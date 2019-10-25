@@ -27,17 +27,8 @@ const paragraphs = [
 
 const articleCountParagraph = `You’ve read ${articleViewCount} Guardian articles in the last month – made possible by our choice to keep Guardian journalism open to all. We do not have a paywall because we believe everyone deserves access to factual information, regardless of where they live or what they can afford.`;
 
-const controlParagraphs = paragraphs.slice();
-controlParagraphs.splice(3, 0, articleCountParagraph);
-
 const variantParagraphs = paragraphs.slice();
 variantParagraphs.splice(1, 0, articleCountParagraph);
-
-const controlCopy = {
-    heading,
-    paragraphs: controlParagraphs,
-    highlightedText,
-};
 
 const variantCopy = {
     heading,
@@ -73,16 +64,6 @@ export const articlesViewedMoment: EpicABTest = makeEpicABTest({
     canRun: () => articleViewCount >= minArticleViews,
 
     variants: [
-        {
-            id: 'control',
-            buttonTemplate: defaultButtonTemplate,
-            products: [],
-            copy: buildEpicCopy(controlCopy, false, geolocation),
-            classNames: [
-                'contributions__epic--2019-10-14_moment_climate_pledge',
-            ],
-            supportBaseURL: url,
-        },
         {
             id: 'variant',
             buttonTemplate: defaultButtonTemplate,
