@@ -64,11 +64,8 @@ export const signInGateFirstTest: ABTest = {
                 const slot = document.querySelector('.js-article__body');
                 if (slot) {
                     const elem = document.createElement('div');
-                    elem.innerHTML = askHtml;
-                    slot.insertBefore(
-                        elem.firstElementChild,
-                        slot.firstElementChild
-                    );
+                    elem.outerHTML = askHtml;
+                    slot.insertBefore(elem, slot.firstElementChild);
                 }
             },
         },
