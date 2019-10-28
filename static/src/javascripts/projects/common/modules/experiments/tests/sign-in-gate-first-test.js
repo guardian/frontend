@@ -81,6 +81,9 @@ export const signInGateFirstTest: ABTest = {
                     }
                 }
             },
+            canRun: () => {
+
+            }
         },
     ],
 };
