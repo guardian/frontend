@@ -3,6 +3,7 @@ package controllers
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
+import experiments.ActiveExperiments
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomponents.{DataModelV3, DotcomponentsDataModel, PageType}
@@ -89,19 +90,27 @@ class ArticleController(
     DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, pageType))
   }
 
-  private def shouldUseDotcomRendering(tier: RenderType): Boolean = {
-    tier == RemoteRender
+  private def shouldUseLocalRender(tier: RenderType, abTests: Map[String, String]): Boolean = {
+    // We want to use LocalRenderArticle when either
+    // The tier is not RemoteRender (in this case we do not have much choice anyway), or
+    // When we are in the dotcomRenderingAdvertisements's control group
+    (tier != RemoteRender) || abTests.contains("dotcomRenderingAdvertisementsControl")
+  }
+
+  private def shouldUseDotcomRendering(tier: RenderType, abTests: Map[String, String]): Boolean = {
+    !shouldUseLocalRender(tier, abTests)
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
     val isAmpSupported = article.article.content.shouldAmplify
     val pageType: PageType = PageType(article, request, context)
+    val abTests = ActiveExperiments.getJsMap(request)
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if shouldUseDotcomRendering(tier) => remoteRenderer.getArticle(ws, path, article, blocks, pageType)
+      case HtmlFormat if shouldUseDotcomRendering(tier, abTests) => remoteRenderer.getArticle(ws, path, article, blocks, pageType)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, pageType)
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
