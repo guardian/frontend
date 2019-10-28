@@ -1,12 +1,14 @@
 // @flow
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
-import ophan from 'ophan/ng';
+import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
+// import ophan from 'ophan/ng';
 import config from 'lib/config';
-import userPrefs from 'common/modules/user-prefs';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+// import userPrefs from 'common/modules/user-prefs';
+import {
+    isInVariantSynchronous,
+    getAsyncTestsToRun,
+} from 'common/modules/experiments/ab';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { getAsyncTestsToRun } from '../../experiments/ab';
 import { isUserLoggedIn } from '../api';
 
 const code = 'sign-in-gate';
@@ -60,8 +62,8 @@ const canShow: () => Promise<boolean> = async () =>
     );
 
 const show: () => Promise<boolean> = () => {
-    const show = Promise.resolve(true);
-    return show;
+    const showprom = Promise.resolve(true);
+    return showprom;
 };
 
 export const signInGate: Banner = {
