@@ -60,6 +60,6 @@ ul.signin-gate__benefits {
         height: 100%;
 
         /* "transparent" only works here because == rgba(0,0,0,0) */
-        background-image: linear-gradient(to bottom, transparent, white);
+        background-image: linear-gradient(to bottom, transparent, #ffffff);
     }
 }
