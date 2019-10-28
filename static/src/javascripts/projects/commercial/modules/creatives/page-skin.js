@@ -31,11 +31,13 @@ const pageSkin = (): void => {
     };
 
     const repositionSkin = (): void => {
-        console.log('reposition skin', bodyEl.scrollTop);
-        if (bodyEl.scrollTop === 0) {
-            bodyEl.style.backgroundPosition = '50% 507px';
-        } else {
-            bodyEl.style.backgroundPosition = '50% 0px';
+        if (bodyEl && hasPageSkin) {
+            console.log('reposition skin', bodyEl.scrollTop);
+            if (bodyEl.scrollTop === 0) {
+                bodyEl.style.backgroundPosition = '50% 507px';
+            } else {
+                bodyEl.style.backgroundPosition = '50% 0px';
+            }
         }
     };
 
