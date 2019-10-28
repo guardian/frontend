@@ -4,7 +4,7 @@
     clear: left;
     margin-top: $gs-baseline * 2;
     margin-bottom: $gs-baseline * 2;
-    padding: $gs-baseline;
+    padding: ($gs-baseline * 3) ($gs-baseline * 2);
 }
 
 .signin-gate__header {
@@ -47,4 +47,19 @@ ul.signin-gate__benefits {
     text-decoration: underline;
     font-size: 9pt;
     font-weight: bold;
+}
+
+.signin-gate__first-paragraph-container {
+    position: relative;
+    overflow: hidden;
+    .signin-gate__first-paragraph-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        /* "transparent" only works here because == rgba(0,0,0,0) */
+        background-image: linear-gradient(to bottom, transparent, white);
+    }
 }

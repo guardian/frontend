@@ -1,8 +1,7 @@
-// @flow strict
-
+// @flow
 const signinUrl = 'https://profile.theguardian.com/signin';
 
-const askHtml = `
+const signInGateHTML = `
     <div class="signin-gate">
         <div class="signin-gate__content">
             <div class="signin-gate__header">
@@ -61,11 +60,25 @@ export const signInGateFirstTest: ABTest = {
         {
             id: 'variant',
             test: (): void => {
-                const slot = document.querySelector('.js-article__body');
-                if (slot) {
-                    const elem = document.createElement('div');
-                    elem.outerHTML = askHtml;
-                    slot.insertBefore(elem, slot.firstElementChild);
+                // get the whole article body
+                const articleBody = document.querySelector('.js-article__body');
+
+                if (articleBody) {
+                    // copy article body html string representation into memory
+                    const currentContent = articleBody.innerHTML;
+
+                    // get the first paragraph of the article
+                    const articleBodyFirstChild = articleBody.firstElementChild;
+                    if (articleBodyFirstChild) {
+                        // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
+                        articleBody.innerHTML = `
+                            <div class="signin-gate__first-paragraph-container">
+                                ${articleBodyFirstChild.outerHTML}
+                                <div class="signin-gate__first-paragraph-overlay"></div>
+                            </div>
+                            ${signInGateHTML}
+                        `;
+                    }
                 }
             },
         },
