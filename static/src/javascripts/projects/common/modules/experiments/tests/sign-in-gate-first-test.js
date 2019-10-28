@@ -65,7 +65,7 @@ export const signInGateFirstTest: ABTest = {
 
                 if (articleBody) {
                     // copy article body html string representation into memory
-                    const currentContent = articleBody.innerHTML;
+                    // const currentContent = articleBody.innerHTML;
 
                     // get the first paragraph of the article
                     const articleBodyFirstChild = articleBody.firstElementChild;
