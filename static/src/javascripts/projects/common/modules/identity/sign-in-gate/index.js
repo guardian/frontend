@@ -36,7 +36,9 @@ const isValidArticleType = (): boolean => {
         config.get(`page.${type}`)
     );
 
-    const isInvalidArticleType = currentArticleTypes.some(true);
+    const isInvalidArticleType = currentArticleTypes.some(
+        type => type === true
+    );
 
     return !isInvalidArticleType;
 };
