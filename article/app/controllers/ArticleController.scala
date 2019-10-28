@@ -89,6 +89,10 @@ class ArticleController(
     DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, pageType))
   }
 
+  private def shouldUseDotcomRendering(tier: RenderType): Boolean = {
+    tier == RemoteRender
+  }
+
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
     val tier = ArticlePicker.getTier(article)
     val isAmpSupported = article.article.content.shouldAmplify
@@ -97,7 +101,7 @@ class ArticleController(
       case JsonFormat if request.forceDCR => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
-      case HtmlFormat if tier == RemoteRender => remoteRenderer.getArticle(ws, path, article, blocks, pageType)
+      case HtmlFormat if shouldUseDotcomRendering(tier) => remoteRenderer.getArticle(ws, path, article, blocks, pageType)
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, pageType)
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
