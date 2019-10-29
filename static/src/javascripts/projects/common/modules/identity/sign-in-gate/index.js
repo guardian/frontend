@@ -34,10 +34,7 @@ const isSecondPageOrHigherPageView = (): boolean => {
     return count >= 1;
 };
 
-const isValidGeoLocation = (): boolean => {
-    console.log('geolocationGetSync', geolocationGetSync());
-    return geolocationGetSync() !== 'US';
-};
+const isValidGeoLocation = (): boolean => geolocationGetSync() !== 'US';
 
 const isInvalidArticleType = (): boolean => {
     const invalidTypes = [
@@ -60,22 +57,6 @@ const isInvalidArticleType = (): boolean => {
         return config.get(`page.${type}`);
     }, false);
 };
-
-// const logChecks: () => Promise<boolean> = async () => {
-//     console.log(
-//         'isInVariantSynchronous',
-//         isInVariantSynchronous(signInGateFirstTest, 'variant')
-//     );
-//     console.log('!hasUserAcknowledgedBanner', !hasUserAcknowledgedBanner(code));
-//     console.log('isSecondPageOrHigherPageView', isSecondPageOrHigherPageView());
-//     console.log(
-//         `!(await getAsyncTestsToRun()).length`,
-//         !(await getAsyncTestsToRun()).length
-//     );
-//     console.log('!isUserLoggedIn', !isUserLoggedIn());
-//     console.log('!isInvalidArticleType()', !isInvalidArticleType());
-//     return Promise.resolve(true);
-// };
 
 const canShow: () => Promise<boolean> = async () =>
     Promise.resolve(
