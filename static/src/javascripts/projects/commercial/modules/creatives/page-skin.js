@@ -8,6 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
+    const NAVMENU_END_POSITION: Number = 508;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -30,13 +31,18 @@ const pageSkin = (): void => {
         }
     };
 
+    const moveBackgroundVerticalPosition = (verticalPos: Number): void => {
+        bodyEl.style.backgroundPosition = '50% ' + verticalPos + 'px';
+    };
+
     const repositionSkin = (): void => {
         if (bodyEl && hasPageSkin) {
-            console.log('reposition skin', bodyEl.scrollTop);
-            if (bodyEl.scrollTop === 0) {
-                bodyEl.style.backgroundPosition = '50% 507px';
-            } else {
-                bodyEl.style.backgroundPosition = '50% 0px';
+            if (window.pageYOffset === 0) {
+                moveBackgroundVerticalPosition(NAVMENU_END_POSITION);
+            } else if (window.pageXOffset <= NAVMENU_END_POSITION) {
+                moveBackgroundVerticalPosition(NAVMENU_END_POSITION - window.pageYOffset);
+            } if (window.pageYOffset > NAVMENU_END_POSITION){
+                moveBackgroundVerticalPosition(0);
             }
         }
     };
