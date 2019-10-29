@@ -3,25 +3,38 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 // import ophan from 'ophan/ng';
 import config from 'lib/config';
-// import userPrefs from 'common/modules/user-prefs';
+import { local } from 'lib/storage';
 import {
     isInVariantSynchronous,
     getAsyncTestsToRun,
 } from 'common/modules/experiments/ab';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { make } from './template';
 import { isUserLoggedIn } from '../api';
 
 const code = 'sign-in-gate';
 
+// const trackInteraction = (interaction: string): void => {
+//     ophan.record({
+//         component: code,
+//         value: interaction,
+//     });
+// };
+
 const isSecondPageOrHigherPageView = (): boolean => {
-    const views = 2;
-    return views >= 2;
+    // get daily read article count array from local storage
+    const dailyArticleCount = local.get('gu.history.dailyArticleCount') || [];
+
+    // get the count from latest date, if it doesnt exist, set to 0
+    const { count = 0 } = dailyArticleCount[0] || {};
+
+    // check if count is greater or equal to 1 since dailyArticleCount is incremented after this component is loaded
+    return count >= 1;
 };
 
-const isValidArticleType = (): boolean => {
-    const incompatibleTypes = [
+const isInvalidArticleType = (): boolean => {
+    const invalidTypes = [
         'isColumn',
-        'isContent',
         'isFront',
         'isHosted',
         'isImmersive',
@@ -34,16 +47,28 @@ const isValidArticleType = (): boolean => {
         'isSplash',
     ];
 
-    const currentArticleTypes = incompatibleTypes.map(type =>
-        config.get(`page.${type}`)
-    );
+    return invalidTypes.reduce((isArticleInvalid, type) => {
+        if (isArticleInvalid) return true;
 
-    const isInvalidArticleType = currentArticleTypes.some(
-        type => type === true
-    );
-
-    return !isInvalidArticleType;
+        return config.get(`page.${type}`);
+    }, false);
 };
+
+// const logChecks: () => Promise<boolean> = async () => {
+//     console.log(
+//         'isInVariantSynchronous',
+//         isInVariantSynchronous(signInGateFirstTest, 'variant')
+//     );
+//     console.log('!hasUserAcknowledgedBanner', !hasUserAcknowledgedBanner(code));
+//     console.log('isSecondPageOrHigherPageView', isSecondPageOrHigherPageView());
+//     console.log(
+//         `!(await getAsyncTestsToRun()).length`,
+//         !(await getAsyncTestsToRun()).length
+//     );
+//     console.log('!isUserLoggedIn', !isUserLoggedIn());
+//     console.log('!isInvalidArticleType()', !isInvalidArticleType());
+//     return Promise.resolve(true);
+// };
 
 const canShow: () => Promise<boolean> = async () =>
     Promise.resolve(
@@ -58,12 +83,29 @@ const canShow: () => Promise<boolean> = async () =>
             // check if user is not logged by checking for cookie
             !isUserLoggedIn() &&
             // check if article type is valid
-            isValidArticleType()
+            !isInvalidArticleType()
     );
 
 const show: () => Promise<boolean> = () => {
-    const showprom = Promise.resolve(true);
-    return showprom;
+    // get the whole article body
+    const articleBody = document.querySelector('.js-article__body');
+    if (articleBody) {
+        // copy article body html string representation into memory
+        // const currentContent = articleBody.innerHTML;
+        // get the first paragraph of the article
+        const articleBodyFirstChild = articleBody.firstElementChild;
+        if (articleBodyFirstChild) {
+            // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
+            articleBody.innerHTML = `
+                <div class="signin-gate__first-paragraph-container">
+                    ${articleBodyFirstChild.outerHTML}
+                    <div class="signin-gate__first-paragraph-overlay"></div>
+                </div>
+                ${make()}
+            `;
+        }
+    }
+    return Promise.resolve(true);
 };
 
 export const signInGate: Banner = {
