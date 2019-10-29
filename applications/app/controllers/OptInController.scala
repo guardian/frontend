@@ -5,6 +5,7 @@ import model.Cached
 import model.Cached.WithoutRevalidationResult
 import play.api.mvc._
 
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 /*
@@ -37,13 +38,6 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
   }
 
   def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
-    Cached(60)(
-      WithoutRevalidationResult(
-        experiments.ActiveExperiments.allExperiments
-          .find(_.name == feature)
-          .map(test => opt(test.participationGroup.headerName, choice))
-          .getOrElse(NotFound)
-      )
-    )
+    Ok("Pascal")
   }
 }
