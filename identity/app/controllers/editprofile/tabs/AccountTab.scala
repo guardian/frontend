@@ -15,6 +15,6 @@ trait AccountTab
   }
 
   /** GET /account/edit */
-  def redirectToAccountDetails: Action[AnyContent] = redirectToManage("account-details")
+  def redirectToAccountSettings: Action[AnyContent] = redirectToManage("account-settings")
 
 }

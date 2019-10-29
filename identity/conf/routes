@@ -48,7 +48,7 @@ GET         /delete/confirm                         controllers.AccountDeletionC
 ########################################################################################################################
 GET         /public/edit                            controllers.editprofile.EditProfileController.redirectToPublicSettings
 
-GET         /account/edit                           controllers.editprofile.EditProfileController.redirectToAccountDetails
+GET         /account/edit                           controllers.editprofile.EditProfileController.redirectToAccountSettings
 
 GET         /membership/edit                        controllers.editprofile.EditProfileController.redirectToManageMembership
 GET         /contribution/recurring/edit            controllers.editprofile.EditProfileController.redirectToManageContributions
