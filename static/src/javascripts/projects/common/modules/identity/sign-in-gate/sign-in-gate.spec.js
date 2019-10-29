@@ -1,0 +1,110 @@
+// @flow
+import { signInGate } from './index';
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(() => true),
+    getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
+}));
+
+jest.mock('lib/storage', () => ({
+    local: {
+        get: jest.fn(() => [{ count: 1, day: 1 }]),
+    },
+}));
+
+jest.mock('common/modules/ui/message', () => ({
+    hasUserAcknowledgedBanner: jest.fn(() => false),
+}));
+
+jest.mock('common/modules/identity/api', () => ({
+    isUserLoggedIn: jest.fn(() => false),
+}));
+
+jest.mock('lib/config', () => ({
+    get: jest.fn(() => false),
+}));
+
+const fakeIsInVariantSynchronous: any = require('common/modules/experiments/ab')
+    .isInVariantSynchronous;
+
+const fakeHasUserAcknowledgedBanner: any = require('common/modules/ui/message')
+    .hasUserAcknowledgedBanner;
+
+const fakeLocal: any = require('lib/storage').local;
+
+const fakeGetAsyncTestsToRun: any = require('common/modules/experiments/ab')
+    .getAsyncTestsToRun;
+
+const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
+    .isUserLoggedIn;
+
+const fakeConfig: any = require('lib/config');
+
+describe('Sign in gate test', () => {
+    describe('canShow returns true', () => {
+        it('should return true using default mocks', () =>
+            signInGate.canShow().then(show => {
+                expect(show).toBe(true);
+            }));
+
+        it('should return true if page view is greater than or equal to 1', () => {
+            fakeLocal.get.mockReturnValueOnce([{ count: 10, day: 1 }]);
+            signInGate.canShow().then(show => {
+                expect(show).toBe(true);
+            });
+        });
+    });
+
+    describe('canShow returns false', () => {
+        it('should return false if not in correct test variant', () => {
+            fakeIsInVariantSynchronous.mockReturnValueOnce(false);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if user has closed banner previously', () => {
+            fakeHasUserAcknowledgedBanner.mockReturnValueOnce(true);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if this is the first page view', () => {
+            fakeLocal.get.mockReturnValueOnce([{ count: 0, day: 1 }]);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false of the dailyArticleCount does not exist', () => {
+            fakeLocal.get.mockReturnValueOnce(undefined);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if there are any epics or banners (through getAsyncTestsToRun length', () => {
+            fakeGetAsyncTestsToRun.mockReturnValueOnce(
+                Promise.resolve(['test'])
+            );
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if the user is logged in', () => {
+            fakeIsUserLoggedIn.mockReturnValueOnce(true);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if there is an invalid article type detected', () => {
+            fakeConfig.get.mockReturnValueOnce(true);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+    });
+});

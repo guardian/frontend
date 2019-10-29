@@ -2,7 +2,6 @@
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 // import ophan from 'ophan/ng';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import {
@@ -10,9 +9,9 @@ import {
     getAsyncTestsToRun,
 } from 'common/modules/experiments/ab';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { make } from './template';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
-import { isUserLoggedIn } from '../api';
+import { make } from './template';
 
 const code = 'sign-in-gate';
 
@@ -30,11 +29,9 @@ const isSecondPageOrHigherPageView = (): boolean => {
     // get the count from latest date, if it doesnt exist, set to 0
     const { count = 0 } = dailyArticleCount[0] || {};
 
-    // check if count is greater or equal to 1 since dailyArticleCount is incremented after this component is loaded
+    // check if count is greater or equal to 1 rather than 2 since dailyArticleCount is incremented after this component is loaded
     return count >= 1;
 };
-
-const isValidGeoLocation = (): boolean => geolocationGetSync() !== 'US';
 
 const isInvalidArticleType = (): boolean => {
     const invalidTypes = [
@@ -66,8 +63,6 @@ const canShow: () => Promise<boolean> = async () =>
             !hasUserAcknowledgedBanner(code) &&
             // check number of page views
             isSecondPageOrHigherPageView() &&
-            // check if valid geo location (so not US)
-            isValidGeoLocation() &&
             // check for epics and banners, returns empty array if none shown
             !(await getAsyncTestsToRun()).length &&
             // check if user is not logged by checking for cookie
