@@ -7,16 +7,6 @@ import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
-  val DotcomRendering = Switch(
-    SwitchGroup.Feature,
-    "dotcom-rendering",
-    "If this switch is on, we will use the dotcom rendering tier for articles which are supported by it",
-    owners = Seq(Owner.withGithub("MatthewJWalls")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val ShareCounts = Switch(
     SwitchGroup.Feature,
     "server-share-counts",

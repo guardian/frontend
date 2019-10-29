@@ -123,16 +123,13 @@ object ArticlePicker {
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-
     val whitelistFeatures = featureWhitelist(page, request)
-    val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
     val isAdFree = ArticlePageChecks.isAdFree(page, request)
     val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
 
     // add free pages always go through DCR provided it's turned on and we support its article features.
     // pages with commercial aspects require the request to go through the DotcomRenderingAdvertisements abtest
-
-    val tier = if ((dcrCouldRender(page, request) && isEnabled && (isAdFree || isCommercialBetaUser) && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
+    val tier = if ((dcrCouldRender(page, request) && (isAdFree || isCommercialBetaUser) && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
 
     // include features that we wish to log but not whitelist against
     val features = whitelistFeatures + ("isCommercialBetaUser" -> isCommercialBetaUser)
