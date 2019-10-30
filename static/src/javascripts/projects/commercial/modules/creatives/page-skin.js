@@ -8,7 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
-    let topPosition: Number;
+    let topPosition: number = 0;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -31,18 +31,25 @@ const pageSkin = (): void => {
         }
     };
 
-    const moveBackgroundVerticalPosition = (verticalPos: Number): void => {
-        bodyEl.style.backgroundPosition = `50% ${verticalPos}px`;
+    const moveBackgroundVerticalPosition = (verticalPos: number): void => {
+        if (bodyEl) {
+            bodyEl.style.backgroundPosition = `50% ${verticalPos}px`;
+        }
     };
 
-    //This is to reposition the Page Skin to start where the navigation header ends.
-    const repositionSkin = (): void => {
-        if (bodyEl && hasPageSkin) {
-            if (!topPosition) {
-                const navHeader = document.getElementsByClassName('new-header')[0];
+    const initTopPositionOnce = (): void => {
+        if (topPosition === 0) {
+            const navHeader = document.getElementsByClassName('new-header')[0];
+            if (navHeader) {
                 topPosition = navHeader.offsetTop + navHeader.offsetHeight;
             }
-            moveBackgroundVerticalPosition(topPosition);
+        }
+    };
+
+    // This is to reposition the Page Skin to start where the navigation header ends.
+    const repositionSkin = (): void => {
+        if (hasPageSkin) {
+            initTopPositionOnce();
             if (window.pageYOffset === 0) {
                 moveBackgroundVerticalPosition(topPosition);
             } else if (window.pageXOffset <= topPosition) {
