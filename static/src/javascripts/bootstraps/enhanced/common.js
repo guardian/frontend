@@ -47,6 +47,7 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import { subsciptionMediumBanner } from 'common/modules/ui/subscription-medium-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
@@ -302,20 +303,24 @@ const initialiseEmail = (): void => {
 };
 
 const initialiseBanner = (): void => {
-    // ordered by priority
-    const bannerList = [
-        consentManagementPlatformUi,
-        firstPvConsentPlusEngagementBanner,
-        firstPvConsentBanner,
-        breakingNews,
-        membershipBanner,
-        membershipEngagementBanner,
-        smartAppBanner,
-        adFreeBanner,
-        emailSignInBanner,
-    ];
+    // if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
+        // ordered by priority
+        const bannerList = [
+            subsciptionMediumBanner,
+            firstPvConsentPlusEngagementBanner,
+            firstPvConsentBanner,
+            breakingNews,
+            membershipBanner,
+            membershipEngagementBanner,
+            smartAppBanner,
+            adFreeBanner,
+            emailSignInBanner,
+        ];
 
-    initBannerPicker(bannerList);
+        initBannerPicker(bannerList);
+    // } else {
+    //     initCmpUi();
+    // }
 };
 
 const initialiseConsentCookieTracking = (): void =>
