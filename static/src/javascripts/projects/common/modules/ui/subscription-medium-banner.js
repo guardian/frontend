@@ -8,7 +8,7 @@ import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { local } from 'lib/storage';
-import { submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
+import { submitViewEvent, submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import {
     track as trackFirstPvConsent,
@@ -16,6 +16,7 @@ import {
     canShow as canShowFirstPvConsent,
     messageCode as firstPvConsentMessageCode,
     makeHtml as makeFirstPvConsentHtml,
+    hasUnsetAdChoices as firstPvHasUnsetAdChoices
 } from 'common/modules/ui/first-pv-consent-banner';
 import {
     getAdConsentState,
@@ -43,10 +44,6 @@ const subcriptionBannerCloseActions = () => {
     bannerHasBeenAcknowledged();
 };
 
-const hasUnsetAdChoices = (): boolean =>
-    allAdConsents.some((_: AdConsent) => getAdConsentState(_) === null);
-
-
 const onAgree = (): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
@@ -54,16 +51,20 @@ const onAgree = (): void => {
 };
 
 const bindCloseHandler = (button, banner, callback) => {
-    button.addEventListener('click', () => {
-        callback();
-        banner.remove();
-    });
+    if (button) {
+        button.addEventListener('click', () => {
+            callback();
+            banner.remove();
+        });
+    }
 }
 
 const bindClickHandler = (button, callback) => {
-    button.addEventListener('click', () => {
-        callback();
-    });
+    if (button) {
+        button.addEventListener('click', () => {
+            callback();
+        });
+    }
 }
 
 const trackSubscriptionBannerView = () => {
@@ -189,7 +190,7 @@ const bannerTemplate = (): string =>
         >
 
         ${subsciptionBannerTemplate()}
-        ${hasUnsetAdChoices() ? consentSection : '' }
+        ${firstPvHasUnsetAdChoices() ? consentSection : '' }
     </div>
     `;
 
@@ -205,10 +206,7 @@ const show: () => Promise<boolean> = () => {
     bindConsentClickHandlers();
     bindSubscriptionClickHandlers();
 
-    return Promise.resolve(() => {
-            return true;
-        }
-    );
+    return Promise.resolve(true);
 };
 
 // sideEffects();
