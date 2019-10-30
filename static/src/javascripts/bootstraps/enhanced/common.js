@@ -57,9 +57,7 @@ import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.li
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
-import {
-    addPrivacySettingsLink,
-} from 'common/modules/ui/cmp-ui';
+import { addPrivacySettingsLink } from 'common/modules/ui/cmp-ui';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
