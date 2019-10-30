@@ -58,7 +58,6 @@ import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 import {
-    consentManagementPlatformUi,
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 
@@ -304,20 +303,20 @@ const initialiseEmail = (): void => {
 
 const initialiseBanner = (): void => {
     // if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
-        // ordered by priority
-        const bannerList = [
-            subsciptionMediumBanner,
-            firstPvConsentPlusEngagementBanner,
-            firstPvConsentBanner,
-            breakingNews,
-            membershipBanner,
-            membershipEngagementBanner,
-            smartAppBanner,
-            adFreeBanner,
-            emailSignInBanner,
-        ];
+    // ordered by priority
+    const bannerList = [
+        subsciptionMediumBanner,
+        firstPvConsentPlusEngagementBanner,
+        firstPvConsentBanner,
+        breakingNews,
+        membershipBanner,
+        membershipEngagementBanner,
+        smartAppBanner,
+        adFreeBanner,
+        emailSignInBanner,
+    ];
 
-        initBannerPicker(bannerList);
+    initBannerPicker(bannerList);
     // } else {
     //     initCmpUi();
     // }
