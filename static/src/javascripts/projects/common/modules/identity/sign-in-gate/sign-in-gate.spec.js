@@ -1,19 +1,27 @@
 // @flow
 import { signInGate } from './index';
 
+jest.mock('ophan/ng', () => ({
+    record: jest.fn(),
+}));
+
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(() => true),
+    isInABTestSynchronous: jest.fn(() => true),
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
+    getSynchronousTestsToRun: jest.fn(() => [
+        {
+            id: 'SignInGateFirstTest',
+            variantToRun: {
+                id: 'variant',
+            },
+        },
+    ]),
 }));
 
 jest.mock('lib/storage', () => ({
     local: {
         get: jest.fn(() => [{ count: 1, day: 1 }]),
     },
-}));
-
-jest.mock('common/modules/ui/message', () => ({
-    hasUserAcknowledgedBanner: jest.fn(() => false),
 }));
 
 jest.mock('common/modules/identity/api', () => ({
@@ -24,11 +32,12 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => false),
 }));
 
-const fakeIsInVariantSynchronous: any = require('common/modules/experiments/ab')
-    .isInVariantSynchronous;
+jest.mock('common/modules/user-prefs', () => ({
+    get: jest.fn(() => undefined),
+}));
 
-const fakeHasUserAcknowledgedBanner: any = require('common/modules/ui/message')
-    .hasUserAcknowledgedBanner;
+const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
+    .isInABTestSynchronous;
 
 const fakeLocal: any = require('lib/storage').local;
 
@@ -39,6 +48,8 @@ const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
     .isUserLoggedIn;
 
 const fakeConfig: any = require('lib/config');
+
+const fakeUserPrefs: any = require('common/modules/user-prefs');
 
 describe('Sign in gate test', () => {
     describe('canShow returns true', () => {
@@ -56,15 +67,8 @@ describe('Sign in gate test', () => {
     });
 
     describe('canShow returns false', () => {
-        it('should return false if not in correct test variant', () => {
-            fakeIsInVariantSynchronous.mockReturnValueOnce(false);
-            return signInGate.canShow().then(show => {
-                expect(show).toBe(false);
-            });
-        });
-
-        it('should return false if user has closed banner previously', () => {
-            fakeHasUserAcknowledgedBanner.mockReturnValueOnce(true);
+        it('should return false if not in correct test', () => {
+            fakeIsInABTestSynchronous.mockReturnValueOnce(false);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });
@@ -81,6 +85,12 @@ describe('Sign in gate test', () => {
             fakeLocal.get.mockReturnValueOnce(undefined);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if user has dismissed the gate', () => {
+            fakeUserPrefs.get.mockReturnValueOnce({
+                'SignInGateFirstTest-variant': Date.now(),
             });
         });
 

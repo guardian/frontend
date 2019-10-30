@@ -22,13 +22,13 @@ export const make = (): string => `
             </li>
         </ul>
         <div class="signin-gate__buttons">
-            <a class="component-button component-button--primary component-button--hasicon-right signin-gate__button" href="https://profile.theguardian.com/signin">
+            <a class="component-button component-button--primary component-button--hasicon-right signin-gate__button js-signin-gate__button" href="https://profile.theguardian.com/signin">
                 Sign in free
                 <svg class="svg-arrow-right-straight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17.89" preserveAspectRatio="xMinYMid" aria-hidden="true" focusable="false" >
                     <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
                 </svg>
             </a>
-            <a class="signin-gate__dismiss">No thanks</a>
+            <a class="signin-gate__dismiss js-signin-gate__dismiss">No thanks</a>
         </div>
     </div>
 </div>
