@@ -8,7 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
-    const NAVMENU_END_POSITION: Number = 508;
+    let topPosition: Number;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -32,26 +32,35 @@ const pageSkin = (): void => {
     };
 
     const moveBackgroundVerticalPosition = (verticalPos: Number): void => {
-        bodyEl.style.backgroundPosition = '50% ' + verticalPos + 'px';
+        bodyEl.style.backgroundPosition = `50% ${verticalPos}px`;
     };
 
+    //This is to reposition the Page Skin to start where the navigation header ends.
     const repositionSkin = (): void => {
         if (bodyEl && hasPageSkin) {
+            if (!topPosition) {
+                const navHeader = document.getElementsByClassName('new-header')[0];
+                topPosition = navHeader.offsetTop + navHeader.offsetHeight;
+            }
+            moveBackgroundVerticalPosition(topPosition);
             if (window.pageYOffset === 0) {
-                moveBackgroundVerticalPosition(NAVMENU_END_POSITION);
-            } else if (window.pageXOffset <= NAVMENU_END_POSITION) {
-                moveBackgroundVerticalPosition(NAVMENU_END_POSITION - window.pageYOffset);
-            } if (window.pageYOffset > NAVMENU_END_POSITION){
+                moveBackgroundVerticalPosition(topPosition);
+            } else if (window.pageXOffset <= topPosition) {
+                moveBackgroundVerticalPosition(
+                    topPosition - window.pageYOffset
+                );
+            }
+            if (window.pageYOffset > topPosition) {
                 moveBackgroundVerticalPosition(0);
             }
         }
     };
 
     togglePageSkin();
-    repositionSkin();
 
     mediator.on('window:throttledResize', togglePageSkin);
     mediator.on('window:throttledScroll', repositionSkin);
+    mediator.on('modules:commercial:dfp:rendered', repositionSkin);
 };
 
 export { pageSkin };
