@@ -60,6 +60,10 @@ ul.signin-gate__benefits {
         height: 100%;
 
         /* "transparent" only works here because == rgba(0,0,0,0) */
-        background-image: linear-gradient(to bottom, transparent, #ffffff);
+        background-image: linear-gradient(0deg, $brightness-100, 70%, transparent);
+
+        &.signin-gate__first-paragraph-overlay--comment {
+            background-image: linear-gradient(0deg, $opinion-faded, 70%, transparent);
+        }
     }
 }

@@ -161,6 +161,18 @@ const show: () => Promise<boolean> = () => {
                         ${make()}
                     `;
 
+                    // check if comment, and add comment/opinion bg colour
+                    if (config.get(`page.cardStyle`) === 'comment') {
+                        const overlay = shadowArticleBody.querySelector(
+                            '.signin-gate__first-paragraph-overlay'
+                        );
+                        if (overlay) {
+                            overlay.classList.add(
+                                'signin-gate__first-paragraph-overlay--comment'
+                            );
+                        }
+                    }
+
                     // add click handler for the dismiss of the gate
                     bean.on(
                         shadowArticleBody,
