@@ -38,9 +38,6 @@ const signInUrl =
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
 
-console.log({edition});
-console.log({subscriptionBannerSwitch});
-
 const closedAt = lastClosedAtKey =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
@@ -147,7 +144,7 @@ const subsciptionBannerTemplate = (): string => `
                 <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
             </div>
             <div class="site-message--packshot-container">
-                <img src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" >
+                <img srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" >
             </div>
 
 
