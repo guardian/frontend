@@ -23,12 +23,14 @@ const thankYouClosingSentence =
     'Thank you for supporting the Guardian – readers from around the world, like you, make this work possible.';
 const thankYouCTA = 'Support us again';
 
-const stayQuietFinalPushCopy = 'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
+const stayQuietFinalPushCopy =
+    'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
 
-const thankYouFinalPushCopy = 'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
+const thankYouFinalPushCopy =
+    'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
 
-const closingSentenceFinalPush = 'Your support is galvanising – it makes our work possible and is critical for our future. Thank you.';
-
+const closingSentenceFinalPush =
+    'Your support is galvanising – it makes our work possible and is critical for our future. Thank you.';
 
 // These test params must be set on engagementBannerParams *and* passed into canShowBannerSync
 // TODO - we need to rethink how banner tests are selected/displayed
@@ -182,7 +184,10 @@ export const environmentMomentBannerFinalPush: AcquisitionsABTest = {
                 bannerModifierClass: 'moment-banner',
                 minArticlesBeforeShowingBanner,
                 userCohort: userCohortParam.momentBannerEveryone,
-                titles: ['Thank you for supporting ', 'our environmental pledge'],
+                titles: [
+                    'Thank you for supporting ',
+                    'our environmental pledge',
+                ],
                 linkUrl,
                 secondaryLinkUrl,
                 secondaryLinkLabel,

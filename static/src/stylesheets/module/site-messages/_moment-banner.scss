@@ -8,12 +8,13 @@
 }
 
 $title: 'Guardian Titlepiece', Georgia, serif !default;
+$moment-blue: '#1570A6';
 
 .site-message--moment-banner {
     overflow: visible;
     border: 0;
     position: relative;
-    background-color: $highlight-main;
+    background-color: $moment-blue
 }
 
 .moment-banner__container {
