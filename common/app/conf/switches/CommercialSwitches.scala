@@ -260,9 +260,9 @@ trait CommercialSwitches {
 
   val SubscriptionMediumBanner = Switch(
     Commercial,
-    "subscription-banner-block",
+    "subscription-banner",
     "if this is switched on the subscriptions banner will show (region visibility is controlled from the frontend banner code)",
-    owners = Seq(Owner.withGithub("joelochlann")),
+    owners = Seq(Owner.withGithub("damienshaw")),
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true
