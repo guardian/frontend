@@ -8,7 +8,7 @@
 }
 
 $title: 'Guardian Titlepiece', Georgia, serif !default;
-$moment-blue: #1570A6;
+$moment-blue: #1570a6;
 
 .site-message--moment-banner {
     overflow: visible;
@@ -62,8 +62,6 @@ $moment-blue: #1570A6;
 
 .moment-banner__titles {
     margin-bottom: $gs-baseline;
-    // Magic number to get desired line breaks on mobile
-    //width: 270px;
 
     @include mq($from: tablet) {
         width: initial;
