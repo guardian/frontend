@@ -67,7 +67,6 @@
     align-items: flex-end;
     align-content: stretch;
     width: 50%;
-    // background-color: plum;
 
     @include mq($from: tablet) {
         width: 60%;
@@ -78,10 +77,10 @@
     }
 
     p {
-        font-size: 16px;
+        font-size: 17px;
         line-height: 18px;
         margin: 0;
-        // background-color: lightblue;
+        font-family: $f-serif-text;
 
         @include mq($from: mobileLandscape) {
             font-size: 18px;
@@ -136,7 +135,7 @@
     display: inline-block;
     font-size: 16px;
     width: 100%;
-    padding: 12px 20px 14px;
+    padding: 10px 20px 12px;
     border-radius: 50px;
     background: $brightness-7;
     font-family: $f-sans-serif-text;
@@ -149,9 +148,13 @@
     }
 }
 
+.site-message--subscription-banner__cta:hover {
+    text-decoration: none;
+}
+
 .site-message--subscription-banner__cta-dismiss-container {
     text-align: center;
-    margin: 20px 0;
+    margin: 20px 0 8px;
 
     @include mq($from: tablet) {
         margin: 12px 0 0 10px;
@@ -168,17 +171,15 @@
 
 .site-message--subscription-banner__sign-in {
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 100;
     font-family: $f-sans-serif-text;
-    // background-color: darkmagenta;
     color: $brightness-7;
     margin-top: 10px;
 
     p {
         display: inline-block;
         margin-right: 5px;
-        // cursor: pointer;
     }
 
     a {
@@ -257,6 +258,11 @@
 
 .site-message--subscription-banner__gu-logo {
     display: none;
+
+    svg {
+        background-size: 200px 300px;
+        width: 60px;
+    }
 
     @include mq($from: leftCol) {
         display: block;
