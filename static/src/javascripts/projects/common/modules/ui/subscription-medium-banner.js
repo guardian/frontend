@@ -1,25 +1,25 @@
 // @flow
 
 import uniq from 'lodash/uniq';
-import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import ophan from 'ophan/ng';
-import config from 'lib/config';
+import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
+// import { trackNonClickInteraction } from 'common/modules/analytics/google';
+// import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { local } from 'lib/storage';
-import { submitViewEvent, submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {
+    submitViewEvent,
+    submitClickEvent,
+} from 'common/modules/commercial/acquisitions-ophan';
 import marque36icon from 'svgs/icon/marque-36.svg';
 import {
     track as trackFirstPvConsent,
-    // bindClickHandlers as bindSubscriptionClickHandlers,
-    canShow as canShowFirstPvConsent,
-    messageCode as firstPvConsentMessageCode,
+    // canShow as canShowFirstPvConsent,
+    // messageCode as firstPvConsentMessageCode,
     makeHtml as makeFirstPvConsentHtml,
-    hasUnsetAdChoices as firstPvHasUnsetAdChoices
+    hasUnsetAdChoices as firstPvHasUnsetAdChoices,
 } from 'common/modules/ui/first-pv-consent-banner';
 import {
-    getAdConsentState,
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
@@ -28,16 +28,19 @@ const messageCode = 'subscription-banner';
 const pageviews = local.get('gu.alreadyVisited');
 const fiveOrMorePageViews = currentPageViews => currentPageViews >= 5;
 const subsciptionBannerClosedKey = 'subscriptionBannerLastClosedAt';
-const subscriptionUrl = 'https://support.theguardian.com/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D';
-const signInUrl = 'https://profile.theguardian.com/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs';
+const subscriptionUrl =
+    'https://support.theguardian.com/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D';
+const signInUrl =
+    'https://profile.theguardian.com/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs';
 
-const closedAt = lastClosedAtKey => userPrefs.set(lastClosedAtKey, new Date().toISOString());
+const closedAt = lastClosedAtKey =>
+    userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
 const bannerHasBeenAcknowledged = () => {
     const messageStates = userPrefs.get('messages') || [];
     messageStates.push(messageCode);
     userPrefs.set('messages', uniq(messageStates));
-}
+};
 
 const subcriptionBannerCloseActions = () => {
     closedAt(subsciptionBannerClosedKey);
@@ -57,7 +60,7 @@ const bindCloseHandler = (button, banner, callback) => {
             banner.remove();
         });
     }
-}
+};
 
 const bindClickHandler = (button, callback) => {
     if (button) {
@@ -65,7 +68,7 @@ const bindClickHandler = (button, callback) => {
             callback();
         });
     }
-}
+};
 
 const trackSubscriptionBannerView = () => {
     submitViewEvent({
@@ -74,7 +77,7 @@ const trackSubscriptionBannerView = () => {
             id: 'acquisitions-subscription-banner',
         },
     });
-}
+};
 
 const trackSubscriptionBannerCtaClick = () => {
     submitClickEvent({
@@ -83,33 +86,45 @@ const trackSubscriptionBannerCtaClick = () => {
             id: 'acquisitions-subscription-banner',
         },
     });
-}
+};
 
 const bindSubscriptionClickHandlers = () => {
-    const subscriptionBannercloseButton = document.querySelector('#js-site-message--subscription-banner__cta-dismiss');
-    const subscriptionBannerHtml = document.querySelector('#js-subscription-banner-site-message');
+    const subscriptionBannercloseButton = document.querySelector(
+        '#js-site-message--subscription-banner__cta-dismiss'
+    );
+    const subscriptionBannerHtml = document.querySelector(
+        '#js-subscription-banner-site-message'
+    );
 
-    const subscriptionBannerCta = document.querySelector('#js-site-message--subscription-banner__cta');
+    const subscriptionBannerCta = document.querySelector(
+        '#js-site-message--subscription-banner__cta'
+    );
 
     if (subscriptionBannerHtml) {
-
         bindCloseHandler(
             subscriptionBannercloseButton,
             subscriptionBannerHtml,
             subcriptionBannerCloseActions
         );
-        bindClickHandler(subscriptionBannerCta, trackSubscriptionBannerCtaClick);
+        bindClickHandler(
+            subscriptionBannerCta,
+            trackSubscriptionBannerCtaClick
+        );
     }
-}
+};
 
 const bindConsentClickHandlers = () => {
-    const consentBannerCloseButton = document.querySelector('.site-message--first-pv-consent__button');
-    const consentBannerHtml = document.querySelector('#js-first-pv-consent-site-message');
+    const consentBannerCloseButton = document.querySelector(
+        '.site-message--first-pv-consent__button'
+    );
+    const consentBannerHtml = document.querySelector(
+        '#js-first-pv-consent-site-message'
+    );
 
     if (consentBannerHtml) {
         bindCloseHandler(consentBannerCloseButton, consentBannerHtml, onAgree);
     }
-}
+};
 
 const subsciptionBannerTemplate = (): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
@@ -166,9 +181,7 @@ const subsciptionBannerTemplate = (): string => `
 </div>
 `;
 
-const consentSection = (
-
-    `<div id="js-first-pv-consent-site-message" class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
+const consentSection = `<div id="js-first-pv-consent-site-message" class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
         <div class="gs-container">
             <div class="site-message__inner js-site-message-inner">
                 <div class="site-message__copy js-site-message-copy u-cf">
@@ -176,8 +189,7 @@ const consentSection = (
                 </div>
             </div>
         </div>
-    </div>`
-)
+    </div>`;
 
 const bannerTemplate = (): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
@@ -190,14 +202,13 @@ const bannerTemplate = (): string =>
         >
 
         ${subsciptionBannerTemplate()}
-        ${firstPvHasUnsetAdChoices() ? consentSection : '' }
+        ${firstPvHasUnsetAdChoices() ? consentSection : ''}
     </div>
     `;
 
 const show: () => Promise<boolean> = () => {
     trackFirstPvConsent();
     trackSubscriptionBannerView();
-
 
     if (document.body) {
         document.body.insertAdjacentHTML('beforeend', bannerTemplate());
@@ -213,9 +224,8 @@ const show: () => Promise<boolean> = () => {
 
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
-        fiveOrMorePageViews(pageviews)
-        &&
-        !hasUserAcknowledgedBanner(messageCode)
+        fiveOrMorePageViews(pageviews) &&
+            !hasUserAcknowledgedBanner(messageCode)
     );
     return can;
 };

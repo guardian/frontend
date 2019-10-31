@@ -162,5 +162,5 @@ export {
     bindClickHandlers,
     messageCode,
     makeHtml,
-    hasUnsetAdChoices
+    hasUnsetAdChoices,
 };
