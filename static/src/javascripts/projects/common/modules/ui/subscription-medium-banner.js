@@ -3,7 +3,7 @@
 import uniq from 'lodash/uniq';
 import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 // import { trackNonClickInteraction } from 'common/modules/analytics/google';
-// import config from 'lib/config';
+import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { local } from 'lib/storage';
@@ -12,6 +12,7 @@ import {
     submitClickEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import marque36icon from 'svgs/icon/marque-36.svg';
+// import {  getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     track as trackFirstPvConsent,
     // canShow as canShowFirstPvConsent,
@@ -26,12 +27,19 @@ import {
 
 const messageCode = 'subscription-banner';
 const pageviews = local.get('gu.alreadyVisited');
-const fiveOrMorePageViews = currentPageViews => currentPageViews >= 5;
 const subsciptionBannerClosedKey = 'subscriptionBannerLastClosedAt';
+const subscriptionBannerSwitch = config.get('switches.subscriptionBanner');
+const edition = config.get('page.edition');
 const subscriptionUrl =
     'https://support.theguardian.com/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D';
 const signInUrl =
     'https://profile.theguardian.com/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs';
+
+const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
+const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
+
+console.log({edition});
+console.log({subscriptionBannerSwitch});
 
 const closedAt = lastClosedAtKey =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
@@ -220,12 +228,12 @@ const show: () => Promise<boolean> = () => {
     return Promise.resolve(true);
 };
 
-// sideEffects();
-
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
         fiveOrMorePageViews(pageviews) &&
-            !hasUserAcknowledgedBanner(messageCode)
+            !hasUserAcknowledgedBanner(messageCode) &&
+            !isAustralianEdition(edition) &&
+            subscriptionBannerSwitch
     );
     return can;
 };
