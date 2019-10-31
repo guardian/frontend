@@ -7,15 +7,10 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 const geolocation = geolocationGetSync();
 const campaignId = 'climate_pledge_2019';
 
-const stayQuietFinalPushCopy =
+const finalPushCopy =
     'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
-
-const thankYouFinalPushCopy =
-    'The climate emergency is the defining issue of our times. Since we published our environmental pledge, Guardian readers from more than 100 countries across the world have supported us. Many of you have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism. ';
-
 const mobileFinalPushCopy =
     'The climate emergency is the defining issue of our times. Since we published our pledge, readers from more than 100 countries across the world have supported us. You have told us how much you value our commitment: to be truthful, resolute and undeterred in pursuing this important journalism.';
-
 const closingSentenceFinalPush =
     'Your support is galvanising – it makes our work possible and is critical for our future. Thank you.';
 
@@ -56,7 +51,7 @@ export const environmentMomentBannerFinalPush: AcquisitionsABTest = {
             id: 'stayquiet',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: stayQuietFinalPushCopy,
+                messageText: finalPushCopy,
                 mobileMessageText: mobileFinalPushCopy,
                 closingSentence: closingSentenceFinalPush,
                 template: acquisitionsBannerMomentTemplate,
@@ -78,7 +73,7 @@ export const environmentMomentBannerFinalPush: AcquisitionsABTest = {
             id: 'thankyou',
             test: (): void => {}, // banner tests look at the bucket and vary the copy themselves
             engagementBannerParams: {
-                messageText: thankYouFinalPushCopy,
+                messageText: finalPushCopy,
                 mobileMessageText: mobileFinalPushCopy,
                 closingSentence: closingSentenceFinalPush,
                 template: acquisitionsBannerMomentTemplate,
