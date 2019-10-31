@@ -213,7 +213,7 @@ You can stop and start the test using our [switchboard](https://frontend.gutools
 
 To see the test in action locally: `localhost:9000/[articleId]#ab-[testName]=[variantName]`
 
-To see the tests you are part of using Google Chrome: open the Dev Console -> Resources -> Local Storage -> choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row. You can also add `#experiments` to the URL to get an overlay on the left-hand side which shows the contents of `gu.ab.participations` and allows you to change them. **Note that if a test's `canRun` is false on that pageview, the participation will be removed from `gu.ab.participations` and therefore not appear in the `#experiments` overlay.**
+To see the tests you are part of using Google Chrome: open the `Dev Console -> Application -> Local Storage` and choose `http://[domain]` (e.g. localhost or www.theguardian.com)  -> check the `gu.ab.participations` row. You can also add `#experiments` to the URL to get an overlay on the left-hand side which shows the contents of `gu.ab.participations` and allows you to change them. **Note that if a test's `canRun` is false on that pageview, the participation will be removed from `gu.ab.participations` and therefore not appear in the `#experiments` overlay.**
 
 ## Analysis of the test data
 
@@ -308,31 +308,32 @@ If you want to set up your AB test with scala instead of javascript, almost all 
 
 2. Ensure that the object name and the name property are the same - but formatted correctly.  
 eg: object `AudioChangeImagePosition` has the name property `audio-change-image-position`.
-```
-object AudioChangeImagePosition extends Experiment(
-  name = "audio-change-image-position",
-  description = "Test the position of the image on audio pages",
-  owners = Owner.group(SwitchGroup.Journalism),
-  sellByDate = new LocalDate(2018, 8, 3),
-  participationGroup = Perc50
-)
 
-```
+    ```
+    object AudioChangeImagePosition extends Experiment(
+      name = "audio-change-image-position",
+      description = "Test the position of the image on audio pages",
+      owners = Owner.group(SwitchGroup.Journalism),
+      sellByDate = new LocalDate(2018, 8, 3),
+      participationGroup = Perc50
+    )
+
+    ```
 3. Add the experiment to the object property `ActiveExperiments.allExperiments` at the top of the file 
 
 4. Switch the test on for your local environment: http://localhost:9000/dev/switchboard You should be able to find it under `Serverside Tests`
-NB: You should be running in `project dev-build` because you will need it to access the /switchboard screen
+NB: You should be running in `project dev-build` because you will need it to access the `/switchboard` screen
 
 5. Incorporate the test in your code as a switch, eg:
 
-```
-@import experiments.{ActiveExperiments, AudioChangeImagePosition}
+    ```
+    @import experiments.{ActiveExperiments, AudioChangeImagePosition}
 
-if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) { 
-    //do variant thing 
- }
+    if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) { 
+        //do variant thing 
+     }
 
-```
+    ```
 
 NB: If your test suddenly stops working in local, check the switchboard again and make sure your test is still switched on. 
 
