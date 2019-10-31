@@ -94,7 +94,7 @@ export const acquisitionsBannerMomentTemplate = (
                 }
 
                 <div class="engagement-banner__cta">
-                    <a tabindex="3" class="button engagement-banner__button" href="${
+                    <a tabindex="3" class="button engagement-banner__button engagement-banner__button--moment-cta" href="${
                         params.linkUrl
                     }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
