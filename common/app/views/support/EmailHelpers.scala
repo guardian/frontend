@@ -49,10 +49,10 @@ object EmailHelpers {
 
   def imgForFront: (String, Option[String]) => Html = img(width=EmailImageParams.fullWidth) _
 
-  def imgFromCard(card: ContentCard, colWidth: Int = 12)(implicit requestHeader: RequestHeader): Option[Html] = {
+  def imgFromCard(card: ContentCard, colWidth: Int = 12, altTextOverride: Option[String] = None)(implicit requestHeader: RequestHeader): Option[Html] = {
     val width = ((colWidth.toDouble / 12.toDouble) * EmailImageParams.fullWidth).toInt
     imageUrlFromCard(card, width).map { url => Html {
-        s"""<a ${card.header.url.hrefWithRel}>${img(width)(url, Some(card.header.headline))}</a>"""
+        s"""<a ${card.header.url.hrefWithRel}>${img(width)(url, Some(altTextOverride.getOrElse(card.header.headline)))}</a>"""
       }
     }
   }

@@ -34,7 +34,7 @@ jvm_mem="-Xmx$((physical_mem / 2 / 1024))m"
 
 
 if [ -z $FRONTEND_JVM_ARGS ]; then
-    FRONTEND_JVM_ARGS="$jvm_mem -XX:ReservedCodeCacheSize=128m -XX:+UseConcMarkSweepGC -Djava.awt.headless=true -XX:NewRatio=4"
+    FRONTEND_JVM_ARGS="$jvm_mem -XX:ReservedCodeCacheSize=128m -Djava.awt.headless=true -XX:NewRatio=4"
 fi
 
 echo ''

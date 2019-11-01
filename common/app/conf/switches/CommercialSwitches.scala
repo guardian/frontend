@@ -577,7 +577,7 @@ trait PrebidSwitches {
     description = "YouTube's PfP ad targeting parameters",
     owners = group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 10, 16),
+    sellByDate = new LocalDate(2019, 12, 16),
     exposeClientSide = true
   )
 

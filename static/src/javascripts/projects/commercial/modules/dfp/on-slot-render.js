@@ -52,6 +52,7 @@ const reportEmptyResponse = (
 const outstreamSizes = [
     adSizes.outstreamDesktop.toString(),
     adSizes.outstreamMobile.toString(),
+    adSizes.outstreamGoogleDesktop.toString(),
 ];
 
 export const onSlotRender = (event: SlotRenderEndedEvent): void => {

@@ -4,11 +4,6 @@ Product Manager: Stephan Fowler
 Twitter: @stephanfowler
 From: London, UK
 
-Design human: Zef Cherry-Kynaston
-Twitter: @zeftilldeath
-From: Wales, UK
-Location: London, UK
-
 QA Automation: Michael McNamara
 Twitter: @m_w_mcnamara
 From: Melbourne, Aus
@@ -28,14 +23,7 @@ SETI (Tools & Infra): Matthew Walls
 GitHub: MatthewJWalls
 Location: Essex, UK
 
-Client-side Developer: Alex Sanders
-Location: London/Norwich
-Twitter: @asanders
-
 Developer: John Duffell
-
-Developer: Sam Desborough
-Twitter: @samdesborough
 
 Client-Side Developer: Gareth Trufitt
 Location: London, UK (snaps.digit.nails)
@@ -55,11 +43,6 @@ Twitter: @akash1810
 Location: London, UK
 
 Developer: Jamie Byers
-Location: London, UK
-
-Design human: Duarte Carrilho da Graça
-Twitter: @duartecg
-From: Lisbon, Portugal
 Location: London, UK
 
 Digital Designer: Frank Hulley-Jones
@@ -118,15 +101,6 @@ Twitter: @adamnfish
 
 Developer: Pascal Honore
 Twitter: @0x104
-
-Developer: Richard Beddington
-Twitter: @richieahb
-Location: London, UK
-
-Developer: Laura González
-Twitter: @freezydorito
-From: Oviedo, ES
-Location: London, UK
 
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
@@ -325,4 +299,30 @@ Location: London, UK
 SETI (Tools & Infra): Stephen Geller
 GitHub: stephengeller
 Twitter: _stephengeller
+Location: London, UK
+
+Client-side Developer: Alex Sanders
+Location: London/Norwich
+Twitter: @asanders
+
+Design human: Zef Cherry-Kynaston
+Twitter: @zeftilldeath
+From: Wales, UK
+Location: London, UK
+
+Developer: Sam Desborough
+Twitter: @samdesborough
+
+Design human: Duarte Carrilho da Graça
+Twitter: @duartecg
+From: Lisbon, Portugal
+Location: London, UK
+
+Developer: Richard Beddington
+Twitter: @richieahb
+Location: London, UK
+
+Developer: Laura González
+Twitter: @freezydorito
+From: Oviedo, ES
 Location: London, UK

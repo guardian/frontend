@@ -41,7 +41,7 @@ You will want to start by determining which Frontend apps are affected. You can
 see this from the overview boards. Pay close attention to the charts for 'errors by
 app' and 'latency by app' in Kibana.
 
-* [Kibana Overview Board](https://logs.gutools.co.uk/app/kibana#/dashboard/00349ef0-06a1-11e8-a56d-a31118fab969?_g=(refreshInterval%3A(display%3AOff%2Cpause%3A!f%2Cvalue%3A0)%2Ctime%3A(from%3Anow-15m%2Cmode%3Aquick%2Cto%3Anow)))
+* [Kibana Overview Board](https://logs.gutools.co.uk/goto/9d096c4c18e63c8496f6bd92529af1d0)
 * [CloudWatch Overview Board](https://eu-west-1.console.aws.amazon.com/cloudwatch/home?region=eu-west-1#dashboards:name=xOverview)
 
 ## Investigate whether the affected apps are _slow_ or _failing_

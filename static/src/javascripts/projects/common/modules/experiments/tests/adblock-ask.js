@@ -11,21 +11,16 @@ const askHtml = `
     <div class="contributions__adblock-content">
         <div class="contributions__adblock-header">
             <h2>
-                Editorially<br>
-                independent,<br>
-                open to everyone
+                Read The<br>
+                Guardian without<br>
+                interruption on all<br>
+                your devices
             </h2>
         </div>
-        <div class="contributions__adblock-sub">
-            We chose a different approach —<br>
-            will you support it?
-        </div>
         <a class="contributions__adblock-button" href="${supportUrl}">
-            <span class="component-button__content">Find out more</span>
-            <svg class="svg-arrow-right-straight" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 17.89" preserveAspectRatio="xMinYMid">
-                <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z"></path>
-            </svg>
+            <span class="component-button__content">Subscribe now</span>
         </a>
+        <img src="https://media.guim.co.uk/b437f809d9fa4c72336ccbead1730b6bb0965239/0_0_432_503/432.png" class="contributions__adblock-image" alt="" />
     </div>
 </div>
 `;
