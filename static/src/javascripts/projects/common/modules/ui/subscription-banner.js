@@ -11,19 +11,14 @@ import {
     submitViewEvent,
     submitClickEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
-import marque36icon from 'svgs/icon/marque-36.svg';
-// import {  getSync as geolocationGetSync } from 'lib/geolocation';
-import {
-    track as trackFirstPvConsent,
-    // canShow as canShowFirstPvConsent,
-    // messageCode as firstPvConsentMessageCode,
-    makeHtml as makeFirstPvConsentHtml,
-    hasUnsetAdChoices as firstPvHasUnsetAdChoices,
-} from 'common/modules/ui/first-pv-consent-banner';
+import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
+import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import { track as trackFirstPvConsent } from 'common/modules/ui/first-pv-consent-banner';
 import {
     setAdConsentState,
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
+import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 
 const messageCode = 'subscription-banner';
 const pageviews = local.get('gu.alreadyVisited');
@@ -36,9 +31,10 @@ const signInUrl =
     'https://profile.theguardian.com/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs';
 
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
+
 const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
 
-const closedAt = lastClosedAtKey =>
+const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
 const bannerHasBeenAcknowledged = () => {
@@ -131,92 +127,12 @@ const bindConsentClickHandlers = () => {
     }
 };
 
-const subsciptionBannerTemplate = (): string => `
-<div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
-    <div class="site-message--subscription-banner__inner">
-        <h3 class="site-message--subscription-banner__title">
-            A beautiful way to read it <br>
-            A powerful way <br class="temp-mobile-break" /> to fund it
-        </h3>
-
-
-            <div class="site-message--subscription-banner__description">
-                <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
-            </div>
-            <div class="site-message--packshot-container">
-                <img srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" >
-            </div>
-
-
-        <div class="site-message--subscription-banner__cta-container">
-            <a
-                id="js-site-message--subscription-banner__cta"
-                data-link-name="subscription-banner : to-sign-in"
-                data-link-name="subscription-banner : success"
-                class="site-message--subscription-banner__cta"
-                href="${subscriptionUrl}"
-            >
-                Become a digital subscriber
-            </a>
-            <div class="site-message--subscription-banner__cta-dismiss-container">
-                <a
-                    id="js-site-message--subscription-banner__cta-dismiss"
-                    class="site-message--subscription-banner__cta-dismiss"
-                >
-                    Not now
-                </a>
-            </div>
-        </div>
-
-        <div class="site-message--subscription-banner__sign-in">
-            <p>Already a subscriber?</p>
-            <br class="temp-mobile-break" />
-            <a
-                class="site-message--subscription-banner__subscriber-link"
-                href="${signInUrl}"
-            >
-                Sign in to not see this again
-            </a>
-        </div>
-
-        <div class="site-message--subscription-banner__gu-logo">
-            ${marque36icon.markup}
-        </div>
-    </div>
-</div>
-`;
-
-const consentSection = `<div id="js-first-pv-consent-site-message" class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
-        <div class="gs-container">
-            <div class="site-message__inner js-site-message-inner">
-                <div class="site-message__copy js-site-message-copy u-cf">
-                    ${makeFirstPvConsentHtml()}
-                </div>
-            </div>
-        </div>
-    </div>`;
-
-const bannerTemplate = (): string =>
-    `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
-          tabindex="-1"
-          role="dialog"
-          aria-label="welcome"
-          aria-describedby="site-message__message"
-          data-component="AcquisitionsEngagementBannerStylingTweaks_control"
-          aria-live="polite"
-        >
-
-        ${subsciptionBannerTemplate()}
-        ${firstPvHasUnsetAdChoices() ? consentSection : ''}
-    </div>
-    `;
-
 const show: () => Promise<boolean> = () => {
     trackFirstPvConsent();
     trackSubscriptionBannerView();
 
     if (document.body) {
-        document.body.insertAdjacentHTML('beforeend', bannerTemplate());
+        document.body.insertAdjacentHTML('beforeend', bannerTemplate(subscriptionUrl, signInUrl));
     }
 
     bindConsentClickHandlers();
@@ -230,12 +146,14 @@ const canShow: () => Promise<boolean> = () => {
         fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(messageCode) &&
             !isAustralianEdition(edition) &&
+            !shouldHideSupportMessaging() &&
+            !pageShouldHideReaderRevenue() &&
             subscriptionBannerSwitch
     );
     return can;
 };
 
-export const subsciptionMediumBanner: Banner = {
+export const firstPvConsentSubsciptionBanner: Banner = {
     id: messageCode,
     show,
     canShow,

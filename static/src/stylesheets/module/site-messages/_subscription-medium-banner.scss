@@ -196,7 +196,6 @@
     position: relative;
     width: 50%;
     padding-top: 130px;
-    // background-color: darkgreen;
 
     @include mq($from: tablet) {
         position: static;
@@ -258,11 +257,6 @@
 
 .site-message--subscription-banner__gu-logo {
     display: none;
-
-    svg {
-        background-size: 200px 300px;
-        width: 60px;
-    }
 
     @include mq($from: leftCol) {
         display: block;

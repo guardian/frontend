@@ -39,6 +39,7 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
+import { firstPvConsentSubsciptionBanner } from 'common/modules/ui/subscription-banner';
 import { firstPvConsentPlusEngagementBanner } from 'common/modules/ui/first-pv-consent-plus-engagement-banner';
 import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
@@ -47,7 +48,6 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
-import { subsciptionMediumBanner } from 'common/modules/ui/subscription-medium-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
@@ -303,7 +303,7 @@ const initialiseBanner = (): void => {
     // if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
     // ordered by priority
     const bannerList = [
-        subsciptionMediumBanner,
+        firstPvConsentSubsciptionBanner,
         firstPvConsentPlusEngagementBanner,
         firstPvConsentBanner,
         breakingNews,
