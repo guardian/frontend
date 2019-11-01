@@ -13,14 +13,14 @@ const articleCountDays = 30;
 
 const articleViewCount = getArticleViewCountForDays(articleCountDays);
 
-const highlightedText =
-    'Support us from as little as %%CURRENCY_SYMBOL%%1 – it only takes a minute. Thank you.';
-
 const monthArticleCountParagraph = `You’ve read ${articleViewCount} Guardian articles in the last month – made possible by our choice to keep Guardian journalism open to all. We do not have a paywall because we believe everyone deserves access to factual information, regardless of where they live or what they can afford.`;
 
 const url = 'http://support.theguardian.com/contribute/climate-pledge-2019';
 
 const geolocation = geolocationGetSync();
+
+const thankYouUrl =
+    'https://www.theguardian.com/environment/2019/oct/31/guardian-climate-pledge-thank-you-hope-change?INTCMP=climate_pledge_2019_epic';
 
 export const controlCopy = (articleCountParagraph: string) => ({
     heading: 'As the climate crisis escalates...',
@@ -31,7 +31,8 @@ export const controlCopy = (articleCountParagraph: string) => ({
         'The Guardian believes that the problems we face on the climate crisis are systemic and that fundamental societal change is needed. We will keep reporting on the efforts of individuals and communities around the world who are fearlessly taking a stand for future generations and the preservation of human life on earth. We want their stories to inspire hope. We will also report back on our own progress as an organisation, as we take important steps to address our impact on the environment.',
         'We hope you will consider supporting the Guardian’s open, independent reporting today. Every contribution from our readers, however big or small, is so valuable.',
     ],
-    highlightedText,
+    highlightedText:
+        'Support us from as little as %%CURRENCY_SYMBOL%%1 – it only takes a minute. Thank you.',
 });
 
 export const variantCopy = (articleCountParagraph: string) => ({
@@ -41,9 +42,10 @@ export const variantCopy = (articleCountParagraph: string) => ({
         articleCountParagraph,
         'We will not stay quiet on the escalating climate crisis and we recognise it as the defining issue of our lifetimes. The Guardian will give global heating, wildlife extinction and pollution the urgent attention they demand. Our independence means we can interrogate inaction by those in power. It means Guardian reporting will always be driven by scientific facts, never by commercial or political interests.',
         'We believe that the problems we face on the climate crisis are systemic and that fundamental societal change is needed. We will keep reporting on the efforts of individuals and communities around the world who are fearlessly taking a stand for future generations and the preservation of human life on earth. We want their stories to inspire hope. We will also report back on our own progress as an organisation, as we take important steps to address our impact on the environment.',
-        'Thank you again to everyone who supported our pledge. Every contribution from our readers, however big or small, is so valuable. Learn more about why support matters.',
+        `Thank you again to everyone who supported our pledge. Every contribution from our readers, however big or small, is so valuable. Learn more about <a href='${thankYouUrl}'>why support matters</a>.`,
     ],
-    highlightedText,
+    highlightedText:
+        'You can contribute today from as little as %%CURRENCY_SYMBOL%%1 – it only takes a minute. Thank you.',
 });
 
 export const articlesViewedMonthMomentFinal: EpicABTest = makeEpicABTest({
