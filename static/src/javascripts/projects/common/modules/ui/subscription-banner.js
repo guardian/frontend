@@ -132,7 +132,10 @@ const show: () => Promise<boolean> = () => {
     trackSubscriptionBannerView();
 
     if (document.body) {
-        document.body.insertAdjacentHTML('beforeend', bannerTemplate(subscriptionUrl, signInUrl));
+        document.body.insertAdjacentHTML(
+            'beforeend',
+            bannerTemplate(subscriptionUrl, signInUrl)
+        );
     }
 
     bindConsentClickHandlers();

@@ -6,7 +6,10 @@ import {
     hasUnsetAdChoices as firstPvHasUnsetAdChoices,
 } from 'common/modules/ui/first-pv-consent-banner';
 
-const subsciptionBannerTemplate = (subscriptionUrl: string, signInUrl: string): string => `
+const subsciptionBannerTemplate = (
+    subscriptionUrl: string,
+    signInUrl: string
+): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
