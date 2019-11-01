@@ -1,10 +1,7 @@
 // @flow
 
 import marque36icon from 'svgs/icon/marque-36.svg';
-import {
-    makeHtml as makeFirstPvConsentHtml,
-    hasUnsetAdChoices as firstPvHasUnsetAdChoices,
-} from 'common/modules/ui/first-pv-consent-banner';
+import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
 const subsciptionBannerTemplate = (
     subscriptionUrl: string,
@@ -74,7 +71,11 @@ const consentSection = `<div id="js-first-pv-consent-site-message" class="site-m
         </div>
     </div>`;
 
-const bannerTemplate = (subscriptionUrl: string, signInUrl: string): string =>
+const bannerTemplate = (
+    subscriptionUrl: string,
+    signInUrl: string,
+    showConsent: boolean
+): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
           tabindex="-1"
           role="dialog"
@@ -85,7 +86,7 @@ const bannerTemplate = (subscriptionUrl: string, signInUrl: string): string =>
         >
 
         ${subsciptionBannerTemplate(subscriptionUrl, signInUrl)}
-        ${firstPvHasUnsetAdChoices() ? consentSection : ''}
+        ${showConsent ? consentSection : ''}
     </div>
     `;
 

@@ -13,7 +13,10 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import { track as trackFirstPvConsent } from 'common/modules/ui/first-pv-consent-banner';
+import {
+    track as trackFirstPvConsent,
+    canShow as canShowFirstPvConsent,
+} from 'common/modules/ui/first-pv-consent-banner';
 import {
     setAdConsentState,
     allAdConsents,
@@ -127,14 +130,15 @@ const bindConsentClickHandlers = () => {
     }
 };
 
-const show: () => Promise<boolean> = () => {
+const show: () => Promise<boolean> = async () => {
     trackFirstPvConsent();
     trackSubscriptionBannerView();
+    const showConsent = await canShowFirstPvConsent();
 
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(subscriptionUrl, signInUrl)
+            bannerTemplate(subscriptionUrl, signInUrl, showConsent)
         );
     }
 
