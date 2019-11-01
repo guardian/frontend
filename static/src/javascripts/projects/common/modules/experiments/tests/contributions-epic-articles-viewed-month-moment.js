@@ -18,6 +18,10 @@ const highlightedText =
 
 const monthArticleCountParagraph = `You’ve read ${articleViewCount} Guardian articles in the last month – made possible by our choice to keep Guardian journalism open to all. We do not have a paywall because we believe everyone deserves access to factual information, regardless of where they live or what they can afford.`;
 
+const url = 'http://support.theguardian.com/contribute/climate-pledge-2019';
+
+const geolocation = geolocationGetSync();
+
 export const controlCopy = (articleCountParagraph: string) => ({
     heading: 'As the climate crisis escalates...',
     paragraphs: [
@@ -41,10 +45,6 @@ export const variantCopy = (articleCountParagraph: string) => ({
     ],
     highlightedText,
 });
-
-const url = 'http://support.theguardian.com/contribute/climate-pledge-2019';
-
-const geolocation = geolocationGetSync();
 
 export const articlesViewedMonthMomentFinal: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicArticlesViewedMonthMomentFinal',
