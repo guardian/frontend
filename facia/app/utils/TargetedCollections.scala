@@ -34,8 +34,12 @@ object TargetedCollections {
   def pageContainsTargetedCollections(faciaPage: PressedPage): Boolean =
     faciaPage.collections.exists(c => c.targetedTerritory.isDefined)
 
-  def processTargetedCollections(faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory], isPreview: Boolean): PressedPage = {
-    if (pageContainsTargetedCollections(faciaPage)) {
+  def processTargetedCollections(
+    faciaPage: PressedPage,
+    allowedContainerTerritories: List[TargetedTerritory],
+    isPreview: Boolean,
+    targetedCollections: Boolean): PressedPage = {
+    if (targetedCollections) {
       if (isPreview) {
         markCollections(faciaPage)
       } else {
