@@ -125,23 +125,24 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
+    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
-          val regionalFaciaPage = TargetedCollections.processTargetedCollections(faciaPage, request.territories, context.isPreview)
+          val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+          val regionalFaciaPage = TargetedCollections.processTargetedCollections(faciaPage, request.territories, context.isPreview, pageContainsTargetedCollections)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
-            frontJsonFapi.get(path, LiteType)
+            frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
           }
-          else Future.successful(Some(regionalFaciaPage))
+          else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
         case None => Future.successful(None)
     }
 
     val futureResult = futureFaciaPage.flatMap {
-      case Some(faciaPage) if nonHtmlEmail(request) =>
+      case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
-      case Some(faciaPage: PressedPage) =>
+      case Some((faciaPage: PressedPage, targetedTerritories)) =>
         val result = successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
@@ -158,7 +159,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         ))
         // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
         // only set it for fronts with targeted collections
-        if (TargetedCollections.pageContainsTargetedCollections(faciaPage)) {
+        if (targetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
