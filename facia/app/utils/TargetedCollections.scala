@@ -3,7 +3,6 @@ package utils
 import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
 import model.PressedPage
 import model.facia.PressedCollection
-import model.pressed.CollectionConfig
 
 object TargetedCollections {
   // remove all collections with a targeted territory that is not allowed
@@ -31,11 +30,8 @@ object TargetedCollections {
     faciaPage.copy(collections = faciaPage.collections.map(markDisplayName))
   }
 
-  def pageContainsTargetedCollections(faciaPage: PressedPage): Boolean =
-    faciaPage.collections.exists(c => c.targetedTerritory.isDefined)
-
   def processTargetedCollections(faciaPage: PressedPage, allowedContainerTerritories: List[TargetedTerritory], isPreview: Boolean): PressedPage = {
-    if (pageContainsTargetedCollections(faciaPage)) {
+    if (TargetedCollectionsCommon.pageContainsTargetedCollections(faciaPage.collections)) {
       if (isPreview) {
         markCollections(faciaPage)
       } else {

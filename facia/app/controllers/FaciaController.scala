@@ -124,7 +124,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
   private def nonHtmlEmail(request: RequestHeader) = (request.isEmail && request.isHeadlineText) || request.isEmailJson || request.isEmailTxt
 
   import PressedPage.pressedPageFormat
-  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
+  private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader): Future[Result] = {
     val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
           val regionalFaciaPage = TargetedCollections.processTargetedCollections(faciaPage, request.territories, context.isPreview)
@@ -139,7 +139,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
     }
 
     val futureResult = futureFaciaPage.flatMap {
-      case Some(faciaPage) if nonHtmlEmail(request) =>
+      case Some((faciaPage: PressedPage)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
       case Some(faciaPage: PressedPage) =>
         val result = successful(Cached(CacheTime.Facia)(
@@ -158,7 +158,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
         ))
         // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
         // only set it for fronts with targeted collections
-        if (TargetedCollections.pageContainsTargetedCollections(faciaPage)) {
+        if (faciaPage.containsTargetedTerritories) {
           result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
         } else result
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}

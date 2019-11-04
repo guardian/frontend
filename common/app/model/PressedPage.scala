@@ -2,6 +2,7 @@ package model
 
 import com.gu.commercial.branding.Branding
 import com.gu.facia.api.models._
+import com.gu.facia.client.models.TargetedTerritory
 import common.Edition
 import conf.Configuration
 import contentapi.Paths
@@ -9,6 +10,7 @@ import model.facia.PressedCollection
 import model.pressed.PressedContent
 import navigation.GuardianFoundationHelper
 import play.api.libs.json.{JsBoolean, JsString, JsValue}
+import utils.TargetedCollectionsCommon
 
 import scala.language.postfixOps
 
@@ -111,6 +113,7 @@ case class PressedPage (
 
   override val metadata: MetaData = PressedPage.makeMetadata(id, seoData, frontProperties, collections)
   val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
+  val containsTargetedTerritories: Boolean = TargetedCollectionsCommon.pageContainsTargetedCollections(collections)
 
   /** If a Facia front is a tag or section page, it ought to exist as a tag or section ID for one of its pieces of
     * content.

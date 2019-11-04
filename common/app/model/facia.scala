@@ -56,7 +56,7 @@ case class FrontProperties(
   imageHeight: Option[String],
   isImageDisplayed: Boolean,
   editorialType: Option[String],
-  commercial: Option[CommercialProperties]
+  commercial: Option[CommercialProperties],
 ) {
   val isPaidContent: Boolean = commercial.exists(_.isPaidContent)
 }
