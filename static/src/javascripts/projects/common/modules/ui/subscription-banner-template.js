@@ -1,6 +1,6 @@
 // @flow
 
-import marque36icon from 'svgs/icon/marque-36.svg';
+import marque44icon from 'svgs/icon/marque-44.svg';
 import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
 const subsciptionBannerTemplate = (
@@ -55,7 +55,7 @@ const subsciptionBannerTemplate = (
         </div>
 
         <div class="site-message--subscription-banner__gu-logo">
-            ${marque36icon.markup}
+            ${marque44icon.markup}
         </div>
     </div>
 </div>
