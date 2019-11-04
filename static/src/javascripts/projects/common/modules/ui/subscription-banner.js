@@ -2,7 +2,7 @@
 
 import uniq from 'lodash/uniq';
 import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
-// import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
@@ -23,15 +23,20 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 
+const ENTER_KEY_CODE = 'Enter';
+const displayEventKey = 'subscription-banner : display';
 const messageCode = 'subscription-banner';
-const pageviews = local.get('gu.alreadyVisited');
 const subsciptionBannerClosedKey = 'subscriptionBannerLastClosedAt';
-const subscriptionBannerSwitch = config.get('switches.subscriptionBanner');
-const edition = config.get('page.edition');
-const subscriptionUrl =
-    'https://support.theguardian.com/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D';
-const signInUrl =
-    'https://profile.theguardian.com/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs';
+const subscriptionHostname: string = config.get('page.supportUrl');
+const signinHostname: string = config.get('page.idUrl');
+const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D`;
+const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
+
+const pageviews: number = local.get('gu.alreadyVisited');
+const subscriptionBannerSwitchIsOn: boolean = config.get(
+    'switches.subscriptionBanner'
+);
+const edition: string = config.get('page.edition');
 
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
@@ -40,13 +45,13 @@ const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
-const bannerHasBeenAcknowledged = () => {
+const bannerHasBeenAcknowledged = (): void => {
     const messageStates = userPrefs.get('messages') || [];
     messageStates.push(messageCode);
     userPrefs.set('messages', uniq(messageStates));
 };
 
-const subcriptionBannerCloseActions = () => {
+const subcriptionBannerCloseActions = (): void => {
     closedAt(subsciptionBannerClosedKey);
     bannerHasBeenAcknowledged();
 };
@@ -58,11 +63,21 @@ const onAgree = (): void => {
 };
 
 const bindCloseHandler = (button, banner, callback) => {
+    const removeBanner = () => {
+        callback();
+        banner.remove();
+    }
+
     if (button) {
         button.addEventListener('click', () => {
-            callback();
-            banner.remove();
+            removeBanner();
         });
+
+        button.addEventListener('keydown', (e: KeyboardEvent) => {
+            if (e.code === ENTER_KEY_CODE) {
+                removeBanner();
+            }
+        })
     }
 };
 
@@ -104,7 +119,12 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__cta'
     );
 
+    if(subscriptionBannerCta) {
+        subscriptionBannerCta.focus(); // the banner takes focus to improve accessibility
+    }
+
     if (subscriptionBannerHtml) {
+
         bindCloseHandler(
             subscriptionBannercloseButton,
             subscriptionBannerHtml,
@@ -133,6 +153,8 @@ const bindConsentClickHandlers = () => {
 const show: () => Promise<boolean> = async () => {
     trackFirstPvConsent();
     trackSubscriptionBannerView();
+    trackNonClickInteraction(displayEventKey);
+
     const showConsent = await canShowFirstPvConsent();
 
     if (document.body) {
@@ -155,7 +177,7 @@ const canShow: () => Promise<boolean> = () => {
             !isAustralianEdition(edition) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
-            subscriptionBannerSwitch
+            subscriptionBannerSwitchIsOn
     );
     return can;
 };

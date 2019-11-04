@@ -3,7 +3,7 @@
 import marque44icon from 'svgs/icon/marque-44.svg';
 import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
-const subsciptionBannerTemplate = (
+const subscriptionBannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string
 ): string => `
@@ -19,15 +19,17 @@ const subsciptionBannerTemplate = (
                 <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
             </div>
             <div class="site-message--packshot-container">
-                <img srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png" >
+                <img
+                    srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
+                    src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
+                    alt=""
+                >
             </div>
 
 
         <div class="site-message--subscription-banner__cta-container">
             <a
                 id="js-site-message--subscription-banner__cta"
-                data-link-name="subscription-banner : to-sign-in"
-                data-link-name="subscription-banner : success"
                 class="site-message--subscription-banner__cta"
                 href="${subscriptionUrl}"
             >
@@ -37,6 +39,7 @@ const subsciptionBannerTemplate = (
                 <a
                     id="js-site-message--subscription-banner__cta-dismiss"
                     class="site-message--subscription-banner__cta-dismiss"
+                    tabindex="0"
                 >
                     Not now
                 </a>
@@ -85,7 +88,7 @@ const bannerTemplate = (
           aria-live="polite"
         >
 
-        ${subsciptionBannerTemplate(subscriptionUrl, signInUrl)}
+        ${subscriptionBannerTemplate(subscriptionUrl, signInUrl)}
         ${showConsent ? consentSection : ''}
     </div>
     `;
