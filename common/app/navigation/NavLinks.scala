@@ -181,6 +181,7 @@ private object NavLinks {
   )
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
+  val podcastsAU = NavLink("Podcasts", "/australia-podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com/jobs")
@@ -479,7 +480,7 @@ private object NavLinks {
   val auOtherLinks = List(
     apps,
     video,
-    podcasts,
+    podcastsAU,
     pictures,
     newsletters,
     insideTheGuardian,

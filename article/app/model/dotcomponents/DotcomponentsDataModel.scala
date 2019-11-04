@@ -6,20 +6,16 @@ import com.gu.contentapi.client.utils.DesignType
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import common.ManifestData
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
-import controllers.ArticlePage
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
 import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
-import navigation.NavMenu
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
 import navigation.{FooterLink, FooterLinks}
-import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
@@ -27,7 +23,6 @@ import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTim
 import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
-import common.Environment.stage
 import views.support.JavaScriptPage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
