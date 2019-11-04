@@ -57,7 +57,10 @@ import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.li
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
-import { addPrivacySettingsLink } from 'common/modules/ui/cmp-ui';
+import {
+    consentManagementPlatformUi,
+    addPrivacySettingsLink,
+} from 'common/modules/ui/cmp-ui';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -300,9 +303,9 @@ const initialiseEmail = (): void => {
 };
 
 const initialiseBanner = (): void => {
-    // if (!isInVariantSynchronous(commercialIabCompliant, 'variant')) {
     // ordered by priority
     const bannerList = [
+        consentManagementPlatformUi,
         firstPvConsentSubsciptionBanner,
         firstPvConsentPlusEngagementBanner,
         firstPvConsentBanner,
@@ -315,9 +318,6 @@ const initialiseBanner = (): void => {
     ];
 
     initBannerPicker(bannerList);
-    // } else {
-    //     initCmpUi();
-    // }
 };
 
 const initialiseConsentCookieTracking = (): void =>
