@@ -66,7 +66,7 @@ const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
         banner.remove();
-    }
+    };
 
     if (button) {
         button.addEventListener('click', () => {
@@ -77,7 +77,7 @@ const bindCloseHandler = (button, banner, callback) => {
             if (e.code === ENTER_KEY_CODE) {
                 removeBanner();
             }
-        })
+        });
     }
 };
 
@@ -119,12 +119,11 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__cta'
     );
 
-    if(subscriptionBannerCta) {
+    if (subscriptionBannerCta) {
         subscriptionBannerCta.focus(); // the banner takes focus to improve accessibility
     }
 
     if (subscriptionBannerHtml) {
-
         bindCloseHandler(
             subscriptionBannercloseButton,
             subscriptionBannerHtml,
