@@ -24,19 +24,21 @@ import {
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 
 const ENTER_KEY_CODE = 'Enter';
-const displayEventKey = 'subscription-banner : display';
-const messageCode = 'subscription-banner';
-const subsciptionBannerClosedKey = 'subscriptionBannerLastClosedAt';
+const DISPLAY_EVENT_KEY = 'subscription-banner : display';
+const MESSAGE_CODE = 'subscription-banner';
+const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
+
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
-const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D`;
-const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
-
-const pageviews: number = local.get('gu.alreadyVisited');
+const edition: string = config.get('page.edition');
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
 );
-const edition: string = config.get('page.edition');
+
+const pageviews: number = local.get('gu.alreadyVisited');
+
+const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22ACQUISITIONS_SUBSCRIPTIONS_BANNER%22%7D`;
+const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
@@ -47,12 +49,12 @@ const closedAt = (lastClosedAtKey: string) =>
 
 const bannerHasBeenAcknowledged = (): void => {
     const messageStates = userPrefs.get('messages') || [];
-    messageStates.push(messageCode);
+    messageStates.push(MESSAGE_CODE);
     userPrefs.set('messages', uniq(messageStates));
 };
 
 const subcriptionBannerCloseActions = (): void => {
-    closedAt(subsciptionBannerClosedKey);
+    closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
     bannerHasBeenAcknowledged();
 };
 
@@ -119,10 +121,6 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__cta'
     );
 
-    if (subscriptionBannerCta) {
-        subscriptionBannerCta.focus(); // the banner takes focus to improve accessibility
-    }
-
     if (subscriptionBannerHtml) {
         bindCloseHandler(
             subscriptionBannercloseButton,
@@ -152,7 +150,7 @@ const bindConsentClickHandlers = () => {
 const show: () => Promise<boolean> = async () => {
     trackFirstPvConsent();
     trackSubscriptionBannerView();
-    trackNonClickInteraction(displayEventKey);
+    trackNonClickInteraction(DISPLAY_EVENT_KEY);
 
     const showConsent = await canShowFirstPvConsent();
 
@@ -172,7 +170,7 @@ const show: () => Promise<boolean> = async () => {
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
         fiveOrMorePageViews(pageviews) &&
-            !hasUserAcknowledgedBanner(messageCode) &&
+            !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
             !isAustralianEdition(edition) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
@@ -182,7 +180,7 @@ const canShow: () => Promise<boolean> = () => {
 };
 
 export const firstPvConsentSubsciptionBanner: Banner = {
-    id: messageCode,
+    id: MESSAGE_CODE,
     show,
     canShow,
 };
