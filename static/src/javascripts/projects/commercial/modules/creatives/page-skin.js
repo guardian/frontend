@@ -1,6 +1,5 @@
 // @flow
 import config from 'lib/config';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
@@ -10,8 +9,7 @@ const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
 
-    const isInAuRegion = (): boolean =>
-        ['AU', 'NZ'].includes(geolocationGetSync());
+    const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
 
     let topPosition: number = 0;
 
@@ -53,7 +51,7 @@ const pageSkin = (): void => {
 
     // This is to reposition the Page Skin to start where the navigation header ends.
     const repositionSkin = (): void => {
-        if (hasPageSkin && isInAuRegion()) {
+        if (hasPageSkin && isInAUEdition) {
             initTopPositionOnce();
             if (window.pageYOffset === 0) {
                 moveBackgroundVerticalPosition(topPosition);
