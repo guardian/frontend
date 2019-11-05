@@ -28,7 +28,7 @@ const DISPLAY_EVENT_KEY = 'subscription-banner : display';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 const COMPONENT_TYPE = 'ACQUISITIONS_OTHER';
-const OPHAN_EVENT_ID = 'acquisitions-subscription-banner'
+const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
