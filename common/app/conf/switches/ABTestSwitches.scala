@@ -68,16 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-environment-moment-final-push",
-    "moment banner test for final push",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
