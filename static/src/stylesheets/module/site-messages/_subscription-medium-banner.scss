@@ -1,0 +1,305 @@
+*[class^='site-message--subscription-banner'] {
+    box-sizing: border-box;
+}
+
+.site-message--subscription-banner {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    overflow: hidden;
+    background: $highlight-main;
+    color: $brightness-7;
+    width: 100%;
+    padding: 10px;
+
+    @include mq($from: tablet) {
+        padding: 20px;
+    }
+}
+
+.site-message--subscription-banner__inner {
+    box-sizing: border-box;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    margin: 0 auto;
+    max-width: 980px;
+
+    @include mq($from: leftCol) {
+        max-width: 1140px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 1300px;
+    }
+}
+
+.site-message--subscription-banner__title {
+    font-size: 24px;
+    line-height: 24px;
+    font-family: $f-serif-headline;
+    font-weight: bold;
+    width: 100%;
+
+    @media (min-width: 600px) {
+        font-size: 28px;
+        line-height: 28px;
+    }
+
+    @include mq($from: tablet) {
+        margin-bottom: 10px;
+        width: 60%;
+        font-size: 4.7vw;
+        line-height: 4.9vw;
+    }
+
+    @include mq($from: desktop) {
+        width: 45%;
+        margin-right: 55%;
+        font-size: 34px;
+        line-height: 36px;
+    }
+}
+
+// text copy
+.site-message--subscription-banner__description {
+    display: flex;
+    align-items: flex-end;
+    align-content: stretch;
+    width: 50%;
+
+    @include mq($from: tablet) {
+        width: 60%;
+    }
+
+    @include mq($from: desktop) {
+        width: 45%;
+    }
+
+    p {
+        font-size: 17px;
+        line-height: 18px;
+        margin: 0;
+        font-family: $f-serif-text;
+
+        @include mq($from: mobileLandscape) {
+            font-size: 18px;
+            line-height: 20px;
+        }
+
+        @media (min-width: 550px) {
+            font-size: 20px;
+            line-height: 22px;
+        }
+
+        @include mq($from: phablet) {
+            font-size: 22px;
+            line-height: 24px;
+        }
+
+        @include mq($from: tablet) {
+            font-size: 2.5vw;
+            line-height: 3vw;
+        }
+
+        @include mq($from: desktop) {
+            font-size: 20px;
+            line-height: 22px;
+        }
+
+        @include mq($from: leftCol) {
+            font-size: 20px;
+            line-height: 26px;
+        }
+    }
+}
+
+.site-message--subscription-banner__cta-container {
+    width: 100%;
+    font-size: 12px;
+    font-weight: bold;
+    margin: 30px 0 0;
+
+    @include mq($from: tablet) {
+        display: flex;
+        width: 60%;
+    }
+
+    @include mq($from: desktop) {
+        width: 45%;
+    }
+}
+
+// button
+.site-message--subscription-banner__cta {
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    padding: 10px 20px 12px;
+    border-radius: 50px;
+    background: $brightness-7;
+    font-family: $f-sans-serif-text;
+    color: $brightness-97;
+    text-align: center;
+    cursor: pointer;
+
+    @include mq($from: tablet) {
+        width: auto;
+    }
+}
+
+.site-message--subscription-banner__cta:focus ,
+.site-message--subscription-banner__cta:hover {
+    text-decoration: none;
+}
+
+.site-message--subscription-banner__cta-dismiss-container {
+    text-align: center;
+    margin: 20px 0 8px;
+
+    @include mq($from: tablet) {
+        margin: 12px 0 0 10px;
+    }
+}
+
+.site-message--subscription-banner__cta-dismiss {
+    color: $brightness-7;
+    font-family: $f-sans-serif-text;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.site-message--subscription-banner__sign-in {
+    width: 100%;
+    font-size: 16px;
+    font-weight: 100;
+    font-family: $f-sans-serif-text;
+    color: $brightness-7;
+    margin-top: 10px;
+
+    p {
+        display: inline-block;
+        margin-right: 5px;
+    }
+
+    a {
+        color: $brightness-7;
+    }
+}
+
+.site-message--subscription-banner__subscriber-link {
+    text-decoration: underline;
+}
+
+// image
+.site-message--packshot-container {
+    position: relative;
+    width: 50%;
+    padding-top: 130px;
+
+    @include mq($from: tablet) {
+        position: static;
+        padding-top: 0;
+        width: 33%;
+    }
+
+    @media (min-width: 792px) {
+        padding-top: 13%;
+    }
+
+    @include mq($from: desktop) {
+        position: relative;
+        padding-top: 0;
+        width: 55%;
+    }
+
+
+    img {
+        position: absolute;
+        bottom: 0;
+        width: 300px;
+        left: 10%;
+
+        @include mq($from: tablet) {
+            width: 65%;
+            right: -33%;
+            bottom: -10%;
+            left: auto;
+        }
+
+        @include mq($from: desktop) {
+            width: 480px;
+            right: auto;
+            left: 40px;
+            bottom: -147px;
+        }
+
+        // custom breakpoint
+        @media (min-width: 1260px) {
+            width: 460px;
+            bottom: -155px;
+        }
+    }
+}
+
+.site-message--subscription-banner__lockup {
+    display: flex;
+    position: relative;
+}
+
+.temp-mobile-break {
+    display: block;
+
+    @include mq($from: mobileLandscape) {
+        display: none;
+    }
+}
+
+.site-message--subscription-banner__gu-logo {
+    display: none;
+
+    @include mq($from: leftCol) {
+        display: block;
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+}
+
+/*********************** footer hacks *********************/
+
+.subscription-banner--holder
+.site-message--first-pv-consent__block.site-message--first-pv-consent__block--intro {
+    margin: 0;
+}
+
+.subscription-banner--holder
+.site-message__copy.js-site-message-copy.u-cf {
+    margin: 0;
+}
+
+
+.subscription-banner--holder
+.gs-container {
+    margin: 0 10px;
+
+    @include mq($from: tablet) {
+        margin: 0 20px;
+    }
+
+    @include mq($from: desktop) {
+        max-width: 980px;
+        margin: 0 auto;
+    }
+
+    @include mq($from: leftCol) {
+        max-width: 1140px;
+    }
+
+    @include mq($from: wide) {
+        max-width: 1300px;
+    }
+}
+
+/*********************** footer hacks END *********************/
