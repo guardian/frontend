@@ -66,7 +66,7 @@ object Badges {
   val yemenAtWar = Badge("world/series/yemen-at-war", Static("images/badges/yemen-at-war.svg"))
   val thePolluters = Badge("environment/series/the-polluters", Static("images/badges/the-polluters.svg"))
   val youthJustice = Badge("society/youthjustice", Static("images/badges/childrenInTheDocks-Icon1.svg"))
-  val electionBadge = Badge("politics/general-election-2019", Static("images/badges/election-badge-2.svg"))
+  val electionBadge = Badge("politics/general-election-2019", Static("images/badges/election-badge-3.svg"))
 
   val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
     brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport, nhs70, cricketWorldCup, womensWorldCup, greenBlood, usElections2020, ausElection,
