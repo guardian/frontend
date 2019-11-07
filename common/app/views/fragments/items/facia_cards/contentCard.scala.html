@@ -28,11 +28,14 @@ data-test-id="facia-card"
     @item.snapStuff.map(_.dataAttributes)
     @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
 
-    @if(!item.hasInlineSnapHtml) {
-        @container(item)
-    }
     @if(item.hasInlineSnapHtml) {
-        @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
+        @item.snapStuff.map { snap =>
+            @snap.embedCss.map { css => <style>@Html(css)</style> }
+            @snap.embedHtml.map(Html(_))
+            @snap.embedJs.map { js => <script>@Html(js)</script> }
+        }
+    } else {
+        @container(item)
     }
 
 </div>
