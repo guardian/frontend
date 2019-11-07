@@ -34,11 +34,11 @@ const rawTest = {
     ],
     highPriority: false,
     useLocalViewLog: false,
-    articlesViewedSettings : {
+    articlesViewedSettings: {
         minViews: 5,
         maxViews: 10,
         periodInWeeks: 4,
-    }
+    },
 };
 
 describe('buildConfiguredEpicTestFromJson', () => {

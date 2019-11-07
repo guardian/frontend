@@ -54,7 +54,7 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
-import { getArticleViewCountForWeeks } from "common/modules/onward/history";
+import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -231,14 +231,19 @@ const countryNameIsOk = (
     geolocation: ?string
 ): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
 
-const articleViewCountIsOk = (articlesViewedSettings?: ArticlesViewedSettings): boolean => {
+const articleViewCountIsOk = (
+    articlesViewedSettings?: ArticlesViewedSettings
+): boolean => {
     if (articlesViewedSettings) {
-        const upperOk = articlesViewedSettings.maxViews ? articlesViewedSettings.count <= articlesViewedSettings.maxViews : true;
-        const lowerOk = articlesViewedSettings.minViews ? articlesViewedSettings.count >= articlesViewedSettings.minViews : true;
+        const upperOk = articlesViewedSettings.maxViews
+            ? articlesViewedSettings.count <= articlesViewedSettings.maxViews
+            : true;
+        const lowerOk = articlesViewedSettings.minViews
+            ? articlesViewedSettings.count >= articlesViewedSettings.minViews
+            : true;
         return upperOk && lowerOk;
-    } else {
-        return true;
     }
+    return true;
 };
 
 const makeEpicABTestVariant = (
@@ -552,7 +557,7 @@ const buildEpicCopy = (
     row: any,
     testHasCountryName: boolean,
     geolocation: ?string,
-    articlesViewedCount?: number,
+    articlesViewedCount?: number
 ) => {
     const heading = row.heading;
 
@@ -566,16 +571,21 @@ const buildEpicCopy = (
         : undefined;
 
     const replaceCountryNameAndArticlesViewed = (s: ?string): ?string =>
-        s ? replaceArticlesViewed(replaceCountryName(s, countryName), articlesViewedCount) : s;
+        s
+            ? replaceArticlesViewed(
+                  replaceCountryName(s, countryName),
+                  articlesViewedCount
+              )
+            : s;
 
     return {
         heading: replaceCountryNameAndArticlesViewed(heading),
         paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
-                /%%CURRENCY_SYMBOL%%/g,
-                getLocalCurrencySymbol(geolocation)
-            )
+                  /%%CURRENCY_SYMBOL%%/g,
+                  getLocalCurrencySymbol(geolocation)
+              )
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
     };
@@ -613,11 +623,16 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
 
     const deploymentRules = test.alwaysAsk ? 'AlwaysAsk' : parseMaxViews();
 
-    const articlesViewedSettings = test.articlesViewedSettings && test.articlesViewedSettings.periodInWeeks ? {
-        minViews: test.articlesViewedSettings.minViews,
-        maxViews: test.articlesViewedSettings.maxViews,
-        count: getArticleViewCountForWeeks(test.articlesViewedSettings.periodInWeeks)
-    } : undefined;
+    const articlesViewedSettings =
+        test.articlesViewedSettings && test.articlesViewedSettings.periodInWeeks
+            ? {
+                  minViews: test.articlesViewedSettings.minViews,
+                  maxViews: test.articlesViewedSettings.maxViews,
+                  count: getArticleViewCountForWeeks(
+                      test.articlesViewedSettings.periodInWeeks
+                  ),
+              }
+            : undefined;
 
     return makeEpicABTest({
         id: test.name,
@@ -666,7 +681,14 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
                       supportBaseURL: variant.cta.baseURL,
                   }
                 : {}),
-            copy: buildEpicCopy(variant, test.hasCountryName, geolocation, articlesViewedSettings ? articlesViewedSettings.count : undefined),
+            copy: buildEpicCopy(
+                variant,
+                test.hasCountryName,
+                geolocation,
+                articlesViewedSettings
+                    ? articlesViewedSettings.count
+                    : undefined
+            ),
             classNames: [
                 `contributions__epic--${test.name}`,
                 `contributions__epic--${test.name}-${variant.name}`,
