@@ -32,7 +32,9 @@ data-test-id="facia-card"
         @container(item)
     }
     @if(item.hasInlineSnapHtml) {
+        @item.snapStuff.map { snap => @snap.embedCss.map { css => <style>@Html(css)</style> } }
         @item.snapStuff.map { snap => @snap.embedHtml.map(Html(_)) }
+        @item.snapStuff.map { snap => @snap.embedJs.map { js => <script>@Html(js)</script> } }
     }
 
 </div>

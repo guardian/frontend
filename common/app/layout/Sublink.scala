@@ -135,10 +135,23 @@ object SnapStuff {
       case link: LinkSnap => link.enriched.flatMap(_.embedHtml)
       case _ => None
     }
+
+    val embedCss = faciaContent match {
+      case curated: CuratedContent => curated.enriched.flatMap(_.embedCss)
+      case link: LinkSnap => link.enriched.flatMap(_.embedCss)
+      case _ => None
+    }
+
+    val embedJs = faciaContent match {
+      case curated: CuratedContent => curated.enriched.flatMap(_.embedJs)
+      case link: LinkSnap => link.enriched.flatMap(_.embedJs)
+      case _ => None
+    }
+
     faciaContent.properties.embedType match {
-      case Some("latest") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml))
-      case Some("link") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml))
-      case Some(_) => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml))
+      case Some("latest") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLatestSnap, embedHtml, embedCss, embedJs))
+      case Some("link") => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendLinkSnap, embedHtml, embedCss, embedJs))
+      case Some(_) => Some(SnapStuff(snapData, faciaContent.properties.embedCss, FrontendOtherSnap, embedHtml, embedCss, embedJs))
       case None => None}}
 }
 
@@ -146,7 +159,9 @@ case class SnapStuff(
   dataAttributes: String,
   snapCss: Option[String],
   snapType: SnapType,
-  embedHtml: Option[String]
+  embedHtml: Option[String],
+  embedCss: Option[String],
+  embedJs: Option[String],
 ) {
   def cssClasses: Seq[String] = Seq(
     Some("js-snap"),

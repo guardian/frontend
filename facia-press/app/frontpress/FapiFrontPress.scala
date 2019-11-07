@@ -81,6 +81,16 @@ object EmbedJsonHtml {
   implicit val format = Json.format[EmbedJsonHtml]
 }
 
+final case class EmbedInteractiveAtom(
+  html: String,
+  css: String,
+  mainJS: String,
+)
+
+object EmbedInteractiveAtom {
+  implicit val format = Json.format[EmbedInteractiveAtom]
+}
+
 case class EmailFrontPath(path: String, edition: String)
 
 object EmailFrontPath {
@@ -331,31 +341,43 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
 
   private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit executionContext: ExecutionContext): Response[EnrichedContent] = {
 
-      val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
+    val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
 
-      val afterEnrichment = for {
-        embedType <- content.properties.embedType if embedType == "json.html"
-        embedUri <- content.properties.embedUri
-      } yield {
-        val maybeUpdate = wsClient.url(embedUri).get().map { response =>
-          Json.fromJson[EmbedJsonHtml](response.json) match {
-            case JsSuccess(embed, _) => {
-              beforeEnrichment.copy(embedHtml = Some(embed.html))
+    val afterEnrichment = for {
+      embedType <- content.properties.embedType if embedType == "json.html" || embedType == "interactive"
+      embedUri <- content.properties.embedUri
+    } yield {
+      val maybeUpdate = wsClient.url(embedUri).get().map { response =>
+        embedType match {
+          case "json.html" =>
+            Json.fromJson[EmbedJsonHtml](response.json) match {
+              case JsSuccess(embed, _) =>
+                beforeEnrichment.copy(embedHtml = Some(embed.html))
+              case _ =>
+                log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+                beforeEnrichment
             }
-            case _ => {
-              log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
-              beforeEnrichment
-            }
-          }
-        } recover {
-          case _ => {
-            log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
-            beforeEnrichment
-          }
+          case "interactive" =>
+            (response.json\"response"\"interactive"\"data"\"interactive").toOption.flatMap { j =>
+              Json.fromJson[EmbedInteractiveAtom](j) match {
+                case JsSuccess(embed, _) =>
+                  Some(beforeEnrichment.copy(embedHtml = Some(embed.html), embedCss = Some(embed.css), embedJs = Some(embed.mainJS)))
+                case _ =>
+                  log.warn(s"An interactive atom had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+                  None
+              }
+            }.getOrElse(beforeEnrichment)
         }
-        Response.Async.Right(maybeUpdate)
+
+      } recover {
+        case _ => {
+          log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
+          beforeEnrichment
+        }
       }
-      afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
+      Response.Async.Right(maybeUpdate)
+    }
+    afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
   }
 
   private def getTreats(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
@@ -393,15 +415,17 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
     for {
       config <- Response.Async.Right(fapiClient.config)
       collectionIds = collectionsIdsFromConfigForPath(path, config)
-      pressedCollections <- Response.traverse(collectionIds.map(generateCollectionJsonFromFapiClient))
+      pressedCollections <- Response.traverse(collectionIds.drop(1).map(generateCollectionJsonFromFapiClient))
       seoWithProperties <- Response.Async.Right(getFrontSeoAndProperties(path))
     } yield seoWithProperties match {
-      case (seoData, frontProperties) => generatePressedVersions(path, pressedCollections, seoData, frontProperties)
+      case (seoData, frontProperties) =>
+        generatePressedVersions(path, pressedCollections, seoData, frontProperties)
     }
   }
 
-  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] =
-    for {
+  def getFrontSeoAndProperties(path: String)(implicit executionContext: ExecutionContext): Future[(SeoData, FrontProperties)] = {
+
+  for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
       val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
@@ -437,6 +461,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
       val seoData: SeoData = SeoData(path, navSection, webTitle, title, description)
       (seoData, frontProperties)
     }
+  }
 
   private def getNavSectionFromItemResponse(itemResponse: ItemResponse): Option[String] =
     itemResponse.tag.flatMap(_.sectionId)
