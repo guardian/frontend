@@ -5,6 +5,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import ophan from 'ophan/ng';
 import config from 'lib/config';
 import { local } from 'lib/storage';
+import { getCookie } from 'lib/cookies';
 import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
@@ -12,6 +13,7 @@ import {
 } from 'common/modules/experiments/ab';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import { constructQuery } from 'lib/url';
 
 import { make } from './template';
 
@@ -26,9 +28,19 @@ type ComponentEventWithoutAction = {
     abTest?: ABTestVariant,
 };
 
+type ComponentEventParams = {
+    componentType: string,
+    componentId: string,
+    abTestName: string,
+    abTestVariant: string,
+    viewId?: string,
+    browserId?: string,
+    visitId?: string,
+};
+
 const componentName = 'sign-in-gate';
 
-const component: OphanComponent = {
+const component = {
     componentType: 'SIGN_IN_GATE',
     id: 'inital_test',
 };
@@ -128,6 +140,34 @@ const show: () => Promise<boolean> = () => {
 
     // check if user is in correct test/variant to display
     if (variant) {
+        window.getCookie = getCookie;
+
+        const queryParams: ComponentEventParams = {
+            componentType: component.componentType,
+            componentId: component.id,
+            abTestName: signInGateFirstTest.id,
+            abTestVariant: variant,
+        };
+
+        if (
+            window.guardian &&
+            window.guardian.ophan &&
+            window.guardian.ophan.viewId
+        )
+            queryParams.viewId = window.guardian.ophan.viewId;
+
+        const bwid = getCookie('bwid');
+        if (bwid) queryParams.browserId = bwid;
+
+        const vsid = getCookie('vsid');
+        if (vsid) queryParams.visitId = vsid;
+
+        const signInUrl = `${config.get(
+            `page.idUrl`
+        )}/signin?componentEventParams=${encodeURIComponent(
+            constructQuery(queryParams)
+        )}`;
+
         // in control or variant
         // fire tracking
         submitViewEvent({
@@ -158,7 +198,7 @@ const show: () => Promise<boolean> = () => {
                             ${articleBodyFirstChild.outerHTML}
                             <div class="signin-gate__first-paragraph-overlay"></div>
                         </div>
-                        ${make()}
+                        ${make(signInUrl)}
                     `;
 
                     // check if comment, and add comment/opinion bg colour
