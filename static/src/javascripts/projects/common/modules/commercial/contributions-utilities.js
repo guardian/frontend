@@ -506,7 +506,7 @@ const makeEpicABTest = ({
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
     canRun = () => true,
-    articlesViewedSettings = undefined,
+    articlesViewedSettings,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -570,16 +570,16 @@ const buildEpicCopy = (
         ? getCountryName(geolocation)
         : undefined;
 
-    const replaceCountryNameAndArticlesViewed = (s: ?string): ?string =>
-        s
-            ? replaceArticlesViewed(
-                  replaceCountryName(s, countryName),
-                  articlesViewedCount
-              )
-            : s;
+    const replaceCountryNameAndArticlesViewed = (s: string): string =>
+        replaceArticlesViewed(
+            replaceCountryName(s, countryName),
+            articlesViewedCount
+        );
 
     return {
-        heading: replaceCountryNameAndArticlesViewed(heading),
+        heading: heading
+            ? replaceCountryNameAndArticlesViewed(heading)
+            : heading,
         paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(

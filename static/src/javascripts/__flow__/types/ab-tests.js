@@ -142,7 +142,6 @@ declare type InitEpicABTest = {
     geolocation: ?string,
     highPriority: boolean,
     articlesViewedSettings?: ArticlesViewedSettings,
-    articlesViewedCount?: number,
 }
 
 declare type Interaction = {
