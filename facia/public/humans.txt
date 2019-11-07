@@ -326,3 +326,8 @@ Developer: Laura González
 Twitter: @freezydorito
 From: Oviedo, ES
 Location: London, UK
+
+Design human: Jesse Yuen
+Twitter: @jesseyuen
+From: Perth, Australia
+Location: London, UK
