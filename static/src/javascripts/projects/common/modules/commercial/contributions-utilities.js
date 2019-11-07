@@ -54,6 +54,7 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
+import { getArticleViewCountForWeeks } from "common/modules/onward/history";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -76,8 +77,11 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
-const replaceCountryName = (text: string, countryName: string): string =>
-    text.replace(/%%COUNTRY_NAME%%/g, countryName);
+const replaceCountryName = (text: string, countryName: ?string): string =>
+    countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
+
+const replaceArticlesViewed = (text: string, count: ?number): string =>
+    count ? text.replace(/%%ARTICLE_COUNT%%/g, count.toString()) : text;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -226,6 +230,16 @@ const countryNameIsOk = (
     testHasCountryName: boolean,
     geolocation: ?string
 ): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
+
+const articleViewCountIsOk = (articlesViewedSettings?: ArticlesViewedSettings): boolean => {
+    if (articlesViewedSettings) {
+        const upperOk = articlesViewedSettings.maxViews ? articlesViewedSettings.count <= articlesViewedSettings.maxViews : true;
+        const lowerOk = articlesViewedSettings.minViews ? articlesViewedSettings.count >= articlesViewedSettings.minViews : true;
+        return upperOk && lowerOk;
+    } else {
+        return true;
+    }
+};
 
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
@@ -487,6 +501,7 @@ const makeEpicABTest = ({
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
     canRun = () => true,
+    articlesViewedSettings = undefined,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -498,6 +513,7 @@ const makeEpicABTest = ({
             return (
                 canRun() &&
                 countryNameIsOk(testHasCountryName, geolocation) &&
+                articleViewCountIsOk(articlesViewedSettings) &&
                 shouldShowEpic(this)
             );
         },
@@ -535,7 +551,8 @@ const makeEpicABTest = ({
 const buildEpicCopy = (
     row: any,
     testHasCountryName: boolean,
-    geolocation: ?string
+    geolocation: ?string,
+    articlesViewedCount?: number,
 ) => {
     const heading = row.heading;
 
@@ -548,22 +565,17 @@ const buildEpicCopy = (
         ? getCountryName(geolocation)
         : undefined;
 
+    const replaceCountryNameAndArticlesViewed = (s: ?string): ?string =>
+        s ? replaceArticlesViewed(replaceCountryName(s, countryName), articlesViewedCount) : s;
+
     return {
-        heading:
-            heading && countryName
-                ? replaceCountryName(heading, countryName)
-                : heading,
-        paragraphs:
-            paragraphs && countryName
-                ? paragraphs.map<string>(para =>
-                      replaceCountryName(para, countryName)
-                  )
-                : paragraphs,
+        heading: replaceCountryNameAndArticlesViewed(heading),
+        paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
-                  /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol(geolocation)
-              )
+                /%%CURRENCY_SYMBOL%%/g,
+                getLocalCurrencySymbol(geolocation)
+            )
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
     };
@@ -601,6 +613,12 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
 
     const deploymentRules = test.alwaysAsk ? 'AlwaysAsk' : parseMaxViews();
 
+    const articlesViewedSettings = test.articlesViewedSettings && test.articlesViewedSettings.periodInWeeks ? {
+        minViews: test.articlesViewedSettings.minViews,
+        maxViews: test.articlesViewedSettings.maxViews,
+        count: getArticleViewCountForWeeks(test.articlesViewedSettings.periodInWeeks)
+    } : undefined;
+
     return makeEpicABTest({
         id: test.name,
         campaignId: test.name,
@@ -636,6 +654,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
         // If testHasCountryName is true but a country name is not available for this user then
         // they will be excluded from this test
         testHasCountryName: test.hasCountryName,
+        articlesViewedSettings,
 
         variants: test.variants.map(variant => ({
             id: variant.name,
@@ -647,7 +666,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
                       supportBaseURL: variant.cta.baseURL,
                   }
                 : {}),
-            copy: buildEpicCopy(variant, test.hasCountryName, geolocation),
+            copy: buildEpicCopy(variant, test.hasCountryName, geolocation, articlesViewedSettings ? articlesViewedSettings.count : undefined),
             classNames: [
                 `contributions__epic--${test.name}`,
                 `contributions__epic--${test.name}-${variant.name}`,
