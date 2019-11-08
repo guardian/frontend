@@ -140,7 +140,9 @@ const show: () => Promise<boolean> = () => {
 
     // check if user is in correct test/variant to display
     if (variant) {
-        window.getCookie = getCookie;
+        const returnUrl = encodeURIComponent(
+            `${config.get('page.host')}/${config.get('page.pageId')}`
+        );
 
         const queryParams: ComponentEventParams = {
             componentType: component.componentType,
@@ -164,7 +166,7 @@ const show: () => Promise<boolean> = () => {
 
         const signInUrl = `${config.get(
             `page.idUrl`
-        )}/signin?componentEventParams=${encodeURIComponent(
+        )}/signin?returnUrl=${returnUrl}&componentEventParams=${encodeURIComponent(
             constructQuery(queryParams)
         )}`;
 
