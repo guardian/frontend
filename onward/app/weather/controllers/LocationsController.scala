@@ -20,8 +20,8 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
   }
 
   val CityHeader: String = "X-GU-GeoCity"
+  val RegionHeader: String = "X-GU-GeoRegion"
   val CountryHeader: String = "X-GU-GeoCountry"
-  val LatLongHeader: String = "X-GU-GeoLatLong"
 
   def whatIsMyCity(): Action[AnyContent] = Action.async { implicit request =>
 
@@ -31,32 +31,34 @@ class LocationsController(weatherApi: WeatherApi, val controllerComponents: Cont
       request.headers.get(key).map(java.net.URLDecoder.decode(_, "latin1"))
 
     val maybeCity = getEncodedHeader(CityHeader).filter(_.nonEmpty)
+    val maybeRegion = getEncodedHeader(RegionHeader).filter(_.nonEmpty)
     val maybeCountry = getEncodedHeader(CountryHeader).filter(_.nonEmpty)
-    val maybeLatLong = getEncodedHeader(LatLongHeader)
-      .flatMap(LatitudeLongitude.fromString)
-      .map(LatitudeLongitude.toCityAccuracy)
 
-    (maybeLatLong, maybeCity, maybeCountry) match {
-      case (Some(latitudeLongitude), _, _) =>
-        weatherApi.getNearestCity(latitudeLongitude).map {
-          location => Cached(1 hour)(JsonComponent(CityResponse.fromLocationResponse(location)))
-        }.recover {
-          case _ =>
-            log.warn(s"Failed to get nearest city with lat/long")
-            Cached(CacheTime.NotFound)(JsonNotFound())
-        }
+    (maybeCity, maybeRegion, maybeCountry) match {
+      case (Some(city), Some(region), Some(country)) =>
+        CitiesLookUp.getLatitudeLongitude(CityRef.makeFixedCase(city, region, country)) match {
+          case Some(latitudeLongitude) =>
+            log.info(s"Matched $city, $region, $country to $latitudeLongitude")
 
-      case (_, Some(city), Some(country)) =>
-        log.warn(s"Latitude/longitude not available, trying text search")
+            weatherApi.getNearestCity(latitudeLongitude) map { location =>
+              Cached(1 hour)(JsonComponent(CityResponse.fromLocationResponse(location).copy(
+                // Prefer the city name in MaxMind - the one Accuweather returns is a bit more granular than we'd like,
+                // given how fuzzy geolocation by IP is.
+                city = city
+              )))
+            }
 
-        weatherApi.searchForLocations(city) map { locations =>
-          val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
+          case None =>
+            log.warn(s"Could not find $city, $region, $country in database, trying text search")
+            weatherApi.searchForLocations(city) map { locations =>
+              val cities = CityResponse.fromLocationResponses(locations.filter(_.Country.ID == country).toList)
 
-          cities.headOption.fold {
-            Cached(CacheTime.NotFound)(JsonNotFound())
-          } { weatherCity =>
-            Cached(1 hour)(JsonComponent(weatherCity))
-          }
+              cities.headOption.fold {
+                Cached(CacheTime.NotFound)(JsonNotFound())
+              } { weatherCity =>
+                Cached(1 hour)(JsonComponent(weatherCity))
+              }
+            }
         }
 
       case (_, _, _) =>
