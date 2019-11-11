@@ -42,13 +42,12 @@ const pageviews: number = local.get('gu.alreadyVisited');
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
-
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
 const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
 
 const closedAt = (lastClosedAtKey: string) =>
-userPrefs.set(lastClosedAtKey, new Date().toISOString());
+    userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
 const bannerHasBeenAcknowledged = (): void => {
     const messageStates = userPrefs.get('messages') || [];
@@ -171,7 +170,6 @@ const show: () => Promise<boolean> = async () => {
 };
 
 const canShow: () => Promise<boolean> = () => {
-
     const can = Promise.resolve(
         fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
