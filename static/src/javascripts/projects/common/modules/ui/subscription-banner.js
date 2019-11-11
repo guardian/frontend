@@ -172,8 +172,6 @@ const show: () => Promise<boolean> = async () => {
 
 const canShow: () => Promise<boolean> = () => {
 
-    bannerDismissedOverOneMonthAgo()
-
     const can = Promise.resolve(
         fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
