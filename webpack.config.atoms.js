@@ -8,15 +8,6 @@ const config = require('./webpack.config.js');
 
 // Blatantly override JS entry points
 config.entry = {
-    storyquestions: path.join(
-        __dirname,
-        'static',
-        'src',
-        'javascripts',
-        'bootstraps',
-        'atoms',
-        'storyquestions.js'
-    ),
     snippet: path.join(
         __dirname,
         'static',

@@ -11,7 +11,7 @@
 )(implicit request: RequestHeader, context: ApplicationContext)
 
 @import _root_.model.ShareLinkMeta
-@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, StoryQuestionsAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom, AudioAtom, ChartAtom}
+@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom, AudioAtom, ChartAtom}
 @{
     model match {
         case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
@@ -22,7 +22,6 @@
             posterImageOverride = posterImageOverride
         )
         case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
-        case storyquestions: StoryQuestionsAtom => Html(ArticleAtomRenderer.getHTML(storyquestions.atom, config))
         case qanda: QandaAtom => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
         case timeline: TimelineAtom => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
         case guide: GuideAtom => Html(ArticleAtomRenderer.getHTML(guide.atom, config))
