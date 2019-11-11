@@ -18,6 +18,7 @@ const inlineDefinition = {
             adSizes.mpu,
             adSizes.googleCard,
             adSizes.outstreamDesktop,
+            adSizes.outstreamGoogleDesktop,
             adSizes.fluid,
         ],
         desktop: [
@@ -27,6 +28,7 @@ const inlineDefinition = {
             adSizes.googleCard,
             adSizes.video,
             adSizes.outstreamDesktop,
+            adSizes.outstreamGoogleDesktop,
             adSizes.fluid,
         ],
     },

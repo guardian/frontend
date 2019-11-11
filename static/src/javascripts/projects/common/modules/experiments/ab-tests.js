@@ -3,17 +3,14 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
-import { articlesViewedMoment } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-variant';
-import { articlesViewedMoment60Days } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-moment-60-days';
+import { articlesViewedMonthMomentFinal } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-month-moment';
+import { articlesViewed60DaysMomentFinal } from 'common/modules/experiments/tests/contributions-epic-articles-viewed-60-days-moment';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
 import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
-import {
-    environmentMomentBannerNonSupporters,
-    environmentMomentBannerSupporters,
-} from 'common/modules/experiments/tests/contributions-moment-banner-environment';
+import { environmentMomentBannerFinalPush } from 'common/modules/experiments/tests/contributions-moment-banner-environment';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
@@ -28,8 +25,8 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
-    articlesViewedMoment,
-    articlesViewedMoment60Days,
+    articlesViewedMonthMomentFinal,
+    articlesViewed60DaysMomentFinal,
     articlesViewed,
     learnMore,
     countryName,
@@ -39,6 +36,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     articlesViewedBanner,
-    environmentMomentBannerNonSupporters,
-    environmentMomentBannerSupporters,
+    environmentMomentBannerFinalPush,
 ];

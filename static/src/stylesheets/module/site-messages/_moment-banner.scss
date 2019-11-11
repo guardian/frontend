@@ -8,12 +8,13 @@
 }
 
 $title: 'Guardian Titlepiece', Georgia, serif !default;
+$moment-blue: #1570a6;
 
 .site-message--moment-banner {
     overflow: visible;
     border: 0;
     position: relative;
-    background-color: $highlight-main;
+    background-color: $moment-blue;
 }
 
 .moment-banner__container {
@@ -61,8 +62,6 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
 
 .moment-banner__titles {
     margin-bottom: $gs-baseline;
-    // Magic number to get desired line breaks on mobile
-    width: 270px;
 
     @include mq($from: tablet) {
         width: initial;
@@ -71,18 +70,24 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
 
 .moment-banner__title-one,
 .moment-banner__title-two {
-    font-size: 42px;
+    font-size: 36px;
     font-family: $title;
-    line-height: 40px;
+    line-height: 36px;
+
 
     @include mq($from: tablet) {
         display: block;
+        font-size: 42px;
         line-height: 40px;
     }
 }
 
+.moment-banner__title-one {
+    color: $brightness-97;
+}
+
 .moment-banner__title-two {
-    color: $sport-main;
+    color: $highlight-main;
 }
 
 .moment-banner__copy {
@@ -90,6 +95,7 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     font-size: 17px;
     line-height: 21px;
     margin-bottom: $gs-baseline;
+    color: $brightness-97
 }
 
 .moment-banner__title-two,
@@ -106,13 +112,24 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     font-weight: 700;
 }
 
+// Secondary Button / Link to editorial content
 .engagement-banner__button--moment-link {
-    color: $brightness-7;
-    background-color: $brightness-97;
-    border-color: $brightness-97;
+    color: $brightness-97;
+    background-color: $brightness-7;
+    border-color: $brightness-7;
     padding-right: 18px;
 }
 
+// Primary Support CTA
+.engagement-banner__button--moment-cta {
+    color: $brightness-7;
+    background-color: $highlight-main;
+    border-color: $highlight-main;
+
+    .inline-arrow-white-right path {
+        fill: $brightness-7;
+    }
+}
 
 // Color of the "G" inside the roundel logo
 .site-message--moment-banner .inline-marque-36 {

@@ -358,6 +358,7 @@
     &.form_input--checkbox .form_field {
         display: flex;
         flex-direction: column;
+        flex-wrap: wrap;
         label {
             flex: initial;
             margin-right: 1em;

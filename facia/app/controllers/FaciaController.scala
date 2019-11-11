@@ -2,6 +2,7 @@ package controllers
 
 import common._
 import _root_.html.{BrazeEmailFormatter, HtmlTextExtractor}
+import com.gu.facia.client.models.TargetedTerritory
 import controllers.front._
 import layout.{CollectionEssentials, ContentCard, FaciaCard, FaciaCardAndIndex, FaciaContainer, Front}
 import model.Cached.{CacheableResult, RevalidatableResult, WithoutRevalidationResult}
@@ -16,7 +17,9 @@ import layout.slices._
 import views.html.fragments.containers.facia_cards.container
 import views.support.FaciaToMicroFormat2Helpers.getCollection
 import conf.switches.Switches.InlineEmailStyles
+import implicits.GUHeaders
 import pages.{FrontEmailHtmlPage, FrontHtmlPage}
+import utils.TargetedCollections
 
 import scala.concurrent.Future
 import scala.concurrent.Future.successful
@@ -122,25 +125,25 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
   import PressedPage.pressedPageFormat
   private[controllers] def renderFrontPressResult(path: String)(implicit request: RequestHeader) = {
-    val futureFaciaPage: Future[Option[PressedPage]] = frontJsonFapi.get(path, liteRequestType).flatMap { frontJson =>
-      frontJson match {
+    val futureFaciaPage: Future[Option[(PressedPage, Boolean)]] = frontJsonFapi.get(path, liteRequestType).flatMap {
         case Some(faciaPage: PressedPage) =>
+          val pageContainsTargetedCollections = TargetedCollections.pageContainsTargetedCollections(faciaPage)
+          val regionalFaciaPage = TargetedCollections.processTargetedCollections(faciaPage, request.territories, context.isPreview, pageContainsTargetedCollections)
           if (conf.Configuration.environment.stage == "CODE") {
             logInfoWithCustomFields(s"Rendering front $path, frontjson: ${Json.stringify(Json.toJson(faciaPage)(pressedPageFormat))}", List())
           }
           if(faciaPage.collections.isEmpty && liteRequestType == LiteAdFreeType) {
-            frontJsonFapi.get(path, LiteType)
+            frontJsonFapi.get(path, LiteType).map(_.map(f => (f, false)))
           }
-          else Future.successful(Some(faciaPage))
+          else Future.successful(Some(regionalFaciaPage, pageContainsTargetedCollections))
         case None => Future.successful(None)
-      }
     }
 
     val futureResult = futureFaciaPage.flatMap {
-      case Some(faciaPage) if nonHtmlEmail(request) =>
+      case Some((faciaPage, _)) if nonHtmlEmail(request) =>
         successful(Cached(CacheTime.RecentlyUpdated)(renderEmail(faciaPage)))
-      case Some(faciaPage: PressedPage) =>
-        successful(Cached(CacheTime.Facia)(
+      case Some((faciaPage: PressedPage, targetedTerritories)) =>
+        val result = successful(Cached(CacheTime.Facia)(
           if (request.isRss) {
             val body = TrailsToRss.fromPressedPage(faciaPage)
             RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
@@ -154,6 +157,11 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
             RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))
           }
         ))
+        // setting Vary header can be expensive (https://www.fastly.com/blog/best-practices-using-vary-header)
+        // only set it for fronts with targeted collections
+        if (targetedTerritories) {
+          result.map(_.withHeaders(("Vary", GUHeaders.TERRITORY_HEADER)))
+        } else result
       case None => successful(Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound)))}
 
     futureResult.failed.foreach { t: Throwable => log.error(s"Failed rendering $path with $t", t)}

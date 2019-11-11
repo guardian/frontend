@@ -13,49 +13,64 @@ import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import {
+    onIabConsentNotification,
+    onGuConsentNotification,
+} from '@guardian/consent-management-platform';
 
-let scriptsInserted: boolean = false;
+let advertisingScriptsInserted: boolean = false;
+let performanceScriptsInserted: boolean = false;
 
-const insertScripts = (services: Array<ThirdPartyTag>): void => {
+const addScripts = (services: Array<ThirdPartyTag>): void => {
+    const ref = document.scripts[0];
+    const frag = document.createDocumentFragment();
+    let hasScriptsToInsert = false;
+
+    services.forEach(service => {
+        if (service.useImage === true) {
+            new Image().src = service.url;
+        } else {
+            hasScriptsToInsert = true;
+            const script = document.createElement('script');
+            script.src = service.url;
+            script.onload = service.onLoad;
+            frag.appendChild(script);
+        }
+    });
+
+    if (hasScriptsToInsert) {
+        fastdom.write(() => {
+            if (ref && ref.parentNode) {
+                ref.parentNode.insertBefore(frag, ref);
+            }
+        });
+    }
+};
+
+const insertScripts = (
+    advertisingServices: Array<ThirdPartyTag>,
+    performanceServices: Array<ThirdPartyTag>
+): void => {
+    onGuConsentNotification('performance', state => {
+        if (!performanceScriptsInserted && state) {
+            addScripts(performanceServices);
+            performanceScriptsInserted = true;
+        }
+    });
+
     onIabConsentNotification(state => {
         const consentState =
             state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!scriptsInserted && consentState) {
-            scriptsInserted = true;
-
-            const ref = document.scripts[0];
-            const frag = document.createDocumentFragment();
-            let hasScriptsToInsert = false;
-
-            services.forEach(service => {
-                if (service.useImage === true) {
-                    new Image().src = service.url;
-                } else {
-                    hasScriptsToInsert = true;
-                    const script = document.createElement('script');
-                    script.src = service.url;
-                    script.onload = service.onLoad;
-                    frag.appendChild(script);
-                }
-            });
-
-            if (hasScriptsToInsert) {
-                fastdom.write(() => {
-                    if (ref && ref.parentNode) {
-                        ref.parentNode.insertBefore(frag, ref);
-                    }
-                });
-            }
+        if (!advertisingScriptsInserted && consentState) {
+            addScripts(advertisingServices);
+            advertisingScriptsInserted = true;
         }
     });
 };
 
 const loadOther = (): void => {
-    const services: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+    const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
         simpleReach,
         krux,
@@ -65,7 +80,12 @@ const loadOther = (): void => {
         twitterUwt(),
     ].filter(_ => _.shouldRun);
 
-    insertScripts(services);
+    const performanceServices: Array<ThirdPartyTag> = [
+        imrWorldwide,
+        imrWorldwideLegacy,
+    ].filter(_ => _.shouldRun);
+
+    insertScripts(advertisingServices, performanceServices);
 };
 
 const init = (): Promise<boolean> => {
@@ -93,6 +113,7 @@ export const _ = {
     insertScripts,
     loadOther,
     reset: () => {
-        scriptsInserted = false;
+        advertisingScriptsInserted = false;
+        performanceScriptsInserted = false;
     },
 };

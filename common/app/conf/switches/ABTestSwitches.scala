@@ -38,7 +38,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-variant",
+    "ab-contributions-epic-articles-viewed-month-moment-final",
     "Moment epic which also states how many articles a user has viewed",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
@@ -48,7 +48,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-60-days",
+    "ab-contributions-epic-articles-viewed-60-days-moment-final",
     "Moment epic which also states how many articles a user has viewed",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
@@ -88,18 +88,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-environment-moment-supporters",
-    "moment banner to be seen by current supporters",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-environment-moment-non-supporters",
-    "moment banner to be seen by general audience",
+    "ab-contributions-banner-environment-moment-final-push",
+    "moment banner test for final push",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
