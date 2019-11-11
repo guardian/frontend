@@ -88,7 +88,7 @@ object UrlHelpers {
     if (editionId == "au") {
       "https://jobs.theguardian.com/landingpage/2868291/jobs-australia-html/?INTCMP=jobs_au_web_newheader"
     } else {
-      s"https://jobs.theguardian.com/jobs?INTCMP=jobs_${editionId}_web_newheader"
+      s"https://jobs.theguardian.com/?INTCMP=jobs_${editionId}_web_newheader"
     }
 
   def getSoulmatesUrl: String = "https://soulmates.theguardian.com/?INTCMP=soulmates_uk_web_newheader"
