@@ -22,7 +22,7 @@ object KeyEventData {
     val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
 
     bodyBlocks.map { bodyBlock =>
-      KeyEventData(bodyBlock.id, bodyBlock.publishedCreatedDate(timezone), bodyBlock.title)
+      KeyEventData(bodyBlock.id, bodyBlock.publishedDate.map(LiveBlogDate(_, timezone)), bodyBlock.title)
     }
   }
 
