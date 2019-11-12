@@ -603,7 +603,9 @@ const buildBannerCopy = (
     return countryName ? replaceCountryName(text, countryName) : text;
 };
 
-export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
+export const buildConfiguredEpicTestFromJson = (
+    test: Object
+): InitEpicABTest => {
     const geolocation = geolocationGetSync();
 
     const countryGroups = test.locations;
@@ -634,7 +636,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
               }
             : undefined;
 
-    return makeEpicABTest({
+    return {
         id: test.name,
         campaignId: test.name,
         geolocation,
@@ -703,7 +705,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
             excludedTagIds,
             excludedSections,
         })),
-    });
+    };
 };
 
 export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
@@ -713,7 +715,9 @@ export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
             if (epicTestData.tests) {
                 return epicTestData.tests
                     .filter(test => test.isOn || showDrafts)
-                    .map(buildConfiguredEpicTestFromJson);
+                    .map(json =>
+                        makeEpicABTest(buildConfiguredEpicTestFromJson(json))
+                    );
             }
             return [];
         })
