@@ -38,26 +38,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-final",
-    "Moment epic which also states how many articles a user has viewed",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-articles-viewed-60-days-moment-final",
-    "Moment epic which also states how many articles a user has viewed",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-learn-more-cta",
     "States how many articles a user has viewed in the epic in a month",
     owners = Seq(Owner.withGithub("jlieb10")),
@@ -81,16 +61,6 @@ trait ABTestSwitches {
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-environment-moment-final-push",
-    "moment banner test for final push",
-    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
