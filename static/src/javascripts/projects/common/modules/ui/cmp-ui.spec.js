@@ -1,5 +1,8 @@
 // @flow
-import { cmpUi as cmpUi_ } from '@guardian/consent-management-platform';
+import {
+    cmpUi as cmpUi_,
+    cmpConfig,
+} from '@guardian/consent-management-platform';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { consentManagementPlatformUi, _ } from './cmp-ui';
 
@@ -29,27 +32,57 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('returns true if cmpUi.canShow true and in commercialCmpUiIab test', () => {
+            it('returns true if cmpUi.canShow true and in CommercialCmpUiIab test variant', () => {
                 cmpUi.canShow.mockReturnValue(true);
-                isInVariantSynchronous.mockReturnValue(true);
+                isInVariantSynchronous.mockImplementation(
+                    (test, variant) =>
+                        test.id === 'CommercialCmpUiIab' &&
+                        variant === 'variant'
+                );
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(true);
                 });
             });
 
-            it('returns false if cmpUi.canShow false', () => {
-                cmpUi.canShow.mockReturnValue(false);
-                isInVariantSynchronous.mockReturnValue(true);
+            it('returns true if cmpUi.canShow true and in CommercialCmpUiNonDismissable test control', () => {
+                cmpUi.canShow.mockReturnValue(true);
+                isInVariantSynchronous.mockImplementation(
+                    (test, variant) =>
+                        test.id === 'CommercialCmpUiNonDismissable' &&
+                        variant === 'control'
+                );
 
                 return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(false);
+                    expect(show).toBe(true);
+                });
+            });
+
+            it('returns true if cmpUi.canShow true and in commercialCmpUiNonDismissable test variant', () => {
+                cmpUi.canShow.mockReturnValue(true);
+                isInVariantSynchronous.mockImplementation(
+                    (test, variant) =>
+                        test.id === 'CommercialCmpUiNonDismissable' &&
+                        variant === 'variant'
+                );
+
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(true);
                 });
             });
 
             it('returns false if not in commercialCmpUiIab test', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(false);
+
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(false);
+                });
+            });
+
+            it('returns false if cmpUi.canShow false', () => {
+                cmpUi.canShow.mockReturnValue(false);
+                isInVariantSynchronous.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);
@@ -81,6 +114,68 @@ describe('cmp-ui', () => {
                     1
                 );
                 expect(cmpUi.setupMessageHandlers).toHaveBeenCalledTimes(1);
+            });
+
+            describe('adds correct src to iframe', () => {
+                const tests = [
+                    {
+                        id: 'CommercialCmpUiIab',
+                        variant: 'variant',
+                        url: `${
+                            cmpConfig.CMP_URL
+                        }?abTestVariant=CmpUiIab-variant`,
+                    },
+                    {
+                        id: 'CommercialCmpUiNonDismissable',
+                        variant: 'control',
+                        url: `${
+                            cmpConfig.CMP_URL
+                        }?abTestVariant=CmpUiNonDismissable-control`,
+                    },
+                    {
+                        id: 'CommercialCmpUiNonDismissable',
+                        variant: 'variant',
+                        url: `${
+                            cmpConfig.CMP_URL
+                        }?abTestVariant=CmpUiNonDismissable-variant`,
+                    },
+                ];
+
+                tests.forEach(test => {
+                    const { id, variant, url } = test;
+                    it(`when in ${id} test and ${variant} group`, () => {
+                        isInVariantSynchronous.mockImplementation(
+                            (abTest, abVariant) =>
+                                abTest.id === id && abVariant === variant
+                        );
+
+                        consentManagementPlatformUi.show();
+
+                        const iframe = document.querySelector(iframeSelector);
+
+                        expect(iframe).not.toBeNull();
+
+                        if (iframe) {
+                            expect(iframe.getAttribute('src')).toBe(url);
+                        }
+                    });
+                });
+
+                it('fallsback to default url when not in ab test', () => {
+                    isInVariantSynchronous.mockReturnValue(false);
+
+                    consentManagementPlatformUi.show();
+
+                    const iframe = document.querySelector(iframeSelector);
+
+                    expect(iframe).not.toBeNull();
+
+                    if (iframe) {
+                        expect(iframe.getAttribute('src')).toBe(
+                            cmpConfig.CMP_URL
+                        );
+                    }
+                });
             });
 
             it('does not run prepareUi multiple times when called more than once', () => {
