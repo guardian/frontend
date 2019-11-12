@@ -39,18 +39,23 @@ const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
-const edition: string = config.get('page.edition');
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
 );
 const pageviews: number = local.get('gu.alreadyVisited');
 
-const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(geolocationGetSync());
-const hideBannerInTheseRegions: ReaderRevenueRegion[] = ['united-states', 'australia'];
+const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
+    geolocationGetSync()
+);
+const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
+    'united-states',
+    'australia',
+];
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
-const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean => !(hideBannerInTheseRegions.includes(region));
+const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
+    !hideBannerInTheseRegions.includes(region);
 
 const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
