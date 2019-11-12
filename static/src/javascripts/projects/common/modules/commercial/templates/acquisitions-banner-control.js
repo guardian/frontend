@@ -7,11 +7,19 @@ import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 import config from 'lib/config';
 import { applePayApiAvailable } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
+import { getSync as getGeolocation } from 'lib/geolocation';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ): string => {
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
+    const paymentMethodLogos = config.get(
+        getGeolocation() === 'US'
+            ? 'images.acquisitions.payment-methods-us'
+            : 'images.acquisitions.payment-methods',
+        ''
+    );
+
     return `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel hide-until-phablet">
@@ -42,10 +50,7 @@ export const acquisitionsBannerControlTemplate = (
                 </a>
                 <div class="engagement-banner__payment-logos">
                     <img
-                        src="${config.get(
-                            'images.acquisitions.payment-methods',
-                            ''
-                        )}"
+                        src="${paymentMethodLogos}"
                         alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
                     >
                     ${applePayLogo}
