@@ -13,12 +13,16 @@ export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
 ): string => {
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
+    const inUS = getGeolocation() === 'US';
     const paymentMethodLogos = config.get(
-        getGeolocation() === 'US'
+        inUS
             ? 'images.acquisitions.payment-methods-us'
             : 'images.acquisitions.payment-methods',
         ''
     );
+    const paymentMethodAltText = `Accepted payment methods: Visa, Mastercard, American Express ${
+        inUS ? ' Paypal, Diners Club and Discover' : ' and Paypal'
+    }`;
 
     return `
         <div class="engagement-banner__close">
@@ -51,7 +55,7 @@ export const acquisitionsBannerControlTemplate = (
                 <div class="engagement-banner__payment-logos">
                     <img
                         src="${paymentMethodLogos}"
-                        alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
+                        alt="${paymentMethodAltText}"
                     >
                     ${applePayLogo}
                 </div>

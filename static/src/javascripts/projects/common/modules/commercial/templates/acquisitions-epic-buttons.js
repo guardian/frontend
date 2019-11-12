@@ -2,12 +2,23 @@
 import config from 'lib/config';
 import { applePayApiAvailable } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
+import { getSync as getGeolocation } from 'lib/geolocation';
 
 export const epicButtonsTemplate = (
     { supportUrl = '' }: CtaUrls,
     ctaText?: string = 'Support The Guardian'
 ) => {
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
+    const inUS = getGeolocation() === 'US';
+    const paymentMethodLogos = config.get(
+        inUS
+            ? 'images.acquisitions.payment-methods-us'
+            : 'images.acquisitions.payment-methods',
+        ''
+    );
+    const paymentMethodAltText = `Accepted payment methods: Visa, Mastercard, American Express ${
+        inUS ? ' Paypal, Diners Club and Discover' : ' and Paypal'
+    }`;
 
     const supportButtonSupport = `
         <div>
@@ -29,10 +40,7 @@ export const epicButtonsTemplate = (
         </div>`;
 
     const paymentLogos = `<div class="contributions__payment-logos contributions__contribute--epic-member">
-        <img src="${config.get(
-            'images.acquisitions.payment-methods',
-            ''
-        )}" alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal">
+        <img src="${paymentMethodLogos}" alt="${paymentMethodAltText}">
         ${applePayLogo}
     </div>`;
 
