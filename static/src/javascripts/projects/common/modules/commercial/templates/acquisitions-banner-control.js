@@ -3,28 +3,13 @@
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
-import config from 'lib/config';
-import { applePayApiAvailable } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
-import { getSync as getGeolocation } from 'lib/geolocation';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
-): string => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-    const inUS = getGeolocation() === 'US';
-    const paymentMethodLogos = config.get(
-        inUS
-            ? 'images.acquisitions.payment-methods-us'
-            : 'images.acquisitions.payment-methods',
-        ''
-    );
-    const paymentMethodAltText = `Accepted payment methods: Visa, Mastercard, American Express ${
-        inUS ? ' Paypal, Diners Club and Discover' : ' and Paypal'
-    }`;
-
-    return `
+): string =>
+    `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel hide-until-phablet">
                 ${marque36icon.markup}
@@ -52,13 +37,9 @@ export const acquisitionsBannerControlTemplate = (
                 }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
                 </a>
-                <div class="engagement-banner__payment-logos">
-                    <img
-                        src="${paymentMethodLogos}"
-                        alt="${paymentMethodAltText}"
-                    >
-                    ${applePayLogo}
-                </div>
+                ${paymentMethodLogosTemplate(
+                    'engagement-banner__payment-logos'
+                )}
             </div>
         </div>
         <a
@@ -68,4 +49,3 @@ export const acquisitionsBannerControlTemplate = (
             href="${params.linkUrl}"
         ></a>
     `;
-};

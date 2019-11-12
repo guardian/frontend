@@ -1,25 +1,10 @@
 // @flow
-import config from 'lib/config';
-import { applePayApiAvailable } from 'lib/detect';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
-import { getSync as getGeolocation } from 'lib/geolocation';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
 export const epicButtonsTemplate = (
     { supportUrl = '' }: CtaUrls,
     ctaText?: string = 'Support The Guardian'
 ) => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-    const inUS = getGeolocation() === 'US';
-    const paymentMethodLogos = config.get(
-        inUS
-            ? 'images.acquisitions.payment-methods-us'
-            : 'images.acquisitions.payment-methods',
-        ''
-    );
-    const paymentMethodAltText = `Accepted payment methods: Visa, Mastercard, American Express ${
-        inUS ? ' Paypal, Diners Club and Discover' : ' and Paypal'
-    }`;
-
     const supportButtonSupport = `
         <div>
             <a class="component-button component-button--primary component-button--hasicon-right contributions__contribute--epic-member"
@@ -39,14 +24,11 @@ export const epicButtonsTemplate = (
             </a>
         </div>`;
 
-    const paymentLogos = `<div class="contributions__payment-logos contributions__contribute--epic-member">
-        <img src="${paymentMethodLogos}" alt="${paymentMethodAltText}">
-        ${applePayLogo}
-    </div>`;
-
     return `
         <div class="contributions__buttons">
             ${supportButtonSupport}
-            ${paymentLogos}
+            ${paymentMethodLogosTemplate(
+                'contributions__payment-logos contributions__contribute--epic-member'
+            )}
         </div>`;
 };
