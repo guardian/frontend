@@ -12,6 +12,7 @@ import { learnMore } from 'common/modules/experiments/tests/contributions-epic-l
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
+import { permutiveTest } from 'common/modules/experiments/tests/commercial-permutive';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -20,6 +21,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
+    permutiveTest,
     commercialCmpUiNonDismissable,
 ];
 
