@@ -155,4 +155,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-permutive",
+    "Test of Permutive implementation",
+    owners = Seq(Owner.withGithub("faresite")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
 }
