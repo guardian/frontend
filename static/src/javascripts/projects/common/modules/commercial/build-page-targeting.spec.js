@@ -236,6 +236,7 @@ describe('Build Page Targeting', () => {
             pa: 'f',
             cc: 'US',
             rp: 'dotcom-platform',
+            dcre: 'f',
         });
     });
 
