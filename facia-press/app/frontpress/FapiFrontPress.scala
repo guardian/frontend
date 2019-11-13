@@ -340,44 +340,44 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
   }
 
   private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit executionContext: ExecutionContext): Response[EnrichedContent] = {
+    def asFut[A](opt: Option[A]): Future[A] = {
+      opt match {
+        case Some(value) => Future.successful(value)
+        case None => Future.failed(new Throwable("Option was None"))
+      }
+    }
+
+    def fetchAndEnrich(embedUri: String, embedType: String, template: EnrichedContent): Future[EnrichedContent] = {
+      val maybeUpdate = wsClient.url(embedUri).get().map { response =>
+        embedType match {
+          case "json.html" =>
+            Json.fromJson[EmbedJsonHtml](response.json)
+              .map(embed => template.copy(embedHtml = Some(embed.html)))
+              .asOpt
+          case "interactive" =>
+            for {
+              json <- (response.json \ "response" \ "interactive" \ "data" \ "interactive").toOption
+              embed <- Json.fromJson[EmbedInteractiveAtom](json).asOpt
+            } yield template.copy(embedHtml = Some(embed.html), embedCss = Some(embed.css), embedJs = Some(embed.mainJS))
+        }
+      }
+
+      maybeUpdate.foreach(_ => {
+        log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
+      })
+
+      maybeUpdate.map(_.getOrElse(template))
+    }
 
     val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
 
     val afterEnrichment = for {
-      embedType <- content.properties.embedType if embedType == "json.html" || embedType == "interactive"
-      embedUri <- content.properties.embedUri
-    } yield {
-      val maybeUpdate = wsClient.url(embedUri).get().map { response =>
-        embedType match {
-          case "json.html" =>
-            Json.fromJson[EmbedJsonHtml](response.json) match {
-              case JsSuccess(embed, _) =>
-                beforeEnrichment.copy(embedHtml = Some(embed.html))
-              case _ =>
-                log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
-                beforeEnrichment
-            }
-          case "interactive" =>
-            (response.json\"response"\"interactive"\"data"\"interactive").toOption.flatMap { j =>
-              Json.fromJson[EmbedInteractiveAtom](j) match {
-                case JsSuccess(embed, _) =>
-                  Some(beforeEnrichment.copy(embedHtml = Some(embed.html), embedCss = Some(embed.css), embedJs = Some(embed.mainJS)))
-                case _ =>
-                  log.warn(s"An interactive atom had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
-                  None
-              }
-            }.getOrElse(beforeEnrichment)
-        }
+      embedType <- asFut(content.properties.embedType) if embedType == "json.html" || embedType == "interactive"
+      embedUri <- asFut(content.properties.embedUri)
+      embed <- fetchAndEnrich(embedUri, embedType, beforeEnrichment)
+    } yield embed
 
-      } recover {
-        case _ => {
-          log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
-          beforeEnrichment
-        }
-      }
-      Response.Async.Right(maybeUpdate)
-    }
-    afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
+    Response.Async.Right(afterEnrichment).recover({ _ => beforeEnrichment})
   }
 
   private def getTreats(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
