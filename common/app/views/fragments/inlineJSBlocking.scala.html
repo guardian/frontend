@@ -32,7 +32,7 @@
     @Html(config(page).body)
 
     // permutive
-    @Html(permutive().body)
+    @InlineJs(permutive().body, "permutive.js")
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")
