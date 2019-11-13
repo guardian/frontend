@@ -124,7 +124,6 @@ class ArticleController(
       case Right(r) => Right(r)
       case _ => Right(NotFound)
     }
-
   }
 
 }

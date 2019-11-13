@@ -1,6 +1,7 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
+import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -78,6 +79,22 @@ const onErrorCmp = (error: Error): void => {
     );
 };
 
+const getUrl = (): string => {
+    if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
+        return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiIab-variant`;
+    } else if (
+        isInVariantSynchronous(commercialCmpUiNonDismissable, 'control')
+    ) {
+        return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiNonDismissable-control`;
+    } else if (
+        isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
+    ) {
+        return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiNonDismissable-variant`;
+    }
+
+    return cmpConfig.CMP_URL;
+};
+
 const prepareUi = (): void => {
     if (uiPrepared) {
         return;
@@ -108,7 +125,9 @@ const prepareUi = (): void => {
     const iframe: HTMLIFrameElement = document.createElement('iframe');
 
     iframe.className = IFRAME_CLASS;
-    iframe.src = cmpConfig.CMP_URL;
+
+    iframe.src = getUrl();
+
     iframe.tabIndex = 1;
     iframe.addEventListener(
         'touchmove',
@@ -142,7 +161,11 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (!isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
+    if (
+        !isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
+        !isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
+        !isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
+    ) {
         return;
     }
 
@@ -182,7 +205,11 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
+        if (
+            isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
+            isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
+            isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
+        ) {
             return Promise.resolve(cmpUi.canShow());
         }
 

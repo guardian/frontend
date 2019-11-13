@@ -43,7 +43,6 @@ class AtomCleanerTest extends FlatSpec
     interactives = Nil,
     recipes = Nil,
     reviews = Nil,
-    storyquestions = Nil,
     explainers = Nil,
     qandas = Nil,
     guides = Nil,

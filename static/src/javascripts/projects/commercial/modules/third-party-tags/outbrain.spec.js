@@ -89,7 +89,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', true);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).not.toHaveBeenCalled();
@@ -102,7 +101,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
@@ -115,7 +113,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds checks
             resolveCheck('isOutbrainBlockedByAds', true);
             resolveCheck('isOutbrainMerchandiseCompliant', false);
@@ -130,7 +127,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainDisabled', false);
             // make outbrain compliant
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
             // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
             resolveCheck('isOutbrainBlockedByAds', false);
             resolveCheck('isOutbrainMerchandiseCompliant', true);
@@ -148,25 +144,9 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             // editorial tests
             resolveCheck('isUserInContributionsAbTest', true);
-            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalledWith('nonCompliant', true);
-            });
-        });
-
-        it('should load a non compliant component if story questions on page', () => {
-            // isOutbrainDisabled check
-            resolveCheck('isOutbrainDisabled', false);
-            // isOutbrainBlockedByAds and isOutbrainMerchandiseCompliant checks
-            resolveCheck('isOutbrainBlockedByAds', false);
-            resolveCheck('isOutbrainMerchandiseCompliant', false);
-            // editorial tests
-            resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', true);
-
-            return initOutbrain().then(() => {
-                expect(load).toHaveBeenCalledWith('nonCompliant', false);
             });
         });
 
@@ -178,7 +158,6 @@ describe('Outbrain', () => {
             resolveCheck('isOutbrainMerchandiseCompliant', false);
             // editorial tests
             resolveCheck('isUserInContributionsAbTest', false);
-            resolveCheck('isStoryQuestionsOnPage', false);
 
             return initOutbrain().then(() => {
                 expect(load).toHaveBeenCalled();
