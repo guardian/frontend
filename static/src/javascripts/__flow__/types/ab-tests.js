@@ -102,6 +102,7 @@ declare type InitEpicABTestVariant = {
     showTicker?: boolean,
     supportBaseURL?: string,
     backgroundImageUrl?: string,
+    canRun?: () => boolean,
 };
 
 declare type InitBannerABTestVariant = {
