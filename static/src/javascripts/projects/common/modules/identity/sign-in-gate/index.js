@@ -215,6 +215,45 @@ const show: () => Promise<boolean> = () => {
                         }
                     }
 
+                    // check page type to change text colour
+                    const paragraphText = shadowArticleBody.querySelector(
+                        '.signin-gate__benefits--text'
+                    );
+                    if (paragraphText) {
+                        switch (config.get(`page.pillar`)) {
+                            case 'News':
+                                paragraphText.classList.add(
+                                    `signin-gate__benefits--text-news`
+                                );
+                                break;
+                            case 'Opinion':
+                                paragraphText.classList.add(
+                                    `signin-gate__benefits--text-comment`
+                                );
+                                break;
+                            case 'Sport': {
+                                paragraphText.classList.add(
+                                    `signin-gate__benefits--text-sport`
+                                );
+                                break;
+                            }
+                            case 'Arts': {
+                                paragraphText.classList.add(
+                                    `signin-gate__benefits--text-culture`
+                                );
+                                break;
+                            }
+                            case 'Lifestyle': {
+                                paragraphText.classList.add(
+                                    `signin-gate__benefits--text-lifestyle`
+                                );
+                                break;
+                            }
+                            default:
+                                break;
+                        }
+                    }
+
                     // add click handler for the dismiss of the gate
                     bean.on(
                         shadowArticleBody,

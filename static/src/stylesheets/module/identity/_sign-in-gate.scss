@@ -1,22 +1,24 @@
 .signin-gate {
-    border: 1px solid $brightness-86;
-    background-color: $brightness-100;
     clear: left;
-    margin-top: $gs-baseline * 2;
+    margin-top: $gs-baseline * 3;
     margin-bottom: $gs-baseline * 2;
     padding: ($gs-baseline * 3) ($gs-baseline * 2);
 }
 
 .signin-gate__header {
+    border-top: 1px solid $brightness-46;
     @include fs-header(3);
     margin-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline;
 }
 
 .signin-gate__buttons {
+    border-top: 1px solid $brightness-46;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
-    margin-top: $gs-baseline * 2;
+    padding-top: $gs-baseline;
+    margin-top: $gs-baseline;
 
     // Horizontal alignment
     align-items: flex-start;
@@ -29,24 +31,22 @@
     }
 }
 
-ul.signin-gate__benefits {
-    list-style-type: none;
-    list-style-position: outside;
-
-    li {
-        margin-bottom: $gs-baseline;
-    }
-}
-
-.signin-gate__button {
-    margin: $gs-baseline/3 $gs-gutter/2 $gs-baseline/3 0;
+.signin-gate__why {
+    @include fs-textSans(5);
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-size: 10pt;
+    font-weight: bold;
+    padding-left: $gs-baseline;
 }
 
 .signin-gate__dismiss {
+    @include fs-textSans(5);
     color: $brightness-7 !important;
     text-decoration: underline;
-    font-size: 9pt;
+    font-size: 10pt;
     font-weight: bold;
+    padding-left: $gs-baseline;
 }
 
 .signin-gate__first-paragraph-container {
@@ -65,5 +65,77 @@ ul.signin-gate__benefits {
         &.signin-gate__first-paragraph-overlay--comment {
             background-image: linear-gradient(0deg, $opinion-faded, 70%, transparent);
         }
+    }
+}
+
+.signin-gate__button {
+    @include fs-textSans(5);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    height: 42px;
+    min-height: 42px;
+    padding: 0 42px;
+    border: 0;
+    border-radius: 21px;
+    box-sizing: border-box;
+    background: transparent;
+    cursor: pointer;
+    transition: .3s ease-in-out;;
+    justify-content: space-between;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover, &:focus {
+        outline: 0;
+    }
+
+    &[data-disabled] {
+        pointer-events: none;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.signin-gate__button--primary {
+    background-color: $brand-main;
+    color: $brightness-100 !important;
+    &:hover, &:focus {
+        background-color: $brand-dark;
+    }
+}
+
+.signin-gate__header--text {
+    font-weight: normal;
+    margin-bottom: $gs-baseline;
+}
+
+.signin-gate__benefits {
+    border-top: 1px solid $brightness-46;
+    padding-top: $gs-baseline;
+}
+
+.signin-gate__benefits--text {
+    font-weight: bold;
+    color: $sport-main;
+    &-news {
+        color: $news-main;
+    }
+    &-comment {
+        color: $opinion-main
+    }
+    &-sport {
+        color: $sport-main
+    }
+    &-culture {
+        color: $culture-main
+    }
+    &-lifestyle {
+        color: $lifestyle-main
     }
 }
