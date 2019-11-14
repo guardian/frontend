@@ -491,6 +491,10 @@
                 margin-left: 0;
                 margin-right: 0;
             }
+
+            @include mq($from: desktop) {
+                padding-left: $gs-gutter;
+            }
         }
 
         .block-share {
@@ -510,11 +514,17 @@
         }
 
         @include mq(leftCol) {
-            margin-left: -(gs-span(2) + $gs-gutter * 2);
+            margin-left: -(gs-span(2) + $gs-gutter);
         }
 
         @include mq(wide) {
-            margin-left: -(gs-span(3) + $gs-gutter * 2);
+            margin-left: -(gs-span(3) + $gs-gutter);
+        }
+
+        .caption {
+            @include mq($from: desktop, $until: leftCol) {
+                padding-left: $gs-gutter;
+            }
         }
 
         //important overrides the hide on mobile class
@@ -534,10 +544,6 @@
         }
 
         .caption {
-            @include mq(desktop) {
-                padding-left: $gs-gutter;
-            }
-
             @include mq(leftCol) {
                 position: absolute;
                 width: gs-span(2);
