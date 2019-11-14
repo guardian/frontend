@@ -103,12 +103,12 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            const consentState = !Object.values(state).includes(false);
+            const npaFlag = Object.values(state).includes(false);
 
             window.googletag.cmd.push(() => {
                 window.googletag
                     .pubads()
-                    .setRequestNonPersonalizedAds(consentState ? 0 : 1);
+                    .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
             });
         });
 
