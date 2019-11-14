@@ -68,7 +68,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     expiry: '2020-01-27',
 
     author: 'Tom Forbes',
-    description: 'States how many articles a user has viewed in the epic',
+    description: 'Tests adding a count of articles viewed in the epic',
     successMeasure: 'Conversion rate',
     idealOutcome: 'Acquires many Supporters',
 
