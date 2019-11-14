@@ -15,8 +15,7 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.{ContentCSSFile}
-import views.html.stacked
-import services.dotcomponents.ArticlePicker.dcrCouldRender
+import dotcomrendering.DotcomRenderingUtils.pageIsDCRSupported
 
 object StoryHtmlPage {
 
@@ -28,11 +27,6 @@ object StoryHtmlPage {
     override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
     override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
     override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
-
-  def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
-    val thisDcrCouldRender: Boolean = dcrCouldRender(pageWithStoryPackage, request)
-    Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
   }
 
   def html(
@@ -54,8 +48,7 @@ object StoryHtmlPage {
         head,
         styles(allStyles),
         fixIEReferenceErrors(),
-        inlineJSBlocking(),
-        htmlDcrCouldRender(pageWithStoryPackage, request)
+        inlineJSBlocking(pageIsDCRSupported(pageWithStoryPackage, request)),
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),

@@ -1,4 +1,4 @@
-@(item: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(item: model.Page, isDCRSupported: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import conf.Configuration
@@ -10,7 +10,7 @@
 @defining(Edition(request)) { edition =>
     {
         "isDotcomRendering": false,
-        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview)))),
+        "page": @JavaScript(StringEncodings.jsonToJS(Json.stringify(JavaScriptPage.get(item, Edition(request), context.isPreview, isDCRSupported)))),
         "nav": @JavaScript(Json.stringify(Json.toJson(NavMenu(item, edition)))),
         "switches" : { @{JavaScript(conf.switches.Switches.all.filter(_.exposeClientSide).map{ switch =>
             s""""${CamelCase.fromHyphenated(switch.name)}":${switch.isSwitchedOn}"""}.mkString(","))}

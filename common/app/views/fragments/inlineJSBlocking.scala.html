@@ -3,7 +3,7 @@
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance, loadApp}
 @import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
-@()(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
+@(isDCRSupported: Boolean = false)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @* NOTE the order of these includes is important  *@
 <script id="gu">
@@ -28,7 +28,7 @@
     @InlineJs(shouldEnhance(page.metadata).body, "shouldEnhance.js")
 
     // page config
-    @Html(config(page).body)
+    @Html(config(page, isDCRSupported).body)
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")

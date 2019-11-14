@@ -12,9 +12,9 @@ import play.api.libs.json._
 
 object JavaScriptPage {
 
-  def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
+  def get(page: Page, edition: Edition, isPreview: Boolean, isDCRSupported: Boolean = false): JsValue = Json.toJson(getMap(page, edition, isPreview, isDCRSupported))
 
-  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String,JsValue] = {
+  def getMap(page: Page, edition: Edition, isPreview: Boolean, isDCRSupported: Boolean = false): Map[String,JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -81,6 +81,7 @@ object JavaScriptPage {
       ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
       ("cardStyle", JsString(cardStyle)),
+      ("dcrCouldRender", JsBoolean(isDCRSupported)),
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife")))
     )
   }

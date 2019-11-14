@@ -1,4 +1,4 @@
-@(page: model.Page)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, isDCRSupported: Boolean = false)(implicit request: RequestHeader, context: model.ApplicationContext)
 @import common.{Edition, StringEncodings}
 @import conf.Static
 @import play.api.libs.json.Json
@@ -26,7 +26,7 @@ window.guardian = {
         active: undefined,
         onDetect: []
     },
-    config: @JavaScript(templates.js.javaScriptConfig(page).body)
+    config: @JavaScript(templates.js.javaScriptConfig(page, isDCRSupported).body)
 };
 
 // Check if a pre-made view id has been constructed through an esi.
