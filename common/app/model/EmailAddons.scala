@@ -422,7 +422,9 @@ object EmailAddons {
     USMorningBriefing,
     ObserverPictureArchive,
     GunsAndLiesInAmerica,
-    TheSnap)
+    TheSnap,
+    AndrewSparrowsElectionBriefing
+    )
   private val frontEmails = Seq(
     SocialCareNetwork,
     GuardianUniversities,
@@ -461,8 +463,7 @@ object EmailAddons {
     FirstDogOnTheMoon,
     GreenLight,
     WordOfMouth,
-    SavedForLater,
-    AndrewSparrowsElectionBriefing
+    SavedForLater
   )
 
   implicit class EmailContentType(p: Page) {
