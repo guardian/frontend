@@ -34,18 +34,27 @@ const rawTest = {
     ],
     highPriority: false,
     useLocalViewLog: false,
+    articlesViewedSettings: {
+        minViews: 5,
+        maxViews: 10,
+        periodInWeeks: 4,
+    },
 };
 
 describe('buildConfiguredEpicTestFromJson', () => {
     it('Parses and constructs an epic test', () => {
-        const test = buildConfiguredEpicTestFromJson(rawTest);
+        const test: InitEpicABTest = buildConfiguredEpicTestFromJson(rawTest);
         expect(test.id).toBe('my_test');
         expect(test.useLocalViewLog).toBe(false);
         expect(test.userCohort).toBe('AllNonSupporters');
 
-        // Have to cast here because type is `Variant`
-        // $FlowFixMe
-        const variant = (test.variants[0]: EpicVariant);
+        expect(test.articlesViewedSettings).toEqual({
+            minViews: 5,
+            maxViews: 10,
+            count: 0,
+        });
+
+        const variant: InitEpicABTestVariant = test.variants[0];
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);

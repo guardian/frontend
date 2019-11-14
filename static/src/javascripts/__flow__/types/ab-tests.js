@@ -72,6 +72,12 @@ declare type MaxViews = {
     minDaysBetweenViews: number,
 };
 
+declare type ArticlesViewedSettings = {
+    minViews?: number,
+    maxViews?: number,
+    count: number,
+}
+
 declare type DeploymentRules = 'AlwaysAsk' | MaxViews
 
 declare type EpicABTest = AcquisitionsABTest & {
@@ -136,6 +142,7 @@ declare type InitEpicABTest = {
     testHasCountryName?: boolean,
     geolocation: ?string,
     highPriority: boolean,
+    articlesViewedSettings?: ArticlesViewedSettings,
 }
 
 declare type Interaction = {
