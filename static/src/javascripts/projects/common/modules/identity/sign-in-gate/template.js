@@ -3,8 +3,7 @@ export const make = (signInUrl: string): string => `
 <div class="signin-gate">
     <div class="signin-gate__content">
         <div class="signin-gate__header">
-            <h1 class="signin-gate__header--text">Sign in and continue</h1>
-            <h1 class="signin-gate__header--text">reading for free</h1>
+            <h1 class="signin-gate__header--text">Sign in and continue<br />reading for free</h1>
         </div>
         <div class="signin-gate__benefits syndication--bottom">
             <p class="signin-gate__benefits--text">
