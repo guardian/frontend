@@ -461,7 +461,8 @@ object EmailAddons {
     FirstDogOnTheMoon,
     GreenLight,
     WordOfMouth,
-    SavedForLater
+    SavedForLater,
+    AndrewSparrowsElectionBriefing
   )
 
   implicit class EmailContentType(p: Page) {
