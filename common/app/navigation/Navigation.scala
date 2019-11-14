@@ -1,6 +1,5 @@
 package navigation
 
-
 import _root_.model.{NavItem, Page, Tags}
 import common.{Edition, editions}
 import play.api.libs.json.{Json, Writes}
@@ -59,7 +58,6 @@ object NavMenu {
     val currentNavLink = findDescendantByUrl(currentUrl, edition, root.children, root.otherLinks)
     val currentParent = currentNavLink.flatMap(link => findParent(link, edition, root.children, root.otherLinks))
     val currentPillar = getPillar(currentParent, edition, root.children, root.otherLinks)
-
     NavMenu(
       currentUrl = currentUrl,
       pillars = root.children,

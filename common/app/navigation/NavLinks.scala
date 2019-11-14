@@ -16,7 +16,9 @@ private object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
+  val ukElections2019 = NavLink("Election 2019", "/politics/general-election-2019", longTitle = "Election 2019")
   val usElections2020 = NavLink("Elections 2020", "/us-news/us-elections-2020", longTitle = "Elections 2020")
+
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -181,9 +183,10 @@ private object NavLinks {
   )
   val video = NavLink("Video", "/video")
   val podcasts = NavLink("Podcasts", "/podcasts")
+  val podcastsAU = NavLink("Podcasts", "/australia-podcasts")
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
-  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com/jobs")
+  val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
   val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "/guardian-masterclasses")
@@ -193,6 +196,7 @@ private object NavLinks {
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
   val discountCodes = NavLink("Discount Codes", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
   val discountCoupons = NavLink("Coupons", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
+  val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -209,6 +213,7 @@ private object NavLinks {
   val ukNewsPillar = NavLink("News", "/", longTitle = "Headlines", iconName = "home",
     List(
       ukNews,
+      ukElections2019,
       world,
       ukBusiness,
       football,
@@ -479,7 +484,7 @@ private object NavLinks {
   val auOtherLinks = List(
     apps,
     video,
-    podcasts,
+    podcastsAU,
     pictures,
     newsletters,
     insideTheGuardian,
@@ -513,6 +518,7 @@ private object NavLinks {
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
     dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
+    guardianLive,
     ukMasterClasses,
     digitalNewspaperArchive,
     printShop,

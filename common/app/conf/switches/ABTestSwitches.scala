@@ -18,6 +18,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-commercial-cmp-ui-non-dismissable",
+    "Test whether our new CMP UI obtains target consent rates using non-dismissable variant",
+    owners = Seq(Owner.withGithub("ghaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 12, 3),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -28,28 +38,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month",
-    "States how many articles a user has viewed in the epic in a month",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-position",
-    "Moment epic which also states how many articles a user has viewed",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-articles-viewed-month-moment-60-days-variant",
-    "Moment epic which also states how many articles a user has viewed",
+    "ab-contributions-epic-articles-viewed-round-3",
+    "Tests adding a count of articles viewed in the epic",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
@@ -81,26 +71,6 @@ trait ABTestSwitches {
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-environment-moment-supporters",
-    "moment banner to be seen by current supporters",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-environment-moment-non-supporters",
-    "moment banner to be seen by general audience",
-    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true

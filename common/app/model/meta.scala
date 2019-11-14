@@ -444,21 +444,6 @@ case class MediaAtomPage(
   )
 }
 
-case class StoryQuestionsAtomPage(
-  override val atom: StoryQuestionsAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean,
-  val inApp: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "storyquestions"
-  override val body = views.html.fragments.atoms.storyquestions(atom, inApp = inApp)
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Story questions"),
-    section = None
-  )
-}
-
 case class GuideAtomPage(
   override val atom: GuideAtom,
   override val withJavaScript: Boolean,

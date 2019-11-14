@@ -17,7 +17,6 @@ object ArticleHtmlPage extends HtmlPage[ArticlePage] {
       case article if article.isImmersive => (immersiveGarnettHeader(), immersiveGarnettBody())
       case _ => (guardianHeaderHtml(), articleBodyGarnett(page))
     }
-
     StoryHtmlPage.html(
       header = header,
       content = content

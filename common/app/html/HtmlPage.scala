@@ -22,7 +22,6 @@ object HtmlPageHelpers {
   def guardianHeaderHtml()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
     val showTop = !page.metadata.shouldHideHeaderAndTopAds
     val showAds = Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)
-
     val headerContent: Html = stacked(
       commercial.topBanner() when showTop && showAds,
       header() when showTop

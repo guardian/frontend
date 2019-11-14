@@ -3,7 +3,7 @@
     margin-top: $gs-baseline;
     padding-top: $gs-baseline * 1.5;
 
-    .content--media:not(.paid-content):not(.content--gallery)  & {
+    .content--media:not(.paid-content):not(.content--gallery) & {
         @include multiline(4, $brightness-20, top);
 
         .submeta__keywords {
@@ -37,7 +37,6 @@
     padding-bottom: $gs-baseline;
 }
 
-
 // Nesting 'article' overrides from-content-api ul rules
 article .submeta__links,
 .submeta__links {
@@ -68,7 +67,6 @@ article .submeta__links,
 }
 
 .submeta__badge {
-    width: 33px;
     float: right;
     margin-top: -$gs-baseline;
     margin-left: $gs-gutter / 2;

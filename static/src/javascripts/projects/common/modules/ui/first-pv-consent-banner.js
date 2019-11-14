@@ -14,6 +14,7 @@ import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
+import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
 
 type Template = {
     heading: string,
@@ -105,7 +106,15 @@ const canShow = (): Promise<boolean> =>
     Promise.resolve(
         hasUnsetAdChoices() &&
             !hasUserAcknowledgedBanner(messageCode) &&
-            !isInVariantSynchronous(commercialCmpUiIab, 'variant')
+            (!isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
+                !isInVariantSynchronous(
+                    commercialCmpUiNonDismissable,
+                    'control'
+                ) ||
+                !isInVariantSynchronous(
+                    commercialCmpUiNonDismissable,
+                    'variant'
+                ))
     );
 
 const track = (): void => {
@@ -162,4 +171,5 @@ export {
     bindClickHandlers,
     messageCode,
     makeHtml,
+    hasUnsetAdChoices,
 };

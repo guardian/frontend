@@ -336,6 +336,7 @@ const makeEpicABTestVariant = (
             );
 
             return (
+                (!initVariant.canRun || initVariant.canRun()) &&
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
                 matchesTagsOrSections &&

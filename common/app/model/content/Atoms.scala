@@ -21,7 +21,6 @@ final case class Atoms(
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
   reviews: Seq[ReviewAtom],
-  storyquestions: Seq[StoryQuestionsAtom],
   explainers: Seq[ExplainerAtom],
   qandas: Seq[QandaAtom],
   guides: Seq[GuideAtom],
@@ -31,14 +30,13 @@ final case class Atoms(
   audios: Seq[AudioAtom],
   charts: Seq[ChartAtom]
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ storyquestions ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
+  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
 
   def atomTypes: Map[String, Boolean] = Map(
     "guide" -> !guides.isEmpty,
     "qanda" -> !qandas.isEmpty,
     "profile" -> !profiles.isEmpty,
     "timeline" -> !timelines.isEmpty,
-    "storyquestions" -> !storyquestions.isEmpty,
     "explainer" -> !explainers.isEmpty,
     "commonsdivision" -> !commonsdivisions.isEmpty,
     "audio" -> !audios.isEmpty,
@@ -144,12 +142,6 @@ final case class ReviewAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.review.ReviewAtom
-) extends Atom
-
-final case class StoryQuestionsAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.storyquestions.StoryQuestionsAtom
 ) extends Atom
 
 final case class ExplainerAtom(
@@ -270,8 +262,6 @@ object Atoms extends common.Logging {
 
       val reviews = extract(atoms.reviews, atom => { ReviewAtom.make(atom) })
 
-      val storyquestions = extract(atoms.storyquestions, atom => { StoryQuestionsAtom.make(atom) }).filter(StoryQuestionsAtom.isOpen)
-
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
       val qandas = extract(atoms.qandas, atom => {QandaAtom.make(atom)})
@@ -294,7 +284,6 @@ object Atoms extends common.Logging {
         interactives = interactives,
         recipes = recipes,
         reviews = reviews,
-        storyquestions = storyquestions,
         explainers = explainers,
         qandas = qandas,
         guides = guides,
@@ -559,39 +548,6 @@ object ReviewAtom {
       url <- GoogleStructuredData.bestSrcFor(media)
     } yield url
   }
-}
-
-object StoryQuestionsAtom {
-  def make(atom: AtomApiAtom): StoryQuestionsAtom = StoryQuestionsAtom(
-    atom.id,
-    atom,
-    atom.data.asInstanceOf[AtomData.Storyquestions].storyquestions
-  )
-
-  def isOpen(question: StoryQuestionsAtom): Boolean =
-    !question.data.closeDate.exists { closeDate =>
-      closeDate < DateTime.now(DateTimeZone.UTC).getMillis
-    }
-
-  def getListId(question: StoryQuestionsAtom): Option[String] = {
-    if ("test/test" == question.data.relatedStoryId) {
-      /**
-        * TODO - remove this workaround once we've migrated to using the listId in the model.
-        *
-        * This workaround enables us to run a test for demand of receiving the answers commissioned to questions by email.
-        * If the story questions atom belongs to the test/test tag and has a label 4 characters long (an email list id) then
-        * show the form allowing a user to submit their email address and receive an answer.
-        */
-      question.atom.labels.find(_.length == 4)
-    } else {
-      for {
-        notifications <- question.data.notifications
-        email <- notifications.email
-      } yield email.listId
-    }
-  }
-
-
 }
 
 object ExplainerAtom {

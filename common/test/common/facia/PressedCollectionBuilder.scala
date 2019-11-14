@@ -53,7 +53,8 @@ object PressedCollectionBuilder {
       showDateHeader = false,
       showLatestUpdate = false,
       config,
-      hasMore = false
+      hasMore = false,
+      targetedTerritory = None
     )
   }
 }

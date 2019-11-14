@@ -1,5 +1,10 @@
 ## What does this change?
 
+## Does this change need to be reproduced in dotcom-rendering ?
+
+- [ ] No
+- [ ] Yes (please indicate your plans for DCR Implementation)
+
 ## Screenshots
 
 ## What is the value of this and can you measure success?
