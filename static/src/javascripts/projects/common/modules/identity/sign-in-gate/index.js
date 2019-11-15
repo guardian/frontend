@@ -45,6 +45,7 @@ const component = {
     id: 'inital_test',
 };
 
+// ophan helper methods
 const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
@@ -61,18 +62,22 @@ const submitClickEvent = (componentEvent: ComponentEventWithoutAction) =>
         action: 'CLICK',
     });
 
+// check if the user has dismissed the gate by checking the user preferences
 const hasUserDismissedGate: (string, string) => boolean = (name, variant) => {
     const prefs = userPrefs.get(componentName) || {};
 
     return !!prefs[`${name}-${variant}`];
 };
 
+// set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
 const setUserDismissedGate: (string, string) => void = (name, variant) => {
     const prefs = userPrefs.get(componentName) || {};
-    prefs[`${name}-${variant}`] = Date.now();
+    prefs[`${name}-${variant}`] = new Date().toISOString();
     userPrefs.set(componentName, prefs);
 };
 
+// use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day
+// in our case if this is the second article or higher the user has viewed then set the gate
 const isSecondPageOrHigherPageView = (): boolean => {
     // get daily read article count array from local storage
     const dailyArticleCount = local.get('gu.history.dailyArticleCount') || [];
@@ -84,7 +89,9 @@ const isSecondPageOrHigherPageView = (): boolean => {
     return count >= 1;
 };
 
+// hide the sign in gate on article types that are not supported
 const isInvalidArticleType = (): boolean => {
+    // uses guardian config object to check for these page types
     const invalidTypes = [
         'isColumn',
         'isFront',
@@ -106,6 +113,7 @@ const isInvalidArticleType = (): boolean => {
     }, false);
 };
 
+// get the current variant id the user is in
 const getVariant: () => string = () => {
     //  get the current test
     const currentTest = getSynchronousTestsToRun().find(
@@ -116,6 +124,7 @@ const getVariant: () => string = () => {
     return currentTest ? currentTest.variantToRun.id : '';
 };
 
+// determines if this "banner" can show for this user
 const canShow: () => Promise<boolean> = async () => {
     const variant = getVariant();
 
@@ -135,22 +144,33 @@ const canShow: () => Promise<boolean> = async () => {
     );
 };
 
+// runs if the user is able to view the banner
 const show: () => Promise<boolean> = () => {
+    // get the users variant
     const variant = getVariant();
 
     // check if user is in correct test/variant to display
     if (variant) {
+        // object helper to determine the ab test
+        const abTest = {
+            name: signInGateFirstTest.id,
+            variant,
+        };
+
+        // encode the current page as the return URL if the user goes onto the sign in page
         const returnUrl = encodeURIComponent(
             `${config.get('page.host')}/${config.get('page.pageId')}`
         );
 
+        // set the component event params to be included in the query
         const queryParams: ComponentEventParams = {
-            componentType: component.componentType,
+            componentType: 'signingate',
             componentId: component.id,
             abTestName: signInGateFirstTest.id,
             abTestVariant: variant,
         };
 
+        // attach the view id to component event params
         if (
             window.guardian &&
             window.guardian.ophan &&
@@ -158,12 +178,17 @@ const show: () => Promise<boolean> = () => {
         )
             queryParams.viewId = window.guardian.ophan.viewId;
 
+        // attach the browser id to component event params
         const bwid = getCookie('bwid');
         if (bwid) queryParams.browserId = bwid;
 
+        // attach the visit id to component event params
         const vsid = getCookie('vsid');
         if (vsid) queryParams.visitId = vsid;
 
+        // generate the sign in url link using the return url and component event params
+        // also converts the params to a query string and uri encodes them so they can be passed through
+        // all the way to IDAPI
         const signInUrl = `${config.get(
             `page.idUrl`
         )}/signin?returnUrl=${returnUrl}&componentEventParams=${encodeURIComponent(
@@ -174,10 +199,7 @@ const show: () => Promise<boolean> = () => {
         // fire tracking
         submitViewEvent({
             component,
-            abTest: {
-                name: signInGateFirstTest.id,
-                variant,
-            },
+            abTest,
         });
 
         if (variant === 'variant') {
@@ -215,7 +237,7 @@ const show: () => Promise<boolean> = () => {
                         }
                     }
 
-                    // check page type to change text colour
+                    // check page type/pillar to change text colour of the sign in gate
                     const paragraphText = shadowArticleBody.querySelector(
                         '.signin-gate__benefits--text'
                     );
@@ -231,24 +253,21 @@ const show: () => Promise<boolean> = () => {
                                     `signin-gate__benefits--text-comment`
                                 );
                                 break;
-                            case 'Sport': {
+                            case 'Sport':
                                 paragraphText.classList.add(
                                     `signin-gate__benefits--text-sport`
                                 );
                                 break;
-                            }
-                            case 'Arts': {
+                            case 'Arts':
                                 paragraphText.classList.add(
                                     `signin-gate__benefits--text-culture`
                                 );
                                 break;
-                            }
-                            case 'Lifestyle': {
+                            case 'Lifestyle':
                                 paragraphText.classList.add(
                                     `signin-gate__benefits--text-lifestyle`
                                 );
                                 break;
-                            }
                             default:
                                 break;
                         }
@@ -263,10 +282,7 @@ const show: () => Promise<boolean> = () => {
                             // submit dismiss click event to ophan
                             submitClickEvent({
                                 component,
-                                abTest: {
-                                    name: signInGateFirstTest.id,
-                                    variant,
-                                },
+                                abTest,
                                 value: 'dismiss',
                             });
 
@@ -281,6 +297,7 @@ const show: () => Promise<boolean> = () => {
                         }
                     );
 
+                    // add click handler for sign in button click
                     bean.on(
                         shadowArticleBody,
                         'click',
@@ -289,11 +306,23 @@ const show: () => Promise<boolean> = () => {
                             // submit sign in button click event to ophan
                             submitClickEvent({
                                 component,
-                                abTest: {
-                                    name: signInGateFirstTest.id,
-                                    variant,
-                                },
+                                abTest,
                                 value: 'signin_button',
+                            });
+                        }
+                    );
+
+                    // add click handler for the why sign in link
+                    bean.on(
+                        shadowArticleBody,
+                        'click',
+                        '.js-signin-gate__why',
+                        () => {
+                            // submit why sign in track event
+                            submitClickEvent({
+                                component,
+                                abTest,
+                                value: 'why_sign_in',
                             });
                         }
                     );
@@ -304,6 +333,8 @@ const show: () => Promise<boolean> = () => {
             }
         }
     }
+
+    // have to return a promise
     return Promise.resolve(true);
 };
 
