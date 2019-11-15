@@ -117,6 +117,38 @@ const reset = () => {
     fillAdvertSlots.mockReset();
 };
 
+const fakeTrueConsent = {
+    '1': true,
+    '2': true,
+    '3': true,
+    '4': true,
+    '5': true,
+};
+
+const fakeFalseConsent = {
+    '1': false,
+    '2': false,
+    '3': false,
+    '4': false,
+    '5': false,
+};
+
+const fakeNullConsent = {
+    '1': null,
+    '2': null,
+    '3': null,
+    '4': null,
+    '5': null,
+};
+
+const fakeMixedConsent = {
+    '1': true,
+    '2': false,
+    '3': false,
+    '4': false,
+    '5': false,
+};
+
 describe('DFP', () => {
     const domSnippet = `
         <div id="dfp-ad-html-slot" class="js-ad-slot" data-name="html-slot" data-mobile="300,50"></div>
@@ -404,19 +436,53 @@ describe('DFP', () => {
 
     describe('keyword targeting', () => {
         it('should send page level keywords', () => {
-            onIabConsentNotification.mockImplementation(callback =>
-                callback({
-                    '1': true,
-                    '2': true,
-                    '3': true,
-                    '4': true,
-                    '5': true,
-                })
-            );
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
                 ).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
+            });
+        });
+    });
+
+    describe('NPA flag is set correctly', () => {
+        it('when full IAB consent was given', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(fakeTrueConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(0);
+            });
+        });
+        it('when no IAB consent preferences were specified', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(fakeNullConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(0);
+            });
+        });
+        it('when full IAB consent was denied', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(fakeFalseConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(1);
+            });
+        });
+        it('when only partial IAB consent was given', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(fakeMixedConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(1);
             });
         });
     });
