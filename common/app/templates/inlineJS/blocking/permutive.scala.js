@@ -64,26 +64,42 @@
             keywords,
             webPublicationDate,
         } = window.guardian.config.page;
+
         const safeAuthors =
-            author && typeof author === 'string' ? author.split(',') : [];
+            author && typeof author === 'string' ? author.split(',') : null;
         const safeKeywords =
-            keywords && typeof keywords === 'string' ? keywords.split(',') : [];
+            keywords && typeof keywords === 'string'
+                ? keywords.split(',')
+                : null;
         const safePublishedAt =
             webPublicationDate && typeof webPublicationDate === 'number'
                 ? new Date(webPublicationDate).toISOString()
                 : null;
+        const rawPayload = {
+            premium: isPaidContent,
+            id: pageId,
+            title: headline,
+            type: contentType,
+            section: section,
+            authors: safeAuthors,
+            keywords: safeKeywords,
+            publishedAt: safePublishedAt,
+        };
+
+        const isEmpty = value =>
+            value === '' || typeof value === 'undefined' || value === null;
+
+        const removeEmpty = payload => {
+            Object.keys(payload).forEach(
+                key => isEmpty(payload[key]) && delete payload[key]
+            );
+            return payload;
+        };
+
+        const payload = removeEmpty(rawPayload);
         permutive.addon('web', {
             page: {
-                content: {
-                    premium: isPaidContent || false,
-                    id: pageId || '',
-                    title: headline || '',
-                    type: contentType || '',
-                    section: section || '',
-                    authors: safeAuthors,
-                    keywords: safeKeywords,
-                    publishedAt: safePublishedAt,
-                },
+                content: payload,
             },
         });
     } catch (e) {
