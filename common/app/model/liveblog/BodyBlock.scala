@@ -116,6 +116,10 @@ case class BodyBlock(
   def publishedCreatedDate(timezone: DateTimeZone): Option[LiveBlogDate] = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
 
   def publishedCreatedTimestamp(): Option[Long] = firstPublishedDate.orElse(createdDate).map(_.getMillis())
+
+  def referenceDateForDisplay(): Option[DateTime] = {
+    firstPublishedDate
+  }
 }
 
 object LiveBlogDate {
