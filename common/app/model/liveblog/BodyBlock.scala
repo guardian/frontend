@@ -117,7 +117,7 @@ case class BodyBlock(
 
   def publishedCreatedTimestamp(): Option[Long] = firstPublishedDate.orElse(createdDate).map(_.getMillis())
 
-  def referenceDateForDisplay(): Option[DateTime] = Option(firstPublishedDate.getOrElse(publishedDate.getOrElse(createdDate.getOrElse(null))))
+  def referenceDateForDisplay(): Option[DateTime] = firstPublishedDate.orElse(publishedDate).orElse(createdDate)
 
 }
 
