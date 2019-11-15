@@ -34,7 +34,7 @@
 
         <p class="block-time published-time">
                 <a href="/@article.metadata.id?page=with:block-@block.id#block-@block.id" itemprop="url" class="block-time__link">
-                    @views.html.liveblog.dateBlock(block.publishedDate.map(LiveBlogDate(_, timezone)))
+                    @views.html.liveblog.dateBlock(block.firstPublishedDate.map(LiveBlogDate(_, timezone)))
                 </a>
         </p>
 

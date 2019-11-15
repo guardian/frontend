@@ -78,7 +78,7 @@ class RemoteRenderer extends Logging {
   }
 
   def getArticle(
-    ws:WSClient,
+    ws: WSClient,
     path: String,
     page: PageWithStoryPackage,
     blocks: Blocks,
