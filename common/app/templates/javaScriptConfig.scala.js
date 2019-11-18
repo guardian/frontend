@@ -29,6 +29,7 @@
             },
             "acquisitions": {
                 "payment-methods": "@Static("images/acquisitions/payment-methods.png")",
+                "payment-methods-us": "@Static("images/acquisitions/payment-methods-us.png")",
                 "info-logo": "@Static("images/acquisitions/info-logo.svg")",
                 "ad-free": "@Static("images/acquisitions/ad-free.svg")"
             },

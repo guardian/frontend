@@ -54,6 +54,7 @@ import {
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
+import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -76,8 +77,11 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
 
 const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 
-const replaceCountryName = (text: string, countryName: string): string =>
-    text.replace(/%%COUNTRY_NAME%%/g, countryName);
+const replaceCountryName = (text: string, countryName: ?string): string =>
+    countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
+
+const replaceArticlesViewed = (text: string, count: ?number): string =>
+    count ? text.replace(/%%ARTICLE_COUNT%%/g, count.toString()) : text;
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -227,6 +231,21 @@ const countryNameIsOk = (
     geolocation: ?string
 ): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
 
+const articleViewCountIsOk = (
+    articlesViewedSettings?: ArticlesViewedSettings
+): boolean => {
+    if (articlesViewedSettings) {
+        const upperOk = articlesViewedSettings.maxViews
+            ? articlesViewedSettings.count <= articlesViewedSettings.maxViews
+            : true;
+        const lowerOk = articlesViewedSettings.minViews
+            ? articlesViewedSettings.count >= articlesViewedSettings.minViews
+            : true;
+        return upperOk && lowerOk;
+    }
+    return true;
+};
+
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
@@ -336,6 +355,7 @@ const makeEpicABTestVariant = (
             );
 
             return (
+                (!initVariant.canRun || initVariant.canRun()) &&
                 meetsMaxViewsConditions &&
                 matchesCountryGroups &&
                 matchesTagsOrSections &&
@@ -487,6 +507,7 @@ const makeEpicABTest = ({
     pageCheck = isCompatibleWithArticleEpic,
     template = controlTemplate,
     canRun = () => true,
+    articlesViewedSettings,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -498,6 +519,7 @@ const makeEpicABTest = ({
             return (
                 canRun() &&
                 countryNameIsOk(testHasCountryName, geolocation) &&
+                articleViewCountIsOk(articlesViewedSettings) &&
                 shouldShowEpic(this)
             );
         },
@@ -535,7 +557,8 @@ const makeEpicABTest = ({
 const buildEpicCopy = (
     row: any,
     testHasCountryName: boolean,
-    geolocation: ?string
+    geolocation: ?string,
+    articlesViewedCount?: number
 ) => {
     const heading = row.heading;
 
@@ -548,17 +571,17 @@ const buildEpicCopy = (
         ? getCountryName(geolocation)
         : undefined;
 
+    const replaceCountryNameAndArticlesViewed = (s: string): string =>
+        replaceArticlesViewed(
+            replaceCountryName(s, countryName),
+            articlesViewedCount
+        );
+
     return {
-        heading:
-            heading && countryName
-                ? replaceCountryName(heading, countryName)
-                : heading,
-        paragraphs:
-            paragraphs && countryName
-                ? paragraphs.map<string>(para =>
-                      replaceCountryName(para, countryName)
-                  )
-                : paragraphs,
+        heading: heading
+            ? replaceCountryNameAndArticlesViewed(heading)
+            : heading,
+        paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
         highlightedText: row.highlightedText
             ? row.highlightedText.replace(
                   /%%CURRENCY_SYMBOL%%/g,
@@ -581,7 +604,9 @@ const buildBannerCopy = (
     return countryName ? replaceCountryName(text, countryName) : text;
 };
 
-export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
+export const buildConfiguredEpicTestFromJson = (
+    test: Object
+): InitEpicABTest => {
     const geolocation = geolocationGetSync();
 
     const countryGroups = test.locations;
@@ -601,7 +626,18 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
 
     const deploymentRules = test.alwaysAsk ? 'AlwaysAsk' : parseMaxViews();
 
-    return makeEpicABTest({
+    const articlesViewedSettings =
+        test.articlesViewedSettings && test.articlesViewedSettings.periodInWeeks
+            ? {
+                  minViews: test.articlesViewedSettings.minViews,
+                  maxViews: test.articlesViewedSettings.maxViews,
+                  count: getArticleViewCountForWeeks(
+                      test.articlesViewedSettings.periodInWeeks
+                  ),
+              }
+            : undefined;
+
+    return {
         id: test.name,
         campaignId: test.name,
         geolocation,
@@ -636,6 +672,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
         // If testHasCountryName is true but a country name is not available for this user then
         // they will be excluded from this test
         testHasCountryName: test.hasCountryName,
+        articlesViewedSettings,
 
         variants: test.variants.map(variant => ({
             id: variant.name,
@@ -647,12 +684,19 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
                       supportBaseURL: variant.cta.baseURL,
                   }
                 : {}),
-            copy: buildEpicCopy(variant, test.hasCountryName, geolocation),
+            copy: buildEpicCopy(
+                variant,
+                test.hasCountryName,
+                geolocation,
+                articlesViewedSettings
+                    ? articlesViewedSettings.count
+                    : undefined
+            ),
             classNames: [
                 `contributions__epic--${test.name}`,
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
-            showTicker: optionalStringToBoolean(variant.showTicker),
+            showTicker: variant.showTicker,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
             deploymentRules,
@@ -662,7 +706,7 @@ export const buildConfiguredEpicTestFromJson = (test: Object): EpicABTest => {
             excludedTagIds,
             excludedSections,
         })),
-    });
+    };
 };
 
 export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
@@ -672,7 +716,9 @@ export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
             if (epicTestData.tests) {
                 return epicTestData.tests
                     .filter(test => test.isOn || showDrafts)
-                    .map(buildConfiguredEpicTestFromJson);
+                    .map(json =>
+                        makeEpicABTest(buildConfiguredEpicTestFromJson(json))
+                    );
             }
             return [];
         })

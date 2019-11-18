@@ -3,16 +3,13 @@
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
-import config from 'lib/config';
-import { applePayApiAvailable } from 'lib/detect';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
 export const acquisitionsBannerControlTemplate = (
     params: EngagementBannerTemplateParams
-): string => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-    return `
+): string =>
+    `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel hide-until-phablet">
                 ${marque36icon.markup}
@@ -40,16 +37,9 @@ export const acquisitionsBannerControlTemplate = (
                 }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
                 </a>
-                <div class="engagement-banner__payment-logos">
-                    <img
-                        src="${config.get(
-                            'images.acquisitions.payment-methods',
-                            ''
-                        )}"
-                        alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal"
-                    >
-                    ${applePayLogo}
-                </div>
+                ${paymentMethodLogosTemplate(
+                    'engagement-banner__payment-logos'
+                )}
             </div>
         </div>
         <a
@@ -59,4 +49,3 @@ export const acquisitionsBannerControlTemplate = (
             href="${params.linkUrl}"
         ></a>
     `;
-};

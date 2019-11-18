@@ -38,8 +38,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month",
-    "States how many articles a user has viewed in the epic in a month",
+    "ab-contributions-epic-articles-viewed-round-3",
+    "Tests adding a count of articles viewed in the epic",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 11, 18),
+    sellByDate = new LocalDate(2019, 12, 11),
     exposeClientSide = true
   )
 
