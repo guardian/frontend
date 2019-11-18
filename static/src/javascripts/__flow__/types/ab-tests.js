@@ -29,7 +29,7 @@ declare type EpicVariant = Variant & {
     classNames: string[],
     showTicker: boolean,
 
-    buttonTemplate?: (primaryCta: EpicCta) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
@@ -99,7 +99,7 @@ declare type InitEpicABTestVariant = {
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: (primaryCta: EpicCta) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
