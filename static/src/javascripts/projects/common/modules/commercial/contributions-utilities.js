@@ -98,10 +98,13 @@ const controlTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
-            ? variant.buttonTemplate({
-                  url: variant.supportURL,
-                  ctaText: variant.ctaText || 'Support The Guardian',
-              })
+            ? variant.buttonTemplate(
+                  {
+                      url: variant.supportURL,
+                      ctaText: variant.ctaText || 'Support The Guardian',
+                  },
+                  variant.secondaryCta
+              )
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
@@ -276,6 +279,7 @@ const makeEpicABTestVariant = (
         template,
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
+        secondaryCta: initVariant.secondaryCta,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
@@ -665,6 +669,12 @@ export const buildConfiguredEpicTestFromJson = (
                       supportBaseURL: variant.cta.baseURL,
                   }
                 : {}),
+            secondaryCta:
+                variant.secondaryCta &&
+                variant.secondaryCta.url &&
+                variant.secondaryCta.ctaText
+                    ? variant.secondaryCta
+                    : undefined,
             copy: buildEpicCopy(
                 variant,
                 test.hasCountryName,
