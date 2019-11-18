@@ -117,11 +117,6 @@
 
     @page.article.fields.blocks.toSeq.map { blocks =>
         @blocks.body.map { block =>
-            @block.title.map { title =>
-                @row(Seq("padded")) {
-                    <h2 class="block__title">@title</h2>
-                }
-            }
 
             @block.elements.map { element =>
                 @element match {
