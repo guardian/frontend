@@ -1,12 +1,12 @@
 // @flow
 import {
     makeEpicABTest,
-    defaultButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { epicButtonsLearnMoreTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons-learn-more';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 
 // User must not have read fewer than 5 articles in the last 30 days
 const maxArticleViews = 5;
@@ -28,11 +28,6 @@ const copy = {
     ],
     highlightedText,
 };
-
-const learnMoreButtonTemplate: (CtaUrls, ctaText?: string) => string = (
-    url: CtaUrls,
-    ctaText?: string
-) => epicButtonsLearnMoreTemplate(url, ctaText);
 
 export const learnMore: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicLearnMoreCta',
@@ -59,13 +54,13 @@ export const learnMore: EpicABTest = makeEpicABTest({
     variants: [
         {
             id: 'control',
-            buttonTemplate: defaultButtonTemplate,
+            buttonTemplate: epicButtonsTemplate,
             products: [],
             copy: buildEpicCopy(copy, false, geolocation),
         },
         {
             id: 'variant',
-            buttonTemplate: learnMoreButtonTemplate,
+            buttonTemplate: epicButtonsLearnMoreTemplate,
             products: [],
             copy: buildEpicCopy(copy, false, geolocation),
         },

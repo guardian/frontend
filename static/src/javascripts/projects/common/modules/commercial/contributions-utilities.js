@@ -38,7 +38,6 @@ import {
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
-    supportSubscribeGeoRedirectURL,
     addCountryGroupToSupportLink,
 } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
@@ -91,11 +90,6 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
-    url: CtaUrls,
-    ctaText?: string
-) => epicButtonsTemplate(url, ctaText);
-
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
     copy: AcquisitionsEpicTemplateCopy
@@ -104,13 +98,10 @@ const controlTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         buttonTemplate: variant.buttonTemplate
-            ? variant.buttonTemplate(
-                  {
-                      supportUrl: variant.supportURL,
-                      subscribeUrl: variant.subscribeURL,
-                  },
-                  variant.ctaText
-              )
+            ? variant.buttonTemplate({
+                  url: variant.supportURL,
+                  ctaText: variant.ctaText || 'Support The Guardian',
+              })
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
@@ -274,16 +265,6 @@ const makeEpicABTestVariant = (
             base: initVariant.supportBaseURL
                 ? addCountryGroupToSupportLink(initVariant.supportBaseURL)
                 : supportContributeURL(),
-            componentType: parentTest.componentType,
-            componentId,
-            campaignCode,
-            abTest: {
-                name: parentTest.id,
-                variant: initVariant.id,
-            },
-        }),
-        subscribeURL: addTrackingCodesToUrl({
-            base: supportSubscribeGeoRedirectURL,
             componentType: parentTest.componentType,
             componentId,
             campaignCode,
@@ -679,7 +660,7 @@ export const buildConfiguredEpicTestFromJson = (
             ...(test.isLiveBlog ? { test: setupEpicInLiveblog } : {}),
             ...(variant.cta
                 ? {
-                      buttonTemplate: defaultButtonTemplate,
+                      buttonTemplate: epicButtonsTemplate,
                       ctaText: variant.cta.text,
                       supportBaseURL: variant.cta.baseURL,
                   }
@@ -885,7 +866,6 @@ export {
     pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeEpicABTest,
-    defaultButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
     userIsInCorrectCohort,

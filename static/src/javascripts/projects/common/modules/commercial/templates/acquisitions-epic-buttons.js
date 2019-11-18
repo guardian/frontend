@@ -1,16 +1,13 @@
 // @flow
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
-export const epicButtonsTemplate = (
-    { supportUrl = '' }: CtaUrls,
-    ctaText?: string = 'Support The Guardian'
-) => {
+export const epicButtonsTemplate = (primaryCta: EpicCta) => {
     const supportButtonSupport = `
         <div>
             <a class="component-button component-button--primary component-button--hasicon-right contributions__contribute--epic-member"
-              href="${supportUrl}"
+              href="${primaryCta.url}"
               target="_blank">
-                ${ctaText}
+                ${primaryCta.ctaText}
                 <svg
                 class="svg-arrow-right-straight"
                 xmlns="http://www.w3.org/2000/svg"

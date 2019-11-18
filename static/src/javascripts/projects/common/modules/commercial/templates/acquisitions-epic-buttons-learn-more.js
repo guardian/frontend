@@ -3,15 +3,16 @@ import config from 'lib/config';
 import { applePayApiAvailable } from 'lib/detect';
 import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
-export const epicButtonsLearnMoreTemplate = (
-    { supportUrl = '' }: CtaUrls,
-    ctaText?: string = 'Support The Guardian'
-) => {
+// TODO - delete test
+export const epicButtonsLearnMoreTemplate = ({
+    url,
+    ctaText = 'Support The Guardian',
+}: EpicCta) => {
     const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
 
     const supportButtonSupport = `
             <a class="component-button component-button--primary component-button--hasicon-right contributions__contribute--epic-member"
-              href="${supportUrl}"
+              href="${url}"
               target="_blank">
                 ${ctaText}
                 <svg
