@@ -696,7 +696,7 @@ export const buildConfiguredEpicTestFromJson = (
                 `contributions__epic--${test.name}`,
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
-            showTicker: optionalStringToBoolean(variant.showTicker),
+            showTicker: variant.showTicker,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
             deploymentRules,
