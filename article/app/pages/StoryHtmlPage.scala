@@ -15,7 +15,7 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.{ContentCSSFile}
-import dotcomrendering.DotcomRenderingUtils.pageIsDCRSupported
+import dotcomrendering.DotcomRendering.pageIsDCRSupported
 
 object StoryHtmlPage {
 

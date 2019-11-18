@@ -88,7 +88,7 @@ object ArticlePageDCRChecks {
 
 }
 
-object DotcomRenderingUtils {
+object DotcomRendering {
 
   def featureWhitelist(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
@@ -112,7 +112,7 @@ object DotcomRenderingUtils {
 
   def pageIsDCRSupported(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     // Indicates whether the page is technically supported by DCR
-    val whitelistFeatures = DotcomRenderingUtils.featureWhitelist(page, request)
+    val whitelistFeatures = DotcomRendering.featureWhitelist(page, request)
     whitelistFeatures.forall({ case (_, isMet) => isMet})
   }
 

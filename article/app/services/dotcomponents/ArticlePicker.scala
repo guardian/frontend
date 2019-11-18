@@ -1,6 +1,6 @@
 package services.dotcomponents
 
-import dotcomrendering.DotcomRenderingUtils._
+import dotcomrendering.DotcomRendering._
 import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
 import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
