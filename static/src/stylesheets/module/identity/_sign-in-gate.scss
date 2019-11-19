@@ -59,10 +59,10 @@
         height: 100%;
 
         /* "transparent" only works here because == rgba(0,0,0,0) */
-        background-image: linear-gradient(0deg, $brightness-100, 70%, transparent);
+        background-image: linear-gradient(0deg, $brightness-100, 70%, rgba(255,255,255,0));
 
         &.signin-gate__first-paragraph-overlay--comment {
-            background-image: linear-gradient(0deg, $opinion-faded, 70%, transparent);
+            background-image: linear-gradient(0deg, $opinion-faded, 70%, rgba(255,255,255,0));
         }
     }
 }
@@ -80,7 +80,7 @@
     border: 0;
     border-radius: 21px;
     box-sizing: border-box;
-    background: transparent;
+    background: rgba(255,255,255,0);
     cursor: pointer;
     transition: .3s ease-in-out;;
     justify-content: space-between;
