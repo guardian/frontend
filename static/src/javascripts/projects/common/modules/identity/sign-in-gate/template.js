@@ -1,5 +1,5 @@
 // @flow
-export const make = (signInUrl: string): string => `
+export const make = (signInUrl: string, guUrl: string): string => `
 <div class="signin-gate">
     <div class="signin-gate__content">
         <div class="signin-gate__header">
@@ -18,7 +18,7 @@ export const make = (signInUrl: string): string => `
             <a class="signin-gate__button signin-gate__button--primary js-signin-gate__button" href="${signInUrl}">
                 Sign in
             </a>
-            <a class="signin-gate__why">Why sign in?</a>
+            <a class="signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
             <a class="signin-gate__dismiss js-signin-gate__dismiss">Not Now</a>
         </div>
     </div>

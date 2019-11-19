@@ -186,6 +186,9 @@ const show: () => Promise<boolean> = () => {
         const vsid = getCookie('vsid');
         if (vsid) queryParams.visitId = vsid;
 
+        // get the current guardian website url, used to why sign in link
+        const guUrl = config.get(`page.host`);
+
         // generate the sign in url link using the return url and component event params
         // also converts the params to a query string and uri encodes them so they can be passed through
         // all the way to IDAPI
@@ -222,7 +225,7 @@ const show: () => Promise<boolean> = () => {
                             ${articleBodyFirstChild.outerHTML}
                             <div class="signin-gate__first-paragraph-overlay"></div>
                         </div>
-                        ${make(signInUrl)}
+                        ${make(signInUrl, guUrl)}
                     `;
 
                     // check if comment, and add comment/opinion bg colour
