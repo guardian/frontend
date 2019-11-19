@@ -113,6 +113,17 @@ const isInvalidArticleType = (): boolean => {
     }, false);
 };
 
+// hide the sign in gate on certain sections of the site, e.g info, about, help etc.
+const isInvalidSection = (): boolean => {
+    const invalidSections = ['about', 'info'];
+
+    return invalidSections.reduce((isSectionInvalid, section) => {
+        if (isSectionInvalid) return true;
+
+        return config.get(`page.section`) === section;
+    }, false);
+};
+
 // get the current variant id the user is in
 const getVariant: () => string = () => {
     //  get the current test
@@ -140,7 +151,9 @@ const canShow: () => Promise<boolean> = async () => {
             // check if user is not logged by checking for cookie
             !isUserLoggedIn() &&
             // check if article type is valid
-            !isInvalidArticleType()
+            !isInvalidArticleType() &&
+            // check if page section is valid (e.g not about or info)
+            !isInvalidSection()
     );
 };
 

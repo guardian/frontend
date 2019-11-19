@@ -114,7 +114,7 @@ describe('Sign in gate test', () => {
             });
         });
 
-        it('should return false if there is an invalid article type detected', () => {
+        it('should return false if there is an invalid article type or section detected', () => {
             fakeConfig.get.mockReturnValueOnce(true);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
