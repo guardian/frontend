@@ -36,6 +36,10 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => undefined),
 }));
 
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(() => ''),
+}));
+
 const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
     .isInABTestSynchronous;
 
