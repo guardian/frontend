@@ -18,8 +18,8 @@ export const make = (signInUrl: string, guUrl: string): string => `
             <a class="signin-gate__button signin-gate__button--primary js-signin-gate__button" href="${signInUrl}">
                 Sign in
             </a>
-            <a class="signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
-            <a class="signin-gate__dismiss js-signin-gate__dismiss">Not Now</a>
+            <a class="signin-gate__why js-signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
+            <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
         </div>
     </div>
 </div>
