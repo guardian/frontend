@@ -666,14 +666,17 @@ export const buildConfiguredEpicTestFromJson = (
                 ? {
                       buttonTemplate: epicButtonsTemplate,
                       ctaText: variant.cta.text,
-                      supportBaseURL: variant.cta.baseURL,
+                      supportBaseURL: variant.cta.baseUrl,
                   }
                 : {}),
             secondaryCta:
                 variant.secondaryCta &&
-                variant.secondaryCta.url &&
-                variant.secondaryCta.ctaText
-                    ? variant.secondaryCta
+                variant.secondaryCta.baseUrl &&
+                variant.secondaryCta.text
+                    ? {
+                          url: variant.secondaryCta.baseUrl,
+                          ctaText: variant.secondaryCta.text,
+                      }
                     : undefined,
             copy: buildEpicCopy(
                 variant,
