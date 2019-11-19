@@ -1,7 +1,7 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
-import { acquisitionsBannerUsEoy } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
+import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
@@ -35,7 +35,7 @@ export const contributionsBannerUsEoy: AcquisitionsABTest = {
                 leadSentence,
                 messageText,
                 ctaText,
-                template: acquisitionsBannerUsEoy,
+                template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
             },
         },

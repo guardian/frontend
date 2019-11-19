@@ -4,7 +4,7 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
-export const acquisitionsBannerUsEoy = (
+export const acquisitionsBannerUsEoyTemplate = (
     params: EngagementBannerTemplateParams
 ): string => `
         <div class="engagement-banner__close">
