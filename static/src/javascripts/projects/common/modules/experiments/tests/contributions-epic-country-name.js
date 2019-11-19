@@ -1,10 +1,10 @@
 // @flow
 import {
     makeEpicABTest,
-    defaultButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getCountryName, getSync as geolocationGetSync } from 'lib/geolocation';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 
 const geolocation = geolocationGetSync();
 
@@ -35,7 +35,7 @@ export const countryName: EpicABTest = makeEpicABTest({
     variants: [
         {
             id: 'control',
-            buttonTemplate: defaultButtonTemplate,
+            buttonTemplate: epicButtonsTemplate,
             products: [],
             copy: buildEpicCopy(
                 {

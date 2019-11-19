@@ -1,11 +1,11 @@
 // @flow
 import {
     makeEpicABTest,
-    defaultButtonTemplate,
     buildEpicCopy,
 } from 'common/modules/commercial/contributions-utilities';
 import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 
 const geolocation = geolocationGetSync();
 
@@ -40,7 +40,7 @@ const buildArticleCountVariant = ({
 
     return {
         id: name,
-        buttonTemplate: defaultButtonTemplate,
+        buttonTemplate: epicButtonsTemplate,
         products: [],
         copy: buildEpicCopy(
             {
@@ -82,7 +82,7 @@ export const articlesViewed: EpicABTest = makeEpicABTest({
     variants: [
         {
             id: 'control',
-            buttonTemplate: defaultButtonTemplate,
+            buttonTemplate: epicButtonsTemplate,
             products: [],
             copy: buildEpicCopy(controlCopy, false, geolocation),
         },

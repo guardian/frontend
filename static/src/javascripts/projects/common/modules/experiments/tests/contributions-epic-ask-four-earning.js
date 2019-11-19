@@ -1,9 +1,7 @@
 // @flow
-import {
-    makeEpicABTest,
-    defaultButtonTemplate,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 
 export const askFourEarning: EpicABTest = makeEpicABTest({
     id: 'ContributionsEpicAskFourEarning',
@@ -29,7 +27,7 @@ export const askFourEarning: EpicABTest = makeEpicABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-            buttonTemplate: defaultButtonTemplate,
+            buttonTemplate: epicButtonsTemplate,
         },
     ],
 });

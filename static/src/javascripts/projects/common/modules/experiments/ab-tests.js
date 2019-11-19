@@ -8,7 +8,6 @@ import { countryName } from 'common/modules/experiments/tests/contributions-epic
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
-import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
@@ -27,7 +26,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     articlesViewed,
-    learnMore,
     countryName,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
