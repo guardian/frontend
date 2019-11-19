@@ -20,7 +20,7 @@ export const acquisitionsBannerUsEoyTemplate = (
         <div class="engagement-banner__container engagement-banner__container--us-eoy-2019">
             <div class="engagement-banner__text-container">
                 <div class="engagement-banner__header">
-                    </h2>${params.leadSentence}</h2>
+                    </h2>${params.leadSentence ? params.leadSentence : ''}</h2>
                 </div>
                 <div class="engagement-banner__body">
                     <p>${params.messageText}</p>
