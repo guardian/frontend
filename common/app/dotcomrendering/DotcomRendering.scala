@@ -119,10 +119,9 @@ object DotcomRendering {
   def pageWithStoryPackageIsDotcomRenderingEligible(page: PageWithStoryPackage)(implicit request: RequestHeader): Boolean = {
     // Indicates whether the page is technically supported by DCR and isEligible for the current request
     val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    val isAdFree = ArticlePageDCRChecks.isAdFree(page, request)
     val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
 
-    (pageIsDCRSupported(page, request) && isEnabled && (isAdFree || isCommercialBetaUser) && !request.forceDCROff) || request.forceDCR
+    (pageIsDCRSupported(page, request) && isEnabled && isCommercialBetaUser && !request.forceDCROff) || request.forceDCR
   }
 
 }
