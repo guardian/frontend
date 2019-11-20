@@ -680,3 +680,43 @@
         position: fixed;
     }
 }
+
+.creative__background-parent-interscroller {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+
+    /* This will clip the fixed-positioned child to the boundaries of its parent */
+    clip: rect(0, auto, auto, 0);
+
+    .creative__background {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .creative__background--interscroller {
+        width: 100%;
+        top: 0;
+        left: 0;
+        //clip: rect(0,100vw,100vh,0);
+        /* overflow-x: hidden;
+        overflow-y: auto;*/
+        position: fixed;
+        -webkit-transform: translateZ(0);
+        -moz-transform: translateZ(0);
+        transform: translateZ(0);
+        max-width: 100%;
+    }
+}
+
+.creative__background-parent-interscroller .ad-slot__label.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%
+}
+
