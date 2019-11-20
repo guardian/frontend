@@ -1,20 +1,16 @@
 // @flow
-import config from 'lib/config';
-import { applePayApiAvailable } from 'lib/detect';
-import applyPayMark from 'svgs/acquisitions/apple-pay-mark.svg';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
 export const epicButtonsTemplate = (
-    { supportUrl = '' }: CtaUrls,
-    ctaText?: string = 'Support The Guardian'
+    primaryCta: EpicCta,
+    secondaryCta?: EpicCta
 ) => {
-    const applePayLogo = applePayApiAvailable ? applyPayMark.markup : '';
-
     const supportButtonSupport = `
         <div>
             <a class="component-button component-button--primary component-button--hasicon-right contributions__contribute--epic-member"
-              href="${supportUrl}"
+              href="${primaryCta.url}"
               target="_blank">
-                ${ctaText}
+                ${primaryCta.ctaText}
                 <svg
                 class="svg-arrow-right-straight"
                 xmlns="http://www.w3.org/2000/svg"
@@ -28,17 +24,31 @@ export const epicButtonsTemplate = (
             </a>
         </div>`;
 
-    const paymentLogos = `<div class="contributions__payment-logos contributions__contribute--epic-member">
-        <img src="${config.get(
-            'images.acquisitions.payment-methods',
-            ''
-        )}" alt="Accepted payment methods: Visa, Mastercard, American Express and Paypal">
-        ${applePayLogo}
-    </div>`;
+    const secondaryButton = secondaryCta
+        ? `
+            <a class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--hasicon-right contributions__contribute--epic-member contributions__secondary-button contributions__secondary-button--epic"
+              href=${secondaryCta.url}
+              target="_blank">
+              ${secondaryCta.ctaText}
+              <svg
+                class="svg-arrow-right-straight"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 17.89"
+                preserveAspectRatio="xMinYMid"
+                aria-hidden="true"
+                focusable="false"
+                >
+                    <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
+                </svg>
+            </a>`
+        : '';
 
     return `
         <div class="contributions__buttons">
             ${supportButtonSupport}
-            ${paymentLogos}
+            ${secondaryButton}
+            ${paymentMethodLogosTemplate(
+                'contributions__payment-logos contributions__contribute--epic-member'
+            )}
         </div>`;
 };

@@ -38,19 +38,9 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-articles-viewed-month",
-    "States how many articles a user has viewed in the epic in a month",
+    "ab-contributions-epic-articles-viewed-round-3",
+    "Tests adding a count of articles viewed in the epic",
     owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-learn-more-cta",
-    "States how many articles a user has viewed in the epic in a month",
-    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 27),
     exposeClientSide = true
@@ -92,7 +82,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 11, 18),
+    sellByDate = new LocalDate(2019, 12, 11),
     exposeClientSide = true
   )
 
@@ -143,6 +133,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("faresite")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-first-test",
+    "Test new sign in component on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 12, 17),
     exposeClientSide = true
   )
 }
