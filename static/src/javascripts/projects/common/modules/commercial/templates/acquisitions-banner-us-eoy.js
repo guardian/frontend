@@ -28,8 +28,8 @@ export const acquisitionsBannerUsEoyTemplate = (
             </div>
            
             <div class="engagement-banner__cta-container">
-                <div class="engagement-banner__cta-heading">
-                    <h3>Help us reach our year-end goal</h3>
+                <div class="engagement-banner__ticker-header-container">
+                    <h3 class="engagement-banner__ticker-header">Help us reach our year-end goal</h3>
                 </div>
                 
                 <div class="engagement-banner__ticker-container">
@@ -37,18 +37,16 @@ export const acquisitionsBannerUsEoyTemplate = (
                 </div>
                 
                 <div class="engagement-banner__cta">
-                    <a tabIndex="3" class="button engagement-banner__button" href="${
+                    <a tabIndex="3" class="component-button component-button--primary" href="${
                         params.linkUrl
                     }">
                         ${params.buttonCaption}
                     </a>
                 </div>
                 
-                <div class="engagement-banner__cta">
-                    <a tabIndex="3" class="button engagement-banner__button" href="${
-                        params.linkUrl
-                    }">
-                        ${params.buttonCaption}
+                <div class="engagement-banner__cta engagement-banner__cta--editorial">
+                    <a tabIndex="3" class="component-button component-button--greyHollow component-button--greyHollow--eoy" href="${'https://www.theguardian.com/us-news/2019/nov/18/help-raise-15-million-fund-high-impact-journalism-2020'}">
+                        Learn more
                     </a>
                 </div>
             </div>

@@ -1,12 +1,8 @@
 .engagement-banner-ticker {
-    display: none;
-
-    @include mq(desktop) {
         display: block;
         position: relative;
         height: 70px;
         margin-top: 12px;
-    }
 }
 
 .engagement-banner-ticker__count {
