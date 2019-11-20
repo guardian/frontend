@@ -7,11 +7,7 @@ export const make = (signInUrl: string, guUrl: string): string => `
         </div>
         <div class="signin-gate__benefits syndication--bottom">
             <p class="signin-gate__benefits--text">
-                Help keep our independent, progressive
-                <br />
-                journalism alive and thriving by taking a
-                <br />
-                couple of simple steps to sign in
+                Help keep our independent, progressive journalism alive and thriving by taking a couple of simple steps to sign in
             </p>
         </div>
         <div class="signin-gate__buttons">
