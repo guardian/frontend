@@ -6,7 +6,7 @@ export const signInGateFirstTest: ABTest = {
     author: 'Mahesh Makani, Domoinic Kendrick',
     description:
         'Test adding a sign in component on the 2nd pageview of simple article templates',
-    audience: 0.01,
+    audience: 0.04,
     audienceOffset: 0.9,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
