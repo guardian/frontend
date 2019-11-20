@@ -82,7 +82,9 @@ const onAgree = (): void => {
 const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
-        banner.remove();
+        if(banner) {
+            banner.remove();
+        }
     };
 
     if (button) {
