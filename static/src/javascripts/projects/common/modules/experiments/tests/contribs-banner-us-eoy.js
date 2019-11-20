@@ -6,7 +6,7 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const leadSentence = 'As we head into another pivotal year...';
+const leadSentence = 'As\xa0we\xa0head\xa0into\nanother\xa0pivotal\xa0year...';
 const messageText =
     'We are asking you to support our independent journalism. Guardian reporting is based in fact, and as a news organisation, we are progressive in how we view the world and respond to it. Whether we are up close or far away, we provide a global perspective on the most critical issues of our lifetimes.';
 const ctaText = 'Support The Guardian';
