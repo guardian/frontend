@@ -1,6 +1,5 @@
 // @flow
 
-import marque44icon from 'svgs/icon/marque-44.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
 
