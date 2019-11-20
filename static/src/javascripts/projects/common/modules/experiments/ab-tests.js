@@ -11,6 +11,7 @@ import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
+import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -20,6 +21,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     appnexusUSAdapter,
     pangaeaAdapterTest,
     commercialCmpUiNonDismissable,
+    signInGateFirstTest,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
