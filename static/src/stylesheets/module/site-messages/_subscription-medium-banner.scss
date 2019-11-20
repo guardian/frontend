@@ -23,6 +23,7 @@
     flex-wrap: wrap;
     position: relative;
     margin: 0 auto;
+    width: 100%;
     max-width: 980px;
 
     @include mq($from: leftCol) {
@@ -35,11 +36,16 @@
 }
 
 .site-message--subscription-banner__title {
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 22px;
+    line-height: 22px;
     font-family: $f-serif-headline;
     font-weight: bold;
     width: 100%;
+
+    @media (min-width: 350px) {
+        font-size: 24px;
+        line-height: 24px;
+    }
 
     @media (min-width: 600px) {
         font-size: 28px;
@@ -61,19 +67,22 @@
     }
 }
 
-// text copy
 .site-message--subscription-banner__description {
     display: flex;
     align-items: flex-end;
     align-content: stretch;
-    width: 50%;
+    width: 100%;
 
     @include mq($from: tablet) {
         width: 60%;
     }
 
     @include mq($from: desktop) {
-        width: 45%;
+        width: 43%; // this an uneven number to remove an orphan word at the end of the copy
+    }
+
+    @include mq($from: wide) {
+        width: 47%;
     }
 
     p {
@@ -87,6 +96,7 @@
             line-height: 20px;
         }
 
+        // custom breakpoint
         @media (min-width: 550px) {
             font-size: 20px;
             line-height: 22px;
@@ -126,11 +136,10 @@
     }
 
     @include mq($from: desktop) {
-        width: 45%;
+        width: 100%;
     }
 }
 
-// button
 .site-message--subscription-banner__cta {
     display: inline-block;
     font-size: 16px;
@@ -163,11 +172,16 @@
 }
 
 .site-message--subscription-banner__cta-dismiss {
+    display: none;
     color: $brightness-7;
     font-family: $f-sans-serif-text;
     font-size: 16px;
     width: 100%;
     cursor: pointer;
+
+    @include mq($from: tablet) {
+        display: block;
+    }
 }
 
 .site-message--subscription-banner__sign-in {
@@ -177,6 +191,12 @@
     font-family: $f-sans-serif-text;
     color: $brightness-7;
     margin-top: 10px;
+    text-align: center;
+
+    @include mq($from: tablet) {
+        width: 60%;
+        text-align: left;
+    }
 
     p {
         display: inline-block;
@@ -190,55 +210,67 @@
 
 .site-message--subscription-banner__subscriber-link {
     text-decoration: underline;
-}
-
-// image
-.site-message--packshot-container {
-    position: relative;
-    width: 50%;
-    padding-top: 130px;
+    font-weight: bold;
 
     @include mq($from: tablet) {
-        position: static;
-        padding-top: 0;
-        width: 33%;
+        text-decoration: none;
+        font-weight: normal;
+    }
+}
+
+.site-message--subscription-banner__subscriber-link:hover,
+.site-message--subscription-banner__subscriber-link:focus {
+    text-decoration: none;
+}
+
+.site-message--subscription-banner__sign-in-link {
+    text-decoration: underline;
+    font-weight: bold;
+}
+
+.site-message--packshot-container {
+    width: 100%;
+    margin: 30px 0 -90px;
+
+    @include mq($from: tablet) {
+        position: absolute;
+        width: 45%;
+        right: 0;
+        margin: 0;
+        bottom: -35px;
     }
 
-    @media (min-width: 792px) {
-        padding-top: 13%;
-    }
 
     @include mq($from: desktop) {
-        position: relative;
-        padding-top: 0;
         width: 55%;
     }
 
+    @include mq($from: wide) {
+        bottom: -61px;
+    }
 
     img {
-        position: absolute;
-        bottom: 0;
-        width: 300px;
-        left: 10%;
+        width: 100%;
+        max-width: 380px;
+        margin: 0 auto;
+        display: block;
 
         @include mq($from: tablet) {
-            width: 65%;
-            right: -33%;
-            bottom: -10%;
-            left: auto;
+            margin-right: 0;
         }
 
         @include mq($from: desktop) {
-            width: 480px;
-            right: auto;
-            left: 40px;
-            bottom: -147px;
+            max-width: 420px;
+            margin-right: 90px;
         }
 
         // custom breakpoint
+        @include mq($from: leftCol) {
+            max-width: 500px;
+        }
+
         @media (min-width: 1260px) {
-            width: 460px;
-            bottom: -155px;
+            margin-right: 120px;
         }
     }
 }
@@ -251,19 +283,49 @@
 .temp-mobile-break {
     display: block;
 
-    @include mq($from: mobileLandscape) {
+    @media (min-width: 380px) {
         display: none;
+    }
+}
+
+.site-message--subscription-banner__close-button {
+    display: block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 1;
+
+    svg {
+        border-radius: 50%;
+        padding: 2px;
+        border: 1px solid $brightness-7;
+        transition: background-color 0.5s ease;
+    }
+
+    svg:hover {
+        cursor: pointer;
+        background-color: rgba(237, 237, 237, 0.5); // $brightness-93
+    }
+
+    svg path {
+        fill: black;
     }
 }
 
 .site-message--subscription-banner__gu-logo {
     display: none;
 
-    @include mq($from: leftCol) {
+    @include mq($from: desktop) {
         display: block;
         position: absolute;
         right: 0;
-        top: 0;
+        bottom: 0;
+        width: 80px;
+    }
+
+    // custom breakpoint
+    @media (min-width: 1260px) {
+        width: 109px;
     }
 }
 

@@ -1,6 +1,9 @@
 // @flow
 
 import marque44icon from 'svgs/icon/marque-44.svg';
+import closeCentralIcon from 'svgs/icon/close-central.svg';
+import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
+
 import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
 const subscriptionBannerTemplate = (
@@ -11,21 +14,12 @@ const subscriptionBannerTemplate = (
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
             A beautiful way to read it <br>
-            A powerful way <br class="temp-mobile-break" /> to fund it
+            A powerful way to fund it
         </h3>
 
-
-            <div class="site-message--subscription-banner__description">
-                <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
-            </div>
-            <div class="site-message--packshot-container">
-                <img
-                    srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
-                    src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
-                    alt=""
-                >
-            </div>
-
+        <div class="site-message--subscription-banner__description">
+            <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
+        </div>
 
         <div class="site-message--subscription-banner__cta-container">
             <a
@@ -53,12 +47,28 @@ const subscriptionBannerTemplate = (
                 class="site-message--subscription-banner__subscriber-link"
                 href="${signInUrl}"
             >
-                Sign in to not see this again
+                <span class="site-message--subscription-banner__sign-in-link">Sign in</span> to not see this again
             </a>
         </div>
 
+        <div class="site-message--packshot-container">
+            <img
+                srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
+                src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
+                alt="the guardian mobile app, the guardian daily"
+            >
+        </div>
+
+        <div id="js-site-message--subscription-banner__close-button"
+            class="site-message--subscription-banner__close-button"
+            aria-label="Close"
+            tabindex="0"
+        >
+            ${closeCentralIcon.markup}
+        </div>
+
         <div class="site-message--subscription-banner__gu-logo">
-            ${marque44icon.markup}
+            ${theGuardianLogo.markup}
         </div>
     </div>
 </div>
