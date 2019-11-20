@@ -299,16 +299,16 @@
         border-radius: 50%;
         padding: 2px;
         border: 1px solid $brightness-7;
-        transition: background-color 0.5s ease;
+        transition: background-color .5s ease;
     }
 
     svg:hover {
         cursor: pointer;
-        background-color: rgba(237, 237, 237, 0.5); // $brightness-93
+        background-color: rgba(237, 237, 237, .5); // $brightness-93
     }
 
     svg path {
-        fill: black;
+        fill: $brightness-7;
     }
 }
 
