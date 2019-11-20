@@ -122,7 +122,7 @@
 .signin-gate__header--text {
     font-weight: normal;
     margin-bottom: $gs-baseline;
-    line-height: initial;
+    line-height: 1.25em;
     font-size: 24px;
     @include mq(tablet) {
         font-size: 34px;
