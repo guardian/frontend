@@ -14,6 +14,11 @@ const CONTAINER_CLASS = 'cmp-container';
 let overlay: ?HTMLElement;
 let uiPrepared: boolean = false;
 
+const isInCmpTest = () =>
+    isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
+    isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
+    isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant');
+
 const animateCmp = (): Promise<void> =>
     new Promise(resolve => {
         /**
@@ -161,11 +166,7 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (
-        !isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
-        !isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
-        !isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
-    ) {
+    if (!isInCmpTest()) {
         return;
     }
 
@@ -190,7 +191,7 @@ export const addPrivacySettingsLink = (): void => {
             newPrivacyLinkListItem.appendChild(newPrivacyLink);
 
             privacyLinkListItem.insertAdjacentElement(
-                'afterend',
+                'beforebegin',
                 newPrivacyLinkListItem
             );
 
@@ -205,11 +206,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (
-            isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
-            isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
-            isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
-        ) {
+        if (isInCmpTest()) {
             return Promise.resolve(cmpUi.canShow());
         }
 
