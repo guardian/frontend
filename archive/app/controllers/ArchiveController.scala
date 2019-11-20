@@ -117,7 +117,7 @@ class ArchiveController(redirects: RedirectService, val controllerComponents: Co
   private object Lowercase {
     def unapply(path: String): Option[String] = path.split("/").toList match {
         case "" :: section :: other if section.exists(_.isUpper) =>
-          Some(s"/${section.toLowerCase}/${other.mkString("/")}")
+          Some(("" :: section.toLowerCase :: other).mkString("/"))
         case _ => None
     }
   }
