@@ -1,7 +1,6 @@
 // @flow
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
-import find from 'lodash/find';
 import type { RegisterListeners } from 'commercial/modules/messenger';
 
 type AdSpec = {
@@ -39,12 +38,12 @@ const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
         return result;
     }, {});
 
-const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
+const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
-        //!('backgroundRepeat' in specs) ||
-        //!('backgroundPosition' in specs) ||
+        //! ('backgroundRepeat' in specs) ||
+        //! ('backgroundPosition' in specs) ||
         !('scrollType' in specs) ||
         !(adSlot instanceof Element)
     ) {
@@ -54,9 +53,12 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     const specStyles: SpecStyles = getStylesFromSpec(specs);
 
     // check to see whether the parent div exists already, if so, jut alter the style
-    //container of background image div
+    // container of background image div
 
-    const backgroundParentClass =  specs.scrollType === 'interscroller' ? 'creative__background-parent-interscroller' :  'creative__background-parent';
+    const backgroundParentClass =
+        specs.scrollType === 'interscroller'
+            ? 'creative__background-parent-interscroller'
+            : 'creative__background-parent';
     const backgroundClass = 'creative__background';
 
     const maybeBackgroundParent = ((adSlot.getElementsByClassName(
@@ -112,7 +114,10 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
 
         Object.assign(background.style, specStyles);
 
-        if (specs.scrollType === 'fixed' || specs.scrollType === 'interscroller') {
+        if (
+            specs.scrollType === 'fixed' ||
+            specs.scrollType === 'interscroller'
+        ) {
             return fastdom
                 .read(() => {
                     if (adSlot instanceof Element) {
@@ -149,12 +154,14 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         background: HTMLElement
     ) => {
         fastdom.read(() => {
-            console.log("backgroundParent", backgroundParent);
-            console.log("background", background);
-            console.log("on interscroller scroll");
+            console.log('backgroundParent', backgroundParent);
+            console.log('background', background);
+            console.log('on interscroller scroll');
             const rect = adSlot.getBoundingClientRect();
-            console.log("rect", rect);
-            background.style.clip = "rect("+rect.top+"px,100vw,"+rect.bottom+"px,0)";
+            console.log('rect', rect);
+            background.style.clip = `rect(${rect.top}px,100vw,${
+                rect.bottom
+            }px,0)`;
         });
     };
 
@@ -217,13 +224,11 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         )
         .then(({ backgroundParent, background }) => {
             if (specs.scrollType === 'interscroller') {
-                addEventListener(
-                    window,
-                    'scroll',
-                    () => onInterscrollerScroll(backgroundParent, background)
+                addEventListener(window, 'scroll', () =>
+                    onInterscrollerScroll(backgroundParent, background)
                 );
 
-                //onScroll(backgroundParent, background);
+                // onScroll(backgroundParent, background);
             } else {
                 observer.observe(backgroundParent);
             }
