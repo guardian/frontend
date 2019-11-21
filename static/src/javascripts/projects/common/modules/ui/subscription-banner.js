@@ -82,7 +82,9 @@ const onAgree = (): void => {
 const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
-        banner.remove();
+        if (banner) {
+            banner.remove();
+        }
     };
 
     if (button) {
@@ -123,11 +125,17 @@ const trackSubscriptionBannerCtaClick = () => {
         },
     });
 };
+const closeActions = (banner, callback) => buttons => {
+    buttons.forEach(button => {
+        bindCloseHandler(button, banner, callback);
+    });
+};
 
 const bindSubscriptionClickHandlers = () => {
-    const subscriptionBannercloseButton = document.querySelector(
+    const subscriptionBannerNotNowButton = document.querySelector(
         '#js-site-message--subscription-banner__cta-dismiss'
     );
+
     const subscriptionBannerHtml = document.querySelector(
         '#js-subscription-banner-site-message'
     );
@@ -136,12 +144,20 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__cta'
     );
 
+    const subscriptionBannercloseButton = document.querySelector(
+        '#js-site-message--subscription-banner__close-button'
+    );
+
+    const bindSubscriptionCloseButtons = closeActions(
+        subscriptionBannerHtml,
+        subcriptionBannerCloseActions
+    );
+
     if (subscriptionBannerHtml) {
-        bindCloseHandler(
+        bindSubscriptionCloseButtons([
             subscriptionBannercloseButton,
-            subscriptionBannerHtml,
-            subcriptionBannerCloseActions
-        );
+            subscriptionBannerNotNowButton,
+        ]);
         bindClickHandler(
             subscriptionBannerCta,
             trackSubscriptionBannerCtaClick
