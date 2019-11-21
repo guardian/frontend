@@ -13,7 +13,7 @@ $background-dark: #e6e2de;
 $red-accent: #ea4333;
 $blue-accent: #1a5292;
 
-[data-component*='ContributionsBannerUsEoy'] {
+.site-message--useoy2019 {
     border-top: 2px solid $brightness-7;
     color: $brightness-7;
     background-color: $background;
@@ -36,7 +36,7 @@ $blue-accent: #1a5292;
         }
 
         @include mq($from: desktop) {
-            position: static;
+            position: relative;
         }
     }
 }
@@ -74,8 +74,13 @@ $blue-accent: #1a5292;
         color: $blue-accent;
         display: block;
         line-height: 1.15;
-        font-size: 28px;
+        font-size: 23px;
         border-bottom: 0;
+        width: calc(100% - 36px);
+
+        @include mq($from: phablet) {
+            font-size: 28px;
+        }
 
         @include mq($from: desktop) {
             font-size: 48px;
@@ -86,7 +91,11 @@ $blue-accent: #1a5292;
 
     .engagement-banner__body {
         line-height: 1.35;
-        font-size: 17px;
+        font-size: 15px;
+
+        @include mq($from: phablet) {
+            font-size: 17px;
+        }
 
         @include mq($from: tablet) {
             padding: $gs-baseline $gs-gutter $gs-baseline 0;
@@ -107,7 +116,7 @@ $blue-accent: #1a5292;
     }
 
     .engagement-banner__ticker-header-container {
-        margin-top: $gs-baseline * 2;
+        margin-top: $gs-baseline;
         position: relative;
 
         &:after {
@@ -117,9 +126,16 @@ $blue-accent: #1a5292;
             background-color: $brightness-7;
             width: 1000%;
             left: -$gs-gutter;
-            top: -$gs-baseline;
+            top: -$gs-baseline / 2;
         }
 
+        @include mq($from: phablet) {
+            margin-top: $gs-baseline * 2;
+
+            &:after {
+                top: -$gs-baseline;
+            }
+        }
         @include mq($from: tablet) {
             &:after {
                 top: initial;
@@ -129,11 +145,15 @@ $blue-accent: #1a5292;
     }
 
     .engagement-banner__ticker-header {
-        font-size: 18px;
-        line-height: 22px;
         font-family: $f-serif-headline;
         font-weight: 300;
         margin-bottom: 0;
+        font-size: 15px;
+
+        @include mq($from: phablet) {
+            font-size: 18px;
+            line-height: 22px;
+        }
 
         @include mq($from: desktop) {
             font-size: 24px;
@@ -142,6 +162,8 @@ $blue-accent: #1a5292;
     }
 
     .engagement-banner__cta {
+        position: relative;
+        z-index: 1;
         padding-top: $gs-baseline / 2;
 
         @include mq($from: desktop) {
@@ -150,7 +172,11 @@ $blue-accent: #1a5292;
     }
 
     .engagement-banner__cta--editorial {
-        display: block;
+        display: none;
+
+        @include mq($from: phablet) {
+            display: block;
+        }
 
         @include mq($from: desktop) {
             display: inline-block;
@@ -159,7 +185,10 @@ $blue-accent: #1a5292;
     }
 
     .engagement-banner__ticker-container {
-        padding-top: $gs-baseline;
+
+        @include mq($from: phablet) {
+            padding-top: $gs-baseline;
+        }
 
         @include mq($from: desktop) {
             padding-top: $gs-baseline * 3;

@@ -20,6 +20,7 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
+import { initTicker } from 'common/modules/commercial/ticker';
 
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
@@ -153,6 +154,10 @@ const show = (): Promise<boolean> => {
 
                 if (paramsAndEngagementBannerHtml.params.bannerShownCallback) {
                     paramsAndEngagementBannerHtml.params.bannerShownCallback();
+                }
+
+                if (paramsAndEngagementBannerHtml.params.hasTicker) {
+                    initTicker('.js-engagement-banner-ticker');
                 }
 
                 return true;
