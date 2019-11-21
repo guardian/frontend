@@ -48,16 +48,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-learn-more-cta",
-    "States how many articles a user has viewed in the epic in a month",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-country-name",
     "Displays country name in the epic",
     owners = Seq(Owner.withGithub("tomrf1")),
@@ -133,6 +123,26 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-permutive",
+    "Test of Permutive implementation",
+    owners = Seq(Owner.withGithub("faresite")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-first-test",
+    "Test new sign in component on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 12, 17),
     exposeClientSide = true
   )
 }

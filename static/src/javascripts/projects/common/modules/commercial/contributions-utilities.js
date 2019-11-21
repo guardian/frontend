@@ -38,7 +38,6 @@ import {
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
-    supportSubscribeGeoRedirectURL,
     addCountryGroupToSupportLink,
 } from 'common/modules/commercial/support-utilities';
 import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
@@ -91,11 +90,6 @@ const defaultMaxViews: MaxViews = {
     minDaysBetweenViews: 0,
 };
 
-const defaultButtonTemplate: (CtaUrls, ctaText?: string) => string = (
-    url: CtaUrls,
-    ctaText?: string
-) => epicButtonsTemplate(url, ctaText);
-
 const controlTemplate: EpicTemplate = (
     variant: EpicVariant,
     copy: AcquisitionsEpicTemplateCopy
@@ -106,10 +100,10 @@ const controlTemplate: EpicTemplate = (
         buttonTemplate: variant.buttonTemplate
             ? variant.buttonTemplate(
                   {
-                      supportUrl: variant.supportURL,
-                      subscribeUrl: variant.subscribeURL,
+                      url: variant.supportURL,
+                      ctaText: variant.ctaText || 'Support The Guardian',
                   },
-                  variant.ctaText
+                  variant.secondaryCta
               )
             : undefined,
         epicClassNames: variant.classNames,
@@ -282,19 +276,10 @@ const makeEpicABTestVariant = (
                 variant: initVariant.id,
             },
         }),
-        subscribeURL: addTrackingCodesToUrl({
-            base: supportSubscribeGeoRedirectURL,
-            componentType: parentTest.componentType,
-            componentId,
-            campaignCode,
-            abTest: {
-                name: parentTest.id,
-                variant: initVariant.id,
-            },
-        }),
         template,
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
+        secondaryCta: initVariant.secondaryCta,
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
@@ -679,11 +664,20 @@ export const buildConfiguredEpicTestFromJson = (
             ...(test.isLiveBlog ? { test: setupEpicInLiveblog } : {}),
             ...(variant.cta
                 ? {
-                      buttonTemplate: defaultButtonTemplate,
+                      buttonTemplate: epicButtonsTemplate,
                       ctaText: variant.cta.text,
-                      supportBaseURL: variant.cta.baseURL,
+                      supportBaseURL: variant.cta.baseUrl,
                   }
                 : {}),
+            secondaryCta:
+                variant.secondaryCta &&
+                variant.secondaryCta.baseUrl &&
+                variant.secondaryCta.text
+                    ? {
+                          url: variant.secondaryCta.baseUrl,
+                          ctaText: variant.secondaryCta.text,
+                      }
+                    : undefined,
             copy: buildEpicCopy(
                 variant,
                 test.hasCountryName,
@@ -885,7 +879,6 @@ export {
     pageShouldHideReaderRevenue,
     shouldShowEpic,
     makeEpicABTest,
-    defaultButtonTemplate,
     defaultMaxViews,
     getReaderRevenueRegion,
     userIsInCorrectCohort,

@@ -3,6 +3,7 @@
 @import templates.inlineJS.blocking.js.{applyRenderConditions, config, enableStylesheets, loadFonts, shouldEnhance, loadApp}
 @import templates.inlineJS.blocking.polyfills.js.{details, raf, setTimeout}
 
+@import templates.inlineJS.blocking.js.permutive
 @(isDCRSupported: Boolean = false)(implicit page: model.Page, request: RequestHeader, context: model.ApplicationContext)
 
 @* NOTE the order of these includes is important  *@
@@ -29,6 +30,9 @@
 
     // page config
     @Html(config(page, isDCRSupported).body)
+
+    // permutive
+    @InlineJs(permutive().body, "permutive.js")
 
     // apply render conditions
     @InlineJs(applyRenderConditions().body, "applyRenderConditions.js")

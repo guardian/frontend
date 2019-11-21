@@ -46,13 +46,14 @@ const controlEpicComponent = (
             copy,
             componentName: '', // TODO: confirm data-component not needed
             buttonTemplate: epicButtonsTemplate({
-                supportUrl: addTrackingCodesToUrl({
+                url: addTrackingCodesToUrl({
                     base: supportContributeURL(),
                     componentType: epicComponentType,
                     componentId: epicId,
                     campaignCode: epicId,
                     abTest,
                 }),
+                ctaText: 'Support The Guardian',
             }),
             testimonialBlock,
             epicClassNames: [],

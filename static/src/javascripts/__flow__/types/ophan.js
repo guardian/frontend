@@ -52,7 +52,8 @@ declare type OphanComponentType =
     | 'ACQUISITIONS_STANDFIRST'
     | 'ACQUISITIONS_THRASHER'
     | 'ACQUISITIONS_EDITORIAL_LINK'
-    | 'ACQUISITIONS_OTHER';
+    | 'ACQUISITIONS_OTHER'
+    | 'SIGN_IN_GATE';
 
 declare type OphanComponent = {
     componentType: OphanComponentType,

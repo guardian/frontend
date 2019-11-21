@@ -1,8 +1,6 @@
 type ListenerFunction = (f: () => void) => void;
 
-export type CtaUrls = {
-    supportUrl: string,
-};
+declare type EpicCta = {url: string, ctaText: string};
 
 declare type EpicTemplate = (EpicVariant, AcquisitionsEpicTemplateCopy) => string;
 
@@ -26,14 +24,14 @@ declare type EpicVariant = Variant & {
     excludedSections: string[],
 
     supportURL: string,
-    subscribeURL: string,
     componentName: string,
     template: EpicTemplate,
     classNames: string[],
     showTicker: boolean,
 
-    buttonTemplate?: (CtaUrls, ctaText?: string) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
     ctaText?: string,
+    secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
     backgroundImageUrl?: string,
 }
@@ -101,8 +99,9 @@ declare type InitEpicABTestVariant = {
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: (CtaUrls, ctaText?: string) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
     ctaText?: string,
+    secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
