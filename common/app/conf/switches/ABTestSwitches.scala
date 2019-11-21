@@ -128,6 +128,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-permutive",
+    "Test of Permutive implementation",
+    owners = Seq(Owner.withGithub("faresite")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 7, 30),
+    exposeClientSide = true
+  )
+  
+  Switch(
+    ABTests,
     "ab-sign-in-gate-first-test",
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
