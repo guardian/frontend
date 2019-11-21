@@ -6,9 +6,11 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const leadSentence = 'As\xa0we\xa0head\xa0into\nanother\xa0pivotal\xa0year...';
-const messageText =
-    'We are asking you to support our independent journalism. Guardian reporting is based in fact, and as a news organisation, we are progressive in how we view the world and respond to it. Whether we are up close or far away, we provide a global perspective on the most critical issues of our lifetimes.';
+const leadSentence = '2020 will be a defining year for America';
+const messageTextV1 =
+    'And the result could define the country for a generation. Many vital aspects of American public life are in play - the supreme court, abortion rights, climate policy, wealth inequality, Big Tech and more.  As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million.';
+const messageTextV2 =
+    'Over the last three years, much of what the Guardian holds dear has been threatened - democracy, civility, truth. This US administration is establishing new norms of behaviour. Truth is being chased away. But with your help we can continue put it center stage. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million.';
 const ctaText = 'Support The Guardian';
 
 export const contributionsBannerUsEoy: AcquisitionsABTest = {
@@ -33,7 +35,18 @@ export const contributionsBannerUsEoy: AcquisitionsABTest = {
             test: (): void => {},
             engagementBannerParams: {
                 leadSentence,
-                messageText,
+                messageTextV1,
+                ctaText,
+                template: acquisitionsBannerUsEoyTemplate,
+                hasTicker: true,
+            },
+        },
+        {
+            id: 'variant',
+            test: (): void => {},
+            engagementBannerParams: {
+                leadSentence,
+                messageTextV2,
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,

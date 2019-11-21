@@ -8,13 +8,15 @@
 }
 
 $title: 'Guardian Titlepiece', Georgia, serif !default;
-$red: #e1594a;
-$dark-red: #cc5243;
+$background: #fef9f5;
+$background-dark: #e6e2de;
+$red-accent: #ea4333;
+$blue-accent: #1a5292;
 
 [data-component*='ContributionsBannerUsEoy'] {
-    border-top: 0;
-    color: $brightness-97;
-    background-color: $red;
+    border-top: 2px solid $brightness-7;
+    color: $brightness-7;
+    background-color: $background;
     position: relative;
     overflow: hidden;
 
@@ -35,14 +37,6 @@ $dark-red: #cc5243;
 
         @include mq($from: desktop) {
             position: static;
-        }
-    }
-
-    .engagement-banner__close-button {
-        border: 1px solid $brightness-97;
-
-        svg {
-            fill: $brightness-97;
         }
     }
 }
@@ -66,7 +60,7 @@ $dark-red: #cc5243;
                 right: 0;
                 width: 1px;
                 height: 200%;
-                background-color: $brightness-97;
+                background-color: $brightness-7;
             }
         }
 
@@ -77,6 +71,7 @@ $dark-red: #cc5243;
 
     .engagement-banner__header {
         font-family: $title;
+        color: $blue-accent;
         display: block;
         line-height: 1.15;
         font-size: 28px;
@@ -119,7 +114,7 @@ $dark-red: #cc5243;
             content: '';
             position: absolute;
             height: 1px;
-            background-color: $brightness-97;
+            background-color: $brightness-7;
             width: 1000%;
             left: -$gs-gutter;
             top: -$gs-baseline;
@@ -163,16 +158,6 @@ $dark-red: #cc5243;
         }
     }
 
-    .component-button--greyHollow--eoy {
-        border-color: $brightness-97;
-        color: $brightness-97 !important;
-
-        &:hover,
-        &:focus {
-            color: $brightness-7 !important;
-        }
-    }
-
     .engagement-banner__ticker-container {
         padding-top: $gs-baseline;
 
@@ -181,15 +166,14 @@ $dark-red: #cc5243;
         }
     }
 
-    .engagement-banner-ticker__goal,
-    .engagement-banner-ticker__count,
     .js-ticker-label {
-        color: $brightness-97;
+        color: $brightness-7;
     }
 
     .engagement-banner-ticker__goal,
     .engagement-banner-ticker__count {
         font-family: $title;
+        color: $red-accent;
     }
 
     .js-ticker-so-far .engagement-banner-ticker__count {
@@ -208,11 +192,11 @@ $dark-red: #cc5243;
 
     .engagement-banner-ticker__progress {
         height: 20px;
-        background-color: $dark-red;
+        background-color: $background-dark;
     }
 
     .js-ticker-filled-progress {
-        background-color: $highlight-main;
+        background-color: $red-accent;
     }
 
     .js-ticker-label {

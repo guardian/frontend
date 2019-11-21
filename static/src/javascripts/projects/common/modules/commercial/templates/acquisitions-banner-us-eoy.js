@@ -37,7 +37,7 @@ export const acquisitionsBannerUsEoyTemplate = (
                 </div>
                 
                 <div class="engagement-banner__cta">
-                    <a tabIndex="3" class="component-button component-button--primary" href="${
+                    <a tabIndex="3" class="component-button component-button--secondary" href="${
                         params.linkUrl
                     }">
                         ${params.buttonCaption}
