@@ -99,11 +99,14 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                 if (backgroundParent) {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                 }
-                if (specs.scrollType === "interscroller") {
+                if (specs.scrollType === 'interscroller') {
                     const scrollForMoreLabel = document.createElement('div');
-                    scrollForMoreLabel.classList.add("ad-slot__label");
-                    scrollForMoreLabel.innerText = "Scroll for More";
-                    adSlot.parentNode.insertBefore(scrollForMoreLabel, adSlot.nextSibling);
+                    scrollForMoreLabel.classList.add('ad-slot__label');
+                    scrollForMoreLabel.innerText = 'Scroll for More';
+                    adSlot.parentNode.insertBefore(
+                        scrollForMoreLabel,
+                        adSlot.nextSibling
+                    );
                 }
             })
             .then(() => ({ backgroundParent, background }));
