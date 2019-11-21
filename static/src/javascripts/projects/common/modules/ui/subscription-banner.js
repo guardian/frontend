@@ -29,6 +29,8 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialIabBottomConsentBanner } from 'common/modules/experiments/tests/commercial-iab-bottom-consent-banner';
 
 const ENTER_KEY_CODE = 'Enter';
 const DISPLAY_EVENT_KEY = 'subscription-banner : display';
@@ -200,7 +202,8 @@ const show: () => Promise<boolean> = async () => {
 
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
-        fiveOrMorePageViews(pageviews) &&
+        !isInVariantSynchronous(commercialIabBottomConsentBanner, 'variant') &&
+            fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
