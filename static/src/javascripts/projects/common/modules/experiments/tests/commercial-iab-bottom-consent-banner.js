@@ -1,9 +1,9 @@
 // @flow
 
-export const commercialIabConsentBanner: ABTest = {
-    id: 'CommercialIabConsentBanner',
-    start: '2019-11-17',
-    expiry: '2019-11-27',
+export const commercialIabBottomConsentBanner: ABTest = {
+    id: 'CommercialIabBottomConsentBanner',
+    start: '2019-11-21',
+    expiry: '2019-12-12',
     author: 'George Haberis',
     description: '1% participation AB test for an IAB compliant consent banner',
     audience: 0.01,

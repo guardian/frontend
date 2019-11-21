@@ -15,7 +15,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
-import { commercialIabConsentBanner } from 'common/modules/experiments/tests/commercial-iab-consent-banner';
+import { commercialIabBottomConsentBanner } from 'common/modules/experiments/tests/commercial-iab-bottom-consent-banner';
 
 type Template = {
     heading: string,
@@ -103,7 +103,7 @@ const makeHtml = (): string => `
         .join('')}
     </div>
     ${
-        isInVariantSynchronous(commercialIabConsentBanner, 'variant')
+        isInVariantSynchronous(commercialIabBottomConsentBanner, 'variant')
             ? `
                 <div class="site-message--first-pv-consent--commercialIabConsentBanner site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">
                     <div class="cmp-list-container" id="${INFO_LIST_ID}">
@@ -197,7 +197,7 @@ const bindClickHandlers = (msg: Message): void => {
         agreeButtonEl.addEventListener('click', () => onAgree(msg));
     });
 
-    if (isInVariantSynchronous(commercialIabConsentBanner, 'variant')) {
+    if (isInVariantSynchronous(commercialIabBottomConsentBanner, 'variant')) {
         const infoListButton = document.getElementById(INFO_LIST_BUTTON_ID);
 
         if (infoListButton) {
@@ -223,7 +223,7 @@ const show = (): Promise<boolean> => {
 
     const opts = {};
 
-    if (isInVariantSynchronous(commercialIabConsentBanner, 'variant')) {
+    if (isInVariantSynchronous(commercialIabBottomConsentBanner, 'variant')) {
         opts.cssModifierClass = 'first-pv-consent--commercialIabConsentBanner';
     }
 
