@@ -19,10 +19,6 @@ From: Halifax, Canada
 Developer: Justin Pinner
 Twitter: @_JustinPinner
 
-SETI (Tools & Infra): Matthew Walls
-GitHub: MatthewJWalls
-Location: Essex, UK
-
 Developer: John Duffell
 
 Client-Side Developer: Gareth Trufitt
@@ -331,3 +327,7 @@ Design human: Jesse Yuen
 Twitter: @jesseyuen
 From: Perth, Australia
 Location: London, UK
+
+SETI (Tools & Infra): Matthew Walls
+GitHub: MatthewJWalls
+Location: Essex, UK
