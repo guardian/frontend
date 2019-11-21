@@ -99,6 +99,12 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                 if (backgroundParent) {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                 }
+                if (specs.scrollType === "interscroller") {
+                    const scrollForMoreLabel = document.createElement('div');
+                    scrollForMoreLabel.classList.add("ad-slot__label");
+                    scrollForMoreLabel.innerText = "Scroll for More";
+                    adSlot.parentNode.insertBefore(scrollForMoreLabel, adSlot.nextSibling);
+                }
             })
             .then(() => ({ backgroundParent, background }));
     };
@@ -154,11 +160,7 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
         background: HTMLElement
     ) => {
         fastdom.read(() => {
-            console.log('backgroundParent', backgroundParent);
-            console.log('background', background);
-            console.log('on interscroller scroll');
             const rect = adSlot.getBoundingClientRect();
-            console.log('rect', rect);
             background.style.clip = `rect(${rect.top}px,100vw,${
                 rect.bottom
             }px,0)`;
@@ -207,7 +209,6 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                                 passive: true,
                             }
                         );
-
                         onScroll(backgroundParent, background);
                     }
                 }
@@ -227,8 +228,6 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                 addEventListener(window, 'scroll', () =>
                     onInterscrollerScroll(backgroundParent, background)
                 );
-
-                // onScroll(backgroundParent, background);
             } else {
                 observer.observe(backgroundParent);
             }

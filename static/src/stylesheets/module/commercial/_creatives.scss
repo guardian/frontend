@@ -703,6 +703,7 @@
         width: 100%;
         top: 0;
         left: 0;
+        margin-top: 24px;
         //clip: rect(0,100vw,100vh,0);
         /* overflow-x: hidden;
         overflow-y: auto;*/
@@ -713,10 +714,3 @@
         max-width: 100%;
     }
 }
-
-.creative__background-parent-interscroller .ad-slot__label.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%
-}
-
