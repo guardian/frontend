@@ -194,3 +194,63 @@ $btn-height: ($gs-baseline*3.5);
         }
     }
 }
+
+// commercialIabConsentBanner a/b test styles
+.site-message--first-pv-consent--commercialIabConsentBanner {
+
+    .cmp-list-container {
+        .cmp-button {
+            border: 0;
+            color: currentColor;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            padding-left: 24px;
+            margin-bottom: 4px;
+            margin-left: -4px;
+
+            &::before {
+                content: '';
+                position: absolute;
+                top: 5px;
+                left: 6px;
+                border: 2px solid $highlight-main;
+                border-top: 0;
+                border-left: 0;
+                display: inline-block;
+                transform: rotate(45deg);
+                height: 6px;
+                width: 6px;
+            }
+        }
+
+        .cmp-list {
+            margin: 0;
+            max-height: 0;
+            transition: max-height 0.15s ease-out;
+            overflow-y: hidden;
+            padding-left: 24px;
+            list-style-position: outside;
+
+            li {
+                padding-top: 2px;
+            }
+        }
+    }
+
+    .cmp-list-container--visible {
+        .cmp-button {
+            &::before {
+                top: 7px;
+                transform: rotate(-135deg);
+            }
+        }
+
+        .cmp-list {
+            display: block;
+            max-height: 500px;
+            transition: max-height 0.25s ease-in;
+        }
+    }
+}

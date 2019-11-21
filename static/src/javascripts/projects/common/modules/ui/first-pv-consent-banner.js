@@ -15,6 +15,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
+import { commercialIabConsentBanner } from 'common/modules/experiments/tests/commercial-iab-consent-banner';
 
 type Template = {
     heading: string,
@@ -60,6 +61,39 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
+const INFO_LIST_BUTTON_ID = 'cmp-info-list-button';
+const PURPOSE_LIST_BUTTON_ID = 'cmp-purpose-list-button';
+const INFO_LIST_ID = 'cmp-info-list';
+const PURPOSE_LIST_ID = 'cmp-purpose-button';
+
+const buildInfoList = (): string => {
+    const listItems = [
+        'Type of browser and its settings',
+        'Cookie information',
+        'Information about other identifiers assigned to the device',
+        "The IP address from which the device accesses a client's website or mobile application",
+        'Information about the geographic location of the device when it accesses a website or mobile application',
+    ]
+        .map(listItem => `<li>${listItem}</li>`)
+        .join('');
+
+    return `<ul class="cmp-list">${listItems}</ul>`;
+};
+
+const buildPurposeList = (): string => {
+    const listItems = [
+        'Storage and access of information',
+        'Ad selection and delivery',
+        'Content selection and delivery',
+        'Personalization',
+        'Measurement',
+    ]
+        .map(listItem => `<li>${listItem}</li>`)
+        .join('');
+
+    return `<ul class="cmp-list">${listItems}</ul>`;
+};
+
 const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
@@ -68,6 +102,24 @@ const makeHtml = (): string => `
         .map(_ => `<p>${_}</p>`)
         .join('')}
     </div>
+    ${
+        isInVariantSynchronous(commercialIabConsentBanner, 'variant')
+            ? `
+                <div class="site-message--first-pv-consent__block cmp-list-container" id="${INFO_LIST_ID}">
+                    <button class="cmp-button" id="${INFO_LIST_BUTTON_ID}" >
+                        Information that may be used
+                    </button>
+                    ${buildInfoList()}
+                </div>
+                <div class="site-message--first-pv-consent__block cmp-list-container" id="${PURPOSE_LIST_ID}">
+                    <button class="cmp-button" id="${PURPOSE_LIST_BUTTON_ID}">
+                        Purposes for storing information
+                    </button>
+                    ${buildPurposeList()}
+                </div>
+            `
+            : ''
+    }
     <div class="site-message--first-pv-consent__actions">
         <button
             data-link-name="first-pv-consent : agree"
@@ -122,18 +174,56 @@ const track = (): void => {
     trackInteraction(displayEventKey);
 };
 
+const toggleListVisibility = (listId: string): void => {
+    const SHOW_LIST_CLASS = 'cmp-list-container--visible';
+
+    const listContainerElem = document.getElementById(listId);
+
+    if (listContainerElem) {
+        if (listContainerElem.classList.contains(SHOW_LIST_CLASS)) {
+            listContainerElem.classList.remove(SHOW_LIST_CLASS);
+        } else {
+            listContainerElem.classList.add(SHOW_LIST_CLASS);
+        }
+    }
+};
+
 const bindClickHandlers = (msg: Message): void => {
     Array.from(
         document.querySelectorAll(`.${bindableClassNames.agree}`)
     ).forEach(agreeButtonEl => {
         agreeButtonEl.addEventListener('click', () => onAgree(msg));
     });
+
+    if (isInVariantSynchronous(commercialIabConsentBanner, 'variant')) {
+        const infoListButton = document.getElementById(INFO_LIST_BUTTON_ID);
+
+        if (infoListButton) {
+            infoListButton.addEventListener('click', () => {
+                toggleListVisibility(INFO_LIST_ID);
+            });
+        }
+
+        const purposeListButton = document.getElementById(
+            PURPOSE_LIST_BUTTON_ID
+        );
+
+        if (purposeListButton) {
+            purposeListButton.addEventListener('click', () => {
+                toggleListVisibility(PURPOSE_LIST_ID);
+            });
+        }
+    }
 };
 
 const show = (): Promise<boolean> => {
     track();
 
     const opts = {};
+
+    if (isInVariantSynchronous(commercialIabConsentBanner, 'variant')) {
+        opts.cssModifierClass = 'first-pv-consent--commercialIabConsentBanner';
+    }
 
     const msg = new Message(
         messageCode,

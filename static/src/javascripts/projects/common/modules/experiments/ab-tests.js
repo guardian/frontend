@@ -1,5 +1,6 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
+import { commercialIabConsentBanner } from 'common/modules/experiments/tests/commercial-iab-consent-banner';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
@@ -25,6 +26,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     permutiveTest,
     commercialCmpUiNonDismissable,
     signInGateFirstTest,
+    commercialIabConsentBanner,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [

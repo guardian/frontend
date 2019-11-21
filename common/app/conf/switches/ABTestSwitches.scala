@@ -155,4 +155,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 12, 17),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-iab-consent-banner",
+    "1% participation AB test for an IAB compliant consent banner",
+    owners = Seq(Owner.withGithub("ghaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 11, 27),
+    exposeClientSide = true
+  )
 }
