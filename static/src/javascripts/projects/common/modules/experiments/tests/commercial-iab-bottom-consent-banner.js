@@ -6,7 +6,7 @@ export const commercialIabBottomConsentBanner: ABTest = {
     expiry: '2019-12-12',
     author: 'George Haberis',
     description: '1% participation AB test for an IAB compliant consent banner',
-    audience: 0.01,
+    audience: 0.005,
     audienceOffset: 0.7,
     successMeasure:
         'IAB compliant consent banner does not adversely affect consent rates',
