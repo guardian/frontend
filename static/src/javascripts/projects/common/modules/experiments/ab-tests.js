@@ -13,6 +13,7 @@ import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-a
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { permutiveTest } from 'common/modules/experiments/tests/commercial-permutive';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -34,5 +35,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsBannerUsEoy,
     articlesViewedBanner,
 ];
