@@ -63,6 +63,7 @@ const bindableClassNames: BindableClassNames = {
 
 const INFO_LIST_BUTTON_ID = 'cmp-info-list-button';
 const PURPOSE_LIST_BUTTON_ID = 'cmp-purpose-list-button';
+const OPTIONS_BUTTON_ID = 'cmp-options-button';
 const INFO_LIST_ID = 'cmp-info-list';
 const PURPOSE_LIST_ID = 'cmp-purpose-button';
 
@@ -129,11 +130,21 @@ const makeHtml = (): string => `
                 bindableClassNames.agree
             }"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
-        <a
-            href="${template.linkToPreferences}"
-            data-link-name="first-pv-consent : to-prefs"
-            class="site-message--first-pv-consent__link u-underline"
-        >${template.choicesButton}</a>
+        ${
+            isInVariantSynchronous(commercialIabBottomConsentBanner, 'variant')
+                ? `
+                    <button class="cmp-options-button" id="${OPTIONS_BUTTON_ID}">
+                        Options
+                    </button>
+                  `
+                : `
+                    <a
+                        href="${template.linkToPreferences}"
+                        data-link-name="first-pv-consent : to-prefs"
+                        class="site-message--first-pv-consent__link u-underline"
+                    >${template.choicesButton}</a>`
+        }
+
     </div>
 `;
 
