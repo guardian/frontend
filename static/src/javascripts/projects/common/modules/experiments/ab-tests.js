@@ -14,6 +14,7 @@ import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-
 import { permutiveTest } from 'common/modules/experiments/tests/commercial-permutive';
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
+import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -25,6 +26,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     permutiveTest,
     commercialCmpUiNonDismissable,
     signInGateFirstTest,
+    commercialCmpUiNoOverlay,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
