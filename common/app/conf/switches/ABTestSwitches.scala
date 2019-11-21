@@ -159,7 +159,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-commercial-iab-bottom-consent-banner",
-    "1% AB test for an IAB compliant consent banner",
+    "0.5% AB test for an IAB compliant consent banner",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2019, 12, 12),
