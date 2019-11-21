@@ -197,7 +197,6 @@ $btn-height: ($gs-baseline*3.5);
 
 // commercialIabConsentBanner a/b test styles
 .site-message--first-pv-consent--commercialIabConsentBanner {
-
     .cmp-list-container {
         .cmp-button {
             border: 0;
@@ -228,7 +227,7 @@ $btn-height: ($gs-baseline*3.5);
         .cmp-list {
             margin: 0;
             max-height: 0;
-            transition: max-height 0.15s ease-out;
+            transition: max-height .15s ease-out;
             overflow-y: hidden;
             padding-left: 24px;
             list-style-position: outside;
@@ -250,7 +249,7 @@ $btn-height: ($gs-baseline*3.5);
         .cmp-list {
             display: block;
             max-height: 500px;
-            transition: max-height 0.25s ease-in;
+            transition: max-height .25s ease-in;
         }
     }
 }
