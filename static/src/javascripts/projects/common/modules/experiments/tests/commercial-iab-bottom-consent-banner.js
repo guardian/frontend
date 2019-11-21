@@ -17,6 +17,10 @@ export const commercialIabBottomConsentBanner: ABTest = {
     canRun: () => true,
     variants: [
         {
+            id: 'control',
+            test: (): void => {},
+        },
+        {
             id: 'variant',
             test: (): void => {},
         },
