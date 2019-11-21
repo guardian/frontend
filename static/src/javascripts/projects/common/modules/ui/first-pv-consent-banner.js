@@ -105,17 +105,19 @@ const makeHtml = (): string => `
     ${
         isInVariantSynchronous(commercialIabConsentBanner, 'variant')
             ? `
-                <div class="site-message--first-pv-consent__block cmp-list-container" id="${INFO_LIST_ID}">
-                    <button class="cmp-button" id="${INFO_LIST_BUTTON_ID}" >
-                        Information that may be used
-                    </button>
-                    ${buildInfoList()}
-                </div>
-                <div class="site-message--first-pv-consent__block cmp-list-container" id="${PURPOSE_LIST_ID}">
-                    <button class="cmp-button" id="${PURPOSE_LIST_BUTTON_ID}">
-                        Purposes for storing information
-                    </button>
-                    ${buildPurposeList()}
+                <div class="site-message--first-pv-consent--commercialIabConsentBanner site-message--first-pv-consent__block site-message--first-pv-consent__block--intro">
+                    <div class="cmp-list-container" id="${INFO_LIST_ID}">
+                        <button class="cmp-button" id="${INFO_LIST_BUTTON_ID}" >
+                            Information that may be used
+                        </button>
+                        ${buildInfoList()}
+                    </div>
+                    <div class="cmp-list-container" id="${PURPOSE_LIST_ID}">
+                        <button class="cmp-button" id="${PURPOSE_LIST_BUTTON_ID}">
+                            Purposes for storing information
+                        </button>
+                        ${buildPurposeList()}
+                    </div>
                 </div>
             `
             : ''
