@@ -208,6 +208,10 @@ $btn-height: ($gs-baseline*3.5);
             padding-left: 24px;
             margin-left: -4px;
 
+            &:focus {
+                outline: none;
+            }
+
             &::before {
                 content: '';
                 position: absolute;
@@ -268,4 +272,7 @@ $btn-height: ($gs-baseline*3.5);
     background: #767676;
     color: #FFFFFF;
 
+    :focus {
+        outline: none;
+    }
 }
