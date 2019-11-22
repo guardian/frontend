@@ -145,7 +145,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-sign-in-gate-first-test",
@@ -153,6 +153,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = On,
     sellByDate = new LocalDate(2019, 12, 17),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-cmp-ui-no-overlay",
+    "Tests whether a CMP UI with no overlay yield higher consent rates",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 12, 12),
     exposeClientSide = true
   )
 }
