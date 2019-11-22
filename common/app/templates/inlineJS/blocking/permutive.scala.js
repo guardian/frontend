@@ -63,6 +63,7 @@
             author,
             keywords,
             webPublicationDate,
+            series,
         } = window.guardian.config.page;
 
         const safeAuthors =
@@ -84,6 +85,7 @@
             authors: safeAuthors,
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
+            series: series,
         };
 
         const isEmpty = value =>
