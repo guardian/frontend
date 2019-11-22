@@ -15,6 +15,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 type Template = {
     heading: string,
@@ -60,6 +61,8 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
+const OPTIONS_BUTTON_ID = 'cmp-options-button';
+
 const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
@@ -75,11 +78,20 @@ const makeHtml = (): string => `
                 bindableClassNames.agree
             }"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
-        <a
-            href="${template.linkToPreferences}"
-            data-link-name="first-pv-consent : to-prefs"
-            class="site-message--first-pv-consent__link u-underline"
-        >${template.choicesButton}</a>
+        ${
+            isInVariantSynchronous(commercialConsentOptionsButton, 'variant')
+                ? `
+                    <button class="cmp-options-button" id="${OPTIONS_BUTTON_ID}">
+                        Options
+                    </button>
+                  `
+                : `
+                    <a
+                        href="${template.linkToPreferences}"
+                        data-link-name="first-pv-consent : to-prefs"
+                        class="site-message--first-pv-consent__link u-underline"
+                    >${template.choicesButton}</a>`
+        }
     </div>
 `;
 

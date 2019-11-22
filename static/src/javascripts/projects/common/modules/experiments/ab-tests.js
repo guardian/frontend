@@ -15,6 +15,7 @@ import { permutiveTest } from 'common/modules/experiments/tests/commercial-permu
 import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -27,6 +28,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialCmpUiNonDismissable,
     signInGateFirstTest,
     commercialCmpUiNoOverlay,
+    commercialConsentOptionsButton,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
