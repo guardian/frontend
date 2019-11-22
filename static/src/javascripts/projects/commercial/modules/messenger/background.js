@@ -98,15 +98,12 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
             .write(() => {
                 if (backgroundParent) {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
-                }
-                if (specs.scrollType === 'interscroller') {
-                    const scrollForMoreLabel = document.createElement('div');
-                    scrollForMoreLabel.classList.add('ad-slot__label');
-                    scrollForMoreLabel.innerText = 'Scroll for More';
-                    adSlot.parentNode.insertBefore(
-                        scrollForMoreLabel,
-                        adSlot.nextSibling
-                    );
+                    if (specs.scrollType === 'interscroller') {
+                        const scrollForMoreLabel = document.createElement('div');
+                        scrollForMoreLabel.classList.add('ad-slot__scroll');
+                        scrollForMoreLabel.innerText = 'Scroll for More';
+                        backgroundParent.appendChild(scrollForMoreLabel);
+                    }
                 }
             })
             .then(() => ({ backgroundParent, background }));
@@ -148,7 +145,7 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                             }
                         }
                         if (specs.scrollType === 'interscroller') {
-                            adSlot.style.height = '85vh';
+                            adSlot.style.height = '90vh';
                         }
                     })
                 )
@@ -167,6 +164,11 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
             background.style.clip = `rect(${rect.top}px,100vw,${
                 rect.bottom
             }px,0)`;
+
+            const adSlotLabel = backgroundParent.parentElement.getElementsByClassName('ad-slot__label')[0];
+            if (adSlotLabel) {
+                adSlotLabel.classList.add("sticky");
+            }
         });
     };
 
