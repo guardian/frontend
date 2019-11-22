@@ -208,7 +208,6 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
