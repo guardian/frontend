@@ -3,8 +3,8 @@ import fastdom from 'lib/fastdom-promise';
 import crossIcon from 'svgs/icon/cross.svg';
 
 const shouldRenderLabel = adSlotNode =>
-    !// adSlotNode.classList.contains('ad-slot--fluid') ||
-    (
+    !(
+        adSlotNode.classList.contains('ad-slot--fluid') ||
         adSlotNode.classList.contains('ad-slot--frame') ||
         adSlotNode.classList.contains('ad-slot--gc') ||
         adSlotNode.getAttribute('data-label') === 'false' ||
@@ -33,8 +33,6 @@ const createAdLabel = (): HTMLDivElement => {
 
 export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
     fastdom.read(() => {
-        console.log('SHOULD RENDER AD SLOT LABEL FOR ', adSlotNode);
-        console.log('?', shouldRenderLabel(adSlotNode));
         if (shouldRenderLabel(adSlotNode)) {
             return fastdom.write(() => {
                 adSlotNode.prepend(createAdLabel());
