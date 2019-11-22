@@ -99,10 +99,18 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                 if (backgroundParent) {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     if (specs.scrollType === 'interscroller') {
-                        const scrollForMoreLabel = document.createElement('div');
+                        const scrollForMoreLabel = document.createElement(
+                            'div'
+                        );
                         scrollForMoreLabel.classList.add('ad-slot__scroll');
-                        scrollForMoreLabel.innerText = 'Scroll for More';
+                        scrollForMoreLabel.innerHTML = 'Scroll for More';
                         backgroundParent.appendChild(scrollForMoreLabel);
+
+                        const adSlotLabel = document.createElement('div');
+                        adSlotLabel.classList.add('ad-slot__label');
+                        adSlotLabel.classList.add('sticky');
+                        adSlotLabel.innerHTML = 'Advertisement';
+                        backgroundParent.appendChild(adSlotLabel);
                     }
                 }
             })
@@ -165,10 +173,12 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
                 rect.bottom
             }px,0)`;
 
-            const adSlotLabel = backgroundParent.parentElement.getElementsByClassName('ad-slot__label')[0];
+            /* const adSlotLabel = backgroundParent.parentElement.getElementsByClassName(
+                'ad-slot__label'
+            )[0];
             if (adSlotLabel) {
-                adSlotLabel.classList.add("sticky");
-            }
+                adSlotLabel.classList.add('sticky');
+            } */
         });
     };
 
