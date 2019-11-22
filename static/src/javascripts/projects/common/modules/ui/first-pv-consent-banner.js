@@ -61,8 +61,6 @@ const bindableClassNames: BindableClassNames = {
     agree: 'js-first-pv-consent-agree',
 };
 
-const OPTIONS_BUTTON_ID = 'cmp-options-button';
-
 const makeHtml = (): string => `
     <div class="site-message--first-pv-consent__block site-message--first-pv-consent__block--head ">${
         template.heading
@@ -78,20 +76,23 @@ const makeHtml = (): string => `
                 bindableClassNames.agree
             }"
         >${checkIcon.markup}<span>${template.agreeButton}</span></button>
-        ${
+        <a
+            href="${template.linkToPreferences}"
+            data-link-name="first-pv-consent : to-prefs"
+            class="site-message--first-pv-consent__link u-underline ${
+                isInVariantSynchronous(
+                    commercialConsentOptionsButton,
+                    'variant'
+                )
+                    ? 'cmp-options-button'
+                    : ''
+            }"
+        >${
             isInVariantSynchronous(commercialConsentOptionsButton, 'variant')
-                ? `
-                    <button class="cmp-options-button" id="${OPTIONS_BUTTON_ID}">
-                        Options
-                    </button>
-                  `
-                : `
-                    <a
-                        href="${template.linkToPreferences}"
-                        data-link-name="first-pv-consent : to-prefs"
-                        class="site-message--first-pv-consent__link u-underline"
-                    >${template.choicesButton}</a>`
-        }
+                ? 'Options'
+                : template.choicesButton
+        }</a>
+
     </div>
 `;
 
@@ -140,15 +141,6 @@ const bindClickHandlers = (msg: Message): void => {
     ).forEach(agreeButtonEl => {
         agreeButtonEl.addEventListener('click', () => onAgree(msg));
     });
-
-    if (isInVariantSynchronous(commercialConsentOptionsButton, 'variant')) {
-        const OptButton = document.getElementById(OPTIONS_BUTTON_ID);
-        if (OptButton) {
-            OptButton.addEventListener('click', () => {
-                window.location.href = template.linkToPreferences;
-            });
-        }
-    }
 };
 
 const show = (): Promise<boolean> => {
