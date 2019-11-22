@@ -85,7 +85,7 @@ $blue-accent: #1a5292;
         @include mq($from: desktop) {
             font-size: 48px;
             font-weight: bold;
-            padding: $gs-baseline $gs-gutter $gs-baseline 0;
+            padding: 0 $gs-gutter $gs-baseline 0;
         }
     }
 
