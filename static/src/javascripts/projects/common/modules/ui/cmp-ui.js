@@ -106,11 +106,11 @@ const getUrl = (): string => {
     } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'control')) {
         return `${
             cmpConfig.CMP_URL
-        }?abTestVariant=commercialCmpUiNoOverlay-control`;
+        }?abTestVariant=CommercialCmpUiNoOverlay-control`;
     } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant')) {
         return `${
             cmpConfig.CMP_URL
-        }?abTestVariant=commercialCmpUiNoOverlay-variant`;
+        }?abTestVariant=CommercialCmpUiNoOverlay-variant`;
     }
 
     return cmpConfig.CMP_URL;
@@ -136,7 +136,13 @@ const prepareUi = (): void => {
     container.addEventListener('transitionend', () => {
         fastdom.write(() => {
             if (overlay && overlay.parentNode) {
-                overlay.style.maxWidth = '100%';
+                if (
+                    isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant')
+                ) {
+                    overlay.style.maxWidth = '100%';
+                } else {
+                    overlay.style.width = '100%';
+                }
             }
         });
     });

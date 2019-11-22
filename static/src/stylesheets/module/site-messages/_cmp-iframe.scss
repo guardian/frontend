@@ -67,6 +67,9 @@
     z-index: 9999;
     display: none;
 
+    @include mq($until: mobileLandscape) {
+        left: 0;
+    }
     @include mq(mobileLandscape) {
         transition: background-color;
         transition-delay: .6s;
