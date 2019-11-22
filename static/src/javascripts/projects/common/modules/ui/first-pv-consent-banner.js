@@ -140,6 +140,15 @@ const bindClickHandlers = (msg: Message): void => {
     ).forEach(agreeButtonEl => {
         agreeButtonEl.addEventListener('click', () => onAgree(msg));
     });
+
+    if (isInVariantSynchronous(commercialConsentOptionsButton, 'variant')) {
+        const OptButton = document.getElementById(OPTIONS_BUTTON_ID);
+        if (OptButton) {
+            OptButton.addEventListener('click', () => {
+                window.location.href = template.linkToPreferences;
+            });
+        }
+    }
 };
 
 const show = (): Promise<boolean> => {
