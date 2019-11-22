@@ -42,10 +42,5 @@ export const acquisitionsBannerControlTemplate = (
                 )}
             </div>
         </div>
-        <a
-            aria-hidden="true"
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>
+
     `;

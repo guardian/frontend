@@ -16,7 +16,7 @@ export const acquisitionsBannerUsEoyTemplate = (
                 ${closeCentralIcon.markup}
             </button>
         </div>
-        
+
         <div class="engagement-banner__container engagement-banner__container--us-eoy-2019">
             <div class="engagement-banner__text-container">
                 <div class="engagement-banner__header">
@@ -30,16 +30,16 @@ export const acquisitionsBannerUsEoyTemplate = (
                     <p>${params.messageText}</p>
                 </div>
             </div>
-           
+
             <div class="engagement-banner__cta-container">
                 <div class="engagement-banner__ticker-header-container">
                     <h3 class="engagement-banner__ticker-header">Help us reach our year-end goal</h3>
                 </div>
-                
+
                 <div class="engagement-banner__ticker-container">
                     ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
                 </div>
-                
+
                 <div class="engagement-banner__cta">
                     <a tabIndex="3" class="component-button component-button--secondary" href="${
                         params.linkUrl
@@ -47,7 +47,7 @@ export const acquisitionsBannerUsEoyTemplate = (
                         ${params.buttonCaption}
                     </a>
                 </div>
-                
+
                 <div class="engagement-banner__cta engagement-banner__cta--editorial">
                     <a tabIndex="3" class="component-button component-button--greyHollow component-button--greyHollow--eoy" href="${'https://www.theguardian.com/us-news/2019/nov/18/help-raise-15-million-fund-high-impact-journalism-2020'}">
                         Learn more
@@ -55,11 +55,5 @@ export const acquisitionsBannerUsEoyTemplate = (
                 </div>
             </div>
         </div>
-        
-        <a
-            aria-hidden="true"
-            class="u-faux-block-link__overlay"
-            target="_blank"
-            href="${params.linkUrl}"
-        ></a>
+
     `;
