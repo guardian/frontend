@@ -25,6 +25,8 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -200,7 +202,12 @@ const show: () => Promise<boolean> = async () => {
 
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
-        fiveOrMorePageViews(pageviews) &&
+        !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
+            !isInVariantSynchronous(
+                commercialConsentOptionsButton,
+                'variant'
+            ) &&
+            fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
