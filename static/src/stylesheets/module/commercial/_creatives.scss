@@ -714,3 +714,26 @@
         max-width: 100%;
     }
 }
+
+.ad-slot__label.sticky {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 0;
+}
+
+.ad-slot__scroll {
+    @include font-size(12, 20);
+    height: $mpu-ad-label-height;
+    background-color: $brightness-97;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: $f-sans-serif-text;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
