@@ -267,6 +267,7 @@ const initPageVisibility = (): void => {
         } else {
             pageVisibility = document && document.hidden ? 'hidden' : 'visible';
         }
+        mediator.emit(`modules:detect:pagevisibility:${pageVisibility}`);
     };
 
     // Standards:
