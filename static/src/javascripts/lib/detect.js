@@ -265,7 +265,7 @@ const initPageVisibility = (): void => {
         if (evt.type in evtMap) {
             pageVisibility = evtMap[evt.type];
         } else {
-            pageVisibility = window && window.hidden ? 'hidden' : 'visible';
+            pageVisibility = document && document.hidden ? 'hidden' : 'visible';
         }
     };
 
