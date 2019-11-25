@@ -42,8 +42,8 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
-        ! ('backgroundRepeat' in specs) ||
-        ! ('backgroundPosition' in specs) ||
+        !('backgroundRepeat' in specs) ||
+        !('backgroundPosition' in specs) ||
         !('scrollType' in specs) ||
         !(adSlot instanceof Element)
     ) {
