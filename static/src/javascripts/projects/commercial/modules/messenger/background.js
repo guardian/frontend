@@ -42,8 +42,8 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
-        //! ('backgroundRepeat' in specs) ||
-        //! ('backgroundPosition' in specs) ||
+        ! ('backgroundRepeat' in specs) ||
+        ! ('backgroundPosition' in specs) ||
         !('scrollType' in specs) ||
         !(adSlot instanceof Element)
     ) {
@@ -172,13 +172,6 @@ const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
             background.style.clip = `rect(${rect.top}px,100vw,${
                 rect.bottom
             }px,0)`;
-
-            /* const adSlotLabel = backgroundParent.parentElement.getElementsByClassName(
-                'ad-slot__label'
-            )[0];
-            if (adSlotLabel) {
-                adSlotLabel.classList.add('sticky');
-            } */
         });
     };
 
