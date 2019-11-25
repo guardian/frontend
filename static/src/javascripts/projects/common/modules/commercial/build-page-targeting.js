@@ -229,6 +229,18 @@ const buildPageTargetting = (
             rp: config.get('isDotcomRendering', false)
                 ? 'dotcom-rendering'
                 : 'dotcom-platform', // rendering platform
+            dcre:
+                config.get('isDotcomRendering', false) ||
+                config.get('page.dcrCouldRender', false)
+                    ? 't'
+                    : 'f', // Indicates whether the page is DCR eligible. This happens when the page
+            // was DCR eligible and was actually rendered by DCR or
+            // was DCR eligible but rendered by frontend for a user not in the
+            // DotcomRenderingAdvertisements experiment
+            //
+            // This is introduced (Nov 2019) to be used as part of correctly
+            // validating ad performance on DCR (against DCR eligible pages)
+            // and can be decomissioned after Pascal and D&I no longer need the flag.
             inskin: inskinTargetting(),
         },
         page.sharedAdTargeting,

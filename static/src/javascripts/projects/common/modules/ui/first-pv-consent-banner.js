@@ -15,6 +15,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
 import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 type Template = {
     heading: string,
@@ -78,8 +79,20 @@ const makeHtml = (): string => `
         <a
             href="${template.linkToPreferences}"
             data-link-name="first-pv-consent : to-prefs"
-            class="site-message--first-pv-consent__link u-underline"
-        >${template.choicesButton}</a>
+            class="site-message--first-pv-consent__link u-underline ${
+                isInVariantSynchronous(
+                    commercialConsentOptionsButton,
+                    'variant'
+                )
+                    ? 'cmp-options-button'
+                    : ''
+            }"
+        >${
+            isInVariantSynchronous(commercialConsentOptionsButton, 'variant')
+                ? 'Options'
+                : template.choicesButton
+        }</a>
+
     </div>
 `;
 

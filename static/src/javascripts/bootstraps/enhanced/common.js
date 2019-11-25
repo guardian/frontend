@@ -61,6 +61,7 @@ import {
     consentManagementPlatformUi,
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
+import { signInGate } from 'common/modules/identity/sign-in-gate';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -315,6 +316,7 @@ const initialiseBanner = (): void => {
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
+        signInGate,
     ];
 
     initBannerPicker(bannerList);

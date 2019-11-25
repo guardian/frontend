@@ -8,10 +8,14 @@ import { countryName } from 'common/modules/experiments/tests/contributions-epic
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
-import { learnMore } from 'common/modules/experiments/tests/contributions-epic-learn-more-cta';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
+import { permutiveTest } from 'common/modules/experiments/tests/commercial-permutive';
+import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
+import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -20,17 +24,21 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
+    permutiveTest,
     commercialCmpUiNonDismissable,
+    signInGateFirstTest,
+    commercialCmpUiNoOverlay,
+    commercialConsentOptionsButton,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     articlesViewed,
-    learnMore,
     countryName,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsBannerUsEoy,
     articlesViewedBanner,
 ];

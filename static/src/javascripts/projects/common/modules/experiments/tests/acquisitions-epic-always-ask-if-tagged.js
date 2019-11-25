@@ -1,9 +1,7 @@
 // @flow
-import {
-    makeEpicABTest,
-    defaultButtonTemplate,
-} from 'common/modules/commercial/contributions-utilities';
+import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 
 export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     id: 'AcquisitionsEpicAlwaysAskIfTagged',
@@ -34,7 +32,7 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
 
             deploymentRules: 'AlwaysAsk',
-            buttonTemplate: defaultButtonTemplate,
+            buttonTemplate: epicButtonsTemplate,
         },
     ],
 });

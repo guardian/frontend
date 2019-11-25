@@ -5,14 +5,16 @@ import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import { local } from 'lib/storage';
 import {
     submitViewEvent,
     submitClickEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
-import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import {
+    pageShouldHideReaderRevenue,
+    getReaderRevenueRegion,
+} from 'common/modules/commercial/contributions-utilities';
 import {
     track as trackFirstPvConsent,
     canShow as canShowFirstPvConsent,
@@ -22,6 +24,13 @@ import {
     allAdConsents,
 } from 'common/modules/commercial/ad-prefs.lib';
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+
+// types
+import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 const ENTER_KEY_CODE = 'Enter';
 const DISPLAY_EVENT_KEY = 'subscription-banner : display';
@@ -32,19 +41,25 @@ const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
-const edition: string = config.get('page.edition');
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
 );
-
 const pageviews: number = local.get('gu.alreadyVisited');
 
+const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
+    geolocationGetSync()
+);
+const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
+    'united-states',
+    'australia',
+];
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
-const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
+const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
+    !hideBannerInTheseRegions.includes(region);
 
-const isAustralianEdition = (currentEdition: string) => currentEdition === 'AU';
+const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
@@ -69,7 +84,9 @@ const onAgree = (): void => {
 const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
-        banner.remove();
+        if (banner) {
+            banner.remove();
+        }
     };
 
     if (button) {
@@ -110,11 +127,17 @@ const trackSubscriptionBannerCtaClick = () => {
         },
     });
 };
+const closeActions = (banner, callback) => buttons => {
+    buttons.forEach(button => {
+        bindCloseHandler(button, banner, callback);
+    });
+};
 
 const bindSubscriptionClickHandlers = () => {
-    const subscriptionBannercloseButton = document.querySelector(
+    const subscriptionBannerNotNowButton = document.querySelector(
         '#js-site-message--subscription-banner__cta-dismiss'
     );
+
     const subscriptionBannerHtml = document.querySelector(
         '#js-subscription-banner-site-message'
     );
@@ -123,12 +146,20 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__cta'
     );
 
+    const subscriptionBannercloseButton = document.querySelector(
+        '#js-site-message--subscription-banner__close-button'
+    );
+
+    const bindSubscriptionCloseButtons = closeActions(
+        subscriptionBannerHtml,
+        subcriptionBannerCloseActions
+    );
+
     if (subscriptionBannerHtml) {
-        bindCloseHandler(
+        bindSubscriptionCloseButtons([
             subscriptionBannercloseButton,
-            subscriptionBannerHtml,
-            subcriptionBannerCloseActions
-        );
+            subscriptionBannerNotNowButton,
+        ]);
         bindClickHandler(
             subscriptionBannerCta,
             trackSubscriptionBannerCtaClick
@@ -171,11 +202,16 @@ const show: () => Promise<boolean> = async () => {
 
 const canShow: () => Promise<boolean> = () => {
     const can = Promise.resolve(
-        fiveOrMorePageViews(pageviews) &&
+        !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
+            !isInVariantSynchronous(
+                commercialConsentOptionsButton,
+                'variant'
+            ) &&
+            fiveOrMorePageViews(pageviews) &&
             !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
-            !isAustralianEdition(edition) &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
+            canShowBannerInRegion(currentRegion) &&
             subscriptionBannerSwitchIsOn
     );
     return can;

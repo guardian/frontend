@@ -1,0 +1,162 @@
+.signin-gate {
+    clear: left;
+    margin-bottom: $gs-baseline * 2;
+    padding: ($gs-baseline * 3) ($gs-baseline * 2);
+    @include mq(desktop) {
+        min-height: 600px;
+    }
+}
+
+.signin-gate__header {
+    @include fs-header(3);
+    border-top: 1px solid $brightness-46;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__buttons {
+    border-top: 1px solid $brightness-46;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    padding-top: 4px;
+
+    // Horizontal alignment
+    align-items: flex-start;
+
+    @include mq(424px) {
+        flex-direction: row;
+
+        // Now vertical alignment, because the flex-direction is row
+        align-items: center;
+    }
+}
+
+.signin-gate__why {
+    @include fs-textSans(5);
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 17px;
+    padding-left: $gs-baseline * 1.5;
+    padding-top: 20px;
+    @include mq(424px) {
+        padding-top: 0px;
+    }
+
+}
+
+.signin-gate__dismiss {
+    @include fs-textSans(5);
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-weight: 700;
+    font-size: 17px;
+    padding-left: $gs-baseline * 1.5;
+    padding-top: 20px;
+    @include mq(424px) {
+        padding-top: 0px;
+    }
+}
+
+.signin-gate__first-paragraph-container {
+    position: relative;
+    overflow: hidden;
+    .signin-gate__first-paragraph-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        /* "transparent" only works here because == rgba(0,0,0,0) */
+        background-image: linear-gradient(0deg, $brightness-100, 70%, rgba(255, 255, 255, 0));
+
+        &.signin-gate__first-paragraph-overlay--comment {
+            background-image: linear-gradient(0deg, $opinion-faded, 70%, rgba(255, 255, 255, 0));
+        }
+    }
+}
+
+.signin-gate__button {
+    @include fs-textSans(5);
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 17px;
+    height: 42px;
+    min-height: 42px;
+    padding: 20px 42px;
+    border: 0;
+    border-radius: 21px;
+    box-sizing: border-box;
+    background: rgba(255, 255, 255, 0);
+    cursor: pointer;
+    transition: .3s ease-in-out;;
+    justify-content: space-between;
+    position: relative;
+    white-space: nowrap;
+
+    &:hover, &:focus {
+        outline: 0;
+    }
+
+    &[data-disabled] {
+        pointer-events: none;
+    }
+
+    &:hover,
+    &:focus {
+        text-decoration: none;
+    }
+}
+
+.signin-gate__button--primary {
+    background-color: $brand-main;
+    color: $brightness-100 !important;
+    &:hover, &:focus {
+        background-color: $brand-dark;
+    }
+}
+
+.signin-gate__header--text {
+    font-weight: normal;
+    margin-bottom: $gs-baseline;
+    line-height: 1.25em;
+    font-size: 24px;
+    @include mq(tablet) {
+        font-size: 34px;
+    }
+}
+
+.signin-gate__benefits {
+    border-top: 1px solid $brightness-46;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__benefits--text {
+    @include mq(tablet) {
+        padding-right: $gs-baseline * 12;
+    }
+    font-weight: bold;
+    color: $sport-main;
+    font-size: 17px;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+    &-news {
+        color: $news-main;
+    }
+    &-comment {
+        color: $opinion-main
+    }
+    &-sport {
+        color: $sport-main
+    }
+    &-culture {
+        color: $culture-main
+    }
+    &-lifestyle {
+        color: $lifestyle-main
+    }
+}
