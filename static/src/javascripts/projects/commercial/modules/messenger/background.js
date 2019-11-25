@@ -38,7 +38,7 @@ const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
         return result;
     }, {});
 
-const setBackground = (specs: AdSpec, adSlot: any): Promise<any> => {
+const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
