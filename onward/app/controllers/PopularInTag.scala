@@ -7,8 +7,11 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
+import models.OnwardCollectionResponse
 import play.api.mvc._
 import services._
+import models.OnwardCollection._
+
 
 class PopularInTag(
   val contentApiClient: ContentApiClient,
@@ -32,11 +35,24 @@ class PopularInTag(
     // Initially a fix for PaidFor related content (where this problem is more common), the decision to truncate is due
     // to aesthetic issues with the second slice when there are only 5 or 6 results in related content (7 looks fine).
     val numberOfCards = if (trails.faciaItems.length == 5 || trails.faciaItems.length == 6) 4 else 8
-    val html = views.html.fragments.containers.facia_cards.container(
-      containerDefinition = onwardContainer("Related content", trails.faciaItems take numberOfCards),
-      frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
-    )
 
-    JsonComponent(html)
+    if (request.forceDCR) {
+      JsonComponent(
+        OnwardCollectionResponse(
+          heading = "Related content",
+          trails = trailsToItems(trails.items.map(_.faciaContent))
+        )
+      )
+    } else {
+      val html = views.html.fragments.containers.facia_cards.container(
+        containerDefinition = onwardContainer("Related content", trails.faciaItems take numberOfCards),
+        frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
+      )
+
+      JsonComponent(html)
+    }
+
+
+
   }
 }
