@@ -1,5 +1,6 @@
 package models
 
+import com.gu.contentapi.client.utils.{DesignType, Article}
 import common.LinkTo
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
@@ -16,7 +17,8 @@ case class OnwardItem(
   image: Option[String],
   ageWarning: Option[String],
   isLiveBlog: Boolean,
-  pillar: String
+  pillar: String,
+  designType: String
 )
 
 case class MostPopularGeoResponse(
@@ -53,7 +55,8 @@ object OnwardCollection {
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
         ageWarning = ageWarning(content),
         isLiveBlog = content.properties.isLiveBlog,
-        pillar = findPillar(content.maybePillar, content.frontendTags.toList)
+        pillar = findPillar(content.maybePillar, content.frontendTags.toList),
+        designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString
       )
     )
   }
