@@ -159,6 +159,7 @@ object PressedContentFormat {
       case JsString("GuardianView") => JsSuccess(com.gu.contentapi.client.utils.GuardianView)
       case JsString("Quiz") => JsSuccess(com.gu.contentapi.client.utils.Quiz)
       case JsString("GuardianLabs") => JsSuccess(com.gu.contentapi.client.utils.GuardianLabs)
+      case JsString("AdvertisementFeature") => JsSuccess(com.gu.contentapi.client.utils.AdvertisementFeature)
       case _ => JsError(s"Unknown design type: '$json'")
     }
     override def writes(dt: DesignType): JsValue = dt match {
@@ -177,6 +178,7 @@ object PressedContentFormat {
       case com.gu.contentapi.client.utils.GuardianView => JsString("GuardianView")
       case com.gu.contentapi.client.utils.Quiz => JsString("Quiz")
       case com.gu.contentapi.client.utils.GuardianLabs => JsString("GuardianLabs")
+      case com.gu.contentapi.client.utils.AdvertisementFeature => JsString("AdvertisementFeature")
     }
   }
 

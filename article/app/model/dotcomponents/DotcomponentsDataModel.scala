@@ -2,28 +2,26 @@ package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.DesignType
+import com.gu.contentapi.client.utils.Article
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
+import controllers.ArticlePage
+import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
+import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
-import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
-import navigation.{FooterLink, FooterLinks}
+import navigation._
+import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
-import controllers.ArticlePage
-import experiments.ActiveExperiments
-import org.joda.time.DateTime
-import views.support.JavaScriptPage
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300, JavaScriptPage}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -397,12 +395,6 @@ object DotcomponentsDataModel {
       }.getOrElse("news")
     }
 
-    def findDesignType(designType: Option[DesignType], tags: List[Tag]): String = {
-      // TODO Remove this when changes can be moved to https://github.com/guardian/content-api-scala-client/blob/master/client/src/main/scala/com.gu.contentapi.client/utils/CapiModelEnrichment.scala
-      if (isPaidContent(tags)) "AdvertisementFeature"
-      else designType.map(_.toString).getOrElse("Article")
-    }
-
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
@@ -611,7 +603,7 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = findDesignType(article.metadata.designType, allTags),
+      designType = article.metadata.designType.getOrElse(Article).toString,
       pageFooter = pageFooter,
       publication = article.content.publication,
     )
