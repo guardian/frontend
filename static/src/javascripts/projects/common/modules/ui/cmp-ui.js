@@ -20,13 +20,6 @@ const CONTAINER_CLASS = 'cmp-container';
 let overlay: ?HTMLElement;
 let uiPrepared: boolean = false;
 
-const isInCmpTest = () =>
-    isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
-    isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
-    isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant') ||
-    isInVariantSynchronous(commercialCmpUiNoOverlay, 'control') ||
-    isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant');
-
 const animateCmp = (): Promise<void> =>
     new Promise(resolve => {
         /**
@@ -186,6 +179,13 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 
     show();
 };
+
+export const isInCmpTest = (): boolean =>
+    isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
+    isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
+    isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant') ||
+    isInVariantSynchronous(commercialCmpUiNoOverlay, 'control') ||
+    isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant');
 
 export const addPrivacySettingsLink = (): void => {
     if (!isInCmpTest()) {
