@@ -37,6 +37,7 @@ const commercialModules: Array<Array<any>> = [
 ];
 
 if (!commercialFeatures.adFree) {
+    performance.mark('commercial-modules');
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
         ['cm-prepare-googletag', prepareGoogletag],
@@ -141,6 +142,14 @@ export const bootCommercial = (): Promise<void> => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
+            /* eslint-disable no-console */
+            const perfToGoogleTag: any = performance.measure(
+                'commercial modules init to google tag init',
+                'commercial-modules',
+                'google-tag-init'
+            );
+            console.log(perfToGoogleTag.name, perfToGoogleTag.duration);
+            /* eslint-enable */
             markTime('commercial end');
             catchErrorsWithContext(
                 [
