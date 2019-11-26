@@ -29,6 +29,9 @@ beforeEach(() => {
     getCookie.mockImplementation(passingCookies);
 });
 
+jest.mock('common/modules/ui/cmp-ui', () => ({
+    isInCmpTest: jest.fn(() => false),
+}));
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'notintest'
