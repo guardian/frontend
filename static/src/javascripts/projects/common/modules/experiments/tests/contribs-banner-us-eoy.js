@@ -10,7 +10,7 @@ const titles = ['2020 will be a defining year for America'];
 const messageTextV1 =
     'And the result could define the country for a generation. Many vital aspects of American public life are in play - the supreme court, abortion rights, climate policy, wealth inequality, Big Tech and more. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million.';
 const messageTextV2 =
-    'This year, much of what we hold dear has been threatened - democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million.';
+    'This year, much of what we hold dear has been threatened - democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue to put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million.';
 const ctaText = 'Support The Guardian';
 
 export const contributionsBannerUsEoy: AcquisitionsABTest = {
