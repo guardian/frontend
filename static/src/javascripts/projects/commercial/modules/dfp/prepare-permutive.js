@@ -5,9 +5,8 @@ import reportError from 'lib/report-error';
 
 declare var permutive: any;
 
+/* eslint-disable */
 export const initPermutive = (): Promise<void> => {
-    /* eslint-disable */
-    performance.mark('permutive-head-init');
     return new Promise(resolve => {
         (function (n, e, o, r, i) {
             if (!e) {

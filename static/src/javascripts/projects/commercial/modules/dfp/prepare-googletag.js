@@ -88,7 +88,6 @@ const setPublisherProvidedId = (): void => {
 };
 
 export const init = (): Promise<void> => {
-    performance.mark('google-tag-init');
     const setupAdvertising = (): Promise<void> => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are

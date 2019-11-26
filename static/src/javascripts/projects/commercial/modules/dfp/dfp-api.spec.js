@@ -20,9 +20,6 @@ const getBreakpoint: any = getBreakpoint_;
 const fillAdvertSlots: any = fillAdvertSlots_;
 const onIabConsentNotification: any = onIabConsentNotification_;
 
-// TODO: Remove this after non blocking permutive performance review
-global.performance.mark = () => 0;
-
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));

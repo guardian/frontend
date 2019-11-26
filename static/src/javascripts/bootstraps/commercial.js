@@ -41,7 +41,6 @@ const commercialModules: Array<Array<any>> = [
 ];
 
 if (!commercialFeatures.adFree) {
-    performance.mark('commercial-modules');
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
         ['cm-thirdPartyTags', initThirdPartyTags],
@@ -149,29 +148,6 @@ export const bootCommercial = (): Promise<void> => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            const perfToPermutive: any = performance.measure(
-                'commercial modules init to permutive head init',
-                'commercial-modules',
-                'permutive-head-init'
-            );
-            const perfToGoogleTag: any = performance.measure(
-                'commercial modules init to google tag init',
-                'commercial-modules',
-                'google-tag-init'
-            );
-            const perfPermutiveToGoogleTag: any = performance.measure(
-                'permutive head init to google tag init',
-                'permutive-head-init',
-                'google-tag-init'
-            );
-            /* eslint-disable no-console */
-            console.log(perfToPermutive.name, perfToPermutive.duration);
-            console.log(perfToGoogleTag.name, perfToGoogleTag.duration);
-            console.log(
-                perfPermutiveToGoogleTag.name,
-                perfPermutiveToGoogleTag.duration
-            );
-            /* eslint-enable */
             markTime('commercial end');
             catchErrorsWithContext(
                 [
