@@ -16,6 +16,10 @@ import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
+import {
+    initPermutive,
+    initPermutiveLib,
+} from 'commercial/modules/dfp/prepare-permutive';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -37,10 +41,14 @@ const commercialModules: Array<Array<any>> = [
 ];
 
 if (!commercialFeatures.adFree) {
+    performance.mark('commercial-modules');
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
-        ['cm-prepare-googletag', prepareGoogletag],
         ['cm-thirdPartyTags', initThirdPartyTags],
+        // Permutive init code must run before google tag enableServices()
+        // The permutive lib however is loaded async in `initPermutiveLib`
+        ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+        ['cm-prepare-permutiveLib', initPermutiveLib],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
@@ -141,6 +149,29 @@ export const bootCommercial = (): Promise<void> => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
+            const perfToPermutive: any = performance.measure(
+                'commercial modules init to permutive head init',
+                'commercial-modules',
+                'permutive-head-init'
+            );
+            const perfToGoogleTag: any = performance.measure(
+                'commercial modules init to google tag init',
+                'commercial-modules',
+                'google-tag-init'
+            );
+            const perfPermutiveToGoogleTag: any = performance.measure(
+                'permutive head init to google tag init',
+                'permutive-head-init',
+                'google-tag-init'
+            );
+            /* eslint-disable no-console */
+            console.log(perfToPermutive.name, perfToPermutive.duration);
+            console.log(perfToGoogleTag.name, perfToGoogleTag.duration);
+            console.log(
+                perfPermutiveToGoogleTag.name,
+                perfPermutiveToGoogleTag.duration
+            );
+            /* eslint-enable */
             markTime('commercial end');
             catchErrorsWithContext(
                 [
