@@ -104,6 +104,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                         );
                         scrollForMoreLabel.classList.add('ad-slot__scroll');
                         scrollForMoreLabel.innerHTML = 'Scroll for More';
+                        scrollForMoreLabel.onclick = () => {
+                            backgroundParent.scrollIntoView(false);
+                        };
                         backgroundParent.appendChild(scrollForMoreLabel);
 
                         const adSlotLabel = document.createElement('div');
@@ -153,7 +156,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             }
                         }
                         if (specs.scrollType === 'interscroller') {
-                            adSlot.style.height = '90vh';
+                            adSlot.style.height = '85vh';
                         }
                     })
                 )
