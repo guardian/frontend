@@ -27,7 +27,6 @@ const createAdLabel = (): HTMLDivElement => {
     adLabel.className = 'ad-slot__label';
     adLabel.innerHTML = 'Advertisement';
     adLabel.appendChild(createAdCloseDiv());
-
     return adLabel;
 };
 

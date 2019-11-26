@@ -99,6 +99,16 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 if (backgroundParent) {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     if (specs.scrollType === 'interscroller') {
+                        adSlot.style.height = '85vh';
+
+                        // Sticky 'Advertisement' label at the top
+                        const adSlotLabel = document.createElement('div');
+                        adSlotLabel.classList.add('ad-slot__label');
+                        adSlotLabel.classList.add('sticky');
+                        adSlotLabel.innerHTML = 'Advertisement';
+                        backgroundParent.appendChild(adSlotLabel);
+
+                        // Sticky 'Scroll for More' label at the bottom
                         const scrollForMoreLabel = document.createElement(
                             'div'
                         );
@@ -111,12 +121,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             });
                         };
                         backgroundParent.appendChild(scrollForMoreLabel);
-
-                        const adSlotLabel = document.createElement('div');
-                        adSlotLabel.classList.add('ad-slot__label');
-                        adSlotLabel.classList.add('sticky');
-                        adSlotLabel.innerHTML = 'Advertisement';
-                        backgroundParent.appendChild(adSlotLabel);
                     }
                 }
             })
@@ -134,10 +138,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
 
         Object.assign(background.style, specStyles);
 
-        if (
-            specs.scrollType === 'fixed' ||
-            specs.scrollType === 'interscroller'
-        ) {
+        if (specs.scrollType === 'fixed') {
             return fastdom
                 .read(() => {
                     if (adSlot instanceof Element) {
@@ -146,20 +147,14 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 })
                 .then(rect =>
                     fastdom.write(() => {
-                        if (specs.scrollType === 'fixed') {
-                            if (specStyles.backgroundColor) {
-                                backgroundParent.style.backgroundColor =
-                                    specStyles.backgroundColor;
-                            }
-
-                            if (rect) {
-                                background.style.left = `${rect.left}px`;
-                                background.style.right = `${rect.right}px`;
-                                background.style.width = `${rect.width}px`;
-                            }
+                        if (specStyles.backgroundColor) {
+                            backgroundParent.style.backgroundColor =
+                                specStyles.backgroundColor;
                         }
-                        if (specs.scrollType === 'interscroller') {
-                            adSlot.style.height = '85vh';
+                        if (rect) {
+                            background.style.left = `${rect.left}px`;
+                            background.style.right = `${rect.right}px`;
+                            background.style.width = `${rect.width}px`;
                         }
                     })
                 )
