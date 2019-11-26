@@ -2,6 +2,10 @@
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
+import {
+    createStickyAdLabel,
+    createStickyScrollForMoreLabel,
+} from 'commercial/modules/dfp/render-advert-label';
 
 type AdSpec = {
     scrollType: string,
@@ -100,27 +104,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
-
-                        // Sticky 'Advertisement' label at the top
-                        const adSlotLabel = document.createElement('div');
-                        adSlotLabel.classList.add('ad-slot__label');
-                        adSlotLabel.classList.add('sticky');
-                        adSlotLabel.innerHTML = 'Advertisement';
-                        backgroundParent.appendChild(adSlotLabel);
-
-                        // Sticky 'Scroll for More' label at the bottom
-                        const scrollForMoreLabel = document.createElement(
-                            'div'
-                        );
-                        scrollForMoreLabel.classList.add('ad-slot__scroll');
-                        scrollForMoreLabel.innerHTML = 'Scroll for More';
-                        scrollForMoreLabel.onclick = () => {
-                            backgroundParent.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'end',
-                            });
-                        };
-                        backgroundParent.appendChild(scrollForMoreLabel);
                     }
                 }
             })
@@ -234,6 +217,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         )
         .then(({ backgroundParent, background }) => {
             if (specs.scrollType === 'interscroller') {
+                createStickyAdLabel(backgroundParent).then();
+                createStickyScrollForMoreLabel(backgroundParent).then();
+
                 addEventListener(window, 'scroll', () =>
                     onInterscrollerScroll(backgroundParent, background)
                 );
