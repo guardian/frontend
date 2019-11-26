@@ -69,12 +69,15 @@ GET        /business-data/stocks.json                 controllers.StocksControll
 POST       /info/tech-feedback/send                   controllers.TechFeedbackController.submitFeedback(path = "")
 GET        /info/tech-feedback                        controllers.TechFeedbackController.techFeedback(path = "")
 
+# DCR
+GET        /story-package/*path.json                  controllers.StoryPackageController.render(path)
+
 # AMP
 GET        /most-read-mf2.json                        controllers.MostPopularController.renderPopularMicroformat2()
 GET        /related-mf2/*path.json                    controllers.RelatedController.renderMf2(path)
 GET        /series-mf2/*path.json                     controllers.SeriesController.renderMf2SeriesStories(path)
 GET        /editionalised-nav.json                    controllers.NavigationController.renderAmpNav()
-GET        /story-package-mf2/*path.json              controllers.StoryPackageController.render(path)
+GET        /story-package-mf2/*path.json              controllers.StoryPackageController.renderMF2(path)
 
 ## Breaking-news
 GET     /news-alert/alerts                            controllers.NewsAlertController.alerts()
