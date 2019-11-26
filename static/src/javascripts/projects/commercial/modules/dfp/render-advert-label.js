@@ -38,3 +38,28 @@ export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
             });
         }
     });
+
+export const createStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
+    fastdom.write(() => {
+        const adSlotLabel = document.createElement('div');
+        adSlotLabel.classList.add('ad-slot__label');
+        adSlotLabel.classList.add('sticky');
+        adSlotLabel.innerHTML = 'Advertisement';
+        adSlotNode.appendChild(adSlotLabel);
+    });
+
+export const createStickyScrollForMoreLabel = (
+    adSlotNode: HTMLElement
+): Promise<null> =>
+    fastdom.write(() => {
+        const scrollForMoreLabel = document.createElement('div');
+        scrollForMoreLabel.classList.add('ad-slot__scroll');
+        scrollForMoreLabel.innerHTML = 'Scroll for More';
+        scrollForMoreLabel.onclick = () => {
+            adSlotNode.scrollIntoView({
+                behavior: 'smooth',
+                block: 'end',
+            });
+        };
+        adSlotNode.appendChild(scrollForMoreLabel);
+    });
