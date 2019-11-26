@@ -180,7 +180,7 @@ const handlePrivacySettingsClick = (evt: Event): void => {
     show();
 };
 
-export const isInCmpTest = () =>
+export const isInCmpTest = (): boolean =>
     isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
     isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
     isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant') ||
