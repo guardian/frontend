@@ -1,7 +1,6 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
-import { commercialCmpUiNonDismissable } from 'common/modules/experiments/tests/commercial-cmp-ui-non-dismissable';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
@@ -88,14 +87,6 @@ const onErrorCmp = (error: Error): void => {
 const getUrl = (): string => {
     if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
         return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiIab-variant`;
-    } else if (
-        isInVariantSynchronous(commercialCmpUiNonDismissable, 'control')
-    ) {
-        return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiNonDismissable-control`;
-    } else if (
-        isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant')
-    ) {
-        return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiNonDismissable-variant`;
     } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'control')) {
         return `${
             cmpConfig.CMP_URL
@@ -182,8 +173,6 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 
 export const isInCmpTest = (): boolean =>
     isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
-    isInVariantSynchronous(commercialCmpUiNonDismissable, 'control') ||
-    isInVariantSynchronous(commercialCmpUiNonDismissable, 'variant') ||
     isInVariantSynchronous(commercialCmpUiNoOverlay, 'control') ||
     isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant');
 
