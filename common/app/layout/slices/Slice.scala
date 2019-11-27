@@ -767,6 +767,28 @@ case object FullMedia100 extends Slice {
   )
 }
 
+/* .___________________________________.
+ * |###################################|
+ * |###################################|
+ * |###################################|
+ * |                                   |
+ * `-----------------------------------'
+ */
+case object FullMedia100DynamicPackage extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "mf",
+    columns = Seq(
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = cards.DynamicPackage,
+          tablet = cards.FullMedia100DynamicPackage
+        )
+      )
+    )
+  )
+}
+
 /*   .___________________________________.
  * ##|###################################|##
  * ##|###################################|##

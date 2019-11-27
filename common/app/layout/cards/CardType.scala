@@ -6,7 +6,7 @@ sealed trait CardType {
   case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
 
   def videoPlayer: VideoPlayerMode = this match {
-    case FullMedia50 | FullMedia75 | FullMedia100 =>
+    case FullMedia50 | FullMedia75 | FullMedia100 | FullMedia100DynamicPackage =>
       VideoPlayerMode(show = true, showEndSlate = true)
     case ThreeQuarters | ThreeQuartersRight | Half | Third | Standard =>
       VideoPlayerMode(show = true, showEndSlate = false)
@@ -15,7 +15,7 @@ sealed trait CardType {
   }
 
   def youTubeMediaAtomPlayer: VideoPlayerMode = this match {
-    case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight =>
+    case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight | FullMedia100DynamicPackage =>
       VideoPlayerMode(show = true, showEndSlate = true)
     case Half | Third | Standard =>
       VideoPlayerMode(show = true, showEndSlate = false)
@@ -39,12 +39,12 @@ sealed trait CardType {
   }
 
   def showStandfirst: Boolean = this match {
-    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
+    case Fluid | FullMedia100 | FullMedia100DynamicPackage | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
     case _ => false
   }
 
   def canShowSlideshow: Boolean = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
+    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 | FullMedia100DynamicPackage => true
     case _ => false
   }
 }
@@ -60,6 +60,10 @@ case object MediaList extends CardType {
 
 case object Standard extends CardType {
   override val cssClassName = "standard"
+}
+
+case object DynamicPackage extends CardType {
+  override val cssClassName = "dynamic-package"
 }
 
 case object Half extends CardType {
@@ -88,6 +92,10 @@ case object FullMedia75 extends CardType {
 
 case object FullMedia100 extends CardType {
   override val cssClassName: String = "full-media-100"
+}
+
+case object FullMedia100DynamicPackage extends CardType {
+  override val cssClassName: String = "full-media-100-dynamic-package"
 }
 
 case object Fluid extends CardType {

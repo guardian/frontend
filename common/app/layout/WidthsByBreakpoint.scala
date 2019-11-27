@@ -31,7 +31,8 @@ object FaciaWidths {
     (ThreeQuartersTall, 520.px),
     (FullMedia50, 350.px),
     (FullMedia75, 520.px),
-    (FullMedia100, 700.px)
+    (FullMedia100, 700.px),
+    (FullMedia100DynamicPackage, 700.px)
   )
 
   private val CutOutTablet = Map[CardType, BrowserWidth](
@@ -44,7 +45,8 @@ object FaciaWidths {
     (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
-    (FullMedia100, 331.px)
+    (FullMedia100, 331.px),
+    (FullMedia100DynamicPackage, 331.px)
   )
 
   private val MediaDesktop = Map[CardType, BrowserWidth](
@@ -58,7 +60,8 @@ object FaciaWidths {
     (ThreeQuartersTall, 700.px),
     (FullMedia50, 470.px),
     (FullMedia75, 700.px),
-    (FullMedia100, 940.px)
+    (FullMedia100, 940.px),
+    (FullMedia100DynamicPackage, 940.px),
   )
 
   private val CutOutDesktop = Map[CardType, BrowserWidth](
@@ -71,7 +74,8 @@ object FaciaWidths {
     (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
-    (FullMedia100, 331.px)
+    (FullMedia100, 331.px),
+    (FullMedia100DynamicPackage, 331.px)
   )
 
   private val SquareImageFronts = Map[CardType, BrowserWidth](
