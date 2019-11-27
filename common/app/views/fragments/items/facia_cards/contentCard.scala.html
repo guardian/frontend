@@ -13,8 +13,6 @@
 
 @import Function.const
 
-@headlineAbove = @{isStoryPackage && index == 1}
-
 <div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
         @item.discussionSettings.discussionId.map { id =>
@@ -92,30 +90,8 @@ data-test-id="facia-card"
     }
 }
 
-@header(item: layout.ContentCard, index: Int, containerindex: Int) = {
-    <div class="@RenderClasses(Map(
-        ("fc-item__header", true),
-        ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
-    ))">
-        @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
-
-        @item.bylineText.map { byline =>
-            <div class="fc-item__byline">@byline</div>
-        }
-        @item.starRating.map { rating =>
-            @starRating(rating)
-        }
-    </div>
-}
-
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
-
-        @if(headlineAbove) {
-            @header(item, index, containerIndex)
-        }
-
-
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, fallback)) if item.cardTypes.showVideoPlayer => {
                 @defining(VideoPlayer(
@@ -222,9 +198,19 @@ data-test-id="facia-card"
         }
 
         <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
-            @if(!headlineAbove) {
-                @header(item, index, containerIndex)
-            }
+            <div class="@RenderClasses(Map(
+                ("fc-item__header", true),
+                ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
+            ))">
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+
+                @item.bylineText.map { byline =>
+                    <div class="fc-item__byline">@byline</div>
+                }
+                @item.starRating.map { rating =>
+                    @starRating(rating)
+                }
+            </div>
 
             @if(item.isMediaLink) {
                 @standfirst(item)

@@ -12,6 +12,7 @@
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.html.fragments.items.facia_cards.paidContentCard
+@import views.html.fragments.items.facia_cards.dynamoContentCard
 @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.{GetClasses, RenderClasses}
 
@@ -36,6 +37,10 @@
                 index,
                 isFirstContainer
             )
+        }
+
+        case content: ContentCard if isStoryPackage => {
+            @dynamoContentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
         }
 
         case content: ContentCard => {
