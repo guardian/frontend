@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
-import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
+import com.gu.contentapi.client.{ContentApiBackoff, ScheduledExecutor, ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
@@ -121,6 +121,9 @@ final case class CircuitBreakingContentApiClient(
   apiKey: String
 )(implicit executionContext: ExecutionContext)
   extends MonitoredContentApiClientLogic {
+
+  override implicit val executor = ScheduledExecutor()
+  override val backoffStrategy = ContentApiBackoff.constantStrategy(Duration.Zero, 1)
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "content-api-client",
