@@ -6,7 +6,8 @@
     colSpan: Int = 1,
     frontProperties: Option[FrontProperties] = None,
     containerDisplayName: Option[String] = None,
-    frontId: Option[String] = None)(implicit request: RequestHeader)
+    frontId: Option[String] = None,
+    isStoryPackage: Boolean = false)(implicit request: RequestHeader)
 
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
@@ -38,7 +39,7 @@
         }
 
         case content: ContentCard => {
-            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+            @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList, isStoryPackage)
 
         }
 
