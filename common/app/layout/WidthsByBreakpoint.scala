@@ -7,7 +7,8 @@ import views.support.ImageProfile
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),
-    (Standard, 95.vw)
+    (Standard, 95.vw),
+    (DynamicPackage, 95.vw)
   )
 
   val ExtraPixelWidthsForMediaMobile: Seq[PixelWidth] = List(
@@ -17,13 +18,15 @@ object FaciaWidths {
 
   private val CutOutMobile = Map[CardType, BrowserWidth](
     (MediaList, 115.px),
-    (Standard, 130.px)
+    (Standard, 130.px),
+    (DynamicPackage, 130.px)
   )
 
   private val MediaTablet = Map[CardType, BrowserWidth](
     (MediaList, 140.px),
     (Fluid, 140.px),
     (Standard, 160.px),
+    (DynamicPackage, 160.px),
     (Third, 220.px),
     (Half, 340.px),
     (ThreeQuarters, 340.px),
@@ -38,6 +41,7 @@ object FaciaWidths {
   private val CutOutTablet = Map[CardType, BrowserWidth](
     (MediaList, 115.px),
     (Standard, 216.px),
+    (DynamicPackage, 216.px),
     (Third, 187.px),
     (Half, 331.px),
     (ThreeQuarters, 331.px),
@@ -53,6 +57,7 @@ object FaciaWidths {
     (MediaList, 140.px),
     (Fluid, 188.px),
     (Standard, 220.px),
+    (DynamicPackage, 220.px),
     (Third, 300.px),
     (Half, 460.px),
     (ThreeQuarters, 460.px),
@@ -67,6 +72,7 @@ object FaciaWidths {
   private val CutOutDesktop = Map[CardType, BrowserWidth](
     (MediaList, 115.px),
     (Standard, 216.px),
+    (DynamicPackage, 216.px),
     (Third, 216.px),
     (Half, 331.px),
     (ThreeQuarters, 389.px),
@@ -80,6 +86,7 @@ object FaciaWidths {
 
   private val SquareImageFronts = Map[CardType, BrowserWidth](
     (Standard, 368.px),
+    (DynamicPackage, 368.px),
   )
 
   def mediaFromItemClasses(itemClasses: ItemClasses): WidthsByBreakpoint = {
