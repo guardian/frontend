@@ -151,6 +151,7 @@
         &.fc-item--third-tablet,
         &.fc-item--half-tablet,
         &.fc-item--full-media-100-tablet,
+        &.fc-item--full-media-100-dynamic-package-tablet,
         &.fc-item--three-quarters-tall-tablet {
             @include mq($from: tablet) {
                 @include immersiveBottom();

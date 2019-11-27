@@ -75,7 +75,8 @@ $pillars: (
                 &.fc-item--three-quarters-tablet {
                     @include garnett-underline($pillarColor, 24px);
                 }
-                &.fc-item--full-media-100-tablet {
+                &.fc-item--full-media-100-tablet,
+                &.fc-item--full-media-100-dynamic-package-tablet{
                     @include garnett-underline($pillarColor, 28px, .5);
                 }
 
@@ -90,7 +91,8 @@ $pillars: (
                     &.fc-item--full-media-75-tablet {
                         @include garnett-underline($pillarColor, 32px, .5);
                     }
-                    &.fc-item--full-media-100-tablet {
+                    &.fc-item--full-media-100-tablet,
+                    &.fc-item--full-media-100-dynamic-package-tablet {
                         @include garnett-underline($pillarColor, 36px, .5);
                     }
                 }

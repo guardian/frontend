@@ -55,6 +55,7 @@
 @import 'item-layouts/fc-item--full-media-50';
 @import 'item-layouts/fc-item--full-media-75';
 @import 'item-layouts/fc-item--full-media-100';
+@import 'item-layouts/fc-item--full-media-100-dynamic-package';
 @import 'item-layouts/fc-item--fluid';
 
 @import 'item-types/_fc-item--type-liveblog';
@@ -247,10 +248,18 @@
     }
 }
 
-// full media 50/75/100 and fluid-tablet all look same if class fc-item--has-cutout is present
+
+.fc-item--full-media-100-dynamic-package-tablet {
+    @include mq(tablet) {
+        @include fc-item--full-media-100-dynamic-package;
+    }
+}
+
+// full media 50/75/100/100DP and fluid-tablet all look same if class fc-item--has-cutout is present
 .fc-item--full-media-50-tablet,
 .fc-item--full-media-75-tablet,
 .fc-item--full-media-100-tablet,
+.fc-item--full-media-100-dynamic-package-tablet,
 .fc-item--fluid-tablet {
     @include mq(tablet) {
         &.fc-item--has-cutout {

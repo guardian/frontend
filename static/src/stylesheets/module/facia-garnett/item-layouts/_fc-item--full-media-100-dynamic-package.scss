@@ -1,0 +1,51 @@
+/*
+
+Full width item with 100% width image.
+
+Only to be used in nuclear situations.
+
+***********************************************************************************************
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
+
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
+
+************************************************************************************************
+
+*/
+
+@mixin fc-item--full-media-100-dynamic-package {
+
+    .responsive-img {
+        top: -25%;
+        height: auto;
+    }
+
+    .fc-item__header {
+        @include fs-headline(4, true);
+        @include fs-headline-quote(4);
+        @include headline-boost(5);
+
+        @include mq(desktop) {
+            @include fs-headline(6, true);
+            @include fs-headline-quote(6);
+            @include headline-boost(6);
+        }
+    }
+
+    &:not(.fc-item--has-cutout) {
+        .fc-item__image-container {
+            display: block;
+            padding-bottom: 40%;
+        }
+
+        @include fc-sublinks--below;
+    }
+}
