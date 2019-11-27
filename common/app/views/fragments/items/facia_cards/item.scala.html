@@ -6,12 +6,15 @@
     colSpan: Int = 1,
     frontProperties: Option[FrontProperties] = None,
     containerDisplayName: Option[String] = None,
-    frontId: Option[String] = None)(implicit request: RequestHeader)
+    frontId: Option[String] = None,
+    isStoryPackage: Boolean = false)(implicit request: RequestHeader)
 
 @import layout.{ContentCard, HtmlBlob, PaidCard}
 @import views.html.fragments.items.facia_cards.contentCard
 @import views.html.fragments.items.facia_cards.paidContentCard
-@import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
+    @import views.html.fragments.items.facia_cards.dynamoContentCard
+
+    @import views.support.Commercial.TrackingCodeBuilder.mkInteractionTrackingCode
 @import views.support.{GetClasses, RenderClasses}
 
 @defining((card.item, card.index)) { case (item, index) =>
@@ -37,6 +40,10 @@
             )
         }
 
+        case content: ContentCard if isStoryPackage => {
+            @dynamoContentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
+        }
+            
         case content: ContentCard => {
             @contentCard(content, containerIndex, index, card.visibilityDataAttribute, isFirstContainer, isList)
 
