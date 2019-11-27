@@ -71,7 +71,8 @@
         }
     }
 
-    &.fc-item--standard-mobile {
+    &.fc-item--standard-mobile,
+    &.fc-item--dynamic-package-mobile {
         @include mq($until: tablet) {
             .u-responsive-ratio {
                 padding-bottom: 60%;
@@ -142,7 +143,8 @@
             fill: #ffffff;
         }
 
-        &.fc-item--standard-mobile {
+        &.fc-item--standard-mobile,
+        &.fc-item--dynamic-package-mobile {
             @include mq($until: tablet) {
                 @include immersiveBottom();
             }

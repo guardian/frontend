@@ -98,7 +98,8 @@
     flex: 0 !important;
 }
 
-.fc-item--standard-mobile {
+.fc-item--standard-mobile,
+.fc-item--dynamic-package-mobile {
     @include mq($until: tablet) {
         &.fc-item--has-cutout {
             @include avatar(2.4);

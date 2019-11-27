@@ -112,7 +112,8 @@
     }
 
     &.fc-item--has-cutout {
-        &.fc-item--standard-mobile {
+        &.fc-item--standard-mobile,
+        &.fc-item--dynamic-package-mobile {
             @include mq($until: tablet) {
                 @include comment-avatar(2.4);
 

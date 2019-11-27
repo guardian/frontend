@@ -133,7 +133,8 @@ $pillars: (
         color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--dynamic-package-mobile {
         .fc-item__content {
             background-color: map-get($palette, kicker);
         }
@@ -344,7 +345,8 @@ $pillars: (
 
 .fc-item--pillar-special-report,
 .fc-item--pillar-special-report.fc-item--type-feature {
-    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile {
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--standard-mobile,
+    &.fc-item--type-immersive.fc-item--has-boosted-title.fc-item--dynamic-package-mobile {
         .fc-item__content {
             background-color: $special-report-dark;
         }

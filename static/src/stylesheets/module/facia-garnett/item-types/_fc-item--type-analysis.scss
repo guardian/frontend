@@ -55,7 +55,8 @@ $pillars: (
             @include garnett-underline($pillarColor, 20px);
 
             @include mq($until: tablet) {
-                &.fc-item--standard-mobile {
+                &.fc-item--standard-mobile,
+                &.fc-item--dynamic-package-mobile {
                     @include garnett-underline($pillarColor, 24px);
                 }
             }
