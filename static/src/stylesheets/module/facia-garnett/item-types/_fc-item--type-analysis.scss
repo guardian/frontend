@@ -76,7 +76,7 @@ $pillars: (
                     @include garnett-underline($pillarColor, 24px);
                 }
                 &.fc-item--full-media-100-tablet,
-                &.fc-item--full-media-100-dynamic-package-tablet{
+                &.fc-item--full-media-100-dynamic-package-tablet {
                     @include garnett-underline($pillarColor, 28px, .5);
                 }
 
