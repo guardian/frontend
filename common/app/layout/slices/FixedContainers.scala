@@ -93,7 +93,7 @@ object FixedContainers {
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
     ("fixed/thrasher", thrasher)
   ) ++ (if (Configuration.faciatool.showTestContainers) Map(
-    ("all-items/not-for-production", slices(FullMedia100, FullMedia75, FullMedia50, HalfHalf, QuarterThreeQuarter, ThreeQuarterQuarter, Hl4Half, HalfQuarterQl2Ql4, TTTL4, Ql3Ql3Ql3Ql3))
+    ("all-items/not-for-production", slices(FullMedia100, FullMedia100DynamicPackage, FullMedia75, FullMedia50, HalfHalf, QuarterThreeQuarter, ThreeQuarterQuarter, Hl4Half, HalfQuarterQl2Ql4, TTTL4, Ql3Ql3Ql3Ql3))
   ) else Map.empty)
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =
