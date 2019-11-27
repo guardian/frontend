@@ -25,8 +25,8 @@ object Sublinks {
     case FullMedia50 | FullMedia75 => fromZero(4)
     case Half => fromZero(3)
     case ListItem | MediaList | Fluid => unit(0)
-    case FullMedia100 => InclusiveRange(2, 4)
-    case Standard | Third => fromZero(2)
+    case FullMedia100 | FullMedia100DynamicPackage => InclusiveRange(2, 4)
+    case Standard | DynamicPackage | Third => fromZero(2)
     case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
   }
 

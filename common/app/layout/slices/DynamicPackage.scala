@@ -29,7 +29,7 @@ object DynamicPackage extends DynamicContainer {
       } else if (stories.length == 4) {
         Seq(ThreeQuarterTallQuarter2Ql2)
       } else {
-        Seq(FullMedia75, QuarterQuarterQuarterQuarter)
+        Seq(FullMedia100DynamicPackage, QuarterQuarterQuarterQuarter)
       }
     }
   }
