@@ -94,7 +94,7 @@ As mentioned above, when Facia receives a request for a front, it:
 
 Each front collection would be rendered into a `container`. A container is always full-width.
 
-The collection type (ex: `fixed/medium/slow-VI`) will decide the type and layout of the container. See [here](https://github.com/guardian/frontend/blob/master/common/app/slices/FixedContainers.scala#L79) and [here](https://github.com/guardian/frontend/blob/master/common/app/slices/Container.scala#L9)
+The collection type (ex: `fixed/medium/slow-VI`) will decide the type and layout of the container. See [here](https://github.com/guardian/frontend/blob/master/common/app/layout/slices/FixedContainers.scala#L79) and [here](https://github.com/guardian/frontend/blob/master/common/app/layout/slices/Container.scala#L12)
 
 Each container is composed of `slices` (aka "rows"). Each [Slice definition](https://github.com/guardian/frontend/blob/master/common/app/slices/Slice.scala) specifies columns info and css classname.
 

@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
-import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
+import com.gu.contentapi.client.{ContentApiBackoff, ScheduledExecutor, ContentApiClient => CapiContentApiClient}
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
@@ -103,6 +103,11 @@ trait ApiQueryDefaults extends Logging {
 trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryDefaults with Logging {
 
   val httpClient: HttpClient
+
+  override implicit val executor = ScheduledExecutor()
+  val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
+  val retryAttempts = 3
+  override val backoffStrategy: ContentApiBackoff = ContentApiBackoff.constantStrategy(retryDuration, retryAttempts)
 
   def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = httpClient.GET(url, headers) map { response: Response =>

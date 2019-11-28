@@ -45,11 +45,11 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns true if cmpUi.canShow true and in CommercialCmpUiNonDismissable test control', () => {
+            it('returns true if cmpUi.canShow true and in CommercialCmpUiNoOverlay test control', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockImplementation(
                     (test, variant) =>
-                        test.id === 'CommercialCmpUiNonDismissable' &&
+                        test.id === 'CommercialCmpUiNoOverlay' &&
                         variant === 'control'
                 );
 
@@ -58,11 +58,11 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns true if cmpUi.canShow true and in commercialCmpUiNonDismissable test variant', () => {
+            it('returns true if cmpUi.canShow true and in CommercialCmpUiNoOverlay test variant', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockImplementation(
                     (test, variant) =>
-                        test.id === 'CommercialCmpUiNonDismissable' &&
+                        test.id === 'CommercialCmpUiNoOverlay' &&
                         variant === 'variant'
                 );
 
@@ -126,18 +126,18 @@ describe('cmp-ui', () => {
                         }?abTestVariant=CmpUiIab-variant`,
                     },
                     {
-                        id: 'CommercialCmpUiNonDismissable',
+                        id: 'CommercialCmpUiNoOverlay',
                         variant: 'control',
                         url: `${
                             cmpConfig.CMP_URL
-                        }?abTestVariant=CmpUiNonDismissable-control`,
+                        }?abTestVariant=CommercialCmpUiNoOverlay-control`,
                     },
                     {
-                        id: 'CommercialCmpUiNonDismissable',
+                        id: 'CommercialCmpUiNoOverlay',
                         variant: 'variant',
                         url: `${
                             cmpConfig.CMP_URL
-                        }?abTestVariant=CmpUiNonDismissable-variant`,
+                        }?abTestVariant=CommercialCmpUiNoOverlay-variant`,
                     },
                 ];
 

@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-non-dismissable",
-    "Test whether our new CMP UI obtains target consent rates using non-dismissable variant",
-    owners = Seq(Owner.withGithub("ghaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -61,6 +51,16 @@ trait ABTestSwitches {
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy",
+    "US end of year banner",
+    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
@@ -135,7 +135,7 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 30),
     exposeClientSide = true
   )
-  
+
   Switch(
     ABTests,
     "ab-sign-in-gate-first-test",
@@ -145,4 +145,25 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2019, 12, 17),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-cmp-ui-no-overlay",
+    "Tests whether a CMP UI with no overlay yield higher consent rates",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 12, 12),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-consent-options-button",
+    "0.5% AB test for a bottom consent banner with an options button instead of a link",
+    owners = Seq(Owner.withGithub("ripecosta")),
+    safeState = Off,
+    sellByDate = new LocalDate(2019, 12, 12),
+    exposeClientSide = true
+  )
+
 }

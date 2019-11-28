@@ -204,7 +204,7 @@ case object TheSnap extends ArticleEmailMetadata {
 
 case object AndrewSparrowsElectionBriefing extends ArticleEmailMetadata {
   val name = "Andrew Sparrow's Election Briefing"
-  override val banner = Some("andrew-sparrow-election-briefing.png")
+  override val banner = Some("andrew-sparrow-email.png")
    def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "politics/series/andrew-sparrows-election-briefing")
 }
 
