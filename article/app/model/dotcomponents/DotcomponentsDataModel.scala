@@ -397,12 +397,6 @@ object DotcomponentsDataModel {
       }.getOrElse("news")
     }
 
-    def findDesignType(designType: Option[DesignType], tags: List[Tag]): String = {
-      // TODO Remove this when changes can be moved to https://github.com/guardian/content-api-scala-client/blob/master/client/src/main/scala/com.gu.contentapi.client/utils/CapiModelEnrichment.scala
-      if (isPaidContent(tags)) "AdvertisementFeature"
-      else designType.map(_.toString).getOrElse("Article")
-    }
-
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
@@ -611,7 +605,7 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = findDesignType(article.metadata.designType, allTags),
+      designType = article.metadata.designType.map(_.toString).getOrElse("Article"),
       pageFooter = pageFooter,
       publication = article.content.publication,
     )
