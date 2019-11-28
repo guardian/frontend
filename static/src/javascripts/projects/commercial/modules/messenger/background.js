@@ -3,8 +3,8 @@ import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
 import {
-    createStickyAdLabel,
-    createStickyScrollForMoreLabel,
+    renderStickyAdLabel,
+    renderStickyScrollForMoreLabel,
 } from 'commercial/modules/dfp/render-advert-label';
 
 type AdSpec = {
@@ -104,6 +104,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                     adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
+                        // $FlowFixMe
+                        adSlot.style['margin-bottom'] = '12px';
                     }
                 }
             })
@@ -217,8 +219,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         )
         .then(({ backgroundParent, background }) => {
             if (specs.scrollType === 'interscroller') {
-                createStickyAdLabel(backgroundParent).then();
-                createStickyScrollForMoreLabel(backgroundParent).then();
+                renderStickyAdLabel(backgroundParent).then();
+                renderStickyScrollForMoreLabel(backgroundParent).then();
 
                 addEventListener(window, 'scroll', () =>
                     onInterscrollerScroll(backgroundParent, background)
