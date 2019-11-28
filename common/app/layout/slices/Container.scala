@@ -31,7 +31,7 @@ object Container extends Logging {
 
   def storiesCount(collectionConfig: CollectionConfig, items: Seq[PressedContent]): Option[Int] = {
     resolve(collectionConfig.collectionType) match {
-      case Dynamic(dynamicPackage) => dynamicPackage
+      case Dynamic(dynamicContainer) => dynamicContainer
         .slicesFor(items.map(Story.fromFaciaContent))
         .map(Front.itemsVisible)
       case Fixed(fixedContainer) => Some(Front.itemsVisible(fixedContainer.slices))
