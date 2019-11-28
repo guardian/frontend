@@ -1,5 +1,4 @@
 // @flow
-import { loadScript } from 'lib/load-script';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 
@@ -124,14 +123,4 @@ export const initPermutive = (): Promise<void> => {
 
         return resolve();
     });
-};
-
-export const initPermutiveLib = (): Promise<void> => {
-    const setupPermutive = (): Promise<void> =>
-        loadScript(
-            '//cdn.permutive.com/d6691a17-6fdb-4d26-85d6-b3dd27f55f08-web.js',
-            { async: true }
-        );
-
-    return setupPermutive();
 };

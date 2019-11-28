@@ -16,10 +16,7 @@ import { trackConsent as trackCmpConsent } from 'commercial/modules/cmp/consent-
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
-import {
-    initPermutive,
-    initPermutiveLib,
-} from 'commercial/modules/dfp/prepare-permutive';
+import { initPermutive } from 'commercial/modules/dfp/prepare-permutive';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
@@ -47,7 +44,6 @@ if (!commercialFeatures.adFree) {
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async in `initPermutiveLib`
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
-        ['cm-prepare-permutiveLib', initPermutiveLib],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
