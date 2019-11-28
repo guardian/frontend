@@ -1,0 +1,265 @@
+@(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
+
+@import layout.{FaciaWidths, FrontendLatestSnap}
+@import model.{CrosswordSvg, InlineImage, InlineSlideshow, InlineVideo, InlineYouTubeMediaAtom, VideoPlayer}
+@import views.html.fragments.items.elements.facia_cards._
+@import views.html.fragments.items.elements.starRating
+@import views.html.fragments.items.facia_cards.meta
+@import views.html.fragments.atoms.youtube
+@import views.html.fragments.media.video
+@import views.html.fragments.inlineSvg
+@import views.support.{CutOut, GetClasses, RemoveOuterParaHtml, RenderClasses, Video640}
+@import model.ContentDesignType.RichContentDesignType
+
+@import Function.const
+
+<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
+    @if(item.discussionSettings.isCommentable) {
+        @item.discussionSettings.discussionId.map { id =>
+        data-discussion-id="@id"
+        }
+        data-discussion-closed="@item.discussionSettings.isClosedForComments"
+        data-discussion-url="@item.header.url.get(request)#comments"
+    }
+data-link-name="@item.dataLinkName(index)"
+data-item-visibility="@visibilityDataAttribute"
+data-test-id="facia-card"
+    @item.id.map { id => data-id="@id" }
+    @item.snapStuff.map(_.dataAttributes)
+    @item.shortUrl.map { shortUrl => data-loyalty-short-url="@shortUrl" }>
+
+    @if(item.hasInlineSnapHtml) {
+        @item.snapStuff.map { snap =>
+            @snap.embedCss.map { css => <style>@Html(css)</style> }
+            @snap.embedHtml.map(Html(_))
+            @snap.embedJs.map { js => <script>@Html(js)</script> }
+        }
+    } else {
+        @container(item)
+    }
+
+</div>
+
+@mediaMeta(item: layout.ContentCard) = {
+    <div class="fc-item__meta-wrapper">
+        @if(item.contentType.name.toLowerCase == "video") {
+            @item.displayElement match {
+                case Some(InlineVideo(videoElement, _, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @if(videoElement.videos.formattedDuration != "0:00") {
+                            <span class="fc-item__video-duration">@videoElement.videos.formattedDuration</span>
+                        }
+                    </div>
+                }
+
+                case Some(media@InlineYouTubeMediaAtom(youTubeAtom, _)) => {
+                    <div class="fc-item__media-meta">
+                        @inlineSvg("video-icon", "icon")
+                        @if(youTubeAtom.formattedDuration.getOrElse("0:00") != "0:00") {
+                            <span class="fc-item__video-duration">@youTubeAtom.formattedDuration</span>
+                        }
+                    </div>
+                }
+
+                case _ => {}
+            }
+        }
+
+        @if(item.contentType.name.toLowerCase == "audio") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("volume-high", "icon")
+                <span class="u-h">Podcast</span>
+            </div>
+        }
+
+        @if(item.contentType.name.toLowerCase == "gallery") {
+            <div class="fc-item__media-meta">
+                @inlineSvg("camera", "icon")
+                <span class="u-h">Gallery</span>
+            </div>
+        }
+
+        @meta(item)
+    </div>
+}
+
+@standfirst(item: layout.ContentCard) = {
+    @item.trailText.filter(const(item.showStandfirst)).map { text =>
+        <div class="fc-item__standfirst">@Html(text)</div>
+    }
+}
+
+@container(item: layout.ContentCard) = {
+    <div class="fc-item__container">
+        @item.displayElement.filter(const(item.showDisplayElement)) match {
+            case Some(InlineVideo(videoElement, title, fallback)) if item.cardTypes.showVideoPlayer => {
+                @defining(VideoPlayer(
+                    videoElement,
+                    Video640,
+                    title,
+                    autoPlay = false,
+                    showControlsAtStart = false,
+                    overrideIsRatioHd = Some(false),
+                    // We only pass in the ID if this is a video or audio block, as if it's a mainMedia video, the
+                    // ID is actually pointing to the article, which is wrong. It would be nice to have the ID on the
+                    // ContentCard, but we don't for now. Annoyingly this doesn't allow us to check for if we should
+                    // play ads or if the video is expired, but as fronts change really often, this is a non-problem.
+                    embedPath = if (item.isMediaLink) item.id else None,
+                    path = if (item.isMediaLink) item.id else None
+                )) { player =>
+                    <div class="fc-item__media-wrapper fc-item__video u-faux-block-link__promote media__container--hidden js-video-player">
+                        <div class="fc-item__video-container">
+                            @video(player, false, item.cardTypes.showVideoEndSlate, showPoster = false)
+                        </div>
+                    </div>
+                @fallback.map { fallbackImage =>
+                    <div class="fc-item__video fc-item__video-fallback media__placeholder--active js-video-placeholder gu-media__fallback">
+                        <div data-link-name="video-play-button-overlay" class="@RenderClasses("fc-item__video-play", "media__placeholder--hidden", "vjs-big-play-button", "js-video-play-button")"><span class="vjs-control-text">@fragments.inlineSvg("play", "icon")</span></div>
+                        @itemImage(
+                            fallbackImage.imageMedia,
+                            inlineImage = containerIndex == 0 && index < 4,
+                            widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                        )
+                    </div>
+                }
+                }
+            }
+
+            case Some(svg@CrosswordSvg(_)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio inlined-image">
+                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img" alt=""
+                        role="presentation" data-crossword-id="@svg.persistenceId" ></object>
+                    </div>
+                </div>
+            }
+
+            case Some(media@InlineYouTubeMediaAtom(_,_)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__video-container">
+                    @youtube(
+                        media = media.youTubeAtom,
+                        displayCaption = false,
+                        displayDuration = false,
+                        playable = item.cardTypes.showYouTubeMediaAtomPlayer,
+                        posterImageOverride = media.posterImageOverride,
+                        cardStyle = Some(item.cardStyle))
+                    </div>
+                </div>
+            }
+
+            case Some(InlineVideo(_, _, Some(fallbackImage))) => {
+                <div class="fc-item__media-wrapper">
+                    @itemImage(
+                        fallbackImage.imageMedia,
+                        inlineImage = containerIndex == 0 && index < 4,
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                    )
+                </div>
+            }
+
+            case Some(InlineImage(images)) => {
+                <div class="fc-item__media-wrapper">
+                    @item.starRating.map { rating =>
+                        @starRating(rating)
+                    }
+                    @itemImage(
+                        images,
+                        inlineImage = containerIndex == 0 && index < 4,
+                        widthsByBreakpoint = Some(item.mediaWidthsByBreakpoint),
+                    )
+                </div>
+            }
+
+            case Some(InlineSlideshow(imageElements)) => {
+                <div class="fc-item__media-wrapper">
+                    <div class="fc-item__image-container u-responsive-ratio fc-item__slideshow fc-item__slideshow--@imageElements.size">
+                    @imageElements.headOption.map { imageElement =>
+                        @image(
+                            classes = Seq("responsive-img"),
+                            widths = item.mediaWidthsByBreakpoint,
+                            maybePath = Some(imageElement.url),
+                            maybeSrc = if(containerIndex == 0 && index < 4) Some(imageElement.url) else None
+                        )
+                        @imageElements.tail.map { imageElement =>
+                            @image(
+                                classes = Seq("responsive-img "),
+                                widths = item.mediaWidthsByBreakpoint,
+                                maybePath = Some(imageElement.url)
+                            )
+                        }
+                    }
+                    </div>
+                </div>
+            }
+
+            case _ => {}
+        }
+
+        <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
+            <div class="@RenderClasses(Map(
+                ("fc-item__header", true),
+                ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
+            ))">
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+
+                @item.bylineText.map { byline =>
+                    <div class="fc-item__byline">@byline</div>
+                }
+                @item.starRating.map { rating =>
+                    @starRating(rating)
+                }
+            </div>
+
+            @if(item.isMediaLink) {
+                @standfirst(item)
+            } else {
+                <div class="@RenderClasses(Map(
+                    ("fc-item__standfirst-wrapper", true),
+                    ("fc-item__standfirst-wrapper--timestamp", !item.timeStampDisplay.isEmpty)
+                ))">
+                    @standfirst(item)
+                    @meta(item)
+                </div>
+                @if(item.cardTypes.showCutOut) {
+                    @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+                    <div class="fc-item__avatar">
+                        @image(
+                            classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                            widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
+                            maybePath = Some(imageUrl)
+                        )
+                    </div>
+                    }
+                }
+            }
+
+            @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
+                <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
+            }
+            @if(item.isMediaLink) {
+                <div class="fc-item__footer-meta-wrapper">
+                    @mediaMeta(item)
+                    @if(item.sublinks.nonEmpty) {
+                        <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                    }
+                </div>
+            } else {
+                @if(item.sublinks.nonEmpty) {
+                    <div class="fc-item__footer--vertical" aria-hidden="true">@sublinks(item.sublinks)</div>
+                }
+            }
+        </div>
+
+        @if(item.sublinks.nonEmpty) {
+            <footer class="fc-item__footer--horizontal">@sublinks(item.sublinks)</footer>
+        }
+
+        @if(item.designType.nameOrDefault == "comment") {
+            @meta(item)
+        }
+
+        <a @Html(item.header.url.hrefWithRel) class="u-faux-block-link__overlay js-headline-text" data-link-name="article" tabindex="-1" aria-hidden="true">@RemoveOuterParaHtml(item.header.headline)</a>
+    </div>
+}
