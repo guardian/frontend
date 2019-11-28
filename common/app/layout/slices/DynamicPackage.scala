@@ -14,7 +14,6 @@ object DynamicPackage extends DynamicContainer {
     }
   }
 
-
   override protected def standardSlices(storiesIncludingBackfill: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = {
     storiesIncludingBackfill.length match {
       case 0 => Nil
