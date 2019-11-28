@@ -39,7 +39,7 @@ export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
         }
     });
 
-export const createStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
+export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
     fastdom.write(() => {
         const adSlotLabel = document.createElement('div');
         adSlotLabel.classList.add('ad-slot__label');
@@ -48,7 +48,7 @@ export const createStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
         adSlotNode.appendChild(adSlotLabel);
     });
 
-export const createStickyScrollForMoreLabel = (
+export const renderStickyScrollForMoreLabel = (
     adSlotNode: HTMLElement
 ): Promise<null> =>
     fastdom.write(() => {
