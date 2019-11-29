@@ -19,8 +19,14 @@ $container-title: $card-colour;
             fill: $colour;
         }
 
+
         .fc-item__container:before {
             background-color: #ffffff;
+        }
+
+        &.fc-item.fc-item--full-media-100-tablet .fc-item__title {
+            background-image: none;
+
         }
     }
 

@@ -24,6 +24,7 @@ case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardT
   def showYouTubeMediaAtomPlayer: Boolean = allTypes.exists(_.youTubeMediaAtomPlayer.show)
   def showCutOut: Boolean = allTypes.exists(_.showCutOut)
   def canShowSlideshow: Boolean = allTypes.exists(_.canShowSlideshow)
+  def allowsHeadlineAbove: Boolean = allTypes.exists(_.allowsHeadlineAbove)
 }
 case class SliceLayout(cssClassName: String, columns: Seq[Column]) {
   def numItems: Int = columns.map(_.numItems).sum

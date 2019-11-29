@@ -47,6 +47,11 @@ sealed trait CardType {
     case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }
+
+  def allowsHeadlineAbove: Boolean = this match {
+    case FullMedia100 => true
+    case _ => false
+  }
 }
 
 /** This is called ListItem because List is already taken */
