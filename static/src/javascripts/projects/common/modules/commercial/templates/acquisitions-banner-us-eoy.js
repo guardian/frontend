@@ -57,5 +57,4 @@ export const acquisitionsBannerUsEoyTemplate = (
                 </div>
             </div>
         </div>
-
     `;

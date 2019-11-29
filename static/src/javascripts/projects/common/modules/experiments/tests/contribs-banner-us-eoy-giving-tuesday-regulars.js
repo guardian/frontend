@@ -11,17 +11,18 @@ const articleViewCount = getArticleViewCountForDays(articleCountDays);
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
+const testRunConditions = isUS && articleViewCount >= minArticleViews;
 
 const titles = ['Offset fake news this Giving Tuesday'];
 const messageText =
-    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. Help us reach our year-end goal.';
+    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts,” the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. Help us reach our year-end goal.';
 const ctaText = 'Support The Guardian';
 
 const tickerHeaderControl = 'Help us reach our year-end goal';
 const tickerHeaderWithArticleCount = `You’ve read ${articleViewCount} articles in the last two months`;
 
 export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest = {
-    id: 'contributionsBannerUsEoyGivingTuesdayRegulars',
+    id: 'ContributionsBannerUsEoyGivingTuesdayRegulars',
     campaignId: 'USeoy2019',
     start: '2019-11-15',
     expiry: '2020-1-30',
@@ -35,7 +36,7 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
     idealOutcome: 'variant design performs at least as well as control',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => isUS && articleViewCount >= minArticleViews,
+    canRun: () => testRunConditions,
     geolocation,
     variants: [
         {
