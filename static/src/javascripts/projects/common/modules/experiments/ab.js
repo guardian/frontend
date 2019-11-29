@@ -152,9 +152,6 @@ export const runAndTrackAbTests = (): Promise<void> => {
     return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
-        // temp adding tests to the window.guardian object
-        window.guardian.tests = tests.map(test => test.id);
-
         registerImpressionEvents(tests);
         registerCompleteEvents(tests);
         trackABTests(tests);
