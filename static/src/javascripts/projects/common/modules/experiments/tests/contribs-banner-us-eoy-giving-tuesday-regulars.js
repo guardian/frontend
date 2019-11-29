@@ -15,7 +15,8 @@ const testRunConditions = isUS && articleViewCount >= minArticleViews;
 
 const titles = ['Offset fake news this Giving Tuesday'];
 const messageText =
-    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts,” the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. Help us reach our year-end goal.';
+    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. ';
+const closingSentence = 'Help us reach our year-end goal.';
 const ctaText = 'Support The Guardian';
 
 const tickerHeaderControl = 'Help us reach our year-end goal';
@@ -45,6 +46,7 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
             engagementBannerParams: {
                 titles,
                 messageText,
+                closingSentence,
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
@@ -58,6 +60,7 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
             engagementBannerParams: {
                 titles,
                 messageText,
+                closingSentence,
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
