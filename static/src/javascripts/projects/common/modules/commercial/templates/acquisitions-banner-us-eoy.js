@@ -33,7 +33,7 @@ export const acquisitionsBannerUsEoyTemplate = (
 
             <div class="engagement-banner__cta-container">
                 <div class="engagement-banner__ticker-header-container">
-                    <h3 class="engagement-banner__ticker-header">Help us reach our year-end goal</h3>
+                    <h3 class="engagement-banner__ticker-header">${params.tickerHeader ? params.tickerHeader : ''}</h3>
                 </div>
 
                 <div class="engagement-banner__ticker-container">

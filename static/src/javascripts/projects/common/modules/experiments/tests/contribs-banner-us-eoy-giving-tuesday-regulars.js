@@ -13,15 +13,13 @@ const messageTextV2 =
     'This year, much of what we hold dear has been threatened - democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue to put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million.';
 const ctaText = 'Support The Guardian';
 
-const tickerHeaderControl = 'Help us reach our year-end goal';
-
-export const contributionsBannerUsEoy: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoy',
+export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest = {
+    id: 'contributionsBannerUsEoyGivingTuesdayRegulars',
     campaignId: 'USeoy2019',
     start: '2019-11-15',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
-    description: 'general banner for the US EOY campaign',
+    description: 'banner test for the US EOY campaign for readers who have seen more than 5 articles',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
@@ -41,7 +39,6 @@ export const contributionsBannerUsEoy: AcquisitionsABTest = {
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
-                tickerHeader: tickerHeaderControl,
                 bannerModifierClass: 'useoy2019',
             },
         },
@@ -54,7 +51,6 @@ export const contributionsBannerUsEoy: AcquisitionsABTest = {
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
-                tickerHeader: tickerHeaderControl,
                 bannerModifierClass: 'useoy2019',
             },
         },
