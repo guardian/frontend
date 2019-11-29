@@ -64,6 +64,31 @@ const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
+const wasBannerClosedBeforeRedeployDate = (
+    bannerRedeploymentDate: number,
+    lastClosedAt: string
+) => {
+    const lastClosedAtTime = new Date(lastClosedAt).getTime();
+    return bannerRedeploymentDate - lastClosedAtTime > 0;
+};
+
+const shouldRedeploy = () => {
+    const bannerRedeploymentDate = new Date(2019, 11, 2, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
+    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
+    const now = new Date().getTime();
+
+    if (now < bannerRedeploymentDate) {
+        return !hasUserAcknowledgedBanner(MESSAGE_CODE);
+    }
+
+    return !lastClosedAt
+        ? true
+        : wasBannerClosedBeforeRedeployDate(
+              bannerRedeploymentDate,
+              lastClosedAt
+          );
+};
+
 const bannerHasBeenAcknowledged = (): void => {
     const messageStates = userPrefs.get('messages') || [];
     messageStates.push(MESSAGE_CODE);
@@ -208,7 +233,7 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
+            shouldRedeploy() &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&
