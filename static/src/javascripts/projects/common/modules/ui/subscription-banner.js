@@ -69,24 +69,20 @@ const wasBannerClosedBeforeRedeployDate = (
     lastClosedAt: string
 ) => {
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
-    return bannerRedeploymentDate - lastClosedAtTime > 0;
+    return bannerRedeploymentDate < lastClosedAtTime;
 };
 
-const shouldRedeploy = () => {
+const hasAcknowledgedSinceRedeploy = () => {
     const bannerRedeploymentDate = new Date(2019, 11, 2, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const now = new Date().getTime();
+    const redeployActive = now > bannerRedeploymentDate;
 
-    if (now < bannerRedeploymentDate) {
+    if (!redeployActive) {
         return !hasUserAcknowledgedBanner(MESSAGE_CODE);
     }
 
-    return !lastClosedAt
-        ? true
-        : wasBannerClosedBeforeRedeployDate(
-              bannerRedeploymentDate,
-              lastClosedAt
-          );
+    return !lastClosedAt || wasBannerClosedBeforeRedeployDate(bannerRedeploymentDate, lastClosedAt);
 };
 
 const bannerHasBeenAcknowledged = (): void => {
@@ -233,7 +229,7 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            shouldRedeploy() &&
+            hasAcknowledgedSinceRedeploy() &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&
