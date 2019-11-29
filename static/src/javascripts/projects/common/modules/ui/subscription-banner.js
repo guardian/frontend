@@ -82,7 +82,10 @@ const hasAcknowledgedSinceRedeploy = () => {
         return !hasUserAcknowledgedBanner(MESSAGE_CODE);
     }
 
-    return !lastClosedAt || wasBannerClosedBeforeRedeployDate(bannerRedeploymentDate, lastClosedAt);
+    return (
+        !lastClosedAt ||
+        wasBannerClosedBeforeRedeployDate(bannerRedeploymentDate, lastClosedAt)
+    );
 };
 
 const bannerHasBeenAcknowledged = (): void => {
