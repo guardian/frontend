@@ -61,6 +61,7 @@ declare type EngagementBannerTestParams = {
     buttonCaption?: string,
     linkUrl?: string,
     hasTicker?: boolean,
+    tickerHeader?: string,
     products?: OphanProduct[],
     template?: (templateParams: EngagementBannerTemplateParams) => string,
     bannerModifierClass?: string,
