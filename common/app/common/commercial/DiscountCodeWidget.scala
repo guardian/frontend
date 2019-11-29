@@ -309,6 +309,7 @@ object DiscountCodeLinks {
     "money/2015/jun/13/best-deal-west-end-theatre-tickets",
     "travel/2007/feb/11/wildlifeholidays.budget.africa",
     "travel/2008/may/04/camping.hotels",
-    "money/2012/apr/17/megabus-coach-tickets-europe"
+    "money/2012/apr/17/megabus-coach-tickets-europe",
+    "business/live/2019/nov/29/black-friday-2019-best-deals-bargains-latest-news-live"
   )
 }
