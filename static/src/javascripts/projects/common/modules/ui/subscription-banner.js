@@ -36,7 +36,7 @@ const ENTER_KEY_CODE = 'Enter';
 const DISPLAY_EVENT_KEY = 'subscription-banner : display';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
-const COMPONENT_TYPE = 'ACQUISITIONS_OTHER';
+const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
