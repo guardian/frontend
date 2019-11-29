@@ -339,13 +339,18 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
     } yield {
       val maybeUpdate = (embedType match {
         case "json.html" =>
-          wsClient.url(embedUri).get().map { response =>
+          (wsClient.url(embedUri).get().map { response =>
             Json.fromJson[EmbedJsonHtml](response.json) match {
               case JsSuccess(embed, _) =>
                 beforeEnrichment.copy(embedHtml = Some(embed.html))
               case _ =>
                 log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
                 beforeEnrichment
+            }
+          }) recover {
+            case _ => {
+              log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
+              beforeEnrichment
             }
           }
         case "interactive" =>
@@ -359,16 +364,12 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
                   None
               }
             }.getOrElse({
-              log.warn(s"Processing of an interactive atom failed, and it won't be pressed. ${embedUri} for collection ${collection.id}")
-              beforeEnrichment
+              val msg = s"Processing of an interactive atom failed, and it won't be pressed. ${embedUri} for collection ${collection.id}"
+              log.warn(msg)
+              throw new RuntimeException(msg)
             })
           }
-      }) recover {
-        case _ => {
-          log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
-          beforeEnrichment
-        }
-      }
+      })
 
       Response.Async.Right(maybeUpdate)
     }
