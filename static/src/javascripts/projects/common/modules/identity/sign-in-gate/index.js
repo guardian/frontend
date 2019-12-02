@@ -42,7 +42,7 @@ const componentName = 'sign-in-gate';
 
 const component = {
     componentType: 'SIGN_IN_GATE',
-    id: 'initial_test',
+    id: 'prius_test',
 };
 
 // ophan helper methods
