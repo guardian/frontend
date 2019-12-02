@@ -15,7 +15,7 @@ type AdSpec = {
     backgroundPosition: string,
     backgroundSize: string,
     transform: string,
-    ctaUrl?: ?string,
+    ctaUrl: string,
 };
 
 type SpecStyles = {
