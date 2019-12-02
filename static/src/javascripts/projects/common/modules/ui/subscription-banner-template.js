@@ -7,7 +7,8 @@ import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-c
 
 const subscriptionBannerTemplate = (
     subscriptionUrl: string,
-    signInUrl: string
+    signInUrl: string,
+    userLoggedIn: boolean
 ): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
@@ -39,7 +40,7 @@ const subscriptionBannerTemplate = (
             </div>
         </div>
 
-        <div class="site-message--subscription-banner__sign-in">
+        <div class="site-message--subscription-banner__sign-in ${userLoggedIn ? 'site-message--subscription-banner__sign-in--visibility--hidden' : ''}">
             <p>Already a subscriber?</p>
             <br class="temp-mobile-break" />
             <a
@@ -86,7 +87,8 @@ const consentSection = `<div id="js-first-pv-consent-site-message" class="site-m
 const bannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
-    showConsent: boolean
+    showConsent: boolean,
+    userLoggedIn: boolean
 ): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
           tabindex="-1"
@@ -97,7 +99,7 @@ const bannerTemplate = (
           aria-live="polite"
         >
 
-        ${subscriptionBannerTemplate(subscriptionUrl, signInUrl)}
+        ${subscriptionBannerTemplate(subscriptionUrl, signInUrl, userLoggedIn)}
         ${showConsent ? consentSection : ''}
     </div>
     `;
