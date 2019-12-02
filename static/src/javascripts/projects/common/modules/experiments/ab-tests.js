@@ -15,6 +15,8 @@ import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-ga
 import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+import { contributionsBannerUsEoyGivingTuesdayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-casuals';
+import { contributionsBannerUsEoyGivingTuesdayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-regulars';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -37,6 +39,8 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsBannerUsEoyGivingTuesdayRegulars,
+    contributionsBannerUsEoyGivingTuesdayCasuals,
     contributionsBannerUsEoy,
     articlesViewedBanner,
 ];
