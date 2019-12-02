@@ -10,7 +10,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateFirstTest',
+            id: 'SignInGatePrius',
             variantToRun: {
                 id: 'variant',
             },
@@ -44,9 +44,6 @@ const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
     .isInABTestSynchronous;
 
 const fakeLocal: any = require('lib/storage').local;
-
-const fakeGetAsyncTestsToRun: any = require('common/modules/experiments/ab')
-    .getAsyncTestsToRun;
 
 const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
     .isUserLoggedIn;
@@ -94,16 +91,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGateFirstTest-variant': Date.now(),
-            });
-        });
-
-        it('should return false if there are any epics or banners (through getAsyncTestsToRun length', () => {
-            fakeGetAsyncTestsToRun.mockReturnValueOnce(
-                Promise.resolve(['test'])
-            );
-            return signInGate.canShow().then(show => {
-                expect(show).toBe(false);
+                'SignInGatePrius-variant': Date.now(),
             });
         });
 

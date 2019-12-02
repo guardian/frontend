@@ -1,12 +1,12 @@
 // @flow
-export const signInGateFirstTest: ABTest = {
-    id: 'SignInGateFirstTest',
-    start: '2019-10-18',
+export const signInGatePrius: ABTest = {
+    id: 'SignInGatePrius',
+    start: '2019-12-02',
     expiry: '2019-12-17',
-    author: 'Mahesh Makani, Domoinic Kendrick',
+    author: 'Mahesh Makani, Dominic Kendrick',
     description:
-        'Test adding a sign in component on the 2nd pageview of simple article templates',
-    audience: 0.04,
+        'Test adding a sign in component on the 2nd pageview of simple article templates, with higher priority over banners and epic.',
+    audience: 0.01,
     audienceOffset: 0.9,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
