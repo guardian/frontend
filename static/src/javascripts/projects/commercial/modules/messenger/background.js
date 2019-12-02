@@ -15,7 +15,7 @@ type AdSpec = {
     backgroundPosition: string,
     backgroundSize: string,
     transform: string,
-    ctaUrl?: string,
+    ctaUrl?: ?string,
 };
 
 type SpecStyles = {
@@ -107,14 +107,21 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                         // $FlowFixMe
                         adSlot.style['margin-bottom'] = '12px';
 
-                        const ctaURLElement = document.createElement('a');
-                        ctaURLElement.href = specs.ctaUrl;
-                        ctaURLElement.target = '_new';
-                        ctaURLElement.appendChild(backgroundParent);
-
-                        adSlot.insertBefore(ctaURLElement, adSlot.firstChild);
+                        if (specs.ctaUrl != null) {
+                            const ctaURLAnchor = document.createElement('a');
+                            ctaURLAnchor.href = specs.ctaUrl;
+                            ctaURLAnchor.target = '_new';
+                            ctaURLAnchor.appendChild(backgroundParent);
+                            adSlot.insertBefore(
+                                ctaURLAnchor,
+                                adSlot.firstChild
+                            );
+                        }
                     } else {
-                        adSlot.insertBefore(backgroundParent, adSlot.firstChild);
+                        adSlot.insertBefore(
+                            backgroundParent,
+                            adSlot.firstChild
+                        );
                     }
                 }
             })
