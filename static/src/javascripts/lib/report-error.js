@@ -14,7 +14,13 @@ export type ReportedError = Error & {
     reported?: boolean,
 };
 
-const reportError = (
+export type ErrorLogger = (
+    err: ReportedError,
+    tags: Object,
+    shouldThrow?: boolean
+) => void;
+
+const reportError: ErrorLogger = (
     err: ReportedError,
     tags: Object,
     shouldThrow?: boolean = true
