@@ -58,7 +58,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     const specStyles: SpecStyles = getStylesFromSpec(specs);
 
     // check to see whether the parent div exists already, if so, jut alter the style
-    // container of background image div
 
     const backgroundParentClass =
         specs.scrollType === 'interscroller'
