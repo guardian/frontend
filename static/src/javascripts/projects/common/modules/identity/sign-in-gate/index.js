@@ -11,7 +11,7 @@ import {
     isInABTestSynchronous,
     getAsyncTestsToRun,
 } from 'common/modules/experiments/ab';
-import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { constructQuery } from 'lib/url';
 
@@ -128,7 +128,7 @@ const isInvalidSection = (): boolean => {
 const getVariant: () => string = () => {
     //  get the current test
     const currentTest = getSynchronousTestsToRun().find(
-        t => t.id === signInGateFirstTest.id
+        t => t.id === signInGatePrius.id
     );
 
     // get variant user is in for the test
@@ -141,13 +141,13 @@ const canShow: () => Promise<boolean> = async () => {
 
     return Promise.resolve(
         // is in sign in gate ab test
-        isInABTestSynchronous(signInGateFirstTest) &&
+        isInABTestSynchronous(signInGatePrius) &&
             // check if user already dismissed gate
-            !hasUserDismissedGate(signInGateFirstTest.id, variant) &&
+            !hasUserDismissedGate(signInGatePrius.id, variant) &&
             // check number of page views
             isSecondPageOrHigherPageView() &&
             // check for epics and banners, returns empty array if none shown
-            !(await getAsyncTestsToRun()).length &&
+            // !(await getAsyncTestsToRun()).length &&
             // check if user is not logged by checking for cookie
             !isUserLoggedIn() &&
             // check if article type is valid
@@ -166,7 +166,7 @@ const show: () => Promise<boolean> = () => {
     if (variant) {
         // object helper to determine the ab test
         const abTest = {
-            name: signInGateFirstTest.id,
+            name: signInGatePrius.id,
             variant,
         };
 
@@ -179,7 +179,7 @@ const show: () => Promise<boolean> = () => {
         const queryParams: ComponentEventParams = {
             componentType: 'signingate',
             componentId: component.id,
-            abTestName: signInGateFirstTest.id,
+            abTestName: signInGatePrius.id,
             abTestVariant: variant,
         };
 
@@ -306,10 +306,7 @@ const show: () => Promise<boolean> = () => {
                             shadowArticleBody.replaceWith(currentContent);
 
                             // user pref dismissed gate
-                            setUserDismissedGate(
-                                signInGateFirstTest.id,
-                                variant
-                            );
+                            setUserDismissedGate(signInGatePrius.id, variant);
                         }
                     );
 
