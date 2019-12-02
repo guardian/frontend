@@ -145,7 +145,7 @@ describe('Generating Permutive payload utils', () => {
     describe('runPermutive', () => {
         const logger = jest.fn();
         it('catches errors and calle the logger correctly', () => {
-            _.runPermutive(false, false, logger);
+            _.runPermutive({}, false, logger);
             const err = logger.mock.calls[0][0];
             expect(err).toBeInstanceOf(Error);
             expect(err.message).toBe('Global Permutive setup error');
