@@ -15,6 +15,7 @@ type AdSpec = {
     backgroundPosition: string,
     backgroundSize: string,
     transform: string,
+    ctaUrl?: string,
 };
 
 type SpecStyles = {
@@ -101,11 +102,19 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         return fastdom
             .write(() => {
                 if (backgroundParent) {
-                    adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
                         // $FlowFixMe
                         adSlot.style['margin-bottom'] = '12px';
+
+                        const ctaURLElement = document.createElement('a');
+                        ctaURLElement.href = specs.ctaUrl;
+                        ctaURLElement.target = '_new';
+                        ctaURLElement.appendChild(backgroundParent);
+
+                        adSlot.insertBefore(ctaURLElement, adSlot.firstChild);
+                    } else {
+                        adSlot.insertBefore(backgroundParent, adSlot.firstChild);
                     }
                 }
             })
