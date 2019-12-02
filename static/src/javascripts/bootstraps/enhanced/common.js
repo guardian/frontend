@@ -311,12 +311,12 @@ const initialiseBanner = (): void => {
         firstPvConsentPlusEngagementBanner,
         firstPvConsentBanner,
         breakingNews,
+        signInGate,
         membershipBanner,
         membershipEngagementBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
-        signInGate,
     ];
 
     initBannerPicker(bannerList);
