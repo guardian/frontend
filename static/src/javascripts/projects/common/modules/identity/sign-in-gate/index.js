@@ -9,7 +9,6 @@ import { getCookie } from 'lib/cookies';
 import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
-    // getAsyncTestsToRun,
 } from 'common/modules/experiments/ab';
 import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -146,8 +145,6 @@ const canShow: () => Promise<boolean> = async () => {
             !hasUserDismissedGate(signInGatePrius.id, variant) &&
             // check number of page views
             isSecondPageOrHigherPageView() &&
-            // check for epics and banners, returns empty array if none shown
-            // !(await getAsyncTestsToRun()).length &&
             // check if user is not logged by checking for cookie
             !isUserLoggedIn() &&
             // check if article type is valid
