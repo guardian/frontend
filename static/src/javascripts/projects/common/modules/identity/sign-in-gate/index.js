@@ -9,7 +9,7 @@ import { getCookie } from 'lib/cookies';
 import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
-    getAsyncTestsToRun,
+    // getAsyncTestsToRun,
 } from 'common/modules/experiments/ab';
 import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { isUserLoggedIn } from 'common/modules/identity/api';
