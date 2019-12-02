@@ -1,6 +1,5 @@
 // @flow
 
-import uniq from 'lodash/uniq';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
@@ -68,8 +67,7 @@ const hasAcknowledged = () => {
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
 
-    return lastClosedAt &&
-        lastClosedAtTime > bannerRedeploymentDate;
+    return lastClosedAt && lastClosedAtTime > bannerRedeploymentDate;
 };
 
 const subcriptionBannerCloseActions = (): void => {
