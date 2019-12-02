@@ -25,6 +25,7 @@ import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -189,7 +190,7 @@ const show: () => Promise<boolean> = async () => {
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(subscriptionUrl, signInUrl, showConsent)
+            bannerTemplate(subscriptionUrl, signInUrl, showConsent,  isUserLoggedIn())
         );
     }
 
