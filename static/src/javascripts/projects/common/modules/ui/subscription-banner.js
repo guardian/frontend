@@ -1,7 +1,5 @@
 // @flow
 
-import uniq from 'lodash/uniq';
-import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
@@ -64,15 +62,16 @@ const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
-const bannerHasBeenAcknowledged = (): void => {
-    const messageStates = userPrefs.get('messages') || [];
-    messageStates.push(MESSAGE_CODE);
-    userPrefs.set('messages', uniq(messageStates));
+const hasAcknowledged = () => {
+    const bannerRedeploymentDate = new Date(2019, 11, 2, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
+    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
+    const lastClosedAtTime = new Date(lastClosedAt).getTime();
+
+    return lastClosedAt && lastClosedAtTime > bannerRedeploymentDate;
 };
 
 const subcriptionBannerCloseActions = (): void => {
     closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    bannerHasBeenAcknowledged();
 };
 
 const onAgree = (): void => {
@@ -208,7 +207,7 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
+            !hasAcknowledged() &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&
