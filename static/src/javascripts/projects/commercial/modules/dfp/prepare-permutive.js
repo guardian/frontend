@@ -1,13 +1,112 @@
 // @flow
-import config from 'lib/config';
-import reportError from 'lib/report-error';
+import config, { type Config } from 'lib/config';
+import reportError, { type ErrorLogger } from 'lib/report-error';
 
 declare var permutive: any;
+type PermutiveSchema = {
+    content: {
+        premium?: boolean,
+        id?: string,
+        title?: string,
+        type?: string,
+        section?: string,
+        authors?: Array<string>,
+        keywords?: Array<string>,
+        publishedAt?: string,
+        series: string,
+    },
+};
+
+const isEmpty = (value: any) =>
+    value === '' ||
+    value === null ||
+    typeof value === 'undefined' ||
+    (Array.isArray(value) && value.length === 0) ||
+    (typeof value === 'object' && Object.keys(value).length === 0);
+
+const removeEmpty = <T: Config>(payload: T): T => {
+    Object.keys(payload).forEach(key => {
+        if (typeof payload[key] === 'object' && payload[key] !== null) {
+            removeEmpty(payload[key]);
+        }
+        if (isEmpty(payload[key])) {
+            delete payload[key];
+        }
+    });
+    return payload;
+};
+
+const generatePayload = (pageConfig: Config): PermutiveSchema => {
+    const {
+        isPaidContent,
+        pageId,
+        headline,
+        contentType,
+        section,
+        author,
+        keywords,
+        webPublicationDate,
+        series,
+    } = pageConfig;
+
+    const safeAuthors = (author && typeof author === 'string'
+        ? author.split(',')
+        : []
+    ).map(str => str.trim());
+    const safeKeywords = (keywords && typeof keywords === 'string'
+        ? keywords.split(',')
+        : []
+    ).map(str => str.trim());
+    const safePublishedAt =
+        webPublicationDate && typeof webPublicationDate === 'number'
+            ? new Date(webPublicationDate).toISOString()
+            : '';
+
+    const cleanPayload = removeEmpty({
+        content: {
+            premium: isPaidContent,
+            id: pageId,
+            title: headline,
+            type: contentType,
+            section,
+            authors: safeAuthors,
+            keywords: safeKeywords,
+            publishedAt: safePublishedAt,
+            series,
+        },
+    });
+
+    return cleanPayload;
+};
+
+const runPermutive = (
+    pageConfig: Config = {},
+    permutiveGlobal: any,
+    logger: ErrorLogger
+): void => {
+    try {
+        if (!permutiveGlobal || !permutiveGlobal.addon) {
+            throw new Error('Global Permutive setup error');
+        }
+
+        const payload = generatePayload(pageConfig);
+
+        if (isEmpty(payload)) {
+            throw new Error('Empty Permutive payload');
+        }
+
+        permutiveGlobal.addon('web', {
+            page: payload,
+        });
+    } catch (err) {
+        logger(err, { feature: 'commercial' }, false);
+    }
+};
 
 /* eslint-disable */
-export const initPermutive = (): Promise<void> => {
-    return new Promise(resolve => {
-        (function (n, e, o, r, i) {
+export const initPermutive = (): Promise<void> =>
+    new Promise(resolve => {
+        (function(n, e, o, r, i) {
             if (!e) {
                 (e = e || {}),
                     (window.permutive = e),
@@ -66,61 +165,14 @@ export const initPermutive = (): Promise<void> => {
                 }
             });
         /* eslint-enable */
-        try {
-            const {
-                isPaidContent,
-                pageId,
-                headline,
-                contentType,
-                section,
-                author,
-                keywords,
-                webPublicationDate,
-                series,
-            } = config.get('page');
-
-            const safeAuthors =
-                author && typeof author === 'string' ? author.split(',') : null;
-            const safeKeywords =
-                keywords && typeof keywords === 'string'
-                    ? keywords.split(',')
-                    : null;
-            const safePublishedAt =
-                webPublicationDate && typeof webPublicationDate === 'number'
-                    ? new Date(webPublicationDate).toISOString()
-                    : null;
-            const rawPayload = {
-                premium: isPaidContent,
-                id: pageId,
-                title: headline,
-                type: contentType,
-                section,
-                authors: safeAuthors,
-                keywords: safeKeywords,
-                publishedAt: safePublishedAt,
-                series,
-            };
-
-            const isEmpty = value =>
-                value === '' || typeof value === 'undefined' || value === null;
-
-            const removeEmpty = payload => {
-                Object.keys(payload).forEach(
-                    key => isEmpty(payload[key]) && delete payload[key]
-                );
-                return payload;
-            };
-
-            const payload = removeEmpty(rawPayload);
-            permutive.addon('web', {
-                page: {
-                    content: payload,
-                },
-            });
-        } catch (err) {
-            reportError(err, { feature: 'comercial' }, false);
-        }
+        runPermutive(config.get('page'), permutive, reportError);
 
         return resolve();
     });
+
+export const _ = {
+    isEmpty,
+    removeEmpty,
+    generatePayload,
+    runPermutive,
 };
