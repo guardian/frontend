@@ -1,15 +1,25 @@
 // @flow
 
 import config from 'lib/config';
-import { slots, _ } from './slot-config';
+import { Advert } from 'commercial/modules/dfp/Advert';
+
+import { getPrebidAdSlots, _ } from './slot-config';
 import {
     getBreakpointKey as getBreakpointKey_,
     shouldIncludeMobileSticky as shouldIncludeMobileSticky_,
 } from './utils';
 
 const { getSlots } = _;
+
 const getBreakpointKey: any = getBreakpointKey_;
 const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
+
+// Avoiding 'define is not defined' error
+// from node_modules/ophan-tracker-js/build/ophan.ng.js, which
+// is a dependency of this outbrain module.
+jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
+    getOutbrainComplianceTargeting: jest.fn(),
+}));
 
 jest.mock('./utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
@@ -33,11 +43,35 @@ jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(),
     getViewport: jest.fn(),
     hasPushStateSupport: jest.fn(),
+    breakpoints: [],
 }));
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
+
+const slotPrototype = {
+    fake: 'slot',
+    defineSizeMapping: () => slotPrototype,
+    addService: () => slotPrototype,
+    setTargeting: () => slotPrototype,
+};
+
+// Mock window.googletag
+window.googletag = {
+    sizeMapping: () => ({
+        build: () => [],
+    }),
+    defineSlot: () => ({ ...slotPrototype }),
+    pubads: () => ({}),
+};
+
+const buildAdvert = id => {
+    const elt = document.createElement('div');
+    elt.setAttribute('id', id);
+    // slot.setAttribute('data-name', 'top-above-nav');
+    return new Advert(elt);
+};
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 describe('getSlots', () => {
@@ -170,14 +204,14 @@ describe('getSlots', () => {
     });
 });
 
-describe('slots', () => {
+describe('getPrebidAdSlots', () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
 
     test('should return the correct top-above-nav slot at breakpoint D', () => {
         getBreakpointKey.mockReturnValue('D');
-        expect(slots('top-above-nav', '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[970, 250], [728, 90]],
@@ -187,7 +221,7 @@ describe('slots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint T', () => {
         getBreakpointKey.mockReturnValue('T');
-        expect(slots('top-above-nav', '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[728, 90]],
@@ -197,7 +231,7 @@ describe('slots', () => {
 
     test('should return the correct top-above-nav slot at breakpoint M', () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(slots('top-above-nav', '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('top-above-nav'), '')).toEqual([
             {
                 key: 'top-above-nav',
                 sizes: [[300, 250]],
@@ -209,7 +243,7 @@ describe('slots', () => {
         getBreakpointKey.mockReturnValue('M');
         config.set('switches.mobileStickyPrebid', true);
         shouldIncludeMobileSticky.mockReturnValue(true);
-        expect(slots('mobile-sticky', '')).toEqual([
+        expect(getPrebidAdSlots(buildAdvert('mobile-sticky'), '')).toEqual([
             {
                 key: 'mobile-sticky',
                 sizes: [[320, 50]],

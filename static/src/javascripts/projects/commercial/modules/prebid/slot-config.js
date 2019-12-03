@@ -1,4 +1,6 @@
 // @flow strict
+import { Advert } from 'commercial/modules/dfp/Advert';
+
 import {
     getBreakpointKey,
     stripMobileSuffix,
@@ -10,14 +12,13 @@ import config from 'lib/config';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
-const filterByAdvertId = (
-    advertId: string,
+const filterByAdvert = (
+    ad: Advert,
     slots: Array<PrebidSlot>
 ): Array<PrebidSlot> => {
+    console.log('Filtering by ', ad, slots);
     const adUnits = slots.filter(slot =>
-        stripTrailingNumbersAbove1(stripMobileSuffix(advertId)).endsWith(
-            slot.key
-        )
+        stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(slot.key)
     );
     return adUnits;
 };
@@ -58,6 +59,10 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         {
             key: 'comments',
             sizes: [[160, 600], [300, 250], [300, 600]],
+        },
+        {
+            key: 'banner',
+            sizes: [[88, 70], [728, 90], [940, 230], [900, 250], [970, 250]],
         },
     ];
 
@@ -111,7 +116,9 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     }
 };
 
-export const slots = (advertId: string, contentType: string) =>
-    filterByAdvertId(advertId, getSlots(contentType));
+export const getPrebidAdSlots = (
+    ad: Advert,
+    contentType: string
+): Array<PrebidSlot> => filterByAdvert(ad, getSlots(contentType));
 
 export const _ = { getSlots };
