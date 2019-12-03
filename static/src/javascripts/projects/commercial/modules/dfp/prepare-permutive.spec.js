@@ -2,9 +2,9 @@
 
 import { _ } from './prepare-permutive';
 
-describe('Generating Permutive payload utils', () => {
-    jest.mock('lib/raven');
+jest.mock('lib/raven');
 
+describe('Generating Permutive payload utils', () => {
     describe('isEmpty', () => {
         it('returns true for empty values', () => {
             const emptyValues = ['', undefined, null, [], {}];
@@ -73,8 +73,22 @@ describe('Generating Permutive payload utils', () => {
         });
         it('splits authors and keywords to an array correctly', () => {
             const valid = {
+                author: 'author1,author2',
+                keywords: 'environment,travel',
+            };
+
+            const expected = {
+                content: {
+                    authors: ['author1', 'author2'],
+                    keywords: ['environment', 'travel'],
+                },
+            };
+            expect(_.generatePayload(valid)).toEqual(expected);
+        });
+        it('splits authors and keywords to an array correctly and trims whitespace', () => {
+            const valid = {
                 author: 'author1, author2',
-                keywords: 'environment, travel',
+                keywords: 'environment , travel',
             };
 
             const expected = {
@@ -143,12 +157,30 @@ describe('Generating Permutive payload utils', () => {
         });
     });
     describe('runPermutive', () => {
-        const logger = jest.fn();
-        it('catches errors and calle the logger correctly', () => {
-            _.runPermutive({}, false, logger);
+        it('catches errors and calls the logger correctly when no global permutive', () => {
+            const logger = jest.fn();
+            _.runPermutive({}, undefined, logger);
             const err = logger.mock.calls[0][0];
             expect(err).toBeInstanceOf(Error);
             expect(err.message).toBe('Global Permutive setup error');
+        });
+        it('catches errors and calls the logger correctly when the payload is empty', () => {
+            const logger = jest.fn();
+            _.runPermutive({}, { addon: jest.fn() }, logger);
+            const err = logger.mock.calls[0][0];
+            expect(err).toBeInstanceOf(Error);
+            expect(err.message).toBe('Empty Permutive payload');
+        });
+        it('calles the permutive addon method with the correct payload', () => {
+            const logger = jest.fn();
+            const mockPermutive = { addon: jest.fn() };
+            const config = { section: 'uk' };
+
+            _.runPermutive(config, mockPermutive, logger);
+            expect(mockPermutive.addon).toHaveBeenCalledWith('web', {
+                page: { content: { section: 'uk' } },
+            });
+            expect(logger).not.toHaveBeenCalled();
         });
     });
 });
