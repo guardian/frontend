@@ -1,13 +1,14 @@
 package models
 
-import com.gu.contentapi.client.utils.{DesignType, Article}
+import com.gu.contentapi.client.utils.{Article, DesignType}
 import common.LinkTo
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
+import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import models.dotcomponents.OnwardsUtils.findPillar
+import org.joda.time.DateTimeZone
 
 case class OnwardItem(
   url: String,
@@ -18,7 +19,8 @@ case class OnwardItem(
   ageWarning: Option[String],
   isLiveBlog: Boolean,
   pillar: String,
-  designType: String
+  designType: String,
+  webPublicationDate: String,
 )
 
 case class MostPopularGeoResponse(
@@ -46,6 +48,8 @@ object OnwardCollection {
         .filterNot(_ == "")
     }
 
+
+
     trails.take(10).map(content =>
       OnwardItem(
         url = LinkTo(content.header.url),
@@ -56,7 +60,8 @@ object OnwardCollection {
         ageWarning = ageWarning(content),
         isLiveBlog = content.properties.isLiveBlog,
         pillar = findPillar(content.maybePillar, content.frontendTags.toList),
-        designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString
+        designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+        webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString
       )
     )
   }
