@@ -106,6 +106,10 @@ const runPermutive = (
 /* eslint-disable */
 export const initPermutive = (): Promise<void> =>
     new Promise(resolve => {
+        // From here until we re-enable eslint is the Permutive code
+        // that we received from them.
+        // Please do not change unless you've consulted with Permutive
+        // and confirmed the change is safe.
         (function(n, e, o, r, i) {
             if (!e) {
                 (e = e || {}),
