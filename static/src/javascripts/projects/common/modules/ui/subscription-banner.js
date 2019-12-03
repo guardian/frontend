@@ -190,7 +190,12 @@ const show: () => Promise<boolean> = async () => {
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(subscriptionUrl, signInUrl, showConsent,  isUserLoggedIn())
+            bannerTemplate(
+                subscriptionUrl,
+                signInUrl,
+                showConsent,
+                isUserLoggedIn()
+            )
         );
     }
 
