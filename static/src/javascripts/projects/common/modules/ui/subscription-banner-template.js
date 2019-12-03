@@ -40,7 +40,11 @@ const subscriptionBannerTemplate = (
             </div>
         </div>
 
-        <div class="site-message--subscription-banner__sign-in ${userLoggedIn ? 'site-message--subscription-banner__sign-in--visibility--hidden' : ''}">
+        <div class="site-message--subscription-banner__sign-in ${
+            userLoggedIn
+                ? 'site-message--subscription-banner__sign-in--visibility-hidden'
+                : ''
+        }">
             <p>Already a subscriber?</p>
             <br class="temp-mobile-break" />
             <a
