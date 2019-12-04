@@ -233,8 +233,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         )
         .then(({ backgroundParent, background }) => {
             if (specs.scrollType === 'interscroller') {
-                renderStickyAdLabel(backgroundParent).then();
-                renderStickyScrollForMoreLabel(backgroundParent).then();
+                renderStickyAdLabel(backgroundParent);
+                renderStickyScrollForMoreLabel(backgroundParent);
 
                 addEventListener(
                     window,
