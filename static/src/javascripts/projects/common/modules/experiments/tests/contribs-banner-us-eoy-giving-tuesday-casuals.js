@@ -6,7 +6,7 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['Offset fake news this Giving Tuesday'];
+const titles = ['Offset fake news this holiday season'];
 const messageText =
     'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. ';
 const closingSentence = 'Help us reach our year-end goal.';
