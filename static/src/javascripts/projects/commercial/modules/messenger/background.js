@@ -103,8 +103,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 if (backgroundParent) {
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
-                        // $FlowFixMe
-                        adSlot.style['margin-bottom'] = '12px';
+                        adSlot.style.marginBottom = '12px';
 
                         if (specs.ctaUrl != null) {
                             const ctaURLAnchor = document.createElement('a');
@@ -238,7 +237,10 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 renderStickyScrollForMoreLabel(backgroundParent).then();
 
                 addEventListener(window, 'scroll', () =>
-                    onInterscrollerScroll(backgroundParent, background)
+                    onInterscrollerScroll(backgroundParent, background),
+                    {
+                        passive: true,
+                    }
                 );
             } else {
                 observer.observe(backgroundParent);
