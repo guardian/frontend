@@ -58,7 +58,7 @@ export const renderStickyScrollForMoreLabel = (
         scrollForMoreLabel.onclick = event => {
             adSlotNode.scrollIntoView({
                 behavior: 'smooth',
-                block: 'end',
+                block: 'start',
             });
             event.preventDefault();
         };
