@@ -244,7 +244,7 @@ data-test-id="facia-card"
             }
 
             @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
-                <div class="js-liveblog-blocks fc-item__liveblog-blocks" data-article-id="@item.id"></div>
+                <div class="js-liveblog-blocks js-liveblog-blocks-dynamic fc-item__liveblog-blocks" data-article-id="@item.id"></div>
             }
             @if(item.isMediaLink) {
                 <div class="fc-item__footer-meta-wrapper">

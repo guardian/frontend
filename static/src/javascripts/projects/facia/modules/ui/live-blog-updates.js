@@ -14,10 +14,12 @@ import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;
+const newUpdateTransitionDelayMs = 150;
 let refreshSecs = 30;
 const refreshDecay = 1;
 let refreshMaxTimes = 5;
 const selector = '.js-liveblog-blocks';
+const dynamicClass = 'js-liveblog-blocks-dynamic';
 const articleIdAttribute = 'data-article-id';
 const sessionStorageKey = 'gu.liveblog.block-dates';
 const viewportHeightPx = getViewport().height;
@@ -47,9 +49,9 @@ const renderBlock = (
     if (relTime.match(/yesterday/i)) {
         relTime = relTime.toLowerCase();
     } else if (relTime) {
-        relTime = `Latest update ${relTime} ago`;
+        relTime = `<span class="block-time-prefix">Latest update </span>${relTime} ago`;
     } else {
-        relTime = 'Updated just now';
+        relTime = '<span class="block-time-prefix">Updated </span>just now';
     }
 
     return template(blockTemplate)({
@@ -63,47 +65,102 @@ const renderBlock = (
     });
 };
 
+const timeoutPromise = (delay: number): Promise<void> =>
+    new Promise(resolve => setTimeout(resolve, delay));
+
 const maybeAnimateBlocks = (
     el: Element,
+    container: Element,
     immediate?: boolean
 ): Promise<boolean> =>
     fastdomPromise
         .read(() => el.getBoundingClientRect().top)
         .then(vPosition => {
-            if (vPosition > 0 && vPosition < viewportHeightPx) {
-                setTimeout(
-                    () => {
-                        const $el = bonzo(el);
-                        fastdomPromise.write(() => {
-                            $el.removeClass(
-                                'fc-item__liveblog-blocks__inner--offset'
-                            );
-                        });
-                    },
-                    immediate ? 0 : animateDelayMs
+            const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
+
+            if (isVisible) {
+                timeoutPromise(immediate ? 0 : animateDelayMs).then(() =>
+                    fastdomPromise.write(() =>
+                        el.classList.remove(
+                            'fc-item__liveblog-blocks__inner--offset'
+                        )
+                    )
                 );
+
                 return true;
             }
             return false;
         });
 
-const animateBlocks = (el: Element): void => {
-    maybeAnimateBlocks(el).then(didAnimate => {
-        let animateOnScroll;
-
+const animateBlocks = (el: Element, container: Element): void => {
+    maybeAnimateBlocks(el, container).then(didAnimate => {
         if (!didAnimate) {
-            animateOnScroll = debounce(() => {
-                maybeAnimateBlocks(el, true).then(animated => {
-                    if (animated) {
-                        mediator.off('window:throttledScroll', animateOnScroll);
+            const animateOnScroll = debounce(() => {
+                maybeAnimateBlocks(el, container, true).then(
+                    didAnimateOnScroll => {
+                        if (didAnimateOnScroll) {
+                            mediator.off(
+                                'window:throttledScroll',
+                                animateOnScroll
+                            );
+                        }
                     }
-                });
+                );
             }, animateAfterScrollDelayMs);
 
             mediator.on('window:throttledScroll', animateOnScroll);
         }
     });
+
+    fastdomPromise.write(() => {
+        container.classList.remove('fc-item__liveblog-blocks--hidden');
+        container.classList.add('fc-item__liveblog-blocks--visible');
+    });
 };
+
+const applyUpdate = (
+    container: Element,
+    content: Array<Element>
+): Promise<void> =>
+    fastdomPromise.write(() => {
+        bonzo(container)
+            .empty()
+            .append(content);
+    });
+
+const startUpdate = (
+    container: Element,
+    content: Array<Element>,
+    shouldTransitionOut: boolean
+): Promise<void> => {
+    if (shouldTransitionOut) {
+        container.classList.remove('fc-item__liveblog-blocks--visible');
+        container.classList.add('fc-item__liveblog-blocks--hidden');
+
+        // Use a timeout here so we don't update the DOM until the transition
+        // has completed. There's a relationship here between
+        // newUpdateTransitionDelayMs and the transition timings in
+        // story-package-garnett.scss.
+        return timeoutPromise(newUpdateTransitionDelayMs).then(() =>
+            applyUpdate(container, content)
+        );
+    }
+
+    return applyUpdate(container, content);
+};
+
+const completeUpdate = (
+    container: Element,
+    content: Array<Element>,
+    shouldTransitionIn: boolean
+): void => {
+    if (shouldTransitionIn) {
+        animateBlocks(content[0], container);
+    }
+};
+
+const isDynamic = (element: Element): boolean =>
+    element.classList.contains(dynamicClass);
 
 const showBlocks = (
     articleId: string,
@@ -134,9 +191,10 @@ const showBlocks = (
                         'fc-item__liveblog-blocks__inner--offset'
                     );
                 }
+
                 return renderBlock(articleId, block, index);
             })
-            .slice(0, hasNewBlock ? 2 : 1);
+            .slice(0, hasNewBlock || isDynamic(element) ? 2 : 1);
 
         const el = bonzo.create(
             `<div class="${wrapperClasses.join(' ')}">${blocksHtml.join(
@@ -144,17 +202,9 @@ const showBlocks = (
             )}</div>`
         );
 
-        const $element = bonzo(element);
-
-        fastdomPromise
-            .write(() => {
-                $element.empty().append(el);
-            })
-            .then(() => {
-                if (hasNewBlock) {
-                    animateBlocks(el[0]);
-                }
-            });
+        startUpdate(element, el, hasNewBlock).then(() =>
+            completeUpdate(element, el, hasNewBlock)
+        );
     });
 };
 
@@ -172,6 +222,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
         .read(() => {
             const elementsById: Map<string, Array<Element>> = new Map();
 
+            // For each liveblock block
             $(selector).each(element => {
                 const articleId = element.getAttribute(articleIdAttribute);
 
