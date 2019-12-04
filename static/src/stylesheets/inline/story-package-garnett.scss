@@ -10,7 +10,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
 @mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
-
         .fc-item__kicker,
         .rich-link__kicker,
         .fc-item__byline {
@@ -42,7 +41,6 @@ $fc-item-gutter: $gs-gutter / 4;
                 color: $dark-colour;
             }
 
-
             .inline-garnett-quote {
                 fill: $dark-colour;
             }
@@ -64,31 +62,26 @@ $fc-item-gutter: $gs-gutter / 4;
             }
         }
 
-
         .fc-item__container:before {
             background-color: #ffffff;
         }
 
         &.fc-item.fc-item--full-media-100-tablet .fc-item__title {
             background-image: none;
-
         }
     }
 
     .fc-sublink--pillar-#{$tone} .fc-sublink__kicker {
         color: $colour;
     }
-
 }
 
 .fc-container--story-package {
-
     background-color: $story-package-container-colour;
 
     .fc-container__body {
         position: relative;
         @include mq($from: leftCol) {
-
             &:before {
                 position: absolute;
                 content: '';
@@ -176,7 +169,6 @@ $fc-item-gutter: $gs-gutter / 4;
         color: $story-package-dynamic-card-text;
     }
 
-
     .fc-container__inner {
         border-top: 1px solid #929698;
 
@@ -219,6 +211,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 background-color: darken($story-package-card-colour, 5%);
             }
         }
+
         .fc-trail__count--commentcount {
             background-color: $story-package-card-colour;
         }
@@ -235,6 +228,138 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__standfirst-wrapper .fc-item__meta {
             background-image: none;
+        }
+    }
+
+    // I'm not sure this is at all reliable, or a good idea, but until I figure
+    // out what classes I want to add in Scala this gets things moving:
+    .l-row__item--span-3 + .l-row__item--span-1 {
+        .fc-item--live-updates {
+            &.fc-item--standard-tablet {
+                .fc-item__media-wrapper {
+                    display: block;
+                }
+            }
+        }
+    }
+
+    .fc-item--live-updates {
+        $border-bottom-width: 5px;
+        $circle-diameter: 13px;
+        $circle-top-position: 5px;
+        $thin-border: 1px;
+
+        @include mq($from: desktop) {
+            &.fc-item--standard-tablet {
+                .fc-item__media-wrapper {
+                    display: none;
+                }
+            }
+
+            .fc-item__liveblog-blocks {
+                height: 100%;
+            }
+        }
+
+        .fc-item__liveblog-block__text {
+            @include f-textSans;
+            background-color: transparent;
+            border-top: 0;
+            border-bottom: $border-bottom-width solid $story-package-card-colour;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .fc-item__liveblog-block__time {
+            .block-time-prefix {
+                display: none;
+            }
+        }
+
+        .fc-item__liveblog-block__text:after {
+            color: mix(#ffffff, $story-package-card-colour, 92%);
+            background-color: $story-package-card-colour;
+            box-shadow: -5px 0 5px -2px $story-package-card-colour;
+        }
+
+        &:hover {
+            .fc-item__liveblog-block__text:after {
+                color: mix(#ffffff, $story-package-card-colour, 92%);
+                background-color: darken($story-package-card-colour, 5%);
+                box-shadow: -5px 0 5px -2px darken($story-package-card-colour, 5%);
+            }
+
+            .fc-item__liveblog-block__text {
+                border-bottom: $border-bottom-width solid darken($story-package-card-colour, 5%);
+            }
+        }
+
+        .fc-item__liveblog-blocks--visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity .1s linear;
+        }
+
+        .fc-item__liveblog-blocks--hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s .1s, opacity .1s linear;
+        }
+
+        .fc-item__liveblog-blocks__inner {
+            transition: none;
+            transform: none;
+        }
+
+        // Live update circle
+        .fc-item__liveblog-block__time:before {
+            content: '';
+            color: #ffffff;
+            border: $thin-border solid #ffffff;
+            border-radius: 50%;
+            height: $circle-diameter;
+            width: $circle-diameter;
+            display: block;
+            position: absolute;
+            left: 0;
+            top: $circle-top-position;
+        }
+
+        // Live update circle connector/line
+        .fc-item__liveblog-block:first-of-type:not(:only-child) {
+            &:before {
+                content: '';
+                color: #ffffff;
+                border: 0;
+                border-left: 1px solid #ffffff;
+                border-radius: 0;
+                height: calc(100% - #{$circle-diameter} - #{$thin-border * 2});
+                width: $thin-border;
+                display: block;
+                position: absolute;
+                left: calc((#{$circle-diameter} / 2) + #{$thin-border});
+                top: calc(#{$circle-top-position} + #{$circle-diameter} + #{$thin-border * 2});
+                z-index: 2;
+            }
+        }
+
+        &.fc-item--full-media-75-tablet {
+            .fc-item__liveblog-blocks {
+                margin-bottom: 5px;
+            }
+
+            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
+                background-color: darken($story-package-card-colour, 5%);
+            }
+
+            .fc-item__liveblog-blocks__inner {
+                background-color: $story-package-card-colour;
+                padding-left: 5px;
+
+                &:hover {
+                    background-color: darken($story-package-card-colour, 5%);
+                }
+            }
         }
     }
 
@@ -259,7 +384,6 @@ $fc-item-gutter: $gs-gutter / 4;
             color: $story-package-dynamic-card-text;
         }
     }
-
 
     .treats__list-item {
         .treats__treat {
@@ -323,8 +447,6 @@ $fc-item-gutter: $gs-gutter / 4;
                     @include fs-headline(9);
                 }
             }
-
-
         }
 
         &:hover {
@@ -337,7 +459,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-trail__count--commentcount {
             background-color: $story-package-container-colour;
-
         }
 
         .fc-item__kicker:after {
@@ -367,9 +488,7 @@ $fc-item-gutter: $gs-gutter / 4;
             }
         }
 
-
         @include mq($until: tablet) {
-
             &.fc-item--three-quarters-tall-tablet,
             &.fc-item--full-media-100-tablet {
                 // Show the sublinks
@@ -411,7 +530,6 @@ $fc-item-gutter: $gs-gutter / 4;
             .fc-sublink {
                 flex: 1 1 100%;
 
-
                 &+* {
                     margin-left: $gs-gutter / 2;
                 }
@@ -423,7 +541,6 @@ $fc-item-gutter: $gs-gutter / 4;
         &.fc-item--full-media-100-tablet,
         &.fc-item--three-quarters-tablet,
         &.fc-item--three-quarters-tall-tablet {
-
             .fc-item__footer--vertical {
                 margin-top: -35px;
             }
@@ -444,16 +561,13 @@ $fc-item-gutter: $gs-gutter / 4;
             }
         }
 
-
         // Sublink desktop widths
         @include mq($from: tablet) {
-
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
             &.fc-item--full-media-100-tablet,
             &.fc-item--full-media-100-tablet,
             &.fc-item--three-quarters-tablet,
             &.fc-item--three-quarters-tall-tablet {
-
                 .fc-sublink {
                     margin-bottom: $gs-baseline;
                 }
@@ -473,7 +587,6 @@ $fc-item-gutter: $gs-gutter / 4;
                     bottom: 0;
                     right: 0;
                 }
-
             }
 
             // FullMedia75
@@ -483,8 +596,6 @@ $fc-item-gutter: $gs-gutter / 4;
                     @include fc-sublinks--horizontal;
                     width: calc(75% - 2px);
                 }
-
-
             }
 
             // FullMedia100 & ThreeQuarterTall
@@ -505,7 +616,6 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-
     //These need to exist for all kickers because of tone on tone action
     @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-bright);
     @include pillar-override(arts, $culture-bright, $culture-bright);
@@ -513,5 +623,4 @@ $fc-item-gutter: $gs-gutter / 4;
     @include pillar-override(opinion, $opinion-bright, $opinion-bright);
     @include pillar-override(news, $news-bright, $news-bright);
     @include pillar-override(special-report, $highlight-main, $highlight-main);
-
 }

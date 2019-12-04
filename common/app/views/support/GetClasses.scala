@@ -34,6 +34,7 @@ object GetClasses {
       ("fc-item--is-boosted", item.displaySettings.isBoosted),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
+      ("fc-item--live-updates", item.isLive && item.displaySettings.showLivePlayable),
       ("fc-item--has-metadata",
         item.timeStampDisplay.isDefined || item.discussionSettings.isCommentable),
       ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
