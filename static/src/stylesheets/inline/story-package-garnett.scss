@@ -2,10 +2,9 @@
 @import '../_mixins';
 
 //specific vars for colours for dynamo
-$dynamo-background: #e0e4e8;
-$card-colour: #041f4a;
-$container-title: $card-colour;
-
+$story-package-container-colour: #e0e4e8;
+$story-package-container-colour: #041f4a;
+$container-title: $story-package-container-colour;
 
 @mixin pillar-override($tone, $colour) {
     .fc-item--pillar-#{$tone} {
@@ -40,7 +39,8 @@ $container-title: $card-colour;
 }
 
 .fc-container--story-package {
-    background-color: $dynamo-background;
+
+    background-color: $story-package-container-colour;
 
     .fc-container__body {
         position: relative;
@@ -68,6 +68,7 @@ $container-title: $card-colour;
             border-top: 0;
         }
     }
+
 
     .fc-slice__item + .fc-slice__item:before {
         border-left-color: #929698; // This colour does not exist (in the palette)
@@ -136,19 +137,19 @@ $container-title: $card-colour;
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature
-    {
-        background-color: $card-colour;
+    .fc-item.fc-item--type-feature {
+        background-color: $story-package-container-colour;
 
         &:hover {
-            background-color: darken($card-colour, 5%);
+            background-color: darken($story-package-container-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($card-colour, 5%);
+                background-color: darken($story-package-container-colour, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $card-colour;
+            background-color: $story-package-container-colour;
+
         }
 
         .fc-item__headline {
@@ -191,9 +192,50 @@ $container-title: $card-colour;
         }
     }
 
-    .fc-container--story-package .fc-container__header__title>h2 {
+    .fc-container__header__title>h2 {
         color: #ffffff;
     }
+
+    // 'Dynamic Layout'
+    .fc-item__content--above {
+        display: none;
+    }
+
+    .fc-item--dynamic-layout {
+        background-color: $story-package-container-colour;
+
+        // The white line above the story
+        .fc-item__container:before {
+            width: 25%;
+            height: $gs-baseline / 3;
+        }
+
+        .fc-item__content--below .fc-item__header {
+            display: none;
+        }
+
+        .fc-item__content--above {
+            display: block;
+            padding-top: $gs-baseline;
+        }
+
+        @include mq($until: phablet) {
+            .fc-item__content--below .fc-item__header {
+                display: none;
+            }
+
+            .fc-item__content--above {
+                display: block;
+            }
+        }
+
+        .fc-item__kicker:after {
+            display: none;
+        }
+    }
+
+
+
 
     //These need to exist for all kickers because of tone on tone action
     @include pillar-override(lifestyle, $lifestyle-bright);

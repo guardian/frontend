@@ -38,7 +38,8 @@ object GetClasses {
       ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
       ("fc-item--is-commentable", item.discussionSettings.isCommentable),
       ("fc-item--is-media-link", item.isMediaLink),
-      ("fc-item--has-video-main-media", item.hasVideoMainMedia)
+      ("fc-item--has-video-main-media", item.hasVideoMainMedia),
+      ("fc-item--dynamic-layout", item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined && !item.hasVideoMainMedia)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
     )
