@@ -6,7 +6,7 @@ export const permutiveTest: ABTest = {
     expiry: '2020-07-30',
     author: 'Fares Basmadji',
     description: 'Test permutive implementation',
-    audience: 0.0,
+    audience: 0.1,
     audienceOffset: 0.0,
     successMeasure: 'Permutive to confirm functioning deployment',
     audienceCriteria: 'n/a',
@@ -15,10 +15,6 @@ export const permutiveTest: ABTest = {
     showForSensitive: true,
     canRun: () => true,
     variants: [
-        {
-            id: 'control',
-            test: (): void => {},
-        },
         {
             id: 'variant',
             test: (): void => {},
