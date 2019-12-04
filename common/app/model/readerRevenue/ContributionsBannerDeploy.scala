@@ -18,6 +18,10 @@ case object US extends ReaderRevenueRegion { val name = "united-states"}
 case object AU extends ReaderRevenueRegion { val name = "australia"}
 case object ROW extends ReaderRevenueRegion { val name = "rest-of-world"}
 
+sealed trait EngagementBanner
+case object ContributionsBanner extends EngagementBanner
+case object SubscriptionsBanner extends EngagementBanner
+
 object ReaderRevenueRegion {
   def fromString(region: String): Option[ReaderRevenueRegion] = {
     region.toLowerCase() match {

@@ -26,7 +26,11 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions)))
   }
 
-  def redeployContributionsBanner(strRegion: String): Action[AnyContent] = Action.async { implicit request =>
+  def redeployContributionsBanner(strRegion: String): Action[AnyContent] = redeployBanner(strRegion, ContributionsBanner)
+
+  def redeploySubscriptionsBanner(strRegion: String): Action[AnyContent] = redeployBanner(strRegion, SubscriptionsBanner)
+
+  def redeployBanner(strRegion: String, bannerType: EngagementBanner): Action[AnyContent] = Action.async { implicit request =>
     ReaderRevenueRegion.fromString(strRegion).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now

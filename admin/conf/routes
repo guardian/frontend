@@ -61,6 +61,7 @@ GET         /analytics/confidence                                               
 GET         /reader-revenue                                                                         controllers.admin.ReaderRevenueAdminController.renderReaderRevenueMenu()
 GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
 POST        /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
+POST        /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                     controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()
