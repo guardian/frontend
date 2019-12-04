@@ -19,7 +19,6 @@ const messageText =
 const closingSentence = 'Help us reach our year-end goal.';
 const ctaText = 'Support The Guardian';
 
-const tickerHeaderControl = 'Help us reach our year-end goal';
 const tickerHeaderWithArticleCount = `You’ve read ${articleViewCount} articles in the last two months`;
 
 export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest = {
@@ -40,20 +39,6 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
     canRun: () => testRunConditions,
     geolocation,
     variants: [
-        {
-            id: 'control',
-            test: (): void => {},
-            engagementBannerParams: {
-                titles,
-                messageText,
-                closingSentence,
-                ctaText,
-                template: acquisitionsBannerUsEoyTemplate,
-                hasTicker: true,
-                bannerModifierClass: 'useoy2019',
-                tickerHeader: tickerHeaderControl,
-            },
-        },
         {
             id: 'withArticleCount',
             test: (): void => {},
