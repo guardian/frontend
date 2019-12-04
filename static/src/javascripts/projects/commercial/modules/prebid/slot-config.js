@@ -16,9 +16,14 @@ const filterByAdvert = (
     ad: Advert,
     slots: Array<PrebidSlot>
 ): Array<PrebidSlot> => {
-    console.log('Filtering by ', ad, slots);
     const adUnits = slots.filter(slot =>
-        stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(slot.key)
+        slot.key === 'banner' // Special case for interactive banner slots
+            ? // as they are currently incorrectly identified.
+              !!ad.id.match(/^dfp-ad--\d+/) &&
+              ad.node.classList.contains('ad-slot--banner-ad-desktop')
+            : stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(
+                  slot.key
+              )
     );
     return adUnits;
 };
@@ -60,6 +65,8 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
             key: 'comments',
             sizes: [[160, 600], [300, 250], [300, 600]],
         },
+        // Banner slots appear on interactives, like on
+        // https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
         {
             key: 'banner',
             sizes: [[88, 70], [728, 90], [940, 230], [900, 250], [970, 250]],
