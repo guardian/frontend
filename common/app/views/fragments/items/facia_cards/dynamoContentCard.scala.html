@@ -92,14 +92,12 @@ data-test-id="facia-card"
 
 @container(item: layout.ContentCard) = {
     <div class="fc-item__container">
-        @if(item.cardTypes.allowsHeadlineAbove) {
-            <div class="fc-item__content">
-                <div class="fc-item__header">
-                    @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
-                </div>
-            </div>
-        }
 
+        <div class="fc-item__content fc-item__content--above">
+            <div class="fc-item__header">
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
+            </div>
+        </div>
 
         @item.displayElement.filter(const(item.showDisplayElement)) match {
             case Some(InlineVideo(videoElement, title, fallback)) if item.cardTypes.showVideoPlayer => {
@@ -206,14 +204,13 @@ data-test-id="facia-card"
             case _ => {}
         }
 
-        <div class="fc-item__content @if(item.starRating.isDefined){fc-item__content--has-stars}">
+        <div class="fc-item__content fc-item__content--below @if(item.starRating.isDefined){fc-item__content--has-stars}">
             <div class="@RenderClasses(Map(
                 ("fc-item__header", true),
                 ("fc-item__header--inline-video", item.isVideo && item.displaySettings.isBoosted)
             ))">
-                @if(!item.cardTypes.allowsHeadlineAbove) {
-                    @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
-                }
+
+                @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
 
                 @item.bylineText.map { byline =>
                     <div class="fc-item__byline">@byline</div>

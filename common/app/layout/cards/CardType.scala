@@ -48,7 +48,8 @@ sealed trait CardType {
     case _ => false
   }
 
-  def allowsHeadlineAbove: Boolean = this match {
+  /** This is only currently used in the dynamoContentCard.scala.html **/
+  def canBeDynamicLayout: Boolean = this match {
     case FullMedia100 => true
     case _ => false
   }
