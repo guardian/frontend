@@ -20,8 +20,8 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     with ImplicitControllerExecutionContext {
 
   private[this] def getRelatedContent(path: String): Future[Seq[RelatedContentItem]] = {
-    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable,thumbnail"
-    val query = contentApiClient.item(path).showPackages(true).showFields(fields).showElements("image")
+    val fields = "headline,standfirst,shortUrl,webUrl,byline,trailText,liveBloggingNow,commentCloseDate,commentable,thumbnail,displayHint"
+    val query = contentApiClient.item(path).showPackages(true).showFields(fields).showElements("image").showTags("all")
     val resp = contentApiClient.getResponse(query)
     resp.map(item => StoryPackages(path, item).items)
   }
