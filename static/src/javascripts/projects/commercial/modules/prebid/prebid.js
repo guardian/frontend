@@ -237,7 +237,6 @@ const requestBids = (
         return requestQueue;
     }
 
-    console.log('Looking for prebid slot for advert = ', advert);
     const adUnits: Array<PrebidAdUnit> = getPrebidAdSlots(
         advert,
         config.get('page.contentType', '')

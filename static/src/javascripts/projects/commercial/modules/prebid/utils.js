@@ -12,8 +12,19 @@ import type { PrebidSize } from './types';
 const isInAppnexusUSAdapterTestVariant = (): boolean =>
     isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
+const SUFFIX_REGEXPS = {};
 const stripSuffix = (s: string, suffix: string): string => {
-    const re = new RegExp(`${suffix}$`);
+    const re =
+        SUFFIX_REGEXPS[suffix] ||
+        (SUFFIX_REGEXPS[suffix] = new RegExp(`${suffix}$`));
+    return s.replace(re, '');
+};
+
+const PREFIX_REGEXPS = {};
+const stripPrefix = (s: string, prefix: string): string => {
+    const re =
+        PREFIX_REGEXPS[prefix] ||
+        (PREFIX_REGEXPS[prefix] = new RegExp(`^${prefix}`));
     return s.replace(re, '');
 };
 
@@ -21,11 +32,6 @@ const currentGeoLocation = once((): string => geolocationGetSync());
 
 const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
     Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
-
-const stripPrefix = (s: string, prefix: string): string => {
-    const re = new RegExp(`^${prefix}`);
-    return s.replace(re, '');
-};
 
 export const removeFalseyValues = (o: {
     [string]: string,
@@ -151,7 +157,7 @@ export const shouldIncludeMobileSticky = once(
 );
 
 export const stripMobileSuffix = (s: string): string =>
-    stripSuffix(s, '--mobile');
+    stripSuffix(stripSuffix(s, '--mobile'), 'Mobile');
 
 export const stripTrailingNumbersAbove1 = (s: string): string =>
     stripSuffix(s, '([2-9]|\\d{2,})');
