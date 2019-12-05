@@ -1,6 +1,12 @@
 @import '../_vars';
 @import '../_mixins';
 
+//specific vars for colours for dynamo
+$dynamo-background: #E0E4E8;
+$card-colour: #041F4A;
+$container-title: $card-colour;
+
+
 @mixin pillar-override($tone, $colour) {
     .fc-item--pillar-#{$tone} {
         .fc-item__kicker,
@@ -28,7 +34,37 @@
 }
 
 .fc-container--story-package {
-    background-color: #6b6e71; // This colour does not exist (in the palette)
+    background-color: $dynamo-background;
+
+    .fc-container__body {
+      &:before {
+        @include mq($from: leftCol) {
+          position: absolute;
+          content: '';
+          display: block;
+          top: 0;
+          bottom: -12px;
+          width: 1px;
+          background-color: #929698;
+          left: 170px; //magic numbers sorry --\_()_/--
+        }
+
+        @include mq($from: wide) {
+          left: 250px; //magic numbers sorry --\_()_/--
+        }
+      }
+    }
+
+    &.js-container--first {
+        .fc-container__body {
+          &:before {
+            top: -6px;
+          }
+        }
+        .fc-container__inner {
+          border-top: none;
+        }
+    }
 
     .fc-slice__item + .fc-slice__item:before {
         border-left-color: #929698; // This colour does not exist (in the palette)
@@ -48,21 +84,15 @@
 
         & > span,
         h2.fc-container__title__text {
-            color: #ffffff;
-            display: inline;
-            line-height: 32px;
+            color: $container-title;
+            display: inline-block;
+            line-height: 24px;
             top: 6px;
             position: relative;
             padding-right: 4px;
 
             @include mq($from: tablet) {
                 top: 0px;
-            }
-            @include mq($from: desktop) {
-                line-height: 25px;
-            }
-            @include mq($from: wide) {
-                line-height: 30px;
             }
         }
 
@@ -76,12 +106,24 @@
         color: #ffffff;
     }
 
+
     .fc-container__inner {
         border-top: 0;
+        border-top: 1px solid #929698;
+
+        @include mq($from: tablet) {
+          overflow: visible;
+        }
     }
 
     .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
         background-image: none;
+    }
+
+    .fc-item {
+      .youtube-media-atom__play-button {
+        bottom: 43%;
+      }
     }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
@@ -94,17 +136,17 @@
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
     .fc-item.fc-item--type-feature
     {
-        background-color: #383a3c; // This colour does not exist (in the palette)
+        background-color: $card-colour;
 
         &:hover {
-            background-color: darken(#383a3c, 5%);
+            background-color: darken($card-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken(#383a3c, 5%);
+                background-color: darken($card-colour, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: #383a3c;
+            background-color: $card-colour;
         }
 
         .fc-item__headline {
