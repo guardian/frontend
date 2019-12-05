@@ -359,6 +359,21 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             }
         }
 
+        // ThreeQuarterTall
+        &.fc-item--three-quarters-tall-tablet {
+            .fc-item__content--below {
+                display: none;
+            }
+
+            .fc-item__content--above {
+                display: block;
+
+                &:before {
+                    width: $gs-column-width;
+                }
+            }
+        }
+
 
         @include mq($until: tablet) {
 
