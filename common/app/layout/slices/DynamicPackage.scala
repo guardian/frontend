@@ -20,7 +20,7 @@ object DynamicPackage extends DynamicContainer {
       case 1 => Seq(FullMedia75)
       case 2 => Seq(ThreeQuarterQuarter)
       case 3 => Seq(ThreeQuarterTallQuarter2)
-      case 4 => Seq(ThreeQuarterTallQuarter2Ql2)
+      case 4 => Seq(ThreeQuarterTallQuarter1Ql2)
       case 5 => Seq(FullMedia75, QuarterQuarterQuarterQuarter)
       case 6 => Seq(FullMedia75, QuarterQuarterQuarterQl)
       case 7 => Seq(FullMedia75, QuarterQuarterQuarterQl)
