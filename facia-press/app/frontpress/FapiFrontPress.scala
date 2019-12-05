@@ -210,7 +210,6 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
   }
 
   private def pressPath(path: String, messageId: String)(implicit executionContext: ExecutionContext): Future[Unit] = {
-
     val stopWatch: StopWatch = new StopWatch
 
     val pressFuture = getPressedFrontForPath(path)
@@ -388,10 +387,10 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
 
   def generatePressedVersions(path: String, allPressedCollections: List[PressedCollectionVisibility], seoData: SeoData, frontProperties: FrontProperties): PressedPageVersions = {
     val webCollections = allPressedCollections.filter(PressedCollectionVisibility.isWebCollection)
-    val dedupliatedCollections = PressedCollectionVisibility.deduplication(webCollections)
+    val deduplicatedCollections = PressedCollectionDeduplication.deduplication(webCollections)
       .map(_.pressedCollectionVersions)
       .toList
-    PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, dedupliatedCollections)
+    PressedPageVersions.fromPressedCollections(path, seoData, frontProperties, deduplicatedCollections)
   }
 
   def collectionsIdsFromConfigForPath(path: String, config: ConfigJson): List[String] = {

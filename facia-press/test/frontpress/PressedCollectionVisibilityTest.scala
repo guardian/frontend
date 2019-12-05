@@ -20,7 +20,7 @@ class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaT
 
     val duplicatedCollections: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
 
-    val deduped = PressedCollectionVisibility.deduplication(duplicatedCollections)
+    val deduped = PressedCollectionDeduplication.deduplication(duplicatedCollections)
     deduped.head shouldBe collectionVisibility
 
     val collectionWithoutCurated = collectionVisibility.copy(pressedCollection = pressedCollection.copy(curated = Nil))
@@ -32,7 +32,7 @@ class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaT
 
     val duplicatedCollections: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
 
-    val deduped = PressedCollectionVisibility.deduplication(duplicatedCollections)
+    val deduped = PressedCollectionDeduplication.deduplication(duplicatedCollections)
     deduped.head shouldBe collectionVisibility
 
     val collectionWithDeduplicatedCurated = collectionVisibility.copy(pressedCollection = pressedCollection.copy(curated = pressedCollection.curated.takeRight(2)))
