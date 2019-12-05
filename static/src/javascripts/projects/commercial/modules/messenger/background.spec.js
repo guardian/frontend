@@ -10,6 +10,7 @@ const adSpec = {
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'absolute',
     backgroundSize: 'contain',
+    ctaUrl: 'theguardian.com',
     transform: 'translate3d(0,0,0)',
 };
 

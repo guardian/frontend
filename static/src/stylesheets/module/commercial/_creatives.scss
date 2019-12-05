@@ -680,3 +680,50 @@
         position: fixed;
     }
 }
+
+.creative__background-parent-interscroller {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    clip: rect(0, auto, auto, 0);
+
+    .creative__background {
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .creative__background--interscroller {
+        width: 100%;
+        top: 0;
+        left: 0;
+        margin-top: 24px;
+        position: fixed;
+    }
+}
+
+.ad-slot__label.sticky {
+    position: sticky;
+    top: 0;
+}
+
+.ad-slot__scroll {
+    @include font-size(12, 20);
+    height: $mpu-ad-label-height;
+    background-color: $brightness-97;
+    padding: 0 ($gs-baseline/3)*2;
+    border-top: 1px solid $brightness-86;
+    color: $brightness-46;
+    text-align: left;
+    box-sizing: border-box;
+    font-family: $f-sans-serif-text;
+    display: block;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
