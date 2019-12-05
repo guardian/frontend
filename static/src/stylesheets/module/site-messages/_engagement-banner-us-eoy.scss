@@ -240,7 +240,7 @@ $blue-accent: #1a5292;
     .epic-ticker__goal-reached .engagement-banner-ticker__goal {
         display: none;
 
-        @include mq($from: desktop) {
+        @include mq($from: tablet) {
             display: initial;
         }
     }
