@@ -2,8 +2,8 @@
 @import '../_mixins';
 
 //specific vars for colours for dynamo
-$dynamo-background: #E0E4E8;
-$card-colour: #041F4A;
+$dynamo-background: #e0e4e8;
+$card-colour: #041f4a;
 $container-title: $card-colour;
 
 
@@ -37,32 +37,32 @@ $container-title: $card-colour;
     background-color: $dynamo-background;
 
     .fc-container__body {
-      &:before {
-        @include mq($from: leftCol) {
-          position: absolute;
-          content: '';
-          display: block;
-          top: 0;
-          bottom: -12px;
-          width: 1px;
-          background-color: #929698;
-          left: 170px; //magic numbers sorry --\_()_/--
-        }
+        &:before {
+            @include mq($from: leftCol) {
+                position: absolute;
+                content: '';
+                display: block;
+                top: 0;
+                bottom: -12px;
+                width: 1px;
+                background-color: #929698;
+                left: 170px; //magic numbers sorry --\_()_/--
+            }
 
-        @include mq($from: wide) {
-          left: 250px; //magic numbers sorry --\_()_/--
+            @include mq($from: wide) {
+                left: 250px; //magic numbers sorry --\_()_/--
+            }
         }
-      }
     }
 
     &.js-container--first {
         .fc-container__body {
-          &:before {
-            top: -6px;
-          }
+            &:before {
+                top: -6px;
+            }
         }
         .fc-container__inner {
-          border-top: none;
+            border-top: none;
         }
     }
 
@@ -108,7 +108,6 @@ $container-title: $card-colour;
 
 
     .fc-container__inner {
-        border-top: 0;
         border-top: 1px solid #929698;
 
         @include mq($from: tablet) {
@@ -121,9 +120,9 @@ $container-title: $card-colour;
     }
 
     .fc-item {
-      .youtube-media-atom__play-button {
-        bottom: 43%;
-      }
+        .youtube-media-atom__play-button {
+            bottom: 43%;
+        }
     }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
