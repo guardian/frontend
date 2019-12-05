@@ -82,6 +82,10 @@ $container-title: $story-package-container-colour;
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
 
+        &:after {
+            display: none;
+        }
+
         @include mq($from: desktop) {
             padding-left: 0px;
         }
@@ -137,8 +141,11 @@ $container-title: $story-package-container-colour;
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature {
-        background-color: $story-package-container-colour;
+    .fc-item.fc-item--type-feature
+    {
+        &:not(.fc-item--dynamic-layout) {
+            background-color: $story-package-card-colour;
+        }
 
         &:hover {
             background-color: darken($story-package-container-colour, 5%);
@@ -203,23 +210,45 @@ $container-title: $story-package-container-colour;
 
     .fc-item--dynamic-layout {
         background-color: $story-package-container-colour;
+        &.fc-item--type-feature {
+            background-color: $story-package-container-colour;
+        }
 
         // The white line above the story
         .fc-item__container:before {
-            width: 25%;
+            display: none; // Remove existing on container
+        }
+
+        .fc-item__content:before {
+            content: '';
+            background-color: #ffffff;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
             height: $gs-baseline / 3;
+            width: calc(100% - 10px);
         }
 
-        .fc-item__content--below .fc-item__header {
-            display: none;
+        .fc-item__content {
+            padding-top: $gs-baseline / 2;
         }
 
-        .fc-item__content--above {
-            display: block;
-            padding-top: $gs-baseline;
+        .fc-item--has-boosted-title {
+            .fc-item__content--below .fc-item__header {
+                display: none;
+            }
+
+            .fc-item__content--above {
+                display: block;
+                padding-top: $gs-baseline;
+            }
         }
 
-        @include mq($until: phablet) {
+
+        @include mq($until: tablet) {
+
             .fc-item__content--below .fc-item__header {
                 display: none;
             }
@@ -227,15 +256,13 @@ $container-title: $story-package-container-colour;
             .fc-item__content--above {
                 display: block;
             }
+
         }
 
         .fc-item__kicker:after {
             display: none;
         }
     }
-
-
-
 
     //These need to exist for all kickers because of tone on tone action
     @include pillar-override(lifestyle, $lifestyle-bright);
