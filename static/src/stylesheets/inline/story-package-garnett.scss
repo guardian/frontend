@@ -62,7 +62,7 @@ $container-title: $card-colour;
             }
         }
         .fc-container__inner {
-            border-top: none;
+            border-top: 0;
         }
     }
 
@@ -111,7 +111,7 @@ $container-title: $card-colour;
         border-top: 1px solid #929698;
 
         @include mq($from: tablet) {
-          overflow: visible;
+            overflow: visible;
         }
     }
 
