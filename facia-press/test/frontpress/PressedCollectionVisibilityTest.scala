@@ -15,28 +15,23 @@ class PressedCollectionVisibilityTest extends FlatSpec with Matchers with FaciaT
     val pressedCollection: PressedCollection = collections.head
   }
 
-  "deduplication" should "remove duplicated curated content" in new PressedCollectionVisibilityScope {
+  "deduplication" should "not remove duplicated curated content" in new PressedCollectionVisibilityScope {
     val collectionVisibility: PressedCollectionVisibility = PressedCollectionVisibility(pressedCollection, 5)
+    val collectionWithCurationDuplication: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
 
-    val duplicatedCollections: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
-
-    val deduped = PressedCollectionDeduplication.deduplication(duplicatedCollections)
-    deduped.head shouldBe collectionVisibility
-
-    val collectionWithoutCurated = collectionVisibility.copy(pressedCollection = pressedCollection.copy(curated = Nil))
-    deduped(1) shouldBe collectionWithoutCurated
+    val collectionWithCurationDuplicationAfterDeduplication = PressedCollectionDeduplication.deduplication(collectionWithCurationDuplication)
+    collectionWithCurationDuplicationAfterDeduplication.head shouldBe collectionVisibility
+    collectionWithCurationDuplicationAfterDeduplication(1) shouldBe collectionVisibility
   }
 
-  it should "only remove visible duplicated curated content" in new PressedCollectionVisibilityScope {
+  it should "remove duplicated backfill'ed content" in new PressedCollectionVisibilityScope {
     val collectionVisibility: PressedCollectionVisibility = PressedCollectionVisibility(pressedCollection, 3)
+    val collectionWithBackfillDuplication: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
+    val collectionWithoutBackfillDuplication = collectionVisibility :: collectionVisibility.copy(pressedCollection = pressedCollection.copy(backfill = Nil)) :: Nil
 
-    val duplicatedCollections: Seq[PressedCollectionVisibility] = collectionVisibility :: collectionVisibility :: Nil
-
-    val deduped = PressedCollectionDeduplication.deduplication(duplicatedCollections)
-    deduped.head shouldBe collectionVisibility
-
-    val collectionWithDeduplicatedCurated = collectionVisibility.copy(pressedCollection = pressedCollection.copy(curated = pressedCollection.curated.takeRight(2)))
-    deduped(1) shouldBe collectionWithDeduplicatedCurated
+    val collectionWithBackfillDuplicationAfterDeduplication = PressedCollectionDeduplication.deduplication(collectionWithBackfillDuplication)
+    collectionWithBackfillDuplicationAfterDeduplication.head shouldBe collectionVisibility
+    collectionWithBackfillDuplicationAfterDeduplication(1) shouldBe collectionWithoutBackfillDuplication(1)
   }
 
   "pressedCollectionVersions" should "create lite and full versions with hasMore set" in new PressedCollectionVisibilityScope {
