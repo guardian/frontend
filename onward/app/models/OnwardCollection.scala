@@ -53,7 +53,7 @@ object OnwardCollection {
     trails.take(10).map(content =>
       OnwardItem(
         url = LinkTo(content.header.url),
-        linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.properties.webTitle)).body,
+        linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
         showByline = content.properties.showByline,
         byline = content.properties.byline,
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
