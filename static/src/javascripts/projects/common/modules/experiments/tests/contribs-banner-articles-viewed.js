@@ -66,7 +66,7 @@ export const articlesViewedBanner: AcquisitionsABTest = {
             id: 'variant',
             test: (): void => {},
             engagementBannerParams: {
-                leadSentence: `You’ve read ${articleViewCount} Guardian articles in the last two months – if you’ve enjoyed reading, we hope you will consider supporting us today.`,
+                leadSentence: `You’ve read ${articleViewCount} Guardian articles in the last two months – so we hope you will consider supporting us today.`,
                 messageText,
                 ctaText,
                 template: acquisitionsBannerControlTemplate,
