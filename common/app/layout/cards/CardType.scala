@@ -50,7 +50,7 @@ sealed trait CardType {
 
   /** This is only currently used in the dynamoContentCard.scala.html **/
   def canBeDynamicLayout: Boolean = this match {
-    case FullMedia100 | FullMedia75 | ThreeQuarters => true
+    case FullMedia100 | FullMedia75 | ThreeQuarters | ThreeQuartersTall => true
     case _ => false
   }
 }
