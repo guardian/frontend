@@ -319,6 +319,10 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         .fc-sublink__title {
             color: $story-package-dynamic-card-text;
         }
+
+        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
+            color: $story-package-dynamic-card-text;
+        }
     }
 
     //These need to exist for all kickers because of tone on tone action
