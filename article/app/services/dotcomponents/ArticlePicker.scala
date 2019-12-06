@@ -123,30 +123,44 @@ object ArticlePicker {
   }
 
   def dcrShouldRender(request: RequestHeader): Boolean = {
-    // A special exception to allow us to render with DCR even is the page is not supported
-    // Always render DCR for this one particular article
-    val forceDcr = request.path == "/info/2019/dec/08/migrating-to-react"
+    // dcrShouldRender provides an override to let us force rendering by DCR even
+    // when an article is not supportted
+    val forceDCR = request.forceDCR
+    // our whitelist is only one article at the moment
+    val isInWhitelist = request.path == "/info/2019/dec/08/migrating-to-react"
 
-    forceDcr
+    forceDCR || isInWhitelist
+  }
+
+  def dcrShouldNotRender(request: RequestHeader): Boolean = {
+    val forceDCROff = request.forceDCROff
+    val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
+
+    forceDCROff || !dcrEnabled
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-
     val whitelistFeatures = featureWhitelist(page, request)
-    val isEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    val isCommercialBetaUser = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
+    val userIsInCohort = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
 
-    val tier = if (dcrShouldRender(request)) {
-      // dcrShouldRender provides an override to let us force rendering even when not supported
+    // Decide if we should render this request with the DCR platform or not
+    // RemoteRender means DCR
+    val tier = if (dcrShouldNotRender(request)) {
+      // DCR is not turned on or dcr=false was passed
+      LocalRenderArticle
+    } else if (dcrShouldRender(request)) {
+      // DCR is on and either dcr=true was passed or this article is in the whitelist
+      RemoteRender
+    } else if (dcrCouldRender(page, request) && userIsInCohort) {
+      // The page is supported by DCR AND the user is part of the DCR test group
       RemoteRender
     } else {
-      // add free pages always go through DCR provided it's turned on and we support its article features.
-      // pages with commercial aspects require the request to go through the DotcomRenderingAdvertisements abtest
-      if ((dcrCouldRender(page, request) && isEnabled && isCommercialBetaUser && !request.forceDCROff) || request.forceDCR) RemoteRender else LocalRenderArticle
+      // The page was not supported by DCR or the user was not part of the test
+      LocalRenderArticle
     }
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures + ("isCommercialBetaUser" -> isCommercialBetaUser)
+    val features = whitelistFeatures + ("userIsInCohort" -> userIsInCohort)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
