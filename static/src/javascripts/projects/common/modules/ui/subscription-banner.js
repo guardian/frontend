@@ -75,6 +75,13 @@ const subcriptionBannerCloseActions = (): void => {
     closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
 };
 
+const pageIsIdentity = (): boolean => {
+    const isIdentityPage =
+        config.get('page.contentType') === 'Identity' ||
+        config.get('page.section') === 'identity';
+    return isIdentityPage;
+};
+
 const onAgree = (): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
@@ -217,7 +224,8 @@ const canShow: () => Promise<boolean> = () => {
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&
-            subscriptionBannerSwitchIsOn
+            subscriptionBannerSwitchIsOn &&
+            !pageIsIdentity()
     );
     return can;
 };
