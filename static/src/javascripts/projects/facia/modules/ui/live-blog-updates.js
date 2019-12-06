@@ -211,7 +211,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
                                 session.set(sessionStorageKey, oldBlockDates);
                             }
                         })
-                        .catch(() => {});
+                        .catch(() => { });
                 });
 
                 if (refreshMaxTimes) {
