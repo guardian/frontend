@@ -5,8 +5,9 @@
 $story-package-container-colour: #e0e4e8;
 $story-package-card-colour: #041f4a;
 $container-title: $story-package-card-colour;
+$story-package-dynamic-card-text: $story-package-card-colour;
 
-@mixin pillar-override($tone, $colour) {
+@mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
         .fc-item__kicker,
         .rich-link__kicker,
@@ -14,8 +15,17 @@ $container-title: $story-package-card-colour;
             color: $colour;
         }
 
-        .inline-garnett-quote {
-            fill: $colour;
+        &.fc-item--dynamic-layout {
+            .fc-item__kicker,
+            .rich-link__kicker,
+            .fc-item__byline {
+                color: $dark-colour;
+            }
+
+
+            .inline-garnett-quote {
+                fill: $dark-colour;
+            }
         }
 
 
@@ -33,6 +43,14 @@ $container-title: $story-package-card-colour;
         .fc-sublink--pillar-#{$tone} {
             .fc-sublink__kicker {
                 color: $colour;
+            }
+        }
+
+        &.fc-item--dynamic-layout:not(.fc-item--pillar-special-report) {
+            .fc-sublink--pillar-#{$tone} {
+                .fc-sublink__kicker {
+                    color: $dark-colour;
+                }
             }
         }
     }
@@ -111,7 +129,7 @@ $container-title: $story-package-card-colour;
     }
 
     .fc-container__header__description {
-        color: #ffffff;
+        color: $story-package-dynamic-card-text;
     }
 
 
@@ -145,6 +163,10 @@ $container-title: $story-package-card-colour;
     {
         &:not(.fc-item--dynamic-layout) {
             background-color: $story-package-card-colour;
+
+            .fc-item__headline {
+                color: #ffffff;
+            }
         }
 
         &:hover {
@@ -159,9 +181,7 @@ $container-title: $story-package-card-colour;
 
         }
 
-        .fc-item__headline {
-            color: #ffffff;
-        }
+
     }
 
     .fc-item--pillar-news.fc-item--type-comment,
@@ -180,7 +200,7 @@ $container-title: $story-package-card-colour;
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-dark, 5%) !important;
+        background-color: darken($story-package-card-colour, 5%);
     }
 
     .fc-item__standfirst {
@@ -191,6 +211,17 @@ $container-title: $story-package-card-colour;
         color: #ffffff;
     }
 
+    &.fc-item--dynamic-layout {
+        .fc-item__standfirst {
+            color: $story-package-dynamic-card-text;
+        }
+
+        .fc-sublink__title {
+            color: $story-package-dynamic-card-text;
+        }
+    }
+
+
     .treats__list-item {
         .treats__treat {
             background-color: $brightness-86;
@@ -200,7 +231,7 @@ $container-title: $story-package-card-colour;
     }
 
     .fc-container__header__title>h2 {
-        color: #ffffff;
+        color: $story-package-dynamic-card-text;
     }
 
     // 'Dynamic Layout'
@@ -219,9 +250,13 @@ $container-title: $story-package-card-colour;
             display: none; // Remove existing on container
         }
 
+        .fc-item__container.u-faux-block-link--hover {
+            background-color: darken($story-package-container-colour, 5%);
+        }
+
         .fc-item__content:before {
             content: '';
-            background-color: #ffffff;
+            background-color: $story-package-dynamic-card-text;
             position: absolute;
             top: 0;
             left: 0;
@@ -262,13 +297,19 @@ $container-title: $story-package-card-colour;
         .fc-item__kicker:after {
             display: none;
         }
+
+        .fc-item__headline,
+        .fc-item__standfirst,
+        .fc-sublink__title {
+            color: $story-package-dynamic-card-text;
+        }
     }
 
     //These need to exist for all kickers because of tone on tone action
-    @include pillar-override(lifestyle, $lifestyle-bright);
-    @include pillar-override(arts, $culture-bright);
-    @include pillar-override(sport, $sport-bright);
-    @include pillar-override(opinion, $opinion-pastel);
-    @include pillar-override(news, $lifestyle-pastel);
-    @include pillar-override(special-report, $highlight-main);
+    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-dark);
+    @include pillar-override(arts, $culture-bright, $culture-dark);
+    @include pillar-override(sport, $sport-bright, $sport-dark);
+    @include pillar-override(opinion, $opinion-pastel, $opinion-dark);
+    @include pillar-override(news, $lifestyle-pastel, $news-dark);
+    @include pillar-override(special-report, $highlight-main, $highlight-dark);
 }
