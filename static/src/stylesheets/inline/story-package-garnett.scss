@@ -3,8 +3,8 @@
 
 //specific vars for colours for dynamo
 $story-package-container-colour: #e0e4e8;
-$story-package-container-colour: #041f4a;
-$container-title: $story-package-container-colour;
+$story-package-card-colour: #041f4a;
+$container-title: $story-package-card-colour;
 
 @mixin pillar-override($tone, $colour) {
     .fc-item--pillar-#{$tone} {
