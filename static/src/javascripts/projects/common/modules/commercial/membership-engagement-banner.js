@@ -95,6 +95,13 @@ const clearBannerHistory = (): void => {
     userPrefs.remove(lastClosedAtKey);
 };
 
+const pageIsIdentity = (): boolean => {
+    const isIdentityPage =
+        config.get('page.contentType') === 'Identity' ||
+        config.get('page.section') === 'identity';
+    return isIdentityPage;
+};
+
 const bannerParamsToHtml = (params: EngagementBannerParams): string => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
@@ -209,7 +216,11 @@ const show = (): Promise<boolean> =>
         });
 
 const canShow = (): Promise<boolean> => {
-    if (!config.get('switches.membershipEngagementBanner') || isBlocked()) {
+    if (
+        !config.get('switches.membershipEngagementBanner') ||
+        isBlocked() ||
+        pageIsIdentity()
+    ) {
         return Promise.resolve(false);
     }
     return getBannerParams().then(params => {
