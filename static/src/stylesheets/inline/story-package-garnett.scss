@@ -51,14 +51,6 @@ $fc-item-gutter: $gs-gutter / 4;
                 margin-bottom: $gs-baseline;
             }
         }
-
-        &.fc-item--dynamic-layout:not(.fc-item--pillar-special-report) {
-            .fc-sublink--pillar-#{$tone} {
-                .fc-sublink__kicker {
-                    color: $dark-colour;
-                }
-            }
-        }
     }
 }
 
@@ -329,7 +321,7 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__headline,
         .fc-item__standfirst,
         .fc-sublink__title {
-            color: $story-package-dynamic-card-text;
+            color: $story-package-card-colour;
         }
 
         // Sublinks
@@ -376,8 +368,12 @@ $fc-item-gutter: $gs-gutter / 4;
                     background-color: rgba(0, 0, 0, .4);
                 }
 
-                .fc-sublink__title:before {
-                    width: 100%;
+                .fc-sublink__title {
+                    color: #ffffff;
+
+                    &:before {
+                        width: 100%;
+                    }
                 }
             }
 
