@@ -1,8 +1,11 @@
 // @flow
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
-
 import type { RegisterListeners } from 'commercial/modules/messenger';
+import {
+    renderStickyAdLabel,
+    renderStickyScrollForMoreLabel,
+} from 'commercial/modules/dfp/render-advert-label';
 
 type AdSpec = {
     scrollType: string,
@@ -12,6 +15,7 @@ type AdSpec = {
     backgroundPosition: string,
     backgroundSize: string,
     transform: string,
+    ctaUrl: string,
 };
 
 type SpecStyles = {
@@ -39,7 +43,7 @@ const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
         return result;
     }, {});
 
-const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
+const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
@@ -54,7 +58,11 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
     const specStyles: SpecStyles = getStylesFromSpec(specs);
 
     // check to see whether the parent div exists already, if so, jut alter the style
-    const backgroundParentClass = 'creative__background-parent';
+
+    const backgroundParentClass =
+        specs.scrollType === 'interscroller'
+            ? 'creative__background-parent-interscroller'
+            : 'creative__background-parent';
     const backgroundClass = 'creative__background';
 
     const maybeBackgroundParent = ((adSlot.getElementsByClassName(
@@ -93,7 +101,26 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         return fastdom
             .write(() => {
                 if (backgroundParent) {
-                    adSlot.insertBefore(backgroundParent, adSlot.firstChild);
+                    if (specs.scrollType === 'interscroller') {
+                        adSlot.style.height = '85vh';
+                        adSlot.style.marginBottom = '12px';
+
+                        if (specs.ctaUrl != null) {
+                            const ctaURLAnchor = document.createElement('a');
+                            ctaURLAnchor.href = specs.ctaUrl;
+                            ctaURLAnchor.target = '_new';
+                            ctaURLAnchor.appendChild(backgroundParent);
+                            adSlot.insertBefore(
+                                ctaURLAnchor,
+                                adSlot.firstChild
+                            );
+                        }
+                    } else {
+                        adSlot.insertBefore(
+                            backgroundParent,
+                            adSlot.firstChild
+                        );
+                    }
                 }
             })
             .then(() => ({ backgroundParent, background }));
@@ -123,7 +150,6 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
                             backgroundParent.style.backgroundColor =
                                 specStyles.backgroundColor;
                         }
-
                         if (rect) {
                             background.style.left = `${rect.left}px`;
                             background.style.right = `${rect.right}px`;
@@ -135,6 +161,18 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         }
 
         return Promise.resolve({ backgroundParent, background });
+    };
+
+    const onInterscrollerScroll = (
+        backgroundParent: HTMLElement,
+        background: HTMLElement
+    ) => {
+        fastdom.read(() => {
+            const rect = adSlot.getBoundingClientRect();
+            background.style.clip = `rect(${rect.top}px,100vw,${
+                rect.bottom
+            }px,0)`;
+        });
     };
 
     const onScroll = (
@@ -179,7 +217,6 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
                                 passive: true,
                             }
                         );
-
                         onScroll(backgroundParent, background);
                     }
                 }
@@ -194,7 +231,23 @@ const setBackground = (specs: AdSpec, adSlot: Node): Promise<any> => {
         .then(({ backgroundParent, background }) =>
             updateStyles(backgroundParent, background)
         )
-        .then(({ backgroundParent }) => observer.observe(backgroundParent));
+        .then(({ backgroundParent, background }) => {
+            if (specs.scrollType === 'interscroller') {
+                renderStickyAdLabel(backgroundParent);
+                renderStickyScrollForMoreLabel(backgroundParent);
+
+                addEventListener(
+                    window,
+                    'scroll',
+                    () => onInterscrollerScroll(backgroundParent, background),
+                    {
+                        passive: true,
+                    }
+                );
+            } else {
+                observer.observe(backgroundParent);
+            }
+        });
 };
 
 const init = (register: RegisterListeners): void => {

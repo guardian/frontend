@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test whether our new CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 3),
+    sellByDate = new LocalDate(2019, 12, 17),
     exposeClientSide = true
   )
 
@@ -60,6 +60,26 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-banner-us-eoy",
     "US end of year banner",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-giving-tuesday-regulars",
+    "US end of year banner - giving tuesday version for regular readers",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-giving-tuesday-casuals",
+    "US end of year banner - giving tuesday version for casual readers",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
@@ -128,17 +148,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-permutive",
-    "Test of Permutive implementation",
-    owners = Seq(Owner.withGithub("faresite")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-first-test",
+    "ab-sign-in-gate-prius",
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = On,

@@ -1,4 +1,6 @@
 // @flow strict
+import { Advert } from 'commercial/modules/dfp/Advert';
+
 import {
     getBreakpointKey,
     stripMobileSuffix,
@@ -10,14 +12,18 @@ import config from 'lib/config';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
-const filterByAdvertId = (
-    advertId: string,
+const filterByAdvert = (
+    ad: Advert,
     slots: Array<PrebidSlot>
 ): Array<PrebidSlot> => {
     const adUnits = slots.filter(slot =>
-        stripTrailingNumbersAbove1(stripMobileSuffix(advertId)).endsWith(
-            slot.key
-        )
+        slot.key === 'banner' // Special case for interactive banner slots
+            ? // as they are currently incorrectly identified.
+              !!ad.id.match(/^dfp-ad--\d+/) &&
+              ad.node.classList.contains('ad-slot--banner-ad-desktop')
+            : stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(
+                  slot.key
+              )
     );
     return adUnits;
 };
@@ -58,6 +64,12 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         {
             key: 'comments',
             sizes: [[160, 600], [300, 250], [300, 600]],
+        },
+        // Banner slots appear on interactives, like on
+        // https://www.theguardian.com/us-news/ng-interactive/2018/nov/06/midterm-elections-2018-live-results-latest-winners-and-seats
+        {
+            key: 'banner',
+            sizes: [[88, 70], [728, 90], [940, 230], [900, 250], [970, 250]],
         },
     ];
 
@@ -111,7 +123,9 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     }
 };
 
-export const slots = (advertId: string, contentType: string) =>
-    filterByAdvertId(advertId, getSlots(contentType));
+export const getPrebidAdSlots = (
+    ad: Advert,
+    contentType: string
+): Array<PrebidSlot> => filterByAdvert(ad, getSlots(contentType));
 
 export const _ = { getSlots };

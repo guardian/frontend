@@ -10,11 +10,12 @@ import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import { permutiveTest } from 'common/modules/experiments/tests/commercial-permutive';
-import { signInGateFirstTest } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+import { contributionsBannerUsEoyGivingTuesdayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-casuals';
+import { contributionsBannerUsEoyGivingTuesdayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-regulars';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -23,8 +24,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
-    permutiveTest,
-    signInGateFirstTest,
+    signInGatePrius,
     commercialCmpUiNoOverlay,
     commercialConsentOptionsButton,
 ];
@@ -37,6 +37,8 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsBannerUsEoyGivingTuesdayRegulars,
+    contributionsBannerUsEoyGivingTuesdayCasuals,
     contributionsBannerUsEoy,
     articlesViewedBanner,
 ];

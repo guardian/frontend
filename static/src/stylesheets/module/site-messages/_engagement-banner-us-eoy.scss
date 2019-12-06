@@ -102,6 +102,10 @@ $blue-accent: #1a5292;
         }
     }
 
+    .engagement-banner__body-copy--bold {
+        font-weight: bold;
+    }
+
     .engagement-banner__cta-container {
         width: 100%;
 
@@ -111,7 +115,7 @@ $blue-accent: #1a5292;
         }
 
         @include mq($from: desktop) {
-            width: gs-span(6)
+            width: gs-span(7)
         }
     }
 

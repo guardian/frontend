@@ -1,7 +1,13 @@
 @import '../_vars';
 @import '../_mixins';
 
-@mixin kicker-override($tone, $colour) {
+//specific vars for colours for dynamo
+$dynamo-background: #e0e4e8;
+$card-colour: #041f4a;
+$container-title: $card-colour;
+
+
+@mixin pillar-override($tone, $colour) {
     .fc-item--pillar-#{$tone} {
         .fc-item__kicker,
         .rich-link__kicker,
@@ -11,6 +17,10 @@
 
         .inline-garnett-quote {
             fill: $colour;
+        }
+
+        .fc-item__container:before {
+            background-color: #ffffff;
         }
     }
 
@@ -24,7 +34,38 @@
 }
 
 .fc-container--story-package {
-    background-color: $brightness-86;
+    background-color: $dynamo-background;
+
+    .fc-container__body {
+        position: relative;
+        @include mq($from: leftCol) {
+
+            &:before {
+                position: absolute;
+                content: '';
+                display: block;
+                top: 0;
+                bottom: -12px;
+                width: 1px;
+                background-color: #929698;
+                left: -10px; 
+            }
+        }
+    }
+
+    &.fc-container--first {
+        .fc-container__body:before {
+            top: -6px;
+        }
+
+        .fc-container__inner {
+            border-top: 0;
+        }
+    }
+
+    .fc-slice__item + .fc-slice__item:before {
+        border-left-color: #929698; // This colour does not exist (in the palette)
+    }
 
     .fc-container__toggle {
         display: none;
@@ -40,13 +81,9 @@
 
         & > span,
         h2.fc-container__title__text {
-            background: #fff132;
-            background: -moz-linear-gradient(top, #ffe500 0%,  #ffe500 50%, #ffe500 100%);
-            background: -webkit-linear-gradient(top, #ffe500 0%, #ffe500 50%, #ffe500 100%);
-            background: linear-gradient(to bottom,  #ffe500 0%, #ffe500 50%, #ffe500 100%);
-            display: inline;
-            box-shadow: -4px 0 0 0 #ffe500;
-            line-height: 32px;
+            color: $container-title;
+            display: inline-block;
+            line-height: 24px;
             top: 6px;
             position: relative;
             padding-right: 4px;
@@ -54,17 +91,35 @@
             @include mq($from: tablet) {
                 top: 0px;
             }
-            @include mq($from: desktop) {
-                line-height: 25px;
-            }
-            @include mq($from: wide) {
-                line-height: 30px;
-            }
+        }
+
+        a:hover {
+            text-decoration: none;
+            border-bottom: #ffffff;
         }
     }
 
+    .fc-container__header__description {
+        color: #ffffff;
+    }
+
+
     .fc-container__inner {
-        border-top: 0;
+        border-top: 1px solid #929698;
+
+        @include mq($from: tablet) {
+            overflow: visible;
+        }
+    }
+
+    .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
+        background-image: none;
+    }
+
+    .fc-item {
+        .youtube-media-atom__play-button {
+            bottom: 43%;
+        }
     }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
@@ -77,17 +132,17 @@
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
     .fc-item.fc-item--type-feature
     {
-        background-color: $special-report-dark;
+        background-color: $card-colour;
 
         &:hover {
-            background-color: darken($special-report-dark, 5%);
+            background-color: darken($card-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($special-report-dark, 5%);
+                background-color: darken($card-colour, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $special-report-dark;
+            background-color: $card-colour;
         }
 
         .fc-item__headline {
@@ -102,7 +157,7 @@
     .fc-item--pillar-lifestyle.fc-item--type-comment
     {
         .fc-item__meta {
-            @include multiline(4, $brightness-46, $position: bottom);
+            background-image: none;
         }
 
         .fc-item__standfirst-wrapper .fc-item__meta {
@@ -130,11 +185,15 @@
         }
     }
 
+    .fc-container--story-package .fc-container__header__title>h2 {
+        color: #ffffff;
+    }
+
     //These need to exist for all kickers because of tone on tone action
-    @include kicker-override(lifestyle, $lifestyle-bright);
-    @include kicker-override(arts, $culture-bright);
-    @include kicker-override(sport, $sport-bright);
-    @include kicker-override(opinion, $opinion-bright);
-    @include kicker-override(news, $news-bright);
-    @include kicker-override(special-report, $highlight-main);
+    @include pillar-override(lifestyle, $lifestyle-bright);
+    @include pillar-override(arts, $culture-bright);
+    @include pillar-override(sport, $sport-bright);
+    @include pillar-override(opinion, $opinion-pastel);
+    @include pillar-override(news, $lifestyle-pastel);
+    @include pillar-override(special-report, $highlight-main);
 }
