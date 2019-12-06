@@ -1,5 +1,5 @@
-@import "../_vars";
-@import "../_mixins";
+@import '../_vars';
+@import '../_mixins';
 
 //specific vars for colours for dynamo
 $story-package-container-colour: #e0e4e8;
@@ -61,7 +61,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         @include mq($from: leftCol) {
             &:before {
                 position: absolute;
-                content: "";
+                content: '';
                 display: block;
                 top: 0;
                 bottom: -12px;
@@ -227,7 +227,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
         // Live update circle
         .fc-item__liveblog-block__time:before {
-            content: "";
+            content: '';
             color: white;
             border: $thin-border solid white;
             border-radius: 50%;
@@ -242,7 +242,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         // Live update circle connector/line
         .fc-item__liveblog-block:first-of-type {
             &:before {
-                content: "";
+                content: '';
                 color: white;
                 border: none;
                 border-left: 1px solid white;
@@ -336,7 +336,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
 
         .fc-item__content:before {
-            content: "";
+            content: '';
             background-color: $story-package-dynamic-card-text;
             position: absolute;
             top: 0;
