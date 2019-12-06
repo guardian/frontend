@@ -35,7 +35,6 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
         &.fc-item.fc-item--full-media-100-tablet .fc-item__title {
             background-image: none;
-
         }
     }
 
@@ -72,7 +71,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
                 bottom: -12px;
                 width: 1px;
                 background-color: #929698;
-                left: -10px; 
+                left: -10px;
             }
         }
     }
@@ -128,6 +127,10 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
     }
 
+    .fc-item__title {
+      font-weight: 800;
+    }
+
     .fc-container__header__description {
         color: $story-package-dynamic-card-text;
     }
@@ -143,12 +146,6 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
     .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
         background-image: none;
-    }
-
-    .fc-item {
-        .youtube-media-atom__play-button {
-            bottom: 43%;
-        }
     }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
