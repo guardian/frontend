@@ -1,7 +1,6 @@
 @import '../_vars';
 @import '../_mixins';
 
-<<<<<<< HEAD
 //specific vars for colours for dynamo
 $story-package-container-colour: #e0e4e8;
 $story-package-card-colour: #041f4a;
@@ -16,6 +15,20 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             color: $colour;
         }
 
+        &.fc-item--type-comment {
+            .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__standfirst-wrapper .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-card-colour, 5%);
+            }
+        }
+
         &.fc-item--dynamic-layout {
             .fc-item__kicker,
             .rich-link__kicker,
@@ -26,6 +39,10 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
             .inline-garnett-quote {
                 fill: $dark-colour;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-container-colour, 5%);
             }
         }
 
@@ -158,6 +175,11 @@ $story-package-dynamic-card-text: $story-package-card-colour;
     .fc-item.fc-item--type-feature {
         &:not(.fc-item--dynamic-layout) {
             background-color: $story-package-card-colour;
+
+
+            .fc-item__headline {
+                color: #ffffff;
+            }
         }
         
         &:hover {
@@ -173,24 +195,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
     }
 
 
-    // Comment style overrides
-    .fc-item--pillar-news.fc-item--type-comment,
-    .fc-item--pillar-opinion.fc-item--type-comment,
-    .fc-item--pillar-sport.fc-item--type-comment,
-    .fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item--pillar-lifestyle.fc-item--type-comment {
-        .fc-item__meta {
-            background-image: none;
-        }
 
-        .fc-item__standfirst-wrapper .fc-item__meta {
-            background-image: none;
-        }
-
-        .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($story-package-card-colour, 5%);
-        }
-    }
 
     .fc-item__container.u-faux-block-link--hover {
         background-color: darken($story-package-card-colour, 5%);
@@ -288,19 +293,6 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
         }
 
-
-        @include mq($until: tablet) {
-
-            .fc-item__content--below .fc-item__header {
-                display: none;
-            }
-
-            .fc-item__content--above {
-                display: block;
-            }
-
-        }
-
         .fc-item__kicker:after {
             display: none;
         }
@@ -309,54 +301,6 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         .fc-item__standfirst,
         .fc-sublink__title {
             color: $story-package-dynamic-card-text;
-        }
-
-        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
-            color: $story-package-dynamic-card-text;
-        }
-    }
-
-    // 'Dynamic Layout'
-    .fc-item__content--above {
-        display: none;
-    }
-
-    .fc-item--dynamic-layout {
-        background-color: $story-package-container-colour;
-        &.fc-item--type-feature {
-            background-color: $story-package-container-colour;
-        }
-
-        // The white line above the story
-        .fc-item__container:before {
-            display: none; // Remove existing on container
-        }
-
-        .fc-item__content:before {
-            content: '';
-            background-color: #ffffff;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 2;
-            height: $gs-baseline / 3;
-            width: calc(100% - 10px);
-        }
-
-        .fc-item__content {
-            padding-top: $gs-baseline / 2;
-        }
-
-        .fc-item--has-boosted-title {
-            .fc-item__content--below .fc-item__header {
-                display: none;
-            }
-
-            .fc-item__content--above {
-                display: block;
-                padding-top: $gs-baseline;
-            }
         }
 
         // ThreeQuarterTall
@@ -369,11 +313,10 @@ $story-package-dynamic-card-text: $story-package-card-colour;
                 display: block;
 
                 &:before {
-                    width: $gs-column-width;
+                    width: 33%;
                 }
             }
         }
-
 
         @include mq($until: tablet) {
 
@@ -385,11 +328,16 @@ $story-package-dynamic-card-text: $story-package-card-colour;
                 display: block;
             }
 
+            &.fc-item--three-quarters-tall-tablet .fc-item__content--above:before {
+                width: 100%;
+            }
+
         }
 
-        .fc-item__kicker:after {
-            display: none;
+        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
+            color: $story-package-dynamic-card-text;
         }
+
     }
     
     //These need to exist for all kickers because of tone on tone action
