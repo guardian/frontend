@@ -91,12 +91,10 @@ const maybeAnimateBlocks = (
 
 const animateBlocks = (el: Element): void => {
     maybeAnimateBlocks(el).then(didAnimate => {
-        let animateOnScroll;
-
         if (!didAnimate) {
-            animateOnScroll = debounce(() => {
-                maybeAnimateBlocks(el, true).then(animated => {
-                    if (animated) {
+            const animateOnScroll = debounce(() => {
+                maybeAnimateBlocks(el, true).then(didAnimateOnScroll => {
+                    if (didAnimateOnScroll) {
                         mediator.off('window:throttledScroll', animateOnScroll);
                     }
                 });
