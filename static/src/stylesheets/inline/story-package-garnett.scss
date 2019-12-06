@@ -281,7 +281,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($story-package-card-colour, 5%) !important;
+        background-color: darken($story-package-card-colour, 5%);
     }
 
     .fc-item__standfirst {
