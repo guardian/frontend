@@ -144,18 +144,13 @@ object ArticlePicker {
     val userIsInCohort = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
 
     // Decide if we should render this request with the DCR platform or not
-    // RemoteRender means DCR
     val tier = if (dcrShouldNotRender(request)) {
-      // DCR is not turned on or dcr=false was passed
       LocalRenderArticle
     } else if (dcrShouldRender(request)) {
-      // DCR is on and either dcr=true was passed or this article is in the whitelist
       RemoteRender
     } else if (dcrCouldRender(page, request) && userIsInCohort) {
-      // The page is supported by DCR AND the user is part of the DCR test group
       RemoteRender
     } else {
-      // The page was not supported by DCR or the user was not part of the test
       LocalRenderArticle
     }
 
