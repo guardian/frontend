@@ -37,8 +37,10 @@ $container-title: $card-colour;
     background-color: $dynamo-background;
 
     .fc-container__body {
-        &:before {
-            @include mq($from: leftCol) {
+        position: relative;
+        @include mq($from: leftCol) {
+
+            &:before {
                 position: absolute;
                 content: '';
                 display: block;
@@ -46,21 +48,16 @@ $container-title: $card-colour;
                 bottom: -12px;
                 width: 1px;
                 background-color: #929698;
-                left: 170px; //magic numbers sorry --\_()_/--
-            }
-
-            @include mq($from: wide) {
-                left: 250px; //magic numbers sorry --\_()_/--
+                left: -10px; 
             }
         }
     }
 
-    &.js-container--first {
-        .fc-container__body {
-            &:before {
-                top: -6px;
-            }
+    &.fc-container--first {
+        .fc-container__body:before {
+            top: -6px;
         }
+
         .fc-container__inner {
             border-top: 0;
         }
