@@ -170,14 +170,14 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
 
         &:hover {
-            background-color: darken($story-package-container-colour, 5%);
+            background-color: darken($story-package-card-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($story-package-container-colour, 5%);
+                background-color: darken($story-package-card-colour, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $story-package-container-colour;
+            background-color: $story-package-card-colour;
 
         }
 
@@ -241,6 +241,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
     .fc-item--dynamic-layout {
         background-color: $story-package-container-colour;
+
         &.fc-item--type-feature {
             background-color: $story-package-container-colour;
         }
@@ -279,6 +280,19 @@ $story-package-dynamic-card-text: $story-package-card-colour;
                 display: block;
                 padding-top: $gs-baseline;
             }
+        }
+
+        &:hover {
+            background-color: darken($story-package-container-colour, 5%);
+
+            .fc-trail__count--commentcount {
+                background-color: darken($story-package-container-colour, 5%);
+            }
+        }
+
+        .fc-trail__count--commentcount {
+            background-color: $story-package-container-colour;
+
         }
 
 
