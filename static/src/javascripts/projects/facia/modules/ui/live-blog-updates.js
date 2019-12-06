@@ -133,7 +133,18 @@ const showBlocks = (
                     wrapperClasses.push(
                         'fc-item__liveblog-blocks__inner--offset'
                     );
+
+                    // Set hidden class on container (in a dynamo fade out)
+                    if (oldBlockDate) {
+                        element.classList.remove(
+                            'fc-item__liveblog-blocks--visible'
+                        );
+                        element.classList.add(
+                            'fc-item__liveblog-blocks--hidden'
+                        );
+                    }
                 }
+
                 return renderBlock(articleId, block, index);
             })
             .slice(0, hasNewBlock ? 2 : 1);
@@ -146,15 +157,29 @@ const showBlocks = (
 
         const $element = bonzo(element);
 
-        fastdomPromise
-            .write(() => {
-                $element.empty().append(el);
-            })
-            .then(() => {
-                if (hasNewBlock) {
-                    animateBlocks(el[0]);
-                }
-            });
+        setTimeout(() => {
+            fastdomPromise
+                .write(() => {
+                    $element.empty().append(el);
+                })
+                .then(() => {
+                    if (hasNewBlock) {
+                        animateBlocks(el[0]);
+
+                        // Set visible class on container (in a dynamo fade in)
+                        if (oldBlockDate) {
+                            setTimeout(() => {
+                                element.classList.remove(
+                                    'fc-item__liveblog-blocks--hidden'
+                                );
+                                element.classList.add(
+                                    'fc-item__liveblog-blocks--visible'
+                                );
+                            }, 150);
+                        }
+                    }
+                });
+        }, 150);
     });
 };
 

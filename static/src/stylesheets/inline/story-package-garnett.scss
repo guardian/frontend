@@ -233,6 +233,18 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             }
         }
 
+        .fc-item__liveblog-blocks--visible {
+            visibility: visible;
+            opacity: 1;
+            transition: opacity 0.1 linear;
+        }
+
+        .fc-item__liveblog-blocks--hidden {
+            visibility: hidden;
+            opacity: 0;
+            transition: visibility 0s 0.1s, opacity 0.1s linear;
+        }
+
         .fc-item__liveblog-blocks__inner {
             transition: none;
             transform: none;
