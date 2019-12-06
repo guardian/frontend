@@ -209,6 +209,11 @@ $blue-accent: #1a5292;
         color: $red-accent;
     }
 
+    .engagement-banner-ticker__goal-marker {
+        height: 20px;
+        margin-top: -10px;
+    }
+
     .js-ticker-so-far .engagement-banner-ticker__count {
         font-size: 28px;
         line-height: 1;
@@ -218,9 +223,26 @@ $blue-accent: #1a5292;
         }
     }
 
+    .epic-ticker__goal-reached .js-ticker-so-far .engagement-banner-ticker__count {
+        font-size: 17px;
+        white-space: nowrap;
+
+        @include mq($from: desktop) {
+            font-size: 28px;
+        }
+    }
+
     .js-ticker-goal .engagement-banner-ticker__count {
         font-size: 17px;
         line-height: 1;
+    }
+
+    .epic-ticker__goal-reached .engagement-banner-ticker__goal {
+        display: none;
+
+        @include mq($from: tablet) {
+            display: initial;
+        }
     }
 
     .engagement-banner-ticker__progress {
