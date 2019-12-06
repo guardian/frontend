@@ -128,6 +128,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val PermutiveSwitch = Switch(
+    Commercial,
+    "permutive",
+    "Enable Permutive library loading",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val RemarketingSwitch = Switch(
     Commercial,
     "remarketing",
