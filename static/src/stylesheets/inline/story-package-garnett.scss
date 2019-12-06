@@ -184,18 +184,23 @@ $story-package-dynamic-card-text: $story-package-card-colour;
 
     }
 
+
+    // Comment style overrides
     .fc-item--pillar-news.fc-item--type-comment,
     .fc-item--pillar-opinion.fc-item--type-comment,
     .fc-item--pillar-sport.fc-item--type-comment,
     .fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item--pillar-lifestyle.fc-item--type-comment
-    {
+    .fc-item--pillar-lifestyle.fc-item--type-comment {
         .fc-item__meta {
             background-image: none;
         }
 
         .fc-item__standfirst-wrapper .fc-item__meta {
             background-image: none;
+        }
+
+        .fc-item__container.u-faux-block-link--hover {
+            background-color: darken($story-package-card-colour, 5%);
         }
     }
 
