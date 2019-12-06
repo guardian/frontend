@@ -172,6 +172,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
         .read(() => {
             const elementsById: Map<string, Array<Element>> = new Map();
 
+            // For each liveblock block
             $(selector).each(element => {
                 const articleId = element.getAttribute(articleIdAttribute);
 
