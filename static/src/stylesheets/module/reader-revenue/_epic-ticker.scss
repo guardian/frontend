@@ -128,3 +128,11 @@ $progress-bar-height: 10px;
     color: #ffffff;
     opacity: .7;
 }
+
+.epic-ticker__goal-reached .epic-ticker__goal {
+    display: none;
+
+    @include mq($from: tablet) {
+        display: initial;
+    }
+}
