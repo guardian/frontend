@@ -176,6 +176,18 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
     }
 
+    // I'm not sure this is at all reliable, or a good idea, but until I figure
+    // out what classes I want to add in Scala this gets things moving:
+    .l-row__item--span-3 + .l-row__item--span-1 {
+        .fc-item--live-updates {
+            &.fc-item--standard-tablet {
+                .fc-item__media-wrapper {
+                    display: block;
+                }
+            }
+        }
+    }
+
     .fc-item--live-updates {
         $border-bottom-width: 5px;
         $circle-diameter: 13px;
