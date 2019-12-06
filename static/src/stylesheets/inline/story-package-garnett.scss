@@ -183,8 +183,10 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         $thin-border: 1px;
 
         @include mq($from: desktop) {
-            .fc-item__media-wrapper {
-                display: none;
+            &.fc-item--standard-tablet {
+                .fc-item__media-wrapper {
+                    display: none;
+                }
             }
 
             .fc-item__liveblog-blocks {
