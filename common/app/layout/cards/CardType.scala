@@ -47,6 +47,12 @@ sealed trait CardType {
     case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
     case _ => false
   }
+
+  /** This is only currently used in the dynamoContentCard.scala.html **/
+  def canBeDynamicLayout: Boolean = this match {
+    case FullMedia100 | FullMedia75 | ThreeQuarters => true
+    case _ => false
+  }
 }
 
 /** This is called ListItem because List is already taken */
