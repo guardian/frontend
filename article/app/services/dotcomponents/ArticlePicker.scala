@@ -117,7 +117,7 @@ object ArticlePicker {
 
   def isInWhitelist(path: String): Boolean = {
     // our whitelist is only one article at the moment
-    path == "/info/2019/dec/08/migrating-to-react";
+    path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
   }
 
   def dcrCouldRender(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
