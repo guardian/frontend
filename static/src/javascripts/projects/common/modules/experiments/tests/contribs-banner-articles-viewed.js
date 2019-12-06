@@ -9,9 +9,9 @@ import {
 import { getArticleViewCountForDays } from 'common/modules/onward/history';
 import { buildBannerCopy } from 'common/modules/commercial/contributions-utilities';
 
-// User must have read at least 5 articles in last 30 days
+// User must have read at least 5 articles in last 60 days
 const minArticleViews = 5;
-const articleCountDays = 30;
+const articleCountDays = 60;
 
 const articleViewCount = getArticleViewCountForDays(articleCountDays);
 
@@ -66,7 +66,7 @@ export const articlesViewedBanner: AcquisitionsABTest = {
             id: 'variant',
             test: (): void => {},
             engagementBannerParams: {
-                leadSentence: `You’ve read ${articleViewCount} Guardian articles in the last month – if you’ve enjoyed reading, we hope you will consider supporting us today.`,
+                leadSentence: `You’ve read ${articleViewCount} Guardian articles in the last two months – so we hope you will consider supporting us today.`,
                 messageText,
                 ctaText,
                 template: acquisitionsBannerControlTemplate,
