@@ -214,8 +214,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             }
 
             .fc-item__liveblog-block__text {
-                border-bottom: $border-bottom-width solid;
-                darken($story-package-card-colour, 5%);
+                border-bottom: $border-bottom-width solid darken($story-package-card-colour, 5%);
             }
         }
 
