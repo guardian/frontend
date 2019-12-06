@@ -134,8 +134,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
     }
 
-    .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet
-        .fc-item__title {
+    .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
         background-image: none;
     }
 
@@ -215,8 +214,8 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             }
 
             .fc-item__liveblog-block__text {
-                border-bottom: $border-bottom-width solid
-                    darken($story-package-card-colour, 5%);
+                border-bottom: $border-bottom-width solid;
+                darken($story-package-card-colour, 5%);
             }
         }
 
@@ -252,10 +251,7 @@ $story-package-dynamic-card-text: $story-package-card-colour;
                 display: block;
                 position: absolute;
                 left: calc((#{$circle-diameter} / 2) + #{$thin-border});
-                top: calc(
-                    #{$circle-top-position} + #{$circle-diameter} + #{$thin-border *
-                        2}
-                );
+                top: calc(#{$circle-top-position} + #{$circle-diameter} + #{$thin-border * 2});
                 z-index: 2;
             }
         }
