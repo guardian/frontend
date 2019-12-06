@@ -70,7 +70,9 @@ const maybeAnimateBlocks = (
     fastdomPromise
         .read(() => el.getBoundingClientRect().top)
         .then(vPosition => {
-            if (vPosition > 0 && vPosition < viewportHeightPx) {
+            const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
+
+            if (isVisible) {
                 setTimeout(
                     () => {
                         const $el = bonzo(el);
