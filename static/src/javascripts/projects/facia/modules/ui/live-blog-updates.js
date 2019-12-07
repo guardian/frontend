@@ -14,6 +14,7 @@ import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;
+const newUpdateTransitionDelayMs = 150;
 let refreshSecs = 30;
 const refreshDecay = 1;
 let refreshMaxTimes = 5;
@@ -63,8 +64,12 @@ const renderBlock = (
     });
 };
 
+const timeoutPromise = (delay: number): Promise<void> =>
+    new Promise(resolve => setTimeout(resolve, delay));
+
 const maybeAnimateBlocks = (
     el: Element,
+    container: Element,
     immediate?: boolean
 ): Promise<boolean> =>
     fastdomPromise
@@ -73,36 +78,83 @@ const maybeAnimateBlocks = (
             const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
 
             if (isVisible) {
-                setTimeout(
-                    () => {
-                        const $el = bonzo(el);
-                        fastdomPromise.write(() => {
-                            $el.removeClass(
-                                'fc-item__liveblog-blocks__inner--offset'
-                            );
-                        });
-                    },
-                    immediate ? 0 : animateDelayMs
+                timeoutPromise(immediate ? 0 : animateDelayMs).then(() =>
+                    fastdomPromise.write(() =>
+                        el.classList.remove(
+                            'fc-item__liveblog-blocks__inner--offset'
+                        )
+                    )
                 );
+
+                timeoutPromise(immediate ? 0 : newUpdateTransitionDelayMs).then(
+                    () => {
+                        container.classList.remove(
+                            'fc-item__liveblog-blocks--hidden'
+                        );
+                        container.classList.add(
+                            'fc-item__liveblog-blocks--visible'
+                        );
+                    }
+                );
+
                 return true;
             }
             return false;
         });
 
-const animateBlocks = (el: Element): void => {
-    maybeAnimateBlocks(el).then(didAnimate => {
+const animateBlocks = (el: Element, container: Element): void => {
+    maybeAnimateBlocks(el, container).then(didAnimate => {
         if (!didAnimate) {
             const animateOnScroll = debounce(() => {
-                maybeAnimateBlocks(el, true).then(didAnimateOnScroll => {
-                    if (didAnimateOnScroll) {
-                        mediator.off('window:throttledScroll', animateOnScroll);
+                maybeAnimateBlocks(el, container, true).then(
+                    didAnimateOnScroll => {
+                        if (didAnimateOnScroll) {
+                            mediator.off(
+                                'window:throttledScroll',
+                                animateOnScroll
+                            );
+                        }
                     }
-                });
+                );
             }, animateAfterScrollDelayMs);
 
             mediator.on('window:throttledScroll', animateOnScroll);
         }
     });
+};
+
+const applyUpdate = (container: Element, content: Element): Promise<void> =>
+    fastdomPromise.write(() => {
+        bonzo(container)
+            .empty()
+            .append(content);
+    });
+
+const startUpdate = (
+    container: Element,
+    content: Element,
+    shouldTransitionOut: boolean
+): Promise<void> => {
+    if (shouldTransitionOut) {
+        container.classList.remove('fc-item__liveblog-blocks--visible');
+        container.classList.add('fc-item__liveblog-blocks--hidden');
+
+        return timeoutPromise(newUpdateTransitionDelayMs).then(() =>
+            applyUpdate(container, content)
+        );
+    }
+
+    return applyUpdate(container, content);
+};
+
+const completeUpdate = (
+    container: Element,
+    content: Element,
+    shouldTransitionIn: boolean
+): void => {
+    if (shouldTransitionIn) {
+        animateBlocks(content[0], container);
+    }
 };
 
 const showBlocks = (
@@ -133,16 +185,6 @@ const showBlocks = (
                     wrapperClasses.push(
                         'fc-item__liveblog-blocks__inner--offset'
                     );
-
-                    // Set hidden class on container (in a dynamo fade out)
-                    if (oldBlockDate) {
-                        element.classList.remove(
-                            'fc-item__liveblog-blocks--visible'
-                        );
-                        element.classList.add(
-                            'fc-item__liveblog-blocks--hidden'
-                        );
-                    }
                 }
 
                 return renderBlock(articleId, block, index);
@@ -155,31 +197,9 @@ const showBlocks = (
             )}</div>`
         );
 
-        const $element = bonzo(element);
-
-        setTimeout(() => {
-            fastdomPromise
-                .write(() => {
-                    $element.empty().append(el);
-                })
-                .then(() => {
-                    if (hasNewBlock) {
-                        animateBlocks(el[0]);
-
-                        // Set visible class on container (in a dynamo fade in)
-                        if (oldBlockDate) {
-                            setTimeout(() => {
-                                element.classList.remove(
-                                    'fc-item__liveblog-blocks--hidden'
-                                );
-                                element.classList.add(
-                                    'fc-item__liveblog-blocks--visible'
-                                );
-                            }, 150);
-                        }
-                    }
-                });
-        }, 150);
+        startUpdate(element, el, hasNewBlock).then(() =>
+            completeUpdate(element, el, hasNewBlock)
+        );
     });
 };
 
