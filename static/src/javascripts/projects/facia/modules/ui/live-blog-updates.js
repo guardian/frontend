@@ -86,9 +86,6 @@ const maybeAnimateBlocks = (
                     )
                 );
 
-                container.classList.remove('fc-item__liveblog-blocks--hidden');
-                container.classList.add('fc-item__liveblog-blocks--visible');
-
                 return true;
             }
             return false;
@@ -112,6 +109,11 @@ const animateBlocks = (el: Element, container: Element): void => {
 
             mediator.on('window:throttledScroll', animateOnScroll);
         }
+    });
+
+    fastdomPromise.write(() => {
+        container.classList.remove('fc-item__liveblog-blocks--hidden');
+        container.classList.add('fc-item__liveblog-blocks--visible');
     });
 };
 
