@@ -86,16 +86,8 @@ const maybeAnimateBlocks = (
                     )
                 );
 
-                timeoutPromise(immediate ? 0 : newUpdateTransitionDelayMs).then(
-                    () => {
-                        container.classList.remove(
-                            'fc-item__liveblog-blocks--hidden'
-                        );
-                        container.classList.add(
-                            'fc-item__liveblog-blocks--visible'
-                        );
-                    }
-                );
+                container.classList.remove('fc-item__liveblog-blocks--hidden');
+                container.classList.add('fc-item__liveblog-blocks--visible');
 
                 return true;
             }
@@ -139,6 +131,10 @@ const startUpdate = (
         container.classList.remove('fc-item__liveblog-blocks--visible');
         container.classList.add('fc-item__liveblog-blocks--hidden');
 
+        // Use a timeout here so we don't update the DOM until the transition
+        // has completed. There's a relationship here between
+        // newUpdateTransitionDelayMs and the transition timings in
+        // story-package-garnett.scss.
         return timeoutPromise(newUpdateTransitionDelayMs).then(() =>
             applyUpdate(container, content)
         );
