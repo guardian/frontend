@@ -30,8 +30,8 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     NoCache(Ok(views.html.readerRevenue.subscriptionsBannerDeploys(ReaderRevenueRegion.allRegions)))
   }
 
-  def redeployContributionsBanner(strRegion: String): Action[AnyContent] = Action.async { implicit request =>
-    ReaderRevenueRegion.fromString(strRegion).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
+  def redeployContributionsBanner(region: String): Action[AnyContent] = Action.async { implicit request =>
+    ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
@@ -47,15 +47,15 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   }
 
-  def redeployBanner(strRegion: String, strBanner: String): Action[AnyContent] = Action.async { implicit request =>
-    ReaderRevenueRegion.fromString(strRegion).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
+  def redeployBanner(region: String, banner: BannerType): Action[AnyContent] = Action.async { implicit request =>
+    ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
-      val message = s"$strBanner banner in ${region.name} redeploy by $requester at ${time.toString}}"
+      val message = s"${banner.name} banner in ${region.name} redeploy by $requester at ${time.toString}}"
 
       val result = for {
-        _ <- updateBannerDeployLog(region, jsonLog.toString, SubscriptionsBanner)
+        _ <- updateBannerDeployLog(region, jsonLog.toString, banner)
         _ <- purgeDeployLogCache(region)
       } yield bannerRedeploySuccessful(message, region)
 
