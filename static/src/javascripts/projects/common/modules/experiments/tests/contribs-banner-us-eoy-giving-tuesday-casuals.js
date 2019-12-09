@@ -7,8 +7,7 @@ const isUS = geolocation === 'US';
 
 const titles = ['2020 will be a defining year for America'];
 const messageText =
-    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. ';
-const closingSentence = 'Help us reach our year-end goal.';
+    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. Help us reach our year-end goal.';
 const ctaText = 'Support The Guardian';
 
 const tickerHeaderControl = 'Help us reach our year-end goal';
@@ -37,7 +36,6 @@ export const contributionsBannerUsEoyGivingTuesdayCasuals: AcquisitionsABTest = 
             engagementBannerParams: {
                 titles,
                 messageText,
-                closingSentence,
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
