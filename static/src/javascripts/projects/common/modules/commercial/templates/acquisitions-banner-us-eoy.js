@@ -27,7 +27,11 @@ export const acquisitionsBannerUsEoyTemplate = (
                     }</h2>
                 </div>
                 <div class="engagement-banner__body">
-                    <p>${params.messageText}
+                    <p>
+                    <span class="engagement-banner__body-copy--bold">${
+                        params.leadSentence ? params.leadSentence : ''
+                    }</span>
+                    ${params.messageText}
                     <span class="engagement-banner__body-copy--bold">${
                         params.closingSentence ? params.closingSentence : ''
                     }</span>
