@@ -21,6 +21,20 @@ $fc-item-gutter: $gs-gutter / 4;
             fill: $dark-colour;
         }
 
+        &.fc-item--type-comment {
+            .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__standfirst-wrapper .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-card-colour, 5%);
+            }
+        }
+
         &.fc-item--dynamic-layout {
             .fc-item__kicker,
             .rich-link__kicker,
@@ -31,6 +45,10 @@ $fc-item-gutter: $gs-gutter / 4;
 
             .inline-garnett-quote {
                 fill: $dark-colour;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-container-colour, 5%);
             }
         }
 
@@ -89,7 +107,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-slice__item+.fc-slice__item:before {
+    .fc-slice__item + .fc-slice__item:before {
         border-left-color: #929698; // This colour does not exist (in the palette)
     }
 
@@ -109,7 +127,7 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-left: 0px;
         }
 
-        &>span,
+        & > span,
         h2.fc-container__title__text {
             color: $container-title;
             display: inline-block;
@@ -135,6 +153,10 @@ $fc-item-gutter: $gs-gutter / 4;
             text-decoration: none;
             border-bottom: #ffffff;
         }
+    }
+
+    .fc-item__title {
+        font-weight: 800;
     }
 
     .fc-container__header__description {
@@ -168,27 +190,24 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature
-    {
+    .fc-item.fc-item--type-feature {
         &:not(.fc-item--dynamic-layout) {
             background-color: $story-package-card-colour;
 
             .fc-item__headline {
                 color: #ffffff;
             }
-
         }
-
 
         &:hover {
-            background-color: darken($story-package-container-colour, 5%);
+            background-color: darken($story-package-card-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($story-package-container-colour, 5%);
+                background-color: darken($story-package-card-colour, 5%);
             }
         }
-
         .fc-trail__count--commentcount {
+            background-color: $story-package-card-colour;
             background-color: $story-package-container-colour;
 
         }
@@ -279,28 +298,59 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-top: $gs-baseline / 2;
         }
 
-        .fc-item--has-boosted-title {
-            .fc-item__content--below .fc-item__header {
-                display: none;
+        &.fc-item--is-boosted {
+            .fc-item__header {
+                @include fs-headline(6);
             }
 
-            .fc-item__content--above {
-                display: block;
-                padding-top: $gs-baseline;
+            @include mq($from: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+
+                .fc-item__header {
+                    @include fs-headline(9);
+                }
+            }
+
+        }
+
+        &:hover {
+            background-color: darken($story-package-container-colour, 5%);
+
+            .fc-trail__count--commentcount {
+                background-color: darken($story-package-container-colour, 5%);
             }
         }
 
-        // ThreeQuarterTall
-        &.fc-item--three-quarters-tall-tablet {
+        .fc-trail__count--commentcount {
+            background-color: $story-package-container-colour;
+
+        }
+
+        .fc-item__kicker:after {
+            display: none;
+        }
+
+        .fc-item__headline,
+        .fc-item__standfirst,
+        .fc-sublink__title {
+            color: $story-package-dynamic-card-text;
+        }
+
+        // Flip the headline and image!
+        &.fc-item--three-quarters-tall-tablet,
+        &.fc-item--full-media-100-tablet {
             .fc-item__content--below {
                 display: none;
             }
 
             .fc-item__content--above {
                 display: block;
+                padding-top: $gs-baseline;
 
                 &:before {
-                    width: $gs-column-width;
+                    width: 33%;
                 }
             }
         }
@@ -316,16 +366,16 @@ $fc-item-gutter: $gs-gutter / 4;
                 display: block;
             }
 
-        }
+            &.fc-item--three-quarters-tall-tablet .fc-item__content--above:before {
+                width: 100%;
+            }
 
         .fc-item__kicker:after {
             display: none;
         }
 
-        .fc-item__headline,
-        .fc-item__standfirst,
-        .fc-sublink__title {
-            color: $story-package-card-colour;
+        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
+            color: $story-package-dynamic-card-text;
         }
 
         // Sublinks
