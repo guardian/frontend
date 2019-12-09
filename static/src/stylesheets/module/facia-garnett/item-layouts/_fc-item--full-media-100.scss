@@ -22,12 +22,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
 */
 
 @mixin fc-item--full-media-100 {
-
-    .responsive-img {
-        top: -25%;
-        height: auto;
-    }
-
+    
     .fc-item__header {
         @include fs-headline(4, true);
         @include fs-headline-quote(4);
@@ -43,7 +38,7 @@ x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x x
     &:not(.fc-item--has-cutout) {
         .fc-item__image-container {
             display: block;
-            padding-bottom: 40%;
+            padding-bottom: 60%;
         }
 
         @include fc-sublinks--below;
