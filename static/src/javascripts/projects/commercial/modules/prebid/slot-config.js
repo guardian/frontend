@@ -12,19 +12,25 @@ import config from 'lib/config';
 
 import type { PrebidSlot } from 'commercial/modules/prebid/types';
 
+const slotKeyMatchesAd = (pbs: PrebidSlot, ad: Advert): boolean =>
+    stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);
+
 const filterByAdvert = (
     ad: Advert,
     slots: Array<PrebidSlot>
 ): Array<PrebidSlot> => {
-    const adUnits = slots.filter(slot =>
-        slot.key === 'banner' // Special case for interactive banner slots
-            ? // as they are currently incorrectly identified.
-              !!ad.id.match(/^dfp-ad--\d+/) &&
-              ad.node.classList.contains('ad-slot--banner-ad-desktop')
-            : stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(
-                  slot.key
-              )
-    );
+    const adUnits = slots.filter(slot => {
+        if (slot.key === 'banner') {
+            // Special case for interactive banner slots
+            // as they are currently incorrectly identified.
+            return (
+                (!!ad.id.match(/^dfp-ad--\d+/) &&
+                    ad.node.classList.contains('ad-slot--banner-ad-desktop')) ||
+                slotKeyMatchesAd(slot, ad)
+            );
+        }
+        return slotKeyMatchesAd(slot, ad);
+    });
     return adUnits;
 };
 
