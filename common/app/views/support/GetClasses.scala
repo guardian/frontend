@@ -31,6 +31,7 @@ object GetClasses {
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
+      ("fc-item--is-boosted", item.displaySettings.isBoosted),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata",
