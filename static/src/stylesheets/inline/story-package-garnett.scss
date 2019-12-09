@@ -50,6 +50,19 @@ $fc-item-gutter: $gs-gutter / 4;
             .fc-item__container.u-faux-block-link--hover {
                 background-color: darken($story-package-container-colour, 5%);
             }
+
+
+            &.fc-item:not(.fc-item--pillar-special-report) {
+                .fc-sublink--pillar-#{$tone} {
+                    .fc-sublink__kicker {
+                        @include fs-textSans(3);
+                        color: #ffffff;
+                        display: block;
+                        width: 100%;
+                        margin-bottom: $gs-baseline / 2;
+                    }
+                }
+            }
         }
 
 
@@ -63,17 +76,6 @@ $fc-item-gutter: $gs-gutter / 4;
         }
     }
 
-    .fc-item:not(.fc-item--pillar-special-report) {
-        .fc-sublink--pillar-#{$tone} {
-            .fc-sublink__kicker {
-                @include fs-textSans(3);
-                color: #ffffff;
-                display: block;
-                width: 100%;
-                margin-bottom: $gs-baseline / 2;
-            }
-        }
-    }
 }
 
 .fc-container--story-package {
@@ -157,6 +159,14 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .fc-item__title {
         font-weight: 800;
+    }
+
+    .fc-item__standfirst-wrapper {
+        display: none;
+
+        @include mq($from: desktop) {
+            display: block;
+        }
     }
 
     .fc-container__header__description {
@@ -397,6 +407,34 @@ $fc-item-gutter: $gs-gutter / 4;
             }
         }
 
+        &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tablet,
+        &.fc-item--three-quarters-tall-tablet {
+
+            .fc-item__footer--vertical {
+                margin-top: -35px;
+            }
+
+            .fc-sublink {
+                padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
+                background-color: rgba(4, 31, 74, .8);
+                margin-bottom: 0;
+            }
+
+            .fc-sublink__title,
+            &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
+                color: #ffffff;
+
+                &:before {
+                    width: 100%;
+                }
+            }
+        }
+
+
+        // Sublink desktop widths
         @include mq($from: tablet) {
 
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
@@ -404,6 +442,14 @@ $fc-item-gutter: $gs-gutter / 4;
             &.fc-item--full-media-100-tablet,
             &.fc-item--three-quarters-tablet,
             &.fc-item--three-quarters-tall-tablet {
+
+                .fc-sublink {
+                    margin-bottom: $gs-baseline;
+                }
+
+                .fc-item__footer--vertical {
+                    margin-top: 0;
+                }
 
                 // In the dynamo container we don't have vertical sublinks in 75, three quarter and 100 cards.
                 .fc-item__footer--vertical {
@@ -417,19 +463,6 @@ $fc-item-gutter: $gs-gutter / 4;
                     right: 0;
                 }
 
-                .fc-sublink {
-                    padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                    background-color: rgba(4, 31, 74, .8);
-                }
-
-                .fc-sublink__title,
-                &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
-                    color: #ffffff;
-
-                    &:before {
-                        width: 100%;
-                    }
-                }
             }
 
             // FullMedia75
