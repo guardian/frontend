@@ -33,6 +33,13 @@ object ReaderRevenueRegion {
     contributionsBannerDeployLogKey + "-" + region.name + ".json"
   }
 
+  def getNewBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
+    subscriptionsBannerDeployLogKey + "-" + region.name + ".json"
+  }
+
   val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW)
 }
 
+sealed trait BannerType { val name: String }
+case object ContributionsBanner extends BannerType { val name = "contributions-banner" }
+case object SubscriptionsBanner extends BannerType { val name = "subscriptions-banner" }
