@@ -369,6 +369,7 @@ $fc-item-gutter: $gs-gutter / 4;
             &.fc-item--three-quarters-tall-tablet .fc-item__content--above:before {
                 width: 100%;
             }
+        }
 
         .fc-item__kicker:after {
             display: none;
@@ -400,10 +401,10 @@ $fc-item-gutter: $gs-gutter / 4;
         @include mq($from: tablet) {
 
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
-            &.fc-item--full-media-100-tablet.fc-item--has-sublinks-3,
-            &.fc-item--full-media-100-tablet.fc-item--has-sublinks-4,
-            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-3,
-            &.fc-item--three-quarters-tall-tablet.fc-item--has-sublinks-3 {
+            &.fc-item--full-media-100-tablet,
+            &.fc-item--full-media-100-tablet,
+            &.fc-item--three-quarters-tablet,
+            &.fc-item--three-quarters-tall-tablet {
 
                 // In the dynamo container we don't have vertical sublinks in 75, three quarter and 100 cards.
                 .fc-item__footer--vertical {
@@ -422,7 +423,8 @@ $fc-item-gutter: $gs-gutter / 4;
                     background-color: rgba(4, 31, 74, .8);
                 }
 
-                .fc-sublink__title {
+                .fc-sublink__title,
+                &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
                     color: #ffffff;
 
                     &:before {
@@ -443,16 +445,16 @@ $fc-item-gutter: $gs-gutter / 4;
             }
 
             // FullMedia100 & ThreeQuarterTall
-            &.fc-item--full-media-100-tablet.fc-item--has-sublinks-3,
-            &.fc-item--full-media-100-tablet.fc-item--has-sublinks-4,
-            &.fc-item--three-quarters-tall-tablet.fc-item--has-sublinks-3 {
+            &.fc-item--full-media-100-tablet,
+            &.fc-item--full-media-100-tablet,
+            &.fc-item--three-quarters-tall-tablet {
                 .fc-item__footer--horizontal {
                     width: 100%;
                 }
             }
 
             // ThreeQuarters
-            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-3 {
+            &.fc-item--three-quarters-tablet {
                 .fc-item__footer--horizontal {
                     width: 66%;
                 }
