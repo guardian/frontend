@@ -21,15 +21,15 @@ object DynamicPackage extends DynamicContainer {
       case 2 => Seq(ThreeQuarterQuarter)
       case 3 => Seq(ThreeQuarterTallQuarter2)
       case 4 => Seq(ThreeQuarterTallQuarter1Ql2)
-      case 5 => Seq(FullMedia75, QuarterQuarterQuarterQuarter)
-      case 6 => Seq(FullMedia75, QuarterQuarterQuarterQl)
-      case 7 => Seq(FullMedia75, QuarterQuarterQuarterQl)
+      case 5 => Seq(FullMedia100, QuarterQuarterQuarterQuarter)
+      case 6 => Seq(FullMedia100, QuarterQuarterQuarterQl)
+      case 7 => Seq(FullMedia100, QuarterQuarterQuarterQl)
       case 8 =>
         // This case doesn't look _quite_ right. We end up with a row of four
         // and then a row of three, slightly stretched. There isn't a layout
         // which caters for this currently, we'll follow up on this separately.
         Seq(FullMedia75, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
-      case _ => Seq(FullMedia75, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+      case _ => Seq(FullMedia100, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
     }
   }
 }

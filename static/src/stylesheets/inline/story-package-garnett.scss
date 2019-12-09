@@ -17,6 +17,10 @@ $fc-item-gutter: $gs-gutter / 4;
             color: $colour;
         }
 
+        .inline-garnett-quote {
+            fill: $dark-colour;
+        }
+
         &.fc-item--dynamic-layout {
             .fc-item__kicker,
             .rich-link__kicker,
@@ -48,7 +52,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 color: #ffffff;
                 display: block;
                 width: 100%;
-                margin-bottom: $gs-baseline;
+                margin-bottom: $gs-baseline / 2;
             }
         }
     }
@@ -70,7 +74,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 bottom: -12px;
                 width: 1px;
                 background-color: #929698;
-                left: -10px; 
+                left: -10px;
             }
         }
     }
@@ -364,8 +368,8 @@ $fc-item-gutter: $gs-gutter / 4;
                 }
 
                 .fc-sublink {
-                    padding: $gs-gutter / 2;
-                    background-color: rgba(0, 0, 0, .4);
+                    padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
+                    background-color: rgba(4, 31, 74, 0.8);
                 }
 
                 .fc-sublink__title {
@@ -408,11 +412,11 @@ $fc-item-gutter: $gs-gutter / 4;
 
 
     //These need to exist for all kickers because of tone on tone action
-    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-dark);
-    @include pillar-override(arts, $culture-bright, $culture-dark);
-    @include pillar-override(sport, $sport-bright, $sport-dark);
-    @include pillar-override(opinion, $opinion-pastel, $opinion-dark);
-    @include pillar-override(news, $lifestyle-pastel, $news-dark);
-    @include pillar-override(special-report, $highlight-main, $highlight-dark);
+    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-bright);
+    @include pillar-override(arts, $culture-bright, $culture-bright);
+    @include pillar-override(sport, $sport-bright, $sport-bright);
+    @include pillar-override(opinion, $opinion-bright, $opinion-bright);
+    @include pillar-override(news, $news-bright, $news-bright);
+    @include pillar-override(special-report, $highlight-main, $highlight-main);
 
 }
