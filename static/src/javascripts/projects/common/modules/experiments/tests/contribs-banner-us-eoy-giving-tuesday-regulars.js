@@ -26,7 +26,7 @@ const articleCountCopy = `You’ve read ${articleViewCount} articles in the last
 // Copy specific to 'withArticleCountInBody'
 const articleCountInBody = `${articleCountCopy}. `;
 const messageTextBody =
-    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. ';
+    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. Help us reach our goal.'
 const tickerHeaderDefault = `Help us reach our year-end goal`;
 
 export const contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo: AcquisitionsABTest = {
