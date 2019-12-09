@@ -194,9 +194,6 @@ $story-package-dynamic-card-text: $story-package-card-colour;
         }
     }
 
-
-
-
     .fc-item__container.u-faux-block-link--hover {
         background-color: darken($story-package-card-colour, 5%);
     }
@@ -269,15 +266,21 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             padding-top: $gs-baseline / 2;
         }
 
-        .fc-item--has-boosted-title {
-            .fc-item__content--below .fc-item__header {
-                display: none;
+        &.fc-item--is-boosted {
+            .fc-item__header {
+                @include fs-headline(6);
             }
 
-            .fc-item__content--above {
-                display: block;
-                padding-top: $gs-baseline;
+            @include mq($from: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+
+                .fc-item__header {
+                    @include fs-headline(9);
+                }
             }
+                
         }
 
         &:hover {
@@ -303,14 +306,16 @@ $story-package-dynamic-card-text: $story-package-card-colour;
             color: $story-package-dynamic-card-text;
         }
 
-        // ThreeQuarterTall
-        &.fc-item--three-quarters-tall-tablet {
+        // Flip the headline and image!
+        &.fc-item--three-quarters-tall-tablet,
+        &.fc-item--full-media-100-tablet {
             .fc-item__content--below {
                 display: none;
             }
 
             .fc-item__content--above {
                 display: block;
+                padding-top: $gs-baseline;
 
                 &:before {
                     width: 33%;
