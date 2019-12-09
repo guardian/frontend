@@ -29,6 +29,7 @@ object DynamicPackage extends DynamicContainer {
         // and then a row of three, slightly stretched. There isn't a layout
         // which caters for this currently, we'll follow up on this separately.
       case _ => Seq(FullMedia100, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+
     }
   }
 }
