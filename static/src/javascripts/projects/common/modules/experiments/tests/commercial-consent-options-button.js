@@ -3,7 +3,7 @@
 export const commercialConsentOptionsButton: ABTest = {
     id: 'CommercialConsentOptionsButton',
     start: '2019-11-21',
-    expiry: '2019-12-12',
+    expiry: '2019-01-08',
     author: 'George Haberis',
     description:
         '0.5% AB test for a bottom consent banner with an options button instead of a link',
