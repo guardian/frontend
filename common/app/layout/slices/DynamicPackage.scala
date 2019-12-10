@@ -14,23 +14,22 @@ object DynamicPackage extends DynamicContainer {
     }
   }
 
-  override protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = {
-    val BigsAndStandards(_, _) = bigsAndStandards(stories)
+  override protected def standardSlices(storiesIncludingBackfill: Seq[Story], firstSlice: Option[Slice]): Seq[Slice] = {
 
-    if (stories.isEmpty) {
-      Nil
-    } else {
-      if (stories.length == 1) {
-        Seq(FullMedia75)
-      } else if (stories.length == 2) {
-        Seq(ThreeQuarterQuarter)
-      } else if (stories.length == 3) {
-        Seq(ThreeQuarterTallQuarter2)
-      } else if (stories.length == 4) {
-        Seq(ThreeQuarterTallQuarter2Ql2)
-      } else {
-        Seq(FullMedia75, QuarterQuarterQuarterQuarter)
-      }
+    storiesIncludingBackfill.length match {
+      case 0 => Nil
+      case 1 => Seq(FullMedia75)
+      case 2 => Seq(ThreeQuarterTallQuarter)
+      case 3 => Seq(ThreeQuarterTallQuarter2)
+      case 4 => Seq(ThreeQuarterTallQuarter1Ql2)
+      case 5 => Seq(FullMedia100, QuarterQuarterQuarterQuarter)
+      case 6 | 7 => Seq(FullMedia100, QuarterQuarterQuarterQl)
+      case 8 => Seq(FullMedia100, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+        // This case doesn't look _quite_ right. We end up with a row of four
+        // and then a row of three, slightly stretched. There isn't a layout
+        // which caters for this currently, we'll follow up on this separately.
+      case _ => Seq(FullMedia100, QuarterQuarterQuarterQuarter, Ql1Ql1Ql1Ql1)
+
     }
   }
 }

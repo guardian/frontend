@@ -1,7 +1,5 @@
 // @flow
 
-import uniq from 'lodash/uniq';
-import { hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
@@ -27,6 +25,7 @@ import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -36,7 +35,7 @@ const ENTER_KEY_CODE = 'Enter';
 const DISPLAY_EVENT_KEY = 'subscription-banner : display';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
-const COMPONENT_TYPE = 'ACQUISITIONS_OTHER';
+const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
@@ -64,15 +63,16 @@ const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
-const bannerHasBeenAcknowledged = (): void => {
-    const messageStates = userPrefs.get('messages') || [];
-    messageStates.push(MESSAGE_CODE);
-    userPrefs.set('messages', uniq(messageStates));
+const hasAcknowledged = () => {
+    const bannerRedeploymentDate = new Date(2019, 11, 2, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
+    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
+    const lastClosedAtTime = new Date(lastClosedAt).getTime();
+
+    return lastClosedAt && lastClosedAtTime > bannerRedeploymentDate;
 };
 
 const subcriptionBannerCloseActions = (): void => {
     closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    bannerHasBeenAcknowledged();
 };
 
 const onAgree = (): void => {
@@ -190,7 +190,12 @@ const show: () => Promise<boolean> = async () => {
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(subscriptionUrl, signInUrl, showConsent)
+            bannerTemplate(
+                subscriptionUrl,
+                signInUrl,
+                showConsent,
+                isUserLoggedIn()
+            )
         );
     }
 
@@ -208,7 +213,7 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            !hasUserAcknowledgedBanner(MESSAGE_CODE) &&
+            !hasAcknowledged() &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&

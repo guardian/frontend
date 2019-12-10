@@ -27,7 +27,6 @@ const createAdLabel = (): HTMLDivElement => {
     adLabel.className = 'ad-slot__label';
     adLabel.innerHTML = 'Advertisement';
     adLabel.appendChild(createAdCloseDiv());
-
     return adLabel;
 };
 
@@ -38,4 +37,30 @@ export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
                 adSlotNode.prepend(createAdLabel());
             });
         }
+    });
+
+export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
+    fastdom.write(() => {
+        const adSlotLabel = document.createElement('div');
+        adSlotLabel.classList.add('ad-slot__label');
+        adSlotLabel.classList.add('sticky');
+        adSlotLabel.innerHTML = 'Advertisement';
+        adSlotNode.appendChild(adSlotLabel);
+    });
+
+export const renderStickyScrollForMoreLabel = (
+    adSlotNode: HTMLElement
+): Promise<null> =>
+    fastdom.write(() => {
+        const scrollForMoreLabel = document.createElement('div');
+        scrollForMoreLabel.classList.add('ad-slot__scroll');
+        scrollForMoreLabel.innerHTML = 'Scroll for More';
+        scrollForMoreLabel.onclick = event => {
+            adSlotNode.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start',
+            });
+            event.preventDefault();
+        };
+        adSlotNode.appendChild(scrollForMoreLabel);
     });

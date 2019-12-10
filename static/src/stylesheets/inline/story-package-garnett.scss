@@ -1,7 +1,13 @@
 @import '../_vars';
 @import '../_mixins';
 
-@mixin kicker-override($tone, $colour) {
+//specific vars for colours for dynamo
+$story-package-container-colour: #e0e4e8;
+$story-package-card-colour: #041f4a;
+$container-title: $story-package-card-colour;
+$story-package-dynamic-card-text: $story-package-card-colour;
+
+@mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
         .fc-item__kicker,
         .rich-link__kicker,
@@ -9,8 +15,44 @@
             color: $colour;
         }
 
-        .inline-garnett-quote {
-            fill: $colour;
+        &.fc-item--type-comment {
+            .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__standfirst-wrapper .fc-item__meta {
+                background-image: none;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-card-colour, 5%);
+            }
+        }
+
+        &.fc-item--dynamic-layout {
+            .fc-item__kicker,
+            .rich-link__kicker,
+            .fc-item__byline {
+                color: $dark-colour;
+            }
+
+
+            .inline-garnett-quote {
+                fill: $dark-colour;
+            }
+
+            .fc-item__container.u-faux-block-link--hover {
+                background-color: darken($story-package-container-colour, 5%);
+            }
+        }
+
+
+        .fc-item__container:before {
+            background-color: #ffffff;
+        }
+
+        &.fc-item.fc-item--full-media-100-tablet .fc-item__title {
+            background-image: none;
         }
     }
 
@@ -20,11 +62,50 @@
                 color: $colour;
             }
         }
+
+        &.fc-item--dynamic-layout:not(.fc-item--pillar-special-report) {
+            .fc-sublink--pillar-#{$tone} {
+                .fc-sublink__kicker {
+                    color: $dark-colour;
+                }
+            }
+        }
     }
 }
 
 .fc-container--story-package {
-    background-color: $brightness-86;
+    background-color: $story-package-container-colour;
+
+    .fc-container__body {
+        position: relative;
+        @include mq($from: leftCol) {
+
+            &:before {
+                position: absolute;
+                content: '';
+                display: block;
+                top: 0;
+                bottom: -12px;
+                width: 1px;
+                background-color: #929698;
+                left: -10px;
+            }
+        }
+    }
+
+    &.fc-container--first {
+        .fc-container__body:before {
+            top: -6px;
+        }
+
+        .fc-container__inner {
+            border-top: 0;
+        }
+    }
+
+    .fc-slice__item + .fc-slice__item:before {
+        border-left-color: #929698; // This colour does not exist (in the palette)
+    }
 
     .fc-container__toggle {
         display: none;
@@ -34,19 +115,19 @@
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
 
+        &:after {
+            display: none;
+        }
+
         @include mq($from: desktop) {
             padding-left: 0px;
         }
 
         & > span,
         h2.fc-container__title__text {
-            background: #fff132;
-            background: -moz-linear-gradient(top, #ffe500 0%,  #ffe500 50%, #ffe500 100%);
-            background: -webkit-linear-gradient(top, #ffe500 0%, #ffe500 50%, #ffe500 100%);
-            background: linear-gradient(to bottom,  #ffe500 0%, #ffe500 50%, #ffe500 100%);
-            display: inline;
-            box-shadow: -4px 0 0 0 #ffe500;
-            line-height: 32px;
+            color: $container-title;
+            display: inline-block;
+            line-height: 24px;
             top: 6px;
             position: relative;
             padding-right: 4px;
@@ -54,17 +135,33 @@
             @include mq($from: tablet) {
                 top: 0px;
             }
-            @include mq($from: desktop) {
-                line-height: 25px;
-            }
-            @include mq($from: wide) {
-                line-height: 30px;
-            }
+        }
+
+        a:hover {
+            text-decoration: none;
+            border-bottom: #ffffff;
         }
     }
 
+    .fc-item__title {
+        font-weight: 800;
+    }
+
+    .fc-container__header__description {
+        color: $story-package-dynamic-card-text;
+    }
+
+
     .fc-container__inner {
-        border-top: 0;
+        border-top: 1px solid #929698;
+
+        @include mq($from: tablet) {
+            overflow: visible;
+        }
+    }
+
+    .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
+        background-image: none;
     }
 
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
@@ -75,43 +172,30 @@
     .fc-item.fc-item--pillar-sport.fc-item--type-comment,
     .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
     .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature
-    {
-        background-color: $special-report-dark;
+    .fc-item.fc-item--type-feature {
+        &:not(.fc-item--dynamic-layout) {
+            background-color: $story-package-card-colour;
 
+
+            .fc-item__headline {
+                color: #ffffff;
+            }
+        }
+        
         &:hover {
-            background-color: darken($special-report-dark, 5%);
+            background-color: darken($story-package-card-colour, 5%);
 
             .fc-trail__count--commentcount {
-                background-color: darken($special-report-dark, 5%);
+                background-color: darken($story-package-card-colour, 5%);
             }
         }
         .fc-trail__count--commentcount {
-            background-color: $special-report-dark;
-        }
-
-        .fc-item__headline {
-            color: #ffffff;
-        }
-    }
-
-    .fc-item--pillar-news.fc-item--type-comment,
-    .fc-item--pillar-opinion.fc-item--type-comment,
-    .fc-item--pillar-sport.fc-item--type-comment,
-    .fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item--pillar-lifestyle.fc-item--type-comment
-    {
-        .fc-item__meta {
-            @include multiline(4, $brightness-46, $position: bottom);
-        }
-
-        .fc-item__standfirst-wrapper .fc-item__meta {
-            background-image: none;
+            background-color: $story-package-card-colour;
         }
     }
 
     .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-dark, 5%) !important;
+        background-color: darken($story-package-card-colour, 5%);
     }
 
     .fc-item__standfirst {
@@ -122,6 +206,17 @@
         color: #ffffff;
     }
 
+    &.fc-item--dynamic-layout {
+        .fc-item__standfirst {
+            color: $story-package-dynamic-card-text;
+        }
+
+        .fc-sublink__title {
+            color: $story-package-dynamic-card-text;
+        }
+    }
+
+
     .treats__list-item {
         .treats__treat {
             background-color: $brightness-86;
@@ -130,11 +225,131 @@
         }
     }
 
+    .fc-container__header__title>h2 {
+        color: $story-package-dynamic-card-text;
+    }
+
+    // 'Dynamic Layout'
+    .fc-item__content--above {
+        display: none;
+    }
+
+    .fc-item--dynamic-layout {
+        background-color: $story-package-container-colour;
+
+        &.fc-item--type-feature {
+            background-color: $story-package-container-colour;
+        }
+
+        // The white line above the story
+        .fc-item__container:before {
+            display: none; // Remove existing on container
+        }
+
+        .fc-item__container.u-faux-block-link--hover {
+            background-color: darken($story-package-container-colour, 5%);
+        }
+
+        .fc-item__content:before {
+            content: '';
+            background-color: $story-package-dynamic-card-text;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 2;
+            height: $gs-baseline / 3;
+            width: calc(100% - 10px);
+        }
+
+        .fc-item__content {
+            padding-top: $gs-baseline / 2;
+        }
+
+        &.fc-item--is-boosted {
+            .fc-item__header {
+                @include fs-headline(6);
+            }
+
+            @include mq($from: tablet) {
+                .fc-item__content:before {
+                    display: none;
+                }
+
+                .fc-item__header {
+                    @include fs-headline(9);
+                }
+            }
+                
+        }
+
+        &:hover {
+            background-color: darken($story-package-container-colour, 5%);
+
+            .fc-trail__count--commentcount {
+                background-color: darken($story-package-container-colour, 5%);
+            }
+        }
+
+        .fc-trail__count--commentcount {
+            background-color: $story-package-container-colour;
+
+        }
+
+        .fc-item__kicker:after {
+            display: none;
+        }
+
+        .fc-item__headline,
+        .fc-item__standfirst,
+        .fc-sublink__title {
+            color: $story-package-dynamic-card-text;
+        }
+
+        // Flip the headline and image!
+        &.fc-item--three-quarters-tall-tablet,
+        &.fc-item--full-media-100-tablet {
+            .fc-item__content--below {
+                display: none;
+            }
+
+            .fc-item__content--above {
+                display: block;
+                padding-top: $gs-baseline;
+
+                &:before {
+                    width: 33%;
+                }
+            }
+        }
+
+        @include mq($until: tablet) {
+
+            .fc-item__content--below .fc-item__header {
+                display: none;
+            }
+
+            .fc-item__content--above {
+                display: block;
+            }
+
+            &.fc-item--three-quarters-tall-tablet .fc-item__content--above:before {
+                width: 100%;
+            }
+
+        }
+
+        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
+            color: $story-package-dynamic-card-text;
+        }
+
+    }
+    
     //These need to exist for all kickers because of tone on tone action
-    @include kicker-override(lifestyle, $lifestyle-bright);
-    @include kicker-override(arts, $culture-bright);
-    @include kicker-override(sport, $sport-bright);
-    @include kicker-override(opinion, $opinion-bright);
-    @include kicker-override(news, $news-bright);
-    @include kicker-override(special-report, $highlight-main);
+    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-dark);
+    @include pillar-override(arts, $culture-bright, $culture-dark);
+    @include pillar-override(sport, $sport-bright, $sport-dark);
+    @include pillar-override(opinion, $opinion-pastel, $opinion-dark);
+    @include pillar-override(news, $lifestyle-pastel, $news-dark);
+    @include pillar-override(special-report, $highlight-main, $highlight-dark);
 }
