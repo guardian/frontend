@@ -69,9 +69,7 @@ const requestBids = (
         .then(
             () =>
                 new Promise(resolve => {
-                    console.log('A9 CALL FETCH BIDS', { slots: adUnits });
                     window.apstag.fetchBids({ slots: adUnits }, bids => {
-                        console.log('A9 BIDS received', bids);
                         window.googletag.cmd.push(() => {
                             window.apstag.setDisplayBids();
                             resolve();

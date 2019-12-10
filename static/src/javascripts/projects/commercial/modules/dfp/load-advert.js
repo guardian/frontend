@@ -42,7 +42,6 @@ export const loadAdvert = (advert: Advert): void => {
             ]);
         })
         .then(() => {
-            console.log(' *** LOAD ADVERT CALL DFP ');
             window.googletag.display(advert.id);
         });
 };
