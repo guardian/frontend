@@ -26,6 +26,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import fetchJson from 'lib/fetch-json';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -54,6 +55,12 @@ const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
 ];
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
+
+fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/united-kingdom`, {
+    mode: 'cors',
+}).then((resp) => {
+    console.log('res', {resp})
+});
 
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
     !hideBannerInTheseRegions.includes(region);

@@ -47,16 +47,18 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   }
 
-  def redeployBanner(region: String, banner: BannerType): Action[AnyContent] = Action.async { implicit request =>
+  def redeploySubscriptionsBanner(region: String): Action[AnyContent] = redeployBanner(region, SubscriptionsBanner)
+
+  def redeployBanner(region: String, bannerType: BannerType): Action[AnyContent] = Action.async { implicit request =>
     ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
-      val message = s"${banner.name} banner in ${region.name} redeploy by $requester at ${time.toString}}"
+      val message = s"Subscriptions banner in ${region.name} redeploy by $requester at ${time.toString}}"
 
       val result = for {
-        _ <- updateBannerDeployLog(region, jsonLog.toString, banner)
-        _ <- purgeDeployLogCache(region)
+        _ <- updateBannerDeployLog(region, jsonLog.toString, bannerType)
+//        _ <- purgeDeployLogCache(region)
       } yield bannerRedeploySuccessful(message, region)
 
       result.recover { case e => redeployFailed(e)}

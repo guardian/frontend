@@ -5,8 +5,8 @@
 @(regions: List[ReaderRevenueRegion])(implicit request: RequestHeader, context: model.ApplicationContext, flash: Flash)
 
 
-@redeployButton(region: ReaderRevenueRegion, banner: BannerType) = {
-    <form action="@controllers.admin.routes.ReaderRevenueAdminController.redeployBanner(region.name, banner.name)" method="POST">
+@redeployButton(region: ReaderRevenueRegion) = {
+    <form action="@controllers.admin.routes.ReaderRevenueAdminController.redeploySubscriptionsBanner(region.name)" method="POST">
         <input class="btn btn-large btn-danger" type="submit" value="Redeploy banner in @region.name">
     </form>
 }
@@ -20,7 +20,7 @@
     <ul>
         @for(region <- regions) {
             <li>
-                @redeployButton(region, SubscriptionsBanner)
+                @redeployButton(region)
                 <p><a href="@Configuration.ajax.url/reader-revenue/subscriptions-banner-deploy-log/@region.name">Timestamp of last banner redeploy</a></p>
             </li>
         }
