@@ -58,8 +58,8 @@ const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&u
 
 fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/united-kingdom`, {
     mode: 'cors',
-}).then((resp) => {
-    console.log('res', {resp})
+}).then(resp => {
+    console.log('res', { resp });
 });
 
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
