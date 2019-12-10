@@ -51,7 +51,6 @@ $fc-item-gutter: $gs-gutter / 4;
                 background-color: darken($story-package-container-colour, 5%);
             }
 
-
             &.fc-item:not(.fc-item--pillar-special-report) {
                 .fc-sublink--pillar-#{$tone} {
                     .fc-sublink__kicker {
@@ -74,6 +73,10 @@ $fc-item-gutter: $gs-gutter / 4;
             background-image: none;
 
         }
+    }
+
+    .fc-sublink--pillar-#{$tone} .fc-sublink__kicker {
+        color: $colour;
     }
 
 }
