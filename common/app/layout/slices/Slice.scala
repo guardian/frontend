@@ -568,6 +568,39 @@ case object QuarterThreeQuarter extends Slice {
 /* .__________________________.________.
  * |##########################|########|
  * |##########################|########|
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      SingleItem(
+        colSpan = 1,
+        ItemClasses(
+          mobile = MediaList,
+          tablet = Standard
+        )
+      ),
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|########|
+ * |##########################|########|
  * |##########################|        |
  * |##########################|        |
  * |##########################|        |
@@ -597,6 +630,44 @@ case object ThreeQuarterTallQuarter2 extends Slice {
         ItemClasses(
           mobile = ListItem,
           tablet = Standard
+        )
+      )
+    )
+  )
+}
+
+/* .__________________________.________.
+ * |##########################|########|
+ * |##########################|        |
+ * |##########################|        |
+ * |##########################|--------|
+ * |                          |        |
+ * |                          |--------|
+ * |                          |        |
+ * `--------------------------'--------'
+ */
+case object ThreeQuarterTallQuarter1Ql2 extends Slice {
+  val layout = SliceLayout(
+    cssClassName = "qqqtall-q1-ql2",
+    columns = Seq(
+      SingleItem(
+        colSpan = 3,
+        ItemClasses(
+          mobile = Standard,
+          tablet = ThreeQuartersTall
+        )
+      ),
+      SplitColumn(
+        colSpan = 1,
+        topItemRows = 1,
+        topItemClasses = ItemClasses(
+          mobile = ListItem,
+          tablet = Standard
+        ),
+        bottomItemRows = 2,
+        bottomItemsClasses = ItemClasses(
+          mobile = ListItem,
+          tablet = ListItem
         )
       )
     )

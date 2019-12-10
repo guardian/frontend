@@ -31,6 +31,7 @@ object GetClasses {
       ("fc-item--has-image", item.hasImage),
       ("fc-item--force-image-upgrade", isFirstContainer),
       (s"fc-item--has-sublinks-${item.sublinks.length}", item.sublinks.nonEmpty),
+      ("fc-item--is-boosted", item.displaySettings.isBoosted),
       ("fc-item--has-boosted-title", item.displaySettings.showBoostedHeadline),
       ("fc-item--live", item.isLive),
       ("fc-item--has-metadata",
@@ -38,7 +39,8 @@ object GetClasses {
       ("fc-item--has-timestamp", item.timeStampDisplay.isDefined),
       ("fc-item--is-commentable", item.discussionSettings.isCommentable),
       ("fc-item--is-media-link", item.isMediaLink),
-      ("fc-item--has-video-main-media", item.hasVideoMainMedia)
+      ("fc-item--has-video-main-media", item.hasVideoMainMedia),
+      ("fc-item--dynamic-layout", item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined && !item.isMediaLink)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
     )

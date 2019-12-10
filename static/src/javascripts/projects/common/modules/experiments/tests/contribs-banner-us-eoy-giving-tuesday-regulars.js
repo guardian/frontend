@@ -13,16 +13,24 @@ const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 const testRunConditions = isUS && articleViewCount >= minArticleViews;
 
-const titles = ['Offset fake news this holiday season'];
-const messageText =
-    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. ';
-const closingSentence = 'Help us reach our year-end goal.';
+// Copy for both variants:
+const titles = ['2020 will be a defining year for America'];
 const ctaText = 'Support The Guardian';
 
-const tickerHeaderWithArticleCount = `You’ve read ${articleViewCount} articles in the last two months`;
+// Copy specific to 'withArticleCountOnRight'
+const messageText =
+    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. ';
+const closingSentence = 'Help us reach our year-end goal.';
+const articleCountCopy = `You’ve read ${articleViewCount} articles in the last two months`;
 
-export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyGivingTuesdayRegulars',
+// Copy specific to 'withArticleCountInBody'
+const articleCountInBody = `${articleCountCopy}. `;
+const messageTextBody =
+    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. Help us reach our goal.';
+const tickerHeaderDefault = `Help us reach our year-end goal`;
+
+export const contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyGivingTuesdayRegularsRoundTwo',
     campaignId: 'USeoy2019',
     start: '2019-11-15',
     expiry: '2020-1-30',
@@ -40,7 +48,7 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
     geolocation,
     variants: [
         {
-            id: 'withArticleCount',
+            id: 'withArticleCountOnRight',
             test: (): void => {},
             engagementBannerParams: {
                 titles,
@@ -50,7 +58,21 @@ export const contributionsBannerUsEoyGivingTuesdayRegulars: AcquisitionsABTest =
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
                 bannerModifierClass: 'useoy2019',
-                tickerHeader: tickerHeaderWithArticleCount,
+                tickerHeader: articleCountCopy,
+            },
+        },
+        {
+            id: 'withArticleCountInBody',
+            test: (): void => {},
+            engagementBannerParams: {
+                titles,
+                messageText: messageTextBody,
+                leadSentence: articleCountInBody,
+                ctaText,
+                template: acquisitionsBannerUsEoyTemplate,
+                hasTicker: true,
+                bannerModifierClass: 'useoy2019',
+                tickerHeader: tickerHeaderDefault,
             },
         },
     ],

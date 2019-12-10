@@ -1,15 +1,13 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['Offset fake news this holiday season'];
+const titles = ['2020 will be a defining year for America'];
 const messageText =
-    'Help the truth triumph in 2020. Amid a tsunami of disinformation and “alternative facts”, the need for truth has never been greater. Support the Guardian’s independent, fact-based journalism this holiday season. As we look to the challenges of the coming year, we’re hoping to raise $1.5m from our US readers by January. ';
-const closingSentence = 'Help us reach our year-end goal.';
+    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. Help us reach our year-end goal.';
 const ctaText = 'Support The Guardian';
 
 const tickerHeaderControl = 'Help us reach our year-end goal';
@@ -38,7 +36,6 @@ export const contributionsBannerUsEoyGivingTuesdayCasuals: AcquisitionsABTest = 
             engagementBannerParams: {
                 titles,
                 messageText,
-                closingSentence,
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,

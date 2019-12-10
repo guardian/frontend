@@ -68,7 +68,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-giving-tuesday-regulars",
+    "ab-contributions-banner-us-eoy-giving-tuesday-regulars-round-two",
     "US end of year banner - giving tuesday version for regular readers",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
