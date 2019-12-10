@@ -69,7 +69,7 @@ const requestBids = (
         .then(
             () =>
                 new Promise(resolve => {
-                    window.apstag.fetchBids({ slots: adUnits }, bids => {
+                    window.apstag.fetchBids({ slots: adUnits }, () => {
                         window.googletag.cmd.push(() => {
                             window.apstag.setDisplayBids();
                             resolve();
