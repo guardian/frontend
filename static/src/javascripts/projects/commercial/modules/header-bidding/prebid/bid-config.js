@@ -21,7 +21,7 @@ import type {
     PrebidOpenXParams,
     PrebidOzoneParams,
     PrebidPubmaticParams,
-    PrebidSize,
+    HeaderBiddingSize,
     PrebidSonobiParams,
     PrebidTripleLiftParams,
     PrebidTrustXParams,
@@ -145,7 +145,7 @@ const getIndexSiteId = (): string => {
     }
 };
 
-const getImprovePlacementId = (sizes: PrebidSize[]): number => {
+const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
     if (isInSafeframeTestVariant()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -243,7 +243,7 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
         : {};
 };
 
-const getXhbPlacementId = (sizes: PrebidSize[]): number => {
+const getXhbPlacementId = (sizes: HeaderBiddingSize[]): number => {
     if (containsDmpu(sizes)) return 13663297;
     if (containsMpu(sizes)) return 13663304;
     if (containsBillboard(sizes)) return 13663284;
@@ -256,7 +256,7 @@ const getPangaeaPlacementIdForUsAndAu = (): string => {
     return '';
 };
 
-const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
+const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
     const NO_MATCH_ID = 15900184;
     switch (getBreakpointKey()) {
         case 'D':
@@ -274,7 +274,7 @@ const getXaxisPlacementId = (sizes: PrebidSize[]): number => {
     }
 };
 
-const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
+const getPangaeaPlacementId = (sizes: HeaderBiddingSize[]): number => {
     type PangaeaSection = {
         sections: Array<string>,
         lb: number,
@@ -361,7 +361,7 @@ const getPangaeaPlacementId = (sizes: PrebidSize[]): number => {
 
 const getTripleLiftInventoryCode = (
     slotId: string,
-    sizes: PrebidSize[]
+    sizes: HeaderBiddingSize[]
 ): string => {
     if (containsLeaderboard(sizes))
         return 'theguardian_topbanner_728x90_prebid';
@@ -386,8 +386,10 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidAppNexusParams =>
-        getAppNexusDirectBidParams(sizes),
+    bidParams: (
+        slotId: string,
+        sizes: HeaderBiddingSize[]
+    ): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
@@ -491,7 +493,7 @@ const tripleLiftBidder: PrebidBidder = {
     switchName: 'prebidTriplelift',
     bidParams: (
         slotId: string,
-        sizes: PrebidSize[]
+        sizes: HeaderBiddingSize[]
     ): PrebidTripleLiftParams => ({
         inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
     }),
@@ -500,14 +502,17 @@ const tripleLiftBidder: PrebidBidder = {
 const improveDigitalBidder: PrebidBidder = {
     name: 'improvedigital',
     switchName: 'prebidImproveDigital',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidImproveParams => ({
+    bidParams: (
+        slotId: string,
+        sizes: HeaderBiddingSize[]
+    ): PrebidImproveParams => ({
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
 };
 
 // Create multiple bids for each slot size
-const xaxisBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes =>
+const xaxisBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes =>
     slotSizes.map(size => ({
         name: 'xhb',
         switchName: 'prebidXaxis',
@@ -519,7 +524,10 @@ const xaxisBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes =>
 const xaxisBidder: PrebidBidder = {
     name: 'xhb',
     switchName: 'prebidXaxis',
-    bidParams: (slotId: string, sizes: PrebidSize[]): PrebidXaxisParams => ({
+    bidParams: (
+        slotId: string,
+        sizes: HeaderBiddingSize[]
+    ): PrebidXaxisParams => ({
         placementId: getXhbPlacementId(sizes),
     }),
 };
@@ -572,7 +580,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         switchName: 'prebidS2sozone',
         bidParams: (
             slotId: string,
-            sizes: PrebidSize[]
+            sizes: HeaderBiddingSize[]
         ): PrebidAppNexusParams =>
             Object.assign(
                 {},
@@ -606,7 +614,7 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
         switchName: 'prebidS2sozone',
         bidParams: (
             slotId: string,
-            sizes: PrebidSize[]
+            sizes: HeaderBiddingSize[]
         ): PrebidAppNexusParams =>
             Object.assign(
                 {},
@@ -634,7 +642,9 @@ const getDummyServerSideBidders = (): Array<PrebidBidder> => {
 };
 
 // There's an IX bidder for every size that the slot can take
-const indexExchangeBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+const indexExchangeBidders: (
+    HeaderBiddingSize[]
+) => PrebidBidder[] = slotSizes => {
     const indexSiteId = getIndexSiteId();
     return slotSizes.map(size => ({
         name: 'ix',
@@ -655,7 +665,7 @@ const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
     return allBidders.filter(bidder => isSwitchedOn(bidder));
 };
 
-const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
+const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
@@ -690,7 +700,7 @@ const currentBidders: (PrebidSize[]) => PrebidBidder[] = slotSizes => {
         : biddersSwitchedOn(allBidders);
 };
 
-export const bids: (string, PrebidSize[]) => PrebidBid[] = (
+export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
     slotId,
     slotSizes
 ) =>

@@ -10,7 +10,7 @@ import {
     isInAuRegion as isInAuRegion_,
     isInUsRegion as isInUsRegion_,
 } from '../utils';
-import type { PrebidSize } from '../types';
+import type { HeaderBiddingSize } from '../types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -126,7 +126,7 @@ describe('getAppNexusDirectPlacementId', () => {
         window.OzoneLotameData = undefined;
     });
 
-    const prebidSizes: Array<Array<PrebidSize>> = [
+    const prebidSizes: Array<Array<HeaderBiddingSize>> = [
         [[300, 250]],
         [[300, 600]],
         [[970, 250]],
@@ -180,7 +180,7 @@ describe('getAppNexusPlacementId', () => {
     });
 
     const generateTestIds = (): Array<string> => {
-        const prebidSizes: Array<Array<PrebidSize>> = [
+        const prebidSizes: Array<Array<HeaderBiddingSize>> = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],

@@ -17,22 +17,22 @@ import {
     isInUsRegion,
 } from '../utils';
 
-import type { PrebidAppNexusParams, PrebidSize } from '../types';
+import type { PrebidAppNexusParams, HeaderBiddingSize } from '../types';
 
-const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
+const getAppNexusInvCode = (sizes: Array<HeaderBiddingSize>): ?string => {
     const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';
     // section is optional and makes it through to the config object as an empty string... OTL
     const sectionName =
         config.get('page.section', '') ||
         config.get('page.sectionName', '').replace(/ /g, '-');
 
-    const slotSize: PrebidSize | null = getLargestSize(sizes);
+    const slotSize: HeaderBiddingSize | null = getLargestSize(sizes);
     if (slotSize) {
         return `${device}${sectionName.toLowerCase()}${slotSize.join('x')}`;
     }
 };
 
-export const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
+export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
     const defaultPlacementId: string = '13915593';
     if (isInUsRegion() || isInAuRegion()) {
         return defaultPlacementId;
@@ -64,7 +64,9 @@ export const getAppNexusPlacementId = (sizes: PrebidSize[]): string => {
     }
 };
 
-export const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
+export const getAppNexusDirectPlacementId = (
+    sizes: HeaderBiddingSize[]
+): string => {
     if (isInAuRegion()) {
         return '11016434';
     }
@@ -102,7 +104,7 @@ export const getAppNexusDirectPlacementId = (sizes: PrebidSize[]): string => {
 };
 
 export const getAppNexusDirectBidParams = (
-    sizes: PrebidSize[]
+    sizes: HeaderBiddingSize[]
 ): PrebidAppNexusParams => {
     if (isInAuRegion() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
@@ -125,7 +127,7 @@ export const getAppNexusDirectBidParams = (
 };
 
 export const getAppNexusServerSideBidParams = (
-    sizes: PrebidSize[]
+    sizes: HeaderBiddingSize[]
 ): PrebidAppNexusParams =>
     Object.assign(
         {},

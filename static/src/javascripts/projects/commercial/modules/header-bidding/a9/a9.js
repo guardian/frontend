@@ -2,20 +2,20 @@
 
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { getPrebidAdSlots } from 'commercial/modules/header-bidding/slot-config';
+import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 import type {
-    PrebidSize,
-    PrebidSlot,
+    HeaderBiddingSize,
+    HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 
 class A9AdUnit {
     slotID: ?string;
     slotName: ?string;
-    sizes: PrebidSize[];
+    sizes: HeaderBiddingSize[];
 
-    constructor(advert: Advert, slot: PrebidSlot) {
+    constructor(advert: Advert, slot: HeaderBiddingSlot) {
         this.slotID = advert.id;
         this.slotName = config.get('page.adUnit');
         this.sizes = slot.sizes;
@@ -44,7 +44,7 @@ const initialise = (): void => {
 // for this given request for bids.
 const requestBids = (
     advert: Advert,
-    slotFlatMap?: PrebidSlot => PrebidSlot[]
+    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
 ): Promise<void> => {
     if (!initialised) {
         return requestQueue;
@@ -54,7 +54,10 @@ const requestBids = (
         return requestQueue;
     }
 
-    const adUnits: Array<A9AdUnit> = getPrebidAdSlots(advert, slotFlatMap)
+    const adUnits: Array<A9AdUnit> = getHeaderBiddingAdSlots(
+        advert,
+        slotFlatMap
+    )
         .map(slot => new A9AdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 

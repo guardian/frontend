@@ -4,13 +4,13 @@ import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/header-bidding/prebid/bid-config';
-import { getPrebidAdSlots } from 'commercial/modules/header-bidding/slot-config';
+import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { priceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import type {
     PrebidBid,
     PrebidMediaTypes,
-    PrebidSlot,
+    HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 import type { PrebidPriceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 
@@ -114,7 +114,7 @@ class PrebidAdUnit {
     bids: ?(PrebidBid[]);
     mediaTypes: ?PrebidMediaTypes;
 
-    constructor(advert: Advert, slot: PrebidSlot) {
+    constructor(advert: Advert, slot: HeaderBiddingSlot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
@@ -226,7 +226,7 @@ const initialise = (window: {
 // for this given request for bids.
 const requestBids = (
     advert: Advert,
-    slotFlatMap?: PrebidSlot => PrebidSlot[]
+    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
 ): Promise<void> => {
     if (!initialised) {
         return requestQueue;
@@ -236,7 +236,10 @@ const requestBids = (
         return requestQueue;
     }
 
-    const adUnits: Array<PrebidAdUnit> = getPrebidAdSlots(advert, slotFlatMap)
+    const adUnits: Array<PrebidAdUnit> = getHeaderBiddingAdSlots(
+        advert,
+        slotFlatMap
+    )
         .map(slot => new PrebidAdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 
