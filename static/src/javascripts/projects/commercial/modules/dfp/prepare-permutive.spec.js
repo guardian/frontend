@@ -64,31 +64,40 @@ describe('Generating Permutive payload utils', () => {
     describe('generatePayload', () => {
         it('safely removes invalid authors or keywords', () => {
             const invalidValues = [undefined, null, '', {}, []];
-            const expected = {};
+            const expected = { user: { identity: false } };
             invalidValues.forEach(invalid =>
                 expect(
-                    _.generatePayload({ author: invalid, keywords: invalid })
+                    _.generatePayload({
+                        page: { author: invalid, keywords: invalid },
+                    })
                 ).toEqual(expected)
             );
         });
         it('splits authors and keywords to an array correctly', () => {
             const valid = {
-                author: 'author1,author2',
-                keywords: 'environment,travel',
+                page: {
+                    author: 'author1,author2',
+                    keywords: 'environment,travel',
+                },
             };
 
             const expected = {
                 content: {
                     authors: ['author1', 'author2'],
                     keywords: ['environment', 'travel'],
+                },
+                user: {
+                    identity: false,
                 },
             };
             expect(_.generatePayload(valid)).toEqual(expected);
         });
         it('splits authors and keywords to an array correctly and trims whitespace', () => {
             const valid = {
-                author: 'author1, author2',
-                keywords: 'environment , travel',
+                page: {
+                    author: 'author1, author2',
+                    keywords: 'environment , travel',
+                },
             };
 
             const expected = {
@@ -96,31 +105,37 @@ describe('Generating Permutive payload utils', () => {
                     authors: ['author1', 'author2'],
                     keywords: ['environment', 'travel'],
                 },
+                user: {
+                    identity: false,
+                },
             };
             expect(_.generatePayload(valid)).toEqual(expected);
         });
         it('removes invalid date', () => {
             const invalidDates = ['bad date', '', null, undefined, [], {}];
-            const expected = {};
+            const expected = { user: { identity: false } };
             invalidDates.forEach(invalid => {
                 expect(
-                    _.generatePayload({ webPublicationDate: invalid })
+                    _.generatePayload({ page: { webPublicationDate: invalid } })
                 ).toEqual(expected);
             });
         });
         it('generates payload with valid ISO date', () => {
-            const validConfig = { webPublicationDate: 1575037372000 };
+            const validConfig = { page: { webPublicationDate: 1575037372000 } };
             const expected = {
                 content: { publishedAt: '2019-11-29T14:22:52.000Z' },
+                user: { identity: false },
             };
             expect(_.generatePayload(validConfig)).toEqual(expected);
         });
         it('generates valid payload', () => {
             const config1 = {
-                isPaidContent: false,
-                pageId: '',
-                contentType: 'Network Front',
-                section: 'uk',
+                page: {
+                    isPaidContent: false,
+                    pageId: '',
+                    contentType: 'Network Front',
+                    section: 'uk',
+                },
             };
             const expected1 = {
                 content: {
@@ -128,16 +143,25 @@ describe('Generating Permutive payload utils', () => {
                     type: 'Network Front',
                     section: 'uk',
                 },
+                user: {
+                    identity: false,
+                },
             };
             const config2 = {
-                pageId: 'world/2019/nov/29',
-                headline: 'Headline',
-                contentType: 'Article',
-                section: 'world',
-                author: 'author1',
-                keywords: 'world/nato,World news,France',
-                webPublicationDate: 1575048268000,
-                series: 'politics series',
+                page: {
+                    pageId: 'world/2019/nov/29',
+                    headline: 'Headline',
+                    contentType: 'Article',
+                    section: 'world',
+                    author: 'author1',
+                    keywords: 'world/nato,World news,France',
+                    webPublicationDate: 1575048268000,
+                    series: 'politics series',
+                    edition: 'UK',
+                },
+                user: {
+                    id: 42,
+                },
             };
             const expected2 = {
                 content: {
@@ -149,6 +173,10 @@ describe('Generating Permutive payload utils', () => {
                     keywords: ['world/nato', 'World news', 'France'],
                     publishedAt: '2019-11-29T17:24:28.000Z',
                     series: 'politics series',
+                },
+                user: {
+                    identity: true,
+                    edition: 'UK',
                 },
             };
 
@@ -164,21 +192,14 @@ describe('Generating Permutive payload utils', () => {
             expect(err).toBeInstanceOf(Error);
             expect(err.message).toBe('Global Permutive setup error');
         });
-        it('catches errors and calls the logger correctly when the payload is empty', () => {
-            const logger = jest.fn();
-            _.runPermutive({}, { addon: jest.fn() }, logger);
-            const err = logger.mock.calls[0][0];
-            expect(err).toBeInstanceOf(Error);
-            expect(err.message).toBe('Empty Permutive payload');
-        });
         it('calles the permutive addon method with the correct payload', () => {
             const logger = jest.fn();
             const mockPermutive = { addon: jest.fn() };
-            const config = { section: 'uk' };
+            const config = { page: { section: 'uk' } };
 
             _.runPermutive(config, mockPermutive, logger);
             expect(mockPermutive.addon).toHaveBeenCalledWith('web', {
-                page: { content: { section: 'uk' } },
+                page: { content: { section: 'uk' }, user: { identity: false } },
             });
             expect(logger).not.toHaveBeenCalled();
         });
