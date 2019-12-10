@@ -51,7 +51,7 @@ const requestBids = (
         return requestQueue;
     }
 
-    const adUnits: Array<A9AdUnit> = getPrebidAdSlots(advert.id, slotFlatMap)
+    const adUnits: Array<A9AdUnit> = getPrebidAdSlots(advert, slotFlatMap)
         .map(slot => new A9AdUnit(advert, slot))
         .filter(adUnit => !adUnit.isEmpty());
 

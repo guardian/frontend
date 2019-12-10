@@ -131,11 +131,13 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
 
 export const getPrebidAdSlots = (
     ad: Advert,
-    contentType: string,
     slotFlatMap?: PrebidSlot => PrebidSlot[]
 ): Array<PrebidSlot> => {
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
-    const adSlots = filterByAdvert(ad, getSlots(contentType));
+    const adSlots = filterByAdvert(
+        ad,
+        getSlots(config.get('page.contentType', ''))
+    );
     return (
         adSlots
             .map(effectiveSlotFlatMap)
