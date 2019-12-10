@@ -29,7 +29,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCheckMediator } from 'common/modules/check-mediator';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
-import {init as prepareA9} from "commercial/modules/dfp/prepare-a9";
+import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
