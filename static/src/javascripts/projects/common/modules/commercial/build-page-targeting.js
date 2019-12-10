@@ -16,7 +16,7 @@ import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
-import { removeFalseyValues } from 'commercial/modules/prebid/utils';
+import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';

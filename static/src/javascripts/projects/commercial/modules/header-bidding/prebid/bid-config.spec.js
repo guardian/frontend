@@ -4,7 +4,7 @@
 import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
-import type { PrebidBidder, PrebidSize } from './types';
+import type { PrebidBidder, PrebidSize } from '../types';
 import {
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
@@ -29,7 +29,7 @@ import {
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
     shouldIncludePangaea as shouldIncludePangaea_,
-} from './utils';
+} from '../utils';
 
 const containsBillboard: any = containsBillboard_;
 const containsDmpu: any = containsDmpu_;
@@ -77,7 +77,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
-jest.mock('./utils');
+jest.mock('../utils');
 
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),

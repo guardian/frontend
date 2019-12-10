@@ -15,9 +15,9 @@ import {
     getBreakpointKey,
     isInAuRegion,
     isInUsRegion,
-} from './utils';
+} from '../utils';
 
-import type { PrebidAppNexusParams, PrebidSize } from './types';
+import type { PrebidAppNexusParams, PrebidSize } from '../types';
 
 const getAppNexusInvCode = (sizes: Array<PrebidSize>): ?string => {
     const device: string = getBreakpointKey() === 'M' ? 'M' : 'D';

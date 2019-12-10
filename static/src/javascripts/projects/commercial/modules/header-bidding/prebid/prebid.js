@@ -3,16 +3,16 @@
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { bids } from 'commercial/modules/prebid/bid-config';
-import { getPrebidAdSlots } from 'commercial/modules/prebid/slot-config';
-import { priceGranularity } from 'commercial/modules/prebid/price-config';
+import { bids } from 'commercial/modules/header-bidding/prebid/bid-config';
+import { getPrebidAdSlots } from 'commercial/modules/header-bidding/slot-config';
+import { priceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import type {
     PrebidBid,
     PrebidMediaTypes,
     PrebidSlot,
-} from 'commercial/modules/prebid/types';
-import type { PrebidPriceGranularity } from 'commercial/modules/prebid/price-config';
+} from 'commercial/modules/header-bidding/types';
+import type { PrebidPriceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 
 type EnableAnalyticsConfig = {
     provider: string,

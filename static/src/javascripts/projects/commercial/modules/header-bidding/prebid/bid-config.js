@@ -26,7 +26,7 @@ import type {
     PrebidTripleLiftParams,
     PrebidTrustXParams,
     PrebidXaxisParams,
-} from './types';
+} from '../types';
 import {
     containsBillboard,
     containsDmpu,
@@ -55,7 +55,7 @@ import {
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-} from './utils';
+} from '../utils';
 import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
 
 const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());

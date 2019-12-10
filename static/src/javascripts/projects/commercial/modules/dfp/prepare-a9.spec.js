@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
-import a9 from 'commercial/modules/prebid/a9';
+import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
@@ -15,7 +15,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
-jest.mock('commercial/modules/prebid/a9', () => ({
+jest.mock('commercial/modules/header-bidding/a9/a9', () => ({
     initialise: jest.fn(),
 }));
 
@@ -29,11 +29,11 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),
 }));
 
-jest.mock('commercial/modules/prebid/bid-config', () => ({
+jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
-jest.mock('commercial/modules/prebid/utils', () => ({
+jest.mock('commercial/modules/header-bidding/utils', () => ({
     isInUsRegion: () => true,
 }));
 

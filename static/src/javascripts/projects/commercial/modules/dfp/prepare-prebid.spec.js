@@ -2,7 +2,7 @@
 
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
-import prebid from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
@@ -13,7 +13,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
-jest.mock('commercial/modules/prebid/prebid', () => ({
+jest.mock('commercial/modules/header-bidding/prebid/prebid', () => ({
     initialise: jest.fn(),
 }));
 
@@ -25,11 +25,11 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: jest.fn(),
 }));
 
-jest.mock('commercial/modules/prebid/bid-config', () => ({
+jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
-jest.mock('commercial/modules/prebid/utils', () => ({
+jest.mock('commercial/modules/header-bidding/utils', () => ({
     shouldIncludeOnlyA9: false,
 }));
 

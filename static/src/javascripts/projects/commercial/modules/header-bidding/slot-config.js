@@ -6,11 +6,11 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     shouldIncludeMobileSticky,
-} from 'commercial/modules/prebid/utils';
+} from 'commercial/modules/header-bidding/utils';
 
 import config from 'lib/config';
 
-import type { PrebidSlot } from 'commercial/modules/prebid/types';
+import type { PrebidSlot } from 'commercial/modules/header-bidding/types';
 
 const slotKeyMatchesAd = (pbs: PrebidSlot, ad: Advert): boolean =>
     stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);

@@ -1,7 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import prebid from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 
@@ -13,7 +13,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/prebid/bid-config', () => ({
+jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
     bids: jest.fn(),
 }));
 

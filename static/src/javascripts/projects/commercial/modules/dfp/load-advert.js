@@ -1,8 +1,8 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
-import prebid from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { markTime } from 'lib/user-timing';
-import a9 from 'commercial/modules/prebid/a9';
+import a9 from 'commercial/modules/header-bidding/a9/a9';
 
 const slotFlatMap = (advert, hbSlot) => {
     // We only fiddle with top-above-nav hbSlot(s)

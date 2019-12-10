@@ -5,9 +5,9 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
-import prebid from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
-import { shouldIncludeOnlyA9 } from 'commercial/modules/prebid/utils';
+import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
 let moduleLoadResult = Promise.resolve();
 

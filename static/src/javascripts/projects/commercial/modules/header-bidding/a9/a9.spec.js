@@ -1,13 +1,13 @@
 // @flow
 
-import a9 from 'commercial/modules/prebid/a9';
+import a9 from 'commercial/modules/header-bidding/a9/a9';
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/prebid/slot-config', () => ({
+jest.mock('commercial/modules/header-bidding/slot-config', () => ({
     slots: jest
         .fn()
         .mockImplementation(() => [

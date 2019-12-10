@@ -3,13 +3,13 @@
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import once from 'lodash/once';
-import a9 from 'commercial/modules/prebid/a9';
+import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { isGoogleProxy } from 'lib/detect';
 import {
     isInUsRegion,
     shouldIncludeOnlyA9,
-} from 'commercial/modules/prebid/utils';
+} from 'commercial/modules/header-bidding/utils';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 

@@ -2,10 +2,13 @@
 
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
-import { getPrebidAdSlots } from 'commercial/modules/prebid/slot-config';
+import { getPrebidAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
-import type { PrebidSize, PrebidSlot } from 'commercial/modules/prebid/types';
+import type {
+    PrebidSize,
+    PrebidSlot,
+} from 'commercial/modules/header-bidding/types';
 
 class A9AdUnit {
     slotID: ?string;

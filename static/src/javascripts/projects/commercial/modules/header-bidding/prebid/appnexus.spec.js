@@ -9,8 +9,8 @@ import {
     getBreakpointKey as getBreakpointKey_,
     isInAuRegion as isInAuRegion_,
     isInUsRegion as isInUsRegion_,
-} from './utils';
-import type { PrebidSize } from './types';
+} from '../utils';
+import type { PrebidSize } from '../types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -22,9 +22,9 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: () => 'pageTargeting',
 }));
 
-jest.mock('./utils', () => {
+jest.mock('../utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
-    const original = jest.requireActual('./utils');
+    const original = jest.requireActual('../utils');
     return {
         ...original,
         getBreakpointKey: jest.fn(),
