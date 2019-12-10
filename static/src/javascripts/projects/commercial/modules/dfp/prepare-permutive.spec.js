@@ -128,7 +128,7 @@ describe('Generating Permutive payload utils', () => {
             };
             expect(_.generatePayload(validConfig)).toEqual(expected);
         });
-        it('generates valid payload', () => {
+        it('generates valid payload for `content` sub schema', () => {
             const config1 = {
                 page: {
                     isPaidContent: false,
@@ -157,10 +157,6 @@ describe('Generating Permutive payload utils', () => {
                     keywords: 'world/nato,World news,France',
                     webPublicationDate: 1575048268000,
                     series: 'politics series',
-                    edition: 'UK',
-                },
-                user: {
-                    id: 42,
                 },
             };
             const expected2 = {
@@ -175,13 +171,45 @@ describe('Generating Permutive payload utils', () => {
                     series: 'politics series',
                 },
                 user: {
-                    identity: true,
-                    edition: 'UK',
+                    identity: false,
                 },
             };
 
             expect(_.generatePayload(config1)).toEqual(expected1);
             expect(_.generatePayload(config2)).toEqual(expected2);
+        });
+        it('generates valid payload for `user` sub schema', () => {
+            const config1 = { page: {}, user: {} };
+            const expected1 = {
+                user: {
+                    identity: false,
+                },
+            };
+            const config2 = {
+                page: {
+                    edition: 'UK',
+                },
+            };
+            const expected2 = {
+                user: {
+                    identity: false,
+                    edition: 'UK',
+                },
+            };
+            const config3 = {
+                page: {},
+                user: {
+                    id: 42,
+                },
+            };
+            const expected3 = {
+                user: {
+                    identity: true,
+                },
+            };
+            expect(_.generatePayload(config1)).toEqual(expected1);
+            expect(_.generatePayload(config2)).toEqual(expected2);
+            expect(_.generatePayload(config3)).toEqual(expected3);
         });
     });
     describe('runPermutive', () => {
