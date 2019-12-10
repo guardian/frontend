@@ -13,7 +13,11 @@ type PermutiveSchema = {
         authors?: Array<string>,
         keywords?: Array<string>,
         publishedAt?: string,
-        series: string,
+        series?: string,
+    },
+    user: {
+        edition?: string,
+        identity?: boolean,
     },
 };
 
@@ -36,7 +40,10 @@ const removeEmpty = <T: Config>(payload: T): T => {
     return payload;
 };
 
-const generatePayload = (pageConfig: Config): PermutiveSchema => {
+const generatePayload = (
+    permutiveConfig: Config = { page: {}, user: {} }
+): PermutiveSchema => {
+    const { page, user } = permutiveConfig;
     const {
         isPaidContent,
         pageId,
@@ -47,7 +54,8 @@ const generatePayload = (pageConfig: Config): PermutiveSchema => {
         keywords,
         webPublicationDate,
         series,
-    } = pageConfig;
+        edition,
+    } = page;
 
     const safeAuthors = (author && typeof author === 'string'
         ? author.split(',')
@@ -61,7 +69,6 @@ const generatePayload = (pageConfig: Config): PermutiveSchema => {
         webPublicationDate && typeof webPublicationDate === 'number'
             ? new Date(webPublicationDate).toISOString()
             : '';
-
     const cleanPayload = removeEmpty({
         content: {
             premium: isPaidContent,
@@ -73,6 +80,10 @@ const generatePayload = (pageConfig: Config): PermutiveSchema => {
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
             series,
+        },
+        user: {
+            edition,
+            identity: isEmpty(user) ? false : !isEmpty(user.id),
         },
     });
 
@@ -90,10 +101,6 @@ const runPermutive = (
         }
 
         const payload = generatePayload(pageConfig);
-
-        if (isEmpty(payload)) {
-            throw new Error('Empty Permutive payload');
-        }
 
         permutiveGlobal.addon('web', {
             page: payload,
@@ -169,7 +176,11 @@ export const initPermutive = (): Promise<void> =>
                 }
             });
         /* eslint-enable */
-        runPermutive(config.get('page'), permutive, reportError);
+        const permutiveConfig = {
+            user: config.get('user', {}),
+            page: config.get('page', {}),
+        };
+        runPermutive(permutiveConfig, permutive, reportError);
 
         return resolve();
     });
