@@ -21,6 +21,8 @@ const ctaText = 'Support The Guardian';
 const messageText =
     'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. ';
 const closingSentence = 'Help us reach our year-end goal.';
+
+// NB This copy expires and must be changed week of the 16th - Please see Joshua for more details
 const articleCountCopy = `You’ve read ${articleViewCount} articles in the last three months`;
 
 // Copy specific to 'withArticleCountInBody'
