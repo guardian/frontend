@@ -97,6 +97,10 @@ data-test-id="facia-card"
             <div class="fc-item__header">
                 @title(item.header, index, containerIndex, snapType = item.snapStuff.map(_.snapType))
             </div>
+
+            @if(item.isLive && item.displaySettings.showLivePlayable && !isList) {
+                <div class="js-liveblog-blocks js-liveblog-blocks-dynamic fc-item__liveblog-blocks" data-article-id="@item.id"></div>
+            }
         </div>
 
         @item.displayElement.filter(const(item.showDisplayElement)) match {
