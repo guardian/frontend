@@ -31,14 +31,22 @@ object PressedCollectionDeduplication {
 
   def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility]): Seq[String] = {
     // Return the header urls of all curated or backfill elements of a sequence of `PressedCollectionVisibility`.
-    pCVs.flatMap{ collection => (collection.pressedCollection.curated ++ collection.pressedCollection.backfill).map ( pressedContent => pressedContent.header.url ) }
+
+    val visibility: Int = 5
+
+    // 11th Dec version:
+    // To prevent a tiny problem with the Most Popular container I am introducing the effect of collecting only the
+    // first 5 stories of each field. Interestingly the PressedCollectionVisibility has a notion of visibility
+    // that is inherited from the old code. The old notion is meant to be decommissioned
+
+    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(visibility) ++ collection.pressedCollection.backfill.take(visibility)).map ( pressedContent => pressedContent.header.url ) }
   }
 
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
-      val accumulatedHeaderURLs: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(accum)
+      val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(accum)
       // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-      val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLs.contains(pressedContent.header.url) )
+      val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
       val newCollectionV = collectionV.copy(
         pressedCollection = collectionV.pressedCollection.copy (
           backfill = newBackfill
