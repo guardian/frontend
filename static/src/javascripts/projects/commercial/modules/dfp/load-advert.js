@@ -68,7 +68,6 @@ export const refreshAdvert = (advert: Advert): void => {
                     advert.slot.defineSizeMapping([[[0, 0], [advert.size]]]);
                 }
             }
-            console.log(' *** REFRESH ADVERT CALL DFP ');
             window.googletag.pubads().refresh([advert.slot]);
         });
 };
