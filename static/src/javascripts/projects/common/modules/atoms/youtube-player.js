@@ -7,6 +7,7 @@ import { constructQuery } from 'lib/url';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import $ from 'lib/$';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -61,6 +62,11 @@ const onPlayerStateChangeEvent = (
                     `youtube__video-${status.toLocaleLowerCase()}`,
                     event.data === window.YT.PlayerState[status]
                 );
+                const fcItem = $.ancestor(el, 'fc-item');
+                if (fcItem) {
+                    fcItem.classList.toggle(`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
+                        event.data === window.YT.PlayerState[status])
+                }
                 addVideoStartedClass(el);
             }
         });
