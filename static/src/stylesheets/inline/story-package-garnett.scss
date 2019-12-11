@@ -181,12 +181,6 @@ $fc-item-gutter: $gs-gutter / 4;
         background-image: none;
     }
 
-    .fc-item {
-        .youtube-media-atom__play-button {
-            bottom: 43%;
-        }
-    }
-
     //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
     .fc-item,
     .fc-item.fc-item--pillar-opinion,
@@ -431,6 +425,10 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__content {
             padding-top: $gs-baseline / 2;
+        }
+
+        .youtube-media-atom__play-button {
+            bottom: 43%;
         }
 
         &.fc-item--is-boosted {
