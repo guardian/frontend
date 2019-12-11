@@ -550,7 +550,10 @@ $fc-item-gutter: $gs-gutter / 4;
 
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                background-color: rgba(4, 31, 74, .8);
+                background-color: $story-package-card-colour;
+                @include mq($from: tablet) {
+                    background-color: rgba(4, 31, 74, .8);
+                }
                 margin-bottom: 0;
             }
 
