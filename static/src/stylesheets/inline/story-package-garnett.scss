@@ -85,6 +85,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-container--story-package {
+    
     background-color: $story-package-container-colour;
 
     .facia-snap {
@@ -444,9 +445,10 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-top: $gs-baseline / 2;
         }
 
-
-        .youtube-media-atom__play-button {
-            bottom: 43%;
+        @include mq($from: tablet) {
+            .youtube-media-atom__play-button {
+                bottom: 43%;
+            }
         }
         
         .fc-item__header {
@@ -563,13 +565,16 @@ $fc-item-gutter: $gs-gutter / 4;
         &.fc-item--full-media-100-tablet,
         &.fc-item--three-quarters-tablet,
         &.fc-item--three-quarters-tall-tablet {
-            .fc-item__footer--vertical {
+            &:not(.fc-item--has-video-main-media) .fc-item__footer--vertical {
                 margin-top: -35px;
             }
 
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                background-color: rgba(4, 31, 74, .8);
+                background-color: $story-package-card-colour;
+                @include mq($from: tablet) {
+                    background-color: rgba(4, 31, 74, .8);
+                }
                 margin-bottom: 0;
             }
 
@@ -579,6 +584,16 @@ $fc-item-gutter: $gs-gutter / 4;
 
                 &:before {
                     width: 100%;
+                }
+            }
+        }
+
+        @include mq($from: tablet) {
+
+            &.fc-item--has-video-main-media__playing,
+            &.fc-item--has-video-main-media__paused {
+                .fc-sublinks {
+                    display: none;
                 }
             }
         }
@@ -617,6 +632,15 @@ $fc-item-gutter: $gs-gutter / 4;
                 .fc-item__footer--horizontal {
                     @include fc-sublinks--horizontal;
                     width: calc(75% - 2px);
+                }
+
+                @include mq($from: tablet) {
+                    &.fc-item--has-video-main-media__playing,
+                    &.fc-item--has-video-main-media__paused {
+                        .fc-sublinks {
+                            display: none;
+                        }
+                    }
                 }
             }
 
