@@ -77,6 +77,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-container--story-package {
+    
     background-color: $story-package-container-colour;
 
     .fc-container__body {
@@ -611,6 +612,15 @@ $fc-item-gutter: $gs-gutter / 4;
                 .fc-item__footer--horizontal {
                     @include fc-sublinks--horizontal;
                     width: calc(75% - 2px);
+                }
+
+                @include mq($from: tablet) {
+                    &.fc-item--has-video-main-media__playing,
+                    &.fc-item--has-video-main-media__paused {
+                        .fc-sublinks {
+                            display: none;
+                        }
+                    }
                 }
             }
 
