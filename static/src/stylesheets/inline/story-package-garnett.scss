@@ -274,6 +274,7 @@ $fc-item-gutter: $gs-gutter / 4;
             color: mix(#ffffff, $story-package-card-colour, 92%);
             background-color: $story-package-card-colour;
             box-shadow: -5px 0 5px -2px $story-package-card-colour;
+            bottom: 3px;
         }
 
         &:hover {
