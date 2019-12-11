@@ -1,6 +1,6 @@
 package implicits
 
-import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
+import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory, USWestCoastTerritory}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -24,7 +24,8 @@ trait Requests {
   val territoryHeaders: List[TerritoryHeader] = List(
     TerritoryHeader(EU27Territory, "EU-27"),
     TerritoryHeader(NZTerritory, "NZ"),
-    TerritoryHeader(USEastCoastTerritory, "US-East"))
+    TerritoryHeader(USEastCoastTerritory, "US-East-Coast"),
+    TerritoryHeader(USWestCoastTerritory, "US-West-Coast"))
 
   implicit class RichRequestHeader(r: RequestHeader) {
 

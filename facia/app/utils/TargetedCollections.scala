@@ -1,6 +1,6 @@
 package utils
 
-import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory}
+import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory, USWestCoastTerritory}
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -16,7 +16,8 @@ object TargetedCollections {
   val prettyTerritoryLookup: Map[TargetedTerritory, String] = Map(
     NZTerritory -> "New Zealand",
     EU27Territory -> "EU-27 Countries",
-    USEastCoastTerritory -> "US East Coast"
+    USEastCoastTerritory -> "US East Coast",
+    USWestCoastTerritory -> "US West Coast"
   )
 
   def markDisplayName(collection: PressedCollection): PressedCollection = {
