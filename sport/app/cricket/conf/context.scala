@@ -21,7 +21,7 @@ class CricketLifecycle(
   }}
 
   private def scheduleJobs() {
-    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 15.seconds) {
+    jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 120.seconds) {
       Future(cricketStatsJob.run(fromDate = LocalDate.now, matchesToFetch = 1))
     }
     jobs.scheduleEvery("CricketAgentRefreshHistoricalMatches", 10.minutes) {
