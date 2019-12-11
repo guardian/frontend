@@ -370,6 +370,14 @@ $fc-item-gutter: $gs-gutter / 4;
 
         @include mq($until: tablet) {
 
+            &.fc-item--three-quarters-tall-tablet,
+            &.fc-item--full-media-100-tablet {
+                // Show the sublinks
+                .fc-item__content--below {
+                    display: block;
+                }
+            }
+
             .fc-item__content--below .fc-item__header {
                 display: none;
             }
