@@ -18,8 +18,7 @@ if (!isGoogleProxy()) {
 const setupPrebid: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
-            (dfpEnv.externalDemand === 'prebid' ||
-                dfpEnv.externalDemand === 'all') &&
+            dfpEnv.hbImpl.prebid &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&

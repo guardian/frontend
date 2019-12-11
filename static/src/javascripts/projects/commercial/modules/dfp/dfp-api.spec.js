@@ -115,6 +115,7 @@ const reset = () => {
     dfpEnv.adverts = [];
     dfpEnv.advertsToRefresh = [];
     dfpEnv.advertsToLoad = [];
+    dfpEnv.hbImpl = { prebid: false, a9: false };
     fillAdvertSlots.mockReset();
 };
 

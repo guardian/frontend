@@ -23,8 +23,7 @@ const setupA9: () => Promise<void> = () =>
         if (
             shouldIncludeOnlyA9 ||
             (isInUsRegion() &&
-                (dfpEnv.externalDemand === 'a9' ||
-                    dfpEnv.externalDemand === 'all') &&
+                dfpEnv.hbImpl.a9 &&
                 isInVariantSynchronous(amazonA9Test, 'variant') &&
                 commercialFeatures.dfpAdvertising &&
                 !commercialFeatures.adFree &&

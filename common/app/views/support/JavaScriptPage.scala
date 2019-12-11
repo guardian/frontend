@@ -50,12 +50,10 @@ object JavaScriptPage {
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> {
-        if (prebidSwitch.isSwitchedOn && a9Switch.isSwitchedOn) JsString("all")
-        else if (prebidSwitch.isSwitchedOn) JsString("prebid")
-        else if (a9Switch.isSwitchedOn) JsString("a9")
-        else JsString("none")
-      },
+      "hbImpl" -> JsObject(Seq(
+          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
+          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
+      )),
       "isSensitive" -> JsBoolean(page.metadata.sensitive)
     ) ++ sponsorshipType
 

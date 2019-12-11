@@ -50,7 +50,7 @@ const requestBids = (
         return requestQueue;
     }
 
-    if (dfpEnv.externalDemand !== 'a9' && dfpEnv.externalDemand !== 'all') {
+    if (!dfpEnv.hbImpl.a9) {
         return requestQueue;
     }
 

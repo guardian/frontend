@@ -7,7 +7,7 @@ import config from 'lib/config';
 export type DfpEnv = {
     renderStartTime: number,
     adSlotSelector: string,
-    externalDemand: string,
+    hbImpl: { prebid: boolean, a9: boolean },
     lazyLoadEnabled: boolean,
     lazyLoadObserve: boolean,
     creativeIDs: Array<number>,
@@ -25,8 +25,8 @@ export const dfpEnv: DfpEnv = {
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* externalDemand: string. Set to 'prebid' or 'a9' for header-bidding connections, or 'none' or 'all'. */
-    externalDemand: config.get('page.hbImpl'),
+    /* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
+    hbImpl: config.get('page.hbImpl'),
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,

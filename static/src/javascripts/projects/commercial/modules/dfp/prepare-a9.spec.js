@@ -67,8 +67,8 @@ describe('init', () => {
         jest.clearAllMocks();
     });
 
-    it('should initialise A9 when external demand is A9 or all and advertising is on and ad-free is off', async () => {
-        dfpEnv.externalDemand = 'a9';
+    it('should initialise A9 when A9 switch is ON and advertising is on and ad-free is off', async () => {
+        dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         isInVariantSynchronous.mockImplementation(
@@ -78,8 +78,8 @@ describe('init', () => {
         expect(a9.initialise).toBeCalled();
     });
 
-    it('should initialise A9 when external demand is all or all and advertising is on and ad-free is off', async () => {
-        dfpEnv.externalDemand = 'all';
+    it('should initialise A9 when both prebid and a9 switches are ON and advertising is on and ad-free is off', async () => {
+        dfpEnv.hbImpl = { a9: true, prebid: true };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         await setupA9();
@@ -93,7 +93,7 @@ describe('init', () => {
     });
 
     it('should not initialise A9 when no external demand', async () => {
-        dfpEnv.externalDemand = 'none';
+        dfpEnv.hbImpl = { a9: false, prebid: false };
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
@@ -111,7 +111,7 @@ describe('init', () => {
     });
 
     it('should not initialise a9 when the page has a pageskin', async () => {
-        dfpEnv.externalDemand = 'a9';
+        dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.set('page.hasPageSkin', true);
@@ -120,7 +120,7 @@ describe('init', () => {
     });
 
     it('should initialise a9 when the page has no pageskin', async () => {
-        dfpEnv.externalDemand = 'a9';
+        dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         config.set('page.hasPageSkin', false);

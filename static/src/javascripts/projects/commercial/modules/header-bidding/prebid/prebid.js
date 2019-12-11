@@ -232,7 +232,7 @@ const requestBids = (
         return requestQueue;
     }
 
-    if (dfpEnv.externalDemand !== 'prebid' && dfpEnv.externalDemand !== 'all') {
+    if (!dfpEnv.hbImpl.prebid) {
         return requestQueue;
     }
 
