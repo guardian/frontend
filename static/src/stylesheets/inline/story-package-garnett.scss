@@ -19,7 +19,7 @@ $fc-item-gutter: $gs-gutter / 4;
         }
 
         .live-pulse-icon:before {
-          background-color: $colour;
+            background-color: $colour;
         }
 
         .inline-garnett-quote {
@@ -321,9 +321,9 @@ $fc-item-gutter: $gs-gutter / 4;
         }
 
         .fc-item__header {
-          @include mq($until: tablet) {
-            @include fs-headline(4);
-          }
+            @include mq($until: tablet) {
+                @include fs-headline(4);
+            }
         }
 
         &.fc-item--is-boosted {
