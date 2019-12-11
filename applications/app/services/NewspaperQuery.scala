@@ -161,6 +161,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
         snapType = "no-snap-type",
         snapUri = None,
         snapCss = None,
+        atomId = None,
         headline = Some(displayFormat),
         href = Some(href),
         trailText = None,
