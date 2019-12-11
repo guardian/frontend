@@ -373,6 +373,10 @@ $fc-item-gutter: $gs-gutter / 4;
                     background-color: darken($story-package-card-colour, 5%);
                 }
             }
+
+            .fc-item__standfirst-wrapper {
+                display: none;
+            }
         }
     }
 
