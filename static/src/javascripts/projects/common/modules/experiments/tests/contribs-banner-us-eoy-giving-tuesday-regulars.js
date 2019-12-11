@@ -2,12 +2,12 @@
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
-import { getArticleViewCountForDays } from 'common/modules/onward/history';
+import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
 // User must have read at least 5 articles in last 60 days
 const minArticleViews = 5;
-const articleCountDays = 60;
-const articleViewCount = getArticleViewCountForDays(articleCountDays);
+const articleCountWeeks = 26; // Requesting a half year in order to get as many as possible for this and next iterations
+const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
@@ -21,7 +21,7 @@ const ctaText = 'Support The Guardian';
 const messageText =
     'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. ';
 const closingSentence = 'Help us reach our year-end goal.';
-const articleCountCopy = `You’ve read ${articleViewCount} articles in the last two months`;
+const articleCountCopy = `You’ve read ${articleViewCount} articles in the last three months`;
 
 // Copy specific to 'withArticleCountInBody'
 const articleCountInBody = `${articleCountCopy}. `;
