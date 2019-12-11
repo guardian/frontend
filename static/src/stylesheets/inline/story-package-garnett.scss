@@ -13,8 +13,13 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__kicker,
         .rich-link__kicker,
+        .fc-sublink__kicker,
         .fc-item__byline {
             color: $colour;
+        }
+
+        .live-pulse-icon:before {
+          background-color: $colour;
         }
 
         .inline-garnett-quote {
@@ -55,12 +60,15 @@ $fc-item-gutter: $gs-gutter / 4;
                 .fc-sublink--pillar-#{$tone} {
                     .fc-sublink__kicker {
                         @include fs-textSans(3);
-                        color: #ffffff;
                         display: block;
                         width: 100%;
                         margin-bottom: $gs-baseline / 2;
                     }
                 }
+            }
+
+            .fc-item__content--above {
+                padding: 6px 0;
             }
         }
 
@@ -82,8 +90,13 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-container--story-package {
-
     background-color: $story-package-container-colour;
+
+    .facia-snap {
+        @include mq($from: desktop) {
+            border-bottom: 1px solid #929698
+        }
+    }
 
     .fc-container__body {
         position: relative;
@@ -123,6 +136,12 @@ $fc-item-gutter: $gs-gutter / 4;
     .fc-container__header__title {
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
+        width: 100%;
+        border-bottom: 1px solid #d6d6d6;
+
+        @include mq($from: leftCol) {
+            border-bottom: 0;
+        }
 
         &:after {
             display: none;
@@ -137,20 +156,12 @@ $fc-item-gutter: $gs-gutter / 4;
             color: $container-title;
             display: inline-block;
             line-height: 24px;
-            top: 6px;
+            top: 0;
             position: relative;
             padding-right: 4px;
 
             @include mq($from: tablet) {
                 top: 0px;
-            }
-
-            @include mq($from: desktop) {
-                line-height: 25px;
-            }
-
-            @include mq($from: wide) {
-                line-height: 30px;
             }
         }
 
@@ -263,7 +274,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
     .treats__list-item {
         .treats__treat {
-            background-color: $brightness-86;
+            background-color: $story-package-container-colour;
             border-color: $special-report-dark;
             color: $special-report-dark;
         }
@@ -307,6 +318,12 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-item__content {
             padding-top: $gs-baseline / 2;
+        }
+
+        .fc-item__header {
+          @include mq($until: tablet) {
+            @include fs-headline(4);
+          }
         }
 
         &.fc-item--is-boosted {
@@ -362,7 +379,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 padding-top: $gs-baseline;
 
                 &:before {
-                    width: 33%;
+                    width: 24.5%;
                 }
             }
         }
