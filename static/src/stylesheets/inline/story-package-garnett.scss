@@ -445,9 +445,10 @@ $fc-item-gutter: $gs-gutter / 4;
             padding-top: $gs-baseline / 2;
         }
 
-
-        .youtube-media-atom__play-button {
-            bottom: 43%;
+        @include mq($from: tablet) {
+            .youtube-media-atom__play-button {
+                bottom: 43%;
+            }
         }
         
         .fc-item__header {
