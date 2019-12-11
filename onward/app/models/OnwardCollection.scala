@@ -21,6 +21,7 @@ case class OnwardItem(
   pillar: String,
   designType: String,
   webPublicationDate: String,
+  headline: String,
 )
 
 case class MostPopularGeoResponse(
@@ -61,7 +62,8 @@ object OnwardCollection {
         isLiveBlog = content.properties.isLiveBlog,
         pillar = findPillar(content.maybePillar, content.frontendTags.toList),
         designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
-        webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString
+        webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
+        headline = content.header.headline,
       )
     )
   }
