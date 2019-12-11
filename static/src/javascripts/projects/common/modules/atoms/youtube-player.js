@@ -64,8 +64,10 @@ const onPlayerStateChangeEvent = (
                 );
                 const fcItem = $.ancestor(el, 'fc-item');
                 if (fcItem) {
-                    fcItem.classList.toggle(`fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
-                        event.data === window.YT.PlayerState[status])
+                    $(fcItem)[0].classList.toggle(
+                        `fc-item--has-video-main-media__${status.toLocaleLowerCase()}`,
+                        event.data === window.YT.PlayerState[status]
+                    );
                 }
                 addVideoStartedClass(el);
             }
