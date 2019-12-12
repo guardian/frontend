@@ -308,6 +308,12 @@ $block-height: 58px; // Note: duplicated from _item.scss
             transform: none;
         }
 
+        // This is overridden below for the fc-item--full-media-100-tablet and
+        // fc-item--three-quarters-tall-tablet cards (where we show all blocks)
+        .fc-item__liveblog-block:nth-child(n+3) {
+            display: none;
+        }
+
         // Live update circle
         .fc-item__liveblog-block__time:before {
             content: '';
@@ -375,7 +381,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-item__liveblog-block {
                 display: flex;
                 flex: 1;
-                max-width: 50%;
+                max-width: 33.3%;
             }
 
             .fc-item__liveblog-block__time {
