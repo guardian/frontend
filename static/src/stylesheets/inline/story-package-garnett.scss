@@ -290,8 +290,11 @@ $block-height: 58px; // Note: duplicated from _item.scss
         .fc-item__liveblog-block__text:after {
             color: mix(#ffffff, $story-package-card-colour, 92%);
             background-color: $story-package-card-colour;
-            box-shadow: -5px 0 5px -2px $story-package-card-colour;
-            bottom: 3px;
+            box-shadow: -5px 0 5px -.04px $story-package-card-colour;
+            bottom: 1.2px;
+            font-size: 20px;
+            line-height: 13px;
+            padding-right: 24px;
         }
 
         &:hover {
@@ -383,7 +386,8 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         // Invert the live update colours for these cards
-        &.fc-item--full-media-100-tablet, &.fc-item--three-quarters-tall-tablet {
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
             .fc-item__liveblog-blocks {
                 height: $block-height;
             }
@@ -397,6 +401,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
                 display: flex;
                 flex: 1;
                 max-width: 33.3%;
+                padding-right: $gs-gutter;
             }
 
             .fc-item__liveblog-block__time {
@@ -406,6 +411,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-item__liveblog-block__text {
                 color: $story-package-card-colour;
+                padding-right: 0; // Remove padding in this layout so that we only use the gutter padding from the block
             }
 
             .fc-item__liveblog-block__text {
@@ -445,7 +451,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             // Circle
             .fc-item__liveblog-block__time:before {
-                border: $thin-border solid $story-package-card-colour;
+                border: $thin-border solid $news-bright;
             }
 
             // Connector line
