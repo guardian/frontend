@@ -3,8 +3,9 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { markTime } from 'lib/user-timing';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
+import type { HeaderBiddingSlot } from 'commercial/modules/header-bidding/types';
 
-const slotFlatMap = (advert, hbSlot) => {
+const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
     // We only fiddle with top-above-nav hbSlot(s)
     if (hbSlot.key !== 'top-above-nav') {
         return [hbSlot];
@@ -51,11 +52,11 @@ export const refreshAdvert = (advert: Advert): void => {
     advert.whenSlotReady
         .then(() => {
             const prepidPromise = prebid.requestBids(advert, prebidSlot =>
-                slotFlatMap(advert, prebidSlot)
+                forcedSlotSize(advert, prebidSlot)
             );
 
             const a9Promise = a9.requestBids(advert, a9Slot =>
-                slotFlatMap(advert, a9Slot)
+                forcedSlotSize(advert, a9Slot)
             );
             return Promise.all([prepidPromise, a9Promise]);
         })
