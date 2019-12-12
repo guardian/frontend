@@ -32,7 +32,7 @@ object PressedCollectionDeduplication {
   def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility]): Seq[String] = {
     // Return the header urls of all curated or backfill elements of a sequence of `PressedCollectionVisibility`.
 
-    val visibility: Int = 5
+    val visibility: Int = 3
 
     // 11th Dec version:
     // To prevent a tiny problem with the Most Popular container I am introducing the effect of collecting only the
