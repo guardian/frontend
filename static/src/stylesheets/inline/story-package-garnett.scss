@@ -275,7 +275,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
         .fc-item__liveblog-block__text:after {
             color: mix(#ffffff, $story-package-card-colour, 92%);
             background-color: $story-package-card-colour;
-            box-shadow: -5px 0 5px -0.04px $story-package-card-colour;
+            box-shadow: -5px 0 5px -.04px $story-package-card-colour;
             bottom: 1.2px;
             font-size: 20px;
             line-height: 13px;
