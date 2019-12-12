@@ -29,7 +29,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 background-image: none;
             }
 
-            .fc-item__container.u-faux-block-link--hover {
+            &.fc-item--type-comment:not(.fc-item--pillar-special-report) .fc-item__container.u-faux-block-link--hover {
                 background-color: darken($story-package-card-colour, 5%);
             }
         }
