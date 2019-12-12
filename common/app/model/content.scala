@@ -23,6 +23,7 @@ import scala.collection.JavaConverters._
 import scala.util.Try
 import implicits.Booleans._
 import org.joda.time.DateTime
+import conf.switches.Switches.InteractiveHeaderSwitch
 
 sealed trait ContentType {
   def content: Content
@@ -906,7 +907,7 @@ object Interactive {
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
-      contentWithSlimHeader = true
+      contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff
     )
     val contentOverrides = content.copy(
       metadata = metadata
