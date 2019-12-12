@@ -15,7 +15,7 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 let moduleLoadResult = Promise.resolve();
 if (!isGoogleProxy()) {
-    moduleLoadResult = import('lib/apstag.js');
+    moduleLoadResult = import('lib/a9-apstag.js');
 }
 
 const setupA9: () => Promise<void> = () =>
