@@ -61,24 +61,33 @@ describe('init', () => {
     });
 
     it('should not initialise Prebid when useragent is Google Web Preview', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
         fakeUserAgent('Google Web Preview');
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when no header bidding switches are on', async () => {
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
         dfpEnv.hbImpl = { prebid: false, a9: false };
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when advertising is switched off', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = false;
+        commercialFeatures.adFree = false;
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });
 
     it('should not initialise Prebid when ad-free is on', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = true;
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();

@@ -99,13 +99,23 @@ describe('init', () => {
     });
 
     it('should not initialise a9 when advertising is switched off', async () => {
+        dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = false;
+        commercialFeatures.adFree = false;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
 
     it('should not initialise a9 when ad-free is on', async () => {
+        dfpEnv.hbImpl = { a9: true, prebid: false };
+        commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = true;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
@@ -114,6 +124,9 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         config.set('page.hasPageSkin', true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
