@@ -57,16 +57,19 @@ $fc-item-gutter: $gs-gutter / 4;
             &.fc-item:not(.fc-item--pillar-special-report) {
                 .fc-sublink--pillar-#{$tone} {
                     .fc-sublink__kicker {
-                        @include fs-textSans(3);
                         display: block;
                         width: 100%;
-                        margin-bottom: $gs-baseline / 2;
                     }
                 }
             }
 
             .fc-item__content--above {
                 padding: 6px 0;
+            }
+            .fc-item__content--below {
+                @include mq($until: tablet) {
+                    padding: 0;
+                }
             }
         }
 
@@ -85,7 +88,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-container--story-package {
-    
+
     background-color: $story-package-container-colour;
 
     .facia-snap {
@@ -450,7 +453,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 bottom: 43%;
             }
         }
-        
+
         .fc-item__header {
             @include mq($until: tablet) {
                 @include fs-headline(4);
@@ -565,15 +568,15 @@ $fc-item-gutter: $gs-gutter / 4;
         &.fc-item--full-media-100-tablet,
         &.fc-item--three-quarters-tablet,
         &.fc-item--three-quarters-tall-tablet {
-            &:not(.fc-item--has-video-main-media) .fc-item__footer--vertical {
-                margin-top: -35px;
-            }
 
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                background-color: $story-package-card-colour;
+                background-color: $story-package-dynamic-card-text;
+
                 @include mq($from: tablet) {
                     background-color: rgba(4, 31, 74, .8);
+                    border-left: 0;
+                    border-bottom: 0;
                 }
                 margin-bottom: 0;
             }
@@ -581,6 +584,7 @@ $fc-item-gutter: $gs-gutter / 4;
             .fc-sublink__title,
             &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
                 color: #ffffff;
+                font-weight: 800;
 
                 &:before {
                     width: 100%;
