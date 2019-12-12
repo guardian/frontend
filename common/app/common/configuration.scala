@@ -242,7 +242,8 @@ class GuardianConfiguration extends Logging {
     lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
   }
 
-  object apstag {
+  // Amazon A9 APS Transparent Ad Marketplace library
+  object a9ApsTag {
     lazy val key = configuration.getStringProperty("apstag.api.key").getOrElse("")
   }
 
@@ -508,7 +509,7 @@ class GuardianConfiguration extends Logging {
       ("supportUrl", id.supportUrl),
       ("stripePublicToken", id.stripePublicToken),
       ("optimizeEpicUrl", id.optimizeEpicUrl),
-      ("a9PublisherId", apstag.key)
+      ("a9PublisherId", a9ApsTag.key)
     )
 
     lazy val pageData: Map[String, String] = {
