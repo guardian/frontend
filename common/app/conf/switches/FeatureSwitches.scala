@@ -441,4 +441,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+    // Election interactive header switch
+  val InteractiveHeaderSwitch = Switch(
+    SwitchGroup.Feature,
+    "interactive-header-switch",
+    "If switched on, the header on all interctives will display in full.",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = On,
+    sellByDate = new LocalDate(2019, 12, 16),
+    exposeClientSide = true
+  )
 }
