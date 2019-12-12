@@ -481,12 +481,15 @@ $video-width-desktop: 700px;
 }
 
 .fc-item__video-container {
-    .youtube-media-atom {
-        z-index: 1;
+    // Videos on mobile should just click through to the article
+    @include mq($from: tablet) {
+        .youtube-media-atom {
+            z-index: 1;
 
-        &.no-player,
-        .is-not-modern & {
-            z-index: 0;
+            &.no-player,
+            .is-not-modern & {
+                z-index: 0;
+            }
         }
     }
 }
