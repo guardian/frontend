@@ -3,7 +3,7 @@
 export const commercialCmpUiIab: ABTest = {
     id: 'CommercialCmpUiIab',
     start: '2019-10-14',
-    expiry: '2019-12-17',
+    expiry: '2019-01-08',
     author: 'George Haberis',
     description: '1% participation AB test for the new CMP UI',
     audience: 0.01,
