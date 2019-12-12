@@ -64,7 +64,7 @@ const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
 const hasAcknowledged = () => {
-    const bannerRedeploymentDate = new Date(2019, 11, 2, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
+    const bannerRedeploymentDate = new Date(2019, 11, 12, 5, 0).getTime(); // 2 Dec 2019 @ 5:00
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
 
