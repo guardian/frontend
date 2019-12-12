@@ -653,8 +653,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
         @include mq($from: tablet) {
 
-            &.fc-item--has-video-main-media__unstarted,
-            &.fc-item--has-video-main-media__playing,
+            &.fc-item--has-video-main-media__ready:not(.fc-item--has-video-main-media__ended),
             &.fc-item--has-video-main-media__paused {
                 .fc-sublinks {
                     display: none;
