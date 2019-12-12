@@ -488,10 +488,6 @@ $fc-item-gutter: $gs-gutter / 4;
             background-color: $story-package-container-colour;
         }
 
-        .fc-item__kicker:after {
-            display: none;
-        }
-
         .fc-item__headline,
         .fc-item__standfirst,
         .fc-sublink__title {
@@ -535,10 +531,6 @@ $fc-item-gutter: $gs-gutter / 4;
             &.fc-item--three-quarters-tall-tablet .fc-item__content--above:before {
                 width: 100%;
             }
-        }
-
-        .fc-item__kicker:after {
-            display: none;
         }
 
         &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
