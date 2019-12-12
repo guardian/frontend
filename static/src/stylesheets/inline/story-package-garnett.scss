@@ -353,31 +353,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        &.fc-item--full-media-75-tablet {
-            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
-                background-color: darken($story-package-card-colour, 5%);
-            }
-
-            .fc-item__liveblog-blocks__inner {
-                background-color: $story-package-card-colour;
-                margin-left: -5px;
-                margin-right: 5px;
-                padding-left: 5px;
-                position: absolute;
-                bottom: 0;
-
-                &:hover {
-                    background-color: darken($story-package-card-colour, 5%);
-                }
-            }
-
-            .fc-item__standfirst-wrapper {
-                display: none;
-            }
+        &.fc-item--full-media-75-tablet .fc-item__standfirst-wrapper {
+            display: none;
         }
 
-        // Invert the live update colours for these cards
-        &.fc-item--full-media-100-tablet, &.fc-item--three-quarters-tall-tablet {
+        // Live updates in horizontal mode
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
             .fc-item__liveblog-blocks {
                 height: $block-height;
             }
@@ -393,6 +375,20 @@ $block-height: 58px; // Note: duplicated from _item.scss
                 max-width: 50%;
             }
 
+        }
+
+        // Stick the liveblog blocks to the bottom
+        &.fc-item--full-media-75-tablet {
+            .fc-item__liveblog-blocks__inner {
+                position: absolute;
+                bottom: -#{$border-bottom-width};
+            }
+        }
+
+        // Invert the live update colours for these cards
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet,
+        &.fc-item--full-media-75-tablet {
             .fc-item__liveblog-block__time {
                 color: $story-package-card-colour;
                 display: inline;
