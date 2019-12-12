@@ -23,6 +23,7 @@ const dynamicClass = 'js-liveblog-blocks-dynamic';
 const articleIdAttribute = 'data-article-id';
 const sessionStorageKey = 'gu.liveblog.block-dates';
 const viewportHeightPx = getViewport().height;
+const maxBlockCount = 3;
 
 type Block = {
     id: string,
@@ -162,6 +163,18 @@ const completeUpdate = (
 const isDynamic = (element: Element): boolean =>
     element.classList.contains(dynamicClass);
 
+const calculateBlockCount = (
+    hasNewBlock: boolean,
+    isInDynamicContainer: boolean
+): number => {
+    if (isInDynamicContainer) {
+        return maxBlockCount;
+    } else if (hasNewBlock) {
+        return 2;
+    }
+    return 1;
+};
+
 const showBlocks = (
     articleId: string,
     targets: Array<Element>,
@@ -179,7 +192,7 @@ const showBlocks = (
         ];
 
         const blocksHtml = blocks
-            .slice(0, 2)
+            .slice(0, maxBlockCount)
             .map((block, index) => {
                 if (
                     !hasNewBlock &&
@@ -194,7 +207,7 @@ const showBlocks = (
 
                 return renderBlock(articleId, block, index);
             })
-            .slice(0, hasNewBlock || isDynamic(element) ? 2 : 1);
+            .slice(0, calculateBlockCount(hasNewBlock, isDynamic(element)));
 
         const el = bonzo.create(
             `<div class="${wrapperClasses.join(' ')}">${blocksHtml.join(
