@@ -67,9 +67,9 @@ $fc-item-gutter: $gs-gutter / 4;
                 padding: 6px 0;
             }
             .fc-item__content--below {
-              @include mq($until: tablet) {
-                padding: 0;
-              }
+                @include mq($until: tablet) {
+                    padding: 0;
+                }
             }
         }
 
