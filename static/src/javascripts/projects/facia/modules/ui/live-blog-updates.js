@@ -56,7 +56,7 @@ const renderBlock = (
 
     return template(blockTemplate)({
         ariaHidden: !block.isNew,
-        href: `/${articleId}#${block.id}`,
+        href: `/${articleId}#block-${block.id}`,
         relativeTime: relTime,
         text: [block.title, block.body.slice(0, 500)]
             .filter(x => x != null)
