@@ -371,7 +371,8 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         // Invert the live update colours for these cards
-        &.fc-item--full-media-100-tablet, &.fc-item--three-quarters-tall-tablet {
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
             .fc-item__liveblog-blocks {
                 height: $block-height;
             }
@@ -385,6 +386,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
                 display: flex;
                 flex: 1;
                 max-width: 33.3%;
+                padding-right: $gs-gutter;
             }
 
             .fc-item__liveblog-block__time {
@@ -394,6 +396,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-item__liveblog-block__text {
                 color: $story-package-card-colour;
+                padding-right: 0; // Remove padding in this layout so that we only use the gutter padding from the block
             }
 
             .fc-item__liveblog-block__text {
