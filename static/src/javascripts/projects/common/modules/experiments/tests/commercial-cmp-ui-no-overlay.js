@@ -3,7 +3,7 @@
 export const commercialCmpUiNoOverlay: ABTest = {
     id: 'CommercialCmpUiNoOverlay',
     start: '2019-11-21',
-    expiry: '2019-01-08',
+    expiry: '2020-01-08',
     author: 'Ricardo Costa',
     description:
         '0.5% AB test for an IAB compliant consent banner with no overlay',
