@@ -70,7 +70,9 @@ object PressedCollectionDeduplication {
   }
 
   def makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): Seq[PressedCollectionVisibility] = {
-    Seq.range(1,10).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
+    val depths: List[Int] = accum.map( c => pressedCollectionCommonLength(c.pressedCollection) ).toList
+    val maxDepth = if (depths.isEmpty) 1 else depths.max + 1 // We meed to ensure that maxDepth is at least one for the return Seq to have at least one element
+    Seq.range(0, maxDepth).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
   }
 
   def reduceDeduplicatedCollectionCandidates(candidates: Seq[PressedCollectionVisibility]): Option[PressedCollectionVisibility] = {
