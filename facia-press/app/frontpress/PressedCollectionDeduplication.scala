@@ -57,17 +57,31 @@ object PressedCollectionDeduplication {
     pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
   }
 
+  def deduplicatedThisCollectionV(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility, depth: Int): PressedCollectionVisibility = {
+    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, depth)
+    val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
+    collectionV.copy(
+      pressedCollection = collectionV.pressedCollection.copy (
+        backfill = newBackfill
+      )
+    )
+  }
+
+  def makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): Seq[PressedCollectionVisibility] = {
+    Seq.range(1,3).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
+  }
+
+  def reduceDeduplicatedCollectionCandidates(candidates: Seq[PressedCollectionVisibility]): Option[PressedCollectionVisibility] = {
+    candidates.reverse.headOption
+  }
+
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
-      val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 3)
-      // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-      val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
-      val newCollectionV = collectionV.copy(
-        pressedCollection = collectionV.pressedCollection.copy (
-          backfill = newBackfill
-        )
-      )
-      accum :+ newCollectionV
+      val candidates: Seq[PressedCollectionVisibility] = makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility)
+      reduceDeduplicatedCollectionCandidates(candidates) match {
+        case None => accum
+        case Some(collectionV) => accum :+ collectionV
+      }
     }
   }
 }
