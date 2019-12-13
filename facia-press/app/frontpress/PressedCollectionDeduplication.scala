@@ -29,7 +29,7 @@ object PressedCollectionDeduplication {
 
    */
 
-  def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
+  def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility], curatedDepth: Int, backfillDepth: Int): Seq[String] = {
     // Return the header urls of all curated or backfill elements of a sequence of `PressedCollectionVisibility`.
     // Taken within `depth` of the beginning of the sequence.
 
@@ -38,12 +38,14 @@ object PressedCollectionDeduplication {
     // first depth stories of each field. Interestingly the PressedCollectionVisibility has a notion of visibility
     // that is inherited from the old code. The old notion is meant to be decommissioned
 
-    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
+    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(curatedDepth) ++ collection.pressedCollection.backfill.take(backfillDepth)).map ( pressedContent => pressedContent.header.url ) }
   }
 
   def makeNewBackfill(collectionV: PressedCollectionVisibility, preceedingCollectionVsDeduplicated: Seq[PressedCollectionVisibility]): List[PressedContent] = {
     // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated, 3)
+    val lookUpCuratedDepth = 3
+    val lookupBackfilledDepth = 3
+    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated, lookUpCuratedDepth, lookupBackfilledDepth)
     collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
   }
 
