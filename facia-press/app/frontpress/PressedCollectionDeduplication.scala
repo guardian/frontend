@@ -50,12 +50,6 @@ object PressedCollectionDeduplication {
       Therefore, once [pc_{n}'1, pc_{n}'2, ..., pc_{n}'i_{max}] has been computed, we take either the first one or the last possible one with at least 10 elements (curated and backfilled counted together).
    */
 
-  /*
-      Pascal - 13th Dec 2019
-
-      The next refactoring will focus on detecting the Most Popular component and apply a different logic to it. 
-   */
-
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
     pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
   }
@@ -63,6 +57,7 @@ object PressedCollectionDeduplication {
   def pressedCollectionCommonLength(pC: PressedCollection): Int = pC.curated.size + pC.backfill.size
 
   def deduplicatedThisCollectionV(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility, depth: Int): PressedCollectionVisibility = {
+    // Essentially deduplicate the backfill of collectionV using header values values from accum's elements curated and backfill
     val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, depth)
     val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
     collectionV.copy(
@@ -73,22 +68,29 @@ object PressedCollectionDeduplication {
   }
 
   def makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): Seq[PressedCollectionVisibility] = {
+    // Given accum prepare a sequence of more and more aggressively deduplicated versions of collectionV
     val depths: List[Int] = accum.map( c => pressedCollectionCommonLength(c.pressedCollection) ).toList
     val maxDepth = if (depths.isEmpty) 1 else depths.max + 1 // We meed to ensure that maxDepth is at least one for the return Seq to have at least one element
     Seq.range(0, maxDepth).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
   }
 
+  def secondCollectionShouldBeChosenOverTheFirst(c1: PressedCollectionVisibility, c2: PressedCollectionVisibility): Boolean = {
+    pressedCollectionCommonLength(c2.pressedCollection) >= 10
+  }
+
   def reduceDeduplicatedCollectionCandidates(candidates: Seq[PressedCollectionVisibility]): Option[PressedCollectionVisibility] = {
-    candidates.foldLeft[Option[PressedCollectionVisibility]](None){ (accum, collectionV) =>
+    // Reduces the sequence prepared by makeDeduplicatedCollectionCandidates using the boolean computed by secondCollectionShouldBeChosenOverTheFirst
+    candidates.foldLeft[Option[PressedCollectionVisibility]](None){ (accum, collectionV_) =>
       accum match {
-        case None => Some(collectionV)
-        case Some(_collectionV) => Some( if (pressedCollectionCommonLength(collectionV.pressedCollection) >= 10) collectionV else _collectionV )
+        case None => Some(collectionV_)
+        case Some(collectionV) => Some( if(secondCollectionShouldBeChosenOverTheFirst(collectionV, collectionV_)) collectionV_ else collectionV )
       }
     }
   }
 
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
+      // Given collectionV we compute the candidates for its replacement, then add the best of those candidates (according to reduceDeduplicatedCollectionCandidates) to accum
       val candidates: Seq[PressedCollectionVisibility] = makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility)
       reduceDeduplicatedCollectionCandidates(candidates) match {
         case None => accum
