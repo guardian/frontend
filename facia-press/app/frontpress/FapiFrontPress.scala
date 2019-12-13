@@ -22,11 +22,10 @@ import model.facia.PressedCollection
 import model.pressed._
 import org.joda.time.DateTime
 import play.api.libs.json._
-import play.api.libs.ws.WSClient
+import play.api.libs.ws.{WSClient, WSResponse}
 import services.{ConfigAgent, S3FrontsApi}
 import implicits.Booleans._
 import layout.slices.Container
-import java.net.URI
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
@@ -332,48 +331,13 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
   private def enrichContent(collection: Collection, content: PressedContent, enriched: Option[EnrichedContent])(implicit executionContext: ExecutionContext): Response[EnrichedContent] = {
     val beforeEnrichment = enriched.getOrElse(EnrichedContent.empty)
 
-    val afterEnrichment = for {
-      embedType <- content.properties.embedType if embedType == "json.html" || embedType == "interactive"
-      embedUri <- content.properties.embedUri
-    } yield {
-      val maybeUpdate = (embedType match {
-        case "json.html" =>
-          (wsClient.url(embedUri).get().map { response =>
-            Json.fromJson[EmbedJsonHtml](response.json) match {
-              case JsSuccess(embed, _) =>
-                beforeEnrichment.copy(embedHtml = Some(embed.html))
-              case _ =>
-                log.warn(s"An embed had invalid json format, and won't be pressed. ${content.properties.webTitle} for collection ${collection.id}")
-                beforeEnrichment
-            }
-          }) recover {
-            case _ => {
-              log.warn(s"A request to an embed uri failed, embed won't be pressed. $embedUri for collection ${collection.id}")
-              beforeEnrichment
-            }
-          }
-        case "interactive" =>
-          val capiId = CapiUrl.extractId(embedUri)
-          capiClient.getResponse(ItemQuery(capiId)).map { response =>
-            response.interactive.flatMap { interactive =>
-              interactive.data match {
-                case atom: com.gu.contentatom.thrift.AtomData.Interactive =>
-                  Some(beforeEnrichment.copy(embedHtml = Some(atom.interactive.html), embedCss = Some(atom.interactive.css), embedJs = atom.interactive.mainJS))
-                case _ =>
-                  None
-              }
-            }.getOrElse({
-              val msg = s"Processing of an interactive atom failed, and it won't be pressed. ${embedUri} for collection ${collection.id}"
-              log.warn(msg)
-              throw new RuntimeException(msg)
-            })
-          }
-      })
-
-      Response.Async.Right(maybeUpdate)
+    val maybeUpdate = content.properties.embedType match {
+      case Some("json.html") => Enrichment.enrichSnap(content.properties.embedUri, beforeEnrichment, collection, wsClient)
+      case Some("interactive") => Enrichment.enrichInteractive(content.properties.atomId, beforeEnrichment, collection, capiClient)
+      case _ => Future.successful(beforeEnrichment)
     }
 
-    afterEnrichment.getOrElse(Response.Right(beforeEnrichment))
+    Response(maybeUpdate.map(scala.Right.apply))
   }
 
   private def getTreats(collection: Collection)(implicit executionContext: ExecutionContext): Response[List[PressedContent]] = {
@@ -489,13 +453,79 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
 
     contentApiResponse.map(Option(_)).fallbackTo(Future.successful(None))
   }
-
 }
 
-object CapiUrl {
-  def extractId(urlString: String): String = {
-    val uri = new URI(urlString)
-    val path = uri.getPath()
-    path.stripPrefix("/")
+object Enrichment extends Logging {
+  def enrichSnap(
+     embedUri: Option[String],
+     beforeEnrichment: EnrichedContent,
+     collection: Collection,
+     wsClient: WSClient)
+   (implicit executionContext: ExecutionContext): Future[EnrichedContent] = {
+
+    def enrich(response: WSResponse): Option[EnrichedContent] = {
+      val jsResult = Json.fromJson[EmbedJsonHtml](response.json)
+
+      val jsOption = jsResult match {
+        case JsSuccess(embed, _) => Some(embed)
+        case _ => None
+      }
+
+      jsOption.map { embed =>
+        beforeEnrichment.copy(embedHtml = Some(embed.html))
+      }
+    }
+
+    val result = for {
+      embedUri <- asFut(embedUri, "missing embedUri")
+      response <- wsClient.url(embedUri).get()
+      enriched <- asFut(enrich(response), s"failed to enrich snap $embedUri")
+    } yield enriched
+
+    result.recover {
+      case error => {
+        log.warn(s"Processing a snap failed, skipping: ${error.toString()}")
+        beforeEnrichment
+      }
+    }
+  }
+
+  def enrichInteractive(
+    atomId: Option[String],
+    beforeEnrichment: EnrichedContent,
+    collection: Collection,
+    capiClient: CapiContentApiClient)
+    (implicit executionContext: ExecutionContext): Future[EnrichedContent] = {
+
+    def enrich(response: ItemResponse): Option[EnrichedContent] = {
+      for {
+        interactive <- response.interactive
+        enriched <- Some(interactive.data).flatMap {
+          case atom: com.gu.contentatom.thrift.AtomData.Interactive =>
+            Some(beforeEnrichment.copy(embedHtml = Some(atom.interactive.html), embedCss = Some(atom.interactive.css), embedJs = atom.interactive.mainJS))
+          case _ => None
+        }
+      } yield enriched
+    }
+
+    val result = for {
+      atomId <- asFut(atomId, "atomId was undefined")
+      itemResponse <- capiClient.getResponse(ItemQuery(atomId))
+      enriched <- asFut(enrich(itemResponse), s"failed to enrich atom $atomId")
+    } yield enriched
+
+    result.failed.foreach { error =>
+      val msg = s"Processing of an interactive atom failed, and it won't be pressed: $error"
+      log.warn(msg)
+    }
+
+    result
+  }
+
+  private def asFut[A](opt: Option[A], errMsg: String): Future[A] = {
+    opt match {
+      case Some(thing) => Future.successful(thing)
+      case None => Future.failed(new Throwable(errMsg))
+    }
   }
 }

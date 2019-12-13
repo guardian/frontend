@@ -218,7 +218,8 @@ object PressedProperties {
       webUrl = FaciaContentUtils.webUrl(content),
       editionBrandings = Some(content.brandingByEdition.flatMap {
         case (editionId, branding) => Edition.byId(editionId) map (EditionBranding(_, branding))
-      }.toSeq)
+      }.toSeq),
+      atomId = FaciaContentUtils.atomId(content),
     )
   }
 
@@ -252,7 +253,8 @@ final case class PressedProperties(
   maybeFrontPublicationDate: Option[Long],
   href: Option[String],
   webUrl: Option[String],
-  editionBrandings: Option[Seq[EditionBranding]]
+  editionBrandings: Option[Seq[EditionBranding]],
+  atomId: Option[String]
 ) {
   lazy val isPaidFor: Boolean = editionBrandings.exists(_.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition))
 }
