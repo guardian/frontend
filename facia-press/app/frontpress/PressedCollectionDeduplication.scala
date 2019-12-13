@@ -29,22 +29,21 @@ object PressedCollectionDeduplication {
 
    */
 
-  def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility]): Seq[String] = {
+  def getHeaderURLsFromCuratedAndBackfilled(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
     // Return the header urls of all curated or backfill elements of a sequence of `PressedCollectionVisibility`.
+    // Taken within `depth` of the beginning of the sequence.
 
-    val visibility: Int = 3
-
-    // 11th Dec version:
+    // 11th Dec:
     // To prevent a tiny problem with the Most Popular container I am introducing the effect of collecting only the
-    // first 5 stories of each field. Interestingly the PressedCollectionVisibility has a notion of visibility
+    // first depth stories of each field. Interestingly the PressedCollectionVisibility has a notion of visibility
     // that is inherited from the old code. The old notion is meant to be decommissioned
 
-    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(visibility) ++ collection.pressedCollection.backfill.take(visibility)).map ( pressedContent => pressedContent.header.url ) }
+    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
   }
 
   def makeNewBackfill(collectionV: PressedCollectionVisibility, preceedingCollectionVsDeduplicated: Seq[PressedCollectionVisibility]): List[PressedContent] = {
     // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated)
+    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated, 3)
     collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
   }
 
