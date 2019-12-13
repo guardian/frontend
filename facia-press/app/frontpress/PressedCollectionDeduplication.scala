@@ -68,7 +68,7 @@ object PressedCollectionDeduplication {
   }
 
   def makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): Seq[PressedCollectionVisibility] = {
-    Seq.range(1,3).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
+    Seq.range(1,4).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
   }
 
   def reduceDeduplicatedCollectionCandidates(candidates: Seq[PressedCollectionVisibility]): Option[PressedCollectionVisibility] = {
