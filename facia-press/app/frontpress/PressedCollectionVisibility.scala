@@ -1,9 +1,7 @@
 package frontpress
 
-import layout.slices.Container
 import model.PressedCollectionVersions
 import model.facia.PressedCollection
-import model.pressed.PressedContent
 import com.gu.facia.client.models.{AnyPlatform, WebCollection}
 
 case class PressedCollectionVisibility(pressedCollection: PressedCollection, visible: Int) {
