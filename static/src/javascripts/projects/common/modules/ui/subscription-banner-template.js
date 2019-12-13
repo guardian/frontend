@@ -5,6 +5,10 @@ import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
 
 import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
+const isUserLoggedIn = (userLoggedIn) => userLoggedIn
+    ? 'site-message--subscription-banner__sign-in--already-signed-in'
+    : '';
+
 const subscriptionBannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
@@ -18,7 +22,7 @@ const subscriptionBannerTemplate = (
         </h3>
 
         <div class="site-message--subscription-banner__description">
-            <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian</p>
+            <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian.</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">
@@ -29,7 +33,7 @@ const subscriptionBannerTemplate = (
             >
                 Become a digital subscriber
             </a>
-            <div class="site-message--subscription-banner__cta-dismiss-container">
+            <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(userLoggedIn)}">
                 <a
                     id="js-site-message--subscription-banner__cta-dismiss"
                     class="site-message--subscription-banner__cta-dismiss"
@@ -40,11 +44,7 @@ const subscriptionBannerTemplate = (
             </div>
         </div>
 
-        <div class="site-message--subscription-banner__sign-in ${
-            userLoggedIn
-                ? 'site-message--subscription-banner__sign-in--visibility-hidden'
-                : ''
-        }">
+        <div class="site-message--subscription-banner__sign-in ${isUserLoggedIn(userLoggedIn)}">
             <p>Already a subscriber?</p>
             <br class="temp-mobile-break" />
             <a

@@ -169,6 +169,14 @@
     @include mq($from: tablet) {
         margin: 12px 0 0 10px;
     }
+
+    &.site-message--subscription-banner__sign-in--already-signed-in {
+        display: none;
+
+        @include mq($from: tablet) {
+            display: block;
+        }
+    }
 }
 
 .site-message--subscription-banner__cta-dismiss {
@@ -206,6 +214,14 @@
     a {
         color: $brightness-7;
     }
+
+    &.site-message--subscription-banner__sign-in--already-signed-in {
+        display: none;
+
+        @include mq($from: tablet) {
+            visibility: hidden;
+        }
+    }
 }
 
 .site-message--subscription-banner__subscriber-link {
@@ -230,7 +246,12 @@
 
 .site-message--packshot-container {
     width: 100%;
-    margin: 30px 0 -90px;
+    margin: 30px 0 -75px;
+
+    @include mq($from: tablet) {
+        margin-bottom: -105px;
+    }
+
 
     @include mq($from: tablet) {
         position: absolute;
@@ -251,9 +272,13 @@
 
     img {
         width: 100%;
-        max-width: 380px;
+        max-width: 280px;
         margin: 0 auto;
         display: block;
+
+        @include mq($from: mobileLandscape) {
+            max-width: 380px;
+        }
 
         @include mq($from: tablet) {
             margin-right: 0;
@@ -329,9 +354,6 @@
     }
 }
 
-.site-message--subscription-banner__sign-in--visibility-hidden {
-    visibility: hidden;
-}
 
 /*********************** footer hacks *********************/
 
@@ -344,7 +366,11 @@
 .site-message__copy.js-site-message-copy.u-cf {
     margin: 0;
 }
-
+.subscription-banner--holder .site-message--first-pv-consent {
+    @include mq($from: desktop) {
+        padding: 12px 20px;
+    }
+}
 
 .subscription-banner--holder
 .gs-container {
