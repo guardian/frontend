@@ -42,11 +42,15 @@ object PressedCollectionDeduplication {
     pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(visibility) ++ collection.pressedCollection.backfill.take(visibility)).map ( pressedContent => pressedContent.header.url ) }
   }
 
+  def makeNewBackfill(collectionV: PressedCollectionVisibility, preceedingCollectionVsDeduplicated: Seq[PressedCollectionVisibility]): List[PressedContent] = {
+    // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
+    val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated)
+    collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
+  }
+
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
-      val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(accum)
-      // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-      val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
+      val newBackfill = makeNewBackfill(collectionV, accum)
       val newCollectionV = collectionV.copy(
         pressedCollection = collectionV.pressedCollection.copy (
           backfill = newBackfill
