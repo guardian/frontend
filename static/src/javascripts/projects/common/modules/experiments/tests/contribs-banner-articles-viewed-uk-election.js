@@ -38,7 +38,7 @@ export const articlesViewedBannerUkElection: AcquisitionsABTest = {
     successMeasure: 'AV per impression',
     audienceCriteria: 'All',
     idealOutcome: 'variant design performs at least as well as control',
-    canRun: () => articleViewCount >= minArticleViews && geolocation === 'UK';
+    canRun: () => articleViewCount >= minArticleViews && geolocation === 'UK',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     geolocation,
