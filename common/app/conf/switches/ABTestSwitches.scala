@@ -48,6 +48,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-banner-articles-viewed-uk-election",
+    "uk election test that shows number of articles viewed in contributions banner",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),

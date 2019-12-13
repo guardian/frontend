@@ -16,6 +16,7 @@ import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/comme
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { contributionsBannerUsEoyGivingTuesdayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-casuals';
 import { contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-regulars';
+import { articlesViewedBannerUkElection } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-uk-election';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -40,5 +41,6 @@ export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo,
     contributionsBannerUsEoyGivingTuesdayCasuals,
     contributionsBannerUsEoy,
+    articlesViewedBannerUkElection,
     articlesViewedBanner,
 ];
