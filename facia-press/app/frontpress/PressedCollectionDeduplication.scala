@@ -26,11 +26,9 @@ object PressedCollectionDeduplication {
       section of any of [pc_{1}, pc_{2}, ...., pc_{n-1}].
 
       The attribute of `PressedContent` that we used to detect duplicates is `PressedContent.header.url`
-
    */
 
   /*
-
       Pascal - 13th Dec 2019
 
       Today I am introducing a logic that is as close to the target logic as possible, while handling two interesting cases:
@@ -50,7 +48,12 @@ object PressedCollectionDeduplication {
       The having been said `pc_{n}'i` with large `i` can lead to Most Popular containers being only partially filled.
 
       Therefore, once [pc_{n}'1, pc_{n}'2, ..., pc_{n}'i_{max}] has been computed, we take either the first one or the last possible one with at least 10 elements (curated and backfilled counted together).
+   */
 
+  /*
+      Pascal - 13th Dec 2019
+
+      The next refactoring will focus on detecting the Most Popular component and apply a different logic to it. 
    */
 
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
