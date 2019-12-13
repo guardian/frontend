@@ -43,7 +43,14 @@ object PressedCollectionDeduplication {
 
   def makeNewBackfill(collectionV: PressedCollectionVisibility, preceedingCollectionVsDeduplicated: Seq[PressedCollectionVisibility]): List[PressedContent] = {
     // We want to remove from the current collection' backfilled's PressedCollections those with a header that has already been used
-    val lookUpCuratedDepth = 3
+
+    // 13th December
+    // This refactoring is meant to handle the following case:
+    // If the current collection has no curated elements, then we make sure that there is no duplicate of any previous curated element.
+    // This is actually meant to always be the case, but we are not currently fully doing it due to the Most Popular container.
+    // This is temporary before a later refactoring.
+
+    val lookUpCuratedDepth = if (collectionV.pressedCollection.curated.isEmpty) 99 else 3
     val lookupBackfilledDepth = 3
     val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilled(preceedingCollectionVsDeduplicated, lookUpCuratedDepth, lookupBackfilledDepth)
     collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
