@@ -54,7 +54,7 @@ export const articlesViewedBannerUkElection: AcquisitionsABTest = {
             },
         },
         {
-            id: 'control',
+            id: 'variant',
             test: (): void => {},
             engagementBannerParams: {
                 leadSentence: leadSentenceVariant,
