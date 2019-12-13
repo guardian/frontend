@@ -57,6 +57,8 @@ object PressedCollectionDeduplication {
     pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
   }
 
+  def pressedCollectionCommonLength(pC: PressedCollection): Int = pC.curated.size + pC.backfill.size
+
   def deduplicatedThisCollectionV(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility, depth: Int): PressedCollectionVisibility = {
     val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, depth)
     val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
@@ -68,11 +70,16 @@ object PressedCollectionDeduplication {
   }
 
   def makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): Seq[PressedCollectionVisibility] = {
-    Seq.range(1,4).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
+    Seq.range(1,10).map{ depth => deduplicatedThisCollectionV(accum, collectionV, depth) }
   }
 
   def reduceDeduplicatedCollectionCandidates(candidates: Seq[PressedCollectionVisibility]): Option[PressedCollectionVisibility] = {
-    candidates.reverse.headOption
+    candidates.foldLeft[Option[PressedCollectionVisibility]](None){ (accum, collectionV) =>
+      accum match {
+        case None => Some(collectionV)
+        case Some(_collectionV) => Some( if (pressedCollectionCommonLength(collectionV.pressedCollection) >= 10) collectionV else _collectionV )
+      }
+    }
   }
 
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
