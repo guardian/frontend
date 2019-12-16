@@ -4,9 +4,9 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
-// User must have read at least 5 articles in last 60 days
+// User must have read at least 5 articles in last 3 months (as 13 weeks)
 const minArticleViews = 5;
-const articleCountWeeks = 26; // Requesting a half year in order to get as many as possible for this and next iterations
+const articleCountWeeks = 13;
 const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 
 const geolocation = geolocationGetSync();
