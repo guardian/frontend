@@ -3,9 +3,9 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
-// User must have read at least 5 articles in last 60 days
+// User must have read at least 5 articles in last 3 months (as 13 weeks)
 const minArticleViews = 5;
-const articleCountWeeks = 26; // Requesting a half year in order to get as many as possible for this and next iterations
+const articleCountWeeks = 13;
 const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 
 const geolocation = geolocationGetSync();
