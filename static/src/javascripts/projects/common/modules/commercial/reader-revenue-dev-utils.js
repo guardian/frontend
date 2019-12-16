@@ -119,7 +119,9 @@ const changeGeolocation = (asExistingSupporter: boolean = false): void => {
     const geo = window.prompt(
         `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
     );
-    if (geo) {
+    if (geo === 'UK') {
+        alert(`'UK' is not a valid geolocation - please use 'GB' instead!`);
+    } else if (geo) {
         setGeolocation(geo);
         clearCommonReaderRevenueStateAndReload(asExistingSupporter);
     }
