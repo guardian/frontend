@@ -44,6 +44,8 @@ if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
         ['cm-thirdPartyTags', initThirdPartyTags],
+        // Permutive init code must run before google tag enableServices()
+        // The permutive lib however is loaded async with the third party tags
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
