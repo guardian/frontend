@@ -83,6 +83,12 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
     fastdom.write(() => {
         if (el) {
             el.classList.add('youtube__video-ready');
+            const fcItem = $.ancestor(el, 'fc-item');
+            if (fcItem) {
+                $(fcItem)[0].classList.add(
+                    'fc-item--has-video-main-media__ready'
+                );
+            }
         }
     });
 

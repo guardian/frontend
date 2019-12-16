@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test whether our new CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 17),
+    sellByDate = new LocalDate(2020, 1, 8),
     exposeClientSide = true
   )
 
@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 11),
+    sellByDate = new LocalDate(2019, 12, 18),
     exposeClientSide = true
   )
 
@@ -172,7 +172,7 @@ trait ABTestSwitches {
     "Tests whether a CMP UI with no overlay yield higher consent rates",
     owners = Seq(Owner.withGithub("ripecosta")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 12),
+    sellByDate = new LocalDate(2020, 1, 8),
     exposeClientSide = true
   )
 
@@ -182,7 +182,7 @@ trait ABTestSwitches {
     "0.5% AB test for a bottom consent banner with an options button instead of a link",
     owners = Seq(Owner.withGithub("ripecosta")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 12),
+    sellByDate = new LocalDate(2020, 1, 8),
     exposeClientSide = true
   )
 

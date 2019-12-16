@@ -7,6 +7,7 @@ $story-package-card-colour: #041f4a;
 $container-title: $story-package-card-colour;
 $story-package-dynamic-card-text: $story-package-card-colour;
 $fc-item-gutter: $gs-gutter / 4;
+$block-height: 58px; // Note: duplicated from _item.scss
 
 @mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
@@ -34,7 +35,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 background-image: none;
             }
 
-            .fc-item__container.u-faux-block-link--hover {
+            &.fc-item--type-comment:not(.fc-item--pillar-special-report) .fc-item__container.u-faux-block-link--hover {
                 background-color: darken($story-package-card-colour, 5%);
             }
         }
@@ -57,16 +58,19 @@ $fc-item-gutter: $gs-gutter / 4;
             &.fc-item:not(.fc-item--pillar-special-report) {
                 .fc-sublink--pillar-#{$tone} {
                     .fc-sublink__kicker {
-                        @include fs-textSans(3);
                         display: block;
                         width: 100%;
-                        margin-bottom: $gs-baseline / 2;
                     }
                 }
             }
 
             .fc-item__content--above {
                 padding: 6px 0;
+            }
+            .fc-item__content--below {
+                @include mq($until: tablet) {
+                    padding: 0;
+                }
             }
         }
 
@@ -85,7 +89,7 @@ $fc-item-gutter: $gs-gutter / 4;
 }
 
 .fc-container--story-package {
-    
+
     background-color: $story-package-container-colour;
 
     .facia-snap {
@@ -286,8 +290,11 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__liveblog-block__text:after {
             color: mix(#ffffff, $story-package-card-colour, 92%);
             background-color: $story-package-card-colour;
-            box-shadow: -5px 0 5px -2px $story-package-card-colour;
-            bottom: 3px;
+            box-shadow: -5px 0 5px -.04px $story-package-card-colour;
+            bottom: 1.2px;
+            font-size: 20px;
+            line-height: 13px;
+            padding-right: 24px;
         }
 
         &:hover {
@@ -319,10 +326,15 @@ $fc-item-gutter: $gs-gutter / 4;
             transform: none;
         }
 
+        // This is overridden below for the fc-item--full-media-100-tablet and
+        // fc-item--three-quarters-tall-tablet cards (where we show all blocks)
+        .fc-item__liveblog-block:nth-child(n+3) {
+            display: none;
+        }
+
         // Live update circle
         .fc-item__liveblog-block__time:before {
             content: '';
-            color: #ffffff;
             border: $thin-border solid #ffffff;
             border-radius: 50%;
             height: $circle-diameter;
@@ -337,9 +349,8 @@ $fc-item-gutter: $gs-gutter / 4;
         .fc-item__liveblog-block:first-of-type:not(:only-child) {
             &:before {
                 content: '';
-                color: #ffffff;
                 border: 0;
-                border-left: 1px solid #ffffff;
+                border-left: $thin-border solid #ffffff;
                 border-radius: 0;
                 height: calc(100% - #{$circle-diameter} - #{$thin-border * 2});
                 width: $thin-border;
@@ -370,6 +381,81 @@ $fc-item-gutter: $gs-gutter / 4;
             }
 
             .fc-item__standfirst-wrapper {
+                display: none;
+            }
+        }
+
+        // Invert the live update colours for these cards
+        &.fc-item--full-media-100-tablet,
+        &.fc-item--three-quarters-tall-tablet {
+            .fc-item__liveblog-blocks {
+                height: $block-height;
+            }
+
+            .fc-item__liveblog-blocks__inner {
+                display: flex;
+                flex-direction: row;
+            }
+
+            .fc-item__liveblog-block {
+                display: flex;
+                flex: 1;
+                max-width: 33.3%;
+                padding-right: $gs-gutter;
+            }
+
+            .fc-item__liveblog-block__time {
+                color: $story-package-card-colour;
+                display: inline;
+            }
+
+            .fc-item__liveblog-block__text {
+                color: $story-package-card-colour;
+                padding-right: 0; // Remove padding in this layout so that we only use the gutter padding from the block
+            }
+
+            .fc-item__liveblog-block__text {
+                border-bottom-color: $story-package-container-colour;
+
+                // Ellipses
+                &:after {
+                    color: $story-package-card-colour;
+                    background-color: $story-package-container-colour;
+                    box-shadow: -5px 0 5px -2px $story-package-container-colour;
+                }
+            }
+
+            &:hover {
+                .fc-item__liveblog-block__text {
+                    border-bottom-color: darken($story-package-container-colour, 5%);
+
+                    // Ellipses
+                    &:after {
+                        background-color: darken($story-package-container-colour, 5%);
+                        box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
+                    }
+                }
+            }
+
+            .u-faux-block-link--hover {
+                .fc-item__liveblog-block__text {
+                    border-bottom-color: darken($story-package-container-colour, 5%);
+
+                    // Ellipses
+                    &:after {
+                        background-color: darken($story-package-container-colour, 5%);
+                        box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
+                    }
+                }
+            }
+
+            // Circle
+            .fc-item__liveblog-block__time:before {
+                border: $thin-border solid $news-bright;
+            }
+
+            // Connector line
+            .fc-item__liveblog-block:first-of-type:not(:only-child):before {
                 display: none;
             }
         }
@@ -450,7 +536,7 @@ $fc-item-gutter: $gs-gutter / 4;
                 bottom: 43%;
             }
         }
-        
+
         .fc-item__header {
             @include mq($until: tablet) {
                 @include fs-headline(4);
@@ -483,10 +569,6 @@ $fc-item-gutter: $gs-gutter / 4;
 
         .fc-trail__count--commentcount {
             background-color: $story-package-container-colour;
-        }
-
-        .fc-item__kicker:after {
-            display: none;
         }
 
         .fc-item__headline,
@@ -534,10 +616,6 @@ $fc-item-gutter: $gs-gutter / 4;
             }
         }
 
-        .fc-item__kicker:after {
-            display: none;
-        }
-
         &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
             color: $story-package-dynamic-card-text;
         }
@@ -565,15 +643,15 @@ $fc-item-gutter: $gs-gutter / 4;
         &.fc-item--full-media-100-tablet,
         &.fc-item--three-quarters-tablet,
         &.fc-item--three-quarters-tall-tablet {
-            &:not(.fc-item--has-video-main-media) .fc-item__footer--vertical {
-                margin-top: -35px;
-            }
 
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                background-color: $story-package-card-colour;
+                background-color: $story-package-dynamic-card-text;
+
                 @include mq($from: tablet) {
                     background-color: rgba(4, 31, 74, .8);
+                    border-left: 0;
+                    border-bottom: 0;
                 }
                 margin-bottom: 0;
             }
@@ -581,6 +659,7 @@ $fc-item-gutter: $gs-gutter / 4;
             .fc-sublink__title,
             &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
                 color: #ffffff;
+                font-weight: 800;
 
                 &:before {
                     width: 100%;
@@ -590,7 +669,7 @@ $fc-item-gutter: $gs-gutter / 4;
 
         @include mq($from: tablet) {
 
-            &.fc-item--has-video-main-media__playing,
+            &.fc-item--has-video-main-media__ready:not(.fc-item--has-video-main-media__ended),
             &.fc-item--has-video-main-media__paused {
                 .fc-sublinks {
                     display: none;
