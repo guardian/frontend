@@ -1,6 +1,7 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
+import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
@@ -27,7 +28,6 @@ export const contributionsBannerUsEoyReaderAppreciationSupportersCasuals: Acquis
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     canRun: () => isUS,
     geolocation,
-    userCohort: 'AllExistingSupporters',
     variants: [
         {
             id: 'control',
@@ -40,7 +40,9 @@ export const contributionsBannerUsEoyReaderAppreciationSupportersCasuals: Acquis
                 hasTicker: true,
                 tickerHeader,
                 bannerModifierClass: 'useoy2019',
+                userCohort: 'AllExistingSupporters',
             },
+            canRun: () => canShowBannerSync(3, 'AllExistingSupporters'),
         },
     ],
 };

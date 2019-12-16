@@ -2,6 +2,7 @@
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
+import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 // User must have read at least 5 articles in last 60 days
 const minArticleViews = 5;
@@ -33,7 +34,6 @@ export const contributionsBannerUsEoyReaderAppreciationSupporters: AcquisitionsA
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     canRun: () => isUS && articleViewCount >= minArticleViews,
     geolocation,
-    userCohort: 'AllExistingSupporters',
     variants: [
         {
             id: 'control',
@@ -46,7 +46,9 @@ export const contributionsBannerUsEoyReaderAppreciationSupporters: AcquisitionsA
                 hasTicker: true,
                 tickerHeader,
                 bannerModifierClass: 'useoy2019',
+                userCohort: 'AllExistingSupporters',
             },
+            canRun: () => canShowBannerSync(3, 'AllExistingSupporters'),
         },
     ],
 };
