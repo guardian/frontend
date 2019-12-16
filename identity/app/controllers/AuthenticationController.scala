@@ -54,7 +54,7 @@ class AuthenticationController(
          Future.successful(NoCache(InternalServerError(Json.toJson(formWithErrors.errors.map(_.toString)))))
        },
        emailPassword => {
-         val authResponse = signInService.getCookies(api.authBrowser(emailPassword, idRequest.trackingData), rememberMe = false)
+         val authResponse = signInService.getCookies(api.authBrowser(emailPassword, idRequest.trackingData), rememberMe = true)
          authResponse.map {
            case Right(cookies) =>
              Cors(NoCache(Ok("{}")), fallbackAllowOrigin = Some(fallbackAccessControlOrigin)).withCookies(cookies: _*)
