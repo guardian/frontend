@@ -5,30 +5,29 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['2020 will be a defining year for America'];
-const messageText =
-    'This year, much of what we hold dear has been threatened – democracy, civility, truth. This administration is establishing new norms of behaviour. Truth is being chased away. With your help we can continue put it center stage. As we prepare for 2020, we’re asking our readers to help us raise $1.5 million. Help us reach our year-end goal.';
+const titles = ['It’s because of you...'];
+const messageText = `...and your unprecedented support for the Guardian in 2019 that our journalism thrived in a challenging climate for publishers. Thank you – your support is vital. Next year America faces a momentous choice and the need for an independent press has never been greater. If you can, please consider supporting us again today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
 const ctaText = 'Support The Guardian';
+const tickerHeader = 'Help us reach our year-end goal';
 
-const tickerHeaderControl = 'Help us reach our year-end goal';
-
-export const contributionsBannerUsEoyGivingTuesdayCasuals: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyGivingTuesdayCasuals',
+export const contributionsBannerUsEoyReaderAppreciationSupportersCasuals: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyReaderAppreciationSupportersCasuals',
     campaignId: 'USeoy2019',
-    start: '2019-11-15',
+    start: '2019-12-16',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
     description:
-        'banner for the US EOY campaign for readers who have seen fewer than 5 articles',
+        'reader appreciation banner for the US EOY campaign - known supporters, no article count',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
     audienceCriteria: 'All',
-    idealOutcome: 'variant design performs at least as well as control',
+    idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
     canRun: () => isUS,
     geolocation,
+    userCohort: 'AllExistingSupporters',
     variants: [
         {
             id: 'control',
@@ -39,7 +38,7 @@ export const contributionsBannerUsEoyGivingTuesdayCasuals: AcquisitionsABTest = 
                 ctaText,
                 template: acquisitionsBannerUsEoyTemplate,
                 hasTicker: true,
-                tickerHeader: tickerHeaderControl,
+                tickerHeader,
                 bannerModifierClass: 'useoy2019',
             },
         },

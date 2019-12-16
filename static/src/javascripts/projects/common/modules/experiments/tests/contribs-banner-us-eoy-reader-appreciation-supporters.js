@@ -12,8 +12,7 @@ const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
 const titles = ['It’s because of you...'];
-const messageText =
-    `...and your unprecedented support for the Guardian that our journalism thrived in a challenging climate for publishers in 2019. Thank you. You've read ${articleViewCount} articles in the last 3 months and your support is vital. Next year America faces a momentous choice and the need for an independent press has never been greater. If you can, please consider supporting us again today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`
+const messageText = `...and your unprecedented support for the Guardian that our journalism thrived in a challenging climate for publishers in 2019. Thank you. You've read ${articleViewCount} articles in the last 3 months and your support is vital. Next year America faces a momentous choice and the need for an independent press has never been greater. If you can, please consider supporting us again today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
 const ctaText = 'Support The Guardian';
 const tickerHeader = 'Help us reach our year-end goal';
 
@@ -23,7 +22,8 @@ export const contributionsBannerUsEoyReaderAppreciationSupporters: AcquisitionsA
     start: '2019-12-16',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
-    description: 'reader appreciation banner for the US EOY campaign - known supporters',
+    description:
+        'reader appreciation banner for the US EOY campaign - known supporters with article count',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
