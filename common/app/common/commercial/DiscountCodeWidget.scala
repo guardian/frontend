@@ -6,7 +6,7 @@ case class DiscountCodeMerchantLink(
 )
 
 object DiscountCodeLinks {
-  val Deliveroo = DiscountCodeMerchantLink("Deliveroo", "https://discountcode.theguardian.com/uk/deliveroo")
+  val Deliveroo = DiscountCodeMerchantLink("Now-TV", "https://discountcode.theguardian.com/uk/deliveroo")
   val Travelodge = DiscountCodeMerchantLink("Travelodge", "https://discountcode.theguardian.com/uk/travelodge")
   val FunkyPigeon = DiscountCodeMerchantLink("Funky Pigeon", "https://discountcode.theguardian.com/uk/funky-pigeon")
   val Wayfair = DiscountCodeMerchantLink("Wayfair", "https://discountcode.theguardian.com/uk/wayfair")
@@ -18,24 +18,20 @@ object DiscountCodeLinks {
   val Amazon = DiscountCodeMerchantLink("Amazon", "https://discountcode.theguardian.com/uk/amazon")
   val Currys = DiscountCodeMerchantLink("Currys PC World", "https://discountcode.theguardian.com/uk/currys")
   val JdSports = DiscountCodeMerchantLink("JD Sports", "https://discountcode.theguardian.com/uk/jd-sports")
-  val BrandAlley = DiscountCodeMerchantLink("BrandAlley", "https://discountcode.theguardian.com/uk/brandalley")
-  val Selfridges = DiscountCodeMerchantLink("Selfridges", "https://discountcode.theguardian.com/uk/selfridges-and-co")
-  val NOWTV = DiscountCodeMerchantLink("NOW TV", "https://discountcode.theguardian.com/uk/sky-now-tv")
-  val Photobox = DiscountCodeMerchantLink("Photobox", "https://discountcode.theguardian.com/uk/photobox")
-  val CultBeauty = DiscountCodeMerchantLink("Cult Beauty", "https://discountcode.theguardian.com/uk/cult-beauty")
 
   val links = List(
     Deliveroo,
-    BrandAlley,
-    Selfridges,
-    NOWTV,
-    TUI,
+    Travelodge,
+    FunkyPigeon,
+    Wayfair,
     Groupon,
-    Photobox,
-    CultBeauty,
+    TUI,
+    Very,
+    RiverIsland,
     Argos,
     Amazon,
-    Currys
+    Currys,
+    JdSports
   )
 
   def shouldShowWidget(path:String): Boolean ={
