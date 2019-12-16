@@ -68,31 +68,41 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy",
-    "US end of year banner",
+    "ab-contributions-banner-us-eoy-reader-appreciation-supporters",
+    "US End of year banner - reader appreciation, supporters with article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
+    sellByDate = new LocalDate(2020, 1, 30),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-giving-tuesday-regulars-round-two",
-    "US end of year banner - giving tuesday version for regular readers",
+    "ab-contributions-banner-us-eoy-reader-appreciation-nonsupporters",
+    "US End of year banner - reader appreciation, nonsupporters with article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
+    sellByDate = new LocalDate(2020, 1, 30),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-giving-tuesday-casuals",
-    "US end of year banner - giving tuesday version for casual readers",
+    "ab-contributions-banner-us-eoy-reader-appreciation-supporters-casuals",
+    "US End of year banner - reader appreciation, supporters without article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-reader-appreciation-nonsupporters-casuals",
+    "US End of year banner - reader appreciation, nonsupporters without article count",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
     exposeClientSide = true
   )
 

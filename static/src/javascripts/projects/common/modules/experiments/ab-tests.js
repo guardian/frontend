@@ -11,12 +11,13 @@ import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xa
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { contributionsBannerUsEoy } from 'common/modules/experiments/tests/contribs-banner-us-eoy';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
-import { contributionsBannerUsEoyGivingTuesdayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-casuals';
-import { contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo } from 'common/modules/experiments/tests/contribs-banner-us-eoy-giving-tuesday-regulars';
 import { articlesViewedBannerUkElection } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-uk-election';
+import { contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-nonsupporters-casuals';
+import { contributionsBannerUsEoyReaderAppreciationSupportersCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters-casuals';
+import { contributionsBannerUsEoyReaderAppreciationNonsupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-nonsupporters';
+import { contributionsBannerUsEoyReaderAppreciationSupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -38,9 +39,10 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsBannerUsEoyGivingTuesdayRegularsRoundTwo,
-    contributionsBannerUsEoyGivingTuesdayCasuals,
-    contributionsBannerUsEoy,
+    contributionsBannerUsEoyReaderAppreciationSupporters,
+    contributionsBannerUsEoyReaderAppreciationNonsupporters,
+    contributionsBannerUsEoyReaderAppreciationSupportersCasuals,
+    contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals,
     articlesViewedBannerUkElection,
     articlesViewedBanner,
 ];
