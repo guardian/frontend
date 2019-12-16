@@ -51,6 +51,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   def redeployBanner(region: String, bannerType: BannerType): Action[AnyContent] = Action.async { implicit request =>
     ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
+      log.info(s"redeployBanner $bannerType $region")
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
@@ -61,7 +62,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 //        _ <- purgeDeployLogCache(region)
       } yield bannerRedeploySuccessful(message, region)
 
-      result.recover { case e => redeployFailed(e)}
+      result.recover { case e => redeployFailed(e) }
     }
 
   }
@@ -73,6 +74,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   private def updateBannerDeployLog(region: ReaderRevenueRegion, bannerDeployLogJson: String, banner: BannerType): Future[Unit] = {
+    log.info(s"updateBannerDeployLog $banner $region")
     val defaultJsonEncoding: String = "application/json;charset=utf-8"
     val bucketKey = ReaderRevenueRegion.getNewBucketKey(region, banner)
     Future(S3.putPublic(bucketKey, bannerDeployLogJson, defaultJsonEncoding))

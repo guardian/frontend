@@ -40,7 +40,7 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
   }
 
   def subscriptionsBannerDeployLog(region: String): Action[AnyContent] = Action { implicit request =>
-    getBannerDeployLog(region).fold(bannerDeployLogUnavailable){ bannerDeployLog =>
+    getBannerDeployLog(region).fold(bannerDeployLogUnavailable) { bannerDeployLog =>
       Cached(7.days) {
         RevalidatableResult.Ok(bannerDeployLog)
       }
