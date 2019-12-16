@@ -6,7 +6,7 @@ const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
 const titles = ['It’s because of you...'];
-const messageText = `...and the readers across all 50 states that supported us in 2019 that our journalism thrived in a challenging climate for publishers. Next year America faces an epic choice and the need for an independent press has never been greater. Support from our readers is vital. Please consider supporting us today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
+const messageText = `... and the readers across all 50 states that supported us in 2019 that our journalism thrived in a challenging climate for publishers. Next year America faces an epic choice and the need for an independent press has never been greater. Support from our readers is vital. Please consider supporting us today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
 const ctaText = 'Support The Guardian';
 const tickerHeader = 'Help us reach our year-end goal';
 
