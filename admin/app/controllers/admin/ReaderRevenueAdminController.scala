@@ -51,7 +51,6 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   def redeployBanner(region: String, bannerType: BannerType): Action[AnyContent] = Action.async { implicit request =>
     ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region")))){ region: ReaderRevenueRegion =>
-      log.info(s"redeployBanner $bannerType $region")
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))

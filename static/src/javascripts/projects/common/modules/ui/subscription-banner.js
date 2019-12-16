@@ -56,31 +56,33 @@ const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
-
-const hasAcknowledged = (bannerRedeploymentDate) => {
+const hasAcknowledged = bannerRedeploymentDate => {
     const redeploymentDate = new Date(bannerRedeploymentDate).getTime(); // 2 Dec 2019 @ 5:00
-    console.log({redeploymentDate});
+    console.log({ redeploymentDate });
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    console.log({lastClosedAt});
+    console.log({ lastClosedAt });
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
 
-    console.log('fn: hasAcknowledged', lastClosedAt && lastClosedAtTime > redeploymentDate);
+    console.log(
+        'fn: hasAcknowledged',
+        lastClosedAt && lastClosedAtTime > redeploymentDate
+    );
     return lastClosedAt && lastClosedAtTime > redeploymentDate;
 };
 
-const hasAcknowledgedBanner = async (region) => {
-
-    return await fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
+const hasAcknowledgedBanner = region =>
+    fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
-    }).then(resp => {
-        console.log('response', { resp });
-        console.log('time', resp.time );
+    })
+        .then(resp => {
+            console.log('response', { resp });
+            console.log('time', resp.time);
 
-        return hasAcknowledged(resp.time);
-    }).catch((e) => {
-        console.warn(e)
-    });
-}
+            return hasAcknowledged(resp.time);
+        })
+        .catch(e => {
+            console.warn(e);
+        });
 
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
     !hideBannerInTheseRegions.includes(region);
@@ -233,21 +235,23 @@ const show: () => Promise<boolean> = async () => {
 };
 
 const canShow: () => Promise<boolean> = async () => {
-    const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(currentRegion);
-    console.log({hasAcknowledgedSinceLastRedeploy });
+    const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
+        currentRegion
+    );
+    console.log({ hasAcknowledgedSinceLastRedeploy });
     const can = Promise.resolve(
         !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
-        !isInVariantSynchronous(
-            commercialConsentOptionsButton,
-            'variant'
-        ) &&
-        fiveOrMorePageViews(pageviews) &&
-        !hasAcknowledgedSinceLastRedeploy &&
-        !shouldHideSupportMessaging() &&
-        !pageShouldHideReaderRevenue() &&
-        canShowBannerInRegion(currentRegion) &&
-        subscriptionBannerSwitchIsOn &&
-        !pageIsIdentity()
+            !isInVariantSynchronous(
+                commercialConsentOptionsButton,
+                'variant'
+            ) &&
+            fiveOrMorePageViews(pageviews) &&
+            !hasAcknowledgedSinceLastRedeploy &&
+            !shouldHideSupportMessaging() &&
+            !pageShouldHideReaderRevenue() &&
+            canShowBannerInRegion(currentRegion) &&
+            subscriptionBannerSwitchIsOn &&
+            !pageIsIdentity()
     );
 
     return can;
