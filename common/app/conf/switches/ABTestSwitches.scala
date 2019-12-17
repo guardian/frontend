@@ -68,6 +68,26 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-banner-us-eoy-impeachment-regulars",
+    "US End of year banner - impeachment, with article count",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-impeachment-casuals",
+    "US End of year banner - impeachment, no article count",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-banner-us-eoy-reader-appreciation-supporters",
     "US End of year banner - reader appreciation, supporters with article count",
     owners = Seq(Owner.withGithub("jlieb10")),
