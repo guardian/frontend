@@ -158,14 +158,14 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", sportIndexFrontMeta, defaultEdition) should be(true)
   }
 
-  "production DfpAgent" should "not recognise adtest targetted line items" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(false)
-  }
-
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
       defaultEdition) should be(
       true)
+  }
+
+  "production DfpAgent" should "should recognise adtest targetted line items" in {
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(true)
   }
 
   "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
