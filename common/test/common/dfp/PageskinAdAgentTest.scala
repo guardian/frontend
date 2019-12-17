@@ -164,6 +164,10 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       true)
   }
 
+  "production DfpAgent" should "should recognise adtest targetted line items" in {
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(true)
+  }
+
   "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
     TestPageskinAdAgent.findSponsorships(
       adUnitPath = "/123456/root/technology/subsection/ng",
