@@ -74,12 +74,7 @@ const hasAcknowledgedBanner = region =>
     fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
     })
-        .then(resp => {
-            console.log('response', { resp });
-            console.log('time', resp.time);
-
-            return hasAcknowledged(resp.time);
-        })
+        .then(resp => hasAcknowledged(resp.time))
         .catch(e => {
             console.warn(e);
         });
@@ -238,7 +233,7 @@ const canShow: () => Promise<boolean> = async () => {
     const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
         currentRegion
     );
-    console.log({ hasAcknowledgedSinceLastRedeploy });
+
     const can = Promise.resolve(
         !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
             !isInVariantSynchronous(
