@@ -220,6 +220,7 @@
 
         @include mq($from: tablet) {
             visibility: hidden;
+            display: block;
         }
     }
 }
