@@ -445,8 +445,8 @@ trait FeatureSwitches {
     // Election interactive header switch
   val InteractiveHeaderSwitch = Switch(
     SwitchGroup.Feature,
-    "interactive-header-switch",
-    "If switched on, the header on all interctives will display in full.",
+    "interactive-full-header-switch",
+    "If switched on, the header on all interactives will display in full.",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = never,
