@@ -58,8 +58,7 @@ trait PageskinAdAgent {
   // If the sponsorship is an adTest, it is only considered outside of production.
   def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
     if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
-        sponsorship.targetsAdTest)
+      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
     } else false
   }
 
