@@ -10,6 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
+import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
@@ -36,6 +37,7 @@ type PageTargeting = {
     co: string,
     tn: string,
     slot: string,
+    permutive: string,
 };
 
 let myPageTargetting: {} = {};
@@ -173,8 +175,8 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     ).join(',');
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} =>
-        removeFalseyValues({
+    (pageTargeting: PageTargeting): {} => ({
+        ...removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
             pt2: pageTargeting.edition,
@@ -191,7 +193,9 @@ const buildAppNexusTargetingObject = once(
                 pageTargeting.tn,
                 pageTargeting.slot,
             ].join('|'),
-        })
+        }),
+        permutive: pageTargeting.permutive,
+    })
 );
 
 const buildAppNexusTargeting = once(
@@ -211,6 +215,7 @@ const buildPageTargetting = (
         {
             sens: page.isSensitive ? 't' : 'f',
             x: getKruxSegments(adConsentState),
+            permutive: getPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
