@@ -192,7 +192,7 @@ trait ABTestSwitches {
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2019, 12, 17),
+    sellByDate = new LocalDate(2019, 12, 20),
     exposeClientSide = true
   )
 
