@@ -52,22 +52,26 @@ trait FaciaPressDeduplicationTestData {
 
   val collection0 = collectionFromCuratedAndBackfilled(
     List(
-      "link10",
       "link11",
-      "link12",
-      "link13",
     ).map(id => pressedContentFromId(id)),
     List(
+      "link10",
       "link22",
       "link23"
     ).map(id => pressedContentFromId(id))
   )
 
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // Test that we do not deduplicate below 10 elements [1]
+  // We expect backfill to stay even if a duplicate of collection0 backfill
+  // -----------------------------------------------------
   val collection1 = collectionFromCuratedAndBackfilled(
     List(
+      "link10",
+      "link12",
+      "link13",
       "link43",
-      "link44",
-      "link45",
       "link46",
       "link47",
       "link48",
@@ -75,73 +79,59 @@ trait FaciaPressDeduplicationTestData {
       "link50",
     ).map(id => pressedContentFromId(id)),
     List(
-      "link21",
-      "link22",
-      "link23"
+      "link10",
     ).map(id => pressedContentFromId(id))
   )
 
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // Test that we deduplicate against curated and backfilled elements
+  // We expect 11 to go because of collection0's curated
+  // We expect 22 to go because of collection0's backfilled
+  // -----------------------------------------------------
   val collection2 = collectionFromCuratedAndBackfilled(
     List(
-      "link30",
-      "link31",
-      "link32",
-      "link33",
-      "link34",
-      "link35",
-      "link36",
-      "link37",
-      "link38",
-      "link39",
-      "link40",
-      "link41",
-      "link42",
+      "link11",
+      "link12",
+      "link13",
       "link43",
-      "link44",
-      "link45",
       "link46",
       "link47",
       "link48",
       "link49",
-      "link50"
+      "link50",
+      "link51"
+    ).map(id => pressedContentFromId(id)),
+    List(
+      "link11",
+      "link22"
+    ).map(id => pressedContentFromId(id))
+  )
+
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // Test remove backfilled contents when appearing in the previous container as curated
+  // .... thereby overidding [1]
+  // We expect "link10" in collection4 to go, but "link10" in collection5 to stay
+  // -----------------------------------------------------
+  val collection3 = collectionFromCuratedAndBackfilled(
+    List(
+      "link10",
     ).map(id => pressedContentFromId(id)),
     Nil
   )
 
-  val collection3 = collectionFromCuratedAndBackfilled(
+  val collection4 = collectionFromCuratedAndBackfilled(
+    Nil,
     List(
-      "link30",
-      "link31",
-      "link32",
-      "link33",
-      "link34",
-      "link35",
-      "link36",
-      "link37",
-      "link38",
-      "link39",
-      "link40"
-    ).map(id => pressedContentFromId(id)),
-    List(
-      "link41",
-      "link42",
-      "link43",
-      "link44",
-      "link45",
-      "link46",
-      "link47",
-      "link48",
-      "link49",
-      "link50"
+      "link10",
     ).map(id => pressedContentFromId(id))
   )
 
-  // What we want to see.
-
-  // 1. The curated elements are never removed
-
-  // 2. Just one element backfilled elements of collection1 is going to be removed (this is because after "link21" is
-  // removed, we will be with a collection which has exactly 10 elements)
-
-  // 3. All the backfilled elements of collection3 are going to be removed.
+  val collection5 = collectionFromCuratedAndBackfilled(
+    Nil,
+    List(
+      "link10",
+    ).map(id => pressedContentFromId(id))
+  )
 }
