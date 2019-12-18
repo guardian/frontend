@@ -29,25 +29,11 @@ object PressedCollectionDeduplication {
    */
 
   /*
-      Pascal - 13th Dec 2019
-
-      Today I am introducing a logic that is as close to the target logic as possible, while handling two interesting cases:
-        1. Maintaining the integrity of the Most Popular container.
-        2. Allowing for backfill'ed only containers to work fine.
-
-      Considering the situation:
-        - The `PressedCollection`s are given in order `[pc_{1}, pc_{2}, ...., pc_{n-1}, pc_{n}, pc_{n+1}, ... ]`.
-        - During the fold we have computed `[pc_{1}, pc_{2}, ...., pc_{n-1}]` and we are given `pc_{n}`.
-
-      Define: `pc_{n}'i` = Deduplication at depth `i` of the backfilled elements of `pc_{n}` using the first `i` curated or backfilled elements of `[pc_{1}, pc_{2}, ...., pc_{n-1}]`
-
-      We compute `pc_{n}'i` for i \in { 1, ...., i_{max} } # Where `i_{max}` the maximum length of the curated or backfilled arrays of the entire collection `[pc_{1}, pc_{2}, ...., pc_{n-1}]`.
-
-      The intuitive meaning of `pc_{n}'i` is that the bigger the `i` the closer we are from the ideal situation of complete deduplication.
-
-      The having been said `pc_{n}'i` with large `i` can lead to Most Popular containers being only partially filled.
-
-      Therefore, once [pc_{n}'1, pc_{n}'2, ..., pc_{n}'i_{max}] has been computed, we take either the first one or the last possible one with at least 10 elements (curated and backfilled counted together).
+      Pascal - 18th Dec 2019
+        The implementation is a variation of the general rules (exposed on 05th Dec 2019) to allow for:
+          1. Maintaining the integrity of the Most Popular container.
+          2. Allowing for backfill'ed only containers to work fine.
+          3. Forcing backfilled deduplication in consecutive containers
    */
 
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
@@ -88,13 +74,31 @@ object PressedCollectionDeduplication {
     }
   }
 
+  def completelyDeduplicateSecondBackfilledAgainstFirstCurated(collectionV1: PressedCollectionVisibility, collectionV2: PressedCollectionVisibility): PressedCollectionVisibility = {
+    val accumulatedHeaderURLsForDeduplication = collectionV1.pressedCollection.curated.map ( pressedContent => pressedContent.header.url )
+    val newBackfill = collectionV2.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
+    collectionV2.copy(
+      pressedCollection = collectionV2.pressedCollection.copy (
+        backfill = newBackfill
+      )
+    )
+  }
+
+  def completelyDeduplicateCollectionAgainstAccumulatorEnding(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): PressedCollectionVisibility = {
+    val last = accum.reverse.headOption
+    last match {
+      case None => collectionV
+      case Some(lastCollectionV) => completelyDeduplicateSecondBackfilledAgainstFirstCurated(lastCollectionV: PressedCollectionVisibility, collectionV: PressedCollectionVisibility)
+    }
+  }
+
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
       // Given collectionV we compute the candidates for its replacement, then add the best of those candidates (according to reduceDeduplicatedCollectionCandidates) to accum
       val candidates: Seq[PressedCollectionVisibility] = makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility)
       reduceDeduplicatedCollectionCandidates(candidates) match {
         case None => accum
-        case Some(collectionV) => accum :+ collectionV
+        case Some(collectionV) => accum :+ completelyDeduplicateCollectionAgainstAccumulatorEnding(accum, collectionV)
       }
     }
   }
