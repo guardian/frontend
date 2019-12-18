@@ -275,15 +275,9 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-comment:not(.fc-item--pillar-special-report) {
-        &.fc-item--pillar-news,
-        &.fc-item--pillar-opinion,
-        &.fc-item--pillar-sport,
-        &.fc-item--pillar-arts,
-        &.fc-item--pillar-lifestyle {
-            background-color: $opinion-faded;
-        }
+    &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--dynamic-layout) {
 
+        background-color: $opinion-faded;
 
         .fc-item__container.u-faux-block-link--hover {
             background-color: darken($opinion-faded, 2%);
