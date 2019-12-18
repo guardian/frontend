@@ -21,14 +21,13 @@ class FaciaPressDeduplicationTest extends FlatSpec with Matchers with FaciaPress
   // 3. All the backfilled elements of collection3 are going to be removed.
 
   it should "curated elements are never removed" in {
-    newSequence(0).pressedCollection.curated.size shouldBe 4
-    newSequence(1).pressedCollection.curated.size shouldBe 8
-    newSequence(2).pressedCollection.curated.size shouldBe 22
-    newSequence(3).pressedCollection.curated.size shouldBe 11
+    newSequence(0).pressedCollection.curated.size shouldBe sequence(0).pressedCollection.curated.size
+    newSequence(1).pressedCollection.curated.size shouldBe sequence(1).pressedCollection.curated.size
+    newSequence(2).pressedCollection.curated.size shouldBe sequence(2).pressedCollection.curated.size
   }
 
   it should "remove duplicated backfill'ed content" in {
-    newSequence(1).pressedCollection.backfill.size shouldBe 2
+    newSequence(1).pressedCollection.backfill.size shouldBe 1
     // It is not 1, because we do not deduplicate if resulting in less than 10 elements.
   }
 

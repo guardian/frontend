@@ -65,19 +65,20 @@ trait FaciaPressDeduplicationTestData {
 
   val collection1 = collectionFromCuratedAndBackfilled(
     List(
-      "link10",
       "link11",
       "link12",
       "link13",
       "link43",
+      "link46",
+      "link47",
       "link48",
       "link49",
-      "link50",
+      "link50"
     ).map(id => pressedContentFromId(id)),
     List(
-      "link21",
-      "link22",
-      "link23"
+      "link10",
+      "link12",
+      "link22"
     ).map(id => pressedContentFromId(id))
   )
 
@@ -100,11 +101,7 @@ trait FaciaPressDeduplicationTestData {
       "link43",
       "link44",
       "link45",
-      "link46",
-      "link47",
-      "link48",
-      "link49",
-      "link50"
+
     ).map(id => pressedContentFromId(id)),
     Nil
   )
