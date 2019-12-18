@@ -35,7 +35,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
                 background-image: none;
             }
 
-            &.fc-item--type-comment:not(.fc-item--pillar-special-report) .fc-item__container.u-faux-block-link--hover {
+            &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--dynamic-layout) .fc-item__container.u-faux-block-link--hover {
                 background-color: darken($story-package-card-colour, 5%);
             }
         }
