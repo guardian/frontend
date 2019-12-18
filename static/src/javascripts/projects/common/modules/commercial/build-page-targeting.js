@@ -10,6 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getKruxSegments } from 'common/modules/commercial/krux';
+import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
@@ -36,6 +37,7 @@ type PageTargeting = {
     co: string,
     tn: string,
     slot: string,
+    permutive: string,
 };
 
 let myPageTargetting: {} = {};
@@ -191,6 +193,7 @@ const buildAppNexusTargetingObject = once(
                 pageTargeting.tn,
                 pageTargeting.slot,
             ].join('|'),
+            permutive: pageTargeting.permutive,
         })
 );
 
@@ -211,6 +214,7 @@ const buildPageTargetting = (
         {
             sens: page.isSensitive ? 't' : 'f',
             x: getKruxSegments(adConsentState),
+            permutive: getPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
