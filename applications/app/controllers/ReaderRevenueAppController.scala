@@ -14,12 +14,6 @@ import model.readerRevenue._
 class ReaderRevenueAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-//  private def getContributionsBannerDeployLog(strRegion: String): Option[String] = {
-//    ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
-//      S3.get(ReaderRevenueRegion.getBucketKey(region))
-//    }
-//  }
-
   private def getBannerDeployLog(strRegion: String, bannerType: BannerType): Option[String] = {
     ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
       S3.get(ReaderRevenueRegion.getBucketKey(region, SubscriptionsBanner))

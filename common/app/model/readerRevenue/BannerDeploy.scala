@@ -34,13 +34,8 @@ object ReaderRevenueRegion {
         case ContributionsBanner => createBucketKeyForRegion(contributionsBannerDeployLogKey, region)
         case SubscriptionsBanner => createBucketKeyForRegion(subscriptionsBannerDeployLogKey, region)
       }
-
-//    contributionsBannerDeployLogKey + "-" + region.name + ".json"
   }
 
-//  def getNewBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
-//    subscriptionsBannerDeployLogKey + "-" + region.name + ".json"
-//  }
   def createBucketKeyForRegion(bucketKey: String, region: ReaderRevenueRegion): String = {
     bucketKey + "-" + region.name + ".json"
   }
