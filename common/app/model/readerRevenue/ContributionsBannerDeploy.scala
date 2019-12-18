@@ -29,12 +29,20 @@ object ReaderRevenueRegion {
     }
   }
 
-  def getBucketKey(region: ReaderRevenueRegion): String = {
-    contributionsBannerDeployLogKey + "-" + region.name + ".json"
+  def getBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
+      banner match {
+        case ContributionsBanner => createBucketKeyForRegion(contributionsBannerDeployLogKey, region)
+        case SubscriptionsBanner => createBucketKeyForRegion(subscriptionsBannerDeployLogKey, region)
+      }
+
+//    contributionsBannerDeployLogKey + "-" + region.name + ".json"
   }
 
-  def getNewBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
-    subscriptionsBannerDeployLogKey + "-" + region.name + ".json"
+//  def getNewBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
+//    subscriptionsBannerDeployLogKey + "-" + region.name + ".json"
+//  }
+  def createBucketKeyForRegion(bucketKey: String, region: ReaderRevenueRegion): String = {
+    bucketKey + "-" + region.name + ".json"
   }
 
   val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW)

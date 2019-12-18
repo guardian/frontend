@@ -8,21 +8,21 @@ import services.S3
 import scala.concurrent.duration._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.readerRevenue.ReaderRevenueRegion
-import model.readerRevenue.SubscriptionsBanner
+import model.readerRevenue._
 
 
 class ReaderRevenueAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with Logging {
 
-  private def getContributionsBannerDeployLog(strRegion: String): Option[String] = {
-    ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
-      S3.get(ReaderRevenueRegion.getBucketKey(region))
-    }
-  }
+//  private def getContributionsBannerDeployLog(strRegion: String): Option[String] = {
+//    ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
+//      S3.get(ReaderRevenueRegion.getBucketKey(region))
+//    }
+//  }
 
-  private def getBannerDeployLog(strRegion: String): Option[String] = {
+  private def getBannerDeployLog(strRegion: String, bannerType: BannerType): Option[String] = {
     ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
-      S3.get(ReaderRevenueRegion.getNewBucketKey(region, SubscriptionsBanner))
+      S3.get(ReaderRevenueRegion.getBucketKey(region, SubscriptionsBanner))
     }
   }
 
@@ -32,7 +32,7 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
   }
 
   def contributionsBannerDeployLog(region: String): Action[AnyContent] = Action { implicit request =>
-    getContributionsBannerDeployLog(region).fold(bannerDeployLogUnavailable){ bannerDeployLog =>
+    getBannerDeployLog(region, ContributionsBanner).fold(bannerDeployLogUnavailable){ bannerDeployLog =>
       Cached(7.days) {
         RevalidatableResult.Ok(bannerDeployLog)
       }
@@ -40,7 +40,7 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
   }
 
   def subscriptionsBannerDeployLog(region: String): Action[AnyContent] = Action { implicit request =>
-    getBannerDeployLog(region).fold(bannerDeployLogUnavailable) { bannerDeployLog =>
+    getBannerDeployLog(region, SubscriptionsBanner).fold(bannerDeployLogUnavailable) { bannerDeployLog =>
       Cached(7.days) {
         RevalidatableResult.Ok(bannerDeployLog)
       }
