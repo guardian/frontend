@@ -175,8 +175,8 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     ).join(',');
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} => ({
-        ...removeFalseyValues({
+    (pageTargeting: PageTargeting): {} =>
+        removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
             pt2: pageTargeting.edition,
@@ -193,9 +193,8 @@ const buildAppNexusTargetingObject = once(
                 pageTargeting.tn,
                 pageTargeting.slot,
             ].join('|'),
-        }),
-        permutive: pageTargeting.permutive,
-    })
+            permutive: pageTargeting.permutive,
+        })
 );
 
 const buildAppNexusTargeting = once(
