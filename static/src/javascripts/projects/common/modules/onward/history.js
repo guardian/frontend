@@ -560,6 +560,18 @@ const getArticleViewCountForWeeks = (weeks: number): number => {
     return weeklyCountWindow.reduce((acc, current) => current.count + acc, 0);
 };
 
+const getDaysLeftInCampaign = (endDate: number): number => {
+    const currentDate: number = new Date().getTime();
+    const timeLeft: number = currentDate - endDate;
+
+    if (timeLeft >= 0) {
+        const daysLeft: number = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
+        return daysLeft;
+    }
+
+    return 0;
+};
+
 export {
     logHistory,
     logSummary,
@@ -579,6 +591,7 @@ export {
     getArticleViewCountForDays,
     getArticleViewCountForWeeks,
     getMondayFromDate,
+    getDaysLeftInCampaign,
 };
 
 export const _ = {
