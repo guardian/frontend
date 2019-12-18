@@ -84,8 +84,8 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   private def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
 
       val path = bannerType match {
-        case SubscriptionsBanner => subscriptionsPath + region.name
-        case ContributionsBanner => contributionsPath + region.name
+        case SubscriptionsBanner => s"$subscriptionsPath/${region.name}"
+        case ContributionsBanner => s"$contributionsPath/${region.name}"
       }
 
     log.info(s"Service ID for Fastly is :: ${AjaxHost.serviceId}")
