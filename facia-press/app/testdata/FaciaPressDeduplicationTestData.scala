@@ -65,11 +65,11 @@ trait FaciaPressDeduplicationTestData {
 
   val collection1 = collectionFromCuratedAndBackfilled(
     List(
+      "link10",
+      "link11",
+      "link12",
+      "link13",
       "link43",
-      "link44",
-      "link45",
-      "link46",
-      "link47",
       "link48",
       "link49",
       "link50",
@@ -83,6 +83,7 @@ trait FaciaPressDeduplicationTestData {
 
   val collection2 = collectionFromCuratedAndBackfilled(
     List(
+      "link10",
       "link30",
       "link31",
       "link32",
@@ -135,13 +136,4 @@ trait FaciaPressDeduplicationTestData {
       "link50"
     ).map(id => pressedContentFromId(id))
   )
-
-  // What we want to see.
-
-  // 1. The curated elements are never removed
-
-  // 2. Just one element backfilled elements of collection1 is going to be removed (this is because after "link21" is
-  // removed, we will be with a collection which has exactly 10 elements)
-
-  // 3. All the backfilled elements of collection3 are going to be removed.
 }
