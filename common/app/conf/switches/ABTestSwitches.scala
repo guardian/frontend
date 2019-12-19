@@ -68,7 +68,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-impeachment-regulars",
+    "ab-contributions-banner-us-eoy-impeachment-count-down-regulars",
     "US End of year banner - impeachment, with article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
@@ -78,7 +78,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-impeachment-casuals",
+    "ab-contributions-banner-us-eoy-impeachment-count-down-casuals",
     "US End of year banner - impeachment, no article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,

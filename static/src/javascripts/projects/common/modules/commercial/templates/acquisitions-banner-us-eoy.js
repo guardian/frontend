@@ -4,12 +4,6 @@ import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
 
-// TBD: place image of whitehouse
-// import whitehouseImage from 'svgs/acquisitions/whitehouse.svg';
-// <div className="engagement-banner__background-image">
-//     ${whitehouseImage.markup}
-// </div>
-
 export const acquisitionsBannerUsEoyTemplate = (
     params: EngagementBannerTemplateParams
 ): string => `
