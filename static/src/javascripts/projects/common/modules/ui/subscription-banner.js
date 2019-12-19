@@ -27,6 +27,7 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -58,15 +59,9 @@ const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&u
 
 const hasAcknowledged = bannerRedeploymentDate => {
     const redeploymentDate = new Date(bannerRedeploymentDate).getTime(); // 2 Dec 2019 @ 5:00
-    console.log({ redeploymentDate });
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    console.log({ lastClosedAt });
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
 
-    console.log(
-        'fn: hasAcknowledged',
-        lastClosedAt && lastClosedAtTime > redeploymentDate
-    );
     return lastClosedAt && lastClosedAtTime > redeploymentDate;
 };
 
@@ -75,8 +70,13 @@ const hasAcknowledgedBanner = region =>
         mode: 'cors',
     })
         .then(resp => hasAcknowledged(resp.time))
-        .catch(e => {
-            console.warn(e);
+        .catch(err => {
+            reportError(
+                new Error(`Unable to get subscriptions banner deploy log: ${err}`),
+                { feature: 'subscriptions-banner' },
+                false
+            );
+            return false;
         });
 
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
