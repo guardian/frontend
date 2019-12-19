@@ -726,10 +726,10 @@ $block-height: 58px; // Note: duplicated from _item.scss
     }
 
     //These need to exist for all kickers because of tone on tone action
-    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-bright);
-    @include pillar-override(arts, $culture-bright, $culture-bright);
+    @include pillar-override(lifestyle, $lifestyle-bright, $lifestyle-dark);
+    @include pillar-override(arts, $culture-bright, $culture-dark);
     @include pillar-override(sport, $sport-bright, $sport-bright);
     @include pillar-override(opinion, $opinion-bright, $opinion-bright);
     @include pillar-override(news, $news-bright, $news-bright);
-    @include pillar-override(special-report, $highlight-main, $highlight-main);
+    @include pillar-override(special-report, $highlight-main, $highlight-dark);
 }
