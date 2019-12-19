@@ -18,8 +18,8 @@ import { contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals } from '
 import { contributionsBannerUsEoyReaderAppreciationSupportersCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters-casuals';
 import { contributionsBannerUsEoyReaderAppreciationNonsupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-nonsupporters';
 import { contributionsBannerUsEoyReaderAppreciationSupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters';
-import { contributionsBannerUsEoyImpeachmentCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-impeachment-casuals';
-import { contributionsBannerUsEoyImpeachmentRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-impeachment-regulars';
+import { contributionsBannerUsEoyImpeachmentCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-casuals';
+import { contributionsBannerUsEoyImpeachmentRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-regulars';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
