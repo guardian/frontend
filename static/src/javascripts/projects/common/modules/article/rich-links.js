@@ -127,6 +127,10 @@ const getSpacefinderRules = (): SpacefinderRules => ({
                 : 0,
             minBelow: 0,
         },
+        '.js-article__body--type-numbered-list > h2': {
+            minAbove: 100,
+            minBelow: 200,
+        },
     },
 });
 
