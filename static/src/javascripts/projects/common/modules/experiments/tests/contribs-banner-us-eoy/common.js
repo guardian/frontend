@@ -8,7 +8,7 @@ const getDaysLeftInCampaign = (endDate: number): number => {
 };
 
 export const getDaysLeftBeforeEOY2019 = (): number =>
-    getDaysLeftInCampaign(new Date('Dec 21, 2019 23:59:59').getTime());
+    getDaysLeftInCampaign(new Date('Dec 31, 2019 23:59:59').getTime());
 
 export const daysLeftCopy = (daysLeft: number): string => {
     switch (daysLeft) {
