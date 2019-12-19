@@ -39,8 +39,8 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region"), bannerType))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
-      val jsonLog: JsValue = Json.toJson(ContributionsBannerDeploy(time))
-      val message = s"Subscriptions banner in ${region.name} redeploy by $requester at ${time.toString}}"
+      val jsonLog: JsValue = Json.toJson(BannerDeploy(time))
+      val message = s"${bannerType.name} banner in ${region.name} redeploy by $requester at ${time.toString}}"
 
       val result = for {
         _ <- updateBannerDeployLog(region, jsonLog.toString, bannerType)
@@ -65,8 +65,6 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
         case SubscriptionsBanner => s"$subscriptionsPath/${region.name}"
         case ContributionsBanner => s"$contributionsPath/${region.name}"
       }
-
-    log.info(s"Service ID for Fastly is :: ${AjaxHost.serviceId}")
 
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
