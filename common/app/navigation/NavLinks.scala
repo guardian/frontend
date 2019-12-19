@@ -16,7 +16,6 @@ private object NavLinks {
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
-  val ukElections2019 = NavLink("Election 2019", "/politics/general-election-2019", longTitle = "Election 2019")
   val usElections2020 = NavLink("Elections 2020", "/us-news/us-elections-2020", longTitle = "Elections 2020")
 
 
@@ -213,7 +212,6 @@ private object NavLinks {
   val ukNewsPillar = NavLink("News", "/", longTitle = "Headlines", iconName = "home",
     List(
       ukNews,
-      ukElections2019,
       world,
       ukBusiness,
       football,
