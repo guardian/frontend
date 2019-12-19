@@ -72,7 +72,9 @@ const hasAcknowledgedBanner = region =>
         .then(resp => hasAcknowledged(resp.time))
         .catch(err => {
             reportError(
-                new Error(`Unable to get subscriptions banner deploy log: ${err}`),
+                new Error(
+                    `Unable to get subscriptions banner deploy log: ${err}`
+                ),
                 { feature: 'subscriptions-banner' },
                 false
             );
