@@ -10,7 +10,7 @@ import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import { signInGatePrius } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { articlesViewedBannerUkElection } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-uk-election';
@@ -28,7 +28,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
-    signInGatePrius,
+    signInGateSecundus,
     commercialCmpUiNoOverlay,
     commercialConsentOptionsButton,
 ];
