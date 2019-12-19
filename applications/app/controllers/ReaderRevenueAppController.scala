@@ -16,31 +16,25 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
 
   private def getBannerDeployLog(strRegion: String, bannerType: BannerType): Option[String] = {
     ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
-      S3.get(ReaderRevenueRegion.getBucketKey(region, SubscriptionsBanner))
+      S3.get(ReaderRevenueRegion.getBucketKey(region, bannerType))
     }
   }
 
-  private def bannerDeployLogUnavailable(implicit request: RequestHeader) = {
-    log.warn(s"Could not get reader revenue contributions-banner deploy log from s3")
+  private def bannerDeployLogUnavailable(bannerType: BannerType)(implicit request: RequestHeader) = {
+    log.warn(s"Could not get reader revenue ${bannerType.name} deploy log from s3")
     Cached(300)(WithoutRevalidationResult(NotFound))
   }
 
-  def contributionsBannerDeployLog(region: String): Action[AnyContent] = Action { implicit request =>
-    getBannerDeployLog(region, ContributionsBanner).fold(bannerDeployLogUnavailable){ bannerDeployLog =>
+  private def bannerDeployLogUtil(region: String, bannerType: BannerType): Action[AnyContent] = Action { implicit request =>
+    getBannerDeployLog(region, bannerType).fold(bannerDeployLogUnavailable(bannerType)) { bannerDeployLog =>
       Cached(7.days) {
         RevalidatableResult.Ok(bannerDeployLog)
       }
     }
   }
 
-  def subscriptionsBannerDeployLog(region: String): Action[AnyContent] = Action { implicit request =>
-    getBannerDeployLog(region, SubscriptionsBanner).fold(bannerDeployLogUnavailable) { bannerDeployLog =>
-      Cached(7.days) {
-        RevalidatableResult.Ok(bannerDeployLog)
-      }
-    }
-  }
+  def contributionsBannerDeployLog(region: String): Action[AnyContent] = bannerDeployLogUtil(region, ContributionsBanner)
 
-
+  def subscriptionsBannerDeployLog(region: String): Action[AnyContent] = bannerDeployLogUtil(region, SubscriptionsBanner)
 
 }
