@@ -142,7 +142,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2019, 12, 18),
+    sellByDate = new LocalDate(2020, 1, 18),
     exposeClientSide = true
   )
 
@@ -192,7 +192,7 @@ trait ABTestSwitches {
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = On,
-    sellByDate = new LocalDate(2019, 12, 20),
+    sellByDate = new LocalDate(2020, 1, 20),
     exposeClientSide = true
   )
 
