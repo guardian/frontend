@@ -188,11 +188,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-prius",
+    "ab-sign-in-gate-secundus",
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 1, 20),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 31),
     exposeClientSide = true
   )
 
