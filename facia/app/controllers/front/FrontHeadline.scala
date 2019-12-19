@@ -9,16 +9,21 @@ object FrontHeadline extends Results with Logging {
 
   val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(NotFound("Could not extract headline from front"))
 
-  def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
-    val webTitle = for {
+  def headline(faciaPage: PressedPage): Option[String] = {
+    for {
       topCollection <- faciaPage.collections.headOption
       topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-    } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
-
-    webTitle.getOrElse {
-      log.warn(s"headline not found for ${faciaPage.id}")
-      headlineNotFound
-    }
+    } yield topCurated.properties.webTitle
   }
 
+  def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
+    val  h = headline(faciaPage)
+
+    h match {
+      case Some(h) => RevalidatableResult.Ok(h)
+      case None =>
+        log.warn(s"headline not found for ${faciaPage.id}")
+        headlineNotFound
+    }
+  }
 }

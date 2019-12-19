@@ -182,7 +182,8 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
 
     if (request.isEmailJson) {
       val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
-      val emailJson = JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))
+      val headline = FrontHeadline.headline(faciaPage).getOrElse("")
+      val emailJson = JsObject(Map("headline" -> JsString(headline), "body" -> JsString(htmlWithUtmLinks.toString)))
       RevalidatableResult.Ok(emailJson)
     } else if (request.isEmailTxt) {
       val htmlWithUtmLinks = BrazeEmailFormatter(htmResponseInlined)
