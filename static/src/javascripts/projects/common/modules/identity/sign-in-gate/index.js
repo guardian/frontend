@@ -114,7 +114,7 @@ const isInvalidArticleType = (): boolean => {
 
 // hide the sign in gate on certain sections of the site, e.g info, about, help etc.
 const isInvalidSection = (): boolean => {
-    const invalidSections = ['about', 'info'];
+    const invalidSections = ['about', 'info', 'membership'];
 
     return invalidSections.reduce((isSectionInvalid, section) => {
         if (isSectionInvalid) return true;
