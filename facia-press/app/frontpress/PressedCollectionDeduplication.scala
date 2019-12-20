@@ -45,7 +45,7 @@ object PressedCollectionDeduplication {
   }
 
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
-    pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
+    pCVs.flatMap{ collection => (collection.pressedCollection.curated ++ collection.pressedCollection.backfill).take(depth).map ( pressedContent => pressedContent.header.url ) }
   }
 
   def deduplicateCollectionAgainstAccumulator(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): PressedCollectionVisibility = {
