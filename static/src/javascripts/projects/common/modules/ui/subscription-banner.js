@@ -58,7 +58,7 @@ const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const hasAcknowledged = bannerRedeploymentDate => {
-    const redeploymentDate = new Date(bannerRedeploymentDate).getTime(); // 2 Dec 2019 @ 5:00
+    const redeploymentDate = new Date(bannerRedeploymentDate).getTime();
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
 

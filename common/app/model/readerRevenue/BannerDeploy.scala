@@ -29,11 +29,8 @@ object ReaderRevenueRegion {
     }
   }
 
-  def getBucketKey(region: ReaderRevenueRegion, banner: BannerType): String = {
-      banner match {
-        case ContributionsBanner => createBucketKeyForRegion(contributionsBannerDeployLogKey, region)
-        case SubscriptionsBanner => createBucketKeyForRegion(subscriptionsBannerDeployLogKey, region)
-      }
+  def getBucketKey(region: ReaderRevenueRegion, bannerType: BannerType): String = {
+    createBucketKeyForRegion(bannerType.logKey, region)
   }
 
   def createBucketKeyForRegion(bucketKey: String, region: ReaderRevenueRegion): String = {
@@ -43,6 +40,20 @@ object ReaderRevenueRegion {
   val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW)
 }
 
-sealed trait BannerType { val name: String }
-case object ContributionsBanner extends BannerType { val name = "contributions-banner" }
-case object SubscriptionsBanner extends BannerType { val name = "subscriptions-banner" }
+sealed trait BannerType {
+  val name: String
+  val logKey: String
+  val path: String
+}
+
+case object ContributionsBanner extends BannerType {
+  val name = "contributions-banner"
+  val logKey = contributionsBannerDeployLogKey
+  val path = subscriptionsPath
+}
+
+case object SubscriptionsBanner extends BannerType {
+  val name = "subscriptions-banner"
+  val logKey = subscriptionsBannerDeployLogKey
+  val path = contributionsPath
+}

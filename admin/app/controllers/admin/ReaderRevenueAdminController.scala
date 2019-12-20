@@ -11,7 +11,6 @@ import services.S3
 import org.apache.commons.codec.digest.DigestUtils
 import play.api.libs.ws.{WSClient, WSResponse}
 import purge.{AjaxHost, CdnPurge}
-import conf.Configuration.readerRevenue._
 
 import scala.concurrent.Future
 
@@ -61,34 +60,28 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   private def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
 
-      val path = bannerType match {
-        case SubscriptionsBanner => s"$subscriptionsPath/${region.name}"
-        case ContributionsBanner => s"$contributionsPath/${region.name}"
-      }
+    val path = s"${bannerType.path}/${region.name}"
 
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 
+  private def getRoute(bannerType: BannerType): Call = {
+     bannerType match {
+      case ContributionsBanner => routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()
+      case SubscriptionsBanner => routes.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
+    }
+  }
+
   private def bannerRedeploySuccessful(message: String, region: ReaderRevenueRegion, bannerType: BannerType): Result = {
     log.info(s"$message: SUCCESSFUL")
-    bannerType match {
-      case ContributionsBanner => Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
-        "success" -> (s"Banner redeployed in ${region.name}"))
-      case SubscriptionsBanner => Redirect(routes.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()).flashing(
-        "success" -> (s"Banner redeployed in ${region.name}"))
-    }
+
+    Redirect(getRoute(bannerType)).flashing("success" -> s"${bannerType.name} redeployed in ${region.name}")
+
   }
 
   private def redeployFailed(error: Throwable, bannerType: BannerType): Result = {
-    log.error("Contributions banner redeploy FAILED", error)
-    bannerType match {
-      case ContributionsBanner => Redirect(routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()).flashing(
-        "error" -> ("Banner not redeployed"))
-      case SubscriptionsBanner => Redirect(routes.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()).flashing(
-        "error" -> ("Banner not redeployed"))
-    }
+    log.error(s"${bannerType.name} banner redeploy FAILED", error)
 
+    Redirect(getRoute(bannerType)).flashing("error" -> s"${bannerType.name} not redeployed")
   }
-
-
 }
