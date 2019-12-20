@@ -7,6 +7,7 @@ import { local } from 'lib/storage';
 import {
     submitViewEvent,
     submitClickEvent,
+    addTrackingCodesToUrl,
 } from 'common/modules/commercial/acquisitions-ophan';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import {
@@ -26,6 +27,12 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
+import {
+    isInVariantSynchronous,
+    isInABTestSynchronous,
+} from 'common/modules/experiments/ab';
+import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
+import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -40,6 +47,8 @@ const CLICK_EVENT_CTA = 'subscription-banner : cta';
 const CLICK_EVENT_CLOSE_NOT_NOW = 'subscription-banner : not now';
 const CLICK_EVENT_CLOSE_BUTTON = 'subscription-banner : close';
 const CLICK_EVENT_SIGN_IN = 'subscription-banner : sign in';
+const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
+const CAMPAIGN_CODE = 'gdnwb_copts_banner_subscribe_SubscriptionBanner';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
@@ -52,7 +61,23 @@ const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
     geolocationGetSync()
 );
 const hideBannerInTheseRegions: ReaderRevenueRegion[] = ['australia'];
-const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${CLICK_EVENT_CTA}%22%7D`;
+
+const abTest =
+    isInABTestSynchronous(subscriptionsBannerNewYearCopyTest) ? {
+        abTest: {
+            name: subscriptionsBannerNewYearCopyTest.id,
+            variant: isInVariantSynchronous(subscriptionsBannerNewYearCopyTest, 'control') ? 'control' : 'variant',
+        }
+    } : {};
+
+const subscriptionUrl = addTrackingCodesToUrl({
+    base: `${subscriptionHostname}/subscribe/digital`,
+    componentType: COMPONENT_TYPE,
+    componentId: OPHAN_EVENT_ID,
+    campaignCode: CAMPAIGN_CODE,
+    ...abTest,
+});
+
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const hasAcknowledged = bannerRedeploymentDate => {
