@@ -62,13 +62,19 @@ const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
 );
 const hideBannerInTheseRegions: ReaderRevenueRegion[] = ['australia'];
 
-const abTest =
-    isInABTestSynchronous(subscriptionsBannerNewYearCopyTest) ? {
+const abTest = isInABTestSynchronous(subscriptionsBannerNewYearCopyTest)
+    ? {
         abTest: {
             name: subscriptionsBannerNewYearCopyTest.id,
-            variant: isInVariantSynchronous(subscriptionsBannerNewYearCopyTest, 'control') ? 'control' : 'variant',
-        }
-    } : {};
+            variant: isInVariantSynchronous(
+                subscriptionsBannerNewYearCopyTest,
+                'control'
+            )
+                ? 'control'
+                : 'variant',
+        },
+    }
+    : {};
 
 const subscriptionUrl = addTrackingCodesToUrl({
     base: `${subscriptionHostname}/subscribe/digital`,
