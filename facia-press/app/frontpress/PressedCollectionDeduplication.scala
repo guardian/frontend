@@ -29,12 +29,21 @@ object PressedCollectionDeduplication {
    */
 
   /*
-      Pascal - 18th Dec 2019
+      Pascal - 20th Dec 2019
         The implementation is a variation of the general rules (exposed on 05th Dec 2019) to allow for:
           1. Maintaining the integrity of the Most Popular container.
           2. Allowing for backfill'ed only containers to work fine.
           3. Forcing backfilled deduplication in consecutive containers
    */
+
+  def collectionIsMostPopular(collectionV: PressedCollectionVisibility): Boolean = {
+    collectionV.pressedCollection.config.collectionType == "news/most-popular"
+  }
+
+  def collectionShouldBeDeduplicated(collectionV: PressedCollectionVisibility): Boolean = {
+    // For the moment we are only checking if the collection is most popular or not.
+    !collectionIsMostPopular(collectionV: PressedCollectionVisibility)
+  }
 
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
     pCVs.flatMap{ collection => (collection.pressedCollection.curated.take(depth) ++ collection.pressedCollection.backfill.take(depth)).map ( pressedContent => pressedContent.header.url ) }
@@ -94,11 +103,15 @@ object PressedCollectionDeduplication {
 
   def deduplication(pressedCollections: Seq[PressedCollectionVisibility]): Seq[PressedCollectionVisibility] = {
     pressedCollections.foldLeft[Seq[PressedCollectionVisibility]](Nil) { (accum, collectionV) =>
-      // Given collectionV we compute the candidates for its replacement, then add the best of those candidates (according to reduceDeduplicatedCollectionCandidates) to accum
-      val candidates: Seq[PressedCollectionVisibility] = makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility)
-      reduceDeduplicatedCollectionCandidates(candidates) match {
-        case None => accum
-        case Some(collectionV) => accum :+ completelyDeduplicateCollectionAgainstAccumulatorEnding(accum, collectionV)
+      if (collectionShouldBeDeduplicated(collectionV: PressedCollectionVisibility)) {
+        // Given collectionV we compute the candidates for its replacement, then add the best of those candidates (according to reduceDeduplicatedCollectionCandidates) to accum
+        val candidates: Seq[PressedCollectionVisibility] = makeDeduplicatedCollectionCandidates(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility)
+        reduceDeduplicatedCollectionCandidates(candidates) match {
+          case None => accum
+          case Some(collectionV) => accum :+ completelyDeduplicateCollectionAgainstAccumulatorEnding(accum, collectionV)
+        }
+      } else {
+        accum :+ collectionV
       }
     }
   }
