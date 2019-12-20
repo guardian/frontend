@@ -72,17 +72,15 @@
                     }
 
                     @if(editionId == "uk") {
-                        @if(editionId != "us" || UsHeaderAndFooterSubscribeLinkSwitch.isSwitchedOn) {
-                            <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
-                            data-link-name="nav2 : support-cta"
-                            data-edition="@{
-                                editionId
-                            }"
-                            href="@getReaderRevenueUrl(SupportSubscribe, Header)">
-                                Subscribe
-                                @fragments.inlineSvg("arrow-right", "icon")
-                            </a>
-                        }
+                        <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
+                        data-link-name="nav2 : support-cta"
+                        data-edition="@{
+                            editionId
+                        }"
+                        href="@getReaderRevenueUrl(SupportSubscribe, Header)">
+                            Subscribe
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </a>
                     } else {
                         <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
                             data-link-name="nav2 : contribute-cta"
