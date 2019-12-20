@@ -104,4 +104,15 @@ trait FaciaPressDeduplicationTestData {
     ).map(id => pressedContentFromId(id))
   )
 
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // collection3 is a variation of collection 1
+  // collection3 is used to demonstrate that the Most Popular container is not deduplicated
+  // -----------------------------------------------------
+  val collection3 = collection1.copy(
+    config = collection1.config.copy(
+      collectionType = "news/most-popular"
+    )
+  )
+
 }
