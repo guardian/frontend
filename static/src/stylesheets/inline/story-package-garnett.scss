@@ -244,11 +244,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
     // I'm not sure this is at all reliable, or a good idea, but until I figure
     // out what classes I want to add in Scala this gets things moving:
-    .l-row__item--span-3 + .l-row__item--span-1 {
-        .fc-item--live-updates {
-            &.fc-item--standard-tablet {
-                .fc-item__media-wrapper {
-                    display: block;
+    @include mq($from: desktop) {
+        .l-row__item--span-3 + .l-row__item--span-1 {
+            .fc-item--live-updates {
+                &.fc-item--standard-tablet {
+                    .fc-item__media-wrapper {
+                        display: block;
+                    }
                 }
             }
         }
@@ -647,13 +649,14 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
                 background-color: $story-package-dynamic-card-text;
+                margin-bottom: 0;
 
                 @include mq($from: tablet) {
                     background-color: rgba(4, 31, 74, .8);
                     border-left: 0;
                     border-bottom: 0;
+                    max-width: 33%;
                 }
-                margin-bottom: 0;
             }
 
             .fc-sublink__title,
