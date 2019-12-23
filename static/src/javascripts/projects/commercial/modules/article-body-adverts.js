@@ -2,12 +2,14 @@
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
+import mediator from 'lib/mediator';
 import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
+
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 
@@ -246,7 +248,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     );
 };
 
-export const init = (): Promise<boolean> => {
+const doInit = (): Promise<boolean> => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
@@ -261,4 +263,13 @@ export const init = (): Promise<boolean> => {
         .then(initCarrot);
 
     return im;
+};
+
+export const init = (): Promise<boolean> => {
+    // Also init when the main article is redisplayed
+    // For instance by the signin gate.
+    mediator.on('page:article:redisplayed', () => {
+        doInit();
+    });
+    return doInit();
 };
