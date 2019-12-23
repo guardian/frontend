@@ -50,12 +50,18 @@ trait FaciaPressDeduplicationTestData {
     )
   }
 
+  // -----------------------------------------------------
+  // Comment for FaciaPressDeduplicationTest:
+  // collection1 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
+  // We expect: curated of size 2, backfill of size 3
+  // -----------------------------------------------------
   val collection0 = collectionFromCuratedAndBackfilled(
     List(
+      "link10",
       "link11",
     ).map(id => pressedContentFromId(id)),
     List(
-      "link10",
+      "link20",
       "link22",
       "link23"
     ).map(id => pressedContentFromId(id))
@@ -63,75 +69,50 @@ trait FaciaPressDeduplicationTestData {
 
   // -----------------------------------------------------
   // Comment for FaciaPressDeduplicationTest:
-  // Test that we do not deduplicate below 10 elements [1]
-  // We expect backfill to stay even if a duplicate of collection0 backfill
+  // collection1 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
+  // We expect: curated of size 3, backfill of size 1 ("link24")
   // -----------------------------------------------------
   val collection1 = collectionFromCuratedAndBackfilled(
     List(
       "link10",
+      "link11",
       "link12",
-      "link13",
-      "link43",
-      "link46",
-      "link47",
-      "link48",
-      "link49",
-      "link50",
     ).map(id => pressedContentFromId(id)),
     List(
-      "link10",
+      "link20",
+      "link22",
+      "link23",
+      "link24"
     ).map(id => pressedContentFromId(id))
   )
 
   // -----------------------------------------------------
   // Comment for FaciaPressDeduplicationTest:
-  // Test that we deduplicate against curated and backfilled elements
-  // We expect 11 to go because of collection0's curated
-  // We expect 22 to go because of collection0's backfilled
+  // collection2 is used to test that we do not touch curated elements and that we deduplicate backfilled elements
+  // We expect: curated of size 3, backfill of size 2 ("link25", "link26")
   // -----------------------------------------------------
   val collection2 = collectionFromCuratedAndBackfilled(
     List(
       "link11",
       "link12",
-      "link13",
-      "link43",
-      "link46",
-      "link47",
-      "link48",
-      "link49",
-      "link50",
-      "link51"
+      "link20",
     ).map(id => pressedContentFromId(id)),
     List(
-      "link11",
-      "link22"
+      "link23",
+      "link25",
+      "link26",
     ).map(id => pressedContentFromId(id))
   )
 
   // -----------------------------------------------------
   // Comment for FaciaPressDeduplicationTest:
-  // Test remove backfilled contents when appearing in the previous container as curated
-  // .... thereby overidding [1]
-  // We expect "link10" in collection4 to go, but "link10" in collection5 to stay
+  // collection3 is a variation of collection 1
+  // collection3 is used to demonstrate that the Most Popular container is not deduplicated
   // -----------------------------------------------------
-  val collection3 = collectionFromCuratedAndBackfilled(
-    List(
-      "link10",
-    ).map(id => pressedContentFromId(id)),
-    Nil
+  val collection3 = collection1.copy(
+    config = collection1.config.copy(
+      collectionType = "news/most-popular"
+    )
   )
 
-  val collection4 = collectionFromCuratedAndBackfilled(
-    Nil,
-    List(
-      "link10",
-    ).map(id => pressedContentFromId(id))
-  )
-
-  val collection5 = collectionFromCuratedAndBackfilled(
-    Nil,
-    List(
-      "link10",
-    ).map(id => pressedContentFromId(id))
-  )
 }
