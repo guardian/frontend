@@ -1,7 +1,6 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
-import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';

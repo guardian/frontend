@@ -2,7 +2,6 @@
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
-import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 // User must have read at least 5 articles in last 4 months (as 17 weeks)
 const minArticleViews = 5;
@@ -31,10 +30,7 @@ export const contributionsBannerUsEoyThreeDaysRegulars: AcquisitionsABTest = {
     idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => {
-        debugger;
-        return isUS && articleViewCount >= minArticleViews;
-    },
+    canRun: () => isUS && articleViewCount >= minArticleViews,
     geolocation,
     variants: [
         {
