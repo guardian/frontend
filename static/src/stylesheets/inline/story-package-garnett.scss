@@ -643,7 +643,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
         &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
         &.fc-item--full-media-100-tablet,
         &.fc-item--full-media-100-tablet,
-        &.fc-item--three-quarters-tablet,
+        &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
         &.fc-item--three-quarters-tall-tablet {
 
             .fc-sublink {
@@ -685,7 +685,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
             &.fc-item--full-media-100-tablet,
             &.fc-item--full-media-100-tablet,
-            &.fc-item--three-quarters-tablet,
+            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
             &.fc-item--three-quarters-tall-tablet {
                 .fc-sublink {
                     margin-bottom: $gs-baseline;
@@ -709,6 +709,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
 
             // FullMedia75
+            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
             &.fc-item--full-media-75-tablet.fc-item--has-sublinks-4 {
                 .fc-item__footer--horizontal {
@@ -736,9 +737,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
 
             // ThreeQuarters
-            &.fc-item--three-quarters-tablet {
+            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2 {
                 .fc-item__footer--horizontal {
                     width: 66%;
+                }
+
+                .fc-sublink {
+                    max-width: 50%;
                 }
             }
         }
