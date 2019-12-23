@@ -1,23 +1,24 @@
 // @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
+import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['It’s because of you...'];
-const messageText = `... and the readers across all 50 states that supported us in 2019 that our journalism thrived in a challenging climate for publishers. Next year America faces an epic choice and the need for an independent press has never been greater. Support from our readers is vital. Please consider supporting us today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
+const titles = ['1 day left to give to the Guardian in 2019'];
+const messageText = `… and one year left in Donald Trump’s first term. Over the last three years, much of what the Guardian holds dear has been threatened – democracy, civility, truth. As 2020 approaches, the need for a robust, independent press has never been greater. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million to cover the issues that matter.`;
 const ctaText = 'Support The Guardian';
 const tickerHeader = 'Help us reach our year-end goal';
 
-export const contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyReaderAppreciationNonsupportersCasuals',
+export const contributionsBannerUsEoyOneDayCasuals: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyOneDayCasuals',
     campaignId: 'USeoy2019',
-    start: '2019-12-16',
+    start: '2019-12-23',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
     description:
-        'reader appreciation banner for the US EOY campaign - potential supporters, no article count',
+        'US End of year banner - three day count without articles viewed',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',

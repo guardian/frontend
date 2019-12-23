@@ -4,27 +4,26 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import { canShowBannerSync } from 'common/modules/commercial/contributions-utilities';
 
-// User must have read at least 5 articles in last 3 months (as 13 weeks)
+// User must have read at least 5 articles in last 4 months (as 17 weeks)
 const minArticleViews = 5;
-const articleCountWeeks = 13;
+const articleCountWeeks = 17;
 const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['It’s because of you...'];
-const messageText = `... and your unprecedented support for the Guardian that our journalism thrived in a challenging climate for publishers in 2019. Thank you. You've read ${articleViewCount} articles in the last three months and your support is vital. Next year America faces a momentous choice and the need for an independent press has never been greater. If you can, please consider supporting us again today with a year-end gift. Contribute from as little as $1 and help us reach our goal.`;
+const titles = ['1 day left to give to the Guardian in 2019'];
+const messageText = `… and one year left in Donald Trump’s first term. Over the last three years, much of what the Guardian holds dear has been threatened – democracy, civility, truth. As 2020 approaches, the need for a robust, independent press has never been greater. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million to cover the issues that matter.`;
 const ctaText = 'Support The Guardian';
-const tickerHeader = 'Help us reach our year-end goal';
+const tickerHeader = `You've read ${articleViewCount} in the last four months`;
 
-export const contributionsBannerUsEoyReaderAppreciationSupporters: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyReaderAppreciationSupporters',
+export const contributionsBannerUsEoyOneDayRegulars: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyOneDayRegulars',
     campaignId: 'USeoy2019',
-    start: '2019-12-16',
+    start: '2019-12-23',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
-    description:
-        'reader appreciation banner for the US EOY campaign - known supporters with article count',
+    description: 'US End of year banner - three day count with articles viewed',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
@@ -46,9 +45,7 @@ export const contributionsBannerUsEoyReaderAppreciationSupporters: AcquisitionsA
                 hasTicker: true,
                 tickerHeader,
                 bannerModifierClass: 'useoy2019',
-                userCohort: 'AllExistingSupporters',
             },
-            canRun: () => canShowBannerSync(3, 'AllExistingSupporters'),
         },
     ],
 };

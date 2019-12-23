@@ -68,6 +68,66 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-banner-us-eoy-three-days-regulars",
+    "US End of year banner - three day count with articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-three-days-casuals",
+    "US End of year banner - three day count without articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-two-days-regulars",
+    "US End of year banner - two day count with articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-two-days-casuals",
+    "US End of year banner - two day count without articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-one-day-regulars",
+    "US End of year banner - one day count with articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-us-eoy-one-day-casuals",
+    "US End of year banner - one day count without articles viewed",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 1, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-banner-us-eoy-impeachment-count-down-regulars",
     "US End of year banner - impeachment, with article count",
     owners = Seq(Owner.withGithub("jlieb10")),
@@ -80,46 +140,6 @@ trait ABTestSwitches {
     ABTests,
     "ab-contributions-banner-us-eoy-impeachment-count-down-casuals",
     "US End of year banner - impeachment, no article count",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-reader-appreciation-supporters",
-    "US End of year banner - reader appreciation, supporters with article count",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-reader-appreciation-nonsupporters",
-    "US End of year banner - reader appreciation, nonsupporters with article count",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-reader-appreciation-supporters-casuals",
-    "US End of year banner - reader appreciation, supporters without article count",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-reader-appreciation-nonsupporters-casuals",
-    "US End of year banner - reader appreciation, nonsupporters without article count",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 30),
