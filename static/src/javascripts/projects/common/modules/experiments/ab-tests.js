@@ -14,12 +14,14 @@ import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gat
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { articlesViewedBannerUkElection } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-uk-election';
-import { contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-nonsupporters-casuals';
-import { contributionsBannerUsEoyReaderAppreciationSupportersCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters-casuals';
-import { contributionsBannerUsEoyReaderAppreciationNonsupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-nonsupporters';
-import { contributionsBannerUsEoyReaderAppreciationSupporters } from 'common/modules/experiments/tests/contribs-banner-us-eoy-reader-appreciation-supporters';
 import { contributionsBannerUsEoyImpeachmentCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-casuals';
 import { contributionsBannerUsEoyImpeachmentRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-regulars';
+import { contributionsBannerUsEoyThreeDaysRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-three-days-regulars';
+import { contributionsBannerUsEoyThreeDaysCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-three-days-casuals';
+import { contributionsBannerUsEoyTwoDaysRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-two-days-regulars';
+import { contributionsBannerUsEoyTwoDaysCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-two-days-casuals';
+import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-one-day-casuals';
+import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-one-day-regulars';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -41,12 +43,14 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsBannerUsEoyThreeDaysRegulars,
+    contributionsBannerUsEoyThreeDaysCasuals,
+    contributionsBannerUsEoyTwoDaysRegulars,
+    contributionsBannerUsEoyTwoDaysCasuals,
+    contributionsBannerUsEoyOneDayRegulars,
+    contributionsBannerUsEoyOneDayCasuals,
     contributionsBannerUsEoyImpeachmentRegulars,
     contributionsBannerUsEoyImpeachmentCasuals,
-    contributionsBannerUsEoyReaderAppreciationSupporters,
-    contributionsBannerUsEoyReaderAppreciationNonsupporters,
-    contributionsBannerUsEoyReaderAppreciationSupportersCasuals,
-    contributionsBannerUsEoyReaderAppreciationNonsupportersCasuals,
     articlesViewedBannerUkElection,
     articlesViewedBanner,
 ];
