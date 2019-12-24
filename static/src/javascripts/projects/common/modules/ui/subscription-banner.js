@@ -38,12 +38,11 @@ const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
-
-const getVariant = () => {
+const getVariant = () =>
     // pass variant to ga
     // pass variant to ophan
-    return Math.round(Math.random());
-}
+    Math.round(Math.random());
+
 console.log(getVariant());
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
