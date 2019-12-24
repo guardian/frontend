@@ -55,8 +55,8 @@
     @include mq($from: tablet) {
         margin-bottom: 10px;
         width: 60%;
-        font-size: 4.7vw;
-        line-height: 4.9vw;
+        font-size: 30px;
+        line-height: 32px;
     }
 
     @include mq($from: desktop) {
@@ -355,6 +355,24 @@
     }
 }
 
+.variantB-header {
+    display: block;
+    background-color: pink;
+    max-width: 350px;
+    padding-right: 36px;
+
+    @include mq($from: phablet) {
+        max-width: 450px;
+    }
+
+    @include mq($from: tablet) {
+        max-width: 480px;
+    }
+
+    @include mq($from: desktop) {
+        max-width: 500px;
+    }
+}
 
 /*********************** footer hacks *********************/
 

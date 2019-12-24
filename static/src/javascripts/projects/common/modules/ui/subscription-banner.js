@@ -38,6 +38,13 @@ const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 
+
+const getVariant = () => {
+    // pass variant to ga
+    // pass variant to ophan
+    return Math.round(Math.random());
+}
+console.log(getVariant());
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
 const subscriptionBannerSwitchIsOn: boolean = config.get(
@@ -201,7 +208,8 @@ const show: () => Promise<boolean> = async () => {
                 subscriptionUrl,
                 signInUrl,
                 showConsent,
-                isUserLoggedIn()
+                isUserLoggedIn(),
+                getVariant()
             )
         );
     }
