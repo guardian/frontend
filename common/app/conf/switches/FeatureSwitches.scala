@@ -452,4 +452,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val UsHeaderAndFooterSubscribeLinkSwitch = Switch(
+    SwitchGroup.Feature,
+    "us-header-and-footer-subscribe-link-switch",
+    "If switched off, the US edition header and footer will not contain a Subscribe link.",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }

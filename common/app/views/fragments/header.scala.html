@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl, getSoulmatesUrl }
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch }
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -59,19 +59,25 @@
                         @fragments.inlineSvg("arrow-right", "icon")
                     </a>
 
-                    <a class="cta-bar__cta hide-until-tablet js-subscribe js-acquisition-link"
+                    @if(editionId != "us" || UsHeaderAndFooterSubscribeLinkSwitch.isSwitchedOn) {
+                        <a class="cta-bar__cta hide-until-tablet js-subscribe js-acquisition-link"
                         data-link-name="nav2 : subscribe-cta"
-                        data-edition="@{editionId}"
+                        data-edition="@{
+                            editionId
+                        }"
                         href="@getReaderRevenueUrl(SupportSubscribe, Header)">
-                        Subscribe
-                        @fragments.inlineSvg("arrow-right", "icon")
-                    </a>
+                            Subscribe
+                            @fragments.inlineSvg("arrow-right", "icon")
+                        </a>
+                    }
 
                     @if(editionId == "uk") {
                         <a class="cta-bar__cta hide-from-tablet js-change-become-member-link js-acquisition-link"
-                            data-link-name="nav2 : support-cta"
-                            data-edition="@{editionId}"
-                            href="@getReaderRevenueUrl(SupportSubscribe, Header)">
+                        data-link-name="nav2 : support-cta"
+                        data-edition="@{
+                            editionId
+                        }"
+                        href="@getReaderRevenueUrl(SupportSubscribe, Header)">
                             Subscribe
                             @fragments.inlineSvg("arrow-right", "icon")
                         </a>
