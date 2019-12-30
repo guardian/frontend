@@ -14,7 +14,7 @@ const isUS = geolocation === 'US';
 const titles = ['2 days left to give to the Guardian in 2019'];
 const messageText = `… and two supreme court justices Donald Trump has appointed in his first term. The next US president will shape the court for the next half century – and the future of LGBTQ+ rights, immigration, abortion, guns, religion, dark money and more are in play. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million to cover the issues that matter.`;
 const ctaText = 'Support The Guardian';
-const tickerHeader = `You've read ${articleViewCount} in the last four months`;
+const tickerHeader = `You've read ${articleViewCount} articles in the last four months`;
 
 export const contributionsBannerUsEoyTwoDaysRegulars: AcquisitionsABTest = {
     id: 'ContributionsBannerUsEoyTwoDaysRegulars',
