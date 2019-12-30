@@ -28,7 +28,7 @@ export const contributionsBannerUsEoyImpeachmentCasuals: AcquisitionsABTest = {
     idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => daysLeft >= 0 && isUS,
+    canRun: () => daysLeft > 0 && isUS,
     geolocation,
     variants: [
         {
