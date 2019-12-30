@@ -164,7 +164,7 @@ class LiveBlogController(
 
   private[this] def mapModel(path: String, range: BlockRange)(render: (PageWithStoryPackage, Blocks) => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range))
+      .lookup(path, Some(range), true, true, true, true)
       .map(responseToModelOrResult(range))
       .recover(convertApiExceptions)
       .flatMap {

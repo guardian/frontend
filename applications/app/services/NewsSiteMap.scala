@@ -60,9 +60,8 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
       .orderBy("newest")
       .showFields("headline")
-      .showTags("all")
-      .showReferences("all")
-      .showElements("all")
+      .showTags("keyword,tone")
+      .showElements("image")
       .fromDate(jodaToJavaInstant(date))
 
     val responses = contentApiClient.getResponse(query).flatMap { initialResponse =>

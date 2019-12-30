@@ -72,7 +72,7 @@ class ArticleController(
     }
 
     capiLookup
-      .lookup(path, Some(ArticleBlocks))
+      .lookup(path, Some(ArticleBlocks), false, false, false, false)
       .map(_.content.map(_.webTitle))
       .map(responseFromHeadline)
   }
@@ -106,7 +106,7 @@ class ArticleController(
 
   private def mapModel(path: String, range: BlockRange)(render: (ArticlePage, Blocks) => Future[Result])(implicit request: RequestHeader): Future[Result] = {
     capiLookup
-      .lookup(path, Some(range))
+      .lookup(path, Some(range), true, true, true, true)
       .map(responseToModelOrResult)
       .recover(convertApiExceptions)
       .flatMap {

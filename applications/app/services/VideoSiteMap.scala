@@ -60,9 +60,8 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
       .tag("type/video,-tone/sponsoredfeatures,-tone/advertisement-features")
       .orderBy("newest")
       .showFields("headline")
-      .showTags("all")
-      .showReferences("all")
-      .showElements("all")
+      .showTags("keyword")
+      .showElements("image,video")
       .fromDate(jodaToJavaInstant(date))
 
     val responses = contentApiClient.getResponse(query).flatMap { initialResponse =>
