@@ -5,13 +5,16 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['3 days left to give to the Guardian in 2019'];
-const messageText = `… and three American billionaires whose family net worth equals the net worth of more than 50% of the US population. The coming year will be an epic one for America and will tell us much about how this country wants to tackle wealth inequality. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million to cover the issues that matter.`;
-const ctaText = 'Support The Guardian';
-const tickerHeader = 'Help us reach our year-end goal';
+// Start running as soon as it's January 1, 2020 00:00:01 wherever you are
+const is2020 = Date.now() > new Date('January 1, 2020 00:00:00').getTime();
 
-export const contributionsBannerUsEoyThreeDaysCasuals: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyThreeDaysCasuals',
+const titles = ['As 2020 begins...'];
+const messageText = `The stakes could hardly be higher. This year America faces an epic choice – and the result could define the country for a generation. Many vital aspects of American public life are in play – the supreme court, abortion rights, climate policy, wealth inequality, Big Tech and much more. The Guardian relies on your support. We hope you’ll make a contribution to the Guardian before our campaign closes early in the new year. Help us reach our $1.5m goal.`;
+const ctaText = 'Support The Guardian';
+const tickerHeader = 'Help us reach our goal';
+
+export const contributionsBannerUsEoyNewYearCasuals: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyNewYearCasuals',
     campaignId: 'USeoy2019',
     start: '2019-12-23',
     expiry: '2020-1-30',
@@ -25,7 +28,7 @@ export const contributionsBannerUsEoyThreeDaysCasuals: AcquisitionsABTest = {
     idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => isUS,
+    canRun: () => isUS && is2020,
     geolocation,
     variants: [
         {
