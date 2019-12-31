@@ -13,15 +13,10 @@ import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-
 import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
-import { articlesViewedBannerUkElection } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-uk-election';
-import { contributionsBannerUsEoyImpeachmentCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-casuals';
-import { contributionsBannerUsEoyImpeachmentRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-impeachment-regulars';
-import { contributionsBannerUsEoyThreeDaysRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-three-days-regulars';
-import { contributionsBannerUsEoyThreeDaysCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-three-days-casuals';
-import { contributionsBannerUsEoyTwoDaysRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-two-days-regulars';
-import { contributionsBannerUsEoyTwoDaysCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-two-days-casuals';
-import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy-one-day-casuals';
-import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy-one-day-regulars';
+import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-casuals';
+import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-regulars';
+import { contributionsBannerUsEoyNewYearCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-casuals';
+import { contributionsBannerUsEoyNewYearRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-regulars';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -43,14 +38,9 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsBannerUsEoyThreeDaysRegulars,
-    contributionsBannerUsEoyThreeDaysCasuals,
-    contributionsBannerUsEoyTwoDaysRegulars,
-    contributionsBannerUsEoyTwoDaysCasuals,
+    contributionsBannerUsEoyNewYearRegulars,
+    contributionsBannerUsEoyNewYearCasuals,
     contributionsBannerUsEoyOneDayRegulars,
     contributionsBannerUsEoyOneDayCasuals,
-    contributionsBannerUsEoyImpeachmentRegulars,
-    contributionsBannerUsEoyImpeachmentCasuals,
-    articlesViewedBannerUkElection,
     articlesViewedBanner,
 ];

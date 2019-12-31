@@ -3,21 +3,24 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templates/acquisitions-banner-us-eoy';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
-// User must have read at least 5 articles in last 4 months (as 17 weeks)
+// User must have read at least 6 articles in last 4 months (as 17 weeks)
 const minArticleViews = 5;
 const articleCountWeeks = 17;
-const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
+const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks) - 1;
 
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-const titles = ['2 days left to give to the Guardian in 2019'];
-const messageText = `… and two supreme court justices Donald Trump has appointed in his first term. The next US president will shape the court for the next half century – and the future of LGBTQ+ rights, immigration, abortion, guns, religion, dark money and more are in play. As we prepare for 2020, we’re asking our US readers to help us raise $1.5 million to cover the issues that matter.`;
-const ctaText = 'Support The Guardian';
-const tickerHeader = `You've read ${articleViewCount} articles in the last four months`;
+// Start running as soon as it's January 1, 2020 00:00:01 wherever you are
+const is2020 = Date.now() > new Date('January 1, 2020 00:00:00').getTime();
 
-export const contributionsBannerUsEoyTwoDaysRegulars: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyTwoDaysRegulars',
+const titles = ['As 2020 begins...'];
+const messageText = `The stakes could hardly be higher. This year America faces an epic choice – and the result could define the country for a generation. Many vital aspects of American public life are in play – the supreme court, abortion rights, climate policy, wealth inequality, Big Tech and much more. You’ve read more than ${articleViewCount} articles in the last four months, and the Guardian relies on your support. We hope you’ll make a contribution to the Guardian before our campaign closes early in the new year. Help us reach our $1.5m goal.`;
+const ctaText = 'Support The Guardian';
+const tickerHeader = 'Help us reach our goal';
+
+export const contributionsBannerUsEoyNewYearRegulars: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyNewYearRegulars',
     campaignId: 'USeoy2019',
     start: '2019-12-23',
     expiry: '2020-1-30',
@@ -30,7 +33,7 @@ export const contributionsBannerUsEoyTwoDaysRegulars: AcquisitionsABTest = {
     idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => isUS && articleViewCount >= minArticleViews,
+    canRun: () => isUS && articleViewCount >= minArticleViews && is2020,
     geolocation,
     variants: [
         {
