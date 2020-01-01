@@ -95,8 +95,7 @@ From: London, UK
 Senior Developer: Adam Fisher
 Twitter: @adamnfish
 
-Developer: Pascal Honore
-Twitter: @0x104
+Developer: Pascal Honoré
 
 Development Manager: Dominic Kendrick
 Twitter: @dominickendrick
