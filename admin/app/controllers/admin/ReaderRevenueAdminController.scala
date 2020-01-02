@@ -62,8 +62,12 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     Future(S3.putPublic(bucketKey, bannerDeployLogJson, defaultJsonEncoding))
   }
 
-  private[this] def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
+  private[this] def purgeDeployLogCache(
+    region: ReaderRevenueRegion,
+    bannerType: BannerType
+  ): Future[WSResponse] = {
     val path = s"${bannerType.path}/${region.name}"
+    log.info(s"Attempting to purge Fastly cache from URL: $path")
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 

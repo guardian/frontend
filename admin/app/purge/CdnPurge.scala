@@ -17,9 +17,13 @@ case object AjaxHost extends FastlyService { val serviceId = fastly.ajaxServiceI
 object CdnPurge extends Dates with Logging {
 
   // Performs soft purge which will still serve stale if there is an error
-  def soft(wsClient: WSClient, key:String, fastlyService: FastlyService)(implicit executionContext: ExecutionContext): Future[String] = {
+  def soft(
+    wsClient: WSClient,
+    key: String,
+    fastlyService: FastlyService
+  )(implicit executionContext: ExecutionContext): Future[WSResponse] = {
     // Fastly is in front of PROD and CODE but not locally running dev instances
-    val result: Future[WSResponse] = if (environment.isProd || environment.isCode) {
+    if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
       wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
         .withHttpHeaders(
@@ -39,7 +43,5 @@ object CdnPurge extends Dates with Logging {
     } else {
       Future.failed(new RuntimeException("Purging is disabled in non-production environment"))
     }
-    result.map { _ => "Purge request successfully sent" }
-      .recover { case e => s"Purge request was not successful, please report this issue: '${e.getLocalizedMessage}'" }
   }
 }
