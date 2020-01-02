@@ -9,7 +9,7 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, AmpFooter}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches.{ EmailInlineInFooterSwitch }
+@import conf.switches.Switches.{ EmailInlineInFooterSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
 @import com.gu.identity.model.EmailNewsletters
 @import model.NoCache
 @import views.support.{RenderClasses}
@@ -161,16 +161,9 @@
             <div class="cta-bar__heading">
                 Support The&nbsp;Guardian
             </div>
-            @if(editionId == "us") {
-                <div class="cta-bar__subheading">
-                        Support our journalism with a year-end gift
-                </div>
-            }
-            @if(editionId != "us") {
             <div class="cta-bar__subheading">
-                    Available for everyone, funded by readers
+                Available for everyone, funded by readers
             </div>
-        }
         </div>
 
         <a class="cta-bar__cta js-change-become-member-link js-acquisition-link"
@@ -181,12 +174,16 @@
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
 
-        <a class="cta-bar__cta js-subscribe js-acquisition-link"
+        @if(editionId != "us" || UsHeaderAndFooterSubscribeLinkSwitch.isSwitchedOn) {
+            <a class="cta-bar__cta js-subscribe js-acquisition-link"
             data-link-name="footer : subscribe-cta"
-            data-edition="@{editionId}"
+            data-edition="@{
+                editionId
+            }"
             href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-            Subscribe
-            @fragments.inlineSvg("arrow-right", "icon")
-        </a>
+                Subscribe
+                @fragments.inlineSvg("arrow-right", "icon")
+            </a>
+        }
     </div>
 }

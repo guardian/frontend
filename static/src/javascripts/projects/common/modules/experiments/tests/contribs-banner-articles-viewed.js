@@ -6,13 +6,13 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
-import { getArticleViewCountForDays } from 'common/modules/onward/history';
+import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 
-// User must have read at least 5 articles in last 60 days
+// User must have read at least 5 articles in last 4 months (as 17 weeks)
 const minArticleViews = 5;
-const articleCountDays = 60;
+const articleCountWeeks = 17;
 
-const articleViewCount = getArticleViewCountForDays(articleCountDays);
+const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 const geolocation = geolocationGetSync();
 const messageText =
     'Unlike many news organisations, we made a choice to keep our journalism free and available for all. At a time when factual information is a necessity, we believe that each of us, around the world, deserves access to accurate reporting with integrity at its heart. Every contribution, big or small, is so valuable – it is essential in protecting our editorial independence.';

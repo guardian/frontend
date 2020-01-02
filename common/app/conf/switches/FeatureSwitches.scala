@@ -204,7 +204,7 @@ trait FeatureSwitches {
     "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("siadcock")),
     safeState = On,
-    sellByDate = new LocalDate(2019, 12, 30),
+    sellByDate = new LocalDate(2020, 1, 30),
     exposeClientSide = true
   )
 
@@ -449,6 +449,16 @@ trait FeatureSwitches {
     "If switched on, the header on all interactives will display in full.",
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val UsHeaderAndFooterSubscribeLinkSwitch = Switch(
+    SwitchGroup.Feature,
+    "us-header-and-footer-subscribe-link-switch",
+    "If switched off, the US edition header and footer will not contain a Subscribe link.",
+    owners = Seq(Owner.withName("dotcom.platform")),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
