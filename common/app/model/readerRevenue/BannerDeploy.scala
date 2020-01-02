@@ -41,9 +41,9 @@ object ReaderRevenueRegion {
 }
 
 sealed trait BannerType {
-  val name: String
-  val logKey: String
-  val path: String
+  def name: String
+  def logKey: String
+  def path: String
 }
 
 case object ContributionsBanner extends BannerType {

@@ -51,36 +51,36 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
 
   }
 
-  private def updateBannerDeployLog(region: ReaderRevenueRegion, bannerDeployLogJson: String, banner: BannerType): Future[Unit] = {
+  private[this] def updateBannerDeployLog(
+    region: ReaderRevenueRegion,
+    bannerDeployLogJson: String,
+    banner: BannerType
+  ): Future[Unit] = {
     log.info(s"updateBannerDeployLog $banner $region")
     val defaultJsonEncoding: String = "application/json;charset=utf-8"
     val bucketKey = ReaderRevenueRegion.getBucketKey(region, banner)
     Future(S3.putPublic(bucketKey, bannerDeployLogJson, defaultJsonEncoding))
   }
 
-  private def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
+  private[this] def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
     val path = s"/reader-revenue${bannerType.path}/${region.name}"
-
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 
-  private def getRoute(bannerType: BannerType): Call = {
+  private[this] def getRoute(bannerType: BannerType): Call = {
      bannerType match {
       case ContributionsBanner => routes.ReaderRevenueAdminController.renderContributionsBannerAdmin()
       case SubscriptionsBanner => routes.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
     }
   }
 
-  private def bannerRedeploySuccessful(message: String, region: ReaderRevenueRegion, bannerType: BannerType): Result = {
+  private[this] def bannerRedeploySuccessful(message: String, region: ReaderRevenueRegion, bannerType: BannerType): Result = {
     log.info(s"$message: SUCCESSFUL")
-
     Redirect(getRoute(bannerType)).flashing("success" -> s"${bannerType.name} redeployed in ${region.name}")
-
   }
 
-  private def redeployFailed(error: Throwable, bannerType: BannerType): Result = {
+  private[this] def redeployFailed(error: Throwable, bannerType: BannerType): Result = {
     log.error(s"${bannerType.name} banner redeploy FAILED", error)
-
     Redirect(getRoute(bannerType)).flashing("error" -> s"${bannerType.name} not redeployed")
   }
 }
