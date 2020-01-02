@@ -2,7 +2,7 @@ package models
 
 import com.gu.contentapi.client.utils.{Article, DesignType}
 import common.LinkTo
-import model.pressed.PressedContent
+import model.pressed.{MediaType, PressedContent}
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
@@ -22,6 +22,7 @@ case class OnwardItem(
   designType: String,
   webPublicationDate: String,
   headline: String,
+  mediaType: Option[String],
 )
 
 case class MostPopularGeoResponse(
@@ -64,6 +65,7 @@ object OnwardCollection {
         designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
         webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
         headline = content.header.headline,
+        mediaType = content.card.mediaType.map(_.toString())
       )
     )
   }
