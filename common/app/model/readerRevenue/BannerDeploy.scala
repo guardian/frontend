@@ -12,7 +12,11 @@ object BannerDeploy {
   implicit val deployFormat: OFormat[BannerDeploy] = Json.format[BannerDeploy]
 }
 
-sealed trait ReaderRevenueRegion { val name: String }
+sealed trait ReaderRevenueRegion {
+  def name: String;
+  override def toString: String = s"ReaderRevenueRegion: $name"
+}
+
 case object UK extends ReaderRevenueRegion { val name = "united-kingdom"}
 case object US extends ReaderRevenueRegion { val name = "united-states"}
 case object AU extends ReaderRevenueRegion { val name = "australia"}
@@ -44,16 +48,18 @@ sealed trait BannerType {
   def name: String
   def logKey: String
   def path: String
+
+  override def toString: String = s"Banner type: $name; logKey: $logKey; path: $path"
 }
 
 case object ContributionsBanner extends BannerType {
   val name = "contributions-banner"
-  val logKey = contributionsBannerDeployLogKey
-  val path = subscriptionsPath
+  val logKey: String = contributionsBannerDeployLogKey
+  val path: String = subscriptionsPath
 }
 
 case object SubscriptionsBanner extends BannerType {
   val name = "subscriptions-banner"
-  val logKey = subscriptionsBannerDeployLogKey
-  val path = contributionsPath
+  val logKey: String = subscriptionsBannerDeployLogKey
+  val path: String = contributionsPath
 }
