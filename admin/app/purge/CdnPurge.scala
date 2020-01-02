@@ -21,13 +21,13 @@ object CdnPurge extends Dates with Logging {
     wsClient: WSClient,
     key: String,
     fastlyService: FastlyService
-  )(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+  )(implicit executionContext: ExecutionContext): Future[String] = {
     // Fastly is in front of PROD and CODE but not locally running dev instances
-    if (environment.isProd || environment.isCode) {
+    val result: Future[WSResponse] = if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
       val endpoint = s"https://api.fastly.com/service/$serviceId/purge/$key"
-
       log.info(s"Attempting to purge fastly cache from end point: $endpoint with key: ${fastly.key} and service ID: ${serviceId}")
+
       wsClient.url(endpoint)
         .withHttpHeaders(
           "Fastly-Key" -> fastly.key,
@@ -46,5 +46,7 @@ object CdnPurge extends Dates with Logging {
     } else {
       Future.failed(new RuntimeException("Purging is disabled in non-production environment"))
     }
+    result.map { _ => "Purge request successfully sent" }
+      .recover { case e => s"Purge request was not successful, please report this issue: '${e.getLocalizedMessage}'" }
   }
 }
