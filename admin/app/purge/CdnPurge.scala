@@ -25,7 +25,10 @@ object CdnPurge extends Dates with Logging {
     // Fastly is in front of PROD and CODE but not locally running dev instances
     if (environment.isProd || environment.isCode) {
       val serviceId = fastlyService.serviceId
-      wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/$key")
+      val endpoint = s"https://api.fastly.com/service/$serviceId/purge/$key"
+
+      log.info(s"Attempting to purge fastly cache from end point: $endpoint with key: ${fastly.key} and service ID: ${serviceId}")
+      wsClient.url(endpoint)
         .withHttpHeaders(
           "Fastly-Key" -> fastly.key,
           "Fastly-Soft-Purge" -> "1"
