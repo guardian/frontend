@@ -55,11 +55,11 @@ sealed trait BannerType {
 case object ContributionsBanner extends BannerType {
   val name = "contributions-banner"
   val logKey: String = contributionsBannerDeployLogKey
-  val path: String = subscriptionsPath
+  val path: String = contributionsPath
 }
 
 case object SubscriptionsBanner extends BannerType {
   val name = "subscriptions-banner"
   val logKey: String = subscriptionsBannerDeployLogKey
-  val path: String = contributionsPath
+  val path: String = subscriptionsPath
 }

@@ -35,7 +35,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   def redeploySubscriptionsBanner(region: String): Action[AnyContent] = redeployBanner(region, SubscriptionsBanner)
 
   def redeployBanner(region: String, bannerType: BannerType): Action[AnyContent] = Action.async { implicit request =>
-    ReaderRevenueRegion.fromString(region).fold(Future(redeployFailed(new Throwable("attempted to redeploy banner in unknown region"), bannerType))){ region: ReaderRevenueRegion =>
+    ReaderRevenueRegion.fromString(region).fold(Future.successful(redeployFailed(new Throwable("attempted to redeploy banner in unknown region"), bannerType))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val time = DateTime.now
       val jsonLog: JsValue = Json.toJson(BannerDeploy(time))
@@ -63,7 +63,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   private[this] def purgeDeployLogCache(region: ReaderRevenueRegion, bannerType: BannerType): Future[String] = {
-    val path = s"/reader-revenue${bannerType.path}/${region.name}"
+    val path = s"${bannerType.path}/${region.name}"
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
 

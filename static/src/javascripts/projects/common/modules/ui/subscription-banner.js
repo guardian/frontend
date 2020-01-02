@@ -78,7 +78,7 @@ const hasAcknowledgedBanner = region =>
                 { feature: 'subscriptions-banner' },
                 false
             );
-            return false;
+            return true;
         });
 
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
