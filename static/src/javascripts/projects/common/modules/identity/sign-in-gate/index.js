@@ -4,6 +4,7 @@ import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import ophan from 'ophan/ng';
 import config from 'lib/config';
+import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
 import { getCookie } from 'lib/cookies';
 import {
@@ -219,8 +220,6 @@ const show: () => Promise<boolean> = () => {
             // get the whole article body
             const articleBody = document.querySelector('.js-article__body');
             if (articleBody) {
-                // clone article body html string representation into memory
-                const currentContent = articleBody.cloneNode(true);
                 // get the first paragraph of the article
                 const articleBodyFirstChild = articleBody.firstElementChild;
                 if (articleBodyFirstChild) {
@@ -299,8 +298,12 @@ const show: () => Promise<boolean> = () => {
                                 value: 'dismiss',
                             });
 
-                            // replace the shadow article with the original content
-                            shadowArticleBody.replaceWith(currentContent);
+                            // show the current body. Remove the shadow one
+                            articleBody.style.display = 'block';
+                            shadowArticleBody.remove();
+
+                            // Tell other things the article has been redisplayed
+                            mediator.emit('page:article:redisplayed');
 
                             // user pref dismissed gate
                             setUserDismissedGate(
@@ -340,8 +343,11 @@ const show: () => Promise<boolean> = () => {
                         }
                     );
 
-                    // replace the real article with the shadow article
-                    articleBody.replaceWith(shadowArticleBody);
+                    // Hide the article Body. Append the shadow one.
+                    articleBody.style.display = 'none';
+                    if (articleBody.parentNode) {
+                        articleBody.parentNode.appendChild(shadowArticleBody);
+                    }
                 }
             }
         }
