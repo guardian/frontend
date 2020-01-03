@@ -71,7 +71,7 @@
     display: flex;
     align-items: flex-end;
     align-content: stretch;
-    width: 100%;
+    width: 95%;
 
     @include mq($from: tablet) {
         width: 55%;
