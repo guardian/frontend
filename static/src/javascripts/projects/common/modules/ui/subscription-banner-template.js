@@ -16,15 +16,15 @@ const subscriptionBannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
     userLoggedIn: boolean,
-    abTestVariant: any
+    abTestVariant: boolean
 ): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
             ${
                 abTestVariant
-                    ? `A beautiful way to read it <br /> A powerful way to fund it`
-                    : `<span class="variantB-header">We're going to need each other this year</span>`
+                    ? `<span class="variantB-header">We're going to need each other this year</span>`
+                    : `A beautiful way to read it <br /> A powerful way to fund it`
             }
         </h3>
 
