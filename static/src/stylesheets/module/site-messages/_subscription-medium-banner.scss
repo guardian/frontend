@@ -74,7 +74,7 @@
     width: 100%;
 
     @include mq($from: tablet) {
-        width: 60%;
+        width: 55%;
     }
 
     @include mq($from: desktop) {
@@ -98,18 +98,18 @@
 
         // custom breakpoint
         @media (min-width: 550px) {
-            font-size: 20px;
-            line-height: 22px;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: phablet) {
-            font-size: 22px;
-            line-height: 24px;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: tablet) {
-            font-size: 2.5vw;
-            line-height: 3vw;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: desktop) {
@@ -357,7 +357,7 @@
 
 .variantB-header {
     display: block;
-    max-width: 350px;
+    max-width: 340px;
     padding-right: 36px;
 
     @include mq($from: phablet) {
