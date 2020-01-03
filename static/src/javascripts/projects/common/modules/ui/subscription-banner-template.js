@@ -5,8 +5,6 @@ import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
 
 import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
 
-//
-
 const isUserLoggedIn = userLoggedIn =>
     userLoggedIn
         ? 'site-message--subscription-banner__sign-in--already-signed-in'
@@ -106,7 +104,7 @@ const bannerTemplate = (
     signInUrl: string,
     showConsent: boolean,
     userLoggedIn: boolean,
-    abTestVariant: any
+    abTestVariant: boolean
 ): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
           tabindex="-1"
