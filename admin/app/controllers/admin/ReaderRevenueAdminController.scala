@@ -66,7 +66,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
     region: ReaderRevenueRegion,
     bannerType: BannerType
   ): Future[String] = {
-    val path = s"${bannerType.path}/${region.name}"
+    val path = s"/reader-revenue${bannerType.path}/${region.name}"
     log.info(s"Attempting to purge Fastly cache from URL: $path")
     CdnPurge.soft(wsClient, DigestUtils.md5Hex(path), AjaxHost)
   }
