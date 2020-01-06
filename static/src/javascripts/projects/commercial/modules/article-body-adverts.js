@@ -101,6 +101,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
                 minAbove: 0,
                 minBelow: 600,
             },
+            ' figure.element--supporting': {
+                minAbove: 500,
+                minBelow: 0,
+            },
         },
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
