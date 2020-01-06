@@ -55,8 +55,8 @@
     @include mq($from: tablet) {
         margin-bottom: 10px;
         width: 60%;
-        font-size: 4.7vw;
-        line-height: 4.9vw;
+        font-size: 30px;
+        line-height: 32px;
     }
 
     @include mq($from: desktop) {
@@ -71,10 +71,10 @@
     display: flex;
     align-items: flex-end;
     align-content: stretch;
-    width: 100%;
+    width: 95%;
 
     @include mq($from: tablet) {
-        width: 60%;
+        width: 55%;
     }
 
     @include mq($from: desktop) {
@@ -98,18 +98,18 @@
 
         // custom breakpoint
         @media (min-width: 550px) {
-            font-size: 20px;
-            line-height: 22px;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: phablet) {
-            font-size: 22px;
-            line-height: 24px;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: tablet) {
-            font-size: 2.5vw;
-            line-height: 3vw;
+            font-size: 17px;
+            line-height: 19px;
         }
 
         @include mq($from: desktop) {
@@ -355,6 +355,23 @@
     }
 }
 
+.variantB-header {
+    display: block;
+    max-width: 340px;
+    padding-right: 36px;
+
+    @include mq($from: phablet) {
+        max-width: 450px;
+    }
+
+    @include mq($from: tablet) {
+        max-width: 480px;
+    }
+
+    @include mq($from: desktop) {
+        max-width: 500px;
+    }
+}
 
 /*********************** footer hacks *********************/
 

@@ -89,6 +89,14 @@ const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 
+const hasAcknowledged = () => {
+    const bannerRedeploymentDate = new Date(2020, 0, 6, 5, 0).getTime(); // 6 Jan 2019 @ 5:00
+    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
+    const lastClosedAtTime = new Date(lastClosedAt).getTime();
+
+    return lastClosedAt && lastClosedAtTime > bannerRedeploymentDate;
+};
+
 const subcriptionBannerCloseActions = (): void => {
     closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
 };
@@ -220,7 +228,8 @@ const show: () => Promise<boolean> = async () => {
                 subscriptionUrl,
                 signInUrl,
                 showConsent,
-                isUserLoggedIn()
+                isUserLoggedIn(),
+                true // This should be taken from A/B test participation if we want to run this as a test eventually
             )
         );
     }

@@ -13,17 +13,23 @@ const isUserLoggedIn = userLoggedIn =>
 const subscriptionBannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
-    userLoggedIn: boolean
+    userLoggedIn: boolean,
+    abTestVariant: boolean
 ): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            A beautiful way to read it <br>
-            A powerful way to fund it
+            ${
+                abTestVariant
+                    ? `<span class="variantB-header">We're going to need <br /> each other this year</span>`
+                    : `A beautiful way to read it <br /> A powerful way to fund it`
+            }
         </h3>
 
         <div class="site-message--subscription-banner__description">
-            <p>Two innovative apps and ad-free reading on theguardian.com. The complete digital experience from The Guardian.</p>
+            <p>Support The Guardian and enjoy The Guardian Daily,
+            Premium access to The Guardian Live app and ad-free
+            reading on theguardian.com</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">
@@ -97,7 +103,8 @@ const bannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
     showConsent: boolean,
-    userLoggedIn: boolean
+    userLoggedIn: boolean,
+    abTestVariant: boolean
 ): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
           tabindex="-1"
@@ -108,7 +115,12 @@ const bannerTemplate = (
           aria-live="polite"
         >
 
-        ${subscriptionBannerTemplate(subscriptionUrl, signInUrl, userLoggedIn)}
+        ${subscriptionBannerTemplate(
+            subscriptionUrl,
+            signInUrl,
+            userLoggedIn,
+            abTestVariant
+        )}
         ${showConsent ? consentSection : ''}
     </div>
     `;
