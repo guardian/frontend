@@ -26,6 +26,8 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import fetchJson from 'lib/fetch-json';
+import reportError from 'lib/report-error';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -55,6 +57,30 @@ const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
 const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
+const hasAcknowledged = bannerRedeploymentDate => {
+    const redeploymentDate = new Date(bannerRedeploymentDate).getTime();
+    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
+    const lastClosedAtTime = new Date(lastClosedAt).getTime();
+
+    return lastClosedAt && lastClosedAtTime > redeploymentDate;
+};
+
+const hasAcknowledgedBanner = region =>
+    fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
+        mode: 'cors',
+    })
+        .then(resp => hasAcknowledged(resp.time))
+        .catch(err => {
+            reportError(
+                new Error(
+                    `Unable to get subscriptions banner deploy log: ${err}`
+                ),
+                { feature: 'subscriptions-banner' },
+                false
+            );
+            return true;
+        });
+
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
     !hideBannerInTheseRegions.includes(region);
 
@@ -62,14 +88,6 @@ const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
 
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
-
-const hasAcknowledged = () => {
-    const bannerRedeploymentDate = new Date(2020, 0, 6, 5, 0).getTime(); // 6 Jan 2019 @ 5:00
-    const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    const lastClosedAtTime = new Date(lastClosedAt).getTime();
-
-    return lastClosedAt && lastClosedAtTime > bannerRedeploymentDate;
-};
 
 const subcriptionBannerCloseActions = (): void => {
     closedAt(SUBSCRIPTION_BANNER_CLOSED_KEY);
@@ -134,6 +152,7 @@ const trackSubscriptionBannerCtaClick = () => {
         },
     });
 };
+
 const closeActions = (banner, callback) => buttons => {
     buttons.forEach(button => {
         bindCloseHandler(button, banner, callback);
@@ -213,7 +232,11 @@ const show: () => Promise<boolean> = async () => {
     return Promise.resolve(true);
 };
 
-const canShow: () => Promise<boolean> = () => {
+const canShow: () => Promise<boolean> = async () => {
+    const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
+        currentRegion
+    );
+
     const can = Promise.resolve(
         !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
             !isInVariantSynchronous(
@@ -221,13 +244,14 @@ const canShow: () => Promise<boolean> = () => {
                 'variant'
             ) &&
             fiveOrMorePageViews(pageviews) &&
-            !hasAcknowledged() &&
+            !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
             canShowBannerInRegion(currentRegion) &&
             subscriptionBannerSwitchIsOn &&
             !pageIsIdentity()
     );
+
     return can;
 };
 
