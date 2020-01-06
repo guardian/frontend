@@ -6,7 +6,9 @@ import com.gu.Dependencies._
 import com.gu.ProjectSettings._
 
 val common = library("common").settings(
-  javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
+  javaOptions in Test ++= Seq(
+    "-Dconfig.file=common/conf/test.conf"
+  ),
   libraryDependencies ++= Seq(
     guBox,
     apacheCommonsMath3,
@@ -59,7 +61,7 @@ val common = library("common").settings(
     jsonSchema
   )
 ).settings(
-    mappings in TestAssets ~= filterAssets
+  mappings in TestAssets ~= filterAssets
 )
 
 val commonWithTests = withTests(common)
@@ -185,9 +187,9 @@ val main = root().aggregate(
   preview,
   rss
 ).settings(
-  riffRaffBuildIdentifier := System.getenv().getOrDefault("BUILD_NUMBER", "0").replaceAll("\"",""),
-  riffRaffUploadArtifactBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
-  riffRaffUploadManifestBucket := Some(System.getenv().getOrDefault("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
+  riffRaffBuildIdentifier := sys.env.getOrElse("BUILD_NUMBER", "0").replaceAll("\"",""),
+  riffRaffUploadArtifactBucket := Some(sys.env.getOrElse("RIFF_RAFF_ARTIFACT_BUCKET", "aws-frontend-teamcity")),
+  riffRaffUploadManifestBucket := Some(sys.env.getOrElse("RIFF_RAFF_BUILD_BUCKET", "aws-frontend-teamcity")),
   riffRaffManifestProjectName := s"dotcom:all",
   riffRaffArtifactResources := Seq(
     (packageBin in Universal in admin).value -> s"${(name in admin).value}/${(packageBin in Universal in admin).value.getName}",
@@ -227,4 +229,3 @@ badgeHash := {
 
   println(result)
 }
-
