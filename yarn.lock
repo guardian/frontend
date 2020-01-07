@@ -1166,12 +1166,14 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/consent-management-platform@2.0.0-beta.2":
-  version "2.0.0-beta.2"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-2.0.0-beta.2.tgz#29a248ec9f49d0d5bd0a7538561d2bf59c42fbeb"
-  integrity sha512-qvy/2BTb1k5XVBuBC/U2Ki5VTkotKsPWYgumD0FJLLdE0rjY/cV1yAHts7Xg+Hzecwcu1zuLGCko/iNafIxHVQ==
+"@guardian/consent-management-platform@2.0.0-beta.3":
+  version "2.0.0-beta.3"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-2.0.0-beta.3.tgz#d0c01f0d05562fef45b198c91f7f7554d5d0af1d"
+  integrity sha512-B3PWVT5uzfpCtMA0pE8mVmoXftu82KMKAdos75Sq/bXiyOMjuczigkQpVQLxut94grlXUkkGBHPClkjOYPCH7w==
   dependencies:
-    "@guardian/src-foundations" "^0.2.3"
+    "@guardian/src-button" "^0.5.1"
+    "@guardian/src-foundations" "^0.10.0"
+    "@guardian/src-svgs" "^0.0.6"
     consent-string "^1.5.1"
     js-cookie "^2.2.1"
     whatwg-fetch "^3.0.0"
@@ -1188,10 +1190,20 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/src-foundations@^0.2.3":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-0.2.4.tgz#a2dc8267be6efb19c684b1bb27099ad58d887c3b"
-  integrity sha512-SYijZJndBv6bvoFHaWgAo2iOSkZgi4pLQWKB2GYOf5wzN1R/DOl3UUjNUHSF7vKVDzNnsChfiopl4WSx2gIH8g==
+"@guardian/src-button@^0.5.1":
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/@guardian/src-button/-/src-button-0.5.1.tgz#b107a5a075e2ad41c59f3d52429a614273f247de"
+  integrity sha512-4i4o+qCd6o/W0Xi5IKcLz0aS+NUBNdBien5pmPlbcRIq/0TBVt7XAKxK4avrf7BiCWAAAtg/0ejq8AWx0wlPjw==
+
+"@guardian/src-foundations@^0.10.0":
+  version "0.10.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-0.10.0.tgz#b7773484f2b9e661d31f1d400950a83fb261fe63"
+  integrity sha512-w5xvrYqCLngxFUsivhVhJ35EppFi2GtPMAUxN6EG/Hc9FDD3qiWHiT0nwSPOReNq3UXOLH6DxbNxanFVaOelCg==
+
+"@guardian/src-svgs@^0.0.6":
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-0.0.6.tgz#f8ec43935c5df3860f69cc356b9574a7a72c28e0"
+  integrity sha512-qlHe80XVEyTeiolgNjLsrq7z+19acIa0XIfMByAjo8zDw85S58Fjp/b0XYsYc0V7G8XamZRnMgjFNdF++FUZEw==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
