@@ -24,11 +24,11 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('returns true if shouldShow true and in CommercialCmpUiIab test variant', () => {
+            it('returns true if shouldShow true and in CommercialCmpUiBannerModal test variant', () => {
                 shouldShow.mockReturnValue(true);
                 isInVariantSynchronous.mockImplementation(
                     (test, variant) =>
-                        test.id === 'CommercialCmpUiIab' &&
+                        test.id === 'CommercialCmpUiBannerModal' &&
                         variant === 'variant'
                 );
 
@@ -37,7 +37,7 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns false if not in commercialCmpUiIab test', () => {
+            it('returns false if not in CommercialCmpUiBannerModal test', () => {
                 shouldShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(false);
 

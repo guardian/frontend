@@ -1,6 +1,6 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
+import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
@@ -18,7 +18,7 @@ import { contributionsBannerUsEoyNewYearRegulars } from 'common/modules/experime
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    commercialCmpUiIab,
+    commercialCmpUiBannerModal,
     adblockTest,
     xaxisAdapterTest,
     appnexusUSAdapter,

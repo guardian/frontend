@@ -1,6 +1,6 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
+import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { shouldShow } from '@guardian/consent-management-platform';
 import raven from 'lib/raven';
 
@@ -33,7 +33,7 @@ const show = (forceModal: ?boolean): Promise<boolean> => {
 };
 
 export const isInCmpTest = (): boolean =>
-    isInVariantSynchronous(commercialCmpUiIab, 'variant');
+    isInVariantSynchronous(commercialCmpUiBannerModal, 'variant');
 
 export const addPrivacySettingsLink = (): void => {
     if (!isInCmpTest()) {
