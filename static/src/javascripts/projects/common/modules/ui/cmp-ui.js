@@ -1,19 +1,13 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
-import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { cmpConfig, cmpUi } from '@guardian/consent-management-platform';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
 const CMP_READY_CLASS = 'cmp-iframe-ready';
 const CMP_ANIMATE_CLASS = 'cmp-animate';
-const OVERLAY_CLASS = isInVariantSynchronous(
-    commercialCmpUiNoOverlay,
-    'variant'
-)
-    ? 'cmp-no-overlay'
-    : 'cmp-overlay';
+const OVERLAY_CLASS = 'cmp-overlay';
 const IFRAME_CLASS = 'cmp-iframe';
 const CONTAINER_CLASS = 'cmp-container';
 let overlay: ?HTMLElement;
@@ -87,14 +81,6 @@ const onErrorCmp = (error: Error): void => {
 const getUrl = (): string => {
     if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
         return `${cmpConfig.CMP_URL}?abTestVariant=CmpUiIab-variant`;
-    } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'control')) {
-        return `${
-            cmpConfig.CMP_URL
-        }?abTestVariant=CommercialCmpUiNoOverlay-control`;
-    } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant')) {
-        return `${
-            cmpConfig.CMP_URL
-        }?abTestVariant=CommercialCmpUiNoOverlay-variant`;
     }
 
     return cmpConfig.CMP_URL;
@@ -120,13 +106,7 @@ const prepareUi = (): void => {
     container.addEventListener('transitionend', () => {
         fastdom.write(() => {
             if (overlay && overlay.parentNode) {
-                if (
-                    isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant')
-                ) {
-                    overlay.style.maxWidth = '100%';
-                } else {
-                    overlay.style.width = '100%';
-                }
+                overlay.style.width = '100%';
             }
         });
     });
@@ -172,9 +152,7 @@ const handlePrivacySettingsClick = (evt: Event): void => {
 };
 
 export const isInCmpTest = (): boolean =>
-    isInVariantSynchronous(commercialCmpUiIab, 'variant') ||
-    isInVariantSynchronous(commercialCmpUiNoOverlay, 'control') ||
-    isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant');
+    isInVariantSynchronous(commercialCmpUiIab, 'variant');
 
 export const addPrivacySettingsLink = (): void => {
     if (!isInCmpTest()) {

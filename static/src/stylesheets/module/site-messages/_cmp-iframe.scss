@@ -55,34 +55,3 @@
     width: 100%;
     border: 0;
 }
-
-// commercialCmpUiNoOverlay A/B test styles
-.cmp-no-overlay {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    padding: 0;
-    margin: 0;
-    z-index: 9999;
-    display: none;
-
-    @include mq($until: mobileLandscape) {
-        left: 0;
-    }
-    @include mq(mobileLandscape) {
-        transition: background-color;
-        transition-delay: .6s;
-        will-change: background-color;
-    }
-
-    &.cmp-iframe-ready {
-        display: block;
-    }
-
-    &.cmp-animate {
-        @include mq(mobileLandscape) {
-            background-color: rgba(#000000, .7);
-        }
-    }
-}

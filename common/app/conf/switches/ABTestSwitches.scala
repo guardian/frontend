@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test whether our new CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 8),
+    sellByDate = new LocalDate(2020, 1, 28),
     exposeClientSide = true
   )
 
@@ -163,16 +163,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-cmp-ui-no-overlay",
-    "Tests whether a CMP UI with no overlay yield higher consent rates",
-    owners = Seq(Owner.withGithub("ripecosta")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 8),
     exposeClientSide = true
   )
 
