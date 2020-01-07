@@ -1,20 +1,10 @@
 // @flow
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
-import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
+// import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { ConsentManagementPlatform } from '@guardian/consent-management-platform/lib/ConsentManagementPlatform';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-const getVariant = (): ?string => {
-    if (isInVariantSynchronous(commercialCmpUiIab, 'variant')) {
-        return 'CmpUiIab-variant';
-    } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'control')) {
-        return 'CmpUiNoOverlay-control';
-    } else if (isInVariantSynchronous(commercialCmpUiNoOverlay, 'variant')) {
-        return 'CmpUiNoOverlay-variant';
-    }
-};
+const getVariant = (): ?string => {};
 
 export const init = (forceModal: boolean) => {
     const container = document.createElement('div');
