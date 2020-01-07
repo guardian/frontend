@@ -45,32 +45,6 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns true if cmpUi.canShow true and in CommercialCmpUiNoOverlay test control', () => {
-                cmpUi.canShow.mockReturnValue(true);
-                isInVariantSynchronous.mockImplementation(
-                    (test, variant) =>
-                        test.id === 'CommercialCmpUiNoOverlay' &&
-                        variant === 'control'
-                );
-
-                return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(true);
-                });
-            });
-
-            it('returns true if cmpUi.canShow true and in CommercialCmpUiNoOverlay test variant', () => {
-                cmpUi.canShow.mockReturnValue(true);
-                isInVariantSynchronous.mockImplementation(
-                    (test, variant) =>
-                        test.id === 'CommercialCmpUiNoOverlay' &&
-                        variant === 'variant'
-                );
-
-                return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(true);
-                });
-            });
-
             it('returns false if not in commercialCmpUiIab test', () => {
                 cmpUi.canShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(false);
@@ -124,20 +98,6 @@ describe('cmp-ui', () => {
                         url: `${
                             cmpConfig.CMP_URL
                         }?abTestVariant=CmpUiIab-variant`,
-                    },
-                    {
-                        id: 'CommercialCmpUiNoOverlay',
-                        variant: 'control',
-                        url: `${
-                            cmpConfig.CMP_URL
-                        }?abTestVariant=CommercialCmpUiNoOverlay-control`,
-                    },
-                    {
-                        id: 'CommercialCmpUiNoOverlay',
-                        variant: 'variant',
-                        url: `${
-                            cmpConfig.CMP_URL
-                        }?abTestVariant=CommercialCmpUiNoOverlay-variant`,
                     },
                 ];
 
