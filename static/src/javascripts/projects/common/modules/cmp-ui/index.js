@@ -16,7 +16,7 @@ const getVariant = (): ?string => {
     }
 };
 
-export const init = () => {
+export const init = (forceModal: boolean) => {
     const container = document.createElement('div');
     container.id = 'cmpContainer';
 
@@ -29,6 +29,7 @@ export const init = () => {
             bodySerif: string,
             bodySans: string,
         },
+        forceModal: boolean,
     } = {
         onClose: () => {
             ReactDOM.unmountComponentAtNode(container);
@@ -40,6 +41,7 @@ export const init = () => {
             bodySans:
                 "'Guardian Text Sans Web', Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif",
         },
+        forceModal,
     };
     const variant = getVariant();
 

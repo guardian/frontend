@@ -7,7 +7,7 @@ import raven from 'lib/raven';
 
 let initUi;
 
-const show = (): Promise<boolean> => {
+const show = (forceModal: ?boolean): Promise<boolean> => {
     if (initUi) {
         initUi();
     } else {
@@ -20,7 +20,9 @@ const show = (): Promise<boolean> => {
                             feature: 'cmp',
                         },
                     },
-                    require('common/modules/cmp-ui').init,
+                    () => {
+                        require('common/modules/cmp-ui').init(!!forceModal);
+                    },
                     []
                 );
             },
@@ -64,7 +66,9 @@ export const addPrivacySettingsLink = (): void => {
                 newPrivacyLinkListItem
             );
 
-            newPrivacyLink.addEventListener('click', show);
+            newPrivacyLink.addEventListener('click', () => {
+                show(true);
+            });
         }
     }
 };
