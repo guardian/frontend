@@ -1,5 +1,4 @@
 // @flow strict
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 export const amazonA9Test: ABTest = {
     id: 'CommercialA9',
@@ -13,7 +12,7 @@ export const amazonA9Test: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'Amazon a9 successfully run in parallel with prebid',
-    canRun: () => ['US', 'CA'].includes(geolocationGetSync()),
+    canRun: () => true,
     variants: [
         {
             id: 'control',
