@@ -1,7 +1,6 @@
 // @flow
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
-import { commercialCmpUiNoOverlay } from 'common/modules/experiments/tests/commercial-cmp-ui-no-overlay';
 import { shouldShow } from '@guardian/consent-management-platform';
 import raven from 'lib/raven';
 

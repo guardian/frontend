@@ -37,32 +37,6 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns true if shouldShow true and in CommercialCmpUiNoOverlay test control', () => {
-                shouldShow.mockReturnValue(true);
-                isInVariantSynchronous.mockImplementation(
-                    (test, variant) =>
-                        test.id === 'CommercialCmpUiNoOverlay' &&
-                        variant === 'control'
-                );
-
-                return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(true);
-                });
-            });
-
-            it('returns true if shouldShow true and in CommercialCmpUiNoOverlay test variant', () => {
-                shouldShow.mockReturnValue(true);
-                isInVariantSynchronous.mockImplementation(
-                    (test, variant) =>
-                        test.id === 'CommercialCmpUiNoOverlay' &&
-                        variant === 'variant'
-                );
-
-                return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(true);
-                });
-            });
-
             it('returns false if not in commercialCmpUiIab test', () => {
                 shouldShow.mockReturnValue(true);
                 isInVariantSynchronous.mockReturnValue(false);
