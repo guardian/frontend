@@ -1,5 +1,6 @@
 .subnav-link {
     @include fs-textSans(1);
+    font-size: 17px;
     color: $brightness-7;
     display: block;
     height: $pillar-height - $gs-baseline / 2;
@@ -8,7 +9,7 @@
     position: relative;
 
     @include mq(mobileMedium) {
-        font-size: 14px;
+        font-size: 15px;
     }
 
     @include mq(tablet) {
