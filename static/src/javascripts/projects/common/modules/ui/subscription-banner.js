@@ -59,13 +59,18 @@ const hasAcknowledged = bannerRedeploymentDate => {
     const redeploymentDate = new Date(bannerRedeploymentDate).getTime();
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
-    
     // $FlowFixMe
-    console.log('hasAcknowledgedBanner->redeploymentDate : ' + redeploymentDate);
+    console.log(
+        `hasAcknowledgedBanner->redeploymentDate : ${redeploymentDate.toString()}`
+    );
     // $FlowFixMe
-    console.log('hasAcknowledgedBanner->lastClosedAt : ' + lastClosedAt);
+    console.log(
+        `hasAcknowledgedBanner->lastClosedAt : ${lastClosedAt.toString()}`
+    );
     // $FlowFixMe
-    console.log('hasAcknowledgedBanner->lastClosedAtTime : ' + lastClosedAtTime);
+    console.log(
+        `hasAcknowledgedBanner->lastClosedAtTime : ${lastClosedAtTime.toString()}`
+    );
 
     return lastClosedAt && lastClosedAtTime > redeploymentDate;
 };
@@ -241,9 +246,11 @@ const canShow: () => Promise<boolean> = async () => {
     const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
         currentRegion
     );
-    
+
     // $FlowFixMe
-    console.log('hasAcknowledgedSinceLastRedeploy: ' + hasAcknowledgedSinceLastRedeploy);
+    console.log(
+        `hasAcknowledgedSinceLastRedeploy: ${hasAcknowledgedSinceLastRedeploy}`
+    );
 
     const can = Promise.resolve(
         fiveOrMorePageViews(pageviews) &&
