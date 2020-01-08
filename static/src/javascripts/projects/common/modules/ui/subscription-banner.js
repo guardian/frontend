@@ -61,7 +61,7 @@ const hasAcknowledged = bannerRedeploymentDate => {
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
     // $FlowFixMe
     console.log(
-        `hasAcknowledgedBanner->redeploymentDate : ${redeploymentDate.toString()}`
+        `hasAcknowledgedBanner->bannerRedeploymentDate : ${bannerRedeploymentDate.toString()}`
     );
     // $FlowFixMe
     console.log(
@@ -79,7 +79,10 @@ const hasAcknowledgedBanner = region =>
     fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
     })
-        .then(resp => hasAcknowledged(resp.time))
+        .then(resp => {
+            console.log(resp);
+            hasAcknowledged(resp.time);
+        })
         .catch(err => {
             reportError(
                 new Error(
