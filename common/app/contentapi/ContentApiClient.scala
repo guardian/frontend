@@ -4,7 +4,7 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
-import com.gu.contentapi.client.{ContentApiBackoff, ScheduledExecutor, ContentApiClient => CapiContentApiClient}
+import com.gu.contentapi.client.{ContentApiBackoff, ScheduledExecutor, ContentApiClient => CapiContentApiClient, Exponential, Multiple, Constant}
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
@@ -113,9 +113,17 @@ trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryD
     val futureContent = httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
     }
+
     futureContent.failed.foreach { t =>
+      val attemptNumber = backoffStrategy match {
+        case Exponential(_, n, _) => Some(n+1)
+        case Constant(_, n, _) => Some(n+1)
+        case Multiple(_, n, _, _) => Some(n+1)
+        case _ => None
+      }
       val tryDecodedUrl: String = Try(java.net.URLDecoder.decode(url, "UTF-8")).getOrElse(url)
-      log.error(s"$t: $tryDecodedUrl")}
+      log.error(s"Failed to request data from CAPI $t: $tryDecodedUrl (attempt number ${attemptNumber.getOrElse(("unknown"))})")
+    }
     futureContent
   }
 }
