@@ -60,8 +60,11 @@ const hasAcknowledged = bannerRedeploymentDate => {
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt).getTime();
     
+    // $FlowFixMe
     console.log('hasAcknowledgedBanner->redeploymentDate : ' + redeploymentDate);
+    // $FlowFixMe
     console.log('hasAcknowledgedBanner->lastClosedAt : ' + lastClosedAt);
+    // $FlowFixMe
     console.log('hasAcknowledgedBanner->lastClosedAtTime : ' + lastClosedAtTime);
 
     return lastClosedAt && lastClosedAtTime > redeploymentDate;
@@ -239,6 +242,7 @@ const canShow: () => Promise<boolean> = async () => {
         currentRegion
     );
     
+    // $FlowFixMe
     console.log('hasAcknowledgedSinceLastRedeploy: ' + hasAcknowledgedSinceLastRedeploy);
 
     const can = Promise.resolve(
