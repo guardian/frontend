@@ -249,7 +249,7 @@ const canShow: () => Promise<boolean> = async () => {
 
     // $FlowFixMe
     console.log(
-        `hasAcknowledgedSinceLastRedeploy: ${hasAcknowledgedSinceLastRedeploy}`
+        `hasAcknowledgedSinceLastRedeploy: ${hasAcknowledgedSinceLastRedeploy.toString()}`
     );
 
     const can = Promise.resolve(
