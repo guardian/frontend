@@ -105,9 +105,9 @@ trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryD
   val httpClient: HttpClient
 
   override implicit val executor = ScheduledExecutor()
-  val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
+  val retryDuration = Duration(200L, TimeUnit.MILLISECONDS)
   val retryAttempts = 3
-  override val backoffStrategy: ContentApiBackoff = ContentApiBackoff.constantStrategy(retryDuration, retryAttempts)
+  override val backoffStrategy: ContentApiBackoff = ContentApiBackoff.exponentialStrategy(retryDuration, retryAttempts)
 
   def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = httpClient.GET(url, headers) map { response: Response =>
