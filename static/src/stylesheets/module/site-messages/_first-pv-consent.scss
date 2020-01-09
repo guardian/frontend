@@ -194,16 +194,3 @@ $btn-height: ($gs-baseline*3.5);
         }
     }
 }
-
-// commercialIabBottomConsentBanner A/B test styles
-
-.cmp-options-button {
-    height: 22px;
-    border: 0;
-    border-radius: 1000px;
-    padding: 10px 20px;
-    margin-left: 8px;
-    vertical-align: bottom;
-    background: $brightness-46;
-    color: $brightness-100;
-}

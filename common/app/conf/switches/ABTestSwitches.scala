@@ -165,15 +165,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 1, 31),
     exposeClientSide = true
   )
-
-  Switch(
-    ABTests,
-    "ab-commercial-consent-options-button",
-    "0.5% AB test for a bottom consent banner with an options button instead of a link",
-    owners = Seq(Owner.withGithub("ripecosta")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 8),
-    exposeClientSide = true
-  )
-
 }

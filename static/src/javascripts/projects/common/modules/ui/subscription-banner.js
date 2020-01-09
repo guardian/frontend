@@ -23,8 +23,6 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
@@ -238,12 +236,7 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
-        !isInVariantSynchronous(commercialConsentOptionsButton, 'control') &&
-            !isInVariantSynchronous(
-                commercialConsentOptionsButton,
-                'variant'
-            ) &&
-            fiveOrMorePageViews(pageviews) &&
+        fiveOrMorePageViews(pageviews) &&
             !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&

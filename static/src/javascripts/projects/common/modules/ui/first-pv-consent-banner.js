@@ -12,8 +12,6 @@ import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { isInCmpTest } from 'common/modules/ui/cmp-ui';
 
 type Template = {
@@ -78,19 +76,8 @@ const makeHtml = (): string => `
         <a
             href="${template.linkToPreferences}"
             data-link-name="first-pv-consent : to-prefs"
-            class="site-message--first-pv-consent__link u-underline ${
-                isInVariantSynchronous(
-                    commercialConsentOptionsButton,
-                    'variant'
-                )
-                    ? 'cmp-options-button'
-                    : ''
-            }"
-        >${
-            isInVariantSynchronous(commercialConsentOptionsButton, 'variant')
-                ? 'Options'
-                : template.choicesButton
-        }</a>
+            class="site-message--first-pv-consent__link u-underline"
+        >${template.choicesButton}</a>
 
     </div>
 `;
