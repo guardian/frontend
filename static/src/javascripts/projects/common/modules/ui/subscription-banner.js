@@ -56,33 +56,30 @@ const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const hasAcknowledged = bannerRedeploymentDate => {
-    const redeploymentDate = new Date(bannerRedeploymentDate).getTime();
+    // In order to migrate between ISO string and millisecond format support both temporarily
+    const stringOrNumberRedeploymentDate = Number(bannerRedeploymentDate) || bannerRedeploymentDate;
+    const redeploymentDate = new Date(stringOrNumberRedeploymentDate);
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
-    const lastClosedAtTime = new Date(lastClosedAt).getTime();
-    // $FlowFixMe
-    console.log(
-        `hasAcknowledgedBanner->bannerRedeploymentDate : ${bannerRedeploymentDate.toString()}`
-    );
-    // $FlowFixMe
-    console.log(
-        `hasAcknowledgedBanner->lastClosedAt : ${lastClosedAt.toString()}`
-    );
-    // $FlowFixMe
-    console.log(
-        `hasAcknowledgedBanner->lastClosedAtTime : ${lastClosedAtTime.toString()}`
-    );
+    const lastClosedAtTime = new Date(lastClosedAt);
 
-    return lastClosedAt && lastClosedAtTime > redeploymentDate;
+    // Always show to people who have never dismissed
+    if(!lastClosedAt) {
+        return false
+    }
+
+    // Default to hiding when there is a problem with the redeploy - this is unexpected
+    if(!redeploymentDate) {
+        return true
+    }
+
+    return lastClosedAtTime > redeploymentDate;
 };
 
 const hasAcknowledgedBanner = region =>
     fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
     })
-        .then(resp => {
-            console.log(resp);
-            hasAcknowledged(resp.time);
-        })
+        .then(resp => hasAcknowledged(resp.time))
         .catch(err => {
             reportError(
                 new Error(
@@ -248,11 +245,6 @@ const show: () => Promise<boolean> = async () => {
 const canShow: () => Promise<boolean> = async () => {
     const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
         currentRegion
-    );
-
-    // $FlowFixMe
-    console.log(
-        `hasAcknowledgedSinceLastRedeploy: ${hasAcknowledgedSinceLastRedeploy.toString()}`
     );
 
     const can = Promise.resolve(
