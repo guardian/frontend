@@ -57,19 +57,20 @@ const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&u
 
 const hasAcknowledged = bannerRedeploymentDate => {
     // In order to migrate between ISO string and millisecond format support both temporarily
-    const stringOrNumberRedeploymentDate = Number(bannerRedeploymentDate) || bannerRedeploymentDate;
+    const stringOrNumberRedeploymentDate =
+        Number(bannerRedeploymentDate) || bannerRedeploymentDate;
     const redeploymentDate = new Date(stringOrNumberRedeploymentDate);
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt);
 
     // Always show to people who have never dismissed
-    if(!lastClosedAt) {
-        return false
+    if (!lastClosedAt) {
+        return false;
     }
 
     // Default to hiding when there is a problem with the redeploy - this is unexpected
-    if(!redeploymentDate) {
-        return true
+    if (!redeploymentDate) {
+        return true;
     }
 
     return lastClosedAtTime > redeploymentDate;
