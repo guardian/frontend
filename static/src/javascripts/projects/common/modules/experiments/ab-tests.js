@@ -11,7 +11,6 @@ import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xa
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-casuals';
 import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-regulars';
 import { contributionsBannerUsEoyNewYearCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-casuals';
@@ -25,7 +24,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     appnexusUSAdapter,
     pangaeaAdapterTest,
     signInGateSecundus,
-    commercialConsentOptionsButton,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [

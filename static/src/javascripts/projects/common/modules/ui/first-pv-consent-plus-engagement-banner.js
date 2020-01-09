@@ -17,14 +17,10 @@ import {
     makeHtml as makeFirstPvConsentHtml,
 } from 'common/modules/ui/first-pv-consent-banner';
 import marque36icon from 'svgs/icon/marque-36.svg';
-import {
-    isInVariantSynchronous,
-    getEngagementBannerTestToRun,
-} from 'common/modules/experiments/ab';
+import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 import { initTicker } from 'common/modules/commercial/ticker';
-import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 
 const messageCode: string = 'first-pv-consent-plus-engagement-banner';
 
@@ -186,14 +182,6 @@ const firstPvConsentPlusEngagementBanner: Banner = {
     canShow: (): Promise<boolean> =>
         Promise.all([canShowFirstPvConsent(), canShowEngagementBanner()]).then(
             (canShowBanners: Array<boolean>) =>
-                !isInVariantSynchronous(
-                    commercialConsentOptionsButton,
-                    'control'
-                ) &&
-                !isInVariantSynchronous(
-                    commercialConsentOptionsButton,
-                    'variant'
-                ) &&
                 canShowBanners.every(canShowBanner => canShowBanner === true)
         ),
     show,
