@@ -4,7 +4,7 @@
 import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { _, bids } from './bid-config';
-import type { PrebidBidder, PrebidSize } from './types';
+import type { PrebidBidder, HeaderBiddingSize } from '../types';
 import {
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
@@ -29,7 +29,7 @@ import {
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
     shouldIncludePangaea as shouldIncludePangaea_,
-} from './utils';
+} from '../utils';
 
 const containsBillboard: any = containsBillboard_;
 const containsDmpu: any = containsDmpu_;
@@ -77,7 +77,7 @@ jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
     getAdConsentState: jest.fn(),
 }));
 
-jest.mock('./utils');
+jest.mock('../utils');
 
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
@@ -165,7 +165,7 @@ describe('getImprovePlacementId', () => {
     });
 
     const generateTestIds = (): Array<number> => {
-        const prebidSizes: Array<Array<PrebidSize>> = [
+        const prebidSizes: Array<Array<HeaderBiddingSize>> = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],
@@ -383,7 +383,7 @@ describe('indexExchangeBidders', () => {
     });
 
     test('should return an IX bidder for every size that the slot can take', () => {
-        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const slotSizes: Array<HeaderBiddingSize> = [[300, 250], [300, 600]];
         const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
         expect(bidders).toEqual([
             expect.objectContaining({
@@ -398,7 +398,7 @@ describe('indexExchangeBidders', () => {
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
-        const slotSizes: Array<PrebidSize> = [[300, 250], [300, 600]];
+        const slotSizes: Array<HeaderBiddingSize> = [[300, 250], [300, 600]];
         const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
         expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
             siteId: '123456',

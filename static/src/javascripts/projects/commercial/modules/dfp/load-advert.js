@@ -1,7 +1,33 @@
 // @flow
 import { Advert } from 'commercial/modules/dfp/Advert';
-import prebid from 'commercial/modules/prebid/prebid';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { markTime } from 'lib/user-timing';
+import a9 from 'commercial/modules/header-bidding/a9/a9';
+import type { HeaderBiddingSlot } from 'commercial/modules/header-bidding/types';
+
+const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
+    // We only fiddle with top-above-nav hbSlot(s)
+    if (hbSlot.key !== 'top-above-nav') {
+        return [hbSlot];
+    }
+    // For top-above-nav slots, we force the refreshed
+    // to be the same size as the first display
+    if (hbSlot.sizes.length === 1) {
+        // No point forcing a size, as there is already only one
+        // possible (mobile/tablet). See prebid/slot-config.js
+        return [hbSlot];
+    }
+
+    if (Array.isArray(advert.size)) {
+        return [
+            Object.assign({}, hbSlot, {
+                sizes: [[advert.size[0], advert.size[1]]],
+            }),
+        ];
+    }
+    // No point having this hbSlot, as advert.size is not an array
+    return [];
+};
 
 export const loadAdvert = (advert: Advert): void => {
     advert.whenSlotReady
@@ -11,39 +37,29 @@ export const loadAdvert = (advert: Advert): void => {
         .then(() => {
             markTime(`Commercial: Slot Ready: ${advert.id}`);
             advert.startLoading();
-            return prebid.requestBids(advert);
+            return Promise.all([
+                prebid.requestBids(advert),
+                a9.requestBids(advert),
+            ]);
         })
-        .then(() => window.googletag.display(advert.id));
+        .then(() => {
+            window.googletag.display(advert.id);
+        });
 };
 
 export const refreshAdvert = (advert: Advert): void => {
     // advert.size contains the effective size being displayed prior to refreshing
     advert.whenSlotReady
-        .then(() =>
-            prebid.requestBids(advert, prebidSlot => {
-                // We only fiddle with top-above-nav prebidSlot(s)
-                if (prebidSlot.key !== 'top-above-nav') {
-                    return [prebidSlot];
-                }
-                // For top-above-nav slots, we force the refreshed
-                // to be the same size as the first display
-                if (prebidSlot.sizes.length === 1) {
-                    // No point forcing a size, as there is already only one
-                    // possible (mobile/tablet). See prebid/slot-config.js
-                    return [prebidSlot];
-                }
-                // Prebid slots only support array sizes (no string literals).
-                if (Array.isArray(advert.size)) {
-                    return [
-                        Object.assign({}, prebidSlot, {
-                            sizes: [[advert.size[0], advert.size[1]]],
-                        }),
-                    ];
-                }
-                // No point having this prebidSlot, as advert.size is not an array
-                return [];
-            })
-        )
+        .then(() => {
+            const prepidPromise = prebid.requestBids(advert, prebidSlot =>
+                forcedSlotSize(advert, prebidSlot)
+            );
+
+            const a9Promise = a9.requestBids(advert, a9Slot =>
+                forcedSlotSize(advert, a9Slot)
+            );
+            return Promise.all([prepidPromise, a9Promise]);
+        })
         .then(() => {
             advert.slot.setTargeting('refreshed', 'true');
             if (advert.id === 'dfp-ad--top-above-nav') {

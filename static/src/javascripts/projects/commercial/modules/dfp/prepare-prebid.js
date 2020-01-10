@@ -5,15 +5,9 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
-import prebid from 'commercial/modules/prebid/prebid';
-
-const isGoogleProxy: () => boolean = () =>
-    !!(
-        navigator &&
-        navigator.userAgent &&
-        (navigator.userAgent.indexOf('Google Web Preview') > -1 ||
-            navigator.userAgent.indexOf('googleweblight') > -1)
-    );
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
+import { isGoogleProxy } from 'lib/detect';
+import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
 let moduleLoadResult = Promise.resolve();
 
@@ -24,11 +18,12 @@ if (!isGoogleProxy()) {
 const setupPrebid: () => Promise<void> = () =>
     moduleLoadResult.then(() => {
         if (
-            dfpEnv.externalDemand === 'prebid' &&
+            dfpEnv.hbImpl.prebid &&
             commercialFeatures.dfpAdvertising &&
             !commercialFeatures.adFree &&
             !config.get('page.hasPageSkin') &&
-            !isGoogleProxy()
+            !isGoogleProxy() &&
+            !shouldIncludeOnlyA9
         ) {
             getPageTargeting();
             prebid.initialise(window);
@@ -44,6 +39,5 @@ export const init = (): Promise<void> => {
 };
 
 export const _ = {
-    isGoogleProxy,
     setupPrebid,
 };

@@ -6,19 +6,19 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     shouldIncludeMobileSticky,
-} from 'commercial/modules/prebid/utils';
+} from 'commercial/modules/header-bidding/utils';
 
 import config from 'lib/config';
 
-import type { PrebidSlot } from 'commercial/modules/prebid/types';
+import type { HeaderBiddingSlot } from 'commercial/modules/header-bidding/types';
 
-const slotKeyMatchesAd = (pbs: PrebidSlot, ad: Advert): boolean =>
+const slotKeyMatchesAd = (pbs: HeaderBiddingSlot, ad: Advert): boolean =>
     stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);
 
 const filterByAdvert = (
     ad: Advert,
-    slots: Array<PrebidSlot>
-): Array<PrebidSlot> => {
+    slots: Array<HeaderBiddingSlot>
+): Array<HeaderBiddingSlot> => {
     const adUnits = slots.filter(slot => {
         if (slot.key === 'banner') {
             // Special case for interactive banner slots
@@ -34,14 +34,14 @@ const filterByAdvert = (
     return adUnits;
 };
 
-const getSlots = (contentType: string): Array<PrebidSlot> => {
+const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
     const isArticle = contentType === 'Article';
     const isCrossword = contentType === 'Crossword';
     const hasShowcase = config.get('page.hasShowcaseMainElement', false);
     const hasExtendedMostPop =
         isArticle && config.get('switches.extendedMostPopular');
 
-    const commonSlots: Array<PrebidSlot> = [
+    const commonSlots: Array<HeaderBiddingSlot> = [
         {
             key: 'right',
             sizes: hasShowcase ? [[300, 250]] : [[300, 600], [300, 250]],
@@ -52,7 +52,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
-    const desktopSlots: Array<PrebidSlot> = [
+    const desktopSlots: Array<HeaderBiddingSlot> = [
         {
             key: 'top-above-nav',
             sizes: [[970, 250], [728, 90]],
@@ -79,7 +79,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
-    const tabletSlots: Array<PrebidSlot> = [
+    const tabletSlots: Array<HeaderBiddingSlot> = [
         {
             key: 'top-above-nav',
             sizes: [[728, 90]],
@@ -96,7 +96,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
-    const mobileSlots: Array<PrebidSlot> = [
+    const mobileSlots: Array<HeaderBiddingSlot> = [
         {
             key: 'top-above-nav',
             sizes: [[300, 250]],
@@ -111,7 +111,7 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
         },
     ];
 
-    const mobileStickySlot: PrebidSlot = {
+    const mobileStickySlot: HeaderBiddingSlot = {
         key: 'mobile-sticky',
         sizes: [[320, 50]],
     };
@@ -129,9 +129,21 @@ const getSlots = (contentType: string): Array<PrebidSlot> => {
     }
 };
 
-export const getPrebidAdSlots = (
+export const getHeaderBiddingAdSlots = (
     ad: Advert,
-    contentType: string
-): Array<PrebidSlot> => filterByAdvert(ad, getSlots(contentType));
+    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
+): Array<HeaderBiddingSlot> => {
+    const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
+    const adSlots = filterByAdvert(
+        ad,
+        getSlots(config.get('page.contentType', ''))
+    );
+    return (
+        adSlots
+            .map(effectiveSlotFlatMap)
+            // $FlowFixMe
+            .reduce((acc, elt) => acc.concat(elt), [])
+    ); // the "flat" in "flatMap"
+};
 
 export const _ = { getSlots };

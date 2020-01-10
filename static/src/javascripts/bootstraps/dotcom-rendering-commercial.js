@@ -29,6 +29,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCheckMediator } from 'common/modules/check-mediator';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
+import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -43,6 +44,7 @@ const commercialModules: Array<Array<any>> = [
 if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],
+        ['cm-prepare-a9', prepareA9],
         ['cm-thirdPartyTags', initThirdPartyTags],
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async with the third party tags

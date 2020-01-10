@@ -1,6 +1,19 @@
 // @flow strict
 
-export type PrebidSize = [number, number];
+export type HeaderBiddingSize = [number, number];
+
+export type HeaderBiddingSlot = {
+    key:
+        | 'top-above-nav'
+        | 'right'
+        | 'inline1'
+        | 'inline'
+        | 'mostpop'
+        | 'comments'
+        | 'mobile-sticky'
+        | 'banner',
+    sizes: HeaderBiddingSize[],
+};
 
 export type PrebidOzoneParams = {
     publisherId: string,
@@ -25,7 +38,7 @@ export type PrebidPubmaticParams = {
 
 export type PrebidIndexExchangeParams = {
     siteId: string,
-    size: PrebidSize,
+    size: HeaderBiddingSize,
 };
 
 export type PrebidTrustXParams = {
@@ -67,25 +80,12 @@ export type PrebidAdYouLikeParams = {
     placement: string,
 };
 
-export type PrebidSlot = {
-    key:
-        | 'top-above-nav'
-        | 'right'
-        | 'inline1'
-        | 'inline'
-        | 'mostpop'
-        | 'comments'
-        | 'mobile-sticky'
-        | 'banner',
-    sizes: PrebidSize[],
-};
-
 export type PrebidBidder = {
     name: string,
     switchName: string,
     bidParams: (
         slotId: string,
-        sizes: PrebidSize[]
+        sizes: HeaderBiddingSize[]
     ) =>
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
@@ -118,6 +118,6 @@ export type PrebidBid = {
 
 export type PrebidMediaTypes = {
     banner: {
-        sizes: PrebidSize[],
+        sizes: HeaderBiddingSize[],
     },
 };

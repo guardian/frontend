@@ -7,7 +7,7 @@ import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import type { PrebidSize } from './types';
+import type { HeaderBiddingSize } from './types';
 
 const isInAppnexusUSAdapterTestVariant = (): boolean =>
     isInVariantSynchronous(appnexusUSAdapter, 'variant');
@@ -30,8 +30,10 @@ const stripPrefix = (s: string, prefix: string): string => {
 
 const currentGeoLocation = once((): string => geolocationGetSync());
 
-const contains = (sizes: PrebidSize[], size: PrebidSize): boolean =>
-    Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
+const contains = (
+    sizes: HeaderBiddingSize[],
+    size: HeaderBiddingSize
+): boolean => Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
 
 export const removeFalseyValues = (o: {
     [string]: string,
@@ -57,29 +59,35 @@ export const isInAuRegion = (): boolean =>
 export const isInRowRegion = (): boolean =>
     !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
 
-export const containsMpu = (sizes: PrebidSize[]): boolean =>
+export const containsMpu = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [300, 250]);
 
-export const containsDmpu = (sizes: PrebidSize[]): boolean =>
+export const containsDmpu = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [300, 600]);
 
-export const containsLeaderboard = (sizes: PrebidSize[]): boolean =>
+export const containsLeaderboard = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [728, 90]);
 
-export const containsBillboard = (sizes: PrebidSize[]): boolean =>
+export const containsBillboard = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [970, 250]);
 
-export const containsMpuOrDmpu = (sizes: PrebidSize[]): boolean =>
+export const containsMpuOrDmpu = (sizes: HeaderBiddingSize[]): boolean =>
     containsMpu(sizes) || containsDmpu(sizes);
 
-export const containsMobileSticky = (sizes: PrebidSize[]): boolean =>
+export const containsMobileSticky = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [320, 50]);
 
-export const containsLeaderboardOrBillboard = (sizes: PrebidSize[]): boolean =>
-    containsLeaderboard(sizes) || containsBillboard(sizes);
+export const containsLeaderboardOrBillboard = (
+    sizes: HeaderBiddingSize[]
+): boolean => containsLeaderboard(sizes) || containsBillboard(sizes);
 
-export const getLargestSize = (sizes: PrebidSize[]): PrebidSize | null => {
-    const reducer = (previous: PrebidSize, current: PrebidSize) => {
+export const getLargestSize = (
+    sizes: HeaderBiddingSize[]
+): HeaderBiddingSize | null => {
+    const reducer = (
+        previous: HeaderBiddingSize,
+        current: HeaderBiddingSize
+    ) => {
         if (previous[0] >= current[0] && previous[1] >= current[1]) {
             return previous;
         }
@@ -126,8 +134,9 @@ export const shouldIncludePangaea = (): boolean =>
 
 export const shouldIncludeTripleLift = (): boolean => isInUsRegion();
 
-export const shouldIncludeAdYouLike = (slotSizes: PrebidSize[]): boolean =>
-    containsMpu(slotSizes);
+export const shouldIncludeAdYouLike = (
+    slotSizes: HeaderBiddingSize[]
+): boolean => containsMpu(slotSizes);
 
 export const shouldIncludeOzone = (): boolean =>
     !isInUsRegion() && !isInAuRegion();
@@ -162,5 +171,8 @@ export const stripMobileSuffix = (s: string): string =>
 export const stripTrailingNumbersAbove1 = (s: string): string =>
     stripSuffix(s, '([2-9]|\\d{2,})');
 
-export const containsWS = (sizes: PrebidSize[]): boolean =>
+export const containsWS = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [160, 600]);
+
+export const shouldIncludeOnlyA9 =
+    window.location.hash.indexOf('#only-a9') !== -1;

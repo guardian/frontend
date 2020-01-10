@@ -7,7 +7,7 @@ import {
 } from 'common/modules/commercial/ad-prefs.lib';
 import { CMP_GLOBAL_NAME } from 'commercial/modules/cmp/cmp-env';
 import type { ConsentDataResponse } from 'commercial/modules/cmp/types';
-import { getRandomIntInclusive } from 'commercial/modules/prebid/utils';
+import { getRandomIntInclusive } from 'commercial/modules/header-bidding/utils';
 
 declare type ConsentPayload = {
     pv: string, // page view ID

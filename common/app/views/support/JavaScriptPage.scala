@@ -6,6 +6,7 @@ import common.Maps.RichMap
 import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
 import conf.switches.Switches.prebidSwitch
+import conf.switches.Switches.a9Switch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
@@ -49,10 +50,10 @@ object JavaScriptPage {
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> {
-        if (prebidSwitch.isSwitchedOn) JsString("prebid")
-        else JsString("none")
-      },
+      "hbImpl" -> JsObject(Seq(
+          "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
+          "a9" -> JsBoolean(a9Switch.isSwitchedOn),
+      )),
       "isSensitive" -> JsBoolean(page.metadata.sensitive)
     ) ++ sponsorshipType
 

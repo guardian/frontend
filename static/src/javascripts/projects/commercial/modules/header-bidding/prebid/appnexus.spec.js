@@ -9,8 +9,8 @@ import {
     getBreakpointKey as getBreakpointKey_,
     isInAuRegion as isInAuRegion_,
     isInUsRegion as isInUsRegion_,
-} from './utils';
-import type { PrebidSize } from './types';
+} from '../utils';
+import type { HeaderBiddingSize } from '../types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -22,9 +22,9 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: () => 'pageTargeting',
 }));
 
-jest.mock('./utils', () => {
+jest.mock('../utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
-    const original = jest.requireActual('./utils');
+    const original = jest.requireActual('../utils');
     return {
         ...original,
         getBreakpointKey: jest.fn(),
@@ -126,7 +126,7 @@ describe('getAppNexusDirectPlacementId', () => {
         window.OzoneLotameData = undefined;
     });
 
-    const prebidSizes: Array<Array<PrebidSize>> = [
+    const prebidSizes: Array<Array<HeaderBiddingSize>> = [
         [[300, 250]],
         [[300, 600]],
         [[970, 250]],
@@ -180,7 +180,7 @@ describe('getAppNexusPlacementId', () => {
     });
 
     const generateTestIds = (): Array<string> => {
-        const prebidSizes: Array<Array<PrebidSize>> = [
+        const prebidSizes: Array<Array<HeaderBiddingSize>> = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],

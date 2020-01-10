@@ -60,6 +60,7 @@ jest.mock('lib/detect', () => ({
             width: 1300,
         },
     ],
+    isGoogleProxy: jest.fn(() => false),
 }));
 jest.mock('common/modules/analytics/google', () => () => {});
 jest.mock('commercial/modules/dfp/display-lazy-ads', () => ({
@@ -114,6 +115,7 @@ const reset = () => {
     dfpEnv.adverts = [];
     dfpEnv.advertsToRefresh = [];
     dfpEnv.advertsToLoad = [];
+    dfpEnv.hbImpl = { prebid: false, a9: false };
     fillAdvertSlots.mockReset();
 };
 
