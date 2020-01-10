@@ -4,16 +4,14 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import conf.Configuration.readerRevenue._
 
-case class BannerDeploy(time: DateTime)
+case class BannerDeploy(time: Long)
 
 object BannerDeploy {
-  private implicit val jodaDateTimeFormats: Format[DateTime] =
-    Format(JodaReads.jodaDateReads("yyyy-MM-dd'T'HH:mm:ssZ"), JodaWrites.jodaDateWrites("yyyy-MM-dd'T'HH:mm:ssZ"))
-  implicit val deployFormat: OFormat[BannerDeploy] = Json.format[BannerDeploy]
+  implicit val deployFormat = Json.format[BannerDeploy]
 }
 
 sealed trait ReaderRevenueRegion {
-  def name: String;
+  def name: String
   override def toString: String = s"ReaderRevenueRegion: $name"
 }
 

@@ -47,7 +47,9 @@ const hasBannerBeenRedeployedSinceClosed = (
 ): Promise<boolean> =>
     getTimestampOfLastBannerDeployForLocation(region)
         .then(timestamp => {
-            const bannerLastDeployedAt = new Date(timestamp);
+            // In order to migrate between ISO string and millisecond format support both temporarily
+            const stringOrNumberTimestamp = Number(timestamp) || timestamp;
+            const bannerLastDeployedAt = new Date(stringOrNumberTimestamp);
             return bannerLastDeployedAt > new Date(userLastClosedBannerAt);
         })
         .catch(err => {
