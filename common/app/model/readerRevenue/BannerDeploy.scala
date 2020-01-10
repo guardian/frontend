@@ -4,7 +4,7 @@ import org.joda.time.DateTime
 import play.api.libs.json._
 import conf.Configuration.readerRevenue._
 
-case class BannerDeploy(millis: Long)
+case class BannerDeploy(time: Long)
 
 object BannerDeploy {
   implicit val deployFormat = Json.format[BannerDeploy]
