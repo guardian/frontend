@@ -36,7 +36,7 @@ case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, is
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
 case class InteractiveUrlBlockElement(url: String) extends PageElement
-case class InteractiveMarkupBlockElement(html: Option[String], css: Option[String], js: Option[String]) extends PageElement
+case class InteractiveMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
@@ -329,6 +329,7 @@ object PageElement {
 
           case Some(interactive: InteractiveAtom) => {
             Some(InteractiveMarkupBlockElement(
+              id = interactive.id,
               html = Some(interactive.html),
               css = Some(interactive.css),
               js = interactive.mainJS
