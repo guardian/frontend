@@ -6,7 +6,7 @@ export const signInGateSecundus: ABTest = {
     author: 'Mahesh Makani, Dominic Kendrick',
     description:
         'Test adding a sign in component on the 2nd pageview of simple article templates, with higher priority over banners and epic, and a much larget audience size.',
-    audience: 0.28,
+    audience: 0.40,
     audienceOffset: 0.1,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
