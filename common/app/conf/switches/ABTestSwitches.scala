@@ -8,8 +8,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-iab",
-    "Test whether our new CMP UI obtains target consent rates",
+    "ab-commercial-cmp-ui-banner-modal",
+    "Test whether our new banner/modal CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 28),

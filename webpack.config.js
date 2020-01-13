@@ -79,6 +79,7 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
         },
+        symlinks: false // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
         modules: [
