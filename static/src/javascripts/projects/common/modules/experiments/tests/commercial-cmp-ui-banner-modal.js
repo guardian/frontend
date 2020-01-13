@@ -5,7 +5,7 @@ export const commercialCmpUiBannerModal: ABTest = {
     start: '2020-01-13',
     expiry: '2020-01-28',
     author: 'George Haberis',
-    description: '0% participation AB test for the new banner/modal CMP UI',
+    description: '1% participation AB test for the new banner/modal CMP UI',
     audience: 0.01,
     audienceOffset: 0.8,
     successMeasure: 'Our new banner/modal CMP UI obtains target consent rates',
