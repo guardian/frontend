@@ -274,8 +274,12 @@ describe('Generating Permutive payload utils', () => {
             };
 
             _.runPermutive(config, mockPermutive, logger);
-            const [ identifyCallOrder ] = mockPermutive.identify.mock.invocationCallOrder
-            const [ addonCallOrder ] = mockPermutive.addon.mock.invocationCallOrder
+            const [
+                identifyCallOrder,
+            ] = mockPermutive.identify.mock.invocationCallOrder;
+            const [
+                addonCallOrder,
+            ] = mockPermutive.addon.mock.invocationCallOrder;
             expect(identifyCallOrder).toBeLessThan(addonCallOrder);
         });
         it('does not call the identify method if no browser ID is present', () => {
