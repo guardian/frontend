@@ -276,9 +276,11 @@ describe('Generating Permutive payload utils', () => {
             _.runPermutive(config, mockPermutive, logger);
             const [
                 identifyCallOrder,
+                // $FlowFixMe Flow types for jest are missing invocationCallOrder
             ] = mockPermutive.identify.mock.invocationCallOrder;
             const [
                 addonCallOrder,
+                // $FlowFixMe Flow types for jest are missing invocationCallOrder
             ] = mockPermutive.addon.mock.invocationCallOrder;
             expect(identifyCallOrder).toBeLessThan(addonCallOrder);
         });
