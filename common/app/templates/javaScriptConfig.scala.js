@@ -64,8 +64,7 @@
             "cmp": { "fullVendorDataUrl": "/commercial/cmp/vendorlist.json",
                      "shortVendorDataUrl": "/commercial/cmp/shortvendorlist.json"
             },
-            "facebookAccountId": "@FBPixel.account",
-            "a9PublisherId": "@{Configuration.javascript.config("a9PublisherId")}"
+            "facebookAccountId": "@FBPixel.account"
         }
     }
 }

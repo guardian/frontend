@@ -34,7 +34,7 @@ const initialise = (): void => {
     initialised = true;
 
     window.apstag.init({
-        pubID: config.get('libs.a9PublisherId'),
+        pubID: config.get('page.a9PublisherId'),
         adServer: 'googletag',
         bidTimeout: bidderTimeout,
     });
