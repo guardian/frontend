@@ -76,7 +76,7 @@ const hasAcknowledged = bannerRedeploymentDate => {
         return true;
     }
 
-    return lastClosedAtTime < redeploymentDate;
+    return lastClosedAtTime > redeploymentDate;
 };
 
 const hasAcknowledgedBanner = region =>
