@@ -200,6 +200,7 @@ export const initPermutive = (): Promise<void> =>
         const permutiveConfig = {
             user: config.get('user', {}),
             page: config.get('page', {}),
+            ophan: config.get('ophan', {}),
         };
         runPermutive(permutiveConfig, permutive, reportError);
 
