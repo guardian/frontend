@@ -8,6 +8,7 @@ import { getPageTargeting } from 'common/modules/commercial/build-page-targeting
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
+import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -106,13 +107,13 @@ const createAdsConfig = (
     if (adFree) {
         return { disableAds: true };
     } else if (isPfpAdTargetingSwitchedOn) {
+        const custParams = getPageTargeting();
+        custParams.permutive = getPermutivePFPSegments();
         return {
             nonPersonalizedAd: !wantPersonalisedAds,
             adTagParameters: {
                 iu: config.get('page.adUnit'),
-                cust_params: encodeURIComponent(
-                    constructQuery(getPageTargeting())
-                ),
+                cust_params: encodeURIComponent(constructQuery(custParams)),
             },
         };
     }
