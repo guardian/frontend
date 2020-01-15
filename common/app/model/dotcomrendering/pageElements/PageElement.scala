@@ -22,6 +22,7 @@ case class TextBlockElement(html: String) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
+case class BlockquoteBlockElement(html: String) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
@@ -133,6 +134,7 @@ object PageElement {
       case _: EmbedBlockElement => true
       case _: DisclaimerBlockElement => true
       case _: PullquoteBlockElement => true
+      case _: BlockquoteBlockElement => true
       case _: QABlockElement => true
       case _: GuideBlockElement => true
       case _: ProfileBlockElement => true
@@ -166,6 +168,7 @@ object PageElement {
         element <- Cleaner.split(text)
       } yield { element match {
         case ("h2", heading) => SubheadingBlockElement(heading)
+        case ("blockquote", blockquote) => BlockquoteBlockElement(blockquote)
         case (_ , para) if (addAffiliateLinks) => AffiliateLinksCleaner.replaceLinksInElement(para, pageUrl = pageUrl, contentType = "article")
         case (_, para) => TextBlockElement(para)
         }
@@ -456,6 +459,7 @@ object PageElement {
   implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
+  implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveMarkupBlockElement] = Json.writes[InteractiveMarkupBlockElement]
   implicit val InteractiveIframeElementWrites: Writes[InteractiveUrlBlockElement] = Json.writes[InteractiveUrlBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
