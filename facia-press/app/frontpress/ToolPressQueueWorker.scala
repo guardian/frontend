@@ -64,7 +64,7 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
       _ <- forceConfigUpdateFuture
       press <- pressFuture
     } yield {
-      val processTime = stopWatch.elapsed
+      val processTime = stopWatch.elapsedMS
       checkAndLogLatency(path, processTime, messageId, creationTime, processStartTime)
       press
     }

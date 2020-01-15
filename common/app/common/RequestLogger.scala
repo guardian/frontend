@@ -52,7 +52,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
 
     val stopWatchHeaders: List[LogField] = stopWatch.map { s: StopWatch =>
       List[LogField](
-        "req.latency_millis" -> s.elapsed
+        "req.latency_millis" -> s.elapsedMS
       )
     }.getOrElse(Nil)
 

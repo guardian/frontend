@@ -22,13 +22,13 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
       TagIndexesS3.putIndex(parentKey, tagPage)
     }
 
-    log.info(s"Uploaded ${tagPages.length} $parentKey index pages to S3 after ${s3StopWatch.elapsed}ms")
+    log.info(s"Uploaded ${tagPages.length} $parentKey index pages to S3 after ${s3StopWatch.elapsedMS}ms")
 
     val listingStopWatch = new StopWatch
 
     TagIndexesS3.putListing(parentKey, TagIndexListings.fromTagIndexPages(tagPages))
 
-    log.info(s"Uploaded $parentKey listing in ${listingStopWatch.elapsed}ms")
+    log.info(s"Uploaded $parentKey listing in ${listingStopWatch.elapsedMS}ms")
   }
 
   /** The title for the alpha keys (A, B, C ... )

@@ -18,7 +18,7 @@ trait Http extends Logging {
     GET(url, headers: _*) map { response =>
         response.status match {
           case 200 =>
-            val dapiLatency = stopWatch.elapsed
+            val dapiLatency = stopWatch.elapsedMS
             val customFields: List[LogField] = List("dapi.response.latency.millis" -> dapiLatency.toInt)
             logInfoWithCustomFields(s"DAPI responded successfully in ${dapiLatency} ms for url: ${url}", customFields)
             response.json

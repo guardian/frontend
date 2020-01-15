@@ -7,7 +7,7 @@ object StopWatch {
 class StopWatch {
   private val startTime = System.nanoTime
 
-  def elapsed: Long = System.nanoTime - startTime
+  def elapsedMS: Long = (System.nanoTime - startTime) / (10^6L)
 
-  override def toString(): String = s"${elapsed}ms"
+  override def toString(): String = s"${elapsedMS}ms"
 }

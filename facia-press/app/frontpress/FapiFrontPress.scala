@@ -237,7 +237,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
 
     pressFuture.onComplete {
       case Success(_) =>
-        val pressDuration: Long = stopWatch.elapsed
+        val pressDuration: Long = stopWatch.elapsedMS
         log.info(s"Successfully pressed $path in $pressDuration ms")
         FaciaPressMetrics.AllFrontsPressLatencyMetric.recordDuration(pressDuration)
         /** We record separate metrics for each of the editions' network fronts */
