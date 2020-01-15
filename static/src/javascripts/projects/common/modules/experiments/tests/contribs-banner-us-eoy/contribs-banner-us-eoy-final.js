@@ -6,7 +6,7 @@ const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
 const titles = ['Thank\xa0you\xa0to\xa0the\n30,000\xa0US\xa0readers …'];
-const messageText = `… who have shown their support for our reader-supported, independent journalism. As we begin 2020, the stakes could hardly be higher. America faces an epic choice and the result could define the country for a generation. Thank you to everyone who has generously contributed to our appeal so far. There’s still time to help us hit our $1.5m goal before our campaign closes – we’re nearly there.`;
+const messageText = `… who have shown their support for our open, independent journalism. As we begin 2020, the stakes could hardly be higher. America faces an epic choice and the result could define the country for a generation. Thank you to everyone who has generously contributed to our appeal so far. There’s still time to help us hit our $1.5m goal before our campaign closes – we’re nearly there.`;
 const ctaText = 'Support The Guardian';
 const tickerHeader = 'Help us reach our goal';
 
