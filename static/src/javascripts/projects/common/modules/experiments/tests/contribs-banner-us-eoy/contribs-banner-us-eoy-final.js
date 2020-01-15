@@ -5,22 +5,18 @@ import { acquisitionsBannerUsEoyTemplate } from 'common/modules/commercial/templ
 const geolocation = geolocationGetSync();
 const isUS = geolocation === 'US';
 
-// Start running as soon as it's January 1, 2020 00:00:01 wherever you are
-const is2020 = Date.now() > new Date('January 1, 2020 00:00:00').getTime();
-
-const titles = ['As 2020 begins...'];
-const messageText = `The stakes could hardly be higher. This year America faces an epic choice – and the result could define the country for a generation. Many vital aspects of American public life are in play – the supreme court, abortion rights, climate policy, wealth inequality, Big Tech and much more. The Guardian relies on your support. We hope you’ll make a contribution to the Guardian before our campaign closes early in the new year. Help us reach our $1.5m goal.`;
+const titles = ['Thank\xa0you\xa0to\xa0the\n30,000\xa0US\xa0readers …'];
+const messageText = `… who have shown their support for our reader-supported, independent journalism. As we begin 2020, the stakes could hardly be higher. America faces an epic choice and the result could define the country for a generation. Thank you to everyone who has generously contributed to our appeal so far. There’s still time to help us hit our $1.5m goal before our campaign closes – we’re nearly there.`;
 const ctaText = 'Support The Guardian';
 const tickerHeader = 'Help us reach our goal';
 
-export const contributionsBannerUsEoyNewYearCasuals: AcquisitionsABTest = {
-    id: 'ContributionsBannerUsEoyNewYearCasuals',
+export const contributionsBannerUsEoyFinal: AcquisitionsABTest = {
+    id: 'ContributionsBannerUsEoyFinal',
     campaignId: 'USeoy2019',
     start: '2019-12-23',
     expiry: '2020-1-30',
     author: 'Joshua Lieberman',
-    description:
-        'US End of year banner - three day count without articles viewed',
+    description: 'US End of year banner - final push',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
@@ -28,7 +24,7 @@ export const contributionsBannerUsEoyNewYearCasuals: AcquisitionsABTest = {
     idealOutcome: 'NA',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => isUS && is2020,
+    canRun: () => isUS,
     geolocation,
     variants: [
         {
