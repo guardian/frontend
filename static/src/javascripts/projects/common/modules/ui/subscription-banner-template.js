@@ -36,7 +36,9 @@ const subscriptionBannerTemplate = (
             <a
                 id="js-site-message--subscription-banner__cta"
                 class="site-message--subscription-banner__cta"
+                data-link-name="subscription-banner : cta"
                 href="${subscriptionUrl}"
+
             >
                 Become a digital subscriber
             </a>
@@ -46,6 +48,7 @@ const subscriptionBannerTemplate = (
                 <a
                     id="js-site-message--subscription-banner__cta-dismiss"
                     class="site-message--subscription-banner__cta-dismiss"
+                    data-link-name="subscription-banner : not now"
                     tabindex="0"
                 >
                     Not now
@@ -55,12 +58,16 @@ const subscriptionBannerTemplate = (
 
         <div class="site-message--subscription-banner__sign-in ${isUserLoggedIn(
             userLoggedIn
-        )}">
+        )}"
+        >
             <p>Already a subscriber?</p>
             <br class="temp-mobile-break" />
             <a
+                id="site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
+                data-link-name="subscription-banner : sign in"
                 href="${signInUrl}"
+
             >
                 <span class="site-message--subscription-banner__sign-in-link">Sign in</span> to not see this again
             </a>
@@ -74,8 +81,10 @@ const subscriptionBannerTemplate = (
             >
         </div>
 
-        <div id="js-site-message--subscription-banner__close-button"
+        <div
+            id="js-site-message--subscription-banner__close-button"
             class="site-message--subscription-banner__close-button"
+            data-link-name="subscription-banner : close"
             aria-label="Close"
             tabindex="0"
         >
