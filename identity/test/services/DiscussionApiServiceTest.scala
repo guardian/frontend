@@ -95,7 +95,7 @@ class DiscussionApiServiceTest extends AsyncFlatSpec
     when(wsResponseMock.json).thenReturn(Json.parse(valid404Response))
 
     dapiService.userHasPublicProfile(testUserId).value map { response =>
-      response shouldBe Left(DiscussionApiServiceException("404: User not found in Discussion"))}
+      response shouldBe Left(DiscussionApiServiceException(s"404: User ${testUserId} not found in Discussion"))}
   }
 
   it should "return a DiscussionApiServiceException for an invalid Profile Stats response from Discussion" in {
@@ -103,7 +103,7 @@ class DiscussionApiServiceTest extends AsyncFlatSpec
     when(wsResponseMock.json).thenReturn(Json.parse(invalidDapiProfileStatsResponse))
 
     dapiService.userHasPublicProfile(testUserId).value map { response =>
-      response shouldBe Left(DiscussionApiServiceException("Error validating user profile stats response"))}
+      response shouldBe Left(DiscussionApiServiceException(s"Error validating user profile stats response for user ${testUserId}"))}
   }
 
   it should "return a False for a user with negative comment number in Profile Stats response from Discussion" in {

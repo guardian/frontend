@@ -40,18 +40,19 @@ class PublicProfileController(
         }
 
       case Right(user) =>
-
         discussionApi.userHasPublicProfile(user.id).value map {
           case Left(error) =>
-            println(s"DAPI LEFT ERROR: ${error.message}")
+            logger.info(s"public profile page returned error: ${error.message}")
             NotFound(views.html.errors._404())
+
           case Right(false) =>
-            println(s"DAPI RIGHT no public profile - not commented")
+            logger.info(s"public profile page returned error: user ${user.id} found in Discussion but does not have a public profile")
             NotFound(views.html.errors._404())
+
           case Right(true) =>
-            println(s"DAPI RIGHT has public profile - commented")
-            val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile")
+            val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile") // TODO
             implicit val identityPage: IdentityPage = IdentityPage(url, title, usesGuardianHeader = true)
+
             Cached(60)(
               RevalidatableResult.Ok(
                 IdentityHtmlPage.html(

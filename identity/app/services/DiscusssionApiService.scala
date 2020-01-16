@@ -29,10 +29,10 @@ class DiscussionApiService(wsClient: WSClient, config: conf.IdentityConfiguratio
       .get()
   }
 
-  private def handleApiResponse(response: WSResponse): EitherT[Future, DiscussionApiServiceException, JsValue] = {
+  private def handleApiResponse(response: WSResponse, userId: String): EitherT[Future, DiscussionApiServiceException, JsValue] = {
     response.status match {
       case 200 => EitherT.rightT(response.json)
-      case 404 => EitherT.leftT(DiscussionApiServiceException(s"${response.status}: User not found in Discussion"))
+      case 404 => EitherT.leftT(DiscussionApiServiceException(s"${response.status}: User ${userId} not found in Discussion"))
       case _ => EitherT.leftT(DiscussionApiServiceException(s"${response.status}: ${response.statusText}"))
     }
   }
@@ -41,10 +41,10 @@ class DiscussionApiService(wsClient: WSClient, config: conf.IdentityConfiguratio
     val apiPath = s"/profile/${userId}/stats"
 
     for {
-      response <- GET(apiPath).attemptT.leftMap(_ => DiscussionApiServiceException(s"Request to GET ${apiPath} failed"))
-      foundUser <- handleApiResponse(response)
+      response <- GET(apiPath).attemptT.leftMap(error => DiscussionApiServiceException(s"Request to Discussion Api GET ${apiPath} failed: $error"))
+      foundUser <- handleApiResponse(response, userId)
       profileStats <- EitherT.fromEither[Future](foundUser.validate[ProfileStats].asEither).leftMap(_ =>
-        DiscussionApiServiceException("Error validating user profile stats response"))
+        DiscussionApiServiceException(s"Error validating user profile stats response for user $userId"))
     } yield {
       profileStats.hasComments
     }
