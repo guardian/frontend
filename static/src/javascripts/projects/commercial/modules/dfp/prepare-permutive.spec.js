@@ -225,6 +225,11 @@ describe('Generating Permutive payload utils', () => {
                 _.generatePermutiveIdentities({ ophan: { pageViewId: 'pvid' } })
             ).toEqual([]);
         });
+        it('returns an empty array if an empty browser ID is present', () => {
+            expect(
+                _.generatePermutiveIdentities({ ophan: { browserId: '' } })
+            ).toEqual([]);
+        });
         it('returns an empty array if ophan config object is completely missing', () => {
             expect(_.generatePermutiveIdentities({})).toEqual([]);
         });

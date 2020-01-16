@@ -100,7 +100,8 @@ const generatePermutiveIdentities = (
 ): Array<PermutiveIdentity> => {
     if (
         typeof pageConfig.ophan === 'object' &&
-        typeof pageConfig.ophan.browserId === 'string'
+        typeof pageConfig.ophan.browserId === 'string' &&
+        pageConfig.ophan.browserId.length > 0
     ) {
         return [{ tag: 'ophan', id: pageConfig.ophan.browserId }];
     }
