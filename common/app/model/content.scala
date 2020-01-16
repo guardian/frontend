@@ -449,7 +449,7 @@ object Article {
 
     // we don't serve pre-roll if there are multiple videos in an article
     // `headOption` as the video could be main media or a regular embed, so just get the first video
-    val videoDuration = content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNull)
+    val videoDuration = content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNumber(0))
 
     val javascriptConfig: Map[String, JsValue] = Map(
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
