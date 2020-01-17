@@ -38,6 +38,8 @@ import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
+import reportError from 'lib/report-error';
+import { setErrorHandler } from '@guardian/consent-management-platform';
 import { initAtoms } from './atoms';
 
 const setAdTestCookie = (): void => {
@@ -288,6 +290,21 @@ const bootStandard = (): void => {
             },
         ],
     ]);
+
+    // setErrorHandler takes function to be called on errors in the CMP UI
+    setErrorHandler(
+        (errMsg: string): void => {
+            const err = new Error(errMsg);
+
+            reportError(
+                err,
+                {
+                    feature: 'cmp',
+                },
+                false
+            );
+        }
+    );
 };
 
 export { bootStandard };
