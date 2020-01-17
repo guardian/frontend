@@ -14,7 +14,7 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { getCookie } from 'lib/cookies';
+import { local } from 'lib/storage';
 
 type Template = {
     heading: string,
@@ -33,6 +33,7 @@ type Links = {
     cookies: string,
 };
 
+const rePermissionKey = 'gu.commercial.re-permissioned';
 const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
 
@@ -91,6 +92,9 @@ const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
     });
+    if (isInVariantSynchronous(commercialCmpUiBannerModal, 'control')) {
+        local.set(rePermissionKey, true);
+    }
     msg.hide();
 };
 
@@ -107,22 +111,13 @@ const canShow = (): Promise<boolean> => {
     const hasSubmittedConsent =
         !hasUnsetAdChoices() || hasUserAcknowledgedBanner(messageCode);
 
-    const consentCookieSetBeforeDate = (): boolean => {
-        const dateToCheck = new Date(1579266000000); // 13.00 17/01/2020 GMT CommercialCmpUiBannerModal test
-        const cookieRaw = getCookie('GU_TK');
-
-        if (!cookieRaw) return true;
-
-        const cookieDate = new Date(parseInt(cookieRaw.split('.')[1], 10));
-
-        return cookieDate < dateToCheck;
-    };
+    console.log("***", local.get(rePermissionKey));
 
     return Promise.resolve(
         (!hasSubmittedConsent &&
             !isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) ||
             (isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
-                consentCookieSetBeforeDate())
+                !local.get(rePermissionKey))
     );
 };
 
