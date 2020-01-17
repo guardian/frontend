@@ -2,6 +2,8 @@
 import { ConsentManagementPlatform } from '@guardian/consent-management-platform/lib/ConsentManagementPlatform';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import reportError from 'lib/report-error';
+import { setErrorHandler } from '@guardian/consent-management-platform';
 
 export const init = (forceModal: boolean) => {
     const container = document.createElement('div');
@@ -35,6 +37,21 @@ export const init = (forceModal: boolean) => {
     if (document.body) {
         document.body.appendChild(container);
     }
+
+    // setErrorHandler takes function to be called on errors in the CMP UI
+    setErrorHandler(
+        (errMsg: string): void => {
+            const err = new Error(errMsg);
+
+            reportError(
+                err,
+                {
+                    feature: 'cmp',
+                },
+                false
+            );
+        }
+    );
 
     ReactDOM.render(<ConsentManagementPlatform {...props} />, container);
 };
