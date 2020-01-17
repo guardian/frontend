@@ -111,8 +111,6 @@ const canShow = (): Promise<boolean> => {
     const hasSubmittedConsent =
         !hasUnsetAdChoices() || hasUserAcknowledgedBanner(messageCode);
 
-    console.log("***", local.get(rePermissionKey));
-
     return Promise.resolve(
         (!hasSubmittedConsent &&
             !isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) ||
