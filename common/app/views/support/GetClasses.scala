@@ -17,7 +17,7 @@ object GetClasses {
     ) ++ item.customCssClasses: _*)
   }
 
-  def forItem(item: ContentCard, isFirstContainer: Boolean)(implicit request: RequestHeader): String = {
+  def forItem(item: ContentCard, isFirstContainer: Boolean, isDynamic: Boolean = false)(implicit request: RequestHeader): String = {
 
     RenderClasses(Map(
       ("fc-item", true),
@@ -41,7 +41,7 @@ object GetClasses {
       ("fc-item--is-commentable", item.discussionSettings.isCommentable),
       ("fc-item--is-media-link", item.isMediaLink),
       ("fc-item--has-video-main-media", item.hasVideoMainMedia),
-      ("fc-item--dynamic-layout", item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined)
+      ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
     )
