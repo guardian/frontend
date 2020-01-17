@@ -10,9 +10,11 @@ import {
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { isInCmpTest } from 'common/modules/ui/cmp-ui';
+import { getCookie } from 'lib/cookies';
 
 type Template = {
     heading: string,
@@ -101,12 +103,28 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const canShow = (): Promise<boolean> =>
-    Promise.resolve(
-        hasUnsetAdChoices() &&
-            !hasUserAcknowledgedBanner(messageCode) &&
-            !isInCmpTest()
+const canShow = (): Promise<boolean> => {
+    const hasSubmittedConsent =
+        !hasUnsetAdChoices() || hasUserAcknowledgedBanner(messageCode);
+
+    const consentCookieSetBeforeDate = (): boolean => {
+        const dateToCheck = new Date(1579266000000); // 13.00 17/01/2020 GMT CommercialCmpUiBannerModal test
+        const cookieRaw = getCookie('GU_TK');
+
+        if (!cookieRaw) return true;
+
+        const cookieDate = new Date(parseInt(cookieRaw.split('.')[1], 10));
+
+        return cookieDate < dateToCheck;
+    };
+
+    return Promise.resolve(
+        (!hasSubmittedConsent &&
+            !isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) ||
+            (isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
+                consentCookieSetBeforeDate())
     );
+};
 
 const track = (): void => {
     upAlertViewCount();
