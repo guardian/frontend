@@ -222,7 +222,8 @@ case class DataModelV3(
   designType: String,
   showBottomSocialButtons: Boolean,
   pageFooter: PageFooter,
-  publication: String
+  publication: String,
+  shouldHideReaderRevenue: Boolean,
 )
 
 object DataModelV3 {
@@ -614,6 +615,7 @@ object DotcomponentsDataModel {
       designType = findDesignType(article.metadata.designType, allTags),
       pageFooter = pageFooter,
       publication = article.content.publication,
+      shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue.getOrElse(false)
     )
   }
 }
