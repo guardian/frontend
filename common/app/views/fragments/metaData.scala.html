@@ -181,3 +181,9 @@
 @page.metadata.iosId("google").map { iosId =>
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }
+
+@*
+As a European publisher, we need to include snippets and thumbnails in our search previews - https://search.google.com/search-console/settings/eucd?resource_id=https%3A%2F%2Fwww.theguardian.com%2F
+https://developers.google.com/search/reference/robots_meta_tag
+*@
+<meta name="robots" content="max-snippet:20, max-image-preview:large">

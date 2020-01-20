@@ -8,8 +8,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-iab",
-    "Test whether our new CMP UI obtains target consent rates",
+    "ab-commercial-cmp-ui-banner-modal",
+    "Test whether our new banner/modal CMP UI obtains target consent rates",
     owners = Seq(Owner.withGithub("ghaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 28),
@@ -58,38 +58,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-new-year-regulars",
-    "US End of year banner - one day count with articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-new-year-casuals",
-    "US End of year banner - one day count without articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-one-day-regulars",
-    "US End of year banner - one day count with articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-one-day-casuals",
-    "US End of year banner - one day count without articles viewed",
+    "ab-contributions-banner-us-eoy-final",
+    "US End of year banner - final push",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 1, 30),

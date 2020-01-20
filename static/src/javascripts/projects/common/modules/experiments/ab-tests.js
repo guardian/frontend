@@ -1,6 +1,6 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { commercialCmpUiIab } from 'common/modules/experiments/tests/commercial-cmp-ui-iab';
+import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
 import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
@@ -11,15 +11,12 @@ import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xa
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-casuals';
-import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-regulars';
-import { contributionsBannerUsEoyNewYearCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-casuals';
-import { contributionsBannerUsEoyNewYearRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-regulars';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
+import { contributionsBannerUsEoyFinal } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-final';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    commercialCmpUiIab,
+    commercialCmpUiBannerModal,
     adblockTest,
     amazonA9Test,
     xaxisAdapterTest,
@@ -36,9 +33,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsBannerUsEoyNewYearRegulars,
-    contributionsBannerUsEoyNewYearCasuals,
-    contributionsBannerUsEoyOneDayRegulars,
-    contributionsBannerUsEoyOneDayCasuals,
+    contributionsBannerUsEoyFinal,
     articlesViewedBanner,
 ];

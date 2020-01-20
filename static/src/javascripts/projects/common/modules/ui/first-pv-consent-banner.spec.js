@@ -1,8 +1,14 @@
 // @flow
+import { isInVariantSynchronous as _isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
+import { local as _local } from 'lib/storage';
 import {
     firstPvConsentBanner as banner,
     _ as test,
 } from './first-pv-consent-banner';
+
+const isInVariantSynchronous: any = _isInVariantSynchronous;
+const local: any = _local;
 
 const getAdConsentState: any = require('common/modules/commercial/ad-prefs.lib')
     .getAdConsentState;
@@ -36,6 +42,13 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'notintest'
     ),
+}));
+
+jest.mock('lib/storage', () => ({
+    local: {
+        set: jest.fn(),
+        get: jest.fn(),
+    },
 }));
 
 jest.mock('ophan/ng', () => ({
@@ -99,6 +112,41 @@ describe('First PV consents banner', () => {
         it('should not show with set consents', () => {
             setAdConsentState(0, true);
             setAdConsentState(1, false);
+            return banner.canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should show when in commercialCmpUiBannerModal control group and has not been re-permissioned', () => {
+            local.get.mockReturnValue(false);
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) =>
+                    testId === commercialCmpUiBannerModal &&
+                    variantId === 'control'
+            );
+
+            banner.canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
+        });
+        it('should not show when in commercialCmpUiBannerModal control group and has been re-permissioned', () => {
+            local.get.mockReturnValue(true);
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) =>
+                    testId === commercialCmpUiBannerModal &&
+                    variantId === 'control'
+            );
+
+            banner.canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should not show when in commercialCmpUiBannerModal variant group', () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) =>
+                    testId === commercialCmpUiBannerModal &&
+                    variantId === 'variant'
+            );
+
             return banner.canShow().then(showable => {
                 expect(showable).toBe(false);
             });

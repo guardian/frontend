@@ -36,7 +36,10 @@ const DISPLAY_EVENT_KEY = 'subscription-banner : display';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
-const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
+const CLICK_EVENT_CTA = 'subscription-banner : cta';
+const CLICK_EVENT_CLOSE_NOT_NOW = 'subscription-banner : not now';
+const CLICK_EVENT_CLOSE_BUTTON = 'subscription-banner : close';
+const CLICK_EVENT_SIGN_IN = 'subscription-banner : sign in';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
 const signinHostname: string = config.get('page.idUrl');
@@ -52,7 +55,7 @@ const hideBannerInTheseRegions: ReaderRevenueRegion[] = [
     'united-states',
     'australia',
 ];
-const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${OPHAN_EVENT_ID}%22%7D`;
+const subscriptionUrl = `${subscriptionHostname}/subscribe/digital?INTCMP=gdnwb_copts_banner_subscribe_SubscriptionBanner&acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22subscriptions_banner%22%2C%22componentType%22%3A%22${COMPONENT_TYPE}%22%2C%22componentId%22%3A%22${CLICK_EVENT_CTA}%22%7D`;
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const hasAcknowledged = bannerRedeploymentDate => {
@@ -121,6 +124,17 @@ const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
         if (banner) {
+            submitClickEvent({
+                component: {
+                    componentType: COMPONENT_TYPE,
+                    id:
+                        button &&
+                        button.id ===
+                            'js-site-message--subscription-banner__close-button'
+                            ? CLICK_EVENT_CLOSE_BUTTON
+                            : CLICK_EVENT_CLOSE_NOT_NOW,
+                },
+            });
             banner.remove();
         }
     };
@@ -141,7 +155,7 @@ const bindCloseHandler = (button, banner, callback) => {
 const bindClickHandler = (button, callback) => {
     if (button) {
         button.addEventListener('click', () => {
-            callback();
+            callback(button);
         });
     }
 };
@@ -150,16 +164,19 @@ const trackSubscriptionBannerView = () => {
     submitViewEvent({
         component: {
             componentType: COMPONENT_TYPE,
-            id: OPHAN_EVENT_ID,
+            id: CLICK_EVENT_CTA,
         },
     });
 };
 
-const trackSubscriptionBannerCtaClick = () => {
+const trackSubscriptionBannerClick = button => {
     submitClickEvent({
         component: {
             componentType: COMPONENT_TYPE,
-            id: OPHAN_EVENT_ID,
+            id:
+                button.id === 'js-site-message--subscription-banner__cta'
+                    ? CLICK_EVENT_CTA
+                    : CLICK_EVENT_SIGN_IN,
         },
     });
 };
@@ -187,6 +204,10 @@ const bindSubscriptionClickHandlers = () => {
         '#js-site-message--subscription-banner__close-button'
     );
 
+    const subscriptionBannerSignIn = document.querySelector(
+        '#site-message--subscription-banner__sign-in'
+    );
+
     const bindSubscriptionCloseButtons = closeActions(
         subscriptionBannerHtml,
         subcriptionBannerCloseActions
@@ -197,9 +218,10 @@ const bindSubscriptionClickHandlers = () => {
             subscriptionBannercloseButton,
             subscriptionBannerNotNowButton,
         ]);
+        bindClickHandler(subscriptionBannerCta, trackSubscriptionBannerClick);
         bindClickHandler(
-            subscriptionBannerCta,
-            trackSubscriptionBannerCtaClick
+            subscriptionBannerSignIn,
+            trackSubscriptionBannerClick
         );
     }
 };

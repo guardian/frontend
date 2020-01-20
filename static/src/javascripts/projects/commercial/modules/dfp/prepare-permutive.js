@@ -21,6 +21,11 @@ type PermutiveSchema = {
     },
 };
 
+type PermutiveIdentity = {
+    id: string,
+    tag: string,
+};
+
 const isEmpty = (value: any) =>
     value === '' ||
     value === null ||
@@ -90,6 +95,19 @@ const generatePayload = (
     return cleanPayload;
 };
 
+const generatePermutiveIdentities = (
+    pageConfig: Config = {}
+): Array<PermutiveIdentity> => {
+    if (
+        typeof pageConfig.ophan === 'object' &&
+        typeof pageConfig.ophan.browserId === 'string' &&
+        pageConfig.ophan.browserId.length > 0
+    ) {
+        return [{ tag: 'ophan', id: pageConfig.ophan.browserId }];
+    }
+    return [];
+};
+
 const runPermutive = (
     pageConfig: Config = {},
     permutiveGlobal: any,
@@ -100,8 +118,12 @@ const runPermutive = (
             throw new Error('Global Permutive setup error');
         }
 
-        const payload = generatePayload(pageConfig);
+        const permutiveIdentities = generatePermutiveIdentities(pageConfig);
+        if (permutiveIdentities.length > 0) {
+            permutiveGlobal.identify(permutiveIdentities);
+        }
 
+        const payload = generatePayload(pageConfig);
         permutiveGlobal.addon('web', {
             page: payload,
         });
@@ -179,6 +201,7 @@ export const initPermutive = (): Promise<void> =>
         const permutiveConfig = {
             user: config.get('user', {}),
             page: config.get('page', {}),
+            ophan: config.get('ophan', {}),
         };
         runPermutive(permutiveConfig, permutive, reportError);
 
@@ -189,5 +212,6 @@ export const _ = {
     isEmpty,
     removeEmpty,
     generatePayload,
+    generatePermutiveIdentities,
     runPermutive,
 };

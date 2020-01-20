@@ -13,7 +13,7 @@
 
 @import Function.const
 
-<div class="@GetClasses.forItem(item, isFirstContainer) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
+<div class="@GetClasses.forItem(item, isFirstContainer, true) @item.cardTypes.classes @if(!item.hasInlineSnapHtml) {js-snappable}"
     @if(item.discussionSettings.isCommentable) {
         @item.discussionSettings.discussionId.map { id =>
         data-discussion-id="@id"

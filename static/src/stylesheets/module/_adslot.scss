@@ -309,17 +309,16 @@
 .ad-slot--outstream {
 
     background: transparent;
+    height: auto;
 
     @include mq(mobile) {
         width: 300px;
-        height: auto;
         min-height: auto;
     }
 
     @include mq($from: phablet) {
         float: none;
         width: 620px;
-        height: $mpu-ad-label-height + 350px;
         margin: 4px 0 0;
 
         & > div.ad-slot__label {
