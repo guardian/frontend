@@ -19,3 +19,9 @@ const getSegments = (key: SegmentsKey): Array<string> => {
 
 export const getPermutiveSegments = () => getSegments(PERMUTIVE_KEY);
 export const getPermutivePFPSegments = () => getSegments(PFP_KEY);
+
+export const _ = {
+    PERMUTIVE_KEY,
+    PFP_KEY,
+    getSegments,
+};
