@@ -177,6 +177,7 @@ object PressedContentFormat {
       case com.gu.contentapi.client.utils.GuardianView => JsString("GuardianView")
       case com.gu.contentapi.client.utils.Quiz => JsString("Quiz")
       case com.gu.contentapi.client.utils.GuardianLabs => JsString("GuardianLabs")
+      case com.gu.contentapi.client.utils.AdvertisementFeature => JsString("AdvertisementFeature")
     }
   }
 
