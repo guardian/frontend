@@ -8,6 +8,10 @@ jest.mock('lib/storage', () => ({
     },
 }));
 
+afterEach(() => {
+    jest.clearAllMocks();
+});
+
 describe('getSegments', () => {
     const DUMMY_KEY = `_dummyKey`;
     test('parses Permutive segments correctly', () => {
