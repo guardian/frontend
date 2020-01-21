@@ -36,11 +36,33 @@ case class OnwardCollectionResponse(
   trails: Seq[OnwardItem]
 )
 
+/*
+interface TrailTabType {
+    heading: string;
+    trails: TrailType[];
+}
+ */
+
+case class OnwardCollectionForDCRv2(
+  tabs: Seq[OnwardCollectionResponse],
+  //mostCommented: OnwardCollectionResponse,
+  //mostShared: OnwardCollectionResponse
+)
+
+/*
+interface MostViewedFooterType {
+    tabs: TrailTabType[];
+    mostCommented: TrailType;
+    mostShared: TrailType;
+}
+ */
+
 object OnwardCollection {
 
   implicit val itemWrites = Json.writes[OnwardItem]
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
 
   def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
     def ageWarning(content: PressedContent): Option[String] = {
@@ -49,8 +71,6 @@ object OnwardCollection {
         .map(ContentOldAgeDescriber.apply)
         .filterNot(_ == "")
     }
-
-
 
     trails.take(10).map(content =>
       OnwardItem(
