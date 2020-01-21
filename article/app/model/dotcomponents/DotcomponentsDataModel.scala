@@ -275,7 +275,8 @@ object DataModelV3 {
       "designType" -> model.designType,
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
       "pageFooter" -> model.pageFooter,
-      "publication" -> model.publication
+      "publication" -> model.publication,
+      "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue
     )
   }
 
