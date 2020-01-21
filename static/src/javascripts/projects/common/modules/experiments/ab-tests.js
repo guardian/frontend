@@ -12,7 +12,6 @@ import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-a
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
-import { contributionsBannerUsEoyFinal } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-final';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -33,6 +32,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsBannerUsEoyFinal,
     articlesViewedBanner,
 ];
