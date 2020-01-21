@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 20),
+    sellByDate = new LocalDate(2021, 1, 20),
     exposeClientSide = true
   )
 
