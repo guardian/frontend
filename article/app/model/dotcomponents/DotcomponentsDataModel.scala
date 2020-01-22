@@ -227,7 +227,7 @@ case class DataModelV3(
   shouldHideReaderRevenue: Boolean,
 
   // slot machine (temporary for contributions development)
-  slotMachineParams: String,
+  slotMachineFlags: String,
 )
 
 object DataModelV3 {
@@ -281,7 +281,7 @@ object DataModelV3 {
       "pageFooter" -> model.pageFooter,
       "publication" -> model.publication,
       "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
-      "slotMachineParams" -> model.slotMachineParams,
+      "slotMachineFlags" -> model.slotMachineFlags,
     )
   }
 
@@ -625,7 +625,7 @@ object DotcomponentsDataModel {
       shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue
         .getOrElse(isPaidContent),
 
-      slotMachineParams = request.slotMachine,
+      slotMachineFlags = request.slotMachineFlags,
     )
   }
 }

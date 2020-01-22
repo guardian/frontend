@@ -89,7 +89,7 @@ trait Requests {
     lazy val forceDCR: Boolean = r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
 
     // slot machine
-    lazy val slotMachine = r.getQueryString("slot-machine").getOrElse("")
+    lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")
   }
 
 }
