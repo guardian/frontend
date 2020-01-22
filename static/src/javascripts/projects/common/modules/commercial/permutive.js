@@ -2,8 +2,8 @@
 import { local } from 'lib/storage';
 
 const PERMUTIVE_KEY = `_papns`;
-const PFP_KEY = `_pdfps`;
-type SegmentsKey = typeof PERMUTIVE_KEY | typeof PFP_KEY;
+const PERMUTIVE_PFP_KEY = `_pdfps`;
+type SegmentsKey = typeof PERMUTIVE_KEY | typeof PERMUTIVE_PFP_KEY;
 
 const getSegments = (key: SegmentsKey): Array<string> => {
     try {
@@ -18,10 +18,10 @@ const getSegments = (key: SegmentsKey): Array<string> => {
 };
 
 export const getPermutiveSegments = () => getSegments(PERMUTIVE_KEY);
-export const getPermutivePFPSegments = () => getSegments(PFP_KEY);
+export const getPermutivePFPSegments = () => getSegments(PERMUTIVE_PFP_KEY);
 
 export const _ = {
     PERMUTIVE_KEY,
-    PFP_KEY,
+    PERMUTIVE_PFP_KEY,
     getSegments,
 };

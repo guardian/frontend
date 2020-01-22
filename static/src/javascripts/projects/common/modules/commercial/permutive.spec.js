@@ -42,6 +42,6 @@ describe('getPermutiveSegments', () => {
 describe('getPermutivePFPSegments', () => {
     test('calls the right key from localStorage', () => {
         getPermutivePFPSegments();
-        expect(local.getRaw).toHaveBeenCalledWith(_.PFP_KEY);
+        expect(local.getRaw).toHaveBeenCalledWith(_.PERMUTIVE_PFP_KEY);
     });
 });
