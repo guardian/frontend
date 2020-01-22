@@ -11,7 +11,7 @@ import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
-import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
+import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItemMost}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -56,7 +56,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
       mostPopular match {
         case Nil => NotFound
-        case popular if request.forceDCR => jsonResponse2(popular, mostCards())
+        case popular if request.forceDCR => jsonResponse(popular, mostCards())
         case popular if !request.isJson => Cached(900) {
           RevalidatableResult.Ok(views.html.mostPopular(page, popular))
         }
@@ -106,25 +106,15 @@ class MostPopularController(contentApiClient: ContentApiClient,
     }
   }
 
-  def jsonResponse(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
-    val response = mostPopulars.map{section =>
-      OnwardCollectionResponse(
-        heading = section.heading,
-        trails = OnwardCollection.trailsToItems(section.trails)
-      )
-    }
-    Cached(900)(JsonComponent(response))
-  }
-
-  def jsonResponse2(mostPopulars: Seq[MostPopular], mostCards: Map[String, Option[ContentCard]])(implicit request: RequestHeader): Result = {
+  def jsonResponse(mostPopulars: Seq[MostPopular], mostCards: Map[String, Option[ContentCard]])(implicit request: RequestHeader): Result = {
     val tabs = mostPopulars.map{section =>
       OnwardCollectionResponse(
         heading = section.heading,
         trails = OnwardCollection.trailsToItems(section.trails)
       )
     }
-    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap{contentCard => OnwardItem.maybeFromContentCard(contentCard)}
-    val mostShared = mostCards.getOrElse("most_shared", None).flatMap{contentCard => OnwardItem.maybeFromContentCard(contentCard)}
+    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap{contentCard => OnwardItemMost.maybeFromContentCard(contentCard)}
+    val mostShared = mostCards.getOrElse("most_shared", None).flatMap{contentCard => OnwardItemMost.maybeFromContentCard(contentCard)}
     val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
