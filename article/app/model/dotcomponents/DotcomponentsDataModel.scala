@@ -18,6 +18,7 @@ import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
 import navigation.{FooterLink, FooterLinks}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
@@ -224,6 +225,9 @@ case class DataModelV3(
   pageFooter: PageFooter,
   publication: String,
   shouldHideReaderRevenue: Boolean,
+
+  // slot machine (temporary for contributions development)
+  slotMachineParams: String,
 )
 
 object DataModelV3 {
@@ -276,7 +280,8 @@ object DataModelV3 {
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
       "pageFooter" -> model.pageFooter,
       "publication" -> model.publication,
-      "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue
+      "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
+      "slotMachineParams" -> model.slotMachineParams,
     )
   }
 
@@ -618,7 +623,9 @@ object DotcomponentsDataModel {
 
       // See pageShouldHideReaderRevenue in contributions-utilities.js
       shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue
-        .getOrElse(isPaidContent)
+        .getOrElse(isPaidContent),
+
+      slotMachineParams = request.slotMachine,
     )
   }
 }
