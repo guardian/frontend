@@ -40,7 +40,11 @@ class PublicProfileController(
         }
 
       case Right(user) =>
-        discussionApi.userHasPublicProfile(user.id).value map {
+        /**
+          * Only render public profile if a user in Identity also exists in Discussion
+          * and has one or more comments, otherwise return a 404.
+          */
+        discussionApi.userHasPublicProfile(user.id).value.map {
           case Left(error) =>
             logger.info(s"public profile page returned error: ${error.message}")
             NotFound(views.html.errors._404())
@@ -50,7 +54,7 @@ class PublicProfileController(
             NotFound(views.html.errors._404())
 
           case Right(true) =>
-            val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile") // TODO
+            val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile")
             implicit val identityPage: IdentityPage = IdentityPage(url, title, usesGuardianHeader = true)
 
             Cached(60)(
