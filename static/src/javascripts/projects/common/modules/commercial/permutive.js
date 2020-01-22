@@ -3,9 +3,8 @@ import { local } from 'lib/storage';
 
 const PERMUTIVE_KEY = `_papns`;
 const PERMUTIVE_PFP_KEY = `_pdfps`;
-type SegmentsKey = typeof PERMUTIVE_KEY | typeof PERMUTIVE_PFP_KEY;
 
-const getSegments = (key: SegmentsKey): Array<string> => {
+const getSegments = (key: string): Array<string> => {
     try {
         return JSON.parse(local.getRaw(key) || '[]')
             .slice(0, 250)
