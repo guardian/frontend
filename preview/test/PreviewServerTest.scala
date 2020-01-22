@@ -13,7 +13,7 @@ class PreviewTestSuite extends Suites (
   // These features are tested elsewhere, this is actually just here to ensure that the
   // preview server can start up and serve a page
 
-  "Preview Server" should "be able to serve an article" in goTo("/music/2015/jan/01/music-awards-for-new-artists-blessing-or-curse") { browser =>
-    browser.$("body").text should include ("The annual next-big-thing lists are now such a stepping-stone that a nomination is a major aim of many artist-development campaigns")
+  "Preview Server" should "be able to serve an article" in goTo("/news/2017/nov/16/a-mission-for-journalism-in-a-time-of-crisis") { browser =>
+    browser.$("body").text should include ("Now we are living through another extraordinary period in history")
   }
 }

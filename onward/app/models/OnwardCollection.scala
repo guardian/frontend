@@ -23,6 +23,7 @@ case class OnwardItem(
   webPublicationDate: String,
   headline: String,
   mediaType: Option[String],
+  shortUrl: String,
 )
 
 case class MostPopularGeoResponse(
@@ -61,11 +62,12 @@ object OnwardCollection {
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
         ageWarning = ageWarning(content),
         isLiveBlog = content.properties.isLiveBlog,
-        pillar = findPillar(content.maybePillar, content.frontendTags.toList),
+        pillar = findPillar(content.maybePillar, content.properties.maybeContent.map(_.metadata.designType)),
         designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
         webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
         headline = content.header.headline,
-        mediaType = content.card.mediaType.map(_.toString())
+        mediaType = content.card.mediaType.map(_.toString()),
+        shortUrl = content.card.shortUrl,
       )
     )
   }

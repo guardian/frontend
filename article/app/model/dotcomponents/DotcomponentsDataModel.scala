@@ -2,7 +2,7 @@ package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.DesignType
+import com.gu.contentapi.client.utils.{DesignType, AdvertisementFeature}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
@@ -18,6 +18,7 @@ import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
 import navigation.{FooterLink, FooterLinks}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
+import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
 import controllers.ArticlePage
@@ -222,7 +223,11 @@ case class DataModelV3(
   designType: String,
   showBottomSocialButtons: Boolean,
   pageFooter: PageFooter,
-  publication: String
+  publication: String,
+  shouldHideReaderRevenue: Boolean,
+
+  // slot machine (temporary for contributions development)
+  slotMachineParams: String,
 )
 
 object DataModelV3 {
@@ -274,7 +279,9 @@ object DataModelV3 {
       "designType" -> model.designType,
       "showBottomSocialButtons" -> model.showBottomSocialButtons,
       "pageFooter" -> model.pageFooter,
-      "publication" -> model.publication
+      "publication" -> model.publication,
+      "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
+      "slotMachineParams" -> model.slotMachineParams,
     )
   }
 
@@ -387,20 +394,17 @@ object DotcomponentsDataModel {
       relevantBlocks.filter(block => ids(block.id))
     }
 
-    // note: these two functions are duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common!)
-    def isPaidContent(tags: List[Tag]): Boolean = tags.exists(tag => tag.`type` == "Tone" && tag.id == "tone/advertisement-features")
-    def findPillar(pillar: Option[Pillar], tags: List[Tag]): String = {
+    // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
+    def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
       pillar.map { pillar =>
-        if (isPaidContent(tags)) "labs"
+        if (designType == AdvertisementFeature) "labs"
         else if (pillar.toString.toLowerCase == "arts") "culture"
         else pillar.toString.toLowerCase()
       }.getOrElse("news")
     }
 
-    def findDesignType(designType: Option[DesignType], tags: List[Tag]): String = {
-      // TODO Remove this when changes can be moved to https://github.com/guardian/content-api-scala-client/blob/master/client/src/main/scala/com.gu.contentapi.client/utils/CapiModelEnrichment.scala
-      if (isPaidContent(tags)) "AdvertisementFeature"
-      else designType.map(_.toString).getOrElse("Article")
+    def asString(designType: Option[DesignType]): String = {
+      designType.map(_.toString).getOrElse("Article")
     }
 
     val bodyBlocksRaw = articlePage match {
@@ -568,6 +572,8 @@ object DotcomponentsDataModel {
       FooterLinks.getFooterByEdition(Edition(request))
     )
 
+    val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
+
     DataModelV3(
       version = 3,
       headline = article.trail.headline,
@@ -585,7 +591,7 @@ object DotcomponentsDataModel {
       editionId = Edition(request).id,
       pageId = article.metadata.id,
       tags = allTags,
-      pillar = findPillar(article.metadata.pillar, allTags),
+      pillar = findPillar(article.metadata.pillar, article.metadata.designType),
       isImmersive = article.isImmersive,
       sectionLabel = article.content.sectionLabelName,
       sectionUrl = article.content.sectionLabelLink,
@@ -611,9 +617,15 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = findDesignType(article.metadata.designType, allTags),
+      designType = asString(article.metadata.designType),
       pageFooter = pageFooter,
       publication = article.content.publication,
+
+      // See pageShouldHideReaderRevenue in contributions-utilities.js
+      shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue
+        .getOrElse(isPaidContent),
+
+      slotMachineParams = request.slotMachine,
     )
   }
 }
