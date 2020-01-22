@@ -113,8 +113,7 @@ const canShow = (): Promise<boolean> => {
 
     return Promise.resolve(
         isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
-            !local.get(rePermissionKey) &&
-            !hasSubmittedConsent
+            (!local.get(rePermissionKey) || !hasSubmittedConsent)
     );
 };
 

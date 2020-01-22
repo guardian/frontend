@@ -66,9 +66,6 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const isInCmpCustomiseTest = (): boolean =>
-    isInVariantSynchronous(commercialCmpUiBannerModal, 'variant');
-
 const generateStore = (isInTest: boolean): CmpStore => {
     const store = new CmpStore(
         CMP_ID,
@@ -283,9 +280,12 @@ export const init = (): void => {
     if (window[CMP_GLOBAL_NAME]) {
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-        const shouldAccessTestCookie = isInCmpCustomiseTest();
+        const useIabCookie = !isInVariantSynchronous(
+            commercialCmpUiBannerModal,
+            'control'
+        );
         // Initialize the store with all of our consent data
-        const store = generateStore(shouldAccessTestCookie);
+        const store = generateStore(useIabCookie);
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
@@ -298,8 +298,8 @@ export const init = (): void => {
         cmp.cmpReady = true;
         cmp.notify('cmpReady');
 
-        if (shouldAccessTestCookie) {
-            log.info('CMP customise is ACTIVE');
+        if (useIabCookie) {
+            log.info('CMP is using IAB cookie');
         }
     }
 };
