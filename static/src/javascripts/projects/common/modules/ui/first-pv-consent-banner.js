@@ -112,10 +112,9 @@ const canShow = (): Promise<boolean> => {
         !hasUnsetAdChoices() || hasUserAcknowledgedBanner(messageCode);
 
     return Promise.resolve(
-        (!hasSubmittedConsent &&
-            !isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) ||
-            (isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
-                !local.get(rePermissionKey))
+        isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
+            !local.get(rePermissionKey) &&
+            !hasSubmittedConsent
     );
 };
 
