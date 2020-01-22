@@ -11,7 +11,7 @@ import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
-import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionResponse, OnwardCollectionForDCRv2}
+import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -56,7 +56,7 @@ class MostPopularController(contentApiClient: ContentApiClient,
 
       mostPopular match {
         case Nil => NotFound
-        case popular if request.forceDCR => jsonResponse2(popular)
+        case popular if request.forceDCR => jsonResponse2(popular, mostCards())
         case popular if !request.isJson => Cached(900) {
           RevalidatableResult.Ok(views.html.mostPopular(page, popular))
         }
@@ -116,17 +116,16 @@ class MostPopularController(contentApiClient: ContentApiClient,
     Cached(900)(JsonComponent(response))
   }
 
-  def jsonResponse2(mostPopulars: Seq[MostPopular])(implicit request: RequestHeader): Result = {
+  def jsonResponse2(mostPopulars: Seq[MostPopular], mostCards: Map[String, Option[ContentCard]])(implicit request: RequestHeader): Result = {
     val tabs = mostPopulars.map{section =>
       OnwardCollectionResponse(
         heading = section.heading,
         trails = OnwardCollection.trailsToItems(section.trails)
       )
     }
-    val response = OnwardCollectionForDCRv2(tabs)
-    // var mostCommented = TODO
-    // var mostShared = TODO
-    // val responses = OnwardCollectionForDCRv2(tabs, onwardCollectionResponses.head, onwardCollectionResponses.head)
+    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap{contentCard => OnwardItem.maybeFromContentCard(contentCard)}
+    val mostShared = mostCards.getOrElse("most_shared", None).flatMap{contentCard => OnwardItem.maybeFromContentCard(contentCard)}
+    val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
 

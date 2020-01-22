@@ -7,6 +7,7 @@ import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
+import layout.ContentCard
 import models.dotcomponents.OnwardsUtils.findPillar
 import org.joda.time.DateTimeZone
 
@@ -25,6 +26,28 @@ case class OnwardItem(
   mediaType: Option[String],
 )
 
+object OnwardItem {
+  def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItem] = {
+    for {
+      url <- contentCard.shortUrl
+      linkText <- contentCard.trailText
+      webPublicationDate <- contentCard.webPublicationDate.map( x => x.toDateTime().toString() )
+    } yield OnwardItem(
+      url= url,
+      linkText = linkText,
+      showByline = false,
+      byline = contentCard.byline.map( x => x.get ),
+      image = None,
+      ageWarning = None,
+      isLiveBlog = false,
+      pillar = "news",
+      designType = "",
+      webPublicationDate = webPublicationDate,
+      headline = "",
+      mediaType = contentCard.mediaType.map( x => x.toString ))
+  }
+}
+
 case class MostPopularGeoResponse(
   country: Option[String],
   heading: String,
@@ -36,26 +59,11 @@ case class OnwardCollectionResponse(
   trails: Seq[OnwardItem]
 )
 
-/*
-interface TrailTabType {
-    heading: string;
-    trails: TrailType[];
-}
- */
-
 case class OnwardCollectionForDCRv2(
   tabs: Seq[OnwardCollectionResponse],
-  //mostCommented: OnwardCollectionResponse,
-  //mostShared: OnwardCollectionResponse
+  mostCommented: Option[OnwardItem],
+  mostShared: Option[OnwardItem]
 )
-
-/*
-interface MostViewedFooterType {
-    tabs: TrailTabType[];
-    mostCommented: TrailType;
-    mostShared: TrailType;
-}
- */
 
 object OnwardCollection {
 
