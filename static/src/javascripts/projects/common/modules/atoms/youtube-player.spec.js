@@ -5,6 +5,10 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: jest.fn(() => ({ key: 'value' })),
 }));
 
+jest.mock('common/modules/commercial/permutive', () => ({
+    getPermutivePFPSegments: jest.fn(() => [42]),
+}));
+
 jest.mock('lib/config', () => ({
     get: jest.fn(key => {
         if (key === 'page.adUnit') {
@@ -103,6 +107,8 @@ describe('create ads config', () => {
             true // pfp variant
         );
 
-        expect(result.adTagParameters.cust_params).toEqual('key%3Dvalue');
+        expect(result.adTagParameters.cust_params).toEqual(
+            'key%3Dvalue%26permutive%3D42'
+        );
     });
 });
