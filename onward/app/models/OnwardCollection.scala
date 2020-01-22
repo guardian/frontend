@@ -23,6 +23,7 @@ case class OnwardItem(
   webPublicationDate: String,
   headline: String,
   mediaType: Option[String],
+  shortUrl: String,
 )
 
 case class MostPopularGeoResponse(
@@ -65,7 +66,8 @@ object OnwardCollection {
         designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
         webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
         headline = content.header.headline,
-        mediaType = content.card.mediaType.map(_.toString())
+        mediaType = content.card.mediaType.map(_.toString()),
+        shortUrl = content.card.shortUrl,
       )
     )
   }
