@@ -2,11 +2,12 @@ package models
 
 import com.gu.contentapi.client.utils.{Article, DesignType}
 import common.LinkTo
-import model.pressed.{MediaType, PressedContent}
+import model.pressed.{Image, MediaType, PressedContent}
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
+import layout.ContentCard
 import models.dotcomponents.OnwardsUtils.findPillar
 import org.joda.time.DateTimeZone
 
@@ -26,6 +27,54 @@ case class OnwardItem(
   shortUrl: String,
 )
 
+// OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
+// The only difference between OnwardItem and OnwardItemMost
+// is that the image is optional in OnwardItem but not in OnwardItemMost
+
+case class OnwardItemMost(
+  designType: String,
+  pillar: String,
+  url: String,
+  headline: String,
+  isLiveBlog: Boolean,
+  linkText: String,
+  showByline: Boolean,
+  byline: Option[String],
+  image: String,
+  webPublicationDate: String,
+  ageWarning: Option[String],
+  mediaType: Option[String],
+)
+
+object OnwardItemMost {
+  def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
+    for {
+      properties <- contentCard.properties
+      maybeContent <- properties.maybeContent
+      metadata = maybeContent.metadata
+      pillar <- metadata.pillar
+      url <- properties.webUrl
+      headline = properties.webTitle
+      isLiveBlog = properties.isLiveBlog
+      showByline = properties.showByline
+      image <- maybeContent.trail.thumbnailPath
+      webPublicationDate <- contentCard.webPublicationDate.map( x => x.toDateTime().toString() )
+    } yield OnwardItemMost(
+      designType = metadata.designType.toString,
+      pillar = pillar.toString.toLowerCase,
+      url = url,
+      headline = headline,
+      isLiveBlog = isLiveBlog,
+      linkText = "",
+      showByline = showByline,
+      byline = contentCard.byline.map( x => x.get ),
+      image = image,
+      webPublicationDate = webPublicationDate,
+      ageWarning = None,
+      mediaType = contentCard.mediaType.map( x => x.toString ))
+  }
+}
+
 case class MostPopularGeoResponse(
   country: Option[String],
   heading: String,
@@ -37,11 +86,19 @@ case class OnwardCollectionResponse(
   trails: Seq[OnwardItem]
 )
 
+case class OnwardCollectionForDCRv2(
+  tabs: Seq[OnwardCollectionResponse],
+  mostCommented: Option[OnwardItemMost],
+  mostShared: Option[OnwardItemMost]
+)
+
 object OnwardCollection {
 
-  implicit val itemWrites = Json.writes[OnwardItem]
+  implicit val onwardItemWrites = Json.writes[OnwardItem]
+  implicit val onwardItemMostWrites = Json.writes[OnwardItemMost]
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
 
   def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
     def ageWarning(content: PressedContent): Option[String] = {
@@ -50,8 +107,6 @@ object OnwardCollection {
         .map(ContentOldAgeDescriber.apply)
         .filterNot(_ == "")
     }
-
-
 
     trails.take(10).map(content =>
       OnwardItem(
