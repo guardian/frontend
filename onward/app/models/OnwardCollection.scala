@@ -60,7 +60,7 @@ object OnwardItemMost {
       webPublicationDate <- contentCard.webPublicationDate.map( x => x.toDateTime().toString() )
     } yield OnwardItemMost(
       designType = metadata.designType.toString,
-      pillar = pillar.toString,
+      pillar = pillar.toString.toLowerCase,
       url = url,
       headline = headline,
       isLiveBlog = isLiveBlog,
