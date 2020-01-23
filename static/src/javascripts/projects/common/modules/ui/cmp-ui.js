@@ -1,4 +1,5 @@
 // @flow
+import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { shouldShow } from '@guardian/consent-management-platform';
@@ -33,7 +34,10 @@ const show = (forceModal: ?boolean): Promise<boolean> => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (isInVariantSynchronous(commercialCmpUiBannerModal, 'control')) {
+    if (
+        isInVariantSynchronous(commercialCmpUiBannerModal, 'control') ||
+        !config.get('switches.cmpUi', true)
+    ) {
         return;
     }
 
@@ -78,7 +82,9 @@ export const consentManagementPlatformUi = {
         if (isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) {
             return Promise.resolve(shouldShow(true));
         }
-        return Promise.resolve(shouldShow());
+        return Promise.resolve(
+            config.get('switches.cmpUi', true) && shouldShow()
+        );
     },
     show,
 };
