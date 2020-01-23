@@ -20,7 +20,7 @@ trait CommercialSwitches {
   val CmpUi = Switch(
     SwitchGroup.Feature,
     "cmp-ui",
-    "If this switch is on, the CMP UI will be completely unavailable to users.",
+    "If this switch is off, the CMP UI will be completely unavailable to users.",
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
