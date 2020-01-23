@@ -47,6 +47,16 @@ case class OnwardItemMost(
 )
 
 object OnwardItemMost {
+
+  // Todo: when I have a moment, make the correct update in marker: c76ce0f6-25dc-41b0-bc12-527312b96e21
+  // I have created a card for it.
+  def correctPillar(pillar: String): String = {
+    if (pillar == "arts") {
+      "culture"
+    } else {
+      pillar
+    }
+  }
   def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
     for {
       properties <- contentCard.properties
@@ -61,7 +71,7 @@ object OnwardItemMost {
       webPublicationDate <- contentCard.webPublicationDate.map( x => x.toDateTime().toString() )
     } yield OnwardItemMost(
       designType = metadata.designType.toString,
-      pillar = pillar.toString.toLowerCase,
+      pillar = correctPillar(pillar.toString.toLowerCase),
       url = url,
       headline = headline,
       isLiveBlog = isLiveBlog,

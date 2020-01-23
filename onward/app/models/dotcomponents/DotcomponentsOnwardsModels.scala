@@ -34,6 +34,7 @@ object RichLinkTag {
 }
 
 object OnwardsUtils {
+  // marker: c76ce0f6-25dc-41b0-bc12-527312b96e21
   def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
     pillar.map { pillar =>
       if (designType == AdvertisementFeature) "labs"
