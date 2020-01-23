@@ -1,5 +1,6 @@
 // @flow
 import { shouldShow } from '@guardian/consent-management-platform';
+import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { consentManagementPlatformUi } from './cmp-ui';
 
@@ -71,6 +72,16 @@ describe('cmp-ui', () => {
             });
             it('return false if not in CommercialCmpUiBannerModal test and shouldShow returns false', () => {
                 shouldShow.mockReturnValue(false);
+                isInVariantSynchronous.mockImplementation(
+                    test => test.id !== 'CommercialCmpUiBannerModal'
+                );
+
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(false);
+                });
+            });
+            it('return false if not in CommercialCmpUiBannerModal test and cmpUi switch is off', () => {
+                config.set('switches.cmpUi', false);
                 isInVariantSynchronous.mockImplementation(
                     test => test.id !== 'CommercialCmpUiBannerModal'
                 );
