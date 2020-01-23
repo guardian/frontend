@@ -17,6 +17,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val CmpUi = Switch(
+    SwitchGroup.Feature,
+    "cmp-ui",
+    "If this switch is off, the CMP UI will be completely unavailable to users.",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",

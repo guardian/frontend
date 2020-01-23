@@ -1166,10 +1166,10 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/consent-management-platform@2.0.3":
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-2.0.3.tgz#cf13262a631567bf2edab013df08757ff5d1e5ed"
-  integrity sha512-JanOjVlHEw2vAbpqrSr6t7Dg/WuMPtLFkXyuNHOks3CH6sDKQpzT7/XgfNIFLQ3RWJKPtmDuT4Khgze6samnsQ==
+"@guardian/consent-management-platform@2.0.4":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-2.0.4.tgz#4cb5aff99d0cf41878958cd41873fac04a20849a"
+  integrity sha512-qEpkfdSPySNrP+dTxqanhP9yI4FMJYu0Zka0BrRgZHZxb2p82SEM1kurm+xqHndRFtxos14vADVrf2CsttPZag==
   dependencies:
     "@guardian/src-button" "^0.5.1"
     "@guardian/src-foundations" "^0.10.0"

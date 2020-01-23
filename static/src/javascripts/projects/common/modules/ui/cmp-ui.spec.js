@@ -1,5 +1,6 @@
 // @flow
 import { shouldShow } from '@guardian/consent-management-platform';
+import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { consentManagementPlatformUi } from './cmp-ui';
 
@@ -24,7 +25,18 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('returns true if shouldShow true and in CommercialCmpUiBannerModal test variant', () => {
+            it('returns false if in CommercialCmpUiBannerModal control group', () => {
+                isInVariantSynchronous.mockImplementation(
+                    (test, variant) =>
+                        test.id === 'CommercialCmpUiBannerModal' &&
+                        variant === 'control'
+                );
+
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(false);
+                });
+            });
+            it('returns true if in CommercialCmpUiBannerModal variant group and shouldShow returns true', () => {
                 shouldShow.mockReturnValue(true);
                 isInVariantSynchronous.mockImplementation(
                     (test, variant) =>
@@ -36,19 +48,43 @@ describe('cmp-ui', () => {
                     expect(show).toBe(true);
                 });
             });
-
-            it('returns false if not in CommercialCmpUiBannerModal test', () => {
-                shouldShow.mockReturnValue(true);
-                isInVariantSynchronous.mockReturnValue(false);
+            it('returns false if in CommercialCmpUiBannerModal variant group and shouldShow returns false', () => {
+                shouldShow.mockReturnValue(false);
+                isInVariantSynchronous.mockImplementation(
+                    (test, variant) =>
+                        test.id === 'CommercialCmpUiBannerModal' &&
+                        variant === 'variant'
+                );
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });
+            it('return true if not in CommercialCmpUiBannerModal test and shouldShow returns true', () => {
+                shouldShow.mockReturnValue(true);
+                isInVariantSynchronous.mockImplementation(
+                    test => test.id !== 'CommercialCmpUiBannerModal'
+                );
 
-            it('returns false if shouldShow false', () => {
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(true);
+                });
+            });
+            it('return false if not in CommercialCmpUiBannerModal test and shouldShow returns false', () => {
                 shouldShow.mockReturnValue(false);
-                isInVariantSynchronous.mockReturnValue(true);
+                isInVariantSynchronous.mockImplementation(
+                    test => test.id !== 'CommercialCmpUiBannerModal'
+                );
+
+                return consentManagementPlatformUi.canShow().then(show => {
+                    expect(show).toBe(false);
+                });
+            });
+            it('return false if not in CommercialCmpUiBannerModal test and cmpUi switch is off', () => {
+                config.set('switches.cmpUi', false);
+                isInVariantSynchronous.mockImplementation(
+                    test => test.id !== 'CommercialCmpUiBannerModal'
+                );
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);

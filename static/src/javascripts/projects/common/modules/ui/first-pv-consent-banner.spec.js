@@ -105,30 +105,29 @@ describe('First PV consents banner', () => {
     });
 
     describe('With consents', () => {
-        it('should show up with null consents', () =>
-            banner.canShow().then(showable => {
-                expect(showable).toBe(true);
-            }));
-        it('should not show with set consents', () => {
-            setAdConsentState(0, true);
-            setAdConsentState(1, false);
-            return banner.canShow().then(showable => {
-                expect(showable).toBe(false);
-            });
-        });
-        it('should show when in commercialCmpUiBannerModal control group and has not been re-permissioned', () => {
-            local.get.mockReturnValue(false);
+        it('should not show if not in commercialCmpUiBannerModal test', () => {
             isInVariantSynchronous.mockImplementation(
-                (testId, variantId) =>
-                    testId === commercialCmpUiBannerModal &&
-                    variantId === 'control'
+                testId => testId !== commercialCmpUiBannerModal
             );
 
             banner.canShow().then(showable => {
-                expect(showable).toBe(true);
+                expect(showable).toBe(false);
             });
         });
-        it('should not show when in commercialCmpUiBannerModal control group and has been re-permissioned', () => {
+        it('should not show if in commercialCmpUiBannerModal variant group', () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) =>
+                    testId === commercialCmpUiBannerModal &&
+                    variantId === 'variant'
+            );
+
+            banner.canShow().then(showable => {
+                expect(showable).toBe(false);
+            });
+        });
+        it('should not show if in commercialCmpUiBannerModal control group and hasSubmittedConsent is true and rePermissionKey flag present', () => {
+            setAdConsentState(0, true);
+            setAdConsentState(1, true);
             local.get.mockReturnValue(true);
             isInVariantSynchronous.mockImplementation(
                 (testId, variantId) =>
@@ -140,15 +139,29 @@ describe('First PV consents banner', () => {
                 expect(showable).toBe(false);
             });
         });
-        it('should not show when in commercialCmpUiBannerModal variant group', () => {
+        it('should show if in commercialCmpUiBannerModal control group and hasSubmittedConsent is true and rePermissionKey flag not present', () => {
+            setAdConsentState(0, true);
+            setAdConsentState(1, true);
+            local.get.mockReturnValue(null);
             isInVariantSynchronous.mockImplementation(
                 (testId, variantId) =>
                     testId === commercialCmpUiBannerModal &&
-                    variantId === 'variant'
+                    variantId === 'control'
             );
 
-            return banner.canShow().then(showable => {
-                expect(showable).toBe(false);
+            banner.canShow().then(showable => {
+                expect(showable).toBe(true);
+            });
+        });
+        it('should show if in commercialCmpUiBannerModal control group and hasSubmittedConsent is false', () => {
+            isInVariantSynchronous.mockImplementation(
+                (testId, variantId) =>
+                    testId === commercialCmpUiBannerModal &&
+                    variantId === 'control'
+            );
+
+            banner.canShow().then(showable => {
+                expect(showable).toBe(true);
             });
         });
     });
