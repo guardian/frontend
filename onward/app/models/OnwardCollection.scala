@@ -8,6 +8,7 @@ import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOu
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
+import model.InlineImage
 import models.dotcomponents.OnwardsUtils.{determinePillar, correctPillar}
 import org.joda.time.DateTimeZone
 
@@ -25,6 +26,7 @@ case class OnwardItem(
   headline: String,
   mediaType: Option[String],
   shortUrl: String,
+  avatarUrl: Option[String],
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -44,10 +46,17 @@ case class OnwardItemMost(
   webPublicationDate: String,
   ageWarning: Option[String],
   mediaType: Option[String],
+  avatarUrl: Option[String],
 )
 
 object OnwardItemMost {
 
+  def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
+    contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
+      case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
+      case _ => None
+    }}
+  }
   def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
     for {
       properties <- contentCard.properties
@@ -72,7 +81,9 @@ object OnwardItemMost {
       image = image,
       webPublicationDate = webPublicationDate,
       ageWarning = None,
-      mediaType = contentCard.mediaType.map( x => x.toString ))
+      mediaType = contentCard.mediaType.map( x => x.toString ),
+      avatarUrl = contentCardToAvatarUrl(contentCard),
+    )
   }
 }
 
@@ -108,7 +119,10 @@ object OnwardCollection {
         .map(ContentOldAgeDescriber.apply)
         .filterNot(_ == "")
     }
-
+    def pressedContentToAvatarUrl(content: PressedContent): Option[String] = {
+      // TODO
+      None
+    }
     trails.take(10).map(content =>
       OnwardItem(
         url = LinkTo(content.header.url),
@@ -124,6 +138,7 @@ object OnwardCollection {
         headline = content.header.headline,
         mediaType = content.card.mediaType.map(_.toString()),
         shortUrl = content.card.shortUrl,
+        avatarUrl = pressedContentToAvatarUrl(content),
       )
     )
   }
