@@ -8,7 +8,7 @@ import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOu
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import models.dotcomponents.OnwardsUtils.findPillar
+import models.dotcomponents.OnwardsUtils.{determinePillar, correctPillar}
 import org.joda.time.DateTimeZone
 
 case class OnwardItem(
@@ -48,15 +48,6 @@ case class OnwardItemMost(
 
 object OnwardItemMost {
 
-  // Todo: when I have a moment, make the correct update in marker: c76ce0f6-25dc-41b0-bc12-527312b96e21
-  // I have created a card for it.
-  def correctPillar(pillar: String): String = {
-    if (pillar == "arts") {
-      "culture"
-    } else {
-      pillar
-    }
-  }
   def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
     for {
       properties <- contentCard.properties
@@ -127,7 +118,7 @@ object OnwardCollection {
         image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
         ageWarning = ageWarning(content),
         isLiveBlog = content.properties.isLiveBlog,
-        pillar = findPillar(content.maybePillar, content.properties.maybeContent.map(_.metadata.designType)),
+        pillar = determinePillar(content.maybePillar),
         designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
         webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
         headline = content.header.headline,

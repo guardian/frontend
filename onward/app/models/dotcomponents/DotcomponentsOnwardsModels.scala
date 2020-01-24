@@ -33,11 +33,17 @@ object RichLink {
 }
 
 object OnwardsUtils {
-  // marker: c76ce0f6-25dc-41b0-bc12-527312b96e21
-  def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-    pillar.map { pillar =>
-      if (pillar.toString.toLowerCase == "arts") "culture"
-      else pillar.toString.toLowerCase()
-    }.getOrElse("news")
+
+  def determinePillar(pillar: Option[Pillar]): String = {
+    pillar.map { pillar => correctPillar(pillar.toString.toLowerCase()) }.getOrElse("news")
   }
+
+  def correctPillar(pillar: String): String = {
+    if (pillar == "arts") {
+      "culture"
+    } else {
+      pillar
+    }
+  }
+
 }
