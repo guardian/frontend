@@ -28,5 +28,8 @@ module.exports = {
             cpy(['polyfill.io'], path.resolve(conf), {
                 cwd: path.resolve(src, 'javascripts'),
             }),
+            cpy(['amp-iframe.html'], path.resolve(conf, 'amp'), {
+                cwd: path.resolve(src, 'html', 'amp'),
+            }),
         ]),
 };
