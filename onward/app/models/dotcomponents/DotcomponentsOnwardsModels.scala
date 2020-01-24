@@ -1,8 +1,19 @@
 package models.dotcomponents
 
-import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
-import model.{DotcomContentType, Pillar, Tag, Tags}
+import com.gu.contentapi.client.utils.{DesignType}
+import model.{DotcomContentType, Pillar}
 import play.api.libs.json.Json
+
+// duplicated in dotcomponentsdatamodel
+case class RichLinkTag(
+    id: String,
+    `type`: String,
+    title: String,
+)
+
+object RichLinkTag {
+  implicit val writes = Json.writes[RichLinkTag]
+}
 
 case class RichLink(
   tags: List[RichLinkTag],
@@ -19,27 +30,20 @@ case class RichLink(
 
 object RichLink {
   implicit val writes = Json.writes[RichLink]
-
-}
-
-// duplicated in dotcomponentsdatamodel
-case class RichLinkTag(
-  id: String,
-  `type`: String,
-  title: String,
-)
-
-object RichLinkTag {
-  implicit val writes = Json.writes[RichLinkTag]
 }
 
 object OnwardsUtils {
-  // marker: c76ce0f6-25dc-41b0-bc12-527312b96e21
-  def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-    pillar.map { pillar =>
-      if (designType == AdvertisementFeature) "labs"
-      else if (pillar.toString.toLowerCase == "arts") "culture"
-      else pillar.toString.toLowerCase()
-    }.getOrElse("news")
+
+  def determinePillar(pillar: Option[Pillar]): String = {
+    pillar.map { pillar => correctPillar(pillar.toString.toLowerCase()) }.getOrElse("news")
   }
+
+  def correctPillar(pillar: String): String = {
+    if (pillar == "arts") {
+      "culture"
+    } else {
+      pillar
+    }
+  }
+
 }
