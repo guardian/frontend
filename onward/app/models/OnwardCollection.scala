@@ -46,6 +46,7 @@ case class OnwardItemMost(
   ageWarning: Option[String],
   mediaType: Option[String],
   avatarUrl: Option[String],
+  kickerText: Option[String],
 )
 
 object OnwardItemMost {
@@ -82,6 +83,7 @@ object OnwardItemMost {
       ageWarning = None,
       mediaType = contentCard.mediaType.map( x => x.toString ),
       avatarUrl = contentCardToAvatarUrl(contentCard),
+      kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
     )
   }
 }
