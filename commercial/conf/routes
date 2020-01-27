@@ -52,3 +52,6 @@ POST        /commercial/api/pv                                              comm
 
 # Passbacks
 GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)
+
+# AMP iframe HTML, needed for AMP (DCR repo)
+GET         /commercial/amp-iframe.html                                     commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
