@@ -25,8 +25,7 @@ case class OnwardItem(
   webPublicationDate: String,
   headline: String,
   mediaType: Option[String],
-  shortUrl: String,
-  avatarUrl: Option[String],
+  shortUrl: String
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -119,10 +118,6 @@ object OnwardCollection {
         .map(ContentOldAgeDescriber.apply)
         .filterNot(_ == "")
     }
-    def pressedContentToAvatarUrl(content: PressedContent): Option[String] = {
-      // TODO
-      None
-    }
     trails.take(10).map(content =>
       OnwardItem(
         url = LinkTo(content.header.url),
@@ -138,7 +133,6 @@ object OnwardCollection {
         headline = content.header.headline,
         mediaType = content.card.mediaType.map(_.toString()),
         shortUrl = content.card.shortUrl,
-        avatarUrl = pressedContentToAvatarUrl(content),
       )
     )
   }
