@@ -25,7 +25,8 @@ case class OnwardItem(
   webPublicationDate: String,
   headline: String,
   mediaType: Option[String],
-  shortUrl: String
+  shortUrl: String,
+  kickerText: Option[String],
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -135,6 +136,7 @@ object OnwardCollection {
         headline = content.header.headline,
         mediaType = content.card.mediaType.map(_.toString()),
         shortUrl = content.card.shortUrl,
+        kickerText = content.header.kicker.flatMap(_.properties.kickerText)
       )
     )
   }
