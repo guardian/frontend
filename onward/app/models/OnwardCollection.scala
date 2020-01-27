@@ -63,7 +63,7 @@ object OnwardItemMost {
       metadata = maybeContent.metadata
       pillar <- metadata.pillar
       url <- properties.webUrl
-      headline = properties.webTitle
+      headline = contentCard.header.headline
       isLiveBlog = properties.isLiveBlog
       showByline = properties.showByline
       image <- maybeContent.trail.thumbnailPath
