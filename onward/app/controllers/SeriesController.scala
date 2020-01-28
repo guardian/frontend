@@ -5,7 +5,7 @@ import java.net.URI
 import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
-import common._
+import common.{JsonComponent, _}
 import contentapi.ContentApiClient
 import implicits.Requests
 import layout.slices.Fixed
@@ -17,16 +17,10 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import services.CollectionConfigWithId
 import views.support.FaciaToMicroFormat2Helpers._
+import models.{Series, SeriesStoriesDCR}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
-
-case class Series(id: String, tag: Tag, trails: RelatedContent) {
-  lazy val displayName = tag.id match {
-    case "commentisfree/commentisfree" => "opinion"
-    case _ => tag.metadata.webTitle
- }
-}
 
 class SeriesController(
   contentApiClient: ContentApiClient,
@@ -35,8 +29,14 @@ class SeriesController(
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
   def renderSeriesStories(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map { series =>
-      series.map(renderSeriesTrails).getOrElse(NotFound)
+    if(request.forceDCR){
+      lookup(Edition(request), seriesId).map{ mseries =>
+          mseries.map{ series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+      }
+    }else {
+      lookup(Edition(request), seriesId) map { series =>
+        series.map(renderSeriesTrails).getOrElse(NotFound)
+      }
     }
   }
 
