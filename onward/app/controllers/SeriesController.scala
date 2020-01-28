@@ -5,7 +5,7 @@ import java.net.URI
 import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.facia.client.models.Backfill
-import common._
+import common.{JsonComponent, _}
 import contentapi.ContentApiClient
 import implicits.Requests
 import layout.slices.Fixed
@@ -17,6 +17,7 @@ import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import services.CollectionConfigWithId
 import views.support.FaciaToMicroFormat2Helpers._
+import models.{OnwardCollection, OnwardItem}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -28,6 +29,17 @@ case class Series(id: String, tag: Tag, trails: RelatedContent) {
  }
 }
 
+case class SeriesStoriesDCR(id: String, displayname: String, tag: Tag, trails: Seq[OnwardItem])
+
+object SeriesStoriesDCR {
+  implicit val onwardItemWrites = Json.writes[OnwardItem]
+  implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
+  def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
+    val trails = OnwardCollection.trailsToItems(series.trails.faciaItems)
+    SeriesStoriesDCR(series.id, series.displayName, series.tag, trails)
+  }
+}
+
 class SeriesController(
   contentApiClient: ContentApiClient,
   val controllerComponents: ControllerComponents
@@ -35,8 +47,14 @@ class SeriesController(
   extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
 
   def renderSeriesStories(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map { series =>
-      series.map(renderSeriesTrails).getOrElse(NotFound)
+    if(request.forceDCR){
+      lookup(Edition(request), seriesId).map{ mseries =>
+          mseries.map{ series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+      }
+    }else {
+      lookup(Edition(request), seriesId) map { series =>
+        series.map(renderSeriesTrails).getOrElse(NotFound)
+      }
     }
   }
 
