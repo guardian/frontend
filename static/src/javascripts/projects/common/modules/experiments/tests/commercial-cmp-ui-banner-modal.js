@@ -3,7 +3,7 @@
 export const commercialCmpUiBannerModal: ABTest = {
     id: 'CommercialCmpUiBannerModal',
     start: '2020-01-13',
-    expiry: '2020-01-28',
+    expiry: '2020-02-07',
     author: 'George Haberis',
     description: '3% participation AB test for the new banner/modal CMP UI',
     audience: 0.03,
