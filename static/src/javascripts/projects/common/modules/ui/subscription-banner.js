@@ -31,7 +31,6 @@ import {
     isInVariantSynchronous,
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
-import { commercialConsentOptionsButton } from 'common/modules/experiments/tests/commercial-consent-options-button';
 import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
 
 // types
@@ -64,16 +63,16 @@ const hideBannerInTheseRegions: ReaderRevenueRegion[] = ['australia'];
 
 const abTest = isInABTestSynchronous(subscriptionsBannerNewYearCopyTest)
     ? {
-        abTest: {
-            name: subscriptionsBannerNewYearCopyTest.id,
-            variant: isInVariantSynchronous(
-                subscriptionsBannerNewYearCopyTest,
-                'control'
-            )
-                ? 'control'
-                : 'variant',
-        },
-    }
+          abTest: {
+              name: subscriptionsBannerNewYearCopyTest.id,
+              variant: isInVariantSynchronous(
+                  subscriptionsBannerNewYearCopyTest,
+                  'control'
+              )
+                  ? 'control'
+                  : 'variant',
+          },
+      }
     : {};
 
 const subscriptionUrl = addTrackingCodesToUrl({

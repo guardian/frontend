@@ -11,7 +11,6 @@ import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
 
-
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     commercialCmpUiBannerModal,
