@@ -281,7 +281,10 @@ const show: () => Promise<boolean> = async () => {
                 signInUrl,
                 showConsent,
                 isUserLoggedIn(),
-                true // This should be taken from A/B test participation if we want to run this as a test eventually
+                isInVariantSynchronous(
+                    subscriptionsBannerNewYearCopyTest,
+                    'variant'
+                ) || !isInABTestSynchronous(subscriptionsBannerNewYearCopyTest)
             )
         );
     }
