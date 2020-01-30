@@ -5,10 +5,11 @@ import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 
+const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
 
 const test = {
     id: 'RemoteRenderEpic',
-    campaignId: 'gdnwb_copts_memco_remote_epic_test_api',
+    campaignId,
 
     highPriority: true,
 
@@ -39,57 +40,37 @@ const test = {
             test: () => {
                 const api = 'https://contributions.guardianapis.com/epic';
 
+                const { ophan, page } = window.guardian.config;
+
                 const tracking = {
-                    ophanPageId: 'k5nxn0mxg7ytwpkxuwms',
+                    ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
-                    campaignCode: 'gdnwb_copts_memco_remote_epic_test_api',
+                    campaignCode: campaignId,
                     abTestName: 'remote_epic_test',
                     abTestVariant: 'api',
-                    referrerUrl:
-                        'http://localhost:3000/politics/2020/jan/17/uk-rules-out-automatic-deportation-of-eu-citizens-verhofstadt-brexit',
+                    referrerUrl: window.location.origin + window.location.pathname,
                 };
 
                 const localisation = {
                     countryCode: 'US',
                 };
 
+                const keywordIds = page.keywordIds.split(',');
+                const keywords = page.keywords.split(',');
+                const keywordTags = keywordIds.map((id, idx) => ({
+                   id,
+                   type: 'Keyword',
+                   title: keywords[idx],
+                }));
+
                 const targeting = {
-                    contentType: 'Article',
-                    sectionName: 'culture',
-                    shouldHideReaderRevenue: false,
-                    isMinuteArticle: false,
-                    isPaidContent: false,
-                    tags: [
-                        {
-                            id: 'culture/david-schwimmer',
-                            type: 'Keyword',
-                            title: 'David Schwimmer',
-                        },
-                        {
-                            id: 'tv-and-radio/friends',
-                            type: 'Keyword',
-                            title: 'Friends',
-                        },
-                        {
-                            id: 'tone/interview',
-                            type: 'Tone',
-                            title: 'Interviews',
-                        },
-                        {
-                            id: 'publication/theguardian',
-                            type: 'Publication',
-                            title: 'The Guardian',
-                        },
-                        {
-                            id: 'profile/davidsmith',
-                            type: 'Contributor',
-                            title: 'David Smith',
-                            twitterHandle: 'smithinamerica',
-                            bylineImageUrl:
-                                'https://i.guim.co.uk/img/uploads/2017/10/06/David-Smith,-L.png?width=300&quality=85&auto=format&fit=max&s=9aebe85c96f6f72a6ba6239cdfaed7ec',
-                        },
-                    ],
+                    contentType: page.contentType,
+                    sectionName: page.sectionName,
+                    shouldHideReaderRevenue: page.shouldHideReaderRevenue,
+                    isMinuteArticle: page.isLiveBlog, // Is this the same thing?
+                    isPaidContent: page.isPaidContent,
+                    tags: keywordTags,
                 };
 
                 fetch(api, {
