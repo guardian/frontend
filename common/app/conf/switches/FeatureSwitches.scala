@@ -202,9 +202,9 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "videojs",
     "If this is switched on then videos are enhanced using VideoJS",
-    owners = Seq(Owner.withGithub("siadcock")),
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 1, 30),
+    sellByDate = new LocalDate(2020, 2, 19),
     exposeClientSide = true
   )
 
