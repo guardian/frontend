@@ -240,6 +240,74 @@ const articleViewCountIsOk = (
     return true;
 };
 
+// const writeEpic = (
+//     component: Object,
+//     initVariant: InitEpicABTestVariant,
+//     parentTest: EpicABTest,
+//     campaignCode: string
+// ) => {
+//
+//     return fastdom.write(() => {
+//         const targets = getTargets('.submeta');
+//
+//         awaitEpicButtonClicked().then(() =>
+//             submitClickEvent({
+//                 component: {
+//                     componentType: parentTest.componentType,
+//                     products: initVariant.products,
+//                     campaignCode,
+//                     id: campaignCode,
+//                 },
+//                 abTest: {
+//                     name: parentTest.id,
+//                     variant: initVariant.id,
+//                 },
+//             })
+//         );
+//
+//         if (targets.length > 0) {
+//             component.insertBefore(targets);
+//
+//             mediator.emit(parentTest.insertEvent, {
+//                 componentType: parentTest.componentType,
+//                 products: initVariant.products,
+//                 campaignCode,
+//             });
+//
+//             component.each(element => {
+//                 // top offset of 18 ensures view only counts when half of element is on screen
+//                 const inView = elementInView(
+//                     element,
+//                     window,
+//                     {
+//                         top: 18,
+//                     }
+//                 );
+//
+//                 inView.on('firstview', () => {
+//                     logView(parentTest.id);
+//                     mediator.emit(parentTest.viewEvent, {
+//                         componentType:
+//                         parentTest.componentType,
+//                         products: initVariant.products,
+//                         campaignCode,
+//                     });
+//                     mediator.emit(
+//                         'register:end',
+//                         trackingCampaignId
+//                     );
+//
+//                     if (initVariant.showTicker) {
+//                         initTicker('.js-epic-ticker');
+//                     }
+//                 });
+//             });
+//         }
+//
+//         return component[0];
+//     });
+// };
+
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
