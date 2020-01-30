@@ -1,5 +1,6 @@
 // @flow
 import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons'
 import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
