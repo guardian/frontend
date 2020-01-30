@@ -277,6 +277,7 @@ GET            /advertiser-content/:campaignName/:pageName/autoplay.json        
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 GET            /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
 GET            /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
+GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
