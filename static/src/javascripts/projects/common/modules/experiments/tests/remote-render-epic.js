@@ -39,7 +39,64 @@ const test = {
             test: () => {
                 const api = 'https://contributions.guardianapis.com/epic';
 
-                fetch(api, {}).then(response => {
+                const tracking = {
+                    ophanPageId: 'k5nxn0mxg7ytwpkxuwms',
+                    ophanComponentId: 'ACQUISITIONS_EPIC',
+                    platformId: 'GUARDIAN_WEB',
+                    campaignCode: 'gdnwb_copts_memco_remote_epic_test_api',
+                    abTestName: 'remote_epic_test',
+                    abTestVariant: 'api',
+                    referrerUrl:
+                        'http://localhost:3000/politics/2020/jan/17/uk-rules-out-automatic-deportation-of-eu-citizens-verhofstadt-brexit',
+                };
+
+                const localisation = {
+                    countryCode: 'US',
+                };
+
+                const targeting = {
+                    contentType: 'Article',
+                    sectionName: 'culture',
+                    shouldHideReaderRevenue: false,
+                    isMinuteArticle: false,
+                    isPaidContent: false,
+                    tags: [
+                        {
+                            id: 'culture/david-schwimmer',
+                            type: 'Keyword',
+                            title: 'David Schwimmer',
+                        },
+                        {
+                            id: 'tv-and-radio/friends',
+                            type: 'Keyword',
+                            title: 'Friends',
+                        },
+                        {
+                            id: 'tone/interview',
+                            type: 'Tone',
+                            title: 'Interviews',
+                        },
+                        {
+                            id: 'publication/theguardian',
+                            type: 'Publication',
+                            title: 'The Guardian',
+                        },
+                        {
+                            id: 'profile/davidsmith',
+                            type: 'Contributor',
+                            title: 'David Smith',
+                            twitterHandle: 'smithinamerica',
+                            bylineImageUrl:
+                                'https://i.guim.co.uk/img/uploads/2017/10/06/David-Smith,-L.png?width=300&quality=85&auto=format&fit=max&s=9aebe85c96f6f72a6ba6239cdfaed7ec',
+                        },
+                    ],
+                };
+
+                fetch(api, {
+                    method: 'post',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tracking, localisation, targeting })
+                }).then(response => {
                     if (response.ok) {
                         response.json().then(json => {
                             const html = json.html;
