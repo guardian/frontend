@@ -30,6 +30,8 @@ import {
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
+import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
+
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
         const highPriorityHardCodedTests = hardCodedEpicTests.filter(
@@ -52,7 +54,10 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
+
+                // TODO prioritise our hardcoded test at the moment
                 return firstRunnableTest<EpicABTest>([
+                    remoteRenderEpic,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
                     ...lowPriorityConfiguredTests,
