@@ -8,7 +8,6 @@ import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -19,7 +18,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
-    signInGateSecundus,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
