@@ -4,7 +4,6 @@ import { makeEpicABTest } from 'common/modules/commercial/contributions-utilitie
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
 import config from 'lib/config';
 
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
@@ -35,7 +34,7 @@ const checkResponseOk = response => {
     }
 
     throw new Error(
-        `Contributions fetch failed with response code: ${response.status}`,
+        `Contributions fetch failed with response code: ${response.status}`
     );
 };
 
@@ -114,9 +113,7 @@ const test = {
                         const content = `<style>${css}</style>${html}`;
 
                         return fastdom.write(() => {
-                            const target = document.querySelector(
-                                '.submeta'
-                            );
+                            const target = document.querySelector('.submeta');
 
                             if (!target) {
                                 return;
