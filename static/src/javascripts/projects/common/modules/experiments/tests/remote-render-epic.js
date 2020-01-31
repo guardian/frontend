@@ -6,6 +6,8 @@ import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 
+require('@webcomponents/shadydom');
+
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
 
 const buildKeywordTags = page => {
