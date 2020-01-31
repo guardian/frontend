@@ -111,8 +111,7 @@ const test = {
                     .then(json => {
                         const html = json.html;
                         const css = json.css;
-                        const markup = `<style>${css}</style>${html}`;
-                        const component = $.create(markup);
+                        const content = `<style>${css}</style>${html}`;
 
                         return fastdom.write(() => {
                             const target = document.querySelector(
@@ -123,7 +122,19 @@ const test = {
                                 return;
                             }
 
-                            component.insertBefore(target);
+                            const parent = target.parentNode;
+
+                            if (!parent) {
+                                return;
+                            }
+
+                            const container = document.createElement('div');
+                            parent.insertBefore(container, target);
+
+                            const shadowRoot = container.attachShadow({
+                                mode: 'open',
+                            });
+                            shadowRoot.innerHTML = content;
                         });
                     })
                     .catch(error =>
