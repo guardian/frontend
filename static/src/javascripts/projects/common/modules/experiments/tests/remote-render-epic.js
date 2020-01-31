@@ -1,10 +1,11 @@
 // @flow
 
 import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
-import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons'
+import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
+import config from 'lib/config';
 
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
 
@@ -41,7 +42,8 @@ const test = {
             test: () => {
                 const api = 'https://contributions.guardianapis.com/epic';
 
-                const { ophan, page } = window.guardian.config;
+                const ophan = config.get('ophan');
+                const page = config.get('page');
 
                 const tracking = {
                     ophanPageId: ophan.pageViewId,
@@ -50,7 +52,8 @@ const test = {
                     campaignCode: campaignId,
                     abTestName: 'remote_epic_test',
                     abTestVariant: 'api',
-                    referrerUrl: window.location.origin + window.location.pathname,
+                    referrerUrl:
+                        window.location.origin + window.location.pathname,
                 };
 
                 const localisation = {
@@ -60,9 +63,9 @@ const test = {
                 const keywordIds = page.keywordIds.split(',');
                 const keywords = page.keywords.split(',');
                 const keywordTags = keywordIds.map((id, idx) => ({
-                   id,
-                   type: 'Keyword',
-                   title: keywords[idx],
+                    id,
+                    type: 'Keyword',
+                    title: keywords[idx],
                 }));
 
                 const targeting = {
@@ -77,7 +80,7 @@ const test = {
                 fetch(api, {
                     method: 'post',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tracking, localisation, targeting })
+                    body: JSON.stringify({ tracking, localisation, targeting }),
                 }).then(response => {
                     if (response.ok) {
                         response.json().then(json => {
@@ -87,7 +90,9 @@ const test = {
                             const component = $.create(markup);
 
                             return fastdom.write(() => {
-                                const target = document.querySelector('.submeta')
+                                const target = document.querySelector(
+                                    '.submeta'
+                                );
 
                                 if (!target) {
                                     return;
@@ -98,10 +103,9 @@ const test = {
                         });
                     }
                 });
-            }
+            },
         },
     ],
-}
-
+};
 
 export const remoteRenderEpic: EpicABTest = makeEpicABTest(test);
