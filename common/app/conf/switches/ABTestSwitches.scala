@@ -98,16 +98,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-secundus",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-a9",
     "Test Amazon A9 header bidding",
     owners = Seq(Owner.withGithub("ioanna0")),
