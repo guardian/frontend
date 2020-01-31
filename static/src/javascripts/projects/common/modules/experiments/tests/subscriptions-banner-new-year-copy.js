@@ -6,7 +6,7 @@ const geolocation = geolocationGetSync();
 export const subscriptionsBannerNewYearCopyTest: ABTest = {
     id: 'SubsBannerNewYearCopyTest',
     start: '2020-02-03',
-    expiry: '2020-02-25',
+    expiry: '2020-03-10',
     author: 'Jon Soul',
     description: 'Test headline copy variant on the subscriptions banner',
     audience: 1,
