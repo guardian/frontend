@@ -111,8 +111,8 @@ trait ABTestSwitches {
     "ab-subs-banner-new-year-copy-test",
     "Test subscription banner copy variants",
     owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 2, 25),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 3, 10),
     exposeClientSide = true
   )
 
