@@ -9,6 +9,38 @@ import config from 'lib/config';
 
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
 
+const buildKeywordTags = page => {
+    const keywordIds = page.keywordIds.split(',');
+    const keywords = page.keywords.split(',');
+    return keywordIds.map((id, idx) => ({
+        id,
+        type: 'Keyword',
+        title: keywords[idx],
+    }));
+};
+
+const fetchRemoteEpic = payload => {
+    const api = 'https://contributions.guardianapis.com/epic';
+
+    return fetch(api, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+    });
+};
+
+const checkResponseOk = response => {
+    if (response.ok) {
+        return response;
+    }
+
+    throw new Error(
+        `Contributions fetch failed with response code: ${response.status}`,
+    );
+};
+
+const decodeJson = response => response.json();
+
 const test = {
     id: 'RemoteRenderEpic',
     campaignId,
@@ -40,8 +72,6 @@ const test = {
             id: 'remote',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: () => {
-                const api = 'https://contributions.guardianapis.com/epic';
-
                 const ophan = config.get('ophan');
                 const page = config.get('page');
 
@@ -60,49 +90,47 @@ const test = {
                     countryCode: 'US',
                 };
 
-                const keywordIds = page.keywordIds.split(',');
-                const keywords = page.keywords.split(',');
-                const keywordTags = keywordIds.map((id, idx) => ({
-                    id,
-                    type: 'Keyword',
-                    title: keywords[idx],
-                }));
-
                 const targeting = {
                     contentType: page.contentType,
                     sectionName: page.sectionName,
                     shouldHideReaderRevenue: page.shouldHideReaderRevenue,
                     isMinuteArticle: page.isLiveBlog, // Is this the same thing?
                     isPaidContent: page.isPaidContent,
-                    tags: keywordTags,
+                    tags: buildKeywordTags(page),
                 };
 
-                fetch(api, {
-                    method: 'post',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ tracking, localisation, targeting }),
-                }).then(response => {
-                    if (response.ok) {
-                        response.json().then(json => {
-                            const html = json.html;
-                            const css = json.css;
-                            const markup = `<style>${css}</style>${html}`;
-                            const component = $.create(markup);
-
-                            return fastdom.write(() => {
-                                const target = document.querySelector(
-                                    '.submeta'
-                                );
-
-                                if (!target) {
-                                    return;
-                                }
-
-                                component.insertBefore(target);
-                            });
-                        });
-                    }
+                const payload = JSON.stringify({
+                    tracking,
+                    localisation,
+                    targeting,
                 });
+
+                fetchRemoteEpic(payload)
+                    .then(checkResponseOk)
+                    .then(decodeJson)
+                    .then(json => {
+                        const html = json.html;
+                        const css = json.css;
+                        const markup = `<style>${css}</style>${html}`;
+                        const component = $.create(markup);
+
+                        return fastdom.write(() => {
+                            const target = document.querySelector(
+                                '.submeta'
+                            );
+
+                            if (!target) {
+                                return;
+                            }
+
+                            component.insertBefore(target);
+                        });
+                    })
+                    .catch(error =>
+                        console.log(
+                            `An error occurred while fetching epic: ${error}`
+                        )
+                    );
             },
         },
     ],
