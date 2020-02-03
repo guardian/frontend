@@ -1,6 +1,12 @@
 // @flow
 
-import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    setupOnView,
+    emitBeginEvent,
+    setupClickHandling,
+    emitInsertEvent,
+} from 'common/modules/commercial/contributions-utilities';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
@@ -40,7 +46,9 @@ const checkResponseOk = response => {
 
 const decodeJson = response => response.json();
 
-const test = {
+const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
+
+const remoteRenderTest = {
     id: 'RemoteRenderEpic',
     campaignId,
 
@@ -64,13 +72,14 @@ const test = {
     variants: [
         {
             id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             buttonTemplate: epicButtonsTemplate,
+            products,
         },
         {
             id: 'remote',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-            test: () => {
+            products,
+            // eslint-disable-next-line import/no-shadow
+            test: (html: string, variant: EpicVariant, test: EpicABTest) => {
                 const ophan = config.get('ophan');
                 const page = config.get('page');
 
@@ -104,13 +113,25 @@ const test = {
                     targeting,
                 });
 
+                const trackingCampaignId = `epic_${campaignId}`; // note exposed on ABTest unfortunately
+
+                emitBeginEvent(trackingCampaignId);
+                console.log('epic - beginning remote variant...');
+
+                setupClickHandling(
+                    test,
+                    variant.campaignCode,
+                    products,
+                    variant.id
+                );
+
                 fetchRemoteEpic(payload)
                     .then(checkResponseOk)
                     .then(decodeJson)
                     .then(json => {
-                        const html = json.html;
+                        const epicHtml = json.html;
                         const css = json.css;
-                        const content = `<style>${css}</style>${html}`;
+                        const content = `<style>${css}</style>${epicHtml}`;
 
                         return fastdom.write(() => {
                             const target = document.querySelector('.submeta');
@@ -130,15 +151,29 @@ const test = {
 
                             // use Shadow Dom if found
                             if (container.attachShadow) {
-                                console.log('has shadow dom...');
+                                console.log('epic - has shadow dom');
                                 const shadowRoot = container.attachShadow({
                                     mode: 'open',
                                 });
                                 shadowRoot.innerHTML = content;
                             } else {
-                                console.log('no shadow dom...');
+                                console.log('epic - no shadow dom');
                                 container.innerHTML = content;
                             }
+
+                            emitInsertEvent(
+                                test,
+                                products,
+                                variant.campaignCode
+                            );
+
+                            setupOnView(
+                                container,
+                                test,
+                                variant.campaignCode,
+                                trackingCampaignId,
+                                products
+                            );
                         });
                     })
                     .catch(error =>
@@ -151,4 +186,4 @@ const test = {
     ],
 };
 
-export const remoteRenderEpic: EpicABTest = makeEpicABTest(test);
+export const remoteRenderEpic: EpicABTest = makeEpicABTest(remoteRenderTest);
