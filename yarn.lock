@@ -1509,11 +1509,6 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
-"@webcomponents/shadydom@^1.7.1":
-  version "1.7.1"
-  resolved "https://registry.yarnpkg.com/@webcomponents/shadydom/-/shadydom-1.7.1.tgz#51786c00dcd9bd01237d7b096f92e829a0f41fed"
-  integrity sha512-5+6sadjLBuYqNgfT/jw56hpZjhNrMfasx9PG4ysR1Q7cu1ldVsceBnyR3TcmqsHhExv+7s0h99/uM9Ln1Te4Kw==
-
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"

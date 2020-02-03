@@ -6,8 +6,6 @@ import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 
-require('@webcomponents/shadydom');
-
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
 
 const buildKeywordTags = page => {
@@ -130,10 +128,17 @@ const test = {
                             const container = document.createElement('div');
                             parent.insertBefore(container, target);
 
-                            const shadowRoot = container.attachShadow({
-                                mode: 'open',
-                            });
-                            shadowRoot.innerHTML = content;
+                            // use Shadow Dom if found
+                            if (container.attachShadow) {
+                                console.log('has shadow dom...');
+                                const shadowRoot = container.attachShadow({
+                                    mode: 'open',
+                                });
+                                shadowRoot.innerHTML = content;
+                            } else {
+                                console.log('no shadow dom...');
+                                container.innerHTML = content;
+                            }
                         });
                     })
                     .catch(error =>
