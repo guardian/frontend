@@ -14,14 +14,6 @@ import {
     pageShouldHideReaderRevenue,
     getReaderRevenueRegion,
 } from 'common/modules/commercial/contributions-utilities';
-import {
-    track as trackFirstPvConsent,
-    canShow as canShowFirstPvConsent,
-} from 'common/modules/ui/first-pv-consent-banner';
-import {
-    setAdConsentState,
-    allAdConsents,
-} from 'common/modules/commercial/ad-prefs.lib';
 import { bannerTemplate } from 'common/modules/ui/subscription-banner-template';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isUserLoggedIn } from 'common/modules/identity/api';
@@ -141,12 +133,6 @@ const pageIsIdentity = (): boolean => {
     return isIdentityPage;
 };
 
-const onAgree = (): void => {
-    allAdConsents.forEach(_ => {
-        setAdConsentState(_, true);
-    });
-};
-
 const bindCloseHandler = (button, banner, callback) => {
     const removeBanner = () => {
         callback();
@@ -253,25 +239,9 @@ const bindSubscriptionClickHandlers = () => {
     }
 };
 
-const bindConsentClickHandlers = () => {
-    const consentBannerCloseButton = document.querySelector(
-        '.site-message--first-pv-consent__button'
-    );
-    const consentBannerHtml = document.querySelector(
-        '#js-first-pv-consent-site-message'
-    );
-
-    if (consentBannerHtml) {
-        bindCloseHandler(consentBannerCloseButton, consentBannerHtml, onAgree);
-    }
-};
-
 const show: () => Promise<boolean> = async () => {
-    trackFirstPvConsent();
     trackSubscriptionBannerView();
     trackNonClickInteraction(DISPLAY_EVENT_KEY);
-
-    const showConsent = await canShowFirstPvConsent();
 
     if (document.body) {
         document.body.insertAdjacentHTML(
@@ -279,7 +249,6 @@ const show: () => Promise<boolean> = async () => {
             bannerTemplate(
                 subscriptionUrl,
                 signInUrl,
-                showConsent,
                 isUserLoggedIn(),
                 isInVariantSynchronous(
                     subscriptionsBannerNewYearCopyTest,
@@ -289,7 +258,6 @@ const show: () => Promise<boolean> = async () => {
         );
     }
 
-    bindConsentClickHandlers();
     bindSubscriptionClickHandlers();
 
     return Promise.resolve(true);
@@ -313,7 +281,7 @@ const canShow: () => Promise<boolean> = async () => {
     return can;
 };
 
-export const firstPvConsentSubsciptionBanner: Banner = {
+export const subscriptionBanner: Banner = {
     id: MESSAGE_CODE,
     show,
     canShow,

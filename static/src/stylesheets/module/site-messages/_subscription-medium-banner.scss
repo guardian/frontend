@@ -358,19 +358,11 @@
 
 /*********************** footer hacks *********************/
 
-.subscription-banner--holder
-.site-message--first-pv-consent__block.site-message--first-pv-consent__block--intro {
-    margin: 0;
-}
+
 
 .subscription-banner--holder
 .site-message__copy.js-site-message-copy.u-cf {
     margin: 0;
-}
-.subscription-banner--holder .site-message--first-pv-consent {
-    @include mq($from: desktop) {
-        padding: 12px 20px;
-    }
 }
 
 .subscription-banner--holder
