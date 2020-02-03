@@ -66,6 +66,7 @@ export const getEpicTestToRun = memoize(
         }
         return Promise.resolve(
             firstRunnableTest<EpicABTest>([
+                remoteRenderEpic,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,
             ])
