@@ -1,9 +1,5 @@
 // @flow
 import config from 'lib/config';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 
 const onLoad = () => {
     window.google_trackConversion({
@@ -14,9 +10,7 @@ const onLoad = () => {
 };
 
 export const remarketing: () => ThirdPartyTag = () => ({
-    shouldRun:
-        config.get('switches.remarketing') &&
-        !!getAdConsentState(thirdPartyTrackingAdConsent),
+    shouldRun: config.get('switches.remarketing'),
     url: '//www.googleadservices.com/pagead/conversion_async.js',
     onLoad,
 });
