@@ -4,8 +4,6 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -280,12 +278,8 @@ export const init = (): void => {
     if (window[CMP_GLOBAL_NAME]) {
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-        const useIabCookie = !isInVariantSynchronous(
-            commercialCmpUiBannerModal,
-            'control'
-        );
         // Initialize the store with all of our consent data
-        const store = generateStore(useIabCookie);
+        const store = generateStore(true);
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
@@ -298,9 +292,7 @@ export const init = (): void => {
         cmp.cmpReady = true;
         cmp.notify('cmpReady');
 
-        if (useIabCookie) {
-            log.info('CMP is using IAB cookie');
-        }
+        log.info('CMP is using IAB cookie');
     }
 };
 

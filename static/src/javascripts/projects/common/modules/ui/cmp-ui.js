@@ -1,7 +1,5 @@
 // @flow
 import config from 'lib/config';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { shouldShow } from '@guardian/consent-management-platform';
 import raven from 'lib/raven';
 
@@ -34,10 +32,7 @@ const show = (forceModal: ?boolean): Promise<boolean> => {
 };
 
 export const addPrivacySettingsLink = (): void => {
-    if (
-        isInVariantSynchronous(commercialCmpUiBannerModal, 'control') ||
-        !config.get('switches.cmpUi', true)
-    ) {
+    if (!config.get('switches.cmpUi', true)) {
         return;
     }
 
@@ -75,16 +70,7 @@ export const addPrivacySettingsLink = (): void => {
 
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
-    canShow: (): Promise<boolean> => {
-        if (isInVariantSynchronous(commercialCmpUiBannerModal, 'control')) {
-            return Promise.resolve(false);
-        }
-        if (isInVariantSynchronous(commercialCmpUiBannerModal, 'variant')) {
-            return Promise.resolve(shouldShow(true));
-        }
-        return Promise.resolve(
-            config.get('switches.cmpUi', true) && shouldShow()
-        );
-    },
+    canShow: (): Promise<boolean> =>
+        Promise.resolve(config.get('switches.cmpUi', true) && shouldShow()),
     show,
 };

@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-banner-modal",
-    "Test whether our new banner/modal CMP UI obtains target consent rates",
-    owners = Seq(Owner.withGithub("ghaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 2, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),

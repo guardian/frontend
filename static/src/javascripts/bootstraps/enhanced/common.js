@@ -40,8 +40,6 @@ import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { subscriptionBanner } from 'common/modules/ui/subscription-banner';
-import { firstPvConsentPlusEngagementBanner } from 'common/modules/ui/first-pv-consent-plus-engagement-banner';
-import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -52,8 +50,6 @@ import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
-import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
-import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
@@ -308,8 +304,6 @@ const initialiseBanner = (): void => {
     const bannerList = [
         consentManagementPlatformUi,
         subscriptionBanner,
-        firstPvConsentPlusEngagementBanner,
-        firstPvConsentBanner,
         breakingNews,
         signInGate,
         membershipBanner,
@@ -322,14 +316,10 @@ const initialiseBanner = (): void => {
     initBannerPicker(bannerList);
 };
 
-const initialiseConsentCookieTracking = (): void =>
-    trackConsentCookies(getAllAdConsentsWithState());
-
 const init = (): void => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],
-        ['c-consent-cookie-tracking', initialiseConsentCookieTracking],
         ['c-identity', initIdentity],
         ['c-adverts', requestUserSegmentsFromId],
         ['c-discussion', initDiscussion],
