@@ -48,7 +48,6 @@ GET         /app-ads.txt                                                    comm
 
 # Analytics
 POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
-POST        /commercial/api/pv                                              commercial.controllers.PageViewAnalyticsController.insert()
 
 # Passbacks
 GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)

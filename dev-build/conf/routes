@@ -283,7 +283,6 @@ GET            /ads.txt                                                         
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
-POST           /commercial/api/pv                                                                                                commercial.controllers.PageViewAnalyticsController.insert()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
 # Commercial Admin
