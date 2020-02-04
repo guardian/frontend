@@ -10,6 +10,7 @@ import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-a
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
+import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -21,6 +22,8 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     pangaeaAdapterTest,
     subscriptionsBannerNewYearCopyTest,
 ];
+
+export const priorityEpicTest: EpicABTest = remoteRenderEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,
