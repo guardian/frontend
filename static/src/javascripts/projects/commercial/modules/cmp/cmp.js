@@ -64,14 +64,13 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const generateStore = (isInTest: boolean): CmpStore => {
+const generateStore = (): CmpStore => {
     const store = new CmpStore(
         CMP_ID,
         CMP_VERSION,
         COOKIE_VERSION,
         readConsentCookie(COOKIE_NAME),
-        shortVendorListData,
-        isInTest
+        shortVendorListData
     );
     return store;
 };
@@ -279,7 +278,7 @@ export const init = (): void => {
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
         // Initialize the store with all of our consent data
-        const store = generateStore(true);
+        const store = generateStore();
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
