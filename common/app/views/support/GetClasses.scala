@@ -24,7 +24,6 @@ object GetClasses {
       ("js-fc-item", true),
       ("fc-item--pillar-" + item.pillar.nameOrDefault, true),
       ("fc-item--type-" + item.designType.nameOrDefault, true),
-      ("fc-item--type-media", item.isAdvertisementFeature && item.isMediaLink),
       ("fc-item--pillar-special-report", item.cardStyle == SpecialReport),
       ("fc-item--paid-content", item.branding.exists(_.isPaid)),
       ("fc-item--has-cutout", item.cutOut.isDefined),

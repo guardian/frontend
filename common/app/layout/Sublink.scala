@@ -3,7 +3,7 @@ package layout
 import cards.{MediaList, Standard}
 import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
+import com.gu.contentapi.client.utils.DesignType
 import common.Edition.defaultEdition
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
@@ -377,11 +377,11 @@ case class ContentCard(
 
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
 
-  val hasInlineSnapHtml : Boolean = snapStuff.exists(_.embedHtml.isDefined)
+  val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
 
-  val isMediaLink : Boolean = mediaType.nonEmpty
+  val isMediaLink = mediaType.nonEmpty
 
-  val hasVideoMainMedia : Boolean = displayElement match {
+  val hasVideoMainMedia = displayElement match {
     case Some(_: InlineVideo) if !isMediaLink => true
     case Some(_: InlineYouTubeMediaAtom) if !isMediaLink => true
     case _ => false
@@ -390,8 +390,6 @@ case class ContentCard(
   val designType: Option[DesignType] = storyContent.map(_.metadata.designType)
   val pillar: Option[Pillar] = Pillar(storyContent)
   val contentType: DotcomContentType = DotcomContentType(storyContent)
-
-  val isAdvertisementFeature : Boolean = designType.contains(AdvertisementFeature)
 }
 object ContentCard {
 
