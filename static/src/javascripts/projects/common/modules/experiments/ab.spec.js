@@ -32,6 +32,7 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
     getConfiguredEpicTests: jest.fn(),
+    makeEpicABTest: jest.fn(),
 }));
 
 jest.mock('lodash/memoize', () => f => f);
