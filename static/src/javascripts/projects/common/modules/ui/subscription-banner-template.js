@@ -3,8 +3,6 @@
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
 
-import { makeHtml as makeFirstPvConsentHtml } from 'common/modules/ui/first-pv-consent-banner';
-
 const isUserLoggedIn = userLoggedIn =>
     userLoggedIn
         ? 'site-message--subscription-banner__sign-in--already-signed-in'
@@ -98,20 +96,9 @@ const subscriptionBannerTemplate = (
 </div>
 `;
 
-const consentSection = `<div id="js-first-pv-consent-site-message" class="site-message--first-pv-consent" tabindex="-1" data-link-name="release message" role="dialog" aria-label="welcome" aria-describedby="site-message__message">
-        <div class="gs-container">
-            <div class="site-message__inner js-site-message-inner">
-                <div class="site-message__copy js-site-message-copy u-cf">
-                    ${makeFirstPvConsentHtml()}
-                </div>
-            </div>
-        </div>
-    </div>`;
-
 const bannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
-    showConsent: boolean,
     userLoggedIn: boolean,
     abTestVariant: boolean
 ): string =>
@@ -130,7 +117,6 @@ const bannerTemplate = (
             userLoggedIn,
             abTestVariant
         )}
-        ${showConsent ? consentSection : ''}
     </div>
     `;
 
