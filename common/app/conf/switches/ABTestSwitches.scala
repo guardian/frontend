@@ -112,7 +112,7 @@ trait ABTestSwitches {
     "A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date",
     owners = Seq(Owner.withGithub("tjmw"), Owner.withGithub("nicl")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 3, 1),
+    sellByDate = new LocalDate(2020, 3, 2),
     exposeClientSide = true
   )
 }
