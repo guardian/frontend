@@ -28,7 +28,7 @@ const isInExperiment = (): boolean =>
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
-        component: 'first-pv-consent',
+        component: `${messageCode}`,
         value: interaction,
     });
     trackNonClickInteraction(interaction);
