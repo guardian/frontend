@@ -64,7 +64,7 @@ const remoteRenderTest = {
     idealOutcome: 'No difference between control and variant',
 
     audienceCriteria: 'All',
-    audience: 1,
+    audience: 0.1,
     audienceOffset: 0,
 
     geolocation: undefined,
