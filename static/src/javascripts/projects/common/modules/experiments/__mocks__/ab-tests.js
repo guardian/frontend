@@ -15,3 +15,5 @@ export const engagementBannerTests = [
     genAbTest('BannerTest'),
     genAbTest('BannerTest2'),
 ];
+
+export const priorityEpicTest = genAbTest('PriorityEpicTest');

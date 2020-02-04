@@ -24,13 +24,12 @@ import {
     concurrentTests,
     engagementBannerTests,
     epicTests as hardCodedEpicTests,
+    priorityEpicTest as hardCodedPriorityEpicTest,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
-
-import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
@@ -56,7 +55,7 @@ export const getEpicTestToRun = memoize(
 
                 // TODO prioritise our hardcoded test at the moment
                 return firstRunnableTest<EpicABTest>([
-                    remoteRenderEpic,
+                    hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
                     ...lowPriorityConfiguredTests,
@@ -66,7 +65,7 @@ export const getEpicTestToRun = memoize(
         }
         return Promise.resolve(
             firstRunnableTest<EpicABTest>([
-                remoteRenderEpic,
+                hardCodedPriorityEpicTest,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,
             ])

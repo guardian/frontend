@@ -14,6 +14,7 @@ import {
 import {
     concurrentTests,
     epicTests,
+    priorityEpicTest,
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
@@ -32,7 +33,6 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
     getConfiguredEpicTests: jest.fn(),
-    makeEpicABTest: jest.fn(),
 }));
 
 jest.mock('lodash/memoize', () => f => f);
@@ -71,16 +71,19 @@ describe('A/B', () => {
                 abBannerTest: true,
                 abBannerTest2: true,
             };
+
             const shouldRun = [
                 jest.spyOn(concurrentTests[0].variants[0], 'test'),
                 jest.spyOn(concurrentTests[1].variants[0], 'test'),
                 jest.spyOn(epicTests[0].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[0].variants[0], 'test'),
             ];
+
             const shouldNotRun = [
                 jest.spyOn(concurrentTests[2].variants[0], 'test'),
                 jest.spyOn(epicTests[1].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
+                jest.spyOn(priorityEpicTest.variants[0], 'test'),
             ];
 
             runAndTrackAbTests().then(() => {
