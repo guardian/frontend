@@ -126,7 +126,6 @@ const getVendorConsentData = (
     canPersonalise: boolean | null,
     shortVendorList: ShortVendorList
 ): ?VendorConsentData => {
-    log.info('getVendorConsentData: Running Cmp Customise');
     const cookieVal = readVendorConsentCookie();
     if (cookieVal) return { ...cookieVal };
 
