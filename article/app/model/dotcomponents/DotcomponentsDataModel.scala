@@ -582,7 +582,7 @@ object DotcomponentsDataModel {
       DCRBadge(
         badge.seriesTag,
         // We use the assets path in DCR that already has /assets/ suffix
-        badge.imageUrl.replace("/assets/","")
+        Configuration.assets.fullURL(common.Environment.stage) + badge.imageUrl.replace("/assets/","")
       )
     )
 
