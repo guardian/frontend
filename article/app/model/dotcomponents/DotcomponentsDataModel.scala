@@ -11,7 +11,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
+import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -147,6 +147,12 @@ object Author {
   implicit val writes = Json.writes[Author]
 }
 
+case class DCRBadge(seriesTag: String, imageUrl: String)
+
+object DCRBadge {
+  implicit val writes = Json.writes[DCRBadge]
+}
+
 case class Nav(
   currentUrl: String,
   pillars: Seq[NavLink],
@@ -229,6 +235,7 @@ case class DataModelV3(
 
   // slot machine (temporary for contributions development)
   slotMachineFlags: String,
+  badge: Option[DCRBadge]
 )
 
 object DataModelV3 {
@@ -283,6 +290,7 @@ object DataModelV3 {
       "publication" -> model.publication,
       "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
       "slotMachineFlags" -> model.slotMachineFlags,
+      "badge" -> model.badge
     )
   }
 
@@ -570,6 +578,14 @@ object DotcomponentsDataModel {
       twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle)
     )
 
+    val badge = Badges.badgeFor(article).map(badge =>
+      DCRBadge(
+        badge.seriesTag,
+        // We use the assets path in DCR that already has /assets/ suffix
+        badge.imageUrl.replace("/assets/","")
+      )
+    )
+
     val pageFooter = PageFooter(
       FooterLinks.getFooterByEdition(Edition(request))
     )
@@ -628,6 +644,7 @@ object DotcomponentsDataModel {
         .getOrElse(isPaidContent),
 
       slotMachineFlags = request.slotMachineFlags,
+      badge = badge
     )
   }
 }
