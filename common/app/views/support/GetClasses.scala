@@ -44,6 +44,7 @@ object GetClasses {
       ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined)
     ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
       ++ mediaTypeClass(item).map(_ -> true)
+      ++ adFeatureMediaClass(item).map(_ -> true)
     )
   }
 
@@ -58,6 +59,10 @@ object GetClasses {
     case Gallery => "fc-item--gallery"
     case Video => "fc-item--video"
     case Audio => "fc-item--audio"
+  }
+
+  def adFeatureMediaClass(faciaCard: ContentCard): Option[String] =  {
+    if (faciaCard.isAdvertisementFeature && faciaCard.isMediaLink) Some("fc-item--type-media") else None
   }
 
   def sublinkMediaTypeClass(sublink: Sublink): Option[String] = sublink.mediaType map {
