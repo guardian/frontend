@@ -86,7 +86,8 @@ const replaceArticlesViewed = (text: string, count: ?number): string =>
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
 const defaultMaxViews: MaxViews = {
     days: 30,
-    count: 4,
+    // count: 4,
+    count: 4000,
     minDaysBetweenViews: 0,
 };
 

@@ -49,7 +49,10 @@ do you have fonts in localStorage?
                     const inIframe = window.location !== window.parent.location;
                 }
 
-                const fontStorageKey = (fontName, fontHash = '') => `gu.fonts.${fontName}.${fontHash}`;
+                // const version = '3';
+                // const version = 5;
+                const version = 8;
+                const fontStorageKey = (fontName) => `gu.fonts.${fontName}.${version}`;
 
                 // detect which font format (ttf, woff, woff2 etc) we want
                 const fontFormat = (() => {
@@ -124,7 +127,7 @@ do you have fonts in localStorage?
                 }
 
                 // download font as json to store/use etc
-                function fetchFont(url, el, fontName, fontHash) {
+                function fetchFont(url, el, fontName) {
                     const xhr = new XMLHttpRequest();
 
                     // JSONP callback
@@ -137,22 +140,41 @@ do you have fonts in localStorage?
                         if (xhr.readyState === 4 && xhr.status === 200) {
                             const css = eval(xhr.responseText);
                             useFont(el, css, fontName);
-                            saveFont(fontName, fontHash, css);
+                            saveFont(fontName, css);
                         }
                     };
                     xhr.send();
                 }
 
                 // save font css to localstorage
-                function saveFont(fontName, fontHash, css) {
-                    for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
+                // function saveFont(fontName, fontHash, css) {
+                //     for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
+                //         var key = localStorage.key(i);
+                //         if (key.indexOf('gu.fonts.' + fontName) !== -1) {
+                //             console.log('Key name match: try to delete LS entry: ', key);
+                //             localStorage.removeItem(key);
+                //             break;
+                //         }
+                //     }
+                //
+                //     localStorage.setItem(fontStorageKey(fontName, fontHash), JSON.stringify({value: css}));
+                // }
+
+                function saveFont(fontName, css) {
+
+                    for (var i = 0, totalItems = localStorage.length; i < totalItems; i++) {
                         var key = localStorage.key(i);
-                        if (key.indexOf(fontStorageKey(fontName)) !== -1) {
+                        if (key.indexOf('gu.fonts.' + fontName) > -1) {
+                            console.log('=== MATCH: ', key);
                             localStorage.removeItem(key);
-                            break;
+                            //break;
+                        } else {
+                          console.log('NO MATCH: ', key);
                         }
                     }
-                    localStorage.setItem(fontStorageKey(fontName, fontHash), JSON.stringify({value: css}));
+
+                    console.log('=== SAVE FONT: ', fontStorageKey(fontName));
+                    localStorage.setItem(fontStorageKey(fontName), JSON.stringify({value: css}));
                 }
 
                 // down to business
@@ -172,13 +194,14 @@ do you have fonts in localStorage?
                     const fontURL = font.getAttribute(urlAttribute);
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
-                    const fontHash = fontInfo[1];
-                    const fontData = localStorage.getItem(fontStorageKey(fontName, fontHash));
-
+                    // const fontHash = fontInfo[1];
+                    const fontData = localStorage.getItem(fontStorageKey(fontName));
                     if (fontData) {
+                        console.log('====== USE LOCAL STORAGE');
                         useFont(font, JSON.parse(fontData).value, fontName);
                     } else {
-                        fetchFont(fontURL, font, fontName, fontHash);
+                        console.log('====== DO NOT USE LOCAL STORAGE');
+                        fetchFont(fontURL, font, fontName);
                     }
                 }
                 return true;
@@ -199,6 +222,8 @@ do you have fonts in localStorage?
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
             fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
+
+            // console.log('Font HREF: ', fonts.href)
 
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
@@ -312,7 +337,8 @@ do you have fonts in localStorage?
         checkUserFontDisabling();
         if (fontsEnabled) {
             if (fontSmoothingEnabled()) {
-                loadFontsFromStorage() || loadFontsAsynchronously();
+              // loadFontsAsynchronously();
+              loadFontsFromStorage() || loadFontsAsynchronously();
             } else {
                 disableFonts();
             }

@@ -1,6 +1,8 @@
 @import 'pasteup/fonts/src';
 
-@include font-face('Guardian Text Egyptian Web', $hinting: 'auto');
-@include font-face('Guardian Egyptian Web', $hinting: 'auto');
-@include font-face('Guardian Text Sans Web', $hinting: 'auto');
-@include font-face('Guardian Sans Web', $hinting: 'auto');
+@include font-face('Guardian Text Egyptian Web', $hinting: 'auto'); // BODY
+@include font-face('Guardian Egyptian Web', $hinting: 'auto'); // HEADLINE
+@include font-face('Guardian Text Sans Web', $hinting: 'auto'); // SANS
+@include font-face('Guardian Sans Web', $hinting: 'auto');  // ???
+
+// @include font-face('GuardianTextEgyptian', $hinting: 'auto'); // BODY

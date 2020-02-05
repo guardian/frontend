@@ -25,22 +25,26 @@
 
     // defines the versions of the different typefaces used on the site
     $font-families: (
+        // BODY
         'Guardian Text Egyptian Web': (
             (weight: 'regular', style: 'normal', charset: 'original'),
             (weight: 'regular', style: 'italic', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'latin1', use-as: bold)
         ),
+        // HEADLINE
         'Guardian Egyptian Web': (
             (weight: 'light', style: 'normal', charset: 'latin1'),
             (weight: 'regular', style: 'normal', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'latin1'),
             (weight: 'semibold', style: 'normal', charset: 'ascii', use-as: ultrablack)
         ),
+        // SANS
         'Guardian Text Sans Web': (
             (weight: 'regular', style: 'normal', charset: 'original'),
             (weight: 'regular', style: 'italic', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'original', use-as: bold)
         ),
+        // ??
         'Guardian Sans Web': (
             (weight: 'regular', style: 'normal', charset: 'latin1'), // comma forces it into a map
         )
@@ -59,12 +63,22 @@
         'ultrablack': 900
     );
 
+    // Alias
+    $alias-map: (
+      'Guardian Text Egyptian Web': 'GuardianTextEgyptian',
+      'Guardian Egyptian Web': 'GH Guardian Headline',
+      'Guardian Text Sans Web': 'GuardianTextSans',
+      'Guardian Sans Web': 'Guardian Sans Web',
+    );
+
     $typeface: str-replace($font-family, ' ', '');
 
     @each $variant in map-get($font-families, $font-family) {
         $charset: map-get($variant, charset);
         $filename: filename($typeface, map-get($variant, weight), map-get($variant, style));
         $url: '//pasteup.guim.co.uk/fonts/#{$font-version}/hinting-#{$hinting}/kerning-#{$kerning}/#{$charset}/#{$typeface}/#{$filename}';
+
+        $alias: map-get($alias-map, $font-family);
 
         $css-weight: map-get($css-weights,
             if(map-has-key($variant, use-as),
@@ -73,11 +87,11 @@
             )
         );
 
-        @include font-face-for($font-family, $url, unquote(map-get($variant, style)), $css-weight, $filename);
+        @include font-face-for($font-family, $url, unquote(map-get($variant, style)), $css-weight, $filename, $alias);
     };
 }
 
-@mixin font-face-for($font-family, $url, $style, $weight, $filename) {
+@mixin font-face-for($font-family, $url, $style, $weight, $filename, $alias) {
     @at-root {
         @font-face {
             font-family: $font-family;
@@ -90,6 +104,20 @@
             font-weight: $weight;
             font-style: $style;
             font-stretch: normal;
+        }
+        @if $alias {
+          @font-face {
+              font-family: $alias;
+              src: url('#{$url}.eot'); // IE9 Compat Modes
+              src: url('#{$url}.eot?#iefix') format('embedded-opentype'), // IE6-IE8
+              url('#{$url}.woff2') format('woff2'), // Very Modern Browsers
+              url('#{$url}.woff') format('woff'), // Modern Browsers
+              url('#{$url}.ttf') format('truetype'), // Safari, Android, iOS
+              url('#{$url}.svg##{$filename}') format('svg'); // Legacy iOS
+              font-weight: $weight;
+              font-style: $style;
+              font-stretch: normal;
+          }
         }
     }
 }
