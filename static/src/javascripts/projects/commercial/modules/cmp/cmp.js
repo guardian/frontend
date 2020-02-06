@@ -4,8 +4,6 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -66,14 +64,13 @@ const readConsentCookie = (cookieName: string): boolean | null => {
     return null;
 };
 
-const generateStore = (isInTest: boolean): CmpStore => {
+const generateStore = (): CmpStore => {
     const store = new CmpStore(
         CMP_ID,
         CMP_VERSION,
         COOKIE_VERSION,
         readConsentCookie(COOKIE_NAME),
-        shortVendorListData,
-        isInTest
+        shortVendorListData
     );
     return store;
 };
@@ -280,12 +277,8 @@ export const init = (): void => {
     if (window[CMP_GLOBAL_NAME]) {
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-        const useIabCookie = !isInVariantSynchronous(
-            commercialCmpUiBannerModal,
-            'control'
-        );
         // Initialize the store with all of our consent data
-        const store = generateStore(useIabCookie);
+        const store = generateStore();
         const cmp = new CmpService(store);
         // Expose `processCommand` as the CMP implementation
         window[CMP_GLOBAL_NAME] = cmp.processCommand;
@@ -297,10 +290,6 @@ export const init = (): void => {
 
         cmp.cmpReady = true;
         cmp.notify('cmpReady');
-
-        if (useIabCookie) {
-            log.info('CMP is using IAB cookie');
-        }
     }
 };
 

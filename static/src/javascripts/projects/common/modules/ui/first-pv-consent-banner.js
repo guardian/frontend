@@ -10,11 +10,8 @@ import {
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 import { upAlertViewCount } from 'common/modules/analytics/send-privacy-prefs';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { local } from 'lib/storage';
 
 type Template = {
     heading: string,
@@ -33,7 +30,6 @@ type Links = {
     cookies: string,
 };
 
-const rePermissionKey = 'gu.commercial.re-permissioned';
 const displayEventKey: string = 'first-pv-consent : display';
 const messageCode: string = 'first-pv-consent';
 
@@ -92,9 +88,7 @@ const onAgree = (msg: Message): void => {
     allAdConsents.forEach(_ => {
         setAdConsentState(_, true);
     });
-    if (isInVariantSynchronous(commercialCmpUiBannerModal, 'control')) {
-        local.set(rePermissionKey, true);
-    }
+
     msg.hide();
 };
 
@@ -111,10 +105,7 @@ const canShow = (): Promise<boolean> => {
     const hasSubmittedConsent =
         !hasUnsetAdChoices() || hasUserAcknowledgedBanner(messageCode);
 
-    return Promise.resolve(
-        isInVariantSynchronous(commercialCmpUiBannerModal, 'control') &&
-            (!local.get(rePermissionKey) || !hasSubmittedConsent)
-    );
+    return Promise.resolve(!hasSubmittedConsent);
 };
 
 const track = (): void => {
