@@ -368,16 +368,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val commercialPageViewAnalytics: Switch = Switch(
-    group = Commercial,
-    name = "commercial-page-view-analytics",
-    description = "Gather commercial analytics from page views",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val facebookTrackingPixel: Switch = Switch(
     group = Commercial,
     name = "facebook-tracking-pixel",
