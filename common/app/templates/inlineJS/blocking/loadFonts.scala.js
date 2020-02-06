@@ -178,6 +178,7 @@ do you have fonts in localStorage?
                     const fontName = fontInfo[2];
                     const fontHash = fontInfo[1];
                     const fontData = localStorage.getItem(fontStorageKey(fontName));
+
                     if (fontData) {
                         useFont(font, JSON.parse(fontData).value, fontName);
                     } else {
@@ -198,9 +199,11 @@ do you have fonts in localStorage?
             const scripts = document.getElementsByTagName('script');
             const thisScript = scripts[scripts.length - 1];
             const fonts = document.createElement('link');
+
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
             fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
+
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });

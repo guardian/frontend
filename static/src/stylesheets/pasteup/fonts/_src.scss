@@ -25,26 +25,22 @@
 
     // defines the versions of the different typefaces used on the site
     $font-families: (
-        // BODY
         'Guardian Text Egyptian Web': (
             (weight: 'regular', style: 'normal', charset: 'original'),
             (weight: 'regular', style: 'italic', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'latin1', use-as: bold)
         ),
-        // HEADLINE
         'Guardian Egyptian Web': (
             (weight: 'light', style: 'normal', charset: 'latin1'),
             (weight: 'regular', style: 'normal', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'latin1'),
             (weight: 'semibold', style: 'normal', charset: 'ascii', use-as: ultrablack)
         ),
-        // SANS
         'Guardian Text Sans Web': (
             (weight: 'regular', style: 'normal', charset: 'original'),
             (weight: 'regular', style: 'italic', charset: 'latin1'),
             (weight: 'medium', style: 'normal', charset: 'original', use-as: bold)
         ),
-        // ??
         'Guardian Sans Web': (
             (weight: 'regular', style: 'normal', charset: 'latin1'), // comma forces it into a map
         )
@@ -63,7 +59,7 @@
         'ultrablack': 900
     );
 
-    // Alias
+    // Define an alias for each font name
     $alias-map: (
       'Guardian Text Egyptian Web': 'GuardianTextEgyptian',
       'Guardian Egyptian Web': 'GH Guardian Headline',
