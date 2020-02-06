@@ -49,9 +49,9 @@ do you have fonts in localStorage?
                     const inIframe = window.location !== window.parent.location;
                 }
 
-                // const version = '3';
-                // const version = 5;
-                const version = 8;
+                // Bump version up to invalidate any font data
+                // previously saved on the user's browser
+                const version = 'v0.1';
                 const fontStorageKey = (fontName) => `gu.fonts.${fontName}.${version}`;
 
                 // detect which font format (ttf, woff, woff2 etc) we want
@@ -146,34 +146,16 @@ do you have fonts in localStorage?
                     xhr.send();
                 }
 
-                // save font css to localstorage
-                // function saveFont(fontName, fontHash, css) {
-                //     for (var i = 0, totalItems = localStorage.length; i < totalItems - 1; i++) {
-                //         var key = localStorage.key(i);
-                //         if (key.indexOf('gu.fonts.' + fontName) !== -1) {
-                //             console.log('Key name match: try to delete LS entry: ', key);
-                //             localStorage.removeItem(key);
-                //             break;
-                //         }
-                //     }
-                //
-                //     localStorage.setItem(fontStorageKey(fontName, fontHash), JSON.stringify({value: css}));
-                // }
-
                 function saveFont(fontName, css) {
-
+                    // Before we save the fonts in localStorage, let's do a bit of cleanup...
+                    // Map through localStorage entries and remove any items whose key name suggests font data
                     for (var i = 0, totalItems = localStorage.length; i < totalItems; i++) {
                         var key = localStorage.key(i);
                         if (key.indexOf('gu.fonts.' + fontName) > -1) {
-                            console.log('=== MATCH: ', key);
                             localStorage.removeItem(key);
-                            //break;
-                        } else {
-                          console.log('NO MATCH: ', key);
                         }
                     }
-
-                    console.log('=== SAVE FONT: ', fontStorageKey(fontName));
+                    // Then save the new font data
                     localStorage.setItem(fontStorageKey(fontName), JSON.stringify({value: css}));
                 }
 
@@ -194,13 +176,11 @@ do you have fonts in localStorage?
                     const fontURL = font.getAttribute(urlAttribute);
                     const fontInfo = fontURL.match(/fonts\/([^/]*?)\/?([^/]*)\.(woff2|woff|ttf).json$/);
                     const fontName = fontInfo[2];
-                    // const fontHash = fontInfo[1];
+                    const fontHash = fontInfo[1];
                     const fontData = localStorage.getItem(fontStorageKey(fontName));
                     if (fontData) {
-                        console.log('====== USE LOCAL STORAGE');
                         useFont(font, JSON.parse(fontData).value, fontName);
                     } else {
-                        console.log('====== DO NOT USE LOCAL STORAGE');
                         fetchFont(fontURL, font, fontName);
                     }
                 }
@@ -218,13 +198,9 @@ do you have fonts in localStorage?
             const scripts = document.getElementsByTagName('script');
             const thisScript = scripts[scripts.length - 1];
             const fonts = document.createElement('link');
-
             fonts.rel = 'stylesheet';
             fonts.className = 'webfonts';
             fonts.href = window.guardian.config.stylesheets.fonts[shouldHint ? 'hintingAuto' : 'hintingOff'].kerningOn;
-
-            // console.log('Font HREF: ', fonts.href)
-
             window.setTimeout(function () {
                 thisScript.parentNode.insertBefore(fonts, thisScript);
             });
@@ -337,7 +313,6 @@ do you have fonts in localStorage?
         checkUserFontDisabling();
         if (fontsEnabled) {
             if (fontSmoothingEnabled()) {
-              // loadFontsAsynchronously();
               loadFontsFromStorage() || loadFontsAsynchronously();
             } else {
                 disableFonts();
