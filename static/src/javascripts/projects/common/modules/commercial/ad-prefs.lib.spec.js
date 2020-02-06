@@ -16,10 +16,6 @@ jest.mock('lib/cookies', () => ({
     addCookie: jest.fn(() => null),
 }));
 
-jest.mock('common/modules/analytics/send-privacy-prefs', () => ({
-    onConsentSet: jest.fn(() => null),
-}));
-
 beforeEach(() => {
     addCookie.mockReset();
     getCookie.mockReset();
