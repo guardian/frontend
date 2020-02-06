@@ -1,5 +1,6 @@
 // @flow
 
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     makeEpicABTest,
     setupOnView,
@@ -13,6 +14,7 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 
 const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
+const geolocation = geolocationGetSync();
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -67,7 +69,7 @@ const remoteRenderTest = {
     audience: 0.1,
     audienceOffset: 0,
 
-    geolocation: undefined,
+    geolocation,
 
     variants: [
         {
@@ -95,7 +97,7 @@ const remoteRenderTest = {
                 };
 
                 const localisation = {
-                    countryCode: 'US',
+                    countryCode: geolocation,
                 };
 
                 const targeting = {
