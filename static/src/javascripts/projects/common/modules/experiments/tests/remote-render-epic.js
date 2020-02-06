@@ -131,52 +131,56 @@ const remoteRenderTest = {
                     .then(checkResponseOk)
                     .then(decodeJson)
                     .then(json => {
-                        const epicHtml = json.html;
-                        const css = json.css;
-                        const content = `<style>${css}</style>${epicHtml}`;
+                        if (json && json.data) {
+                            const epicHtml = json.data.html;
+                            const css = json.data.css;
+                            const content = `<style>${css}</style>${epicHtml}`;
 
-                        return fastdom.write(() => {
-                            const target = document.querySelector('.submeta');
+                            return fastdom.write(() => {
+                                const target = document.querySelector(
+                                    '.submeta'
+                                );
 
-                            if (!target) {
-                                return;
-                            }
+                                if (!target) {
+                                    return;
+                                }
 
-                            const parent = target.parentNode;
+                                const parent = target.parentNode;
 
-                            if (!parent) {
-                                return;
-                            }
+                                if (!parent) {
+                                    return;
+                                }
 
-                            const container = document.createElement('div');
-                            parent.insertBefore(container, target);
+                                const container = document.createElement('div');
+                                parent.insertBefore(container, target);
 
-                            // use Shadow Dom if found
-                            if (container.attachShadow) {
-                                console.log('epic - has shadow dom');
-                                const shadowRoot = container.attachShadow({
-                                    mode: 'open',
-                                });
-                                shadowRoot.innerHTML = content;
-                            } else {
-                                console.log('epic - no shadow dom');
-                                container.innerHTML = content;
-                            }
+                                // use Shadow Dom if found
+                                if (container.attachShadow) {
+                                    console.log('epic - has shadow dom');
+                                    const shadowRoot = container.attachShadow({
+                                        mode: 'open',
+                                    });
+                                    shadowRoot.innerHTML = content;
+                                } else {
+                                    console.log('epic - no shadow dom');
+                                    container.innerHTML = content;
+                                }
 
-                            emitInsertEvent(
-                                test,
-                                products,
-                                variant.campaignCode
-                            );
+                                emitInsertEvent(
+                                    test,
+                                    products,
+                                    variant.campaignCode
+                                );
 
-                            setupOnView(
-                                container,
-                                test,
-                                variant.campaignCode,
-                                trackingCampaignId,
-                                products
-                            );
-                        });
+                                setupOnView(
+                                    container,
+                                    test,
+                                    variant.campaignCode,
+                                    trackingCampaignId,
+                                    products
+                                );
+                            });
+                        }
                     })
                     .catch(error =>
                         console.log(
