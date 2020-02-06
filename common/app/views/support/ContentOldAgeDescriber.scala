@@ -11,7 +11,7 @@ object ContentOldAgeDescriber extends ContentOldAgeDescriber
 
 class ContentOldAgeDescriber {
 
-   private val excludePaths = Set("artanddesign/2019/jun/18/serpentine-galleries-chief-resigns")
+   private val excludePaths = Set("law/2019/jun/14/yana-peel-uk-rights-advocate-serpentine-nso-spyware-pegasus")
 
   def apply(content: model.Content): String = {
     message(Some(content.trail.webPublicationDate), Some(content.metadata.id))
