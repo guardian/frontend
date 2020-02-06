@@ -104,7 +104,7 @@ const remoteRenderTest = {
                     contentType: page.contentType,
                     sectionName: page.sectionName,
                     shouldHideReaderRevenue: page.shouldHideReaderRevenue,
-                    isMinuteArticle: page.isLiveBlog, // Is this the same thing?
+                    isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
                     tags: buildKeywordTags(page),
                 };
