@@ -13,7 +13,7 @@ import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 
-const campaignId = 'gdnwb_copts_memco_remote_epic_test_api';
+const campaignId = 'remote_epic_test';
 const geolocation = geolocationGetSync();
 
 const buildKeywordTags = page => {
@@ -89,9 +89,9 @@ const remoteRenderTest = {
                     ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
-                    campaignCode: campaignId,
-                    abTestName: 'remote_epic_test',
-                    abTestVariant: 'api',
+                    campaignCode: variant.campaignCode,
+                    abTestName: test.id, // "RemoteRenderEpic"
+                    abTestVariant: variant.id, // "remote"
                     referrerUrl:
                         window.location.origin + window.location.pathname,
                 };
