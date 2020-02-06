@@ -1,41 +1,116 @@
-$f-serif-text: 'Guardian Text Egyptian Web', 'GuardianTextEgyptian', Georgia, serif !default;
-$f-serif-headline: 'Guardian Egyptian Web', 'GH Guardian Headline', Georgia, serif !default;
-$f-sans-serif-text: 'Guardian Text Sans Web', 'GuardianTextSans', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif !default;
+$f-serif-text: "Guardian Text Egyptian Web", "GuardianTextEgyptian", Georgia,
+    serif !default;
+$f-serif-headline: "Guardian Egyptian Web", "GH Guardian Headline", Georgia,
+    serif !default;
+$f-sans-serif-text: "Guardian Text Sans Web", "GuardianTextSans",
+    "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif !default;
 
 $font-scale: (
     header: (
-        15: (font-size: 14, line-height: 17),
-        2: (font-size: 17, line-height: 20),
-        3: (font-size: 20, line-height: 23),
-        5: (font-size: 24, line-height: 27),
+        15: (
+            font-size: 14,
+            line-height: 17
+        ),
+        2: (
+            font-size: 17,
+            line-height: 20
+        ),
+        3: (
+            font-size: 20,
+            line-height: 23
+        ),
+        5: (
+            font-size: 24,
+            line-height: 27
+        )
     ),
     headline: (
-        1: (font-size: 14, line-height: 17),
-        2: (font-size: 17, line-height: 20),
-        3: (font-size: 20, line-height: 23),
-        4: (font-size: 24, line-height: 27),
-        5: (font-size: 28, line-height: 32),
-        6: (font-size: 34, line-height: 38),
-        8: (font-size: 42, line-height: 46),
-        9: (font-size: 50, line-height: 56),
-        10: (font-size: 70, line-height: 78),
+        1: (
+            font-size: 14,
+            line-height: 17
+        ),
+        2: (
+            font-size: 17,
+            line-height: 20
+        ),
+        3: (
+            font-size: 20,
+            line-height: 23
+        ),
+        4: (
+            font-size: 24,
+            line-height: 27
+        ),
+        5: (
+            font-size: 28,
+            line-height: 32
+        ),
+        6: (
+            font-size: 34,
+            line-height: 38
+        ),
+        8: (
+            font-size: 42,
+            line-height: 46
+        ),
+        9: (
+            font-size: 50,
+            line-height: 56
+        ),
+        10: (
+            font-size: 70,
+            line-height: 78
+        )
     ),
     bodyHeading: (
-        1: (font-size: 14, line-height: 22),
-        2: (font-size: 17, line-height: 24),
-        4: (font-size: 20, line-height: 28),
+        1: (
+            font-size: 14,
+            line-height: 22
+        ),
+        2: (
+            font-size: 17,
+            line-height: 24
+        ),
+        4: (
+            font-size: 20,
+            line-height: 28
+        )
     ),
     bodyCopy: (
-        1: (font-size: 14, line-height: 18),
-        2: (font-size: 17, line-height: 24),
+        1: (
+            font-size: 14,
+            line-height: 18
+        ),
+        2: (
+            font-size: 17,
+            line-height: 24
+        )
     ),
     textSans: (
-        1: (font-size: 12, line-height: 16),
-        2: (font-size: 13, line-height: 18),
-        3: (font-size: 14, line-height: 20),
-        4: (font-size: 14, line-height: 22),
-        5: (font-size: 16, line-height: 22),
-        6: (font-size: 18, line-height: 18),
+        1: (
+            font-size: 12,
+            line-height: 16
+        ),
+        2: (
+            font-size: 13,
+            line-height: 18
+        ),
+        3: (
+            font-size: 14,
+            line-height: 20
+        ),
+        4: (
+            font-size: 14,
+            line-height: 22
+        ),
+        5: (
+            font-size: 16,
+            line-height: 22
+        ),
+        6: (
+            font-size: 18,
+            line-height: 18
+        )
     )
 );
 
@@ -62,7 +137,10 @@ $font-scale: (
 }
 
 @mixin fs-header($level, $size-only: false) {
-    @include font-size(get-font-size(header, $level), get-line-height(header, $level));
+    @include font-size(
+        get-font-size(header, $level),
+        get-line-height(header, $level)
+    );
 
     @if $size-only == false {
         @include f-header;
@@ -75,7 +153,10 @@ $font-scale: (
 }
 
 @mixin fs-headline($level, $size-only: false) {
-    @include font-size(get-font-size(headline, $level), get-line-height(headline, $level));
+    @include font-size(
+        get-font-size(headline, $level),
+        get-line-height(headline, $level)
+    );
 
     @if $size-only == false {
         @include f-headline;
@@ -88,7 +169,10 @@ $font-scale: (
 }
 
 @mixin fs-bodyHeading($level, $size-only: false) {
-    @include font-size(get-font-size(bodyHeading, $level), get-line-height(bodyHeading, $level));
+    @include font-size(
+        get-font-size(bodyHeading, $level),
+        get-line-height(bodyHeading, $level)
+    );
 
     @if $size-only == false {
         @include f-bodyHeading;
@@ -100,7 +184,10 @@ $font-scale: (
 }
 
 @mixin fs-bodyCopy($level, $size-only: false) {
-    @include font-size(get-font-size(bodyCopy, $level), get-line-height(bodyCopy, $level));
+    @include font-size(
+        get-font-size(bodyCopy, $level),
+        get-line-height(bodyCopy, $level)
+    );
 
     @if $size-only == false {
         @include f-bodyCopy;
@@ -112,7 +199,10 @@ $font-scale: (
 }
 
 @mixin fs-textSans($level, $size-only: false) {
-    @include font-size(get-font-size(textSans, $level), get-line-height(textSans, $level));
+    @include font-size(
+        get-font-size(textSans, $level),
+        get-line-height(textSans, $level)
+    );
 
     @if $size-only == false {
         @include f-textSans;
@@ -131,11 +221,15 @@ $font-scale: (
 }
 
 @function get-font-size($name, $level, $font-scale: $font-scale) {
-    @return convert-to-px(map-get(get-scale-level($name, $level, $font-scale), font-size));
+    @return convert-to-px(
+        map-get(get-scale-level($name, $level, $font-scale), font-size)
+    );
 }
 
 @function get-line-height($name, $level, $font-scale: $font-scale) {
-    @return convert-to-px(map-get(get-scale-level($name, $level, $font-scale), line-height));
+    @return convert-to-px(
+        map-get(get-scale-level($name, $level, $font-scale), line-height)
+    );
 }
 
 @function convert-to-px($value) {
