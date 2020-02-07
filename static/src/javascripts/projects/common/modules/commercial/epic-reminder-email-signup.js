@@ -145,15 +145,14 @@ const epicReminderEmailSignup = (fields: Fields) => {
         });
     });
 
-    fields.reminderPrompt.addEventListener(
-        'click',
+    fields.reminderPrompt.addEventListener('click', () => {
         submitClickEvent({
             component: {
                 componentType: 'ACQUISITIONS_OTHER',
                 id: 'precontribution-reminder-prompt-clicked',
             },
-        })
-    );
+        });
+    });
 };
 
 export { getFields, epicReminderEmailSignup };
