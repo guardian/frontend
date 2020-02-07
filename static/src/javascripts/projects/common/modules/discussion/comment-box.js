@@ -2,6 +2,7 @@
 
 import bean from 'bean';
 import bonzo from 'bonzo';
+import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
@@ -14,7 +15,6 @@ import {
 import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
-import config from 'lib/config';
 
 type commentType = {
     body: string,
