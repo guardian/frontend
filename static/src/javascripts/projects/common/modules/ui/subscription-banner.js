@@ -78,10 +78,7 @@ const subscriptionUrl = addTrackingCodesToUrl({
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
 
 const hasAcknowledged = bannerRedeploymentDate => {
-    // In order to migrate between ISO string and millisecond format support both temporarily
-    const stringOrNumberRedeploymentDate =
-        Number(bannerRedeploymentDate) || bannerRedeploymentDate;
-    const redeploymentDate = new Date(stringOrNumberRedeploymentDate);
+    const redeploymentDate = new Date(Number(bannerRedeploymentDate));
     const lastClosedAt = userPrefs.get(SUBSCRIPTION_BANNER_CLOSED_KEY);
     const lastClosedAtTime = new Date(lastClosedAt);
 
@@ -117,7 +114,7 @@ const hasAcknowledgedBanner = region =>
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
     !hideBannerInTheseRegions.includes(region);
 
-const fiveOrMorePageViews = (currentPageViews: number) => currentPageViews >= 5;
+const threeOrMorePageViews = (currentPageViews: number) => currentPageViews >= 3;
 
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
@@ -269,7 +266,7 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
-        fiveOrMorePageViews(pageviews) &&
+        threeOrMorePageViews(pageviews) &&
             !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
