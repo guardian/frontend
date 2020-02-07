@@ -305,11 +305,11 @@ const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
         consentManagementPlatformUi,
-        subscriptionBanner,
         breakingNews,
         signInGate,
         membershipBanner,
         membershipEngagementBanner,
+        subscriptionBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
