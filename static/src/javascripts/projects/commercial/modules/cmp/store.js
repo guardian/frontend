@@ -96,7 +96,7 @@ const generateVendorData = (
     };
 };
 
-/* 
+/*
    This is a stub. For now it just enriches the
    given parameters with some constant context data.
 */
@@ -124,14 +124,11 @@ const getVendorConsentData = (
     cmpVersion: number,
     cookieVersion: number,
     canPersonalise: boolean | null,
-    shortVendorList: ShortVendorList,
-    isRunningCmpCustomise: boolean = false
+    shortVendorList: ShortVendorList
 ): ?VendorConsentData => {
-    if (isRunningCmpCustomise) {
-        log.info('getVendorConsentData: Running Cmp Customise');
-        const cookieVal = readVendorConsentCookie();
-        if (cookieVal) return { ...cookieVal };
-    }
+    const cookieVal = readVendorConsentCookie();
+    if (cookieVal) return { ...cookieVal };
+
     if (typeof canPersonalise === 'boolean') {
         const consentData = generateConsentData(
             cmpId,
@@ -162,8 +159,7 @@ export class CmpStore {
         cmpVersion: number,
         cookieVersion: number,
         canPersonalise: boolean | null,
-        shortVendorList: ShortVendorList,
-        isRunningCmpCustomise: boolean = false
+        shortVendorList: ShortVendorList
     ) {
         this.shortVendorList = shortVendorList;
         this.canPersonalise = canPersonalise;
@@ -181,8 +177,7 @@ export class CmpStore {
             cmpVersion,
             cookieVersion,
             canPersonalise,
-            shortVendorList,
-            isRunningCmpCustomise
+            shortVendorList
         );
     }
 
