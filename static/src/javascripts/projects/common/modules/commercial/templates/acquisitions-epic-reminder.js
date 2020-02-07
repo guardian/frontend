@@ -63,7 +63,7 @@ export const acquisitionsEpicReminderTemplate = (
             <div class="epic-reminder__thank-you">
                 We will be in touch to invite you to contribute. Look out for a message in your inbox in ${
                     reminderFields.reminderDateAsString
-                }. If you have any questions about contributing, please <a href="#">contact us</a>.
+                }. If you have any questions about contributing, please <a href="mailto:contribution.support@theguardian.com">contact us</a>.
             </div>
         </div>
     </div>
