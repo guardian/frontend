@@ -54,6 +54,7 @@ import {
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
+import { getFields } from 'common/modules/commercial/epic-reminder-email-signup';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -108,6 +109,7 @@ const controlTemplate: EpicTemplate = (
             : undefined,
         epicClassNames: variant.classNames,
         showTicker: variant.showTicker,
+        showReminderFields: variant.showReminderFields,
         backgroundImageUrl: variant.backgroundImageUrl,
     });
 
@@ -262,7 +264,8 @@ const setupOnView = (
     campaignCode: ?string,
     trackingCampaignId: string,
     products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false
+    showTicker: boolean = false,
+    showReminderFields: boolean = false
 ) => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(element, window, {
@@ -282,6 +285,15 @@ const setupOnView = (
 
         if (showTicker) {
             initTicker('.js-epic-ticker');
+        }
+
+        if (showReminderFields) {
+            const htmlElements = getFields();
+            if (htmlElements) {
+                epicReminderEmailSignup(
+                    htmlElements
+                );
+            }
         }
     });
 };
@@ -351,6 +363,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
         deploymentRules,
 
@@ -463,7 +476,8 @@ const makeEpicABTestVariant = (
                                         campaignCode,
                                         trackingCampaignId,
                                         initVariant.products,
-                                        initVariant.showTicker
+                                        initVariant.showTicker,
+                                        initVariant.showReminderFields,
                                     );
                                 });
                             }
@@ -733,6 +747,7 @@ export const buildConfiguredEpicTestFromJson = (
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
             showTicker: variant.showTicker,
+            showReminderFields: variant.showReminderFields,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
             deploymentRules,

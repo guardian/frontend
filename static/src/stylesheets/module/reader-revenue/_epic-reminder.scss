@@ -1,0 +1,148 @@
+.epic-reminder {
+    ////////////////////////////////////
+    // Prompt to open reminder
+    // Button to close reminder
+    ////////////////////////////////////
+    .epic-reminder__prompt {
+        width: 100%;
+        text-align: right;
+        cursor: pointer;
+    }
+
+    .epic-reminder__prompt-text {
+        @include fs-textSans(5);
+        font-weight: bold;
+        text-decoration: underline;
+        padding-right: 18px;
+    }
+
+    .epic-reminder__close-button {
+        font-size: 30px;
+        cursor: pointer;
+        float: right;
+        margin-top: $gs-baseline * 2;
+
+        svg path {
+            fill: $brightness-7;
+        }
+    }
+
+    ////////////////////////////////////////////////
+    // Logic for opening and closing the reminder
+    ////////////////////////////////////////////////
+    .epic-reminder__reveal-reminder {
+        display: none;
+    }
+
+    .epic-reminder__reveal-reminder:checked ~ .epic-reminder__signup {
+        display: block;
+    }
+
+    .epic-reminder__reveal-reminder:checked ~ .epic-reminder__prompt-label {
+        display: none;
+    }
+
+    .epic-reminder__signup {
+        @include multiline(4, $brightness-86, top);
+        display: none;
+        line-height: initial;
+        padding: 0 5px;
+    }
+
+    ////////////////////////////////////////////////
+    // Reminder sign up form
+    ////////////////////////////////////////////////
+    .epic-reminder__form-title {
+        @include fs-headline(3);
+        padding-top: $gs-baseline * 2;
+        font-weight: bold;
+        margin-top: $gs-baseline;
+    }
+
+    .epic-reminder__email-label {
+        @include fs-textSans(5);
+        font-weight: bold;
+        display: block;
+        margin-top: $gs-baseline;
+    }
+
+    .epic-reminder__email-input-wrapper {
+        display: flex;
+        flex-flow: column nowrap;
+        margin-top: $gs-baseline / 2;
+
+        @include mq($from: tablet) {
+            flex-flow: row nowrap;
+        }
+    }
+
+    .epic-reminder__email-input {
+        @include fs-textSans(5);
+        font-size: 17px;
+        flex: 1 1 100%;
+
+        @include mq($from: tablet) {
+            flex: 1 1 auto;
+        }
+    }
+
+    .epic-reminder__email-help-text {
+        @include fs-textSans(5);
+        display: block;
+        color: $news-main;
+        font-size: 17px;
+        line-height: 21px;
+    }
+
+    .inline-error-triangle {
+        display: inline-block;
+
+        svg {
+            vertical-align: bottom;
+        }
+    }
+
+    .epic-reminder__email-help-text:empty {
+        display: none;
+    }
+
+    .epic-reminder__submit-button-wrapper {
+        flex: 1 1 100%;
+
+        @include mq($from: tablet) {
+            flex: 0 0 auto;
+        }
+    }
+
+    .epic-reminder__submit-button {
+        color: $brightness-97;
+        background: $brand-main;
+        width: 100%;
+
+        @include mq($from: tablet) {
+            width: initial;
+            margin-left: 10px;
+        }
+    }
+
+    .epic-reminder__email-terms-and-conditions {
+        @include fs-textSans(3);
+        margin-top: $gs-baseline / 2;
+        font-style: italic;
+        font-size: 15px;
+        line-height: 18px;
+    }
+
+    .epic-reminder__thank-you {
+        @include fs-bodyCopy(2);
+        line-height: 21px;
+        display: none;
+        margin-top: $gs-baseline;
+    }
+
+    // Override link rules for the pillar
+    a {
+        color: $brightness-7 !important;
+        text-decoration: underline;
+    }
+}

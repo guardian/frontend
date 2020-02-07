@@ -24,6 +24,7 @@ const rawTest = {
             highlightedText: 'Some highlighted text',
             footer: '',
             showTicker: false,
+            showReminderFields: null,
             backgroundImageUrl: '',
             maxViews: {
                 maxViewsDays: 30,
