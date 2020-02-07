@@ -91,7 +91,7 @@ const remoteRenderTest = {
                     ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
-                    campaignCode: variant.campaignCode,
+                    campaignCode: variant.campaignCode, // "gdnwb_copts_memco_remote_epic_test_remote"
                     abTestName: test.id, // "RemoteRenderEpic"
                     abTestVariant: variant.id, // "remote"
                     referrerUrl:
