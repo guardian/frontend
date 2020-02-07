@@ -4,7 +4,8 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement, RichLinkBlockElement}
+import model.dotcomrendering.pageElements.{BlockquoteBlockElement, SubheadingBlockElement, YoutubeBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -36,9 +37,12 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
+      case _: SubheadingBlockElement => false
       case _: ImageBlockElement => false
       case _: TweetBlockElement => false
       case _: PullquoteBlockElement => false
+      case _: BlockquoteBlockElement => false
+      case _: YoutubeBlockElement => false
       case _: RichLinkBlockElement => false
       case _ => true
     }
