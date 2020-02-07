@@ -71,6 +71,8 @@ const remoteRenderTest = {
 
     geolocation,
 
+    canRun: () => geolocation !== 'US',
+
     variants: [
         {
             id: 'control',
