@@ -114,7 +114,8 @@ const hasAcknowledgedBanner = region =>
 const canShowBannerInRegion = (region: ReaderRevenueRegion): boolean =>
     !hideBannerInTheseRegions.includes(region);
 
-const threeOrMorePageViews = (currentPageViews: number) => currentPageViews >= 3;
+const threeOrMorePageViews = (currentPageViews: number) =>
+    currentPageViews >= 3;
 
 const closedAt = (lastClosedAtKey: string) =>
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
