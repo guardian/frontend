@@ -82,7 +82,7 @@ case class MembershipBlockElement(
 ) extends PageElement
 
 // these don't appear to have typeData on the capi models so we just have empty html
-case class CodeBlockElement(html: Option[String]) extends PageElement
+case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
 
 case class RichLinkBlockElement(
@@ -149,6 +149,7 @@ object PageElement {
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
       case doc: DocumentBlockElement if doc.isMandatory.exists(identity) => true
+      case _: CodeBlockElement => true // Currently will just fail over at DCR
 
       case _ => false
     }
@@ -200,9 +201,12 @@ object PageElement {
           .map { case (a, i) => ImageAsset.make(a, i) }
         val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
-            val srcSet = widths.breakpoints.flatMap { b =>
-              ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)))
-            }
+            val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
+              Seq(
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
+              )
+            }.flatten
 
             // A few very old articles use non-https hosts, which won't render
             val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
@@ -368,7 +372,7 @@ object PageElement {
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
-      case Code => List(CodeBlockElement(None))
+      case Code => List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
       case Form => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
     }

@@ -1,13 +1,6 @@
 // @flow
-import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import config from 'lib/config';
-
-const getAdConsentState: any = _getAdConsentState;
-
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
 
 describe('Remarketing', () => {
     beforeAll(() => {
@@ -18,7 +11,6 @@ describe('Remarketing', () => {
     });
 
     it('should exist', () => {
-        getAdConsentState.mockReturnValue(true);
         const { shouldRun, url, onLoad } = remarketing();
 
         expect(shouldRun).toEqual(true);
@@ -28,18 +20,18 @@ describe('Remarketing', () => {
         expect(onLoad).toBeDefined();
     });
 
-    it('shouldRun returns false only if consent has been denied', () => {
-        getAdConsentState.mockReturnValueOnce(true);
-        getAdConsentState.mockReturnValueOnce(false);
-        getAdConsentState.mockReturnValueOnce(null);
+    it('shouldRun to be true if ad the switch is on', () => {
+        config.set('switches.remarketing', true);
+        const { shouldRun } = remarketing();
 
-        const shouldRunTrue = remarketing().shouldRun;
-        const shouldRunFalse = remarketing().shouldRun;
-        const shouldRunNull = remarketing().shouldRun;
+        expect(shouldRun).toEqual(true);
+    });
 
-        expect(shouldRunTrue).toEqual(true);
-        expect(shouldRunFalse).toEqual(false);
-        expect(shouldRunNull).toEqual(false);
+    it('shouldRun to be false if the switch is off', () => {
+        config.set('switches.remarketing', false);
+        const { shouldRun } = remarketing();
+
+        expect(shouldRun).toEqual(false);
     });
 
     it('should call google_trackConversion', () => {

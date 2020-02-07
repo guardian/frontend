@@ -27,6 +27,7 @@ case class OnwardItem(
   mediaType: Option[String],
   shortUrl: String,
   kickerText: Option[String],
+  starRating: Option[Int],
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -48,6 +49,7 @@ case class OnwardItemMost(
   mediaType: Option[String],
   avatarUrl: Option[String],
   kickerText: Option[String],
+  starRating: Option[Int],
 )
 
 object OnwardItemMost {
@@ -85,6 +87,7 @@ object OnwardItemMost {
       mediaType = contentCard.mediaType.map( x => x.toString ),
       avatarUrl = contentCardToAvatarUrl(contentCard),
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
+      starRating = contentCard.starRating
     )
   }
 }
@@ -136,7 +139,8 @@ object OnwardCollection {
         headline = content.header.headline,
         mediaType = content.card.mediaType.map(_.toString()),
         shortUrl = content.card.shortUrl,
-        kickerText = content.header.kicker.flatMap(_.properties.kickerText)
+        kickerText = content.header.kicker.flatMap(_.properties.kickerText),
+        starRating = content.card.starRating
       )
     )
   }

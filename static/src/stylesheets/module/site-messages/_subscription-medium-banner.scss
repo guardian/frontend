@@ -60,8 +60,8 @@
     }
 
     @include mq($from: desktop) {
-        width: 45%;
-        margin-right: 55%;
+        width: 48%;
+        margin-right: 52%;
         font-size: 34px;
         line-height: 36px;
     }
@@ -264,7 +264,7 @@
 
 
     @include mq($from: desktop) {
-        width: 55%;
+        width: 52%;
     }
 
     @include mq($from: wide) {
@@ -346,48 +346,23 @@
         position: absolute;
         right: 0;
         bottom: 0;
-        width: 80px;
+        width: 70px;
     }
 
     // custom breakpoint
     @media (min-width: 1260px) {
-        width: 109px;
+        width: 90px;
     }
 }
 
-.variantB-header {
-    display: block;
-    max-width: 340px;
-    padding-right: 36px;
-
-    @include mq($from: phablet) {
-        max-width: 450px;
-    }
-
-    @include mq($from: tablet) {
-        max-width: 480px;
-    }
-
-    @include mq($from: desktop) {
-        max-width: 500px;
-    }
-}
 
 /*********************** footer hacks *********************/
 
-.subscription-banner--holder
-.site-message--first-pv-consent__block.site-message--first-pv-consent__block--intro {
-    margin: 0;
-}
+
 
 .subscription-banner--holder
 .site-message__copy.js-site-message-copy.u-cf {
     margin: 0;
-}
-.subscription-banner--holder .site-message--first-pv-consent {
-    @include mq($from: desktop) {
-        padding: 12px 20px;
-    }
 }
 
 .subscription-banner--holder

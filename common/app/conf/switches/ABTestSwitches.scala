@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-banner-modal",
-    "Test whether our new banner/modal CMP UI obtains target consent rates",
-    owners = Seq(Owner.withGithub("ghaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 2, 7),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -98,16 +88,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-secundus",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-a9",
     "Test Amazon A9 header bidding",
     owners = Seq(Owner.withGithub("ioanna0")),
@@ -115,4 +95,15 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 9, 4),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-subs-banner-new-year-copy-test",
+    "Test subscription banner copy variants",
+    owners = Seq(Owner.withGithub("jfsoul")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 3, 10),
+    exposeClientSide = true
+  )
+
 }

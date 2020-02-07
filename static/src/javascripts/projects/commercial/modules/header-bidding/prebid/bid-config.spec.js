@@ -73,10 +73,6 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: () => 'bla',
 }));
 
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
-
 jest.mock('../utils');
 
 jest.mock('common/modules/experiments/ab', () => ({

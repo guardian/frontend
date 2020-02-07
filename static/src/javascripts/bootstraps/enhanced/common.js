@@ -39,9 +39,7 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { firstPvConsentSubsciptionBanner } from 'common/modules/ui/subscription-banner';
-import { firstPvConsentPlusEngagementBanner } from 'common/modules/ui/first-pv-consent-plus-engagement-banner';
-import { firstPvConsentBanner } from 'common/modules/ui/first-pv-consent-banner';
+import { subscriptionBanner } from 'common/modules/ui/subscription-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
@@ -307,9 +305,7 @@ const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
         consentManagementPlatformUi,
-        firstPvConsentSubsciptionBanner,
-        firstPvConsentPlusEngagementBanner,
-        firstPvConsentBanner,
+        subscriptionBanner,
         breakingNews,
         signInGate,
         membershipBanner,

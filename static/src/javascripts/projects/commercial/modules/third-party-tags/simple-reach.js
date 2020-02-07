@@ -3,8 +3,8 @@ import config from 'lib/config';
 
 const shouldRun =
     !config.get('page.isFront') &&
-    config.get('switches.simpleReach') &&
-    config.get('page.isPaidContent');
+    config.get('page.isPaidContent') &&
+    config.get('switches.simpleReach', false);
 
 let simpleReachUrl = '';
 

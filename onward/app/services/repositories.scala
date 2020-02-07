@@ -13,7 +13,6 @@ trait Related extends ConciergeRepository {
   def mostReadAgent: MostReadAgent
 
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
-
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(RelatedContent(Nil))
     } else {

@@ -3,7 +3,7 @@ package layout
 import cards.{MediaList, Standard}
 import com.gu.commercial.branding.Branding
 import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.DesignType
+import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition.defaultEdition
 import common.{Edition, LinkTo}
 import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
@@ -390,6 +390,8 @@ case class ContentCard(
   val designType: Option[DesignType] = storyContent.map(_.metadata.designType)
   val pillar: Option[Pillar] = Pillar(storyContent)
   val contentType: DotcomContentType = DotcomContentType(storyContent)
+
+  val isAdvertisementFeature : Boolean = designType.contains(AdvertisementFeature)
 }
 object ContentCard {
 
