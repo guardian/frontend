@@ -2,6 +2,7 @@
 
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
+import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
@@ -12,6 +13,8 @@ type Fields = {
     formWrapper: HTMLElement,
     titleField: HTMLElement,
     thankYouText: HTMLElement,
+    closeButton: HTMLElement,
+    reminderPrompt: HTMLElement,
 };
 
 const isValidEmail = (email: string) => {
@@ -28,6 +31,8 @@ const getFields = (): ?Fields => {
     const formWrapper = document.querySelector('.epic-reminder__form-wrapper');
     const titleField = document.querySelector('.epic-reminder__form-title');
     const thankYouText = document.querySelector('.epic-reminder__thank-you');
+    const closeButton = document.querySelector('.epic-reminder__close-button');
+    const reminderPrompt = document.querySelector('.epic-reminder__prompt');
 
     if (
         helpText &&
@@ -37,7 +42,9 @@ const getFields = (): ?Fields => {
         emailInput instanceof HTMLInputElement &&
         titleField &&
         thankYouText &&
-        formWrapper
+        formWrapper &&
+        closeButton &&
+        reminderPrompt
     ) {
         // when the js html template string is interpreted,
         // this field gets initialised with a string of whitespace
@@ -52,6 +59,8 @@ const getFields = (): ?Fields => {
             formWrapper,
             titleField,
             thankYouText,
+            closeButton,
+            reminderPrompt,
         };
     }
 };
@@ -78,6 +87,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
             case 'success':
                 fields.thankYouText.style.display = 'block';
                 fields.formWrapper.style.display = 'none';
+                fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
                     'Thank you! Your support is so valuable.';
                 break;
@@ -134,6 +144,16 @@ const epicReminderEmailSignup = (fields: Fields) => {
             }
         });
     });
+
+    fields.reminderPrompt.addEventListener(
+        'click',
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'precontribution-reminder-prompt-clicked',
+            },
+        })
+    );
 };
 
 export { getFields, epicReminderEmailSignup };

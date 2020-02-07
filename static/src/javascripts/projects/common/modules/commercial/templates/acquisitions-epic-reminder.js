@@ -15,7 +15,7 @@ export const acquisitionsEpicReminderTemplate = (
         <label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div class="epic-reminder__prompt">
                 <span tabindex="0" class="epic-reminder__prompt-text">
-                Not a good time? Remind me later
+                    Not a good time? Remind me later
                 </span>
             </div>
         </label>
