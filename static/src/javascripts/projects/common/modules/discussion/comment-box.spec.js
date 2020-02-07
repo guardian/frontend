@@ -3,7 +3,9 @@ import { CommentBox } from 'common/modules/discussion/comment-box';
 import { getUserFromApiWithRefreshedCookie as getUserFromApiWithRefreshedCookie_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
 
-jest.mock('lib/config');
+jest.mock('lib/config', () => ({
+    get: jest.fn(() => 'https://manage.thegulocal.com'),
+}));
 jest.mock('lib/mediator');
 jest.mock('common/modules/discussion/user-avatars', () => ({
     avatarify() {},
@@ -48,6 +50,8 @@ describe('Comment box', () => {
         '{"status":"error", "statusCode": 409, "message":"Discussion closed", "errorCode": "DISCUSSION_CLOSED"}';
     const apiPostValidCommentButReadOnlyMode =
         '{"status":"error", "statusCode": 503, "message":"Commenting is undergoing maintenance but will be back again shortly.", "errorCode": "READ-ONLY-MODE"}';
+    const apiPostValidCommentButIdentityUsernameMissing =
+        '{"status":"error","statusCode":400,"message":"Username is missing","errorCode":"USERNAME_MISSING"}';
     let commentBox;
     let commentBoxEl;
 
@@ -237,6 +241,28 @@ describe('Comment box', () => {
                     expect(JSON.stringify(comment.id)).toEqual(
                         JSON.parse(apiPostValidCommentResp).message
                     );
+                });
+            }
+        });
+
+        it('should error on identity username missing', () => {
+            const commentBody = commentBox.getElem('body');
+
+            expect(commentBox.getElem('error')).toBeUndefined();
+
+            if (commentBody && commentBody instanceof HTMLTextAreaElement) {
+                commentBody.value = validCommentText;
+
+                postComment.mockReturnValueOnce(
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    Promise.reject({
+                        responseText: apiPostValidCommentButIdentityUsernameMissing,
+                        status: 400,
+                    })
+                );
+
+                return commentBox.postComment().then(() => {
+                    expect(commentBox.getElem('error')).not.toBeUndefined();
                 });
             }
         });
