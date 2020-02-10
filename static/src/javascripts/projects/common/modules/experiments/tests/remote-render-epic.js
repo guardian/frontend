@@ -8,6 +8,7 @@ import {
     setupClickHandling,
     emitInsertEvent,
 } from 'common/modules/commercial/contributions-utilities';
+import reportError from 'lib/report-error';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
@@ -144,6 +145,13 @@ const remoteRenderTest = {
                                 );
 
                                 if (!target) {
+                                    reportError(
+                                        new Error(
+                                            'Could not find target element for Epic'
+                                        ),
+                                        {},
+                                        false
+                                    );
                                     return;
                                 }
 
@@ -184,11 +192,10 @@ const remoteRenderTest = {
                             });
                         }
                     })
-                    .catch(error =>
-                        console.log(
-                            `An error occurred while fetching epic: ${error}`
-                        )
-                    );
+                    .catch(error => {
+                        console.log(error);
+                        reportError(error, {}, false);
+                    });
             },
         },
     ],
