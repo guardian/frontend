@@ -121,7 +121,6 @@ const remoteRenderTest = {
                 const trackingCampaignId = `epic_${campaignId}`; // note exposed on ABTest unfortunately
 
                 emitBeginEvent(trackingCampaignId);
-                console.log('epic - beginning remote variant...');
 
                 setupClickHandling(
                     test,
