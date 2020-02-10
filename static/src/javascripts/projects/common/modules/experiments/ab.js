@@ -24,6 +24,7 @@ import {
     concurrentTests,
     engagementBannerTests,
     epicTests as hardCodedEpicTests,
+    priorityEpicTest as hardCodedPriorityEpicTest,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -53,6 +54,7 @@ export const getEpicTestToRun = memoize(
                 );
 
                 return firstRunnableTest<EpicABTest>([
+                    hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
                     ...lowPriorityConfiguredTests,
@@ -62,6 +64,7 @@ export const getEpicTestToRun = memoize(
         }
         return Promise.resolve(
             firstRunnableTest<EpicABTest>([
+                hardCodedPriorityEpicTest,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,
             ])

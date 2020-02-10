@@ -92,7 +92,7 @@ declare type EpicABTest = AcquisitionsABTest & {
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    test?: (html: string, variant: EpicVariant, parentTest: ABTest) => void,
+    test?: (html: string, variant: EpicVariant, parentTest: EpicABTest) => void,
     deploymentRules?: DeploymentRules,
     countryGroups?: string[],
     tagIds?: string[],

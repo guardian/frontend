@@ -240,6 +240,74 @@ const articleViewCountIsOk = (
     return true;
 };
 
+const emitBeginEvent = (trackingCampaignId: string) => {
+    mediator.emit('register:begin', trackingCampaignId);
+};
+
+const emitInsertEvent = (
+    parentTest: EpicABTest,
+    products: $ReadOnlyArray<OphanProduct>,
+    campaignCode: ?string
+) => {
+    mediator.emit(parentTest.insertEvent, {
+        componentType: parentTest.componentType,
+        products,
+        campaignCode: campaignCode || '',
+    });
+};
+
+const setupOnView = (
+    element: HTMLElement,
+    parentTest: EpicABTest,
+    campaignCode: ?string,
+    trackingCampaignId: string,
+    products: $ReadOnlyArray<OphanProduct>,
+    showTicker: boolean = false
+) => {
+    // top offset of 18 ensures view only counts when half of element is on screen
+    const inView = elementInView(element, window, {
+        top: 18,
+    });
+
+    inView.on('firstview', () => {
+        logView(parentTest.id);
+
+        mediator.emit(parentTest.viewEvent, {
+            componentType: parentTest.componentType,
+            products,
+            campaignCode,
+        });
+
+        mediator.emit('register:end', trackingCampaignId);
+
+        if (showTicker) {
+            initTicker('.js-epic-ticker');
+        }
+    });
+};
+
+const setupClickHandling = (
+    parentTest: EpicABTest,
+    campaignCode: ?string,
+    products: $ReadOnlyArray<OphanProduct>,
+    variantId: string
+) => {
+    awaitEpicButtonClicked().then(() =>
+        submitClickEvent({
+            component: {
+                componentType: parentTest.componentType,
+                products,
+                campaignCode: campaignCode || '',
+                id: campaignCode || '',
+            },
+            abTest: {
+                name: parentTest.id,
+                variant: variantId,
+            },
+        })
+    );
+};
+
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
     template: EpicTemplate,
@@ -367,62 +435,36 @@ const makeEpicABTestVariant = (
                         // Standard epic insertion. TODO - this could do with a refactor
                         const component = $.create(renderedTemplate);
 
-                        mediator.emit('register:begin', trackingCampaignId);
+                        emitBeginEvent(trackingCampaignId);
 
                         return fastdom.write(() => {
                             const targets = getTargets('.submeta');
 
-                            awaitEpicButtonClicked().then(() =>
-                                submitClickEvent({
-                                    component: {
-                                        componentType: parentTest.componentType,
-                                        products: initVariant.products,
-                                        campaignCode,
-                                        id: campaignCode,
-                                    },
-                                    abTest: {
-                                        name: parentTest.id,
-                                        variant: initVariant.id,
-                                    },
-                                })
+                            setupClickHandling(
+                                parentTest,
+                                campaignCode,
+                                initVariant.products,
+                                initVariant.id
                             );
 
                             if (targets.length > 0) {
                                 component.insertBefore(targets);
 
-                                mediator.emit(parentTest.insertEvent, {
-                                    componentType: parentTest.componentType,
-                                    products: initVariant.products,
-                                    campaignCode,
-                                });
+                                emitInsertEvent(
+                                    parentTest,
+                                    initVariant.products,
+                                    campaignCode
+                                );
 
                                 component.each(element => {
-                                    // top offset of 18 ensures view only counts when half of element is on screen
-                                    const inView = elementInView(
+                                    setupOnView(
                                         element,
-                                        window,
-                                        {
-                                            top: 18,
-                                        }
+                                        parentTest,
+                                        campaignCode,
+                                        trackingCampaignId,
+                                        initVariant.products,
+                                        initVariant.showTicker
                                     );
-
-                                    inView.on('firstview', () => {
-                                        logView(parentTest.id);
-                                        mediator.emit(parentTest.viewEvent, {
-                                            componentType:
-                                                parentTest.componentType,
-                                            products: initVariant.products,
-                                            campaignCode,
-                                        });
-                                        mediator.emit(
-                                            'register:end',
-                                            trackingCampaignId
-                                        );
-
-                                        if (initVariant.showTicker) {
-                                            initTicker('.js-epic-ticker');
-                                        }
-                                    });
                                 });
                             }
 
@@ -885,4 +927,8 @@ export {
     getVisitCount,
     buildEpicCopy,
     buildBannerCopy,
+    setupOnView,
+    emitBeginEvent,
+    setupClickHandling,
+    emitInsertEvent,
 };

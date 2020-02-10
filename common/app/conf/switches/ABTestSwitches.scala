@@ -106,4 +106,13 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+  Switch(
+    ABTests,
+    "ab-remote-render-epic",
+    "A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date",
+    owners = Seq(Owner.withGithub("tjmw"), Owner.withGithub("nicl")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 3, 2),
+    exposeClientSide = true
+  )
 }
