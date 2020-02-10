@@ -2,6 +2,7 @@
 
 import bean from 'bean';
 import bonzo from 'bonzo';
+import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';
 import { postComment, previewComment } from 'common/modules/discussion/api';
@@ -62,6 +63,9 @@ class CommentBox extends Component {
                 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
             'READ-ONLY-MODE':
                 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
+            USERNAME_MISSING: `You must <a href="${config.get(
+                'page.mmaUrl'
+            )}/public-settings">set a username</a> before commenting.`,
 
             /* Custom error codes */
             /* CORS blocked by HTTP/1.0 proxy */
