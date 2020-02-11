@@ -127,6 +127,7 @@ object Commercial {
 
   object topAboveNavSlot {
 
+    // mark: c66fae4e-1d29-467a-a081-caad7a90cacd
     val adSizes: Map[String, Seq[String]] = {
       val fabricAdvertsTop = Seq("88,71")
       val fluidAdvertsTop = Seq("fluid")
