@@ -65,7 +65,7 @@ class CommentBox extends Component {
                 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
             USERNAME_MISSING: `You must <a href="${config.get(
                 'page.mmaUrl'
-            )}/public-settings">set a username</a> before commenting.`,
+            )}/public-settings">set a username</a> before commenting. (<a href="/help/2020/feb/10/why-am-i-unable-to-post-a-comment">Learn more</a>).`,
 
             /* Custom error codes */
             /* CORS blocked by HTTP/1.0 proxy */
