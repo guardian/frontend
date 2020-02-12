@@ -62,9 +62,8 @@ const pageSkin = (): void => {
     };
 
     const repositionSkin = (): void => {
-        const bodyElement = document.body;
-        const hasTruskin = bodyElement
-            ? bodyElement.classList.contains('truskin-page-skin')
+        const hasTruskin = bodyEl
+            ? bodyEl.classList.contains('truskin-page-skin')
             : false;
         const header = document.querySelector('.new-header');
         const footer = document.querySelector('.l-footer');
