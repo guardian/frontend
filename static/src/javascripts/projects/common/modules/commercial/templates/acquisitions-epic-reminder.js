@@ -10,11 +10,11 @@ export const acquisitionsEpicReminderTemplate = (
     reminderFields: ReminderFields
 ) => `
     <div id="epic-reminder" class="js-epic-reminder epic-reminder">
-        <input type="checkbox" id="epic-reminder__reveal-reminder" class="epic-reminder__reveal-reminder" role="button" />
+        <input type="checkbox" id="epic-reminder__reveal-reminder" class="epic-reminder__reveal-reminder" />
 
         <label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div class="epic-reminder__prompt">
-                <span tabindex="0" class="epic-reminder__prompt-text">
+                <span tabindex="0" class="epic-reminder__prompt-text" role="checkbox">
                     Not a good time? Remind me later
                 </span>
             </div>

@@ -15,6 +15,7 @@ type Fields = {
     thankYouText: HTMLElement,
     closeButton: HTMLElement,
     reminderPrompt: HTMLElement,
+    reminderToggle: HTMLInputElement,
 };
 
 const isValidEmail = (email: string) => {
@@ -33,18 +34,23 @@ const getFields = (): ?Fields => {
     const thankYouText = document.querySelector('.epic-reminder__thank-you');
     const closeButton = document.querySelector('.epic-reminder__close-button');
     const reminderPrompt = document.querySelector('.epic-reminder__prompt');
+    const reminderToggle = document.querySelector(
+        '.epic-reminder__reveal-reminder'
+    );
 
     if (
         helpText &&
         submitButton &&
-        submitButton instanceof HTMLButtonElement &&
         emailInput &&
-        emailInput instanceof HTMLInputElement &&
         titleField &&
         thankYouText &&
         formWrapper &&
         closeButton &&
-        reminderPrompt
+        reminderPrompt &&
+        reminderToggle &&
+        submitButton instanceof HTMLButtonElement &&
+        emailInput instanceof HTMLInputElement &&
+        reminderToggle instanceof HTMLInputElement
     ) {
         // when the js html template string is interpreted,
         // this field gets initialised with a string of whitespace
@@ -61,6 +67,7 @@ const getFields = (): ?Fields => {
             thankYouText,
             closeButton,
             reminderPrompt,
+            reminderToggle,
         };
     }
 };
@@ -145,13 +152,46 @@ const epicReminderEmailSignup = (fields: Fields) => {
         });
     });
 
-    fields.reminderPrompt.addEventListener('click', () => {
+    // This bit of logic to send an analytics event when a user
+    // engages with the precontribution reminder is abstracted so it
+    // can be used either in the case that a user clicks or a user
+    // hits enter on their keyboard
+    const sendPromptClickEvent = () => {
         submitClickEvent({
             component: {
                 componentType: 'ACQUISITIONS_OTHER',
                 id: 'precontribution-reminder-prompt-clicked',
             },
         });
+    };
+
+    // The reminder's visibility is dependent on a hidden checkbox field
+    // being checked or unchecked (a simple CSS solution), however the checking
+    // and unchecking also needs to happen for users who are just using a
+    // keyboard. This is a light JS solution for toggling the checkbox when a user
+    // hits enter, as they would for a link
+    const toggleReminderVisibility = () => {
+        fields.reminderToggle.checked = !fields.reminderToggle.checked;
+    };
+
+    // These are the three event listeners relevant for the above
+    // event handlers
+    fields.reminderPrompt.addEventListener('click', sendPromptClickEvent);
+
+    fields.reminderPrompt.addEventListener(
+        'keypress',
+        (event: KeyboardEvent) => {
+            if (event.key === 'Enter') {
+                sendPromptClickEvent();
+                toggleReminderVisibility();
+            }
+        }
+    );
+
+    fields.closeButton.addEventListener('keypress', (event: KeyboardEvent) => {
+        if (event.key === 'Enter') {
+            toggleReminderVisibility();
+        }
     });
 };
 
