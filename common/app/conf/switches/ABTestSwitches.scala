@@ -48,16 +48,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-outbrain-testing",
-    "Test the outbrain widget",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 22),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-xaxis-adapter",
     "Test new implementation of xaxis adapter with multiple placement ids",
     owners = Seq(Owner.withGithub("ioanna0")),
