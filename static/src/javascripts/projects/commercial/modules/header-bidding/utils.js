@@ -162,7 +162,8 @@ export const shouldIncludeMobileSticky = once(
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
             (isInUsRegion() || isInAuRegion()) &&
-            config.get('page.contentType') === 'Article')
+            config.get('page.contentType') === 'Article' &&
+            !config.get('page.isHosted'))
 );
 
 export const stripMobileSuffix = (s: string): string =>
