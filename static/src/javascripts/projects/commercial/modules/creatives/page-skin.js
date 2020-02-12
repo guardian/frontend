@@ -52,9 +52,9 @@ const pageSkin = (): void => {
         }
     };
 
-    const shrinkElement = (element: HTMLElement | null): void => {
+    const shrinkElement = (element: HTMLElement): void => {
         const frontContainer = document.querySelector('.fc-container__inner');
-        if (element && frontContainer) {
+        if (frontContainer) {
             element.style.cssText = `max-width: ${
                 frontContainer.clientWidth
             }px; margin-right: auto; margin-left: auto;`;
@@ -62,7 +62,7 @@ const pageSkin = (): void => {
     };
 
     const repositionSkin = (): void => {
-        const bodyElement = document.querySelector('body');
+        const bodyElement = document.body;
         const hasTruskin = bodyElement
             ? bodyElement.classList.contains('truskin-page-skin')
             : false;
@@ -73,8 +73,12 @@ const pageSkin = (): void => {
         if (hasTruskin && header && topBannerAd) {
             initTopPositionOnce(hasTruskin);
 
-            shrinkElement(header);
-            shrinkElement(footer);
+            if (header) {
+                shrinkElement(header);
+            }
+            if (footer) {
+                shrinkElement(footer);
+            }
 
             if (window.pageYOffset === 0) {
                 moveBackgroundVerticalPosition(topPosition);
@@ -83,6 +87,7 @@ const pageSkin = (): void => {
             const headerBoundaries = header.getBoundingClientRect();
             const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
             const headerPosition = headerBoundaries.top;
+            const topBannerBottom = topBannerAdBoundaries.bottom;
             const fabricScrollStartPosition =
                 topBannerAdBoundaries.height +
                 adLabelHeight -
@@ -90,10 +95,10 @@ const pageSkin = (): void => {
 
             if (
                 headerPosition <= fabricScrollStartPosition &&
-                topBannerAdBoundaries.bottom > 0
+                topBannerBottom > 0
             ) {
-                moveBackgroundVerticalPosition(topBannerAdBoundaries.bottom);
-            } else if (topBannerAdBoundaries.bottom <= 0) {
+                moveBackgroundVerticalPosition(topBannerBottom);
+            } else if (topBannerBottom <= 0) {
                 moveBackgroundVerticalPosition(0);
             }
         }
