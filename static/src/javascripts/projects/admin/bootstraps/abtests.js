@@ -1,7 +1,11 @@
 // @flow
 import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-report-item';
 import { Audience } from 'admin/modules/abtests/audience';
-import { concurrentTests } from 'common/modules/experiments/ab-tests';
+import {
+    concurrentTests,
+    epicTests,
+    priorityEpicTest,
+} from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 
 const renderTests = (
@@ -23,8 +27,10 @@ const renderTests = (
 };
 
 const initABTests = (): void => {
+    const tests = [].concat(concurrentTests, epicTests, [priorityEpicTest]);
+
     renderTests(
-        concurrentTests.filter(test => !isExpired(test.expiry)),
+        tests.filter(test => !isExpired(test.expiry)),
         true,
         document.querySelector('.abtests-report__data')
     );
