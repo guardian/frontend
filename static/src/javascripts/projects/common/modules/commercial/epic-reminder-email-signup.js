@@ -143,13 +143,15 @@ const epicReminderEmailSignup = (fields: Fields) => {
 
     fields.submitButton.addEventListener('click', (event: Event) => {
         event.preventDefault();
-        sendReminderEvent().then(response => {
-            if (response.ok) {
-                setState('success');
-            } else {
-                setState('failure');
-            }
-        });
+        sendReminderEvent()
+            .then(response => {
+                if (response.ok) {
+                    setState('success');
+                } else {
+                    setState('failure');
+                }
+            })
+            .catch(error => console.error(error));
     });
 
     // This bit of logic to send an analytics event when a user

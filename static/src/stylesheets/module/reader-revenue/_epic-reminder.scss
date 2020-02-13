@@ -118,9 +118,11 @@
         color: $brightness-97;
         background: $brand-main;
         width: 100%;
+        margin-top: $gs-baseline / 2;
 
         @include mq($from: tablet) {
             width: initial;
+            margin-top: 0;
             margin-left: 10px;
         }
     }
