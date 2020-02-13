@@ -1,3 +1,5 @@
+import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+
 type ListenerFunction = (f: () => void) => void;
 
 declare type EpicCta = {url: string, ctaText: string};
@@ -28,6 +30,7 @@ declare type EpicVariant = Variant & {
     template: EpicTemplate,
     classNames: string[],
     showTicker: boolean,
+    showReminderFields?: ReminderFields | null,
 
     buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
     ctaText?: string,
@@ -105,6 +108,7 @@ declare type InitEpicABTestVariant = {
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
+    showReminderFields?: ReminderFields | null,
     supportBaseURL?: string,
     backgroundImageUrl?: string,
     canRun?: () => boolean,

@@ -5,6 +5,16 @@ import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
+  
+  Switch(
+    ABTests,
+    "ab-contributions-epic-precontribution-reminder-round-one",
+    "Test the effect of the reminder on conversion rate",
+    owners = Seq(Owner.withGithub("jlieb10")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 4, 1),
+    exposeClientSide = true
+  )
 
   Switch(
     ABTests,
