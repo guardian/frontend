@@ -54,7 +54,11 @@ import {
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
-import { getFields } from 'common/modules/commercial/epic-reminder-email-signup';
+import {
+    epicReminderEmailSignup,
+    getFields,
+} from 'common/modules/commercial/epic-reminder-email-signup';
+import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -265,7 +269,7 @@ const setupOnView = (
     trackingCampaignId: string,
     products: $ReadOnlyArray<OphanProduct>,
     showTicker: boolean = false,
-    showReminderFields: boolean = false
+    showReminderFields: ReminderFields | null = null
 ) => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(element, window, {
@@ -290,9 +294,7 @@ const setupOnView = (
         if (showReminderFields) {
             const htmlElements = getFields();
             if (htmlElements) {
-                epicReminderEmailSignup(
-                    htmlElements
-                );
+                epicReminderEmailSignup(htmlElements);
             }
         }
     });
@@ -477,7 +479,7 @@ const makeEpicABTestVariant = (
                                         trackingCampaignId,
                                         initVariant.products,
                                         initVariant.showTicker,
-                                        initVariant.showReminderFields,
+                                        initVariant.showReminderFields
                                     );
                                 });
                             }
