@@ -64,7 +64,9 @@ const pageSkin = (): void => {
     const renderedSlotElementIds = [];
 
     const repositionSkin = (event): void => {
-        renderedSlotElementIds.push(event.slot.getSlotElementId());
+        if (event.slot) {
+            renderedSlotElementIds.push(event.slot.getSlotElementId());
+        }
         if (
             renderedSlotElementIds.includes('dfp-ad--pageskin-inread') &&
             renderedSlotElementIds.includes('dfp-ad--top-above-nav')
