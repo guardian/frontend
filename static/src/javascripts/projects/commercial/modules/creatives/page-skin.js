@@ -64,7 +64,7 @@ const pageSkin = (): void => {
     const renderedSlotElementIds = [];
 
     const repositionSkin = (event): void => {
-        if (event.slot) {
+        if (event && event.slot) {
             renderedSlotElementIds.push(event.slot.getSlotElementId());
         }
         if (
