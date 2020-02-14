@@ -100,7 +100,7 @@ const remoteRenderTest = {
                 };
 
                 const localisation = {
-                    countryCode: geolocation,
+                    countryCode: geolocation || null,
                 };
 
                 const targeting = {
