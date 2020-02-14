@@ -115,4 +115,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 3, 2),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-secundus",
+    "Test new sign in component on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 3, 31),
+    exposeClientSide = true
+  )
 }
