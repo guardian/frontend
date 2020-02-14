@@ -28,7 +28,7 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
-const currentGeoLocation = once((): string => geolocationGetSync());
+const currentGeoLocation = once((): ?string => geolocationGetSync());
 
 const contains = (
     sizes: HeaderBiddingSize[],

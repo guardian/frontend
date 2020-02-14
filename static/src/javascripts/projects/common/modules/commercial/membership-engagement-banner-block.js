@@ -50,7 +50,7 @@ export const isBlocked = (
     switches: Array<string> = allSwitches,
     switchBlockConfig: SwitchBlockConfig = defaultSwitchConfig,
     pathname: string = document.location.pathname,
-    geolocation: string = getSync()
+    geolocation: ?string = getSync()
 ): boolean => {
     // the enabled block configurations that apply to the provided geolocation
     const activeBlockConfigs: Array<BlockConfig> = switches

@@ -47,14 +47,15 @@ const init = (): void => {
     get().then(setGeolocation);
 };
 
-const editionToGeolocation = (editionKey: string = 'UK'): string =>
+const editionToGeolocation = (editionKey: string = 'UK'): ?string =>
     editionToGeolocationMap[editionKey];
 
-const getSync = (): string => {
+const getSync = (): ?string => {
     const geolocationFromStorage = getFromStorage();
     return (
         geolocationFromStorage ||
-        editionToGeolocation(config.get('page.edition'))
+        editionToGeolocation(config.get('page.edition')) ||
+        null
     );
 };
 
@@ -378,7 +379,7 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
+const countryCodeToCountryGroupId = (countryCode: ?string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {

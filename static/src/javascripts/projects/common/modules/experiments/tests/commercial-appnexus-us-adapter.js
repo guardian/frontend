@@ -2,7 +2,7 @@
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import once from 'lodash/once';
 
-const currentGeoLocation = once((): string => geolocationGetSync());
+const currentGeoLocation = once((): ?string => geolocationGetSync());
 
 export const appnexusUSAdapter: ABTest = {
     id: 'CommercialAppnexusUsAdapter',

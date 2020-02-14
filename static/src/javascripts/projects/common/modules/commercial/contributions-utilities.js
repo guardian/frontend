@@ -66,7 +66,7 @@ export type ReaderRevenueRegion =
     | 'australia'
     | 'rest-of-world';
 
-const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
+const getReaderRevenueRegion = (geolocation: ?string): ReaderRevenueRegion => {
     switch (geolocation) {
         case 'GB':
             return 'united-kingdom';
