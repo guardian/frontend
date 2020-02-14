@@ -10,6 +10,7 @@ const pageSkin = (): void => {
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
 
     const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
+    const adLabelHeight = 24;
 
     let topPosition: number = 0;
 
@@ -40,28 +41,90 @@ const pageSkin = (): void => {
         }
     };
 
-    const initTopPositionOnce = (): void => {
+    const initTopPositionOnce = (hasTruskin: boolean): void => {
         if (topPosition === 0) {
             const navHeader = document.getElementsByClassName('new-header')[0];
             if (navHeader) {
-                topPosition = navHeader.offsetTop + navHeader.offsetHeight;
+                topPosition = hasTruskin
+                    ? navHeader.offsetTop + adLabelHeight
+                    : navHeader.offsetTop + navHeader.offsetHeight;
             }
         }
     };
 
-    // This is to reposition the Page Skin to start where the navigation header ends.
-    const repositionSkin = (): void => {
-        if (hasPageSkin && isInAUEdition) {
-            initTopPositionOnce();
-            if (window.pageYOffset === 0) {
-                moveBackgroundVerticalPosition(topPosition);
-            } else if (window.pageXOffset <= topPosition) {
-                moveBackgroundVerticalPosition(
-                    topPosition - window.pageYOffset
-                );
+    const shrinkElement = (element: HTMLElement): void => {
+        const frontContainer = document.querySelector('.fc-container__inner');
+        if (frontContainer) {
+            element.style.cssText = `max-width: ${
+                frontContainer.clientWidth
+            }px; margin-right: auto; margin-left: auto;`;
+        }
+    };
+
+    const renderedSlotElementIds = [];
+
+    const repositionSkin = (event): void => {
+        if (event && event.slot) {
+            renderedSlotElementIds.push(event.slot.getSlotElementId());
+        }
+        if (
+            renderedSlotElementIds.includes('dfp-ad--pageskin-inread') &&
+            renderedSlotElementIds.includes('dfp-ad--top-above-nav')
+        ) {
+            const hasTruskin = bodyEl
+                ? bodyEl.classList.contains('truskin-page-skin')
+                : false;
+            const header = document.querySelector('.new-header');
+            const footer = document.querySelector('.l-footer');
+            const topBannerAd = document.querySelector(
+                '.ad-slot--top-banner-ad'
+            );
+
+            if (hasTruskin && header && topBannerAd) {
+                initTopPositionOnce(hasTruskin);
+
+                if (header) {
+                    shrinkElement(header);
+                }
+                if (footer) {
+                    shrinkElement(footer);
+                }
+
+                if (window.pageYOffset === 0) {
+                    moveBackgroundVerticalPosition(topPosition);
+                }
+
+                const headerBoundaries = header.getBoundingClientRect();
+                const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
+                const headerPosition = headerBoundaries.top;
+                const topBannerBottom = topBannerAdBoundaries.bottom;
+                const fabricScrollStartPosition =
+                    topBannerAdBoundaries.height +
+                    adLabelHeight -
+                    headerBoundaries.height;
+
+                if (
+                    headerPosition <= fabricScrollStartPosition &&
+                    topBannerBottom > 0
+                ) {
+                    moveBackgroundVerticalPosition(topBannerBottom);
+                } else if (topBannerBottom <= 0) {
+                    moveBackgroundVerticalPosition(0);
+                }
             }
-            if (window.pageYOffset > topPosition) {
-                moveBackgroundVerticalPosition(0);
+            // This is to reposition the Page Skin to start where the navigation header ends.
+            if (!hasTruskin && hasPageSkin && isInAUEdition) {
+                initTopPositionOnce(false);
+                if (window.pageYOffset === 0) {
+                    moveBackgroundVerticalPosition(topPosition);
+                } else if (window.pageXOffset <= topPosition) {
+                    moveBackgroundVerticalPosition(
+                        topPosition - window.pageYOffset
+                    );
+                }
+                if (window.pageYOffset > topPosition) {
+                    moveBackgroundVerticalPosition(0);
+                }
             }
         }
     };

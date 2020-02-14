@@ -8,6 +8,10 @@
         @include fs-headline(9, true);
         padding-top: $gs-baseline * 2;
     }
+
+    @include mq($until: tablet) {
+        @include fs-headline(4);
+    }
 }
 
 .newsletter-card__signup {

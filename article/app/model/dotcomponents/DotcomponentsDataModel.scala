@@ -581,8 +581,7 @@ object DotcomponentsDataModel {
     val badge = Badges.badgeFor(article).map(badge =>
       DCRBadge(
         badge.seriesTag,
-        // We use the assets path in DCR that already has /assets/ suffix
-        Configuration.assets.fullURL(common.Environment.stage) + badge.imageUrl.replace("/assets/","")
+        badge.imageUrl
       )
     )
 

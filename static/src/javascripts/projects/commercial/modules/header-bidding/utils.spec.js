@@ -351,6 +351,15 @@ describe('Utils', () => {
         expect(shouldIncludeMobileSticky()).toBe(false);
     });
 
+    test('shouldIncludeMobileSticky should be false if all conditions true except isHosted condition', () => {
+        config.set('page.contentType', 'Article');
+        isBreakpoint.mockReturnValue(true);
+        config.set('switches.mobileStickyLeaderboard', true);
+        config.set('page.isHosted', true);
+        getSync.mockReturnValue('US');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
     test('shouldIncludeMobileSticky should be false if all conditions true except continent', () => {
         config.set('page.contentType', 'Article');
         config.set('switches.mobileStickyLeaderboard', true);
