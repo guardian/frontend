@@ -55,7 +55,8 @@ export const contributionsEpicPrecontributionReminderRoundOne: EpicABTest = make
         audienceCriteria: 'All',
         // Run this test for 10% of the audience
         audience: 0.1,
-        audienceOffset: 0,
+        // Set an offset to not interfere with dotcom's remoteRenderTest
+        audienceOffset: 0.1,
 
         geolocation,
         highPriority: true,
