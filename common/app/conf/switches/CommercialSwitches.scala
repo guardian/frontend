@@ -612,6 +612,7 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+<<<<<<< HEAD
   val youtubePfpAdTargeting: Switch = Switch(
     group = Commercial,
     name = "commercial-youtube-pfp-ad-targeting",
@@ -622,6 +623,8 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
+=======
+>>>>>>> remove commercialYoutubePfpAdTargeting switch
   val pangaeaUsAuBidder: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-pangaea-us-au",
