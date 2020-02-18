@@ -46,10 +46,10 @@ const shouldAutoplay = (
     const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
     const isSwitchedOn = switches.hostedVideoAutoplay || false;
 
-    console.log("flashingElementsAllowed", flashingElementsAllowed);
-    console.log("isVideoArticle", isVideoArticle);
-    console.log("isUSContent", isUSContent);
-    console.log("isSwitchedOn", isSwitchedOn);
+    console.log('flashingElementsAllowed', flashingElementsAllowed);
+    console.log('isVideoArticle', isVideoArticle);
+    console.log('isUSContent', isUSContent);
+    console.log('isSwitchedOn', isSwitchedOn);
 
     if (!page.contentType || !page.productionOffice) {
         return false;
@@ -143,7 +143,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 }
             },
             onPlayerReady(event: { target: YouTubePlayer }) {
-                console.log(" on player ready ");
+                console.log(' on player ready ');
                 if (
                     shouldAutoplay(
                         config.get('page', {}),
