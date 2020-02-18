@@ -277,14 +277,11 @@ const shouldAutoplay = (atomId: string): boolean => {
     const isFront = () => config.get('page.isFront');
 
     if (isUSContent) {
-        const isSponsored =
-            config.get('page.sponsorshipType') === 'paid-content';
-        const isGlabsUS =
-            config.get('page.trackingNames', '').toLowerCase() === 'glabs us';
+        const isPaidContent =
+            config.get('page.isPaidContent');
         return (
             ((isVideoArticle() && isMainVideo()) || isFront()) &&
-            isSponsored &&
-            isGlabsUS &&
+            isPaidContent &&
             flashingElementsAllowed()
         );
     }
