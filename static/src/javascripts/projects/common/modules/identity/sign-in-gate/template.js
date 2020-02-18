@@ -1,4 +1,6 @@
 // @flow
+
+// template html for the 'variant' variant of the test
 const variant: ({
     signInUrl: string,
     guUrl: string,
@@ -24,6 +26,7 @@ const variant: ({
 </div>
 `;
 
+// template html for the 'control' variant of the test
 const control: ({
     signInUrl: string,
     guUrl: string,

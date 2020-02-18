@@ -13,6 +13,8 @@ import {
 } from './helper';
 import type { CurrentABTest, ComponentEventParams } from './types';
 
+// get the html of the whole gate, by getting the html template of the variant, and adding that
+// to the first paragraph child which is hidden by the fade in
 const setTemplate: ({
     child: Element,
     variant: string,
@@ -30,6 +32,7 @@ const setTemplate: ({
     })}
 `;
 
+// 'show' method for the 'variant' variant
 const showVariant: ({
     signInUrl: string,
     guUrl: string,
@@ -120,6 +123,7 @@ const showVariant: ({
     }
 };
 
+// 'show' method for the 'control' variant
 const showControl: ({
     signInUrl: string,
     guUrl: string,
@@ -210,6 +214,7 @@ const showControl: ({
     }
 };
 
+// show method used by the banner, uses a switch statement to show a different layout based on the variant
 export const show: ({
     componentName: string,
     component: OphanComponent,
@@ -264,6 +269,7 @@ export const show: ({
         abTest,
     });
 
+    // control what to show using variants
     switch (variant) {
         case 'control':
             showControl({

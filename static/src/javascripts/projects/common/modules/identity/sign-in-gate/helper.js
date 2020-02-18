@@ -102,6 +102,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
         }, false);
 };
 
+// html event wrapper using bean
 export const addEventHandler: ({
     element: HTMLDivElement,
     event: string,
@@ -111,6 +112,7 @@ export const addEventHandler: ({
     bean.on(element, event, target, handler);
 };
 
+// click event wrapper using addEventHandler method
 export const addClickHandler: ({
     element: HTMLDivElement,
     target: string,
@@ -142,6 +144,7 @@ export const addClickHandler: ({
     });
 };
 
+// add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
     element: HTMLDivElement,
     target: string,
@@ -156,6 +159,7 @@ export const addOpinionBgColour: ({
     }
 };
 
+// change the colour of the text depending the pillar that the user is on
 export const addPillarColour: ({
     element: HTMLDivElement,
     target: string,

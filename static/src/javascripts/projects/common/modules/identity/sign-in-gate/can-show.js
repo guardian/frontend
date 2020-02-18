@@ -7,6 +7,7 @@ import {
     isInvalidSection,
 } from './helper';
 
+// can show method for banners, can control how this functions for different variants using the switch block
 export const canShow: ({
     componentName: string,
     component: OphanComponent,
