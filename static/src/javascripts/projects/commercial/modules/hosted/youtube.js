@@ -46,11 +46,6 @@ const shouldAutoplay = (
     const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
     const isSwitchedOn = switches.hostedVideoAutoplay || false;
 
-    console.log('flashingElementsAllowed', flashingElementsAllowed);
-    console.log('isVideoArticle', isVideoArticle);
-    console.log('isUSContent', isUSContent);
-    console.log('isSwitchedOn', isSwitchedOn);
-
     if (!page.contentType || !page.productionOffice) {
         return false;
     }
