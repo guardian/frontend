@@ -248,7 +248,10 @@ const STATES = {
 };
 
 const shouldAutoplay = (atomId: string): boolean => {
-    const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
+    const isUSContent = config.get('page.productionOffice').toLowerCase() === 'us';
+    console.log("isUSContent", isUSContent);
+    const isAutoplayBlockingPlatform = () => (isIOS() || isAndroid()) && !isUSContent;
+    console.log("isAutoplayBlockingPlatform()", isAutoplayBlockingPlatform());
 
     const isInternalReferrer = (): boolean => {
         if (config.get('page.isDev')) {
