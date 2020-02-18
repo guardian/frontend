@@ -10,7 +10,7 @@ import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
 import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
-import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
+import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -21,7 +21,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     appnexusUSAdapter,
     pangaeaAdapterTest,
     subscriptionsBannerNewYearCopyTest,
-    signInGateSecundus,
+    signInGate,
 ];
 
 export const priorityEpicTest: EpicABTest = remoteRenderEpic;
