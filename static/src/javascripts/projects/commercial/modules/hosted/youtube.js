@@ -138,7 +138,6 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                 }
             },
             onPlayerReady(event: { target: YouTubePlayer }) {
-                console.log(' on player ready ');
                 if (
                     shouldAutoplay(
                         config.get('page', {}),
