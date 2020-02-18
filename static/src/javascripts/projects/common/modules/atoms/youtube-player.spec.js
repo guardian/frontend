@@ -39,7 +39,6 @@ describe('create ads config', () => {
     it('disables ads in ad-free', () => {
         const result = youtubePlayer.createAdsConfig(
             true, // ad-free
-            false,
             false
         );
 
@@ -47,13 +46,13 @@ describe('create ads config', () => {
     });
 
     it('does not disable ads when we are not in ad-free', () => {
-        const result = youtubePlayer.createAdsConfig(false, false, false);
+        const result = youtubePlayer.createAdsConfig(false, false);
 
         expect(result.disableAds).toBeFalsy();
     });
 
     it('in non ad-free, returns false nonPersonalizedAds without consent', () => {
-        const result = youtubePlayer.createAdsConfig(false, false, false);
+        const result = youtubePlayer.createAdsConfig(false, false);
 
         if (result.hasOwnProperty('nonPersonalizedAd')) {
             expect(result.nonPersonalizedAd).toBeTruthy();
@@ -63,49 +62,20 @@ describe('create ads config', () => {
     it('in non ad-free, returns true nonPersonalizedAds with consent', () => {
         const result = youtubePlayer.createAdsConfig(
             false,
-            true, // consent
-            false
+            true // consent
         );
 
         expect(result.nonPersonalizedAd).toBeFalsy();
     });
 
-    it('in non ad-free and pfp variant, returns true nonPersonalizedAds with consent', () => {
-        const result = youtubePlayer.createAdsConfig(
-            false,
-            true, // consent
-            true // pfp variant
-        );
-
-        expect(result.nonPersonalizedAd).toBeFalsy();
-    });
-
-    it('in non ad-free and pfp variant, returns false nonPersonalizedAds without consent', () => {
-        const result = youtubePlayer.createAdsConfig(
-            false,
-            false,
-            true // pfp variant
-        );
-
-        expect(result.nonPersonalizedAd).toBeTruthy();
-    });
-
-    it('in non ad-free and pfp variant, includes adUnit', () => {
-        const result = youtubePlayer.createAdsConfig(
-            false,
-            false,
-            true // pfp variant
-        );
+    it('in non ad-free includes adUnit', () => {
+        const result = youtubePlayer.createAdsConfig(false, false);
 
         expect(result.adTagParameters.iu).toEqual('adunit');
     });
 
-    it('in non ad-free and pfp variant, includes url-escaped targeting params', () => {
-        const result = youtubePlayer.createAdsConfig(
-            false,
-            false,
-            true // pfp variant
-        );
+    it('in non ad-free includes url-escaped targeting params', () => {
+        const result = youtubePlayer.createAdsConfig(false, false);
 
         expect(result.adTagParameters.cust_params).toEqual(
             'key%3Dvalue%26permutive%3D42'
