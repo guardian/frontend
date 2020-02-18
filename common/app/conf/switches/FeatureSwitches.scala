@@ -462,4 +462,14 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val slotBodyEnd = Switch(
+    SwitchGroup.Feature,
+    "slot-body-end",
+    "If on, will populate body end slot from Slot Machine (note, only relevant to DCR for now)",
+    owners = Seq(Owner.withEmail("slot.machine.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }
