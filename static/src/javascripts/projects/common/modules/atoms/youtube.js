@@ -277,8 +277,7 @@ const shouldAutoplay = (atomId: string): boolean => {
     const isFront = () => config.get('page.isFront');
 
     if (isUSContent) {
-        const isPaidContent =
-            config.get('page.isPaidContent');
+        const isPaidContent = config.get('page.isPaidContent');
         return (
             ((isVideoArticle() && isMainVideo()) || isFront()) &&
             isPaidContent &&
