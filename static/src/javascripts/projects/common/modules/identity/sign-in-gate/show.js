@@ -4,9 +4,14 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
 import mediator from 'lib/mediator';
-import { submitViewEvent, submitClickEvent } from './component-event-helper';
-import { make } from './template';
-import { setUserDismissedGate } from './helper';
+import { submitViewEvent } from './component-event-helper';
+import { makeTemplate } from './template';
+import {
+    setUserDismissedGate,
+    addClickHandler,
+    addOpinionBgColour,
+    addPillarColour,
+} from './helper';
 
 type CurrentABTest = {
     name: string,
@@ -22,6 +27,23 @@ type ComponentEventParams = {
     browserId?: string,
     visitId?: string,
 };
+
+const setTemplate: ({
+    child: Element,
+    variant: string,
+    signInUrl: string,
+    guUrl: string,
+}) => string = ({ child, variant, signInUrl, guUrl }) => `
+    <div class="signin-gate__first-paragraph-container">
+        ${child.outerHTML}
+        <div class="signin-gate__first-paragraph-overlay"></div>
+    </div>
+    ${makeTemplate({
+        signInUrl,
+        guUrl,
+        abVariant: variant,
+    })}
+`;
 
 const showVariant: ({
     signInUrl: string,
@@ -43,75 +65,33 @@ const showVariant: ({
             shadowArticleBody.className = articleBody.className;
 
             // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
-            shadowArticleBody.innerHTML = `
-                <div class="signin-gate__first-paragraph-container">
-                    ${articleBodyFirstChild.outerHTML}
-                    <div class="signin-gate__first-paragraph-overlay"></div>
-                </div>
-                ${make(signInUrl, guUrl)}
-            `;
+            shadowArticleBody.innerHTML = setTemplate({
+                child: articleBodyFirstChild,
+                guUrl,
+                signInUrl,
+                variant: abTest.variant,
+            });
 
             // check if comment, and add comment/opinion bg colour
-            if (config.get(`page.cardStyle`) === 'comment') {
-                const overlay = shadowArticleBody.querySelector(
-                    '.signin-gate__first-paragraph-overlay'
-                );
-                if (overlay) {
-                    overlay.classList.add(
-                        'signin-gate__first-paragraph-overlay--comment'
-                    );
-                }
-            }
+            addOpinionBgColour({
+                element: shadowArticleBody,
+                target: '.signin-gate__first-paragraph-overlay',
+            });
 
             // check page type/pillar to change text colour of the sign in gate
-            const paragraphText = shadowArticleBody.querySelector(
-                '.signin-gate__benefits--text'
-            );
-            if (paragraphText) {
-                switch (config.get(`page.pillar`)) {
-                    case 'News':
-                        paragraphText.classList.add(
-                            `signin-gate__benefits--text-news`
-                        );
-                        break;
-                    case 'Opinion':
-                        paragraphText.classList.add(
-                            `signin-gate__benefits--text-comment`
-                        );
-                        break;
-                    case 'Sport':
-                        paragraphText.classList.add(
-                            `signin-gate__benefits--text-sport`
-                        );
-                        break;
-                    case 'Arts':
-                        paragraphText.classList.add(
-                            `signin-gate__benefits--text-culture`
-                        );
-                        break;
-                    case 'Lifestyle':
-                        paragraphText.classList.add(
-                            `signin-gate__benefits--text-lifestyle`
-                        );
-                        break;
-                    default:
-                        break;
-                }
-            }
+            addPillarColour({
+                element: shadowArticleBody,
+                target: '.signin-gate__benefits--text',
+            });
 
             // add click handler for the dismiss of the gate
-            bean.on(
-                shadowArticleBody,
-                'click',
-                '.js-signin-gate__dismiss',
-                () => {
-                    // submit dismiss click event to ophan
-                    submitClickEvent({
-                        component,
-                        abTest,
-                        value: 'dismiss',
-                    });
-
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__dismiss',
+                abTest,
+                component,
+                value: 'dismiss',
+                callback: () => {
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
                     shadowArticleBody.remove();
@@ -123,34 +103,117 @@ const showVariant: ({
                     setUserDismissedGate({
                         componentName,
                         name: abTest.name,
-                        variant: 'variant',
+                        variant: abTest.variant,
                     });
-                }
-            );
+                },
+            });
 
             // add click handler for sign in button click
-            bean.on(
-                shadowArticleBody,
-                'click',
-                '.js-signin-gate__button',
-                () => {
-                    // submit sign in button click event to ophan
-                    submitClickEvent({
-                        component,
-                        abTest,
-                        value: 'signin_button',
-                    });
-                }
-            );
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__button',
+                abTest,
+                component,
+                value: 'signin_button',
+            });
 
             // add click handler for the why sign in link
-            bean.on(shadowArticleBody, 'click', '.js-signin-gate__why', () => {
-                // submit why sign in track event
-                submitClickEvent({
-                    component,
-                    abTest,
-                    value: 'why_sign_in',
-                });
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__why',
+                abTest,
+                component,
+                value: 'why_sign_in',
+            });
+
+            // Hide the article Body. Append the shadow one.
+            articleBody.style.display = 'none';
+            if (articleBody.parentNode) {
+                articleBody.parentNode.appendChild(shadowArticleBody);
+            }
+        }
+    }
+};
+
+const showControl: ({
+    signInUrl: string,
+    guUrl: string,
+    component: OphanComponent,
+    abTest: CurrentABTest,
+    componentName: string,
+}) => void = ({ signInUrl, guUrl, component, abTest, componentName }) => {
+    // get the whole article body
+    const articleBody = document.querySelector('.js-article__body');
+
+    if (articleBody) {
+        // get the first paragraph of the article
+        const articleBodyFirstChild = articleBody.firstElementChild;
+        if (articleBodyFirstChild) {
+            // container div to hold our "shadow" article dom while we create it
+            const shadowArticleBody = document.createElement('div');
+            // add the article body classes to the "shadow"
+            shadowArticleBody.className = articleBody.className;
+
+            // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
+            shadowArticleBody.innerHTML = setTemplate({
+                child: articleBodyFirstChild,
+                guUrl,
+                signInUrl,
+                variant: abTest.variant,
+            });
+
+            // check if comment, and add comment/opinion bg colour
+            addOpinionBgColour({
+                element: shadowArticleBody,
+                target: '.signin-gate__first-paragraph-overlay',
+            });
+
+            // check page type/pillar to change text colour of the sign in gate
+            addPillarColour({
+                element: shadowArticleBody,
+                target: '.signin-gate__benefits--text',
+            });
+
+            // add click handler for the dismiss of the gate
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__dismiss',
+                abTest,
+                component,
+                value: 'dismiss',
+                callback: () => {
+                    // show the current body. Remove the shadow one
+                    articleBody.style.display = 'block';
+                    shadowArticleBody.remove();
+
+                    // Tell other things the article has been redisplayed
+                    mediator.emit('page:article:redisplayed');
+
+                    // user pref dismissed gate
+                    setUserDismissedGate({
+                        componentName,
+                        name: abTest.name,
+                        variant: abTest.variant,
+                    });
+                },
+            });
+
+            // add click handler for sign in button click
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__button',
+                abTest,
+                component,
+                value: 'signin_button',
+            });
+
+            // add click handler for the why sign in link
+            addClickHandler({
+                element: shadowArticleBody,
+                target: '.js-signin-gate__why',
+                abTest,
+                component,
+                value: 'why_sign_in',
             });
 
             // Hide the article Body. Append the shadow one.
@@ -217,6 +280,15 @@ export const show: ({
     });
 
     switch (variant) {
+        case 'control':
+            showControl({
+                abTest,
+                component,
+                componentName,
+                guUrl,
+                signInUrl,
+            });
+            return true;
         case 'variant':
             showVariant({
                 abTest,

@@ -1,4 +1,5 @@
 // @flow
+import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
 import { local } from 'lib/storage';
 import config from 'lib/config';
@@ -7,6 +8,7 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import { submitClickEvent } from './component-event-helper';
 
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;
@@ -97,4 +99,95 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
 
             return config.get(`page.section`) === section;
         }, false);
+};
+
+export const addEventHandler: ({
+    element: HTMLDivElement,
+    event: string,
+    target: string,
+    handler: Function,
+}) => void = ({ element, event, target, handler }) => {
+    bean.on(element, event, target, handler);
+};
+
+export const addClickHandler: ({
+    element: HTMLDivElement,
+    target: string,
+    component: OphanComponent,
+    abTest: CurrentABTest,
+    value: string,
+    callback?: Function,
+}) => void = ({
+    element,
+    target,
+    component,
+    abTest,
+    value,
+    callback = () => {},
+}) => {
+    addEventHandler({
+        element,
+        event: 'click',
+        target,
+        handler: () => {
+            submitClickEvent({
+                component,
+                abTest,
+                value,
+            });
+
+            return callback();
+        },
+    });
+};
+
+export const addOpinionBgColour: ({
+    element: HTMLDivElement,
+    target: string,
+}) => void = ({ element, target }) => {
+    if (config.get(`page.cardStyle`) === 'comment') {
+        const overlay = element.querySelector(target);
+        if (overlay) {
+            overlay.classList.add(
+                'signin-gate__first-paragraph-overlay--comment'
+            );
+        }
+    }
+};
+
+export const addPillarColour: ({
+    element: HTMLDivElement,
+    target: string,
+}) => void = ({ element, target }) => {
+    // check page type/pillar to change text colour of the sign in gate
+    const paragraphText = element.querySelector(target);
+    if (paragraphText) {
+        switch (config.get(`page.pillar`)) {
+            case 'News':
+                paragraphText.classList.add(`signin-gate__benefits--text-news`);
+                break;
+            case 'Opinion':
+                paragraphText.classList.add(
+                    `signin-gate__benefits--text-comment`
+                );
+                break;
+            case 'Sport':
+                paragraphText.classList.add(
+                    `signin-gate__benefits--text-sport`
+                );
+                break;
+            case 'Arts':
+                paragraphText.classList.add(
+                    `signin-gate__benefits--text-culture`
+                );
+                break;
+            case 'Lifestyle':
+                paragraphText.classList.add(
+                    `signin-gate__benefits--text-lifestyle`
+                );
+                break;
+            default:
+                break;
+        }
+    }
 };
