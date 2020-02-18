@@ -9,6 +9,7 @@ import {
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { submitClickEvent } from './component-event-helper';
+import type { CurrentABTest } from './types';
 
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;

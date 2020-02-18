@@ -1,5 +1,4 @@
 // @flow
-import bean from 'bean';
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
@@ -12,21 +11,7 @@ import {
     addOpinionBgColour,
     addPillarColour,
 } from './helper';
-
-type CurrentABTest = {
-    name: string,
-    variant: string,
-};
-
-type ComponentEventParams = {
-    componentType: string,
-    componentId?: string,
-    abTestName: string,
-    abTestVariant: string,
-    viewId?: string,
-    browserId?: string,
-    visitId?: string,
-};
+import type { CurrentABTest, ComponentEventParams } from './types';
 
 const setTemplate: ({
     child: Element,
