@@ -247,23 +247,13 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const isUSLabsSponsored = (): boolean => {
+const shouldAutoplay = (atomId: string): boolean => {
     const isUSContent =
         config.get('page.productionOffice', '').toLowerCase() === 'us';
-    const isSponsored = config.get('page.sponsorshipType') === 'paid-content';
-    const isGlabsUS =
-        config.get('page.trackingNames', '').toLowerCase() === 'glabs us';
-    return isUSContent && isSponsored && isGlabsUS;
-};
 
-const shouldAutoplay = (atomId: string): boolean => {
-    const isAutoplayBlockingPlatform = () =>
-        (isIOS() || isAndroid()) && !isUSLabsSponsored();
+    const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = (): boolean => {
-        if (isUSLabsSponsored) {
-            return true;
-        }
         if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
@@ -286,6 +276,18 @@ const shouldAutoplay = (atomId: string): boolean => {
 
     const isFront = () => config.get('page.isFront');
 
+    if (isUSContent) {
+        const isSponsored =
+            config.get('page.sponsorshipType') === 'paid-content';
+        const isGlabsUS =
+            config.get('page.trackingNames', '').toLowerCase() === 'glabs us';
+        return (
+            ((isVideoArticle() && isMainVideo()) || isFront()) &&
+            isSponsored &&
+            isGlabsUS &&
+            flashingElementsAllowed()
+        );
+    }
     return (
         ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
             isFront()) &&
