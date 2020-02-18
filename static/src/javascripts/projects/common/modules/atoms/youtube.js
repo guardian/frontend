@@ -247,14 +247,21 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const shouldAutoplay = (atomId: string): boolean => {
+const isUSLabsSponsored = (): boolean => {
     const isUSContent =
-        config.get('page.productionOffice').toLowerCase() === 'us';
+        config.get('page.productionOffice', '').toLowerCase() === 'us';
+    const isSponsored = config.get('page.sponsorshipType') === 'paid-content';
+    const isGlabsUS =
+        config.get('page.trackingNames', '').toLowerCase() === 'glabs us';
+    return isUSContent && isSponsored && isGlabsUS;
+};
+
+const shouldAutoplay = (atomId: string): boolean => {
     const isAutoplayBlockingPlatform = () =>
-        (isIOS() || isAndroid()) && !isUSContent;
+        (isIOS() || isAndroid()) && !isUSLabsSponsored();
 
     const isInternalReferrer = (): boolean => {
-        if (isUSContent) {
+        if (isUSLabsSponsored) {
             return true;
         }
         if (config.get('page.isDev')) {
