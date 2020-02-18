@@ -101,23 +101,22 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
-    wantPersonalisedAds: boolean,
-    isPfpAdTargetingSwitchedOn: boolean
+    wantPersonalisedAds: boolean
 ): Object => {
     if (adFree) {
         return { disableAds: true };
-    } else if (isPfpAdTargetingSwitchedOn) {
-        const custParams = getPageTargeting();
-        custParams.permutive = getPermutivePFPSegments();
-        return {
-            nonPersonalizedAd: !wantPersonalisedAds,
-            adTagParameters: {
-                iu: config.get('page.adUnit'),
-                cust_params: encodeURIComponent(constructQuery(custParams)),
-            },
-        };
     }
-    return { nonPersonalizedAd: !wantPersonalisedAds };
+
+    const custParams = getPageTargeting();
+    custParams.permutive = getPermutivePFPSegments();
+
+    return {
+        nonPersonalizedAd: !wantPersonalisedAds,
+        adTagParameters: {
+            iu: config.get('page.adUnit'),
+            cust_params: encodeURIComponent(constructQuery(custParams)),
+        },
+    };
 };
 
 const setupPlayer = (
@@ -128,10 +127,6 @@ const setupPlayer = (
     onStateChange,
     onError
 ) => {
-    const isPfpAdTargetingSwitchedOn: boolean = config.get(
-        'switches.commercialYoutubePfpAdTargeting',
-        false
-    );
     const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
@@ -145,8 +140,7 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        !!consentState,
-        isPfpAdTargetingSwitchedOn
+        !!consentState
     );
 
     return new window.YT.Player(elt.id, {

@@ -204,7 +204,7 @@ trait FeatureSwitches {
     "If this is switched on then videos are enhanced using VideoJS",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 2, 19),
+    sellByDate = new LocalDate(2020, 3, 31),
     exposeClientSide = true
   )
 
@@ -461,5 +461,15 @@ trait FeatureSwitches {
     safeState = On,
     sellByDate = never,
     exposeClientSide = true
+  )
+
+  val slotBodyEnd = Switch(
+    SwitchGroup.Feature,
+    "slot-body-end",
+    "If on, will populate body end slot from Slot Machine (note, only relevant to DCR for now)",
+    owners = Seq(Owner.withEmail("slot.machine.dev@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
   )
 }
