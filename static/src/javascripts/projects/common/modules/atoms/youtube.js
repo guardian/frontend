@@ -248,6 +248,9 @@ const STATES = {
 };
 
 const shouldAutoplay = (atomId: string): boolean => {
+    const isUSContent =
+        config.get('page.productionOffice', '').toLowerCase() === 'us';
+
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = (): boolean => {
@@ -273,6 +276,14 @@ const shouldAutoplay = (atomId: string): boolean => {
 
     const isFront = () => config.get('page.isFront');
 
+    if (isUSContent) {
+        const isPaidContent = config.get('page.isPaidContent');
+        return (
+            ((isVideoArticle() && isMainVideo()) || isFront()) &&
+            isPaidContent &&
+            flashingElementsAllowed()
+        );
+    }
     return (
         ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
             isFront()) &&
