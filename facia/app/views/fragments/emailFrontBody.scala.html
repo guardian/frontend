@@ -130,11 +130,9 @@
 }
 
 @freeTextWithImage(card: ContentCard, collectionName: String) = {
-    @faciaCard(classesForCard(card)) {
-@*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
+        @*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
         @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
         @row(Seq("free-text"))(Html(card.header.headline))
-    }
 }
 
 @freeText(text: String) = {
