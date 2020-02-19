@@ -1,7 +1,7 @@
 package views.support
 
 import conf.Static
-import layout.ContentCard
+import layout.{ContentCard, EditionalisedLink}
 import model._
 import play.twirl.api.Html
 import play.api.mvc._
@@ -52,7 +52,16 @@ object EmailHelpers {
   def imgFromCard(card: ContentCard, colWidth: Int = 12, altTextOverride: Option[String] = None)(implicit requestHeader: RequestHeader): Option[Html] = {
     val width = ((colWidth.toDouble / 12.toDouble) * EmailImageParams.fullWidth).toInt
     imageUrlFromCard(card, width).map { url => Html {
-        s"""<a ${card.header.url.hrefWithRel}>${img(width)(url, Some(altTextOverride.getOrElse(card.header.headline)))}</a>"""
+        val urlMatcher = raw"^(https?|/).*".r
+
+        card.header.url match {
+          case EditionalisedLink(urlMatcher(baseUrl)) => {
+            s"""<a ${card.header.url.hrefWithRel}>${img(width)(url, Some(altTextOverride.getOrElse(card.header.headline)))}</a>"""
+          }
+          case _ => {
+            s"""${img(width)(url, Some(altTextOverride.getOrElse(card.header.headline)))}"""
+          }
+        }
       }
     }
   }
