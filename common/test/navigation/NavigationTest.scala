@@ -35,14 +35,6 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     NavMenu(Uk).pillars should be(Seq(ukNewsPillar, ukOpinionPillar, ukSportPillar, ukCulturePillar, ukLifestylePillar))
   }
 
-  "the route `/cities`" should "return the NavLink for cities" in {
-    val edition = International
-    val root = NavMenu.navRoot(edition)
-    val maybeCitiesNavLink = NavMenu.findDescendantByUrl("/cities", edition, root.children, root.otherLinks)
-
-    maybeCitiesNavLink.map( l => l should be(cities) )
-  }
-
   "On `/index/contributors`, the parent" should "be Opinion" in {
     val edition = Us
     val root =  NavMenu.navRoot(edition)

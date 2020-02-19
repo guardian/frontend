@@ -7,7 +7,6 @@ private object NavLinks {
   val tech = NavLink("Tech", "/technology")
   val politics = NavLink("UK politics", "/politics")
   val media = NavLink("Media", "/media")
-  val cities = NavLink("Cities", "/cities")
   val globalDevelopment = NavLink("Global development", "/global-development")
   val australiaNews = NavLink("Australia", "/australia-news", longTitle = "Australia news")
   val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", longTitle = "Politics")
@@ -60,9 +59,9 @@ private object NavLinks {
   val careers = NavLink("Careers", "/money/work-and-careers")
   val obituaries = NavLink("Obituaries", "/tone/obituaries")
   val ukNews = NavLink("UK", "/uk-news", longTitle = "UK news", children = List(politics, education, media, society, law, scotland, wales, northernIreland))
-  val world = NavLink("World", "/world", longTitle = "World news", children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, cities, globalDevelopment))
+  val world = NavLink("World", "/world", longTitle = "World news", children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, globalDevelopment))
   val ukEnvironment = NavLink("Environment", "/environment", children = List(climateChange, wildlife, energy, pollution))
-  val auEnvironment = ukEnvironment.copy(children = List(cities, globalDevelopment, ourWideBrownLand))
+  val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness))
   val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
@@ -222,7 +221,6 @@ private object NavLinks {
       science,
       tech,
       globalDevelopment,
-      cities,
       obituaries
     )
   )
@@ -259,7 +257,6 @@ private object NavLinks {
       ukNews,
       ukEnvironment,
       science,
-      cities,
       globalDevelopment,
       football,
       tech,
