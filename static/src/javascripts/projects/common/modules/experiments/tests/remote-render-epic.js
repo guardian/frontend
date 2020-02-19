@@ -165,15 +165,19 @@ const remoteRenderTest = {
                                         return;
                                     }
 
-                                    const container = document.createElement('div');
+                                    const container = document.createElement(
+                                        'div'
+                                    );
                                     parent.insertBefore(container, target);
 
                                     // use Shadow Dom if found
                                     if (container.attachShadow) {
                                         console.log('epic - has shadow dom');
-                                        const shadowRoot = container.attachShadow({
-                                            mode: 'open',
-                                        });
+                                        const shadowRoot = container.attachShadow(
+                                            {
+                                                mode: 'open',
+                                            }
+                                        );
                                         shadowRoot.innerHTML = content;
                                     } else {
                                         console.log('epic - no shadow dom');
