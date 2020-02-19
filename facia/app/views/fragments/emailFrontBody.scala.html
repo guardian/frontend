@@ -1,3 +1,4 @@
+@import model.pressed.Cutout
 @()(implicit page: model.PressedPage, request: RequestHeader)
 
 @import layout.slices.EmailLayouts
@@ -135,6 +136,12 @@
         @row(Seq("free-text"))(Html(card.header.headline))
 }
 
+@freeTextWithCutoutImage(card: ContentCard, collectionName: String) = {
+        @*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
+    @row(Seq("free-text"))(Html(card.header.headline))
+    @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
+}
+
 @freeText(text: String) = {
     @fullRow(Seq("free-text"))(Html(text))
 }
@@ -146,7 +153,14 @@
             @freeText(card.header.headline)
         }
         case EmailFreeText => {
-            @freeTextWithImage(card, collectionName)
+            @card.properties.map(_.image) match {
+                case Some(Some(Cutout(_, _, _))) => {
+                    @freeTextWithCutoutImage(card, collectionName)
+                }
+                case _ => {
+                    @freeTextWithImage(card, collectionName)
+                }
+            }
         }
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
