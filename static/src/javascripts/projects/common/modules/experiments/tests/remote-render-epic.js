@@ -29,6 +29,7 @@ const buildKeywordTags = page => {
 
 const fetchRemoteEpic = payload => {
     const api = 'https://contributions.guardianapis.com/epic';
+    // const api = 'http://localhost:8081/epic';
 
     return fetch(api, {
         method: 'post',
@@ -103,6 +104,8 @@ const remoteRenderTest = {
                     countryCode: geolocation,
                 };
 
+                console.log('=== Contributions Geolocation: ', localisation);
+
                 const targeting = {
                     contentType: page.contentType,
                     sectionName: page.sectionName,
@@ -129,72 +132,75 @@ const remoteRenderTest = {
                     variant.id
                 );
 
-                fetchRemoteEpic(payload)
-                    .then(checkResponseOk)
-                    .then(decodeJson)
-                    .then(json => {
-                        if (json && json.data) {
-                            const epicHtml = json.data.html;
-                            const css = json.data.css;
-                            const content = `<style>${css}</style>${epicHtml}`;
+                // HACK - testing if this would fix a race condition
+                setTimeout(() => {
+                    fetchRemoteEpic(payload)
+                        .then(checkResponseOk)
+                        .then(decodeJson)
+                        .then(json => {
+                            if (json && json.data) {
+                                const epicHtml = json.data.html;
+                                const css = json.data.css;
+                                const content = `<style>${css}</style>${epicHtml}`;
 
-                            return fastdom.write(() => {
-                                const target = document.querySelector(
-                                    '.submeta'
-                                );
-
-                                if (!target) {
-                                    reportError(
-                                        new Error(
-                                            'Could not find target element for Epic'
-                                        ),
-                                        {},
-                                        false
+                                return fastdom.write(() => {
+                                    const target = document.querySelector(
+                                        '.submeta'
                                     );
-                                    return;
-                                }
 
-                                const parent = target.parentNode;
+                                    if (!target) {
+                                        reportError(
+                                            new Error(
+                                                'Could not find target element for Epic'
+                                            ),
+                                            {},
+                                            false
+                                        );
+                                        return;
+                                    }
 
-                                if (!parent) {
-                                    return;
-                                }
+                                    const parent = target.parentNode;
 
-                                const container = document.createElement('div');
-                                parent.insertBefore(container, target);
+                                    if (!parent) {
+                                        return;
+                                    }
 
-                                // use Shadow Dom if found
-                                if (container.attachShadow) {
-                                    console.log('epic - has shadow dom');
-                                    const shadowRoot = container.attachShadow({
-                                        mode: 'open',
-                                    });
-                                    shadowRoot.innerHTML = content;
-                                } else {
-                                    console.log('epic - no shadow dom');
-                                    container.innerHTML = content;
-                                }
+                                    const container = document.createElement('div');
+                                    parent.insertBefore(container, target);
 
-                                emitInsertEvent(
-                                    test,
-                                    products,
-                                    variant.campaignCode
-                                );
+                                    // use Shadow Dom if found
+                                    if (container.attachShadow) {
+                                        console.log('epic - has shadow dom');
+                                        const shadowRoot = container.attachShadow({
+                                            mode: 'open',
+                                        });
+                                        shadowRoot.innerHTML = content;
+                                    } else {
+                                        console.log('epic - no shadow dom');
+                                        container.innerHTML = content;
+                                    }
 
-                                setupOnView(
-                                    container,
-                                    test,
-                                    variant.campaignCode,
-                                    trackingCampaignId,
-                                    products
-                                );
-                            });
-                        }
-                    })
-                    .catch(error => {
-                        console.log(error);
-                        reportError(error, {}, false);
-                    });
+                                    emitInsertEvent(
+                                        test,
+                                        products,
+                                        variant.campaignCode
+                                    );
+
+                                    setupOnView(
+                                        container,
+                                        test,
+                                        variant.campaignCode,
+                                        trackingCampaignId,
+                                        products
+                                    );
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            console.log(error);
+                            reportError(error, {}, false);
+                        });
+                }, 0);
             },
         },
     ],
