@@ -26,6 +26,14 @@ $cta-font-color: #000000;
     font-style: normal;
 }
 
+@font-face {
+    font-family: 'Guardian Egyptian Text';
+    src: url('https://assets.guim.co.uk/static/frontend/fonts/guardian-textegyptian/noalts-not-hinted/GuardianTextEgyptian-Regular.woff2') format('woff2'), url('https://assets.guim.co.uk/static/frontend/fonts/guardian-textegyptian/noalts-not-hinted/GuardianTextEgyptian-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+}
+
 // table
 .fc,
 .row,
@@ -51,9 +59,9 @@ $cta-font-color: #000000;
 }
 
 .free-text {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    line-height: 18px;
+    font-family: 'Guardian Egyptian Text', Georgia, serif;
+    font-size: 15px;
+    line-height: 20px;
     padding: 6px $gutter;
 
     a {
