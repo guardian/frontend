@@ -10,7 +10,7 @@ describe('Cross-frame messenger: resize', () => {
     beforeEach(() => {
         if (document.body) {
             document.body.innerHTML = `
-              <div id="slot01" class="js-ad-slot">
+              <div id="slot01" class="js-ad-slot" style="width: 7px; height: 14px;" >
                 <div id="container01">
                     <div id="iframe01" class="iframe" data-unit="ch"></div>
                 </div>
@@ -64,7 +64,7 @@ describe('Cross-frame messenger: resize', () => {
             expect(result).toBeNull();
         });
 
-        it('should set width and height of the ad slot', () => {
+        it('should set width and height of the iFrame and leave ad slot unchanged', () => {
             const fallback = document.createElement('div');
             const fakeIframeContainer =
                 document.getElementById('container01') || fallback;
@@ -80,8 +80,8 @@ describe('Cross-frame messenger: resize', () => {
             ).then(() => {
                 expect(fakeIframe.style.height).toBe('10px');
                 expect(fakeIframe.style.width).toBe('20px');
-                expect(fakeAdSlot.style.height).toBe('10px');
-                expect(fakeAdSlot.style.width).toBe('20px');
+                expect(fakeAdSlot.style.height).toBe('14px');
+                expect(fakeAdSlot.style.width).toBe('7px');
             });
         });
     });
