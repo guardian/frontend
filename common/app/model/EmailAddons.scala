@@ -109,7 +109,7 @@ case object CuratedMediaBriefing extends FrontEmailMetadata {
 case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   val name = "The Week In Patriarchy"
   override val banner = Some("the-week-in-patriarchy.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/the-week-in-patriarchy")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "commentisfree/series/the-week-in-patriarchy")
 }
 
 case object OutsideInAmerica extends ArticleEmailMetadata {
