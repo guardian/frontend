@@ -1,5 +1,6 @@
 package views.support
 
+import com.gu.commercial.display.{AdTargetParam, AdTargetParamValue, SingleValue}
 import com.gu.commercial.display.AdTargetParam.toMap
 import common.Edition
 import common.Maps.RichMap
@@ -39,6 +40,10 @@ object JavaScriptPage {
       JsArray(ids map (id => JsNumber(id)))
     }
 
+    val commercialAdTargetingWithAdUnit: Map[String, AdTargetParamValue] =
+      toMap(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty)) +
+      ("adUnit" -> SingleValue(metaData.fullAdUnitPath))
+
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
       "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
@@ -48,7 +53,7 @@ object JavaScriptPage {
         case _: CommercialExpiryPage => true
         case _ => false
       }),
-      "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
+      "sharedAdTargeting" -> Json.toJson(commercialAdTargetingWithAdUnit),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
       "hbImpl" -> JsObject(Seq(
           "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
