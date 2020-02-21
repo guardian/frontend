@@ -1,5 +1,5 @@
 // @flow
-import { checkElemsForVideos } from 'common/modules/atoms/youtube';
+import { checkElemsForVideos, muteIFrame } from 'common/modules/atoms/youtube';
 
 jest.mock('common/modules/atoms/youtube-player', () => ({
     initYoutubePlayer: jest.fn(() => null),
@@ -46,6 +46,68 @@ describe('youtube', () => {
 
         if (document.body) {
             expect(document.body.innerHTML).toBe(div);
+        }
+    });
+
+    it('mutes an iframe by amending the src property if no other URL paramaters', () => {
+        const docSrc = 'http://www.testme.com';
+
+        const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
+
+        if (document.body) {
+            document.body.innerHTML = div;
+        }
+
+        const iframe = ((document.getElementById(
+            'iframeId'
+        ): any): HTMLIFrameElement);
+
+        muteIFrame(iframe);
+
+        if (document.body) {
+            expect(iframe.src).toBe('http://www.test.me.com?mute=1');
+        }
+    });
+
+    it('adds a new parameter to mute iframe if parameters already exist', () => {
+        const docSrc = 'http://www.testme.com?randomParam=abc';
+
+        const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
+
+        if (document.body) {
+            document.body.innerHTML = div;
+        }
+
+        const iframe = ((document.getElementById(
+            'iframeId'
+        ): any): HTMLIFrameElement);
+
+        muteIFrame(iframe);
+
+        if (document.body) {
+            expect(iframe.src).toBe(
+                'http://www.testme.com?randomParam=abc&mute=1'
+            );
+        }
+    });
+
+    it("doesn't amend iframe src property if already muted", () => {
+        const docSrc = 'http://www.testme.com?mute=1';
+
+        const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
+
+        if (document.body) {
+            document.body.innerHTML = div;
+        }
+
+        const iframe = ((document.getElementById(
+            'iframeId'
+        ): any): HTMLIFrameElement);
+
+        muteIFrame(iframe);
+
+        if (document.body) {
+            expect(iframe.src).toBe('http://www.test.me.com?mute=1');
         }
     });
 });
