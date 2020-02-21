@@ -127,7 +127,7 @@ const setupPlayer = (
     onStateChange,
     onError
 ) => {
-    const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
+    const disableRelatedVideos = false;
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
     /**
@@ -136,7 +136,6 @@ const setupPlayer = (
      * shown. Therefore for the time being we will pass an
      * empty array.
      */
-    // const relatedChannels = !disableRelatedVideos && channelId ? [channelId] : [];
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
