@@ -11,7 +11,7 @@ const pageSkin = (): void => {
     const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
     const adLabelHeight = 24;
     let topPosition: number = 0;
-    let hasTruskin: boolean = false;
+    let truskinRendered: boolean = false;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -44,7 +44,7 @@ const pageSkin = (): void => {
         if (topPosition === 0) {
             const navHeader = document.getElementsByClassName('new-header')[0];
             if (navHeader) {
-                topPosition = hasTruskin
+                topPosition = truskinRendered
                     ? navHeader.offsetTop + adLabelHeight
                     : navHeader.offsetTop + navHeader.offsetHeight;
             }
@@ -65,6 +65,12 @@ const pageSkin = (): void => {
         footer: HTMLElement,
         topBannerAd: HTMLElement
     ): void => {
+        const topBannerAdContainer = document.querySelector(
+            '.top-banner-ad-container'
+        );
+        if (topBannerAdContainer) {
+            topBannerAdContainer.style.borderBottom = 'none';
+        }
         initTopPositionOnce();
         shrinkElement(header);
         shrinkElement(footer);
@@ -109,32 +115,22 @@ const pageSkin = (): void => {
         const footer = document.querySelector('.l-footer');
         const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
 
-        if (hasTruskin && header && topBannerAd && footer) {
+        if (truskinRendered && header && topBannerAd && footer) {
             repositionTruskin(header, footer, topBannerAd);
         }
         // This is to reposition the Page Skin to start where the navigation header ends.
-        if (!hasTruskin && hasPageSkin && isInAUEdition) {
+        if (!truskinRendered && hasPageSkin && isInAUEdition) {
             repositionPageSkin();
         }
     };
 
     togglePageSkin();
 
-    const removeTopAdBorder = (): void => {
-        const topBannerAdContainer = document.querySelector(
-            '.top-banner-ad-container'
-        );
-        if (topBannerAdContainer) {
-            topBannerAdContainer.style.borderBottom = 'none';
-        }
-    };
-
     window.addEventListener(
         'message',
         event => {
             if (event.data === 'truskinRendered') {
-                hasTruskin = true;
-                removeTopAdBorder();
+                truskinRendered = true;
                 repositionSkin();
             }
         },
