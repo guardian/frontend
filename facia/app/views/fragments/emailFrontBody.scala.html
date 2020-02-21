@@ -132,14 +132,14 @@
 
 @freeTextWithImage(card: ContentCard, collectionName: String) = {
         @*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
-        @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
-        @row(Seq("free-text"))(Html(card.header.headline))
+    @fullRow(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
+    @fullRow(Seq("free-text"))(Html(card.header.headline))
 }
 
 @freeTextWithCutoutImage(card: ContentCard, collectionName: String) = {
         @*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
-    @row(Seq("free-text"))(Html(card.header.headline))
-    @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
+    @fullRow(Seq("free-text"))(Html(card.header.headline))
+    @fullRow(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
 }
 
 @freeText(text: String) = {
