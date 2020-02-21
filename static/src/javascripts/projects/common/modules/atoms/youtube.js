@@ -289,7 +289,7 @@ const getIFrameBehaviour = (atomId: string): IFrameBehaviour => {
     if (isUsPaidContentVideo) {
         return {
             autoplay: isUsPaidContentVideo,
-            mutedOnStart: isUsPaidContentVideo,
+            mutedOnStart: isUsPaidContentVideo && isAndroid(),
         };
     }
 
