@@ -8,11 +8,10 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
-
     const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
     const adLabelHeight = 24;
-
     let topPosition: number = 0;
+    let truskinRendered: boolean = false;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -41,11 +40,11 @@ const pageSkin = (): void => {
         }
     };
 
-    const initTopPositionOnce = (hasTruskin: boolean): void => {
+    const initTopPositionOnce = (): void => {
         if (topPosition === 0) {
             const navHeader = document.getElementsByClassName('new-header')[0];
             if (navHeader) {
-                topPosition = hasTruskin
+                topPosition = truskinRendered
                     ? navHeader.offsetTop + adLabelHeight
                     : navHeader.offsetTop + navHeader.offsetHeight;
             }
@@ -61,75 +60,84 @@ const pageSkin = (): void => {
         }
     };
 
-    const renderedSlotElementIds = [];
-
-    const repositionSkin = (event): void => {
-        if (event && event.slot) {
-            renderedSlotElementIds.push(event.slot.getSlotElementId());
+    const repositionTruskin = (
+        header: HTMLElement,
+        footer: HTMLElement,
+        topBannerAd: HTMLElement
+    ): void => {
+        const topBannerAdContainer = document.querySelector(
+            '.top-banner-ad-container'
+        );
+        if (topBannerAdContainer) {
+            topBannerAdContainer.style.borderBottom = 'none';
         }
+        initTopPositionOnce();
+        shrinkElement(header);
+        shrinkElement(footer);
+
+        if (window.pageYOffset === 0) {
+            moveBackgroundVerticalPosition(topPosition);
+        }
+
+        const headerBoundaries = header.getBoundingClientRect();
+        const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
+        const headerPosition = headerBoundaries.top;
+        const topBannerBottom = topBannerAdBoundaries.bottom;
+        const fabricScrollStartPosition =
+            topBannerAdBoundaries.height +
+            adLabelHeight -
+            headerBoundaries.height;
+
         if (
-            renderedSlotElementIds.includes('dfp-ad--pageskin-inread') &&
-            renderedSlotElementIds.includes('dfp-ad--top-above-nav')
+            headerPosition <= fabricScrollStartPosition &&
+            topBannerBottom > 0
         ) {
-            const hasTruskin = bodyEl
-                ? bodyEl.classList.contains('truskin-page-skin')
-                : false;
-            const header = document.querySelector('.new-header');
-            const footer = document.querySelector('.l-footer');
-            const topBannerAd = document.querySelector(
-                '.ad-slot--top-banner-ad'
-            );
+            moveBackgroundVerticalPosition(topBannerBottom);
+        } else if (topBannerBottom <= 0) {
+            moveBackgroundVerticalPosition(0);
+        }
+    };
 
-            if (hasTruskin && header && topBannerAd) {
-                initTopPositionOnce(hasTruskin);
+    const repositionPageSkin = (): void => {
+        initTopPositionOnce();
+        if (window.pageYOffset === 0) {
+            moveBackgroundVerticalPosition(topPosition);
+        } else if (window.pageXOffset <= topPosition) {
+            moveBackgroundVerticalPosition(topPosition - window.pageYOffset);
+        }
+        if (window.pageYOffset > topPosition) {
+            moveBackgroundVerticalPosition(0);
+        }
+    };
 
-                if (header) {
-                    shrinkElement(header);
-                }
-                if (footer) {
-                    shrinkElement(footer);
-                }
+    const repositionSkin = (): void => {
+        const header = document.querySelector('.new-header');
+        const footer = document.querySelector('.l-footer');
+        const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
 
-                if (window.pageYOffset === 0) {
-                    moveBackgroundVerticalPosition(topPosition);
-                }
-
-                const headerBoundaries = header.getBoundingClientRect();
-                const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
-                const headerPosition = headerBoundaries.top;
-                const topBannerBottom = topBannerAdBoundaries.bottom;
-                const fabricScrollStartPosition =
-                    topBannerAdBoundaries.height +
-                    adLabelHeight -
-                    headerBoundaries.height;
-
-                if (
-                    headerPosition <= fabricScrollStartPosition &&
-                    topBannerBottom > 0
-                ) {
-                    moveBackgroundVerticalPosition(topBannerBottom);
-                } else if (topBannerBottom <= 0) {
-                    moveBackgroundVerticalPosition(0);
-                }
-            }
-            // This is to reposition the Page Skin to start where the navigation header ends.
-            if (!hasTruskin && hasPageSkin && isInAUEdition) {
-                initTopPositionOnce(false);
-                if (window.pageYOffset === 0) {
-                    moveBackgroundVerticalPosition(topPosition);
-                } else if (window.pageXOffset <= topPosition) {
-                    moveBackgroundVerticalPosition(
-                        topPosition - window.pageYOffset
-                    );
-                }
-                if (window.pageYOffset > topPosition) {
-                    moveBackgroundVerticalPosition(0);
-                }
-            }
+        if (truskinRendered && header && topBannerAd && footer) {
+            repositionTruskin(header, footer, topBannerAd);
+        }
+        // This is to reposition the Page Skin to start where the navigation header ends.
+        if (!truskinRendered && hasPageSkin && isInAUEdition) {
+            repositionPageSkin();
         }
     };
 
     togglePageSkin();
+
+    window.addEventListener(
+        'message',
+        event => {
+            // This event is triggered by the commercial template Truskin to indicate the page skin is also a Truskin
+            // found in: commercial-templates/src/truskin-page-skin/web/index.js
+            if (event.data === 'truskinRendered') {
+                truskinRendered = true;
+                repositionSkin();
+            }
+        },
+        false
+    );
 
     mediator.on('window:throttledResize', togglePageSkin);
     mediator.on('window:throttledScroll', repositionSkin);
