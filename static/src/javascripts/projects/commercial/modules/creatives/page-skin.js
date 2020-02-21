@@ -130,7 +130,7 @@ const pageSkin = (): void => {
         'message',
         event => {
             // This event is triggered by the commercial template Truskin to indicate the page skin is also a Truskin
-            // found it: commercial-templates/src/truskin-page-skin/web/index.js
+            // found in: commercial-templates/src/truskin-page-skin/web/index.js
             if (event.data === 'truskinRendered') {
                 truskinRendered = true;
                 repositionSkin();
