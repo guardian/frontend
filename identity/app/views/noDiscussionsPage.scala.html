@@ -1,12 +1,9 @@
 @(  idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
-    user: com.gu.identity.model.User,
-    activityType: String
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.fragments.registrationFooter
 
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
-    <div class="js-activity-stream activity-stream-content" data-user-id="@user.id" data-stream-type="@activityType"></div>
     <h2>
         No comments found for user
     </h2>

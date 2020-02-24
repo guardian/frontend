@@ -1,5 +1,6 @@
 package controllers
 
+import clients.DiscussionProfile
 import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
 import idapiclient.{IdApiClient, Response}
@@ -24,21 +25,19 @@ class PublicProfileController(
   with ImplicitControllerExecutionContext
   with SafeLogging {
 
-  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = renderPublicProfilePage(
+  def renderProfileFromVanityUrl(vanityUrl: String, activityType: String): Action[AnyContent] = findProfileDataAndRender(
     "/user/" + vanityUrl,
     activityType,
     identityApiClient.userFromVanityUrl(vanityUrl)
   )
 
-  def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = renderPublicProfilePage("/user/id/" + id, activityType, identityApiClient.user(id))
+  def renderProfileFromId(id: String, activityType: String): Action[AnyContent] = findProfileDataAndRender("/user/id/" + id, activityType, identityApiClient.user(id))
 
-  def renderPublicProfilePage(url: String, activityType: String, futureUser: => Future[Response[User]]): Action[AnyContent] = Action.async { implicit request =>
+  def findProfileDataAndRender(url: String, activityType: String, futureUser: => Future[Response[User]]): Action[AnyContent] = Action.async { implicit request =>
     futureUser.flatMap {
       case Left(errors) =>
         logger.info(s"public profile page returned errors ${errors.toString()}")
-        Future {
-          NotFound(views.html.errors._404())
-        }
+        Future.successful(renderUserNotFoundPage(url, request))
 
       case Right(user) =>
         /**
@@ -47,16 +46,24 @@ class PublicProfileController(
           */
         discussionService.findDiscussionUserFilterCommented(user.id).map {
           case None =>
-            implicit val identityPage: IdentityPage = IdentityPage(url, "public profile", usesGuardianHeader = true)
-            renderPage(views.html.noDiscussionsPage(idRequestParser(request), idUrlBuilder, user, activityType))
+            renderUserNotFoundPage(url, request)
 
           case Some(discussionUser) =>
-            val title = s"${discussionUser.displayName}'s public profile"
-            implicit val identityPage: IdentityPage = IdentityPage(url, title, usesGuardianHeader = true)
-            renderPage(views.html.publicProfilePage(identityPage, idRequestParser(request), idUrlBuilder, user, discussionUser.displayName, activityType))
+            renderPublicProfilePage(url, activityType, request, user, discussionUser)
         }
 
     }
+  }
+
+  private def renderPublicProfilePage(url: String, activityType: String, request: Request[AnyContent], user: User, discussionUser: DiscussionProfile)(implicit requestHeader: RequestHeader) = {
+    val title = s"${discussionUser.displayName}'s public profile"
+    implicit val identityPage: IdentityPage = IdentityPage(url, title, usesGuardianHeader = true)
+    renderPage(views.html.publicProfilePage(identityPage, idRequestParser(request), idUrlBuilder, user, discussionUser.displayName, activityType))
+  }
+
+  private def renderUserNotFoundPage(url: String, request: Request[AnyContent])(implicit requestHeader: RequestHeader) = {
+    implicit val identityPage: IdentityPage = IdentityPage(url, "public profile", usesGuardianHeader = true)
+    renderPage(views.html.noDiscussionsPage(idRequestParser(request), idUrlBuilder))
   }
 
   private def renderPage(content: Html)(implicit requestHeader: RequestHeader, identityPage: IdentityPage) = {

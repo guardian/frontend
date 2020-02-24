@@ -105,8 +105,9 @@ class PublicProfileControllerTest extends path.FreeSpec
     "with invalid user Id" - {
       val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
-      "then the status should be 404" in {
-        status(result) should be(404)
+      "then the status should be 200 with no comments found" in {
+        status(result) should be(200)
+        contentAsString(result) should include("No comments found for user")
       }
     }
   }
@@ -135,8 +136,9 @@ class PublicProfileControllerTest extends path.FreeSpec
     "with invalid user Id" - {
       val result = controller.renderProfileFromVanityUrl("notAUser", "discussions")(request)
 
-      "then the status should be 404" in {
-        status(result) should be(404)
+      "then the status should be 200 with no comments found" in {
+        status(result) should be(200)
+        contentAsString(result) should include("No comments found for user")
       }
     }
   }
