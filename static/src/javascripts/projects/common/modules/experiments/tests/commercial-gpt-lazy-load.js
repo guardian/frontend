@@ -13,7 +13,7 @@ export const commercialGptLazyLoad: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome:
-        'GPT enableLazyLoad out performs our custom build lazy load solution',
+        'GPT enableLazyLoad outperforms our custom built lazy load solution',
     canRun: () => true,
     variants: [
         {

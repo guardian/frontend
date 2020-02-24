@@ -52,8 +52,6 @@ export const enableLazyLoad = (advert: Advert): void => {
         'variant'
     );
 
-    console.log('*** enableLazyLoad isInLazyLoadTest ***', isInLazyLoadTest);
-
     if (dfpEnv.lazyLoadObserve && !isInLazyLoadTest) {
         getObserver().then(observer => observer.observe(advert.node));
     } else {

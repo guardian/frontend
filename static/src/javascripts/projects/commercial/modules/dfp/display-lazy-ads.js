@@ -26,13 +26,8 @@ const displayLazyAds = (): void => {
         'variant'
     );
 
-    console.log('*** displayLazyAds isInLazyLoadTest ***', isInLazyLoadTest);
-
     if (isInLazyLoadTest) {
-        window.googletag.pubads().enableLazyLoad({
-            fetchMarginPercent: 0,
-            renderMarginPercent: 0,
-        });
+        window.googletag.pubads().enableLazyLoad();
     }
 
     window.googletag.pubads().collapseEmptyDivs();
