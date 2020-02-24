@@ -384,13 +384,8 @@ const muteIFrame = (iframe: HTMLIFrameElement): void => {
     // Mute iFrame in order to autoplay on android mobile devices
 
     const iframeSrc = new URL(iframe.src);
-    const params = new URLSearchParams(iframeSrc.search.slice(1));
-    if (params.get('mute') !== 1) {
-        params.set('mute', '1');
-    }
-
-    const newSrc = `${iframeSrc.origin}?${params.toString()}`;
-    iframe.setAttribute('src', newSrc);
+    iframeSrc.searchParams.set('mute', '1');
+    iframe.setAttribute('src', iframeSrc.toString());
 };
 
 const onPlayerReady = (
