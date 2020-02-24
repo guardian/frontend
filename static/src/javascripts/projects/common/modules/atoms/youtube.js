@@ -51,6 +51,17 @@ interface IFrameBehaviour {
     mutedOnStart: boolean;
 }
 
+interface IFrameBehaviourConfig {
+    isAutoplayBlockingPlatform: boolean;
+    isInternalReferrer: boolean;
+    isMainVideo: boolean;
+    flashingElementsAllowed: boolean;
+    isVideoArticle: boolean;
+    isFront: boolean;
+    isUSContent: boolean;
+    isPaidContent: boolean;
+}
+
 const players: {
     [string]: AtomPlayer,
 } = {};
@@ -252,55 +263,85 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const getIFrameBehaviour = (atomId: string): IFrameBehaviour => {
-    const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
+const getIFrameBehaviourConfig = (atomId: string): IFrameBehaviourConfig => {
+    const isAutoplayBlockingPlatform = isIOS() || isAndroid();
 
-    const isInternalReferrer = (): boolean => {
+    const isInternalReferrer = ((): boolean => {
         if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
 
         return document.referrer.indexOf(config.get('page.host')) === 0;
-    };
+    })();
 
-    const isMainVideo = (): boolean =>
+    const isMainVideo =
         (players[atomId].iframe &&
             !!players[atomId].iframe.closest(
                 'figure[data-component="main video"]'
             )) ||
         false;
 
-    const flashingElementsAllowed = (): boolean =>
-        accessibilityIsOn('flashing-elements');
+    const flashingElementsAllowed = accessibilityIsOn('flashing-elements');
 
-    const isVideoArticle = (): boolean =>
+    const isVideoArticle =
         config.get('page.contentType', '').toLowerCase() === 'video';
 
-    const isFront = () => config.get('page.isFront');
+    const isFront = config.get('page.isFront');
     const isUSContent =
         config.get('page.productionOffice', '').toLowerCase() === 'us';
 
     const isPaidContent = config.get('page.isPaidContent');
+
+    return {
+        isAutoplayBlockingPlatform,
+        isInternalReferrer,
+        isMainVideo,
+        flashingElementsAllowed,
+        isVideoArticle,
+        isFront,
+        isUSContent,
+        isPaidContent,
+    };
+};
+
+const getIFrameBehaviour = (
+    iframeConfig: IFrameBehaviourConfig
+): IFrameBehaviour => {
+    let iFrameBehaviour;
+
+    const {
+        isAutoplayBlockingPlatform,
+        isInternalReferrer,
+        isMainVideo,
+        flashingElementsAllowed,
+        isVideoArticle,
+        isFront,
+        isUSContent,
+        isPaidContent,
+    } = iframeConfig;
+
     const isUsPaidContentVideo =
         isUSContent &&
         isPaidContent &&
-        ((isVideoArticle() && isMainVideo()) || isFront()) &&
-        flashingElementsAllowed();
+        ((isVideoArticle && isMainVideo) || isFront) &&
+        flashingElementsAllowed;
+
     if (isUsPaidContentVideo) {
-        return {
+        iFrameBehaviour = {
             autoplay: isUsPaidContentVideo,
             mutedOnStart: isUsPaidContentVideo && isAndroid(),
         };
+    } else {
+        iFrameBehaviour = {
+            autoplay:
+                ((isVideoArticle && isInternalReferrer && isMainVideo) ||
+                    isFront) &&
+                !isAutoplayBlockingPlatform &&
+                flashingElementsAllowed,
+            mutedOnStart: false,
+        };
     }
-
-    return {
-        autoplay:
-            ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
-                isFront()) &&
-            !isAutoplayBlockingPlatform() &&
-            flashingElementsAllowed(),
-        mutedOnStart: false,
-    };
+    return iFrameBehaviour;
 };
 
 const getEndSlate = (overlay: HTMLElement): ?Component => {
@@ -539,4 +580,8 @@ export const onVideoContainerNavigation = (atomId: string): void => {
     }
 };
 
-export { muteIFrame, getIFrameBehaviour };
+export const _ = {
+    muteIFrame,
+    getIFrameBehaviour,
+    getIFrameBehaviourConfig,
+};
