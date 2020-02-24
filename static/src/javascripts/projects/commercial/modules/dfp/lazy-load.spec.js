@@ -4,6 +4,14 @@ import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+
+const isInVariantSynchronous: any = isInVariantSynchronous_;
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
 
 jest.mock('lib/config', () => ({
     get: jest.fn(() => false),
@@ -51,13 +59,29 @@ describe('enableLazyLoad', () => {
         expect(windowIntersectionObserver).toBe(undefined);
     });
 
-    it('should create an observer if lazyLoadObserve is true', () => {
+    it('should create an observer if lazyLoadObserve is true and NOT in commercialGptLazyLoad test variant', () => {
+        isInVariantSynchronous.mockImplementation(
+            (test, variantId) =>
+                !(test === commercialGptLazyLoad && variantId === 'variant')
+        );
         dfpEnv.lazyLoadObserve = true;
         enableLazyLoad(testAdvert);
         expect(loadAdvert).not.toHaveBeenCalled();
         expect(window.IntersectionObserver.mock.calls[0][1]).toEqual({
             rootMargin: '200px 0px',
         });
+    });
+
+    it('should still display the adverts if in commercialGptLazyLoad test variant', () => {
+        isInVariantSynchronous.mockImplementation(
+            (test, variantId) =>
+                test === commercialGptLazyLoad && variantId === 'variant'
+        );
+        dfpEnv.lazyLoadObserve = true;
+        getAdvertById.mockReturnValue(testAdvert);
+        enableLazyLoad(testAdvert);
+        expect(getAdvertById.mock.calls).toEqual([['test-advert']]);
+        expect(loadAdvert).toHaveBeenCalledWith(testAdvert);
     });
 
     it('should still display the adverts if lazyLoadObserve is false', () => {
