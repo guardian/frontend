@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, DotcomRenderingAdvertisements}
+import experiments.{ActiveExperiments, DotcomRendering}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement, RichLinkBlockElement}
@@ -144,7 +144,7 @@ object ArticlePicker {
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val whitelistFeatures = featureWhitelist(page, request)
-    val userIsInCohort = ActiveExperiments.isParticipating(DotcomRenderingAdvertisements)
+    val userIsInCohort = ActiveExperiments.isParticipating(DotcomRendering)
 
     // Decide if we should render this request with the DCR platform or not
     val tier = if (dcrShouldNotRender(request)) {
