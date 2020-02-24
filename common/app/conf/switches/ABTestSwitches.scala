@@ -135,4 +135,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 5, 1),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-gpt-lazy-load",
+    "This test enables GPT enableLazyLoad as an alternative to our custom build lazy load solution",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 3, 24),
+    exposeClientSide = true
+  )
 }
