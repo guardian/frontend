@@ -100,7 +100,7 @@ const remoteRenderTest = {
                 };
 
                 const localisation = {
-                    countryCode: geolocation,
+                    countryCode: geolocationGetSync(), // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
                 };
 
                 const targeting = {
