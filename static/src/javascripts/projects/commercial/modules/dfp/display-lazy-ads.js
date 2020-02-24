@@ -21,12 +21,12 @@ const instantLoad = (): void => {
 };
 
 const displayLazyAds = (): void => {
-    const isInLazyLoadTest = isInVariantSynchronous(
+    const useGptLazyLoad = isInVariantSynchronous(
         commercialGptLazyLoad,
         'variant'
     );
 
-    if (isInLazyLoadTest) {
+    if (useGptLazyLoad) {
         window.googletag.pubads().enableLazyLoad();
     }
 

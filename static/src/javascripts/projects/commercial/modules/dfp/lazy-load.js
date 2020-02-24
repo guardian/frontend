@@ -47,12 +47,12 @@ const getObserver = once(() =>
 );
 
 export const enableLazyLoad = (advert: Advert): void => {
-    const isInLazyLoadTest = isInVariantSynchronous(
+    const useGptLazyLoad = isInVariantSynchronous(
         commercialGptLazyLoad,
         'variant'
     );
 
-    if (dfpEnv.lazyLoadObserve && !isInLazyLoadTest) {
+    if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
         getObserver().then(observer => observer.observe(advert.node));
     } else {
         displayAd(advert.id);
