@@ -1,4 +1,6 @@
 // @flow
+
+import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
@@ -153,15 +155,18 @@ const createAdSlotElements = (
 
     const id = `dfp-ad--${name}`;
 
-    // The next three lines are to prevent a problem that appeared with DCR
-    // by which an AdSlot with the given id might have already been
-    // statically introduced server side and needs to be removed before
-    // this code takes effect on the DOM.
-    // We are simply making sure that if we are about to introduce a DOM
-    // element with a given id, that we ensure there isn't already one.
-    const element = document.getElementById(id);
-    if (element && element.parentNode) {
-        element.parentNode.removeChild(element);
+    if (config.get('isDotcomRendering', false)) {
+        // The next three lines are to prevent a problem that appeared with DCR
+        // by which an AdSlot with the given id might have already been
+        // statically introduced server side and needs to be removed before
+        // this code takes effect on the DOM.
+        // We are simply making sure that if we are about to introduce a DOM
+        // element with a given id, that we ensure there isn't already one.
+        const element = document.getElementById(id);
+        if (element && element.parentNode) {
+            console.log(`warning: cleaning up dom element id: dfp-ad--${name}`);
+            element.parentNode.removeChild(element);
+        }
     }
 
     // The 'main' adSlot
