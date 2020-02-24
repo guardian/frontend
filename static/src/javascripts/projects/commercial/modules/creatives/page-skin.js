@@ -132,13 +132,14 @@ const pageSkin = (): void => {
             // Also found in: commercial-templates/src/page-skin/web/index.html
             if (event.data === 'pageskinRendered') {
                 pageskinRendered = true;
+                repositionSkins();
             }
             // This event is triggered by the commercial template: 'Truskin Template' to indicate the page skin is also a Truskin
             // Also found in: commercial-templates/src/truskin-page-skin/web/index.js
             if (event.data === 'truskinRendered') {
                 truskinRendered = true;
+                repositionSkins();
             }
-            repositionSkins();
         },
         false
     );
