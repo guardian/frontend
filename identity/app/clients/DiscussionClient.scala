@@ -40,7 +40,6 @@ object DiscussionApiServiceException {
 class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit executionContext: ExecutionContext) extends SafeLogging {
 
   private def GET(urlPath: String): Future[WSResponse] = {
-    println(config.discussionApiUrl + urlPath)
     wsClient
       .url(config.discussionApiUrl + urlPath)
       .withRequestTimeout(3.seconds)
