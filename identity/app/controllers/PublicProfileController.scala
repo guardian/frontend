@@ -1,22 +1,23 @@
 package controllers
 
-import model.Cached.RevalidatableResult
-import play.api.mvc._
+import com.gu.identity.model.User
 import common.ImplicitControllerExecutionContext
-import services.{DiscussionApiService, DiscussionApiServiceException, IdRequestParser, IdentityUrlBuilder}
-import utils.SafeLogging
-import model.{ApplicationContext, Cached, IdentityPage}
 import idapiclient.{IdApiClient, Response}
+import model.Cached.RevalidatableResult
+import model.{ApplicationContext, Cached, IdentityPage}
+import pages.IdentityHtmlPage
+import play.api.mvc._
+import play.twirl.api.Html
+import services.{DiscussionApiService, IdRequestParser, IdentityUrlBuilder}
+import utils.SafeLogging
 
 import scala.concurrent.Future
-import com.gu.identity.model.User
-import pages.IdentityHtmlPage
 
 class PublicProfileController(
                                idUrlBuilder: IdentityUrlBuilder,
                                identityApiClient: IdApiClient,
                                idRequestParser: IdRequestParser,
-                               discussionApi: DiscussionApiService,
+                               discussionService: DiscussionApiService,
                                val controllerComponents: ControllerComponents
                              )(implicit context: ApplicationContext)
   extends BaseController
@@ -42,31 +43,29 @@ class PublicProfileController(
       case Right(user) =>
         /**
           * Only render public profile if a user in Identity also exists in Discussion
-          * and has one or more comments, otherwise return a 404.
+          * and has one or more comments, otherwise return a no comments page.
           */
-        discussionApi.userHasPublicProfile(user.id).value.map {
-          case Left(error) =>
-            logger.info(s"public profile page returned error: ${error.message}")
-            NotFound(views.html.errors._404())
+        discussionService.findDiscussionUserFilterCommented(user.id).map {
+          case None =>
+            implicit val identityPage: IdentityPage = IdentityPage(url, "public profile", usesGuardianHeader = true)
+            renderPage(views.html.noDiscussionsPage(idRequestParser(request), idUrlBuilder, user, activityType))
 
-          case Right(false) =>
-            logger.info(s"public profile page returned error: user ${user.id} found in Discussion but does not have a public profile")
-            NotFound(views.html.errors._404())
-
-          case Right(true) =>
-            val title = user.publicFields.username.fold("public profile")(username => s"$username's public profile")
+          case Some(discussionUser) =>
+            val title = s"${discussionUser.displayName}'s public profile"
             implicit val identityPage: IdentityPage = IdentityPage(url, title, usesGuardianHeader = true)
-
-            Cached(60)(
-              RevalidatableResult.Ok(
-                IdentityHtmlPage.html(
-                  views.html.publicProfilePage(identityPage, idRequestParser(request), idUrlBuilder, user, activityType)
-                )
-              )
-            )
+            renderPage(views.html.publicProfilePage(identityPage, idRequestParser(request), idUrlBuilder, user, discussionUser.displayName, activityType))
         }
 
     }
   }
 
+  private def renderPage(content: Html)(implicit requestHeader: RequestHeader, identityPage: IdentityPage) = {
+    Cached(60)(
+      RevalidatableResult.Ok(
+        IdentityHtmlPage.html(
+          content
+        )
+      )
+    )
+  }
 }
