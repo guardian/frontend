@@ -263,7 +263,9 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const getIFrameBehaviourConfig = (atomId: string): IFrameBehaviourConfig => {
+const getIFrameBehaviourConfig = (
+    iframe: HTMLIFrameElement
+): IFrameBehaviourConfig => {
     const isAutoplayBlockingPlatform = isIOS() || isAndroid();
 
     const isInternalReferrer = ((): boolean => {
@@ -275,10 +277,7 @@ const getIFrameBehaviourConfig = (atomId: string): IFrameBehaviourConfig => {
     })();
 
     const isMainVideo =
-        (players[atomId].iframe &&
-            !!players[atomId].iframe.closest(
-                'figure[data-component="main video"]'
-            )) ||
+        (iframe && !!iframe.closest('figure[data-component="main video"]')) ||
         false;
 
     const flashingElementsAllowed = accessibilityIsOn('flashing-elements');
@@ -420,7 +419,8 @@ const onPlayerReady = (
         pendingTrackingCalls: [25, 50, 75],
     };
 
-    const iFrameBehaviour = getIFrameBehaviour(uniqueAtomId);
+    const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
+    const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
     if (iFrameBehaviour.mutedOnStart) {
         muteIFrame(iframe);
     }
