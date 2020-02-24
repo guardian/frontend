@@ -145,7 +145,10 @@ const pageSkin = (): void => {
     );
 
     mediator.on('window:throttledResize', togglePageSkin);
-    mediator.on('window:throttledScroll', repositionSkins);
+
+    if (hasPageSkin) {
+        mediator.on('window:throttledScroll', repositionSkins);
+    }
 };
 
 export { pageSkin };
