@@ -12,6 +12,7 @@ const pageSkin = (): void => {
     const adLabelHeight = 24;
     let topPosition: number = 0;
     let truskinRendered: boolean = false;
+    let pageskinRendered: boolean = false;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -60,41 +61,43 @@ const pageSkin = (): void => {
         }
     };
 
-    const repositionTruskin = (
-        header: HTMLElement,
-        footer: HTMLElement,
-        topBannerAd: HTMLElement
-    ): void => {
-        const topBannerAdContainer = document.querySelector(
-            '.top-banner-ad-container'
-        );
-        if (topBannerAdContainer) {
-            topBannerAdContainer.style.borderBottom = 'none';
-        }
-        initTopPositionOnce();
-        shrinkElement(header);
-        shrinkElement(footer);
+    const repositionTruskin = (): void => {
+        const header = document.querySelector('.new-header');
+        const footer = document.querySelector('.l-footer');
+        const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
 
-        if (window.pageYOffset === 0) {
-            moveBackgroundVerticalPosition(topPosition);
-        }
+        if (header && footer && topBannerAd) {
+            const topBannerAdContainer = document.querySelector(
+                '.top-banner-ad-container'
+            );
+            if (topBannerAdContainer) {
+                topBannerAdContainer.style.borderBottom = 'none';
+            }
+            initTopPositionOnce();
+            shrinkElement(header);
+            shrinkElement(footer);
 
-        const headerBoundaries = header.getBoundingClientRect();
-        const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
-        const headerPosition = headerBoundaries.top;
-        const topBannerBottom = topBannerAdBoundaries.bottom;
-        const fabricScrollStartPosition =
-            topBannerAdBoundaries.height +
-            adLabelHeight -
-            headerBoundaries.height;
+            if (window.pageYOffset === 0) {
+                moveBackgroundVerticalPosition(topPosition);
+            }
 
-        if (
-            headerPosition <= fabricScrollStartPosition &&
-            topBannerBottom > 0
-        ) {
-            moveBackgroundVerticalPosition(topBannerBottom);
-        } else if (topBannerBottom <= 0) {
-            moveBackgroundVerticalPosition(0);
+            const headerBoundaries = header.getBoundingClientRect();
+            const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
+            const headerPosition = headerBoundaries.top;
+            const topBannerBottom = topBannerAdBoundaries.bottom;
+            const fabricScrollStartPosition =
+                topBannerAdBoundaries.height +
+                adLabelHeight -
+                headerBoundaries.height;
+
+            if (
+                headerPosition <= fabricScrollStartPosition &&
+                topBannerBottom > 0
+            ) {
+                moveBackgroundVerticalPosition(topBannerBottom);
+            } else if (topBannerBottom <= 0) {
+                moveBackgroundVerticalPosition(0);
+            }
         }
     };
 
@@ -110,16 +113,12 @@ const pageSkin = (): void => {
         }
     };
 
-    const repositionSkin = (): void => {
-        const header = document.querySelector('.new-header');
-        const footer = document.querySelector('.l-footer');
-        const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
-
-        if (truskinRendered && header && topBannerAd && footer) {
-            repositionTruskin(header, footer, topBannerAd);
+    const repositionSkins = (): void => {
+        if (truskinRendered && hasPageSkin) {
+            repositionTruskin();
         }
         // This is to reposition the Page Skin to start where the navigation header ends.
-        if (!truskinRendered && hasPageSkin && isInAUEdition) {
+        if (pageskinRendered && hasPageSkin && isInAUEdition) {
             repositionPageSkin();
         }
     };
@@ -129,19 +128,23 @@ const pageSkin = (): void => {
     window.addEventListener(
         'message',
         event => {
-            // This event is triggered by the commercial template Truskin to indicate the page skin is also a Truskin
-            // found in: commercial-templates/src/truskin-page-skin/web/index.js
+            // This event is triggered by the commercial template: 'Skin for front pages'
+            // Also found in: commercial-templates/src/page-skin/web/index.html
+            if (event.data === 'pageskinRendered') {
+                pageskinRendered = true;
+            }
+            // This event is triggered by the commercial template: 'Truskin Template' to indicate the page skin is also a Truskin
+            // Also found in: commercial-templates/src/truskin-page-skin/web/index.js
             if (event.data === 'truskinRendered') {
                 truskinRendered = true;
-                repositionSkin();
             }
+            repositionSkins();
         },
         false
     );
 
     mediator.on('window:throttledResize', togglePageSkin);
-    mediator.on('window:throttledScroll', repositionSkin);
-    mediator.on('modules:commercial:dfp:rendered', repositionSkin);
+    mediator.on('window:throttledScroll', repositionSkins);
 };
 
 export { pageSkin };
