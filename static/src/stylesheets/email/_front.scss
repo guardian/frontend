@@ -84,6 +84,14 @@ $cta-font-color: #000000;
     }
 }
 
+.free-text__standfirst {
+    font-family: 'Guardian Egyptian Text', Georgia, serif;
+    font-size: 20px;
+    line-height: 23px;
+    padding: 12px $gutter 26px;
+    border-bottom: 1px solid #121212;
+}
+
 // td
 .ct__margin {
     padding: 0 0 12px;
