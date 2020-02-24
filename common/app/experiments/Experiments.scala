@@ -23,7 +23,7 @@ object OldTLSSupportDeprecation extends Experiment(
 )
 
 object DotcomRendering extends Experiment(
-  name = "dotcom-rendering-advertisements",
+  name = "dotcom-rendering",
   description = "Show DCR pages to users",
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
