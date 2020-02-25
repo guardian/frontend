@@ -1,24 +1,20 @@
 package controllers
 
-import cats.data.EitherT
-import cats.instances.future._
-
-import scala.concurrent.ExecutionContext.Implicits.global
-import org.scalatest._
-import org.scalatest.mockito.MockitoSugar
-import services._
-import idapiclient._
+import clients.DiscussionProfile
+import com.gu.identity.model.{PublicFields, User, UserDates}
+import idapiclient.{Auth, _}
+import org.joda.time.DateTime
 import org.mockito.Mockito._
 import org.mockito.{Matchers => MockitoMatchers}
+import org.scalatest._
+import org.scalatest.mockito.MockitoSugar
 import play.api.mvc.RequestHeader
 import play.api.test.Helpers._
-import com.gu.identity.model.{PublicFields, User, UserDates}
+import services._
 import test.{Fake, TestRequest, WithTestApplicationContext}
-import org.joda.time.DateTime
 
 import scala.concurrent.Future
 import scala.util.Left
-import idapiclient.Auth
 
 class PublicProfileControllerTest extends path.FreeSpec
                                   with Matchers
@@ -31,22 +27,9 @@ class PublicProfileControllerTest extends path.FreeSpec
   val idRequest = mock[IdentityRequest]
 
   val userId: String = "123"
+  val discussionProfile = DiscussionProfile(userId, "John Smith")
   val vanityUrl: String = "bobski"
   val user = User("test@example.com", userId,
-    publicFields = PublicFields(
-      displayName = Some("John Smith"),
-      username = Some("John Smith"),
-      aboutMe = Some("I read the Guardian"),
-      location = Some("London"),
-      interests = Some("I like stuff"),
-      vanityUrl = Some(vanityUrl)
-    ),
-    dates = UserDates(
-      accountCreatedDate = Some(new DateTime().minusDays(7))
-    )
-  )
-  val userIdNotInDiscusionDB: String = "456"
-  val userNotInDiscussionDB = User("test@example.com", userIdNotInDiscusionDB,
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
@@ -90,12 +73,10 @@ class PublicProfileControllerTest extends path.FreeSpec
   "Given renderProfileFromId is called" - Fake {
     when(api.user(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.user(userId)) thenReturn Future.successful(Right(user))
-    when(discussionApi.userHasPublicProfile(userId)) thenReturn EitherT.rightT[Future, DiscussionApiServiceException](true)
+    when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
 
     when(api.user(userIdNotCommented)) thenReturn Future.successful(Right(userNotCommented))
-    when(discussionApi.userHasPublicProfile(userIdNotCommented)) thenReturn EitherT.rightT[Future, DiscussionApiServiceException](false)
-    when(api.user(userIdNotInDiscusionDB)) thenReturn Future.successful(Right(userNotInDiscussionDB))
-    when(discussionApi.userHasPublicProfile(userIdNotInDiscusionDB)) thenReturn EitherT.leftT[Future, Boolean](DiscussionApiServiceException("404"))
+    when(discussionApi.findDiscussionUserFilterCommented(userIdNotCommented)) thenReturn Future.successful(None)
 
     "with valid user Id who has commented" - {
       val result = controller.renderProfileFromId(userId, "discussions")(request)
@@ -115,23 +96,18 @@ class PublicProfileControllerTest extends path.FreeSpec
 
     "with a valid user Id who has not commented" - {
       val result = controller.renderProfileFromId(userIdNotCommented, "discussions")(request)
-      "then the status should be 404" in {
-        status(result) should be(404)
-      }
-    }
-
-    "with a valid user Id who is not in Discussion DB" - {
-      val result = controller.renderProfileFromId(userIdNotInDiscusionDB, "discussions")(request)
-      "then the status should be 404" in {
-        status(result) should be(404)
+      "then the status should be 200 since the user profile exists" in {
+        status(result) should be(200)
+        contentAsString(result) should include("No comments found for user")
       }
     }
 
     "with invalid user Id" - {
       val result = controller.renderProfileFromId("notAUser", "discussions")(request)
 
-      "then the status should be 404" in {
-        status(result) should be(404)
+      "then the status should be 200 with no comments found" in {
+        status(result) should be(200)
+        contentAsString(result) should include("No comments found for user")
       }
     }
   }
@@ -139,7 +115,7 @@ class PublicProfileControllerTest extends path.FreeSpec
   "Given renderProfileFromVanityUrl is called" - Fake {
     when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
-    when(discussionApi.userHasPublicProfile(userId)) thenReturn EitherT.rightT[Future, DiscussionApiServiceException](true)
+    when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
 
     "with valid user Id who has commented" - {
       val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
@@ -160,24 +136,9 @@ class PublicProfileControllerTest extends path.FreeSpec
     "with invalid user Id" - {
       val result = controller.renderProfileFromVanityUrl("notAUser", "discussions")(request)
 
-      "then the status should be 404" in {
-        status(result) should be(404)
-      }
-    }
-
-    "with no username for the specified user" - {
-      val guestUser = user.copy(publicFields = user.publicFields.copy(username = None))
-      when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
-      when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(guestUser))
-      val result = controller.renderProfileFromVanityUrl(vanityUrl, "discussions")(request)
-
-      "then should return status 200" in {
+      "then the status should be 200 with no comments found" in {
         status(result) should be(200)
-      }
-
-      "then should omit the profile section with the user's username" in {
-        val content = contentAsString(result)
-        content should not include """<div class="user-profile u-cf">"""
+        contentAsString(result) should include("No comments found for user")
       }
     }
   }
