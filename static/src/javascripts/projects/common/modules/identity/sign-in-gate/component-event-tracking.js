@@ -14,18 +14,18 @@ type ComponentEventWithoutAction = {
 };
 
 // ophan helper methods
-export const submitComponentEvent = (componentEvent: OphanComponentEvent) => {
+export const submitComponentEventTracking = (componentEvent: OphanComponentEvent) => {
     ophan.record({ componentEvent });
 };
 
-export const submitViewEvent = (componentEvent: ComponentEventWithoutAction) =>
-    submitComponentEvent({
+export const submitViewEventTracking = (componentEvent: ComponentEventWithoutAction) =>
+    submitComponentEventTracking({
         ...componentEvent,
         action: 'VIEW',
     });
 
-export const submitClickEvent = (componentEvent: ComponentEventWithoutAction) =>
-    submitComponentEvent({
+export const submitClickEventTracking = (componentEvent: ComponentEventWithoutAction) =>
+    submitComponentEventTracking({
         ...componentEvent,
         action: 'CLICK',
     });

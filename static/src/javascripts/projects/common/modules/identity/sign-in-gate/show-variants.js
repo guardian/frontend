@@ -59,19 +59,19 @@ export const variant: ({
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,
-                target: '.signin-gate__first-paragraph-overlay',
+                selector: '.signin-gate__first-paragraph-overlay',
             });
 
             // check page type/pillar to change text colour of the sign in gate
             addPillarColour({
                 element: shadowArticleBody,
-                target: '.signin-gate__benefits--text',
+                selector: '.signin-gate__benefits--text',
             });
 
             // add click handler for the dismiss of the gate
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__dismiss',
+                selector: '.js-signin-gate__dismiss',
                 abTest,
                 component,
                 value: 'dismiss',
@@ -95,7 +95,7 @@ export const variant: ({
             // add click handler for sign in button click
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__button',
+                selector: '.js-signin-gate__button',
                 abTest,
                 component,
                 value: 'signin_button',
@@ -104,7 +104,7 @@ export const variant: ({
             // add click handler for the why sign in link
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__why',
+                selector: '.js-signin-gate__why',
                 abTest,
                 component,
                 value: 'why_sign_in',
@@ -150,19 +150,19 @@ export const control: ({
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,
-                target: '.signin-gate__first-paragraph-overlay',
+                selector: '.signin-gate__first-paragraph-overlay',
             });
 
             // check page type/pillar to change text colour of the sign in gate
             addPillarColour({
                 element: shadowArticleBody,
-                target: '.signin-gate__benefits--text',
+                selector: '.signin-gate__benefits--text',
             });
 
             // add click handler for the dismiss of the gate
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__dismiss',
+                selector: '.js-signin-gate__dismiss',
                 abTest,
                 component,
                 value: 'dismiss',
@@ -186,7 +186,7 @@ export const control: ({
             // add click handler for sign in button click
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__button',
+                selector: '.js-signin-gate__button',
                 abTest,
                 component,
                 value: 'signin_button',
@@ -195,7 +195,7 @@ export const control: ({
             // add click handler for the why sign in link
             addClickHandler({
                 element: shadowArticleBody,
-                target: '.js-signin-gate__why',
+                selector: '.js-signin-gate__why',
                 abTest,
                 component,
                 value: 'why_sign_in',

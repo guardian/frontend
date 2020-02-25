@@ -8,7 +8,7 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { submitClickEvent } from './component-event-helper';
+import { submitClickEventTracking } from './component-event-tracking';
 import type { CurrentABTest } from './types';
 
 // wrapper over isLoggedIn
@@ -106,23 +106,23 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
 export const addEventHandler: ({
     element: HTMLDivElement,
     event: string,
-    target: string,
+    selector: string,
     handler: Function,
-}) => void = ({ element, event, target, handler }) => {
-    bean.on(element, event, target, handler);
+}) => void = ({ element, event, selector, handler }) => {
+    bean.on(element, event, selector, handler);
 };
 
 // click event wrapper using addEventHandler method
 export const addClickHandler: ({
     element: HTMLDivElement,
-    target: string,
+    selector: string,
     component: OphanComponent,
     abTest: CurrentABTest,
     value: string,
     callback?: Function,
 }) => void = ({
     element,
-    target,
+    selector,
     component,
     abTest,
     value,
@@ -131,9 +131,9 @@ export const addClickHandler: ({
     addEventHandler({
         element,
         event: 'click',
-        target,
+        selector,
         handler: () => {
-            submitClickEvent({
+            submitClickEventTracking({
                 component,
                 abTest,
                 value,
@@ -147,10 +147,10 @@ export const addClickHandler: ({
 // add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
     element: HTMLDivElement,
-    target: string,
-}) => void = ({ element, target }) => {
+    selector: string,
+}) => void = ({ element, selector }) => {
     if (config.get(`page.cardStyle`) === 'comment') {
-        const overlay = element.querySelector(target);
+        const overlay = element.querySelector(selector);
         if (overlay) {
             overlay.classList.add(
                 'signin-gate__first-paragraph-overlay--comment'
@@ -162,10 +162,10 @@ export const addOpinionBgColour: ({
 // change the colour of the text depending the pillar that the user is on
 export const addPillarColour: ({
     element: HTMLDivElement,
-    target: string,
-}) => void = ({ element, target }) => {
+    selector: string,
+}) => void = ({ element, selector }) => {
     // check page type/pillar to change text colour of the sign in gate
-    const paragraphText = element.querySelector(target);
+    const paragraphText = element.querySelector(selector);
     if (paragraphText) {
         switch (config.get(`page.pillar`)) {
             case 'News':

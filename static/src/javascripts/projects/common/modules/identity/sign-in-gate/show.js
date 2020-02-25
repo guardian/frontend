@@ -2,12 +2,9 @@
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
-import { submitViewEvent } from './component-event-helper';
+import { submitViewEventTracking } from './component-event-tracking';
+import { control as showControl, variant as showVariant } from './show-variants';
 import type { CurrentABTest, ComponentEventParams } from './types';
-import {
-    variant as showVariant,
-    control as showControl,
-} from './show-variants';
 
 // show method used by the banner, uses a switch statement to show a different layout based on the variant
 export const show: ({
@@ -59,7 +56,7 @@ export const show: ({
 
     // in any variant
     // fire view tracking event
-    submitViewEvent({
+    submitViewEventTracking({
         component,
         abTest,
     });
