@@ -1,5 +1,7 @@
 // @flow
+
 import { addCookie, getCookie } from 'lib/cookies';
+import { onConsentSet } from 'common/modules/analytics/send-privacy-prefs';
 
 type AdConsent = {
     label: string,
@@ -23,6 +25,7 @@ const allAdConsents: AdConsent[] = [thirdPartyTrackingAdConsent];
 const setAdConsentState = (provider: AdConsent, state: boolean): void => {
     const cookie = [state ? '1' : '0', Date.now()].join('.');
     addCookie(provider.cookie, cookie, cookieExpiryDate, true);
+    onConsentSet(provider, state);
 };
 
 const getAdConsentState = (provider: AdConsent): boolean | null => {

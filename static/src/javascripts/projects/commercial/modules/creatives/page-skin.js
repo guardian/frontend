@@ -8,11 +8,11 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 const pageSkin = (): void => {
     const bodyEl = document.body;
     const hasPageSkin: boolean = config.get('page.hasPageSkin');
-
     const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
     const adLabelHeight = 24;
-
     let topPosition: number = 0;
+    let truskinRendered: boolean = false;
+    let pageskinRendered: boolean = false;
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
@@ -41,11 +41,11 @@ const pageSkin = (): void => {
         }
     };
 
-    const initTopPositionOnce = (hasTruskin: boolean): void => {
+    const initTopPositionOnce = (): void => {
         if (topPosition === 0) {
             const navHeader = document.getElementsByClassName('new-header')[0];
             if (navHeader) {
-                topPosition = hasTruskin
+                topPosition = truskinRendered
                     ? navHeader.offsetTop + adLabelHeight
                     : navHeader.offsetTop + navHeader.offsetHeight;
             }
@@ -61,79 +61,94 @@ const pageSkin = (): void => {
         }
     };
 
-    const renderedSlotElementIds = [];
+    const repositionTruskin = (): void => {
+        const header = document.querySelector('.new-header');
+        const footer = document.querySelector('.l-footer');
+        const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
 
-    const repositionSkin = (event): void => {
-        if (event && event.slot) {
-            renderedSlotElementIds.push(event.slot.getSlotElementId());
-        }
-        if (
-            renderedSlotElementIds.includes('dfp-ad--pageskin-inread') &&
-            renderedSlotElementIds.includes('dfp-ad--top-above-nav')
-        ) {
-            const hasTruskin = bodyEl
-                ? bodyEl.classList.contains('truskin-page-skin')
-                : false;
-            const header = document.querySelector('.new-header');
-            const footer = document.querySelector('.l-footer');
-            const topBannerAd = document.querySelector(
-                '.ad-slot--top-banner-ad'
+        if (header && footer && topBannerAd) {
+            const topBannerAdContainer = document.querySelector(
+                '.top-banner-ad-container'
             );
-
-            if (hasTruskin && header && topBannerAd) {
-                initTopPositionOnce(hasTruskin);
-
-                if (header) {
-                    shrinkElement(header);
-                }
-                if (footer) {
-                    shrinkElement(footer);
-                }
-
-                if (window.pageYOffset === 0) {
-                    moveBackgroundVerticalPosition(topPosition);
-                }
-
-                const headerBoundaries = header.getBoundingClientRect();
-                const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
-                const headerPosition = headerBoundaries.top;
-                const topBannerBottom = topBannerAdBoundaries.bottom;
-                const fabricScrollStartPosition =
-                    topBannerAdBoundaries.height +
-                    adLabelHeight -
-                    headerBoundaries.height;
-
-                if (
-                    headerPosition <= fabricScrollStartPosition &&
-                    topBannerBottom > 0
-                ) {
-                    moveBackgroundVerticalPosition(topBannerBottom);
-                } else if (topBannerBottom <= 0) {
-                    moveBackgroundVerticalPosition(0);
-                }
+            if (topBannerAdContainer) {
+                topBannerAdContainer.style.borderBottom = 'none';
             }
-            // This is to reposition the Page Skin to start where the navigation header ends.
-            if (!hasTruskin && hasPageSkin && isInAUEdition) {
-                initTopPositionOnce(false);
-                if (window.pageYOffset === 0) {
-                    moveBackgroundVerticalPosition(topPosition);
-                } else if (window.pageXOffset <= topPosition) {
-                    moveBackgroundVerticalPosition(
-                        topPosition - window.pageYOffset
-                    );
-                }
-                if (window.pageYOffset > topPosition) {
-                    moveBackgroundVerticalPosition(0);
-                }
+            initTopPositionOnce();
+            shrinkElement(header);
+            shrinkElement(footer);
+
+            if (window.pageYOffset === 0) {
+                moveBackgroundVerticalPosition(topPosition);
             }
+
+            const headerBoundaries = header.getBoundingClientRect();
+            const topBannerAdBoundaries = topBannerAd.getBoundingClientRect();
+            const headerPosition = headerBoundaries.top;
+            const topBannerBottom = topBannerAdBoundaries.bottom;
+            const fabricScrollStartPosition =
+                topBannerAdBoundaries.height +
+                adLabelHeight -
+                headerBoundaries.height;
+
+            if (
+                headerPosition <= fabricScrollStartPosition &&
+                topBannerBottom > 0
+            ) {
+                moveBackgroundVerticalPosition(topBannerBottom);
+            } else if (topBannerBottom <= 0) {
+                moveBackgroundVerticalPosition(0);
+            }
+        }
+    };
+
+    const repositionPageSkin = (): void => {
+        initTopPositionOnce();
+        if (window.pageYOffset === 0) {
+            moveBackgroundVerticalPosition(topPosition);
+        } else if (window.pageXOffset <= topPosition) {
+            moveBackgroundVerticalPosition(topPosition - window.pageYOffset);
+        }
+        if (window.pageYOffset > topPosition) {
+            moveBackgroundVerticalPosition(0);
+        }
+    };
+
+    const repositionSkins = (): void => {
+        if (truskinRendered && hasPageSkin) {
+            repositionTruskin();
+        }
+        // This is to reposition the Page Skin to start where the navigation header ends.
+        if (pageskinRendered && hasPageSkin && isInAUEdition) {
+            repositionPageSkin();
         }
     };
 
     togglePageSkin();
 
+    window.addEventListener(
+        'message',
+        event => {
+            // This event is triggered by the commercial template: 'Skin for front pages'
+            // Also found in: commercial-templates/src/page-skin/web/index.html
+            if (event.data === 'pageskinRendered') {
+                pageskinRendered = true;
+                repositionSkins();
+            }
+            // This event is triggered by the commercial template: 'Truskin Template' to indicate the page skin is also a Truskin
+            // Also found in: commercial-templates/src/truskin-page-skin/web/index.js
+            if (event.data === 'truskinRendered') {
+                truskinRendered = true;
+                repositionSkins();
+            }
+        },
+        false
+    );
+
     mediator.on('window:throttledResize', togglePageSkin);
-    mediator.on('window:throttledScroll', repositionSkin);
-    mediator.on('modules:commercial:dfp:rendered', repositionSkin);
+
+    if (hasPageSkin) {
+        mediator.on('window:throttledScroll', repositionSkins);
+    }
 };
 
 export { pageSkin };

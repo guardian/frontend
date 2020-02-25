@@ -46,6 +46,11 @@ interface AtomPlayer {
     progressTracker?: ?IntervalID;
 }
 
+interface IFrameBehaviour {
+    autoplay: boolean;
+    mutedOnStart: boolean;
+}
+
 const players: {
     [string]: AtomPlayer,
 } = {};
@@ -247,7 +252,7 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const shouldAutoplay = (atomId: string): boolean => {
+const getIFrameBehaviour = (atomId: string): IFrameBehaviour => {
     const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
 
     const isInternalReferrer = (): boolean => {
@@ -272,13 +277,30 @@ const shouldAutoplay = (atomId: string): boolean => {
         config.get('page.contentType', '').toLowerCase() === 'video';
 
     const isFront = () => config.get('page.isFront');
+    const isUSContent =
+        config.get('page.productionOffice', '').toLowerCase() === 'us';
 
-    return (
-        ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
-            isFront()) &&
-        !isAutoplayBlockingPlatform() &&
-        flashingElementsAllowed()
-    );
+    const isPaidContent = config.get('page.isPaidContent');
+    const isUsPaidContentVideo =
+        isUSContent &&
+        isPaidContent &&
+        ((isVideoArticle() && isMainVideo()) || isFront()) &&
+        flashingElementsAllowed();
+    if (isUsPaidContentVideo) {
+        return {
+            autoplay: isUsPaidContentVideo,
+            mutedOnStart: isUsPaidContentVideo,
+        };
+    }
+
+    return {
+        autoplay:
+            ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
+                isFront()) &&
+            !isAutoplayBlockingPlatform() &&
+            flashingElementsAllowed(),
+        mutedOnStart: false,
+    };
 };
 
 const getEndSlate = (overlay: HTMLElement): ?Component => {
@@ -317,6 +339,13 @@ const updateImmersiveButtonPos = (): void => {
     }
 };
 
+const muteIFrame = (iframe: HTMLIFrameElement): void => {
+    // Mute iFrame in order to autoplay on android mobile devices
+    if (!iframe.src.includes('&mute=1')) {
+        iframe.src += '&mute=1';
+    }
+};
+
 const onPlayerReady = (
     atomId: string,
     uniqueAtomId: string,
@@ -349,7 +378,11 @@ const onPlayerReady = (
         pendingTrackingCalls: [25, 50, 75],
     };
 
-    if (shouldAutoplay(uniqueAtomId)) {
+    const iFrameBehaviour = getIFrameBehaviour(uniqueAtomId);
+    if (iFrameBehaviour.mutedOnStart) {
+        muteIFrame(iframe);
+    }
+    if (iFrameBehaviour.autoplay) {
         event.target.playVideo();
     }
 
@@ -358,7 +391,6 @@ const onPlayerReady = (
 
         if (
             !!config.get('page.section') &&
-            !config.get('switches.youtubeRelatedVideos') &&
             isBreakpoint({
                 min: 'desktop',
             })

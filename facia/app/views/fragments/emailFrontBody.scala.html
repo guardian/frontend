@@ -1,3 +1,4 @@
+@import model.pressed.Cutout
 @()(implicit page: model.PressedPage, request: RequestHeader)
 
 @import layout.slices.EmailLayouts
@@ -129,26 +130,49 @@
     }
 }
 
-@freeTextWithImage(card: ContentCard, collectionName: String) = {
-    @faciaCard(classesForCard(card)) {
-@*        here we override the alt text as 'headline' (normal alt text) may contain HTML*@
-        @row(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
-        @row(Seq("free-text"))(Html(card.header.headline))
+@renderStandfirst(standfirst: Option[String]) = {
+    @standfirst match {
+        case Some(str) => {
+            @fullRow(Seq("free-text__standfirst"))(Html(str))
+        }
+        case _ => {}
     }
 }
 
-@freeText(text: String) = {
+@freeTextWithImage(card: ContentCard, collectionName: String, standfirst: Option[String]) = {
+        @renderStandfirst(standfirst)
+        @* here we override the alt text as 'headline' (normal alt text) may contain HTML *@
+        @fullRow(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
+        @fullRow(Seq("free-text"))(Html(card.header.headline))
+}
+
+@freeTextWithCutoutImage(card: ContentCard, collectionName: String, standfirst: Option[String]) = {
+    @renderStandfirst(standfirst)
+    @fullRow(Seq("free-text"))(Html(card.header.headline))
+    @* here we override the alt text as 'headline' (normal alt text) may contain HTML *@
+    @fullRow(Seq("no-pad")){@imgFromCard(card,altTextOverride = Some(collectionName))}
+}
+
+@freeText(text: String, standfirst: Option[String]) = {
+    @renderStandfirst(standfirst)
     @fullRow(Seq("free-text"))(Html(text))
 }
 
-@renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean, collectionName: String) = {
+@renderCard(card: ContentCard, cardStyle: EmailCardStyle, isBranded: Boolean, collectionName: String, standfirst: Option[String]) = {
     @cardStyle match {
         case EmailHidden => { }
         case EmailFreeText if card.displayElement.isEmpty => {
-            @freeText(card.header.headline)
+            @freeText(card.header.headline, standfirst)
         }
         case EmailFreeText => {
-            @freeTextWithImage(card, collectionName)
+            @card.properties.map(_.image) match {
+                case Some(Some(Cutout(_, _, _))) => {
+                    @freeTextWithCutoutImage(card, collectionName, standfirst)
+                }
+                case _ => {
+                    @freeTextWithImage(card, collectionName, standfirst)
+                }
+            }
         }
         case layoutStyle: EmailFaciaCard => {
             @card.cardStyle match {
@@ -206,9 +230,10 @@
 
     @collection.cards.zipWithIndex.map { case (card, cardIndex) =>
         @if(cardIndex == 0) {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined, collection.displayName)
+            @* Hack for this-is-europe: the standfirst text comes from description added in the config screen in Fronts tool *@
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).firstCard, collection.branding.isDefined, collection.displayName, collection.config.description)
         } else {
-            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards, collection.branding.isDefined, collection.displayName)
+            @renderCard(card, EmailLayouts.layoutByName(collection.collectionType).otherCards, collection.branding.isDefined, collection.displayName, collection.config.description)
         }
     }
 }

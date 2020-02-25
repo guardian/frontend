@@ -7,7 +7,7 @@ import org.joda.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
-    DotcomRenderingAdvertisements
+    DotcomRendering
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -22,10 +22,10 @@ object OldTLSSupportDeprecation extends Experiment(
   participationGroup = TLSSupport
 )
 
-object DotcomRenderingAdvertisements extends Experiment(
+object DotcomRendering extends Experiment(
   name = "dotcom-rendering-advertisements",
-  description = "Activate the display of ads on DCR pages",
+  description = "Show DCR pages to users",
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc1A // see ArticlePicker.scala - our main filter mechanism is by page features
+  participationGroup = Perc2A // Also see ArticlePicker.scala - our main filter mechanism is by page features
 )

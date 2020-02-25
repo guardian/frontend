@@ -5,7 +5,11 @@ import bonzo from 'bonzo';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';
-import { postComment, previewComment } from 'common/modules/discussion/api';
+import {
+    getUser,
+    postComment,
+    previewComment,
+} from 'common/modules/discussion/api';
 import {
     getUserFromCookie,
     reset,
@@ -23,6 +27,33 @@ type commentType = {
 };
 
 class CommentBox extends Component {
+    static async refreshUsernameHtml(): Promise<void> {
+        reset();
+
+        const discussionUserResponse = await getUser();
+
+        if (!discussionUserResponse || !discussionUserResponse.userProfile) {
+            return;
+        }
+
+        const discussionUser: DiscussionProfile =
+            discussionUserResponse.userProfile;
+
+        const displayName = discussionUser.displayName;
+        const menuHeaderUsername = document.querySelector('.js-profile-info');
+        const discussionHeaderUsername = document.querySelector(
+            '._author_tywwu_16'
+        );
+
+        if (menuHeaderUsername && displayName) {
+            menuHeaderUsername.innerHTML = displayName;
+        }
+
+        if (discussionHeaderUsername && displayName) {
+            discussionHeaderUsername.innerHTML = displayName;
+        }
+    }
+
     constructor(options: Object): void {
         super();
 
@@ -157,24 +188,6 @@ class CommentBox extends Component {
         this.removeState('invalid');
     }
 
-    refreshUsernameHtml(): void {
-        reset();
-
-        const displayName = this.getUserData().displayName;
-        const menuHeaderUsername = document.querySelector('.js-profile-info');
-        const discussionHeaderUsername = document.querySelector(
-            '._author_tywwu_16'
-        );
-
-        if (menuHeaderUsername && displayName) {
-            menuHeaderUsername.innerHTML = displayName;
-        }
-
-        if (discussionHeaderUsername && displayName) {
-            discussionHeaderUsername.innerHTML = displayName;
-        }
-    }
-
     previewCommentSuccess(comment: commentType, resp: Object): void {
         const previewBody = this.getElem('preview-body');
 
@@ -212,7 +225,7 @@ class CommentBox extends Component {
     }
 
     postCommentSuccess(comment: commentType, resp: Object): commentType {
-        this.refreshUsernameHtml();
+        CommentBox.refreshUsernameHtml();
 
         if (this.options.newCommenter) {
             this.options.newCommenter = false;
@@ -496,11 +509,6 @@ class CommentBox extends Component {
         }
 
         const userData = this.getUserData();
-        const authorEl = this.getElem('author');
-
-        if (authorEl) {
-            authorEl.innerHTML = userData.displayName;
-        }
 
         if (this.options.state === 'response') {
             const submit = this.getElem('submit');

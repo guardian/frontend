@@ -143,6 +143,7 @@ const adSlotDefinitions = {
   Note that for the DFP slot to be filled by GTP, you'll have to
   use addSlot from add-slot.js
 */
+
 const createAdSlotElements = (
     name: string,
     attrs: Object,
@@ -150,9 +151,24 @@ const createAdSlotElements = (
 ) => {
     const adSlots = [];
 
+    const id = `dfp-ad--${name}`;
+
+    // The next three lines are to prevent a problem that appeared with DCR
+    // by which an AdSlot with the given id might have already been
+    // statically introduced server side and needs to be removed before
+    // this code takes effect on the DOM.
+    // We are simply making sure that if we are about to introduce a DOM
+    // node with a given id, that we ensure there isn't already one.
+    const node = document.getElementById(id);
+    if (node && node.parentNode) {
+        const pnode = node.parentNode;
+        console.log(`warning: cleaning up dom node id: dfp-ad--${name}`);
+        pnode.removeChild(node);
+    }
+
     // The 'main' adSlot
     const adSlot: HTMLDivElement = document.createElement('div');
-    adSlot.id = `dfp-ad--${name}`;
+    adSlot.id = id;
     adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
     adSlot.setAttribute('data-link-name', `ad slot ${name}`);
     adSlot.setAttribute('data-name', name);
