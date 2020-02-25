@@ -5,7 +5,7 @@ import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
-  
+
   Switch(
     ABTests,
     "ab-contributions-epic-precontribution-reminder-round-one",
@@ -31,6 +31,16 @@ trait ABTestSwitches {
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-europe-moment",
+    "Europe Moment",
+    owners = Seq(Owner.withGithub("tjsilver")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true

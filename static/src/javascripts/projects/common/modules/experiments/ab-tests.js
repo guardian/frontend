@@ -12,6 +12,7 @@ import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/t
 import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
+import { contributionsEuropeMoment } from 'common/modules/experiments/tests/contribs-banner-europe-moment';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -33,5 +34,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsEuropeMoment,
     articlesViewedBanner,
 ];
