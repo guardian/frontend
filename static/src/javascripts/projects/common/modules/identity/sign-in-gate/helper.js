@@ -28,13 +28,13 @@ export const getVariant: ABTest => string = test => {
 
 // check if the user has dismissed the gate by checking the user preferences
 export const hasUserDismissedGate: ({
-    componentId: string,
+    componentId?: string,
     componentName: string,
     variant: string,
-}) => boolean = ({ componentId, componentName, variant }) => {
+}) => boolean = ({ componentId = '', componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
 
-    return !!prefs[`${componentId}-${variant}`];
+    return !!prefs[`${componentId ? `${componentId}-` : ''}${variant}`];
 };
 
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
@@ -196,3 +196,16 @@ export const addPillarColour: ({
         }
     }
 };
+
+// get the html of the whole gate, by getting the html template of the variant, and adding that
+// to the child which is hidden by the fade in
+export const setTemplate: ({
+    child: Element,
+    template: string,
+}) => string = ({ child, template }) => `
+    <div class="signin-gate__first-paragraph-container">
+        ${child.outerHTML}
+        <div class="signin-gate__first-paragraph-overlay"></div>
+    </div>
+    ${template}
+`;

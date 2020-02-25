@@ -14,3 +14,13 @@ export type ComponentEventParams = {
     browserId?: string,
     visitId?: string,
 };
+
+export type SignInGateVariant = {
+    show: ({
+        abTest: CurrentABTest,
+        guUrl: string,
+        signInUrl: string,
+    }) => boolean,
+    canShow: () => boolean,
+    name: string,
+};
