@@ -21,11 +21,18 @@ declare var require: {
     main: typeof module,
 };
 
+declare type TagAtrribute = {
+    name: string,
+    value: string
+};
+
 declare type ThirdPartyTag = {
     shouldRun: boolean,
     url: string,
     onLoad?: () => any,
     useImage?: boolean,
+    attrs?: Array<TagAtrribute>,
+    async?: boolean
 };
 
 declare var jsdom: {
