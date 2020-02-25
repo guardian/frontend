@@ -15,6 +15,7 @@
     "@guardian/atom-renderer": "1.1.6",
     "@guardian/consent-management-platform": "2.0.10",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
+    "@guardian/slot-machine-client": "^0.1.2",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
