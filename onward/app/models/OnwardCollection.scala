@@ -55,14 +55,23 @@ case class OnwardItemMost(
 object OnwardItemMost {
 
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
-    if (contentCard.cardTypes.showCutOut) {
+
+    val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
       contentCard.cutOut.map { cutOut =>  cutOut.imageUrl}
     } else {
-      contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
+      None
+    }
+
+    val maybeUrl2 = contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
         case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
         case _ => None
-      }}
+    }}
+
+    maybeUrl1 match {
+      case Some(_) => maybeUrl1
+      case None => maybeUrl2
     }
+
   }
   def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
     for {
