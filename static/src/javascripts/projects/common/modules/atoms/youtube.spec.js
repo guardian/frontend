@@ -4,6 +4,8 @@ import { isAndroid as _isAndroid, isIOS as _isIOS } from 'lib/detect';
 import { isOn as _isOn } from 'common/modules/accessibility/main';
 import config from 'lib/config';
 
+const { muteIFrame, getIFrameBehaviour, getIFrameBehaviourConfig } = _;
+
 const isAndroid: any = _isAndroid;
 const isIOS: any = _isIOS;
 const accessibilityIsOn: any = _isOn;
@@ -75,9 +77,9 @@ describe('youtube', () => {
         }
     });
 
-    describe('muting iframes to trgiger autoplay', () => {
+    describe('muting iframes to trigger autoplay', () => {
         it('mutes an iframe by amending the src property if no other URL parameters', () => {
-            const docSrc = 'http://www.testme.com/q';
+            const docSrc = 'http://www.example.com/q';
 
             const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
 
@@ -89,15 +91,15 @@ describe('youtube', () => {
                 'iframeId'
             ): any): HTMLIFrameElement);
 
-            _.muteIFrame(iframe);
+            muteIFrame(iframe);
 
             if (document.body) {
-                expect(iframe.src).toBe('http://www.testme.com/q?mute=1');
+                expect(iframe.src).toBe('http://www.example.com/q?mute=1');
             }
         });
 
         it('adds a new parameter to mute iframe if parameters already exist', () => {
-            const docSrc = 'http://www.testme.com/q?randomParam=abc';
+            const docSrc = 'http://www.example.com/q?randomParam=abc';
 
             const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
 
@@ -109,16 +111,16 @@ describe('youtube', () => {
                 'iframeId'
             ): any): HTMLIFrameElement);
 
-            _.muteIFrame(iframe);
+            muteIFrame(iframe);
             if (document.body) {
                 expect(iframe.src).toBe(
-                    'http://www.testme.com/q?randomParam=abc&mute=1'
+                    'http://www.example.com/q?randomParam=abc&mute=1'
                 );
             }
         });
 
         it("doesn't amend iframe src property if already muted", () => {
-            const docSrc = 'http://www.testme.com/q?mute=1';
+            const docSrc = 'http://www.example.com/q?mute=1';
 
             const div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
 
@@ -130,10 +132,10 @@ describe('youtube', () => {
                 'iframeId'
             ): any): HTMLIFrameElement);
 
-            _.muteIFrame(iframe);
+            muteIFrame(iframe);
 
             if (document.body) {
-                expect(iframe.src).toBe('http://www.testme.com/q?mute=1');
+                expect(iframe.src).toBe('http://www.example.com/q?mute=1');
             }
         });
     });
@@ -151,7 +153,7 @@ describe('youtube', () => {
                 isUSContent: true,
                 isPaidContent: true,
             };
-            expect(_.getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
+            expect(getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
                 autoplay: true,
                 mutedOnStart: true,
             });
@@ -169,7 +171,7 @@ describe('youtube', () => {
                 isUSContent: true,
                 isPaidContent: true,
             };
-            expect(_.getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
+            expect(getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
                 autoplay: true,
                 mutedOnStart: false,
             });
@@ -187,7 +189,7 @@ describe('youtube', () => {
                 isUSContent: false,
                 isPaidContent: false,
             };
-            expect(_.getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
+            expect(getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
                 autoplay: true,
                 mutedOnStart: false,
             });
@@ -205,7 +207,7 @@ describe('youtube', () => {
                 isUSContent: false,
                 isPaidContent: false,
             };
-            expect(_.getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
+            expect(getIFrameBehaviour(iFrameBehaviourConfig)).toEqual({
                 autoplay: false,
                 mutedOnStart: false,
             });
@@ -228,7 +230,7 @@ describe('youtube', () => {
                 },
             });
 
-            docSrc = 'http://www.testme.com/q?mute=1';
+            docSrc = 'http://www.example.com/q?mute=1';
             div = `<div id="outerDiv"><iframe id="iframeId" src="${docSrc}"></iframe></div>`;
             if (document.body) {
                 document.body.innerHTML = div;
@@ -241,14 +243,14 @@ describe('youtube', () => {
         it('is Autoplay blocking platform if isAndroid', () => {
             isAndroid.mockReturnValue(true);
             isIOS.mockReturnValue(false);
-            const iFrameBehaviourConfig = _.getIFrameBehaviourConfig(iframe);
+            const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
             expect(iFrameBehaviourConfig.isAutoplayBlockingPlatform).toBe(true);
         });
 
         it('is Autoplay blocking platform if isIOS', () => {
             isAndroid.mockReturnValue(false);
             isIOS.mockReturnValue(true);
-            const iFrameBehaviourConfig = _.getIFrameBehaviourConfig(iframe);
+            const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
             expect(iFrameBehaviourConfig.isAutoplayBlockingPlatform).toBe(true);
         });
 
@@ -257,14 +259,14 @@ describe('youtube', () => {
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.theguardian.com'
             );
-            expect(_.getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
+            expect(getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
                 true
             );
             // $FlowFixMe jest.spyon can take a third accesstype argument since jest 22.1.0
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.garbage-site.com'
             );
-            expect(_.getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
+            expect(getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
                 false
             );
         });
@@ -272,52 +274,44 @@ describe('youtube', () => {
         it('correctly identifies it isMainVideo', () => {
             // Return true once to mock "'figure[data-component="main video"]'" bring present
             jest.spyOn(iframe, 'closest').mockReturnValueOnce(true);
-            expect(_.getIFrameBehaviourConfig(iframe).isMainVideo).toBe(true);
+            expect(getIFrameBehaviourConfig(iframe).isMainVideo).toBe(true);
             // Expect false as we no longer have specified node in the mock.
-            expect(_.getIFrameBehaviourConfig(iframe).isMainVideo).toBe(false);
+            expect(getIFrameBehaviourConfig(iframe).isMainVideo).toBe(false);
         });
 
         it('correctly configures for flashing element preferences', () => {
             accessibilityIsOn.mockReturnValueOnce(true);
             expect(
-                _.getIFrameBehaviourConfig(iframe).flashingElementsAllowed
+                getIFrameBehaviourConfig(iframe).flashingElementsAllowed
             ).toBe(true);
             accessibilityIsOn.mockReturnValueOnce(false);
             expect(
-                _.getIFrameBehaviourConfig(iframe).flashingElementsAllowed
+                getIFrameBehaviourConfig(iframe).flashingElementsAllowed
             ).toBe(false);
         });
 
         it('correctly identify isFront', () => {
-            expect(_.getIFrameBehaviourConfig(iframe).isFront).toBe(true);
+            expect(getIFrameBehaviourConfig(iframe).isFront).toBe(true);
             config.set('page.isFront', false);
-            expect(_.getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(
-                false
-            );
+            expect(getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(false);
         });
 
         it('correctly identify isVideoArticle', () => {
-            expect(_.getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(
-                false
-            );
+            expect(getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(false);
             config.set('page.contentType', 'video');
-            expect(_.getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(
-                true
-            );
+            expect(getIFrameBehaviourConfig(iframe).isVideoArticle).toBe(true);
         });
 
         it('correctly identify isUSContent', () => {
-            expect(_.getIFrameBehaviourConfig(iframe).isUSContent).toBe(false);
+            expect(getIFrameBehaviourConfig(iframe).isUSContent).toBe(false);
             config.set('page.productionOffice', 'us');
-            expect(_.getIFrameBehaviourConfig(iframe).isUSContent).toBe(true);
+            expect(getIFrameBehaviourConfig(iframe).isUSContent).toBe(true);
         });
 
         it('correctly identify isPaidContent', () => {
-            expect(_.getIFrameBehaviourConfig(iframe).isPaidContent).toBe(true);
+            expect(getIFrameBehaviourConfig(iframe).isPaidContent).toBe(true);
             config.set('page.isPaidContent', false);
-            expect(_.getIFrameBehaviourConfig(iframe).isPaidContent).toBe(
-                false
-            );
+            expect(getIFrameBehaviourConfig(iframe).isPaidContent).toBe(false);
         });
     });
 });

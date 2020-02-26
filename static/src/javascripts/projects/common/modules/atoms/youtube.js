@@ -285,7 +285,7 @@ const getIFrameBehaviourConfig = (
     const isVideoArticle =
         config.get('page.contentType', '').toLowerCase() === 'video';
 
-    const isFront = config.get('page.isFront');
+    const isFront = config.get('page.isFront', false);
     const isUSContent =
         config.get('page.productionOffice', '').toLowerCase() === 'us';
 
@@ -306,8 +306,6 @@ const getIFrameBehaviourConfig = (
 const getIFrameBehaviour = (
     iframeConfig: IFrameBehaviourConfig
 ): IFrameBehaviour => {
-    let iFrameBehaviour;
-
     const {
         isAutoplayBlockingPlatform,
         isInternalReferrer,
@@ -326,21 +324,19 @@ const getIFrameBehaviour = (
         flashingElementsAllowed;
 
     if (isUsPaidContentVideo) {
-        iFrameBehaviour = {
+        return {
             autoplay: isUsPaidContentVideo,
             mutedOnStart: isUsPaidContentVideo && isAndroid(),
         };
-    } else {
-        iFrameBehaviour = {
-            autoplay:
-                ((isVideoArticle && isInternalReferrer && isMainVideo) ||
-                    isFront) &&
-                !isAutoplayBlockingPlatform &&
-                flashingElementsAllowed,
-            mutedOnStart: false,
-        };
     }
-    return iFrameBehaviour;
+    return {
+        autoplay:
+            ((isVideoArticle && isInternalReferrer && isMainVideo) ||
+                isFront) &&
+            !isAutoplayBlockingPlatform &&
+            flashingElementsAllowed,
+        mutedOnStart: false,
+    };
 };
 
 const getEndSlate = (overlay: HTMLElement): ?Component => {
