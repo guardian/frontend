@@ -91,22 +91,6 @@ const addContentEvents = (
     bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
 };
 
-const addPrerollEvents = (
-    player: Object,
-    mediaId: string,
-    mediaType: string
-) => {
-    const eventsMap = {
-        adstart: 'play',
-        adend: 'end',
-        adsready: 'ready',
-        // This comes from the skipAd plugin
-        adskip: 'skip',
-    };
-
-    bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, true);
-};
-
 const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
     const events = {
         play: 'metric1',
@@ -220,48 +204,6 @@ const bindContentEvents = (player: Object) => {
     events.ready();
 };
 
-const bindPrerollEvents = (player: Object) => {
-    const events = {
-        end() {
-            player.trigger(constructEventName('preroll:end', player));
-            bindContentEvents(player);
-        },
-        start() {
-            const duration = player.duration();
-            if (duration) {
-                player.trigger(constructEventName('preroll:play', player));
-            } else {
-                player.one('durationchange', events.start);
-            }
-        },
-        ready() {
-            player.trigger(constructEventName('preroll:ready', player));
-
-            player.one('adstart', events.start);
-            player.one('adend', events.end);
-
-            if (shouldAutoPlay(player)) {
-                player.play();
-            }
-        },
-    };
-    const adFailed = () => {
-        bindContentEvents(player);
-        if (shouldAutoPlay(player)) {
-            player.play();
-        }
-        // Remove both handlers, because this adFailed handler should only happen once.
-        player.off('adtimeout', adFailed);
-        player.off('adserror', adFailed);
-    };
-
-    player.one('adsready', events.ready);
-
-    // If no preroll avaliable or preroll fails, cancel ad framework and init content tracking.
-    player.one('adtimeout', adFailed);
-    player.one('adserror', adFailed);
-};
-
 // These events are so that other libraries (e.g. Ophan) can hook into events without
 // needing to know about videojs
 const bindGlobalEvents = (player: Object) => {
@@ -308,12 +250,10 @@ const bindErrorHandler = (player: Object) => {
 export default {
     constructEventName,
     bindContentEvents,
-    bindPrerollEvents,
     bindGlobalEvents,
     initOphanTracking,
     handleInitialMediaError,
     bindErrorHandler,
     addContentEvents,
-    addPrerollEvents,
     bindGoogleAnalyticsEvents,
 };
