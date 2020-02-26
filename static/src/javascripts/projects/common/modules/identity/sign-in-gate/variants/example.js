@@ -29,7 +29,7 @@ const htmlTemplate: ({
 <div class="signin-gate">
     <div class="signin-gate__content">
         <div class="signin-gate__header">
-            <h1 class="signin-gate__header--text">Sign in and continue<br />reading for free - CONTROL</h1>
+            <h1 class="signin-gate__header--text">Sign in and continue<br />reading for free</h1>
         </div>
         <div class="signin-gate__benefits syndication--bottom">
             <p class="signin-gate__benefits--text">
@@ -40,7 +40,7 @@ const htmlTemplate: ({
             <a class="signin-gate__button signin-gate__button--primary js-signin-gate__button" href="${signInUrl}">
                 Sign in
             </a>
-            <a class="signin-gate__why js-signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
+            <a class="signin-gate__padding-left signin-gate__link js-signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
             <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
         </div>
     </div>
@@ -106,7 +106,7 @@ const show: ({
                 selector: '.js-signin-gate__dismiss',
                 abTest,
                 component,
-                value: 'dismiss',
+                value: 'not-now',
                 callback: () => {
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
@@ -130,7 +130,7 @@ const show: ({
                 selector: '.js-signin-gate__button',
                 abTest,
                 component,
-                value: 'signin_button',
+                value: 'sign-in-link',
             });
 
             // add click handler for the why sign in link
@@ -139,7 +139,7 @@ const show: ({
                 selector: '.js-signin-gate__why',
                 abTest,
                 component,
-                value: 'why_sign_in',
+                value: 'why-link',
             });
 
             // Hide the article Body. Append the shadow one.
@@ -148,12 +148,10 @@ const show: ({
                 articleBody.parentNode.appendChild(shadowArticleBody);
             }
 
-            // show method ran successfully
             return true;
         }
     }
 
-    // can't show for whatever reason
     return false;
 };
 
