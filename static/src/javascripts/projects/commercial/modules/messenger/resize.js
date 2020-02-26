@@ -46,7 +46,6 @@ const resize = (
     }
 
     return fastdom.write(() => {
-        Object.assign(adSlot.style, styles);
         Object.assign(iframe.style, styles);
 
         if (iframeContainer) {
@@ -68,18 +67,6 @@ const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
-
-            if (
-                adSlot &&
-                (adSlot.classList.contains('ad-slot--mostpop') ||
-                    adSlot.classList.contains('ad-slot--right') ||
-                    adSlot.classList.contains('ad-slot--offset-right'))
-            ) {
-                // We ignore resize events (sent mainly by apnx)
-                // for the mostpop (Most popular) slot
-                // See https://trello.com/c/TtuGq6Iy
-                return null;
-            }
             removeAnyOutstreamClass(adSlot);
             const iframeContainer =
                 iframe && iframe.closest('.ad-slot__content');

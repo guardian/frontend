@@ -116,7 +116,7 @@ describe('cmp', () => {
 
     beforeEach(() => {
         // $FlowFixMe I know the Store is a Mock Flow... this is a test
-        cmp = new CmpService(new StoreMock(shortVendorList));
+        cmp = new CmpService(new StoreMock(shortVendorList), {});
         jest.resetAllMocks();
         fetchJsonMock.mockImplementation(
             () => new Promise(resolve => resolve(globalVendorList))

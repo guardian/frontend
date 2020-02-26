@@ -2,6 +2,7 @@ package services
 
 import java.util.concurrent.{Executors, ThreadPoolExecutor}
 
+import clients.DiscussionClient
 import com.gu.identity.cookie.IdentityCookieService
 import com.gu.identity.play.IdentityPlayAuthService
 import com.softwaremill.macwire._
@@ -47,4 +48,5 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val emailService = wire[NewsletterService]
   lazy val mdapiService = wire[MembersDataApiService]
   lazy val discussionApiService = wire[DiscussionApiService]
+  lazy val discussionClient = wire[DiscussionClient]
 }

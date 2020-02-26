@@ -4,12 +4,12 @@ import com.gu.contentapi.client.utils.{Article, DesignType}
 import common.LinkTo
 import model.pressed.{Image, MediaType, PressedContent}
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
+import views.support.{ContentOldAgeDescriber, CutOut, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
 import model.InlineImage
-import models.dotcomponents.OnwardsUtils.{determinePillar, correctPillar}
+import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 import org.joda.time.DateTimeZone
 
 case class OnwardItem(
@@ -55,10 +55,23 @@ case class OnwardItemMost(
 object OnwardItemMost {
 
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
-    contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
-      case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
-      case _ => None
+
+    val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
+      contentCard.cutOut.map { cutOut =>  cutOut.imageUrl}
+    } else {
+      None
+    }
+
+    val maybeUrl2 = contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
+        case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
+        case _ => None
     }}
+
+    maybeUrl1 match {
+      case Some(_) => maybeUrl1
+      case None => maybeUrl2
+    }
+
   }
   def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
     for {

@@ -1,0 +1,16 @@
+@(  idRequest: services.IdentityRequest,
+    idUrlBuilder: services.IdentityUrlBuilder,
+)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import views.html.fragments.registrationFooter
+
+<div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
+    <h2>
+        No comments found for user
+    </h2>
+    <div>
+        Comments and replies will be shown on this page if a user has commented.
+        It appears this user does not exist or has not commented.
+        If this is your public profile, you can view your comments here once you have left your first comment.
+    </div>
+    @registrationFooter(idRequest, idUrlBuilder)
+</div>

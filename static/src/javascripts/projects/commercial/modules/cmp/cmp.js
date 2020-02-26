@@ -4,6 +4,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -85,12 +86,15 @@ class CmpService {
     generateConsentString: () => string;
     processCommand: () => void;
 
-    constructor(store: CmpStore) {
+    constructor(
+        store: CmpStore,
+        eventListeners: { [string]: Array<(obj: {}) => void> }
+    ) {
         this.isLoaded = false;
         this.cmpReady = false;
         this.store = store;
         this.commandQueue = [];
-        this.eventListeners = {};
+        this.eventListeners = eventListeners;
         this.processCommand.receiveMessage = this.receiveMessage;
         this.cmpConfig = defaultConfig;
         if (getUrlVars().cmpdebug) {
@@ -275,21 +279,42 @@ class CmpService {
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
     if (window[CMP_GLOBAL_NAME]) {
+        let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
-        // Initialize the store with all of our consent data
-        const store = generateStore();
-        const cmp = new CmpService(store);
-        // Expose `processCommand` as the CMP implementation
-        window[CMP_GLOBAL_NAME] = cmp.processCommand;
-        cmp.commandQueue = commandQueue;
-        cmp.isLoaded = true;
-        cmp.notify('isLoaded');
-        // Execute any previously queued command
-        cmp.processCommandQueue();
 
-        cmp.cmpReady = true;
-        cmp.notify('cmpReady');
+        /**
+         * Call onIabConsentNotification with callback, this will
+         * trigger the callback immediately and set up cmp with the initial consent
+         * state. If consent state updates via the UI the callback will be triggered
+         * again which will update cmp with the new consent state.
+         */
+        onIabConsentNotification(() => {
+            // Initialize the store with all of our consent data
+            const store = generateStore();
+            /**
+             * If instance of cmp exists get it's eventListeners
+             * as we'll need to add them to the new instance of cmp.
+             */
+            const eventListeners = cmp ? cmp.eventListeners : {};
+
+            // Create new instance of CmpService and assign to cmp
+            cmp = new CmpService(store, eventListeners);
+
+            // Set window[CMP_GLOBAL_NAME] to new `cmp.processCommand`
+            window[CMP_GLOBAL_NAME] = cmp.processCommand;
+        });
+
+        // Just required when we first initialise cmp on page load
+        if (cmp) {
+            cmp.commandQueue = commandQueue;
+            cmp.isLoaded = true;
+            cmp.notify('isLoaded');
+            // Execute any previously queued command
+            cmp.processCommandQueue();
+            cmp.cmpReady = true;
+            cmp.notify('cmpReady');
+        }
     }
 };
 

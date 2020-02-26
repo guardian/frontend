@@ -2,6 +2,7 @@
     idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     user: com.gu.identity.model.User,
+    username: String,
     activityType: String
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 @import views.html.fragments.registrationFooter
@@ -9,29 +10,28 @@
 <div class="identity-wrapper monocolumn-wrapper identity-wrapper--stretched">
     <div class="identity-layout__header">
 
-        @user.publicFields.username.map { username =>
-            <div class="user-profile u-cf">
-                <div class="identity-title identity-title--public-profile">
-                    <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
-                    <div class="user-profile__rows">
-                        <h1 class="user-profile__name" data-userid="@user.id">@username</h1>
-                        @user.dates.accountCreatedDate.map { accountCreatedDate =>
-                            <p class="user-profile__last-seen">
-                                Registered on @accountCreatedDate.toString("d MMM yyyy")
-                            </p>
-                        }
-                    </div>
+        <div class="user-profile u-cf">
+            <div class="identity-title identity-title--public-profile">
+                <div class="user-profile__avatar user-avatar" data-userid="@user.id"></div>
+                <div class="user-profile__rows">
+                    <h1 class="user-profile__name" data-userid="@user.id">@username</h1>
+                    @user.dates.accountCreatedDate.map { accountCreatedDate =>
+                        <p class="user-profile__last-seen">
+                            Registered on @accountCreatedDate.toString("d MMM yyyy")
+                        </p>
+                    }
                 </div>
-                @user.publicFields.aboutMe.map { aboutMe =>
-                    <div class="user-profile__about">
-                        <p>@aboutMe</p>
-                        @user.publicFields.interests.filter(_!="").map{ interests =>
-                            <p><b>Interests:</b> @interests</p>
-                        }
-                    </div>
-                }
             </div>
-        }
+            @user.publicFields.aboutMe.map { aboutMe =>
+                <div class="user-profile__about">
+                    <p>@aboutMe</p>
+                    @user.publicFields.interests.filter(_!="").map { interests =>
+                        <p><b>Interests:</b> @interests</p>
+                    }
+                </div>
+            }
+        </div>
+
 
         <div class="modern-visible">
             @defining("/user/id/"+user.id){ link =>
