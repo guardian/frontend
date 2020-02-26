@@ -300,6 +300,12 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         &:hover {
+            &.fc-item--three-quarters-tablet, &.fc-item--full-media-75-tablet {
+                .fc-item__liveblog-blocks__inner {
+                    background-color: darken($story-package-card-colour, 5%);
+                }
+            }
+
             .fc-item__liveblog-block__text:after {
                 color: mix(#ffffff, $story-package-card-colour, 92%);
                 background-color: darken($story-package-card-colour, 5%);
@@ -364,6 +370,9 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
+        // fc-item--full-media-75-tablet and fc-item--three-quarters-tablet have the light grey background
+        // and the live update blocks with a dark blue background. There's a little extra styling here to
+        // ensure hover states are correct.
         &.fc-item--full-media-75-tablet {
             .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
                 background-color: darken($story-package-card-colour, 5%);
@@ -384,6 +393,21 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
             .fc-item__standfirst-wrapper {
                 display: none;
+            }
+        }
+
+        &.fc-item--three-quarters-tablet {
+            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
+                background-color: darken($story-package-card-colour, 5%);
+            }
+
+            .fc-item__liveblog-blocks__inner {
+                background-color: $story-package-card-colour;
+                padding-left: 5px;
+
+                &:hover {
+                    background-color: darken($story-package-card-colour, 5%);
+                }
             }
         }
 
