@@ -10,10 +10,12 @@ import { acquisitionsBannerEuropeMomentTemplate } from 'common/modules/commercia
 const geolocation = geolocationGetSync();
 
 const countryGroupId: CountryGroupId = countryCodeToCountryGroupId(geolocation);
-const isEurope = countryGroupId === 'EURCountries';
+const isEuropeAndUk =
+    countryGroupId === 'EURCountries' || countryGroupId === 'GBPCountries';
 
 const titles = ['Europe title'];
-const messageText = 'We love Europe!!';
+const messageText =
+    '…Britain may be leaving the EU, but the Guardian remains committed to Europe, doubling down on the ideas and interests that we share. These are turbulent times, and crises are not limited by national boundaries. But then neither are we. We will stay with you, delivering quality, investigative journalism so we can all make up our minds based on fact, not fiction.';
 
 const ctaText = 'Support The Guardian';
 
@@ -31,7 +33,7 @@ export const contributionsEuropeMoment: AcquisitionsABTest = {
     idealOutcome: 'variant design performs at least as well as control',
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
-    canRun: () => isEurope,
+    canRun: () => isEuropeAndUk,
     geolocation,
     variants: [
         {
@@ -43,7 +45,7 @@ export const contributionsEuropeMoment: AcquisitionsABTest = {
                 ctaText,
                 template: acquisitionsBannerEuropeMomentTemplate,
                 hasTicker: true,
-                bannerModifierClass: 'europemoment',
+                bannerModifierClass: 'europe-moment',
             },
         },
     ],
