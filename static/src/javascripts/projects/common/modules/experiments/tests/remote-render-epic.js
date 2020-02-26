@@ -110,6 +110,11 @@ const remoteRenderTest = {
                     isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
                     tags: buildKeywordTags(page),
+                    // These are hardcoded as to no stop the Contributions service from sending the Epic.
+                    // The targeting logic around this test already ensures this data is observed and respected.
+                    showSupportMessaging: true,
+                    isRecurringContributor: false,
+                    lastOneOffContributionDate: 0,
                 };
 
                 const payload = JSON.stringify({
