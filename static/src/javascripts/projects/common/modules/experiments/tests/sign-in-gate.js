@@ -16,6 +16,10 @@ export const signInGate: ABTest = {
     showForSensitive: false,
     canRun: () => true,
     variants: [
+        // {
+        //     id: 'example',
+        //     test: (): void => {},
+        // },
         {
             id: 'control',
             test: (): void => {},
