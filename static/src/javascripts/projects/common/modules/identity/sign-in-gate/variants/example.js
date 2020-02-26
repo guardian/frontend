@@ -71,17 +71,24 @@ const show: ({
     const articleBody = document.querySelector('.js-article__body');
 
     if (articleBody) {
-        // get the first paragraph of the article
-        const articleBodyFirstChild = articleBody.firstElementChild;
-        if (articleBodyFirstChild) {
+        if (articleBody.children.length) {
             // container div to hold our "shadow" article dom while we create it
             const shadowArticleBody = document.createElement('div');
             // add the article body classes to the "shadow"
             shadowArticleBody.className = articleBody.className;
 
+            const shadowOverlay = document.createElement('div');
+            shadowOverlay.appendChild(articleBody.children[0]);
+            if (
+                articleBody.children[0].clientHeight < 125 &&
+                articleBody.children.length > 1
+            ) {
+                shadowOverlay.appendChild(articleBody.children[1]);
+            }
+
             // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
             shadowArticleBody.innerHTML = setTemplate({
-                child: articleBodyFirstChild,
+                child: shadowOverlay,
                 template: htmlTemplate({
                     signInUrl,
                     guUrl,
