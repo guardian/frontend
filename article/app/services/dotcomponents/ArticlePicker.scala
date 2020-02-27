@@ -127,6 +127,23 @@ object ArticlePicker {
     isSupported
   }
 
+  def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
+    val whitelistFeatures = featureWhitelist(page, request)
+    val article100PercentPageFeatures = whitelistFeatures.filterKeys(
+      Set(
+        "isSupportedType",
+        "isNotImmersive",
+        "isNotLiveBlog",
+        "isNotAGallery",
+        "isNotAMP",
+        "isNotBlackListed",
+        "isNotPaidContent"
+      )
+    )
+    val isArticle100PercentPage = article100PercentPageFeatures.forall({ case (test, isMet) => isMet})
+    isArticle100PercentPage
+  }
+
   def dcrShouldRender(request: RequestHeader): Boolean = {
     // dcrShouldRender provides an override to let us force rendering by DCR even
     // when an article is not supportted
@@ -145,6 +162,8 @@ object ArticlePicker {
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val whitelistFeatures = featureWhitelist(page, request)
     val userIsInCohort = ActiveExperiments.isParticipating(DotcomRendering)
+    val isAddFree = ArticlePageChecks.isAdFree(page, request)
+    val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
 
     // Decide if we should render this request with the DCR platform or not
     val tier = if (dcrShouldNotRender(request)) {
@@ -158,7 +177,7 @@ object ArticlePicker {
     }
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures + ("userIsInCohort" -> userIsInCohort)
+    val features = whitelistFeatures + ("userIsInCohort" -> userIsInCohort) + ("isAdFree" -> isAddFree) + ("isArticle100PercentPage" -> isArticle100PercentPage)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
