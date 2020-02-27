@@ -36,7 +36,7 @@ const htmlTemplate: ({
             </p>
         </div>
         <div class="signin-gate__buttons">
-            <a class="signin-gate__button signin-gate__button--primary js-signin-gate__register-button href="${signInUrl}">
+            <a class="signin-gate__button signin-gate__button--primary js-signin-gate__register-button" href="${signInUrl}">
                 Register for free
             </a>
             <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
