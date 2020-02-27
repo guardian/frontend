@@ -7,7 +7,6 @@ import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide'
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
-import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
@@ -74,7 +73,6 @@ const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
         simpleReach,
-        krux,
         permutive,
         ias,
         inizio,
