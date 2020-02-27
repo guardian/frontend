@@ -5,10 +5,6 @@
     overflow: hidden;
     padding-top: 0;
 
-    //@include mq($from: tablet) {
-    //    max-height: 327px;
-    //}
-
     .site-message__copy {
         padding: 0;
     }
@@ -21,10 +17,10 @@
         position: absolute;
         z-index: 1;
         right: 0;
+        top: $gs-baseline;
 
         @include mq($from: tablet) {
             right: $gs-gutter;
-            top: $gs-baseline;
         }
 
         @include mq($from: desktop) {
@@ -43,7 +39,7 @@
         }
 
         path:first-of-type {
-            fill: white;
+            fill: $brightness-97;
         }
 
         path:nth-of-type(2) {
@@ -73,9 +69,11 @@
         flex: 0 1 50%;
         position: relative;
         margin-top: $gs-baseline;
+        margin-bottom: $gs-baseline * 2;
 
         @include mq($from: tablet) {
             flex: 0 0 75%;
+            margin-bottom: 0;
         }
 
         @include mq($from: leftCol) {
@@ -84,10 +82,13 @@
     }
 
     .engagement-banner__image-container--mobile {
-        display: none;
+        display: block;
+        position: absolute;
+        bottom: 0;
+        right: 0;
 
-        @include mq($until: tablet) {
-            display: block;
+        @include mq($from: tablet) {
+            display: none;
         }
     }
 
@@ -118,6 +119,10 @@
                 height: 100%;
             }
         }
+    }
+
+    .engagement-banner__header {
+        padding: 0;
     }
 
     .engagement-banner__header-text  {
