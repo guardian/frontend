@@ -7,6 +7,10 @@
     }
 }
 
+.signin-gate__content {
+    padding-top: $gs-baseline * 5;
+}
+
 .signin-gate__header {
     @include fs-header(3);
     border-top: 1px solid $brightness-46;
@@ -14,11 +18,11 @@
 }
 
 .signin-gate__buttons {
-    border-top: 1px solid $brightness-46;
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
     padding-top: 4px;
+    padding-bottom: 4px;
 
     // Horizontal alignment
     align-items: flex-start;
@@ -31,18 +35,28 @@
     }
 }
 
-.signin-gate__why {
+.signin-gate__padding-left {
+    padding-left: $gs-baseline * 1.5;
+}
+
+.signin-gate__padding-bottom {
+    padding-bottom: $gs-baseline * 1.5;
+}
+
+.signin-gate__padding-right {
+    padding-right: $gs-baseline * 1.5;
+}
+
+.signin-gate__link {
     @include fs-textSans(5);
     color: $brightness-7 !important;
     text-decoration: underline;
     font-weight: 700;
     font-size: 17px;
-    padding-left: $gs-baseline * 1.5;
     padding-top: 20px;
     @include mq(424px) {
         padding-top: 0px;
     }
-
 }
 
 .signin-gate__dismiss {
@@ -129,15 +143,27 @@
     }
 }
 
+.signin-gate__paragraph {
+    border-top: 1px solid $brightness-46;
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__paragraph--text {
+    font-size: 16px;
+    padding-top: $gs-baseline;
+    @include mq(tablet) {
+        font-size: 18px;
+    }
+}
+
+
 .signin-gate__benefits {
     border-top: 1px solid $brightness-46;
     margin-bottom: $gs-baseline * 2;
 }
 
 .signin-gate__benefits--text {
-    @include mq(tablet) {
-        padding-right: $gs-baseline * 12;
-    }
+    padding-top: $gs-baseline / 3;
     font-weight: bold;
     color: $sport-main;
     font-size: 17px;

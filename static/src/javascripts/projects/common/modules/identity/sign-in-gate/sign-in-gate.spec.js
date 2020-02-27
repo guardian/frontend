@@ -10,7 +10,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateSecundus',
+            id: 'SignInGateTertius',
             variantToRun: {
                 id: 'variant',
             },
@@ -91,7 +91,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGateSecundus-variant': Date.now(),
+                'SignInGateTertius-variant': Date.now(),
             });
         });
 
