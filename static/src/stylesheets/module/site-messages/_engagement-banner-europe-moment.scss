@@ -1,71 +1,179 @@
-$background: #f6f6f6;
-$background-dark: #041f4a;
-
 .site-message--europe-moment {
-    border-top: 2px solid $brightness-7;
-    color: $brightness-7;
-    background-color: $background;
+    color: $brand-main;
+    background-color: $brand-main;
     position: relative;
     overflow: hidden;
-}
+    padding-top: 0;
 
-.engagement-banner__roundel  .inline-marque-36 {
-    path:nth-child(1) {
-        fill: $brightness-97;
+    //@include mq($from: tablet) {
+    //    max-height: 327px;
+    //}
+
+    .site-message__copy {
+        padding: 0;
     }
 
-    path:nth-child(2) {
-        fill: $brightness-7;
+    .site-message__roundel {
+        display: none;
+    }
+
+    .engagement-banner__close {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+
+        @include mq($from: tablet) {
+            right: $gs-gutter;
+            top: $gs-baseline;
+        }
+
+        @include mq($from: desktop) {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+    }
+
+    .engagement-banner__roundel {
+        display: none;
+
+        @include mq($from: desktop) {
+            display: block;
+            position: relative;
+            margin-right: $gs-gutter / 2;
+        }
+
+        path:first-of-type {
+            fill: white;
+        }
+
+        path:nth-of-type(2) {
+            fill: $brand-main;
+        }
+    }
+
+    .engagement-banner__close-button {
+        border-color: $brightness-97;
+
+        path {
+            fill: $brightness-97;
+        }
     }
 }
 
-.engagement-banner__container {
+.engagement-banner__container--europe-moment {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+
     @include mq($from: tablet) {
-        display: flex;
-    }
-}
-
-.engagement-banner__text-container {
-    position: relative;
-}
-
-.engagement-banner__header  {
-    margin-top: 100px;
-    border-bottom: 0;
-}
-
-.engagement-banner__body {
-    line-height: 1.35;
-    font-size: 15px;
-
-    @include mq($from: phablet) {
-        font-size: 17px;
+        flex-flow: row nowrap;
     }
 
-    @include mq($from: tablet) {
-        padding: $gs-baseline $gs-gutter $gs-baseline 0;
+    .engagement-banner__text-container {
+        flex: 0 1 50%;
+        position: relative;
+        margin-top: $gs-baseline;
+
+        @include mq($from: tablet) {
+            flex: 0 0 75%;
+        }
+
+        @include mq($from: leftCol) {
+            flex: 0 1 50%;
+        }
     }
-}
 
-.engagement-banner__cta {
-    position: relative;
-    z-index: 1;
-    padding-top: $gs-baseline / 2;
+    .engagement-banner__image-container--mobile {
+        display: none;
 
-    @include mq($from: desktop) {
-        padding-top: $gs-baseline
+        @include mq($until: tablet) {
+            display: block;
+        }
     }
-}
 
-.engagement-banner__cta--editorial {
-    display: none;
+    .engagement-banner__image-container--tablet {
+        display: none;
 
-    @include mq($from: phablet) {
+        @include mq($from: tablet, $until: leftCol) {
+            display: block;
+            flex: 0 1 25%;
+            position: relative;
+        }
+
+        svg {
+            position: absolute;
+            right: $gs-gutter;
+            bottom: $gs-baseline;
+        }
+    }
+
+    .engagement-banner__image-container--desktop {
+        display: none;
+
+        @include mq($from: leftCol) {
+            display: block;
+            flex: 1 0 50%;
+
+            svg {
+                height: 100%;
+            }
+        }
+    }
+
+    .engagement-banner__header-text  {
+        display: none;
+    }
+
+    .engagement-banner__header-image {
+        max-width: 100%;
+
+        @include mq($from: tablet, $until: leftCol) {
+            max-width: 355px;
+        }
+    }
+
+    .engagement-banner__body {
+        @include f-bodyCopy;
+        color: $brightness-97;
+        font-size: 15px;
+        line-height: 1.35;
+
+        @include mq($from: phablet) {
+            font-size: 17px;
+        }
+
+        @include mq($from: tablet) {
+            padding: $gs-baseline $gs-gutter 0 0;
+        }
+    }
+
+    .engagement-banner__cta {
+        position: relative;
+        z-index: 1;
+        padding-top: $gs-baseline / 2;
         display: block;
+
+        @include mq($from: tablet) {
+            display: inline-block;
+        }
     }
 
-    @include mq($from: desktop) {
-        display: inline-block;
-        margin-left: $gs-gutter;
+    .engagement-banner__cta--editorial {
+        color: $brightness-97;
+        //display: block;
+
+        @include mq($from: tablet) {
+            margin-left: $gs-gutter;
+        }
+
+        .component-button--greyHollow--europe-moment {
+            border-color: $highlight-main;
+            color: $highlight-main !important;
+
+            &:hover, &:focus {
+                background: transparent;
+            }
+        }
     }
+
 }
