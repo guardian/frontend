@@ -48,7 +48,7 @@ const htmlTemplate: ({
             <a class="signin-gate__link js-signin-gate__why" href="${guUrl}/membership/2019/dec/20/signing-in-to-the-guardian">Why register & how does it help?</a>
         </div>
         <div class="signin-gate__buttons">
-            <a class="signin-gate__link js-signin-gate__how" href="${guUrl}/help/identity-faq">How will my information & data be used?</a>
+            <a class="signin-gate__link js-signin-gate__how" href="${guUrl}/info/2014/nov/03/why-your-data-matters-to-us-full-text">How will my information & data be used?</a>
         </div>
         <div class="signin-gate__buttons">
             <a class="signin-gate__link js-signin-gate__help" href="${guUrl}/help/identity-faq">Get help with registering or signing in</a>
