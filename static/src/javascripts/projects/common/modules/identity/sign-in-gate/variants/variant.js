@@ -61,7 +61,7 @@ const canShow: () => boolean = () =>
     !hasUserDismissedGate({
         componentName,
         componentId: component.id,
-        variant: 'name',
+        variant: name,
     }) &&
     isNPageOrHigherPageView(2) &&
     !isLoggedIn() &&
