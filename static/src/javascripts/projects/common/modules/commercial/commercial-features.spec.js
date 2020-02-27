@@ -147,21 +147,6 @@ describe('Commercial features', () => {
         });
     });
 
-    describe('Video prerolls', () => {
-        it('Runs by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.videoPreRolls).toBe(true);
-        });
-    });
-
-    describe('Video prerolls under ad-free', () => {
-        it('are disabled', () => {
-            isAdFreeUser.mockReturnValue(true);
-            const features = new CommercialFeatures();
-            expect(features.videoPreRolls).toBe(false);
-        });
-    });
-
     describe('High-relevance commercial component', () => {
         it('Does not run on fronts', () => {
             config.set('page.isFront', true);
