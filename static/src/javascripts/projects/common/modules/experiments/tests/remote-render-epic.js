@@ -28,8 +28,7 @@ const buildKeywordTags = page => {
 };
 
 const fetchRemoteEpic = payload => {
-    // const api = 'https://contributions.guardianapis.com/epic';
-    const api = 'http://localhost:8081/epic';
+    const api = 'https://contributions.guardianapis.com/epic';
 
     return fetch(api, {
         method: 'post',
