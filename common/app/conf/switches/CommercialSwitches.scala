@@ -128,16 +128,6 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val KruxSwitch = Switch(
-    Commercial,
-    "krux",
-    "Enable Krux Control Tag",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val PermutiveSwitch = Switch(
     Commercial,
     "permutive",

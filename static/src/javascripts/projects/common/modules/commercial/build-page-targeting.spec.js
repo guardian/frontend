@@ -16,13 +16,11 @@ import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
 import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
-const getKruxSegments: any = getKruxSegments_;
 const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
@@ -51,9 +49,6 @@ jest.mock('common/modules/commercial/user-ad-targeting', () => ({
 }));
 jest.mock('common/modules/experiments/ab', () => ({
     getSynchronousParticipations: jest.fn(),
-}));
-jest.mock('common/modules/commercial/krux', () => ({
-    getKruxSegments: jest.fn(),
 }));
 jest.mock('lodash/once', () => fn => fn);
 jest.mock('common/modules/commercial/commercial-features', () => ({
@@ -125,7 +120,6 @@ describe('Build Page Targeting', () => {
                 variant: 'variantName',
             },
         });
-        getKruxSegments.mockReturnValue(['E012712', 'E012390', 'E012478']);
 
         local.set('gu.alreadyVisited', 0);
 
@@ -202,10 +196,6 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().ab).toEqual(['MtMaster-variantName']);
     });
 
-    it('should set correct krux params', () => {
-        expect(getPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
-    });
-
     it('should set Observer flag for Observer content', () => {
         expect(getPageTargeting().ob).toEqual('t');
     });
@@ -222,7 +212,6 @@ describe('Build Page Targeting', () => {
         config.page = {};
         config.ophan = { pageViewId: '123456' };
         getUserSegments.mockReturnValue([]);
-        getKruxSegments.mockReturnValue([]);
 
         expect(getPageTargeting()).toEqual({
             sens: 'f',
