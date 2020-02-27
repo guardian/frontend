@@ -28,7 +28,8 @@ const buildKeywordTags = page => {
 };
 
 const fetchRemoteEpic = payload => {
-    const api = 'https://contributions.guardianapis.com/epic';
+    // const api = 'https://contributions.guardianapis.com/epic';
+    const api = 'http://localhost:8081/epic';
 
     return fetch(api, {
         method: 'post',
@@ -112,6 +113,7 @@ const remoteRenderTest = {
                     tags: buildKeywordTags(page),
                     // These are hardcoded as to no stop the Contributions service from sending the Epic.
                     // The targeting logic around this test already ensures this data is observed and respected.
+                    // TODO: make these dynamic - this is a temporary fix because it's safer to pass these than the actual values!
                     showSupportMessaging: true,
                     isRecurringContributor: false,
                     lastOneOffContributionDate: 0,
