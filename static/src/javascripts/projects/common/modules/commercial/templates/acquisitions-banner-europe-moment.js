@@ -22,7 +22,7 @@ export const acquisitionsBannerEuropeMomentTemplate = (
                     <h2 class="engagement-banner__header-text">${
                         params.titles ? params.titles[0] : ''
                     }</h2>
-                    <img class="engagement-banner__header-image" src="https://uploads.guim.co.uk/2020/02/27/This_is_Europe_Beyond_Borders_540x90px.gif" alt="We're going beyond borders">
+                    <img class="engagement-banner__header-image" src="https://uploads.guim.co.uk/2020/02/27/This_is_Europe_Beyond_Borders.gif" alt="We're going beyond borders">
                 </div>
 
                 <div class="engagement-banner__body">
@@ -50,7 +50,7 @@ export const acquisitionsBannerEuropeMomentTemplate = (
 
                     <div class="engagement-banner__cta engagement-banner__cta--editorial">
                         <a tabIndex="3" class="component-button component-button--hasicon-right component-button--greyHollow component-button--greyHollow--europe-moment" href="${'https://www.theguardian.com/us-news/2019/nov/18/help-raise-15-million-fund-high-impact-journalism-2020'}">
-                            Learn more
+                            Read more
                             <svg
                                 class="svg-arrow-right-straight"
                                 xmlns="http://www.w3.org/2000/svg"

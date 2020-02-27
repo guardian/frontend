@@ -73,11 +73,11 @@
 
         @include mq($from: tablet) {
             flex: 0 0 75%;
-            margin-bottom: 0;
         }
 
         @include mq($from: leftCol) {
             flex: 0 1 50%;
+            margin-bottom: $gs-baseline;
         }
     }
 
@@ -133,7 +133,7 @@
         max-width: 100%;
 
         @include mq($from: tablet, $until: leftCol) {
-            max-width: 355px;
+            max-width: 400px;
         }
     }
 
