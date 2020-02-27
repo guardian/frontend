@@ -13,7 +13,6 @@ class CommercialFeatures {
     articleBodyAdverts: boolean;
     articleAsideAdverts: boolean;
     carrotTrafficDriver: boolean;
-    videoPreRolls: boolean;
     highMerch: boolean;
     thirdPartyTags: boolean;
     outbrain: boolean;
@@ -90,8 +89,6 @@ class CommercialFeatures {
             this.articleBodyAdverts &&
             config.get('switches.carrotTrafficDriver', false) &&
             !config.get('page.isPaidContent');
-
-        this.videoPreRolls = this.dfpAdvertising && !this.adFree;
 
         this.highMerch =
             this.dfpAdvertising &&
