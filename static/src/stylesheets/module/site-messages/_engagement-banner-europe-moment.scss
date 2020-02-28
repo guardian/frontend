@@ -57,6 +57,7 @@
 }
 
 .engagement-banner__container--europe-moment {
+    position: relative;
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
@@ -65,10 +66,22 @@
         flex-flow: row nowrap;
     }
 
+    @include mq($from: desktop) {
+        &:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            height: 120%;
+            width: 1px;
+            background-color: $brightness-7;
+            top: 0;
+            z-index: 1;
+        }
+    }
+
     .engagement-banner__text-container {
         flex: 0 1 50%;
         position: relative;
-        margin-top: $gs-baseline;
         margin-bottom: $gs-baseline * 2;
 
         @include mq($from: tablet) {
@@ -149,6 +162,7 @@
 
         @include mq($from: tablet) {
             padding: $gs-baseline $gs-gutter 0 0;
+            margin-left: $gs-gutter / 2;
         }
     }
 
@@ -160,6 +174,7 @@
 
         @include mq($from: tablet) {
             display: inline-block;
+            margin-left: $gs-gutter / 2;
         }
     }
 
