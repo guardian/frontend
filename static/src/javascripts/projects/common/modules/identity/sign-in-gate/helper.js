@@ -104,7 +104,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
 
 // html event wrapper using bean
 export const addEventHandler: ({
-    element: HTMLDivElement,
+    element: HTMLElement,
     event: string,
     selector: string,
     handler: Function,
@@ -114,7 +114,7 @@ export const addEventHandler: ({
 
 // click event wrapper using addEventHandler method
 export const addClickHandler: ({
-    element: HTMLDivElement,
+    element: HTMLElement,
     selector: string,
     component: OphanComponent,
     abTest: CurrentABTest,
@@ -146,7 +146,7 @@ export const addClickHandler: ({
 
 // add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
-    element: HTMLDivElement,
+    element: HTMLElement,
     selector: string,
 }) => void = ({ element, selector }) => {
     if (config.get(`page.cardStyle`) === 'comment') {
@@ -161,7 +161,7 @@ export const addOpinionBgColour: ({
 
 // change the colour of the text depending the pillar that the user is on
 export const addPillarColour: ({
-    element: HTMLDivElement,
+    element: HTMLElement,
     selector: string,
 }) => void = ({ element, selector }) => {
     // check page type/pillar to change text colour of the sign in gate
@@ -200,7 +200,7 @@ export const addPillarColour: ({
 // get the html of the whole gate, by getting the html template of the variant, and adding that
 // to the child which is hidden by the fade in
 export const setTemplate: ({
-    child: Element,
+    child: HTMLElement,
     template: string,
 }) => string = ({ child, template }) => `
     <div class="signin-gate__first-paragraph-container">
@@ -209,3 +209,66 @@ export const setTemplate: ({
     </div>
     ${template}
 `;
+
+// helper method which first shows the gate based on the template supplied, adds any
+// handlers, e.g. click events etc. defined in the handler parameter function
+export const showGate: ({
+    handler: ({
+        articleBody: HTMLElement,
+        shadowArticleBody: HTMLElement,
+    }) => void,
+    template: string,
+}) => boolean = ({ handler, template }) => {
+    // get the whole article body, .js-article__body for non-DCR and .article-body-commercial-selector for DCR
+    const articleBody =
+        document.querySelector('.js-article__body') ||
+        document.querySelector('.article-body-commercial-selector');
+
+    // check if article body exists, since if it doesn't we don't want to show the gate
+    if (articleBody) {
+        // we look at the length of the children to determine which paragraphs should be shown in the "fade in"
+        if (articleBody.children.length) {
+            // container div to hold our "shadow" article dom while we create it
+            const shadowArticleBody = document.createElement('div');
+            // add the article body classes to the "shadow"
+            shadowArticleBody.className = articleBody.className;
+
+            // create an element to contain which children should have the overlay
+            const shadowOverlay = document.createElement('div');
+            // add the first child to the overlay, we use deep cloneNode so that child we add to the overlay is not a reference to the one in the hidden article
+            shadowOverlay.appendChild(articleBody.children[0].cloneNode(true));
+
+            // if the height of the child is too small, we add a 2nd child to the overlay so it looks better
+            if (
+                articleBody.children[0].clientHeight < 125 &&
+                articleBody.children.length > 1
+            ) {
+                shadowOverlay.appendChild(
+                    articleBody.children[1].cloneNode(true)
+                );
+            }
+
+            // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
+            shadowArticleBody.innerHTML = setTemplate({
+                child: shadowOverlay,
+                template,
+            });
+
+            // defined by the caller, this function should handle any click events required, including the "dismiss" or "not now" link/button
+            handler({
+                articleBody,
+                shadowArticleBody,
+            });
+
+            // Hide the article Body. Append the shadow one.
+            articleBody.style.display = 'none';
+            if (articleBody.parentNode) {
+                articleBody.parentNode.appendChild(shadowArticleBody);
+            }
+
+            return true;
+        }
+    }
+
+    return false;
+};
