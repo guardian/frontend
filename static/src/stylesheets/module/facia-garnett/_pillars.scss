@@ -75,7 +75,7 @@ $pillars: (
         kicker: $highlight-main,
         headline: #ffffff,
         featureHeadline: #ffffff,
-        byline: $special-report-dark,
+        byline: $highlight-main,
         commentCount: $brightness-60,
         headlineIcon: $highlight-main,
         metaText: $brightness-60,
@@ -104,13 +104,15 @@ $pillars: (
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
-            background-color: $brightness-97;
+            background-color: $cardBackground;
         }
 
         .fc-item__container.u-faux-block-link--hover {
+            background-color: $darkerCardBackground;
+
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: darken($brightness-97, 3%);
+                background-color: $darkerCardBackground;
             }
         }
     }
@@ -371,13 +373,8 @@ $pillars: (
         }
     }
 
-    &:not(.fc-item--type-comment) {
-        .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($special-report-dark, 2%);
-        }
-        .fc-item__byline {
-            color: $highlight-main;
-        }
+    .fc-item__container.u-faux-block-link--hover {
+        background-color: darken($special-report-dark, 2%);
     }
 
     .fc-sublink__kicker {
