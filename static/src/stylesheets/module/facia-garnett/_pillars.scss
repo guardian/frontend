@@ -386,7 +386,7 @@ $pillars: (
     }
 }
 
-.fc-item--pillar-special-report .fc-item__byline {
+.fc-item--pillar-special-report &:not(.fc-item--type-comment) .fc-item__byline {
     color: $highlight-main;
 }
 
