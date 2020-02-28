@@ -224,7 +224,7 @@ trait FaciaController extends BaseController with Logging with ImplicitControlle
               Fixed(FixedContainers.fixedSmallSlowVI)
           }
 
-          val containerDefinition = FaciaContainer(
+          val containerDefinition = FaciaContainer.fromConfigWithId(
             1,
             containerLayout,
             CollectionConfigWithId(collectionId, config),

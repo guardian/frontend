@@ -45,7 +45,7 @@ class MostViewedAudioController(
     val config = CollectionConfig.empty.copy(displayName = displayName)
 
     val html = views.html.fragments.containers.facia_cards.container(
-      FaciaContainer(
+      FaciaContainer.fromConfigWithId(
         1,
         Fixed(FixedContainers.fixedSmallSlowIV),
         CollectionConfigWithId(dataId, config),

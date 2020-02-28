@@ -21,7 +21,7 @@ trait Containers {
       case 3 => ContainerDefinition.ofSlices(TTT)
       case _ => FixedContainers.fixedMediumFastXII }
 
-    FaciaContainer(
+    FaciaContainer.fromConfigWithId(
       1,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId, CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(config))),

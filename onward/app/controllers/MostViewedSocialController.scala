@@ -48,7 +48,7 @@ class MostViewedSocialController(
           )
 
           val facebookResponse = () => views.html.fragments.containers.facia_cards.container(
-            FaciaContainer(
+            FaciaContainer.fromConfigWithId(
               1,
               Fixed(container),
               CollectionConfigWithId(dataId, config),

@@ -83,7 +83,7 @@ class MediaInSectionController(
     implicit val config = CollectionConfig.empty.copy(href = Some(tagCombinedHref), displayName = displayName)
 
     val response = () => views.html.fragments.containers.facia_cards.container(
-      FaciaContainer(
+      FaciaContainer.fromConfigWithId(
         1,
         Fixed(FixedContainers.fixedMediumFastXI),
         CollectionConfigWithId(dataId, config),

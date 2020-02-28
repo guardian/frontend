@@ -181,7 +181,7 @@ case class FaciaContainer(
 }
 
 object FaciaContainer {
-  def apply(
+  def fromConfigWithId(
     index: Int,
     container: Container,
     config: CollectionConfigWithId,
