@@ -375,6 +375,11 @@ $pillars: (
         .fc-item__container.u-faux-block-link--hover {
             background-color: darken($special-report-dark, 2%);
         }
+        .fc-item__byline {
+            color: $highlight-main;
+        }
+
+
     }
 
     .fc-sublink__kicker {
@@ -385,8 +390,3 @@ $pillars: (
         color: #ffffff;
     }
 }
-
-.fc-item--pillar-special-report &:not(.fc-item--type-comment) .fc-item__byline {
-    color: $highlight-main;
-}
-
