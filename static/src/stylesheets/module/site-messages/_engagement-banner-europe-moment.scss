@@ -180,7 +180,6 @@
 
     .engagement-banner__cta--editorial {
         color: $brightness-97;
-        //display: block;
 
         @include mq($from: tablet) {
             margin-left: $gs-gutter;
