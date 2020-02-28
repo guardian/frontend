@@ -189,7 +189,7 @@ object FaciaContainer {
     hasMore: Boolean,
     componentId: Option[String] = None
   ): FaciaContainer = {
-    apply(
+    fromConfigWithDefault(
       index,
       container,
       ContainerDisplayConfig.withDefaults(config),
@@ -199,7 +199,7 @@ object FaciaContainer {
     )
   }
 
-  def apply(
+  def fromConfigWithDefault(
     index: Int,
     container: Container,
     config: ContainerDisplayConfig,
@@ -258,7 +258,7 @@ object FaciaContainer {
   )
 
   def forStoryPackage(dataId: String, items: Seq[PressedContent], title: String, href: Option[String] = None): FaciaContainer = {
-    FaciaContainer(
+    FaciaContainer.fromConfigWithDefault(
       index = 2,
       container = Fixed(ContainerDefinition.fastForNumberOfItems(items.size)),
       config = ContainerDisplayConfig.withDefaults(CollectionConfigWithId(dataId, CollectionConfig.empty)),
