@@ -114,12 +114,12 @@ class SeriesController(
     val response = () =>
       views.html.fragments.containers.facia_cards.container(
         containerDefinition = FaciaContainer.fromConfigWithId(
-          1,
-          Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
-          CollectionConfigWithId(dataId, config),
-          CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
+          index = 1,
+          container = Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
+          config = CollectionConfigWithId(dataId, config),
+          collectionEssentials = CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
           hasMore = false,
-          componentId
+          componentId = componentId
         )
           .withTimeStamps
           .copy(customHeader = header),
