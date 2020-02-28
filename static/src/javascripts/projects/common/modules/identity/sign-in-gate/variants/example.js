@@ -67,8 +67,10 @@ const show: ({
     guUrl: string,
     signInUrl: string,
 }) => boolean = ({ abTest, guUrl, signInUrl }) => {
-    // get the whole article body
-    const articleBody = document.querySelector('.js-article__body');
+    // get the whole article body, .js-article__body for non-DCR and .article-body-commercial-selector for DCR
+    const articleBody =
+        document.querySelector('.js-article__body') ||
+        document.querySelector('.article-body-commercial-selector');
 
     if (articleBody) {
         if (articleBody.children.length) {
