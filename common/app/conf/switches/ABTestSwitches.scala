@@ -38,6 +38,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-europe-moment",
+    "Europe Moment",
+    owners = Seq(Owner.withGithub("tjsilver")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
