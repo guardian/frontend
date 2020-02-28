@@ -16,11 +16,6 @@ import views.support.CutOut
 import scala.Function._
 import scala.annotation.tailrec
 
-/** For de-duplicating cutouts */
-object ContainerLayoutContext {
-  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
-}
-
 case class ContainerLayoutContext(
   cutOutsSeen: Set[CutOut],
   hideCutOuts: Boolean
@@ -65,6 +60,19 @@ case class ContainerLayoutContext(
   }
 }
 
+object ContainerLayoutContext {
+  val empty = ContainerLayoutContext(Set.empty, hideCutOuts = false)
+}
+
+case class CollectionEssentials(
+  items: Seq[PressedContent],
+  treats: Seq[PressedContent],
+  displayName: Option[String],
+  href: Option[String],
+  lastUpdated: Option[String],
+  showMoreLimit: Option[Int]
+)
+
 object CollectionEssentials {
   /* FAPI Integration */
 
@@ -89,16 +97,88 @@ object CollectionEssentials {
   val empty = CollectionEssentials(Nil, Nil, None, None, None, None)
 }
 
-case class CollectionEssentials(
-  items: Seq[PressedContent],
-  treats: Seq[PressedContent],
+case class ContainerCommercialOptions(omitMPU: Boolean, adFree: Boolean)
+
+case class FaciaContainer(
+  index: Int,
+  dataId: String,
   displayName: Option[String],
   href: Option[String],
-  lastUpdated: Option[String],
-  showMoreLimit: Option[Int]
-)
+  componentId: Option[String],
+  container: Container,
+  collectionEssentials: CollectionEssentials,
+  containerLayout: Option[ContainerLayout],
+  showDateHeader: Boolean,
+  showLatestUpdate: Boolean,
+  commercialOptions: ContainerCommercialOptions,
+  customHeader: Option[FaciaContainerHeader],
+  customClasses: Option[Seq[String]],
+  hideToggle: Boolean,
+  showTimestamps: Boolean,
+  dateLinkPath: Option[String],
+  useShowMore: Boolean,
+  hasShowMoreEnabled: Boolean,
+  isThrasher: Boolean
+) {
+  def transformCards(f: ContentCard => ContentCard): FaciaContainer = copy(
+    containerLayout = containerLayout.map(_.transformCards(f))
+  )
 
-case class ContainerCommercialOptions(omitMPU: Boolean, adFree: Boolean)
+  def faciaComponentName: String = componentId getOrElse {
+    displayName map { title: String =>
+      title.toLowerCase.replace(" ", "-")
+    } getOrElse "no-name"
+  }
+
+  def latestUpdate: Option[DateTime] = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
+    collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
+
+  def items: Seq[PressedContent] = collectionEssentials.items
+
+  def withTimeStamps: FaciaContainer = transformCards(_.withTimeStamp)
+
+  def dateLink: Option[String] = {
+    val maybeDateHeadline = customHeader flatMap  {
+      case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
+      case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
+      case DescriptionMetaHeader(_) => None
+    }
+
+    for {
+      path <- dateLinkPath
+      dateHeadline <- maybeDateHeadline
+      urlFragment <- dateHeadline.urlFragment
+    } yield s"$path/$urlFragment/all"
+  }
+
+  def hasShowMore: Boolean = containerLayout.exists(_.hasShowMore)
+
+  def hasDesktopShowMore: Boolean = containerLayout.exists(_.hasDesktopShowMore)
+
+  def hasMobileOnlyShowMore: Boolean =
+    containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
+
+  /** Nasty hardcoded thing.
+    *
+    * TODO: change Facia Tool to have a dropdown for 'header types', one of which is default, the other CP Scott.
+    *
+    * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
+    * can consume this data if they want to.
+    */
+  def showCPScottHeader: Boolean = Set(
+    "uk/commentisfree/regular-stories",
+    "au/commentisfree/regular-stories"
+  ).contains(dataId)
+
+  def addShowMoreClasses(): Boolean = useShowMore && containerLayout.exists(_.hasShowMore)
+
+  def shouldLazyLoad: Boolean = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
+
+  def isStoryPackage: Boolean = container match {
+    case Dynamic(DynamicPackage) => true
+    case _ => false
+  }
+}
 
 object FaciaContainer {
   def apply(
@@ -189,86 +269,9 @@ object FaciaContainer {
   }
 }
 
-case class FaciaContainer(
-  index: Int,
-  dataId: String,
-  displayName: Option[String],
-  href: Option[String],
-  componentId: Option[String],
-  container: Container,
-  collectionEssentials: CollectionEssentials,
-  containerLayout: Option[ContainerLayout],
-  showDateHeader: Boolean,
-  showLatestUpdate: Boolean,
-  commercialOptions: ContainerCommercialOptions,
-  customHeader: Option[FaciaContainerHeader],
-  customClasses: Option[Seq[String]],
-  hideToggle: Boolean,
-  showTimestamps: Boolean,
-  dateLinkPath: Option[String],
-  useShowMore: Boolean,
-  hasShowMoreEnabled: Boolean,
-  isThrasher: Boolean
-) {
-  def transformCards(f: ContentCard => ContentCard): FaciaContainer = copy(
-    containerLayout = containerLayout.map(_.transformCards(f))
-  )
-
-  def faciaComponentName: String = componentId getOrElse {
-    displayName map { title: String =>
-      title.toLowerCase.replace(" ", "-")
-    } getOrElse "no-name"
-  }
-
-  def latestUpdate: Option[DateTime] = (collectionEssentials.items.flatMap(_.card.webPublicationDateOption) ++
-    collectionEssentials.lastUpdated.map(DateTime.parse)).sortBy(-_.getMillis).headOption
-
-  def items: Seq[PressedContent] = collectionEssentials.items
-
-  def withTimeStamps: FaciaContainer = transformCards(_.withTimeStamp)
-
-  def dateLink: Option[String] = {
-    val maybeDateHeadline = customHeader flatMap  {
-      case MetaDataHeader(_, _, _, dateHeadline, _) => Some(dateHeadline)
-      case LoneDateHeadline(dateHeadline) => Some(dateHeadline)
-      case DescriptionMetaHeader(_) => None
-    }
-
-    for {
-      path <- dateLinkPath
-      dateHeadline <- maybeDateHeadline
-      urlFragment <- dateHeadline.urlFragment
-    } yield s"$path/$urlFragment/all"
-  }
-
-  def hasShowMore: Boolean = containerLayout.exists(_.hasShowMore)
-
-  def hasDesktopShowMore: Boolean = containerLayout.exists(_.hasDesktopShowMore)
-
-  def hasMobileOnlyShowMore: Boolean =
-    containerLayout.exists(layout => layout.hasMobileShowMore && !layout.hasDesktopShowMore)
-
-  /** Nasty hardcoded thing.
-    *
-    * TODO: change Facia Tool to have a dropdown for 'header types', one of which is default, the other CP Scott.
-    *
-    * Then if we end up adding more of these over time, there's an in-built mechanism for doing so. Will also mean apps
-    * can consume this data if they want to.
-    */
-  def showCPScottHeader: Boolean = Set(
-    "uk/commentisfree/regular-stories",
-    "au/commentisfree/regular-stories"
-  ).contains(dataId)
-
-  def addShowMoreClasses(): Boolean = useShowMore && containerLayout.exists(_.hasShowMore)
-
-  def shouldLazyLoad: Boolean = Switches.LazyLoadContainersSwitch.isSwitchedOn && index > 8
-
-  def isStoryPackage: Boolean = container match {
-    case Dynamic(DynamicPackage) => true
-    case _ => false
-  }
-}
+case class Front(
+  containers: Seq[FaciaContainer]
+)
 
 object Front extends implicits.Collections {
   type TrailUrl = String
@@ -388,9 +391,4 @@ object Front extends implicits.Collections {
       }
     )
   }
-
 }
-
-case class Front(
-  containers: Seq[FaciaContainer]
-)
