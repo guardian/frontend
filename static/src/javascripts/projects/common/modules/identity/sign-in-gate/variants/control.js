@@ -12,7 +12,7 @@ import {
     addPillarColour,
     addClickHandler,
     setUserDismissedGate,
-    setTemplate,
+    showGate,
 } from '../helper';
 
 // define the variant name here
@@ -66,37 +66,13 @@ const show: ({
     abTest: CurrentABTest,
     guUrl: string,
     signInUrl: string,
-}) => boolean = ({ abTest, guUrl, signInUrl }) => {
-    // get the whole article body, .js-article__body for non-DCR and .article-body-commercial-selector for DCR
-    const articleBody =
-        document.querySelector('.js-article__body') ||
-        document.querySelector('.article-body-commercial-selector');
-
-    if (articleBody) {
-        if (articleBody.children.length) {
-            // container div to hold our "shadow" article dom while we create it
-            const shadowArticleBody = document.createElement('div');
-            // add the article body classes to the "shadow"
-            shadowArticleBody.className = articleBody.className;
-
-            const shadowOverlay = document.createElement('div');
-            shadowOverlay.appendChild(articleBody.children[0]);
-            if (
-                articleBody.children[0].clientHeight < 125 &&
-                articleBody.children.length > 1
-            ) {
-                shadowOverlay.appendChild(articleBody.children[1]);
-            }
-
-            // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
-            shadowArticleBody.innerHTML = setTemplate({
-                child: shadowOverlay,
-                template: htmlTemplate({
-                    signInUrl,
-                    guUrl,
-                }),
-            });
-
+}) => boolean = ({ abTest, guUrl, signInUrl }) =>
+    showGate({
+        template: htmlTemplate({
+            signInUrl,
+            guUrl,
+        }),
+        handler: ({ articleBody, shadowArticleBody }) => {
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,
@@ -150,19 +126,8 @@ const show: ({
                 component,
                 value: 'why-link',
             });
-
-            // Hide the article Body. Append the shadow one.
-            articleBody.style.display = 'none';
-            if (articleBody.parentNode) {
-                articleBody.parentNode.appendChild(shadowArticleBody);
-            }
-
-            return true;
-        }
-    }
-
-    return false;
-};
+        },
+    });
 
 // export the variant as a SignInGateVariant type
 export const signInGateVariant: SignInGateVariant = {
