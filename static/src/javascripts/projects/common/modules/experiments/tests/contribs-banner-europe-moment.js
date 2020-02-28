@@ -15,7 +15,7 @@ const isEuropeAndUk =
 
 const titles = [`We're going beyond borders`];
 const messageText =
-    '…Britain may be leaving the EU, but the Guardian remains committed to Europe, doubling down on the ideas and interests that we share. These are turbulent times, and crises are not limited by national boundaries. But then neither are we. We will stay with you, delivering quality, investigative journalism so we can all make up our minds based on fact, not fiction.';
+    '…Britain may be leaving the EU, but the Guardian remains committed to Europe, doubling down on the ideas and interests that we share. These are testing times, and crises are not limited by national boundaries. But then neither are we. We will stay with you, delivering quality, investigative journalism so we can all make up our minds based on fact, not fiction.';
 
 const ctaText = 'Support The Guardian';
 
