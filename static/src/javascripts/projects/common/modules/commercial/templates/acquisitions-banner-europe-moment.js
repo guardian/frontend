@@ -49,7 +49,7 @@ export const acquisitionsBannerEuropeMomentTemplate = (
                     </div>
 
                     <div class="engagement-banner__cta engagement-banner__cta--editorial">
-                        <a tabIndex="3" class="component-button component-button--hasicon-right component-button--greyHollow component-button--greyHollow--europe-moment" href="${'https://www.theguardian.com/us-news/2019/nov/18/help-raise-15-million-fund-high-impact-journalism-2020'}">
+                        <a tabIndex="3" class="component-button component-button--hasicon-right component-button--greyHollow component-button--greyHollow--europe-moment" href="${'https://www.theguardian.com/world/2020/mar/02/britain-is-leaving-europe-the-guardian-is-not'}">
                             Read more
                             <svg
                                 class="svg-arrow-right-straight"
