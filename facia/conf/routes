@@ -13,8 +13,6 @@ GET        /_agentcontents                                                      
 
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
-GET        /security.txt                                                           controllers.Assets.at(path="/public", file="security.txt")
-GET        /security.txt.asc                                                        controllers.Assets.at(path="/public", file="security.txt.asc")
 GET        /.well-known/security.txt                                                controllers.Assets.at(path="/public", file="security.txt")
 GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
 
