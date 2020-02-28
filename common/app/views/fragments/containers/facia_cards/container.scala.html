@@ -17,7 +17,7 @@
   showFrontBranding: Boolean = false
   )(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@defining((containerDefinition.displayName, containerDefinition.faciaComponentName)) { case (title, componentName) =>
+@defining(containerDefinition.faciaComponentName) { componentName =>
     @containerDefinition.customHeader.map {
         case header: MetaDataHeader => {
             @containerMetaData(header)
