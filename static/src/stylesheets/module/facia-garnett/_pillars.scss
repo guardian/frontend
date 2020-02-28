@@ -375,6 +375,9 @@ $pillars: (
         .fc-item__container.u-faux-block-link--hover {
             background-color: darken($special-report-dark, 2%);
         }
+        .fc-item__byline {
+            color: $highlight-main;
+        }
     }
 
     .fc-sublink__kicker {
