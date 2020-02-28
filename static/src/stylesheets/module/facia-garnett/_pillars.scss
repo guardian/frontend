@@ -104,14 +104,13 @@ $pillars: (
 
         .fc-item__timestamp,
         .fc-trail__count--commentcount {
-            background-color: darken($opinion-faded, 3%);
+            background-color: $brightness-97;
         }
 
-        &.fc-item--pillar-special-report {
+        .fc-item__container.u-faux-block-link--hover {
             .fc-item__timestamp,
             .fc-trail__count--commentcount {
-                background-color: $special-report-dark;
-                color: $brightness-86;
+                background-color: darken($brightness-97, 3%);
             }
         }
     }
@@ -372,8 +371,10 @@ $pillars: (
         }
     }
 
-    .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($special-report-dark, 2%);
+    &:not(.fc-item--type-comment) {
+        .fc-item__container.u-faux-block-link--hover {
+            background-color: darken($special-report-dark, 2%);
+        }
     }
 
     .fc-sublink__kicker {
