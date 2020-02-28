@@ -181,6 +181,7 @@ case class FaciaContainer(
 }
 
 object FaciaContainer {
+
   def fromConfigWithId(
     index: Int,
     container: Container,
@@ -206,7 +207,7 @@ object FaciaContainer {
     collectionEssentials: CollectionEssentials,
     componentId: Option[String],
     hasMore: Boolean
-  ): FaciaContainer = fromConfig(
+  ): FaciaContainer = fromConfigAndAdSpecs(
     index,
     container,
     config.collectionConfigWithId,
@@ -221,7 +222,7 @@ object FaciaContainer {
     componentId
   )
 
-  def fromConfig(
+  def fromConfigAndAdSpecs(
     index: Int,
     container: Container,
     config: CollectionConfigWithId,
@@ -301,7 +302,7 @@ object Front extends implicits.Collections {
           val newItems = collection.items.distinctBy(_.header.url)
           val layoutMaybe = ContainerLayout.fromContainer(container, context, config, newItems, hasMore = false)
           val newContext = layoutMaybe.map(_._2).getOrElse(context)
-          val faciaContainer = FaciaContainer.fromConfig(
+          val faciaContainer = FaciaContainer.fromConfigAndAdSpecs(
             index,
             container,
             config.collectionConfigWithId,
@@ -342,7 +343,7 @@ object Front extends implicits.Collections {
 
           val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems, pressedCollection.hasMore)
           val newContext: ContainerLayoutContext = containerLayoutMaybe.map(_._2).getOrElse(context)
-          val faciaContainer = FaciaContainer.fromConfig(
+          val faciaContainer = FaciaContainer.fromConfigAndAdSpecs(
             index,
             container,
             pressedCollection.collectionConfigWithId,
