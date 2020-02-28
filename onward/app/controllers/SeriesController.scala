@@ -113,7 +113,7 @@ class SeriesController(
 
     val response = () =>
       views.html.fragments.containers.facia_cards.container(
-        containerDefinition = FaciaContainer(
+        containerDefinition = FaciaContainer.fromConfigWithId(
           index = 1,
           container = Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
           config = CollectionConfigWithId(dataId, config),

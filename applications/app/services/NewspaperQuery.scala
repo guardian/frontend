@@ -124,7 +124,7 @@ class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logg
       case 5 => FixedContainers.fixedSmallSlowVThird
       case _ => FixedContainers.fixedMediumFastXII }
 
-    FaciaContainer(
+    FaciaContainer.fromConfigWithId(
       index,
       Fixed(containerDefinition),
       CollectionConfigWithId(dataId.getOrElse(""), CollectionConfig.empty.copy(displayName = containerName, description = containerDescription)),

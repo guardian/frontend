@@ -48,7 +48,7 @@ class MostViewedGalleryController(
 
   private def renderMostViewedGallery(galleries: Seq[RelatedContentItem])(implicit request: RequestHeader): Result = {
     val html = views.html.fragments.containers.facia_cards.container(
-      FaciaContainer(
+      FaciaContainer.fromConfigWithId(
         1,
         Fixed(FixedContainers.fixedMediumSlowVI),
         CollectionConfigWithId(dataId, config),
