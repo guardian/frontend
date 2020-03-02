@@ -13,6 +13,9 @@ GET        /_agentcontents                                                      
 
 GET        /humans.txt                                                              controllers.Assets.at(path="/public", file="humans.txt")
 
+GET        /.well-known/security.txt                                                controllers.Assets.at(path="/public", file="security.txt")
+GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
+
 # AMP
 GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
 GET        /container/count/:count/offset/:offset/section/:section/mf2.json                     controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section, edition = "")
