@@ -3,6 +3,8 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 
 const advertsToInstantlyLoad = ['dfp-ad--merchandising-high', 'dfp-ad--im'];
 
@@ -19,8 +21,18 @@ const instantLoad = (): void => {
 };
 
 const displayLazyAds = (): void => {
+    const useGptLazyLoad = isInVariantSynchronous(
+        commercialGptLazyLoad,
+        'variant'
+    );
+
+    if (useGptLazyLoad) {
+        window.googletag.pubads().enableLazyLoad();
+    }
+
     window.googletag.pubads().collapseEmptyDivs();
     window.googletag.enableServices();
+
     instantLoad();
 
     dfpEnv.advertsToLoad.forEach(

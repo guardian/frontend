@@ -4,6 +4,8 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 import once from 'lodash/once';
 
 const displayAd = (advertId: string): void => {
@@ -45,7 +47,12 @@ const getObserver = once(() =>
 );
 
 export const enableLazyLoad = (advert: Advert): void => {
-    if (dfpEnv.lazyLoadObserve) {
+    const useGptLazyLoad = isInVariantSynchronous(
+        commercialGptLazyLoad,
+        'variant'
+    );
+
+    if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
         getObserver().then(observer => observer.observe(advert.node));
     } else {
         displayAd(advert.id);
