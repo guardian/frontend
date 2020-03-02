@@ -46,6 +46,7 @@ export const contributionsEuropeMoment: AcquisitionsABTest = {
                 template: acquisitionsBannerEuropeMomentTemplate,
                 hasTicker: true,
                 bannerModifierClass: 'europe-moment',
+                minArticlesBeforeShowingBanner: 2,
             },
         },
     ],
