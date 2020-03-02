@@ -154,13 +154,10 @@ const createAdSlotElements = (
 
     const id = `dfp-ad--${name}`;
 
-    if (config.get('isDotcomRendering', false)) {
-        // This is to prevent a problem that appeared with DCR
-        // by which an AdSlot with the given id might have already been
-        // statically introduced server side and needs to be removed before
-        // this code takes effect on the DOM.
-        // We are simply making sure that if we are about to introduce a DOM
-        // node with a given id, that we ensure there isn't already one.
+    if (config.get('isDotcomRendering', false) && name === 'top-above-nav') {
+        // This is to prevent a problem that appeared with DCR.
+        // We are simply making sure that if we are about to
+        // introduce dfp-ad--top-above-nav then there isn't already one.
         const node = document.getElementById(id);
         if (node && node.parentNode) {
             const pnode = node.parentNode;
