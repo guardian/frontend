@@ -22,7 +22,7 @@ export const acquisitionsBannerEuropeMomentTemplate = (
                     <h2 class="engagement-banner__header-text">${
                         params.titles ? params.titles[0] : ''
                     }</h2>
-                    <img class="engagement-banner__header-image" src="https://uploads.guim.co.uk/2020/02/27/This_is_Europe_Beyond_Borders.gif" alt="We're going beyond borders">
+                    <img class="engagement-banner__header-image" src="https://uploads.guim.co.uk/2020/03/02/This_is_Europe_Beyond_Borders_540x90px.gif" alt="We're going beyond borders">
                 </div>
 
                 <div class="engagement-banner__body">
