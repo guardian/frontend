@@ -149,7 +149,7 @@ export const addOpinionBgColour: ({
     element: HTMLElement,
     selector: string,
 }) => void = ({ element, selector }) => {
-    if (config.get(`page.cardStyle`) === 'comment') {
+    if (config.get(`page.tones`) === 'Comment') {
         const overlay = element.querySelector(selector);
         if (overlay) {
             overlay.classList.add(
