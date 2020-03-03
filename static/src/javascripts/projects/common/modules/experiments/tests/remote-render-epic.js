@@ -13,6 +13,7 @@ import reportError from 'lib/report-error';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
+import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 
 const campaignId = 'remote_epic_test';
 const geolocation = geolocationGetSync();
@@ -106,6 +107,7 @@ const remoteRenderTest = {
                     showSupportMessaging: true,
                     isRecurringContributor: false,
                     lastOneOffContributionDate: 0,
+                    mvtId: getMvtValue(),
                 };
 
                 const payload = {

@@ -1190,10 +1190,10 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/slot-machine-client@^0.1.2":
-  version "0.1.2"
-  resolved "https://registry.yarnpkg.com/@guardian/slot-machine-client/-/slot-machine-client-0.1.2.tgz#5f468d6d1c410badb66f273c2ef94cae2324936d"
-  integrity sha512-Ydh/aIhxdEJdoc5VyO8jDK0tGK5V1mk1L1D8GP3ucbHxkHhDkP2dA1Ur5NxwSdBaQwQ8XvLtvw1VAlCelKSaBw==
+"@guardian/slot-machine-client@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/slot-machine-client/-/slot-machine-client-0.2.1.tgz#883fd7f2503231c3e1d3fe06947f7b2afe8fce2e"
+  integrity sha512-ztYqAI/BN76smiIQz2ImrkFHypkjqqjwEopIqVlFjhLGkFutwcwJ4yE8KTQn+OD3FJ8GXQpbN+tGBHJ5+t/BcQ==
 
 "@guardian/src-button@^0.13.0":
   version "0.13.0"
