@@ -1,5 +1,6 @@
 // @flow
 
+import { getBodyEnd } from '@guardian/slot-machine-client';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     makeEpicABTest,
@@ -10,9 +11,9 @@ import {
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
-import fetch from 'lib/fetch';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
+import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 
 const campaignId = 'remote_epic_test';
 const geolocation = geolocationGetSync();
@@ -25,16 +26,6 @@ const buildKeywordTags = page => {
         type: 'Keyword',
         title: keywords[idx],
     }));
-};
-
-const fetchRemoteEpic = payload => {
-    const api = 'https://contributions.guardianapis.com/epic';
-
-    return fetch(api, {
-        method: 'post',
-        headers: { 'Content-Type': 'application/json' },
-        body: payload,
-    });
 };
 
 const checkResponseOk = response => {
@@ -116,13 +107,14 @@ const remoteRenderTest = {
                     showSupportMessaging: true,
                     isRecurringContributor: false,
                     lastOneOffContributionDate: 0,
+                    mvtId: getMvtValue(),
                 };
 
-                const payload = JSON.stringify({
+                const payload = {
                     tracking,
                     localisation,
                     targeting,
-                });
+                };
 
                 const trackingCampaignId = `epic_${campaignId}`; // note exposed on ABTest unfortunately
 
@@ -135,7 +127,7 @@ const remoteRenderTest = {
                     variant.id
                 );
 
-                fetchRemoteEpic(payload)
+                getBodyEnd(payload)
                     .then(checkResponseOk)
                     .then(decodeJson)
                     .then(json => {
