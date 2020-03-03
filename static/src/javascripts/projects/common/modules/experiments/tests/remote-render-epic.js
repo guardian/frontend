@@ -58,7 +58,7 @@ const remoteRenderTest = {
     highPriority: true,
 
     start: '2020-01-01',
-    expiry: '2020-02-29',
+    expiry: '2020-04-01',
 
     author: 'Nicolas Long',
     description:
