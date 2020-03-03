@@ -123,7 +123,7 @@ object GuardianConfiguration extends Logging {
           case Success(value) => Some(value)
           case Failure(_: ConfigException.Missing) => None
           case Failure(e) =>
-            log.error(s"couldn't retrive $property", e)
+            log.error(s"couldn't retrieve $property", e)
             None
         }
 
@@ -478,7 +478,6 @@ class GuardianConfiguration extends Logging {
     lazy val expiredPaidContentUrl = s"${site.host}/info/2015/feb/06/paid-content-removal-policy"
 
     lazy val prebidAnalyticsStream = configuration.getMandatoryStringProperty("commercial.prebid.analytics.stream")
-    lazy val pageViewAnalyticsStream = configuration.getMandatoryStringProperty("commercial.pv.analytics.stream")
 
     lazy val prebidServerUrl =
       configuration.getStringProperty("commercial.prebid.server.url") getOrElse "http://localhost:8000"
