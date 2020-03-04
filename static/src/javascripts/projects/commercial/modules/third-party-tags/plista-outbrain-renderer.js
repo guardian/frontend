@@ -1,9 +1,8 @@
 // @flow
 
-import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { plista } from 'commercial/modules/third-party-tags/plista';
 import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
-import template from 'lodash/template';
+import { template as externalContentContainerTemplate } from 'commercial/views/creatives/external-content';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
@@ -17,20 +16,18 @@ const findAnchor = (): Promise<HTMLElement | null> => {
     return Promise.resolve(document.querySelector(selector));
 };
 
-const renderWidget = (widgetType: string, init: any): Promise<void> => {
-    const externalTpl = template(externalContentContainerStr);
-    return findAnchor()
+const renderWidget = (widgetType: string, init: any): Promise<void> =>
+    findAnchor()
         .then(anchorNode =>
             fastdom.write(() => {
                 $(anchorNode).after(
-                    externalTpl({
+                    externalContentContainerTemplate({
                         widgetType,
                     })
                 );
             })
         )
         .then(init);
-};
 
 const init = (): Promise<void> => {
     /*

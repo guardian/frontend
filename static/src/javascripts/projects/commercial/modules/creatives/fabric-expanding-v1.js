@@ -5,9 +5,8 @@ import $ from 'lib/$';
 import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';
-import template from 'lodash/template';
-import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
-import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
+import { template as fabricExpandingV1Template } from 'commercial/views/creatives/fabric-expanding-v1';
+import { template as fabricExpandingVideoTemplate } from 'commercial/views/creatives/fabric-expanding-video';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import bindAll from 'lodash/bindAll';
@@ -181,7 +180,7 @@ class FabricExpandingV1 {
             inlineStyle: [leftMargin, leftPosition, rightPosition].join('; '),
         };
 
-        return template(fabricExpandingVideoHtml)(viewModel);
+        return fabricExpandingVideoTemplate(viewModel);
     }
 
     stopVideo(delay: number = 0) {
@@ -245,7 +244,7 @@ class FabricExpandingV1 {
             Math.random() * 10000
         ).toString(16)}`;
         const $fabricExpandingV1 = $.create(
-            template(fabricExpandingV1Html)({
+            fabricExpandingV1Template({
                 data: Object.assign(
                     this.params,
                     showmoreArrow,

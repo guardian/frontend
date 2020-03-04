@@ -1,12 +1,11 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import template from 'lodash/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import frameStr from 'raw-loader!commercial/views/creatives/frame.html';
-import labelStr from 'raw-loader!commercial/views/creatives/gustyle-label.html';
+import { template as frameTemplate } from 'commercial/views/creatives/frame';
+import { template as labelTemplate } from 'commercial/views/creatives/gustyle-label';
 import externalLink from 'svgs/icon/external-link.svg';
 import arrow from 'svgs/icon/arrow.svg';
 
@@ -29,10 +28,10 @@ class Frame {
             16
         )}`;
 
-        const frameMarkup = template(frameStr)({
+        const frameMarkup = frameTemplate({
             data: this.params,
         });
-        const labelMarkup = template(labelStr)({
+        const labelMarkup = labelTemplate({
             data: {
                 buttonTitle: 'Ad',
                 infoTitle: 'Advertising on the Guardian',

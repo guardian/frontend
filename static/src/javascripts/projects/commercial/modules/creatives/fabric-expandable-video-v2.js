@@ -2,9 +2,8 @@
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
-import template from 'lodash/template';
-import fabricExpandableVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
-import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';
+import { template as fabricExpandableVideoTemplate } from 'commercial/views/creatives/fabric-expandable-video-v2';
+import { template as fabricExpandableCtaTemplate } from 'commercial/views/creatives/fabric-expandable-video-v2-cta';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
@@ -15,8 +14,6 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
     const closedHeight = 250;
     const openedHeight = 500;
 
-    const ctaTpl = template(fabricExpandableCtaHtml);
-
     const create = () => {
         const videoHeight = openedHeight;
         const plusIconPosition = params.showCrossInContainer.substring(3);
@@ -25,7 +22,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
                 16
             )}`,
             desktopCTA: params.ctaDesktopImage
-                ? ctaTpl({
+                ? fabricExpandableCtaTemplate({
                       media: 'hide-until-tablet',
                       link: params.link,
                       image: params.ctaDesktopImage,
@@ -33,7 +30,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
                   })
                 : '',
             mobileCTA: params.ctaMobileImage
-                ? ctaTpl({
+                ? fabricExpandableCtaTemplate({
                       media: 'mobile-only',
                       link: params.link,
                       image: params.ctaMobileImage,
@@ -63,7 +60,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         };
 
         const $fabricExpandableVideo = $.create(
-            template(fabricExpandableVideoHtml)({
+            fabricExpandableVideoTemplate({
                 data: Object.assign(params, additionalParams),
             })
         );
