@@ -106,15 +106,6 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-  Switch(
-    ABTests,
-    "ab-subs-banner-new-year-copy-test",
-    "Test subscription banner copy variants",
-    owners = Seq(Owner.withGithub("jfsoul")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 3, 10),
-    exposeClientSide = true
-  )
 
   Switch(
     ABTests,

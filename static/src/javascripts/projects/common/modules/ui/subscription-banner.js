@@ -19,11 +19,6 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
-import {
-    isInVariantSynchronous,
-    isInABTestSynchronous,
-} from 'common/modules/experiments/ab';
-import { subscriptionsBannerNewYearCopyTest } from 'common/modules/experiments/tests/subscriptions-banner-new-year-copy';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
@@ -53,26 +48,11 @@ const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
 );
 const hideBannerInTheseRegions: ReaderRevenueRegion[] = ['australia'];
 
-const abTest = isInABTestSynchronous(subscriptionsBannerNewYearCopyTest)
-    ? {
-          abTest: {
-              name: subscriptionsBannerNewYearCopyTest.id,
-              variant: isInVariantSynchronous(
-                  subscriptionsBannerNewYearCopyTest,
-                  'control'
-              )
-                  ? 'control'
-                  : 'variant',
-          },
-      }
-    : {};
-
 const subscriptionUrl = addTrackingCodesToUrl({
     base: `${subscriptionHostname}/subscribe/digital`,
     componentType: COMPONENT_TYPE,
     componentId: OPHAN_EVENT_ID,
     campaignCode: CAMPAIGN_CODE,
-    ...abTest,
 });
 
 const signInUrl = `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Exisiting&CMP_TU=mrtn&CMP_BUNIT=subs`;
@@ -244,15 +224,7 @@ const show: () => Promise<boolean> = async () => {
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(
-                subscriptionUrl,
-                signInUrl,
-                isUserLoggedIn(),
-                isInVariantSynchronous(
-                    subscriptionsBannerNewYearCopyTest,
-                    'variant'
-                ) || !isInABTestSynchronous(subscriptionsBannerNewYearCopyTest)
-            )
+            bannerTemplate(subscriptionUrl, signInUrl, isUserLoggedIn())
         );
     }
 

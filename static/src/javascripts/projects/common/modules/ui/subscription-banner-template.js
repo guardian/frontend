@@ -11,17 +11,12 @@ const isUserLoggedIn = userLoggedIn =>
 const subscriptionBannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
-    userLoggedIn: boolean,
-    abTestVariant: boolean
+    userLoggedIn: boolean
 ): string => `
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            ${
-                abTestVariant
-                    ? `We're going to need <br /> each other this year`
-                    : `A beautiful way to read it <br /> A powerful way to fund it`
-            }
+            A beautiful way to read it <br /> A powerful way to fund it
         </h3>
 
         <div class="site-message--subscription-banner__description">
@@ -99,8 +94,7 @@ const subscriptionBannerTemplate = (
 const bannerTemplate = (
     subscriptionUrl: string,
     signInUrl: string,
-    userLoggedIn: boolean,
-    abTestVariant: boolean
+    userLoggedIn: boolean
 ): string =>
     `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
           tabindex="-1"
@@ -111,12 +105,7 @@ const bannerTemplate = (
           aria-live="polite"
         >
 
-        ${subscriptionBannerTemplate(
-            subscriptionUrl,
-            signInUrl,
-            userLoggedIn,
-            abTestVariant
-        )}
+        ${subscriptionBannerTemplate(subscriptionUrl, signInUrl, userLoggedIn)}
     </div>
     `;
 
