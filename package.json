@@ -103,7 +103,7 @@
     "jest-environment-jsdom-global": "^1.1.0",
     "jest-teamcity-reporter": "^0.6.2",
     "listr": "^0.12.0",
-    "lodash.merge": "^4.6.0",
+    "lodash.merge": "^4.6.2",
     "lodash.takewhile": "^4.6.0",
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",
