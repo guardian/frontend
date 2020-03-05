@@ -32,28 +32,23 @@ const resize = (
         !iframe ||
         !adSlot
     ) {
-        console.log("*** RESIZE 1");
+        console.log('*** RESIZE 1');
         return null;
     }
 
     const styles = {};
 
     if (specs.width && !isLiveBlogInlineAdSlot(adSlot)) {
-        console.log("*** RESIZE 2");
         styles.width = normalise(specs.width);
     }
-
     if (specs.height) {
-        console.log("*** RESIZE 3");
         styles.height = normalise(specs.height);
     }
 
     return fastdom.write(() => {
-        console.log("*** RESIZE 4");
         Object.assign(iframe.style, styles);
 
         if (iframeContainer) {
-            console.log("*** RESIZE 5");
             Object.assign(iframeContainer.style, styles);
         }
     });
@@ -72,7 +67,7 @@ const init = (register: RegisterListeners) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
-            console.log("*** Resize event received for slot: ", adSlot);
+            console.log('*** Resize event received for slot: ', adSlot);
             removeAnyOutstreamClass(adSlot);
             const iframeContainer =
                 iframe && iframe.closest('.ad-slot__content');
