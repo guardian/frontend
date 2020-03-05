@@ -16,7 +16,7 @@ import {
 } from '../helper';
 
 // define the variant name here
-const name = 'example';
+const variant = 'example';
 
 // add the html template as the return of the function below
 // signInUrl - parameter which holds the link to the sign in/register page with the tracking parameters added
@@ -48,11 +48,11 @@ const htmlTemplate: ({
 `;
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: () => boolean = () =>
+const canShow: (name?: string) => boolean = (name = '') =>
     !hasUserDismissedGate({
         componentName,
-        componentId: component.id,
-        variant: name,
+        name,
+        variant,
     }) &&
     isNPageOrHigherPageView(2) &&
     !isLoggedIn() &&
@@ -139,7 +139,7 @@ const show: ({
 
 // export the variant as a SignInGateVariant type
 export const signInGateVariant: SignInGateVariant = {
-    name,
+    name: variant,
     canShow,
     show,
 };

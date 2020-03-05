@@ -26,25 +26,27 @@ export const getVariant: ABTest => string = test => {
     return currentTest ? currentTest.variantToRun.id : '';
 };
 
-// check if the user has dismissed the gate by checking the user preferences
+// check if the user has dismissed the gate by checking the user preferences,
+// name is optional, but can be used to differentiate between multiple sign in gate tests
 export const hasUserDismissedGate: ({
-    componentId?: string,
-    componentName: string,
+    name?: string,
     variant: string,
-}) => boolean = ({ componentId = '', componentName, variant }) => {
+    componentName: string,
+}) => boolean = ({ name = '', componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
 
-    return !!prefs[`${componentId ? `${componentId}-` : ''}${variant}`];
+    return !!prefs[`${name ? `${name}-` : ''}${variant}`];
 };
 
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
+// name is optional, but can be used to differentiate between multiple sign in gate tests
 export const setUserDismissedGate: ({
-    name: string,
+    name?: string,
     variant: string,
     componentName: string,
-}) => void = ({ name, variant, componentName }) => {
+}) => void = ({ name = '', variant, componentName }) => {
     const prefs = userPrefs.get(componentName) || {};
-    prefs[`${name}-${variant}`] = new Date().toISOString();
+    prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
     userPrefs.set(componentName, prefs);
 };
 

@@ -27,7 +27,7 @@ const canShow: () => Promise<boolean> = () =>
         if (!variant) return resolve(false);
 
         // check if we can show the test for the variant the user is in
-        return resolve(variant.canShow());
+        return resolve(variant.canShow(signInGateTest.id));
     });
 
 const show: () => Promise<boolean> = () =>

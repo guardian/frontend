@@ -14,7 +14,7 @@ import {
     showGate,
 } from '../helper';
 
-const name = 'variant';
+const variant = 'variant';
 
 const htmlTemplate: ({
     signInUrl: string,
@@ -57,11 +57,11 @@ const htmlTemplate: ({
 </div>
 `;
 
-const canShow: () => boolean = () =>
+const canShow: (name?: string) => boolean = (name = '') =>
     !hasUserDismissedGate({
         componentName,
-        componentId: component.id,
-        variant: name,
+        name,
+        variant,
     }) &&
     isNPageOrHigherPageView(2) &&
     !isLoggedIn() &&
@@ -157,7 +157,7 @@ const show: ({
     });
 
 export const signInGateVariant: SignInGateVariant = {
-    name,
+    name: variant,
     canShow,
     show,
 };
