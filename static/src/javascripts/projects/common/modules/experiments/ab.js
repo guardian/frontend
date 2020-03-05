@@ -30,6 +30,28 @@ import {
     getEngagementBannerTestsFromGoogleDoc,
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
+import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
+
+import {
+    compareVariantDecision,
+    getViewLog,
+} from '@guardian/slot-machine-client';
+import {
+    getLastOneOffContributionDate,
+    isRecurringContributor,
+    shouldNotBeShownSupportMessaging,
+} from 'common/modules/commercial/user-features';
+
+// Tmp for Slot Machine work - can remove shortly
+const buildKeywordTags = page => {
+    const keywordIds = page.keywordIds.split(',');
+    const keywords = page.keywords.split(',');
+    return keywordIds.map((id, idx) => ({
+        id,
+        type: 'Keyword',
+        title: keywords[idx],
+    }));
+};
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
@@ -53,13 +75,40 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
-                return firstRunnableTest<EpicABTest>([
+                const result = firstRunnableTest<EpicABTest>([
                     hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
                     ...lowPriorityConfiguredTests,
                     ...lowPriorityHardCodedTests,
                 ]);
+
+                if (config.get('switches.compareVariantDecision')) {
+                    // To evaluate the new contributions service logic we send it the actual decision so that it can
+                    // compare this against what it *thinks* is the right decision, and log differences.
+                    const page = config.get('page');
+                    compareVariantDecision({
+                        targeting: {
+                            contentType: page.contentType,
+                            sectionName: page.sectionName,
+                            shouldHideReaderRevenue:
+                                page.shouldHideReaderRevenue,
+                            isMinuteArticle: config.hasTone('Minute'),
+                            isPaidContent: page.isPaidContent,
+                            tags: buildKeywordTags(page),
+
+                            showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+                            isRecurringContributor: isRecurringContributor(),
+                            lastOneOffContributionDate: getLastOneOffContributionDate(),
+                            mvtId: getMvtValue(),
+                            epicViewLog: getViewLog(),
+                        },
+                        expectedTest: result ? result.id : '',
+                        expectedVariant: result ? result.variantToRun.id : '',
+                    });
+                }
+
+                return result;
             });
         }
         return Promise.resolve(
