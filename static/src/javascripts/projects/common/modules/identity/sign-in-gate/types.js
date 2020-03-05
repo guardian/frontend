@@ -21,6 +21,6 @@ export type SignInGateVariant = {
         guUrl: string,
         signInUrl: string,
     }) => boolean,
-    canShow: () => boolean,
+    canShow: (name?: string) => boolean,
     name: string,
 };

@@ -28,13 +28,13 @@ export const getVariant: ABTest => string = test => {
 
 // check if the user has dismissed the gate by checking the user preferences
 export const hasUserDismissedGate: ({
-    componentId?: string,
-    componentName: string,
+    name: string,
     variant: string,
-}) => boolean = ({ componentId = '', componentName, variant }) => {
+    componentName: string,
+}) => boolean = ({ name, componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
 
-    return !!prefs[`${componentId ? `${componentId}-` : ''}${variant}`];
+    return !!prefs[`${name ? `${name}-` : ''}${variant}`];
 };
 
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
