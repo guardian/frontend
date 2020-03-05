@@ -122,7 +122,7 @@ trait ABTestSwitches {
     "ab-sign-in-gate-tertius",
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2020, 5, 1),
     exposeClientSide = true
   )
