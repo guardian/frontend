@@ -86,4 +86,14 @@ trait MonitoringSwitches {
     false
   )
 
+  val CompareVariantDecisions = Switch(
+    SwitchGroup.Monitoring,
+    "compare-variant-decision",
+    "forward contributions variant (ab test) decision to evaluate new service",
+    Seq(Owner.withEmail("slot.machine.dev@theguardian.com")),
+    Off,
+    never,
+    exposeClientSide = true,
+  )
+
 }
