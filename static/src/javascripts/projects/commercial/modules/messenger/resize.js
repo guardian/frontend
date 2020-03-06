@@ -32,7 +32,8 @@ const resize = (
         !iframe ||
         !adSlot
     ) {
-        console.log('*** RESIZE 1');
+        console.log('*** Missing arguments for resize:');
+        console.dir({ specs, iframe, iframeContainer, adSlot });
         return null;
     }
 
