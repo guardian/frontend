@@ -23,6 +23,14 @@ import { getConfiguredEpicTests as getConfiguredEpicTests_ } from 'common/module
 
 const getConfiguredEpicTests: any = getConfiguredEpicTests_;
 
+// This is required as loading these seems to cause an error locally (and in CI)
+// because of some implicit dependency evil that I haven't been able to figure out.
+jest.mock('common/modules/commercial/user-features', () => ({
+    getLastOneOffContributionDate: () => null,
+    isRecurringContributor: () => false,
+    shouldNotBeShownSupportMessaging: () => false,
+}));
+
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
 jest.mock('common/modules/experiments/ab-ophan', () => ({
