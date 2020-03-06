@@ -86,11 +86,11 @@ export const getEpicTestToRun = memoize(
                 if (config.get('switches.compareVariantDecision')) {
                     // To evaluate the new contributions service logic we send it the actual decision so that it can
                     // compare this against what it *thinks* is the right decision, and log differences.
-                    const countryCode = geolocationGetSync();
 
                     // send ~ one in ten to reduce initial volume
                     if (Math.random() < 0.1) {
                         const page = config.get('page');
+                        const countryCode = geolocationGetSync();
                         compareVariantDecision({
                             targeting: {
                                 contentType: page.contentType,
