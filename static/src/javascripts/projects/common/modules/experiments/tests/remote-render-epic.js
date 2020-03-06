@@ -96,7 +96,7 @@ const remoteRenderTest = {
 
                 const targeting = {
                     contentType: page.contentType,
-                    sectionName: page.sectionName,
+                    sectionName: page.section,
                     shouldHideReaderRevenue: page.shouldHideReaderRevenue,
                     isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
