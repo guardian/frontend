@@ -28,7 +28,7 @@ const askHtml = `
 export const adblockTest: ABTest = {
     id: 'AdblockAsk',
     start: '2019-02-20',
-    expiry: '2020-02-20',
+    expiry: '2021-02-16',
     author: 'Tom Forbes',
     description:
         'Places a contributions ask underneath the right-hand ad slot on articles.',
