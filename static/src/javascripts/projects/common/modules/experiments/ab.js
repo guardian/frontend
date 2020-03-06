@@ -31,7 +31,7 @@ import {
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     compareVariantDecision,
     getViewLog,
@@ -90,6 +90,7 @@ export const getEpicTestToRun = memoize(
                     // send ~ one in ten to reduce initial volume
                     if (Math.random() < 0.1) {
                         const page = config.get('page');
+                        const countryCode = geolocationGetSync();
                         compareVariantDecision({
                             targeting: {
                                 contentType: page.contentType,
@@ -99,7 +100,7 @@ export const getEpicTestToRun = memoize(
                                 isMinuteArticle: config.hasTone('Minute'),
                                 isPaidContent: page.isPaidContent,
                                 tags: buildKeywordTags(page),
-
+                                countryCode,
                                 showSupportMessaging: !shouldNotBeShownSupportMessaging(),
                                 isRecurringContributor: isRecurringContributor(),
                                 lastOneOffContributionDate: getLastOneOffContributionDate(),

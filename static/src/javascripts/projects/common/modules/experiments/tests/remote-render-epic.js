@@ -79,6 +79,9 @@ const remoteRenderTest = {
                 const ophan = config.get('ophan');
                 const page = config.get('page');
 
+                // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
+                const countryCode = geolocationGetSync();
+
                 const tracking = {
                     ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
@@ -91,7 +94,7 @@ const remoteRenderTest = {
                 };
 
                 const localisation = {
-                    countryCode: geolocationGetSync(), // note, there is a race condition so we want to fetch this as late as possible to give a change for the geo local storage value to be set
+                    countryCode,
                 };
 
                 const targeting = {
@@ -108,6 +111,7 @@ const remoteRenderTest = {
                     isRecurringContributor: false,
                     lastOneOffContributionDate: 0,
                     mvtId: getMvtValue(),
+                    countryCode,
                 };
 
                 const payload = {
