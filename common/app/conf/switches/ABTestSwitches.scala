@@ -109,7 +109,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remote-render-epic",
+    "ab-remote-render-epic-round-two",
     "A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date",
     owners = Seq(Owner.withGithub("tjmw"), Owner.withGithub("nicl")),
     safeState = Off,

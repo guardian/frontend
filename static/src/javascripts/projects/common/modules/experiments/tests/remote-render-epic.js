@@ -15,7 +15,7 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 
-const campaignId = 'remote_epic_test';
+const campaignId = 'remote_epic_test_round_two';
 const geolocation = geolocationGetSync();
 
 const buildKeywordTags = page => {
@@ -43,7 +43,7 @@ const decodeJson = response => response.json();
 const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 
 const remoteRenderTest = {
-    id: 'RemoteRenderEpic',
+    id: 'RemoteRenderEpicRoundTwo',
     campaignId,
 
     highPriority: true,
@@ -86,9 +86,9 @@ const remoteRenderTest = {
                     ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
-                    campaignCode: variant.campaignCode, // "gdnwb_copts_memco_remote_epic_test_remote"
-                    abTestName: test.id, // "RemoteRenderEpic"
-                    abTestVariant: variant.id, // "remote"
+                    campaignCode: variant.campaignCode,
+                    abTestName: test.id,
+                    abTestVariant: variant.id,
                     referrerUrl:
                         window.location.origin + window.location.pathname,
                 };
