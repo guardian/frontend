@@ -562,16 +562,6 @@ trait PrebidSwitches {
     exposeClientSide = true
   )
 
-  val prebidS2SOzoneBidder: Switch = Switch(
-    group = CommercialPrebid,
-    name = "prebid-s2sozone",
-    description = "Include S2S Ozone project adapter in Prebid auctions",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val mobileStickyLeaderboard: Switch = Switch(
     group = Commercial,
     name = "mobile-sticky-leaderboard",

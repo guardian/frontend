@@ -62,7 +62,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');

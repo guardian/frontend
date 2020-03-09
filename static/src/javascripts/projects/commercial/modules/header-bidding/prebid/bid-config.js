@@ -571,76 +571,6 @@ const pangaeaBidder: PrebidBidder = {
         ),
 };
 
-// Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
-const getDummyServerSideBidders = (): Array<PrebidBidder> => {
-    const dummyServerSideBidders: Array<PrebidBidder> = [];
-
-    const appnexusServerSideBidder: PrebidBidder = {
-        name: 'appnexus',
-        switchName: 'prebidS2sozone',
-        bidParams: (
-            slotId: string,
-            sizes: HeaderBiddingSize[]
-        ): PrebidAppNexusParams =>
-            Object.assign(
-                {},
-                {
-                    placementId: getAppNexusPlacementId(sizes),
-                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-                },
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    const openxServerSideBidder: PrebidBidder = {
-        name: 'openx',
-        switchName: 'prebidS2sozone',
-        bidParams: (): PrebidOpenXParams =>
-            Object.assign(
-                {},
-                (() => ({
-                    delDomain: 'guardian-d.openx.net',
-                    unit: '539997090',
-                    customParams: buildAppNexusTargetingObject(
-                        getPageTargeting()
-                    ),
-                }))(),
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    const pangaeaServerSideBidder: PrebidBidder = {
-        name: 'pangaea',
-        switchName: 'prebidS2sozone',
-        bidParams: (
-            slotId: string,
-            sizes: HeaderBiddingSize[]
-        ): PrebidAppNexusParams =>
-            Object.assign(
-                {},
-                {
-                    placementId: getPangaeaPlacementId(sizes).toString(),
-                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-                },
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    if (
-        inPbTestOr(
-            config.get('switches.prebidS2sozone') && shouldIncludeOzone()
-        )
-    ) {
-        dummyServerSideBidders.push(openxServerSideBidder);
-        dummyServerSideBidders.push(appnexusServerSideBidder);
-        if (config.get('switches.prebidPangaea', false)) {
-            dummyServerSideBidders.push(pangaeaServerSideBidder);
-        }
-    }
-
-    return dummyServerSideBidders;
-};
-
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (
     HeaderBiddingSize[]
@@ -693,8 +623,7 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
 
     const allBidders = indexExchangeBidders(slotSizes)
         .concat(xhbBidders)
-        .concat(otherBidders)
-        .concat(getDummyServerSideBidders());
+        .concat(otherBidders);
     return isPbTestOn()
         ? biddersBeingTested(allBidders)
         : biddersSwitchedOn(allBidders);
@@ -710,7 +639,6 @@ export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
     }));
 
 export const _ = {
-    getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
