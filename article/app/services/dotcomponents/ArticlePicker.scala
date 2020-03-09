@@ -132,7 +132,6 @@ object ArticlePicker {
     val article100PercentPageFeatures = whitelistFeatures.filterKeys(
       Set(
         "isSupportedType",
-        "isNotImmersive",
         "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
