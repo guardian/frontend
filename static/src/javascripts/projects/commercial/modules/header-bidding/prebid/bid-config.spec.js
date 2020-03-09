@@ -22,7 +22,6 @@ import {
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
-    shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
     shouldIncludeSonobi as shouldIncludeSonobi_,
@@ -42,7 +41,6 @@ const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
 const shouldIncludeImproveDigital: any = shouldIncludeImproveDigital_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
-const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
@@ -60,7 +58,6 @@ const getBidders = () =>
     bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
 
 const {
-    getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
@@ -448,13 +445,8 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
-        shouldIncludeOzone.mockReturnValueOnce(true);
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
-        expect(getBidders()).toEqual([
-            'ix',
-            'improvedigital',
-            'adyoulike',
-        ]);
+        expect(getBidders()).toEqual(['ix', 'improvedigital', 'adyoulike']);
     });
 
     test('should not include ix bidders when switched off', () => {
@@ -566,7 +558,6 @@ describe('bids', () => {
 
     test('should not include Pangaea when switched off', () => {
         config.set('switches.prebidPangaea', false);
-        shouldIncludeOzone.mockReturnValue(true);
         expect(getBidders()).toEqual(['ix', 'adyoulike']);
     });
 });

@@ -138,9 +138,6 @@ export const shouldIncludeAdYouLike = (
     slotSizes: HeaderBiddingSize[]
 ): boolean => containsMpu(slotSizes);
 
-export const shouldIncludeOzone = (): boolean =>
-    !isInUsRegion() && !isInAuRegion();
-
 // TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
 export const shouldUseOzoneAdaptor = (): boolean =>
     !isInUsRegion() && !isInAuRegion() && config.get('switches.prebidOzone');

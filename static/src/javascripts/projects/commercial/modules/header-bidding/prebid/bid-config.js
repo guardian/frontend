@@ -45,7 +45,6 @@ import {
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
-    shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeTripleLift,
@@ -56,7 +55,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from '../utils';
-import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
+import { getAppNexusDirectBidParams } from './appnexus';
 
 const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
 
@@ -272,91 +271,6 @@ const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
         default:
             return NO_MATCH_ID;
     }
-};
-
-const getPangaeaPlacementId = (sizes: HeaderBiddingSize[]): number => {
-    type PangaeaSection = {
-        sections: Array<string>,
-        lb: number,
-        mmpu: number,
-        dmpu: number,
-    };
-    const pangaeaList: Array<PangaeaSection> = [
-        {
-            sections: ['business'],
-            lb: 13892359,
-            mmpu: 13892404,
-            dmpu: 13892360,
-        },
-        {
-            sections: ['culture'],
-            lb: 13892361,
-            mmpu: 13892405,
-            dmpu: 13892362,
-        },
-        {
-            sections: ['uk', 'us', 'au'],
-            lb: 13892363,
-            mmpu: 13892406,
-            dmpu: 13892364,
-        },
-        {
-            sections: ['news'],
-            lb: 13892365,
-            mmpu: 13892407,
-            dmpu: 13892366,
-        },
-        {
-            sections: ['money'],
-            lb: 13892367,
-            mmpu: 13892408,
-            dmpu: 13892368,
-        },
-        {
-            sections: ['sport'],
-            lb: 13892372,
-            mmpu: 13892410,
-            dmpu: 13892373,
-        },
-        {
-            sections: ['lifeandstyle', 'fashion'],
-            lb: 13892411,
-            mmpu: 13892436,
-            dmpu: 13892437,
-        },
-        {
-            sections: ['technology', 'environment'],
-            lb: 13892376,
-            mmpu: 13892414,
-            dmpu: 13892377,
-        },
-        {
-            sections: ['travel'],
-            lb: 13892378,
-            mmpu: 13892415,
-            dmpu: 13892379,
-        },
-    ];
-
-    const section: string = config.get('page.section', '').toLowerCase();
-    const placementIdsForSection: PangaeaSection = pangaeaList.find(
-        ({ sections }) => sections.includes(section)
-    ) || {
-        sections: ['other'],
-        lb: 13892369,
-        mmpu: 13892409,
-        dmpu: 13892370,
-    };
-
-    const breakpointKey: string = getBreakpointKey();
-    // Mobile MPU
-    if (containsMpu(sizes) && breakpointKey === 'M')
-        return placementIdsForSection.mmpu;
-    // Double/Single MPU
-    if (containsMpuOrDmpu(sizes)) return placementIdsForSection.dmpu;
-    // Leaderboard/Billboard
-    if (containsLeaderboardOrBillboard(sizes)) return placementIdsForSection.lb;
-    return 13892409; // Other Section MPU as fallback
 };
 
 const getTripleLiftInventoryCode = (
