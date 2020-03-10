@@ -4,20 +4,16 @@ import java.net.URI
 
 import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import com.gu.facia.client.models.Backfill
 import common.{JsonComponent, _}
 import contentapi.ContentApiClient
 import implicits.Requests
-import layout.slices.Fixed
-import layout.{CollectionEssentials, DescriptionMetaHeader, FaciaContainer}
+import layout.{FaciaContainer}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import model.pressed.CollectionConfig
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
-import services.CollectionConfigWithId
 import views.support.FaciaToMicroFormat2Helpers._
-import models.{Series, SeriesStoriesDCR}
+import models.{Series, SeriesHelper, SeriesStoriesDCR}
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -98,35 +94,14 @@ class SeriesController(
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader): Result = {
-    val dataId = "series"
-    val componentId = Some("series")
-    val displayName = Some(series.displayName)
-    val properties = FrontProperties.empty.copy(onPageDescription = series.tag.metadata.description)
-    val header = series.tag.metadata.description map { description => DescriptionMetaHeader(description) }
-
-
-    val config = CollectionConfig.empty.copy(
-      backfill = Some(Backfill(`type` = "capi", query = series.id)),
-      displayName = displayName,
-      href = Some(series.id)
-    )
-
+    val (containerDefinition: FaciaContainer, frontProperties: FrontProperties) = SeriesHelper.dataForContainerRendering(series)
+    val frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
     val response = () =>
       views.html.fragments.containers.facia_cards.container(
-        containerDefinition = FaciaContainer.fromConfigWithId(
-          index = 1,
-          container = Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
-          config = CollectionConfigWithId(dataId, config),
-          collectionEssentials = CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
-          hasMore = false,
-          componentId = componentId
-        )
-          .withTimeStamps
-          .copy(customHeader = header),
-        frontProperties = properties,
-        frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
-    )
-
+        containerDefinition = containerDefinition,
+        frontProperties = frontProperties,
+        frontId = frontId
+      )
     renderFormat(response, response, 900)
   }
 }
