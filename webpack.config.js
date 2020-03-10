@@ -5,47 +5,47 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        standard: path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'boot.js'
-        ),
-        admin: path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'admin.js'
-        ),
-        // Old VideoJS embed
-        'videojs-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'videojs-embed.js'
-        ),
-        // Video embed with native video player enhancements
-        'video-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'video-embed.js'
-        ),
-        'youtube-embed': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'youtube-embed.js'
-        ),
+        // standard: path.join(
+        //     __dirname,
+        //     'static',
+        //     'src',
+        //     'javascripts',
+        //     'boot.js'
+        // ),
+        // admin: path.join(
+        //     __dirname,
+        //     'static',
+        //     'src',
+        //     'javascripts',
+        //     'bootstraps',
+        //     'admin.js'
+        // ),
+        // // Old VideoJS embed
+        // 'videojs-embed': path.join(
+        //     __dirname,
+        //     'static',
+        //     'src',
+        //     'javascripts',
+        //     'bootstraps',
+        //     'videojs-embed.js'
+        // ),
+        // // Video embed with native video player enhancements
+        // 'video-embed': path.join(
+        //     __dirname,
+        //     'static',
+        //     'src',
+        //     'javascripts',
+        //     'bootstraps',
+        //     'video-embed.js'
+        // ),
+        // 'youtube-embed': path.join(
+        //     __dirname,
+        //     'static',
+        //     'src',
+        //     'javascripts',
+        //     'bootstraps',
+        //     'youtube-embed.js'
+        // ),
         'dotcom-rendering-commercial': path.join(
             __dirname,
             'static',
@@ -125,6 +125,18 @@ module.exports = {
                     'vars.scss'
                 ),
             }),
+            // {
+            //     test: () => {
+            //         console.log('entry -->', arguments);
+            //         return true;
+            //         // return entry === 'dotcom-rendering-commercial';
+            //     },
+            //     resolve: {
+            //         alias: {
+            //             'lib/report-error': 'lib/dotcom-rendering/report-error'
+            //         }
+            //     }
+            // }
         ],
     },
     plugins: [

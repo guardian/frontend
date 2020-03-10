@@ -7,9 +7,6 @@
    exceptions. This is optional because sometimes we log errors for tracking
    user data.
 */
-
-import raven from 'lib/raven';
-
 export type ReportedError = Error & {
     reported?: boolean,
 };
@@ -25,14 +22,7 @@ const reportError: ErrorLogger = (
     tags: Object,
     shouldThrow?: boolean = true
 ): void => {
-    console.log('***** OLD reportError', err, tags, shouldThrow);
-    raven.captureException(err, { tags });
-    if (shouldThrow) {
-        // Flag to ensure it is not reported to Sentry again via global handlers
-        const error = err;
-        error.reported = true;
-        throw error;
-    }
+    console.log('***** NEW reportError', err, tags, shouldThrow);
 };
 
 export default reportError;
