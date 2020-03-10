@@ -78,6 +78,7 @@ module.exports = {
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
+            'lib/report-error': 'lib/dotcom-rendering/report-error'
         },
         symlinks: false // Inserted to enable linking @guardian/consent-management-platform
     },
@@ -125,18 +126,6 @@ module.exports = {
                     'vars.scss'
                 ),
             }),
-            // {
-            //     test: () => {
-            //         console.log('entry -->', arguments);
-            //         return true;
-            //         // return entry === 'dotcom-rendering-commercial';
-            //     },
-            //     resolve: {
-            //         alias: {
-            //             'lib/report-error': 'lib/dotcom-rendering/report-error'
-            //         }
-            //     }
-            // }
         ],
     },
     plugins: [
