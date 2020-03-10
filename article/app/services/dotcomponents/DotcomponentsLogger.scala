@@ -41,6 +41,9 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
           case None => Seq()
         }
       ).distinct.mkString(", ")
+    ),
+    LogFieldString(
+      "page.tone", page.article.tags.tones.headOption.map(_.name).getOrElse("")
     )
   )
 
