@@ -92,7 +92,6 @@ export const getEpicTestToRun = memoize(
                     return result;
                 }
 
-
                 if (config.get('switches.compareVariantDecision')) {
                     // To evaluate the new contributions service logic we send it the actual decision so that it can
                     // compare this against what it *thinks* is the right decision, and log differences.
