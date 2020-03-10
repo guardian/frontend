@@ -56,8 +56,8 @@
                 @if(!usernameIsSet) {
                     @inputField(Input(publicProfileForm("username"), ('_label, "Username")))
                     <div class="form-field__note">
-                        You can only set your username once. It must be 6-20 characters, letters and/or numbers only
-                        and have no spaces. If you do not set your username, then your full name will be used.
+                        You need to set a username before you can comment.
+                        You can only set your username once. It must be 6-20 characters, letters and/or numbers.
                     </div>
                 } else {
                     <input type="hidden" name="username" value=@user.publicFields.username>
