@@ -28,19 +28,6 @@ type ConsentManagement = {
     allowAuctionWithoutConsent: boolean,
 };
 
-type S2SConfig = {
-    accountId: string,
-    enabled: boolean,
-    bidders: Array<string>,
-    timeout: number,
-    adapter: string,
-    is_debug: 'true' | 'false',
-    endpoint: string,
-    syncEndpoint: string,
-    cookieSet: boolean,
-    cookiesetUrl: string,
-};
-
 type UserSync =
     | {
           syncsPerBidder: number,
@@ -58,7 +45,6 @@ type PbjsConfig = {
     priceGranularity: PrebidPriceGranularity,
     userSync: UserSync,
     consentManagement: ConsentManagement | false,
-    s2sConfig: S2SConfig,
 };
 
 type XasisBuyerTargetting = {
@@ -94,19 +80,6 @@ const consentManagement: ConsentManagement = {
     cmpApi: 'iab',
     timeout: 200,
     allowAuctionWithoutConsent: true,
-};
-
-const s2sConfig: S2SConfig = {
-    accountId: '1',
-    enabled: true,
-    bidders: ['appnexus', 'openx', 'pangaea'],
-    timeout: bidderTimeout,
-    adapter: 'prebidServer',
-    is_debug: 'false',
-    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
-    cookieSet: true,
-    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
 };
 
 class PrebidAdUnit {
@@ -160,8 +133,7 @@ const initialise = (window: {
         },
         config.get('switches.enableConsentManagementService', false)
             ? { consentManagement }
-            : {},
-        config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
+            : {}
     );
 
     window.pbjs.setConfig(pbjsConfig);

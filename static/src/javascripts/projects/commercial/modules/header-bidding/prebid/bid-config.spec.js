@@ -22,7 +22,6 @@ import {
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
-    shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
     shouldIncludeSonobi as shouldIncludeSonobi_,
@@ -42,7 +41,6 @@ const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
 const shouldIncludeImproveDigital: any = shouldIncludeImproveDigital_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
-const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
@@ -60,7 +58,6 @@ const getBidders = () =>
     bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
 
 const {
-    getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
@@ -94,7 +91,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('switches.prebidPangaea', true);
     config.set('switches.prebidTriplelift', true);
     config.set('ophan', { pageViewId: 'pvid' });
@@ -102,53 +98,6 @@ const resetConfig = () => {
     config.set('page.section', 'Magic');
     config.set('page.isDev', false);
 };
-
-describe('getDummyServerSideBidders', () => {
-    beforeEach(() => {
-        resetConfig();
-        window.OzoneLotameData = { some: 'lotamedata' };
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        window.OzoneLotameData = undefined;
-    });
-
-    test('should return an empty array if the switch is off', () => {
-        config.set('switches.prebidS2sozone', false);
-        expect(getDummyServerSideBidders()).toEqual([]);
-    });
-
-    test('should return an empty array if outside the test sample', () => {
-        expect(getDummyServerSideBidders()).toEqual([]);
-    });
-
-    test('should otherwise return the expected array of bidders', () => {
-        shouldIncludeOzone.mockReturnValueOnce(true);
-        const bidderNames = getDummyServerSideBidders().map(
-            bidder => bidder.name
-        );
-        expect(bidderNames).toEqual(['openx', 'appnexus', 'pangaea']);
-    });
-
-    test('should include methods in the response that generate the correct bid params', () => {
-        shouldIncludeOzone.mockReturnValueOnce(true);
-        const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
-        const openxParams = bidders[0].bidParams('type', [[1, 2]]);
-        const appNexusParams = bidders[1].bidParams('type', [[1, 2]]);
-        expect(openxParams).toEqual({
-            delDomain: 'guardian-d.openx.net',
-            unit: '539997090',
-            lotame: { some: 'lotamedata' },
-            customParams: 'someAppNexusTargetingObject',
-        });
-        expect(appNexusParams).toEqual({
-            placementId: '13915593',
-            keywords: 'someAppNexusTargetingObject',
-            lotame: { some: 'lotamedata' },
-        });
-    });
-});
 
 describe('getImprovePlacementId', () => {
     beforeEach(() => {
@@ -496,16 +445,8 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
-        shouldIncludeOzone.mockReturnValueOnce(true);
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
-        expect(getBidders()).toEqual([
-            'ix',
-            'improvedigital',
-            'adyoulike',
-            'openx',
-            'appnexus',
-            'pangaea',
-        ]);
+        expect(getBidders()).toEqual(['ix', 'improvedigital', 'adyoulike']);
     });
 
     test('should not include ix bidders when switched off', () => {
@@ -617,8 +558,7 @@ describe('bids', () => {
 
     test('should not include Pangaea when switched off', () => {
         config.set('switches.prebidPangaea', false);
-        shouldIncludeOzone.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
+        expect(getBidders()).toEqual(['ix', 'adyoulike']);
     });
 });
 

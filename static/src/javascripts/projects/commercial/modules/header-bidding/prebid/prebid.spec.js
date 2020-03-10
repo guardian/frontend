@@ -32,11 +32,9 @@ describe('initialise', () => {
         config.set('switches.enableConsentManagementService', true);
         config.set('switches.prebidUserSync', true);
         config.set('switches.prebidAppNexus', true);
-        config.set('switches.prebidS2sozone', true);
         config.set('switches.prebidSonobi', true);
         config.set('switches.prebidXaxis', true);
         window.pbjs.setConfig({ consentManagement: {} });
-        window.pbjs.setConfig({ s2sConfig: {} });
         getAdvertById.mockReset();
     });
 
@@ -95,19 +93,12 @@ describe('initialise', () => {
             priceGranularity: 'custom',
             publisherDomain: 'http://localhost',
             s2sConfig: {
-                accountId: '1',
                 adapter: 'prebidServer',
                 adapterOptions: {},
-                bidders: ['appnexus', 'openx', 'pangaea'],
-                cookieSet: true,
-                cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
-                enabled: true,
-                endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-                is_debug: 'false',
+                enabled: false,
                 maxBids: 1,
-                syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
                 syncUrlModifier: {},
-                timeout: 1500,
+                timeout: 1000,
             },
             timeoutBuffer: 400,
             useBidCache: false,
@@ -131,18 +122,6 @@ describe('initialise', () => {
         config.set('switches.enableConsentManagementService', false);
         prebid.initialise(window);
         expect(window.pbjs.getConfig().consentManagement).toEqual({});
-    });
-    test('should generate correct Prebid config when Ozone off', () => {
-        config.set('switches.prebidS2sozone', false);
-        prebid.initialise(window);
-        expect(window.pbjs.getConfig().s2sConfig).toEqual({
-            adapter: 'prebidServer',
-            adapterOptions: {},
-            enabled: false,
-            maxBids: 1,
-            syncUrlModifier: {},
-            timeout: 1000,
-        });
     });
 
     test('should generate correct bidder settings', () => {

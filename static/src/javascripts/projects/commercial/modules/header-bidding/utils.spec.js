@@ -15,7 +15,6 @@ import {
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
-    shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
@@ -62,7 +61,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
@@ -182,22 +180,6 @@ describe('Utils', () => {
         for (let i = 0; i < testGeos.length; i += 1) {
             getSync.mockReturnValueOnce(testGeos[i]);
             expect(shouldIncludeTrustX()).toBe(false);
-        }
-    });
-
-    test('shouldIncludeOzone should return false for excluded geolocations', () => {
-        const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
-        for (let i = 0; i < excludedGeos.length; i += 1) {
-            getSync.mockReturnValue(excludedGeos[i]);
-            expect(shouldIncludeOzone()).toBe(false);
-        }
-    });
-
-    test('shouldIncludeOzone should return true for GB and ROW', () => {
-        const includedGeos = ['GB', 'FR', 'SA'];
-        for (let i = 0; i < includedGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(includedGeos[i]);
-            expect(shouldIncludeOzone()).toBe(true);
         }
     });
 
