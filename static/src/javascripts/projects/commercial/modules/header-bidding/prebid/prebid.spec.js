@@ -48,12 +48,10 @@ describe('initialise', () => {
                     {
                         increment: 0.01,
                         max: 100,
-                        min: 0,
                     },
                     {
                         increment: 1,
                         max: 500,
-                        min: 100,
                     },
                 ],
             },
@@ -77,12 +75,10 @@ describe('initialise', () => {
                     {
                         increment: 0.01,
                         max: 100,
-                        min: 0,
                     },
                     {
                         increment: 1,
                         max: 500,
-                        min: 100,
                     },
                 ],
             },
@@ -103,7 +99,6 @@ describe('initialise', () => {
             timeoutBuffer: 400,
             useBidCache: false,
             userSync: {
-                pixelEnabled: true,
                 syncDelay: 3000,
                 syncEnabled: true,
                 syncsPerBidder: 999,
