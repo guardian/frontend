@@ -3,7 +3,7 @@
 export const commercialGptLazyLoad: ABTest = {
     id: 'CommercialGptLazyLoad',
     start: '2020-03-02',
-    expiry: '2020-03-10',
+    expiry: '2020-03-16',
     author: 'George Haberis',
     description:
         'This test enables GPT enableLazyLoad as an alternative to our custom build lazy load solution',
