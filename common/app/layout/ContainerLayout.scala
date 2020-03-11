@@ -4,7 +4,23 @@ import slices._
 import model.pressed.PressedContent
 import scala.annotation.tailrec
 
-case class IndexedTrail(faciaContent: PressedContent, index: Int)
+case class ContainerLayout(
+  slices: Seq[SliceWithCards],
+  remainingCards: Seq[FaciaCardAndIndex],
+  hasMore: Boolean = false
+) {
+  def transformCards(f: ContentCard => ContentCard): ContainerLayout = copy(
+    slices = slices.map(_.transformCards(f)),
+    remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
+  )
+
+  def hasMobileShowMore: Boolean =
+    slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
+
+  def hasDesktopShowMore: Boolean = remainingCards.nonEmpty || hasMore
+
+  def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
+}
 
 object ContainerLayout extends implicits.Collections {
   def apply(
@@ -114,20 +130,4 @@ object ContainerLayout extends implicits.Collections {
   }
 }
 
-case class ContainerLayout(
-  slices: Seq[SliceWithCards],
-  remainingCards: Seq[FaciaCardAndIndex],
-  hasMore: Boolean = false
-) {
-  def transformCards(f: ContentCard => ContentCard): ContainerLayout = copy(
-    slices = slices.map(_.transformCards(f)),
-    remainingCards.map(cardAndIndex => cardAndIndex.transformCard(f))
-  )
 
-  def hasMobileShowMore: Boolean =
-    slices.flatMap(_.columns.flatMap(_.cards)).exists(_.hideUpTo.contains(Mobile))
-
-  def hasDesktopShowMore: Boolean = remainingCards.nonEmpty || hasMore
-
-  def hasShowMore: Boolean = hasDesktopShowMore || hasMobileShowMore
-}
