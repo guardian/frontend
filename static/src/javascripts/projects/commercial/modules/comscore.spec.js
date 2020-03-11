@@ -5,7 +5,7 @@ import { init, _ } from './comscore';
 const getComscoreScripTags = (): NodeList<HTMLElement> =>
     document.querySelectorAll('script#comscore');
 
-const validComscoreScriptTag = (tag: HTMLElement) =>
+const isValidComscoreScriptTag = (tag: HTMLElement) =>
     tag instanceof HTMLScriptElement &&
     tag.src === _.comscoreSrc &&
     tag.async === true;
@@ -22,14 +22,14 @@ describe('comscore init', () => {
         const comscoreTags = getComscoreScripTags();
         expect(comscoreTags.length).toBe(0);
     });
+
     it('should drop the corect script tag if the comscore switch is on', () => {
         config.set('switches.comscore', true);
         init();
 
         const comscoreTags = getComscoreScripTags();
         expect(comscoreTags.length).toBe(1);
-
-        expect(validComscoreScriptTag(comscoreTags[0])).toBe(true);
+        expect(isValidComscoreScriptTag(comscoreTags[0])).toBe(true);
     });
 });
 
@@ -44,12 +44,14 @@ describe('comscore getGlobals', () => {
             comscorekw: randomStr,
         });
     });
+
     it('returns an object with no comscorekw variable set when called with "Network Front" as keywords', () => {
         expect(_.getGlobals('Network Front')).toEqual(
             // $FlowFixMe property not does actually exist
             expect.not.objectContaining({ comscorekw: expect.any(Object) })
         );
     });
+
     it('always return an object with the c1 and c2 variables', () => {
         const expectedGlobals = { c1: _.comscoreC1, c2: _.comscoreC2 };
 
