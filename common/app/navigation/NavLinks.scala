@@ -16,7 +16,7 @@ private object NavLinks {
   val usNews = NavLink("US", "/us-news", longTitle = "US news")
   val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
   val usElections2020 = NavLink("Elections 2020", "/us-news/us-elections-2020", longTitle = "Elections 2020")
-
+  val coronavirus = NavLink("Coronavirus", "/world/coronavirus-outbreak", longTitle = "Coronavirus")
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -213,6 +213,7 @@ private object NavLinks {
       ukNews,
       world,
       ukBusiness,
+      coronavirus,
       football,
       ukEnvironment,
       politics,
