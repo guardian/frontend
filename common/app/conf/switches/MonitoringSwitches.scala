@@ -33,7 +33,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("cb372")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true
   )
 
   val ScrollDepthSwitch = Switch(
