@@ -3,8 +3,12 @@ import config from 'lib/config';
 
 type comscoreGlobals = { c1: string, c2: string, comscorekw?: string };
 
+const comscoreSrc = 'https://sb.scorecardresearch.com/beacon.js';
+const comscoreC1 = '2';
+const comscoreC2 = '6035250';
+
 const getGlobals = (keywords: string): comscoreGlobals => {
-    const globals: comscoreGlobals = { c1: '2', c2: '6035250' };
+    const globals: comscoreGlobals = { c1: comscoreC1, c2: comscoreC2 };
 
     if (keywords !== 'Network Front') {
         globals.comscorekw = keywords;
@@ -24,12 +28,11 @@ export const init = (): Promise<void> => {
         const s = document.createElement('script');
         s.id = 'comscore';
         s.async = true;
-        s.src = 'https://sb.scorecardresearch.com/beacon.js';
+        s.src = comscoreSrc;
 
-        const el = document.getElementsByTagName('script')[0];
-
-        if (el && el.parentNode) {
-            el.parentNode.insertBefore(s, el);
+        const el = document.getElementsByTagName('head')[0];
+        if (el) {
+            el.appendChild(s);
         }
     }
 
@@ -38,4 +41,7 @@ export const init = (): Promise<void> => {
 
 export const _ = {
     getGlobals,
+    comscoreSrc,
+    comscoreC1,
+    comscoreC2,
 };
