@@ -7,6 +7,16 @@ import model.facia.PressedCollection
 
 import scala.collection.immutable.Iterable
 
+sealed trait Container
+
+case class Dynamic(get: DynamicContainer) extends Container
+case class Fixed(get: ContainerDefinition) extends Container
+case class Email(get: EmailLayout) extends Container
+case object NavList extends Container
+case object NavMediaList extends Container
+case object MostPopular extends Container
+case object Video extends Container
+
 object Container extends Logging {
   /** This is THE top level resolver for containers */
   def all(adFree: Boolean = false): Map[String, Container] = Map(
@@ -79,13 +89,3 @@ object Container extends Logging {
     case _ => Nil
   }
 }
-
-sealed trait Container
-
-case class Dynamic(get: DynamicContainer) extends Container
-case class Fixed(get: ContainerDefinition) extends Container
-case class Email(get: EmailLayout) extends Container
-case object NavList extends Container
-case object NavMediaList extends Container
-case object MostPopular extends Container
-case object Video extends Container

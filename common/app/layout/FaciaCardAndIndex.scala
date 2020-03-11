@@ -2,20 +2,6 @@ package layout
 
 import model.pressed.{PressedContent, CollectionConfig}
 
-object FaciaCardAndIndex {
-  /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
-  def fromTrail(faciaContent: PressedContent, itemClasses: ItemClasses, index: Int): FaciaCardAndIndex = FaciaCardAndIndex(
-    index,
-    FaciaCard.fromTrail(
-      faciaContent,
-      CollectionConfig.empty,
-      itemClasses,
-      showSeriesAndBlogKickers = false
-    ),
-    None
-  )
-}
-
 case class FaciaCardAndIndex(
   index: Int,
   item: FaciaCard,
@@ -42,4 +28,18 @@ case class FaciaCardAndIndex(
     case contentCard: ContentCard => copy(item = contentCard.copy(fromShowMore = true))
     case _ => this
   }
+}
+
+object FaciaCardAndIndex {
+  /** If creating a Card off the cuff (i.e., outside of the normal Facia front construction code */
+  def fromTrail(faciaContent: PressedContent, itemClasses: ItemClasses, index: Int): FaciaCardAndIndex = FaciaCardAndIndex(
+    index,
+    FaciaCard.fromTrail(
+      faciaContent,
+      CollectionConfig.empty,
+      itemClasses,
+      showSeriesAndBlogKickers = false
+    ),
+    None
+  )
 }

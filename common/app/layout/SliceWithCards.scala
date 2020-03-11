@@ -103,5 +103,3 @@ object SliceWithCards {
     (SliceWithCards(layout.cssClassName, columns), unconsumed, endContext)
   }
 }
-
-

@@ -1,0 +1,48 @@
+package layout
+
+import cards.{MediaList, Standard}
+import com.gu.commercial.branding.Branding
+import com.gu.contentapi.client.model.{v1 => contentapi}
+import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
+import common.Edition.defaultEdition
+import common.{Edition, LinkTo}
+import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
+import model._
+import model.pressed._
+import org.joda.time.DateTime
+import play.api.mvc.RequestHeader
+import play.twirl.api.Html
+import services.FaciaContentConvert
+import views.support._
+
+import scala.Function.const
+
+case class FaciaCardHeader(
+  quoted: Boolean,
+  isExternal: Boolean,
+  isVideo: Boolean,
+  isGallery: Boolean,
+  isAudio: Boolean,
+  kicker: Option[ItemKicker],
+  headline: String,
+  url: EditionalisedLink
+)
+
+object FaciaCardHeader {
+  def fromTrail(faciaContent: PressedContent, config: Option[CollectionConfig]): FaciaCardHeader = fromTrailAndKicker(
+    faciaContent,
+    faciaContent.header.kicker,
+    config
+  )
+
+  def fromTrailAndKicker(faciaContent: PressedContent, itemKicker: Option[ItemKicker], config: Option[CollectionConfig]): FaciaCardHeader = FaciaCardHeader(
+    faciaContent.display.showQuotedHeadline,
+    faciaContent.card.cardStyle == ExternalLink,
+    faciaContent.header.isVideo,
+    faciaContent.header.isGallery,
+    faciaContent.header.isAudio,
+    itemKicker,
+    faciaContent.header.headline,
+    EditionalisedLink.fromFaciaContent(faciaContent)
+  )
+}
