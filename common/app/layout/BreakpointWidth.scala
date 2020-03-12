@@ -1,9 +1,5 @@
 package layout
 
-import cards._
-import BrowserWidth._
-import views.support.ImageProfile
-
 case class BreakpointWidth(breakpoint: Breakpoint, width: BrowserWidth) {
   private val MaximumMobileImageWidth = 620
   private val SourcesToEmitOnMobile = 3

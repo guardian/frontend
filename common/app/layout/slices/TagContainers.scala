@@ -1,8 +1,5 @@
 package layout.slices
 
-import conf.Configuration
-import model.pressed.PressedContent
-
 object TagContainers {
 
   import ContainerDefinition.{ofSlices => slices}

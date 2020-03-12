@@ -1,7 +1,5 @@
 package layout
 
-import cards._
-import BrowserWidth._
 import views.support.ImageProfile
 
 case class WidthsByBreakpoint(

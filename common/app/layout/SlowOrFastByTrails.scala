@@ -1,9 +1,6 @@
 package layout
 
-import implicits.Collections
 import model.Trail
-import model.pressed.PressedContent
-import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
 
 object SlowOrFastByTrails {
   val SlowTags = Set(

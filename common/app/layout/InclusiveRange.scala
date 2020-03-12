@@ -1,9 +1,5 @@
 package layout
 
-import cards._
-import implicits.FaciaContentFrontendHelpers.FaciaContentFrontendHelper
-import model.pressed.PressedContent
-
 case class InclusiveRange(minimum: Int, maximum: Int)
 
 object InclusiveRange {
