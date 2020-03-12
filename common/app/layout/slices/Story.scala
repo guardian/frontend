@@ -6,6 +6,11 @@ import play.api.libs.json.Json
 
 import scala.util.Try
 
+case class Story(
+  group: Int,
+  isBoosted: Boolean
+)
+
 object Story {
   implicit val jsonFormat = Json.format[Story]
 
@@ -29,8 +34,3 @@ object Story {
     )
   }
 }
-
-case class Story(
-  group: Int,
-  isBoosted: Boolean
-)

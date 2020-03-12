@@ -3,46 +3,6 @@ package layout.slices
 import conf.Configuration
 import model.pressed.PressedContent
 
-object TagContainers {
-
-  import ContainerDefinition.{ofSlices => slices}
-
-  def allTagPageSlices(n: Int): ContainerDefinition = n match {
-    case 1 => slices(FullMedia100)
-    case 2 => slices(HalfHalf2)
-    case 3 => slices(TTT)
-    case _ => slices(QuarterQuarterQuarterQuarter,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlMpu)
-  }
-
-  val tagPage = slices(
-    HalfQQ,
-    QuarterQuarterQuarterQuarter,
-    TlTlTl,
-    TlTlMpu
-  )
-
-  val contributorTagPage =  slices(
-    HalfQl4Ql4,
-    TlTlTl,
-    TlTlTl,
-    TlTlMpu
-  )
-
-  val keywordPage = slices(
-    TTT,
-    TlTlTl,
-    TlTlTl,
-    TlTlMpu
-  )
-}
-
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
@@ -98,21 +58,4 @@ object FixedContainers {
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =
     collectionType.flatMap(all.lift)
-}
-
-object DynamicContainers {
-  val all: Map[String, DynamicContainer] = Map(
-    ("dynamic/fast", DynamicFast),
-    ("dynamic/slow", DynamicSlow),
-    ("dynamic/package", DynamicPackage),
-    ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false, adFree = false))
-  )
-
-  def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {
-    for {
-      typ <- collectionType
-      dynamicContainer <- all.get(typ)
-      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
-    } yield definition
-  }
 }
