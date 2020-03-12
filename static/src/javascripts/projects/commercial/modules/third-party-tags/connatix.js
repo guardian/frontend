@@ -1,7 +1,10 @@
 // @flow
 
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
+
 export const connatix: ThirdPartyTag = {
-    shouldRun: true, // TODO: add switch
+    shouldRun: isInVariantSynchronous(connatixTest, 'variant'),
     url: '//cdn.connatix.com/min/connatix.renderer.infeed.min.js',
     attrs: [
         {

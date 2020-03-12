@@ -8,6 +8,7 @@ import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xa
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
+import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
 import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
@@ -18,6 +19,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     adblockTest,
     amazonA9Test,
+    connatixTest,
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
