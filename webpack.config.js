@@ -5,54 +5,46 @@ const webpack = require('webpack');
 
 module.exports = {
     entry: {
-        // standard: path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'boot.js'
-        // ),
-        // admin: path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'bootstraps',
-        //     'admin.js'
-        // ),
-        // // Old VideoJS embed
-        // 'videojs-embed': path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'bootstraps',
-        //     'videojs-embed.js'
-        // ),
-        // // Video embed with native video player enhancements
-        // 'video-embed': path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'bootstraps',
-        //     'video-embed.js'
-        // ),
-        // 'youtube-embed': path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'bootstraps',
-        //     'youtube-embed.js'
-        // ),
-        'dotcom-rendering-commercial': path.join(
+        standard: path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'boot.js'
+        ),
+        admin: path.join(
             __dirname,
             'static',
             'src',
             'javascripts',
             'bootstraps',
-            'dotcom-rendering-commercial.js'
+            'admin.js'
+        ),
+        // Old VideoJS embed
+        'videojs-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'bootstraps',
+            'videojs-embed.js'
+        ),
+        // Video embed with native video player enhancements
+        'video-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'bootstraps',
+            'video-embed.js'
+        ),
+        'youtube-embed': path.join(
+            __dirname,
+            'static',
+            'src',
+            'javascripts',
+            'bootstraps',
+            'youtube-embed.js'
         ),
     },
     output: {
@@ -78,7 +70,6 @@ module.exports = {
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
-            'lib/report-error': 'lib/dotcom-rendering/report-error'
         },
         symlinks: false // Inserted to enable linking @guardian/consent-management-platform
     },

@@ -5,6 +5,7 @@ module.exports = {
         require('./clean'),
         require('./copy'),
         require('./webpack.dev'),
+        require('./webpack-dcr'),
         require('./bundle-polyfills'),
     ],
 };
