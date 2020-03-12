@@ -13,6 +13,7 @@ import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
+import { connatix } from 'commercial/modules/third-party-tags/connatix';
 import {
     onIabConsentNotification,
     onGuConsentNotification,
@@ -21,19 +22,27 @@ import {
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
 
-const addScripts = (services: Array<ThirdPartyTag>): void => {
+const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
-    services.forEach(service => {
-        if (service.useImage === true) {
-            new Image().src = service.url;
+    tags.forEach(tag => {
+        if (tag.useImage === true) {
+            new Image().src = tag.url;
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
+            script.src = tag.url;
+            script.onload = tag.onLoad;
+            if (tag.async === true) {
+                script.setAttribute('async', '');
+            }
+            if (tag.attrs) {
+                tag.attrs.forEach(attr => {
+                    script.setAttribute(attr.name, attr.value);
+                });
+            }
             frag.appendChild(script);
         }
     });
@@ -78,6 +87,7 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
+        connatix,
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
