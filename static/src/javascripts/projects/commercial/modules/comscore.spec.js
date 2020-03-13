@@ -23,7 +23,7 @@ describe('comscore init', () => {
         expect(comscoreTags.length).toBe(0);
     });
 
-    it('should call loadScript with the correctly parameters', () => {
+    it('should call loadScript with the expected parameters', () => {
         init();
 
         expect(loadScript).toBeCalledWith(_.comscoreSrc, {
