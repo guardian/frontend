@@ -1,6 +1,11 @@
 // @flow
 import config from 'lib/config';
+import { loadScript } from 'lib/load-script';
 import { init, _ } from './comscore';
+
+jest.mock('lib/load-script', () => ({
+    loadScript: jest.fn(() => Promise.resolve()),
+}));
 
 const getComscoreScripTags = (): NodeList<HTMLElement> =>
     document.querySelectorAll('script#comscore');
@@ -18,38 +23,13 @@ describe('comscore init', () => {
         expect(comscoreTags.length).toBe(0);
     });
 
-    it('should drop exactly one script tag if the comscore switch is on', () => {
-        config.set('switches.comscore', true);
+    it('should call loadScript with the correctly parameters', () => {
         init();
 
-        const comscoreTags = getComscoreScripTags();
-        expect(comscoreTags.length).toBe(1);
-    });
-
-    it('should drop a script tag with the correct src if the comscore switch is on', () => {
-        config.set('switches.comscore', true);
-        init();
-
-        const comscoreTags = getComscoreScripTags();
-
-        if (comscoreTags[0] instanceof HTMLScriptElement) {
-            expect(comscoreTags[0].src).toEqual(_.comscoreSrc);
-        } else {
-            throw new Error('Obtained comscore tag is not a script');
-        }
-    });
-
-    it('should drop a script tag with the correct async mode if the comscore switch is on', () => {
-        config.set('switches.comscore', true);
-        init();
-
-        const comscoreTags = getComscoreScripTags();
-
-        if (comscoreTags[0] instanceof HTMLScriptElement) {
-            expect(comscoreTags[0].async).toBe(true);
-        } else {
-            throw new Error('Obtained comscore tag is not a script');
-        }
+        expect(loadScript).toBeCalledWith(_.comscoreSrc, {
+            id: 'comscore',
+            async: true,
+        });
     });
 });
 
