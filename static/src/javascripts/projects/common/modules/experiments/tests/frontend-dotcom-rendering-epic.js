@@ -62,7 +62,7 @@ const frontendDotcomRenderingTest = {
 
     geolocation,
 
-    canRun: () => true, // inCohort && dcrCouldRender ?
+    canRun: () => config.get('page').dcrCouldRender, // && inCohort
 
     variants: [
         {
