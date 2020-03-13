@@ -1,5 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 
+const path = require('path');
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const Visualizer = require('webpack-visualizer-plugin');
@@ -9,6 +10,18 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 const config = require('./webpack.config.js');
 
+// override JS entry points
+config.entry = {
+    'dotcom-rendering-commercial': path.join(
+        __dirname,
+        'static',
+        'src',
+        'javascripts',
+        'bootstraps',
+        'dotcom-rendering-commercial.js'
+    ),
+};
+
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
     output: {
@@ -17,13 +30,13 @@ module.exports = webpackMerge.smart(config, {
     },
     devtool: 'source-map',
     plugins: [
-        new webpack.optimize.AggressiveMergingPlugin({
-            // delicate number: stops enhanced-no-commercial and enhanced
-            // being merged into one
-            minSizeReduce: 1.6,
-        }),
+        // new webpack.optimize.AggressiveMergingPlugin({
+        //     // delicate number: stops enhanced-no-commercial and enhanced
+        //     // being merged into one
+        //     minSizeReduce: 1.6,
+        // }),
         new Visualizer({
-            filename: './webpack-dcr-commercial-stats.html',
+            filename: './webpack-stats.html',
         }),
         new BundleAnalyzerPlugin({
             reportFilename: './bundle-analyzer-report.html',
@@ -38,4 +51,9 @@ module.exports = webpackMerge.smart(config, {
             sourceMap: true,
         }),
     ],
+    resolve: {
+        alias: {
+            'lib/report-error': 'lib/dotcom-rendering/report-error'
+        }
+    }
 });
