@@ -7,10 +7,10 @@
    exceptions. This is optional because sometimes we log errors for tracking
    user data.
 */
+
 export type ReportedError = Error & {
     reported?: boolean,
 };
-
 export type ErrorLogger = (
     err: ReportedError,
     tags: Object,
@@ -19,10 +19,25 @@ export type ErrorLogger = (
 
 const reportError: ErrorLogger = (
     err: ReportedError,
-    tags: Object,
-    shouldThrow?: boolean = true
+    tags: {
+        feature?: string,
+    },
+    shouldThrow?: boolean
 ): void => {
-    console.log('***** NEW reportError', err, tags, shouldThrow);
+    const { feature } = tags;
+
+    if (feature) {
+        window.guardian.modules.sentry.reportError(err, feature);
+    } else {
+        window.guardian.modules.sentry.reportError(err);
+    }
+
+    if (shouldThrow) {
+        // Flag to ensure it is not reported to Sentry again via global handlers
+        const error = err;
+        error.reported = true;
+        throw error;
+    }
 };
 
 export default reportError;

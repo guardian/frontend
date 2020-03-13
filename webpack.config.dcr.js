@@ -18,9 +18,9 @@ config.entry = {
 };
 
 module.exports = webpackMerge.smart(config, {
-    // resolve: {
-    //     alias: {
-    //         'lib/report-error': 'lib/dotcom-rendering/report-error'
-    //     }
-    // }
+    resolve: {
+        alias: {
+            'lib/report-error': 'lib/dotcom-rendering/report-error'
+        }
+    }
 });
