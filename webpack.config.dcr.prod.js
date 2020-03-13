@@ -7,20 +7,7 @@ const Visualizer = require('webpack-visualizer-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-
-const config = require('./webpack.config.js');
-
-// override JS entry points
-config.entry = {
-    'dotcom-rendering-commercial': path.join(
-        __dirname,
-        'static',
-        'src',
-        'javascripts',
-        'bootstraps',
-        'dotcom-rendering-commercial.js'
-    ),
-};
+const config = require('./webpack.config.dcr.js');
 
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
@@ -51,9 +38,4 @@ module.exports = webpackMerge.smart(config, {
             sourceMap: true,
         }),
     ],
-    resolve: {
-        alias: {
-            'lib/report-error': 'lib/dotcom-rendering/report-error'
-        }
-    }
 });
