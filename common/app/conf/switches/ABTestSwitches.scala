@@ -145,4 +145,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 3, 16),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-frontend-dotcom-rendering-epic",
+    "A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance",
+    owners = Seq(Owner.withGithub("andre1050")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 5, 13),
+    exposeClientSide = true
+  )
 }
