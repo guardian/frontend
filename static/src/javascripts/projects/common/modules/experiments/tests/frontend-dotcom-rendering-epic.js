@@ -41,6 +41,10 @@ const decodeJson = response => response.json();
 
 const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 
+const canRun = (): boolean =>
+    config.get('page').dcrCouldRender &&
+    config.get('tests').dotcomRenderingControl === 'control';
+
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
     campaignId,
@@ -62,7 +66,7 @@ const frontendDotcomRenderingTest = {
 
     geolocation,
 
-    canRun: () => config.get('page').dcrCouldRender, // && inCohort
+    canRun,
 
     variants: [
         {
