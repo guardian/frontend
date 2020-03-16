@@ -162,7 +162,8 @@
     "setupFilesAfterEnv": [
       "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
     ],
-    "testEnvironment": "jest-environment-jsdom-global"
+    "testEnvironment": "jest-environment-jsdom-global",
+    "testURL": "http://test-url.com"
   },
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",

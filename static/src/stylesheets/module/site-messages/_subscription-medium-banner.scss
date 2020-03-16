@@ -377,3 +377,128 @@
 }
 
 /*********************** footer hacks END *********************/
+
+/*********************** gw Banner *********************/
+.site-message--gw-banner {
+    &.site-message--subscription-banner {
+        // background-color: #333333;
+        background-color: #3E474A;
+        padding: 30px 20px;
+    }
+
+    .site-message--subscription-banner__description {
+        // width: 48%;
+
+        @include mq($from: wide) {
+            width: 48%;
+        }
+    }
+
+    .site-message--subscription-banner__title,
+    .site-message--subscription-banner__description,
+    .site-message--subscription-banner__cta-dismiss,
+    .site-message--subscription-banner__sign-in,
+    .site-message--subscription-banner__sign-in-link,
+    .site-message--subscription-banner__subscriber-link,
+    .site-message--subscription-banner__close-button {
+        color: $brightness-97;
+    }
+
+    .site-message--subscription-banner__title {
+        padding-right: 36px;
+
+        @include mq($from: tablet) {
+            padding-right: 0px;
+        }
+    }
+
+    .site-message--subscription-banner__cta {
+        background: $highlight-main;
+        color: #121212;
+        width: 55%;
+    }
+
+    .site-message--subscription-banner__close-button svg {
+        border: 0.0625rem solid $brightness-97;
+    }
+
+    .site-message--subscription-banner__close-button svg path {
+        fill: $brightness-97;
+    }
+
+    .site-message--subscription-banner__gu-logo svg path {
+        fill: $brightness-97;
+    }
+
+    .site-message--packshot-container {
+        bottom: -30px;
+        margin: 10px 0 -30px;
+
+        @media (min-width: 1140px) {
+            width: 57%;
+        }
+
+        img {
+            max-width: 320px;
+
+            @include mq($from: tablet) {
+                max-width: 400px;
+            }
+
+            @media (min-width: 740px) {
+                max-width: 300px;
+            }
+
+            @media (min-width: 966px) {
+                max-width: 300px;
+                padding-right: 36px;
+            }
+
+            @media (min-width: 980px) {
+                max-width: 350px;
+                padding-right: 0px;
+            }
+
+            @media (min-width: 1140px) {
+                max-width: 540px;
+            }
+        }
+    }
+
+    .site-message--subscription-banner__subscriber-link {
+        text-decoration: none;
+        font-weight: normal;
+    }
+    .site-message--subscription-banner__cta {
+        display: initial;
+        width: initial;
+    }
+
+    .site-message--subscription-banner__cta-dismiss {
+        display: block;
+    }
+
+    .site-message--subscription-banner__cta-dismiss-container {
+        display: inline-block;
+        margin-left: 5px;
+    }
+
+    .site-message--subscription-banner__sign-in {
+        text-align: left;
+    }
+
+    .cta-text-mobile {
+        @include mq($from: desktop) {
+            display: none;
+        }
+    }
+
+    .cta-text-desktop {
+        display: none;
+        @include mq($from: desktop) {
+            display: block;
+        }
+    }
+
+}
+/*********************** gw Banner END *********************/
