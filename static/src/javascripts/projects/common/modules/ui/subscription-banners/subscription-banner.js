@@ -1,6 +1,5 @@
 // @flow
 
-
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import userPrefs from 'common/modules/user-prefs';
@@ -15,16 +14,16 @@ import { isUserLoggedIn } from 'common/modules/identity/api';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
-import { bannerTemplate as subscripionBannerTemplate } from './subscription-banner-template';
-import { bannerTemplate as gwBannerTemplate} from './guardian-weekly-banner-template';
-import { tracking } from './subscription-banner-tracking';
-
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+
+import { bannerTemplate as subscripionBannerTemplate } from './subscription-banner-template';
+import { bannerTemplate as gwBannerTemplate } from './guardian-weekly-banner-template';
+import { bannerTracking } from './subscription-banner-tracking';
 import type { BannerTracking } from './subscription-banner-tracking';
 
-export const MESSAGE_CODE = 'subscription-banner';
+const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 
 const subscriptionBannerSwitchIsOn: boolean = config.get(
@@ -54,7 +53,8 @@ const hasAcknowledged = bannerRedeploymentDate => {
     return lastClosedAtTime > redeploymentDate;
 };
 
-export const selectorName = (bannerName: string) => (actionId: ?string) => `#js-site-message--${bannerName}${actionId ? `__${actionId}` : ''}`;
+const selectorName = (bannerName: string) => (actionId: ?string) =>
+    `#js-site-message--${bannerName}${actionId ? `__${actionId}` : ''}`;
 
 const hasAcknowledgedBanner = region =>
     fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
@@ -91,12 +91,10 @@ const bindClickHandler = (button, callback) => {
 };
 
 const bindCloseHandler = (button, banner, callback) => {
-
     const ENTER_KEY_CODE = 'Enter';
     const removeBanner = () => {
-        callback(SUBSCRIPTION_BANNER_CLOSED_KEY, button);
+        callback(SUBSCRIPTION_BANNER_CLOSED_KEY);
         if (banner) {
-
             banner.remove();
         }
     };
@@ -115,79 +113,64 @@ const bindCloseHandler = (button, banner, callback) => {
 };
 
 const bindCloseActions = (banner, callback) => buttons => {
-
     buttons.forEach(button => {
         bindCloseHandler(button, banner, callback);
     });
 };
 
-export const bindClickHandlers = (
+const bindClickHandlers = (
     bannerName: string,
     trackBannerClick: (button: any) => void,
     trackBannerCloseButtons: (button: any) => void
 ) => {
-
-    const closeActions = (bannerCloseKey, button): void => {
+    const closeActions = (bannerCloseKey): void => {
         const closedAt = (lastClosedAtKey: string) =>
-        userPrefs.set(lastClosedAtKey, new Date().toISOString());
-        trackBannerCloseButtons()
+            userPrefs.set(lastClosedAtKey, new Date().toISOString());
+        trackBannerCloseButtons();
         closedAt(bannerCloseKey);
     };
 
     const bannerSelector = selectorName(bannerName);
 
-    const bannerHtml = document.querySelector(
-        bannerSelector('holder')
-    );
+    const bannerHtml = document.querySelector(bannerSelector('holder'));
 
-    const notNowButton = document.querySelector(
-        bannerSelector('cta-dismiss')
-    );
+    const notNowButton = document.querySelector(bannerSelector('cta-dismiss'));
 
-    const ctaButton = document.querySelector(
-        bannerSelector('cta')
-    );
+    const ctaButton = document.querySelector(bannerSelector('cta'));
 
-    const closeButton = document.querySelector(
-        bannerSelector('close-button')
-    );
+    const closeButton = document.querySelector(bannerSelector('close-button'));
 
-    const signInLink = document.querySelector(
-        bannerSelector('sign-in')
-    );
+    const signInLink = document.querySelector(bannerSelector('sign-in'));
 
-    const bindCloseButtons = bindCloseActions(
-        bannerHtml,
-        closeActions
-    );
+    const bindCloseButtons = bindCloseActions(bannerHtml, closeActions);
 
     if (bannerHtml) {
-        bindCloseButtons([
-            closeButton,
-            notNowButton,
-        ]);
+        bindCloseButtons([closeButton, notNowButton]);
         bindClickHandler(ctaButton, trackBannerClick);
         bindClickHandler(signInLink, trackBannerClick);
     }
 };
 
-export const createBannerShow = (
-        tracking: BannerTracking,
-        bannerTemplate: (
-            subscriptionUrl: string,
-            signInUrl: string,
-            userLoggedIn: boolean
-        ) => string,
-        userLoggedIn: boolean,
-    ) => async (): Promise<boolean> => {
-
+const createBannerShow = (
+    tracking: BannerTracking,
+    bannerTemplate: (
+        subscriptionUrl: string,
+        signInUrl: string,
+        userLoggedIn: boolean
+    ) => string,
+    userLoggedIn: boolean
+) => async (): Promise<boolean> => {
     tracking.trackBannerView();
     tracking.gaTracking();
 
     if (document.body) {
         document.body.insertAdjacentHTML(
             'beforeend',
-            bannerTemplate(tracking.subscriptionUrl, tracking.signInUrl, userLoggedIn),
+            bannerTemplate(
+                tracking.subscriptionUrl,
+                tracking.signInUrl,
+                userLoggedIn
+            )
         );
     }
 
@@ -200,10 +183,13 @@ export const createBannerShow = (
     return Promise.resolve(true);
 };
 
-const chooseBanner = (region: ReaderRevenueRegion) => {
-    return region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
-}
-const show = createBannerShow(tracking(currentRegion), chooseBanner(currentRegion), isUserLoggedIn());
+const chooseBanner = (region: ReaderRevenueRegion) =>
+    region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
+const show = createBannerShow(
+    bannerTracking(currentRegion),
+    chooseBanner(currentRegion),
+    isUserLoggedIn()
+);
 
 const canShow: () => Promise<boolean> = async () => {
     const hasAcknowledgedSinceLastRedeploy = await hasAcknowledgedBanner(
@@ -222,8 +208,10 @@ const canShow: () => Promise<boolean> = async () => {
     return can;
 };
 
-export const subscriptionBanner: Banner = {
+const subscriptionBanner: Banner = {
     id: MESSAGE_CODE,
     show,
     canShow,
 };
+
+export { subscriptionBanner, createBannerShow, selectorName };

@@ -1,31 +1,30 @@
 // @flow
 
-import { bannerTemplate as gwBannerTemplate} from './guardian-weekly-banner-template';
-import { selectorName, createBannerShow} from './subscription-banner';
+import { bannerTemplate as gwBannerTemplate } from './guardian-weekly-banner-template';
+import { selectorName, createBannerShow } from './subscription-banner';
 
 jest.mock('ophan/ng', () => null);
 jest.mock('common/modules/commercial/user-features.js', () => jest.fn());
 jest.mock('common/modules/commercial/contributions-utilities.js', () => ({
     getReaderRevenueRegion: jest.fn().mockReturnValue('united-kingdom'),
-}));;
+}));
 jest.mock('common/modules/identity/api.js', () => ({
-    isUserLoggedIn: jest.fn().mockReturnValue(true)
+    isUserLoggedIn: jest.fn().mockReturnValue(true),
 }));
 jest.mock('lib/report-error', () => jest.fn());
 
 const removeAllSpaces = (str: string) => str.replace(/\s/g, '');
 
 describe('Guardian Weekly Banner', () => {
-
     const bannerSelector = selectorName('subscription-banner');
     const mockTracking = {
         signInUrl: 'signInUrl',
         gaTracking: jest.fn(),
         subscriptionUrl: 'subscriptionUrl',
         trackBannerView: jest.fn(),
-        trackBannerClick: jest.fn((button: any) => {}),
-        trackCloseButtons: jest.fn((button: any) => {}),
-    }
+        trackBannerClick: jest.fn(),
+        trackCloseButtons: jest.fn(),
+    };
 
     afterEach(() => {
         if (document.body) {
@@ -37,22 +36,31 @@ describe('Guardian Weekly Banner', () => {
         let appendedBanner = 'Banner Not Appended';
 
         const show = createBannerShow(mockTracking, gwBannerTemplate, false);
-        show()
+        show();
 
-        const banner = gwBannerTemplate(mockTracking.subscriptionUrl, mockTracking.signInUrl, false);
+        const banner = gwBannerTemplate(
+            mockTracking.subscriptionUrl,
+            mockTracking.signInUrl,
+            false
+        );
 
-        if(document.body) {
-            appendedBanner = document.body.innerHTML
+        if (document.body) {
+            appendedBanner = document.body.innerHTML;
         }
 
         // removeAllSpaces is used because toEqual compares all tabs, spaces and new lines
-        expect(removeAllSpaces(banner)).toEqual(removeAllSpaces(appendedBanner));
+        expect(removeAllSpaces(banner)).toEqual(
+            removeAllSpaces(appendedBanner)
+        );
     });
 
     describe('Button Clicks', () => {
         beforeEach(() => {
-
-            const show = createBannerShow(mockTracking, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTracking,
+                gwBannerTemplate,
+                false
+            );
 
             show();
         });
@@ -64,12 +72,12 @@ describe('Guardian Weekly Banner', () => {
                 bannerSelector('close-button')
             );
 
-            if(closeButton) {
+            if (closeButton) {
                 closeButton.click();
             }
 
-            if(document.body) {
-                appendedBanner = document.body.innerHTML
+            if (document.body) {
+                appendedBanner = document.body.innerHTML;
             }
 
             expect(appendedBanner.trim()).toEqual('');
@@ -82,12 +90,12 @@ describe('Guardian Weekly Banner', () => {
                 bannerSelector('cta-dismiss')
             );
 
-            if(notNowButton) {
+            if (notNowButton) {
                 notNowButton.click();
             }
 
-            if(document.body) {
-                appendedBanner = document.body.innerHTML
+            if (document.body) {
+                appendedBanner = document.body.innerHTML;
             }
 
             expect(appendedBanner.trim()).toEqual('');
@@ -96,15 +104,15 @@ describe('Guardian Weekly Banner', () => {
         it('Should have "subscriptionUrl" as the cta href', () => {
             let ctaButtonHref;
 
-            const ctaButton = document.querySelector(
-                bannerSelector('cta')
-            );
+            const ctaButton = document.querySelector(bannerSelector('cta'));
 
-            if(ctaButton instanceof HTMLAnchorElement) {
+            if (ctaButton instanceof HTMLAnchorElement) {
                 ctaButtonHref = ctaButton.href;
             }
 
-            expect(ctaButtonHref).toEqual(`http://test-url.com/${mockTracking.subscriptionUrl}`);
+            expect(ctaButtonHref).toEqual(
+                `http://test-url.com/${mockTracking.subscriptionUrl}`
+            );
         });
 
         it('Should have "signInUrl" as the signInLink href', () => {
@@ -114,27 +122,35 @@ describe('Guardian Weekly Banner', () => {
                 bannerSelector('sign-in')
             );
 
-            if(signInLink instanceof HTMLAnchorElement) {
+            if (signInLink instanceof HTMLAnchorElement) {
                 signInLinkHref = signInLink.href;
             }
 
-            expect(signInLinkHref).toEqual(`http://test-url.com/${mockTracking.signInUrl}`);
+            expect(signInLinkHref).toEqual(
+                `http://test-url.com/${mockTracking.signInUrl}`
+            );
         });
     });
 
     describe('Banner Tracking', () => {
-
         it('Should call trackCloseButtons when close button is clicked', () => {
-            const mockTrackingSUT = { ...mockTracking, trackCloseButtons: jest.fn((button: any) => {}) };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackCloseButtons: jest.fn(),
+            };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
             const closeButton: ?HTMLElement = document.querySelector(
                 bannerSelector('close-button')
             );
 
-            if(closeButton) {
+            if (closeButton) {
                 closeButton.click();
             }
 
@@ -143,16 +159,23 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('should call trackCloseButtons when "not now" button is clicked', () => {
-            const mockTrackingSUT = { ...mockTracking, trackCloseButtons: jest.fn((button: any) => {}) };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackCloseButtons: jest.fn(),
+            };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
             const notNowButton: ?HTMLElement = document.querySelector(
                 bannerSelector('cta-dismiss')
             );
 
-            if(notNowButton) {
+            if (notNowButton) {
                 notNowButton.click();
             }
 
@@ -161,9 +184,16 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('should call trackBannerView for ophan tracking', () => {
-            const mockTrackingSUT = { ...mockTracking, trackBannerView: jest.fn() };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackBannerView: jest.fn(),
+            };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
             expect(mockTrackingSUT.trackBannerView).toHaveBeenCalled();
@@ -173,7 +203,11 @@ describe('Guardian Weekly Banner', () => {
         it('should call gaTracking for google analytics tracking', () => {
             const mockTrackingSUT = { ...mockTracking, gaTracking: jest.fn() };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
             expect(mockTrackingSUT.gaTracking).toHaveBeenCalled();
@@ -181,16 +215,21 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('should call trackBannerClick when cta ', () => {
-            const mockTrackingSUT = { ...mockTracking, trackBannerClick: jest.fn((button: any) => {}) };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackBannerClick: jest.fn(),
+            };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
-            const ctaButton = document.querySelector(
-                bannerSelector('cta')
-            );
+            const ctaButton = document.querySelector(bannerSelector('cta'));
 
-            if(ctaButton) {
+            if (ctaButton) {
                 ctaButton.click();
             }
 
@@ -199,16 +238,23 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('should call trackBannerClick when sign-in', () => {
-            const mockTrackingSUT = { ...mockTracking, trackBannerClick: jest.fn((button: any) => {}) };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackBannerClick: jest.fn(),
+            };
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, false);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                false
+            );
             show();
 
             const signInLink = document.querySelector(
                 bannerSelector('sign-in')
             );
 
-            if(signInLink) {
+            if (signInLink) {
                 signInLink.click();
             }
 
@@ -217,24 +263,31 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('should hide sign-in link if user is signed in', () => {
-            const mockTrackingSUT = { ...mockTracking, trackBannerClick: jest.fn((button: any) => {}) };
+            const mockTrackingSUT = {
+                ...mockTracking,
+                trackBannerClick: jest.fn(),
+            };
             const isUserSignedIn = true;
             let hasSignedInClass: ?boolean = null;
 
-            const show = createBannerShow(mockTrackingSUT, gwBannerTemplate, isUserSignedIn);
+            const show = createBannerShow(
+                mockTrackingSUT,
+                gwBannerTemplate,
+                isUserSignedIn
+            );
             show();
 
             const signInContainer = document.querySelector(
                 '.site-message--subscription-banner__sign-in'
             );
 
-            if(signInContainer) {
-                hasSignedInClass = signInContainer.classList.contains('site-message--subscription-banner__sign-in--already-signed-in')
+            if (signInContainer) {
+                hasSignedInClass = signInContainer.classList.contains(
+                    'site-message--subscription-banner__sign-in--already-signed-in'
+                );
             }
 
             expect(hasSignedInClass).toBe(true);
         });
     });
-
-
 });
