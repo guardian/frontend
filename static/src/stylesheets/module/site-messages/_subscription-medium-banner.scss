@@ -381,13 +381,11 @@
 /*********************** gw Banner *********************/
 .site-message--gw-banner {
     &.site-message--subscription-banner {
-        // background-color: #333333;
-        background-color: #3E474A;
+        background-color: #3e474a;
         padding: 30px 20px;
     }
 
     .site-message--subscription-banner__description {
-        // width: 48%;
 
         @include mq($from: wide) {
             width: 48%;
@@ -419,7 +417,7 @@
     }
 
     .site-message--subscription-banner__close-button svg {
-        border: 0.0625rem solid $brightness-97;
+        border: 1px solid $brightness-97;
     }
 
     .site-message--subscription-banner__close-button svg path {
