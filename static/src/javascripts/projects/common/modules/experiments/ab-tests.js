@@ -12,7 +12,6 @@ import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test'
 import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
-import { contributionsEuropeMoment } from 'common/modules/experiments/tests/contribs-banner-europe-moment';
 import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -36,6 +35,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsEuropeMoment,
     articlesViewedBanner,
 ];
