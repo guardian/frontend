@@ -46,14 +46,6 @@ module.exports = {
             'bootstraps',
             'youtube-embed.js'
         ),
-        // 'dotcom-rendering-commercial-test': path.join(
-        //     __dirname,
-        //     'static',
-        //     'src',
-        //     'javascripts',
-        //     'bootstraps',
-        //     'dotcom-rendering-commercial.js'
-        // ),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
