@@ -184,13 +184,3 @@ const bootCommercial = (): Promise<void> => {
 initCheckMediator();
 
 bootCommercial();
-
-console.log('**** DCR COMMERCIAL JS ****');
-
-// reportError(
-//     new Error('FAIL!'),
-//     {
-//         feature: 'commercial',
-//     },
-//     false
-// );

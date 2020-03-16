@@ -23,7 +23,7 @@ module.exports = webpackMerge.smart(config, {
         new BundleAnalyzerPlugin({
             reportFilename: './dcr-bundle-analyzer-report.html',
             analyzerMode: 'static',
-            openAnalyzer: true,
+            openAnalyzer: false,
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
