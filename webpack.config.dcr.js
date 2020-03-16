@@ -18,6 +18,9 @@ config.entry = {
 };
 
 module.exports = webpackMerge.smart(config, {
+    output: {
+        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+    },
     resolve: {
         alias: {
             'lib/report-error': 'lib/dotcom-rendering/report-error'

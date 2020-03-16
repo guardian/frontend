@@ -23,12 +23,12 @@ module.exports = webpackMerge.smart(config, {
             minSizeReduce: 1.6,
         }),
         new Visualizer({
-            filename: './webpack-dcr-commercial-stats.html',
+            filename: './webpack-stats.html',
         }),
         new BundleAnalyzerPlugin({
             reportFilename: './bundle-analyzer-report.html',
             analyzerMode: 'static',
-            openAnalyzer: false,
+            openAnalyzer: true,
         }),
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify('production'),
