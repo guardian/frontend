@@ -75,12 +75,9 @@ const hasAcknowledgedBanner = region =>
 const threeOrMorePageViews = (currentPageViews: number) =>
     currentPageViews >= 3;
 
-const pageIsIdentity = (): boolean => {
-    const isIdentityPage =
-        config.get('page.contentType') === 'Identity' ||
-        config.get('page.section') === 'identity';
-    return isIdentityPage;
-};
+const pageIsIdentity = (): boolean =>
+    config.get('page.contentType') === 'Identity' ||
+    config.get('page.section') === 'identity';
 
 const bindClickHandler = (button, callback) => {
     if (button) {
@@ -153,11 +150,7 @@ const bindClickHandlers = (
 
 const createBannerShow = (
     tracking: BannerTracking,
-    bannerTemplate: (
-        subscriptionUrl: string,
-        signInUrl: string,
-        userLoggedIn: boolean
-    ) => string,
+    bannerTemplate: (string, string, boolean) => string,
     userLoggedIn: boolean
 ) => async (): Promise<boolean> => {
     tracking.trackBannerView();
@@ -187,7 +180,7 @@ const chooseBanner = (region: ReaderRevenueRegion) =>
     region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
 const show = createBannerShow(
     bannerTracking(currentRegion),
-    chooseBanner(currentRegion),
+    chooseBanner('australia'),
     isUserLoggedIn()
 );
 
