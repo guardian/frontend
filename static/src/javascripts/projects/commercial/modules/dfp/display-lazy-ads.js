@@ -3,7 +3,6 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const advertsToInstantlyLoad = ['dfp-ad--merchandising-high', 'dfp-ad--im'];
 
