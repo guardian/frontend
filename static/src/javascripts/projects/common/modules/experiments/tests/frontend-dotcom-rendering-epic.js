@@ -63,7 +63,8 @@ const frontendDotcomRenderingTest = {
 
     audienceCriteria: 'All',
 
-    // Settings audience to 100% but relying on canRun function to apply filtering/exclusions
+    // Setting audience to 100% but relying on canRun function to apply relevant
+    // exclusions
     audience: 1,
     audienceOffset: 0,
 
@@ -73,7 +74,7 @@ const frontendDotcomRenderingTest = {
 
     variants: [
         {
-            id: 'frontend', // vs 'dcr' on DCR
+            id: 'frontend',
             products,
             // eslint-disable-next-line import/no-shadow
             test: (html: string, variant: EpicVariant, test: EpicABTest) => {
