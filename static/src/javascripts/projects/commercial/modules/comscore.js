@@ -1,6 +1,7 @@
 // @flow strict
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 type comscoreGlobals = { c1: string, c2: string, comscorekw?: string };
 
@@ -19,7 +20,7 @@ const getGlobals = (keywords: string): comscoreGlobals => {
 };
 
 export const init = (): Promise<void> => {
-    if (config.get('switches.comscore', false)) {
+    if (commercialFeatures.comscore) {
         // eslint-disable-next-line no-underscore-dangle
         window._comscore = window._comscore || [];
 

@@ -1,29 +1,32 @@
 // @flow
-import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
 jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 
+jest.mock('common/modules/commercial/commercial-features', () => ({
+    commercialFeatures: {
+        comscore: true,
+    },
+}));
+
 const getComscoreScripTags = (): NodeList<HTMLElement> =>
     document.querySelectorAll('script#comscore');
 
 describe('comscore init', () => {
-    beforeEach(() => {
-        config.set('switches.comscore', true);
-    });
-
-    it('should do nothing if the comscore switch is off', () => {
-        config.set('switches.comscore', false);
+    it('should do nothing if the comscore is disabled in commercial features', () => {
+        commercialFeatures.comscore = false;
         init();
 
         const comscoreTags = getComscoreScripTags();
         expect(comscoreTags.length).toBe(0);
     });
 
-    it('should call loadScript with the expected parameters', () => {
+    it('should call loadScript with the expected parameters if enabled in commercial features', () => {
+        commercialFeatures.comscore = true;
         init();
 
         expect(loadScript).toBeCalledWith(_.comscoreSrc, {
