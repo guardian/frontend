@@ -431,7 +431,7 @@ object EmailAddons {
     ObserverPictureArchive,
     GunsAndLiesInAmerica,
     TheSnap,
-    AndrewSparrowsElectionBriefing
+    AndrewSparrowsElectionBriefing,
     CoronavirusTheWeekExplained
     )
   private val frontEmails = Seq(
