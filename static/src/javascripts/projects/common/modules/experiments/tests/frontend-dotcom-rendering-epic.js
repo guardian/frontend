@@ -14,6 +14,12 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 
+import {
+    getLastOneOffContributionDate,
+    isRecurringContributor,
+    shouldNotBeShownSupportMessaging,
+} from 'common/modules/commercial/user-features';
+
 const campaignId = 'frontend_dotcom_rendering_epic';
 const geolocation = geolocationGetSync();
 
@@ -106,12 +112,12 @@ const frontendDotcomRenderingTest = {
                     isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
                     tags: buildKeywordTags(page),
-                    // These are hardcoded as to no stop the Contributions service from sending the Epic.
-                    // The targeting logic around this test already ensures this data is observed and respected.
-                    // TODO: make these dynamic - this is a temporary fix because it's safer to pass these than the actual values!
-                    showSupportMessaging: true,
-                    isRecurringContributor: false,
-                    lastOneOffContributionDate: 0,
+                    // This test is already subjected to the 3 checks below, but
+                    // we're passing these properties to the Contributions
+                    // service for consistency with DCR.
+                    showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+                    isRecurringContributor: isRecurringContributor(),
+                    lastOneOffContributionDate: getLastOneOffContributionDate(),
                     mvtId: getMvtValue(),
                     countryCode,
                 };
