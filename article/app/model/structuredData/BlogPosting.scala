@@ -14,9 +14,14 @@ object BlogPosting {
 
   def apply(blog: Article, block: BodyBlock)(implicit request: RequestHeader): JsValue = {
 
-    def blockDate(block: BodyBlock) = block.publishedDate match {
+    def blockFirstPublishedDate(block: BodyBlock) = block.firstPublishedDate match {
       case Some(date) => zulu(date)
       case None => zulu(blog.trail.webPublicationDate)
+    }
+    
+    def blockLastModifiedDate(block: BodyBlock) = block.lastModifiedDate match {
+      case Some(date) => zulu(date)
+      case None => zulu(blog.content.fields.lastModified)
     }
 
     def blockBody(block: BodyBlock): String = {
@@ -49,7 +54,10 @@ object BlogPosting {
       "author" -> blockAuthor(blog, block),
       "publisher" -> Json.obj("@id" -> "https://www.theguardian.com#publisher"),
       "url" -> LinkTo{blog.metadata.url+"?page=with:block-"+block.id+"#block-"+block.id},
-      "datePublished" -> blockDate(block),
+      /* Schema.org -- Date of first broadcast/publication */
+      "datePublished" -> blockFirstPublishedDate(block),
+      /*  Schema.org -- The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed */
+      "dateModified" -> blockLastModifiedDate(block), 
       "articleBody" -> blockBody(block)
     )
 
