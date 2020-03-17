@@ -12,7 +12,6 @@ import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test'
 import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
-import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -23,7 +22,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     appnexusUSAdapter,
     pangaeaAdapterTest,
     signInGate,
-    commercialGptLazyLoad,
 ];
 
 export const priorityEpicTest: EpicABTest = remoteRenderEpic;
