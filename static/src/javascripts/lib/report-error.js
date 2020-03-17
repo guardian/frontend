@@ -25,7 +25,6 @@ const reportError: ErrorLogger = (
     tags: Object,
     shouldThrow?: boolean = true
 ): void => {
-    console.log('***** OLD reportError', err, tags, shouldThrow);
     raven.captureException(err, { tags });
     if (shouldThrow) {
         // Flag to ensure it is not reported to Sentry again via global handlers
