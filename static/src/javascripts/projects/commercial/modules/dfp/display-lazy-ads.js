@@ -21,12 +21,28 @@ const instantLoad = (): void => {
 };
 
 const displayLazyAds = (): void => {
-    const useGptLazyLoad = isInVariantSynchronous(
+    const renderAtHalfViewport = isInVariantSynchronous(
         commercialGptLazyLoad,
-        'variant'
+        'halfViewport'
     );
+    const renderAtQuarterViewport = isInVariantSynchronous(
+        commercialGptLazyLoad,
+        'quarterViewport'
+    );
+    const useGptLazyLoad = renderAtHalfViewport || renderAtQuarterViewport;
+
+    window.addEventListener('scroll', () => {
+        console.log('scroll --->', window.pageYOffset);
+    });
+
+    console.log('useGptLazyLoad --->', useGptLazyLoad);
 
     if (useGptLazyLoad) {
+        const overrides = {
+            fetchMarginPercent: renderAtHalfViewport ? 100 : 50,
+            renderMarginPercent: renderAtHalfViewport ? 50 : 25,
+        };
+        console.log('overrides --->', overrides);
         window.googletag.pubads().enableLazyLoad();
     }
 

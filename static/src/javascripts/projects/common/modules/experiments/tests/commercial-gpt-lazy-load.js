@@ -21,7 +21,11 @@ export const commercialGptLazyLoad: ABTest = {
             test: (): void => {},
         },
         {
-            id: 'variant',
+            id: 'halfViewport',
+            test: (): void => {},
+        },
+        {
+            id: 'quarterViewport',
             test: (): void => {},
         },
     ],

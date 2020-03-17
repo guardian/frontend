@@ -43,6 +43,7 @@ export const loadAdvert = (advert: Advert): void => {
             ]);
         })
         .then(() => {
+            console.log('*** display ***', advert.id);
             window.googletag.display(advert.id);
         });
 };

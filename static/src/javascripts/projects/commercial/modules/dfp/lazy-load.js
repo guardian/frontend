@@ -47,14 +47,13 @@ const getObserver = once(() =>
 );
 
 export const enableLazyLoad = (advert: Advert): void => {
-    const useGptLazyLoad = isInVariantSynchronous(
-        commercialGptLazyLoad,
-        'variant'
-    );
+    const useGptLazyLoad =
+        isInVariantSynchronous(commercialGptLazyLoad, 'halfViewport') ||
+        isInVariantSynchronous(commercialGptLazyLoad, 'quarterViewport');
 
-    if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
-        getObserver().then(observer => observer.observe(advert.node));
-    } else {
-        displayAd(advert.id);
-    }
+    // if (dfpEnv.lazyLoadObserve && !useGptLazyLoad) {
+    getObserver().then(observer => observer.observe(advert.node));
+    // } else {
+    // displayAd(advert.id);
+    // }
 };
