@@ -211,8 +211,7 @@ case object AndrewSparrowsElectionBriefing extends ArticleEmailMetadata {
 case object CoronavirusTheWeekExplained extends ArticleEmailMetadata {
   val name = "Coronavirus: the week explained"
   override val banner = Some("coronavirus.png")
-   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/coronavirus-the-week-explained
-")
+   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/coronavirus-the-week-explained")
 }
 
 
