@@ -62,7 +62,9 @@ const frontendDotcomRenderingTest = {
     idealOutcome: 'No difference between control and variant',
 
     audienceCriteria: 'All',
-    audience: 1, // TBC
+
+    // Settings audience to 100% but relying on canRun function to apply filtering/exclusions
+    audience: 1,
     audienceOffset: 0,
 
     geolocation,
