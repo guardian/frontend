@@ -9,7 +9,6 @@ import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-a
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
-// import { remoteRenderEpic } from 'common/modules/experiments/tests/remote-render-epic';
 import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/frontend-dotcom-rendering-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
@@ -28,7 +27,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialGptLazyLoad,
 ];
 
-// export const priorityEpicTest: EpicABTest = remoteRenderEpic;
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
