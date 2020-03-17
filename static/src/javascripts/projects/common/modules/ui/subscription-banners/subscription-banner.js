@@ -31,9 +31,10 @@ const subscriptionBannerSwitchIsOn: boolean = config.get(
 );
 const pageviews: number = local.get('gu.alreadyVisited');
 
-const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
-    geolocationGetSync()
-);
+// const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
+//     geolocationGetSync()
+// );
+const currentRegion = 'australia';
 
 const hasAcknowledged = bannerRedeploymentDate => {
     const redeploymentDate = new Date(Number(bannerRedeploymentDate));
@@ -180,7 +181,7 @@ const chooseBanner = (region: ReaderRevenueRegion) =>
     region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
 const show = createBannerShow(
     bannerTracking(currentRegion),
-    chooseBanner('australia'),
+    chooseBanner(currentRegion),
     isUserLoggedIn()
 );
 
