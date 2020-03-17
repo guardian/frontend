@@ -113,8 +113,7 @@ const initialise = (window: {
 
     const userSync = config.get('switches.prebidUserSync', false)
         ? {
-              // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-              syncsPerBidder: 999, // temporarily until above bug fixed
+              syncsPerBidder: 0, // allow all syncs
               filterSettings: {
                   all: {
                       bidders: '*', // allow all bidders to sync by iframe or image beacons
