@@ -35,6 +35,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     compareVariantDecision,
     getViewLog,
+    getWeeklyArticleHistory,
 } from '@guardian/slot-machine-client';
 import {
     getLastOneOffContributionDate,
@@ -114,6 +115,7 @@ export const getEpicTestToRun = memoize(
                                 lastOneOffContributionDate: getLastOneOffContributionDate(),
                                 mvtId: getMvtValue(),
                                 epicViewLog: getViewLog(),
+                                weeklyArticleHistory: getWeeklyArticleHistory(),
                             },
                             expectedTest: result ? result.id : '',
                             expectedVariant: result

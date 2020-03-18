@@ -12,8 +12,6 @@ import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test'
 import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/frontend-dotcom-rendering-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
-import { contributionsEuropeMoment } from 'common/modules/experiments/tests/contribs-banner-europe-moment';
-import { commercialGptLazyLoad } from 'common/modules/experiments/tests/commercial-gpt-lazy-load';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -24,7 +22,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     appnexusUSAdapter,
     pangaeaAdapterTest,
     signInGate,
-    commercialGptLazyLoad,
 ];
 
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
@@ -36,6 +33,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsEuropeMoment,
     articlesViewedBanner,
 ];
