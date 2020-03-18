@@ -1,8 +1,6 @@
 // @flow
-import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
-import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+
 import { supportSubscribeDigitalURL } from 'common/modules/commercial/support-utilities';
-import config from 'lib/config';
 
 const supportUrl = `${supportSubscribeDigitalURL()}?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22shady_pie_open_2019%22%2C%22componentId%22%3A%22shady_pie_open_2019%22%7D&INTCMP=shady_pie_open_2019`;
 
@@ -25,35 +23,7 @@ const askHtml = `
 </div>
 `;
 
-export const adblockTest: ABTest = {
-    id: 'AdblockAsk',
-    start: '2019-02-20',
-    expiry: '2021-02-16',
-    author: 'Tom Forbes',
-    description:
-        'Places a contributions ask underneath the right-hand ad slot on articles.',
-    audience: 1,
-    audienceOffset: 0,
-    successMeasure: '',
-    audienceCriteria: '',
-    showForSensitive: true,
-    canRun() {
-        return (
-            !shouldHideSupportMessaging() &&
-            !pageShouldHideReaderRevenue() &&
-            !config.get('page.hasShowcaseMainElement')
-        );
-    },
-
-    variants: [
-        {
-            id: 'control',
-            test: (): void => {
-                const slot = document.querySelector('.js-aside-slot-container');
-                if (slot) {
-                    slot.innerHTML += askHtml;
-                }
-            },
-        },
-    ],
-};
+const slot = document.querySelector('.js-aside-slot-container');
+if (slot) {
+    slot.innerHTML += askHtml;
+}
