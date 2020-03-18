@@ -128,16 +128,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-gpt-lazy-load",
-    "This test enables GPT enableLazyLoad as an alternative to our custom build lazy load solution",
-    owners = Seq(Owner.withGithub("GHaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 3, 23),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-frontend-dotcom-rendering-epic",
     "A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance",
     owners = Seq(Owner.withGithub("andre1050")),
