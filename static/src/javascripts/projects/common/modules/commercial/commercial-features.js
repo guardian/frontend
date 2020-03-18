@@ -21,6 +21,7 @@ class CommercialFeatures {
     paidforBand: boolean;
     asynchronous: boolean;
     adFree: boolean;
+    comscore: boolean;
 
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
@@ -128,6 +129,11 @@ class CommercialFeatures {
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand = config.get('page.isPaidContent') && !supportsSticky;
+
+        this.comscore =
+            config.get('switches.comscore', false) &&
+            !isIdentityPage &&
+            !isSecureContact;
     }
 }
 
