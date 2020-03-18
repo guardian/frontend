@@ -54,14 +54,14 @@
 
     @include mq($from: tablet) {
         margin-bottom: 10px;
-        width: 60%;
+        width: 61%;
         font-size: 30px;
         line-height: 32px;
     }
 
     @include mq($from: desktop) {
-        width: 48%;
-        margin-right: 52%;
+        width: 51%;
+        margin-right: 49%;
         font-size: 34px;
         line-height: 36px;
     }
@@ -129,6 +129,7 @@
     font-size: 12px;
     font-weight: bold;
     margin: 30px 0 0;
+
 
     @include mq($from: tablet) {
         display: flex;
@@ -264,7 +265,7 @@
 
 
     @include mq($from: desktop) {
-        width: 52%;
+        width: 50%;
     }
 
     @include mq($from: wide) {
@@ -282,17 +283,18 @@
         }
 
         @include mq($from: tablet) {
-            margin-right: 0;
+            max-width: 330px;
+            margin-right: 90px;
         }
 
         @include mq($from: desktop) {
-            max-width: 420px;
+            max-width: 380px;
             margin-right: 90px;
         }
 
         // custom breakpoint
         @include mq($from: leftCol) {
-            max-width: 500px;
+            max-width: 450px;
         }
 
         @media (min-width: 1260px) {

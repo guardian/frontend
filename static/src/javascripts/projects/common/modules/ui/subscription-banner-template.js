@@ -16,13 +16,12 @@ const subscriptionBannerTemplate = (
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            A beautiful way to read it <br /> A powerful way to fund it
+            Open to all, supported by you
         </h3>
 
         <div class="site-message--subscription-banner__description">
-            <p>Support The Guardian and enjoy The Guardian Daily,
-            Premium access to The Guardian Live app and ad-free
-            reading on theguardian.com</p>
+            <p>Support open, independent journalism and enjoy two
+             innovative apps and ad-free reading on theguardian.com</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">
