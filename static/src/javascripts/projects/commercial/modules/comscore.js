@@ -18,12 +18,13 @@ const comscoreC2 = '6035250';
 let initialised = false;
 
 const getGlobals = (
-    consentState: boolean,
+    consentState: boolean | null,
     keywords: string
 ): comscoreGlobals => {
     const globals: comscoreGlobals = {
         c1: comscoreC1,
         c2: comscoreC2,
+        // flowlint-next-line sketchy-null-bool:off
         cs_ucfr: consentState ? '1' : '0',
     };
 
@@ -34,23 +35,25 @@ const getGlobals = (
     return globals;
 };
 
+const initOnConsent = (state: boolean | null) => {
+    if (!initialised) {
+        // eslint-disable-next-line no-underscore-dangle
+        window._comscore = window._comscore || [];
+
+        // eslint-disable-next-line no-underscore-dangle
+        window._comscore.push(
+            getGlobals(state, config.get('page.keywords', ''))
+        );
+
+        loadScript(comscoreSrc, { id: 'comscore', async: true });
+
+        initialised = true;
+    }
+};
+
 export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
-        onGuConsentNotification('performance', state => {
-            if (!initialised) {
-                // eslint-disable-next-line no-underscore-dangle
-                window._comscore = window._comscore || [];
-
-                // eslint-disable-next-line no-underscore-dangle
-                window._comscore.push(
-                    getGlobals(state, config.get('page.keywords', ''))
-                );
-
-                loadScript(comscoreSrc, { id: 'comscore', async: true });
-
-                initialised = true;
-            }
-        });
+        onGuConsentNotification('performance', initOnConsent);
     }
 
     return Promise.resolve();
@@ -58,6 +61,7 @@ export const init = (): Promise<void> => {
 
 export const _ = {
     getGlobals,
+    initOnConsent,
     comscoreSrc,
     comscoreC1,
     comscoreC2,
