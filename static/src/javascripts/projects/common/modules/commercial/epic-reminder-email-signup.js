@@ -102,7 +102,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
                 fields.formWrapper.style.display = 'none';
                 fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
-                    'Thank you! Your support is so valuable.';
+                    'Thank you! Your reminder is set.';
                 break;
             case 'failure':
                 fields.submitButton.innerHTML = 'Something went wrong';
@@ -165,10 +165,25 @@ const epicReminderEmailSignup = (fields: Fields) => {
     // can be used either in the case that a user clicks or a user
     // hits enter on their keyboard
     const sendPromptClickEvent = () => {
+        const ctaForAnalytics = fields.reminderPrompt
+            .getAttribute('data-cta-copy')
+            .toLowerCase()
+            .replace(/\s/g, '-');
+
         submitClickEvent({
             component: {
                 componentType: 'ACQUISITIONS_OTHER',
                 id: 'precontribution-reminder-prompt-clicked',
+            },
+        });
+
+        // For second round of testing, the events will be either (tested):
+        // precontribution-reminder-prompt-copy-remind-me-in-july or
+        // precontribution-reminder-prompt-copy-support-us-later
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: `precontribution-reminder-prompt-copy-${ctaForAnalytics}`,
             },
         });
     };

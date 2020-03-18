@@ -69,7 +69,7 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
                 copy,
             },
             {
-                id: 'withReminder',
+                id: 'support-us',
                 buttonTemplate: epicButtonsTemplate,
                 products: [],
                 copy,
@@ -80,7 +80,7 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
                 },
             },
             {
-                id: 'withReminder',
+                id: 'remind-me',
                 buttonTemplate: epicButtonsTemplate,
                 products: [],
                 copy,
