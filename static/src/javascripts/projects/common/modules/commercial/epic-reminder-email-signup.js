@@ -165,10 +165,12 @@ const epicReminderEmailSignup = (fields: Fields) => {
     // can be used either in the case that a user clicks or a user
     // hits enter on their keyboard
     const sendPromptClickEvent = () => {
-        const ctaForAnalytics = fields.reminderPrompt
-            .getAttribute('data-cta-copy')
-            .toLowerCase()
-            .replace(/\s/g, '-');
+        const ctaAttribute = fields.reminderPrompt.getAttribute(
+            'data-cta-copy'
+        );
+        const ctaForAnalytics = ctaAttribute
+            ? ctaAttribute.toLowerCase().replace(/\s/g, '-')
+            : '';
 
         submitClickEvent({
             component: {
