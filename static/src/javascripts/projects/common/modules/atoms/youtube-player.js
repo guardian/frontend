@@ -201,7 +201,7 @@ export const initYoutubePlayer = (
 
         const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
-        const onAdStart = () => {
+        const onAdStart = (): void => {
             window.ga(
                 `${gaTracker}.send`,
                 'event',
@@ -209,7 +209,7 @@ export const initYoutubePlayer = (
             );
         };
 
-        const onAdEnd = () => {
+        const onAdEnd = (): void => {
             window.ga(
                 `${gaTracker}.send`,
                 'event',

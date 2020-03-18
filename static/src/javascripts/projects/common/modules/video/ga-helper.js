@@ -45,7 +45,20 @@ const getGoogleAnalyticsEventAction = (mediaEvent: MediaEvent) => {
 
 type PfpEventType = 'adStart' | 'adEnd';
 
-const buildPfpEvent = (pfpEventType: PfpEventType, videoId: string) => {
+type PfpEventParams = {
+    eventCategory: string,
+    eventAction: string,
+    eventLabel: string,
+    dimension19: string,
+    dimension20: string,
+    metric17?: number,
+    metric18?: number,
+};
+
+const buildPfpEvent = (
+    pfpEventType: PfpEventType,
+    videoId: string
+): PfpEventParams => {
     const pfpEventMetric = pfpEventType === 'adStart' ? 17 : 18;
     return {
         eventCategory: 'media',
