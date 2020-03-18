@@ -10,12 +10,17 @@ import {
     emitInsertEvent,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
-import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 
-const campaignId = 'remote_epic_test_round_two';
+import {
+    getLastOneOffContributionDate,
+    isRecurringContributor,
+    shouldNotBeShownSupportMessaging,
+} from 'common/modules/commercial/user-features';
+
+const campaignId = 'frontend_dotcom_rendering_epic';
 const geolocation = geolocationGetSync();
 
 const buildKeywordTags = page => {
@@ -42,37 +47,40 @@ const decodeJson = response => response.json();
 
 const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 
-const remoteRenderTest = {
-    id: 'RemoteRenderEpicRoundTwo',
+const canRun = (): boolean =>
+    geolocation !== 'US' &&
+    config.get('page').dcrCouldRender &&
+    config.get('tests').dotcomRenderingControl === 'control';
+
+const frontendDotcomRenderingTest = {
+    id: 'FrontendDotcomRenderingEpic',
     campaignId,
 
     highPriority: true,
 
-    start: '2020-01-01',
-    expiry: '2020-04-01',
+    start: '2020-03-13',
+    expiry: '2020-05-13',
 
-    author: 'Nicolas Long',
+    author: 'Andre Silva',
     description:
-        'A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date',
+        'A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance.',
     successMeasure: 'Conversion rate',
     idealOutcome: 'No difference between control and variant',
 
     audienceCriteria: 'All',
-    audience: 0.1,
+
+    // Setting audience to 100% but relying on canRun function to apply relevant
+    // exclusions
+    audience: 1,
     audienceOffset: 0,
 
     geolocation,
 
-    canRun: () => geolocation !== 'US',
+    canRun,
 
     variants: [
         {
-            id: 'control',
-            buttonTemplate: epicButtonsTemplate,
-            products,
-        },
-        {
-            id: 'remote',
+            id: 'frontend',
             products,
             // eslint-disable-next-line import/no-shadow
             test: (html: string, variant: EpicVariant, test: EpicABTest) => {
@@ -104,12 +112,12 @@ const remoteRenderTest = {
                     isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
                     tags: buildKeywordTags(page),
-                    // These are hardcoded as to no stop the Contributions service from sending the Epic.
-                    // The targeting logic around this test already ensures this data is observed and respected.
-                    // TODO: make these dynamic - this is a temporary fix because it's safer to pass these than the actual values!
-                    showSupportMessaging: true,
-                    isRecurringContributor: false,
-                    lastOneOffContributionDate: 0,
+                    // This test is already subjected to the 3 checks below, but
+                    // we're passing these properties to the Contributions
+                    // service for consistency with DCR.
+                    showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+                    isRecurringContributor: isRecurringContributor(),
+                    lastOneOffContributionDate: getLastOneOffContributionDate(),
                     mvtId: getMvtValue(),
                     countryCode,
                 };
@@ -202,4 +210,6 @@ const remoteRenderTest = {
     ],
 };
 
-export const remoteRenderEpic: EpicABTest = makeEpicABTest(remoteRenderTest);
+export const frontendDotcomRenderingEpic: EpicABTest = makeEpicABTest(
+    frontendDotcomRenderingTest
+);
