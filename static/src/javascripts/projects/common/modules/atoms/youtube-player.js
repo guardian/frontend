@@ -8,6 +8,7 @@ import { getPageTargeting } from 'common/modules/commercial/build-page-targeting
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
+import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
@@ -125,7 +126,9 @@ const setupPlayer = (
     channelId?: string,
     onReady,
     onStateChange,
-    onError
+    onError,
+    onAdStart,
+    onAdEnd
 ) => {
     const disableRelatedVideos = false;
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
@@ -155,6 +158,8 @@ const setupPlayer = (
             onReady,
             onStateChange,
             onError,
+            onAdStart,
+            onAdEnd,
         },
         embedConfig: {
             relatedChannels,
@@ -194,13 +199,33 @@ export const initYoutubePlayer = (
             console.dir(event);
         };
 
+        const gaTracker = config.get('googleAnalytics.trackers.editorial');
+
+        const onAdStart = () => {
+            window.ga(
+                `${gaTracker}.send`,
+                'event',
+                buildPfpEvent('adStart', videoId)
+            );
+        };
+
+        const onAdEnd = () => {
+            window.ga(
+                `${gaTracker}.send`,
+                'event',
+                buildPfpEvent('adEnd', videoId)
+            );
+        };
+
         return setupPlayer(
             el,
             videoId,
             channelId,
             onPlayerReady,
             onPlayerStateChange,
-            onPlayerError
+            onPlayerError,
+            onAdStart,
+            onAdEnd
         );
     });
 };
