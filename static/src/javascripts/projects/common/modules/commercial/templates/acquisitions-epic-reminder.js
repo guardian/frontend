@@ -2,6 +2,7 @@
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 
 export type ReminderFields = {
+    reminderCTA: string,
     reminderDate: string,
     reminderDateAsString: string,
 };
@@ -15,7 +16,7 @@ export const acquisitionsEpicReminderTemplate = (
         <label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div class="epic-reminder__prompt">
                 <span tabindex="0" class="epic-reminder__prompt-text" role="checkbox">
-                    Not a good time? Remind me later
+                    ${reminderFields.reminderCTA}
                 </span>
             </div>
         </label>

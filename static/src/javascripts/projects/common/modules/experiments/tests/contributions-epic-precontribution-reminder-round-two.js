@@ -38,10 +38,10 @@ const copy = isUS
     ? buildEpicCopy(usCopy, false, geolocation)
     : buildEpicCopy(controlCopy, false, geolocation);
 
-export const contributionsEpicPrecontributionReminderRoundOne: EpicABTest = makeEpicABTest(
+export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = makeEpicABTest(
     {
-        id: 'ContributionsEpicPrecontributionReminderRoundOne',
-        campaignId: 'epic_precontribution_reminder_round_one',
+        id: 'ContributionsEpicPrecontributionReminderRoundTwo',
+        campaignId: 'epic_precontribution_reminder_round_two',
 
         start: '2020-02-01',
         expiry: '2020-04-01',
@@ -54,7 +54,7 @@ export const contributionsEpicPrecontributionReminderRoundOne: EpicABTest = make
 
         audienceCriteria: 'All',
         // Run this test for 10% of the audience
-        audience: 0.1,
+        audience: 0.15,
         // Set an offset to not interfere with dotcom's remoteRenderTest
         audienceOffset: 0.1,
 
@@ -74,8 +74,20 @@ export const contributionsEpicPrecontributionReminderRoundOne: EpicABTest = make
                 products: [],
                 copy,
                 showReminderFields: {
-                    reminderDate: '2020-05-19 00:00:00',
-                    reminderDateAsString: 'May 2020',
+                    reminderCTA: 'Not a good time? Remind me later',
+                    reminderDate: '2020-07-19 00:00:00',
+                    reminderDateAsString: 'July 2020',
+                },
+            },
+            {
+                id: 'withReminder',
+                buttonTemplate: epicButtonsTemplate,
+                products: [],
+                copy,
+                showReminderFields: {
+                    reminderCTA: 'Not a good time? Remind me later',
+                    reminderDate: '2020-07-19 00:00:00',
+                    reminderDateAsString: 'July 2020',
                 },
             },
         ],

@@ -11,7 +11,7 @@ import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
 import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/frontend-dotcom-rendering-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
-import { contributionsEpicPrecontributionReminderRoundOne } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-one';
+import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -27,7 +27,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
-    contributionsEpicPrecontributionReminderRoundOne,
+    contributionsEpicPrecontributionReminderRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
 ];
