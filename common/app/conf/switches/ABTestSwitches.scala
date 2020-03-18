@@ -12,7 +12,7 @@ trait ABTestSwitches {
     "Test the effect of the reminder on conversion rate",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 1),
+    sellByDate = new LocalDate(2020, 7, 1),
     exposeClientSide = true
   )
 

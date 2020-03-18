@@ -32,7 +32,7 @@ declare type EpicVariant = Variant & {
     showTicker: boolean,
     showReminderFields?: ReminderFields | null,
 
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
@@ -102,7 +102,7 @@ declare type InitEpicABTestVariant = {
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta) => string,
+    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,

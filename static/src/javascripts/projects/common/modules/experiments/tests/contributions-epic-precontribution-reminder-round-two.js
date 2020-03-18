@@ -43,8 +43,8 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
         id: 'ContributionsEpicPrecontributionReminderRoundTwo',
         campaignId: 'epic_precontribution_reminder_round_two',
 
-        start: '2020-02-01',
-        expiry: '2020-04-01',
+        start: '2020-03-18',
+        expiry: '2020-07-01',
 
         author: 'Joshua Lieberman',
         description:
@@ -53,7 +53,7 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
         idealOutcome: 'Add reminder feature without hurting conversion rate',
 
         audienceCriteria: 'All',
-        // Run this test for 10% of the audience
+        // Run this test for 15% of the audience
         audience: 0.15,
         // Set an offset to not interfere with dotcom's remoteRenderTest
         audienceOffset: 0.1,
@@ -74,7 +74,7 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
                 products: [],
                 copy,
                 showReminderFields: {
-                    reminderCTA: 'Not a good time? Remind me later',
+                    reminderCTA: 'Support us later',
                     reminderDate: '2020-07-19 00:00:00',
                     reminderDateAsString: 'July 2020',
                 },
@@ -85,7 +85,7 @@ export const contributionsEpicPrecontributionReminderRoundTwo: EpicABTest = make
                 products: [],
                 copy,
                 showReminderFields: {
-                    reminderCTA: 'Not a good time? Remind me later',
+                    reminderCTA: 'Remind me in July',
                     reminderDate: '2020-07-19 00:00:00',
                     reminderDateAsString: 'July 2020',
                 },

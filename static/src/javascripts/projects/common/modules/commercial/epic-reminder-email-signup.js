@@ -16,6 +16,7 @@ type Fields = {
     closeButton: HTMLElement,
     reminderPrompt: HTMLElement,
     reminderToggle: HTMLInputElement,
+    epicButtons: HTMLElement,
 };
 
 const isValidEmail = (email: string) => {
@@ -33,10 +34,13 @@ const getFields = (): ?Fields => {
     const titleField = document.querySelector('.epic-reminder__form-title');
     const thankYouText = document.querySelector('.epic-reminder__thank-you');
     const closeButton = document.querySelector('.epic-reminder__close-button');
-    const reminderPrompt = document.querySelector('.epic-reminder__prompt');
+    const reminderPrompt = document.querySelector(
+        '.component-button--reminder-prompt'
+    );
     const reminderToggle = document.querySelector(
         '.epic-reminder__reveal-reminder'
     );
+    const epicButtons = document.querySelector('.contributions__buttons');
 
     if (
         helpText &&
@@ -48,6 +52,7 @@ const getFields = (): ?Fields => {
         closeButton &&
         reminderPrompt &&
         reminderToggle &&
+        epicButtons &&
         submitButton instanceof HTMLButtonElement &&
         emailInput instanceof HTMLInputElement &&
         reminderToggle instanceof HTMLInputElement
@@ -68,6 +73,7 @@ const getFields = (): ?Fields => {
             closeButton,
             reminderPrompt,
             reminderToggle,
+            epicButtons,
         };
     }
 };

@@ -1,21 +1,23 @@
+////////////////////////////////////////////////
+// Logic for opening and closing the reminder
+////////////////////////////////////////////////
+.epic-reminder__reveal-reminder {
+    display: none;
+}
+
+.epic-reminder__reveal-reminder:checked ~ .epic-reminder .epic-reminder__signup {
+    display: block;
+}
+
+.epic-reminder__reveal-reminder:checked ~ .contributions__buttons {
+    display: none;
+}
+
 .epic-reminder {
     ////////////////////////////////////
     // Prompt to open reminder
     // Button to close reminder
     ////////////////////////////////////
-    .epic-reminder__prompt {
-        width: 100%;
-        text-align: right;
-        cursor: pointer;
-    }
-
-    .epic-reminder__prompt-text {
-        @include fs-textSans(5);
-        font-weight: bold;
-        text-decoration: underline;
-        padding-right: 18px;
-    }
-
     .epic-reminder__close-button {
         font-size: 30px;
         cursor: pointer;
@@ -28,20 +30,8 @@
     }
 
     ////////////////////////////////////////////////
-    // Logic for opening and closing the reminder
+    // Reminder sign up form
     ////////////////////////////////////////////////
-    .epic-reminder__reveal-reminder {
-        display: none;
-    }
-
-    .epic-reminder__reveal-reminder:checked ~ .epic-reminder__signup {
-        display: block;
-    }
-
-    .epic-reminder__reveal-reminder:checked ~ .epic-reminder__prompt-label {
-        display: none;
-    }
-
     .epic-reminder__signup {
         @include multiline(4, $brightness-86, top);
         display: none;
@@ -49,9 +39,6 @@
         padding: 0 5px;
     }
 
-    ////////////////////////////////////////////////
-    // Reminder sign up form
-    ////////////////////////////////////////////////
     .epic-reminder__form-title {
         @include fs-headline(3);
         padding-top: $gs-baseline * 2;
@@ -80,6 +67,8 @@
         @include fs-textSans(5);
         font-size: 17px;
         flex: 1 1 100%;
+        line-height: 37px;
+        height: initial;
 
         @include mq($from: tablet) {
             flex: 1 1 auto;

@@ -63,6 +63,7 @@ export const acquisitionsEpicControlTemplate = ({
             ${buttonTemplate || ''}
 
             ${footer ? buildFooter(footer) : ''}
+
             ${
                 showReminderFields
                     ? acquisitionsEpicReminderTemplate(showReminderFields)

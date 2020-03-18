@@ -108,7 +108,8 @@ const controlTemplate: EpicTemplate = (
                       url: variant.supportURL,
                       ctaText: variant.ctaText || 'Support The Guardian',
                   },
-                  variant.secondaryCta
+                  variant.secondaryCta,
+                  variant.showReminderFields
               )
             : undefined,
         epicClassNames: variant.classNames,
@@ -292,6 +293,7 @@ const setupOnView = (
         }
 
         if (showReminderFields) {
+            console.log('show reminder fields');
             const htmlElements = getFields();
             if (htmlElements) {
                 epicReminderEmailSignup(htmlElements);
