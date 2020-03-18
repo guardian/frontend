@@ -27,7 +27,7 @@ export const init = (): Promise<void> => {
         // eslint-disable-next-line no-underscore-dangle
         window._comscore.push(getGlobals(config.get('page.keywords', '')));
 
-        loadScript(comscoreSrc, { id: 'comscore', async: true });
+        return loadScript(comscoreSrc, { id: 'comscore', async: true });
     }
 
     return Promise.resolve();
