@@ -49,7 +49,7 @@ export const epicButtonsTemplate = (
         ? `<label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div data-cta-copy="${
                 reminderCta.reminderCTA
-            }" tabindex="0" class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--reminder-prompt" role="checkbox">
+            }" tabindex="0" class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--reminder-prompt contributions__secondary-button contributions__secondary-button--epic" role="checkbox">
                     ${reminderCta.reminderCTA}
             </div>
         </label>`
