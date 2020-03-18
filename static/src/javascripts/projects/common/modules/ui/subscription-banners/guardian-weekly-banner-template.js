@@ -33,7 +33,7 @@ const subscriptionBannerTemplate = (
 
             >
                 <span class="cta-text-mobile">Subscribe Now</span>
-                <span class="cta-text-desktop">Become a Guardian weekly Subscriber</span>
+                <span class="cta-text-desktop">Become a Guardian Weekly subscriber</span>
             </a>
             <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(
                 userLoggedIn

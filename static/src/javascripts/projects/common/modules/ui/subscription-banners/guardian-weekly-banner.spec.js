@@ -33,8 +33,6 @@ describe('Guardian Weekly Banner', () => {
     });
 
     it('Should append a Guardian Weekly Banner to the document', () => {
-        let appendedBanner = 'Banner Not Appended';
-
         const show = createBannerShow(mockTracking, gwBannerTemplate, false);
         show();
 
@@ -44,9 +42,9 @@ describe('Guardian Weekly Banner', () => {
             false
         );
 
-        if (document.body) {
-            appendedBanner = document.body.innerHTML;
-        }
+        const appendedBanner = document.body
+            ? document.body.innerHTML
+            : 'Banner Not Appended';
 
         // removeAllSpaces is used because toEqual compares all tabs, spaces and new lines
         expect(removeAllSpaces(banner)).toEqual(
@@ -66,8 +64,6 @@ describe('Guardian Weekly Banner', () => {
         });
 
         it('Should remove banner when close button is clicked', () => {
-            let appendedBanner = 'Banner Not Appended';
-
             const closeButton: ?HTMLElement = document.querySelector(
                 bannerSelector('close-button')
             );
@@ -76,16 +72,14 @@ describe('Guardian Weekly Banner', () => {
                 closeButton.click();
             }
 
-            if (document.body) {
-                appendedBanner = document.body.innerHTML;
-            }
+            const appendedBanner = document.body
+                ? document.body.innerHTML
+                : 'Banner Not Appended';
 
             expect(appendedBanner.trim()).toEqual('');
         });
 
         it('should remove the banner when the "not now" button is clicked', () => {
-            let appendedBanner = 'Banner Not Appended';
-
             const notNowButton: ?HTMLElement = document.querySelector(
                 bannerSelector('cta-dismiss')
             );
@@ -94,40 +88,34 @@ describe('Guardian Weekly Banner', () => {
                 notNowButton.click();
             }
 
-            if (document.body) {
-                appendedBanner = document.body.innerHTML;
-            }
+            const appendedBanner = document.body
+                ? document.body.innerHTML
+                : 'Banner Not Appended';
 
             expect(appendedBanner.trim()).toEqual('');
         });
 
         it('Should have "subscriptionUrl" as the cta href', () => {
-            let ctaButtonHref;
-
             const ctaButton = document.querySelector(bannerSelector('cta'));
 
-            if (ctaButton instanceof HTMLAnchorElement) {
-                ctaButtonHref = ctaButton.href;
-            }
+            const ctaButtonHref =
+                ctaButton instanceof HTMLAnchorElement && ctaButton.href;
 
             expect(ctaButtonHref).toEqual(
-                `http://test-url.com/${mockTracking.subscriptionUrl}`
+                `http://testurl.theguardian.com/${mockTracking.subscriptionUrl}`
             );
         });
 
         it('Should have "signInUrl" as the signInLink href', () => {
-            let signInLinkHref;
-
             const signInLink = document.querySelector(
                 bannerSelector('sign-in')
             );
 
-            if (signInLink instanceof HTMLAnchorElement) {
-                signInLinkHref = signInLink.href;
-            }
+            const signInLinkHref =
+                signInLink instanceof HTMLAnchorElement && signInLink.href;
 
             expect(signInLinkHref).toEqual(
-                `http://test-url.com/${mockTracking.signInUrl}`
+                `http://testurl.theguardian.com/${mockTracking.signInUrl}`
             );
         });
     });
@@ -268,7 +256,6 @@ describe('Guardian Weekly Banner', () => {
                 trackBannerClick: jest.fn(),
             };
             const isUserSignedIn = true;
-            let hasSignedInClass: ?boolean = null;
 
             const show = createBannerShow(
                 mockTrackingSUT,
@@ -281,11 +268,11 @@ describe('Guardian Weekly Banner', () => {
                 '.site-message--subscription-banner__sign-in'
             );
 
-            if (signInContainer) {
-                hasSignedInClass = signInContainer.classList.contains(
+            const hasSignedInClass: ?boolean =
+                signInContainer &&
+                signInContainer.classList.contains(
                     'site-message--subscription-banner__sign-in--already-signed-in'
                 );
-            }
 
             expect(hasSignedInClass).toBe(true);
         });
