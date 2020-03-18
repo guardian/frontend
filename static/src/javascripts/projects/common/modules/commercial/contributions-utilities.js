@@ -293,7 +293,6 @@ const setupOnView = (
         }
 
         if (showReminderFields) {
-            console.log('show reminder fields');
             const htmlElements = getFields();
             if (htmlElements) {
                 epicReminderEmailSignup(htmlElements);
