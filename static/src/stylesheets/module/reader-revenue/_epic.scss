@@ -132,7 +132,8 @@ a[href].contributions__contribute.contributions__contribute--epic,
     }
 }
 
-a[href].contributions__secondary-button.contributions__secondary-button--epic {
+a[href].contributions__secondary-button.contributions__secondary-button--epic,
+div.contributions__secondary-button.contributions__secondary-button--epic {
     margin-top: $gs-baseline / 2;
 
     @include mq($from: mobileLandscape) {
@@ -140,7 +141,8 @@ a[href].contributions__secondary-button.contributions__secondary-button--epic {
     }
 }
 
-.contributions__secondary-button + .contributions__payment-logos {
+.contributions__secondary-button + .contributions__payment-logos,
+.epic-reminder__prompt-label + .contributions__payment-logos {
     width: 100%;
     margin-top: $gs-baseline / 2;
     margin-left: $gs-baseline / 2;
