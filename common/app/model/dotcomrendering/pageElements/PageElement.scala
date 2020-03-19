@@ -1,7 +1,10 @@
 package model.dotcomrendering.pageElements
 
+import java.net.{URI, URLEncoder}
+
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import conf.Configuration
 import layout.ContentWidths.BodyMedia
 import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
@@ -335,11 +338,9 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
-            Some(InteractiveMarkupBlockElement(
-              id = interactive.id,
-              html = Some(interactive.html),
-              css = Some(interactive.css),
-              js = interactive.mainJS
+            val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
+            Some(InteractiveUrlBlockElement(
+              url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
             ))
           }
 
