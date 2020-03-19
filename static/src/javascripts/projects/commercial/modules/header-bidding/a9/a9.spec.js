@@ -1,7 +1,7 @@
 // @flow
 
 import a9 from 'commercial/modules/header-bidding/a9/a9';
-import { onIabConsentNotification as onIabConsentNotification_ } from "@guardian/consent-management-platform";
+import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 
 const onIabConsentNotification: any = onIabConsentNotification_;
 
