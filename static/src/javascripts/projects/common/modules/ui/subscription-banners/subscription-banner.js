@@ -150,7 +150,11 @@ const bindClickHandlers = (
 
 const createBannerShow = (
     tracking: BannerTracking,
-    bannerTemplate: (string, string, boolean) => string,
+    bannerTemplate: (
+        subscriptionUrl: string,
+        signInUrl: string,
+        userLoggedIn: boolean
+    ) => string,
     userLoggedIn: boolean
 ) => async (): Promise<boolean> => {
     tracking.trackBannerView();
@@ -178,9 +182,10 @@ const createBannerShow = (
 
 const chooseBanner = (region: ReaderRevenueRegion) =>
     region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
+
 const show = createBannerShow(
-    bannerTracking('australia'),
-    chooseBanner('australia'),
+    bannerTracking(currentRegion),
+    chooseBanner(currentRegion),
     isUserLoggedIn()
 );
 
