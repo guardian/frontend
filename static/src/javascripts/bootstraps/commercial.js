@@ -27,6 +27,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCheckDispatcher } from 'commercial/modules/check-dispatcher';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
+import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -55,7 +56,8 @@ if (!commercialFeatures.adFree) {
         ['cm-stickyTopBanner', initStickyTopBanner],
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
-        ['cm-commentAdverts', initCommentAdverts]
+        ['cm-commentAdverts', initCommentAdverts],
+        ['rr-adblock-ask', initAdblockAsk]
     );
 }
 
