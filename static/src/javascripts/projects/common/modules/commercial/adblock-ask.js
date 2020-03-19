@@ -23,7 +23,9 @@ const askHtml = `
 </div>
 `;
 
-const slot = document.querySelector('.js-aside-slot-container');
-if (slot) {
-    slot.innerHTML += askHtml;
-}
+export const initAdblockAsk = () => {
+    const slot = document.querySelector('.js-aside-slot-container');
+    if (slot) {
+        slot.innerHTML += askHtml;
+    }
+};
