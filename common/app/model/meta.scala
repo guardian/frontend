@@ -444,6 +444,21 @@ case class MediaAtomPage(
   )
 }
 
+case class InteractiveAtomPage(
+  override val atom: InteractiveAtom,
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
+)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
+  override val atomType = "interactive"
+  override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
+  override val javascriptModule = "snippet"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
+    section = None
+  )
+}
+
 case class GuideAtomPage(
   override val atom: GuideAtom,
   override val withJavaScript: Boolean,
