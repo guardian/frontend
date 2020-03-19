@@ -9,6 +9,7 @@ import type {
     HeaderBiddingSize,
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
+import { onIabConsentNotification } from '@guardian/consent-management-platform';
 
 class A9AdUnit {
     slotID: ?string;
@@ -31,12 +32,18 @@ let initialised: boolean = false;
 const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
-    initialised = true;
+    onIabConsentNotification(state => {
+        const consentState =
+            state[1] && state[2] && state[3] && state[4] && state[5];
 
-    window.apstag.init({
-        pubID: config.get('page.a9PublisherId'),
-        adServer: 'googletag',
-        bidTimeout: bidderTimeout,
+        if (!initialised && consentState) {
+            initialised = true;
+            window.apstag.init({
+                pubID: config.get('page.a9PublisherId'),
+                adServer: 'googletag',
+                bidTimeout: bidderTimeout,
+            });
+        }
     });
 };
 
