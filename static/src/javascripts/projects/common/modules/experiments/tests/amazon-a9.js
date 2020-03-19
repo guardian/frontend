@@ -6,7 +6,7 @@ export const amazonA9Test: ABTest = {
     expiry: '2020-04-09',
     author: 'Ioanna Kyprianou',
     description: 'This is to test amazon a9 header bidding',
-    audience: 0.0,
+    audience: 0.01,
     audienceOffset: 0.0,
     successMeasure: 'We can see amazon a9 bids ',
     audienceCriteria: 'n/a',
