@@ -18,13 +18,12 @@ const comscoreC2 = '6035250';
 let initialised = false;
 
 const getGlobals = (
-    consentState: boolean | null,
+    consentState: boolean,
     keywords: string
 ): comscoreGlobals => {
     const globals: comscoreGlobals = {
         c1: comscoreC1,
         c2: comscoreC2,
-        // flowlint-next-line sketchy-null-bool:off
         cs_ucfr: consentState ? '1' : '0',
     };
 
@@ -42,7 +41,7 @@ const initOnConsent = (state: boolean | null) => {
 
         // eslint-disable-next-line no-underscore-dangle
         window._comscore.push(
-            getGlobals(state, config.get('page.keywords', ''))
+            getGlobals(!!state, config.get('page.keywords', ''))
         );
 
         loadScript(comscoreSrc, { id: 'comscore', async: true });

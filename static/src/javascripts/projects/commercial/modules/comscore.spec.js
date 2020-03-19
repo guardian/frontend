@@ -98,10 +98,4 @@ describe('comscore getGlobals', () => {
             cs_ucfr: '0',
         });
     });
-
-    it('returns an object with the correct cs_ucfr variable set when calleed with consent sate as null', () => {
-        expect(_.getGlobals(null, '')).toMatchObject({
-            cs_ucfr: '0',
-        });
-    });
 });
