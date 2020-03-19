@@ -387,8 +387,28 @@
 
     .site-message--subscription-banner__description {
 
-        @include mq($from: wide) {
-            width: 48%;
+        @include mq($from: tablet) {
+            width: 55%;
+        }
+
+        @media (min-width: 781px) {
+            width: 60%;
+        }
+
+        @include mq($from: desktop) {
+            width: 50%;
+        }
+
+        @include mq($from: leftCol) {
+            width: 47%;
+        }
+
+        // @include mq($from: wide) {
+        //     width: 48%;
+        // }
+
+        p {
+            line-height: 1.4;
         }
     }
 
@@ -403,7 +423,7 @@
     }
 
     .site-message--subscription-banner__title {
-        padding-right: 36px;
+        padding-right: 44px;
 
         @include mq($from: tablet) {
             padding-right: 0px;
@@ -418,6 +438,8 @@
 
     .site-message--subscription-banner__close-button svg {
         border: 1px solid $brightness-97;
+        padding: 13px;
+        margin-top: -9px;
     }
 
     .site-message--subscription-banner__close-button svg path {
@@ -432,6 +454,10 @@
         bottom: -30px;
         margin: 10px 0 -30px;
 
+        @include mq($from: tablet) {
+            width: 51%;
+        }
+
         @media (min-width: 1140px) {
             width: 57%;
         }
@@ -440,24 +466,22 @@
             max-width: 320px;
 
             @include mq($from: tablet) {
-                max-width: 400px;
+                max-width: 325px;
             }
 
-            @media (min-width: 740px) {
+            @media (min-width: 781px) {
+                max-width: 320px;
+            }
+
+            @media (min-width: 889px) {
                 max-width: 300px;
             }
 
-            @media (min-width: 966px) {
-                max-width: 300px;
-                padding-right: 36px;
+            @include mq($from: desktop) {
+                max-width: 340px;
             }
 
-            @media (min-width: 980px) {
-                max-width: 350px;
-                padding-right: 0px;
-            }
-
-            @media (min-width: 1140px) {
+            @include mq($from: leftCol) {
                 max-width: 540px;
             }
         }
@@ -467,9 +491,14 @@
         text-decoration: none;
         font-weight: normal;
     }
+
     .site-message--subscription-banner__cta {
-        display: initial;
-        width: initial;
+        display: inline-block;
+        width: auto;
+    }
+
+    .site-message--subscription-banner__cta-container {
+        margin-top: 10px;
     }
 
     .site-message--subscription-banner__cta-dismiss {
@@ -478,7 +507,7 @@
 
     .site-message--subscription-banner__cta-dismiss-container {
         display: inline-block;
-        margin-left: 5px;
+        margin-left: 20px;
     }
 
     .site-message--subscription-banner__sign-in {

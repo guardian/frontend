@@ -1,6 +1,6 @@
 // @flow
 
-import closeCentralIcon from 'svgs/icon/close-central.svg';
+import closeCentralIcon from 'svgs/icon/close-large.svg';
 import theGuardianLogo from 'svgs/logo/the-guardian-logo.svg';
 
 const isUserLoggedIn = userLoggedIn =>
@@ -32,7 +32,7 @@ const subscriptionBannerTemplate = (
                 href="${subscriptionUrl}"
 
             >
-                <span class="cta-text-mobile">Subscribe Now</span>
+                <span class="cta-text-mobile">Subscribe now</span>
                 <span class="cta-text-desktop">Become a Guardian Weekly subscriber</span>
             </a>
             <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(
