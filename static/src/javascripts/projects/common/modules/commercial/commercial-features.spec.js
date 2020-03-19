@@ -429,4 +429,54 @@ describe('Commercial features', () => {
             });
         });
     });
+
+    describe('comscore ', () => {
+        beforeEach(() => {
+            config.set('switches.comscore', true);
+        });
+
+        it('Runs if switch is on', () => {
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(true);
+        });
+
+        it('Does not run if switch is off', () => {
+            config.set('switches.comscore', false);
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on identity pages', () => {
+            config.set('page.contentType', 'Identity');
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on identity section', () => {
+            // This is needed for identity pages in the profile subdomain
+            config.set('page.section', 'identity');
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on the secure contact interactive', () => {
+            config.set(
+                'page.pageId',
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely'
+            );
+
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on secure contact help page', () => {
+            config.set(
+                'page.pageId',
+                'help/2016/sep/19/how-to-contact-the-guardian-securely'
+            );
+
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+    });
 });
