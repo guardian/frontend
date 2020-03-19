@@ -88,6 +88,11 @@ $gu-cta-height: 42px;
     }
 }
 
+.component-button--reminder-prompt {
+    background-color: transparent;
+    border-color: $brightness-7;
+}
+
 .component-button--disabled,
 .component-button[disabled],
 .component-button[data-disabled] {
