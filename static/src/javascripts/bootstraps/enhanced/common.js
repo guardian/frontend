@@ -53,6 +53,7 @@ import { breakingNews } from 'common/modules/onward/breaking-news';
 import { trackConsentCookies } from 'common/modules/analytics/send-privacy-prefs';
 import { getAllAdConsentsWithState } from 'common/modules/commercial/ad-prefs.lib';
 import ophan from 'ophan/ng';
+import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 import {
     consentManagementPlatformUi,
@@ -310,6 +311,7 @@ const initialiseBanner = (): void => {
         membershipEngagementBanner,
         subscriptionBanner,
         smartAppBanner,
+        adFreeBanner,
         emailSignInBanner,
     ];
 
