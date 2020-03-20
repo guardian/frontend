@@ -3,20 +3,15 @@ package contentapi
 import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
-import akka.pattern.CircuitBreaker
-import com.gu.contentapi.client.{ContentApiBackoff, ScheduledExecutor, ContentApiClient => CapiContentApiClient}
+import com.github.nscala_time.time.Implicits._
 import com.gu.contentapi.client.model._
 import com.gu.contentapi.client.model.v1.{Edition => _, _}
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichCapiDateTime
+import com.gu.contentapi.client.{BackoffStrategy, Retryable, RetryableContentApiClient, ScheduledExecutor, ContentApiClient => CapiContentApiClient}
 import common._
+import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.Configuration.contentApi
 import conf.switches.Switches.CircuitBreakerSwitch
-import model.{Content, Trail}
-import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
-import concurrent.CircuitBreakerRegistry
-import okhttp3.{ConnectionPool, OkHttpClient}
 
 import scala.concurrent.duration.{Duration, MILLISECONDS}
 import scala.concurrent.{ExecutionContext, Future}
@@ -104,11 +99,6 @@ trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryD
 
   val httpClient: HttpClient
 
-  override implicit val executor = ScheduledExecutor()
-  val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
-  val retryAttempts = 3
-  override val backoffStrategy: ContentApiBackoff = ContentApiBackoff.constantStrategy(retryDuration, retryAttempts)
-
   def get(url: String, headers: Map[String, String])(implicit executionContext: ExecutionContext): Future[HttpResponse] = {
     val futureContent = httpClient.GET(url, headers) map { response: Response =>
       HttpResponse(response.body, response.status, response.statusText)
@@ -125,7 +115,11 @@ final case class CircuitBreakingContentApiClient(
   override val targetUrl: String,
   apiKey: String
 )(implicit executionContext: ExecutionContext)
-  extends MonitoredContentApiClientLogic {
+  extends MonitoredContentApiClientLogic with RetryableContentApiClient {
+    override implicit val executor = ScheduledExecutor()
+    val retryDuration = Duration(250L, TimeUnit.MILLISECONDS)
+    val retryAttempts = 3
+    override val backoffStrategy: Retryable = BackoffStrategy.constantStrategy(retryDuration, retryAttempts)
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "content-api-client",
