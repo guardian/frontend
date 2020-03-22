@@ -400,6 +400,10 @@
         }
 
         @include mq($from: leftCol) {
+            width: 46%;
+        }
+
+        @include mq($from: wide) {
             width: 47%;
         }
 
@@ -463,6 +467,8 @@
 
             @include mq($from: tablet) {
                 max-width: 325px;
+                margin-right: 0;
+                margin-left: auto;
             }
 
             @media (min-width: 781px) {
@@ -475,10 +481,17 @@
 
             @include mq($from: desktop) {
                 max-width: 340px;
+                margin-left: auto;
+                margin-right: 100px;
             }
 
             @include mq($from: leftCol) {
                 max-width: 540px;
+
+            }
+
+            @include mq($from: wide) {
+                margin-right: 100px;
             }
         }
     }

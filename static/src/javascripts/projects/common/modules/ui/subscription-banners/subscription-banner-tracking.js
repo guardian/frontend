@@ -19,12 +19,13 @@ export type BannerTracking = {
     trackCloseButtons: (button: any) => void,
 };
 
-const DISPLAY_EVENT_KEY = 'subscription-banner : display';
 const COMPONENT_TYPE = 'ACQUISITIONS_SUBSCRIPTIONS_BANNER';
-const CLICK_EVENT_CTA = 'subscription-banner : cta';
-const CLICK_EVENT_CLOSE_NOT_NOW = 'subscription-banner : not now';
-const CLICK_EVENT_CLOSE_BUTTON = 'subscription-banner : close';
-const CLICK_EVENT_SIGN_IN = 'subscription-banner : sign in';
+const BANNER_KEY = 'subscription-banner :';
+const DISPLAY_EVENT_KEY = `${BANNER_KEY} display`;
+const CLICK_EVENT_CTA = `${BANNER_KEY} cta`;
+const CLICK_EVENT_CLOSE_NOT_NOW = `${BANNER_KEY} not now`;
+const CLICK_EVENT_CLOSE_BUTTON = `${BANNER_KEY} close`;
+const CLICK_EVENT_SIGN_IN = `${BANNER_KEY} sign in`;
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 const CAMPAIGN_CODE = 'gdnwb_copts_banner_subscribe_SubscriptionBanner_digital';
 const AUS_CAMPAIGN_CODE =
