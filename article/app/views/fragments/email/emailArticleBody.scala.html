@@ -90,8 +90,8 @@
             <tr>
                 @firstContributor.map { profile =>
                     @profile.properties.contributorLargeImagePath.map { src =>
-                        <td>
-                            <img class="byline__img" src="@src" alt="@profile.name" />
+                        <td class="byline-img">
+                            <img width="80" src="@src" alt="@profile.name" />
                         </td>
                     }
                     <td>
