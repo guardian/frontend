@@ -69,10 +69,10 @@ const subscriptionBannerTemplate = (
         <div class="site-message--packshot-container">
 
             <picture>
-                <source srcset="https://media.guim.co.uk/8937356626c6e4dcdf0f14ccee395058f7c0ef87/36_267_1815_889/500.png" media="(max-width: 739px)">
-                <source srcset="https://media.guim.co.uk/18cf1b898a18ba9715be2fd731aa91b028b258e7/280_42_1322_1114/500.png" media="(max-width: 1139px)">
-                <source srcset="https://media.guim.co.uk/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/500.png" media="(min-width: 1140px)">
-                <img srcset="https://media.guim.co.uk/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/500.png" alt="…">
+                <source srcset="https://i.guim.co.uk/img/media/8937356626c6e4dcdf0f14ccee395058f7c0ef87/36_267_1815_889/1815.png?width=324&quality=85&s=fee17219cbe86ecce70b3d872c848aab" media="(max-width: 739px)">
+                <source srcset="https://i.guim.co.uk/img/media/18cf1b898a18ba9715be2fd731aa91b028b258e7/280_42_1322_1114/1322.png?width=344&quality=85&s=d5b95c838557590a4db5dc274ab706cc" media="(max-width: 1139px)">
+                <source srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&quality=85&s=a68601dd33793d2f9056f5e91c797289" media="(min-width: 1140px)">
+                <img srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&quality=85&s=a68601dd33793d2f9056f5e91c797289" alt="…">
             </picture>
         </div>
 

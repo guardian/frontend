@@ -13,8 +13,6 @@ jest.mock('common/modules/identity/api.js', () => ({
 }));
 jest.mock('lib/report-error', () => jest.fn());
 
-const removeAllSpaces = (str: string) => str.replace(/\s/g, '');
-
 describe('Guardian Weekly Banner', () => {
     const bannerSelector = selectorName('subscription-banner');
     const mockTracking = {
@@ -46,10 +44,11 @@ describe('Guardian Weekly Banner', () => {
             ? document.body.innerHTML
             : 'Banner Not Appended';
 
-        // removeAllSpaces is used because toEqual compares all tabs, spaces and new lines
-        expect(removeAllSpaces(banner)).toEqual(
-            removeAllSpaces(appendedBanner)
-        );
+        const div = document.createElement('div');
+        div.insertAdjacentHTML('beforeend', banner);
+        const htmlBanner = div.innerHTML;
+
+        expect(htmlBanner).toEqual(appendedBanner);
     });
 
     describe('Button Clicks', () => {
