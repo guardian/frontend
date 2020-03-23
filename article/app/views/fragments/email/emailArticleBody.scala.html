@@ -5,6 +5,7 @@
 @import views.support.{EmailImage, EmailVideoImage}
 @import views.support.EmailHelpers.{imgForArticle, icon, imgForVideo}
 @import fragments.email._
+@import model.Tag
 @import model.liveblog._
 @import model.EmailAddons.EmailContentType
 @import model.content.{MediaAtom, MediaAssetPlatform}
@@ -65,41 +66,64 @@
 
 <table class="article-body">
 
-@bylineWithImage(page: PageWithStoryPackage) = {
+@bylineTwitter(twitterHandle: String) = {
+    <div class="meta__twitter">
+        <a href="https://twitter.com/@twitterHandle" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+            @icon("twitter-bird")
+            <span class="contact">@@@twitterHandle</span>
+        </a>
+    </div>
+}
+
+@bylineEmail(emailAddress: String) = {
+    <div class="meta__email">
+        <a href="mailto:@emailAddress" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+            @icon("mail")
+            <span class="contact">Email</span>
+        </a>
+    </div>
+}
+
+@bylineWithImage(byline: String, firstContributor: Option[Tag]) = {
     @row(Seq("padded-x", "author")) {
-        @page.article.trail.byline.map { byline =>
-            <table>
-                <tr>
-                    @page.article.tags.contributors.headOption.map { profile =>
-                        @profile.properties.contributorLargeImagePath.map { src =>
-                            <td>
-                                <img class="byline__img" src="@src" alt="@profile.name" />
-                            </td>
-                        }
+        <table>
+            <tr>
+                @firstContributor.map { profile =>
+                    @profile.properties.contributorLargeImagePath.map { src =>
                         <td>
-                            <h3 class="byline">@byline</h3>
-                            @profile.properties.twitterHandle.map { twitter =>
-                                <div class="meta__twitter">
-                                    <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
-                                        @icon("twitter-bird")
-                                        <span class="contact">@@@twitter</span>
-                                    </a>
-                                </div>
-                            }
-                            @profile.properties.emailAddress.map { email =>
-                                <div class="meta__email">
-                                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
-                                        @icon("mail")
-                                        <span class="contact">Email</span>
-                                    </a>
-                                </div>
-                            }
+                            <img class="byline__img" src="@src" alt="@profile.name" />
                         </td>
                     }
-                </tr>
-            </table>
-        }
+                    <td>
+                        <h3 class="byline">@byline</h3>
+                        @profile.properties.twitterHandle.map { twitterHandle =>
+                            @bylineTwitter(twitterHandle)
+                        }
+                        @profile.properties.emailAddress.map { emailAddress =>
+                            @bylineEmail(emailAddress)
+                        }
+                    </td>
+                }
+            </tr>
+        </table>
         <hr class="rule--flush" />
+    }
+}
+
+
+@bylineWithoutImage(byline: String, firstContributor: Option[Tag]) = {
+    @row(Seq("padded", "author")) {
+        <h3 class="byline">@byline</h3>
+
+        @firstContributor.map { profile =>
+            @profile.properties.twitterHandle.map { twitterHandle =>
+                @bylineTwitter(twitterHandle)
+            }
+            @profile.properties.emailAddress.map { emailAddress =>
+                @bylineEmail(emailAddress)
+            }
+        }
+        <hr />
     }
 }
 
@@ -127,34 +151,23 @@
 
     @fragments.emailMainMedia(article)
 
-
-    @if(article.tags.contributors.length == 1) { @* Do not show byline if more than 1 contributor (or zero) *@
-        @bylineWithImage(page: PageWithStoryPackage)
-    } else {
-        @row(Seq("padded", "author")) {
-            @article.trail.byline.map { byline =>
-                <h3 class="byline">@byline</h3>
-
-                @article.tags.contributors.headOption.map { profile =>
-                    @profile.properties.twitterHandle.map { twitter =>
-                        <div class="meta__twitter">
-                            <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
-                                @icon("twitter-bird")
-                                <span class="contact">@@ @twitter</span>
-                            </a>
-                        </div>
-                    }
-                    @profile.properties.emailAddress.map { email =>
-                        <div class="meta__email">
-                            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
-                                @icon("mail")
-                                <span class="contact">Email</span>
-                            </a>
-                        </div>
-                    }
+    @page.article.trail.byline.map { byline =>
+        @* Show byline if there is exactly one contributor *@
+        @* and this is the Coronavirus: the week explained *@
+        @* and the contributor has a contributor image *@
+        @if(article.tags.contributors.length == 1 &&
+            article.tags.series.exists {
+                _.id == "world/series/coronavirus-the-week-explained"
+            }) {
+            @article.tags.contributors.headOption.map { profile =>
+                @if(profile.properties.contributorLargeImagePath.isEmpty) {
+                    @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
+                } else {
+                    @bylineWithImage(byline, page.article.tags.contributors.headOption)
                 }
             }
-            <hr />
+        } else {
+            @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
         }
     }
 
