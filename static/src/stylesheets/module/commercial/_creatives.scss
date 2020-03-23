@@ -706,6 +706,10 @@
     }
 }
 
+.creative__background-parent-interscroller::before {
+    border-bottom: 1px solid $brightness-86;
+}
+
 .ad-slot__label.sticky {
     position: sticky;
     top: 0;
