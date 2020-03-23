@@ -138,7 +138,7 @@ class GuardianConfiguration extends Logging {
   case class OAuthCredentialsWithMultipleCallbacks(oauthClientId: String, oauthSecret: String, authorizedOauthCallbacks: List[String])
 
   object business {
-    lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url")
+    lazy val stocksEndpoint = configuration.getMandatoryStringProperty("business_data.url") // Decommissioned, see marker: 7dde429f00b1
   }
 
   object feedback {

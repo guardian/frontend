@@ -298,10 +298,11 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
+  // Decommissioned, see marker: 7dde429f00b1
   val StocksWidgetSwitch = Switch(
     SwitchGroup.Feature,
     "stocks-widget",
-    "If switched on, a stocks widget will be displayed on the business front",
+    "If switched on, a stocks widget will be displayed on the business front (note: code is currently decommissioned, so switch has no effect)",
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
