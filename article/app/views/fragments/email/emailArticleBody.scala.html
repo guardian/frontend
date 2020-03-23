@@ -64,6 +64,45 @@
 }
 
 <table class="article-body">
+
+@bylineWithImage(page: PageWithStoryPackage) = {
+    @row(Seq("padded-x", "author")) {
+        @page.article.trail.byline.map { byline =>
+            <table>
+                <tr>
+                    @page.article.tags.contributors.headOption.map { profile =>
+                        @profile.properties.contributorLargeImagePath.map { src =>
+                            <td>
+                                <img class="byline__img" src="@src" alt="@profile.name" />
+                            </td>
+                        }
+                        <td>
+                            <h3 class="byline">@byline</h3>
+                            @profile.properties.twitterHandle.map { twitter =>
+                                <div class="meta__twitter">
+                                    <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                                        @icon("twitter-bird")
+                                        <span class="contact">@@@twitter</span>
+                                    </a>
+                                </div>
+                            }
+                            @profile.properties.emailAddress.map { email =>
+                                <div class="meta__email">
+                                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+                                        @icon("mail")
+                                        <span class="contact">Email</span>
+                                    </a>
+                                </div>
+                            }
+                        </td>
+                    }
+                </tr>
+            </table>
+        }
+        <hr class="rule--flush" />
+    }
+}
+
 @defining(page.article) { article =>
     @row(Seq("no-pad")) {
         <a href="@article.metadata.webUrl" @page.email.map { email => title="View @email.name online"}>
@@ -88,29 +127,33 @@
 
     @fragments.emailMainMedia(article)
 
-    @row(Seq("padded", "author")) {
-        @article.trail.byline.map { byline =>
-            <h3 class="byline">@byline</h3>
 
-        @article.tags.contributors.headOption.map { profile =>
-            @profile.properties.twitterHandle.map { twitter =>
-                <div class="meta__twitter">
-                    <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
-                        @icon("twitter-bird")
-                        <span class="contact">@@@twitter</span>
-                    </a>
-                </div>
-            }
-            @profile.properties.emailAddress.map { email =>
-                <div class="meta__email">
-                    <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
-                        @icon("mail")
-                        <span class="contact">Email</span>
-                    </a>
-                </div>
-            }
-        }
+    @if(article.tags.contributors.length == 1) { @* Do not show byline if more than 1 contributor (or zero) *@
+        @bylineWithImage(page: PageWithStoryPackage)
+    } else {
+        @row(Seq("padded", "author")) {
+            @article.trail.byline.map { byline =>
+                <h3 class="byline">@byline</h3>
 
+                @article.tags.contributors.headOption.map { profile =>
+                    @profile.properties.twitterHandle.map { twitter =>
+                        <div class="meta__twitter">
+                            <a href="https://twitter.com/@twitter" data-link-name="twitter-handle" data-component="meta-twitter-handle" class="button button--small button--secondary tone-colour">
+                                @icon("twitter-bird")
+                                <span class="contact">@@ @twitter</span>
+                            </a>
+                        </div>
+                    }
+                    @profile.properties.emailAddress.map { email =>
+                        <div class="meta__email">
+                            <a href="mailto:@email" data-link-name="email-address" data-component="meta-email-address" class="button button--small button--secondary tone-colour">
+                                @icon("mail")
+                                <span class="contact">Email</span>
+                            </a>
+                        </div>
+                    }
+                }
+            }
             <hr />
         }
     }
