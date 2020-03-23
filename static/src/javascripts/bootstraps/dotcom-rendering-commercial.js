@@ -22,6 +22,7 @@ import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
+import { init as initComscore } from 'commercial/modules/comscore';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -37,6 +38,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-checkDispatcher', initCheckDispatcher],
     ['cm-lotame-cmp', initLotameCmp],
     ['cm-lotame-data-extract', initLotameDataExtract],
+    ['cm-comscore', initComscore],
 ];
 
 if (!commercialFeatures.adFree) {
