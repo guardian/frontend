@@ -706,6 +706,16 @@
     }
 }
 
+.creative__background-parent-interscroller::before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    border-bottom: 1px solid $brightness-86;
+}
+
 .ad-slot__label.sticky {
     position: sticky;
     top: 0;
