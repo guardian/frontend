@@ -64,8 +64,8 @@ private object NavLinks {
   val auEnvironment = ukEnvironment.copy(children = List(globalDevelopment, ourWideBrownLand))
   val money = NavLink("Money", "/money", children = List(property, pensions, savings, borrowing, careers))
   val ukBusiness = NavLink("Business", "/business", children = List(economics, banking, money, markets, projectSyndicate, businessToBusiness, retail))
-  val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness))
-  val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate))
+  val usBusiness = ukBusiness.copy(children = List(economics, sustainableBusiness, diversityEquality, smallBusiness, retail))
+  val auBusiness = ukBusiness.copy(children = List(markets, money, projectSyndicate, retail))
 
   /* OPINION */
   val columnists = NavLink("Columnists", "/index/contributors")
