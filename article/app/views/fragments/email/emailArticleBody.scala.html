@@ -151,23 +151,26 @@
 
     @fragments.emailMainMedia(article)
 
-    @page.article.trail.byline.map { byline =>
-        @* Show byline if there is exactly one contributor *@
-        @* and this is the Coronavirus: the week explained *@
-        @* and the contributor has a contributor image *@
-        @if(article.tags.contributors.length == 1 &&
-            article.tags.series.exists {
-                _.id == "world/series/coronavirus-the-week-explained"
-            }) {
-            @article.tags.contributors.headOption.map { profile =>
-                @if(profile.properties.contributorLargeImagePath.isEmpty) {
-                    @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
-                } else {
-                    @bylineWithImage(byline, page.article.tags.contributors.headOption)
+    @defining(
+        article.tags.tones.exists { _.id == "tone/features" } ||
+        article.tags.tones.exists { _.id == "tone/reviews" } ||
+        article.tags.tones.exists { _.id == "tone/comment"} ||
+        article.tags.tones.exists { _.id == "tone/interview"}) { case (shouldShowBylineImage) =>
+        @page.article.trail.byline.map { byline =>
+            @* Show byline if there is exactly one contributor *@
+            @* and this is the Coronavirus: the week explained *@
+            @* and the contributor has a contributor image *@
+            @if(article.tags.contributors.length == 1 && shouldShowBylineImage) {
+                @article.tags.contributors.headOption.map { profile =>
+                    @if(profile.properties.contributorLargeImagePath.isEmpty) {
+                        @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
+                    } else {
+                        @bylineWithImage(byline, page.article.tags.contributors.headOption)
+                    }
                 }
+            } else {
+                @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
             }
-        } else {
-            @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
         }
     }
 
