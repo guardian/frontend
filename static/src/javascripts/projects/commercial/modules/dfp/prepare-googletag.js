@@ -30,6 +30,8 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
+import { commercialGptPath } from 'common/modules/experiments/tests/commercial-gpt-path';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 initMessenger(
     type,
@@ -112,8 +114,12 @@ export const init = (): Promise<void> => {
             });
         });
 
+        const gptPath = isInVariantSynchronous(commercialGptPath, 'variant')
+            ? '//securepubads.g.doubleclick.net/tag/js/gpt.js'
+            : config.get('libs.googletag');
+
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(config.get('libs.googletag'), { async: false });
+        return loadScript(gptPath, { async: false });
     };
 
     if (commercialFeatures.dfpAdvertising) {
