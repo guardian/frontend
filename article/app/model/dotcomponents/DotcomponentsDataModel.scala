@@ -563,7 +563,7 @@ object DotcomponentsDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.dotcom-rendering-commercial.js"),
+      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
       ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

@@ -7,7 +7,7 @@ const config = require('./webpack.config.js');
 
 // override JS entry points
 config.entry = {
-    'dotcom-rendering-commercial': path.join(
+    'commercial': path.join(
         __dirname,
         'static',
         'src',
