@@ -2,8 +2,8 @@
 
 export const commercialGptPath: ABTest = {
     id: 'CommercialGptPath',
-    start: '2020-03-26',
-    expiry: '2020-04-26',
+    start: '2020-03-25',
+    expiry: '2020-04-27',
     author: 'George Haberis',
     description: '0% a/b test for new gpt.js path',
     audience: 0.0,

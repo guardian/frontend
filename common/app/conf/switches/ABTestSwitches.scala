@@ -142,7 +142,7 @@ trait ABTestSwitches {
     "0% a/b test for new gpt.js path",
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 26),
+    sellByDate = new LocalDate(2020, 4, 27),
     exposeClientSide = true
   )
 }
