@@ -12,6 +12,7 @@ export const commercialGptPath: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'New gpt.js path does not adversely affect advertisement',
+    canRun: () => true,
     variants: [
         {
             id: 'variant',
