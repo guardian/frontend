@@ -84,26 +84,24 @@
     </div>
 }
 
-@bylineWithImage(byline: String, firstContributor: Option[Tag]) = {
+@bylineWithImage(byline: String, firstContributor: Tag) = {
     @row(Seq("padded-x", "author")) {
         <table>
             <tr>
-                @firstContributor.map { profile =>
-                    @profile.properties.contributorLargeImagePath.map { src =>
-                        <td class="byline-img">
-                            <img width="80" src="@src" alt="@profile.name" />
-                        </td>
-                    }
-                    <td>
-                        <h3 class="byline">@byline</h3>
-                        @profile.properties.twitterHandle.map { twitterHandle =>
-                            @bylineTwitter(twitterHandle)
-                        }
-                        @profile.properties.emailAddress.map { emailAddress =>
-                            @bylineEmail(emailAddress)
-                        }
+                @firstContributor.properties.contributorLargeImagePath.map { src =>
+                    <td class="byline-img">
+                        <img class="byline-img__img" width="80" src="@src" alt="@firstContributor.name" />
                     </td>
                 }
+                <td>
+                    <h3 class="byline">@byline</h3>
+                    @firstContributor.properties.twitterHandle.map { twitterHandle =>
+                        @bylineTwitter(twitterHandle)
+                    }
+                    @firstContributor.properties.emailAddress.map { emailAddress =>
+                        @bylineEmail(emailAddress)
+                    }
+                </td>
             </tr>
         </table>
         <hr class="rule--flush" />
@@ -151,23 +149,27 @@
 
     @fragments.emailMainMedia(article)
 
-    @page.article.trail.byline.map { byline =>
-        @* Show byline if there is exactly one contributor *@
-        @* and this is the Coronavirus: the week explained *@
-        @* and the contributor has a contributor image *@
-        @if(article.tags.contributors.length == 1 &&
-            article.tags.series.exists {
-                _.id == "world/series/coronavirus-the-week-explained"
-            }) {
-            @article.tags.contributors.headOption.map { profile =>
-                @if(profile.properties.contributorLargeImagePath.isEmpty) {
-                    @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
-                } else {
-                    @bylineWithImage(byline, page.article.tags.contributors.headOption)
+    @defining(
+        article.tags.contributors,
+        article.tags.tones.exists { _.id == "tone/features" } ||
+        article.tags.tones.exists { _.id == "tone/reviews" } ||
+        article.tags.tones.exists { _.id == "tone/comment"} ||
+        article.tags.tones.exists { _.id == "tone/interview"}) { case (contributors, shouldShowBylineImage) =>
+        @page.article.trail.byline.map { byline =>
+            @* Show byline if there is exactly one contributor      *@
+            @* and this article is for one of the whitelisted tones *@
+            @* and the contributor has a contributor image          *@
+            @(contributors, shouldShowBylineImage) match {
+                case (head :: Nil, true) if head.properties.contributorLargeImagePath.isDefined => {
+                    @bylineWithImage(byline, head)
+                }
+                case (head :: _, _) => {
+                    @bylineWithoutImage(byline, Some(head))
+                }
+                case _ => {
+                    @bylineWithoutImage(byline, None)
                 }
             }
-        } else {
-            @bylineWithoutImage(byline, page.article.tags.contributors.headOption)
         }
     }
 
