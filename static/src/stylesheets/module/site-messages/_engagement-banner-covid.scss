@@ -1,7 +1,20 @@
+@font-face {
+    font-family: 'Guardian Titlepiece';
+    src:
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf') format('truetype');
+    font-style: normal;
+}
+
+$title: 'Guardian Titlepiece', Georgia, serif !default;
+
+// Extrinsic banner elements like the roundel and the close button:
 .site-message--covid-banner {
     position: relative;
     overflow: hidden;
     padding-top: 0;
+    color: $brightness-7;
 
     .site-message__copy {
         padding: 0;
@@ -46,14 +59,15 @@
     }
 
     .engagement-banner__close-button {
-        border-color: $brightness-97;
+        border-color: $brightness-7;
 
         path {
-            fill: $brightness-97;
+            fill: $brightness-7;
         }
     }
 }
 
+// Internal banner elements and design:
 .engagement-banner__container--covid-banner {
     position: relative;
     display: flex;
@@ -64,85 +78,38 @@
         flex-flow: row nowrap;
     }
 
-    @include mq($from: desktop) {
-        &:before {
-            content: '';
-            position: absolute;
-            left: 0;
-            height: 120%;
-            width: 1px;
-            background-color: $brightness-7;
-            top: 0;
-            z-index: 1;
+    .engagement-banner__header-container {
+        @include mq($from: tablet) {
+            flex: 0 0 37.5%;
+        }
+    }
+
+    .engagement-banner__header-text {
+        font-family: $title;
+        font-size: 26px;
+        line-height: 1;
+
+        @include mq($from: tablet) {
+            font-size: 46px;
+        }
+
+        @include mq($from: desktop) {
+            font-size: 60px;
         }
     }
 
     .engagement-banner__text-container {
-        flex: 0 1 50%;
-        position: relative;
-        margin-bottom: $gs-baseline * 2;
-
-        @include mq($from: tablet) {
-            flex: 0 0 75%;
-        }
-
-        @include mq($from: leftCol) {
-            flex: 0 1 50%;
-            margin-bottom: $gs-baseline;
+        @include mq($from: desktop) {
+            flex: 0 0 50%;
         }
     }
 
-    .engagement-banner__image-container--mobile {
-        display: block;
-        position: absolute;
-        bottom: 0;
-        right: 0;
-
-        @include mq($from: tablet) {
-            display: none;
-        }
-    }
-
-    .engagement-banner__image-container--tablet {
-        display: none;
-
-        @include mq($from: tablet, $until: leftCol) {
-            display: block;
-            flex: 0 1 25%;
-            position: relative;
-        }
-
-        svg {
-            position: absolute;
-            right: $gs-gutter;
-            bottom: $gs-baseline;
-        }
-    }
-
-    .engagement-banner__image-container--desktop {
-        display: none;
-
-        @include mq($from: leftCol) {
-            display: block;
-            flex: 1 0 50%;
-
-            svg {
-                height: 100%;
-            }
-        }
-    }
-
-    .engagement-banner__header {
-        padding: 0;
-    }
-
-    .engagement-banner__header-text  {
-        display: none;
+    .engagement-banner__lead-sentence {
+        font-weight: bold;
     }
 
     .engagement-banner__body {
         @include f-bodyCopy;
-        color: $brightness-97;
         font-size: 15px;
         line-height: 1.35;
 
@@ -151,8 +118,8 @@
         }
 
         @include mq($from: tablet) {
-            padding: $gs-baseline $gs-gutter 0 0;
-            margin-left: $gs-gutter / 2;
+            //padding: $gs-baseline $gs-gutter 0 0;
+            //margin-left: $gs-gutter / 2;
         }
     }
 
@@ -175,13 +142,13 @@
             margin-left: $gs-gutter;
         }
 
-        .component-button--greyHollow--covid-banner {
-            border-color: $highlight-main;
-            color: $highlight-main !important;
-
-            &:hover, &:focus {
-                background: transparent;
-            }
-        }
+        //.component-button--greyHollow--covid-banner {
+        //    border-color: $highlight-main;
+        //    color: $highlight-main !important;
+        //
+        //    &:hover, &:focus {
+        //        background: transparent;
+        //    }
+        //}
     }
 }
