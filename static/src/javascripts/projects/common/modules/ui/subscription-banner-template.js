@@ -32,7 +32,7 @@ const subscriptionBannerTemplate = (
                 href="${subscriptionUrl}"
 
             >
-                Become a digital subscriber
+                Subscribe now
             </a>
             <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(
                 userLoggedIn
@@ -61,8 +61,8 @@ const subscriptionBannerTemplate = (
                 href="${signInUrl}"
 
             >
-                <span class="site-message--subscription-banner__sign-in-link">Sign in</span> to not see this again
-            </a>
+                <span class="site-message--subscription-banner__sign-in-link">Sign in</span></a>
+            to not see this again
         </div>
 
         <div class="site-message--packshot-container">
