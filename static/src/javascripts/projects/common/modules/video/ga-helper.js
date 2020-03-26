@@ -59,7 +59,7 @@ const buildPfpEvent = (
     pfpEventType: PfpEventType,
     videoId: string
 ): PfpEventParams => {
-    const pfpEventMetric = pfpEventType === 'adStart' ? 17 : 18;
+    const pfpEventMetric = pfpEventType === 'adStart' ? 24 : 25;
     return {
         eventCategory: 'media',
         eventAction: 'video preroll',
