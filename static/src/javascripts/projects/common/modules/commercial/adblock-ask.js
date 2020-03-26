@@ -35,13 +35,13 @@ const canShow = () =>
     !config.get('page.hasShowcaseMainElement');
 
 export const initAdblockAsk = () => {
-    fastdom
-        .read(() => $('.js-aside-slot-container'))
-        .then(slot => {
-            if (canShow()) {
-                return fastdom.write(() => {
+    if (canShow()) {
+        fastdom
+            .read(() => $('.js-aside-slot-container'))
+            .then(slot =>
+                fastdom.write(() => {
                     slot.append(askHtml);
-                });
-            }
-        });
+                })
+            );
+    }
 };
