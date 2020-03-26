@@ -13,7 +13,7 @@ config.entry = {
         'src',
         'javascripts',
         'bootstraps',
-        'dotcom-rendering-commercial.js'
+        'commercial.dcr.js'
     ),
 };
 
