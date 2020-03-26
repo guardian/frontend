@@ -38,10 +38,12 @@ export const initAdblockAsk = () => {
     if (canShow()) {
         fastdom
             .read(() => $('.js-aside-slot-container'))
-            .then(slot =>
-                fastdom.write(() => {
-                    slot.append(askHtml);
-                })
-            );
+            .then(slot => {
+                if (slot) {
+                    fastdom.write(() => {
+                        slot.append(askHtml);
+                    });
+                }
+            });
     }
 };
