@@ -16,7 +16,8 @@ const subscriptionBannerTemplate = (
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            Open to all, supported by you
+            <span class="site-message--subscription-banner__no-wrap">Open to all,</span>
+            <span class="site-message--subscription-banner__no-wrap">supported by you</span>
         </h3>
 
         <div class="site-message--subscription-banner__description">

@@ -124,8 +124,12 @@
     }
 }
 
+.site-message--subscription-banner__no-wrap {
+    white-space: nowrap;
+}
+
 .site-message--subscription-banner__cta-container {
-    width: 100%;
+
     font-size: 12px;
     font-weight: bold;
     margin: 30px 0 0;
