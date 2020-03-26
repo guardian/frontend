@@ -21,4 +21,13 @@
             @fragments.inlineSvg("share-google", "icon", List("social-signin__icon", "social-signin__icon--google"))
         </a>
     </li>
+    <li class="social-signin__item">
+        <a class="social-signin__action social-signin__action--apple"
+        data-link-name="Register/Sign in with Apple" data-test-id="apple-sign-in"
+        href="@idUrlBuilder.buildOAuthUrl("/apple/" + route.apple.path, idRequest, ThirdPartyConditions.optParams(idRequest, idUrlBuilder))
+        ">
+            <span>@route.apple.name with Apple</span>
+            @fragments.inlineSvg("share-apple-white", "icon", List("social-signin__icon", "social-signin__icon--apple"))
+        </a>
+    </li>
 </ul>

@@ -186,6 +186,22 @@ $identity-header-height: 48px;
             top: 7px;
         }
     }
+
+    .social-signin__action--apple {
+        background-color: #000000;
+        color: #ffffff;
+        @include mq(tablet) {
+            width: gs-span(3);
+        }
+        .social-signin__icon--apple {
+            border-radius: 100%;
+
+            svg {
+                height: 1.5rem;
+                width: 1.5rem;
+            }
+        }
+    }
 }
 
 .password-strength-indicator {
