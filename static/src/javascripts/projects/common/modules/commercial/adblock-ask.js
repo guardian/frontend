@@ -1,4 +1,8 @@
 // @flow
+
+import fastdom from 'lib/fastdom-promise';
+import $ from 'lib/$';
+
 import { supportSubscribeDigitalURL } from 'common/modules/commercial/support-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
@@ -31,8 +35,13 @@ const canShow = () =>
     !config.get('page.hasShowcaseMainElement');
 
 export const initAdblockAsk = () => {
-    const slot = document.querySelector('.js-aside-slot-container');
-    if (slot && canShow()) {
-        slot.innerHTML += askHtml;
-    }
+    fastdom
+        .read(() => $('.js-aside-slot-container'))
+        .then(slot => {
+            if (canShow()) {
+                return fastdom.write(() => {
+                    slot.append(askHtml);
+                });
+            }
+        });
 };
