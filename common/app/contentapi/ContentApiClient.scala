@@ -125,7 +125,7 @@ final case class CircuitBreakingContentApiClient(
     name = "content-api-client",
     system = ActorSystem("content-api-client-circuit-breaker"),
     maxFailures = contentApi.circuitBreakerErrorThreshold,
-    callTimeout = contentApi.timeout + Duration.create(400, MILLISECONDS), // +400 to differentiate between circuit breaker and capi timeouts
+    callTimeout = contentApi.timeout + Duration.create(40000, MILLISECONDS), // +400 to differentiate between circuit breaker and capi timeouts
     resetTimeout = contentApi.circuitBreakerResetTimeout,
   )
 

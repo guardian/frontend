@@ -22,6 +22,9 @@ const testCanBeRun = (test: ABTest): boolean => {
     const shouldShowForSensitive = !!test.showForSensitive;
     const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();
+    if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
+        debugger
+    }
 
     return (
         (isSensitive ? shouldShowForSensitive : true) &&
@@ -64,6 +67,12 @@ export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const fromLocalStorage = getVariantFromLocalStorage(test);
     const fromCookie = computeVariantFromMvtCookie(test);
     const variantToRun = fromUrl || fromLocalStorage || fromCookie;
+
+    if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
+        const tcbr = testCanBeRun(test)
+        const vcbr = variantCanBeRun(variantToRun)
+        debugger
+    }
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {
