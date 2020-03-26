@@ -235,6 +235,7 @@ case class DataModelV3(
 
   // slot machine (temporary for contributions development)
   slotMachineFlags: String,
+  contributionsServiceUrl: String,
   badge: Option[DCRBadge]
 )
 
@@ -290,6 +291,7 @@ object DataModelV3 {
       "publication" -> model.publication,
       "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
       "slotMachineFlags" -> model.slotMachineFlags,
+      "contributionsServiceUrl" -> model.contributionsServiceUrl,
       "badge" -> model.badge
     )
   }
@@ -643,6 +645,7 @@ object DotcomponentsDataModel {
         .getOrElse(isPaidContent),
 
       slotMachineFlags = request.slotMachineFlags,
+      contributionsServiceUrl = Configuration.contributionsService.url,
       badge = badge
     )
   }

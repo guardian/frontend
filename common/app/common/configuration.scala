@@ -155,6 +155,10 @@ class GuardianConfiguration extends Logging {
     lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
+  object contributionsService {
+    lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
+  }
+
   object weather {
     lazy val apiKey = configuration.getStringProperty("weather.api.key")
   }
