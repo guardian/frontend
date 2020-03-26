@@ -144,10 +144,19 @@ const getTargets = (insertAtSelector: string): Array<HTMLElement> => {
     return [];
 };
 
-const isCompatibleWithArticleEpic = (page: Object): boolean =>
-    page.contentType === 'Article' &&
-    !page.isMinuteArticle &&
-    isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+const isCompatibleWithArticleEpic = (page: Object): boolean => {
+    const a = page.contentType === 'Article';
+    const m = !page.isMinuteArticle;
+    const worth = isArticleWorthAnEpicImpression(page, defaultExclusionRules);
+
+    console.log({
+        isArticle: a,
+        notMinute: m,
+        worthIt: worth,
+    });
+
+    return a && m && worth;
+};
 
 const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
     page.contentType === 'LiveBlog' &&
@@ -186,7 +195,7 @@ const isValidCohort = (cohort: string): boolean =>
 
 const shouldShowEpic = (test: EpicABTest): boolean => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
-
+    console.log(`on compatible page: ${onCompatiblePage}`);
     const tagsMatch = doTagsMatch(test);
 
     return (
@@ -235,6 +244,10 @@ const countryNameIsOk = (
 const articleViewCountIsOk = (
     articlesViewedSettings?: ArticlesViewedSettings
 ): boolean => {
+    console.log(
+        `article view count stuff:${JSON.stringify(articlesViewedSettings)}`
+    );
+
     if (articlesViewedSettings) {
         const upperOk = articlesViewedSettings.maxViews
             ? articlesViewedSettings.count <= articlesViewedSettings.maxViews
@@ -560,12 +573,19 @@ const makeEpicABTest = ({
         geolocation,
         highPriority,
         canRun() {
-            return (
-                canRun() &&
-                countryNameIsOk(testHasCountryName, geolocation) &&
-                articleViewCountIsOk(articlesViewedSettings) &&
-                shouldShowEpic(this)
-            );
+            const cr = canRun();
+            const cn = countryNameIsOk(testHasCountryName, geolocation);
+            const vc = articleViewCountIsOk(articlesViewedSettings);
+            const ss = shouldShowEpic(this);
+
+            console.log({
+                canRun: cr,
+                countryNameIsOk: cn,
+                articleViewCountIsOk: vc,
+                shouldShowEpic: ss,
+            });
+
+            return cr && cn && vc && ss;
         },
         componentType: 'ACQUISITIONS_EPIC',
         insertEvent: makeEvent(id, 'insert'),

@@ -547,6 +547,8 @@ const getArticleViewCountForDays = (days: number): number => {
 
 const getArticleViewCountForWeeks = (weeks: number): number => {
     const weeklyCount = local.get(storageKeyWeeklyArticleCount) || [];
+
+    console.log(`weekly count is: ${JSON.stringify(weeklyCount)}`);
     const cutOff = startOfThisWeek - weeks * 7;
 
     const firstOldWeekIndex = weeklyCount.findIndex(
