@@ -106,8 +106,9 @@ export const getEpicTestToRun = memoize(
                                 sectionName: page.section,
                                 shouldHideReaderRevenue:
                                     page.shouldHideReaderRevenue,
-                                isMinuteArticle: config.hasTone('Minute'),
-                                isPaidContent: page.isPaidContent,
+                                isMinuteArticle: page.isMinuteArticle,
+                                isPaidContent:
+                                    page.sponsorshipType === 'paid-content',
                                 tags: buildKeywordTags(page),
                                 countryCode,
                                 showSupportMessaging: !shouldNotBeShownSupportMessaging(),
