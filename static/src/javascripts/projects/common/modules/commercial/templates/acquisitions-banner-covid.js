@@ -37,7 +37,7 @@ export const acquisitionsBannerCovidTemplate = (
                         <a tabIndex="3" class="component-button component-button--hasicon-right component-button--secondary" href="${
                             params.linkUrl
                         }">
-                            ${params.buttonCaption}
+                            ${params.ctaText}
                             <svg
                                 class="svg-arrow-right-straight"
                                 xmlns="http://www.w3.org/2000/svg"
@@ -55,8 +55,8 @@ export const acquisitionsBannerCovidTemplate = (
                     ${
                         params.secondaryLinkLabel && params.secondaryLinkUrl
                             ? `
-                        <div class="engagement-banner__cta engagement-banner__cta--editorial">
-                            <a tabIndex="3" class="component-button component-button--hasicon-right component-button--primary" href="${
+                        <div class="engagement-banner__cta engagement-banner__cta--subscribe">
+                            <a tabIndex="3" class="component-button component-button--hasicon-right component-button--primary component-button--primary--covid-banner" href="${
                                 params.secondaryLinkUrl
                             }">
                                     ${params.secondaryLinkLabel}

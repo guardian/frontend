@@ -9,16 +9,11 @@
 
 $title: 'Guardian Titlepiece', Georgia, serif !default;
 
-// Extrinsic banner elements like the roundel and the close button:
+// Extrinsic to banner template elements like the roundel and the close button:
 .site-message--covid-banner {
     position: relative;
     overflow: hidden;
-    padding-top: 0;
     color: $brightness-7;
-
-    .site-message__copy {
-        padding: 0;
-    }
 
     .site-message__roundel {
         display: none;
@@ -67,7 +62,7 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     }
 }
 
-// Internal banner elements and design:
+// Internal banner template elements and design:
 .engagement-banner__container--covid-banner {
     position: relative;
     display: flex;
@@ -80,7 +75,18 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
 
     .engagement-banner__header-container {
         @include mq($from: tablet) {
+            position: relative;
             flex: 0 0 37.5%;
+
+            &:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: -8px;
+                height: 150%;
+                width: 1px;
+                background-color: $brightness-7;
+            }
         }
     }
 
@@ -99,6 +105,10 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     }
 
     .engagement-banner__text-container {
+        @include mq($from: tablet) {
+            margin-left: $gs-gutter;
+        }
+
         @include mq($from: desktop) {
             flex: 0 0 50%;
         }
@@ -117,9 +127,8 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
             font-size: 17px;
         }
 
-        @include mq($from: tablet) {
-            //padding: $gs-baseline $gs-gutter 0 0;
-            //margin-left: $gs-gutter / 2;
+        p:last-of-type {
+            margin-bottom: 0;
         }
     }
 
@@ -131,24 +140,16 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
 
         @include mq($from: tablet) {
             display: inline-block;
-            margin-left: $gs-gutter / 2;
         }
     }
 
-    .engagement-banner__cta--editorial {
-        color: $brightness-97;
-
+    .engagement-banner__cta--subscribe {
         @include mq($from: tablet) {
             margin-left: $gs-gutter;
         }
 
-        //.component-button--greyHollow--covid-banner {
-        //    border-color: $highlight-main;
-        //    color: $highlight-main !important;
-        //
-        //    &:hover, &:focus {
-        //        background: transparent;
-        //    }
-        //}
+        .component-button--primary--covid-banner {
+            border: 1px solid $brightness-7;
+        }
     }
 }
