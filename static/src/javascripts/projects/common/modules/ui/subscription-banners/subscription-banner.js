@@ -197,12 +197,13 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
-        threeOrMorePageViews(pageviews) &&
-            !hasAcknowledgedSinceLastRedeploy &&
-            !shouldHideSupportMessaging() &&
-            !pageShouldHideReaderRevenue() &&
-            subscriptionBannerSwitchIsOn &&
-            !pageIsIdentity()
+        // threeOrMorePageViews(pageviews) &&
+        //     !hasAcknowledgedSinceLastRedeploy &&
+        //     !shouldHideSupportMessaging() &&
+        //     !pageShouldHideReaderRevenue() &&
+        //     subscriptionBannerSwitchIsOn &&
+        //     !pageIsIdentity()
+        true
     );
 
     return can;
