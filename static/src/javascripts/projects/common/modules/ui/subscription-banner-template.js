@@ -35,9 +35,7 @@ const subscriptionBannerTemplate = (
             >
                 Subscribe now
             </a>
-            <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(
-                userLoggedIn
-            )}">
+            <div class="site-message--subscription-banner__cta-dismiss-container">
                 <a
                     id="js-site-message--subscription-banner__cta-dismiss"
                     class="site-message--subscription-banner__cta-dismiss"
@@ -53,8 +51,7 @@ const subscriptionBannerTemplate = (
             userLoggedIn
         )}"
         >
-            <p>Already a subscriber?</p>
-            <br class="temp-mobile-break" />
+            Already a subscriber?
             <a
                 id="site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
