@@ -21,7 +21,7 @@ const subscriptionBannerTemplate = (
 
         <div class="site-message--subscription-banner__description">
             <p>Support The Guardian's independent journalism by subscribing
-             to The Guardian Weekly, our essential world news magazine</p>
+             to <br class="temp-tablet-break">The Guardian Weekly, our essential world news magazine</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">
@@ -54,7 +54,6 @@ const subscriptionBannerTemplate = (
         )}"
         >
             <p>Already a subscriber?</p>
-            <br class="temp-mobile-break">
             <a
                 id="js-site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
@@ -69,8 +68,8 @@ const subscriptionBannerTemplate = (
         <div class="site-message--packshot-container">
 
             <picture>
-                <source srcset="https://i.guim.co.uk/img/media/8937356626c6e4dcdf0f14ccee395058f7c0ef87/36_267_1815_889/1815.png?width=324&quality=85&s=fee17219cbe86ecce70b3d872c848aab" media="(max-width: 739px)">
-                <source srcset="https://i.guim.co.uk/img/media/18cf1b898a18ba9715be2fd731aa91b028b258e7/280_42_1322_1114/1322.png?width=344&quality=85&s=d5b95c838557590a4db5dc274ab706cc" media="(max-width: 1139px)">
+                <source srcset="https://i.guim.co.uk/img/media/e44355cacdb504278d20fe77e49579a73eb8e69b/13_7_1181_561/1181.png?width=350&quality=85&s=5df2b04a3b0b30f2d32c3d292f1001a5" media="(max-width: 739px)">
+                <source srcset="https://i.guim.co.uk/img/media/bd33dfb0e3bfc0c3df81e636713b6784db76ea82/551_203_1516_1145/1516.png?width=400&quality=85&s=543a2267b660b616aa0889cf6896f051" media="(max-width: 1139px)">
                 <source srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&quality=85&s=a68601dd33793d2f9056f5e91c797289" media="(min-width: 1140px)">
                 <img srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&quality=85&s=a68601dd33793d2f9056f5e91c797289" alt="…">
             </picture>
