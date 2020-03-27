@@ -588,7 +588,7 @@ $gw-banner-background-color: #3e474a;
             margin-right: 0;
 
             @include mq($from: tablet) {
-                margin: 10px 0 0 0;
+                margin: 10px 0 0;
             }
         }
 
