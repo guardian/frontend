@@ -28,7 +28,7 @@ export const contributionsCovidBannerRoundOne: AcquisitionsABTest = {
     start: '2020-03-26',
     expiry: '2020-06-26',
     author: 'Joshua Lieberman',
-    description: 'custom banner for the Europe Moment',
+    description: 'custom banner for the public health crisis',
     audience: 1,
     audienceOffset: 0,
     successMeasure: 'AV per impression',
