@@ -496,7 +496,6 @@ $gw-banner-background-color: #3e474a;
         }
 
         @include mq($from: wide) {
-            // width: 555px;
             bottom: -28px;
             margin-right: 120px;
         }
