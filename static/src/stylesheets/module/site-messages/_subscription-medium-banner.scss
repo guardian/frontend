@@ -397,7 +397,6 @@ $gw-banner-background-color: #3e474a;
 
     .site-message--subscription-banner__description {
 
-
         @include mq($from: tablet) {
             width: 298px;
             margin-bottom: 35px;
@@ -411,10 +410,15 @@ $gw-banner-background-color: #3e474a;
             width: 515px;
         }
         @include mq($from: leftCol) {
+            width: 47%;
+        }
+
+        @media (min-width: 1177px) {
             width: 46%;
         }
 
         @include mq($from: wide) {
+            width: 43%;
             margin-bottom: 39px;
         }
 
