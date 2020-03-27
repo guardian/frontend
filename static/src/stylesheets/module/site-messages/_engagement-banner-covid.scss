@@ -1,0 +1,173 @@
+@font-face {
+    font-family: 'Guardian Titlepiece';
+    src:
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff2') format('woff2'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.woff') format('woff'),
+    url('https://interactive.guim.co.uk/fonts/garnett/GTGuardianTitlepiece-Bold.ttf') format('truetype');
+    font-style: normal;
+}
+
+$title: 'Guardian Titlepiece', Georgia, serif !default;
+
+// Extrinsic to banner template elements like the roundel and the close button:
+.site-message--covid-banner {
+    position: relative;
+    overflow: hidden;
+    color: $brightness-7;
+
+    .site-message__roundel {
+        display: none;
+    }
+
+    .engagement-banner__close {
+        position: absolute;
+        z-index: 1;
+        right: 0;
+        top: $gs-baseline;
+
+        @include mq($from: tablet) {
+            right: $gs-gutter;
+        }
+
+        @include mq($from: desktop) {
+            display: flex;
+            flex-flow: row nowrap;
+        }
+    }
+
+    .engagement-banner__roundel {
+        display: none;
+
+        @include mq($from: desktop) {
+            display: block;
+            position: relative;
+            margin-right: $gs-gutter / 2;
+        }
+
+        path:first-of-type {
+            fill: $brightness-97;
+        }
+
+        path:nth-of-type(2) {
+            fill: $brand-main;
+        }
+    }
+
+    .engagement-banner__close-button {
+        border-color: $brightness-7;
+
+        path {
+            fill: $brightness-7;
+        }
+    }
+}
+
+// Internal banner template elements and design:
+.engagement-banner__container--covid-banner {
+    position: relative;
+    display: flex;
+    flex-flow: column nowrap;
+    width: 100%;
+
+    @include mq($from: tablet) {
+        flex-flow: row nowrap;
+    }
+
+    .engagement-banner__header-container {
+        @include mq($from: tablet) {
+            position: relative;
+            flex: 0 0 32.5%;
+
+            &:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: -8px;
+                height: 150%;
+                width: 1px;
+                background-color: $brightness-7;
+            }
+        }
+
+        @include mq($from: desktop) {
+            flex: 0 0 37.5%;
+        }
+    }
+
+    .engagement-banner__header {
+        @include mq($until: phablet) {
+            border-bottom: 0;
+        }
+    }
+
+    .engagement-banner__header-text {
+        font-family: $title;
+        font-size: 26px;
+        line-height: 1;
+
+        @include mq($from: tablet) {
+            font-size: 46px;
+        }
+
+        @include mq($from: desktop) {
+            font-size: 60px;
+        }
+
+        span {
+            display: block;
+        }
+    }
+
+    .engagement-banner__text-container {
+        @include mq($from: tablet) {
+            margin-left: $gs-gutter;
+        }
+
+        @include mq($from: phablet) {
+            flex: 0 0 58%;
+        }
+
+        @include mq($from: desktop) {
+            flex: 0 0 50%;
+        }
+    }
+
+    .engagement-banner__lead-sentence {
+        font-weight: bold;
+    }
+
+    .engagement-banner__body {
+        @include f-bodyCopy;
+        font-size: 15px;
+        line-height: 1.35;
+
+        @include mq($from: phablet) {
+            font-size: 17px;
+        }
+
+        p:last-of-type {
+            margin-bottom: 0;
+        }
+    }
+
+    .engagement-banner__cta {
+        position: relative;
+        z-index: 1;
+        padding-top: $gs-baseline / 2;
+        display: block;
+
+        @include mq($from: tablet) {
+            display: inline-block;
+        }
+    }
+
+    .engagement-banner__cta--subscribe {
+        @include mq($from: tablet) {
+            margin-left: $gs-gutter / 2;
+        }
+
+        .component-button--primary--covid-banner {
+            border: 1px solid $brightness-7;
+        }
+    }
+}

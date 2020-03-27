@@ -12,6 +12,7 @@ import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/fr
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
 import { commercialGptPath } from 'common/modules/experiments/tests/commercial-gpt-path';
+import { contributionsCovidBannerRoundOne } from 'common/modules/experiments/tests/contribs-banner-covid-round-one';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -33,5 +34,6 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
+    contributionsCovidBannerRoundOne,
     articlesViewedBanner,
 ];
