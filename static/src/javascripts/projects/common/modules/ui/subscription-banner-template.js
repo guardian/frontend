@@ -33,7 +33,8 @@ const subscriptionBannerTemplate = (
                 href="${subscriptionUrl}"
 
             >
-                Subscribe now
+                <span class="site-message--subscription-banner__short-message">Subscribe now</span>
+                <span class="site-message--subscription-banner__full-message">Become a digital subscriber</span>
             </a>
             <div class="site-message--subscription-banner__cta-dismiss-container">
                 <a

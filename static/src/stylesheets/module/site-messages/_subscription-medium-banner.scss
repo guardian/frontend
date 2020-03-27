@@ -140,6 +140,20 @@
     }
 }
 
+.site-message--subscription-banner__short-message {
+    display: inline-block;
+    @include mq($from: tablet) {
+        display: none;
+    }
+}
+
+.site-message--subscription-banner__full-message {
+    display: none;
+    @include mq($from: tablet) {
+        display: inline-block;
+    }
+}
+
 .site-message--subscription-banner__cta {
     display: inline-block;
     font-size: 16px;
