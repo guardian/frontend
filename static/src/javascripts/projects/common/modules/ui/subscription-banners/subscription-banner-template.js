@@ -105,7 +105,6 @@ const bannerTemplate = (
           role="dialog"
           aria-label="welcome"
           aria-describedby="site-message__message"
-          data-component="AcquisitionsEngagementBannerStylingTweaks_control"
           aria-live="polite"
         >
 
