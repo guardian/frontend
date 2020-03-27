@@ -184,8 +184,10 @@ const chooseBanner = (region: ReaderRevenueRegion) =>
     region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
 
 const show = createBannerShow(
-    bannerTracking(currentRegion),
-    chooseBanner(currentRegion),
+    // bannerTracking(currentRegion),
+    // chooseBanner(currentRegion),
+    bannerTracking('australia'),
+    chooseBanner('australia'),
     isUserLoggedIn()
 );
 
