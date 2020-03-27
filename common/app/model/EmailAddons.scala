@@ -401,6 +401,11 @@ case object SavedForLater extends FrontEmailMetadata {
   override val banner = Some("saved-for-later.png")
 }
 
+case object TheGuideStayingIn extends FrontEmailMetadata {
+  val name = "The Guide Staying In"
+  override val banner = Some("home-entertainment-banner3-small.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -478,7 +483,8 @@ object EmailAddons {
     FirstDogOnTheMoon,
     GreenLight,
     WordOfMouth,
-    SavedForLater
+    SavedForLater,
+    TheGuideStayingIn
   )
 
   implicit class EmailContentType(p: Page) {
