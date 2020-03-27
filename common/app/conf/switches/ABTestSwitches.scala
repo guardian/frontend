@@ -36,13 +36,12 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
-//  TBD change safe state before deploying:
   Switch(
     ABTests,
     "ab-contributions-covid-banner-round-one",
     "Covid crisis",
     owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )

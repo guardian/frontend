@@ -76,7 +76,7 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
     .engagement-banner__header-container {
         @include mq($from: tablet) {
             position: relative;
-            flex: 0 0 37.5%;
+            flex: 0 0 32.5%;
 
             &:after {
                 content: '';
@@ -87,6 +87,16 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
                 width: 1px;
                 background-color: $brightness-7;
             }
+        }
+
+        @include mq($from: desktop) {
+            flex: 0 0 37.5%;
+        }
+    }
+
+    .engagement-banner__header {
+        @include mq($until: phablet) {
+            border-bottom: 0;
         }
     }
 
@@ -102,11 +112,19 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
         @include mq($from: desktop) {
             font-size: 60px;
         }
+
+        span {
+            display: block;
+        }
     }
 
     .engagement-banner__text-container {
         @include mq($from: tablet) {
             margin-left: $gs-gutter;
+        }
+
+        @include mq($from: phablet) {
+            flex: 0 0 58%;
         }
 
         @include mq($from: desktop) {
@@ -145,7 +163,7 @@ $title: 'Guardian Titlepiece', Georgia, serif !default;
 
     .engagement-banner__cta--subscribe {
         @include mq($from: tablet) {
-            margin-left: $gs-gutter;
+            margin-left: $gs-gutter / 2;
         }
 
         .component-button--primary--covid-banner {

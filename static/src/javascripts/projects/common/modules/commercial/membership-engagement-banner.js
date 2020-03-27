@@ -119,6 +119,15 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         campaignCode: params.campaignCode,
         ...(params.abTest ? { abTest: params.abTest } : {}),
     });
+
+    const subsLinkUrl = addTrackingCodesToUrl({
+        base: `${config.get('page.supportUrl')}/subscribe`,
+        componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        componentId: params.campaignCode,
+        campaignCode: params.campaignCode,
+        ...(params.abTest ? { abTest: params.abTest } : {}),
+    });
+
     const buttonCaption = params.buttonCaption;
     const templateParams = {
         titles: params.titles,
@@ -134,6 +143,7 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
         signInUrl: params.signInUrl,
         secondaryLinkUrl: params.secondaryLinkUrl,
         secondaryLinkLabel: params.secondaryLinkLabel,
+        subsLinkUrl,
     };
 
     return params.template

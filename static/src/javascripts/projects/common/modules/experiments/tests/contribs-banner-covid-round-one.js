@@ -7,13 +7,10 @@ const geolocation = geolocationGetSync();
 const isUSorAU = geolocation === 'US' || geolocation === 'AU';
 
 // Shared parameters:
-const titles = [`Trust has never mattered more`];
+const titles = [`Trust has never`, `mattered more`];
 const ctaText = 'Contribute';
 
 // Shared but geospecific parameters:
-const secondaryLinkUrl = isUSorAU
-    ? undefined
-    : `https://support.theguardian.com/subscribe/digital?acquisitionData=%7B%22source%22%3A%22GUARDIAN_WEB%22%2C%22componentType%22%3A%22ACQUISITIONS_ENGAGEMENT_BANNER%22%2C%22componentId%22%3A%22covid_banner_1%22%2C%22campaignCode%22%3A%22covid_banner_1%22%7D&INTCMP=gdnwb_copts_housead_covid_moment_banner`;
 const secondaryLinkLabel = isUSorAU ? undefined : `Subscribe`;
 
 // Variant-specific parameters:
@@ -23,7 +20,7 @@ const openLeadSentence = `Thanks to your support we can continue to provide qual
 
 const controlMessageText = `Millions of readers across the world are visiting the Guardian every day for open, independent, accurate journalism. Trusted news has never been so important, and neither has your support.`;
 const accuracyMessageText = `No matter how uncertain the future feels, you can rely on us. Quality journalism can help us all make critical decisions about our lives, health and security – based on fact, not fiction. Trusted news has never been so important, and neither has your support.`;
-const openMessageText = `We keep our journalism free from a paywall because we believe everyone deserves equal access to accurate news and calm explanation. Trusted news has never been so important and neither has your support.`;
+const openMessageText = `We keep our journalism free from a paywall because we believe everyone deserves equal access to accurate news and calm explanation. Trusted news has never been so important, and neither has your support.`;
 
 export const contributionsCovidBannerRoundOne: AcquisitionsABTest = {
     id: 'ContributionsCovidBannerRoundOne',
@@ -55,7 +52,6 @@ export const contributionsCovidBannerRoundOne: AcquisitionsABTest = {
                 bannerModifierClass: 'covid-banner',
                 minArticlesBeforeShowingBanner: 2,
                 secondaryLinkLabel,
-                secondaryLinkUrl,
             },
         },
         {
@@ -71,7 +67,6 @@ export const contributionsCovidBannerRoundOne: AcquisitionsABTest = {
                 bannerModifierClass: 'covid-banner',
                 minArticlesBeforeShowingBanner: 2,
                 secondaryLinkLabel,
-                secondaryLinkUrl,
             },
         },
         {
@@ -87,7 +82,6 @@ export const contributionsCovidBannerRoundOne: AcquisitionsABTest = {
                 bannerModifierClass: 'covid-banner',
                 minArticlesBeforeShowingBanner: 2,
                 secondaryLinkLabel,
-                secondaryLinkUrl,
             },
         },
     ],

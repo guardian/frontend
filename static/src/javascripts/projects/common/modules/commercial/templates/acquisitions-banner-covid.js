@@ -19,9 +19,18 @@ export const acquisitionsBannerCovidTemplate = (
         <div class="engagement-banner__container engagement-banner__container--covid-banner">
             <div class="engagement-banner__header-container">
                 <div class="engagement-banner__header">
-                    <h2 class="engagement-banner__header-text">${
-                        params.titles ? params.titles[0] : ''
-                    }</h2>
+                    <h2 class="engagement-banner__header-text">
+                    <span>${
+                        params.titles && params.titles[0]
+                            ? params.titles[0]
+                            : ''
+                    }</span>
+                    <span>${
+                        params.titles && params.titles[1]
+                            ? params.titles[1]
+                            : ''
+                    }</span>
+                    </h2>
                 </div>
             </div>
 
@@ -53,11 +62,11 @@ export const acquisitionsBannerCovidTemplate = (
 
 
                     ${
-                        params.secondaryLinkLabel && params.secondaryLinkUrl
+                        params.secondaryLinkLabel && params.subsLinkUrl
                             ? `
                         <div class="engagement-banner__cta engagement-banner__cta--subscribe">
                             <a tabIndex="3" class="component-button component-button--hasicon-right component-button--primary component-button--primary--covid-banner" href="${
-                                params.secondaryLinkUrl
+                                params.subsLinkUrl
                             }">
                                     ${params.secondaryLinkLabel}
                                     <svg
