@@ -325,7 +325,7 @@ const setupClickHandling = (
 
 const makeEpicABTestVariant = (
     initVariant: InitEpicABTestVariant,
-    template: EpicTemplate,
+    parentTemplate: EpicTemplate,
     parentTest: EpicABTest
 ): EpicVariant => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
@@ -359,7 +359,7 @@ const makeEpicABTestVariant = (
                 variant: initVariant.id,
             },
         }),
-        template,
+        template: initVariant.template || parentTemplate,
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
         secondaryCta: initVariant.secondaryCta,
@@ -949,4 +949,5 @@ export {
     emitBeginEvent,
     setupClickHandling,
     emitInsertEvent,
+    isCompatibleWithLiveBlogEpic,
 };

@@ -11,6 +11,7 @@ import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test'
 import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/frontend-dotcom-rendering-epic';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
+import { contributionsEpicLiveblogDesignTestR1 } from 'common/modules/experiments/tests/contributions-epic-liveblog-design-test';
 import { commercialGptPath } from 'common/modules/experiments/tests/commercial-gpt-path';
 import { contributionsCovidBannerRoundOne } from 'common/modules/experiments/tests/contribs-banner-covid-round-one';
 
@@ -28,6 +29,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
+    contributionsEpicLiveblogDesignTestR1,
     contributionsEpicPrecontributionReminderRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
