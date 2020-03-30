@@ -22,8 +22,6 @@ const testCanBeRun = (test: ABTest): boolean => {
     const shouldShowForSensitive = !!test.showForSensitive;
     const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();
-    if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
-    }
 
     return (
         (isSensitive ? shouldShowForSensitive : true) &&

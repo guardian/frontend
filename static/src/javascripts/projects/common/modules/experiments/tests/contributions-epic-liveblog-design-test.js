@@ -25,9 +25,9 @@ const controlCopy = {
         'For as little as %%CURRENCY_SYMBOL%%1, you can support us, and it only takes a minute. Thank you.',
 };
 
-const liveBlogTemplate: EpicTemplate = (
+const liveBlogTemplate = (
     lastSentenceTemplate: LiveblogEpicLastSentenceTemplate
-) => (variant: EpicVariant, copy: AcquisitionsEpicTemplateCopy): EpicTemplate =>
+): EpicTemplate => (variant: EpicVariant, copy: AcquisitionsEpicTemplateCopy) =>
     epicLiveBlogTemplate({
         copy,
         componentName: variant.componentName,

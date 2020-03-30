@@ -112,6 +112,7 @@ declare type InitEpicABTestVariant = {
     supportBaseURL?: string,
     backgroundImageUrl?: string,
     canRun?: () => boolean,
+    template?: EpicTemplate,
 };
 
 declare type InitBannerABTestVariant = {
