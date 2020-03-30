@@ -54,6 +54,14 @@ const buildKeywordTags = page => {
     }));
 };
 
+const automatLog = {};
+
+type Event = { key: string, value: any };
+
+export const logAutomatEvent = (event: Event): void => {
+    automatLog[event.key] = event.value;
+};
+
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<EpicABTest>> => {
         const highPriorityHardCodedTests = hardCodedEpicTests.filter(
@@ -123,6 +131,7 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
+                            frontendLog: automatLog,
                         });
                     }
                 }

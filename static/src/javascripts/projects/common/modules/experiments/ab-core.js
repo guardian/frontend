@@ -6,6 +6,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
+import { logAutomatEvent } from 'common/modules/experiments/ab';
 import { getVariantFromLocalStorage } from './ab-local-storage';
 import { getVariantFromUrl } from './ab-url';
 import { NOT_IN_TEST } from './ab-constants';
@@ -22,6 +23,18 @@ const testCanBeRun = (test: ABTest): boolean => {
     const shouldShowForSensitive = !!test.showForSensitive;
     const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();
+
+    logAutomatEvent({
+        key: test.id,
+        value: {
+            test,
+            expired,
+            isSensitive,
+            shouldShowForSensitive,
+            isTestOn,
+            canTestBeRun,
+        },
+    });
 
     return (
         (isSensitive ? shouldShowForSensitive : true) &&
