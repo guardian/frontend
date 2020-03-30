@@ -23,7 +23,6 @@ const testCanBeRun = (test: ABTest): boolean => {
     const isTestOn = isTestSwitchedOn(test.id);
     const canTestBeRun = !test.canRun || test.canRun();
     if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
-        debugger
     }
 
     return (
@@ -69,9 +68,8 @@ export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const variantToRun = fromUrl || fromLocalStorage || fromCookie;
 
     if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
-        const tcbr = testCanBeRun(test)
-        const vcbr = variantCanBeRun(variantToRun)
-        debugger
+        const tcbr = testCanBeRun(test);
+        const vcbr = variantCanBeRun(variantToRun);
     }
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {

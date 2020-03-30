@@ -1,39 +1,84 @@
 // @flow
-import { makeEpicABTest } from 'common/modules/commercial/contributions-utilities';
+import {
+    makeEpicABTest,
+    isCompatibleWithLiveBlogEpic,
+    buildEpicCopy,
+} from 'common/modules/commercial/contributions-utilities';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
+import {
+    epicLiveBlogTemplate,
+    lastSentenceTemplateControl,
+    lastSentenceTemplateButtonNoArrow,
+    lastSentenceTemplateButtonArrow,
+} from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import type { LiveblogEpicLastSentenceTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 
-export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest({
-    id: 'ContributionsEpicLiveblogDesignTestR1',
-    campaignId: 'contributions-epic-liveblog-design-test-r1',
+const geolocation = geolocationGetSync();
 
-    geolocation: geolocationGetSync(),
-    highPriority: true,
-
-    start: '2020-03-26',
-    expiry: '2020-06-01',
-
-    author: 'Tom Forbes',
-    description:
-        'Test new designs for the liveblog',
-    successMeasure: 'Conversion rate',
-    idealOutcome: 'Acquires many Supporters',
-
-    audienceCriteria: 'All',
-    audience: 1,
-    audienceOffset: 0,
-
-    canRun: () => {
-        debugger
-        return true
-    },
-
-    variants: [
-        {
-            id: 'control',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-            template: epicLiveBlogTemplate,
-        },
-        //TODO - add variants for different designs
+const controlCopy = {
+    paragraphs: [
+        `In these extraordinary times, the Guardian’s editorial independence has never been more important. Because no one sets our agenda, or edits our editor, we can keep delivering quality, trustworthy, fact-checked journalism each and every day. Free from commercial or political bias, we can report fearlessly on world events and challenge those in power.`,
+        `Your support protects the Guardian’s independence. We believe every one of us deserves equal access to accurate news and calm explanation. No matter how unpredictable the future feels, we will remain with you, delivering high quality news so we can all make critical decisions about our lives, health and security – based on fact, not fiction.`,
     ],
-});
+    highlightedText:
+        'For as little as %%CURRENCY_SYMBOL%%1, you can support us, and it only takes a minute. Thank you.',
+};
+
+const liveBlogTemplate: EpicTemplate = (
+    lastSentenceTemplate: LiveblogEpicLastSentenceTemplate
+) => (variant: EpicVariant, copy: AcquisitionsEpicTemplateCopy): EpicTemplate =>
+    epicLiveBlogTemplate({
+        copy,
+        componentName: variant.componentName,
+        supportURL: variant.supportURL,
+        lastSentenceTemplate,
+    });
+
+export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
+    {
+        id: 'ContributionsEpicLiveblogDesignTestR1',
+        campaignId: 'contributions-epic-liveblog-design-test-r1',
+
+        geolocation: geolocationGetSync(),
+        highPriority: true,
+
+        start: '2020-03-26',
+        expiry: '2020-06-01',
+
+        author: 'Tom Forbes',
+        description: 'Test new designs for the liveblog',
+        successMeasure: 'Conversion rate',
+        idealOutcome: 'Acquires many Supporters',
+
+        audienceCriteria: 'All',
+        audience: 1,
+        audienceOffset: 0,
+
+        pageCheck: isCompatibleWithLiveBlogEpic,
+
+        variants: [
+            {
+                id: 'control',
+                products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+                copy: buildEpicCopy(controlCopy, false, geolocation),
+                template: liveBlogTemplate(lastSentenceTemplateControl),
+                test: setupEpicInLiveblog,
+            },
+            {
+                id: 'v1',
+                products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+                copy: buildEpicCopy(controlCopy, false, geolocation),
+                template: liveBlogTemplate(lastSentenceTemplateButtonNoArrow),
+                test: setupEpicInLiveblog,
+            },
+            {
+                id: 'v2',
+                products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+                copy: buildEpicCopy(controlCopy, false, geolocation),
+                template: liveBlogTemplate(lastSentenceTemplateButtonArrow),
+                test: setupEpicInLiveblog,
+            },
+        ],
+    }
+);
