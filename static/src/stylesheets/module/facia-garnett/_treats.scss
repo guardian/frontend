@@ -26,10 +26,9 @@
 
 .treats__treat {
     @include fs-textSans(1);
-    @include ellipsis();
     @include button-colour(
         #ffffff,
-        $brightness-7, 
+        $brightness-7,
         $brightness-86
     );
     @include button-hover-colour(
@@ -46,8 +45,8 @@
     border-bottom-style: none;
     text-decoration: none;
     max-width: gs-span(4);
-    line-height: $gs-baseline * 2 - 2px;
-    padding-left: $gs-baseline / 2;
+    line-height: $gs-baseline;
+    padding: ($gs-baseline / 4) 0 ($gs-baseline / 6) ($gs-baseline / 2);
     width: 190px;
 
     @include mq(leftCol) {
