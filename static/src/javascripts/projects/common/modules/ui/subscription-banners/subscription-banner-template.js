@@ -52,12 +52,7 @@ const subscriptionBannerTemplate = (
             userLoggedIn
         )}"
         >
-<<<<<<< HEAD:static/src/javascripts/projects/common/modules/ui/subscription-banner-template.js
             Already a subscriber?
-=======
-            <p>Already a subscriber?</p>
-            <br class="temp-mobile-break">
->>>>>>> feat: Guardian Weekly Banner:static/src/javascripts/projects/common/modules/ui/subscription-banners/subscription-banner-template.js
             <a
                 id="js-site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
