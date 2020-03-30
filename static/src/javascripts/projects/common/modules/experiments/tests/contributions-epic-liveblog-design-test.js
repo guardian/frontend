@@ -16,7 +16,7 @@ import type { LiveblogEpicLastSentenceTemplate } from 'common/modules/commercial
 
 const geolocation = geolocationGetSync();
 
-const controlCopy = {
+const epicCopy = {
     paragraphs: [
         `In these extraordinary times, the Guardian’s editorial independence has never been more important. Because no one sets our agenda, or edits our editor, we can keep delivering quality, trustworthy, fact-checked journalism each and every day. Free from commercial or political bias, we can report fearlessly on world events and challenge those in power.`,
         `Your support protects the Guardian’s independence. We believe every one of us deserves equal access to accurate news and calm explanation. No matter how unpredictable the future feels, we will remain with you, delivering high quality news so we can all make critical decisions about our lives, health and security – based on fact, not fiction.`,
@@ -61,21 +61,21 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
             {
                 id: 'control',
                 products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                copy: buildEpicCopy(controlCopy, false, geolocation),
+                copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateControl),
                 test: setupEpicInLiveblog,
             },
             {
                 id: 'v1',
                 products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                copy: buildEpicCopy(controlCopy, false, geolocation),
+                copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateButtonNoArrow),
                 test: setupEpicInLiveblog,
             },
             {
                 id: 'v2',
                 products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                copy: buildEpicCopy(controlCopy, false, geolocation),
+                copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateButtonArrow),
                 test: setupEpicInLiveblog,
             },
