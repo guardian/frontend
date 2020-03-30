@@ -27,5 +27,5 @@ object DotcomRendering extends Experiment(
   description = "Show DCR pages to users",
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc5A // Also see ArticlePicker.scala - our main filter mechanism is by page features
+  participationGroup = Perc10A // Also see ArticlePicker.scala - our main filter mechanism is by page features
 )
