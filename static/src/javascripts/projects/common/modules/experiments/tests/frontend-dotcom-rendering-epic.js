@@ -1,6 +1,6 @@
 // @flow
 
-import { getBodyEnd } from '@guardian/slot-machine-client';
+import { getBodyEnd } from '@guardian/automat-client';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     makeEpicABTest,
@@ -111,6 +111,7 @@ const frontendDotcomRenderingTest = {
                     shouldHideReaderRevenue: page.shouldHideReaderRevenue,
                     isMinuteArticle: config.hasTone('Minute'),
                     isPaidContent: page.isPaidContent,
+                    isSensitive: page.isSensitive,
                     tags: buildKeywordTags(page),
                     // This test is already subjected to the 3 checks below, but
                     // we're passing these properties to the Contributions

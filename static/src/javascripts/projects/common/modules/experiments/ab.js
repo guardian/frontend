@@ -36,7 +36,7 @@ import {
     compareVariantDecision,
     getViewLog,
     getWeeklyArticleHistory,
-} from '@guardian/slot-machine-client';
+} from '@guardian/automat-client';
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
@@ -109,6 +109,7 @@ export const getEpicTestToRun = memoize(
                                 isMinuteArticle: page.isMinuteArticle,
                                 isPaidContent:
                                     page.sponsorshipType === 'paid-content',
+                                isSensitive: page.isSensitive,
                                 tags: buildKeywordTags(page),
                                 countryCode,
                                 showSupportMessaging: !shouldNotBeShownSupportMessaging(),
