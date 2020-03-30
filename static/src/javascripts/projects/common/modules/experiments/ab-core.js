@@ -67,11 +67,6 @@ export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const fromCookie = computeVariantFromMvtCookie(test);
     const variantToRun = fromUrl || fromLocalStorage || fromCookie;
 
-    if (test.id === 'ContributionsEpicLiveblogDesignTestR1') {
-        const tcbr = testCanBeRun(test);
-        const vcbr = variantCanBeRun(variantToRun);
-    }
-
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {
             ...test,
