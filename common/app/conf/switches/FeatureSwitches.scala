@@ -198,16 +198,6 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val VideoJSSwitch = Switch(
-    SwitchGroup.Feature,
-    "videojs",
-    "If this is switched on then videos are enhanced using VideoJS",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 3, 31),
-    exposeClientSide = true
-  )
-
   val BreakingNewsSwitch = Switch(
     SwitchGroup.Feature,
     "breaking-news",
