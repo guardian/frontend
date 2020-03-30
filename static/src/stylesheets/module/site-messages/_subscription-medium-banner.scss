@@ -124,27 +124,39 @@
     }
 }
 
+.site-message--subscription-banner__no-wrap {
+    white-space: nowrap;
+}
+
 .site-message--subscription-banner__cta-container {
-    width: 100%;
     font-size: 12px;
     font-weight: bold;
-    margin: 30px 0 0;
-
+    margin: 20px 0 0;
+    display: flex;
+    width: 100%;
 
     @include mq($from: tablet) {
-        display: flex;
-        width: 60%;
+        margin: 30px 0 0;
     }
+}
 
-    @include mq($from: desktop) {
-        width: 100%;
+.site-message--subscription-banner__short-message {
+    display: inline-block;
+    @include mq($from: tablet) {
+        display: none;
+    }
+}
+
+.site-message--subscription-banner__full-message {
+    display: none;
+    @include mq($from: tablet) {
+        display: inline-block;
     }
 }
 
 .site-message--subscription-banner__cta {
     display: inline-block;
     font-size: 16px;
-    width: 100%;
     padding: 10px 20px 12px;
     border-radius: 50px;
     background: $brightness-7;
@@ -152,10 +164,7 @@
     color: $brightness-97;
     text-align: center;
     cursor: pointer;
-
-    @include mq($from: tablet) {
-        width: auto;
-    }
+    width: auto;
 }
 
 .site-message--subscription-banner__cta:focus ,
@@ -165,45 +174,31 @@
 
 .site-message--subscription-banner__cta-dismiss-container {
     text-align: center;
-    margin: 20px 0 8px;
+    display: block;
+    margin: 12px 0 0 10px;
 
-    @include mq($from: tablet) {
-        margin: 12px 0 0 10px;
-    }
-
-    &.site-message--subscription-banner__sign-in--already-signed-in {
-        display: none;
-
-        @include mq($from: tablet) {
-            display: block;
-        }
-    }
 }
 
 .site-message--subscription-banner__cta-dismiss {
-    display: none;
+    display: block;
     color: $brightness-7;
     font-family: $f-sans-serif-text;
     font-size: 16px;
     width: 100%;
     cursor: pointer;
-
-    @include mq($from: tablet) {
-        display: block;
-    }
 }
 
 .site-message--subscription-banner__sign-in {
     width: 100%;
-    font-size: 16px;
-    font-weight: 100;
+    font-size: 15px;
+    font-weight: normal;
     font-family: $f-sans-serif-text;
     color: $brightness-7;
     margin-top: 10px;
-    text-align: center;
 
     @include mq($from: tablet) {
         width: 60%;
+        margin-bottom: 10px;
         text-align: left;
     }
 
@@ -248,10 +243,10 @@
 
 .site-message--packshot-container {
     width: 100%;
-    margin: 30px 0 -75px;
+    margin: 17px 0 -20px;
 
     @include mq($from: tablet) {
-        margin-bottom: -105px;
+        margin: 30px 0 -105px;
     }
 
 
@@ -306,14 +301,6 @@
 .site-message--subscription-banner__lockup {
     display: flex;
     position: relative;
-}
-
-.temp-mobile-break {
-    display: block;
-
-    @media (min-width: 380px) {
-        display: none;
-    }
 }
 
 .site-message--subscription-banner__close-button {

@@ -16,7 +16,8 @@ const subscriptionBannerTemplate = (
 <div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            Open to all, supported by you
+            <span class="site-message--subscription-banner__no-wrap">Open to all,</span>
+            <span class="site-message--subscription-banner__no-wrap">supported by you</span>
         </h3>
 
         <div class="site-message--subscription-banner__description">
@@ -32,11 +33,10 @@ const subscriptionBannerTemplate = (
                 href="${subscriptionUrl}"
 
             >
-                Become a digital subscriber
+                <span class="site-message--subscription-banner__short-message">Subscribe now</span>
+                <span class="site-message--subscription-banner__full-message">Become a digital subscriber</span>
             </a>
-            <div class="site-message--subscription-banner__cta-dismiss-container ${isUserLoggedIn(
-                userLoggedIn
-            )}">
+            <div class="site-message--subscription-banner__cta-dismiss-container">
                 <a
                     id="js-site-message--subscription-banner__cta-dismiss"
                     class="site-message--subscription-banner__cta-dismiss"
@@ -52,8 +52,7 @@ const subscriptionBannerTemplate = (
             userLoggedIn
         )}"
         >
-            <p>Already a subscriber?</p>
-            <br class="temp-mobile-break" />
+            Already a subscriber?
             <a
                 id="site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
@@ -61,8 +60,8 @@ const subscriptionBannerTemplate = (
                 href="${signInUrl}"
 
             >
-                <span class="site-message--subscription-banner__sign-in-link">Sign in</span> to not see this again
-            </a>
+                <span class="site-message--subscription-banner__sign-in-link">Sign in</span></a>
+            to not see this again
         </div>
 
         <div class="site-message--packshot-container">
