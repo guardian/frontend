@@ -54,7 +54,7 @@ const buildKeywordTags = page => {
     }));
 };
 
-const automatLog = {};
+const automatLog = { url: window.location.href };
 
 type Event = { key: string, value: any };
 
