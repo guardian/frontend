@@ -42,6 +42,7 @@ import {
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import { automatLog } from 'common/modules/experiments/automatLog';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
@@ -52,14 +53,6 @@ const buildKeywordTags = page => {
         type: 'Keyword',
         title: keywords[idx],
     }));
-};
-
-const automatLog = { url: window.location.href };
-
-type Event = { key: string, value: any };
-
-export const logAutomatEvent = (event: Event): void => {
-    automatLog[event.key] = event.value;
 };
 
 export const getEpicTestToRun = memoize(

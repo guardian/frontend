@@ -6,7 +6,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
-import { logAutomatEvent } from 'common/modules/experiments/ab';
+import { logAutomatEvent } from 'common/modules/experiments/automatLog';
 import { getVariantFromLocalStorage } from './ab-local-storage';
 import { getVariantFromUrl } from './ab-url';
 import { NOT_IN_TEST } from './ab-constants';
