@@ -42,6 +42,7 @@ import {
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import { automatLog } from 'common/modules/experiments/automatLog';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
@@ -123,6 +124,7 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
+                            frontendLog: automatLog,
                         });
                     }
                 }
