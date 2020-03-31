@@ -94,6 +94,7 @@ const frontendDotcomRenderingTest = {
                     ophanPageId: ophan.pageViewId,
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
+                    clientName: 'frontend',
                     campaignCode: variant.campaignCode,
                     abTestName: test.id,
                     abTestVariant: variant.id,
