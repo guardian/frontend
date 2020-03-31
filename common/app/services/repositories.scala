@@ -126,7 +126,7 @@ trait Index extends ConciergeRepository with Collections {
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
     // This is a temporary hack to confirm a theory
-    val pageSize = if (path == "profile/helenasmith") 5 else IndexPagePagination.pageSize
+    val pageSize = if (isRss && (path == "profile/helenasmith")) 5 else IndexPagePagination.pageSize
 
     val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
       .pageSize(pageSize)
