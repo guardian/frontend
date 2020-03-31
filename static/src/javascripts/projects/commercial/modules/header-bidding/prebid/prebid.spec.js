@@ -59,7 +59,7 @@ describe('initialise', () => {
             _disableAjaxTimeout: false,
             _mediaTypePriceGranularity: {},
             _priceGranularity: 'custom',
-            _publisherDomain: 'http://localhost',
+            _publisherDomain: 'http://testurl.theguardian.com',
             _sendAllBids: true,
             _timeoutBuffer: 400,
             _useBidCache: false,
@@ -87,7 +87,7 @@ describe('initialise', () => {
             enableSendAllBids: true,
             mediaTypePriceGranularity: {},
             priceGranularity: 'custom',
-            publisherDomain: 'http://localhost',
+            publisherDomain: 'http://testurl.theguardian.com',
             s2sConfig: {
                 adapter: 'prebidServer',
                 adapterOptions: {},

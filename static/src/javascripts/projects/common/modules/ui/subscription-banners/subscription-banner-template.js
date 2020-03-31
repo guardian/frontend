@@ -13,7 +13,7 @@ const subscriptionBannerTemplate = (
     signInUrl: string,
     userLoggedIn: boolean
 ): string => `
-<div id="js-subscription-banner-site-message" class="site-message--subscription-banner">
+<div id="js-site-message--subscription-banner" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
             <span class="site-message--subscription-banner__no-wrap">Open to all,</span>
@@ -54,7 +54,7 @@ const subscriptionBannerTemplate = (
         >
             Already a subscriber?
             <a
-                id="site-message--subscription-banner__sign-in"
+                id="js-site-message--subscription-banner__sign-in"
                 class="site-message--subscription-banner__subscriber-link"
                 data-link-name="subscription-banner : sign in"
                 href="${signInUrl}"
@@ -94,12 +94,12 @@ const bannerTemplate = (
     signInUrl: string,
     userLoggedIn: boolean
 ): string =>
-    `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner subscription-banner--holder"
+    `<div class="site-message js-site-message js-double-site-message site-message--banner site-message--double-banner"
+          id="js-site-message--subscription-banner__holder"
           tabindex="-1"
           role="dialog"
           aria-label="welcome"
           aria-describedby="site-message__message"
-          data-component="AcquisitionsEngagementBannerStylingTweaks_control"
           aria-live="polite"
         >
 
