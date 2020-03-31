@@ -110,6 +110,7 @@ trait Index extends ConciergeRepository with Collections {
   ))
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
 
     val maybeSection = sectionsLookUp.get(path)
@@ -124,8 +125,11 @@ trait Index extends ConciergeRepository with Collections {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
+    // This is a temporary hack to confirm a theory
+    val pageSize = if (path == "profile/helenasmith") 5 else IndexPagePagination.pageSize
+
     val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(pageSize)
       .showFields(fields)
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
