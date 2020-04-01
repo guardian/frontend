@@ -1166,10 +1166,10 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-client@^0.2.10":
-  version "0.2.10"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.10.tgz#4b3abbc7c32944e2d9643af27c07aa9e3224379f"
-  integrity sha512-VVJ09UuMOnbYksjwlhuSCUFpToYm6XVpXtvrFqps15GXDb65g/WU9MmT8KcsejB9EGH77kSdEDhMR/fbOqFHUA==
+"@guardian/automat-client@^0.2.13":
+  version "0.2.13"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.13.tgz#69ad5559160726ca49714d44d6ab77f3db25f5ef"
+  integrity sha512-OHAZv3MZkuFHJkEoWLkiR5nWnzG0i3Unt3w972n6SmkbOr0xLaUhyM+WZvetNn8dOPzHPVwHW6IYi7Z+TQ5Gug==
 
 "@guardian/consent-management-platform@2.0.10":
   version "2.0.10"
