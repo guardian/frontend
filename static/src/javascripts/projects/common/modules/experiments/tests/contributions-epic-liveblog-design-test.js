@@ -54,6 +54,7 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
         audienceCriteria: 'All',
         audience: 1,
         audienceOffset: 0,
+        deploymentRules: 'AlwaysAsk',
 
         pageCheck: isCompatibleWithLiveBlogEpic,
 
