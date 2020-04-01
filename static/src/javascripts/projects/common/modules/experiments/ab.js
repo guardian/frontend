@@ -99,8 +99,11 @@ export const getEpicTestToRun = memoize(
 
                 // No point in going forward with variant comparison unless
                 // we're in an Article (excludes e.g. live blogs which aren't
-                // supported yet)
-                if (page.contentType !== 'Article') {
+                // supported yet) and we have loaded the configured tests successfully
+                if (
+                    page.contentType !== 'Article' ||
+                    configuredEpicTests.length === 0
+                ) {
                     return result;
                 }
 
