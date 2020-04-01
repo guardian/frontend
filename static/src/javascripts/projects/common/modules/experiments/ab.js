@@ -42,7 +42,10 @@ import {
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
-import { automatLog } from 'common/modules/experiments/automatLog';
+import {
+    automatLog,
+    logAutomatEvent,
+} from 'common/modules/experiments/automatLog';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
@@ -66,6 +69,13 @@ export const getEpicTestToRun = memoize(
 
         if (config.get('switches.useConfiguredEpicTests')) {
             return getConfiguredEpicTests().then(configuredEpicTests => {
+                // We want to confirm that the epic tests are getting loaded as we see a
+                // lot of cases where we suspect they are not.
+                logAutomatEvent({
+                    key: 'testIDs',
+                    value: configuredEpicTests.map(test => test.id),
+                });
+
                 configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
