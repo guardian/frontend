@@ -47,10 +47,12 @@ const decodeJson = response => response.json();
 
 const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 
-const canRun = (): boolean =>
-    geolocation !== 'US' &&
-    config.get('page').dcrCouldRender &&
-    config.get('tests').dotcomRenderingControl === 'control';
+// const canRun = (): boolean =>
+//     geolocation !== 'US' &&
+//     config.get('page').dcrCouldRender &&
+//     config.get('tests').dotcomRenderingControl === 'control';
+
+const canRun = ():void => true;
 
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
@@ -84,6 +86,7 @@ const frontendDotcomRenderingTest = {
             products,
             // eslint-disable-next-line import/no-shadow
             test: (html: string, variant: EpicVariant, test: EpicABTest) => {
+
                 const ophan = config.get('ophan');
                 const page = config.get('page');
 
@@ -119,7 +122,8 @@ const frontendDotcomRenderingTest = {
                     // service for consistency with DCR.
                     showSupportMessaging: !shouldNotBeShownSupportMessaging(),
                     isRecurringContributor: isRecurringContributor(),
-                    lastOneOffContributionDate: getLastOneOffContributionDate(),
+                    lastOneOffContributionDate:
+                        getLastOneOffContributionDate() || undefined,
                     mvtId: getMvtValue(),
                     countryCode,
                 };
@@ -141,14 +145,16 @@ const frontendDotcomRenderingTest = {
                     variant.id
                 );
 
-                getBodyEnd(payload)
+                getBodyEnd(payload, 'http://localhost:8081/epic')
                     .then(checkResponseOk)
                     .then(decodeJson)
                     .then(json => {
                         if (json && json.data) {
                             const epicHtml = json.data.html;
-                            const css = json.data.css;
-                            const content = `<style>${css}</style>${epicHtml}`;
+                            const epicCss = json.data.css;
+                            const epicJs = json.data.js;
+
+                            const content = `<style>${epicCss}</style>${epicHtml}`;
 
                             return fastdom.write(() => {
                                 const target = document.querySelector(
@@ -176,9 +182,10 @@ const frontendDotcomRenderingTest = {
                                 parent.insertBefore(container, target);
 
                                 // use Shadow Dom if found
+                                let shadowRoot;
                                 if (container.attachShadow) {
                                     console.log('epic - has shadow dom');
-                                    const shadowRoot = container.attachShadow({
+                                    shadowRoot = container.attachShadow({
                                         mode: 'open',
                                     });
                                     shadowRoot.innerHTML = content;
@@ -186,6 +193,7 @@ const frontendDotcomRenderingTest = {
                                     console.log('epic - no shadow dom');
                                     container.innerHTML = content;
                                 }
+                                // container.innerHTML = content;
 
                                 emitInsertEvent(
                                     test,
@@ -200,6 +208,23 @@ const frontendDotcomRenderingTest = {
                                     trackingCampaignId,
                                     products
                                 );
+
+                                try {
+                                    // eslint-disable-next-line no-eval
+                                    window.eval(epicJs);
+                                    if (
+                                        typeof window.initAutomatJs ===
+                                        'function'
+                                    ) {
+                                        const slotRoot =
+                                            shadowRoot || container;
+                                        window.initAutomatJs(slotRoot);
+                                    }
+                                } catch (error) {
+                                    // eslint-disable-next-line no-console
+                                    console.error(error);
+                                    reportError(error, {}, false);
+                                }
                             });
                         }
                     })
