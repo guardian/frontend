@@ -385,7 +385,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = false
   )
 
 }
