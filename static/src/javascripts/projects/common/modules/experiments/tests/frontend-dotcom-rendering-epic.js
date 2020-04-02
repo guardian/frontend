@@ -52,7 +52,7 @@ const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 //     config.get('page').dcrCouldRender &&
 //     config.get('tests').dotcomRenderingControl === 'control';
 
-const canRun = ():void => true;
+const canRun = (): void => true;
 
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
@@ -86,7 +86,6 @@ const frontendDotcomRenderingTest = {
             products,
             // eslint-disable-next-line import/no-shadow
             test: (html: string, variant: EpicVariant, test: EpicABTest) => {
-
                 const ophan = config.get('ophan');
                 const page = config.get('page');
 
@@ -145,7 +144,7 @@ const frontendDotcomRenderingTest = {
                     variant.id
                 );
 
-                getBodyEnd(payload, 'http://localhost:8081/epic')
+                getBodyEnd(payload)
                     .then(checkResponseOk)
                     .then(decodeJson)
                     .then(json => {
@@ -184,16 +183,13 @@ const frontendDotcomRenderingTest = {
                                 // use Shadow Dom if found
                                 let shadowRoot;
                                 if (container.attachShadow) {
-                                    console.log('epic - has shadow dom');
                                     shadowRoot = container.attachShadow({
                                         mode: 'open',
                                     });
                                     shadowRoot.innerHTML = content;
                                 } else {
-                                    console.log('epic - no shadow dom');
                                     container.innerHTML = content;
                                 }
-                                // container.innerHTML = content;
 
                                 emitInsertEvent(
                                     test,
@@ -209,6 +205,9 @@ const frontendDotcomRenderingTest = {
                                     products
                                 );
 
+                                // If the Epic has custom JS code,
+                                // we need to eval it and call the function
+                                // it defines globally
                                 try {
                                     // eslint-disable-next-line no-eval
                                     window.eval(epicJs);
