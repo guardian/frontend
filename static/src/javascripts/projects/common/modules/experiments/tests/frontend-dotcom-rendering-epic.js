@@ -47,12 +47,10 @@ const decodeJson = response => response.json();
 
 const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
 
-// const canRun = (): boolean =>
-//     geolocation !== 'US' &&
-//     config.get('page').dcrCouldRender &&
-//     config.get('tests').dotcomRenderingControl === 'control';
-
-const canRun = (): void => true;
+const canRun = (): boolean =>
+    geolocation !== 'US' &&
+    config.get('page').dcrCouldRender &&
+    config.get('tests').dotcomRenderingControl === 'control';
 
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
