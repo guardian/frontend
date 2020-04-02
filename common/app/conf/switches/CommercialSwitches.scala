@@ -591,4 +591,14 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true
   )
+
+  val ampOzone: Switch = Switch(
+    group = CommercialPrebid,
+    name = "amp-ozone",
+    description = "Amp inventory is being auctioned through Ozone",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true // Has to be true so that switch is exposed to dotcom-rendering
+  )
 }
