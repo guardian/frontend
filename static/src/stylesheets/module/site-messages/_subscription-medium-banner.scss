@@ -87,39 +87,21 @@
 
     p {
         font-size: 17px;
-        line-height: 18px;
+        line-height: 135%;
         margin: 0;
         font-family: $f-serif-text;
 
         @include mq($from: mobileLandscape) {
             font-size: 18px;
-            line-height: 20px;
         }
 
         // custom breakpoint
         @media (min-width: 550px) {
             font-size: 17px;
-            line-height: 19px;
-        }
-
-        @include mq($from: phablet) {
-            font-size: 17px;
-            line-height: 19px;
-        }
-
-        @include mq($from: tablet) {
-            font-size: 17px;
-            line-height: 19px;
         }
 
         @include mq($from: desktop) {
             font-size: 20px;
-            line-height: 22px;
-        }
-
-        @include mq($from: leftCol) {
-            font-size: 20px;
-            line-height: 26px;
         }
     }
 }
