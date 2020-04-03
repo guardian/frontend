@@ -128,18 +128,8 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remote-render-epic-round-two",
-    "A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date",
-    owners = Seq(Owner.withGithub("tjmw"), Owner.withGithub("nicl")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 2),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-latens",
-    "Test new sign in component on 2nd article view vs 3rd article view",
+    "ab-sign-in-gate-tertius",
+    "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 5, 1),
