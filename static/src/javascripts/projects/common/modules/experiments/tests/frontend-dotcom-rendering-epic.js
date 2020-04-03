@@ -203,19 +203,23 @@ const frontendDotcomRenderingTest = {
                                     products
                                 );
 
-                                // If the Epic has custom JS code,
-                                // we need to eval it and call the function
-                                // it defines globally
+                                // If the Epic has custom JS code, we need to
+                                // eval it and call the function it defines.
+                                // NOTE: this is a temporary solution to solve a
+                                // particular requirement. The Automat team
+                                // plans to replace/remove this very soon.
                                 try {
-                                    // eslint-disable-next-line no-eval
-                                    window.eval(epicJs);
-                                    if (
-                                        typeof window.initAutomatJs ===
-                                        'function'
-                                    ) {
-                                        const slotRoot =
-                                            shadowRoot || container;
-                                        window.initAutomatJs(slotRoot);
+                                    if (epicJs) {
+                                        // eslint-disable-next-line no-eval
+                                        window.eval(epicJs);
+                                        if (
+                                            typeof window.initAutomatJs ===
+                                            'function'
+                                        ) {
+                                            const slotRoot =
+                                                shadowRoot || container;
+                                            window.initAutomatJs(slotRoot);
+                                        }
                                     }
                                 } catch (error) {
                                     // eslint-disable-next-line no-console
