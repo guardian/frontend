@@ -9,7 +9,6 @@ import {
     isInvalidArticleType,
     isInvalidSection,
     addOpinionBgColour,
-    addPillarColour,
     addClickHandler,
     setUserDismissedGate,
     showGate,
@@ -29,19 +28,35 @@ const htmlTemplate: ({
 <div class="signin-gate">
     <div class="signin-gate__content">
         <div class="signin-gate__header">
-            <h1 class="signin-gate__header--text">Sign in and continue<br />reading for free</h1>
+            <h1 class="signin-gate__header--text">Register for free and continue reading</h1>
         </div>
         <div class="signin-gate__benefits syndication--bottom">
             <p class="signin-gate__benefits--text">
-                Help keep our independent, progressive journalism alive and thriving by taking a couple of simple steps to sign in
+                The Guardian’s independent journalism is still free to read
+            </p>
+        </div>
+        <div class="signin-gate__paragraph syndication--bottom">
+            <p class="signin-gate__paragraph--text">
+                Registering lets us understand you better. This means that we can build better products and start to personalise the adverts you see so we can charge more from advertisers in the future.
             </p>
         </div>
         <div class="signin-gate__buttons">
-            <a class="signin-gate__button signin-gate__button--primary js-signin-gate__button" href="${signInUrl}">
-                Sign in
+            <a class="signin-gate__button signin-gate__button--primary js-signin-gate__register-button" href="${signInUrl}">
+                Register for free
             </a>
-            <a class="signin-gate__padding-left signin-gate__link js-signin-gate__why" href="${guUrl}/help/identity-faq">Why sign in?</a>
             <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
+        </div>
+        <div class="signin-gate__padding-bottom signin-gate__buttons">
+            Already registered, contributed, or subscribed?&nbsp;<a class="signin-gate__link js-signin-gate__sign-in signin-gate__link-no-ptm signin-gate__center-424" href="${signInUrl}">Sign in</a>
+        </div>
+        <div class="signin-gate__buttons">
+            <a class="signin-gate__link js-signin-gate__why" href="${guUrl}/membership/2019/dec/20/signing-in-to-the-guardian">Why register & how does it help?</a>
+        </div>
+        <div class="signin-gate__buttons">
+            <a class="signin-gate__link js-signin-gate__how" href="${guUrl}/info/2014/nov/03/why-your-data-matters-to-us-full-text">How will my information & data be used?</a>
+        </div>
+        <div class="signin-gate__buttons">
+            <a class="signin-gate__link js-signin-gate__help" href="${guUrl}/help/identity-faq">Get help with registering or signing in</a>
         </div>
     </div>
 </div>
@@ -67,30 +82,16 @@ const show: ({
     guUrl: string,
     signInUrl: string,
 }) => boolean = ({ abTest, guUrl, signInUrl }) =>
-    // use the show gate helper to abstract away logic about showing the gate
     showGate({
-        // the template as a string of the gate itself
         template: htmlTemplate({
             signInUrl,
             guUrl,
         }),
-        // the handler function should handle any click events required, including the "dismiss" or "not now" link/button
-        // articleBody - html element that corresponds to the original (now hidden) article
-        // shadowArticleBody - html element that contains the gate, and the overlay
-        // you can show the original article, and hide the gate by using the following in a click event for example:
-        // articleBody.style.display = 'block';
-        // shadowArticleBody.remove();
         handler: ({ articleBody, shadowArticleBody }) => {
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,
                 selector: '.signin-gate__first-paragraph-overlay',
-            });
-
-            // check page type/pillar to change text colour of the sign in gate
-            addPillarColour({
-                element: shadowArticleBody,
-                selector: '.signin-gate__benefits--text',
             });
 
             // add click handler for the dismiss of the gate
@@ -117,10 +118,19 @@ const show: ({
                 },
             });
 
-            // add click handler for sign in button click
+            // add click handler for sign in link click
             addClickHandler({
                 element: shadowArticleBody,
-                selector: '.js-signin-gate__button',
+                selector: '.js-signin-gate__register-button',
+                abTest,
+                component,
+                value: 'register-link',
+            });
+
+            // add click handler for sign in link click
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__sign-in',
                 abTest,
                 component,
                 value: 'sign-in-link',
@@ -133,6 +143,24 @@ const show: ({
                 abTest,
                 component,
                 value: 'why-link',
+            });
+
+            // add click handler for the how info used link
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__how',
+                abTest,
+                component,
+                value: 'how-link',
+            });
+
+            // add click handler for the help link
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__help',
+                abTest,
+                component,
+                value: 'help-link',
             });
         },
     });
