@@ -48,7 +48,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-covid-banner-round-one",
+    "ab-contributions-covid-banner-round-two",
     "Covid crisis",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
