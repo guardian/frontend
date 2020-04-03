@@ -10,7 +10,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateTertius',
+            id: 'SignInGateLatens',
             variantToRun: {
                 id: 'variant',
             },
@@ -20,7 +20,7 @@ jest.mock('common/modules/experiments/ab', () => ({
 
 jest.mock('lib/storage', () => ({
     local: {
-        get: jest.fn(() => [{ count: 1, day: 1 }]),
+        get: jest.fn(() => [{ count: 2, day: 1 }]),
     },
 }));
 
@@ -59,7 +59,7 @@ describe('Sign in gate test', () => {
                 expect(show).toBe(true);
             }));
 
-        it('should return true if page view is greater than or equal to 1', () => {
+        it('should return true if page view is greater than or equal to 2', () => {
             fakeLocal.get.mockReturnValueOnce([{ count: 10, day: 1 }]);
             signInGate.canShow().then(show => {
                 expect(show).toBe(true);
@@ -91,7 +91,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGateTertius-variant': Date.now(),
+                'SignInGateLatens-variant': Date.now(),
             });
         });
 
