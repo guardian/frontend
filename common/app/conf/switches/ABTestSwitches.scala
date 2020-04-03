@@ -128,7 +128,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-tertius",
+    "ab-sign-in-gate-latens",
     "Test new sign in component on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
     safeState = Off,
