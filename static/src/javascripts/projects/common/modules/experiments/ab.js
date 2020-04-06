@@ -137,6 +137,10 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
+                            expectedCampaignId: result ? result.campaignId : '',
+                            expectedCampaignCode: result
+                                ? result.variantToRun.campaignCode
+                                : '',
                             frontendLog: automatLog,
                         });
                     }
