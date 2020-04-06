@@ -6,7 +6,7 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { signInGate as signInGateTestControl } from 'common/modules/experiments/tests/sign-in-gate';
 import { signInGateVariant as signInGateTestVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
 import { submitViewEventTracking } from './component-event-tracking';
-import { getVariant, isInTest, getInTest } from './helper';
+import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { component, componentName } from './component';
 import { variants } from './variants';
 import type {
@@ -23,7 +23,7 @@ const canShow: () => Promise<boolean> = () =>
         if (!tests.some(test => isInTest(test))) return resolve(false);
 
         // get the test the user is in
-        const test = getInTest(tests);
+        const test = getTestforMultiTest(tests);
 
         // get the variant
         const variant = variants.find(v => v.name === getVariant(test));
@@ -37,7 +37,7 @@ const canShow: () => Promise<boolean> = () =>
 const show: () => Promise<boolean> = () =>
     new Promise(resolve => {
         // get the test the user is in
-        const test = getInTest(tests);
+        const test = getTestforMultiTest(tests);
 
         // get the variant
         const variant: SignInGateVariant | void = variants.find(

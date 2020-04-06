@@ -54,10 +54,10 @@ const htmlTemplate: ({
 </div>
 `;
 
-// method which runs if the canShow method returns true, used to display the gate and logic associated with it
+// method which runs if the canShow method from the test returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
-// in our case it returns true if the method ran successfully, and false if there were any problems encountered
-export const show: ({
+// in our case it returns true if the design ran successfully, and false if there were any problems encountered
+export const designShow: ({
     abTest: CurrentABTest,
     guUrl: string,
     signInUrl: string,
