@@ -1,8 +1,8 @@
 // @flow
 export const signInGateVariant: ABTest = {
     id: 'SignInGateQuartusVariant',
-    start: '2020-02-17',
-    expiry: '2020-05-01',
+    start: '2020-04-07',
+    expiry: '2020-06-01',
     author: 'Mahesh Makani',
     description:
         'Test adding a sign in component on the 3rd pageview, with higher priority over banners and epic, and a much larget audience size. This test does not display a gate, and only used for tracking users who meet our displayer criteria.',
