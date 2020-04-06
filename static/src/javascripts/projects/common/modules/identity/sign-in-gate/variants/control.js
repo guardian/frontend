@@ -1,4 +1,5 @@
 // @flow
+import mediator from 'lib/mediator';
 import type { CurrentABTest, SignInGateVariant } from '../types';
 import { component, componentName } from '../component';
 import {
