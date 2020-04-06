@@ -10,7 +10,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateQuartus',
+            id: 'SignInGateQuartusVariant',
             variantToRun: {
                 id: 'variant',
             },
@@ -69,7 +69,10 @@ describe('Sign in gate test', () => {
 
     describe('canShow returns false', () => {
         it('should return false if not in correct test', () => {
-            fakeIsInABTestSynchronous.mockReturnValueOnce(false);
+            // mock twice as we have 2 tests
+            fakeIsInABTestSynchronous
+                .mockReturnValueOnce(false)
+                .mockReturnValueOnce(false);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });
@@ -91,7 +94,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGateQuartus-variant': Date.now(),
+                'SignInGateQuartusVariant-variant': Date.now(),
             });
         });
 
