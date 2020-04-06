@@ -45,8 +45,7 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
         console.log(`${chalk.red('✗')} Node ${foundNodeVersion}`);
         console.log(
             chalk.dim(
-                `Frontend requires Node v${nvmrcVersion}.\n` +
-                    "If you're using NVM, you can 'nvm use'..."
+                `Frontend requires Node v${nvmrcVersion}.\nIf you're using NVM, you can 'nvm use'...`
             )
         );
         process.exit(1);
@@ -58,14 +57,13 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
     childProcess.exec('yarn --version', (e, version) => {
         foundYarnVersion = version.trim();
         if (!semver.satisfies(foundYarnVersion, enginesYarnVersion)) {
-            childProcess
-                .spawn('npm', ['i', '-g', `yarn@${enginesYarnVersion}`], {
-                    stdio: 'inherit',
-                })
-                .on('close', code => {
-                    if (code !== 0) process.exit(code);
-                    reportGoodEnv();
-                });
+            console.log(`${chalk.red('✗')} Yarn ${foundYarnVersion}`);
+            console.log(
+                chalk.dim(
+                    `Frontend requires Yarn v${enginesYarnVersion}.\nhttps://classic.yarnpkg.com/en/docs/install`
+                )
+            );
+            process.exit(1);
         } else {
             reportGoodEnv();
         }
