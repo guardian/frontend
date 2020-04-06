@@ -7,7 +7,7 @@
     "tools/amp-validation"
   ],
   "engines": {
-    "yarn": ">=1.19.0"
+    "yarn": ">=1.13.0"
   },
   "dependencies": {
     "@babel/runtime": "^7.2.0",
@@ -170,5 +170,13 @@
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
     "test": "jest"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "tabWidth": 4,
+    "jsxBracketSameLine": true,
+    "parser": "flow"
   }
 }
