@@ -17,6 +17,15 @@ export const isLoggedIn = isUserLoggedIn;
 // wrapper over isInABTestSynchronous
 export const isInTest: ABTest => boolean = test => isInABTestSynchronous(test);
 
+export const getInTest: (Array<ABTest>) => ABTest = tests =>
+    tests.reduce((acc, test) => {
+        const checkTest = getSynchronousTestsToRun().find(
+            t => t.id === test.id
+        );
+        if (checkTest) return checkTest;
+        return acc;
+    }, undefined);
+
 // get the current variant id the user is in
 export const getVariant: ABTest => string = test => {
     //  get the current test

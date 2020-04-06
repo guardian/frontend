@@ -3,9 +3,10 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { signInGate as signInGateTest } from 'common/modules/experiments/tests/sign-in-gate';
+import { signInGate as signInGateTestControl } from 'common/modules/experiments/tests/sign-in-gate';
+import { signInGateVariant as signInGateTestVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
 import { submitViewEventTracking } from './component-event-tracking';
-import { getVariant, isInTest } from './helper';
+import { getVariant, isInTest, getInTest } from './helper';
 import { component, componentName } from './component';
 import { variants } from './variants';
 import type {
@@ -14,33 +15,39 @@ import type {
     SignInGateVariant,
 } from './types';
 
+const tests = [signInGateTestControl, signInGateTestVariant];
+
 const canShow: () => Promise<boolean> = () =>
     new Promise(resolve => {
         // check if user is in test
-        if (!isInTest(signInGateTest)) return resolve(false);
+        if (!tests.some(test => isInTest(test))) return resolve(false);
+
+        // get the test the user is in
+        const test = getInTest(tests);
 
         // get the variant
-        const variant = variants.find(
-            v => v.name === getVariant(signInGateTest)
-        );
+        const variant = variants.find(v => v.name === getVariant(test));
 
         if (!variant) return resolve(false);
 
         // check if we can show the test for the variant the user is in
-        return resolve(variant.canShow(signInGateTest.id));
+        return resolve(variant.canShow(test.id));
     });
 
 const show: () => Promise<boolean> = () =>
     new Promise(resolve => {
+        // get the test the user is in
+        const test = getInTest(tests);
+
         // get the variant
         const variant: SignInGateVariant | void = variants.find(
-            v => v.name === getVariant(signInGateTest)
+            v => v.name === getVariant(test)
         );
 
         if (!variant) return resolve(false);
 
         const abTest: CurrentABTest = {
-            name: signInGateTest.id,
+            name: test.dataLinkNames || test.id,
             variant: variant.name,
         };
 
@@ -53,7 +60,7 @@ const show: () => Promise<boolean> = () =>
         const queryParams: ComponentEventParams = {
             componentType: 'signingate',
             componentId: component.id,
-            abTestName: signInGateTest.id,
+            abTestName: test.dataLinkNames || test.id,
             abTestVariant: variant.name,
         };
 
