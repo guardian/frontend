@@ -170,5 +170,13 @@
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
     "test": "jest"
+  },
+  "prettier": {
+    "trailingComma": "es5",
+    "singleQuote": true,
+    "bracketSpacing": true,
+    "tabWidth": 4,
+    "jsxBracketSameLine": true,
+    "parser": "flow"
   }
 }
