@@ -1,17 +1,12 @@
 // @flow
-import mediator from 'lib/mediator';
-import type { CurrentABTest, SignInGateVariant } from '../types';
-import { component, componentName } from '../component';
+import type { SignInGateVariant } from '../types';
+import { componentName } from '../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
     isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
-    addOpinionBgColour,
-    addClickHandler,
-    setUserDismissedGate,
-    showGate,
 } from '../helper';
 
 // define the variant name here
