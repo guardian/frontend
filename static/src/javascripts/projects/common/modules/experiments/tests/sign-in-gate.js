@@ -11,7 +11,7 @@ export const signInGate: ABTest = {
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
         'The contributions epic is not shown, The consent banner is not shown, The contributions banner is not shown, Should only appear on simple article template, Should not show if they are already signed in, Users will not need to go through the marketing consents as part of signup flow',
-    dataLinkNames: 'n/a',
+    dataLinkNames: 'SignInGateQuartus',
     idealOutcome: '60% of users sign in, and dismiss rate is below 40%',
     showForSensitive: false,
     canRun: () => true,
