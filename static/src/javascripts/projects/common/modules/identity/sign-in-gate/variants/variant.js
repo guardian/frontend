@@ -1,6 +1,6 @@
 // @flow
-import type { SignInGateVariant } from '../types';
-import { componentName } from '../component';
+import type { CurrentABTest, SignInGateVariant } from '../types';
+import { component, componentName } from '../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
