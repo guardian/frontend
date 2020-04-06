@@ -31,7 +31,7 @@ const canShow: () => Promise<boolean> = () =>
         if (!variant) return resolve(false);
 
         // check if we can show the test for the variant the user is in
-        return resolve(variant.canShow(test.id));
+        return resolve(variant.canShow(test.dataLinkNames));
     });
 
 const show: () => Promise<boolean> = () =>
