@@ -72,6 +72,7 @@ describe('Sign in gate test', () => {
             // mock twice as we have 2 tests
             fakeIsInABTestSynchronous
                 .mockReturnValueOnce(false)
+                .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
