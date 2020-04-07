@@ -142,7 +142,6 @@ declare type InitEpicABTest = {
     userCohort?: AcquisitionsComponentUserCohort,
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
-    deploymentRules?: DeploymentRules,
     testHasCountryName?: boolean,
     geolocation: ?string,
     highPriority: boolean,
