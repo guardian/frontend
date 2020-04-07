@@ -108,7 +108,6 @@ object ArticlePicker {
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isDiscussionDisabled", ArticlePageChecks.isDiscussionDisabled(page)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
@@ -154,14 +153,12 @@ object ArticlePicker {
     // dcrShouldRender provides an override to let us force rendering by DCR even
     // when an article is not supportted
     val forceDCR = request.forceDCR
-
     forceDCR || isInWhitelist(request.path)
   }
 
   def dcrShouldNotRender(request: RequestHeader): Boolean = {
     val forceDCROff = request.forceDCROff
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-
     forceDCROff || !dcrEnabled
   }
 
@@ -176,7 +173,7 @@ object ArticlePicker {
       LocalRenderArticle
     } else if (dcrShouldRender(request)) {
       RemoteRender
-    } else if (dcrCouldRender(page, request) && userIsInCohort) {
+    } else if (dcrCouldRender(page, request) && userIsInCohort && ArticlePageChecks.isDiscussionDisabled(page)) {
       RemoteRender
     } else {
       LocalRenderArticle
