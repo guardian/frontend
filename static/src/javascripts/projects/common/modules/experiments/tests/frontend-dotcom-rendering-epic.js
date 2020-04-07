@@ -13,6 +13,7 @@ import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
+import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 import {
     getLastOneOffContributionDate,
@@ -51,6 +52,15 @@ const canRun = (): boolean =>
     geolocation !== 'US' &&
     config.get('page').dcrCouldRender &&
     config.get('tests').dotcomRenderingControl === 'control';
+
+interface InitAutomatJsConfig {
+    epicRoot: HTMLElement | any;
+    onReminderOpen?: Function;
+}
+
+interface AutomatJsCallback {
+    buttonCopyAsString: string;
+}
 
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
@@ -216,9 +226,27 @@ const frontendDotcomRenderingTest = {
                                             typeof window.initAutomatJs ===
                                             'function'
                                         ) {
-                                            const slotRoot =
-                                                shadowRoot || container;
-                                            window.initAutomatJs(slotRoot);
+                                            const initAutomatJsConfig: InitAutomatJsConfig = {
+                                                epicRoot: shadowRoot || container,
+                                                onReminderOpen: (callbackParams: AutomatJsCallback) => {
+                                                    const { buttonCopyAsString } = callbackParams;
+                                                    // Track two separate Open events when the Reminder
+                                                    // button is clicked
+                                                    submitClickEvent({
+                                                        component: {
+                                                            componentType: 'ACQUISITIONS_OTHER',
+                                                            id: 'precontribution-reminder-prompt-clicked',
+                                                        },
+                                                    });
+                                                    submitClickEvent({
+                                                        component: {
+                                                            componentType: 'ACQUISITIONS_OTHER',
+                                                            id: `precontribution-reminder-prompt-copy-${buttonCopyAsString}`,
+                                                        },
+                                                    });
+                                                },
+                                            };
+                                            window.initAutomatJs(initAutomatJsConfig);
                                         }
                                     }
                                 } catch (error) {
