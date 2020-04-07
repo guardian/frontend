@@ -256,9 +256,15 @@ export const showGate: ({
                 articleBody.children[0].clientHeight < 125 &&
                 articleBody.children.length > 1
             ) {
-                shadowOverlay.appendChild(
-                    articleBody.children[1].cloneNode(true)
-                );
+                // find the indexes of the articles "p" tag, to include in the sign in gate fade
+                const pIndexes = Array.from(articleBody.children).map((elem, idx) => elem.tagName === "P" ? idx : '').filter(i => i !== '');
+
+                // found some "p" tags, add the first "p" to the fade
+                if (pIndexes.length > 1) {
+                    shadowOverlay.appendChild(
+                        articleBody.children[pIndexes[1]].cloneNode(true)
+                    );
+                }
             }
 
             // set the new article body to be first paragraph with transparent overlay, with the sign in gate component
