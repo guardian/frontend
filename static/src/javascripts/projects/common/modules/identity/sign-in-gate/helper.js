@@ -260,7 +260,7 @@ export const showGate: ({
                 const pIndexes = Array.from(articleBody.children).map((elem, idx) => elem.tagName === "P" ? idx : '').filter(i => i !== '');
 
                 // found some "p" tags, add the first "p" to the fade
-                if (pIndexes.length > 0) {
+                if (pIndexes.length > 1) {
                     shadowOverlay.appendChild(
                         articleBody.children[pIndexes[1]].cloneNode(true)
                     );
