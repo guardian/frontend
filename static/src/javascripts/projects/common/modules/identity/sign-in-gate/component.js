@@ -6,5 +6,5 @@ export const componentName = 'sign-in-gate';
 // set the ophan component tracking vars
 export const component: OphanComponent = {
     componentType: 'SIGN_IN_GATE',
-    id: 'latens_test',
+    id: 'quartus_test',
 };

@@ -10,10 +10,10 @@ import {
 } from '../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from './design/example';
+import { designShow } from './design/quartus';
 
 // define the variant name here
-const variant = 'example';
+const variant = 'scale';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>
@@ -22,7 +22,7 @@ const canShow: (name?: string) => boolean = (name = '') =>
         name,
         variant,
     }) &&
-    isNPageOrHigherPageView(2) &&
+    isNPageOrHigherPageView(3) &&
     !isLoggedIn() &&
     !isInvalidArticleType() &&
     !isInvalidSection();

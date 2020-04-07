@@ -17,6 +17,17 @@ export const isLoggedIn = isUserLoggedIn;
 // wrapper over isInABTestSynchronous
 export const isInTest: ABTest => boolean = test => isInABTestSynchronous(test);
 
+// when running multiple tests simultaneously to test the component, we need to get
+// which test the user is in, so that we can check and display the correct logic for that test
+export const getTestforMultiTest: (Array<ABTest>) => ABTest = tests =>
+    tests.reduce((acc, test) => {
+        const checkTest = getSynchronousTestsToRun().find(
+            t => t.id === test.id
+        );
+        if (checkTest) return checkTest;
+        return acc;
+    }, undefined);
+
 // get the current variant id the user is in
 export const getVariant: ABTest => string = test => {
     //  get the current test
