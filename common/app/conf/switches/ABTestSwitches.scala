@@ -148,6 +148,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-quartus-scale",
+    "Test new sign in component on 3nd article view to a larger audience",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 6, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-frontend-dotcom-rendering-epic",
     "A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance",
     owners = Seq(Owner.withGithub("andre1050")),
