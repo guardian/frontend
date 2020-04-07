@@ -54,7 +54,7 @@ const canRun = (): boolean =>
     config.get('tests').dotcomRenderingControl === 'control';
 
 interface InitAutomatJsConfig {
-    epicRoot: HTMLElement | any;
+    epicRoot: HTMLElement | ShadowRoot;
     onReminderOpen?: Function;
 }
 
