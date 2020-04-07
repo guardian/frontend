@@ -257,7 +257,7 @@ export const showGate: ({
                 articleBody.children.length > 1
             ) {
                 // find the indexes of the articles "p" tag, to include in the sign in gate fade
-                const pIndexes: Array<number> = Array.from(articleBody.children).map(i => i.tagName).map((a, i) => a === "P" ? i : 0).filter(i => i);
+                const pIndexes: Array<number> = Array.from(articleBody.children).map((elem, idx) => elem.tagName === "P" ? idx : 0).filter(i => i);
 
                 // found some "p" tags, add the first "p" to the fade
                 if (pIndexes.length) {
