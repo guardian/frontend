@@ -183,7 +183,11 @@ object ArticlePicker {
     }
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures + ("userIsInCohort" -> userIsInDotcomRenderingCohort) + ("isAdFree" -> isAddFree) + ("isArticle100PercentPage" -> isArticle100PercentPage)
+    val features = whitelistFeatures +
+      ("userIsInCohort" -> userIsInDotcomRenderingCohort) +
+      ("userIsInCohortDiscussion" -> userIsInDiscussionRenderingCohort) +
+      ("isAdFree" -> isAddFree) +
+      ("isArticle100PercentPage" -> isArticle100PercentPage)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
