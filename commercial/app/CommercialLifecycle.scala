@@ -1,5 +1,7 @@
 package commercial
 
+import java.util.concurrent.Executors
+
 import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
@@ -21,7 +23,12 @@ class CommercialLifecycle(
   akkaAsync: AkkaAsync,
   feedsFetcher: FeedsFetcher,
   feedsParser: FeedsParser,
-  industries: Industries)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+  industries: Industries) extends LifecycleComponent with Logging {
+
+  // This class does work that should be kept separate from the EC used to serve requests
+  implicit private val ec = ExecutionContext.fromExecutorService(
+    Executors.newFixedThreadPool(10)
+  )
 
   appLifecycle.addStopHook { () => Future {
     stop()

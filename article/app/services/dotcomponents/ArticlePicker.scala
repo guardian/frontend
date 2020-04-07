@@ -1,10 +1,10 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, DotcomRendering}
+import experiments.{ActiveExperiments, DiscussionRendering, DotcomRendering}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, TextBlockElement, TweetBlockElement, RichLinkBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -108,7 +108,6 @@ object ArticlePicker {
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isDiscussionDisabled", ArticlePageChecks.isDiscussionDisabled(page)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
@@ -154,20 +153,19 @@ object ArticlePicker {
     // dcrShouldRender provides an override to let us force rendering by DCR even
     // when an article is not supportted
     val forceDCR = request.forceDCR
-
     forceDCR || isInWhitelist(request.path)
   }
 
   def dcrShouldNotRender(request: RequestHeader): Boolean = {
     val forceDCROff = request.forceDCROff
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-
     forceDCROff || !dcrEnabled
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val whitelistFeatures = featureWhitelist(page, request)
-    val userIsInCohort = ActiveExperiments.isParticipating(DotcomRendering)
+    val userIsInDotcomRenderingCohort = ActiveExperiments.isParticipating(DotcomRendering)
+    val userIsInDiscussionRenderingCohort = ActiveExperiments.isParticipating(DiscussionRendering)
     val isAddFree = ArticlePageChecks.isAdFree(page, request)
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
 
@@ -176,14 +174,20 @@ object ArticlePicker {
       LocalRenderArticle
     } else if (dcrShouldRender(request)) {
       RemoteRender
-    } else if (dcrCouldRender(page, request) && userIsInCohort) {
+    } else if (dcrCouldRender(page, request) && userIsInDotcomRenderingCohort && ArticlePageChecks.isDiscussionDisabled(page)) {
+      RemoteRender
+    } else if (dcrCouldRender(page, request) && userIsInDiscussionRenderingCohort) {
       RemoteRender
     } else {
       LocalRenderArticle
     }
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures + ("userIsInCohort" -> userIsInCohort) + ("isAdFree" -> isAddFree) + ("isArticle100PercentPage" -> isArticle100PercentPage)
+    val features = whitelistFeatures +
+      ("userIsInCohort" -> userIsInDotcomRenderingCohort) +
+      ("userIsInCohortDiscussion" -> userIsInDiscussionRenderingCohort) +
+      ("isAdFree" -> isAddFree) +
+      ("isArticle100PercentPage" -> isArticle100PercentPage)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)

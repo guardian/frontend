@@ -130,7 +130,6 @@ const setupPlayer = (
     onAdStart,
     onAdEnd
 ) => {
-    const disableRelatedVideos = false;
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
     /**
@@ -163,7 +162,6 @@ const setupPlayer = (
         },
         embedConfig: {
             relatedChannels,
-            disableRelatedVideos,
             adsConfig,
         },
     });

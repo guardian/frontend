@@ -21,8 +21,9 @@ const subscriptionBannerTemplate = (
         </h3>
 
         <div class="site-message--subscription-banner__description">
-            <p>Support open, independent journalism and enjoy two
-             innovative apps and ad-free reading on theguardian.com</p>
+            <p>Support open and independent journalism and enjoy <b>the Daily</b>,
+            the digital edition of your newspaper,
+            <b>premium access to our Live app</b> and <b>ad-free</b> reading on theguardian.com</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">

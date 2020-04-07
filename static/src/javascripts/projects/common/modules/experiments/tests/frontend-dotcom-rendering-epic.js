@@ -119,7 +119,8 @@ const frontendDotcomRenderingTest = {
                     // service for consistency with DCR.
                     showSupportMessaging: !shouldNotBeShownSupportMessaging(),
                     isRecurringContributor: isRecurringContributor(),
-                    lastOneOffContributionDate: getLastOneOffContributionDate(),
+                    lastOneOffContributionDate:
+                        getLastOneOffContributionDate() || undefined,
                     mvtId: getMvtValue(),
                     countryCode,
                 };
@@ -147,8 +148,10 @@ const frontendDotcomRenderingTest = {
                     .then(json => {
                         if (json && json.data) {
                             const epicHtml = json.data.html;
-                            const css = json.data.css;
-                            const content = `<style>${css}</style>${epicHtml}`;
+                            const epicCss = json.data.css;
+                            const epicJs = json.data.js;
+
+                            const content = `<style>${epicCss}</style>${epicHtml}`;
 
                             return fastdom.write(() => {
                                 const target = document.querySelector(
@@ -176,14 +179,13 @@ const frontendDotcomRenderingTest = {
                                 parent.insertBefore(container, target);
 
                                 // use Shadow Dom if found
+                                let shadowRoot;
                                 if (container.attachShadow) {
-                                    console.log('epic - has shadow dom');
-                                    const shadowRoot = container.attachShadow({
+                                    shadowRoot = container.attachShadow({
                                         mode: 'open',
                                     });
                                     shadowRoot.innerHTML = content;
                                 } else {
-                                    console.log('epic - no shadow dom');
                                     container.innerHTML = content;
                                 }
 
@@ -200,6 +202,30 @@ const frontendDotcomRenderingTest = {
                                     trackingCampaignId,
                                     products
                                 );
+
+                                // If the Epic has custom JS code, we need to
+                                // eval it and call the function it defines.
+                                // NOTE: this is a temporary solution to solve a
+                                // particular requirement. The Automat team
+                                // plans to replace/remove this very soon.
+                                try {
+                                    if (epicJs) {
+                                        // eslint-disable-next-line no-eval
+                                        window.eval(epicJs);
+                                        if (
+                                            typeof window.initAutomatJs ===
+                                            'function'
+                                        ) {
+                                            const slotRoot =
+                                                shadowRoot || container;
+                                            window.initAutomatJs(slotRoot);
+                                        }
+                                    }
+                                } catch (error) {
+                                    // eslint-disable-next-line no-console
+                                    console.error(error);
+                                    reportError(error, {}, false);
+                                }
                             });
                         }
                     })
