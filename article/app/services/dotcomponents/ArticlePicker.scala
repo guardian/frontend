@@ -125,7 +125,7 @@ object ArticlePicker {
     path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
   }
 
-  def dcrCouldRender(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
+  def primaryChecksForDCRRendering(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
     val whitelistFeatures = featureWhitelist(page, request)
     val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
 
@@ -172,9 +172,9 @@ object ArticlePicker {
       LocalRenderArticle
     } else if (dcrShouldRender(request)) {
       RemoteRender
-    } else if (dcrCouldRender(page, request) && userIsInDotcomRenderingCohort && additionalChecksForRegularCohort) {
+    } else if (primaryChecksForDCRRendering(page, request) && userIsInDotcomRenderingCohort && additionalChecksForRegularCohort) {
       RemoteRender
-    } else if (dcrCouldRender(page, request) && userIsInDiscussionRenderingCohort) {
+    } else if (primaryChecksForDCRRendering(page, request) && userIsInDiscussionRenderingCohort) {
       RemoteRender
     } else {
       LocalRenderArticle
