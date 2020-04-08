@@ -26,11 +26,6 @@ const rawTest = {
             showTicker: false,
             showReminderFields: null,
             backgroundImageUrl: '',
-            maxViews: {
-                maxViewsDays: 30,
-                maxViewsCount: 4,
-                minDaysBetweenViews: 0,
-            },
         },
     ],
     highPriority: false,
@@ -39,6 +34,11 @@ const rawTest = {
         minViews: 5,
         maxViews: 10,
         periodInWeeks: 4,
+    },
+    maxViews: {
+        maxViewsDays: 30,
+        maxViewsCount: 4,
+        minDaysBetweenViews: 0,
     },
 };
 
@@ -70,7 +70,7 @@ describe('buildConfiguredEpicTestFromJson', () => {
             highlightedText: 'Some highlighted text',
         });
 
-        expect(variant.deploymentRules).toEqual({
+        expect(test.deploymentRules).toEqual({
             days: 30,
             count: 4,
             minDaysBetweenViews: 0,
