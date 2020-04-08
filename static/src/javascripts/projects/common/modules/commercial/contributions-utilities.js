@@ -550,7 +550,7 @@ const makeEpicABTest = ({
     template = controlTemplate,
     canRun = () => true,
     articlesViewedSettings,
-    deploymentRules = defaultMaxViews,
+    deploymentRules,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -588,7 +588,7 @@ const makeEpicABTest = ({
         userCohort,
         pageCheck,
         useTargetingTool,
-        deploymentRules,
+        deploymentRules: deploymentRules || defaultMaxViews,
     };
 
     test.variants = variants.map(variant =>
