@@ -39,13 +39,12 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import readerRevenueBanners from 'common/modules/commercial/reader-revenue-banner-selector';
 import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
@@ -308,8 +307,7 @@ const initialiseBanner = (): void => {
         breakingNews,
         signInGate,
         membershipBanner,
-        membershipEngagementBanner,
-        subscriptionBanner,
+        ...readerRevenueBanners,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
