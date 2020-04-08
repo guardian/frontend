@@ -230,7 +230,7 @@ const frontendDotcomRenderingTest = {
                                                 epicRoot: shadowRoot || container,
                                                 onReminderOpen: (callbackParams: AutomatJsCallback) => {
                                                     const { buttonCopyAsString } = callbackParams;
-                                                    // Track two separate Open events when the Reminder
+                                                    // Send two separate Ophan events when the Reminder
                                                     // button is clicked
                                                     submitClickEvent({
                                                         component: {
