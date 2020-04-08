@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, DiscussionRendering, DotcomRendering}
+import experiments.{ActiveExperiments, DCRBubble, DiscussionRendering, DotcomRendering}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
@@ -165,14 +165,15 @@ object ArticlePicker {
     val whitelistFeatures = featureWhitelist(page, request)
     val userIsInDotcomRenderingCohort = ActiveExperiments.isParticipating(DotcomRendering)
     val userIsInDiscussionRenderingCohort = ActiveExperiments.isParticipating(DiscussionRendering)
+    val userIsInDCRBubbleCohort = ActiveExperiments.isParticipating(DCRBubble)
     val additionalChecksForRegularCohort = ArticlePageChecks.isDiscussionDisabled(page) && ArticlePageChecks.isNotOpinion(page)
 
     // Decide if we should render this request with the DCR platform or not
     val tier = if (dcrShouldNotRender(request)) {
       LocalRenderArticle
-    } else if (dcrShouldRender(request)) {
+    } else if (dcrShouldRender(request) || userIsInDCRBubbleCohort) {
       RemoteRender
-    } else if (primaryChecksForDCRRendering(page, request) && userIsInDotcomRenderingCohort && additionalChecksForRegularCohort) {
+    } else if (primaryChecksForDCRRendering(page, request) && additionalChecksForRegularCohort && userIsInDotcomRenderingCohort) {
       RemoteRender
     } else if (primaryChecksForDCRRendering(page, request) && userIsInDiscussionRenderingCohort) {
       RemoteRender
