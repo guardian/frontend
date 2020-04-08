@@ -339,7 +339,6 @@ const makeEpicABTestVariant = (
         parentTest.campaignId,
         initVariant.id
     );
-    const deploymentRules = initVariant.deploymentRules || defaultMaxViews;
 
     return {
         id: initVariant.id,
@@ -368,7 +367,6 @@ const makeEpicABTestVariant = (
         showTicker: initVariant.showTicker || false,
         showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
-        deploymentRules,
 
         countryGroups: initVariant.countryGroups || [],
         tagIds: initVariant.tagIds || [],
@@ -403,8 +401,8 @@ const makeEpicABTestVariant = (
             };
 
             const meetsMaxViewsConditions =
-                deploymentRules === 'AlwaysAsk' ||
-                checkMaxViews(deploymentRules);
+                parentTest.deploymentRules === 'AlwaysAsk' ||
+                checkMaxViews(parentTest.deploymentRules);
 
             const matchesCountryGroups =
                 this.countryGroups.length === 0 ||
@@ -552,6 +550,7 @@ const makeEpicABTest = ({
     template = controlTemplate,
     canRun = () => true,
     articlesViewedSettings,
+    deploymentRules = defaultMaxViews,
 }: InitEpicABTest): EpicABTest => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
@@ -589,6 +588,7 @@ const makeEpicABTest = ({
         userCohort,
         pageCheck,
         useTargetingTool,
+        deploymentRules,
     };
 
     test.variants = variants.map(variant =>
@@ -717,6 +717,7 @@ export const buildConfiguredEpicTestFromJson = (
         // they will be excluded from this test
         testHasCountryName: test.hasCountryName,
         articlesViewedSettings,
+        deploymentRules,
 
         variants: test.variants.map(variant => ({
             id: variant.name,
@@ -753,7 +754,6 @@ export const buildConfiguredEpicTestFromJson = (
             showReminderFields: variant.showReminderFields,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
-            deploymentRules,
             countryGroups,
             tagIds,
             sections,

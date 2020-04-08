@@ -14,7 +14,6 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     engagementBannerParams?: EngagementBannerTestParams,
-    deploymentRules?: DeploymentRules,
 };
 
 declare type EpicVariant = Variant & {
@@ -90,13 +89,13 @@ declare type EpicABTest = AcquisitionsABTest & {
     insertEvent: string,
     viewEvent: string,
     highPriority: boolean,
+    deploymentRules: DeploymentRules,
 };
 
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, variant: EpicVariant, parentTest: EpicABTest) => void,
-    deploymentRules?: DeploymentRules,
     countryGroups?: string[],
     tagIds?: string[],
     sections?: string[],
@@ -142,6 +141,7 @@ declare type InitEpicABTest = {
     userCohort?: AcquisitionsComponentUserCohort,
     pageCheck?: (page: Object) => boolean,
     template?: EpicTemplate,
+    deploymentRules?: DeploymentRules,
     testHasCountryName?: boolean,
     geolocation: ?string,
     highPriority: boolean,

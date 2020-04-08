@@ -54,6 +54,7 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
         audienceCriteria: 'All',
         audience: 1,
         audienceOffset: 0,
+        deploymentRules: 'AlwaysAsk',
 
         pageCheck: isCompatibleWithLiveBlogEpic,
 
@@ -64,7 +65,6 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
                 copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateControl),
                 test: setupEpicInLiveblog,
-                deploymentRules: 'AlwaysAsk',
             },
             {
                 id: 'v1',
@@ -72,7 +72,6 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
                 copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateButtonNoArrow),
                 test: setupEpicInLiveblog,
-                deploymentRules: 'AlwaysAsk',
             },
             {
                 id: 'v2',
@@ -80,7 +79,6 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
                 copy: buildEpicCopy(epicCopy, false, geolocation),
                 template: liveBlogTemplate(lastSentenceTemplateButtonArrow),
                 test: setupEpicInLiveblog,
-                deploymentRules: 'AlwaysAsk',
             },
         ],
     }

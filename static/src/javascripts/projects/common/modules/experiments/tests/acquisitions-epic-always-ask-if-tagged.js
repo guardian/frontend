@@ -23,6 +23,7 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
     audience: 1,
     audienceOffset: 0,
     useTargetingTool: true,
+    deploymentRules: 'AlwaysAsk',
     pageCheck: page =>
         page.contentType === 'Article' || page.contentType === 'Interactive',
 
@@ -30,8 +31,6 @@ export const acquisitionsEpicAlwaysAskIfTagged = makeEpicABTest({
         {
             id: 'control',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-
-            deploymentRules: 'AlwaysAsk',
             buttonTemplate: epicButtonsTemplate,
         },
     ],
