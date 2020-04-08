@@ -11,7 +11,7 @@ export const askFourEarning: EpicABTest = makeEpicABTest({
     highPriority: false,
 
     start: '2017-01-24',
-    expiry: '2020-01-27',
+    expiry: '2021-01-27',
 
     author: 'Jonathan Rankin',
     description:
