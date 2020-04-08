@@ -67,8 +67,8 @@ const subscriptionBannerTemplate = (
 
         <div class="site-message--packshot-container">
             <img
-                srcset="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
-                src="https://media.guim.co.uk/28370863b7bb19c5e8e0dc50fe871d4cca99778b/0_0_1894_1156/500.png"
+                srcset="https://i.guim.co.uk/img/media/773ead1bd414781052c0983858e6859993870dd3/34_72_1825_1084/1825.png?quality=85&s=7650036e50d9f2c8a8f49871bb6065ac"
+                src="https://i.guim.co.uk/img/media/773ead1bd414781052c0983858e6859993870dd3/34_72_1825_1084/1825.png?quality=85&s=7650036e50d9f2c8a8f49871bb6065ac"
                 alt="the guardian mobile app, the guardian daily"
             >
         </div>
