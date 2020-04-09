@@ -8,9 +8,8 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     epicLiveBlogTemplate,
+    lastSentenceTemplateButtonAndSubscribe,
     lastSentenceTemplateControl,
-    lastSentenceTemplateButtonNoArrow,
-    lastSentenceTemplateButtonArrow,
 } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import type { LiveblogEpicLastSentenceTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 
@@ -35,12 +34,12 @@ const liveBlogTemplate = (
         lastSentenceTemplate,
     });
 
-export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
+export const contributionsEpicLiveblogDesignTestR2: EpicABTest = makeEpicABTest(
     {
-        id: 'ContributionsEpicLiveblogDesignTestR1',
-        campaignId: 'contributions-epic-liveblog-design-test-r1',
+        id: 'ContributionsEpicLiveblogDesignTestR2',
+        campaignId: 'contributions-epic-liveblog-design-test-r2',
 
-        geolocation: geolocationGetSync(),
+        geolocation,
         highPriority: true,
 
         start: '2020-03-26',
@@ -57,6 +56,7 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
         deploymentRules: 'AlwaysAsk',
 
         pageCheck: isCompatibleWithLiveBlogEpic,
+        canRun: () => geolocation === 'GB',
 
         variants: [
             {
@@ -70,14 +70,7 @@ export const contributionsEpicLiveblogDesignTestR1: EpicABTest = makeEpicABTest(
                 id: 'v1',
                 products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
                 copy: buildEpicCopy(epicCopy, false, geolocation),
-                template: liveBlogTemplate(lastSentenceTemplateButtonNoArrow),
-                test: setupEpicInLiveblog,
-            },
-            {
-                id: 'v2',
-                products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                copy: buildEpicCopy(epicCopy, false, geolocation),
-                template: liveBlogTemplate(lastSentenceTemplateButtonArrow),
+                template: liveBlogTemplate(lastSentenceTemplateButtonAndSubscribe),
                 test: setupEpicInLiveblog,
             },
         ],
