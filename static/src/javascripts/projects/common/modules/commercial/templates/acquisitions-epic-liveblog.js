@@ -5,7 +5,7 @@ export type LiveblogEpicLastSentenceTemplate = (
     supportURL: string
 ) => string;
 
-const lastSentenceTemplateControl: LiveblogEpicLastSentenceTemplate = (
+const lastSentenceTemplate = (hasSubscribeLink: boolean): LiveblogEpicLastSentenceTemplate => (
     highlightedText?: string,
     supportURL: string
 ) =>
@@ -13,52 +13,24 @@ const lastSentenceTemplateControl: LiveblogEpicLastSentenceTemplate = (
         highlightedText
             ? `<span className="contributions__highlight">${highlightedText}</span>`
             : ''
-    }
-    <a href="${supportURL}" target="_blank" class="u-underline">Make a contribution</a> - The Guardian`;
-
-const lastSentenceTemplateButtonNoArrow: LiveblogEpicLastSentenceTemplate = (
-    highlightedText?: string,
-    supportURL: string
-) =>
-    `${
-        highlightedText
-            ? `<span className="contributions__highlight">${highlightedText}</span>`
-            : ''
-    }
+        }
     <div class="component-button--liveblog-container">
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
           target="_blank">
           Make a contribution
         </a>
+        ${
+            hasSubscribeLink
+               ? `<a class="component-button--liveblog-subscribe" href="https://support.theguardian.com/subscribe">Subscribe</a>`
+               : ''
+        }
     </div>`;
 
-const lastSentenceTemplateButtonArrow: LiveblogEpicLastSentenceTemplate = (
-    highlightedText?: string,
-    supportURL: string
-) =>
-    `${
-        highlightedText
-            ? `<span className="contributions__highlight">${highlightedText}</span>`
-            : ''
-    }
-    <div class="component-button--liveblog-container">
-        <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
-          href=${supportURL}
-          target="_blank">
-          Make a contribution
-          <svg
-            class="svg-arrow-right-straight"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 17.89"
-            preserveAspectRatio="xMinYMid"
-            aria-hidden="true"
-            focusable="false"
-            >
-                <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
-            </svg>
-        </a>
-    </div>`;
+
+const lastSentenceTemplateControl: LiveblogEpicLastSentenceTemplate = lastSentenceTemplate(false);
+
+const lastSentenceTemplateButtonAndSubscribe: LiveblogEpicLastSentenceTemplate = lastSentenceTemplate(true);
 
 const epicLiveBlogTemplate = ({
     copy,
@@ -91,7 +63,6 @@ const epicLiveBlogTemplate = ({
 
 export {
     lastSentenceTemplateControl,
-    lastSentenceTemplateButtonNoArrow,
-    lastSentenceTemplateButtonArrow,
+    lastSentenceTemplateButtonAndSubscribe,
     epicLiveBlogTemplate,
 };
