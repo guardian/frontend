@@ -5,6 +5,8 @@ export type LiveblogEpicLastSentenceTemplate = (
     supportURL: string
 ) => string;
 
+const subscribeUrl = 'https://support.theguardian.com/subscribe/digital?acquisitionData=%7B%22componentType%22%3A%22ACQUISITIONS_OTHER%22%2C%22source%22%3A%22GUARDIAN_WEB%22%2C%22campaignCode%22%3A%22gdnwb_copts_EPIC_liveblog_subscribe%22%2C%22componentId%22%3A%22gdnwb_copts_EPIC_liveblog_subscribe%22%7D&INTCMP=gdnwb_copts_EPIC_liveblog_subscribe';
+
 const lastSentenceTemplateGenerator = (hasSubscribeLink: boolean): LiveblogEpicLastSentenceTemplate => (
     highlightedText?: string,
     supportURL: string
@@ -22,7 +24,7 @@ const lastSentenceTemplateGenerator = (hasSubscribeLink: boolean): LiveblogEpicL
         </a>
         ${
             hasSubscribeLink
-               ? `<a class="component-button--liveblog-subscribe" href="https://support.theguardian.com/subscribe">Subscribe</a>`
+               ? `<a class="component-button--liveblog-subscribe" href="${subscribeUrl}">Subscribe</a>`
                : ''
         }
     </div>`;
