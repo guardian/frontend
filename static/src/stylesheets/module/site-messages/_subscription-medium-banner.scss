@@ -1,3 +1,5 @@
+$teal-green: #006d67;
+
 *[class^='site-message--subscription-banner'] {
     box-sizing: border-box;
 }
@@ -7,8 +9,8 @@
     display: flex;
     flex-wrap: wrap;
     overflow: hidden;
-    background: $highlight-main;
-    color: $brightness-7;
+    background: $teal-green;
+    color: $brightness-97;
     width: 100%;
     padding: 10px;
 
@@ -141,9 +143,9 @@
     font-size: 16px;
     padding: 10px 20px 12px;
     border-radius: 50px;
-    background: $brightness-7;
+    background: $highlight-main;
     font-family: $f-sans-serif-text;
-    color: $brightness-97;
+    color: $brightness-7;
     text-align: center;
     cursor: pointer;
     width: auto;
@@ -163,7 +165,7 @@
 
 .site-message--subscription-banner__cta-dismiss {
     display: block;
-    color: $brightness-7;
+    color: $brightness-97;
     font-family: $f-sans-serif-text;
     font-size: 16px;
     width: 100%;
@@ -175,7 +177,7 @@
     font-size: 15px;
     font-weight: normal;
     font-family: $f-sans-serif-text;
-    color: $brightness-7;
+    color: $brightness-97;
     margin-top: 10px;
 
     @include mq($from: tablet) {
@@ -190,7 +192,7 @@
     }
 
     a {
-        color: $brightness-7;
+        color: $brightness-97;
     }
 
     &.site-message--subscription-banner__sign-in--already-signed-in {
@@ -295,7 +297,7 @@
     svg {
         border-radius: 50%;
         padding: 2px;
-        border: 1px solid $brightness-7;
+        border: 1px solid $brightness-97;
         transition: background-color .5s ease;
     }
 
@@ -305,12 +307,16 @@
     }
 
     svg path {
-        fill: $brightness-7;
+        fill: $brightness-97;
     }
 }
 
 .site-message--subscription-banner__gu-logo {
     display: none;
+
+    svg path {
+        fill: $brightness-97;
+    }
 
     @include mq($from: desktop) {
         display: block;
