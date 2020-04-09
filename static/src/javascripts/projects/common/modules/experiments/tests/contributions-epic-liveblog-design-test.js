@@ -39,7 +39,7 @@ export const contributionsEpicLiveblogDesignTestR2: EpicABTest = makeEpicABTest(
         id: 'ContributionsEpicLiveblogDesignTestR2',
         campaignId: 'contributions-epic-liveblog-design-test-r2',
 
-        geolocation: geolocation,
+        geolocation,
         highPriority: true,
 
         start: '2020-03-26',

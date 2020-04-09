@@ -5,7 +5,7 @@ export type LiveblogEpicLastSentenceTemplate = (
     supportURL: string
 ) => string;
 
-const lastSentenceTemplate = (hasSubscribeLink: boolean): LiveblogEpicLastSentenceTemplate => (
+const lastSentenceTemplateGenerator = (hasSubscribeLink: boolean): LiveblogEpicLastSentenceTemplate => (
     highlightedText?: string,
     supportURL: string
 ) =>
@@ -28,9 +28,9 @@ const lastSentenceTemplate = (hasSubscribeLink: boolean): LiveblogEpicLastSenten
     </div>`;
 
 
-const lastSentenceTemplateControl: LiveblogEpicLastSentenceTemplate = lastSentenceTemplate(false);
+const lastSentenceTemplateControl: LiveblogEpicLastSentenceTemplate = lastSentenceTemplateGenerator(false);
 
-const lastSentenceTemplateButtonAndSubscribe: LiveblogEpicLastSentenceTemplate = lastSentenceTemplate(true);
+const lastSentenceTemplateButtonAndSubscribe: LiveblogEpicLastSentenceTemplate = lastSentenceTemplateGenerator(true);
 
 const epicLiveBlogTemplate = ({
     copy,
