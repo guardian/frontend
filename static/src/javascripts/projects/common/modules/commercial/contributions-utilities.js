@@ -272,7 +272,6 @@ const setupOnView = (
     showTicker: boolean = false,
     showReminderFields: ReminderFields | null = null
 ) => {
-    // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(element, window, {
         top: 18,
     });
