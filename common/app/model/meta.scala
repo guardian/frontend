@@ -260,7 +260,7 @@ final case class MetaData (
     DfpAgent.omitMPUsFromContainers(id, edition)
   } else false
 
-  val shouldBlockAnalytics: Boolean = Set(
+  val isSecureContact: Boolean = Set(
       "help/ng-interactive/2017/mar/17/contact-the-guardian-securely",
       "help/2016/sep/19/how-to-contact-the-guardian-securely"
     ).contains(id)

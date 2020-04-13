@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -10,13 +10,16 @@ import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
-let moduleLoadResult = Promise.resolve();
-if (!isGoogleProxy()) {
-    moduleLoadResult = import('lib/a9-apstag.js');
-}
+const moduleLoadResult = () =>
+    isGoogleProxy() ? Promise.resolve() : import('lib/a9-apstag.js');
 
-const setupA9: () => Promise<void> = () =>
-    moduleLoadResult.then(() => {
+const setupA9: () => Promise<void> = () => {
+    // There are two articles that InfoSec would like to avoid loading scripts on
+    if (commercialFeatures.isSecureContact) {
+        return Promise.resolve();
+    }
+
+    return moduleLoadResult().then(() => {
         if (
             shouldIncludeOnlyA9 ||
             (dfpEnv.hbImpl.a9 &&
@@ -30,8 +33,9 @@ const setupA9: () => Promise<void> = () =>
         }
         return Promise.resolve();
     });
+};
 
-export const setupA9Once: () => Promise<void> = once(setupA9);
+const setupA9Once: () => Promise<void> = once(setupA9);
 
 export const init = (): Promise<void> => {
     setupA9Once();

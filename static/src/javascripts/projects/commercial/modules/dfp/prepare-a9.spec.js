@@ -141,6 +141,15 @@ describe('init', () => {
         expect(a9.initialise).toBeCalled();
     });
 
+    it('should not initialise a9 on the secure contact pages', async () => {
+        dfpEnv.hbImpl = { a9: true, prebid: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        commercialFeatures.isSecureContact = true;
+        await setupA9();
+        expect(a9.initialise).not.toBeCalled();
+    });
+
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
         expect(isGoogleProxy()).toBe(false);
     });

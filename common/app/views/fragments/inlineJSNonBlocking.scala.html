@@ -31,7 +31,7 @@
 
 @if(LotameSwitch.isSwitchedOn
     && !page.metadata.contentType.contains(DotcomContentType.Identity)
-    && !page.metadata.shouldBlockAnalytics) {
+    && !page.metadata.isSecureContact) {
     @InlineJs(prepareLotame().body, "prepareLotame.js")
 }
 
