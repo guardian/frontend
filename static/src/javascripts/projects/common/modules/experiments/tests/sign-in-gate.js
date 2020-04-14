@@ -6,7 +6,7 @@ export const signInGate: ABTest = {
     author: 'Mahesh Makani',
     description:
         'Test adding a sign in component on the 2nd pageview of simple article templates, with higher priority over banners and epic, and a much larget audience size. This test does not display a gate, and only used for tracking users who meet our displayer criteria.',
-    audience: 0.06,
+    audience: 0.13,
     audienceOffset: 0.5,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:

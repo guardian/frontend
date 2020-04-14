@@ -28,7 +28,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-liveblog-design-test-r1",
+    "ab-contributions-epic-liveblog-design-test-r2",
     "Test new designs for the liveblog",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
