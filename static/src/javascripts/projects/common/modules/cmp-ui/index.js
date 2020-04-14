@@ -33,7 +33,7 @@ export const init = (forceModal: boolean) => {
                 "'Guardian Text Sans Web', Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif",
         },
         forceModal,
-        variant: isInVariantSynchronous(commercialCmpCopy, 'variant') ? 'variant' : 'control',
+        variant: isInVariantSynchronous(commercialCmpCopy, 'variant') ? 'commercialCmpCopy-variant' : 'commercialCmpCopy-control',
     };
 
     if (document.body) {
