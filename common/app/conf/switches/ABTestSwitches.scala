@@ -179,7 +179,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-commercial-cmp-copy",
-    "1% a/b test for new CMP copy",
+    "3% a/b test for new CMP copy",
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 4, 21),
