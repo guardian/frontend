@@ -7,6 +7,16 @@ import { setErrorHandler } from '@guardian/consent-management-platform';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { commercialCmpCopy } from 'common/modules/experiments/tests/commercial-cmp-copy'
 
+let variant;
+
+if (isInVariantSynchronous(commercialCmpCopy, 'variant')) {
+    variant = 'commercialCmpCopy-variant';
+}
+
+if (isInVariantSynchronous(commercialCmpCopy, 'control')) {
+    variant = 'commercialCmpCopy-control';
+}
+
 export const init = (forceModal: boolean) => {
     const container = document.createElement('div');
     container.id = 'cmpContainer';
@@ -33,7 +43,7 @@ export const init = (forceModal: boolean) => {
                 "'Guardian Text Sans Web', Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif",
         },
         forceModal,
-        variant: isInVariantSynchronous(commercialCmpCopy, 'variant') ? 'commercialCmpCopy-variant' : 'commercialCmpCopy-control',
+        variant,
     };
 
     if (document.body) {
