@@ -165,4 +165,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 5, 4),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-commercial-uk-row-mobile-sticky",
+    "1% a/b test for mobile sticky ad in UK and ROW regions",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 4, 22),
+    exposeClientSide = true
+  )
 }

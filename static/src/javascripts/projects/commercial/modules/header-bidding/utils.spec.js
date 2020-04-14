@@ -6,6 +6,8 @@ import {
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
 import config from 'lib/config';
+import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
+import { commercialUkRowMobileSticky } from 'common/modules/experiments/tests/commercial-uk-row-mobile-sticky.js';
 import {
     getLargestSize,
     getBreakpointKey,
@@ -43,9 +45,7 @@ jest.mock('lib/detect', () => ({
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(
-        (testId, variantId) => variantId === 'variant'
-    ),
+    isInVariantSynchronous: jest.fn(() => false),
 }));
 
 jest.mock('common/modules/experiments/ab-tests');
@@ -65,11 +65,11 @@ const resetConfig = () => {
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
     config.set('page.isDev', false);
+    config.set('page.isHosted', false);
 };
 
 describe('Utils', () => {
-    beforeEach(() => {
-        jest.resetAllMocks();
+    afterEach(() => {
         resetConfig();
     });
 
@@ -125,8 +125,9 @@ describe('Utils', () => {
 
     ['US', 'CA'].forEach(region => {
         test(`shouldIncludeAppNexus should return true if geolocation is ${region} and in variant`, () => {
-            isInVariantSynchronous.mockImplementationOnce(
-                (testId, variantId) => variantId === 'variant'
+            isInVariantSynchronous.mockImplementation(
+                (test, variantId) =>
+                    test === appnexusUSAdapter && variantId === 'variant'
             );
             getSync.mockReturnValue(region);
             expect(shouldIncludeAppNexus()).toBe(true);
@@ -356,6 +357,32 @@ describe('Utils', () => {
         isBreakpoint.mockReturnValue(false);
         getSync.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test(`should include mobile sticky if the user is not in US/AUS BUT is in the commercialUkRowMobileSticky test ukVariant`, () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getSync.mockReturnValue('GB');
+        isBreakpoint.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementation(
+            (test, variantId) =>
+                test === commercialUkRowMobileSticky &&
+                variantId === 'ukVariant'
+        );
+        expect(shouldIncludeMobileSticky()).toBe(true);
+    });
+
+    test(`should include mobile sticky if the user is not in US/AUS BUT is in the commercialUkRowMobileSticky test rowVariant`, () => {
+        config.set('page.contentType', 'Article');
+        config.set('switches.mobileStickyLeaderboard', true);
+        getSync.mockReturnValue('GB');
+        isBreakpoint.mockReturnValue(true);
+        isInVariantSynchronous.mockImplementation(
+            (test, variantId) =>
+                test === commercialUkRowMobileSticky &&
+                variantId === 'rowVariant'
+        );
+        expect(shouldIncludeMobileSticky()).toBe(true);
     });
 
     test('shouldIncludeMobileSticky should be true if test param exists irrespective of other conditions', () => {

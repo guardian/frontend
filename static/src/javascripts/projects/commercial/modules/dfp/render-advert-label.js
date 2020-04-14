@@ -1,6 +1,9 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
 import crossIcon from 'svgs/icon/cross.svg';
+import ophan from 'ophan/ng';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { commercialUkRowMobileSticky } from 'common/modules/experiments/tests/commercial-uk-row-mobile-sticky.js';
 
 const shouldRenderLabel = adSlotNode =>
     !(
@@ -13,11 +16,45 @@ const shouldRenderLabel = adSlotNode =>
 
 const createAdCloseDiv = (): HTMLButtonElement => {
     const closeDiv: HTMLButtonElement = document.createElement('button');
+    const CLOSE_BUTTON_ID = 'ad-slot-close-button';
     closeDiv.className = 'ad-slot__close-button';
+    closeDiv.id = CLOSE_BUTTON_ID;
     closeDiv.innerHTML = crossIcon.markup;
     closeDiv.onclick = function onclickMobileStickyCloser() {
         const container = this.closest('.mobilesticky-container');
-        if (container) container.remove();
+        if (container) {
+            container.remove();
+
+            if (
+                isInVariantSynchronous(
+                    commercialUkRowMobileSticky,
+                    'ukVariant'
+                ) ||
+                isInVariantSynchronous(
+                    commercialUkRowMobileSticky,
+                    'rowVariant'
+                )
+            ) {
+                const componentEvent: OphanComponentEvent = {
+                    action: 'CLICK',
+                    component: {
+                        componentType: 'MOBILE_STICKY_AD',
+                        id: CLOSE_BUTTON_ID,
+                    },
+                    abTest: {
+                        name: 'CommercialUkRowMobileSticky',
+                        variant: isInVariantSynchronous(
+                            commercialUkRowMobileSticky,
+                            'ukVariant'
+                        )
+                            ? 'ukVariant'
+                            : 'rowVariant',
+                    },
+                };
+
+                ophan.record({ componentEvent });
+            }
+        }
     };
     return closeDiv;
 };

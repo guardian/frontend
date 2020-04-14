@@ -6,6 +6,10 @@ jest.mock('lib/detect', () => {});
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
+jest.mock('ophan/ng', () => null);
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: () => false,
+}));
 
 const adverts = {};
 const labelSelector = '.ad-slot__label';

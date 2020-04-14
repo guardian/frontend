@@ -7,6 +7,7 @@ import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
+import { commercialUkRowMobileSticky } from 'common/modules/experiments/tests/commercial-uk-row-mobile-sticky.js';
 import type { HeaderBiddingSize } from './types';
 
 const isInAppnexusUSAdapterTestVariant = (): boolean =>
@@ -158,7 +159,16 @@ export const shouldIncludeMobileSticky = once(
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-            (isInUsRegion() || isInAuRegion()) &&
+            (isInUsRegion() ||
+                isInAuRegion() ||
+                isInVariantSynchronous(
+                    commercialUkRowMobileSticky,
+                    'ukVariant'
+                ) ||
+                isInVariantSynchronous(
+                    commercialUkRowMobileSticky,
+                    'rowVariant'
+                )) &&
             config.get('page.contentType') === 'Article' &&
             !config.get('page.isHosted'))
 );

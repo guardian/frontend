@@ -1,6 +1,11 @@
 // @flow
 import { _ } from './background';
 
+jest.mock('commercial/modules/dfp/render-advert-label', () => ({
+    renderStickyAdLabel: jest.fn(),
+    renderStickyScrollForMoreLabel: jest.fn(),
+}));
+
 const { setBackground, getStylesFromSpec } = _;
 
 const adSpec = {

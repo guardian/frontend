@@ -54,14 +54,15 @@ declare type OphanComponentType =
     | 'ACQUISITIONS_EDITORIAL_LINK'
     | 'ACQUISITIONS_SUBSCRIPTIONS_BANNER'
     | 'ACQUISITIONS_OTHER'
-    | 'SIGN_IN_GATE';
+    | 'SIGN_IN_GATE'
+    | 'MOBILE_STICKY_AD';
 
 declare type OphanComponent = {
     componentType: OphanComponentType,
     id?: string,
     products?: $ReadOnlyArray<OphanProduct>,
     campaignCode?: string,
-    labels?: $ReadOnlyArray<string>
+    labels?: $ReadOnlyArray<string>,
 };
 
 declare type OphanComponentEvent = {
@@ -71,6 +72,6 @@ declare type OphanComponentEvent = {
     id?: string,
     abTest?: {
         name: string,
-        variant: string
-    }
+        variant: string,
+    },
 };

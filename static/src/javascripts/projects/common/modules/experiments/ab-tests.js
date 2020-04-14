@@ -15,6 +15,7 @@ import { signInGateScale } from 'common/modules/experiments/tests/sign-in-gate-s
 import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 import { commercialCmpCopy } from 'common/modules/experiments/tests/commercial-cmp-copy';
+import { commercialUkRowMobileSticky } from 'common/modules/experiments/tests/commercial-uk-row-mobile-sticky.js';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -27,6 +28,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateVariant,
     signInGateScale,
     commercialCmpCopy,
+    commercialUkRowMobileSticky
 ];
 
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
