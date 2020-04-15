@@ -105,15 +105,8 @@ const frontendDotcomRenderingTest = {
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
                     clientName: 'frontend',
-                    campaignCode: variant.campaignCode,
-                    abTestName: test.id,
-                    abTestVariant: variant.id,
                     referrerUrl:
                         window.location.origin + window.location.pathname,
-                };
-
-                const localisation = {
-                    countryCode,
                 };
 
                 const targeting = {
@@ -137,7 +130,6 @@ const frontendDotcomRenderingTest = {
 
                 const payload = {
                     tracking,
-                    localisation,
                     targeting,
                 };
 
