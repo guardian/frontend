@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, DCRBubble, DiscussionRendering, DotcomRendering}
+import experiments.{ActiveExperiments, Control, DCRBubble, DiscussionRendering, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
@@ -98,7 +98,7 @@ object ArticlePicker {
 
   val logger = DotcomponentsLogger()
 
-  private[this] def logRequest(msg:String, results: Map[String, Boolean], page: PageWithStoryPackage)(implicit request: RequestHeader): Unit = {
+  private[this] def logRequest(msg:String, results: Map[String, String], page: PageWithStoryPackage)(implicit request: RequestHeader): Unit = {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
@@ -179,13 +179,21 @@ object ArticlePicker {
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val isAddFree = ArticlePageChecks.isAdFree(page, request)
 
+    def testGroup(experiment: Experiment): String = ActiveExperiments.groupFor(experiment) match {
+      case Participant => "participant"
+      case Control => "control"
+      case Excluded => "excluded"
+    }
+
     // include features that we wish to log but not whitelist against
-    val features = primaryChecks +
-      ("userIsInCohort" -> userInMainTest) +
-      ("userIsInCohortDiscussion" -> userInDiscussionTest) +
-      ("isAdFree" -> isAddFree) +
-      ("isArticle100PercentPage" -> isArticle100PercentPage) +
-      ("dcrCouldRender" -> canRender)
+    val features = primaryChecks.mapValues(_.toString) +
+      ("dcrTestGroup" -> testGroup(DotcomRendering)) +
+      ("dcrDiscussionTestGroup" -> testGroup(DiscussionRendering)) +
+      ("userIsInCohort" -> userInMainTest.toString) +
+      ("userIsInCohortDiscussion" -> userInDiscussionTest.toString) +
+      ("isAdFree" -> isAddFree.toString) +
+      ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
+      ("dcrCouldRender" -> canRender.toString)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
