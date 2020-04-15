@@ -102,7 +102,7 @@ object ArticlePicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  private[this] def featureWhitelist(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+  def primaryFeatures(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
@@ -116,7 +116,7 @@ object ArticlePicker {
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
       ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
-      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page))
+      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
   }
 
@@ -125,15 +125,16 @@ object ArticlePicker {
     path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
   }
 
-  def primaryChecksForDCRRendering(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val whitelistFeatures = featureWhitelist(page, request)
-    val isSupported = whitelistFeatures.forall({ case (test, isMet) => isMet})
+  def forall(features:  Map[String, Boolean]): Boolean = {
+    features.forall({ case (_, isMet) => isMet})
+  }
 
-    isSupported
+  def notCommentOrOpinion(page: PageWithStoryPackage): Boolean = {
+    ArticlePageChecks.isDiscussionDisabled(page) || ArticlePageChecks.isNotOpinion(page)
   }
 
   def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val whitelistFeatures = featureWhitelist(page, request)
+    val whitelistFeatures = primaryFeatures(page, request)
     val article100PercentPageFeatures = whitelistFeatures.filterKeys(
       Set(
         "isSupportedType",
@@ -148,48 +149,43 @@ object ArticlePicker {
     isArticle100PercentPage
   }
 
-  def dcrShouldRender(request: RequestHeader): Boolean = {
-    // dcrShouldRender provides an override to let us force rendering by DCR even
-    // when an article is not supportted
-    val forceDCR = request.forceDCR
-    forceDCR || isInWhitelist(request.path)
+  def dcrForced(request: RequestHeader): Boolean = {
+    request.forceDCR || isInWhitelist(request.path)
   }
 
-  def dcrShouldNotRender(request: RequestHeader): Boolean = {
+  def dcrDisabled(request: RequestHeader): Boolean = {
     val forceDCROff = request.forceDCROff
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
     forceDCROff || !dcrEnabled
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-    val whitelistFeatures = featureWhitelist(page, request)
-    val userIsInDotcomRenderingCohort = ActiveExperiments.isParticipating(DotcomRendering)
-    val userIsInDiscussionRenderingCohort = ActiveExperiments.isParticipating(DiscussionRendering)
-    val userIsInDCRBubbleCohort = ActiveExperiments.isParticipating(DCRBubble)
-    val additionalChecksForRegularCohort = ArticlePageChecks.isDiscussionDisabled(page) && ArticlePageChecks.isNotOpinion(page)
+    val primaryChecks = primaryFeatures(page, request)
+    val userInMainTest = ActiveExperiments.isParticipating(DotcomRendering)
+    val userInDiscussionTest = ActiveExperiments.isParticipating(DiscussionRendering)
+    val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
-    // Decide if we should render this request with the DCR platform or not
-    val tier = if (dcrShouldNotRender(request)) {
-      LocalRenderArticle
-    } else if (dcrShouldRender(request) || userIsInDCRBubbleCohort) {
-      RemoteRender
-    } else if (primaryChecksForDCRRendering(page, request) && additionalChecksForRegularCohort && userIsInDotcomRenderingCohort) {
-      RemoteRender
-    } else if (primaryChecksForDCRRendering(page, request) && userIsInDiscussionRenderingCohort) {
-      RemoteRender
-    } else {
-      LocalRenderArticle
-    }
+    val hasPrimaryFeatures = forall(primaryChecks)
+    val canRender = hasPrimaryFeatures && notCommentOrOpinion(page)
+
+    val tier =
+      if (dcrDisabled(request)) LocalRenderArticle
+      else if (dcrForced(request)) RemoteRender
+      else if (userInDCRBubble) RemoteRender
+      else if (userInMainTest && canRender) RemoteRender
+      else if (userInDiscussionTest && hasPrimaryFeatures) RemoteRender
+      else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val isAddFree = ArticlePageChecks.isAdFree(page, request)
 
     // include features that we wish to log but not whitelist against
-    val features = whitelistFeatures +
-      ("userIsInCohort" -> userIsInDotcomRenderingCohort) +
-      ("userIsInCohortDiscussion" -> userIsInDiscussionRenderingCohort) +
+    val features = primaryChecks +
+      ("userIsInCohort" -> userInMainTest) +
+      ("userIsInCohortDiscussion" -> userInDiscussionTest) +
       ("isAdFree" -> isAddFree) +
-      ("isArticle100PercentPage" -> isArticle100PercentPage)
+      ("isArticle100PercentPage" -> isArticle100PercentPage) +
+      ("dcrCouldRender" -> canRender)
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
