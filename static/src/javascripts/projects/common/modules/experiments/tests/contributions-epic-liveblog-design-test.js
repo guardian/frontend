@@ -8,7 +8,6 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 import {
     epicLiveBlogTemplate,
-    lastSentenceTemplateButtonAndSubscribe,
     lastSentenceTemplateControl,
 } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import type { LiveblogEpicLastSentenceTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
