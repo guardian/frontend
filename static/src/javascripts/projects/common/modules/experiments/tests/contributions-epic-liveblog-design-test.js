@@ -66,13 +66,6 @@ export const contributionsEpicLiveblogDesignTestR2: EpicABTest = makeEpicABTest(
                 template: liveBlogTemplate(lastSentenceTemplateControl),
                 test: setupEpicInLiveblog,
             },
-            {
-                id: 'v1',
-                products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-                copy: buildEpicCopy(epicCopy, false, geolocation),
-                template: liveBlogTemplate(lastSentenceTemplateButtonAndSubscribe),
-                test: setupEpicInLiveblog,
-            },
         ],
     }
 );
