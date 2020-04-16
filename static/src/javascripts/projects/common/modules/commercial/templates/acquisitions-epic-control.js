@@ -47,7 +47,7 @@ export const acquisitionsEpicControlTemplate = ({
 
     const reminderFields = showReminderFields || defaultReminderFields;
 
-    const showReminder = config.get('switches.show-contribution-reminder');
+    const showReminder = config.get('switches.showContributionReminder');
 
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">

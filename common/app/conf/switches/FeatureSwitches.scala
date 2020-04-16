@@ -464,7 +464,7 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
+  val contributionReminder = Switch(
     SwitchGroup.Feature,
     "show-contribution-reminder",
     "This toggles the contribution reminder",
