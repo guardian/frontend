@@ -5,7 +5,13 @@ const lastSentenceTemplate = (highlightedText?: string, supportURL: string) =>
             ? `<span className="contributions__highlight">${highlightedText}</span>`
             : ''
     }
-    <a href="${supportURL}" target="_blank" class="u-underline">Make a contribution</a> - The Guardian`;
+    <div class="component-button--liveblog-container">
+        <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
+          href=${supportURL}
+          target="_blank">
+          Make a contribution
+        </a>
+    </div>`;
 
 export const epicLiveBlogTemplate = ({
                                          copy,
