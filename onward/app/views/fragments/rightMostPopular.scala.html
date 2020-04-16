@@ -22,7 +22,7 @@
                         <div class="media__body">
                             <h4 class="right-most-popular-item__headline">@trail.header.headline</h4>
                             @trail.properties.maybeContent.map { content =>
-                                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                @if(content.tags.tags.exists(_.id == "tone/news") || content.tags.tags.exists(_.id == "tone/comment")) {
                                     @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
                                 }
                             }
