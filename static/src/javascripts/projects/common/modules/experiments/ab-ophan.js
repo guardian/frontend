@@ -103,6 +103,12 @@ export const buildOphanPayload = (
             log[`ab${test}`] = makeABEvent(serverSideVariant, 'false');
         });
 
+        // A flag to indicate if a page was DCR renderable for the data lake.
+        // Ideally we'd pass this as a boolean property in the top-level
+        // pageview data. This is a stop-gap until then.
+        const dcrCouldRender = config.get("page.dcrCouldRender", false)
+        log.abDcrCouldRender = { variantName: dcrCouldRender.toString(), complete: true}
+
         return log;
     } catch (error) {
         // Encountering an error should invalidate the logging process.
