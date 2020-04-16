@@ -113,7 +113,13 @@ export const init = (): Promise<void> => {
         });
 
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(config.get('libs.googletag'), { async: false });
+        return loadScript(
+            config.get(
+                'libs.googletag',
+                '//www.googletagservices.com/tag/js/gpt.js'
+            ),
+            { async: false }
+        );
     };
 
     if (commercialFeatures.dfpAdvertising) {
