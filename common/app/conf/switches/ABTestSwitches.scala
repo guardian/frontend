@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-precontribution-reminder-round-two",
-    "Test the effect of the reminder on conversion rate",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),

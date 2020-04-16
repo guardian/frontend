@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.Commercial
+import conf.switches.SwitchGroup.{ABTests, Commercial}
 
 trait FeatureSwitches {
 
@@ -463,4 +463,15 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  Switch(
+    SwitchGroup.Feature,
+    "show-contribution-reminder",
+    "This toggles the contribution reminder",
+    owners = Seq(Owner.withGithub("JoeMG")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 6, 15),
+    exposeClientSide = true
+  )
+
 }
