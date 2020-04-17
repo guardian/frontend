@@ -15,7 +15,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestApplicationContext
   with WithTestContentApiClient {
 
-  val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  val articleUrl = "music/2018/feb/22/apart-from-the-politics-2018s-brit-awards-were-business-as-usual"
 
   lazy val articleController = new ArticleController(
     testContentApiClient,
@@ -39,7 +39,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
     val result = articleController.renderArticle(oldToneNewsArticleUrl)(TestRequest(oldToneNewsArticleUrl))
     MetaDataMatcher.ensureOldArticleMessage(result, oldToneNewsArticleUrl)
   }
-  it should "not include an old article message on an article that is not tagged with tone/news" in {
+
+  val oldToneCommentArticleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  it should "include an old article message on an article that is tagged with tone/comment" in {
+    val result = articleController.renderArticle(oldToneCommentArticleUrl)(TestRequest(oldToneCommentArticleUrl))
+    MetaDataMatcher.ensureOldArticleMessage(result, oldToneCommentArticleUrl)
+  }
+
+  it should "not include an old article message on an article that is not tagged with tone/news or with tone/comment" in {
     val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
     MetaDataMatcher.ensureNoOldArticleMessage(result, articleUrl)
   }
