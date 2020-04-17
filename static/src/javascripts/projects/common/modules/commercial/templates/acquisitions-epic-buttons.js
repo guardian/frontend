@@ -1,7 +1,9 @@
 // @flow
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import { defaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import config from "../../../../../lib/config";
+
 
 export const epicButtonsTemplate = (
     primaryCta: EpicCta,
@@ -47,7 +49,7 @@ export const epicButtonsTemplate = (
         : '';
 
     const showReminder = config.get('switches.showContributionReminder');
-    const reminderCta = reminderFields ? reminderFields.reminderCTA : "Remind me in July";
+    const reminderCta = reminderFields ? reminderFields.reminderCTA : defaultReminderFields.reminderCTA;
 
     const reminderButton = showReminder
         ? `<label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">

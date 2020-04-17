@@ -15,6 +15,12 @@ const buildImage = (url: string): string =>
         <img src="${url}" alt="Image for Guardian contributions message"/>
     </div>`;
 
+export const defaultReminderFields: ReminderFields = {
+    reminderCTA: 'Remind me in July',
+    reminderDate: '2020-07-19 00:00:00',
+    reminderDateAsString: 'July 2020',
+};
+
 export const acquisitionsEpicControlTemplate = ({
     copy: { heading = '', paragraphs, highlightedText, footer },
     componentName,
@@ -39,11 +45,6 @@ export const acquisitionsEpicControlTemplate = ({
         : epicClassNames
     ).join(' ');
 
-    const defaultReminderFields: ReminderFields = {
-        reminderCTA: 'Remind me in July',
-        reminderDate: '2020-07-19 00:00:00',
-        reminderDateAsString: 'July 2020',
-    };
 
     const reminderFields = showReminderFields || defaultReminderFields;
 
