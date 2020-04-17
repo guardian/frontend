@@ -846,7 +846,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',
 
                         start: '2018-01-01',
-                        expiry: '2020-01-01',
+                        expiry: '2025-01-01',
 
                         author: 'Google Docs',
                         description: 'Google Docs',
