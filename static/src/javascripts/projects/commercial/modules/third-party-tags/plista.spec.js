@@ -14,7 +14,7 @@ jest.mock('commercial/modules/dfp/track-ad-render', () => ({
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
-        outbrain: true,
+        plista: true,
     },
 }));
 
@@ -114,7 +114,7 @@ describe('Plista', () => {
         });
 
         it('should not load when sensitive content', done => {
-            commercialFeaturesMock.outbrain = false;
+            commercialFeaturesMock.plista = false;
             plista.init().then(resolvedPromise => {
                 expect(resolvedPromise).toEqual(false);
                 expect(loadSpy).not.toHaveBeenCalled();
