@@ -158,21 +158,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-gpt-path",
-    "0% a/b test for new gpt.js path",
-    owners = Seq(Owner.withGithub("GHaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-cmp-copy",
-    "3% a/b test for new CMP copy",
+    "5% a/b test for new CMP copy",
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 21),
+    sellByDate = new LocalDate(2020, 4, 24),
     exposeClientSide = true
   )
 }
