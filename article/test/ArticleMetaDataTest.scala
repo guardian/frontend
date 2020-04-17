@@ -15,7 +15,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   with WithTestApplicationContext
   with WithTestContentApiClient {
 
-  val articleUrl = "music/2018/feb/22/apart-from-the-politics-2018s-brit-awards-were-business-as-usual"
+  val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
+  val oldSportUrl = "sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open"
 
   lazy val articleController = new ArticleController(
     testContentApiClient,
@@ -47,8 +48,8 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   }
 
   it should "not include an old article message on an article that is not tagged with tone/news or with tone/comment" in {
-    val result = articleController.renderArticle(articleUrl)(TestRequest(articleUrl))
-    MetaDataMatcher.ensureNoOldArticleMessage(result, articleUrl)
+    val result = articleController.renderArticle(oldSportUrl)(TestRequest(oldSportUrl))
+    MetaDataMatcher.ensureNoOldArticleMessage(result, oldSportUrl)
   }
 
 }
