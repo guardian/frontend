@@ -12,7 +12,6 @@ import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/fr
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { signInGateVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
 import { signInGateScale } from 'common/modules/experiments/tests/sign-in-gate-scale';
-import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -30,7 +29,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
-    contributionsEpicPrecontributionReminderRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
 ];
