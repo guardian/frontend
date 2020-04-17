@@ -2,8 +2,9 @@
 import ophan from 'ophan/ng';
 import { getMarkTime } from 'lib/user-timing';
 import performanceAPI from 'lib/window-performance';
+import config from './config';
 
-const capturePerfTimings = (): void => {
+const captureOphanInfo = (): void => {
     const supportsPerformanceProperties =
         performanceAPI &&
         'navigation' in performanceAPI &&
@@ -38,9 +39,18 @@ const capturePerfTimings = (): void => {
         })),
     };
 
+    let ophanInfo = {};
+
+    if (config.get('page.dcrCouldRender', false)) {
+        ophanInfo = { ...ophanInfo, ...{ experiences: 'dcrCouldRender' } };
+    }
+
     ophan.record({
-        performance,
+        ...ophanInfo,
+        ...{
+            performance,
+        },
     });
 };
 
-export { capturePerfTimings };
+export { captureOphanInfo };
