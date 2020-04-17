@@ -13,8 +13,6 @@ import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { signInGateVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
 import { signInGateScale } from 'common/modules/experiments/tests/sign-in-gate-scale';
 import { contributionsEpicPrecontributionReminderRoundTwo } from 'common/modules/experiments/tests/contributions-epic-precontribution-reminder-round-two';
-import { contributionsEpicLiveblogDesignTestR2 } from 'common/modules/experiments/tests/contributions-epic-liveblog-design-test';
-import { commercialGptPath } from 'common/modules/experiments/tests/commercial-gpt-path';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 import { commercialCmpCopy } from 'common/modules/experiments/tests/commercial-cmp-copy'
 
@@ -35,7 +33,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
 export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
-    contributionsEpicLiveblogDesignTestR2,
     contributionsEpicPrecontributionReminderRoundTwo,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,

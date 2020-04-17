@@ -16,7 +16,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.{ContentCSSFile}
 import views.html.stacked
-import services.dotcomponents.ArticlePicker.primaryChecksForDCRRendering
+import services.dotcomponents.ArticlePicker.{forall, primaryFeatures}
 
 object StoryHtmlPage {
 
@@ -31,7 +31,7 @@ object StoryHtmlPage {
   }
 
   def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
-    val thisDcrCouldRender: Boolean = primaryChecksForDCRRendering(pageWithStoryPackage, request)
+    val thisDcrCouldRender: Boolean = forall(primaryFeatures(pageWithStoryPackage, request))
     Html(s"<script>window.guardian.config.page.dcrCouldRender = $thisDcrCouldRender</script>")
   }
 

@@ -13,7 +13,7 @@
     "@babel/runtime": "^7.2.0",
     "@emotion/core": "^10.0.21",
     "@guardian/atom-renderer": "1.1.6",
-    "@guardian/automat-client": "^0.2.13",
+    "@guardian/automat-client": "^0.2.16",
     "@guardian/consent-management-platform": "3.0.0",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "@guardian/src-button": "^0.16.1",
