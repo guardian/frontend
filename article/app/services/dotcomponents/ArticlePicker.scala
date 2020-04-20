@@ -65,8 +65,6 @@ object ArticlePageChecks {
 
   def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
 
-  def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
-
   def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
 
   def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
@@ -84,7 +82,8 @@ object ArticlePageChecks {
       "tone/interviews",
       "tone/obituaries",
       "tone/analysis",
-      "tone/letters"
+      "tone/letters",
+      "tone/review"
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
@@ -110,7 +109,6 @@ object ArticlePicker {
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
