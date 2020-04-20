@@ -31,7 +31,7 @@ const setupA9: () => Promise<void> = () =>
         return Promise.resolve();
     });
 
-export const setupA9Once: () => Promise<void> = once(setupA9);
+const setupA9Once: () => Promise<void> = once(setupA9);
 
 export const init = (): Promise<void> => {
     setupA9Once();
