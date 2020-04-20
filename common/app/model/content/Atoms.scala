@@ -80,7 +80,6 @@ final case class MediaAtom(
   }
 }
 
-
 sealed trait MediaAssetPlatform extends EnumEntry
 
 object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[MediaAssetPlatform] {
@@ -131,6 +130,14 @@ final case class InteractiveAtom(
   mainJS: Option[String],
   docData: Option[String]
 ) extends Atom
+
+final case class ChartAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  title: String,
+  css: String,
+  html: String,
+  mainJS: Option[String]) extends Atom
 
 final case class RecipeAtom(
   override val id: String,
@@ -215,12 +222,6 @@ final case class AudioAtom(
   override val id: String,
   atom: AtomApiAtom,
   data: atomapi.audio.AudioAtom
-) extends Atom
-
-final case class ChartAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.chart.ChartAtom
 ) extends Atom
 
 object Atoms extends common.Logging {
@@ -314,7 +315,6 @@ object Atoms extends common.Logging {
     ImageMedia(imageAssets)
   }
 }
-
 
 object MediaAtom extends common.Logging {
 
@@ -479,6 +479,11 @@ object InteractiveAtom {
   }
 }
 
+object ChartAtom {
+  def make(atom: AtomApiAtom): ChartAtom = {
+    ChartAtom(atom.id, atom, atom.title.getOrElse("Chart"), "", atom.defaultHtml, None)
+  }
+}
 
 object RecipeAtom {
   def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
@@ -617,9 +622,4 @@ object AudioAtom {
     val audio = atom.data.asInstanceOf[AtomData.Audio].audio
     AudioAtom(atom.id, atom, audio)
   }
-}
-
-object ChartAtom {
-  def make(atom: AtomApiAtom): ChartAtom =
-    ChartAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Chart].chart)
 }
