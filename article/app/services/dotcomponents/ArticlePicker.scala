@@ -191,18 +191,23 @@ object ArticlePicker {
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
+
     val userInMainTest = ActiveExperiments.isParticipating(DotcomRendering)
     val userInDiscussionTest = ActiveExperiments.isParticipating(DiscussionRendering)
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
     val hasPrimaryFeatures = forall(primaryChecks)
+
     val canRender = hasPrimaryFeatures && notCommentOrOpinion(page)
 
+    val primaryChecksExperimentDiscussionRendering = primaryFeaturesExperimentDiscussionRendering(page, request)
+    val hasPrimaryFeaturesExperimentDiscussionRendering = forall(primaryChecksExperimentDiscussionRendering)
+    
     val tier =
       if (dcrDisabled(request)) LocalRenderArticle
       else if (dcrForced(request)) RemoteRender
       else if (userInDCRBubble) RemoteRender
       else if (userInMainTest && canRender) RemoteRender
-      else if (userInDiscussionTest && forall(primaryFeaturesExperimentDiscussionRendering(page, request))) RemoteRender
+      else if (userInDiscussionTest && hasPrimaryFeaturesExperimentDiscussionRendering) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
