@@ -88,6 +88,18 @@ object ArticlePageChecks {
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
+  def isSupportedToneExperimentDiscussionRendering(page: PageWithStoryPackage): Boolean = {
+    Set(
+      "tone/news",
+      "tone/blogposts",
+      "tone/interviews",
+      "tone/obituaries",
+      "tone/analysis",
+      "tone/letters",
+      "tone/comment"
+    ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
+  }
+
   def isNotBlackListed(page: PageWithStoryPackage): Boolean = {
     !page.item.tags.tags.exists(s=>tagsBlacklist(s.id))
   }
@@ -115,6 +127,24 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
+      ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
+      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
+    )
+  }
+
+  def primaryFeaturesExperimentDiscussionRendering(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+    Map(
+      ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
+      ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
+      ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
+      ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
+      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
+      ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
+      ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
+      ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
+      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
+      ("isSupportedTone", ArticlePageChecks.isSupportedToneExperimentDiscussionRendering(page)),
       ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
       ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
@@ -164,7 +194,6 @@ object ArticlePicker {
     val userInMainTest = ActiveExperiments.isParticipating(DotcomRendering)
     val userInDiscussionTest = ActiveExperiments.isParticipating(DiscussionRendering)
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
-
     val hasPrimaryFeatures = forall(primaryChecks)
     val canRender = hasPrimaryFeatures && notCommentOrOpinion(page)
 
@@ -173,7 +202,7 @@ object ArticlePicker {
       else if (dcrForced(request)) RemoteRender
       else if (userInDCRBubble) RemoteRender
       else if (userInMainTest && canRender) RemoteRender
-      else if (userInDiscussionTest && hasPrimaryFeatures) RemoteRender
+      else if (userInDiscussionTest && forall(primaryFeaturesExperimentDiscussionRendering(page, request))) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
