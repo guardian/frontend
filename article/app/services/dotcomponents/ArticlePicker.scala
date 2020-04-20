@@ -83,7 +83,7 @@ object ArticlePageChecks {
       "tone/obituaries",
       "tone/analysis",
       "tone/letters",
-      "tone/review"
+      "tone/reviews"
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
