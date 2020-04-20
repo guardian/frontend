@@ -43,7 +43,7 @@ const createTracking = (
     const australianTracking = {
         signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_gWeekly&CMP_TU=mrtn&CMP_BUNIT=subs`,
         subscriptionUrl: addTrackingCodesToUrl({
-            base: `${subscriptionHostname}/subscribe/digital`,
+            base: `${subscriptionHostname}/subscribe/weekly`,
             componentType: COMPONENT_TYPE,
             componentId: OPHAN_EVENT_ID,
             campaignCode: AUS_CAMPAIGN_CODE,
