@@ -5,7 +5,7 @@ import { shouldShow } from '@guardian/consent-management-platform';
 export const commercialCmpCopy: ABTest = {
     id: 'CommercialCmpCopy',
     start: '2020-04-20',
-    expiry: '2020-04-24',
+    expiry: '2020-05-4',
     author: 'Alex Sanders',
     description: '5% a/b test for new CMP copy',
     audience: 0.05,
