@@ -18,7 +18,7 @@
 @import fragments.email._
 @import common.LinkTo
 @import conf.audio.FlagshipEmailContainer
-@import conf.switches.Switches.FlagshipEmailContainerDynamicImageSwitch
+@import conf.switches.Switches.{FlagshipEmailContainerDynamicImageSwitch, vodafoneEmailHack}
 
 @headline(card: ContentCard, isLarge: Boolean = false, isTrailText: Boolean = false) = {
 
@@ -210,14 +210,23 @@
     @imgForFront(page.banner, page.email.map(_.name))
 }
 
+@* Temporary hack - see associated switch for who to contact/expiry *@
+@smallIfVodafone(displayName: String) = {
+    @if(displayName == "#KeepingTheUKConnected" && vodafoneEmailHack.isSwitchedOn) {
+        <span style="font-size: 22px">@displayName</span>
+    } else {
+        @displayName
+    }
+}
+
 @renderContentContainer(collection: EmailContentContainer, collectionIndex: Int) = {
     @brazePlaceholder(s"Above Collection ${collectionIndex + 1}")
     @containerTitle((if(collectionIndex > 0) Seq("ct--not-top") else Nil) ++ (if (collection.branding.isDefined) Seq("ct-branded") else Nil)) {
 
         @collection.href.map { href =>
-            <a class="ct-link" href="@LinkTo {/@Html(href)}">@collection.displayName</a>
+            <a class="ct-link" href="@LinkTo {/@Html(href)}">@smallIfVodafone(collection.displayName)</a>
         }.getOrElse {
-            @collection.displayName
+            @smallIfVodafone(collection.displayName)
         }
     }
 
