@@ -138,7 +138,6 @@ object ArticlePicker {
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
@@ -199,7 +198,7 @@ object ArticlePicker {
 
     val primaryChecksExperimentDiscussionRendering = primaryFeaturesExperimentDiscussionRendering(page, request)
     val hasPrimaryFeaturesExperimentDiscussionRendering = forall(primaryChecksExperimentDiscussionRendering)
-    
+
     val tier =
       if (dcrDisabled(request)) LocalRenderArticle
       else if (dcrForced(request)) RemoteRender
