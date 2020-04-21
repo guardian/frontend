@@ -99,7 +99,7 @@ object ArticlePageChecks {
       "tone/obituaries",
       "tone/analysis",
       "tone/letters",
-      "tone/comments",
+      "tone/comment",
       "tone/reviews",
       "tone/albumreview",
       "tone/livereview",
