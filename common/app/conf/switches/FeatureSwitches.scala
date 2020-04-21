@@ -3,7 +3,7 @@ package conf.switches
 import conf.switches.Expiry.never
 import org.joda.time.LocalDate
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{ABTests, Commercial}
+import conf.switches.SwitchGroup.Commercial
 
 trait FeatureSwitches {
 
@@ -462,6 +462,16 @@ trait FeatureSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
+  )
+
+  val vodafoneEmailHack = Switch(
+    SwitchGroup.Feature,
+    "vodafone-email-hack",
+    "If on, will use smaller heading font for Vodafone slogan title on email fronts. This is to keep it from introducing horizontal scrolling at the mobile breakpoint. We can remove this once their campaign is over. Editorial owner is celine.bijleveld.",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 6, 1),
+    exposeClientSide = false,
   )
 
   val contributionReminder = Switch(

@@ -70,7 +70,7 @@ module.load = function() {
 };
 
 module.init = function(): Promise<false> {
-    if (commercialFeatures.outbrain) {
+    if (commercialFeatures.plista) {
         return loadInstantly().then(inUse => {
             if (inUse) {
                 module.load();

@@ -59,6 +59,7 @@ describe('Commercial features', () => {
 
         config.set('switches', {
             outbrain: true,
+            plistaForOutbrainAu: true,
             commercial: true,
             enableDiscussionSwitch: true,
         });
@@ -270,24 +271,28 @@ describe('Commercial features', () => {
         it('Runs by default', () => {
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(true);
+            expect(features.plista).toBe(true);
         });
 
         it('Is disabled under perf tests', () => {
             window.location.hash = '#noads';
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled in sensitive content', () => {
             config.set('page.shouldHideAdverts', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled when related content is hidden', () => {
             config.set('page.showRelatedContent', false);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled when user is logged in and page is commentable', () => {
@@ -295,6 +300,7 @@ describe('Commercial features', () => {
             config.set('page.commentable', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
     });
 
@@ -307,30 +313,35 @@ describe('Commercial features', () => {
         it('Does not run by default', () => {
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled under perf tests', () => {
             window.location.hash = '#noads';
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled in sensitive content', () => {
             config.set('page.shouldHideAdverts', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled when related content is hidden', () => {
             config.set('page.showRelatedContent', false);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
 
         it('Is disabled when user is logged in and page is commentable', () => {
             config.set('page.commentable', true);
             const features = new CommercialFeatures();
             expect(features.outbrain).toBe(false);
+            expect(features.plista).toBe(false);
         });
     });
 

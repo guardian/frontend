@@ -40,22 +40,13 @@ const init = (): Promise<void> => {
 
     const edition = config.get('page.edition', '').toLowerCase();
     const isSwitchOn = config.get('switches.plistaForOutbrainAu');
-    const shouldUseRandomWidget: boolean = isSwitchOn && edition === 'au';
+    const shouldUsePlista: boolean = isSwitchOn && edition === 'au';
 
-    config.set('debug.outbrain.shouldUseRandomWidget', shouldUseRandomWidget);
-
-    if (shouldUseRandomWidget) {
-        const possibleWidgets = ['plista', 'outbrain'];
-        const randomWidget =
-            possibleWidgets[Math.floor(Math.random() * possibleWidgets.length)];
-
-        config.set('debug.outbrain.randomWidget', randomWidget);
-
-        if (randomWidget === 'plista') {
-            return renderWidget('plista', plista.init);
-        }
+    if (shouldUsePlista) {
+        return renderWidget('plista', plista.init);
     }
-    return renderWidget('outbrain', initOutbrain);
+
+    return renderWidget('outbrain', initOutbrain)
 };
 
 export { init };
