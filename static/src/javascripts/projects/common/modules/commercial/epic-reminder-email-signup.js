@@ -3,7 +3,6 @@
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
 import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
-import mediator from "../../../../lib/mediator";
 
 type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
