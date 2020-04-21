@@ -31,7 +31,6 @@ const createAdWrapper = () => {
 
 export const init = (): Promise<void> => {
     if (shouldIncludeMobileSticky()) {
-        console.log('******* shouldIncludeMobileSticky *******');
         const mobileStickyWrapper = createAdWrapper();
         return fastdom
             .write(() => {
