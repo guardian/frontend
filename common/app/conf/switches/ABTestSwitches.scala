@@ -28,16 +28,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-liveblog-design-test-r2",
-    "Test new designs for the liveblog",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2025, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
@@ -168,11 +158,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-gpt-path",
-    "0% a/b test for new gpt.js path",
-    owners = Seq(Owner.withGithub("GHaberis")),
+    "ab-commercial-cmp-copy",
+    "5% a/b test for new CMP copy",
+    owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 27),
+    sellByDate = new LocalDate(2020, 5, 4),
     exposeClientSide = true
   )
 }

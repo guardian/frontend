@@ -181,15 +181,15 @@ const frontendDotcomRenderingTest = {
                                 parent.insertBefore(container, target);
 
                                 // use Shadow Dom if found
-                                let shadowRoot;
-                                if (container.attachShadow) {
-                                    shadowRoot = container.attachShadow({
-                                        mode: 'open',
-                                    });
-                                    shadowRoot.innerHTML = content;
-                                } else {
-                                    container.innerHTML = content;
-                                }
+                                // let shadowRoot;
+                                // if (container.attachShadow) {
+                                //     shadowRoot = container.attachShadow({
+                                //         mode: 'open',
+                                //     });
+                                //     shadowRoot.innerHTML = content;
+                                // } else {
+                                container.innerHTML = content;
+                                // }
 
                                 emitInsertEvent(
                                     test,
@@ -219,7 +219,7 @@ const frontendDotcomRenderingTest = {
                                             'function'
                                         ) {
                                             const initAutomatJsConfig: InitAutomatJsConfig = {
-                                                epicRoot: shadowRoot || container,
+                                                epicRoot: container, // shadowRoot || container,
                                                 onReminderOpen: (callbackParams: AutomatJsCallback) => {
                                                     const { buttonCopyAsString } = callbackParams;
                                                     // Send two separate Ophan events when the Reminder

@@ -65,8 +65,6 @@ object ArticlePageChecks {
 
   def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
 
-  def isNotAReview(page:PageWithStoryPackage): Boolean = ! page.item.tags.isReview
-
   def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
 
   def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
@@ -84,7 +82,29 @@ object ArticlePageChecks {
       "tone/interviews",
       "tone/obituaries",
       "tone/analysis",
-      "tone/letters"
+      "tone/letters",
+      "tone/reviews",
+      "tone/albumreview",
+      "tone/livereview",
+      "tone/explainers",
+      "tone/perfromances"
+    ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
+  }
+
+  def isSupportedToneExperimentDiscussionRendering(page: PageWithStoryPackage): Boolean = {
+    Set(
+      "tone/news",
+      "tone/blogposts",
+      "tone/interviews",
+      "tone/obituaries",
+      "tone/analysis",
+      "tone/letters",
+      "tone/comment",
+      "tone/reviews",
+      "tone/albumreview",
+      "tone/livereview",
+      "tone/explainers",
+      "tone/performances"
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
@@ -110,11 +130,27 @@ object ArticlePicker {
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAReview", ArticlePageChecks.isNotAReview(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
+      ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
+      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
+    )
+  }
+
+  def primaryFeaturesExperimentDiscussionRendering(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+    Map(
+      ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
+      ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
+      ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
+      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
+      ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
+      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
+      ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
+      ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
+      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
+      ("isSupportedTone", ArticlePageChecks.isSupportedToneExperimentDiscussionRendering(page)),
       ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
       ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
@@ -161,19 +197,23 @@ object ArticlePicker {
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
+
     val userInMainTest = ActiveExperiments.isParticipating(DotcomRendering)
     val userInDiscussionTest = ActiveExperiments.isParticipating(DiscussionRendering)
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
-
     val hasPrimaryFeatures = forall(primaryChecks)
+
     val canRender = hasPrimaryFeatures && notCommentOrOpinion(page)
+
+    val primaryChecksExperimentDiscussionRendering = primaryFeaturesExperimentDiscussionRendering(page, request)
+    val hasPrimaryFeaturesExperimentDiscussionRendering = forall(primaryChecksExperimentDiscussionRendering)
 
     val tier =
       if (dcrDisabled(request)) LocalRenderArticle
       else if (dcrForced(request)) RemoteRender
       else if (userInDCRBubble) RemoteRender
       else if (userInMainTest && canRender) RemoteRender
-      else if (userInDiscussionTest && hasPrimaryFeatures) RemoteRender
+      else if (userInDiscussionTest && hasPrimaryFeaturesExperimentDiscussionRendering) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
