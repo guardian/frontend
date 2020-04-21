@@ -24,6 +24,10 @@
                 @Html(article.trail.headline)
             </h1>
 
+            @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
+                @fragments.contentAgeNotice(ageNotice, isHidden = true)
+            }
+
             @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
                 @fragments.meta.bylineImage(article.tags)
             }
