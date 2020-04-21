@@ -69,8 +69,7 @@ export const epicButtonsTemplate = (
         ${reminderInput}
         <div class="contributions__buttons">
             ${supportButtonSupport}
-            ${secondaryButton}
-            ${secondaryButton ? '' : reminderButton}
+            ${secondaryButton || reminderButton || ''}
             ${paymentMethodLogosTemplate(
                 'contributions__payment-logos contributions__contribute--epic-member'
             )}
