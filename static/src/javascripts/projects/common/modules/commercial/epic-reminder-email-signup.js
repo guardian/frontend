@@ -2,7 +2,8 @@
 
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
-import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
+import mediator from "../../../../lib/mediator";
 
 type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
@@ -76,6 +77,13 @@ const getFields = (): ?Fields => {
 
 const epicReminderEmailSignup = (fields: Fields) => {
     const warningRed = '#c70000';
+
+    submitViewEvent({
+        component: {
+            componentType: 'ACQUISITIONS_OTHER',
+            id: `precontribution-reminder-view`,
+        },
+    });
 
     const setState = (state: ReminderState) => {
         switch (state) {
@@ -168,13 +176,6 @@ const epicReminderEmailSignup = (fields: Fields) => {
             ? ctaAttribute.toLowerCase().replace(/\s/g, '-')
             : '';
 
-        submitClickEvent({
-            component: {
-                componentType: 'ACQUISITIONS_OTHER',
-                id: 'precontribution-reminder-prompt-clicked',
-            },
-        });
-
         // For second round of testing, the events will be either (tested):
         // precontribution-reminder-prompt-copy-remind-me-in-july or
         // precontribution-reminder-prompt-copy-support-us-later
@@ -192,6 +193,12 @@ const epicReminderEmailSignup = (fields: Fields) => {
     // keyboard. This is a light JS solution for toggling the checkbox when a user
     // hits enter, as they would for a link
     const toggleReminderVisibility = () => {
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'precontribution-reminder-reveal-clicked',
+            },
+        });
         fields.reminderToggle.checked = !fields.reminderToggle.checked;
     };
 
