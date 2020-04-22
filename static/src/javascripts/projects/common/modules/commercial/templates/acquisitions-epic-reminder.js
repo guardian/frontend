@@ -18,9 +18,7 @@ export const acquisitionsEpicReminderTemplate = (
                 </div>
             </label>
 
-            <div class="epic-reminder__form-title">Remind me in ${
-                reminderFields.reminderDateAsString
-            }</div>
+            <div class="epic-reminder__form-title">${reminderFields.reminderCTA}</div>
 
             <div class="epic-reminder__form-wrapper">
                 <form>

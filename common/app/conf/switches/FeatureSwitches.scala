@@ -473,4 +473,15 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2020, 6, 1),
     exposeClientSide = false,
   )
+
+  val contributionReminder = Switch(
+    SwitchGroup.Feature,
+    "show-contribution-reminder",
+    "This toggles the contribution reminder",
+    owners = Seq(Owner.withGithub("JoeMG")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 6, 15),
+    exposeClientSide = true
+  )
+
 }

@@ -58,7 +58,6 @@ import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
-import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -270,7 +269,6 @@ const setupOnView = (
     trackingCampaignId: string,
     products: $ReadOnlyArray<OphanProduct>,
     showTicker: boolean = false,
-    showReminderFields: ReminderFields | null = null
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -291,7 +289,7 @@ const setupOnView = (
             initTicker('.js-epic-ticker');
         }
 
-        if (showReminderFields) {
+        if(config.get('switches.showContributionReminder')) {
             const htmlElements = getFields();
             if (htmlElements) {
                 epicReminderEmailSignup(htmlElements);
@@ -476,8 +474,7 @@ const makeEpicABTestVariant = (
                                         campaignCode,
                                         trackingCampaignId,
                                         initVariant.products,
-                                        initVariant.showTicker,
-                                        initVariant.showReminderFields
+                                        initVariant.showTicker
                                     );
                                 });
                             }
