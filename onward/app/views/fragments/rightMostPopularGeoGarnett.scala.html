@@ -34,7 +34,7 @@
                                 ">@trail.properties.byline</span>
                             }
                             @trail.properties.maybeContent.map { content =>
-                                @if(content.tags.tags.exists(_.id == "tone/news")) {
+                                @if(content.tags.tags.exists(_.id == "tone/news") || content.tags.tags.exists(_.id == "tone/comment")) {
                                     @fragments.contentAgeNotice(ContentOldAgeDescriber(content))
                                 }
                             }
