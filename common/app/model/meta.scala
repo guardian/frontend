@@ -459,6 +459,21 @@ case class InteractiveAtomPage(
   )
 }
 
+case class ChartAtomPage(
+  override val atom: ChartAtom,
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
+)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
+  override val atomType = "chart"
+  override val body = views.html.fragments.atoms.chart(atom, shouldFence = false)
+  override val javascriptModule = "snippet"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
+    section = None
+  )
+}
+
 case class GuideAtomPage(
   override val atom: GuideAtom,
   override val withJavaScript: Boolean,

@@ -87,9 +87,10 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
         renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: TimelineAtom) =>
         renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: InteractiveAtom) => {
+      case Left(model: InteractiveAtom) =>
         renderAtom(InteractiveAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      }
+      case Left(model: ChartAtom) =>
+        renderAtom(ChartAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>
@@ -115,6 +116,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
     apiAtom.qanda.map(atom => QandaAtom.make(atom))                             orElse
     apiAtom.timeline.map(atom => TimelineAtom.make(atom))                       orElse
     apiAtom.interactive.map(atom => InteractiveAtom.make(atom))                 orElse
+    apiAtom.chart.map(atom => ChartAtom.make(atom))                             orElse
     /*
     apiAtom.quiz.map(atom => Quiz.make(atom))                                   orElse
     apiAtom.review.map(atom => RecipeAtom.make(atom))                           orElse
