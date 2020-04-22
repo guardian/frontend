@@ -148,7 +148,7 @@ object PageElement {
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: VideoBlockElement => true
-      // case _: ContentAtomBlockElement => true // Experimental (to be uncommented shortly)
+      case _: ContentAtomBlockElement => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -347,6 +347,17 @@ object PageElement {
 
           case Some(audio: AudioAtom) => {
             Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
+          }
+
+          case Some(chart: ChartAtom) => {
+            chart.id match {
+              case "650c584d-551f-41ac-8bf8-3283fb04a863" => {
+                Some(InteractiveUrlBlockElement(
+                  url = s"https://embed.theguardian.com/embed/atom/chart/650c584d-551f-41ac-8bf8-3283fb04a863"
+                ))
+              }
+              case _ => None
+            }
           }
 
           case Some(atom) => Some(ContentAtomBlockElement(atom.id))
