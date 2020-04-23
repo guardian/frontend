@@ -153,6 +153,8 @@ class ShareImage(
 sealed trait ShareImageCategory
 case object GuardianDefault extends ShareImageCategory
 case object ObserverDefault extends ShareImageCategory
+case class CommentObserverOldContent(publicationYear: Int) extends ShareImageCategory
+case class CommentGuardianOldContent(publicationYear: Int) extends ShareImageCategory
 case object ObserverOpinion extends ShareImageCategory
 case object GuardianOpinion extends ShareImageCategory
 case object Live extends ShareImageCategory
@@ -175,6 +177,8 @@ object OpenGraphImage extends OverlayBase64 {
       case ObserverOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
       case GuardianOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
       case Live => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", shouldIncludeOverlay, shouldUpscale)
+      case CommentObserverOldContent(year) => contentAgeNoticeCommentObserver(year, shouldIncludeOverlay, shouldUpscale)
+      case CommentGuardianOldContent(year) => contentAgeNoticeComment(year, shouldIncludeOverlay, shouldUpscale)
       case ObserverOldContent(year) => contentAgeNoticeObserver(year, shouldIncludeOverlay, shouldUpscale)
       case GuardianOldContent(year) => contentAgeNotice(year, shouldIncludeOverlay, shouldUpscale)
       case ObserverStarRating(rating) => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
@@ -215,6 +219,16 @@ object OpenGraphImage extends OverlayBase64 {
 
   private[this] def contentAgeNoticeObserver(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
+  }
+
+  private[this] def contentAgeNoticeComment(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
+    val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg-opinions", publicationYear))}"
+    new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
+  }
+
+  private[this] def contentAgeNoticeCommentObserver(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean): ShareImage = {
+    val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to-opinions", publicationYear))}"
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 }
