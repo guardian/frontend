@@ -223,7 +223,8 @@ object ArticlePicker {
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
-    val isAddFree = ArticlePageChecks.isAdFree(page, request)
+    val isAddFree = ArticlePageChecks.isAdFree(page, request);
+    val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     def testGroup(experiment: Experiment): String = ActiveExperiments.groupFor(experiment) match {
       case Participant => "participant"
@@ -239,7 +240,11 @@ object ArticlePicker {
       ("userIsInCohortDiscussion" -> userInDiscussionTest.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
-      ("dcrCouldRender" -> canRender.toString)
+      ("dcrCouldRender" -> canRender.toString) +
+      ("pageTones" -> pageTones)
+
+      println(features)
+
 
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
