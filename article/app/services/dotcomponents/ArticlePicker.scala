@@ -242,10 +242,7 @@ object ArticlePicker {
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> canRender.toString) +
       ("pageTones" -> pageTones)
-
-      println(features)
-
-
+    
     if (tier == RemoteRender) {
       logRequest(s"path executing in dotcomponents", features, page)
     } else {
