@@ -350,14 +350,11 @@ object PageElement {
           }
 
           case Some(chart: ChartAtom) => {
-            chart.id match {
-              case "650c584d-551f-41ac-8bf8-3283fb04a863" => {
-                Some(InteractiveUrlBlockElement(
-                  url = s"https://embed.theguardian.com/embed/atom/chart/650c584d-551f-41ac-8bf8-3283fb04a863"
-                ))
-              }
-              case _ => None
-            }
+            val encodedId = URLEncoder.encode(chart.id, "UTF-8")
+            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+            Some(InteractiveUrlBlockElement(
+              url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
+            ))
           }
 
           case Some(atom) => Some(ContentAtomBlockElement(atom.id))
