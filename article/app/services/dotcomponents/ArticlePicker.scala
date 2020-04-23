@@ -87,7 +87,10 @@ object ArticlePageChecks {
       "tone/albumreview",
       "tone/livereview",
       "tone/explainers",
-      "tone/perfromances"
+      "tone/performances",
+      "tone/polls",
+      "tone/profiles",
+      "tone/timelines"
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
@@ -104,7 +107,10 @@ object ArticlePageChecks {
       "tone/albumreview",
       "tone/livereview",
       "tone/explainers",
-      "tone/performances"
+      "tone/performances",
+      "tone/polls",
+      "tone/profiles",
+      "tone/timelines"
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
