@@ -145,14 +145,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 5, 13),
     exposeClientSide = true
   )
-
-  Switch(
-    ABTests,
-    "ab-commercial-cmp-copy",
-    "5% a/b test for new CMP copy",
-    owners = Seq(Owner.withGithub("sndrs")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 4),
-    exposeClientSide = true
-  )
 }
