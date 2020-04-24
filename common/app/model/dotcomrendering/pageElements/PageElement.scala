@@ -39,8 +39,8 @@ case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[St
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
-case class InteractiveUrlBlockElement(url: String) extends PageElement
-case class InteractiveMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
+case class AtomEmbedUrlBlockElement(url: String) extends PageElement
+case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
@@ -142,8 +142,8 @@ object PageElement {
       case _: GuideBlockElement => true
       case _: ProfileBlockElement => true
       case _: TimelineBlockElement => true
-      case _: InteractiveUrlBlockElement => true
-      case _: InteractiveMarkupBlockElement => true
+      case _: AtomEmbedUrlBlockElement => true
+      case _: AtomEmbedMarkupBlockElement => true
       case _: MapBlockElement => true
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
@@ -340,7 +340,7 @@ object PageElement {
 
           case Some(interactive: InteractiveAtom) => {
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
-            Some(InteractiveUrlBlockElement(
+            Some(AtomEmbedUrlBlockElement(
               url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
             ))
           }
@@ -352,7 +352,7 @@ object PageElement {
           case Some(chart: ChartAtom) => {
             val encodedId = URLEncoder.encode(chart.id, "UTF-8")
             // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
-            Some(InteractiveUrlBlockElement(
+            Some(AtomEmbedUrlBlockElement(
               url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
             ))
           }
@@ -376,7 +376,7 @@ object PageElement {
       }.toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution)).toList
-      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveUrlBlockElement(url)).toList
+      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => AtomEmbedUrlBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -474,8 +474,8 @@ object PageElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
-  implicit val InteractiveBlockElementWrites: Writes[InteractiveMarkupBlockElement] = Json.writes[InteractiveMarkupBlockElement]
-  implicit val InteractiveIframeElementWrites: Writes[InteractiveUrlBlockElement] = Json.writes[InteractiveUrlBlockElement]
+  implicit val InteractiveBlockElementWrites: Writes[AtomEmbedMarkupBlockElement] = Json.writes[AtomEmbedMarkupBlockElement]
+  implicit val InteractiveIframeElementWrites: Writes[AtomEmbedUrlBlockElement] = Json.writes[AtomEmbedUrlBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
   implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
