@@ -13,7 +13,7 @@ const isInRowRegion = (): boolean =>
 export const commercialUkRowMobileSticky: ABTest = {
     id: 'CommercialUkRowMobileSticky',
     start: '2020-04-15',
-    expiry: '2020-04-22',
+    expiry: '2020-10-01',
     author: 'George Haberis',
     description: 'Test mobile sticky ad in UK and ROW regions',
     audience: 0.01,
