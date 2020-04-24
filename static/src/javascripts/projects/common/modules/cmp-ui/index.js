@@ -4,18 +4,6 @@ import ReactDOM from 'react-dom';
 import reportError from 'lib/report-error';
 import { ConsentManagementPlatform } from '@guardian/consent-management-platform/lib/ConsentManagementPlatform';
 import { setErrorHandler } from '@guardian/consent-management-platform';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialCmpCopy } from 'common/modules/experiments/tests/commercial-cmp-copy'
-
-let variant;
-
-if (isInVariantSynchronous(commercialCmpCopy, 'variant')) {
-    variant = 'commercialCmpCopy-variant';
-}
-
-if (isInVariantSynchronous(commercialCmpCopy, 'control')) {
-    variant = 'commercialCmpCopy-control';
-}
 
 export const init = (forceModal: boolean) => {
     const container = document.createElement('div');
@@ -43,7 +31,6 @@ export const init = (forceModal: boolean) => {
                 "'Guardian Text Sans Web', Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif",
         },
         forceModal,
-        variant,
     };
 
     if (document.body) {
