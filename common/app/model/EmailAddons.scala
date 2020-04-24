@@ -401,7 +401,7 @@ case object TheGuideStayingIn extends FrontEmailMetadata {
 }
 
 case object Documentaries extends FrontEmailMetadata {
-  val name = "Documentaries Update"
+  val name = "Documentaries"
   override val banner = Some("documentaries-2.png")
 }
 
