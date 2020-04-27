@@ -1,11 +1,8 @@
 package model.content
 
-import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentatom.renderer.{ArticleConfiguration, AudioSettings}
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
 import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
-import conf.Configuration
 import enumeratum._
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
