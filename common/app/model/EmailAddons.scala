@@ -24,12 +24,6 @@ case object ArtWeekly extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "artanddesign/series/art-weekly")
 }
 
-case object DocumentariesUpdate extends ArticleEmailMetadata {
-  val name = "Documentaries Update"
-  override val banner = Some("documentaries.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "news/series/guardian-documentaries-update")
-}
-
 case object MoneyTalks extends ArticleEmailMetadata {
   val name = "Money Talks"
   override val banner = Some("money-talks.png")
@@ -406,6 +400,11 @@ case object TheGuideStayingIn extends FrontEmailMetadata {
   override val banner = Some("home-entertainment-banner3-small.png")
 }
 
+case object Documentaries extends FrontEmailMetadata {
+  val name = "Documentaries"
+  override val banner = Some("documentaries-2.png")
+}
+
 object EmailAddons {
   val unsubscribePlaceholder = "%%unsub_center_url%%"
 
@@ -413,7 +412,6 @@ object EmailAddons {
   private val defaultBanner = "generic.png"
   private val articleEmails     = Seq(
     ArtWeekly,
-    DocumentariesUpdate,
     MoneyTalks,
     TheBreakdown,
     WorldCupFiver,
@@ -484,7 +482,8 @@ object EmailAddons {
     GreenLight,
     WordOfMouth,
     SavedForLater,
-    TheGuideStayingIn
+    TheGuideStayingIn,
+    Documentaries
   )
 
   implicit class EmailContentType(p: Page) {

@@ -55,18 +55,7 @@ describe('Plista Outbrain renderer', () => {
         });
     });
 
-    it('should pick Outbrain for AU', done => {
-        global.Math.random = () => 1;
-        config.set('switches.plistaForOutbrainAu', true);
-        config.set('page.edition', 'AU');
-        initPlistaOutbrainRenderer().then(() => {
-            expect(initOutbrain).toHaveBeenCalled();
-            done();
-        });
-    });
-
     it('should pick Plista for AU', done => {
-        global.Math.random = () => 0;
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
         initPlistaOutbrainRenderer().then(() => {

@@ -1166,15 +1166,15 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-client@^0.2.13":
-  version "0.2.13"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.13.tgz#69ad5559160726ca49714d44d6ab77f3db25f5ef"
-  integrity sha512-OHAZv3MZkuFHJkEoWLkiR5nWnzG0i3Unt3w972n6SmkbOr0xLaUhyM+WZvetNn8dOPzHPVwHW6IYi7Z+TQ5Gug==
+"@guardian/automat-client@^0.2.16":
+  version "0.2.16"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.16.tgz#3ef47e7f49e633aea51c67f061d8d313a26fa9bc"
+  integrity sha512-SgNU2bgiyQaXNfqanx4SDmxqAhXW6QBCTk4tRnCgV9Ht6noRl7UsDfx4I0u+M4H3TRnK4I/i2mmlJBtnuwhxEg==
 
-"@guardian/consent-management-platform@3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.0.0.tgz#6e91aca0330ce8cd8653124287f51a99d0ea727a"
-  integrity sha512-Vu0Q2n/gJew35AxxsEse50f29cAGfcywc7+6FPG7HLMeyS1BymsFxUQAEcem3rM4j6Uq6F/pdtmfsxeXAQJfsA==
+"@guardian/consent-management-platform@3.0.4":
+  version "3.0.4"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.0.4.tgz#8e64bf1c2d92e124c60f0869f2e3b59be786dcaa"
+  integrity sha512-QOd2NbTFWGhh9qhd6wQOU0xyF0dqB9yIFT3W2fZI529Qie+NqPDFU3yVKrvsSQvYpW0ITTZhzCtULQ8rf2kc8w==
   dependencies:
     consent-string "^1.5.1"
     js-cookie "^2.2.1"
@@ -1216,6 +1216,11 @@
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-0.16.1.tgz#331d6bb30513c45b09e5b4807832eb4a146a27ea"
   integrity sha512-OudfWJaKpTTP0J1QckqX0NmfneXgQ5YieZ/4em2lNXGZFEfYyxHnIXrAQE5LjmIGR8eJQoIikkwWiAFt4ziHXQ==
+
+"@kiosked/ulid@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@kiosked/ulid/-/ulid-3.0.0.tgz#2c724de77f13563f26fb9e8858a9e14a84bb6b22"
+  integrity sha512-ZKt2KIgGHDaGfKt6FjYvCpDvBXZRRoE8b+wDOlAV76aXKpq6ITiSUnPYevR4y55NKDnwCvwOrjWe+aVOCAK8kQ==
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -1536,6 +1541,11 @@
 abab@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.0.tgz#aba0ab4c5eee2d4c79d3487d85450fb2376ebb0f"
+
+abab@^2.0.2:
+  version "2.0.3"
+  resolved "https://registry.yarnpkg.com/abab/-/abab-2.0.3.tgz#623e2075e02eb2d3f2475e49f99c91846467907a"
+  integrity sha512-tsFzPpcttalNjFBCFMqsKYQcWxxen1pgJR56by//QwvJc4/OUS3kPOOttx2tSIfjsylB0pYu7f5D3K1RCxUnUg==
 
 abbrev@1:
   version "1.1.1"
@@ -2409,6 +2419,11 @@ braces@^2.3.0, braces@^2.3.1, braces@^2.3.2:
 brorand@^1.0.1:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
+
+browser-cookies@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/browser-cookies/-/browser-cookies-1.2.0.tgz#fca3ffb9b6a63aadc4d8c0999c6b57d0fa7d29b5"
+  integrity sha1-/KP/ubamOq3E2MCZnGtX0Pp9KbU=
 
 browser-process-hrtime@^0.1.2:
   version "0.1.3"
@@ -3453,9 +3468,10 @@ crypto-browserify@^3.11.0:
     randombytes "^2.0.0"
     randomfill "^1.0.3"
 
-crypto-js@^3.1.9-1:
-  version "3.1.9-1"
-  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.1.9-1.tgz#fda19e761fc077e01ffbfdc6e9fdfc59e8806cd8"
+crypto-js@^3.3.0:
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/crypto-js/-/crypto-js-3.3.0.tgz#846dd1cce2f68aacfa156c8578f926a609b7976b"
+  integrity sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q==
 
 css-color-names@0.0.1:
   version "0.0.1"
@@ -5132,10 +5148,12 @@ fstream@^1.0.0, fstream@^1.0.2, fstream@~1.0.10:
     mkdirp ">=0.5 0"
     rimraf "2"
 
-fun-hooks@^0.9.5:
-  version "0.9.6"
-  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.9.6.tgz#ff1452acf05a15b11d3479474528c4db9d5ec199"
-  integrity sha512-0+CUJWTcx/vtm3qfvb9IfILItgDAq28lEsdEzu8622ttSVfFStDQTaSpU/sn2NyFXo5dN2qwwPLcqB/CvDkacg==
+fun-hooks@^0.9.8:
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/fun-hooks/-/fun-hooks-0.9.8.tgz#7103beb4a5011697343eabe7b2f92769789087ca"
+  integrity sha512-FZUHodONJBOCCETXnHTSvqnz+pLZiN2ZqbOZsjXIqJRI8AbvTqOJzDTEeMfPzFf8rPuSZnD5EPcbl7yZsEQ/NA==
+  dependencies:
+    typescript-tuple "^2.2.1"
 
 function-bind@^1.1.0:
   version "1.1.0"
@@ -7085,6 +7103,17 @@ listr@^0.12.0:
     stream-to-observable "^0.1.0"
     strip-ansi "^3.0.1"
 
+live-connect-js@1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/live-connect-js/-/live-connect-js-1.1.1.tgz#f09e184f500a792645a15f451b17d0e8187f01f4"
+  integrity sha512-PsYiZ6R6ecBQgcg3BWvzGf2TNOqpNFK1lUyfYAUEZ+DPwPciKNRM3CQIDtytVvR9vsH7nhotMaU3bBgb7iuPfQ==
+  dependencies:
+    "@kiosked/ulid" "^3.0.0"
+    abab "^2.0.2"
+    browser-cookies "^1.2.0"
+    tiny-hashes "1.0.1"
+    tiny-uuid4 "^1.0.1"
+
 load-json-file@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/load-json-file/-/load-json-file-1.1.0.tgz#956905708d58b4bab4c2261b04f59f31c99374c0"
@@ -8794,21 +8823,22 @@ preact@^8.2.9:
   version "8.2.9"
   resolved "https://registry.yarnpkg.com/preact/-/preact-8.2.9.tgz#813ba9dd45e5d97c5ea0d6c86d375b3be711cc40"
 
-"prebid.js@https://github.com/guardian/Prebid.js#4f04f62":
-  version "3.9.0"
-  resolved "https://github.com/guardian/Prebid.js#4f04f622362cb5e0038ba886fa7d93bccd834414"
+"prebid.js@https://github.com/guardian/Prebid.js#21f0b72":
+  version "3.16.0"
+  resolved "https://github.com/guardian/Prebid.js#21f0b720fdad0794025fae0c26a7d7390192222d"
   dependencies:
     babel-plugin-transform-object-assign "^6.22.0"
     core-js "^2.4.1"
     criteo-direct-rsa-validate "^1.1.0"
-    crypto-js "^3.1.9-1"
+    crypto-js "^3.3.0"
     deep-equal "^1.0.1"
     dlv "1.1.3"
     dset "2.0.1"
     express "^4.15.4"
-    fun-hooks "^0.9.5"
+    fun-hooks "^0.9.8"
     jsencrypt "^3.0.0-rc.1"
     just-clone "^1.0.2"
+    live-connect-js "1.1.1"
 
 prelude-ls@~1.1.2:
   version "1.1.2"
@@ -10665,6 +10695,16 @@ timers-browserify@^2.0.4:
   dependencies:
     setimmediate "^1.0.4"
 
+tiny-hashes@1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tiny-hashes/-/tiny-hashes-1.0.1.tgz#ddbe9060312ddb4efe0a174bb3a27e1331c425a1"
+  integrity sha512-knIN5zj4fl7kW4EBU5sLP20DWUvi/rVouvJezV0UAym2DkQaqm365Nyc8F3QEiOvunNDMxR8UhcXd1d5g+Wg1g==
+
+tiny-uuid4@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/tiny-uuid4/-/tiny-uuid4-1.0.1.tgz#bd44e9dd5f5fbd1768d6d1fbf3020c886a1b7766"
+  integrity sha1-vUTp3V9fvRdo1tH78wIMiGobd2Y=
+
 tmp@^0.0.31:
   version "0.0.31"
   resolved "https://registry.yarnpkg.com/tmp/-/tmp-0.0.31.tgz#8f38ab9438e17315e5dbd8b3657e8bfb277ae4a7"
@@ -10840,6 +10880,25 @@ type-is@~1.6.17, type-is@~1.6.18:
 typedarray@^0.0.6, typedarray@~0.0.5:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/typedarray/-/typedarray-0.0.6.tgz#867ac74e3864187b1d3d47d996a78ec5c8830777"
+
+typescript-compare@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.yarnpkg.com/typescript-compare/-/typescript-compare-0.0.2.tgz#7ee40a400a406c2ea0a7e551efd3309021d5f425"
+  integrity sha512-8ja4j7pMHkfLJQO2/8tut7ub+J3Lw2S3061eJLFQcvs3tsmJKp8KG5NtpLn7KcY2w08edF74BSVN7qJS0U6oHA==
+  dependencies:
+    typescript-logic "^0.0.0"
+
+typescript-logic@^0.0.0:
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/typescript-logic/-/typescript-logic-0.0.0.tgz#66ebd82a2548f2b444a43667bec120b496890196"
+  integrity sha512-zXFars5LUkI3zP492ls0VskH3TtdeHCqu0i7/duGt60i5IGPIpAHE/DWo5FqJ6EjQ15YKXrt+AETjv60Dat34Q==
+
+typescript-tuple@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/typescript-tuple/-/typescript-tuple-2.2.1.tgz#7d9813fb4b355f69ac55032e0363e8bb0f04dad2"
+  integrity sha512-Zcr0lbt8z5ZdEzERHAMAniTiIKerFCMgd7yjq1fPnDJ43et/k9twIFQMUYff9k5oXcsQ0WpvFcgzK2ZKASoW6Q==
+  dependencies:
+    typescript-compare "^0.0.2"
 
 ua-parser-js@0.7.17:
   version "0.7.17"

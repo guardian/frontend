@@ -13,6 +13,7 @@ import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
+import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 import {
     getLastOneOffContributionDate,
@@ -51,6 +52,15 @@ const canRun = (): boolean =>
     geolocation !== 'US' &&
     config.get('page').dcrCouldRender &&
     config.get('tests').dotcomRenderingControl === 'control';
+
+interface InitAutomatJsConfig {
+    epicRoot: HTMLElement | ShadowRoot;
+    onReminderOpen?: Function;
+}
+
+interface AutomatJsCallback {
+    buttonCopyAsString: string;
+}
 
 const frontendDotcomRenderingTest = {
     id: 'FrontendDotcomRenderingEpic',
@@ -95,15 +105,8 @@ const frontendDotcomRenderingTest = {
                     ophanComponentId: 'ACQUISITIONS_EPIC',
                     platformId: 'GUARDIAN_WEB',
                     clientName: 'frontend',
-                    campaignCode: variant.campaignCode,
-                    abTestName: test.id,
-                    abTestVariant: variant.id,
                     referrerUrl:
                         window.location.origin + window.location.pathname,
-                };
-
-                const localisation = {
-                    countryCode,
                 };
 
                 const targeting = {
@@ -127,7 +130,6 @@ const frontendDotcomRenderingTest = {
 
                 const payload = {
                     tracking,
-                    localisation,
                     targeting,
                 };
 
@@ -179,15 +181,15 @@ const frontendDotcomRenderingTest = {
                                 parent.insertBefore(container, target);
 
                                 // use Shadow Dom if found
-                                let shadowRoot;
-                                if (container.attachShadow) {
-                                    shadowRoot = container.attachShadow({
-                                        mode: 'open',
-                                    });
-                                    shadowRoot.innerHTML = content;
-                                } else {
-                                    container.innerHTML = content;
-                                }
+                                // let shadowRoot;
+                                // if (container.attachShadow) {
+                                //     shadowRoot = container.attachShadow({
+                                //         mode: 'open',
+                                //     });
+                                //     shadowRoot.innerHTML = content;
+                                // } else {
+                                container.innerHTML = content;
+                                // }
 
                                 emitInsertEvent(
                                     test,
@@ -216,9 +218,27 @@ const frontendDotcomRenderingTest = {
                                             typeof window.initAutomatJs ===
                                             'function'
                                         ) {
-                                            const slotRoot =
-                                                shadowRoot || container;
-                                            window.initAutomatJs(slotRoot);
+                                            const initAutomatJsConfig: InitAutomatJsConfig = {
+                                                epicRoot: container, // shadowRoot || container,
+                                                onReminderOpen: (callbackParams: AutomatJsCallback) => {
+                                                    const { buttonCopyAsString } = callbackParams;
+                                                    // Send two separate Ophan events when the Reminder
+                                                    // button is clicked
+                                                    submitClickEvent({
+                                                        component: {
+                                                            componentType: 'ACQUISITIONS_OTHER',
+                                                            id: 'precontribution-reminder-prompt-clicked',
+                                                        },
+                                                    });
+                                                    submitClickEvent({
+                                                        component: {
+                                                            componentType: 'ACQUISITIONS_OTHER',
+                                                            id: `precontribution-reminder-prompt-copy-${buttonCopyAsString}`,
+                                                        },
+                                                    });
+                                                },
+                                            };
+                                            window.initAutomatJs(initAutomatJsConfig);
                                         }
                                     }
                                 } catch (error) {

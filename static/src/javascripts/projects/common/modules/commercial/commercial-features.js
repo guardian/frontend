@@ -15,7 +15,9 @@ class CommercialFeatures {
     carrotTrafficDriver: boolean;
     highMerch: boolean;
     thirdPartyTags: boolean;
+    relatedWidgetEnabled: boolean;
     outbrain: boolean;
+    plista: boolean;
     commentAdverts: boolean;
     liveblogAdverts: boolean;
     paidforBand: boolean;
@@ -104,16 +106,23 @@ class CommercialFeatures {
             !isIdentityPage &&
             !this.isSecureContact;
 
-        this.outbrain =
+        this.relatedWidgetEnabled =
             this.dfpAdvertising &&
             !this.adFree &&
-            switches.outbrain &&
             !noadsUrl &&
             !sensitiveContent &&
             isArticle &&
             !config.get('page.isPreview') &&
             config.get('page.showRelatedContent') &&
             !(isUserLoggedIn() && config.get('page.commentable'));
+
+        this.outbrain =
+            this.relatedWidgetEnabled &&
+            switches.outbrain;
+
+        this.plista =
+            this.relatedWidgetEnabled &&
+            switches.plistaForOutbrainAu;
 
         this.commentAdverts =
             this.dfpAdvertising &&

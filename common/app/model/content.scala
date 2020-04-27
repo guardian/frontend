@@ -129,8 +129,13 @@ final case class Content(
     val isOldNews = tags.tags.exists(_.id == "tone/news") &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
+    val isOldOpinion = tags.tags.exists(_.id == "tone/comment") &&
+      trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
+
     () match {
       case paid if isPaidContent => Paid
+      case oldcommentObserver if isOldOpinion && isFromTheObserver => CommentObserverOldContent(trail.webPublicationDate.getYear)
+      case oldComment if isOldOpinion => CommentGuardianOldContent(trail.webPublicationDate.getYear)
       case commentObserver if tags.isComment && isFromTheObserver => ObserverOpinion
       case comment if tags.isComment => GuardianOpinion
       case live if tags.isLiveBlog => Live
