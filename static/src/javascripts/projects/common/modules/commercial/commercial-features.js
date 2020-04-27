@@ -8,7 +8,7 @@ import userPrefs from 'common/modules/user-prefs';
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
     dfpAdvertising: boolean;
-    shouldBlockAnalytics: boolean;
+    isSecureContact: boolean;
     stickyTopBannerAd: boolean;
     articleBodyAdverts: boolean;
     articleAsideAdverts: boolean;
@@ -55,7 +55,7 @@ class CommercialFeatures {
             config.get('page.showNewRecipeDesign') &&
             config.get('tests.abNewRecipeDesign');
 
-        const isSecureContact = [
+        this.isSecureContact = [
             'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
             'help/2016/sep/19/how-to-contact-the-guardian-securely',
         ].includes(config.get('page.pageId', ''));
@@ -70,8 +70,6 @@ class CommercialFeatures {
                 !sensitiveContent &&
                 !isIdentityPage &&
                 !this.adFree);
-
-        this.shouldBlockAnalytics = isSecureContact;
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -106,7 +104,7 @@ class CommercialFeatures {
             !this.adFree &&
             externalAdvertising &&
             !isIdentityPage &&
-            !isSecureContact;
+            !this.isSecureContact;
 
         this.relatedWidgetEnabled =
             this.dfpAdvertising &&
@@ -142,7 +140,7 @@ class CommercialFeatures {
         this.comscore =
             config.get('switches.comscore', false) &&
             !isIdentityPage &&
-            !isSecureContact;
+            !this.isSecureContact;
     }
 }
 

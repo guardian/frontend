@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -11,6 +11,11 @@ import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const setupA9: () => Promise<void> = () => {
+    // There are two articles that InfoSec would like to avoid loading scripts on
+    if (commercialFeatures.isSecureContact) {
+        return Promise.resolve();
+    }
+
     let moduleLoadResult = Promise.resolve();
     if (
         shouldIncludeOnlyA9 ||
