@@ -122,7 +122,7 @@ trait ABTestSwitches {
     "Test Prebid Outstream (via Ozone)",
     owners = Seq(Owner.withGithub("janua")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 31),
+    sellByDate = new LocalDate(2020, 5, 29),
     exposeClientSide = true
   )
 
