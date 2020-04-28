@@ -13,7 +13,8 @@ import type {
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 import type { PrebidPriceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
-import { getUrlVars } from 'lib/url';
+import { prebidOutstream } from 'common/modules/experiments/tests/prebid-outstream-test';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 type EnableAnalyticsConfig = {
     provider: string,
@@ -83,8 +84,6 @@ const consentManagement: ConsentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
-const prebidOutstreamParam: string = 'prebid-outstream'
-
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -99,7 +98,7 @@ class PrebidAdUnit {
             }
         };
 
-        if (getUrlVars[prebidOutstreamParam] === 'true' && slot.key === 'inline1'){
+        if (slot.key === 'inline1' && isInVariantSynchronous(prebidOutstream, 'variant')){
             this.mediaTypes = Object.assign(
                 {},
                 this.mediaTypes,
