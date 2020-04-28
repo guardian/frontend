@@ -1,0 +1,72 @@
+.epic-article-count {
+    position: relative;
+    display: inline;
+}
+
+.epic-article-count__reveal-reminder {
+    display: none;
+}
+
+.epic-article-count__dialog {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 20px;
+    z-index: 1;
+
+    background-color: $brand-main;
+    color: $brightness-100;
+    font-family: $f-sans-serif-text;
+    padding: 15px 10px;
+
+    .epic-article-count__dialog-header {
+        font-size: 17px;
+        line-height: 21px;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        display: block;
+    }
+
+    .epic-article-count__dialog-body {
+        font-size: 15px;
+        line-height: 18px;
+        margin-bottom: 15px;
+
+        display: block;
+    }
+
+    .epic-article-count__dialog-note {
+        font-size: 12px;
+        line-height: 15px;
+        font-style: italic;
+        display: block;
+    }
+}
+
+.epic-article-count__reveal-reminder:checked ~ .epic-article-count__dialog {
+    display: block;
+}
+
+.epic-article-count .epic-article-count__prompt-label a {
+    text-decoration: none;
+    border-bottom: 1px solid $brightness-86;
+    color: $brightness-7;
+}
+
+.epic-article-count__buttons {
+    display: flex;
+}
+
+.epic-article-count a.epic-article-count__button-opt-out {
+    background-color: $brightness-100;
+    color: $brand-main;
+    margin-bottom: 15px;
+}
+
+.epic-article-count a.epic-article-count__button-opt-in {
+    background-color: $brand-main;
+    color: $brightness-100;
+    margin-bottom: 15px;
+    border: solid 1px $brightness-100;
+}

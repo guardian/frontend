@@ -484,4 +484,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val articlesViewedOptOut = Switch(
+    SwitchGroup.Feature,
+    "show-articles-viewed-opt-out",
+    "This toggles the articles viewed count opt out in the epic",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 6, 15),
+    exposeClientSide = true
+  )
+
 }

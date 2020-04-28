@@ -32,6 +32,7 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import { epicArticlesViewedOptOut } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
@@ -58,6 +59,7 @@ import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
+import {getMvtValue} from "common/modules/analytics/mvt-cookie";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -83,8 +85,20 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const replaceCountryName = (text: string, countryName: ?string): string =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
 
-const replaceArticlesViewed = (text: string, count: ?number): string =>
-    count ? text.replace(/%%ARTICLE_COUNT%%/g, count.toString()) : text;
+const replaceArticlesViewed = (text: string, count: ?number): string => {
+    if (count) {
+        // Show the opt-out to 50% of the audience
+        const mvtCookieId = Number(getMvtValue());
+        const optOutEnabled = config.get('switches.showArticlesViewedOptOut');
+        if (optOutEnabled && mvtCookieId % 2) {
+            const html = epicArticlesViewedOptOut(count);
+            return text.replace(/%%ARTICLE_COUNT%%/g, html);
+        }
+
+        return text.replace(/%%ARTICLE_COUNT%%/g, count.toString())
+    }
+    return text;
+};
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -289,11 +303,16 @@ const setupOnView = (
             initTicker('.js-epic-ticker');
         }
 
-        if(config.get('switches.showContributionReminder')) {
+        if (config.get('switches.showContributionReminder')) {
             const htmlElements = getFields();
             if (htmlElements) {
                 epicReminderEmailSignup(htmlElements);
             }
+        }
+
+        if (config.get('switches.showArticlesViewedOptOut')) {
+            // TODO - handlers for the buttons on the opt-out
+            // setupArticlesViewedOptOut();
         }
     });
 };
@@ -616,6 +635,7 @@ const buildEpicCopy = (
             replaceCountryName(s, countryName),
             articlesViewedCount
         );
+
 
     return {
         heading: heading
