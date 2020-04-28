@@ -118,6 +118,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-prebid-outstream",
+    "Test Prebid Outstream (via Ozone)",
+    owners = Seq(Owner.withGithub("janua")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 5, 31),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-commercial-connatix",
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
