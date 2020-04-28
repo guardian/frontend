@@ -12,6 +12,7 @@ import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test'
 import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateCentesimus } from 'common/modules/experiments/tests/sign-in-gate-centesimus';
+import { prebidOutstream } from 'common/modules/experiments/tests/prebid-outstream-test';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 import { commercialRedplanet } from 'common/modules/experiments/tests/commercial-redplanet-aus';
 
@@ -25,6 +26,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     pangaeaAdapterTest,
     signInGatePatientia,
     signInGateCentesimus,
+    prebidOutstream,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;

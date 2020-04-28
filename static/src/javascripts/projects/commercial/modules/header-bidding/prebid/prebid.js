@@ -110,6 +110,10 @@ class PrebidAdUnit {
                 }
             });
         }
+
+        console.log(`${JSON.stringify(this.mediaTypes)}`);
+        console.log(`${slot.key}`);
+        console.log(`${isInVariantSynchronous(prebidOutstream, 'variant').toString()}`);
     }
 
     isEmpty() {
