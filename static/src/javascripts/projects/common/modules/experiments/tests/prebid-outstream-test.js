@@ -1,7 +1,7 @@
 // @flow strict
 
 export const prebidOutstream: ABTest = {
-    id: 'prebid-outstream',
+    id: 'PrebidOutstream',
     start: '2020-04-28',
     expiry: '2020-05-31',
     author: 'Francis Carr',
