@@ -13,6 +13,7 @@ import type {
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 import type { PrebidPriceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
+import { getUrlVars } from 'lib/url';
 
 type EnableAnalyticsConfig = {
     provider: string,
@@ -82,6 +83,8 @@ const consentManagement: ConsentManagement = {
     allowAuctionWithoutConsent: true,
 };
 
+const prebidOutstreamParam: string = 'prebid-outstream'
+
 class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
@@ -90,7 +93,24 @@ class PrebidAdUnit {
     constructor(advert: Advert, slot: HeaderBiddingSlot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
-        this.mediaTypes = { banner: { sizes: slot.sizes } };
+        this.mediaTypes = {
+            banner: {
+                sizes: slot.sizes
+            }
+        };
+
+        if (getUrlVars[prebidOutstreamParam] === 'true' && slot.key === 'inline1'){
+            this.mediaTypes = Object.assign(
+                {},
+                this.mediaTypes,
+                {
+                    video: {
+                        context: 'outstream',
+                        playerSize: [640, 480],
+                        mimes: ['video/mp4']
+                }
+            });
+        }
     }
 
     isEmpty() {
