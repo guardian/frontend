@@ -3,8 +3,13 @@
     display: inline;
 }
 
+// This is the hidden checkbox that we use to hide/unhide the dialog using css only
 .epic-article-count__reveal-reminder {
     display: none;
+}
+
+.epic-article-count__reveal-reminder:checked ~ .epic-article-count__dialog {
+    display: block;
 }
 
 .epic-article-count__dialog {
@@ -42,10 +47,6 @@
         font-style: italic;
         display: block;
     }
-}
-
-.epic-article-count__reveal-reminder:checked ~ .epic-article-count__dialog {
-    display: block;
 }
 
 .epic-article-count .epic-article-count__prompt-label a {
