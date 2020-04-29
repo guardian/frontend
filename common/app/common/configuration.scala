@@ -243,7 +243,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object googletag {
-    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
+    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//securepubads.g.doubleclick.net/tag/js/gpt.js")
   }
 
   // Amazon A9 APS Transparent Ad Marketplace library
