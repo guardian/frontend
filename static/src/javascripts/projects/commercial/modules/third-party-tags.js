@@ -104,7 +104,7 @@ const init = (): Promise<boolean> => {
     }
 
     // Section 1
-    // Outbrain/Plista needs to be loaded before the first ad as it is checking
+    // Plista needs to be loaded before the first ad as it is checking
     // for the presence of high relevance component on page
     // I'm leaving this to check adFree state because while the thirdPartyTags
     // check above is now sensitive to ad-free, it could be changed independently
