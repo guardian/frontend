@@ -1,27 +1,28 @@
 // @flow
 export const signInGate: ABTest = {
-    id: 'SignInGateQuartusControl',
-    start: '2020-04-07',
-    expiry: '2020-06-01',
-    author: 'Mahesh Makani',
+    id: 'SignInGatePatientia',
+    start: '2020-04-30',
+    expiry: '2020-12-01',
+    author: 'Mahesh Makani, vlbee',
     description:
-        'Test adding a sign in component on the 2nd pageview of simple article templates, with higher priority over banners and epic, and a much larget audience size. This test does not display a gate, and only used for tracking users who meet our displayer criteria.',
-    audience: 0.13,
-    audienceOffset: 0.5,
+        'Marathon sign in gate test on 3nd article view of simple article templates, with higher priority over banners and epic',
+    audience: 0.0, // todo
+    audienceOffset: 0.0, // todo
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
-        'The contributions epic is not shown, The consent banner is not shown, The contributions banner is not shown, Should only appear on simple article template, Should not show if they are already signed in, Users will not need to go through the marketing consents as part of signup flow',
-    dataLinkNames: 'SignInGateQuartus',
-    idealOutcome: '60% of users sign in, and dismiss rate is below 40%',
+        '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
+    dataLinkNames: 'SignInGatePatientia',
+    idealOutcome:
+        'Conversion to sign in is higher when the gate is shown over a longer period of time, with no sustained negative impact to engagement levels or supporter acquisition',
     showForSensitive: false,
     canRun: () => true,
     variants: [
-        // {
-        //     id: 'example',
-        //     test: (): void => {},
-        // },
         {
             id: 'control',
+            test: (): void => {},
+        },
+        {
+            id: 'variant',
             test: (): void => {},
         },
     ],

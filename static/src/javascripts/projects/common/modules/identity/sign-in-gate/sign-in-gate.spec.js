@@ -10,7 +10,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateQuartusVariant',
+            id: 'SignInGatePatientia',
             variantToRun: {
                 id: 'variant',
             },

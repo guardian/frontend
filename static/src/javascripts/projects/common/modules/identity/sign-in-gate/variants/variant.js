@@ -7,10 +7,11 @@ import {
     isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
+    isIOS9,
 } from '../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from './design/quartus';
+import { designShow } from './design/patientia';
 
 // define the variant name here
 const variant = 'variant';
@@ -18,14 +19,15 @@ const variant = 'variant';
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>
     !hasUserDismissedGate({
-        componentName,
         name,
         variant,
+        componentName,
     }) &&
     isNPageOrHigherPageView(3) &&
     !isLoggedIn() &&
     !isInvalidArticleType() &&
-    !isInvalidSection();
+    !isInvalidSection() &&
+    !isIOS9();
 
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
