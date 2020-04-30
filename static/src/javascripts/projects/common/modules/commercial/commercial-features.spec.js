@@ -265,7 +265,7 @@ describe('Commercial features', () => {
         });
     });
 
-    describe('Outbrain / Plista', () => {
+    describe('Plista', () => {
         // These are the 'promoted links from around the web' widgets
         it('Runs by default', () => {
             const features = new CommercialFeatures();
@@ -298,7 +298,7 @@ describe('Commercial features', () => {
         });
     });
 
-    describe('Outbrain / Plista under ad-free', () => {
+    describe('Plista under ad-free', () => {
         beforeEach(() => {
             isAdFreeUser.mockReturnValue(true);
         });
