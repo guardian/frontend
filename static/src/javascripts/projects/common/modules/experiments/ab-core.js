@@ -8,7 +8,7 @@ import config from 'lib/config';
 import { isExpired } from 'lib/time-utils';
 import { logAutomatEvent } from 'common/modules/experiments/automatLog';
 import { getVariantFromLocalStorage } from './ab-local-storage';
-import { getVariantFromUrl } from './ab-url';
+import { getVariantFromUrl, getIgnoreCanRunFromUrl } from './ab-url';
 import { NOT_IN_TEST } from './ab-constants';
 import { isTestSwitchedOn } from './ab-utils';
 
@@ -77,6 +77,14 @@ export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
     const fromLocalStorage = getVariantFromLocalStorage(test);
     const fromCookie = computeVariantFromMvtCookie(test);
     const variantToRun = fromUrl || fromLocalStorage || fromCookie;
+    const ignoreCanRun = fromUrl && getIgnoreCanRunFromUrl(); // check fromUrl to only ignore can run for forced tests
+
+    if (variantToRun && ignoreCanRun) {
+        return {
+            ...test,
+            variantToRun,
+        };
+    }
 
     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
         return {
