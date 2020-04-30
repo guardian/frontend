@@ -5,8 +5,6 @@ import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 import { getEpicTestToRun } from 'common/modules/experiments/ab';
 
-const someCheckPassed = (results): boolean => results.includes(true);
-
 const everyCheckPassed = (results): boolean => !results.includes(false);
 
 /**
@@ -91,16 +89,6 @@ const checksToDispatch = {
         );
     },
 
-    isOutbrainMerchandiseCompliantOrBlockedByAds(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('isOutbrainMerchandiseCompliant'),
-            waitForCheck('isOutbrainBlockedByAds'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            someCheckPassed(results)
-        );
-    },
 };
 
 const initCheckDispatcher = (): void => {
