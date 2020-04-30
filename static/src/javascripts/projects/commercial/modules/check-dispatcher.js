@@ -5,8 +5,6 @@ import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 import { getEpicTestToRun } from 'common/modules/experiments/ab';
 
-const everyCheckPassed = (results): boolean => !results.includes(false);
-
 /**
     Any check added to checksToDispatch should also
     be added to the array of checks in './check-mediator-checks'.
@@ -66,18 +64,6 @@ const checksToDispatch = {
             lowPriorityAdLoaded => !lowPriorityAdLoaded
         );
     },
-
-    isOutbrainBlockedByAds(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('hasHighPriorityAdLoaded'),
-            waitForCheck('hasLowPriorityAdLoaded'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            everyCheckPassed(results)
-        );
-    },
-
 };
 
 const initCheckDispatcher = (): void => {
