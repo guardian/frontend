@@ -33,7 +33,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
-import { optOutEnabled, inArticlesViewedOptOutTest, setupArticlesViewedOptOut, OPT_OUT_COOKIE_NAME } from 'common/modules/commercial/epic-articles-viewed-opt-out';
+import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, OPT_OUT_COOKIE_NAME } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
@@ -88,7 +88,8 @@ const replaceCountryName = (text: string, countryName: ?string): string =>
 
 const replaceArticlesViewed = (text: string, count: ?number): string => {
     if (count) {
-        if (optOutEnabled() && inArticlesViewedOptOutTest()) {
+        // A/B test the opt-out feature if the switch is enabled
+        if (optOutEnabled() && userIsInArticlesViewedOptOutTest()) {
             const html = epicArticlesViewedOptOutTemplate(count);
             return text.replace(/%%ARTICLE_COUNT%%/g, html);
         }
@@ -310,11 +311,6 @@ const setupOnView = (
                 epicReminderEmailSignup(htmlElements);
             }
         }
-
-        if (config.get('switches.showArticlesViewedOptOut')) {
-            // TODO - only works if user scrolls
-            setupArticlesViewedOptOut();
-        }
     });
 };
 
@@ -486,6 +482,8 @@ const makeEpicABTestVariant = (
                                     initVariant.products,
                                     campaignCode
                                 );
+
+                                setupArticlesViewedOptOut();
 
                                 component.each(element => {
                                     setupOnView(

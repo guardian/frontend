@@ -10,36 +10,34 @@ const COOKIE_DAYS_TO_LIVE = 90;
 
 const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
 // Show the opt-out to 50% of the audience
-const inArticlesViewedOptOutTest = () => Number(getMvtValue()) % 2;
+const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) % 2;
 
 const hideDialog = () => {
     const checkbox = document.querySelector('#epic-article-count__dialog');
-    if (checkbox) {
+    if (checkbox instanceof HTMLInputElement) {
         checkbox.checked = false;
     }
 };
 
 const showDialog = () => {
     const checkbox = document.querySelector('#epic-article-count__dialog');
-    if (checkbox) {
+    if (checkbox instanceof HTMLInputElement) {
         checkbox.checked = true;
     }
 };
 
 const onArticlesViewedClick = () => {
-    console.log("onArticlesViewedClick")
     submitClickEvent({
         component: {
             componentType: 'ACQUISITIONS_OTHER',
             id: 'articles-viewed-opt-out_open',
         },
-    })
+    });
     // TODO - also show dialog this way? Or use css-only?
     showDialog();
 };
 
 const onOptOutClick = () => {
-    console.log("onOptOutClick")
     submitClickEvent({
         component: {
             componentType: 'ACQUISITIONS_OTHER',
@@ -49,23 +47,28 @@ const onOptOutClick = () => {
 
     addCookie(OPT_OUT_COOKIE_NAME, new Date().getTime().toString(), COOKIE_DAYS_TO_LIVE);
 
+    // Update the dialog message
     const closeButton = document.querySelector('.epic-article-count__dialog-close');
-    if (closeButton) {
-        document.querySelector('.epic-article-count__dialog-close').classList.remove('is-hidden');
+    const buttons = document.querySelector('.epic-article-count__buttons');
+    const header = document.querySelector('.epic-article-count__dialog-header');
+    const body = document.querySelector('.epic-article-count__dialog-body');
+    const note = document.querySelector('.epic-article-count__dialog-note');
+
+    if (closeButton && buttons && header && body && note) {
+        closeButton.classList.remove('is-hidden');
         closeButton.addEventListener('click', () => {
             hideDialog();
         });
-    }
 
-    document.querySelector('.epic-article-count__buttons').remove();
-    document.querySelector('.epic-article-count__dialog-header').innerHTML = `You've opted out`;
-    document.querySelector('.epic-article-count__dialog-body').innerHTML = `Starting from your next page view, we won't count the articles you read or show you this message for three months.`;
-    // TODO - add url
-    document.querySelector('.epic-article-count__dialog-note').innerHTML = `If you have any questions, please <a href="">contact us</a>.`;
+        buttons.remove();
+        header.innerHTML = `You've opted out`;
+        body.innerHTML = `Starting from your next page view, we won't count the articles you read or show you this message for three months.`;
+        // TODO - add url
+        note.innerHTML = `If you have any questions, please <a href="">contact us</a>.`;
+    }
 };
 
 const onOptInClick = () => {
-    console.log("onOptInClick")
     submitClickEvent({
         component: {
             componentType: 'ACQUISITIONS_OTHER',
@@ -88,7 +91,6 @@ const setupArticlesViewedOptOut = () => {
                 id: viewEventId,
             },
         });
-        console.log("submitted view", viewEventId)
 
         if (element) {
             const labelElement = element.querySelector('.epic-article-count__dialog');
@@ -117,7 +119,7 @@ const setupArticlesViewedOptOut = () => {
 
 export {
     optOutEnabled,
-    inArticlesViewedOptOutTest,
+    userIsInArticlesViewedOptOutTest,
     setupArticlesViewedOptOut,
     OPT_OUT_COOKIE_NAME,
 }
