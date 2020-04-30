@@ -2,7 +2,6 @@
 
 import externalContentContainerStr from 'raw-loader!common/views/commercial/external-content.html';
 import { plista } from 'commercial/modules/third-party-tags/plista';
-import { initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import template from 'lodash/template';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
@@ -46,7 +45,7 @@ const init = (): Promise<void> => {
         return renderWidget('plista', plista.init);
     }
 
-    return renderWidget('outbrain', initOutbrain)
+    return Promise.resolve();
 };
 
 export { init };
