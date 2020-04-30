@@ -33,7 +33,7 @@ afterAll(() => {
     jest.resetAllMocks();
 });
 
-describe('Plista Outbrain renderer', () => {
+describe('Plista renderer', () => {
     it('should pick Plista for AU', done => {
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
