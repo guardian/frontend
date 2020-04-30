@@ -1,6 +1,5 @@
 // @flow
 import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
-import { initOutbrain as _initOutbrain } from 'commercial/modules/third-party-tags/outbrain';
 import { plista as _plista } from 'commercial/modules/third-party-tags/plista';
 import config from 'lib/config';
 
@@ -25,7 +24,6 @@ jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
 jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
 const plista = _plista;
-const initOutbrain = _initOutbrain;
 
 jest.mock('commercial/modules/third-party-tags/plista', () => ({
     plista: {
@@ -38,19 +36,6 @@ afterAll(() => {
 });
 
 describe('Plista Outbrain renderer', () => {
-    it('should display Outbrain for UK, US and International Edition', done => {
-        ['uk', 'us', 'int'].forEach((edition, index) => {
-            config.set('switches.plistaForOutbrainAu', true);
-            config.set('page.edition', edition);
-            initPlistaOutbrainRenderer().then(() => {
-                expect(initOutbrain).toHaveBeenCalled();
-                if (index === 2) {
-                    done();
-                }
-            });
-        });
-    });
-
     it('should pick Plista for AU', done => {
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
