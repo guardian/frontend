@@ -59,11 +59,6 @@ const checksToDispatch = {
         return Promise.resolve(false);
     },
 
-    hasLowPriorityAdNotLoaded(): Promise<boolean> {
-        return waitForCheck('hasLowPriorityAdLoaded').then(
-            lowPriorityAdLoaded => !lowPriorityAdLoaded
-        );
-    },
 };
 
 const initCheckDispatcher = (): void => {

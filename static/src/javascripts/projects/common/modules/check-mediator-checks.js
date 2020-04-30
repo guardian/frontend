@@ -5,5 +5,4 @@ export const checks = [
     'isUserNotInContributionsAbTest',
     'hasHighPriorityAdLoaded',
     'hasLowPriorityAdLoaded',
-    'hasLowPriorityAdNotLoaded',
 ];
