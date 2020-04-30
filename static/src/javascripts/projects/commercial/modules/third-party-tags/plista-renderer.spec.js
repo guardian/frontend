@@ -1,5 +1,5 @@
 // @flow
-import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { plista as _plista } from 'commercial/modules/third-party-tags/plista';
 import config from 'lib/config';
 
