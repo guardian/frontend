@@ -3,7 +3,6 @@ import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
 
 type OutbrainPageConditions = {
-    outbrainEnabled: boolean,
     noMerchSlotsExpected: boolean,
     contributionsTestVisible: boolean,
 };
@@ -21,11 +20,9 @@ const noMerchSlotsExpected = (): Promise<boolean> =>
 // These are the on-page conditions which influence the outbrain load. We don't need to wait for DFP to find the value of these.
 const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
     Promise.all([
-        waitForCheck('isOutbrainDisabled'),
         noMerchSlotsExpected(),
         waitForCheck('isUserInContributionsAbTest'),
-    ]).then(([outbrainDisabled, noMerchSlots, contributions]) => ({
-        outbrainEnabled: !outbrainDisabled,
+    ]).then(([noMerchSlots, contributions]) => ({
         noMerchSlotsExpected: noMerchSlots,
         contributionsTestVisible: contributions,
     }));
@@ -35,8 +32,7 @@ export const getOutbrainComplianceTargeting = (): Promise<
 > =>
     getOutbrainPageConditions().then(pageConditions => {
         if (
-            pageConditions.contributionsTestVisible ||
-            !pageConditions.outbrainEnabled
+            pageConditions.contributionsTestVisible
         ) {
             // This key value should be read as "the outbrain load cannot be compliant"
             // (it could be non-compliant, or not loaded at all).
