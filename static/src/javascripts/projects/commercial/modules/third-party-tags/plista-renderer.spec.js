@@ -1,5 +1,5 @@
 // @flow
-import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
+import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { plista as _plista } from 'commercial/modules/third-party-tags/plista';
 import config from 'lib/config';
 
@@ -37,7 +37,7 @@ describe('Plista renderer', () => {
     it('should pick Plista for AU', done => {
         config.set('switches.plistaForOutbrainAu', true);
         config.set('page.edition', 'AU');
-        initPlistaOutbrainRenderer().then(() => {
+        initPlistaRenderer().then(() => {
             expect(plista.init).toHaveBeenCalled();
             done();
         });
