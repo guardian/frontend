@@ -4,10 +4,10 @@ import { getBodyEnd } from '@guardian/automat-client';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     makeEpicABTest,
-    setupOnView,
     emitBeginEvent,
     setupClickHandling,
-    emitInsertEvent,
+    submitOphanInsert,
+    setupOphanView,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
@@ -191,18 +191,23 @@ const frontendDotcomRenderingTest = {
                                     container.innerHTML = content;
                                 }
 
-                                emitInsertEvent(
-                                    test,
+                                submitOphanInsert(
+                                    test.id,
+                                    variant.id,
+                                    test.componentType,
                                     products,
-                                    variant.campaignCode
+                                    variant.campaignCode || ''
                                 );
 
-                                setupOnView(
+                                setupOphanView(
                                     container,
-                                    test,
-                                    variant.campaignCode,
+                                    test.viewEvent,
+                                    test.id,
+                                    variant.id,
+                                    variant.campaignCode || '',
                                     trackingCampaignId,
-                                    products
+                                    test.componentType,
+                                    products,
                                 );
 
                                 // If the Epic has custom JS code, we need to

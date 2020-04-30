@@ -8,7 +8,7 @@ import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-a
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
-import { frontendDotcomRenderingEpic } from 'common/modules/experiments/tests/frontend-dotcom-rendering-epic';
+import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
 import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
 import { signInGateVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
 import { signInGateScale } from 'common/modules/experiments/tests/sign-in-gate-scale';
@@ -26,7 +26,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateScale,
 ];
 
-export const priorityEpicTest: EpicABTest = frontendDotcomRenderingEpic;
+export const priorityEpicTest: ABTest = remoteEpicVariants;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,
