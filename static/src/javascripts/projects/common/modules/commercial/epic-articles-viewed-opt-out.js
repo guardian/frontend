@@ -52,7 +52,7 @@ const onOptOutClick = () => {
     const closeButton = document.querySelector('.epic-article-count__dialog-close');
     if (closeButton) {
         document.querySelector('.epic-article-count__dialog-close').classList.remove('is-hidden');
-        closeButton.addEventListener('click', (event: Event) => {
+        closeButton.addEventListener('click', () => {
             hideDialog();
         });
     }
@@ -94,10 +94,10 @@ const setupArticlesViewedOptOut = () => {
             const labelElement = element.querySelector('.epic-article-count__dialog');
             const optOutButton = element.querySelector('.epic-article-count__button-opt-out');
             const optInButton = element.querySelector('.epic-article-count__button-opt-in');
-            debugger
+            
 
             if (labelElement && optOutButton && optInButton) {
-                labelElement.addEventListener('click', (event: Event) => {
+                labelElement.addEventListener('click', () => {
                     onArticlesViewedClick();
                 });
 
