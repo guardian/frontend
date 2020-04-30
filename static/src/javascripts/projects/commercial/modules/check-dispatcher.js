@@ -41,24 +41,6 @@ const checksToDispatch = {
         return Promise.resolve(false);
     },
 
-    hasLowPriorityAdLoaded(): Promise<boolean> {
-        // if thirdPartyTags false no external ads are loaded
-        // is irrelevant for ad-free users (independently of thirdPartyTags)
-        if (commercialFeatures.thirdPartyTags && !commercialFeatures.adFree) {
-            return waitForCheck('hasHighPriorityAdLoaded').then(
-                highPriorityAdLoaded => {
-                    if (highPriorityAdLoaded) {
-                        return Promise.resolve(
-                            trackAdRender('dfp-ad--merchandising')
-                        );
-                    }
-                    return Promise.resolve(true);
-                }
-            );
-        }
-        return Promise.resolve(false);
-    },
-
 };
 
 const initCheckDispatcher = (): void => {
