@@ -32,7 +32,8 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
-import { epicArticlesViewedOptOut } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out';
+import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
+import { optOutEnabled, inArticlesViewedOptOutTest, setupArticlesViewedOptOut, OPT_OUT_COOKIE_NAME } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
@@ -59,7 +60,7 @@ import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
-import {getMvtValue} from "common/modules/analytics/mvt-cookie";
+import {getCookie} from "lib/cookies";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -87,11 +88,8 @@ const replaceCountryName = (text: string, countryName: ?string): string =>
 
 const replaceArticlesViewed = (text: string, count: ?number): string => {
     if (count) {
-        // Show the opt-out to 50% of the audience
-        const mvtCookieId = Number(getMvtValue());
-        const optOutEnabled = config.get('switches.showArticlesViewedOptOut');
-        if (optOutEnabled && mvtCookieId % 2) {
-            const html = epicArticlesViewedOptOut(count);
+        if (optOutEnabled() && inArticlesViewedOptOutTest()) {
+            const html = epicArticlesViewedOptOutTemplate(count);
             return text.replace(/%%ARTICLE_COUNT%%/g, html);
         }
 
@@ -248,7 +246,10 @@ const countryNameIsOk = (
 const articleViewCountIsOk = (
     articlesViewedSettings?: ArticlesViewedSettings
 ): boolean => {
-    if (articlesViewedSettings) {
+    if (articlesViewedSettings && getCookie(OPT_OUT_COOKIE_NAME)) {
+        // User has opted out of articles viewed counting
+        return false;
+    } else if (articlesViewedSettings) {
         const upperOk = articlesViewedSettings.maxViews
             ? articlesViewedSettings.count <= articlesViewedSettings.maxViews
             : true;
@@ -311,8 +312,8 @@ const setupOnView = (
         }
 
         if (config.get('switches.showArticlesViewedOptOut')) {
-            // TODO - handlers for the buttons on the opt-out
-            // setupArticlesViewedOptOut();
+            // TODO - only works if user scrolls
+            setupArticlesViewedOptOut();
         }
     });
 };

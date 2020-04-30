@@ -4,11 +4,11 @@
 }
 
 // This is the hidden checkbox that we use to hide/unhide the dialog using css only
-.epic-article-count__reveal-reminder {
+.epic-article-count__dialog {
     display: none;
 }
 
-.epic-article-count__reveal-reminder:checked ~ .epic-article-count__dialog {
+.epic-article-count__dialog:checked ~ .epic-article-count__dialog {
     display: block;
 }
 
@@ -16,8 +16,9 @@
     display: none;
     position: absolute;
     left: 0;
-    top: 20px;
+    top: 23px;
     z-index: 1;
+    min-width: 300px;
 
     background-color: $brand-main;
     color: $brightness-100;
@@ -46,12 +47,17 @@
         line-height: 15px;
         font-style: italic;
         display: block;
+
+        a {
+            text-decoration: underline;
+            color: $brightness-100;
+        }
     }
 }
 
 .epic-article-count .epic-article-count__prompt-label a {
     text-decoration: none;
-    border-bottom: 1px solid $brightness-86;
+    border-bottom: 1px solid $brightness-7;
     color: $brightness-7;
 }
 
@@ -70,4 +76,21 @@
     color: $brightness-100;
     margin-bottom: 15px;
     border: solid 1px $brightness-100;
+}
+
+.epic-article-count__dialog-close {
+    float: right;
+}
+
+.epic-article-count__dialog-close-button {
+    padding: 2px 0 0;
+    margin: 0;
+    border: none;
+
+    background: transparent;
+    color: $brightness-100;
+
+    svg {
+        fill: $brightness-100;
+    }
 }

@@ -10,6 +10,8 @@ import { getPath } from 'lib/url';
 import isObject from 'lodash/isObject';
 
 import type { bonzo } from 'bonzo';
+import {getCookie} from "lib/cookies";
+import {OPT_OUT_COOKIE_NAME} from "common/modules/commercial/epic-articles-viewed-opt-out";
 
 const editions = ['uk', 'us', 'au'];
 
@@ -476,7 +478,7 @@ const showInMegaNavEnable = (bool: boolean): void => {
 };
 
 const incrementDailyArticleCount = (pageConfig: Object): void => {
-    if (!pageConfig.isFront) {
+    if (!pageConfig.isFront && !getCookie(OPT_OUT_COOKIE_NAME)) {
         const dailyCount = local.get(storageKeyDailyArticleCount) || [];
 
         if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
@@ -500,7 +502,7 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
 };
 
 const incrementWeeklyArticleCount = (pageConfig: Object): void => {
-    if (!pageConfig.isFront) {
+    if (!pageConfig.isFront && !getCookie(OPT_OUT_COOKIE_NAME)) {
         const weeklyArticleCount =
             local.get(storageKeyWeeklyArticleCount) || [];
         if (
