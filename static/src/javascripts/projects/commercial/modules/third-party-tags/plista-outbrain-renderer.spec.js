@@ -9,8 +9,7 @@ jest.mock('commercial/modules/dfp/track-ad-render', () => ({
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
-        thirdPartyTags: true,
-        outbrain: true,
+        thirdPartyTags: true
     },
 }));
 
