@@ -33,10 +33,6 @@ jest.mock('commercial/modules/third-party-tags/plista', () => ({
     },
 }));
 
-jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
-    initOutbrain: jest.fn(),
-}));
-
 afterAll(() => {
     jest.resetAllMocks();
 });
