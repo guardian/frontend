@@ -58,8 +58,22 @@ object ArticlePageChecks {
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
   }
 
+  // Custom Tag that can be added to articles + special reports tags while we don't support them
   private[this] val tagsBlacklist: Set[String] = Set(
-    "tracking/platformfunctional/dcrblacklist"
+    "tracking/platformfunctional/dcrblacklist",
+    "business/series/undercover-in-the-chicken-industry",
+    "business/series/britains-debt-timebomb",
+    "world/series/this-is-europe",
+    "environment/series/the-polluters",
+    "news/series/hsbc-files",
+    "news/series/panama-papers",
+    "us-news/homan-square",
+    "uk-news/series/the-new-world-of-work",
+    "world/series/the-new-arrivals",
+    "news/series/nauru-files",
+    "us-news/series/counted-us-police-killings",
+    "australia-news/series/healthcare-in-detention",
+    "society/series/this-is-the-nhs"
   )
 
   def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
