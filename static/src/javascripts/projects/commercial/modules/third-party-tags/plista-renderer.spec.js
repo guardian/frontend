@@ -35,7 +35,7 @@ afterAll(() => {
 
 describe('Plista renderer', () => {
     it('should pick Plista for AU', done => {
-        config.set('switches.plistaForOutbrainAu', true);
+        config.set('switches.plistaAu', true);
         config.set('page.edition', 'AU');
         initPlistaRenderer().then(() => {
             expect(plista.init).toHaveBeenCalled();

@@ -67,7 +67,7 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
-  val PlistaForOutbrainAU = Switch(
+  val PlistaAU = Switch(
     SwitchGroup.Feature,
     "plista-for-outbrain-au",
     "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
