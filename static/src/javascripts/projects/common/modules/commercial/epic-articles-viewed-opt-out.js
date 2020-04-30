@@ -13,28 +13,20 @@ const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
 const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) % 2;
 
 const hideDialog = () => {
-    const checkbox = document.querySelector('#epic-article-count__dialog');
+    const checkbox = document.querySelector('#epic-article-count__dialog-checkbox');
     if (checkbox instanceof HTMLInputElement) {
         checkbox.checked = false;
     }
 };
 
-const showDialog = () => {
-    const checkbox = document.querySelector('#epic-article-count__dialog');
-    if (checkbox instanceof HTMLInputElement) {
-        checkbox.checked = true;
-    }
-};
-
 const onArticlesViewedClick = () => {
+    // Only need to send the tracking event here, as the dialog is displayed using only css
     submitClickEvent({
         component: {
             componentType: 'ACQUISITIONS_OTHER',
             id: 'articles-viewed-opt-out_open',
         },
     });
-    // TODO - also show dialog this way? Or use css-only?
-    showDialog();
 };
 
 const onOptOutClick = () => {
@@ -63,8 +55,7 @@ const onOptOutClick = () => {
         buttons.remove();
         header.innerHTML = `You've opted out`;
         body.innerHTML = `Starting from your next page view, we won't count the articles you read or show you this message for three months.`;
-        // TODO - add url
-        note.innerHTML = `If you have any questions, please <a href="">contact us</a>.`;
+        note.innerHTML = `If you have any questions, please <a target="_blank" href="https://www.theguardian.com/help/contact-us">contact us</a>.`;
     }
 };
 
@@ -93,7 +84,7 @@ const setupArticlesViewedOptOut = () => {
         });
 
         if (element) {
-            const labelElement = element.querySelector('.epic-article-count__dialog');
+            const labelElement = element.querySelector('.epic-article-count__prompt-label');
             const optOutButton = element.querySelector('.epic-article-count__button-opt-out');
             const optInButton = element.querySelector('.epic-article-count__button-opt-in');
             

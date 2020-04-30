@@ -4,21 +4,28 @@
 }
 
 // This is the hidden checkbox that we use to hide/unhide the dialog using css only
-.epic-article-count__dialog {
+.epic-article-count__dialog-checkbox {
     display: none;
 }
 
-.epic-article-count__dialog:checked ~ .epic-article-count__dialog {
+.epic-article-count__dialog-checkbox:checked ~ .epic-article-count__dialog {
     display: block;
 }
 
 .epic-article-count__dialog {
     display: none;
     position: absolute;
-    left: 0;
     top: 23px;
     z-index: 1;
-    min-width: 300px;
+
+    @include mq($until: tablet) {
+        min-width: 280px;
+        margin-left: 5px;
+    }
+    @include mq($from: tablet) {
+        left: 0;
+        min-width: 300px;
+    }
 
     background-color: $brand-main;
     color: $brightness-100;
@@ -62,19 +69,20 @@
 }
 
 .epic-article-count__buttons {
-    display: flex;
+    @include mq($from: tablet) {
+        display: flex;
+    }
+    margin-bottom: 15px;
 }
 
 .epic-article-count a.epic-article-count__button-opt-out {
     background-color: $brightness-100;
     color: $brand-main;
-    margin-bottom: 15px;
 }
 
 .epic-article-count a.epic-article-count__button-opt-in {
     background-color: $brand-main;
     color: $brightness-100;
-    margin-bottom: 15px;
     border: solid 1px $brightness-100;
 }
 

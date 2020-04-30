@@ -3,8 +3,8 @@ import closeIcon from 'svgs/icon/close-large.svg';
 
 export const epicArticlesViewedOptOutTemplate = (count: number): string => `
     <span class="epic-article-count">
-        <input type="checkbox" id="epic-article-count__dialog" class="epic-article-count__dialog" />
-        <label for="epic-article-count__dialog" class="epic-article-count__prompt-label">
+        <input type="checkbox" id="epic-article-count__dialog-checkbox" class="epic-article-count__dialog-checkbox" />
+        <label for="epic-article-count__dialog-checkbox" class="epic-article-count__prompt-label">
             <a>${count.toString()}</a>
         </label>
         <span class="epic-article-count__dialog">
