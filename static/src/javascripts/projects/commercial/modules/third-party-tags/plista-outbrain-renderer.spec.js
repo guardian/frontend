@@ -21,7 +21,6 @@ jest.mock('common/modules/experiments/ab', () => ({
 }));
 
 jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
-jest.mock('./outbrain-load', () => ({ load: jest.fn() }));
 
 const plista = _plista;
 
