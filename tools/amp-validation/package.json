@@ -6,7 +6,9 @@
   "license": "Apache-2.0",
   "scripts": {
     "start": "node index.js",
-    "top-traffic": "node top-traffic.js"
+    "top-traffic": "node top-traffic.js",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -20,9 +22,11 @@
     "amphtml-validator": "^1.0.10",
     "lodash": "^4.17.13",
     "promise-retry": "^1.1.1",
-    "request": "^2.78.0"
+    "request": "^2.78.0",
+    "snyk": "^1.316.1"
   },
   "engines": {
     "node": ">=6"
-  }
+  },
+  "snyk": true
 }
