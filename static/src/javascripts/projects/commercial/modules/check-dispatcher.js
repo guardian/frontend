@@ -78,17 +78,6 @@ const checksToDispatch = {
         );
     },
 
-    isOutbrainMerchandiseCompliant(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('hasHighPriorityAdLoaded'),
-            waitForCheck('hasLowPriorityAdNotLoaded'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            everyCheckPassed(results)
-        );
-    },
-
 };
 
 const initCheckDispatcher = (): void => {
