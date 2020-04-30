@@ -81,10 +81,6 @@
 
 // scrollable clues - only on tablets not in accessible view
 .crossword__container--react {
-    & .crossword__clues--wrapper {
-        position: relative; // required for positioning of .crossword__clues__gradient
-    }
-
     & .crossword__clues--wrapper,
     & .crossword__clues {
         @include mq($from: tablet, $until: leftCol) {
