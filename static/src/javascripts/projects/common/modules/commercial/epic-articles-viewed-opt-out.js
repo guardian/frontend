@@ -5,67 +5,130 @@ import {getMvtValue} from "common/modules/analytics/mvt-cookie";
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import {addCookie} from "lib/cookies";
+import reportError from "lib/report-error";
 
 const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
 // Show the opt-out to 50% of the audience
 const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) % 2;
 
-const hideDialog = () => {
-    const checkbox = document.querySelector('#epic-article-count__dialog-checkbox');
-    if (checkbox instanceof HTMLInputElement) {
-        checkbox.checked = false;
+type ArticlesViewedOptOutElements = {
+    checkbox: HTMLInputElement,
+    labelElement: HTMLElement,
+    optOutButton: HTMLElement,
+    optInButton: HTMLElement,
+    closeButton: HTMLElement,
+    buttons: HTMLElement,
+    header: HTMLElement,
+    body: HTMLElement,
+    note: HTMLElement,
+}
+
+const getElements = (element: HTMLElement): ?ArticlesViewedOptOutElements => {
+    const checkbox = element.querySelector('#epic-article-count__dialog-checkbox');
+
+    const labelElement = element.querySelector('.epic-article-count__prompt-label');
+    const optOutButton = element.querySelector('.epic-article-count__button-opt-out');
+    const optInButton = element.querySelector('.epic-article-count__button-opt-in');
+
+    const closeButton = element.querySelector('.epic-article-count__dialog-close');
+    const buttons = element.querySelector('.epic-article-count__buttons');
+    const header = element.querySelector('.epic-article-count__dialog-header');
+    const body = element.querySelector('.epic-article-count__dialog-body');
+    const note = element.querySelector('.epic-article-count__dialog-note');
+
+    if (
+        element &&
+        checkbox instanceof HTMLInputElement &&
+        labelElement &&
+        optOutButton &&
+        optInButton &&
+        closeButton &&
+        buttons &&
+        header &&
+        body &&
+        note
+    ) {
+        return {
+            element,
+            checkbox,
+            labelElement,
+            optOutButton,
+            optInButton,
+            closeButton,
+            buttons,
+            header,
+            body,
+            note
+        }
     }
 };
 
-const onArticlesViewedClick = () => {
-    // Only need to send the tracking event here, as the dialog is displayed using only css
-    submitClickEvent({
-        component: {
-            componentType: 'ACQUISITIONS_OTHER',
-            id: 'articles-viewed-opt-out_open',
-        },
-    });
-};
+const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
 
-const onOptOutClick = () => {
-    submitClickEvent({
-        component: {
-            componentType: 'ACQUISITIONS_OTHER',
-            id: 'articles-viewed-opt-out_out',
-        },
-    });
+    const hideDialog = () => {
+        // This is the hidden checkbox that we use to hide/unhide the dialog using css only
+        const checkbox = document.querySelector('#epic-article-count__dialog-checkbox');
+        if (checkbox instanceof HTMLInputElement) {
+            checkbox.checked = false;
+        }
+    };
 
-    addCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name, new Date().getTime().toString(), ARTICLES_VIEWED_OPT_OUT_COOKIE.daysToLive);
+    const onArticlesViewedClick = () => {
+        // Only need to send the tracking event here, as the dialog is displayed using only css
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'articles-viewed-opt-out_open',
+            },
+        });
+    };
 
-    // Update the dialog message
-    const closeButton = document.querySelector('.epic-article-count__dialog-close');
-    const buttons = document.querySelector('.epic-article-count__buttons');
-    const header = document.querySelector('.epic-article-count__dialog-header');
-    const body = document.querySelector('.epic-article-count__dialog-body');
-    const note = document.querySelector('.epic-article-count__dialog-note');
+    const onOptOutClick = () => {
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'articles-viewed-opt-out_out',
+            },
+        });
 
-    if (closeButton && buttons && header && body && note) {
-        closeButton.classList.remove('is-hidden');
-        closeButton.addEventListener('click', () => {
+        addCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name, new Date().getTime().toString(), ARTICLES_VIEWED_OPT_OUT_COOKIE.daysToLive);
+
+        // Update the dialog message
+        elements.closeButton.classList.remove('is-hidden');
+        elements.closeButton.addEventListener('click', () => {
             hideDialog();
         });
 
-        buttons.remove();
-        header.innerHTML = `You've opted out`;
-        body.innerHTML = `Starting from your next page view, we won't count the articles you read or show you this message for three months.`;
-        note.innerHTML = `If you have any questions, please <a target="_blank" href="https://www.theguardian.com/help/contact-us">contact us</a>.`;
-    }
-};
+        elements.buttons.remove();
+        elements.header.innerHTML = `You've opted out`;
+        elements.body.innerHTML = `Starting from your next page view, we won't count the articles you read or show you this message for three months.`;
+        elements.note.innerHTML = `If you have any questions, please <a target="_blank" href="https://www.theguardian.com/help/contact-us">contact us</a>.`;
+    };
 
-const onOptInClick = () => {
-    submitClickEvent({
-        component: {
-            componentType: 'ACQUISITIONS_OTHER',
-            id: 'articles-viewed-opt-out_in',
-        },
+    const onOptInClick = () => {
+        submitClickEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: 'articles-viewed-opt-out_in',
+            },
+        });
+
+        hideDialog();
+    };
+
+    elements.labelElement.addEventListener('click', () => {
+        onArticlesViewedClick();
     });
 
-    hideDialog();
+    elements.optOutButton.addEventListener('click', (event: Event) => {
+        event.preventDefault();
+        onOptOutClick();
+    });
+
+    elements.optInButton.addEventListener('click', (event: Event) => {
+        event.preventDefault();
+        onOptInClick();
+    });
 };
 
 const setupArticlesViewedOptOut = () => {
@@ -82,25 +145,20 @@ const setupArticlesViewedOptOut = () => {
         });
 
         if (element) {
-            const labelElement = element.querySelector('.epic-article-count__prompt-label');
-            const optOutButton = element.querySelector('.epic-article-count__button-opt-out');
-            const optInButton = element.querySelector('.epic-article-count__button-opt-in');
-            
+            const elements: ?ArticlesViewedOptOutElements = getElements(element);
 
-            if (labelElement && optOutButton && optInButton) {
-                labelElement.addEventListener('click', () => {
-                    onArticlesViewedClick();
-                });
-
-                optOutButton.addEventListener('click', (event: Event) => {
-                    event.preventDefault();
-                    onOptOutClick();
-                });
-
-                optInButton.addEventListener('click', (event: Event) => {
-                    event.preventDefault();
-                    onOptInClick();
-                });
+            if (elements) {
+                setupHandlers(elements);
+            } else {
+                reportError(
+                    new Error(
+                        `Error setting up articles viewed opt-out in epic: unable to find all elements.`
+                    ),
+                    {
+                        feature: 'epic',
+                    },
+                    false
+                );
             }
         }
     }
