@@ -19,7 +19,6 @@ import {
 } from 'common/modules/onward/history';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import { local as localStorageStub } from 'lib/storage';
-import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 
 jest.mock('lib/storage', () => ({
     local: {
@@ -468,7 +467,7 @@ describe('history', () => {
     it('does not increment the weekly article count if opt-out cookie set', () => {
         const counts = [{ week: startOfThisWeek, count: 1 }];
         localStorageStub.set('gu.history.weeklyArticleCount', counts);
-        getCookie.mockReturnValue(ARTICLES_VIEWED_OPT_OUT_COOKIE.name);
+        getCookie.mockReturnValue(new Date().getTime().toString());
 
         incrementWeeklyArticleCount(pageConfig);
 

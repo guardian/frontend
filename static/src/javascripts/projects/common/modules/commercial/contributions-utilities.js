@@ -968,4 +968,5 @@ export {
     setupClickHandling,
     emitInsertEvent,
     isCompatibleWithLiveBlogEpic,
+    replaceArticlesViewed,
 };
