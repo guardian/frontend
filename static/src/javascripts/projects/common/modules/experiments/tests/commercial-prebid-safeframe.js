@@ -12,7 +12,7 @@ export const commercialPrebidSafeframe: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'No difference between safeframe and standard',
-    showForSensitive: true,
+    showForSensitive: false,
     canRun: () => true,
     variants: [
         {

@@ -12,7 +12,7 @@ export const connatixTest: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'Conantix integration',
-    showForSensitive: true,
+    showForSensitive: false,
     canRun: () => true,
     variants: [
         {
