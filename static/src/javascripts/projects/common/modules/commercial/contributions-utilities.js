@@ -854,6 +854,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                         audienceOffset: 0,
 
                         geolocation,
+                        showForSensitive: false,
                         canRun: () => {
                             const matchesCountryGroups =
                                 countryGroups.length === 0 ||
