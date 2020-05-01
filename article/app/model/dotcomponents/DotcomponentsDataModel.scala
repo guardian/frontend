@@ -327,7 +327,7 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, hasShowcaseMainElement: Boolean, isImmersive: Boolean): Block = {
+    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition): Block = {
       def format(instant: Long, edition: Edition): String = {
         GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(instant), edition.timezone)
       }
@@ -341,7 +341,7 @@ object DotcomponentsDataModel {
 
       Block(
         id = block.id,
-        elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks, hasShowcaseMainElement, isImmersive),
+        elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
         createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
         lastUpdated = lastUpdated,
@@ -352,14 +352,12 @@ object DotcomponentsDataModel {
       )
     }
 
-    def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean, hasShowcaseMainElement: Boolean, isImmersive: Boolean): List[PageElement] = {
+    def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
       val elems = capiElems.toList.flatMap(el => PageElement.make(
         element = el,
         addAffiliateLinks = affiliateLinks,
         pageUrl = request.uri,
-        atoms = atoms,
-        hasShowcaseMainElement = hasShowcaseMainElement,
-        isImmersive = isImmersive
+        atoms = atoms
       )).filter(PageElement.isSupported)
 
       addDisclaimer(elems, capiElems, affiliateLinks)
@@ -427,7 +425,7 @@ object DotcomponentsDataModel {
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), pageType.hasShowcaseMainElement, article.isImmersive)).toList
+      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request))).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -444,14 +442,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), pageType.hasShowcaseMainElement, article.isImmersive))
+      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), pageType.hasShowcaseMainElement, article.isImmersive))
+        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request)))
     }
 
     //val dcBlocks = Blocks(mainBlock, bodyBlocks, keyEvents.toList)

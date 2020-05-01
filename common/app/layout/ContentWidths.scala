@@ -17,6 +17,7 @@ object ContentWidths {
   object Immersive  extends ContentHinting (Some("element--immersive"))
   object Halfwidth  extends ContentHinting (Some("element--halfWidth"))
 
+
   sealed trait ContentRelation {
     def inline: WidthsByBreakpoint
     def supporting: WidthsByBreakpoint = unused

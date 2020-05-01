@@ -5,15 +5,15 @@ import java.net.{URI, URLEncoder}
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import conf.Configuration
-import layout.ContentWidths.{BodyMedia, ImmersiveMedia, MainMedia}
+import layout.ContentWidths.BodyMedia
 import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
 import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
-import scala.collection.JavaConverters._
 
+import scala.collection.JavaConverters._
 
 /*
   These elements are used for the Dotcom Rendering, they are essentially the new version of the
@@ -116,6 +116,7 @@ object Sponsorship {
 
 //noinspection ScalaStyle
 object PageElement {
+  val dotComponentsImageProfiles = List(Item1200, Item700, Item640, Item300, Item140, Item120)
 
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
@@ -158,7 +159,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], hasShowcaseMainElement: Boolean, isImmersive: Boolean): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -198,42 +199,29 @@ object PageElement {
       ))
 
       case Image =>
-
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
 
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
-
-        val mediaType = (hasShowcaseMainElement, isImmersive) match {
-          case (true, _) => MainMedia
-          case (_, true) => ImmersiveMedia
-          case _         => BodyMedia
-        }
-
-        val imageSources: Seq[ImageSource] = mediaType.all.map {
+        val imageSources: Seq[ImageSource] = BodyMedia.all.map {
           case (weighting, widths) =>
             val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
-                ImgSrc.srcsetForBreakpoint(b, mediaType.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
-                ImgSrc.srcsetForBreakpoint(b, mediaType.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
+                ImgSrc.srcsetForBreakpoint(b, BodyMedia.inline.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
               )
             }.flatten
+
             // A few very old articles use non-https hosts, which won't render
             val httpsSrcSet = srcSet.map(set => set.copy(src = ensureHTTPS(set.src)))
             ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
-        val defaultImageRole = (hasShowcaseMainElement, isImmersive) match {
-          case (true, _) => Showcase
-          case (_, true) => Immersive
-          case _         => Inline
-        }
-
         List(ImageBlockElement(
           ImageMedia(signedAssets),
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
-          Role.fromOptionalNameWithDefaultRole(element.imageTypeData.flatMap(_.role), defaultImageRole),
+          Role(element.imageTypeData.flatMap(_.role)),
           imageSources
         ))
 
