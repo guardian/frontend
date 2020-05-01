@@ -4,7 +4,9 @@ import config from "lib/config";
 import {getMvtNumValues, getMvtValue} from "common/modules/analytics/mvt-cookie";
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
+import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
 import {addCookie} from "lib/cookies";
+import { local } from 'lib/storage';
 import reportError from "lib/report-error";
 
 const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
@@ -89,7 +91,10 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
             },
         });
 
+        // Stop counting and clear the user's history
         addCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name, new Date().getTime().toString(), ARTICLES_VIEWED_OPT_OUT_COOKIE.daysToLive);
+        local.remove(storageKeyWeeklyArticleCount);
+        local.remove(storageKeyDailyArticleCount);
 
         // Update the dialog message
         elements.closeButton.classList.remove('is-hidden');

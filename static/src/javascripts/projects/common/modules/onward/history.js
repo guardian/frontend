@@ -581,6 +581,8 @@ export {
     getArticleViewCountForDays,
     getArticleViewCountForWeeks,
     getMondayFromDate,
+    storageKeyDailyArticleCount,
+    storageKeyWeeklyArticleCount,
 };
 
 export const _ = {
