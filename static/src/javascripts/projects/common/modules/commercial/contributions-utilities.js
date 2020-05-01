@@ -33,10 +33,11 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
-import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, OPT_OUT_COOKIE_NAME } from 'common/modules/commercial/epic-articles-viewed-opt-out';
+import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -247,7 +248,7 @@ const countryNameIsOk = (
 const articleViewCountIsOk = (
     articlesViewedSettings?: ArticlesViewedSettings
 ): boolean => {
-    if (articlesViewedSettings && getCookie(OPT_OUT_COOKIE_NAME)) {
+    if (articlesViewedSettings && getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         // User has opted out of articles viewed counting
         return false;
     } else if (articlesViewedSettings) {

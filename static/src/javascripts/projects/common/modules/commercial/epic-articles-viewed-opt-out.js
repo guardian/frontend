@@ -3,10 +3,8 @@
 import config from "lib/config";
 import {getMvtValue} from "common/modules/analytics/mvt-cookie";
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
+import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import {addCookie} from "lib/cookies";
-
-const OPT_OUT_COOKIE_NAME = 'gu_article_count_opt_out';
-const COOKIE_DAYS_TO_LIVE = 90;
 
 const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
 // Show the opt-out to 50% of the audience
@@ -37,7 +35,7 @@ const onOptOutClick = () => {
         },
     });
 
-    addCookie(OPT_OUT_COOKIE_NAME, new Date().getTime().toString(), COOKIE_DAYS_TO_LIVE);
+    addCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name, new Date().getTime().toString(), ARTICLES_VIEWED_OPT_OUT_COOKIE.daysToLive);
 
     // Update the dialog message
     const closeButton = document.querySelector('.epic-article-count__dialog-close');
@@ -112,5 +110,4 @@ export {
     optOutEnabled,
     userIsInArticlesViewedOptOutTest,
     setupArticlesViewedOptOut,
-    OPT_OUT_COOKIE_NAME,
 }

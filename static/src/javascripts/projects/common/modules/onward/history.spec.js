@@ -34,6 +34,20 @@ jest.mock('lib/url', () => ({
 
 jest.mock('fastdom');
 
+jest.mock('lib/cookies', () => ({
+    getCookie: jest.fn(),
+}));
+
+jest.mock('raven-js', () => ({
+    config() {
+        return this;
+    },
+    install() {
+        return this;
+    },
+    captureException: jest.fn(),
+}));
+
 const contains = [['/p/3kvgc', 1], ['/p/3kx8f', 1], ['/p/3kx7e', 1]];
 
 const today = Math.floor(Date.now() / 86400000); // 1 day in ms
