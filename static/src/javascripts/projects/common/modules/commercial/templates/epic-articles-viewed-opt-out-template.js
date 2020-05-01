@@ -1,11 +1,11 @@
 // @flow
 import closeIcon from 'svgs/icon/close-large.svg';
 
-export const epicArticlesViewedOptOutTemplate = (count: number): string => `
+export const epicArticlesViewedOptOutTemplate = (count: number, nextWord: ?string): string => `
     <span class="epic-article-count">
         <input type="checkbox" id="epic-article-count__dialog-checkbox" class="epic-article-count__dialog-checkbox" />
         <label for="epic-article-count__dialog-checkbox" class="epic-article-count__prompt-label">
-            <a>${count.toString()}</a>
+            <a>${count.toString()}${nextWord ? ` ${nextWord}` : ''}</a>
         </label>
         <span class="epic-article-count__dialog">
             <span class="epic-article-count__dialog-close is-hidden">

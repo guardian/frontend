@@ -89,10 +89,12 @@ const replaceCountryName = (text: string, countryName: ?string): string =>
 
 const replaceArticlesViewed = (text: string, count: ?number): string => {
     if (count) {
+        const countValue = count;   // Flow gets confused about the value in count if we don't reassign to another const
         // A/B test the opt-out feature if the switch is enabled
         if (optOutEnabled() && userIsInArticlesViewedOptOutTest()) {
-            const html = epicArticlesViewedOptOutTemplate(count);
-            return text.replace(/%%ARTICLE_COUNT%%/g, html);
+            return text.replace(/%%ARTICLE_COUNT%% (\w+)/g, (match, nextWord) =>
+                epicArticlesViewedOptOutTemplate(countValue, nextWord)
+            );
         }
 
         return text.replace(/%%ARTICLE_COUNT%%/g, count.toString())
