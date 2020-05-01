@@ -17,7 +17,9 @@ import {
     getArticleViewCountForWeeks,
     incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
+import { getCookie as getCookie_ } from 'lib/cookies';
 import { local as localStorageStub } from 'lib/storage';
+import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 
 jest.mock('lib/storage', () => ({
     local: {
@@ -33,6 +35,8 @@ jest.mock('lib/url', () => ({
 }));
 
 jest.mock('fastdom');
+
+const getCookie: any = getCookie_;
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -459,5 +463,15 @@ describe('history', () => {
         expect(localStorageStub.get('gu.history.weeklyArticleCount')).toEqual([
             { week: startOfThisWeek, count: 1 },
         ]);
+    });
+
+    it('does not increment the weekly article count if opt-out cookie set', () => {
+        const counts = [{ week: startOfThisWeek, count: 1 }];
+        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        getCookie.mockReturnValue(ARTICLES_VIEWED_OPT_OUT_COOKIE.name);
+
+        incrementWeeklyArticleCount(pageConfig);
+
+        expect(getArticleViewCountForWeeks(1)).toEqual(1);
     });
 });
