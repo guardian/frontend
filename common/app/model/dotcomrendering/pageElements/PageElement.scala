@@ -198,15 +198,14 @@ object PageElement {
       ))
 
       case Image =>
-
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
 
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
         val mediaType = (hasShowcaseMainElement, isImmersive) match {
-          case (true, _) => MainMedia
-          case (_, true) => ImmersiveMedia
+          case (true, _) => ImmersiveMedia
+          case (_, true) => MainMedia
           case _         => BodyMedia
         }
 
@@ -223,17 +222,11 @@ object PageElement {
             ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
-        val defaultImageRole = (hasShowcaseMainElement, isImmersive) match {
-          case (true, _) => Showcase
-          case (_, true) => Immersive
-          case _         => Inline
-        }
-
         List(ImageBlockElement(
           ImageMedia(signedAssets),
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
-          Role.fromOptionalNameWithDefaultRole(element.imageTypeData.flatMap(_.role), defaultImageRole),
+          Role(element.imageTypeData.flatMap(_.role)),
           imageSources
         ))
 
