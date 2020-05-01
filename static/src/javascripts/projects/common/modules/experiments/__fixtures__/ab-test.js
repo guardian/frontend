@@ -16,6 +16,7 @@ export const genAbTest = (
     audienceOffset: 0,
     audience: 1,
     author: 'n/a',
+    showForSensitive: false,
     canRun: () => {
         if (canRun != null) return !!canRun;
         return true;
