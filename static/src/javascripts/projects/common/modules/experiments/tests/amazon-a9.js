@@ -12,6 +12,7 @@ export const amazonA9Test: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'Amazon a9 successfully run in parallel with prebid',
+    showForSensitive: true,
     canRun: () => true,
     variants: [
         {

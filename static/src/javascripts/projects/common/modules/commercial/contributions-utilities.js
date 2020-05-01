@@ -268,7 +268,7 @@ const setupOnView = (
     campaignCode: ?string,
     trackingCampaignId: string,
     products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false,
+    showTicker: boolean = false
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -289,7 +289,7 @@ const setupOnView = (
             initTicker('.js-epic-ticker');
         }
 
-        if(config.get('switches.showContributionReminder')) {
+        if (config.get('switches.showContributionReminder')) {
             const htmlElements = getFields();
             if (htmlElements) {
                 epicReminderEmailSignup(htmlElements);
