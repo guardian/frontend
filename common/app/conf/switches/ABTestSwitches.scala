@@ -111,7 +111,7 @@ trait ABTestSwitches {
     "ab-sign-in-gate-patientia",
     "Marathon sign in gate test on 3nd article view",
     owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("vlbee")),
-    safeState = On,
+    safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
   )
