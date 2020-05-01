@@ -2,9 +2,12 @@ import type { ReminderFields } from 'common/modules/commercial/templates/acquisi
 
 type ListenerFunction = (f: () => void) => void;
 
-declare type EpicCta = {url: string, ctaText: string};
+declare type EpicCta = { url: string, ctaText: string };
 
-declare type EpicTemplate = (EpicVariant, AcquisitionsEpicTemplateCopy) => string;
+declare type EpicTemplate = (
+    EpicVariant,
+    AcquisitionsEpicTemplateCopy
+) => string;
 
 declare type Variant = {
     id: string,
@@ -31,12 +34,16 @@ declare type EpicVariant = Variant & {
     showTicker: boolean,
     showReminderFields?: ReminderFields | null,
 
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
+    buttonTemplate?: (
+        primaryCta: EpicCta,
+        secondaryCta?: EpicCta,
+        reminderCta?: ReminderFields
+    ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
     backgroundImageUrl?: string,
-}
+};
 
 declare type ABTest = {
     id: string,
@@ -48,7 +55,7 @@ declare type ABTest = {
     audienceOffset: number,
     successMeasure: string,
     audienceCriteria: string,
-    showForSensitive?: boolean,
+    showForSensitive: boolean,
     idealOutcome?: string,
     dataLinkNames?: string,
     variants: $ReadOnlyArray<Variant>,
@@ -57,7 +64,7 @@ declare type ABTest = {
 };
 
 declare type Runnable<T: ABTest> = T & {
-    variantToRun: Variant;
+    variantToRun: Variant,
 };
 
 declare type AcquisitionsABTest = ABTest & {
@@ -76,9 +83,9 @@ declare type ArticlesViewedSettings = {
     minViews?: number,
     maxViews?: number,
     count: number,
-}
+};
 
-declare type DeploymentRules = 'AlwaysAsk' | MaxViews
+declare type DeploymentRules = 'AlwaysAsk' | MaxViews;
 
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
@@ -101,7 +108,11 @@ declare type InitEpicABTestVariant = {
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
+    buttonTemplate?: (
+        primaryCta: EpicCta,
+        secondaryCta?: EpicCta,
+        reminderCta?: ReminderFields
+    ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
@@ -117,7 +128,7 @@ declare type InitEpicABTestVariant = {
 declare type InitBannerABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
+    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>,
 };
 
 declare type InitEpicABTest = {
@@ -146,7 +157,7 @@ declare type InitEpicABTest = {
     geolocation: ?string,
     highPriority: boolean,
     articlesViewedSettings?: ArticlesViewedSettings,
-}
+};
 
 declare type Interaction = {
     component: string,
