@@ -67,10 +67,7 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
 
     const hideDialog = () => {
         // This is the hidden checkbox that we use to hide/unhide the dialog using css only
-        const checkbox = document.querySelector('#epic-article-count__dialog-checkbox');
-        if (checkbox instanceof HTMLInputElement) {
-            checkbox.checked = false;
-        }
+        elements.checkbox.checked = false;
     };
 
     const onArticlesViewedClick = () => {
