@@ -47,6 +47,13 @@
         margin-bottom: 15px;
 
         display: block;
+
+        @include mq($until: tablet) {
+            max-width: 250px;
+        }
+        @include mq($from: tablet) {
+            max-width: 270px;
+        }
     }
 
     .epic-article-count__dialog-note {
