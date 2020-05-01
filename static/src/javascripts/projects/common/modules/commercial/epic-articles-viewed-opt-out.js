@@ -1,15 +1,16 @@
 // @flow
 
 import config from "lib/config";
-import {getMvtValue} from "common/modules/analytics/mvt-cookie";
+import {getMvtNumValues, getMvtValue} from "common/modules/analytics/mvt-cookie";
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import {addCookie} from "lib/cookies";
 import reportError from "lib/report-error";
 
 const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
-// Show the opt-out to 50% of the audience
-const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) % 2;
+// Show the opt-out to 50% of the audience. We do not use `mvt % 2` here because then it would align
+// with the variants of the underlying A/B tests and distort the results
+const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) < getMvtNumValues() / 2;
 
 type ArticlesViewedOptOutElements = {
     checkbox: HTMLInputElement,

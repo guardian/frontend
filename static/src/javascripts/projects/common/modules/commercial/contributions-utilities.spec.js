@@ -99,7 +99,7 @@ describe('replaceArticlesViewed', () => {
 
     it('should replace the template with opt-out feature html', () => {
         config.set('switches.showArticlesViewedOptOut', true);
-        getCookie.mockReturnValue(1);   // odd mvt values are in the variant
+        getCookie.mockReturnValue(1);   // mvt values in the lower half of the range are in the variant
 
         const text = 'You have read %%ARTICLE_COUNT%% articles.';
         const expected = 'You have read \n' +
