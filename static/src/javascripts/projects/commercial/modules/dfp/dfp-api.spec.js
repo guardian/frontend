@@ -89,9 +89,6 @@ jest.mock('commercial/modules/sticky-mpu', () => ({
 jest.mock('common/modules/onward/geo-most-popular', () => ({
     geoMostPopular: { render: jest.fn() },
 }));
-jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
-    getOutbrainComplianceTargeting: () => Promise.resolve(),
-}));
 jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
 }));

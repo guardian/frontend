@@ -1,9 +1,5 @@
 // @flow strict
 
-export const getOutbrainComplianceTargeting = (): Promise<
-    Map<string, string>
-> => Promise.resolve(new Map());
-
 /*
  Outbrain loading behaviour follows the truth table below. This module uses a number of checks
  to determine what kind of outbrain component to show, if any.

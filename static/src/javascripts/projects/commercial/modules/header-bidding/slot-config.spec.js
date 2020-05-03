@@ -14,13 +14,6 @@ const { getSlots } = _;
 const getBreakpointKey: any = getBreakpointKey_;
 const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
 
-// Avoiding 'define is not defined' error
-// from node_modules/ophan-tracker-js/build/ophan.ng.js, which
-// is a dependency of this outbrain module.
-jest.mock('commercial/modules/third-party-tags/outbrain', () => ({
-    getOutbrainComplianceTargeting: jest.fn(),
-}));
-
 jest.mock('./utils', () => {
     // $FlowFixMe property requireActual is actually not missing Flow.
     const original = jest.requireActual('./utils');

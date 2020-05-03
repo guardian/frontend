@@ -5,7 +5,6 @@ import { breakpoints } from 'lib/detect';
 import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
-import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 import type { Slot } from 'commercial/types';
 
 const adUnit = once(() => {
@@ -59,11 +58,7 @@ const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
         return Promise.resolve();
     }
 
-    return getOutbrainComplianceTargeting().then(keyValues => {
-        keyValues.forEach((value, key) => {
-            slot.setTargeting(key, value);
-        });
-    });
+    return Promise.resolve();
 };
 
 const adomikClassify = (): string => {
