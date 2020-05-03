@@ -14,14 +14,6 @@ const everyCheckPassed = (results): boolean => !results.includes(false);
     be added to the array of checks in './check-mediator-checks'.
 * */
 const checksToDispatch = {
-    isOutbrainDisabled(): Promise<boolean> {
-        if (commercialFeatures.outbrain) {
-            return Promise.resolve(false);
-        }
-
-        return Promise.resolve(true);
-    },
-
     isUserInContributionsAbTest(): Promise<boolean> {
         return getEpicTestToRun().then(Boolean);
     },

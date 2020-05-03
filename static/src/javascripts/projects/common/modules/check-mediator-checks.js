@@ -1,7 +1,6 @@
 // @flow
 
 export const checks = [
-    'isOutbrainDisabled',
     'isUserInContributionsAbTest',
     'isUserNotInContributionsAbTest',
     'hasHighPriorityAdLoaded',
