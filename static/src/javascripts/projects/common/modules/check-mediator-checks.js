@@ -6,5 +6,4 @@ export const checks = [
     'hasHighPriorityAdLoaded',
     'hasLowPriorityAdLoaded',
     'hasLowPriorityAdNotLoaded',
-    'isOutbrainMerchandiseCompliant',
 ];
