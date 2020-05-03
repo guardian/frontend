@@ -52,15 +52,6 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
-// The high-merch slot targeting requires Promise-based data about the page.
-const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
-    if (!['merchandising-high', 'merchandising'].includes(slotTarget)) {
-        return Promise.resolve();
-    }
-
-    return Promise.resolve();
-};
-
 const adomikClassify = (): string => {
     const rand = Math.random();
 
@@ -106,7 +97,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         if (isEligibleForOutstream(slotTarget)) {
             allowSafeFrameToExpand(slot);
         }
-        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
+        slotReady = Promise.resolve();
     }
 
     /*
