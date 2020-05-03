@@ -16,7 +16,6 @@ class CommercialFeatures {
     highMerch: boolean;
     thirdPartyTags: boolean;
     relatedWidgetEnabled: boolean;
-    outbrain: boolean;
     plista: boolean;
     commentAdverts: boolean;
     liveblogAdverts: boolean;
@@ -115,10 +114,6 @@ class CommercialFeatures {
             !config.get('page.isPreview') &&
             config.get('page.showRelatedContent') &&
             !(isUserLoggedIn() && config.get('page.commentable'));
-
-        this.outbrain =
-            this.relatedWidgetEnabled &&
-            switches.outbrain;
 
         this.plista =
             this.relatedWidgetEnabled &&
