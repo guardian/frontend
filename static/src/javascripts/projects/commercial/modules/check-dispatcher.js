@@ -82,17 +82,6 @@ const checksToDispatch = {
             everyCheckPassed(results)
         );
     },
-
-    isOutbrainMerchandiseCompliantOrBlockedByAds(): Promise<boolean> {
-        const dependentChecks = [
-            waitForCheck('isOutbrainMerchandiseCompliant'),
-            waitForCheck('isOutbrainBlockedByAds'),
-        ];
-
-        return Promise.all(dependentChecks).then(results =>
-            someCheckPassed(results)
-        );
-    },
 };
 
 const initCheckDispatcher = (): void => {

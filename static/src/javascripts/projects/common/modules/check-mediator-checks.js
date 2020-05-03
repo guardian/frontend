@@ -8,5 +8,4 @@ export const checks = [
     'hasLowPriorityAdNotLoaded',
     'isOutbrainBlockedByAds',
     'isOutbrainMerchandiseCompliant',
-    'isOutbrainMerchandiseCompliantOrBlockedByAds',
 ];
