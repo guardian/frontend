@@ -1,18 +1,11 @@
 // @flow strict
 import { adblockInUse } from 'lib/detect';
 import { waitForCheck } from 'common/modules/check-mediator';
-import config from 'lib/config';
-import { load } from './outbrain-load';
 
 type OutbrainPageConditions = {
     outbrainEnabled: boolean,
     noMerchSlotsExpected: boolean,
     contributionsTestVisible: boolean,
-};
-
-type OutbrainDfpConditions = {
-    blockedByAds: boolean,
-    useMerchandiseAdSlot: boolean,
 };
 
 const noMerchSlotsExpected = (): Promise<boolean> =>
@@ -35,15 +28,6 @@ const getOutbrainPageConditions = (): Promise<OutbrainPageConditions> =>
         outbrainEnabled: !outbrainDisabled,
         noMerchSlotsExpected: noMerchSlots,
         contributionsTestVisible: contributions,
-    }));
-
-const getOutbrainDfpConditions = (): Promise<OutbrainDfpConditions> =>
-    Promise.all([
-        waitForCheck('isOutbrainBlockedByAds'),
-        waitForCheck('isOutbrainMerchandiseCompliant'),
-    ]).then(([blockedByAds, merchandiseCompliant]) => ({
-        blockedByAds,
-        useMerchandiseAdSlot: merchandiseCompliant,
     }));
 
 export const getOutbrainComplianceTargeting = (): Promise<
@@ -81,66 +65,4 @@ export const getOutbrainComplianceTargeting = (): Promise<
   true              false               false             n/a              false         false      false     compliant
 */
 
-export const initOutbrain = (): Promise<void> =>
-    getOutbrainPageConditions().then(pageConditions => {
-        /*
-            The `config.set` instances in this function are injecting debuging information into window.guardian.config.debug
-            This will be used for investigations
-        */
-
-        config.set(
-            'debug.outbrain.pageConditions.outbrainEnabled',
-            pageConditions.outbrainEnabled
-        );
-
-        if (!pageConditions.outbrainEnabled) {
-            return;
-        }
-
-        config.set(
-            'debug.outbrain.pageConditions.contributionsTestVisible',
-            pageConditions.contributionsTestVisible
-        );
-
-        const contributionVisible = pageConditions.contributionsTestVisible;
-        const editorialTests = contributionVisible;
-
-        config.set('debug.outbrain.editorialTests', editorialTests);
-        config.set(
-            'debug.outbrain.pageConditions.noMerchSlotsExpected',
-            pageConditions.noMerchSlotsExpected
-        );
-
-        if (pageConditions.noMerchSlotsExpected) {
-            if (editorialTests) {
-                load('nonCompliant', contributionVisible);
-            } else {
-                load('defaults');
-            }
-        } else {
-            // only wait for dfp conditions if we really have to.
-            return getOutbrainDfpConditions().then(dfpConditions => {
-                config.set(
-                    'debug.outbrain.dfpConditions.blockedByAds',
-                    dfpConditions.blockedByAds
-                );
-
-                if (dfpConditions.blockedByAds) {
-                    return;
-                }
-
-                config.set(
-                    'debug.outbrain.dfpConditions.useMerchandiseAdSlot',
-                    dfpConditions.useMerchandiseAdSlot
-                );
-
-                if (dfpConditions.useMerchandiseAdSlot) {
-                    load('merchandising');
-                } else if (editorialTests) {
-                    load('nonCompliant', contributionVisible);
-                } else {
-                    load('defaults');
-                }
-            });
-        }
-    });
+export const initOutbrain = (): Promise<void> => Promise.resolve();
