@@ -243,7 +243,6 @@ const bootStandard = (): void => {
         });
     }
 
-    // initilaise the email/outbrain check mediator
     initCheckMediator();
 
     ophan.setEventEmitter(mediator);
