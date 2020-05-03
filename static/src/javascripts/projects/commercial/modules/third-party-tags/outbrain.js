@@ -40,7 +40,7 @@ export const getOutbrainComplianceTargeting = (): Promise<
         ) {
             // This key value should be read as "the outbrain load cannot be compliant"
             // (it could be non-compliant, or not loaded at all).
-            return new Map([['outbrain-compliant', 'false']]);
+            return new Map();
         }
         return new Map();
     });
