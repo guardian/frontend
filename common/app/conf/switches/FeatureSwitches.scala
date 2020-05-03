@@ -57,16 +57,6 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val OutbrainSwitch = Switch(
-    SwitchGroup.Feature,
-    "outbrain",
-    "Enable the Outbrain content recommendation widget on web and AMP.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
   val PlistaForOutbrainAU = Switch(
     SwitchGroup.Feature,
     "plista-for-outbrain-au",
