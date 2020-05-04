@@ -117,17 +117,17 @@ describe('replaceArticlesViewed', () => {
             '            </span>\n' +
             '        \n' +
             '            <span class="epic-article-count__dialog-header">What\'s this?</span>\n' +
-            '            <span class="epic-article-count__dialog-body">Using your cookie consent, we can remind you how many Guardian articles you\'ve enjoyed on this device. Can we continue showing you this?</span>\n' +
+            '            <span class="epic-article-count__dialog-body">We would like to remind you how many Guardian articles you\'ve enjoyed on this device. Can we continue showing you this?</span>\n' +
             '            \n' +
             '            <span class="epic-article-count__buttons">\n' +
-            '                <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-out"\n' +
-            '                  target="_blank">\n' +
-            '                  No, opt me out\n' +
-            '                </a>\n' +
-            '                \n' +
             '                <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-in"\n' +
             '                  target="_blank">\n' +
             '                  Yes, that\'s OK\n' +
+            '                </a>\n' +
+            '\n' +
+            '                <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-out"\n' +
+            '                  target="_blank">\n' +
+            '                  No, opt me out\n' +
             '                </a>\n' +
             '            </span>\n' +
             '            \n' +
