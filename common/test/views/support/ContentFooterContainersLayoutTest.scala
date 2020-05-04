@@ -1,7 +1,6 @@
 package views.support
 
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
-import conf.switches.Switches.OutbrainSwitch
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContent, RelatedContentItem}
 import org.scalatest.{FlatSpec, Matchers}

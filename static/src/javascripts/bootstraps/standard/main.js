@@ -21,7 +21,6 @@ import userPrefs from 'common/modules/user-prefs';
 import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { initCheckMediator } from 'common/modules/check-mediator';
 import { addEventListener } from 'lib/events';
 import {
     isUserLoggedIn,
@@ -242,9 +241,6 @@ const bootStandard = (): void => {
             sw.postMessage({ ias });
         });
     }
-
-    // initilaise the email/outbrain check mediator
-    initCheckMediator();
 
     ophan.setEventEmitter(mediator);
 
