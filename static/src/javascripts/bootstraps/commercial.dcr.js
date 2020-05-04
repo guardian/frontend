@@ -26,7 +26,6 @@ import { init as initComscore } from 'commercial/modules/comscore';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { initCheckMediator } from 'common/modules/check-mediator';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 
@@ -176,7 +175,5 @@ const bootCommercial = (): Promise<void> => {
             );
         });
 };
-
-initCheckMediator();
 
 bootCommercial();
