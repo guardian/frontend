@@ -89,7 +89,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         slot = window.googletag
             .defineOutOfPageSlot(adUnit(), id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = Promise.resolve();
     } else {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
@@ -97,7 +96,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         if (isEligibleForOutstream(slotTarget)) {
             allowSafeFrameToExpand(slot);
         }
-        slotReady = Promise.resolve();
     }
 
     /*
@@ -190,9 +188,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 timeoutId = setTimeout(resolve, iasTimeoutDuration);
             });
 
-        slotReady = slotReady.then(() =>
-            Promise.race([iasTimeout(), iasDataPromise])
-        );
+        slotReady = Promise.race([iasTimeout(), iasDataPromise]);
     }
 
     const isBn = config.get('page.isbn');
