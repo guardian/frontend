@@ -1,6 +1,3 @@
 // @flow
 
-export const checks = [
-    'isUserInContributionsAbTest',
-    'isUserNotInContributionsAbTest',
-];
+export const checks = [];

@@ -1,16 +1,13 @@
 // @flow
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck } from 'common/modules/check-mediator';
-import { getEpicTestToRun } from 'common/modules/experiments/ab';
 
 /**
     Any check added to checksToDispatch should also
     be added to the array of checks in './check-mediator-checks'.
 * */
 const checksToDispatch = {
-    isUserInContributionsAbTest(): Promise<boolean> {
-        return getEpicTestToRun().then(Boolean);
-    },
+
 };
 
 const initCheckDispatcher = (): void => {
