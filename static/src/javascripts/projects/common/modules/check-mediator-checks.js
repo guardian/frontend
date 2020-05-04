@@ -3,5 +3,4 @@
 export const checks = [
     'isUserInContributionsAbTest',
     'isUserNotInContributionsAbTest',
-    'hasHighPriorityAdLoaded',
 ];

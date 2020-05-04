@@ -1,6 +1,4 @@
 // @flow
-import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { checks } from 'common/modules/check-mediator-checks';
 import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
 import { getEpicTestToRun } from 'common/modules/experiments/ab';
@@ -18,19 +16,6 @@ const checksToDispatch = {
         return waitForCheck('isUserInContributionsAbTest').then(
             userInContributionsAbTest => !userInContributionsAbTest
         );
-    },
-
-    hasHighPriorityAdLoaded(): Promise<boolean> {
-        // if thirdPartyTags false no external ads are loaded
-        // is irrelevant for ad-free users (independently of thirdPartyTags)
-        if (
-            commercialFeatures.thirdPartyTags &&
-            commercialFeatures.highMerch &&
-            !commercialFeatures.adFree
-        ) {
-            return Promise.resolve(trackAdRender('dfp-ad--merchandising-high'));
-        }
-        return Promise.resolve(false);
     },
 };
 
