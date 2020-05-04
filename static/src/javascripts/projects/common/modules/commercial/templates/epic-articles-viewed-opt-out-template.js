@@ -16,17 +16,17 @@ export const epicArticlesViewedOptOutTemplate = (count: number, nextWord: ?strin
             </span>
         
             <span class="epic-article-count__dialog-header">What's this?</span>
-            <span class="epic-article-count__dialog-body">Using your cookie consent, we can remind you how many Guardian articles you've enjoyed on this device. Can we continue showing you this?</span>
+            <span class="epic-article-count__dialog-body">We would like to remind you how many Guardian articles you've enjoyed on this device. Can we continue showing you this?</span>
             
             <span class="epic-article-count__buttons">
-                <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-out"
-                  target="_blank">
-                  No, opt me out
-                </a>
-                
                 <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-in"
                   target="_blank">
                   Yes, that's OK
+                </a>
+
+                <a class="component-button component-button--hasicon-right contributions__contribute--epic-member epic-article-count__button-opt-out"
+                  target="_blank">
+                  No, opt me out
                 </a>
             </span>
             

@@ -49,10 +49,10 @@
         display: block;
 
         @include mq($until: tablet) {
-            max-width: 250px;
+            max-width: 255px;
         }
         @include mq($from: tablet) {
-            max-width: 270px;
+            max-width: 275px;
         }
     }
 
