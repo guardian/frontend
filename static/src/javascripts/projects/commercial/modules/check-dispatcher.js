@@ -1,6 +1,6 @@
 // @flow
 import { checks } from 'common/modules/check-mediator-checks';
-import { resolveCheck, waitForCheck } from 'common/modules/check-mediator';
+import { resolveCheck } from 'common/modules/check-mediator';
 import { getEpicTestToRun } from 'common/modules/experiments/ab';
 
 /**
@@ -10,12 +10,6 @@ import { getEpicTestToRun } from 'common/modules/experiments/ab';
 const checksToDispatch = {
     isUserInContributionsAbTest(): Promise<boolean> {
         return getEpicTestToRun().then(Boolean);
-    },
-
-    isUserNotInContributionsAbTest(): Promise<boolean> {
-        return waitForCheck('isUserInContributionsAbTest').then(
-            userInContributionsAbTest => !userInContributionsAbTest
-        );
     },
 };
 
