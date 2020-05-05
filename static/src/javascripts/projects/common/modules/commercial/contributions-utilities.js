@@ -33,7 +33,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
-import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut } from 'common/modules/commercial/epic-articles-viewed-opt-out';
+import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
@@ -97,7 +97,7 @@ const replaceArticlesViewed = (text: string, count: ?number): string => {
             );
         }
 
-        return text.replace(/%%ARTICLE_COUNT%%/g, count.toString())
+        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}<span>`)
     }
     return text;
 };
@@ -314,6 +314,8 @@ const setupOnView = (
                 epicReminderEmailSignup(htmlElements);
             }
         }
+
+        onEpicViewed();
     });
 };
 
@@ -486,9 +488,9 @@ const makeEpicABTestVariant = (
                                     campaignCode
                                 );
 
-                                setupArticlesViewedOptOut();
-
                                 component.each(element => {
+                                    setupArticlesViewedOptOut();
+
                                     setupOnView(
                                         element,
                                         parentTest,

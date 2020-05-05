@@ -26,21 +26,20 @@ type ArticlesViewedOptOutElements = {
     note: HTMLElement,
 }
 
-const getElements = (element: HTMLElement): ?ArticlesViewedOptOutElements => {
-    const checkbox = element.querySelector('#epic-article-count__dialog-checkbox');
+const getElements = (container: HTMLElement): ?ArticlesViewedOptOutElements => {
+    const checkbox = container.querySelector('#epic-article-count__dialog-checkbox');
 
-    const labelElement = element.querySelector('.epic-article-count__prompt-label');
-    const optOutButton = element.querySelector('.epic-article-count__button-opt-out');
-    const optInButton = element.querySelector('.epic-article-count__button-opt-in');
+    const labelElement = container.querySelector('.epic-article-count__prompt-label');
+    const optOutButton = container.querySelector('.epic-article-count__button-opt-out');
+    const optInButton = container.querySelector('.epic-article-count__button-opt-in');
 
-    const closeButton = element.querySelector('.epic-article-count__dialog-close');
-    const buttons = element.querySelector('.epic-article-count__buttons');
-    const header = element.querySelector('.epic-article-count__dialog-header');
-    const body = element.querySelector('.epic-article-count__dialog-body');
-    const note = element.querySelector('.epic-article-count__dialog-note');
+    const closeButton = container.querySelector('.epic-article-count__dialog-close');
+    const buttons = container.querySelector('.epic-article-count__buttons');
+    const header = container.querySelector('.epic-article-count__dialog-header');
+    const body = container.querySelector('.epic-article-count__dialog-body');
+    const note = container.querySelector('.epic-article-count__dialog-note');
 
     if (
-        element &&
         checkbox instanceof HTMLInputElement &&
         labelElement &&
         optOutButton &&
@@ -52,7 +51,6 @@ const getElements = (element: HTMLElement): ?ArticlesViewedOptOutElements => {
         note
     ) {
         return {
-            element,
             checkbox,
             labelElement,
             optOutButton,
@@ -134,21 +132,39 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
     });
 };
 
+const onEpicViewed = () => {
+    if (optOutEnabled()) {
+        // Send the view event if this is an epic with an articles-viewed count.
+        // Send for both the control and the variant, so that we can measure impact on conversions.
+        const getArticleCountViewEventId = (): ?string => {
+            if (document.querySelector('.epic-article-count')) {
+                return 'articles-viewed-opt-out_view-variant';
+            } else if (document.querySelector('.epic-article-count__normal')) {
+                return 'articles-viewed-opt-out_view-control';
+            } 
+                return null;    // no articles-viewed count
+            
+        };
+
+        const viewEventId = getArticleCountViewEventId();
+        if (viewEventId) {
+            submitViewEvent({
+                component: {
+                    componentType: 'ACQUISITIONS_OTHER',
+                    id: viewEventId,
+                },
+            });
+        }
+    }
+};
+
 const setupArticlesViewedOptOut = () => {
     if (optOutEnabled()) {
         // If this element exists then they're in the variant
-        const element = document.querySelector('.epic-article-count');
-        const viewEventId = `articles-viewed-opt-out_view-${element ? 'variant' : 'control'}`;
+        const articleCountElement = document.querySelector('.epic-article-count');
 
-        submitViewEvent({
-            component: {
-                componentType: 'ACQUISITIONS_OTHER',
-                id: viewEventId,
-            },
-        });
-
-        if (element) {
-            const elements: ?ArticlesViewedOptOutElements = getElements(element);
+        if (articleCountElement) {
+            const elements: ?ArticlesViewedOptOutElements = getElements(articleCountElement);
 
             if (elements) {
                 setupHandlers(elements);
@@ -171,4 +187,5 @@ export {
     optOutEnabled,
     userIsInArticlesViewedOptOutTest,
     setupArticlesViewedOptOut,
+    onEpicViewed,
 }
