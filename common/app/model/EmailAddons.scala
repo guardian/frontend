@@ -214,6 +214,12 @@ case object CoronavirusAustraliaAtAGlance extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "australia-news/series/coronavirus-australia-latest-at-a-glance")
 }
 
+case object CoronavirusinThePacific extends ArticleEmailMetadata {
+  val name = "Coronavirus in the Pacific"
+  override val banner = Some("coronavirus-in-the-pacific.png")
+  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "world/series/coronavirus-in-the-pacific-weekly-briefing")
+}
+
 
 case object TheFlyer extends FrontEmailMetadata {
   val name = "The Flyer"
@@ -441,7 +447,8 @@ object EmailAddons {
     TheSnap,
     AndrewSparrowsElectionBriefing,
     CoronavirusTheWeekExplained,
-    CoronavirusAustraliaAtAGlance
+    CoronavirusAustraliaAtAGlance,
+    CoronavirusinThePacific
     )
   private val frontEmails = Seq(
     SocialCareNetwork,
