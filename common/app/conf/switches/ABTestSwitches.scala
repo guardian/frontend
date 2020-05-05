@@ -145,4 +145,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 5, 13),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-amp-zero-test-experiment",
+    "A/B test to test amp-experiment tag functionality on prod",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 6, 1),
+    exposeClientSide = true
+  )
 }
