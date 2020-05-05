@@ -1,0 +1,111 @@
+.epic-article-count {
+    position: relative;
+    display: inline;
+}
+
+// This is the hidden checkbox that we use to hide/unhide the dialog using css only
+.epic-article-count__dialog-checkbox {
+    display: none;
+}
+
+.epic-article-count__dialog-checkbox:checked ~ .epic-article-count__dialog {
+    display: block;
+}
+
+.epic-article-count__dialog {
+    display: none;
+    position: absolute;
+    top: 23px;
+    z-index: 1;
+
+    @include mq($until: tablet) {
+        min-width: 280px;
+        margin-left: 5px;
+    }
+    @include mq($from: tablet) {
+        left: 0;
+        min-width: 300px;
+    }
+
+    background-color: $brand-main;
+    color: $brightness-100;
+    font-family: $f-sans-serif-text;
+    padding: 15px 10px;
+
+    .epic-article-count__dialog-header {
+        font-size: 17px;
+        line-height: 21px;
+        font-weight: bold;
+        margin-bottom: 5px;
+
+        display: block;
+    }
+
+    .epic-article-count__dialog-body {
+        font-size: 15px;
+        line-height: 18px;
+        margin-bottom: 15px;
+
+        display: block;
+
+        @include mq($until: tablet) {
+            max-width: 255px;
+        }
+        @include mq($from: tablet) {
+            max-width: 275px;
+        }
+    }
+
+    .epic-article-count__dialog-note {
+        font-size: 12px;
+        line-height: 15px;
+        font-style: italic;
+        display: block;
+
+        a {
+            text-decoration: underline;
+            color: $brightness-100;
+        }
+    }
+}
+
+.epic-article-count .epic-article-count__prompt-label a {
+    text-decoration: none;
+    border-bottom: 1px solid $brightness-7;
+    color: $brightness-7;
+}
+
+.epic-article-count__buttons {
+    @include mq($from: tablet) {
+        display: flex;
+    }
+    margin-bottom: 15px;
+}
+
+.epic-article-count a.epic-article-count__button-opt-out {
+    background-color: $brightness-100;
+    color: $brand-main;
+}
+
+.epic-article-count a.epic-article-count__button-opt-in {
+    background-color: $brand-main;
+    color: $brightness-100;
+    border: solid 1px $brightness-100;
+}
+
+.epic-article-count__dialog-close {
+    float: right;
+}
+
+.epic-article-count__dialog-close-button {
+    padding: 2px 0 0;
+    margin: 0;
+    border: 0;
+
+    background: transparent;
+    color: $brightness-100;
+
+    svg {
+        fill: $brightness-100;
+    }
+}

@@ -32,9 +32,12 @@ import { throwIfEmptyArray } from 'lib/array-utils';
 import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisitions-epic-buttons';
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
+import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
+import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -58,6 +61,7 @@ import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
+import {getCookie} from "lib/cookies";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -83,8 +87,20 @@ const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
 const replaceCountryName = (text: string, countryName: ?string): string =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
 
-const replaceArticlesViewed = (text: string, count: ?number): string =>
-    count ? text.replace(/%%ARTICLE_COUNT%%/g, count.toString()) : text;
+const replaceArticlesViewed = (text: string, count: ?number): string => {
+    if (count) {
+        const countValue = count;   // Flow gets confused about the value in count if we don't reassign to another const
+        // A/B test the opt-out feature if the switch is enabled
+        if (optOutEnabled() && userIsInArticlesViewedOptOutTest()) {
+            return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
+                epicArticlesViewedOptOutTemplate(countValue, nextWord)
+            );
+        }
+
+        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}<span>`)
+    }
+    return text;
+};
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
@@ -234,7 +250,10 @@ const countryNameIsOk = (
 const articleViewCountIsOk = (
     articlesViewedSettings?: ArticlesViewedSettings
 ): boolean => {
-    if (articlesViewedSettings) {
+    if (articlesViewedSettings && getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
+        // User has opted out of articles viewed counting
+        return false;
+    } else if (articlesViewedSettings) {
         const upperOk = articlesViewedSettings.maxViews
             ? articlesViewedSettings.count <= articlesViewedSettings.maxViews
             : true;
@@ -295,6 +314,8 @@ const setupOnView = (
                 epicReminderEmailSignup(htmlElements);
             }
         }
+
+        onEpicViewed();
     });
 };
 
@@ -468,6 +489,8 @@ const makeEpicABTestVariant = (
                                 );
 
                                 component.each(element => {
+                                    setupArticlesViewedOptOut();
+
                                     setupOnView(
                                         element,
                                         parentTest,
@@ -616,6 +639,7 @@ const buildEpicCopy = (
             replaceCountryName(s, countryName),
             articlesViewedCount
         );
+
 
     return {
         heading: heading
@@ -947,4 +971,5 @@ export {
     setupClickHandling,
     emitInsertEvent,
     isCompatibleWithLiveBlogEpic,
+    replaceArticlesViewed,
 };
