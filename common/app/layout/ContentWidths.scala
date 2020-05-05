@@ -17,7 +17,6 @@ object ContentWidths {
   object Immersive  extends ContentHinting (Some("element--immersive"))
   object Halfwidth  extends ContentHinting (Some("element--halfWidth"))
 
-
   sealed trait ContentRelation {
     def inline: WidthsByBreakpoint
     def supporting: WidthsByBreakpoint = unused
@@ -158,6 +157,15 @@ object ContentWidths {
       // This is like `MainMedia.Inline`, but with a different `leftCol` and `wide`.
       leftCol =         Some(780.px),
       wide =            Some(620.px))
+  }
+
+  object DCRExperimental extends ContentRelation {
+    override val inline = BodyMedia.inline
+    override val supporting = BodyMedia.supporting
+    override val showcase = MainMedia.showcase
+    override val immersive = ImmersiveMedia.immersive
+    override val thumbnail = BodyMedia.thumbnail
+    override val halfwidth = BodyMedia.inline
   }
 
   object ImageContentMedia {
