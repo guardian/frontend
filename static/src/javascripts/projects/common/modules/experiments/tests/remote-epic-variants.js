@@ -27,5 +27,5 @@ export const remoteEpicVariants: Runnable<ABTest> = {
     ,
 
     variantToRun: remoteVariant,
-    showForSensitive: false,
+    showForSensitive: true, // there is special targeting logic around this so we don't set to true here
 };
