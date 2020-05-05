@@ -4,7 +4,7 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DiscussionRendering, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement, InstagramBlockElement, EmbedBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement, InstagramBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -41,7 +41,6 @@ object ArticlePageChecks {
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
       case _: InstagramBlockElement => false
-      case _: EmbedBlockElement => false
       case _ => true
     }
 
