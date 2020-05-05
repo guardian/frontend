@@ -94,7 +94,7 @@ describe('replaceArticlesViewed', () => {
 
     it('should replace the template with just the count', () => {
         const text = 'You have read %%ARTICLE_COUNT%% articles.';
-        expect(replaceArticlesViewed(text, 5)).toBe('You have read 5 articles.')
+        expect(replaceArticlesViewed(text, 5)).toBe('You have read <span class="epic-article-count__normal">5<span> articles.')
     });
 
     it('should replace the template with opt-out feature html', () => {
