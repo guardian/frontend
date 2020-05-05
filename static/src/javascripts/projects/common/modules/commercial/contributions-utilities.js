@@ -97,7 +97,7 @@ const replaceArticlesViewed = (text: string, count: ?number): string => {
             );
         }
 
-        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}<span>`)
+        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}</span>`)
     }
     return text;
 };
