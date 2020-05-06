@@ -6,11 +6,11 @@ export const signInGate: ABTest = {
     author: 'Mahesh Makani, vlbee',
     description:
         'Marathon sign in gate test on 3nd article view of simple article templates, with higher priority over banners and epic',
-    audience: 0.0, // todo
-    audienceOffset: 0.0, // todo
+    audience: 0.0001,
+    audienceOffset: 0.99,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
-        '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
+        '2nd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
     dataLinkNames: 'SignInGatePatientia',
     idealOutcome:
         'Conversion to sign in is higher when the gate is shown over a longer period of time, with no sustained negative impact to engagement levels or supporter acquisition',
@@ -18,11 +18,11 @@ export const signInGate: ABTest = {
     canRun: () => true,
     variants: [
         {
-            id: 'control',
+            id: 'patientia-control-1',
             test: (): void => {},
         },
         {
-            id: 'variant',
+            id: 'patientia-variant-1',
             test: (): void => {},
         },
     ],

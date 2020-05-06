@@ -13,7 +13,7 @@ jest.mock('common/modules/experiments/ab', () => ({
             id: 'SignInGatePatientia', // Update for each new test
             dataLinkNames: 'SignInGatePatientia', // Update for each new test
             variantToRun: {
-                id: 'variant',
+                id: 'patientia-variant-1', // Update for each new test
             },
         },
     ]),
@@ -111,7 +111,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-variant': Date.now(), // todo
+                'SignInGatePatientia-variant': Date.now(),
             });
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);

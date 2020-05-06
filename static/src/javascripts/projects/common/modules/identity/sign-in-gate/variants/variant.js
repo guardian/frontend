@@ -14,7 +14,7 @@ import {
 import { designShow } from './design/patientia';
 
 // define the variant name here
-const variant = 'variant';
+const variant = 'patientia-variant-1';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>
@@ -23,7 +23,7 @@ const canShow: (name?: string) => boolean = (name = '') =>
         variant,
         componentName,
     }) &&
-    isNPageOrHigherPageView(3) &&
+    isNPageOrHigherPageView(2) &&
     !isLoggedIn() &&
     !isInvalidArticleType() &&
     !isInvalidSection() &&
