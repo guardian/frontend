@@ -12,16 +12,14 @@ case object HalfWidth extends Role
 
 object Role {
 
-  def apply(maybeName: Option[String]): Role = fromOptionalNameWithDefaultRole(maybeName, Inline)
-
-  def fromOptionalNameWithDefaultRole(maybeName: Option[String], defaultRole: Role): Role = maybeName match {
+  def apply(maybeName: Option[String]): Role = maybeName match {
     case Some("inline") => Inline
     case Some("supporting") => Supporting
     case Some("showcase") => Showcase
     case Some("immersive") => Immersive
     case Some("thumbnail") => Thumbnail
     case Some("halfWidth") => HalfWidth
-    case _ => defaultRole
+    case _ => Inline
   }
 
   implicit object RoleWrites extends Writes[Role] {

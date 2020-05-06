@@ -159,7 +159,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], hasShowcaseMainElement: Boolean, isImmersive: Boolean): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -218,22 +218,15 @@ object PageElement {
             ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
-        val defaultImageRole = (hasShowcaseMainElement, isImmersive) match {
-          case (true, _) => Showcase
-          case (_, true) => Immersive
-          case _         => Inline
-        }
-
         List(ImageBlockElement(
           ImageMedia(signedAssets),
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
-          Role.fromOptionalNameWithDefaultRole(element.imageTypeData.flatMap(_.role), defaultImageRole),
+          Role(element.imageTypeData.flatMap(_.role)),
           imageSources
         ))
 
       case Audio => extractAudio(element).toList
-
 
       case Video =>
         if (element.assets.nonEmpty) {
