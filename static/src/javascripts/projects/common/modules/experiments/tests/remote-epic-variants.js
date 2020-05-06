@@ -1,13 +1,13 @@
 // @flow
 
-import { setEpic } from "common/modules/commercial/contributions-service";
+import { fetchAndRenderEpic } from "common/modules/commercial/contributions-service";
 import config from 'lib/config';
 
 const id = 'RemoteEpicVariants';
 
 const remoteVariant: Variant = {
     id: 'remote',
-    test: () => setEpic(id),
+    test: () => fetchAndRenderEpic(id),
     canRun: () => true,
 };
 
@@ -23,9 +23,9 @@ export const remoteEpicVariants: Runnable<ABTest> = {
     audienceCriteria: "All",
     variants: [remoteVariant],
     canRun: () =>
-         config.get("switches.abRemoteEpicVariants") && Math.random() < 0.01 // control test % here
+         config.get("switches.abRemoteEpicVariants") && Math.random() < 0.01 // set test % here
     ,
 
     variantToRun: remoteVariant,
-    showForSensitive: true, // there is special targeting logic around this so we don't set to true here
+    showForSensitive: true, // there is special targeting logic around this so we don't set to false here
 };

@@ -1,6 +1,6 @@
 // @flow
 
-import { getBodyEnd } from '@guardian/automat-client';
+import { getBodyEnd, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-client';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
@@ -143,15 +143,14 @@ const buildPayload = () => {
         isPaidContent: page.isPaidContent,
         isSensitive: page.isSensitive,
         tags: buildKeywordTags(page),
-        // This test is already subjected to the 3 checks below, but
-        // we're passing these properties to the Contributions
-        // service for consistency with DCR.
         showSupportMessaging: !shouldNotBeShownSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
             getLastOneOffContributionDate() || undefined,
         mvtId: getMvtValue(),
         countryCode,
+        epicViewLog: getViewLog(),
+        weeklyArticleHistory: getWeeklyArticleHistory()
     };
 
     return {
@@ -170,7 +169,7 @@ const checkResponseOk = response => {
     );
 };
 
-export const setEpic = (id: string) => {
+export const fetchAndRenderEpic = (id: string) => {
     const payload = buildPayload();
     const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
     const componentType = 'ACQUISITIONS_EPIC';
@@ -182,7 +181,7 @@ export const setEpic = (id: string) => {
          .then(json => {
             if (json && json.data) {
                 const { html, css, js, meta } = json.data;
-                const trackingCampaignId = `epic_${meta.campaignId}`;
+                const trackingCampaignId = `${meta.campaignId}`;
 
                 emitBeginEvent(trackingCampaignId);
                 setupClickHandling(meta.abTestName, meta.abTestVariant, componentType, meta.campaignCode, products);
