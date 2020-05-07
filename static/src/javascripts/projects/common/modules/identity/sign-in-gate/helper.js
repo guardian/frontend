@@ -74,6 +74,19 @@ export const isNPageOrHigherPageView = (n: number = 2): boolean => {
     return count >= n - 1;
 };
 
+// determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
+export const isIOS9 = (): boolean => {
+    // get the browser user agent
+    const ua = navigator.userAgent;
+    // check useragent if the device is an iOS device
+    const appleDevice = /(iPhone|iPod|iPad)/i.test(ua);
+    // check useragent if the os is version 9
+    const os = /(CPU OS 9_)/i.test(ua);
+
+    // if both true, then it's an apple ios 9 device
+    return appleDevice && os;
+};
+
 // hide the sign in gate on article types that are not supported
 // add to the include parameter array if there are specific types that should be included/overridden
 export const isInvalidArticleType = (include: Array<string> = []): boolean => {
@@ -104,13 +117,20 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
 // hide the sign in gate on certain sections of the site, e.g info, about, help etc.
 // add to the include parameter array if there are specific types that should be included/overridden
 export const isInvalidSection = (include: Array<string> = []): boolean => {
-    const invalidSections = ['about', 'info', 'membership', 'help'];
+    const invalidSections = [
+        'about',
+        'info',
+        'membership',
+        'help',
+        'guardian-live-australia',
+    ];
 
     return invalidSections
         .filter(el => !include.includes(el))
         .reduce((isSectionInvalid, section) => {
             if (isSectionInvalid) return true;
 
+            // looks up window.guardian.config object in the browser console
             return config.get(`page.section`) === section;
         }, false);
 };
@@ -257,7 +277,9 @@ export const showGate: ({
                 articleBody.children.length > 1
             ) {
                 // find the indexes of the articles "p" tag, to include in the sign in gate fade
-                const pIndexes = Array.from(articleBody.children).map((elem, idx) => elem.tagName === "P" ? idx : '').filter(i => i !== '');
+                const pIndexes = Array.from(articleBody.children)
+                    .map((elem, idx) => (elem.tagName === 'P' ? idx : ''))
+                    .filter(i => i !== '');
 
                 // found some "p" tags, add the first "p" to the fade
                 if (pIndexes.length > 1) {

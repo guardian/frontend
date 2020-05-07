@@ -108,31 +108,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-quartus-control",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    "ab-sign-in-gate-patientia",
+    "Marathon sign in gate test on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-quartus-variant",
-    "Test new sign in component on 3nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-quartus-scale",
-    "Test new sign in component on 3nd article view to a larger audience",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
   )
 

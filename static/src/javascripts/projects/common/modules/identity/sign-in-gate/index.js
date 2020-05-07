@@ -3,9 +3,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { signInGate as signInGateTestControl } from 'common/modules/experiments/tests/sign-in-gate';
-import { signInGateVariant as signInGateTestVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
-import { signInGateScale as signInGateTestScale } from 'common/modules/experiments/tests/sign-in-gate-scale';
+import { signInGate as signInGateTest } from 'common/modules/experiments/tests/sign-in-gate';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { component, componentName } from './component';
@@ -16,11 +14,8 @@ import type {
     SignInGateVariant,
 } from './types';
 
-const tests = [
-    signInGateTestControl,
-    signInGateTestVariant,
-    signInGateTestScale,
-];
+// if using multiple tests, then add them all in this array. (all the variant names in each test in the array must be unique)
+const tests = [signInGateTest];
 
 const canShow: () => Promise<boolean> = () =>
     new Promise(resolve => {

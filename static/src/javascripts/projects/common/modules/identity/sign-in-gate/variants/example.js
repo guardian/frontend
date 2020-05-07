@@ -18,9 +18,9 @@ const variant = 'example';
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>
     !hasUserDismissedGate({
-        componentName,
         name,
         variant,
+        componentName,
     }) &&
     isNPageOrHigherPageView(2) &&
     !isLoggedIn() &&
