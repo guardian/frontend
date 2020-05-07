@@ -76,8 +76,6 @@ object ArticlePageChecks {
     "society/series/this-is-the-nhs"
   )
 
-  def isNotImmersive(page: PageWithStoryPackage): Boolean = ! page.item.isImmersive
-
   def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
 
   def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
@@ -149,7 +147,6 @@ object ArticlePicker {
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
@@ -166,7 +163,6 @@ object ArticlePicker {
       ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isNotImmersive", ArticlePageChecks.isNotImmersive(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
