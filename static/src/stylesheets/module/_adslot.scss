@@ -272,6 +272,7 @@
         }
     }
 }
+
 .ad-slot--liveblog-inline:not(.ad-slot--outstream) {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
