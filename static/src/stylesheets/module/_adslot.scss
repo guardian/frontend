@@ -272,13 +272,10 @@
         }
     }
 }
-.ad-slot--liveblog-inline {
-    @include mq(tablet) {
-        padding-bottom: $gs-baseline*2;
-    }
-}
 .ad-slot--liveblog-inline:not(.ad-slot--outstream) {
     @include mq(tablet) {
+        padding-bottom: $gs-baseline*2;
+
         & > div:not(.ad-slot__label) {
             width: 300px;
             margin-left: auto;
