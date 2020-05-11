@@ -58,7 +58,7 @@ describe('Commercial features', () => {
         });
 
         config.set('switches', {
-            plistaForOutbrainAu: true,
+            plistaForAu: true,
             commercial: true,
             enableDiscussionSwitch: true,
         });

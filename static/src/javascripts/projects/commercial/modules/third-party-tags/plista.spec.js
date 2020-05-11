@@ -44,7 +44,7 @@ trackAdRenderMock.mockReturnValue(Promise.resolve(true));
 
 describe('Plista', () => {
     beforeEach(() => {
-        config.switches.plistaForOutbrainAu = true;
+        config.switches.plistaForAu = true;
         config.page = {
             section: 'uk-news',
             isPreview: false,

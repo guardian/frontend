@@ -117,7 +117,7 @@ class CommercialFeatures {
 
         this.plista =
             this.relatedWidgetEnabled &&
-            switches.plistaForOutbrainAu;
+            switches.plistaForAu;
 
         this.commentAdverts =
             this.dfpAdvertising &&
