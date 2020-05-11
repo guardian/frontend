@@ -243,13 +243,13 @@ export const runAndTrackAbTests = (): Promise<void> => {
     return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
-        registerImpressionEvents(tests); // only if variants not function
-        registerCompleteEvents(tests); // only if variants not function
+        registerImpressionEvents(tests);
+        registerCompleteEvents(tests);
         trackABTests(tests);
 
         setParticipationsInLocalStorage({
-            ...getParticipationsFromLocalStorage(), // existing
-            ...runnableTestsToParticipations(tests), // data transformation for new values
+            ...getParticipationsFromLocalStorage(),
+            ...runnableTestsToParticipations(tests),
         });
     });
 };
