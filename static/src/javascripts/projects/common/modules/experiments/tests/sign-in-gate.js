@@ -7,7 +7,7 @@ export const signInGate: ABTest = {
     description:
         'Marathon sign in gate test on 3nd article view of simple article templates, with higher priority over banners and epic',
     audience: 0.0001,
-    audienceOffset: 0.99,
+    audienceOffset: 0.98,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
         '2nd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
