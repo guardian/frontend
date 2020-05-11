@@ -4,7 +4,8 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DiscussionRendering, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ImageBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement, InstagramBlockElement}
+import model.liveblog.{BlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
+import model.dotcomrendering.pageElements.SoundcloudBlockElement
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -34,6 +35,7 @@ object ArticlePageChecks {
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
+
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: TextBlockElement => false
       case _: ImageBlockElement => false
@@ -41,6 +43,7 @@ object ArticlePageChecks {
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
       case _: InstagramBlockElement => false
+      case _: SoundcloudBlockElement => false
       case _ => true
     }
 

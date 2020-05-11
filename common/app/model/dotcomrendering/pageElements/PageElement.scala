@@ -415,7 +415,6 @@ object PageElement {
 
   private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
-
     src.flatMap { s =>
         (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
           case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))

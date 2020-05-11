@@ -341,7 +341,7 @@ object DotcomponentsDataModel {
 
       Block(
         id = block.id,
-        elements = blocksToPageElements(block.elements, shouldAddAffiliateLinks),
+        elements = blockElementsToPageElements(block.elements, shouldAddAffiliateLinks),
         createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
         lastUpdated = lastUpdated,
@@ -352,7 +352,7 @@ object DotcomponentsDataModel {
       )
     }
 
-    def blocksToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+    def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
       val elems = capiElems.toList.flatMap(el => PageElement.make(
         element = el,
         addAffiliateLinks = affiliateLinks,
