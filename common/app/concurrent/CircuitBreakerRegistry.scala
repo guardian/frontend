@@ -19,7 +19,7 @@ object CircuitBreakerRegistry extends Logging {
 
     val cb = new CircuitBreaker(
       scheduler = system.scheduler,
-      maxFailures = 10,
+      maxFailures = maxFailures,
       callTimeout = callTimeout,
       resetTimeout = resetTimeout,
     )
