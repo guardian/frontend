@@ -11,7 +11,7 @@ const remoteVariant: Variant = {
     canRun: () => true,
 };
 
-export const remoteEpicVariants: Runnable<ABTest> = {
+export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     id,
     start: '2020-05-01',
     expiry: '2020-07-01',
@@ -28,4 +28,9 @@ export const remoteEpicVariants: Runnable<ABTest> = {
 
     variantToRun: remoteVariant,
     showForSensitive: true, // there is special targeting logic around this so we don't set to false here
+
+    // required for AcquisitionsABTest interface, so use dummy values
+    campaignId: 'remote-epic-variants-fake-campaign-id',
+    componentType: 'ACQUISITIONS_EPIC',
+    geolocation: undefined,
 };

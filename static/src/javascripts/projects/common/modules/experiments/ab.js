@@ -87,7 +87,7 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
-                const result = firstRunnableTest<ABTest>([
+                const result = firstRunnableTest<AcquisitionsABTest>([
                     hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
@@ -137,7 +137,7 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
-                            expectedCampaignId: result ? ((result: any).campaignId)  : '', // type cast as must be EpicABTest at this poimt
+                            expectedCampaignId: result ? result.campaignId  : '',
                             expectedCampaignCode: result
                                 ? result.variantToRun.campaignCode
                                 : '',

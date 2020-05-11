@@ -26,7 +26,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateScale,
 ];
 
-export const priorityEpicTest: ABTest = remoteEpicVariants;
+export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
     askFourEarning,
