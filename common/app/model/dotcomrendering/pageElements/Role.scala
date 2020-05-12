@@ -22,6 +22,16 @@ object Role {
     case _ => Inline
   }
 
+  def apply(maybeName: Option[String], defaultRole: Role): Role = maybeName match {
+    case Some("inline") => Inline
+    case Some("supporting") => Supporting
+    case Some("showcase") => Showcase
+    case Some("immersive") => Immersive
+    case Some("thumbnail") => Thumbnail
+    case Some("halfWidth") => HalfWidth
+    case _ => defaultRole
+  }
+
   implicit object RoleWrites extends Writes[Role] {
     override def writes(r: Role): JsValue = r match {
       case Inline => JsString("inline")

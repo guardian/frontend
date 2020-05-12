@@ -1,6 +1,6 @@
 package model.dotcomrendering.pageElements
 
-import java.net.{URI, URLEncoder}
+import java.net.{URLEncoder}
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
@@ -11,7 +11,7 @@ import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, Item120, Item1200, Item140, Item300, Item640, Item700, SrcSet}
+import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
 
 import scala.collection.JavaConverters._
 
@@ -159,7 +159,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom]): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -218,11 +218,20 @@ object PageElement {
             ImageSource(weighting, httpsSrcSet)
         }.toSeq
 
+        // The default role is used when an image doesn't have one and is then meant to be Inline,
+        // that having been said, there are exceptions to this rule.
+        // For instance, if the page is immersive and the picture is `mainMedia` and the image
+        // doesn't have a role, then the role should be Immersive, thereby overriding the default Inline
+        val defaultRole = (isMainBlock, isImmersive) match {
+          case (true, true) => Immersive
+          case _ => Inline
+        }
+
         List(ImageBlockElement(
           ImageMedia(signedAssets),
           imageDataFor(element),
           element.imageTypeData.flatMap(_.displayCredit),
-          Role(element.imageTypeData.flatMap(_.role)),
+          Role(element.imageTypeData.flatMap(_.role), defaultRole),
           imageSources
         ))
 
