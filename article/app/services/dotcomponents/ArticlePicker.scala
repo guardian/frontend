@@ -76,7 +76,8 @@ object ArticlePageChecks {
     "news/series/nauru-files",
     "us-news/series/counted-us-police-killings",
     "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs"
+    "society/series/this-is-the-nhs",
+    "artanddesign/series/guardian-print-shop"
   )
 
   def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = ! page.item.isPhotoEssay
