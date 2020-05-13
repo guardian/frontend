@@ -59,7 +59,7 @@ const buildKeywordTags = page => {
 };
 
 export const getEpicTestToRun = memoize(
-    (): Promise<?Runnable<EpicABTest>> => {
+    (): Promise<?Runnable<ABTest>> => {
         const highPriorityHardCodedTests = hardCodedEpicTests.filter(
             test => test.highPriority
         );
@@ -87,7 +87,7 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
-                const result = firstRunnableTest<EpicABTest>([
+                const result = firstRunnableTest<AcquisitionsABTest>([
                     hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
@@ -97,12 +97,12 @@ export const getEpicTestToRun = memoize(
 
                 const page = config.get('page');
 
-                // No point in going forward with variant comparison unless
-                // we're in an Article (excludes e.g. live blogs which aren't
-                // supported yet) and we have loaded the configured tests successfully
+                // No point in going forward with variant comparison in
+                // these cases
                 if (
                     page.contentType !== 'Article' ||
-                    configuredEpicTests.length === 0
+                    configuredEpicTests.length === 0 ||
+                    (result && result.id !== 'RemoteEpicVariants')
                 ) {
                     return result;
                 }
@@ -137,7 +137,7 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
-                            expectedCampaignId: result ? result.campaignId : '',
+                            expectedCampaignId: result ? result.campaignId  : '',
                             expectedCampaignCode: result
                                 ? result.variantToRun.campaignCode
                                 : '',
@@ -149,8 +149,9 @@ export const getEpicTestToRun = memoize(
                 return result;
             });
         }
+
         return Promise.resolve(
-            firstRunnableTest<EpicABTest>([
+            firstRunnableTest<ABTest>([
                 hardCodedPriorityEpicTest,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,

@@ -269,23 +269,35 @@ const emitBeginEvent = (trackingCampaignId: string) => {
     mediator.emit('register:begin', trackingCampaignId);
 };
 
-const emitInsertEvent = (
-    parentTest: EpicABTest,
+const submitOphanInsert = (
+    testId: string,
+    variantId: string,
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: ?string
+    campaignCode: string
 ) => {
-    mediator.emit(parentTest.insertEvent, {
-        componentType: parentTest.componentType,
-        products,
-        campaignCode: campaignCode || '',
+    submitInsertEvent({
+        component: {
+            componentType,
+            products,
+            campaignCode,
+            id: campaignCode,
+        },
+        abTest: {
+            name: testId,
+            variant: variantId,
+        },
     });
 };
 
-const setupOnView = (
+const setupOphanView = (
     element: HTMLElement,
-    parentTest: EpicABTest,
-    campaignCode: ?string,
+    viewEvent: string,
+    testId: string,
+    variantId: string,
+    campaignCode: string,
     trackingCampaignId: string,
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
     showTicker: boolean = false
 ) => {
@@ -294,13 +306,21 @@ const setupOnView = (
     });
 
     inView.on('firstview', () => {
-        logView(parentTest.id);
+        logView(testId);
 
-        mediator.emit(parentTest.viewEvent, {
-            componentType: parentTest.componentType,
-            products,
-            campaignCode,
-        });
+        submitViewEvent({
+                component: {
+                    componentType,
+                    products,
+                    campaignCode,
+                    id: campaignCode,
+                },
+                abTest: {
+                    name: testId,
+                    variant: variantId,
+                }
+            }
+        );
 
         mediator.emit('register:end', trackingCampaignId);
 
@@ -320,21 +340,22 @@ const setupOnView = (
 };
 
 const setupClickHandling = (
-    parentTest: EpicABTest,
+    testId: string,
+    variantId: string,
+    componentType: OphanComponentType,
     campaignCode: ?string,
     products: $ReadOnlyArray<OphanProduct>,
-    variantId: string
 ) => {
     awaitEpicButtonClicked().then(() =>
         submitClickEvent({
             component: {
-                componentType: parentTest.componentType,
+                componentType,
                 products,
                 campaignCode: campaignCode || '',
                 id: campaignCode || '',
             },
             abTest: {
-                name: parentTest.id,
+                name: testId,
                 variant: variantId,
             },
         })
@@ -473,31 +494,37 @@ const makeEpicABTestVariant = (
                             const targets = getTargets('.submeta');
 
                             setupClickHandling(
-                                parentTest,
+                                parentTest.id,
+                                initVariant.id,
+                                parentTest.componentType,
                                 campaignCode,
                                 initVariant.products,
-                                initVariant.id
                             );
 
                             if (targets.length > 0) {
                                 component.insertBefore(targets);
 
-                                emitInsertEvent(
-                                    parentTest,
+                                submitOphanInsert(
+                                    parentTest.id,
+                                    initVariant.id,
+                                    parentTest.componentType,
                                     initVariant.products,
-                                    campaignCode
+                                    campaignCode,
                                 );
 
                                 component.each(element => {
                                     setupArticlesViewedOptOut();
 
-                                    setupOnView(
+                                    setupOphanView(
                                         element,
-                                        parentTest,
+                                        parentTest.viewEvent,
+                                        parentTest.id,
+                                        initVariant.id,
                                         campaignCode,
                                         trackingCampaignId,
+                                        parentTest.componentType,
                                         initVariant.products,
-                                        initVariant.showTicker
+                                        initVariant.showTicker,
                                     );
                                 });
                             }
@@ -507,39 +534,6 @@ const makeEpicABTestVariant = (
                     }
                 });
         },
-        impression: submitABTestImpression =>
-            mediator.once(parentTest.insertEvent, () => {
-                submitInsertEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products: initVariant.products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: initVariant.id,
-                    },
-                });
-
-                submitABTestImpression();
-            }),
-        success: submitABTestComplete =>
-            mediator.once(parentTest.viewEvent, () => {
-                submitViewEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products: initVariant.products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: initVariant.id,
-                    },
-                });
-                submitABTestComplete();
-            }),
     };
 };
 
@@ -966,10 +960,11 @@ export {
     getVisitCount,
     buildEpicCopy,
     buildBannerCopy,
-    setupOnView,
     emitBeginEvent,
+    submitOphanInsert,
+    setupOphanView,
     setupClickHandling,
-    emitInsertEvent,
     isCompatibleWithLiveBlogEpic,
     replaceArticlesViewed,
+    makeEvent,
 };
