@@ -8,7 +8,6 @@ templates:
     type: autoscaling
     parameters:
       bucket: aws-frontend-artifacts
-      warmupGrace: 60
     dependencies:
     - frontend-static
     - update-ami
