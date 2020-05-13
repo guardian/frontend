@@ -4,7 +4,7 @@ This describes how to work with Google Analytics (GA)
 
 ## Hints
 
-Always discuss the reporting requirements with [data solutions](mailto:data.solutions@guardian.co.uk) and [google analytics](google.analyticscore@guardian.co.uk) teams before you implement any new dimensions.
+Always discuss the reporting requirements with [data technology](mailto:data.technology@guardian.co.uk) and [google analytics](google.analyticscore@guardian.co.uk) teams before you implement any new dimensions.
 
 Talk to the mobile apps team early, things can be a slightly different once you take their needs into account (eg: web pages vs app screens)
 
