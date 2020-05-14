@@ -16,6 +16,130 @@ sealed trait Atom {
   def id: String
 }
 
+// ----------------------------------------
+// AudioAtom
+// ----------------------------------------
+
+final case class AudioAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.audio.AudioAtom
+) extends Atom
+
+object AudioAtom {
+  def make(atom: AtomApiAtom): AudioAtom = {
+    val audio = atom.data.asInstanceOf[AtomData.Audio].audio
+    AudioAtom(atom.id, atom, audio)
+  }
+}
+
+// ----------------------------------------
+// ChartAtom
+// ----------------------------------------
+
+final case class ChartAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  title: String,
+  css: String,
+  html: String,
+  mainJS: Option[String]
+) extends Atom
+
+object ChartAtom {
+  def make(atom: AtomApiAtom): ChartAtom = {
+    ChartAtom(atom.id, atom, atom.title.getOrElse("Chart"), "", atom.defaultHtml, None)
+  }
+}
+
+// ----------------------------------------
+// CommonsDivisionAtom
+// ----------------------------------------
+
+final case class CommonsDivisionAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.commonsdivision.CommonsDivision
+) extends Atom
+
+object CommonsDivisionAtom {
+  def make(atom: AtomApiAtom): CommonsDivisionAtom = {
+    val commonsdivision = atom.data.asInstanceOf[AtomData.CommonsDivision].commonsDivision
+    CommonsDivisionAtom(atom.id, atom, commonsdivision)
+  }
+}
+
+// ----------------------------------------
+// ExplainerAtom
+// ----------------------------------------
+
+final case class ExplainerAtom(
+  override val id: String,
+  labels: Seq[String],
+  title: String,
+  body: String,
+  atom: AtomApiAtom
+) extends Atom
+
+object ExplainerAtom {
+  def make(atom: AtomApiAtom): ExplainerAtom = {
+    val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
+    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body, atom)
+  }
+}
+
+// ----------------------------------------
+// InteractiveAtom
+// ----------------------------------------
+
+final case class InteractiveAtom(
+  override val id: String,
+  `type`: String,
+  title: String,
+  css: String,
+  html: String,
+  mainJS: Option[String],
+  docData: Option[String]
+) extends Atom
+
+object InteractiveAtom {
+  def make(atom: AtomApiAtom): InteractiveAtom = {
+    val interactive = atom.data.asInstanceOf[AtomData.Interactive].interactive
+    InteractiveAtom(
+      id = atom.id,
+      `type` = interactive.`type`,
+      title = interactive.title,
+      css = interactive.css,
+      html = interactive.html,
+      mainJS = interactive.mainJS,
+      docData = interactive.docData
+    )
+  }
+}
+
+// ----------------------------------------
+// GuideAtom
+// ----------------------------------------
+
+final case class GuideAtom(
+  override val id: String,
+  atom: AtomApiAtom,
+  data: atomapi.guide.GuideAtom,
+  image: Option[ImageMedia]
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
+
+object GuideAtom {
+  def make(atom: AtomApiAtom): GuideAtom = {
+    val guide = atom.data.asInstanceOf[AtomData.Guide].guide
+    GuideAtom(atom.id, atom, guide, guide.guideImage.map(Atoms.atomImageToImageMedia))
+  }
+}
 
 // ----------------------------------------
 // MediaAtom
@@ -129,87 +253,53 @@ object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[Med
   case object Url extends MediaAssetPlatform
 }
 
-
 // ----------------------------------------
-// TimelineAtom
+// ProfileAtom
 // ----------------------------------------
 
-final case class TimelineAtom(
+final case class ProfileAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.timeline.TimelineAtom,
-  events: Seq[TimelineItem]
-) extends Atom
+  data: atomapi.profile.ProfileAtom,
+  image: Option[ImageMedia]
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
+}
 
-final case class TimelineItem(
-  title: String,
-  date: DateTime,
-  body: Option[String],
-  toDate: Option[Long]
-)
-
-object TimelineAtom {
-  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(
-    atom.id,
-    atom,
-    atom.data.asInstanceOf[AtomData.Timeline].timeline,
-    events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
-  )
-
-  def renderFormattedDate(date: Long, format: Option[String]): String = {
-    format match {
-      case Some("month-year") => DateTimeFormat.forPattern("MMMM yyyy").print(date)
-      case Some("year") =>  DateTimeFormat.forPattern("yyyy").print(date)
-      case _ =>  DateTimeFormat.forPattern("d MMMM yyyy").print(date)
-    }
+object ProfileAtom {
+  def make(atom: AtomApiAtom): ProfileAtom = {
+    val profile = atom.data.asInstanceOf[AtomData.Profile].profile
+    ProfileAtom(atom.id, atom, profile, profile.headshot.map(Atoms.atomImageToImageMedia))
   }
 }
 
-object TimelineItem {
-  def make(item: TimelineApiItem): TimelineItem = TimelineItem(
-    item.title,
-    new DateTime(item.date),
-    item.body,
-    item.toDate
-  )
-}
-
-
 // ----------------------------------------
-// CommonsDivisionAtom
+// QandaAtom
 // ----------------------------------------
 
-final case class CommonsDivisionAtom(
+final case class QandaAtom(
   override val id: String,
   atom: AtomApiAtom,
-  data: atomapi.commonsdivision.CommonsDivision
-) extends Atom
-
-object CommonsDivisionAtom {
-  def make(atom: AtomApiAtom): CommonsDivisionAtom = {
-    val commonsdivision = atom.data.asInstanceOf[AtomData.CommonsDivision].commonsDivision
-    CommonsDivisionAtom(atom.id, atom, commonsdivision)
-  }
+  data: atomapi.qanda.QAndAAtom,
+  image: Option[ImageMedia]
+) extends Atom {
+  def credit: Option[String] = for {
+    img <- image
+    asset <- img.allImages.headOption
+    credit <- asset.credit
+  } yield credit
 }
 
-
-// ----------------------------------------
-// AudioAtom
-// ----------------------------------------
-
-final case class AudioAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.audio.AudioAtom
-) extends Atom
-
-object AudioAtom {
-  def make(atom: AtomApiAtom): AudioAtom = {
-    val audio = atom.data.asInstanceOf[AtomData.Audio].audio
-    AudioAtom(atom.id, atom, audio)
+object QandaAtom {
+  def make(atom: AtomApiAtom): QandaAtom = {
+    val qanda = atom.data.asInstanceOf[AtomData.Qanda].qanda
+    QandaAtom(atom.id, atom, qanda, qanda.eventImage.map(Atoms.atomImageToImageMedia))
   }
 }
-
 
 // ----------------------------------------
 // Quiz
@@ -317,56 +407,6 @@ object Quiz extends common.Logging {
   }
 }
 
-
-// ----------------------------------------
-// InteractiveAtom
-// ----------------------------------------
-
-final case class InteractiveAtom(
-  override val id: String,
-  `type`: String,
-  title: String,
-  css: String,
-  html: String,
-  mainJS: Option[String],
-  docData: Option[String]
-) extends Atom
-
-object InteractiveAtom {
-  def make(atom: AtomApiAtom): InteractiveAtom = {
-    val interactive = atom.data.asInstanceOf[AtomData.Interactive].interactive
-    InteractiveAtom(
-      id = atom.id,
-      `type` = interactive.`type`,
-      title = interactive.title,
-      css = interactive.css,
-      html = interactive.html,
-      mainJS = interactive.mainJS,
-      docData = interactive.docData
-    )
-  }
-}
-
-
-// ----------------------------------------
-// ChartAtom
-// ----------------------------------------
-
-final case class ChartAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  title: String,
-  css: String,
-  html: String,
-  mainJS: Option[String]) extends Atom
-
-object ChartAtom {
-  def make(atom: AtomApiAtom): ChartAtom = {
-    ChartAtom(atom.id, atom, atom.title.getOrElse("Chart"), "", atom.defaultHtml, None)
-  }
-}
-
-
 // ----------------------------------------
 // RecipeAtom
 // ----------------------------------------
@@ -435,7 +475,6 @@ object RecipeAtom {
   }
 }
 
-
 // ----------------------------------------
 // ReviewAtom
 // ----------------------------------------
@@ -458,98 +497,46 @@ object ReviewAtom {
   }
 }
 
-
 // ----------------------------------------
-// ExplainerAtom
+// TimelineAtom
 // ----------------------------------------
 
-final case class ExplainerAtom(
+final case class TimelineAtom(
   override val id: String,
-  labels: Seq[String],
-  title: String,
-  body: String,
-  atom: AtomApiAtom
+  atom: AtomApiAtom,
+  data: atomapi.timeline.TimelineAtom,
+  events: Seq[TimelineItem]
 ) extends Atom
 
-object ExplainerAtom {
-  def make(atom: AtomApiAtom): ExplainerAtom = {
-    val explainer = atom.data.asInstanceOf[AtomData.Explainer].explainer
-    ExplainerAtom(atom.id, explainer.tags.getOrElse(Nil), explainer.title, explainer.body, atom)
+final case class TimelineItem(
+  title: String,
+  date: DateTime,
+  body: Option[String],
+  toDate: Option[Long]
+)
+
+object TimelineAtom {
+  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(
+    atom.id,
+    atom,
+    atom.data.asInstanceOf[AtomData.Timeline].timeline,
+    events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
+  )
+
+  def renderFormattedDate(date: Long, format: Option[String]): String = {
+    format match {
+      case Some("month-year") => DateTimeFormat.forPattern("MMMM yyyy").print(date)
+      case Some("year") =>  DateTimeFormat.forPattern("yyyy").print(date)
+      case _ =>  DateTimeFormat.forPattern("d MMMM yyyy").print(date)
+    }
   }
 }
 
-
-// ----------------------------------------
-// QandaAtom
-// ----------------------------------------
-
-final case class QandaAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.qanda.QAndAAtom,
-  image: Option[ImageMedia]
-) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
+object TimelineItem {
+  def make(item: TimelineApiItem): TimelineItem = TimelineItem(
+    item.title,
+    new DateTime(item.date),
+    item.body,
+    item.toDate
+  )
 }
-
-object QandaAtom {
-  def make(atom: AtomApiAtom): QandaAtom = {
-    val qanda = atom.data.asInstanceOf[AtomData.Qanda].qanda
-    QandaAtom(atom.id, atom, qanda, qanda.eventImage.map(Atoms.atomImageToImageMedia))
-  }
-}
-
-
-// ----------------------------------------
-// GuideAtom
-// ----------------------------------------
-
-final case class GuideAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.guide.GuideAtom,
-  image: Option[ImageMedia]
-) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
-}
-
-object GuideAtom {
-  def make(atom: AtomApiAtom): GuideAtom = {
-    val guide = atom.data.asInstanceOf[AtomData.Guide].guide
-    GuideAtom(atom.id, atom, guide, guide.guideImage.map(Atoms.atomImageToImageMedia))
-  }
-}
-
-
-// ----------------------------------------
-// ProfileAtom
-// ----------------------------------------
-
-final case class ProfileAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.profile.ProfileAtom,
-  image: Option[ImageMedia]
-) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
-}
-
-object ProfileAtom {
-  def make(atom: AtomApiAtom): ProfileAtom = {
-    val profile = atom.data.asInstanceOf[AtomData.Profile].profile
-    ProfileAtom(atom.id, atom, profile, profile.headshot.map(Atoms.atomImageToImageMedia))
-  }
-}
-
