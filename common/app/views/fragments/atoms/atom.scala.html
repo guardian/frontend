@@ -14,22 +14,22 @@
 @import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom, AudioAtom, ChartAtom}
 @{
     model match {
-        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
+        case audio: AudioAtom => Html(ArticleAtomRenderer.getHTML(audio.atom, config))
+        case chart: ChartAtom => Html(ArticleAtomRenderer.getHTML(chart.atom, config))
+        case commonsdivision: CommonsDivisionAtom => Html(ArticleAtomRenderer.getHTML(commonsdivision.atom, config))
+        case explainer: ExplainerAtom => Html(ArticleAtomRenderer.getHTML(explainer.atom, config))
+        case guide: GuideAtom => Html(ArticleAtomRenderer.getHTML(guide.atom, config))
+        case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
         case media: MediaAtom => views.html.fragments.atoms.media(
             media = media,
             displayCaption = true,
             mediaWrapper = mediaWrapper,
             posterImageOverride = posterImageOverride
         )
-        case interactive: InteractiveAtom => views.html.fragments.atoms.interactive(interactive, shouldFence)
-        case qanda: QandaAtom => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
-        case timeline: TimelineAtom => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
-        case guide: GuideAtom => Html(ArticleAtomRenderer.getHTML(guide.atom, config))
         case profile: ProfileAtom => Html(ArticleAtomRenderer.getHTML(profile.atom, config))
-        case explainer: ExplainerAtom => Html(ArticleAtomRenderer.getHTML(explainer.atom, config))
-        case commonsdivision: CommonsDivisionAtom => Html(ArticleAtomRenderer.getHTML(commonsdivision.atom, config))
-        case audio: AudioAtom => Html(ArticleAtomRenderer.getHTML(audio.atom, config))
-        case chart: ChartAtom => Html(ArticleAtomRenderer.getHTML(chart.atom, config))
+        case qanda: QandaAtom => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
+        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
+        case timeline: TimelineAtom => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
         case _ =>
     }
 }
