@@ -3,7 +3,7 @@
 @import common.{LinkTo, Edition}
 @import views.support.RenderClasses
 @import navigation.NavMenu
-@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl, getSoulmatesUrl }
+@import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
 
@@ -98,15 +98,6 @@
                                 href="@getJobUrl(editionId)">
                                     Search jobs
                                 </a>
-
-                                @if(editionId == "uk") {
-                                    <a class="top-bar__item hide-until-desktop"
-                                    data-link-name="nav2 : soulmates-cta"
-                                    data-edition="@{editionId}"
-                                    href="@getSoulmatesUrl">
-                                        Dating
-                                    </a>
-                                }
                             </div>
                         }
 

@@ -120,7 +120,6 @@ object FooterLinks {
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_UK_GU_JOBS", "uk : footer : jobs"),
-    FooterLink("Dating", "https://soulmates.theguardian.com?INTCMP=NGW_FOOTER_UK_GU_SOULMATES", "uk : footer : soulmates"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
     discountCodes("uk")
   )
@@ -129,7 +128,6 @@ object FooterLinks {
     FooterLink("Advertise with us", "https://advertising.theguardian.com/us/advertising", "us : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_US_GU_JOBS", "us : footer : jobs"),
-    FooterLink("Dating", "https://soulmates.theguardian.com?INTCMP=soulmates_us_web_footer", "us : footer : soulmates"),
     discountCodes("us")
   )
 
@@ -137,14 +135,12 @@ object FooterLinks {
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink("Advertise with us", "https://advertising.theguardian.com/", "au : footer : advertise with us"),
     FooterLink("Search UK jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_AU_GU_JOBS", "au : footer : uk-jobs"),
-    FooterLink("Dating", "https://soulmates.theguardian.com?INTCMP=soulmates_au_web_footer", "au : footer : soulmates"),
     discountCodes("au")
   )
 
   val intListThree = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "international : footer : advertise with us"),
     FooterLink("Search UK jobs", "https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS", "international : footer : uk-jobs"),
-    FooterLink("Dating", "https://soulmates.theguardian.com/?INTCMP=soulmates_int_web_footer", "international : footer : soulmates"),
     discountCodes("international")
   )
 
