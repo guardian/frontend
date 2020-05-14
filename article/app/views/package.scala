@@ -45,12 +45,11 @@ object BodyProcessor {
   def cleaners(article: Article)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
     implicit val edition: Edition = Edition(request)
 
-    val shouldShowAds = !article.content.shouldHideAdverts && article.metadata.sectionId != "childrens-books-site"
     def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
 
     List(
       InBodyElementCleaner,
-      AtomsCleaner(atoms = article.content.atoms, shouldFence = true),
+      AtomsCleaner(atoms = article.content.atoms),
       InBodyLinkCleaner("in body link"),
       BlockNumberCleaner,
       new TweetCleaner(article.content),
@@ -83,12 +82,10 @@ object BodyProcessor {
   }
 
   def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-
     withJsoup(BulletCleaner(article.fields.body))(cleaners(article) :_*)
   }
 
   def apply(article: Article, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-
     withJsoup(BulletCleaner(html))(cleaners(article) :_*)
   }
 }
