@@ -3,7 +3,6 @@ package commercial.model.feeds
 import commercial.model.merchandise.books.BestsellersAgent
 import commercial.model.merchandise.events.{LiveEventAgent, MasterclassAgent}
 import commercial.model.merchandise.jobs.JobsAgent
-import commercial.model.merchandise.soulmates.SoulmatesAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import conf.Configuration
 import commercial.model.merchandise.{Book, Job, LiveEvent, Masterclass, Member, TravelOffer}
@@ -32,20 +31,6 @@ class FeedsParser(bestsellersAgent: BestsellersAgent,
         def parse(feedContent: => Option[String]) = jobsAgent.refresh(feedMetaData, feedContent)
       }
     }
-  }
-
-  private val soulmates: Seq[FeedParser[Member]] = {
-    val parsers = Configuration.commercial.soulmatesApiUrl map { url =>
-      SoulmatesAgent.agents map { agent =>
-        new FeedParser[Member] {
-
-          val feedMetaData = SoulmatesFeedMetaData(url, agent)
-
-          def parse(feedContent: => Option[String]) = agent.refresh(feedMetaData, feedContent)
-        }
-      }
-    }
-    parsers getOrElse Nil
   }
 
   private val bestsellers: Option[FeedParser[Book]] = {
@@ -92,8 +77,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent,
     }
   }
 
-  val all = soulmates ++ Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
-}
+  val all = Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
 

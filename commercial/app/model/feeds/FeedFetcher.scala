@@ -4,7 +4,6 @@ import java.lang.System.currentTimeMillis
 
 import conf.Configuration
 import commercial.model.merchandise.events.Eventbrite.{Response => EbResponse}
-import commercial.model.merchandise.soulmates.SoulmatesAgent
 import play.api.libs.json.{JsArray, Json}
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -108,17 +107,6 @@ class FeedsFetcher(wsClient: WSClient) {
       }
   }
 
-  private val soulmates: Seq[FeedFetcher] = {
-
-    def feedFetcher(agent: SoulmatesAgent): Option[FeedFetcher] = {
-      Configuration.commercial.soulmatesApiUrl map { url =>
-        new SingleFeedFetcher(wsClient)(SoulmatesFeedMetaData(url, agent))
-      }
-    }
-
-    SoulmatesAgent.agents flatMap feedFetcher
-  }
-
   private val bestsellers: Option[FeedFetcher] = {
     Configuration.commercial.magento.domain map { domain =>
       new SingleFeedFetcher(wsClient)(BestsellersFeedMetaData(domain))
@@ -140,7 +128,7 @@ class FeedsFetcher(wsClient: WSClient) {
       new SingleFeedFetcher(wsClient)(TravelOffersFeedMetaData(url))
     }
 
-  val all: Seq[FeedFetcher] = soulmates ++ Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
+  val all: Seq[FeedFetcher] = Seq(bestsellers, masterclasses, travelOffers, jobs, liveEvents).flatten
 
 }
 
