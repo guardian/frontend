@@ -33,36 +33,6 @@ trait AtomPage extends Page {
   def javascriptModule: String = atomType
 }
 
-case class MediaAtomPage(
-  override val atom: MediaAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "media"
-  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
-  override val javascriptModule = "youtube-embed"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.title,
-    section = None
-  )
-}
-
-case class InteractiveAtomPage(
-  override val atom: InteractiveAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
-  override val atomType = "interactive"
-  override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.title,
-    section = None
-  )
-}
-
 case class ChartAtomPage(
   override val atom: ChartAtom,
   override val withJavaScript: Boolean,
@@ -89,6 +59,36 @@ case class GuideAtomPage(
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Guide"),
+    section = None
+  )
+}
+
+case class InteractiveAtomPage(
+  override val atom: InteractiveAtom,
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
+)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
+  override val atomType = "interactive"
+  override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
+  override val javascriptModule = "snippet"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
+    section = None
+  )
+}
+
+case class MediaAtomPage(
+  override val atom: MediaAtom,
+  override val withJavaScript: Boolean,
+  override val withVerticalScrollbar: Boolean
+)(implicit request: RequestHeader) extends AtomPage {
+  override val atomType = "media"
+  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
+  override val javascriptModule = "youtube-embed"
+  override val metadata = MetaData.make(
+    id = atom.id,
+    webTitle = atom.title,
     section = None
   )
 }
