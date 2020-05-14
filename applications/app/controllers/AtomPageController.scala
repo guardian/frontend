@@ -21,10 +21,11 @@ import play.api.libs.ws.{WSClient, WSResponse}
 class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   case class AnswersSignupForm(
-                        email: String,
-                        listId: Int,
-                        referrer: Option[String],
-                        campaignCode: Option[String])
+    email: String,
+    listId: Int,
+    referrer: Option[String],
+    campaignCode: Option[String]
+  )
 
   val answersSignupForm: Form[AnswersSignupForm] = Form(
     mapping(
@@ -77,20 +78,20 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
 
   def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean, inApp: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
-      case Left(model: MediaAtom) =>
-        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(model: ChartAtom) =>
+        renderAtom(ChartAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: GuideAtom) =>
         renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(model: InteractiveAtom) =>
+        renderAtom(InteractiveAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(model: MediaAtom) =>
+        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: ProfileAtom) =>
         renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: QandaAtom) =>
         renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(model: TimelineAtom) =>
         renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: InteractiveAtom) =>
-        renderAtom(InteractiveAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: ChartAtom) =>
-        renderAtom(ChartAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>
@@ -110,17 +111,17 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
   }
 
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
-    apiAtom.media.map(atom => MediaAtom.make(atom = atom)) orElse
-    apiAtom.guide.map(atom => GuideAtom.make(atom))                             orElse
-    apiAtom.profile.map(atom => ProfileAtom.make(atom))                         orElse
-    apiAtom.qanda.map(atom => QandaAtom.make(atom))                             orElse
-    apiAtom.timeline.map(atom => TimelineAtom.make(atom))                       orElse
-    apiAtom.interactive.map(atom => InteractiveAtom.make(atom))                 orElse
-    apiAtom.chart.map(atom => ChartAtom.make(atom))                             orElse
+    apiAtom.chart.map(atom => ChartAtom.make(atom))               orElse
+    apiAtom.guide.map(atom => GuideAtom.make(atom))               orElse
+    apiAtom.interactive.map(atom => InteractiveAtom.make(atom))   orElse
+    apiAtom.media.map(atom => MediaAtom.make(atom = atom))        orElse
+    apiAtom.profile.map(atom => ProfileAtom.make(atom))           orElse
+    apiAtom.qanda.map(atom => QandaAtom.make(atom))               orElse
+    apiAtom.timeline.map(atom => TimelineAtom.make(atom))         orElse
     /*
-    apiAtom.quiz.map(atom => Quiz.make(atom))                                   orElse
-    apiAtom.review.map(atom => RecipeAtom.make(atom))                           orElse
-    apiAtom.recipe.map(atom => ReviewAtom.make(atom))                           orElse
+    apiAtom.quiz.map(atom => Quiz.make(atom))                     orElse
+    apiAtom.review.map(atom => RecipeAtom.make(atom))             orElse
+    apiAtom.recipe.map(atom => ReviewAtom.make(atom))             orElse
     */
     None
   }
