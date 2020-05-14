@@ -78,6 +78,7 @@ class FeedsParser(bestsellersAgent: BestsellersAgent,
   }
 
   val all = Seq(jobs, bestsellers, masterclasses, liveEvents, travelOffers).flatten
+}
 
 case class ParsedFeed[+T](contents: Seq[T], parseDuration: Duration)
 
