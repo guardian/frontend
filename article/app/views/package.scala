@@ -40,7 +40,7 @@ object MainCleaner {
   }
 }
 
-object BodyCleaner {
+object BodyProcessor {
 
   def cleaners(article: Article)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
     implicit val edition: Edition = Edition(request)
