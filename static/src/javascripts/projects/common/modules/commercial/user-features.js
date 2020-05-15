@@ -31,6 +31,11 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
     daysToLive: 90,
 };
 
+const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
+    name: 'gu_contributions_reminder_signed-up',
+    daysToLive: 90,
+};
+
 const forcedAdFreeMode: boolean = !!window.location.hash.match(
     /[#&]noadsaf(&.*)?$/
 );
@@ -336,4 +341,5 @@ export {
     shouldNotBeShownSupportMessaging,
     extendContribsCookieExpiry,
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    CONTRIBUTIONS_REMINDER_SIGNED_UP
 };
