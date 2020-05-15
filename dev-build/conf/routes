@@ -263,7 +263,6 @@ GET            /admin/football/api/squad/:teamId                                
 # Commercial
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
-GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
