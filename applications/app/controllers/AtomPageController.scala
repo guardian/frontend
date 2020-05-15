@@ -78,20 +78,20 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
 
   def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean, inApp: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
-      case Left(model: ChartAtom) =>
-        renderAtom(ChartAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: GuideAtom) =>
-        renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: InteractiveAtom) =>
-        renderAtom(InteractiveAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: MediaAtom) =>
-        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: ProfileAtom) =>
-        renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: QandaAtom) =>
-        renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: TimelineAtom) =>
-        renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: ChartAtom) =>
+        renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: GuideAtom) =>
+        renderAtom(GuideAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: InteractiveAtom) =>
+        renderAtom(InteractiveAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: MediaAtom) =>
+        renderAtom(MediaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: ProfileAtom) =>
+        renderAtom(ProfileAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: QandaAtom) =>
+        renderAtom(QandaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: TimelineAtom) =>
+        renderAtom(TimelineAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>

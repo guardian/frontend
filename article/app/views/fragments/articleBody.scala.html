@@ -2,7 +2,7 @@
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
-@import views.BodyCleaner
+@import views.BodyProcessor
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
@@ -60,7 +60,7 @@
 
                         <div class="content__article-body from-content-api js-article__body" itemprop="@bodyType(model)"
                             data-test-id="article-review-body" @langAttributes(article.content)>
-                            @BodyCleaner(article)
+                            @BodyProcessor(article)
                         </div>
 
                         @fragments.submeta(article)
