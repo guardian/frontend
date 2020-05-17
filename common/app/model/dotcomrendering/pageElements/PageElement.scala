@@ -282,32 +282,16 @@ object PageElement {
 
       case Contentatom =>
         (extractAtom match {
-          case Some(mediaAtom: MediaAtom) => {
 
-            mediaAtom match {
-              case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
-                mediaAtom.activeAssets.headOption.map(asset => {
-                  YoutubeBlockElement(
-                    mediaAtom.id, //CAPI ID
-                    asset.id, // Youtube ID
-                    mediaAtom.channelId, //Channel ID
-                    mediaAtom.title //Caption
-                  )
-                })
-              }
-
-              // TODO - handle self-hosted video case.
-              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
-            }
+          case Some(audio: AudioAtom) => {
+            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
           }
 
-          case Some(qa: QandaAtom) => {
-            Some(QABlockElement(
-              id = qa.id,
-              title = qa.atom.title.getOrElse(""),
-              img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
-              html = qa.data.item.body,
-              credit = qa.credit.getOrElse("")
+          case Some(chart: ChartAtom) => {
+            val encodedId = URLEncoder.encode(chart.id, "UTF-8")
+            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+            Some(AtomEmbedUrlBlockElement(
+              url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
             ))
           }
 
@@ -322,6 +306,30 @@ object PageElement {
             ))
           }
 
+          case Some(interactive: InteractiveAtom) => {
+            val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
+            Some(AtomEmbedUrlBlockElement(
+              url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
+            ))
+          }
+
+          case Some(mediaAtom: MediaAtom) => {
+            mediaAtom match {
+              case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
+                mediaAtom.activeAssets.headOption.map(asset => {
+                  YoutubeBlockElement(
+                    mediaAtom.id, //CAPI ID
+                    asset.id, // Youtube ID
+                    mediaAtom.channelId, //Channel ID
+                    mediaAtom.title //Caption
+                  )
+                })
+              }
+              // TODO - handle self-hosted video case.
+              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
+            }
+          }
+
           case Some(profile: ProfileAtom) => {
             Some(ProfileBlockElement(
               id = profile.id,
@@ -330,6 +338,16 @@ object PageElement {
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
               html = profile.data.items.map(_.body).mkString(""),
               credit = profile.credit.getOrElse("")
+            ))
+          }
+
+          case Some(qa: QandaAtom) => {
+            Some(QABlockElement(
+              id = qa.id,
+              title = qa.atom.title.getOrElse(""),
+              img = qa.image.flatMap(ImgSrc.getAmpImageUrl),
+              html = qa.data.item.body,
+              credit = qa.credit.getOrElse("")
             ))
           }
 
@@ -347,25 +365,8 @@ object PageElement {
             ))
           }
 
-          case Some(interactive: InteractiveAtom) => {
-            val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
-            Some(AtomEmbedUrlBlockElement(
-              url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
-            ))
-          }
-
-          case Some(audio: AudioAtom) => {
-            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
-          }
-
-          case Some(chart: ChartAtom) => {
-            val encodedId = URLEncoder.encode(chart.id, "UTF-8")
-            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
-            Some(AtomEmbedUrlBlockElement(
-              url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
-            ))
-          }
-
+          // Here we capture all the atom types which are not yet supported.
+          // ContentAtomBlockElement is mapped to null in the DCR source code.
           case Some(atom) => Some(ContentAtomBlockElement(atom.id))
 
           case _ => None
