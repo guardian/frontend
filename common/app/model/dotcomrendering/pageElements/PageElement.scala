@@ -15,51 +15,9 @@ import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
 
 import scala.collection.JavaConverters._
 
-
-/*
-  These elements are used for the Dotcom Rendering, they are essentially the new version of the
-  model.liveblog._ elements but replaced in full here
- */
-
-sealed trait PageElement
-case class TextBlockElement(html: String) extends PageElement
-case class SubheadingBlockElement(html: String) extends PageElement
-case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
-case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
-case class BlockquoteBlockElement(html: String) extends PageElement
-case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
-case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
-case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
-case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
-case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
-case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
-case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
-case class ContentAtomBlockElement(atomId: String) extends PageElement
-case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
-case class AtomEmbedUrlBlockElement(url: String) extends PageElement
-case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
-case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
-case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
-case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
-case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
-case class VineBlockElement(html: Option[String]) extends PageElement
-case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String) extends PageElement
-case class UnknownBlockElement(html: Option[String]) extends PageElement
-case class DisclaimerBlockElement(html: String) extends PageElement
-
-// Intended for unstructured html that we can't model, typically rejected by consumers
-case class HTMLFallbackBlockElement(html: String) extends PageElement
-
-// atoms
-
 // TODO dates are being rendered as strings to avoid duplication of the
-//  to-string logic, but ultimately we should pass unformatted date info to
-//  DCR.
+// to-string logic, but ultimately we should pass unformatted date info to
+// DCR.
 case class TimelineEvent(
   title: String,
   date: String,
@@ -67,41 +25,11 @@ case class TimelineEvent(
   toDate: Option[String]
 )
 
-case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
-
-case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
-case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
-case class ProfileBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
-
-case class MembershipBlockElement(
-  originalUrl: Option[String],
-  linkText: Option[String],
-  linkPrefix: Option[String],
-  title: Option[String],
-  venue: Option[String],
-  location: Option[String],
-  identifier: Option[String],
-  image: Option[String],
-  price: Option[String]
-) extends PageElement
-
-// these don't appear to have typeData on the capi models so we just have empty html
-case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
-case class FormBlockElement(html: Option[String]) extends PageElement
-
-case class RichLinkBlockElement(
-  url: Option[String],
-  text: Option[String],
-  prefix: Option[String],
-  role: Role,
-  sponsorship: Option[Sponsorship]
-) extends PageElement
-
 case class Sponsorship (
-  sponsorName: String,
-  sponsorLogo: String,
-  sponsorLink: String,
-  sponsorshipType: SponsorshipType
+ sponsorName: String,
+ sponsorLogo: String,
+ sponsorLink: String,
+ sponsorshipType: SponsorshipType
 )
 
 object Sponsorship {
@@ -114,6 +42,68 @@ object Sponsorship {
     )
   }
 }
+
+// ------------------------------------------------------
+// PageElement
+// ------------------------------------------------------
+
+/*
+  These elements are used for the Dotcom Rendering, they are essentially the new version of the
+  model.liveblog._ elements but replaced in full here
+ */
+
+sealed trait PageElement
+
+case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
+case class AtomEmbedUrlBlockElement(url: String) extends PageElement
+case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
+case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+case class BlockquoteBlockElement(html: String) extends PageElement
+case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
+case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
+case class ContentAtomBlockElement(atomId: String) extends PageElement
+case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class DisclaimerBlockElement(html: String) extends PageElement
+case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
+case class FormBlockElement(html: Option[String]) extends PageElement
+case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
+case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
+case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
+case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String) extends PageElement
+case class MembershipBlockElement(
+  originalUrl: Option[String],
+  linkText: Option[String],
+  linkPrefix: Option[String],
+  title: Option[String],
+  venue: Option[String],
+  location: Option[String],
+  identifier: Option[String],
+  image: Option[String],
+  price: Option[String]
+) extends PageElement
+case class ProfileBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
+case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
+case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
+case class SubheadingBlockElement(html: String) extends PageElement
+case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class TextBlockElement(html: String) extends PageElement
+case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
+case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
+case class UnknownBlockElement(html: Option[String]) extends PageElement
+case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VineBlockElement(html: Option[String]) extends PageElement
+case class WitnessBlockElement(html: Option[String]) extends PageElement
+case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
+
+// Intended for unstructured html that we can't model, typically rejected by consumers
+case class HTMLFallbackBlockElement(html: String) extends PageElement
 
 //noinspection ScalaStyle
 object PageElement {
@@ -518,6 +508,10 @@ object PageElement {
   val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
 }
+
+// ------------------------------------------------------
+// Misc.
+// ------------------------------------------------------
 
 object Cleaner{
   def split(html: String):List[(String, String)] = {
