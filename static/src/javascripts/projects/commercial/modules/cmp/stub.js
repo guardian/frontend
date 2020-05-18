@@ -4,7 +4,7 @@
 try {
     (function stubCMP(document, window) {
         if (!window.__cmp) {
-            window.__cmp = (function CMPEventSetUp() {
+            window.__cmp = (function CMPSetup() {
                 const listen = window.attachEvent || window.addEventListener;
                 listen(
                     'message',
@@ -31,11 +31,7 @@ try {
                 addLocatorFrame();
 
                 const commandQueue = [];
-                const cmp = function CMPPingSetUp(
-                    command,
-                    parameter,
-                    callback
-                ) {
+                const cmp = function CMP(command, parameter, callback) {
                     if (command === 'ping') {
                         if (callback) {
                             callback({
