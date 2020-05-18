@@ -32,7 +32,7 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
 };
 
 const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
-    name: 'gu_contributions_reminder_signed-up',
+    name: 'gu_contributions_reminder_signed_up',
     daysToLive: 90,
 };
 
