@@ -2,7 +2,7 @@
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import { defaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
-import config from "../../../../../lib/config";
+import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
 
 export const epicButtonsTemplate = (
@@ -48,7 +48,7 @@ export const epicButtonsTemplate = (
                 </a>`
         : '';
 
-    const showReminder = config.get('switches.showContributionReminder');
+    const showReminder = canShowContributionsReminderFeature();
     const reminderCta = reminderFields ? reminderFields.reminderCTA : defaultReminderFields.reminderCTA;
 
     const reminderButton = showReminder
