@@ -3,6 +3,8 @@
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
 import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {addCookie} from "lib/cookies";
+import {CONTRIBUTIONS_REMINDER_SIGNED_UP} from "common/modules/commercial/user-features";
 
 type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
@@ -106,6 +108,13 @@ const epicReminderEmailSignup = (fields: Fields) => {
                 fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
                     'Thank you! Your reminder is set.';
+
+                addCookie(
+                    CONTRIBUTIONS_REMINDER_SIGNED_UP.name,
+                    new Date().getTime().toString(),
+                    CONTRIBUTIONS_REMINDER_SIGNED_UP.daysToLive
+                );
+
                 break;
             case 'failure':
                 fields.submitButton.innerHTML = 'Something went wrong';

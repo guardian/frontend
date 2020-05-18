@@ -1,9 +1,9 @@
 // @flow
-import config from 'lib/config';
 import { appendToLastElement } from 'lib/array-utils';
 import { acquisitionsEpicTickerTemplate } from 'common/modules/commercial/templates/acquisitions-epic-ticker';
 import { acquisitionsEpicReminderTemplate } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
 const buildFooter = (footer: string[]): string =>
     `<div class="contributions__epic-footer">
@@ -48,8 +48,6 @@ export const acquisitionsEpicControlTemplate = ({
 
     const reminderFields = showReminderFields || defaultReminderFields;
 
-    const showReminder = config.get('switches.showContributionReminder');
-
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
             <div>
@@ -76,7 +74,7 @@ export const acquisitionsEpicControlTemplate = ({
 
             ${footer ? buildFooter(footer) : ''}
 
-            ${showReminder ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
+            ${canShowContributionsReminderFeature() ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
         </div>
     </div>`;
 };
