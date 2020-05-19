@@ -181,7 +181,7 @@ const createBannerShow = (
 };
 
 const chooseBanner = (region: ReaderRevenueRegion) =>
-    (region === 'australia' || region === 'rest-of-world') ? gwBannerTemplate : subscriptionBannerTemplate;
+    region === 'australia' ? gwBannerTemplate : subscriptionBannerTemplate;
 
 const show = createBannerShow(
     bannerTracking(currentRegion),
