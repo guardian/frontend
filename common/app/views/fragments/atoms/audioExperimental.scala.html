@@ -1,0 +1,27 @@
+@import play.twirl.api.HtmlFormat
+@(html: Html, css: Option[String], js: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
+
+<!DOCTYPE html>
+<html lang="en-GB" class="gu-atom-embed-html">
+    <head>
+        <meta charset="utf-8">
+        <title>audio experimental</title>
+        @for(c <- css) {
+                <!-- Migration Css -->
+            <style>
+            @HtmlFormat.raw(c)
+            </style>
+        }
+        </head>
+    <body>
+        <div>
+            @html
+            @for(j <- js) {
+                <!-- Migration Js -->
+                <script>
+                    @HtmlFormat.raw(j)
+                </script>
+            }
+        </div>
+    </body>
+</html>
