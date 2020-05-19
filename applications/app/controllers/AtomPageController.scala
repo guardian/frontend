@@ -81,14 +81,23 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
   def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean, inApp: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
       case Left(atom: AudioAtom) => {
+
+        /*
+          mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
+          author: Pascal
+
+          This code is experimental and was introduced on May 2020 as a way to demonstrate
+          showing atoms from first principles. It should not be considered ready for wide use because
+          the atom is showing fine but there are some missing bits in the HTML template.
+         */
+
         val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
         val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
         val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
         val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType)    // Option[String]
-        val html2: Html = views.html.fragments.atoms.audioExperimental(Html(html1), css, js)
+        val html2: Html = views.html.fragments.atoms.audio(Html(html1), css, js)
         Ok(html2)
       }
-
       case Left(atom: ChartAtom) =>
         renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(atom: GuideAtom) =>
