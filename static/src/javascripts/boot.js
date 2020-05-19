@@ -9,6 +9,7 @@ import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
+import 'projects/commercial/modules/cmp/stub';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
