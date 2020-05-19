@@ -7,21 +7,108 @@
         <meta charset="utf-8">
         <title>audio experimental</title>
         @for(c <- css) {
-                <!-- Migration Css -->
             <style>
             @HtmlFormat.raw(c)
             </style>
         }
-        </head>
+    </head>
     <body>
-        <div>
-            @html
-            @for(j <- js) {
-                <!-- Migration Js -->
-                <script>
-                    @HtmlFormat.raw(j)
-                </script>
-            }
+        <div class="element-atom" data-atom-type="audio" data-atom-id="d6d509cf-ca10-407f-8913-e16a3712f415">
+        @html
         </div>
+        <script type="text/javascript">
+                (function () {
+                    const observers = Object.create(null);
+                    const callbacks = Object.create(null);
+                    const elements = Object.create(null);
+
+                    function observe(element, threshold, callback) {
+                        if (!observers[threshold]) {
+                            callbacks[threshold] = [callback];
+                            elements[threshold] = [element];
+                            observers[threshold] = new IntersectionObserver(entries => {
+                                entries.forEach(entry => {
+                                    if (entry.isIntersecting) {
+                                        callbacks[threshold].forEach((c, index) => {
+                                            if (elements[threshold][index] === entry.target) {
+                                                c(entry.intersectionRatio);
+                                            }
+                                        });
+                                    }
+                                });
+                            }, { threshold });
+                        } else {
+                            callbacks[threshold].push(callback);
+                            elements[threshold].push(element);
+                        }
+                        observers[threshold].observe(element);
+                    }
+
+                    function unobserve(element, threshold, callback) {
+                        if (!observers[threshold]) return;
+
+                        observers[threshold].unobserve(element);
+
+                        const idx = callbacks[threshold].indexOf(callback);
+                        if (idx !== -1) {
+                            callbacks[threshold].splice(idx, 1);
+                            elements[threshold].splice(idx, 1);
+                        }
+
+                        if (callbacks[threshold].length === 0) {
+                            observers[threshold] = null;
+                        }
+                    }
+
+                    const services = {
+                        ophan: {
+                            record(obj) {
+                                console.log("Sending data to Ophan...", obj)
+                            }
+                        },
+                        dom: {
+                            write(f) { f(); },
+                            read(f) { f(); }
+                        },
+                        viewport: {
+                            observe,
+                            unobserve
+                        }
+                    };
+
+                    var atoms = {};
+                    function readAtoms() {
+                        @for(j <- js){
+                        @Html(j)
+                        }
+                    }
+                    readAtoms.call(atoms);
+
+                    function init() {
+                        const atomTypes = atoms;
+                        Object.keys(atomTypes).forEach(t => {
+                            const f = atomTypes[t];
+                            if (typeof f.default !== 'function' || f.default.length !== 1) {
+                                return;
+                            }
+                            bootAtomType(t, atomTypes[t]);
+                        });
+                    }
+
+                    function bootAtomType(atomType, atomFactory) {
+                        const atomBuilder = atomFactory.default(services);
+                        const atoms = document.querySelectorAll(`.element-atom[data-atom-type="${atomType}"]`);
+                        for (let i = 0; i < atoms.length; i++) {
+                            const atom = atomBuilder(atoms[i]).runTry();
+                            if (typeof atom === 'string') {
+                                console.log(`Failed to initialise atom [${atomType}/${atoms[i].getAttribute('data-atom-id')}]: ${atom}`);
+                            } else {
+                                atom.start();
+                            }
+                        }
+                    }
+                    init();
+                }());
+        </script>
     </body>
 </html>
