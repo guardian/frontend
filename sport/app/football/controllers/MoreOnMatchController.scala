@@ -61,14 +61,33 @@ class MoreOnMatchController(
 
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
-          JsonComponent(
-            "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
-            "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
-            "hasStarted" -> theMatch.hasStarted,
-            "group" -> group,
-            "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
-            "dropdown" -> views.html.fragments.dropdown("")(Html(""))
-          )
+          if (request.forceDCR) {
+            println(theMatch)
+            JsonComponent(
+              "id" -> theMatch.id,
+              "leg" -> theMatch.leg,
+              "venue" -> theMatch.venue,
+              "homeTeam" -> JsonComponent(
+                "name" -> theMatch.homeTeam.name,
+                "scorers" -> theMatch.homeTeam.scorers,
+                "score" -> theMatch.homeTeam.score,
+                "aggregateScore" -> theMatch.homeTeam.aggregateScore,
+                "comments" -> theMatch.comments,
+              ),
+              "hasStarted" -> theMatch.hasStarted,
+              "group" -> group,
+              "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
+            )
+          } else {
+            JsonComponent(
+              "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
+              "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
+              "hasStarted" -> theMatch.hasStarted,
+              "group" -> group,
+              "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
+              "dropdown" -> views.html.fragments.dropdown("")(Html(""))
+            )
+          }
         }
       }
     }
