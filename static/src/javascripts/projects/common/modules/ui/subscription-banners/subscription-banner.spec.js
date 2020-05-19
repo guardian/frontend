@@ -1,6 +1,6 @@
 // @flow
 
-import { bannerTemplate as subscriptionBannerTemplate } from './subscription-banner-template';
+import { bannerTemplate as subscripionBannerTemplate } from './subscription-banner-template';
 import { selectorName, createBannerShow } from './subscription-banner';
 
 jest.mock('ophan/ng', () => null);
@@ -33,12 +33,12 @@ describe('Subscription Banner', () => {
     it('Should append a Subscription Banner to the document', () => {
         const show = createBannerShow(
             mockTracking,
-            subscriptionBannerTemplate,
+            subscripionBannerTemplate,
             false
         );
         show();
 
-        const banner = subscriptionBannerTemplate(
+        const banner = subscripionBannerTemplate(
             mockTracking.subscriptionUrl,
             mockTracking.signInUrl,
             false
@@ -59,7 +59,7 @@ describe('Subscription Banner', () => {
         beforeEach(() => {
             const show = createBannerShow(
                 mockTracking,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
 
@@ -132,7 +132,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -157,7 +157,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -182,7 +182,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -196,7 +196,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -213,7 +213,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -236,7 +236,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 false
             );
             show();
@@ -262,7 +262,7 @@ describe('Subscription Banner', () => {
 
             const show = createBannerShow(
                 mockTrackingSUT,
-                subscriptionBannerTemplate,
+                subscripionBannerTemplate,
                 isUserSignedIn
             );
             show();

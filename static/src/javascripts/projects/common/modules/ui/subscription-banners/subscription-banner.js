@@ -18,7 +18,7 @@ import reportError from 'lib/report-error';
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
-import { bannerTemplate as subscriptionBannerTemplate } from './subscription-banner-template';
+import { bannerTemplate as subscripionBannerTemplate } from './subscription-banner-template';
 import { bannerTemplate as gwBannerTemplate } from './guardian-weekly-banner-template';
 import { bannerTracking } from './subscription-banner-tracking';
 import type { BannerTracking } from './subscription-banner-tracking';
@@ -181,7 +181,7 @@ const createBannerShow = (
 };
 
 const chooseBanner = (region: ReaderRevenueRegion) =>
-    (region === 'australia' || region === 'rest-of-world') ? gwBannerTemplate : subscriptionBannerTemplate;
+    region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
 
 const show = createBannerShow(
     bannerTracking(currentRegion),

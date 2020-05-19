@@ -28,7 +28,7 @@ const CLICK_EVENT_CLOSE_BUTTON = `${BANNER_KEY} close`;
 const CLICK_EVENT_SIGN_IN = `${BANNER_KEY} sign in`;
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 const CAMPAIGN_CODE = 'gdnwb_copts_banner_subscribe_SubscriptionBanner_digital';
-const GUARDIAN_WEEKLY_CAMPAIGN_CODE =
+const AUS_CAMPAIGN_CODE =
     'gdnwb_copts_banner_subscribe_SubscriptionBanner_gWeekly';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
@@ -38,20 +38,20 @@ const createTracking = (
     region: ReaderRevenueRegion,
     defaultTracking: BannerTracking
 ) => {
-    const isGuardianWeeklyRegion = (region === 'australia' || region === 'rest-of-world');
+    const isAustralianRegion = region === 'australia';
 
-    const guardianWeeklyTracking = {
+    const australianTracking = {
         signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_gWeekly&CMP_TU=mrtn&CMP_BUNIT=subs`,
         subscriptionUrl: addTrackingCodesToUrl({
             base: `${subscriptionHostname}/subscribe/weekly`,
             componentType: COMPONENT_TYPE,
             componentId: OPHAN_EVENT_ID,
-            campaignCode: GUARDIAN_WEEKLY_CAMPAIGN_CODE,
+            campaignCode: AUS_CAMPAIGN_CODE,
         }),
     };
 
-    return isGuardianWeeklyRegion
-        ? { ...defaultTracking, ...guardianWeeklyTracking }
+    return isAustralianRegion
+        ? { ...defaultTracking, ...australianTracking }
         : defaultTracking;
 };
 
