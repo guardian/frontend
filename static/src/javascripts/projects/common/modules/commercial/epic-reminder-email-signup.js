@@ -20,7 +20,7 @@ type Fields = {
 
 const isValidEmail = (email: string) => {
     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    return re.test(email);
+    return (email.replace(/\s+/g, '') === email) ? re.test(email) : false
 };
 
 const getFields = (): ?Fields => {
@@ -120,7 +120,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
     const sendReminderEvent = (): Promise<Response> => {
         const isProd = config.get('page.isProd');
 
-        const email = fields.emailInput.value || '';
+        const email = fields.emailInput.value.trim() || '';
 
         if (!isValidEmail(email)) {
             setState('invalid');
