@@ -33,6 +33,8 @@ const sentryOptions = {
         'Network request failed',
         'This video is no longer available.',
         'UnknownError',
+        'TypeError: Failed to fetch',
+        'TypeError: NetworkError when attempting to fetch resource',
 
         // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
