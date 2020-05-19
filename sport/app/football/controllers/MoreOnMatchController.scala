@@ -10,6 +10,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Content, ContentType, NoCache}
 import org.joda.time.{DateTime, Days, LocalDate}
 import org.joda.time.format.DateTimeFormat
+import org.joda.time.format.ISODateTimeFormat
 import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
 import pa.FootballMatch
@@ -59,24 +60,45 @@ class MoreOnMatchController(
         case _ => None
       }.getOrElse("")
 
+
+      lazy val competition = competitionsService.competitionForMatch(theMatch.id)
+      lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
+
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
           if (request.forceDCR) {
-            println(theMatch)
             JsonComponent(
               "id" -> theMatch.id,
-              "leg" -> theMatch.leg,
-              "venue" -> theMatch.venue,
-              "homeTeam" -> JsonComponent(
+              "isLive" -> theMatch.isLive,
+              "isResult" -> theMatch.isResult,
+              "comments" -> theMatch.comments.getOrElse(""),
+              "venue" -> theMatch.venue.map(_.name).getOrElse(""),
+              "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
+              "homeTeam" -> Json.obj(
                 "name" -> theMatch.homeTeam.name,
-                "scorers" -> theMatch.homeTeam.scorers,
+                "id" -> theMatch.homeTeam.id,
                 "score" -> theMatch.homeTeam.score,
-                "aggregateScore" -> theMatch.homeTeam.aggregateScore,
-                "comments" -> theMatch.comments,
+                "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
+                "scorers" -> theMatch.homeTeam.scorers.getOrElse("").split(",").map(scorer => {
+                  Json.obj(
+                    "scorer" -> scorer.replace("(", "").replace(")", "")
+                  )
+                })
               ),
-              "hasStarted" -> theMatch.hasStarted,
-              "group" -> group,
-              "matchDate" ->  DateTimeFormat.forPattern("yyyy/MMM/dd").print(theMatch.date).toLowerCase(),
+              "awayTeam" -> Json.obj(
+                "name" -> theMatch.awayTeam.name,
+                "id" -> theMatch.awayTeam.id,
+                "score" -> theMatch.awayTeam.score,
+                "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
+                "scorers" -> theMatch.awayTeam.scorers.getOrElse("").split(",").map(scorer => {
+                  Json.obj(
+                    "scorer" -> scorer.replace("(", "").replace(")", "")
+                  )
+                })
+              ),
+              "competition" -> Json.obj(
+                "fullName" -> competition.map(_.fullName)
+              )
             )
           } else {
             JsonComponent(
