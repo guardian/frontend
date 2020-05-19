@@ -378,6 +378,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val redplanetForAUSSwitch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "redplanet-for-aus",
+    description = "Turn on Redplanet in AUS",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
 
 trait PrebidSwitches {
