@@ -9,7 +9,7 @@ showing atoms from first principles. It should not be considered ready for wide 
 the atom is showing fine but there are some missing bits in the HTML template.
 *@
 
-@(html: Html, css: Option[String], js: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
+@(atomId:String, html: Html, css: Option[String], js: Option[String])(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-atom-embed-html">
@@ -23,7 +23,7 @@ the atom is showing fine but there are some missing bits in the HTML template.
         }
     </head>
     <body>
-        <div class="element-atom" data-atom-type="audio" data-atom-id="d6d509cf-ca10-407f-8913-e16a3712f415">
+        <div class="element-atom" data-atom-type="audio" data-atom-id="@atomId">
         @html
         </div>
         <script type="text/javascript">

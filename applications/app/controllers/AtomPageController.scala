@@ -95,7 +95,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
         val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
         val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
         val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType)    // Option[String]
-        val html2: Html = views.html.fragments.atoms.audio(Html(html1), css, js)
+        val html2: Html = views.html.fragments.atoms.audio(atom.id, Html(html1), css, js)
         Ok(html2)
       }
       case Left(atom: ChartAtom) =>
