@@ -39,7 +39,7 @@
         padding: 0 5px;
     }
 
-    .epic-reminder__form-title {
+    .epic-reminder__form-title, .epic-reminder__survey-request-title {
         @include fs-headline(3);
         padding-top: $gs-baseline * 2;
         font-weight: bold;
@@ -129,6 +129,24 @@
         line-height: 21px;
         display: none;
         margin-top: $gs-baseline;
+    }
+
+    .epic-reminder__survey-request-wrapper {
+        display: none;
+    }
+
+    .epic-reminder__survey-request {
+        @include fs-bodyCopy(2);
+        line-height: 21px;
+        margin-top: $gs-baseline;
+    }
+
+    .epic-reminder__survey-request-button {
+        text-decoration: none !important;
+        margin-top: $gs-baseline !important;
+        margin-bottom: $gs-baseline * 1.5 !important;
+        height: 36px !important;
+        min-height: 36px !important;
     }
 
     // Override link rules for the pillar

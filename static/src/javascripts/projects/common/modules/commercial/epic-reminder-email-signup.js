@@ -15,6 +15,7 @@ type Fields = {
     formWrapper: HTMLElement,
     titleField: HTMLElement,
     thankYouText: HTMLElement,
+    surveyRequest: HTMLElement,
     closeButton: HTMLElement,
     reminderPrompt: HTMLElement,
     reminderToggle: HTMLInputElement,
@@ -22,7 +23,7 @@ type Fields = {
 
 const isValidEmail = (email: string) => {
     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    return re.test(email);
+    return (email.replace(/\s+/g, '') === email) ? re.test(email) : false
 };
 
 const getFields = (): ?Fields => {
@@ -34,6 +35,7 @@ const getFields = (): ?Fields => {
     const formWrapper = document.querySelector('.epic-reminder__form-wrapper');
     const titleField = document.querySelector('.epic-reminder__form-title');
     const thankYouText = document.querySelector('.epic-reminder__thank-you');
+    const surveyRequest = document.querySelector('.epic-reminder__survey-request-wrapper');
     const closeButton = document.querySelector('.epic-reminder__close-button');
     const reminderPrompt = document.querySelector(
         '.component-button--reminder-prompt'
@@ -48,6 +50,7 @@ const getFields = (): ?Fields => {
         emailInput &&
         titleField &&
         thankYouText &&
+        surveyRequest &&
         formWrapper &&
         closeButton &&
         reminderPrompt &&
@@ -69,6 +72,7 @@ const getFields = (): ?Fields => {
             formWrapper,
             titleField,
             thankYouText,
+            surveyRequest,
             closeButton,
             reminderPrompt,
             reminderToggle,
@@ -104,6 +108,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
                 break;
             case 'success':
                 fields.thankYouText.style.display = 'block';
+                fields.surveyRequest.style.display = 'block';
                 fields.formWrapper.style.display = 'none';
                 fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
@@ -129,7 +134,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
     const sendReminderEvent = (): Promise<Response> => {
         const isProd = config.get('page.isProd');
 
-        const email = fields.emailInput.value || '';
+        const email = fields.emailInput.value.trim() || '';
 
         if (!isValidEmail(email)) {
             setState('invalid');
