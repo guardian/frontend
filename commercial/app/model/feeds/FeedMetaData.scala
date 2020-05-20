@@ -2,7 +2,6 @@ package commercial.model.feeds
 
 import commercial.model.feeds.ResponseEncoding.utf8
 import conf.switches.{Switch, Switches}
-import commercial.model.merchandise.soulmates.SoulmatesAgent
 
 import scala.concurrent.duration.{Duration, _}
 
@@ -25,18 +24,6 @@ case class JobsFeedMetaData(override val url: String) extends FeedMetaData {
 
   override val fetchSwitch = Switches.JobsFeedFetchSwitch
   override val parseSwitch = Switches.JobsFeedParseSwitch
-
-  override val responseEncoding = utf8
-}
-
-
-case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends FeedMetaData {
-
-  val name = s"soulmates/${agent.groupName}"
-  val url = s"$baseUrl/${agent.feed.path}"
-
-  override val fetchSwitch = Switches.SoulmatesFeedSwitch
-  override val parseSwitch = Switches.SoulmatesFeedSwitch
 
   override val responseEncoding = utf8
 }

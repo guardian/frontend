@@ -31,6 +31,11 @@ const ARTICLES_VIEWED_OPT_OUT_COOKIE = {
     daysToLive: 90,
 };
 
+const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
+    name: 'gu_contributions_reminder_signed_up',
+    daysToLive: 90,
+};
+
 const forcedAdFreeMode: boolean = !!window.location.hash.match(
     /[#&]noadsaf(&.*)?$/
 );
@@ -317,6 +322,11 @@ const extendContribsCookieExpiry = (): void => {
     }
 };
 
+const canShowContributionsReminderFeature = (): boolean => {
+    const signedUpForReminder = !!getCookie(CONTRIBUTIONS_REMINDER_SIGNED_UP.name);
+    return config.get('switches.showContributionReminder') && !signedUpForReminder;
+};
+
 export {
     accountDataUpdateWarning,
     isAdFreeUser,
@@ -336,4 +346,6 @@ export {
     shouldNotBeShownSupportMessaging,
     extendContribsCookieExpiry,
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    CONTRIBUTIONS_REMINDER_SIGNED_UP,
+    canShowContributionsReminderFeature
 };

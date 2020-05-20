@@ -37,7 +37,7 @@ import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOpt
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,

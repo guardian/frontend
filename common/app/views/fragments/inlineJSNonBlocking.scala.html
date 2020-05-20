@@ -25,10 +25,6 @@
 
 // ************* COMMERCIAL *************
 
-@if(enableConsentManagementService.isSwitchedOn) {
-    @InlineJs(prepareCmp().body, "prepareCmp.js")
-}
-
 @if(LotameSwitch.isSwitchedOn
     && !page.metadata.contentType.contains(DotcomContentType.Identity)
     && !page.metadata.isSecureContact) {

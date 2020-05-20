@@ -4,7 +4,6 @@ import commercial.model.Segment
 import commercial.model.merchandise.books.BestsellersAgent
 import commercial.model.merchandise.events.MasterclassAgent
 import commercial.model.merchandise.jobs.JobsAgent
-import commercial.model.merchandise.soulmates.SoulmatesAgent
 import commercial.model.merchandise.travel.TravelOffersAgent
 import commercial.model.merchandise.{MemberPair, Merchandise}
 import common.{JsonComponent}
@@ -46,16 +45,6 @@ class Multi(bestsellersAgent: BestsellersAgent,
 
       case ("Masterclass", None) =>
         masterclassAgent.masterclassesTargetedAt(segment).filterNot(_.mainPicture.isEmpty)
-
-      case ("Soulmates", _) =>
-        (for {
-          woman <- SoulmatesAgent.womenAgent.sample().headOption
-          man <- SoulmatesAgent.menAgent.sample().headOption
-        } yield {
-          Seq(MemberPair(woman, man))
-        }).getOrElse {
-          Nil
-        }
 
       case ("Travel", Some(travelId)) =>
         travelOffersAgent.specificTravelOffers(Seq(travelId))
