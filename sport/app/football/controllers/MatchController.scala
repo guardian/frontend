@@ -70,9 +70,18 @@ class MatchController(
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
 
       page map { page =>
-        val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
-        val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
-        renderFormat(htmlResponse, jsonResponse, page)
+        if (request.forceDCR) {
+          println(page)
+          Cached(30) {
+            JsonComponent(
+              "id" -> theMatch.id,
+            )
+          }
+        } else {
+          val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
+          val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
+          renderFormat(htmlResponse, jsonResponse, page)
+        }
       }
     }
 
