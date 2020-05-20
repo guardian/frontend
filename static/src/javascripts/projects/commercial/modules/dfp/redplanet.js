@@ -1,5 +1,6 @@
 // @flow strict
 
+import config from 'lib/config';
 import {commercialFeatures} from "common/modules/commercial/commercial-features";
 import {onIabConsentNotification} from "@guardian/consent-management-platform";
 
@@ -9,7 +10,7 @@ const initialise = (): void => {
             state[1] && state[2] && state[3] && state[4] && state[5];
 
         if (consentState) {
-            // Initialise Launchpad Tracker
+            // Initialise Launchpad Tracker
             window.launchpad('newTracker', 'launchpad', 'lpx.qantas.com', {
                 discoverRootDomain: true,
                 appId: 'the-guardian'
@@ -41,6 +42,4 @@ const setupRedplanet: () => Promise<void> = () => {
     return Promise.resolve();
 };
 
-export const init = (): Promise<void> => {
-    return setupRedplanet();
-};
+export const init = (): Promise<void> => setupRedplanet();
