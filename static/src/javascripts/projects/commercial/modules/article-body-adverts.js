@@ -42,12 +42,13 @@ const insertAdAtPara = (
     });
 
     return fastdom
-        .write(() =>
-            ads.map(ad => {
+        .write(() => {
+            return ads.map(ad => {
                 if (para.parentNode) {
                     para.parentNode.insertBefore(ad, para);
                 }
             })
+        }
         )
         .then(() => {
             const shouldForceDisplay = ['im', 'carrot'].includes(name);
