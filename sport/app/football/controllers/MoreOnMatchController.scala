@@ -10,7 +10,6 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{Cached, Content, ContentType, NoCache}
 import org.joda.time.{DateTime, Days, LocalDate}
 import org.joda.time.format.DateTimeFormat
-import org.joda.time.format.ISODateTimeFormat
 import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
 import pa.FootballMatch
