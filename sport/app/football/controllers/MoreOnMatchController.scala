@@ -61,7 +61,6 @@ class MoreOnMatchController(
 
 
       lazy val competition = competitionsService.competitionForMatch(theMatch.id)
-      lazy val homeTeamResults = competition.map(_.teamResults(theMatch.homeTeam.id).take(5))
 
       related map { _ filter hasExactlyTwoTeams } map { filtered =>
         Cached(if(theMatch.isLive) 10 else 300) {
