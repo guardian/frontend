@@ -21,7 +21,7 @@ const subscriptionBannerTemplate = (
 
         <div class="site-message--subscription-banner__description">
             <p>Support The Guardian’s independent journalism by subscribing
-             to <br class="temp-tablet-break">The Guardian Weekly, our essential world news magazine</p>
+             to <br class="temp-tablet-break">The Guardian Weekly, our essential world news magazine. Home delivery available wherever you are.</p>
         </div>
 
         <div class="site-message--subscription-banner__cta-container">
@@ -68,13 +68,7 @@ const subscriptionBannerTemplate = (
         <div class="site-message--packshot-container">
 
             <picture>
-                <source srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&dpr=2&quality=85&s=6f535ef203e58522ecc69bc86bc303ac" media="(min-width: 1140px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width: 1140px) and (min-resolution: 120dpi)" sizes="541px">
-                <source srcset="https://i.guim.co.uk/img/media/7552e031526eceae6385685876a4d52fbbf485e8/19_8_1814_1013/1814.png?width=541&quality=85&s=a68601dd33793d2f9056f5e91c797289" media="(min-width: 1140px)">
-                <source srcset="https://i.guim.co.uk/img/media/bd33dfb0e3bfc0c3df81e636713b6784db76ea82/551_203_1516_1145/1516.png?width=400&dpr=2&quality=85&s=1ed66a5275ccdce5c80ccbf3112106a1" media="(min-width: 740px) and (-webkit-min-device-pixel-ratio: 1.25), (min-width:740px) and (min-resolution: 120dpi)" sizes="400px">
-                <source srcset="https://i.guim.co.uk/img/media/bd33dfb0e3bfc0c3df81e636713b6784db76ea82/551_203_1516_1145/1516.png?width=400&quality=85&s=543a2267b660b616aa0889cf6896f051" media="(min-width: 740px)">
-                <source srcset="https://i.guim.co.uk/img/media/e44355cacdb504278d20fe77e49579a73eb8e69b/13_7_1181_561/1181.png?width=350&dpr=2&quality=85&s=0cd8083e60e5d1737d67d4dafb25ae46">
-                <source srcset="https://i.guim.co.uk/img/media/e44355cacdb504278d20fe77e49579a73eb8e69b/13_7_1181_561/1181.png?width=350&quality=85&s=5df2b04a3b0b30f2d32c3d292f1001a5" >
-                <img srcset="https://i.guim.co.uk/img/media/e44355cacdb504278d20fe77e49579a73eb8e69b/13_7_1181_561/1181.png?width=350&quality=85&s=5df2b04a3b0b30f2d32c3d292f1001a5" alt="Guardian Weekly" />
+                <img srcset="https://media.guim.co.uk/f5c66a31a7d352acaee1c574e5cc009909f25119/0_0_2210_2062/500.png" alt="Guardian Weekly" />
             </picture>
         </div>
 
