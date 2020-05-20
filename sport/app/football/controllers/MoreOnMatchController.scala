@@ -73,7 +73,6 @@ class MoreOnMatchController(
               "isResult" -> theMatch.isResult,
               "comments" -> theMatch.comments.getOrElse(""),
               "venue" -> theMatch.venue.map(_.name).getOrElse(""),
-              "isLiveOrIsResult" -> (theMatch.isResult || theMatch.isLive),
               "homeTeam" -> Json.obj(
                 "name" -> theMatch.homeTeam.name,
                 "id" -> theMatch.homeTeam.id,
