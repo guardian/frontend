@@ -145,6 +145,8 @@
         text-decoration: none !important;
         margin-top: $gs-baseline !important;
         margin-bottom: $gs-baseline * 1.5 !important;
+        height: 36px !important;
+        min-height: 36px !important;
     }
 
     // Override link rules for the pillar
