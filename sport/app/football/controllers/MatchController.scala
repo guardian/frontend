@@ -71,10 +71,52 @@ class MatchController(
 
       page map { page =>
         if (request.forceDCR) {
-          println(page)
           Cached(30) {
+            val teamColours = TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam)
             JsonComponent(
               "id" -> theMatch.id,
+              "homeTeam" -> Json.obj(
+                "lineup" -> Json.arr((page.lineUp.homeTeam.players).map  ( player =>
+                  Json.obj(
+                    "id" -> player.id,
+                    "name" -> player.name,
+                    "position" -> player.position,
+                    "shirtNumber" -> player.shirtNumber,
+                    "events" -> Json.arr(player.events.map( event => Json.obj(
+                      "eventTime" -> event.eventTime,
+                      "eventType" -> event.eventType
+                    )))
+                  )
+                )),
+                "possession" -> page.lineUp.homeTeamPossession,
+                "attemptsOnTarget" -> page.lineUp.homeTeam.shotsOn,
+                "attemptsOffTarget" -> page.lineUp.homeTeam.shotsOff,
+                "corners" -> page.lineUp.homeTeam.corners,
+                "fouls" -> page.lineUp.homeTeam.fouls,
+                "colour" -> teamColours.home
+              ),
+              "awayTeam" -> Json.obj(
+                "lineup" -> Json.arr(
+                  (page.lineUp.homeTeam.players).map ( player =>
+                    Json.obj(
+                      "id" -> player.id,
+                      "name" -> player.name,
+                      "position" -> player.position,
+                      "shirtNumber" -> player.shirtNumber,
+                      "events" -> Json.arr(player.events.map( event => Json.obj(
+                        "eventTime" -> event.eventTime,
+                        "eventType" -> event.eventType
+                      )))
+                    )
+                  )
+                ),
+                "possession" -> page.lineUp.awayTeamPossession,
+                "attemptsOnTarget" -> page.lineUp.awayTeam.shotsOn,
+                "attemptsOffTarget" -> page.lineUp.awayTeam.shotsOff,
+                "corners" -> page.lineUp.awayTeam.corners,
+                "fouls" -> page.lineUp.awayTeam.fouls,
+                "colour" -> teamColours.home
+              )
             )
           }
         } else {
