@@ -66,7 +66,6 @@ const subscriptionBannerTemplate = (
         </div>
 
         <div class="site-message--packshot-container">
-
             <picture>
                 <img srcset="https://media.guim.co.uk/f5c66a31a7d352acaee1c574e5cc009909f25119/0_0_2210_2062/500.png" alt="Guardian Weekly" />
             </picture>
