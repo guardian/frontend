@@ -141,6 +141,12 @@
         margin-top: $gs-baseline;
     }
 
+    .epic-reminder__survey-request-button {
+        text-decoration: none !important;
+        margin-top: $gs-baseline !important;
+        margin-bottom: $gs-baseline * 1.5 !important;
+    }
+
     // Override link rules for the pillar
     a {
         color: $brightness-7 !important;

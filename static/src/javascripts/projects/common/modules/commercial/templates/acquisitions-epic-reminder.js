@@ -58,7 +58,21 @@ export const acquisitionsEpicReminderTemplate = (
             <div class="epic-reminder__survey-request-wrapper">
                 <div class="epic-reminder__survey-request-title">Have you got a minute?</div>
                 <div class="epic-reminder__survey-request">Please answer four short questions to help us improve how we remind our readers to contribute.</div>
-                <a href="https://www.surveymonkey.co.uk/r/7T78HVR" target="_blank">Share your thoughts</a>
+                <a class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--reminder-prompt contributions__secondary-button contributions__secondary-button--epic component-button--hasicon-right epic-reminder__survey-request-button"
+                href="https://www.surveymonkey.co.uk/r/7T78HVR"
+                target="_blank">
+                Share your thoughts
+                    <svg
+                    class="svg-arrow-right-straight"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 17.89"
+                    preserveAspectRatio="xMinYMid"
+                    aria-hidden="true"
+                    focusable="false"
+                    >
+                        <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
+                    </svg>
+                </a>
             </div>
         </div>
     </div>

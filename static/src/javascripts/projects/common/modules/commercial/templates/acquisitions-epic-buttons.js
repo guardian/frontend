@@ -31,7 +31,7 @@ export const epicButtonsTemplate = (
 
     const secondaryButton = secondaryCta
         ? `
-            <a class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--hasicon-right contributions__contribute--epic-member contributions__secondary-button contributions__secondary-button--epic"
+            <a class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--hasicon-right"
               href=${secondaryCta.url}
               target="_blank">
               ${secondaryCta.ctaText}
