@@ -290,7 +290,7 @@ object PageElement {
             // -----------------------------------
 
             // -----------------------------------
-            // Using the AudioAtomBlockElement:
+            // Using the AtomEmbedUrlBlockElement:
             val encodedId = URLEncoder.encode(audio.id, "UTF-8")
             // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
             Some(AtomEmbedUrlBlockElement(
