@@ -58,6 +58,7 @@ declare type ABTest = {
     showForSensitive: boolean,
     idealOutcome?: string,
     dataLinkNames?: string,
+    ophanComponentId?: string,
     variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,

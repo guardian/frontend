@@ -1,5 +1,5 @@
 // @flow
-export const signInGate: ABTest = {
+export const signInGatePatientia: ABTest = {
     id: 'SignInGatePatientia',
     start: '2020-04-30',
     expiry: '2020-12-01',
@@ -12,6 +12,7 @@ export const signInGate: ABTest = {
     audienceCriteria:
         '2nd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
     dataLinkNames: 'SignInGatePatientia',
+    ophanComponentId: 'patientia_test',
     idealOutcome:
         'Conversion to sign in is higher when the gate is shown over a longer period of time, with no sustained negative impact to engagement levels or supporter acquisition',
     showForSensitive: false,

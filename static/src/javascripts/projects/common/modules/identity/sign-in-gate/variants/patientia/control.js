@@ -1,6 +1,6 @@
 // @flow
-import type { SignInGateVariant } from '../types';
-import { componentName } from '../component';
+import type { SignInGateVariant } from '../../types';
+import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
@@ -8,7 +8,7 @@ import {
     isInvalidArticleType,
     isInvalidSection,
     isIOS9,
-} from '../helper';
+} from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
 // No design needed as not showing a sign in gate in the control

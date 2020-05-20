@@ -15,6 +15,7 @@ jest.mock('common/modules/experiments/ab', () => ({
             variantToRun: {
                 id: 'patientia-variant-1', // Update for each new test
             },
+            ophanComponentId: 'patientia_test',
         },
     ]),
 }));
@@ -109,7 +110,7 @@ describe('Sign in gate test', () => {
             });
         });
 
-        it('should return false if user has dismissed the gate', () => {
+        fit('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
                 'SignInGatePatientia-variant': Date.now(),
             });

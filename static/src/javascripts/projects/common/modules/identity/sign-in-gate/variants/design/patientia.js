@@ -1,7 +1,7 @@
 // @flow
 import mediator from 'lib/mediator';
 import type { CurrentABTest } from '../../types';
-import { component, componentName } from '../../component';
+import { componentName, withComponentId } from '../../component';
 import {
     addOpinionBgColour,
     addClickHandler,
@@ -61,7 +61,8 @@ export const designShow: ({
     abTest: CurrentABTest,
     guUrl: string,
     signInUrl: string,
-}) => boolean = ({ abTest, guUrl, signInUrl }) =>
+    ophanComponentId: string,
+}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
     showGate({
         template: htmlTemplate({
             signInUrl,
@@ -74,12 +75,16 @@ export const designShow: ({
                 selector: '.signin-gate__first-paragraph-overlay',
             });
 
+            const ophanComponent: OphanComponent = withComponentId(
+                ophanComponentId
+            );
+
             // add click handler for the dismiss of the gate
             addClickHandler({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__dismiss',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'not-now',
                 callback: () => {
                     // show the current body. Remove the shadow one
@@ -103,7 +108,7 @@ export const designShow: ({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__register-button',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'register-link',
             });
 
@@ -112,7 +117,7 @@ export const designShow: ({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__sign-in',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'sign-in-link',
             });
 
@@ -121,7 +126,7 @@ export const designShow: ({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__why',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'why-link',
             });
 
@@ -130,7 +135,7 @@ export const designShow: ({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__how',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'how-link',
             });
 
@@ -139,7 +144,7 @@ export const designShow: ({
                 element: shadowArticleBody,
                 selector: '.js-signin-gate__help',
                 abTest,
-                component,
+                component: ophanComponent,
                 value: 'help-link',
             });
         },
