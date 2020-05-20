@@ -54,6 +54,12 @@ export const acquisitionsEpicReminderTemplate = (
                     reminderFields.reminderDateAsString
                 }. If you have any questions about contributing, please <a href="mailto:contribution.support@theguardian.com">contact us here</a>.
             </div>
+
+            <div class="epic-reminder__survey-request-wrapper">
+                <div class="epic-reminder__survey-request-title">Have you got a minute?</div>
+                <div class="epic-reminder__survey-request">Please answer four short questions to help us improve how we remind our readers to contribute.</div>
+                <a href="https://www.surveymonkey.co.uk/r/7T78HVR" target="_blank">Share your thoughts</a>
+            </div>
         </div>
     </div>
 `;
