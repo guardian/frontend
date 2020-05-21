@@ -34,11 +34,19 @@ const fillAdvertSlots = (): Promise<void> => {
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
             .map(adSlot => new Advert(adSlot));
+        console.log('*********************')
+        console.log('fillAdvertSlots')
+        console.log('*********************')
+        console.log('adverts',adverts)
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
+        console.log('BEFORE: dfpEnv.advertIds')
+        console.log(dfpEnv.advertIds)
         adverts.forEach((advert, index) => {
             dfpEnv.advertIds[advert.id] = currentLength + index;
         });
+        console.log(dfpEnv.advertIds)
+        console.log('AFTER: dfpEnv.advertIds')
         adverts.forEach(queueAdvert);
 
         if (dfpEnv.shouldLazyLoad()) {
@@ -46,6 +54,7 @@ const fillAdvertSlots = (): Promise<void> => {
         } else {
             displayAds();
         }
+        console.log('*********************')
     });
 };
 

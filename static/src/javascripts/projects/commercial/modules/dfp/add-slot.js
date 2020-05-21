@@ -21,8 +21,13 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
 };
 
 const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&')
+    console.log('addSlot')
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&')
     console.log('forceDisplay', forceDisplay)
+    console.log('adSlot', adSlot)
     console.log('adSlot.id', adSlot.id)
+    console.log('dfpEnv.advertIds', dfpEnv.advertIds)
     console.log('adSlot.id in dfpEnv.advertIds', adSlot.id in dfpEnv.advertIds)
     window.googletag.cmd.push(() => {
         if (!(adSlot.id in dfpEnv.advertIds)) {
@@ -30,6 +35,7 @@ const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
             displayAd(adSlot, forceDisplay);
         }
     });
+    console.log('&&&&&&&&&&&&&&&&&&&&&&&')
 };
 
 export { addSlot };

@@ -42,26 +42,17 @@ const insertAdAtPara = (
     });
 
     return fastdom
-        .write(() => {
-            console.log('ads',ads)
-            console.log('start inserting ad wrapper')
+        .write(() =>
             ads.forEach(ad => {
                 if (para.parentNode) {
                     para.parentNode.insertBefore(ad, para);
-                    console.log('inserting ad wrapper success')
-                } else {
-                    console.log('inserting ad wrapper fail')
                 }
             })
-            console.log('finish inserting ad wrapper')
-        }
         )
         .then(() => {
-            console.log('start ad init')
             const shouldForceDisplay = ['im', 'carrot'].includes(name);
             // Only add the first ad (the DFP one) to GTP
             addSlot(ads[0], shouldForceDisplay);
-            console.log('finish ad init')
         });
 };
 
