@@ -195,6 +195,7 @@ private object NavLinks {
   val discountCoupons = NavLink("Coupons", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
+  val jobsRecruiter = NavLink("Hire with Guardian Jobs" , "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -514,6 +515,7 @@ private object NavLinks {
 
   val ukBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
+    jobsRecruiter,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     guardianLive,
     ukMasterClasses,
@@ -701,4 +703,3 @@ case class NavigationData (
   tagPages: List[String] = NavLinks.tagPages
 
 )
-
