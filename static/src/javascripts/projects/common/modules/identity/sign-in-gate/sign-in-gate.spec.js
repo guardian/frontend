@@ -112,7 +112,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-variant': Date.now(),
+                'SignInGatePatientia-patientia-variant-1': Date.now(),
             });
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
