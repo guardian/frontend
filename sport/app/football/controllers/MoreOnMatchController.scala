@@ -77,9 +77,7 @@ class MoreOnMatchController(
                 "score" -> theMatch.homeTeam.score,
                 "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
                 "scorers" -> theMatch.homeTeam.scorers.getOrElse("").split(",").map(scorer => {
-                  Json.obj(
-                    "scorer" -> scorer.replace("(", "").replace(")", "")
-                  )
+                  scorer.replace("(", "").replace(")", "")
                 })
               ),
               "awayTeam" -> Json.obj(
@@ -88,9 +86,7 @@ class MoreOnMatchController(
                 "score" -> theMatch.awayTeam.score,
                 "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
                 "scorers" -> theMatch.awayTeam.scorers.getOrElse("").split(",").map(scorer => {
-                  Json.obj(
-                    "scorer" -> scorer.replace("(", "").replace(")", "")
-                  )
+                  scorer.replace("(", "").replace(")", "")
                 })
               ),
               "competition" -> Json.obj(
