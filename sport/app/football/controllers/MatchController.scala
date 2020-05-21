@@ -68,6 +68,8 @@ class MatchController(
     val response = maybeMatch map { theMatch =>
       val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
+      val reportedEventTypes = List("booking", "dismissal", "substitution")
+
 
       page map { page =>
         if (request.forceDCR) {
@@ -85,7 +87,7 @@ class MatchController(
                     "substitute" -> player.substitute,
                     "timeOnPitch" -> player.timeOnPitch,
                     "shirtNumber" -> player.shirtNumber,
-                    "events" -> player.events.map( event => Json.obj(
+                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
                       "eventTime" -> event.eventTime,
                       "eventType" -> event.eventType
                     )
@@ -108,7 +110,7 @@ class MatchController(
                     "substitute" -> player.substitute,
                     "timeOnPitch" -> player.timeOnPitch,
                     "shirtNumber" -> player.shirtNumber,
-                    "events" ->player.events.map( event => Json.obj(
+                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
                       "eventTime" -> event.eventTime,
                       "eventType" -> event.eventType
                     ))
