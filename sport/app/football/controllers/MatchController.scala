@@ -76,7 +76,7 @@ class MatchController(
             JsonComponent(
               "id" -> theMatch.id,
               "homeTeam" -> Json.obj(
-                "lineup" -> Json.arr((page.lineUp.homeTeam.players).map  ( player =>
+                "lineup" -> (page.lineUp.homeTeam.players).map  ( player =>
                   Json.obj(
                     "id" -> player.id,
                     "name" -> player.name,
@@ -88,7 +88,7 @@ class MatchController(
                     "events" -> player.events.map( event => Json.obj(
                       "eventTime" -> event.eventTime,
                       "eventType" -> event.eventType
-                    ))
+                    )
                   )
                 )),
                 "possession" -> page.lineUp.homeTeamPossession,
@@ -99,21 +99,19 @@ class MatchController(
                 "colours" -> teamColours.home
               ),
               "awayTeam" -> Json.obj(
-                "lineup" -> Json.arr(
-                  (page.lineUp.homeTeam.players).map ( player =>
-                    Json.obj(
-                      "id" -> player.id,
-                      "name" -> player.name,
-                      "position" -> player.position,
-                      "lastName" -> player.lastName,
-                      "substitute" -> player.substitute,
-                      "timeOnPitch" -> player.timeOnPitch,
-                      "shirtNumber" -> player.shirtNumber,
-                      "events" ->player.events.map( event => Json.obj(
-                        "eventTime" -> event.eventTime,
-                        "eventType" -> event.eventType
-                      ))
-                    )
+                "lineup" -> (page.lineUp.homeTeam.players).map ( player =>
+                  Json.obj(
+                    "id" -> player.id,
+                    "name" -> player.name,
+                    "position" -> player.position,
+                    "lastName" -> player.lastName,
+                    "substitute" -> player.substitute,
+                    "timeOnPitch" -> player.timeOnPitch,
+                    "shirtNumber" -> player.shirtNumber,
+                    "events" ->player.events.map( event => Json.obj(
+                      "eventTime" -> event.eventTime,
+                      "eventType" -> event.eventType
+                    ))
                   )
                 ),
                 "possession" -> page.lineUp.awayTeamPossession,
