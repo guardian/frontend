@@ -27,7 +27,7 @@ const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
     console.log('forceDisplay', forceDisplay)
     console.log('adSlot', adSlot)
     console.log('adSlot.id', adSlot.id)
-    console.log('dfpEnv.advertIds', dfpEnv.advertIds)
+    console.log('dfpEnv.advertIds', { ...dfpEnv.advertIds })
     console.log('adSlot.id in dfpEnv.advertIds', adSlot.id in dfpEnv.advertIds)
     window.googletag.cmd.push(() => {
         if (!(adSlot.id in dfpEnv.advertIds)) {
