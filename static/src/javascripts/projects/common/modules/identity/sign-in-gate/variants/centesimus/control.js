@@ -11,7 +11,7 @@ import {
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from '../design/patientia'; // using the same design as patientia-variant-1
+import { designShow } from '../design/centesimus';
 
 // define the variant name here
 const variant = 'centesimus-control-1';

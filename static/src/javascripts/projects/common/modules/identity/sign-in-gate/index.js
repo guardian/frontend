@@ -38,7 +38,9 @@ const canShow: () => Promise<boolean> = () =>
 const show: () => Promise<boolean> = () =>
     new Promise(resolve => {
         // get the test the user is in
-        const test: ABTest = getTestforMultiTest(tests); // todo what is test is undefined?????
+        const test: ABTest = getTestforMultiTest(tests);
+
+        if (!test) return resolve(false);
 
         // get the variant
         const variant: SignInGateVariant | void = variants.find(

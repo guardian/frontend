@@ -110,7 +110,7 @@ describe('Sign in gate test', () => {
             });
         });
 
-        fit('should return false if user has dismissed the gate', () => {
+        it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
                 'SignInGatePatientia-variant': Date.now(),
             });
