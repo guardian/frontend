@@ -89,8 +89,8 @@ class MatchController(
                   )
                 )),
                 "possession" -> page.lineUp.homeTeamPossession,
-                "attemptsOnTarget" -> page.lineUp.homeTeam.shotsOn,
-                "attemptsOffTarget" -> page.lineUp.homeTeam.shotsOff,
+                "shotsOn" -> page.lineUp.homeTeam.shotsOn,
+                "shotsOff" -> page.lineUp.homeTeam.shotsOff,
                 "corners" -> page.lineUp.homeTeam.corners,
                 "fouls" -> page.lineUp.homeTeam.fouls,
                 "colour" -> teamColours.home
@@ -111,8 +111,8 @@ class MatchController(
                   )
                 ),
                 "possession" -> page.lineUp.awayTeamPossession,
-                "attemptsOnTarget" -> page.lineUp.awayTeam.shotsOn,
-                "attemptsOffTarget" -> page.lineUp.awayTeam.shotsOff,
+                "shotsOn" -> page.lineUp.awayTeam.shotsOn,
+                "shotsOff" -> page.lineUp.awayTeam.shotsOff,
                 "corners" -> page.lineUp.awayTeam.corners,
                 "fouls" -> page.lineUp.awayTeam.fouls,
                 "colour" -> teamColours.home
