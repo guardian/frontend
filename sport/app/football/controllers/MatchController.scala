@@ -93,7 +93,7 @@ class MatchController(
                 "shotsOff" -> page.lineUp.homeTeam.shotsOff,
                 "corners" -> page.lineUp.homeTeam.corners,
                 "fouls" -> page.lineUp.homeTeam.fouls,
-                "colour" -> teamColours.home
+                "colours" -> teamColours.home
               ),
               "awayTeam" -> Json.obj(
                 "lineup" -> Json.arr(
@@ -115,7 +115,7 @@ class MatchController(
                 "shotsOff" -> page.lineUp.awayTeam.shotsOff,
                 "corners" -> page.lineUp.awayTeam.corners,
                 "fouls" -> page.lineUp.awayTeam.fouls,
-                "colour" -> teamColours.home
+                "colours" -> teamColours.away
               )
             )
           }
