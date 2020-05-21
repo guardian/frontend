@@ -85,10 +85,10 @@ class MatchController(
                     "substitute" -> player.substitute,
                     "timeOnPitch" -> player.timeOnPitch,
                     "shirtNumber" -> player.shirtNumber,
-                    "events" -> Json.arr(player.events.map( event => Json.obj(
+                    "events" -> player.events.map( event => Json.obj(
                       "eventTime" -> event.eventTime,
                       "eventType" -> event.eventType
-                    )))
+                    ))
                   )
                 )),
                 "possession" -> page.lineUp.homeTeamPossession,
@@ -109,10 +109,10 @@ class MatchController(
                       "substitute" -> player.substitute,
                       "timeOnPitch" -> player.timeOnPitch,
                       "shirtNumber" -> player.shirtNumber,
-                      "events" -> Json.arr(player.events.map( event => Json.obj(
+                      "events" ->player.events.map( event => Json.obj(
                         "eventTime" -> event.eventTime,
                         "eventType" -> event.eventType
-                      )))
+                      ))
                     )
                   )
                 ),
