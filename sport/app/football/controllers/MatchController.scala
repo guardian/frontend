@@ -81,6 +81,7 @@ class MatchController(
                     "id" -> player.id,
                     "name" -> player.name,
                     "position" -> player.position,
+                    "lastName" -> player.lastName,
                     "substitute" -> player.substitute,
                     "shirtNumber" -> player.shirtNumber,
                     "events" -> Json.arr(player.events.map( event => Json.obj(
@@ -103,6 +104,7 @@ class MatchController(
                       "id" -> player.id,
                       "name" -> player.name,
                       "position" -> player.position,
+                      "lastName" -> player.lastName,
                       "substitute" -> player.substitute,
                       "shirtNumber" -> player.shirtNumber,
                       "events" -> Json.arr(player.events.map( event => Json.obj(
