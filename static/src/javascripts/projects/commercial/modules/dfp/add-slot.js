@@ -21,7 +21,7 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
 };
 
 const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
-    console.log('shouldForceDisplay', shouldForceDisplay)
+    console.log('forceDisplay', forceDisplay)
     console.log('adSlot.id', adSlot.id)
     console.log('adSlot.id in dfpEnv.advertIds', adSlot.id in dfpEnv.advertIds)
     window.googletag.cmd.push(() => {
