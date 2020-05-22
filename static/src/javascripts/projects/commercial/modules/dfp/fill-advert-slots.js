@@ -2,7 +2,6 @@
 
 import qwery from 'qwery';
 import config from 'lib/config';
-import { getBreakpoint } from 'lib/detect';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
@@ -47,9 +46,6 @@ const fillAdvertSlots = (): Promise<void> => {
         adverts.forEach((advert, index) => {
                 dfpEnv.advertIds[advert.id] = currentLength + index;
         });
-        if(getBreakpoint() === 'mobile' && config.get('isDotcomRendering', false) && 'dfp-ad--top-above-nav' in dfpEnv.advertIds) {
-            delete dfpEnv.advertIds['dfp-ad--top-above-nav']
-        }
         console.log({...dfpEnv.advertIds})
         console.log('AFTER: dfpEnv.advertIds')
         adverts.forEach(queueAdvert);
