@@ -32,16 +32,9 @@ const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
     console.log('adSlot.id', adSlot.id)
     console.log('dfpEnv.advertIds', { ...dfpEnv.advertIds })
     console.log('adSlot.id in dfpEnv.advertIds', adSlot.id in dfpEnv.advertIds)
-    const isDCRMobile =
-        config.get('isDotcomRendering', false) &&
-        getBreakpoint() === 'mobile'
 
     window.googletag.cmd.push(() => {
-        if (
-        !(adSlot.id in dfpEnv.advertIds) ||
-        // TODO: find a better work around
-        (isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav')
-        ) {
+        if (!(adSlot.id in dfpEnv.advertIds)) {
             // dynamically add ad slot
             displayAd(adSlot, forceDisplay);
         }

@@ -10,6 +10,9 @@ import { setupPrebidOnce } from 'commercial/modules/dfp/prepare-prebid';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
+import { getBreakpoint } from 'lib/detect';
+import config from 'lib/config';
+
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
 //  article-aside-adverts
@@ -30,9 +33,15 @@ const fillAdvertSlots = (): Promise<void> => {
         if (commercialFeatures.adFree) {
             return Promise.resolve();
         }
+        const isDCRMobile =
+            config.get('isDotcomRendering', false) &&
+            getBreakpoint() === 'mobile'
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            .filter(adSlot => {
+                return !(adSlot.id in dfpEnv.advertIds) ||
+                    (isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav')
+            })
             .map(adSlot => new Advert(adSlot));
         console.log('*********************')
         console.log('fillAdvertSlots')
