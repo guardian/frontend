@@ -68,11 +68,68 @@ class MatchController(
     val response = maybeMatch map { theMatch =>
       val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
+      val reportedEventTypes = List("booking", "dismissal", "substitution")
+
 
       page map { page =>
-        val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
-        val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
-        renderFormat(htmlResponse, jsonResponse, page)
+        if (request.forceDCR) {
+          Cached(30) {
+            val teamColours = TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam)
+            JsonComponent(
+              "id" -> theMatch.id,
+              "homeTeam" -> Json.obj(
+                "lineup" -> (page.lineUp.homeTeam.players).map  ( player =>
+                  Json.obj(
+                    "id" -> player.id,
+                    "name" -> player.name,
+                    "position" -> player.position,
+                    "lastName" -> player.lastName,
+                    "substitute" -> player.substitute,
+                    "timeOnPitch" -> player.timeOnPitch,
+                    "shirtNumber" -> player.shirtNumber,
+                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
+                      "eventTime" -> event.eventTime,
+                      "eventType" -> event.eventType
+                    )
+                  )
+                )),
+                "possession" -> page.lineUp.homeTeamPossession,
+                "shotsOn" -> page.lineUp.homeTeam.shotsOn,
+                "shotsOff" -> page.lineUp.homeTeam.shotsOff,
+                "corners" -> page.lineUp.homeTeam.corners,
+                "fouls" -> page.lineUp.homeTeam.fouls,
+                "colours" -> teamColours.home
+              ),
+              "awayTeam" -> Json.obj(
+                "lineup" -> (page.lineUp.homeTeam.players).map ( player =>
+                  Json.obj(
+                    "id" -> player.id,
+                    "name" -> player.name,
+                    "position" -> player.position,
+                    "lastName" -> player.lastName,
+                    "substitute" -> player.substitute,
+                    "timeOnPitch" -> player.timeOnPitch,
+                    "shirtNumber" -> player.shirtNumber,
+                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
+                      "eventTime" -> event.eventTime,
+                      "eventType" -> event.eventType
+                    ))
+                  )
+                ),
+                "possession" -> page.lineUp.awayTeamPossession,
+                "shotsOn" -> page.lineUp.awayTeam.shotsOn,
+                "shotsOff" -> page.lineUp.awayTeam.shotsOff,
+                "corners" -> page.lineUp.awayTeam.corners,
+                "fouls" -> page.lineUp.awayTeam.fouls,
+                "colours" -> teamColours.away
+              )
+            )
+          }
+        } else {
+          val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
+          val jsonResponse = () => football.views.html.matchStats.matchStatsComponent(page)
+          renderFormat(htmlResponse, jsonResponse, page)
+        }
       }
     }
 
