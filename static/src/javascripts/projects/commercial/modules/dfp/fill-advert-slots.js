@@ -38,8 +38,8 @@ const fillAdvertSlots = (): Promise<void> => {
             getBreakpoint() === 'mobile'
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds) ||
-                    (isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'))
+            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'))
             .map(adSlot => new Advert(adSlot));
         console.log('*********************')
         console.log('fillAdvertSlots')
