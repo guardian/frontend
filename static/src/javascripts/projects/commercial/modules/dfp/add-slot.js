@@ -6,9 +6,6 @@ import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-import { getBreakpoint } from 'lib/detect';
-import config from 'lib/config';
-
 const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
     const advert: Advert = new Advert(adSlot);
 
