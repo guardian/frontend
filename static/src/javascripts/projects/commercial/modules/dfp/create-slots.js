@@ -165,10 +165,6 @@ const createAdSlotElements = (
             console.log(`warning: cleaning up dom node id: dfp-ad--${name}`);
             pnode.removeChild(node);
         }
-        // Need to remove from dfpEnv.advertIds, in case the page already think that Ad has been init
-        if(dfpEnv && dfpEnv.advertIds && 'dfp-ad--top-above-nav' in dfpEnv.advertIds) {
-            delete dfpEnv.advertIds['dfp-ad--top-above-nav']
-        }
     }
 
     // The 'main' adSlot
