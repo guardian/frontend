@@ -1,7 +1,6 @@
 // @flow
 
 import qwery from 'qwery';
-import config from 'lib/config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
