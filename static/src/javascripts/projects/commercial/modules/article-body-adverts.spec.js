@@ -30,6 +30,7 @@ jest.mock('common/modules/article/space-filler', () => ({
         fillSpace: jest.fn(),
     },
 }));
+jest.mock('commercial/modules/dfp/dfp-env', () => ({}));
 jest.mock('lib/detect', () => ({
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
