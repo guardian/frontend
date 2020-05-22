@@ -1,6 +1,5 @@
 // @flow
 import config from 'lib/config';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
