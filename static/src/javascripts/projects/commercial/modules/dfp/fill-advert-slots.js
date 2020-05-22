@@ -48,7 +48,7 @@ const fillAdvertSlots = (): Promise<void> => {
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
         adverts.forEach((advert, index) => {
-                dfpEnv.advertIds[advert.id] = currentLength + index;
+            dfpEnv.advertIds[advert.id] = currentLength + index;
         });
         adverts.forEach(queueAdvert);
 
