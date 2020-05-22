@@ -154,6 +154,7 @@ const createAdSlotElements = (
 
     const id = `dfp-ad--${name}`;
 
+    // 3562dc07-78e9-4507-b922-78b979d4c5cb
     if (config.get('isDotcomRendering', false) && name === 'top-above-nav') {
         // This is to prevent a problem that appeared with DCR.
         // We are simply making sure that if we are about to

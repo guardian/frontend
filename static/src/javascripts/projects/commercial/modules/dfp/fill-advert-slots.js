@@ -39,21 +39,17 @@ const fillAdvertSlots = (): Promise<void> => {
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            // TODO: find cleaner workaround
+            // we need to not init top-above-nav on mobile view in DCR
+            // as the DOM element needs to be removed and replaced to be inline
+            // refer to: 3562dc07-78e9-4507-b922-78b979d4c5cb
             .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'))
             .map(adSlot => new Advert(adSlot));
-        console.log('*********************')
-        console.log('fillAdvertSlots')
-        console.log('*********************')
-        console.log('adverts',adverts)
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
-        console.log('BEFORE: dfpEnv.advertIds')
-        console.log({...dfpEnv.advertIds})
         adverts.forEach((advert, index) => {
                 dfpEnv.advertIds[advert.id] = currentLength + index;
         });
-        console.log({...dfpEnv.advertIds})
-        console.log('AFTER: dfpEnv.advertIds')
         adverts.forEach(queueAdvert);
 
         if (dfpEnv.shouldLazyLoad()) {
@@ -61,7 +57,6 @@ const fillAdvertSlots = (): Promise<void> => {
         } else {
             displayAds();
         }
-        console.log('*********************')
     });
 };
 
