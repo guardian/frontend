@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
@@ -39,10 +40,10 @@ const inlineDefinition = {
 
     mark: 432b3a46-90c1-4573-90d3-2400b51af8d0
 
-    The ad sizes which are hardcoded here are also hardcoded in the source code of 
-    dotcom-rendering. 
+    The ad sizes which are hardcoded here are also hardcoded in the source code of
+    dotcom-rendering.
 
-    If/when this file is modified, please make sure that updates, if any, are reported to DCR.  
+    If/when this file is modified, please make sure that updates, if any, are reported to DCR.
 
  */
 
@@ -163,6 +164,10 @@ const createAdSlotElements = (
             const pnode = node.parentNode;
             console.log(`warning: cleaning up dom node id: dfp-ad--${name}`);
             pnode.removeChild(node);
+        }
+        // Need to remove from dfpEnv.advertIds, in case the page already think that Ad has been init
+        if('dfp-ad--top-above-nav' in dfpEnv.advertIds) {
+            delete dfpEnv.advertIds['dfp-ad--top-above-nav']
         }
     }
 
