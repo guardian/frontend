@@ -1,15 +1,17 @@
 package model.dotcomrendering.pageElements
 
-import java.net.{URLEncoder}
+import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import com.gu.contentatom.renderer.{ArticleAtomRenderer, ArticleConfiguration}
 import conf.Configuration
-import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
+import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
+import play.twirl.api.Html
 import views.support.cleaner.SoundcloudHelper
 import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
 
@@ -56,6 +58,7 @@ sealed trait PageElement
 
 case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
 case class AtomEmbedUrlBlockElement(url: String) extends PageElement
+case class AtomEmbedHtmlDocumentBlockElement(id: String, htmldocument: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
@@ -133,6 +136,7 @@ object PageElement {
       case _: ProfileBlockElement => true
       case _: TimelineBlockElement => true
       case _: AtomEmbedUrlBlockElement => true
+      case _: AtomEmbedHtmlDocumentBlockElement => true
       case _: AtomEmbedMarkupBlockElement => true
       case _: MapBlockElement => true
       case _: AudioBlockElement => true
@@ -276,26 +280,41 @@ object PageElement {
           case Some(audio: AudioAtom) => {
             /*
               author: Pascal
-              date: 20th May 2020
+              date: 24th May 2020
 
-              Ultimately, meaning when the Component is ready in DCR we want to pass metadata carried by
-              the AudioAtomBlockElement, but for the moment we are going to use the AtomEmbedUrlBlockElement
-              which is experimental.
+              Ultimately, meaning when the Component is ready in DCR, we want to pass metadata carried by
+              the AudioAtomBlockElement.
+
+              We have tried to pass the URL to DCR, using AtomEmbedUrlBlockElement, and it works very well
+              using the experimental work that has been done in the applications app.
+
+              In this latest experiment we pass he newly introduced AtomEmbedHtmlDocumentBlockElement
 
              */
 
             // -----------------------------------
             // Using the AudioAtomBlockElement:
-            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
+            // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
             // -----------------------------------
 
             // -----------------------------------
             // Using the AtomEmbedUrlBlockElement:
+            /*
             val encodedId = URLEncoder.encode(audio.id, "UTF-8")
-            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
             Some(AtomEmbedUrlBlockElement(
               url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId"
             ))
+            */
+            // -----------------------------------
+
+            // -----------------------------------
+            // Using the AtomEmbedHtmlDocumentBlockElement
+            val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
+            val html1: String = ArticleAtomRenderer.getHTML(audio.atom, articleConfig)
+            val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(audio.atom.atomType) // Option[String]
+            val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(audio.atom.atomType)    // Option[String]
+            val html2: Html = views.html.fragments.atomsDotcomRendering.audio(audio.id, Html(html1), css, js)
+            Some(AtomEmbedHtmlDocumentBlockElement(audio.id, html2.toString()))
             // -----------------------------------
           }
 
@@ -483,6 +502,7 @@ object PageElement {
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
+  implicit val AtomEmbedHtmlDocumentBlockElementWrites: Writes[AtomEmbedHtmlDocumentBlockElement] = Json.writes[AtomEmbedHtmlDocumentBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
