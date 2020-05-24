@@ -5,7 +5,7 @@ import java.net.{URLEncoder}
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import conf.Configuration
-import layout.ContentWidths.{DCRExperimental}
+import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
 import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
@@ -195,12 +195,12 @@ object PageElement {
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        val imageSources: Seq[ImageSource] = DCRExperimental.all.map {
+        val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
           case (weighting, widths) =>
             val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
-                ImgSrc.srcsetForBreakpoint(b, DCRExperimental.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
-                ImgSrc.srcsetForBreakpoint(b, DCRExperimental.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
+                ImgSrc.srcsetForBreakpoint(b, DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
+                ImgSrc.srcsetForBreakpoint(b, DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
               )
             }.flatten
             // A few very old articles use non-https hosts, which won't render

@@ -17,7 +17,7 @@ object ContentWidths {
   object Immersive  extends ContentHinting (Some("element--immersive"))
   object Halfwidth  extends ContentHinting (Some("element--halfWidth"))
 
-  sealed trait ContentRelation {
+  sealed trait ImageRoleWidthsByBreakpointMapping {
     def inline: WidthsByBreakpoint
     def supporting: WidthsByBreakpoint = unused
     def showcase: WidthsByBreakpoint = unused
@@ -34,7 +34,7 @@ object ContentWidths {
       "halfwidth" -> halfwidth)
   }
 
-  object BodyMedia extends ContentRelation {
+  object BodyMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = WidthsByBreakpoint(
       mobile =          Some(445.px),
       mobileLandscape = Some(605.px),
@@ -62,7 +62,7 @@ object ContentWidths {
     override val halfwidth = BodyMedia.inline
   }
 
-  object MainMedia extends ContentRelation {
+  object MainMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
@@ -109,7 +109,7 @@ object ContentWidths {
   /**
     * Immersive media is all the media within immersive content body
     */
-  object ImmersiveMedia extends ContentRelation {
+  object ImmersiveMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = BodyMedia.inline
     override val supporting = BodyMedia.supporting
     override val thumbnail = BodyMedia.thumbnail
@@ -133,7 +133,7 @@ object ContentWidths {
       wide =            Some(880.px))
   }
 
-  object MinuteMedia extends ContentRelation {
+  object MinuteMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = WidthsByBreakpoint(
       // Inline images, on mobile, in minute articles have a large width
       // to retain a high resolution when cropping using `object-fit: cover;`
@@ -147,7 +147,7 @@ object ContentWidths {
       mobile = Some(95.vw))
   }
 
-  object LiveBlogMedia extends ContentRelation {
+  object LiveBlogMedia extends ImageRoleWidthsByBreakpointMapping {
     override val inline = WidthsByBreakpoint(
       mobile =          Some(465.px),
       mobileLandscape = Some(645.px),
@@ -159,7 +159,7 @@ object ContentWidths {
       wide =            Some(620.px))
   }
 
-  object DCRExperimental extends ContentRelation {
+  object DotcomRenderingImageRoleWidthByBreakpointMapping extends ImageRoleWidthsByBreakpointMapping {
     override val inline = BodyMedia.inline
     override val supporting = BodyMedia.supporting
     override val showcase = MainMedia.showcase
@@ -198,7 +198,7 @@ object ContentWidths {
       wide =            Some(1920.px))
   }
 
-  def getWidthsFromContentElement(hinting: ContentHinting, relation: ContentRelation): WidthsByBreakpoint = {
+  def getWidthsFromContentElement(hinting: ContentHinting, relation: ImageRoleWidthsByBreakpointMapping): WidthsByBreakpoint = {
     hinting match {
       case Inline => relation.inline
       case Supporting => relation.supporting
@@ -206,7 +206,6 @@ object ContentWidths {
       case Thumbnail => relation.thumbnail
       case Immersive => relation.immersive
       case Halfwidth => relation.halfwidth
-
       case _ => unused
     }
   }
