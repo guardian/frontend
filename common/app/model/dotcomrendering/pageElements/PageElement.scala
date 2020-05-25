@@ -326,6 +326,20 @@ object PageElement {
             ))
           }
 
+          case Some(explainer: ExplainerAtom) => {
+            /*
+              author: Pascal
+              date: 25th May 2020
+              Status: Experimental
+             */
+            val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
+            val html1: String = ArticleAtomRenderer.getHTML(explainer.atom, articleConfig)
+            val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(explainer.atom.atomType) // Option[String]
+            val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(explainer.atom.atomType)    // Option[String]
+            val html2: Html = views.html.fragments.atomsDotcomRendering.explainer(explainer.id, Html(html1), css, js)
+            Some(AtomEmbedHtmlDocumentBlockElement(explainer.id, html2.toString()))
+          }
+
           case Some(guide: GuideAtom) => {
             Some(ProfileBlockElement(
               id = guide.id,

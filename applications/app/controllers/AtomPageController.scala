@@ -100,6 +100,19 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
       }
       case Left(atom: ChartAtom) =>
         renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: ExplainerAtom) => {
+
+        /*
+          See mark 57cadc98-16c0-49ac-8bba-c96144c488a7
+         */
+
+        val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
+        val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
+        val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
+        val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType)    // Option[String]
+        val html2: Html = views.html.fragments.atomsDotcomRendering.explainer(atom.id, Html(html1), css, js)
+        Ok(html2)
+      }
       case Left(atom: GuideAtom) =>
         renderAtom(GuideAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(atom: InteractiveAtom) =>
@@ -133,6 +146,7 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
     apiAtom.audio.map(atom => AudioAtom.make(atom))               orElse
     apiAtom.chart.map(atom => ChartAtom.make(atom))               orElse
+    apiAtom.explainer.map(atom => ExplainerAtom.make(atom))       orElse
     apiAtom.guide.map(atom => GuideAtom.make(atom))               orElse
     apiAtom.interactive.map(atom => InteractiveAtom.make(atom))   orElse
     apiAtom.media.map(atom => MediaAtom.make(atom = atom))        orElse
