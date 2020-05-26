@@ -73,7 +73,7 @@ const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> =>
                 false
             );
             return true;
-        })
+        });
 
 const twoOrMorePageViews = (currentPageViews: number) =>
     currentPageViews >= 2;
