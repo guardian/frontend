@@ -10,6 +10,9 @@ import { setupPrebidOnce } from 'commercial/modules/dfp/prepare-prebid';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
+import { getBreakpoint } from 'lib/detect';
+import config from 'lib/config';
+
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:
 //  article-aside-adverts
@@ -30,9 +33,17 @@ const fillAdvertSlots = (): Promise<void> => {
         if (commercialFeatures.adFree) {
             return Promise.resolve();
         }
+        const isDCRMobile =
+            config.get('isDotcomRendering', false) &&
+            getBreakpoint() === 'mobile'
         // Get all ad slots
         const adverts = qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
+            // TODO: find cleaner workaround
+            // we need to not init top-above-nav on mobile view in DCR
+            // as the DOM element needs to be removed and replaced to be inline
+            // refer to: 3562dc07-78e9-4507-b922-78b979d4c5cb
+            .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'))
             .map(adSlot => new Advert(adSlot));
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);
