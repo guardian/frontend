@@ -1,8 +1,11 @@
 // @flow
+import { isInAuRegion as isInAuRegion_ }
+from 'commercial/modules/header-bidding/utils';
 import { imrWorldwide } from './imr-worldwide';
 
 const { shouldRun, url } = imrWorldwide;
 const onLoad: any = imrWorldwide.onLoad;
+const isInAuRegion: any = isInAuRegion_;
 
 /**
  * we have to mock config like this because
@@ -37,6 +40,19 @@ jest.mock('lib/config', () => {
     });
 });
 
+jest.mock('commercial/modules/header-bidding/utils', () => {
+    // $FlowFixMe property requireActual is actually not missing Flow.
+    const original = jest.requireActual('commercial/modules/header-bidding/utils');
+    return {
+        ...original,
+        isInAuRegion: jest.fn().mockReturnValue(true),
+    };
+});
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
+
 const nSdkInstance = {
     ggInitialize: jest.fn(),
     ggPM: jest.fn(),
@@ -46,7 +62,18 @@ window.NOLCMB = {
     getInstance: jest.fn(() => nSdkInstance),
 };
 
-describe('third party tag IMR worldwide', () => {
+isInAuRegion.mockReturnValue(true);
+
+describe('third party tag IMR in AUS', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        isInAuRegion.mockReturnValue(true);
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+    });
+
     it('should exist and have the correct exports', () => {
         expect(shouldRun).toBe(true);
         expect(url).toBe(
