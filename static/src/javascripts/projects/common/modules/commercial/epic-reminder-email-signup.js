@@ -15,7 +15,6 @@ type Fields = {
     formWrapper: HTMLElement,
     titleField: HTMLElement,
     thankYouText: HTMLElement,
-    surveyRequest: HTMLElement,
     closeButton: HTMLElement,
     reminderPrompt: HTMLElement,
     reminderToggle: HTMLInputElement,
@@ -35,7 +34,6 @@ const getFields = (): ?Fields => {
     const formWrapper = document.querySelector('.epic-reminder__form-wrapper');
     const titleField = document.querySelector('.epic-reminder__form-title');
     const thankYouText = document.querySelector('.epic-reminder__thank-you');
-    const surveyRequest = document.querySelector('.epic-reminder__survey-request-wrapper');
     const closeButton = document.querySelector('.epic-reminder__close-button');
     const reminderPrompt = document.querySelector(
         '.component-button--reminder-prompt'
@@ -50,7 +48,6 @@ const getFields = (): ?Fields => {
         emailInput &&
         titleField &&
         thankYouText &&
-        surveyRequest &&
         formWrapper &&
         closeButton &&
         reminderPrompt &&
@@ -72,7 +69,6 @@ const getFields = (): ?Fields => {
             formWrapper,
             titleField,
             thankYouText,
-            surveyRequest,
             closeButton,
             reminderPrompt,
             reminderToggle,
@@ -108,7 +104,6 @@ const epicReminderEmailSignup = (fields: Fields) => {
                 break;
             case 'success':
                 fields.thankYouText.style.display = 'block';
-                fields.surveyRequest.style.display = 'block';
                 fields.formWrapper.style.display = 'none';
                 fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
