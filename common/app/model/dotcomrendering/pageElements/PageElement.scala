@@ -59,7 +59,7 @@ case class AtomEmbedUrlBlockElement(url: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
-case class ExplainerAtomBlockElement(id: String, title: String, body: String, displayType: String) extends PageElement
+case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -309,10 +309,7 @@ object PageElement {
           }
 
           case Some(explainer: ExplainerAtom) => {
-            // author: Pascal
-            // date: 27th May 2020
-            // The display type is hardcoded for he moment, to be updated shortly
-            Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body, "flat"))
+            Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body))
           }
 
           case Some(guide: GuideAtom) => {
