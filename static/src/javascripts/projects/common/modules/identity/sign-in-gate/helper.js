@@ -49,6 +49,17 @@ export const hasUserDismissedGate: ({
     return !!prefs[`${name ? `${name}-` : ''}${variant}`];
 };
 
+// Dynamically sets the gate custom parameter for Google ad request page targeting
+export const setGatePageTargeting = (canShow: boolean): void => {
+    if (window && window.googletag) {
+        window.googletag.cmd.push(() => {
+            window.googletag
+                .pubads()
+                .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice "t"/"f"
+        });
+    }
+};
+
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
 // name is optional, but can be used to differentiate between multiple sign in gate tests
 export const setUserDismissedGate: ({
@@ -103,6 +114,8 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
         'isPhotoEssay',
         'isSensitive',
         'isSplash',
+        'isPodcast',
+        'isInvalidArticleType',
     ];
 
     return invalidTypes
