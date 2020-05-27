@@ -67,19 +67,16 @@ export type ReaderRevenueRegion =
     | 'united-kingdom'
     | 'united-states'
     | 'australia'
-    | 'european-union'
     | 'rest-of-world';
 
 const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
-    switch (true) {
-        case geolocation === 'GB':
+    switch (geolocation) {
+        case 'GB':
             return 'united-kingdom';
-        case geolocation === 'US':
+        case 'US':
             return 'united-states';
-        case geolocation === 'AU':
+        case 'AU':
             return 'australia';
-        case  countryCodeToCountryGroupId(geolocation) === 'EURCountries':
-            return 'european-union';
         default:
             return 'rest-of-world';
     }
