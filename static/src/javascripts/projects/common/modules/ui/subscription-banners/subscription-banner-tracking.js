@@ -38,7 +38,7 @@ const createTracking = (
     region: ReaderRevenueRegion,
     defaultTracking: BannerTracking
 ) => {
-    const isGuardianWeeklyRegion = region === 'australia';
+    const isGuardianWeeklyRegion = (region === 'australia' || region === 'rest-of-world');
 
     const guardianWeeklyTracking = {
         signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_gWeekly&CMP_TU=mrtn&CMP_BUNIT=subs`,

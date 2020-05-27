@@ -34,10 +34,14 @@ const minArticlesBeforeShowingBanner = 3;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
+/**
+ * We're temporarily using the "/rest-of-world" route
+ * for users in the "european-union" region.
+ */
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
-    fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region}`, {
+    fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region === 'european-union' ? 'rest-of-world' : region}`, {
         mode: 'cors',
     }).then((resp: BannerDeployLog) => resp && resp.time);
 
