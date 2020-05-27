@@ -308,6 +308,13 @@ object PageElement {
             ))
           }
 
+          case Some(explainer: ExplainerAtom) => {
+            // author: Pascal
+            // date: 27th May 2020
+            // The display type is hardcoded for he moment, to be updated shortly
+            Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body, "flat"))
+          }
+
           case Some(guide: GuideAtom) => {
             Some(ProfileBlockElement(
               id = guide.id,
