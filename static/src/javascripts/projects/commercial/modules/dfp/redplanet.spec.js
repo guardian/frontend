@@ -3,8 +3,9 @@
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 import { isInAuRegion as isInAuRegion_ } from 'commercial/modules/header-bidding/utils';
-import { init } from './redplanet';
 import config from 'lib/config';
+import { init } from './redplanet';
+
 
 const onIabConsentNotification: any = onIabConsentNotification_;
 const isInAuRegion: any = isInAuRegion_;
