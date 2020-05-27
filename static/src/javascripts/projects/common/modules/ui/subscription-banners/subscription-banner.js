@@ -56,11 +56,8 @@ const hasAcknowledged = bannerRedeploymentDate => {
 const selectorName = (bannerName: string) => (actionId: ?string) =>
     `#js-site-message--${bannerName}${actionId ? `__${actionId}` : ''}`;
 
-/**
- * We're temporarily using the "/united-kingdom" route
- * for users in the "european-union" region.
- */
-const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> => fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region === 'european-union' ? 'united-kingdom' : region}`, {
+const hasAcknowledgedBanner = region =>
+    fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
     })
         .then(resp => hasAcknowledged(resp.time))
@@ -184,7 +181,7 @@ const createBannerShow = (
 };
 
 const chooseBanner = (region: ReaderRevenueRegion) =>
-(region === 'australia' || region === 'rest-of-world') ? gwBannerTemplate : subscriptionBannerTemplate;
+    region === 'australia' ? gwBannerTemplate : subscriptionBannerTemplate;
 
 const show = createBannerShow(
     bannerTracking(currentRegion),
