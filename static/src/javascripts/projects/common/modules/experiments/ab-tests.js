@@ -3,6 +3,7 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
+import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-opt-out';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
@@ -34,4 +35,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     contributionsCovidBannerRoundTwo,
     articlesViewedBanner,
+    contributionsBannerArticlesViewedOptOut,
 ];

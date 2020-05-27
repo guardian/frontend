@@ -28,6 +28,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-contributions-banner-articles-viewed-opt-out",
+    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
+    owners = Seq(Owner.withGithub("michaelbjacobson")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 11, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
     "ab-contributions-covid-banner-round-two",
     "Covid crisis",
     owners = Seq(Owner.withGithub("jlieb10")),
