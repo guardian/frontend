@@ -1,3 +1,8 @@
+.engagement-banner__articles-read-tooltip-wrapper {
+    position: relative;
+    display: inline;
+}
+
 .engagement-banner__articles-read {
     border-bottom: 1px solid $brightness-7;
     cursor: pointer;
@@ -16,7 +21,7 @@
     font-family: $f-sans-serif-text;
     padding: 15px 10px;
     position: absolute;
-    top: 0;
+    top: -224px;
     z-index: 1;
 
     @include mq($until: tablet) {
