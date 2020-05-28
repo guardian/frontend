@@ -116,6 +116,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+    Switch(
+    ABTests,
+    "ab-sign-in-gate-centesimus",
+    "Show sign in gate to 100% of users on 3rd article view",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true
+  )
+
   Switch(
     ABTests,
     "ab-amp-zero-test-experiment",
@@ -132,7 +142,7 @@ trait ABTestSwitches {
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
+    sellByDate = new LocalDate(2020, 7, 1),
     exposeClientSide = true,
   )
 }

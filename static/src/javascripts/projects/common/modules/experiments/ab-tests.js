@@ -9,7 +9,8 @@ import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-
 import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
 import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
-import { signInGate } from 'common/modules/experiments/tests/sign-in-gate';
+import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
+import { signInGateCentesimus } from 'common/modules/experiments/tests/sign-in-gate-centesimus';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -19,7 +20,8 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
-    signInGate,
+    signInGatePatientia,
+    signInGateCentesimus,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;

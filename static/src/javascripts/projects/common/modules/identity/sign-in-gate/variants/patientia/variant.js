@@ -1,6 +1,6 @@
 // @flow
-import type { CurrentABTest, SignInGateVariant } from '../types';
-import { componentName } from '../component';
+import type { CurrentABTest, SignInGateVariant } from '../../types';
+import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
@@ -8,10 +8,10 @@ import {
     isInvalidArticleType,
     isInvalidSection,
     isIOS9,
-} from '../helper';
+} from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from './design/patientia';
+import { designShow } from '../design/patientia';
 
 // define the variant name here
 const variant = 'patientia-variant-1';
@@ -36,8 +36,9 @@ const show: ({
     abTest: CurrentABTest,
     guUrl: string,
     signInUrl: string,
-}) => boolean = ({ abTest, guUrl, signInUrl }) =>
-    designShow({ abTest, guUrl, signInUrl });
+    ophanComponentId: string,
+}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+    designShow({ abTest, guUrl, signInUrl, ophanComponentId });
 
 // export the variant as a SignInGateVariant type
 export const signInGateVariant: SignInGateVariant = {

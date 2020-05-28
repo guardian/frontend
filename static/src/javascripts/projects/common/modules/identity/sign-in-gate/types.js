@@ -20,6 +20,7 @@ export type SignInGateVariant = {
         abTest: CurrentABTest,
         guUrl: string,
         signInUrl: string,
+        ophanComponentId: string,
     }) => boolean,
     canShow: (name?: string) => boolean,
     name: string,

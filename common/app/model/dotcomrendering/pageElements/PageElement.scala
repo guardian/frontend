@@ -5,7 +5,7 @@ import java.net.{URLEncoder}
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import conf.Configuration
-import layout.ContentWidths.{DCRExperimental}
+import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
 import model.content._
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
@@ -59,6 +59,7 @@ case class AtomEmbedUrlBlockElement(url: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
+case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
@@ -195,12 +196,12 @@ object PageElement {
         val signedAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
-        val imageSources: Seq[ImageSource] = DCRExperimental.all.map {
+        val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
           case (weighting, widths) =>
             val srcSet: Seq[SrcSet] = widths.breakpoints.flatMap { b =>
               Seq(
-                ImgSrc.srcsetForBreakpoint(b, DCRExperimental.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
-                ImgSrc.srcsetForBreakpoint(b, DCRExperimental.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
+                ImgSrc.srcsetForBreakpoint(b, DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets))),
+                ImgSrc.srcsetForBreakpoint(b, DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints, maybeImageMedia = Some(ImageMedia(signedAssets)), hidpi = true)
               )
             }.flatten
             // A few very old articles use non-https hosts, which won't render
@@ -274,7 +275,29 @@ object PageElement {
         (extractAtom match {
 
           case Some(audio: AudioAtom) => {
+            /*
+              author: Pascal
+              date: 20th May 2020
+
+              Ultimately, meaning when the Component is ready in DCR we want to pass metadata carried by
+              the AudioAtomBlockElement, but for the moment we are going to use the AtomEmbedUrlBlockElement
+              which is experimental.
+
+             */
+
+            // -----------------------------------
+            // Using the AudioAtomBlockElement:
             Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
+            // -----------------------------------
+
+            // -----------------------------------
+            // Using the AtomEmbedUrlBlockElement:
+            val encodedId = URLEncoder.encode(audio.id, "UTF-8")
+            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+            Some(AtomEmbedUrlBlockElement(
+              url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId"
+            ))
+            // -----------------------------------
           }
 
           case Some(chart: ChartAtom) => {
@@ -283,6 +306,10 @@ object PageElement {
             Some(AtomEmbedUrlBlockElement(
               url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
             ))
+          }
+
+          case Some(explainer: ExplainerAtom) => {
+            Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body))
           }
 
           case Some(guide: GuideAtom) => {
@@ -488,6 +515,7 @@ object PageElement {
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
   implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
+  implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] = Json.writes[ExplainerAtomBlockElement]
 
   // atoms
   implicit val TimelineEventWrites = Json.writes[TimelineEvent]

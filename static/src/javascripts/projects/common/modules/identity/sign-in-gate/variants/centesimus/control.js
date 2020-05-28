@@ -1,19 +1,20 @@
 // @flow
-import type { CurrentABTest, SignInGateVariant } from '../types';
-import { componentName } from '../component';
+import type { CurrentABTest, SignInGateVariant } from '../../types';
+import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
     isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
-} from '../helper';
+    isIOS9,
+} from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from './design/example';
+import { designShow } from '../design/centesimus';
 
 // define the variant name here
-const variant = 'example';
+const variant = 'centesimus-control-1';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>
@@ -22,10 +23,11 @@ const canShow: (name?: string) => boolean = (name = '') =>
         variant,
         componentName,
     }) &&
-    isNPageOrHigherPageView(2) &&
+    isNPageOrHigherPageView(3) &&
     !isLoggedIn() &&
     !isInvalidArticleType() &&
-    !isInvalidSection();
+    !isInvalidSection() &&
+    !isIOS9();
 
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
