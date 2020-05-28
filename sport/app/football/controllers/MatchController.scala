@@ -44,6 +44,47 @@ case class MatchPage(theMatch: FootballMatch, lineUp: LineUp) extends Standalone
   )
 }
 
+sealed trait NsAnswer
+
+case class EventAnswer(eventTime: String, eventType: String) extends NsAnswer
+case class PlayerAnswer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends NsAnswer
+case class TeamAnswer(lineup: Seq[PlayerAnswer], possession: Int, shotsOn: Int, shotsOff: Int, corners: Int, fouls: Int, colours: String) extends NsAnswer
+case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
+
+object NsAnswer {
+  val reportedEventTypes = List("booking", "dismissal", "substitution")
+
+  def makePlayers(team: LineUpTeam): Seq[PlayerAnswer] = {
+    team.players.map{ player =>
+      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
+        EventAnswer(event.eventTime, event.eventType)
+      }
+      PlayerAnswer(player.id, player.name, player.position, player.lastName, player.substitute, player.timeOnPitch, player.shirtNumber, events)
+    }
+  }
+
+  def makeTeam(team: LineUpTeam, teamPossession: Int, teamColour: String): TeamAnswer = {
+    val players = makePlayers(team)
+    TeamAnswer(players, teamPossession, team.shotsOn, team.shotsOff, team.corners, team.fouls, teamColour)
+  }
+
+  def makeFromFootballMatch(matchId: String, lineUp: LineUp): MatchDataAnswer = {
+    val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
+    MatchDataAnswer(
+      matchId,
+      makeTeam(lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
+      makeTeam(lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away)
+    )
+  }
+
+  implicit val EventAnswerWrites: Writes[EventAnswer] = Json.writes[EventAnswer]
+  implicit val PlayerAnswerWrites: Writes[PlayerAnswer] = Json.writes[PlayerAnswer]
+  implicit val TeamAnswerWrites: Writes[TeamAnswer] = Json.writes[TeamAnswer]
+  implicit val MatchDataAnswerWrites: Writes[MatchDataAnswer] = Json.writes[MatchDataAnswer]
+}
+
+// --------------------------------------------------------------
+
 class MatchController(
   competitionsService: CompetitionsService,
   val controllerComponents: ControllerComponents
@@ -68,62 +109,11 @@ class MatchController(
     val response = maybeMatch map { theMatch =>
       val lineup: Future[LineUp] = competitionsService.getLineup(theMatch)
       val page: Future[MatchPage] = lineup map { MatchPage(theMatch, _) }
-      val reportedEventTypes = List("booking", "dismissal", "substitution")
-
 
       page map { page =>
         if (request.forceDCR) {
           Cached(30) {
-            val teamColours = TeamColours(page.lineUp.homeTeam, page.lineUp.awayTeam)
-            JsonComponent(
-              "id" -> theMatch.id,
-              "homeTeam" -> Json.obj(
-                "lineup" -> (page.lineUp.homeTeam.players).map  ( player =>
-                  Json.obj(
-                    "id" -> player.id,
-                    "name" -> player.name,
-                    "position" -> player.position,
-                    "lastName" -> player.lastName,
-                    "substitute" -> player.substitute,
-                    "timeOnPitch" -> player.timeOnPitch,
-                    "shirtNumber" -> player.shirtNumber,
-                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
-                      "eventTime" -> event.eventTime,
-                      "eventType" -> event.eventType
-                    )
-                  )
-                )),
-                "possession" -> page.lineUp.homeTeamPossession,
-                "shotsOn" -> page.lineUp.homeTeam.shotsOn,
-                "shotsOff" -> page.lineUp.homeTeam.shotsOff,
-                "corners" -> page.lineUp.homeTeam.corners,
-                "fouls" -> page.lineUp.homeTeam.fouls,
-                "colours" -> teamColours.home
-              ),
-              "awayTeam" -> Json.obj(
-                "lineup" -> (page.lineUp.homeTeam.players).map ( player =>
-                  Json.obj(
-                    "id" -> player.id,
-                    "name" -> player.name,
-                    "position" -> player.position,
-                    "lastName" -> player.lastName,
-                    "substitute" -> player.substitute,
-                    "timeOnPitch" -> player.timeOnPitch,
-                    "shirtNumber" -> player.shirtNumber,
-                    "events" -> player.events.filter(event => reportedEventTypes.contains(event.eventType)).map( event => Json.obj(
-                      "eventTime" -> event.eventTime,
-                      "eventType" -> event.eventType
-                    ))
-                  )
-                ),
-                "possession" -> page.lineUp.awayTeamPossession,
-                "shotsOn" -> page.lineUp.awayTeam.shotsOn,
-                "shotsOff" -> page.lineUp.awayTeam.shotsOff,
-                "corners" -> page.lineUp.awayTeam.corners,
-                "fouls" -> page.lineUp.awayTeam.fouls,
-                "colours" -> teamColours.away
-              )
-            )
+            JsonComponent(Json.toJson(NsAnswer.makeFromFootballMatch(theMatch.id, page.lineUp)))
           }
         } else {
           val htmlResponse = () => football.views.html.matchStats.matchStatsPage(page, competitionsService.competitionForMatch(theMatch.id))
