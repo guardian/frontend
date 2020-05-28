@@ -83,7 +83,7 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const sizeOpts = getSizeOpts(sizes);
     const id = adSlotNode.id;
     let slot;
-    let slotReady;
+    let slotReady = Promise.resolve();
 
     if (adSlotNode.getAttribute('data-out-of-page')) {
         slot = window.googletag
@@ -190,7 +190,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
 
         slotReady = Promise.race([iasTimeout(), iasDataPromise]);
     }
-
     const isBn = config.get('page.isbn');
 
     if (slotTarget === 'im' && isBn) {
