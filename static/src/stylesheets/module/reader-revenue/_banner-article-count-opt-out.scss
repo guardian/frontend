@@ -1,0 +1,9 @@
+.engagement-banner__articles-read {
+    border-bottom: 1px solid $brightness-7;
+    cursor: pointer;
+
+    &:hover {
+        border-bottom: 0;
+        background-color: $highlight-dark;
+    }
+}
