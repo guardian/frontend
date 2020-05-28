@@ -1,9 +1,11 @@
 // @flow strict
 
 import config from 'lib/config';
-import {commercialFeatures} from "common/modules/commercial/commercial-features";
-import {onIabConsentNotification} from "@guardian/consent-management-platform";
-import {isInAuRegion} from "commercial/modules/header-bidding/utils";
+import { commercialFeatures } from "common/modules/commercial/commercial-features";
+import { onIabConsentNotification } from "@guardian/consent-management-platform";
+import { isInAuRegion } from "commercial/modules/header-bidding/utils";
+import { isInVariantSynchronous } from "common/modules/experiments/ab";
+import { commercialRedplanet } from "common/modules/experiments/tests/commercial-redplaner-aus";
 
 const initialise = (): void => {
     // Initialise Launchpad Tracker
@@ -40,7 +42,7 @@ const setupRedplanet: () => Promise<void> = () => {
 };
 
 export const init = (): Promise<void> => {
-    if (commercialFeatures.launchpad && isInAuRegion()) {
+    if (commercialFeatures.launchpad && isInAuRegion() && isInVariantSynchronous(commercialRedplanet, 'variant')) {
         return setupRedplanet();
     }
     return Promise.resolve();
