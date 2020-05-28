@@ -394,23 +394,12 @@ $gw-banner-background-color: #3e474a;
         }
 
         @media (min-width: 890px) {
-            width: 480px;
-        }
-        @include mq($from: leftCol) {
-            width: 49%;
-        }
-
-        @media (min-width: 1177px) {
-            width: 46%;
+            width: 48%;
         }
 
         @include mq($from: wide) {
-            width: 43%;
+            width: 50%;
             margin-bottom: 39px;
-        }
-
-        @media (min-width: 1330px) {
-            width: 47%;
         }
 
         p {
@@ -485,7 +474,8 @@ $gw-banner-background-color: #3e474a;
         }
 
         @include mq($from: wide) {
-            margin-right: 120px;
+            width: 545px;
+            margin-right: 100px;
         }
 
         img {
@@ -522,8 +512,8 @@ $gw-banner-background-color: #3e474a;
             }
 
             @include mq($from: wide) {
-                width: 555px;
-                max-width: 555px;
+                width: 545px;
+                max-width: 545px;
                 margin-bottom: -50px;
             }
         }
