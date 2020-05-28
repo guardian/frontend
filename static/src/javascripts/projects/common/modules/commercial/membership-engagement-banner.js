@@ -24,6 +24,7 @@ import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import memoize from 'lodash/memoize';
+import {bannerSetupArticlesViewedOptOut} from "common/modules/commercial/articles-read-tooltip";
 
 type BannerDeployLog = {
     time: string,
@@ -89,6 +90,15 @@ const deriveBannerParams = (
 
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
+
+const toggleArticlesReadTooltip = () => {
+    let articlesReadSpan = document.querySelector('.engagement-banner__articles-read');
+    let articlesReadTooltip = document.querySelector('.engagement-banner__articles-read-tooltip')
+
+    articlesReadSpan.classList.toggle('active')
+    articlesReadTooltip.classList.toggle('active')
+}
+
 
 const hideBanner = (banner: Message) => {
     banner.hide();
@@ -200,6 +210,7 @@ const showBanner = (params: EngagementBannerParams): boolean => {
             params.bannerShownCallback();
         }
 
+        bannerSetupArticlesViewedOptOut();
         trackBanner(params);
 
         if (params.hasTicker) {

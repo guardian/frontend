@@ -1,9 +1,103 @@
 .engagement-banner__articles-read {
     border-bottom: 1px solid $brightness-7;
     cursor: pointer;
+}
 
-    &:hover {
-        border-bottom: 0;
-        background-color: $highlight-dark;
+.engagement-banner__articles-read.active {
+    border: 0;
+    background-color: $highlight-dark;
+}
+
+.engagement-banner__articles-read-tooltip {
+    display: none;
+    background-color: $highlight-main;
+    color: $brightness-7;
+    border: 1px solid $brightness-7;
+    font-family: $f-sans-serif-text;
+    padding: 15px 10px;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+
+    @include mq($until: tablet) {
+        min-width: 280px;
+        margin-left: 5px;
+    }
+    @include mq($from: tablet) {
+        left: 0;
+        min-width: 328px;
+    }
+}
+
+.engagement-banner__articles-read-tooltip.active {
+    display: block;
+}
+
+.engagement-banner__articles-read-tooltip-header {
+    font-size: 17px;
+    line-height: 21px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.engagement-banner__articles-read-tooltip-body {
+    font-size: 15px;
+    line-height: 18px;
+    margin-bottom: 15px;
+    display: block;
+
+    @include mq($until: tablet) {
+        max-width: 255px;
+    }
+    @include mq($from: tablet) {
+        max-width: 275px;
+    }
+}
+
+.engagement-banner__articles-read-tooltip-buttons {
+    @include mq($from: tablet) {
+        display: flex;
+    }
+    margin-bottom: 15px;
+}
+
+.engagement_banner__articles-read-tooltip-button-opt-out {
+    background-color: $brightness-7 !important;
+    color: $brightness-100 !important;
+}
+
+.engagement_banner__articles-read-tooltip-button-opt-in {
+    background-color: $highlight-main !important;
+    color: $brightness-7 !important;
+    border: 1px solid $brightness-7 !important;
+}
+
+.engagement-banner__articles-read-tooltip-note {
+    font-size: 12px;
+    line-height: 15px;
+    font-style: italic;
+    display: block;
+
+    a {
+        color: $brightness-7 !important;
+        text-decoration: underline !important;
+    }
+}
+
+.engagement-banner__articles-read-tooltip-close {
+    float: right;
+}
+
+.engagement-banner__articles-read-tooltip-close-button {
+    padding: 2px 0 0;
+    margin: 0;
+    border: 0;
+
+    background: transparent;
+    color: $brightness-7;
+
+    svg {
+        fill: $brightness-7;
     }
 }
