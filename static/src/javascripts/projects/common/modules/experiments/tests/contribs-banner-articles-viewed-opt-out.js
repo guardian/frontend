@@ -4,12 +4,12 @@ import {
     getLocalCurrencySymbol,
     getSync as geolocationGetSync,
 } from 'lib/geolocation';
+import config from "lib/config";
+import { getCookie } from "lib/cookies";
+import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import { articlesReadTooltipMarkup } from "common/modules/commercial/articles-read-tooltip-markup";
 import { acquisitionsBannerControlTemplate } from "common/modules/commercial/templates/acquisitions-banner-control";
-import config from "../../../../../lib/config";
-import {getCookie} from "../../../../../lib/cookies";
-import {ARTICLES_VIEWED_OPT_OUT_COOKIE} from "common/modules/commercial/user-features";
 
 // User must have read at least 5 articles in last 6 months (as 26 weeks)
 const minArticleViews = 5;
@@ -36,9 +36,9 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
     canRun: () => {
         const bannerOptOutEnabled = config.get('switches.showArticlesViewedOptOut')
         const minimumNumberOfArticlesViewed = articleViewCount >= minArticleViews
-        const optOutCookieDoesNotExist = !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+        const optOutCookieNotSet = !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
 
-        return (bannerOptOutEnabled && minimumNumberOfArticlesViewed && optOutCookieDoesNotExist)
+        return (bannerOptOutEnabled && minimumNumberOfArticlesViewed && optOutCookieNotSet)
     },
     showForSensitive: true,
     componentType: 'ACQUISITIONS_ENGAGEMENT_BANNER',

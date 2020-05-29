@@ -1,5 +1,4 @@
 // @flow
-import closeIcon from 'svgs/icon/close-large.svg';
 
 export const articlesReadTooltipMarkup = (count: number): string => `
     <span class="engagement-banner__articles-read-tooltip-wrapper">

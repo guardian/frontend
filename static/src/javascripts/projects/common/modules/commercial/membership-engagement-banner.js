@@ -91,15 +91,6 @@ const deriveBannerParams = (
 const selectSequentiallyFrom = (array: Array<string>): string =>
     array[getVisitCount() % array.length];
 
-const toggleArticlesReadTooltip = () => {
-    let articlesReadSpan = document.querySelector('.engagement-banner__articles-read');
-    let articlesReadTooltip = document.querySelector('.engagement-banner__articles-read-tooltip')
-
-    articlesReadSpan.classList.toggle('active')
-    articlesReadTooltip.classList.toggle('active')
-}
-
-
 const hideBanner = (banner: Message) => {
     banner.hide();
 

@@ -67,13 +67,9 @@ const setupHandlers = (elements: ArticlesViewedTooltipElements) => {
         elements.wrapper.classList.remove('active')
     };
 
-    const isActive = () => {
-        return (elements.wrapper.classList.contains('active'))
-    }
+    const isActive = () => (elements.wrapper.classList.contains('active'))
 
-    const toggleTooltip = () => {
-        isActive() ? hideTooltip() : showTooltip()
-    }
+    const toggleTooltip = () => isActive() ? hideTooltip() : showTooltip()
 
     const onArticlesReadClick = () => {
         toggleTooltip()
