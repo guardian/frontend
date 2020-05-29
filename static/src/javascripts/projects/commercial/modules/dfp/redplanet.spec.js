@@ -72,6 +72,7 @@ describe('init', () => {
         isInAuRegion.mockReturnValue(true);
         config.set('ophan.browserId', '123');
         config.set('page.section', 'uk');
+        config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
         onIabConsentNotification.mockImplementation(trueConsentMock);
         isInVariantSynchronous.mockImplementation(
@@ -87,8 +88,9 @@ describe('init', () => {
         const expectedTrackUnstructEventCall = ['trackUnstructEvent', {
             'schema': 'iglu:com.qantas.launchpad/hierarchy/jsonschema/1-0-0',
             'data': {
-                'u1': 'the-guardian',
+                'u1': 'theguardian.com',
                 'u2':  'uk',
+                'u3':  'Politics',
                 'u4': 'Article',
                 'uid': '123',
             }}]

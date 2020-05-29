@@ -18,8 +18,9 @@ const initialise = (): void => {
     window.launchpad('trackUnstructEvent', {
         'schema': 'iglu:com.qantas.launchpad/hierarchy/jsonschema/1-0-0',
         'data': {
-            'u1': 'the-guardian',
+            'u1': 'theguardian.com',
             'u2':  config.get('page.section'),
+            'u3':  config.get('page.sectionName'),
             'u4': config.get('page.contentType'),
             'uid': config.get('ophan', {}).browserId,
         }
