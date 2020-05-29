@@ -62,7 +62,7 @@ trait FeatureSwitches {
     "plista-for-au",
     "Enable the Plista content recommendation widget in Australia",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
