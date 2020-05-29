@@ -5,7 +5,7 @@ import { commercialFeatures } from "common/modules/commercial/commercial-feature
 import { onIabConsentNotification } from "@guardian/consent-management-platform";
 import { isInAuRegion } from "commercial/modules/header-bidding/utils";
 import { isInVariantSynchronous } from "common/modules/experiments/ab";
-import { commercialRedplanet } from "common/modules/experiments/tests/commercial-redplaner-aus";
+import { commercialRedplanet } from "common/modules/experiments/tests/commercial-redplanet-aus";
 
 const initialise = (): void => {
     // Initialise Launchpad Tracker

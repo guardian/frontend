@@ -47,7 +47,7 @@ if (!commercialFeatures.adFree) {
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async with the third party tags
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
-        ['cm-redplaner', () => initRedplanet()],
+        ['cm-redplanet', () => initRedplanet()],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
