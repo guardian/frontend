@@ -18,7 +18,7 @@ const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 const geolocation = geolocationGetSync();
 const leadSentence = 'We chose a different approach. Will you support it?'
 const articlesRead = articlesReadTooltipMarkup(articleViewCount)
-const messageText = `With news under threat, just when we need it most, the Guardian’s quality, fact-checked news and measured explanation has never mattered more. Our editorial independence is vital. We believe every one of us deserves to read honest reporting – that’s why we remain with you, open to all. And you’re visiting in your millions. You’ve read more than ${articlesRead} in the last six months. But at this crucial moment, advertising revenue is plummeting. We need you to help fill the gap. Every contribution, however big or small, is valuable – in times of crisis and beyond.`
+const variantMessageText = `With news under threat, just when we need it most, the Guardian’s quality, fact-checked news and measured explanation has never mattered more. Our editorial independence is vital. We believe every one of us deserves to read honest reporting – that’s why we remain with you, open to all. And you’re visiting in your millions. You’ve read more than ${articlesRead} in the last six months. But at this crucial moment, advertising revenue is plummeting. We need you to help fill the gap. Every contribution, however big or small, is valuable – in times of crisis and beyond.`
 const controlMessageText = `With news under threat, just when we need it most, the Guardian’s quality, fact-checked news and measured explanation has never mattered more. Our editorial independence is vital. We believe every one of us deserves to read honest reporting – that’s why we remain with you, open to all. And you’re visiting in your millions. You’ve read more than ${articleViewCount.toString()} in the last six months. But at this crucial moment, advertising revenue is plummeting. We need you to help fill the gap. Every contribution, however big or small, is valuable – in times of crisis and beyond.`
 const ctaText = `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol(geolocation)}1.</span>`;
 
@@ -39,12 +39,6 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
         const minimumNumberOfArticlesViewed = articleViewCount >= minArticleViews
         const optOutCookieNotSet = !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
 
-        console.log('-------------------------------------')
-        console.log(`bannerOptOutEnabled: ${bannerOptOutEnabled.toString()}`)
-        console.log(`minimumNumberOfArticlesViewed: ${minimumNumberOfArticlesViewed.toString()}`)
-        console.log(`optOutCookieNotSet: ${optOutCookieNotSet.toString()}`)
-        console.log('-------------------------------------')
-
         return (bannerOptOutEnabled && minimumNumberOfArticlesViewed && optOutCookieNotSet)
     },
     showForSensitive: true,
@@ -52,11 +46,11 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
     geolocation,
     variants: [
         {
-          id: 'control',
+            id: 'control',
             test: (): void => {},
             engagementBannerParams: {
-              leadSentence,
-                controlMessageText,
+                leadSentence,
+                messageText: controlMessageText,
                 ctaText,
                 template: acquisitionsBannerControlTemplate
             }
@@ -66,7 +60,7 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
             test: (): void => {},
             engagementBannerParams: {
                 leadSentence,
-                messageText,
+                messageText: variantMessageText,
                 ctaText,
                 template: acquisitionsBannerControlTemplate,
             },
