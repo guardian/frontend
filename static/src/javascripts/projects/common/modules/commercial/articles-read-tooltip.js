@@ -1,13 +1,11 @@
 // @flow
 
-import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
+import { submitClickEvent } from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
-import {addCookie} from "lib/cookies";
+import { addCookie } from "lib/cookies";
 import { local } from 'lib/storage';
 import reportError from "lib/report-error";
-
-const bannerOptOutEnabled = () => true // TODO: change this in prod
 
 type ArticlesViewedTooltipElements = {
     articlesRead: HTMLElement,
@@ -54,15 +52,6 @@ const getElements = (container: HTMLElement): ?ArticlesViewedTooltipElements => 
             note,
             closeButton
         }
-    } else {
-        console.log(`articlesRead: ${articlesRead}`);
-        console.log(`wrapper: ${wrapper}`);
-        console.log(`optOutButton: ${optOutButton}`);
-        console.log(`optInButton: ${optInButton}`);
-        console.log(`header: ${header}`);
-        console.log(`body ${body}`);
-        console.log(`buttons: ${buttons}`);
-        console.log(`note: ${note}`);
     }
 };
 
@@ -147,26 +136,24 @@ const setupHandlers = (elements: ArticlesViewedTooltipElements) => {
 };
 
 const bannerSetupArticlesViewedOptOut = () => {
-    if (bannerOptOutEnabled()) {
-        // If this element exists then they're in the variant
-        const articlesReadTooltipWrapper = document.querySelector('.engagement-banner__articles-read-tooltip-wrapper');
+    // If this element exists then they're in the variant
+    const articlesReadTooltipWrapper = document.querySelector('.engagement-banner__articles-read-tooltip-wrapper');
 
-        if (articlesReadTooltipWrapper) {
-            const elements: ?ArticlesViewedTooltipElements = getElements(articlesReadTooltipWrapper);
+    if (articlesReadTooltipWrapper) {
+        const elements: ?ArticlesViewedTooltipElements = getElements(articlesReadTooltipWrapper);
 
-            if (elements) {
-                setupHandlers(elements);
-            } else {
-                reportError(
-                    new Error(
-                        `Error setting up articles viewed opt-out in banner: unable to find all elements.`
-                    ),
-                    {
-                        feature: 'banner',
-                    },
-                    false
-                );
-            }
+        if (elements) {
+            setupHandlers(elements);
+        } else {
+            reportError(
+                new Error(
+                    `Error setting up articles viewed opt-out in banner: unable to find all elements.`
+                ),
+                {
+                    feature: 'banner',
+                },
+                false
+            );
         }
     }
 };
