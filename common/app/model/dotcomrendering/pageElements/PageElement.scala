@@ -140,6 +140,7 @@ object PageElement {
       case _: AudioAtomBlockElement => true
       case _: VideoBlockElement => true
       case _: ContentAtomBlockElement => true
+      case _: ExplainerAtomBlockElement => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
