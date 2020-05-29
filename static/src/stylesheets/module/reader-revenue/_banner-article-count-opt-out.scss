@@ -21,7 +21,7 @@
     font-family: $f-sans-serif-text;
     padding: 15px 10px;
     position: absolute;
-    bottom: 24px;
+    bottom: 21px !important;
     z-index: 1;
 
     @include mq($until: tablet) {
