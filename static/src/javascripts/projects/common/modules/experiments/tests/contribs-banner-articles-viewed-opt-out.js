@@ -39,6 +39,12 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
         const minimumNumberOfArticlesViewed = articleViewCount >= minArticleViews
         const optOutCookieNotSet = !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
 
+        console.log('-------------------------------------')
+        console.log(`bannerOptOutEnabled: ${bannerOptOutEnabled}`)
+        console.log(`minimumNumberOfArticlesViewed: ${minimumNumberOfArticlesViewed}`)
+        console.log(`optOutCookieNotSet: ${optOutCookieNotSet}`)
+        console.log('-------------------------------------')
+
         return (bannerOptOutEnabled && minimumNumberOfArticlesViewed && optOutCookieNotSet)
     },
     showForSensitive: true,
