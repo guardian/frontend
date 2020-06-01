@@ -11,10 +11,10 @@ import {
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from '../design/centesimus-control-1';
+import { designShow } from '../design/gate-test-vii-variant';
 
 // define the variant name here
-const variant = 'centesimus-control-1';
+const variant = 'vii-variant';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') =>

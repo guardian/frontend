@@ -5,6 +5,7 @@ import { constructQuery } from 'lib/url';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateCentesimus } from 'common/modules/experiments/tests/sign-in-gate-centesimus';
+import { signInGateVii } from 'common/modules/experiments/tests/sign-in-gate-vii';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { withComponentId, componentName } from './component';
@@ -16,7 +17,7 @@ import type {
 } from './types';
 
 // if using multiple tests, then add them all in this array. (all the variant names in each test in the array must be unique)
-const tests = [signInGatePatientia, signInGateCentesimus];
+const tests = [signInGatePatientia, signInGateCentesimus, signInGateVii];
 
 const canShow: () => Promise<boolean> = () =>
     new Promise(resolve => {

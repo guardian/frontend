@@ -5,6 +5,7 @@ import type { SignInGateVariant } from '../types';
 import { signInGateVariant as patientiaControl } from './patientia/control';
 import { signInGateVariant as patientiaVariant } from './patientia/variant';
 import { signInGateVariant as centesimusControl } from './centesimus/control';
+import { signInGateVariant as gateTestViiVariant } from './gate-test-vii/variant';
 
 // to add a variant, first import the variant in the SignInGateVariant type, and then add to this exported array
 export const variants: Array<SignInGateVariant> = [
@@ -12,4 +13,5 @@ export const variants: Array<SignInGateVariant> = [
     patientiaControl,
     patientiaVariant,
     centesimusControl,
+    gateTestViiVariant,
 ];
