@@ -30,7 +30,14 @@ type BannerDeployLog = {
 };
 
 const messageCode = 'engagement-banner';
-const minArticlesBeforeShowingBanner = 3;
+
+/**
+ * minArticlesBeforeShowingBanner is used by the
+ * showMeTheBanner function in reader-rev-dev-utils,
+ * it is not used in Prod. In Prod minArticlesBeforeShowingBanner
+ * value comes from Google Docs.
+ */
+const minArticlesBeforeShowingBanner = 2;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
