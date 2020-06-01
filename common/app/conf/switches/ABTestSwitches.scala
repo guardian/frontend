@@ -132,7 +132,7 @@ trait ABTestSwitches {
     "A/B test to test amp-experiment tag functionality on prod",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
+    sellByDate = new LocalDate(2020, 8, 1),
     exposeClientSide = true
   )
 
