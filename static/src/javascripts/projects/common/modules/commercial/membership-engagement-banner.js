@@ -24,6 +24,7 @@ import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import memoize from 'lodash/memoize';
+import {bannerSetupArticlesViewedOptOut} from "common/modules/commercial/articles-read-tooltip";
 
 type BannerDeployLog = {
     time: string,
@@ -200,6 +201,7 @@ const showBanner = (params: EngagementBannerParams): boolean => {
             params.bannerShownCallback();
         }
 
+        bannerSetupArticlesViewedOptOut();
         trackBanner(params);
 
         if (params.hasTicker) {
