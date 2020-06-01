@@ -50,7 +50,7 @@ const getAcquisitionsBannerParams = (
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         isHardcodedFallback: false,
         template: acquisitionsBannerControlTemplate,
-        minArticlesBeforeShowingBanner: 3,
+        minArticlesBeforeShowingBanner: 2,
         userCohort: 'AllNonSupporters',
     };
 };
