@@ -16,6 +16,7 @@ import { init as prepareAdVerification } from 'commercial/modules/ad-verificatio
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
 import { initPermutive } from 'commercial/modules/dfp/prepare-permutive';
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
@@ -45,6 +46,7 @@ if (!commercialFeatures.adFree) {
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async with the third party tags
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+        ['cm-redplanet', () => initRedplanet()],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
