@@ -82,7 +82,7 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
                 products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
                 isHardcodedFallback: true,
                 template: acquisitionsBannerControlTemplate,
-                minArticlesBeforeShowingBanner: 3,
+                minArticlesBeforeShowingBanner: 2,
                 userCohort: 'AllNonSupporters',
             };
         });

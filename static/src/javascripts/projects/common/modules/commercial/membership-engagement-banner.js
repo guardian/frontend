@@ -35,7 +35,7 @@ const messageCode = 'engagement-banner';
  * minArticlesBeforeShowingBanner is used by the
  * showMeTheBanner function in reader-rev-dev-utils,
  * it is not used in Prod. In Prod minArticlesBeforeShowingBanner
- * value comes from Google Docs.
+ * value comes from getControlEngagementBannerParams()
  */
 const minArticlesBeforeShowingBanner = 2;
 
