@@ -11,7 +11,7 @@
 )(implicit request: RequestHeader, context: ApplicationContext)
 
 @import _root_.model.ShareLinkMeta
-@import _root_.model.content.{InteractiveAtom, MediaAtom, Quiz, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom, AudioAtom, ChartAtom}
+@import _root_.model.content.{InteractiveAtom, MediaAtom, QuizAtom, TimelineAtom, GuideAtom, ProfileAtom, QandaAtom, ExplainerAtom, CommonsDivisionAtom, AudioAtom, ChartAtom}
 @{
     model match {
         case audio: AudioAtom => Html(ArticleAtomRenderer.getHTML(audio.atom, config))
@@ -28,7 +28,7 @@
         )
         case profile: ProfileAtom => Html(ArticleAtomRenderer.getHTML(profile.atom, config))
         case qanda: QandaAtom => Html(ArticleAtomRenderer.getHTML(qanda.atom, config))
-        case quiz: Quiz => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
+        case quiz: QuizAtom => views.html.fragments.atoms.quiz(quiz, maybeResults = None, showResults = false, sharelinks = quiz.shareLinks)
         case timeline: TimelineAtom => Html(ArticleAtomRenderer.getHTML(timeline.atom, config))
         case _ =>
     }
