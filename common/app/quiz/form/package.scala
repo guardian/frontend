@@ -1,6 +1,6 @@
 package quiz
 
-import model.content.Quiz
+import model.content.QuizAtom
 import play.api.data.Form
 import play.api.data.Forms._
 
@@ -12,7 +12,7 @@ package object form {
     mapping("answers" -> list(text))(Inputs.apply)(Inputs.unapply)
   )
 
-  def checkUsersAnswers(inputs: Inputs, quiz: Quiz): QuizResults = {
+  def checkUsersAnswers(inputs: Inputs, quiz: QuizAtom): QuizResults = {
     val validAnswers = inputs.answerIds.map(findQuizDataFor(_, quiz.content))
 
     QuizResults(quiz, validAnswers.flatten)
@@ -43,7 +43,7 @@ package object form {
   }
 
   case class QuizResults(
-    quiz: Quiz,
+    quiz: QuizAtom,
     entries: Seq[(Question, Answer)]
   ) {
 

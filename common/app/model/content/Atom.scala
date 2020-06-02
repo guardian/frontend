@@ -305,7 +305,7 @@ object QandaAtom {
 // Quiz
 // ----------------------------------------
 
-final case class Quiz(
+final case class QuizAtom(
   override val id: String,
   title: String,
   path: String,
@@ -315,7 +315,7 @@ final case class Quiz(
   shareLinks: ShareLinkMeta
 ) extends Atom
 
-object Quiz extends common.Logging {
+object QuizAtom extends common.Logging {
 
   implicit val assetFormat = Json.format[Asset]
   implicit val imageFormat = Json.format[Image]
@@ -389,13 +389,13 @@ object Quiz extends common.Logging {
       }).getOrElse(Nil)
     )
 
-  def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): Quiz = {
+  def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): QuizAtom = {
 
     val quiz = atom.data.asInstanceOf[AtomData.Quiz].quiz
     val questions = extractQuestions(quiz)
     val content = extractContent(questions, quiz)
 
-    Quiz(
+    QuizAtom(
       id = quiz.id,
       path = path,
       title = quiz.title,
