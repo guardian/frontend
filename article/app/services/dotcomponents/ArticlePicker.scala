@@ -44,6 +44,12 @@ object ArticlePageChecks {
       case _: RichLinkBlockElement => false
       case _: InstagramBlockElement => false
       case _: SoundcloudBlockElement => false
+      case ContentAtomBlockElement(_, atomtype) => {
+        // ContentAtomBlockElement was expanded to include atomtype.
+        // To whitelist an atom type, just add it to supportedAtomTypes
+        val supportedAtomTypes = List("explainer")
+        !supportedAtomTypes.contains(atomtype)
+      }
       case _ => true
     }
 
