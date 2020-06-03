@@ -165,4 +165,16 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 7, 1),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-cmp-ccpa-test",
+    "Check participation in CCPA variant",
+    owners = Seq(Owner.withGithub("buck06191"),
+      Owner.withGithub("ripecosta"),
+      Owner.withGithub("sndrs")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 7, 1),
+    exposeClientSide = true
+  )
 }
