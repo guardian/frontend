@@ -3,7 +3,7 @@
 export const ccpaCMPTest: ABTest = {
     id: 'CmpCcpaTest',
     start: '2020-06-08',
-    expiry: '2020-06-30',
+    expiry: '2020-07-01',
     author: 'Joshua Buckland',
     description: 'Test new CMP implementation for CCPA in US',
     audience: 0.0,
