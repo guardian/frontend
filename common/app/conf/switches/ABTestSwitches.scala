@@ -168,7 +168,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-cmp-ccpa-opt-in",
+    "ab-cmp-ccpa-test",
     "Check participation in CCPA variant",
     owners = Seq(Owner.withGithub("buck06191"),
       Owner.withGithub("ripecosta"),

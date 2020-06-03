@@ -1,7 +1,7 @@
 // @flow strict
 
 export const ccpaCMPTest: ABTest = {
-    id: 'CmpCcpaOptIn',
+    id: 'CmpCcpaTest',
     start: '2020-06-08',
     expiry: '2020-06-30',
     author: 'Joshua Buckland',
