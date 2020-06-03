@@ -1,11 +1,8 @@
 // @flow
-import { isInAuRegion as isInAuRegion_ }
-from 'commercial/modules/header-bidding/utils';
 import { imrWorldwide } from './imr-worldwide';
 
 const { shouldRun, url } = imrWorldwide;
 const onLoad: any = imrWorldwide.onLoad;
-const isInAuRegion: any = isInAuRegion_;
 
 /**
  * we have to mock config like this because
@@ -34,7 +31,7 @@ jest.mock('lib/config', () => {
     return Object.assign({}, defaultConfig, {
         get: (path: string = '', defaultValue: any) =>
             path
-                .replace(/\[(.+?)\]/g, '.$1')
+                .replace(/\[(.+?)]/g, '.$1')
                 .split('.')
                 .reduce((o, key) => o[key], defaultConfig) || defaultValue,
     });
@@ -62,12 +59,9 @@ window.NOLCMB = {
     getInstance: jest.fn(() => nSdkInstance),
 };
 
-isInAuRegion.mockReturnValue(true);
-
 describe('third party tag IMR in AUS', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        isInAuRegion.mockReturnValue(true);
     });
 
     afterAll(() => {
