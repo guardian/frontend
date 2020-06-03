@@ -61,7 +61,8 @@ import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
-import {getCookie} from "lib/cookies";
+import {getCookie} from 'lib/cookies';
+import { parseTickerSettings } from 'common/modules/commercial/ticker';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -407,6 +408,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        // TODO
         showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
 
@@ -768,6 +770,7 @@ export const buildConfiguredEpicTestFromJson = (
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
             showTicker: variant.showTicker,
+            tickerSettings: variant.tickerSettings ? parseTickerSettings(variant.tickerSettings) : null,
             showReminderFields: variant.showReminderFields,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
