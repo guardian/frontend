@@ -55,15 +55,13 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
-import { initTicker } from 'common/modules/commercial/ticker';
+import { type TickerSettings, initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
 import {getCookie} from 'lib/cookies';
-import { parseTickerSettings } from 'common/modules/commercial/ticker';
-import type {TickerSettings} from "common/modules/commercial/ticker";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'

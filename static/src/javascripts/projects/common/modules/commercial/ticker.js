@@ -10,14 +10,14 @@ type TickerCopy = {
     goalReachedSecondary: string,
 }
 
-export type TickerSettings = {
+type TickerSettings = {
     endType: TickerEndType,
     countType: TickerCountType,
     currencySymbol: string,
     copy: TickerCopy,
 }
 
-export const parseTickerSettings = (obj: Object): ?TickerSettings => {
+const parseTickerSettings = (obj: Object): ?TickerSettings => {
   const endType = obj.endType === 'unlimited' || obj.endType ===  'hardstop' ? obj.endType : null;
   const countType = obj.countType === 'money' || obj.countType ===  'people' ? obj.countType : null;
   const copy = obj.copy && obj.copy.countLabel && obj.copy.goalReachedPrimary && obj.copy.goalReachedSecondary ? obj.copy : null;
@@ -219,7 +219,7 @@ const defaultSettings: TickerSettings = {
     }
 };
 
-export const initTicker = (
+const initTicker = (
     parentElementSelector: string,
     tickerSettings: ?TickerSettings
 ) => {
@@ -228,3 +228,9 @@ export const initTicker = (
         tickerSettings || defaultSettings,
     );
 };
+
+export {
+    TickerSettings,
+    initTicker,
+    parseTickerSettings,
+}
