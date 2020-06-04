@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, Control, DCRBubble, DiscussionRendering, DotcomRendering, Excluded, Experiment, Participant}
+import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ContentAtomBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
@@ -127,33 +127,6 @@ object ArticlePageChecks {
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
-  def isSupportedToneExperimentDiscussionRendering(page: PageWithStoryPackage): Boolean = {
-    Set(
-      "tone/albumreview",
-      "tone/analysis",
-      "tone/blog",
-      "tone/comment",
-      "tone/competitions",
-      "tone/documentaries",
-      "tone/editorials",
-      "tone/explainers",
-      "tone/extract",
-      "tone/features",
-      "tone/help",
-      "tone/interview",
-      "tone/letters",
-      "tone/livereview",
-      "tone/news",
-      "tone/obituaries",
-      "tone/performances",
-      "tone/polls",
-      "tone/profiles",
-      "tone/recipes",
-      "tone/reviews",
-      "tone/timelines"
-    ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
-  }
-
   def isNotBlackListed(page: PageWithStoryPackage): Boolean = {
     !page.item.tags.tags.exists(s=>tagsBlacklist(s.id))
   }
@@ -185,23 +158,6 @@ object ArticlePicker {
     )
   }
 
-  def primaryFeaturesExperimentDiscussionRendering(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
-    Map(
-      ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
-      ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
-      ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
-      ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
-      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
-      ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
-      ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
-      ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isSupportedTone", ArticlePageChecks.isSupportedToneExperimentDiscussionRendering(page)),
-      ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
-      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
-    )
-  }
-
   def isInWhitelist(path: String): Boolean = {
     // our whitelist is only one article at the moment
     path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
@@ -209,10 +165,6 @@ object ArticlePicker {
 
   def forall(features:  Map[String, Boolean]): Boolean = {
     features.forall({ case (_, isMet) => isMet})
-  }
-
-  def notCommentOrOpinion(page: PageWithStoryPackage): Boolean = {
-    ArticlePageChecks.isDiscussionDisabled(page) || ArticlePageChecks.isNotOpinion(page)
   }
 
   def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
@@ -243,23 +195,16 @@ object ArticlePicker {
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
-
-    val userInMainTest = ActiveExperiments.isParticipating(DotcomRendering)
-    val userInDiscussionTest = ActiveExperiments.isParticipating(DiscussionRendering)
-    val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
     val hasPrimaryFeatures = forall(primaryChecks)
 
-    val canRender = hasPrimaryFeatures && notCommentOrOpinion(page)
-
-    val primaryChecksExperimentDiscussionRendering = primaryFeaturesExperimentDiscussionRendering(page, request)
-    val hasPrimaryFeaturesExperimentDiscussionRendering = forall(primaryChecksExperimentDiscussionRendering)
+    val userInDCRTest = ActiveExperiments.isParticipating(DotcomRendering)
+    val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
       if (dcrDisabled(request)) LocalRenderArticle
       else if (dcrForced(request)) RemoteRender
       else if (userInDCRBubble) RemoteRender
-      else if (userInMainTest && canRender) RemoteRender
-      else if (userInDiscussionTest && hasPrimaryFeaturesExperimentDiscussionRendering) RemoteRender
+      else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
@@ -275,12 +220,10 @@ object ArticlePicker {
     // include features that we wish to log but not whitelist against
     val features = primaryChecks.mapValues(_.toString) +
       ("dcrTestGroup" -> testGroup(DotcomRendering)) +
-      ("dcrDiscussionTestGroup" -> testGroup(DiscussionRendering)) +
-      ("userIsInCohort" -> userInMainTest.toString) +
-      ("userIsInCohortDiscussion" -> userInDiscussionTest.toString) +
+      ("userIsInCohort" -> userInDCRTest.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
-      ("dcrCouldRender" -> canRender.toString) +
+      ("dcrCouldRender" -> hasPrimaryFeatures.toString) +
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
