@@ -4,23 +4,29 @@ import fetchJSON from 'lib/fetch-json';
 type TickerEndType = 'unlimited' | 'hardstop';
 type TickerCountType = 'money' | 'people';
 
+type TickerCopy = {
+    countLabel: string,
+    goalReachedPrimary: string,
+    goalReachedSecondary: string,
+}
+
 export type TickerSettings = {
     endType: TickerEndType,
     countType: TickerCountType,
-    countLabelCopy: string,
-    currencySymbol?: string,
+    currencySymbol: string,
+    copy: TickerCopy,
 }
 
 export const parseTickerSettings = (obj: Object): ?TickerSettings => {
   const endType = obj.endType === 'unlimited' || obj.endType ===  'hardstop' ? obj.endType : null;
   const countType = obj.countType === 'money' || obj.countType ===  'people' ? obj.countType : null;
-  const countLabelCopy = obj.countLabelCopy;
+  const copy = obj.copy && obj.copy.countLabel && obj.copy.goalReachedPrimary && obj.copy.goalReachedSecondary ? obj.copy : null;
 
-  if (endType && countType && countLabelCopy && (countType === 'people' || obj.currencySymbol)) {
+  if (endType && countType && copy && obj.currencySymbol) {
       return {
           endType,
           countType,
-          countLabelCopy,
+          copy,
           currencySymbol: obj.currencySymbol,
       }
   }
@@ -117,13 +123,13 @@ const populateStatusSoFar = (
 
     if (counterElement && labelElement) {
         if (goalReached()) {
-            counterElement.innerHTML = `We’ve met our goal — thank you`;
+            counterElement.innerHTML = tickerSettings.copy.goalReachedPrimary;
             if (tickerSettings.endType === 'unlimited') {
-                labelElement.innerHTML = `Contributions are still being accepted`;
+                labelElement.innerHTML = tickerSettings.copy.goalReachedSecondary;
                 labelElement.classList.remove('is-hidden');
             }
         } else {
-            labelElement.innerHTML = tickerSettings.countLabelCopy;
+            labelElement.innerHTML = tickerSettings.copy.labelCopy;
             labelElement.classList.remove('is-hidden');
             increaseCounter(parentElementSelector, counterElement, tickerSettings);
         }
@@ -143,7 +149,7 @@ const populateGoal = (parentElement: HTMLElement, tickerSettings: TickerSettings
             countElement.innerHTML = `${getCurrencySymbol(tickerSettings)}${amount.toLocaleString()}`;
 
             if (goalReached()) {
-                labelElement.innerHTML = tickerSettings.countLabelCopy;
+                labelElement.innerHTML = tickerSettings.copy.labelCopy;
             }
         }
     }
@@ -194,7 +200,7 @@ const fetchDataAndAnimate = (
         }).then(data => {
             total = parseInt(data.total, 10);
             goal = parseInt(data.goal, 10);
-            total = 151000
+            // total = 151000
 
             if (dataSuccessfullyFetched()) {
                 animate(parentElementSelector, tickerSettings);
@@ -203,16 +209,22 @@ const fetchDataAndAnimate = (
     }
 };
 
+const defaultSettings: TickerSettings = {
+    endType: 'unlimited',
+    countType: 'people',
+    copy: {
+        labelCopy: 'supporters in Australia',
+        goalReachedPrimary: 'We\'ve hit our goal!',
+        goalReachedSecondary: 'but you can still support us',
+    }
+};
+
 export const initTicker = (
     parentElementSelector: string,
-    tickerSettings?: TickerSettings = {
-        endType: 'unlimited',
-        countType: 'people',
-        countLabelCopy: 'supporters in Australia'
-    }
+    tickerSettings: ?TickerSettings
 ) => {
     fetchDataAndAnimate(
         parentElementSelector,
-        tickerSettings,
+        tickerSettings || defaultSettings,
     );
 };

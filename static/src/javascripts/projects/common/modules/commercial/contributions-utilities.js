@@ -63,6 +63,7 @@ import {
 } from 'common/modules/commercial/epic-reminder-email-signup';
 import {getCookie} from 'lib/cookies';
 import { parseTickerSettings } from 'common/modules/commercial/ticker';
+import type {TickerSettings} from "common/modules/commercial/ticker";
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -303,7 +304,8 @@ const setupOphanView = (
     trackingCampaignId: string,
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false
+    showTicker: boolean = false,
+    tickerSettings: ?TickerSettings,
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -328,8 +330,8 @@ const setupOphanView = (
 
         mediator.emit('register:end', trackingCampaignId);
 
-        if (showTicker) {
-            initTicker('.js-epic-ticker');
+        if (showTicker || !!tickerSettings) {
+            initTicker('.js-epic-ticker', tickerSettings);
         }
 
         if (config.get('switches.showContributionReminder')) {
@@ -408,7 +410,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
-        // TODO
+        tickerSettings: initVariant.tickerSettings,
         showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
 
@@ -530,6 +532,7 @@ const makeEpicABTestVariant = (
                                         parentTest.componentType,
                                         initVariant.products,
                                         initVariant.showTicker,
+                                        initVariant.tickerSettings,
                                     );
                                 });
                             }
