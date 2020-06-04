@@ -32,7 +32,7 @@ declare type EpicVariant = Variant & {
     componentName: string,
     template: EpicTemplate,
     classNames: string[],
-    showTicker: boolean,    // Deprecated, use tickerSettings instead
+    showTicker?: boolean,    // Deprecated, use tickerSettings instead
     tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
 

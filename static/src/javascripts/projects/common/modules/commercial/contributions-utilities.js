@@ -131,7 +131,7 @@ const controlTemplate: EpicTemplate = (
               )
             : undefined,
         epicClassNames: variant.classNames,
-        showTicker: variant.showTicker,
+        showTicker: variant.showTicker || !!variant.tickerSettings,
         showReminderFields: variant.showReminderFields,
         backgroundImageUrl: variant.backgroundImageUrl,
     });
