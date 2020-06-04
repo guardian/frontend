@@ -51,7 +51,7 @@ export const hasUserDismissedGate: ({
 
 // Dynamically sets the gate custom parameter for Google ad request page targeting
 export const setGatePageTargeting = (canShow: boolean): void => {
-    if (window && window.googletag) {
+    if (window.googletag) {
         window.googletag.cmd.push(() => {
             window.googletag
                 .pubads()
@@ -115,7 +115,6 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
         'isSensitive',
         'isSplash',
         'isPodcast',
-        'isInvalidArticleType',
     ];
 
     return invalidTypes
