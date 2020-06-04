@@ -69,12 +69,12 @@ const insertScripts = (
 
     onIabConsentNotification(state => {
         // typeof state === 'boolean' means CCPA mode is on
-        const conRun =
+        const canRun =
             typeof state === 'boolean'
                 ? !state
                 : state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!advertisingScriptsInserted && conRun) {
+        if (!advertisingScriptsInserted && canRun) {
             addScripts(advertisingServices);
             advertisingScriptsInserted = true;
         }

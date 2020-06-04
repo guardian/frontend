@@ -7,7 +7,6 @@ import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/module
 import config from 'lib/config';
 import { init } from './redplanet';
 
-
 const onIabConsentNotification: any = onIabConsentNotification_;
 const isInAuOrNz: any = isInAuOrNz_;
 const trueConsentMock = (callback): void =>
@@ -17,7 +16,6 @@ const falseConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': false });
 
 const isInVariantSynchronous: any = isInVariantSynchronous_;
-
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -36,7 +34,6 @@ jest.mock('common/modules/experiments/ab', () => ({
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
-
 
 jest.mock('lib/launchpad', () => jest.fn());
 
@@ -81,29 +78,46 @@ describe('init', () => {
 
         await init();
 
-        const expectedNewTrackerCall = ['newTracker', 'launchpad', 'lpx.qantas.com',  {
-            "appId": "the-guardian",
-            "discoverRootDomain": true,
-        }];
-        const expectedTrackUnstructEventCall = ['trackUnstructEvent', {
-            'schema': 'iglu:com.qantas.launchpad/hierarchy/jsonschema/1-0-0',
-            'data': {
-                'u1': 'theguardian.com',
-                'u2':  'uk',
-                'u3':  'Politics',
-                'u4': 'Article',
-                'uid': '123',
-            }}]
+        const expectedNewTrackerCall = [
+            'newTracker',
+            'launchpad',
+            'lpx.qantas.com',
+            {
+                appId: 'the-guardian',
+                discoverRootDomain: true,
+            },
+        ];
+        const expectedTrackUnstructEventCall = [
+            'trackUnstructEvent',
+            {
+                schema: 'iglu:com.qantas.launchpad/hierarchy/jsonschema/1-0-0',
+                data: {
+                    u1: 'theguardian.com',
+                    u2: 'uk',
+                    u3: 'Politics',
+                    u4: 'Article',
+                    uid: '123',
+                },
+            },
+        ];
         expect(window.launchpad.mock.calls).toEqual([
             expectedNewTrackerCall,
-            expectedTrackUnstructEventCall
+            expectedTrackUnstructEventCall,
         ]);
     });
 
-    it('should not initialise redplanet when user consented false', async () => {
+    it('should not initialise redplanet when user TCF consent has not been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
         onIabConsentNotification.mockImplementation(falseConsentMock);
+        await init();
+        expect(window.launchpad).not.toBeCalled();
+    });
+
+    it('should not initialise redplanet when user CCPA consent has not been given', async () => {
+        commercialFeatures.launchpad = true;
+        isInAuRegion.mockReturnValue(true);
+        onIabConsentNotification.mockReturnValue(true);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
