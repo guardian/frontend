@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import {isInAuRegion} from "commercial/modules/header-bidding/utils";
 
 // NOLCMB is a global function defined by the IMR worldwide library
 declare var NOLCMB: Object;
@@ -88,7 +89,7 @@ const onLoad = () => {
 };
 
 export const imrWorldwide: ThirdPartyTag = {
-    shouldRun: config.get('switches.imrWorldwide'),
+    shouldRun: config.get('switches.imrWorldwide') && isInAuRegion(),
     url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
     onLoad,
 };
