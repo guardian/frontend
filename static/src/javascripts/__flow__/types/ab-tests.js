@@ -33,7 +33,7 @@ declare type EpicVariant = Variant & {
     template: EpicTemplate,
     classNames: string[],
     showTicker: boolean,    // Deprecated, use tickerSettings instead
-    tickerSettings?: TickerSettings,
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
 
     buttonTemplate?: (
@@ -121,7 +121,7 @@ declare type InitEpicABTestVariant = {
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
-    tickerSettings?: TickerSettings,
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
     supportBaseURL?: string,
     backgroundImageUrl?: string,
