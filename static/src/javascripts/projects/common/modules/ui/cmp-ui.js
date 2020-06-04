@@ -1,6 +1,8 @@
 // @flow
 import config from 'lib/config';
 import { shouldShow } from '@guardian/consent-management-platform';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
 import raven from 'lib/raven';
 
 let initUi;
@@ -71,6 +73,10 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> =>
-        Promise.resolve(config.get('switches.cmpUi', true) && shouldShow()),
+        Promise.resolve(
+            config.get('switches.cmpUi', true) &&
+                shouldShow() &&
+                !isInVariantSynchronous(ccpaCmpTest, 'variant')
+        ),
     show,
 };
