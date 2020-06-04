@@ -219,7 +219,7 @@ object ArticlePicker {
 
     // include features that we wish to log but not whitelist against
     val features = primaryChecks.mapValues(_.toString) +
-      ("dcrTestGroup1" -> testGroup(DotcomRendering)) +
+      ("dcrTestGroup" -> testGroup(DotcomRendering)) +
       ("userIsInCohort" -> userInDCRTest.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
