@@ -179,7 +179,7 @@ trait ABTestSwitches {
   Switch(
     ABTests,
     "ab-cmp-ccpa-test",
-    "Check participation in CCPA variant",
+    "Test new CMP implementation for CCPA alongside TCFv1",
     owners = Seq(Owner.withGithub("buck06191"),
       Owner.withGithub("ripecosta"),
       Owner.withGithub("sndrs")),

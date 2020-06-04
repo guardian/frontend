@@ -28,16 +28,21 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
-import {init as initRedplanet} from "commercial/modules/dfp/redplanet";
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-prepare-cmp', initCmpService],
     ['cm-lotame-cmp', initLotameCmp],
     ['cm-lotame-data-extract', initLotameDataExtract],
     ['cm-comscore', initComscore],
 ];
+
+if (!isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+    commercialModules.push(['cm-prepare-cmp', initCmpService]);
+}
 
 if (!commercialFeatures.adFree) {
     commercialModules.push(
