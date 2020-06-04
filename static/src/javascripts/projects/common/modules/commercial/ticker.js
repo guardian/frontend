@@ -200,7 +200,6 @@ const fetchDataAndAnimate = (
         }).then(data => {
             total = parseInt(data.total, 10);
             goal = parseInt(data.goal, 10);
-            // total = 151000
 
             if (dataSuccessfullyFetched()) {
                 animate(parentElementSelector, tickerSettings);
