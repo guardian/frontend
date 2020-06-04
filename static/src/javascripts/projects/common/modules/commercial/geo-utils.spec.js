@@ -33,19 +33,7 @@ describe('Geolocation Utils', () => {
             expectedRowValue: false,
         },
         {
-            fnName: 'isInUk()',
-            mockCountryCode: 'NON-GB',
-            expectedUKValue: false,
-            expectedUsaValue: false,
-            expectedCaValue: false,
-            expectedAuValue: false,
-            expectedNzValue: false,
-            expectedUsOrCaValue: false,
-            expectedAuOrNzValue: false,
-            expectedRowValue: true,
-        },
-        {
-            fnName: 'isInUsa()',
+            fnName: 'isInUsa() and isInUsOrCa()',
             mockCountryCode: 'US',
             expectedUKValue: false,
             expectedUsaValue: true,
@@ -57,19 +45,7 @@ describe('Geolocation Utils', () => {
             expectedRowValue: false,
         },
         {
-            fnName: 'isInUsa()',
-            mockCountryCode: 'NON-US',
-            expectedUKValue: false,
-            expectedUsaValue: false,
-            expectedCaValue: false,
-            expectedAuValue: false,
-            expectedNzValue: false,
-            expectedUsOrCaValue: false,
-            expectedAuOrNzValue: false,
-            expectedRowValue: true,
-        },
-        {
-            fnName: 'isInCanada()',
+            fnName: 'isInCanada() and isInUsOrCa()',
             mockCountryCode: 'CA',
             expectedUKValue: false,
             expectedUsaValue: false,
@@ -81,19 +57,7 @@ describe('Geolocation Utils', () => {
             expectedRowValue: false,
         },
         {
-            fnName: 'isInCanada()',
-            mockCountryCode: 'NON-CA',
-            expectedUKValue: false,
-            expectedUsaValue: false,
-            expectedCaValue: false,
-            expectedAuValue: false,
-            expectedNzValue: false,
-            expectedUsOrCaValue: false,
-            expectedAuOrNzValue: false,
-            expectedRowValue: true,
-        },
-        {
-            fnName: 'isInAustralia()',
+            fnName: 'isInAustralia() and isInAuOrNz()',
             mockCountryCode: 'AU',
             expectedUKValue: false,
             expectedUsaValue: false,
@@ -105,19 +69,7 @@ describe('Geolocation Utils', () => {
             expectedRowValue: false,
         },
         {
-            fnName: 'isInAustralia()',
-            mockCountryCode: 'NON-AU',
-            expectedUKValue: false,
-            expectedUsaValue: false,
-            expectedCaValue: false,
-            expectedAuValue: false,
-            expectedNzValue: false,
-            expectedUsOrCaValue: false,
-            expectedAuOrNzValue: false,
-            expectedRowValue: true,
-        },
-        {
-            fnName: 'isInNewZealand()',
+            fnName: 'isInNewZealand() and isInAuOrNz()',
             mockCountryCode: 'NZ',
             expectedUKValue: false,
             expectedUsaValue: false,
@@ -129,8 +81,8 @@ describe('Geolocation Utils', () => {
             expectedRowValue: false,
         },
         {
-            fnName: 'isInNewZealand()',
-            mockCountryCode: 'NON-NZS',
+            fnName: 'isInRow()',
+            mockCountryCode: 'NONE_OF_THE_ABOVE',
             expectedUKValue: false,
             expectedUsaValue: false,
             expectedCaValue: false,
@@ -143,7 +95,7 @@ describe('Geolocation Utils', () => {
     ]
 
     testCases.forEach( testCase => {
-        it(`${testCase.fnName} returns correct expectations for geolocation '${testCase.mockCountryCode}'`, () => {
+        it(`Only ${testCase.fnName} return true for geolocation '${testCase.mockCountryCode}'`, () => {
             mockCountryCode = testCase.mockCountryCode;
             expect(isInUk()).toBe(testCase.expectedUKValue);
             expect(isInUsa()).toBe(testCase.expectedUsaValue);
