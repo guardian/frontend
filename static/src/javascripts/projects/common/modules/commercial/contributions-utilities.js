@@ -55,7 +55,7 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
-import { type TickerSettings, initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
+import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
     epicReminderEmailSignup,

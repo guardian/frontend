@@ -1,16 +1,16 @@
 // @flow
 import fetchJSON from 'lib/fetch-json';
 
-type TickerEndType = 'unlimited' | 'hardstop';
-type TickerCountType = 'money' | 'people';
+declare type TickerEndType = 'unlimited' | 'hardstop';
+declare type TickerCountType = 'money' | 'people';
 
-type TickerCopy = {
+declare type TickerCopy = {
     countLabel: string,
     goalReachedPrimary: string,
     goalReachedSecondary: string,
 }
 
-type TickerSettings = {
+declare type TickerSettings = {
     endType: TickerEndType,
     countType: TickerCountType,
     currencySymbol: string,
@@ -40,7 +40,7 @@ let total;
 
 const goalReached = () => total >= goal;
 
-const getCurrencySymbol: string = (tickerSettings: TickerSettings) =>
+const getCurrencySymbol = (tickerSettings: TickerSettings): string =>
     tickerSettings.countType === 'money' ? tickerSettings.currencySymbol : '';
 
 /**
@@ -129,7 +129,7 @@ const populateStatusSoFar = (
                 labelElement.classList.remove('is-hidden');
             }
         } else {
-            labelElement.innerHTML = tickerSettings.copy.labelCopy;
+            labelElement.innerHTML = tickerSettings.copy.countLabel;
             labelElement.classList.remove('is-hidden');
             increaseCounter(parentElementSelector, counterElement, tickerSettings);
         }
@@ -149,7 +149,7 @@ const populateGoal = (parentElement: HTMLElement, tickerSettings: TickerSettings
             countElement.innerHTML = `${getCurrencySymbol(tickerSettings)}${amount.toLocaleString()}`;
 
             if (goalReached()) {
-                labelElement.innerHTML = tickerSettings.copy.labelCopy;
+                labelElement.innerHTML = tickerSettings.copy.countLabel;
             }
         }
     }
@@ -213,10 +213,11 @@ const defaultSettings: TickerSettings = {
     endType: 'unlimited',
     countType: 'people',
     copy: {
-        labelCopy: 'supporters in Australia',
+        countLabel: 'supporters in Australia',
         goalReachedPrimary: 'We\'ve hit our goal!',
         goalReachedSecondary: 'but you can still support us',
-    }
+    },
+    currencySymbol: '$',
 };
 
 const initTicker = (
@@ -230,7 +231,6 @@ const initTicker = (
 };
 
 export {
-    TickerSettings,
     initTicker,
     parseTickerSettings,
 }
