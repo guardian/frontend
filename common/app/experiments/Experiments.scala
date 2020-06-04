@@ -8,7 +8,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
     DotcomRendering,
-    DiscussionRendering,
     DCRBubble
   )
 
@@ -26,18 +25,10 @@ object OldTLSSupportDeprecation extends Experiment(
 
 object DotcomRendering extends Experiment(
   name = "dotcom-rendering",
-  description = "Show DCR pages to users",
-  owners = Seq(Owner.withGithub("shtukas")),
-  sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc20A // Also see ArticlePicker.scala - our main filter mechanism is by page features
-)
-
-object DiscussionRendering extends Experiment(
-  name = "discussion-rendering",
   description = "Show DCR pages to users including those with comments",
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc10A // Also see ArticlePicker.scala - our main filter mechanism is by page features
+  participationGroup = Perc20A // Also see ArticlePicker.scala - our main filter mechanism is by page features
 )
 
 object DCRBubble extends Experiment(
