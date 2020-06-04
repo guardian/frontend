@@ -143,7 +143,7 @@ describe('Geolocation Utils', () => {
     ]
 
     testCases.forEach( testCase => {
-        it(`${testCase.fnName} returns true if geolocation is ${testCase.mockCountryCode}`, () => {
+        it(`${testCase.fnName} returns correct expectations for geolocation '${testCase.mockCountryCode}'`, () => {
             mockCountryCode = testCase.mockCountryCode;
             expect(isInUk()).toBe(testCase.expectedUKValue);
             expect(isInUsa()).toBe(testCase.expectedUsaValue);
