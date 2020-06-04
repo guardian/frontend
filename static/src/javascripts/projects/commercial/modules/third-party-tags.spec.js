@@ -94,7 +94,7 @@ describe('third party tags', () => {
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),
         };
-        it('should add scripts to the document', () => {
+        it('should add scripts to the document when TCF consent has been given', () => {
             _.reset();
             onIabConsentNotification.mockImplementation(callback =>
                 callback({
@@ -114,7 +114,7 @@ describe('third party tags', () => {
             );
             expect(document.scripts.length).toBe(3);
         });
-        it('should not add scripts to the document', () => {
+        it('should not add scripts to the document when TCF consent has not been given', () => {
             _.reset();
             onIabConsentNotification.mockImplementation(callback =>
                 callback({
@@ -124,6 +124,34 @@ describe('third party tags', () => {
                     '4': false,
                     '5': false,
                 })
+            );
+            onGuConsentNotification.mockImplementation((state, callback) =>
+                callback(false)
+            );
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag],
+                [fakeThirdPartyPerformanceTag]
+            );
+            expect(document.scripts.length).toBe(1);
+        });
+        it('should add scripts to the document when CCPA consent has been given', () => {
+            _.reset();
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(false)
+            );
+            onGuConsentNotification.mockImplementation((state, callback) =>
+                callback(true)
+            );
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag],
+                [fakeThirdPartyPerformanceTag]
+            );
+            expect(document.scripts.length).toBe(3);
+        });
+        it('should not add scripts to the document when CCPA consent has not been given', () => {
+            _.reset();
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(true)
             );
             onGuConsentNotification.mockImplementation((state, callback) =>
                 callback(false)
