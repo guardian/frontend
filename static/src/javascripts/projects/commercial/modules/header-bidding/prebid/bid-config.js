@@ -11,6 +11,10 @@ import {
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { isInUk,
+    isInUsOrCa,
+    isInAuOrNz,
+    isInRow } from 'common/modules/commercial/geo-utils';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -37,10 +41,6 @@ import {
     containsMobileSticky,
     containsWS,
     getBreakpointKey,
-    isInAuRegion,
-    isInRowRegion,
-    isInUkRegion,
-    isInUsRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
@@ -172,7 +172,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
                 return -1;
         }
     }
-    if (isInUkRegion()) {
+    if (isInUk()) {
         switch (getBreakpointKey()) {
             case 'D':
                 if (containsMpuOrDmpu(sizes)) {
@@ -199,7 +199,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
                 return -1;
         }
     }
-    if (isInRowRegion()) {
+    if (isInRow()) {
         switch (getBreakpointKey()) {
             case 'D':
                 if (containsMpuOrDmpu(sizes)) {
@@ -250,8 +250,8 @@ const getXhbPlacementId = (sizes: HeaderBiddingSize[]): number => {
 };
 
 const getPangaeaPlacementIdForUsAndAu = (): string => {
-    if (isInUsRegion()) return '13892369';
-    if (isInAuRegion()) return '13892409';
+    if (isInUsOrCa()) return '13892369';
+    if (isInAuOrNz()) return '13892409';
     return '';
 };
 
@@ -310,14 +310,14 @@ const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
     bidParams: (): PrebidOpenXParams => {
-        if (isInUsRegion()) {
+        if (isInUsOrCa()) {
             return {
                 delDomain: 'guardian-us-d.openx.net',
                 unit: '540279544',
                 customParams: buildAppNexusTargetingObject(getPageTargeting()),
             };
         }
-        if (isInAuRegion()) {
+        if (isInAuOrNz()) {
             return {
                 delDomain: 'guardian-aus-d.openx.net',
                 unit: '540279542',
@@ -372,10 +372,10 @@ const sonobiBidder: PrebidBidder = {
 };
 
 const getPubmaticPublisherId = (): string => {
-    if (isInUsRegion()) {
+    if (isInUsOrCa()) {
         return '157206';
     }
-    if (isInAuRegion()) {
+    if (isInAuOrNz()) {
         return '157203';
     }
     return '157207';
@@ -450,17 +450,17 @@ const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
     bidParams: (): PrebidAdYouLikeParams => {
-        if (isInUkRegion()) {
+        if (isInUk()) {
             return {
                 placement: '2b4d757e0ec349583ce704699f1467dd',
             };
         }
-        if (isInUsRegion()) {
+        if (isInUsOrCa()) {
             return {
                 placement: '7fdf0cd05e1d4bf39a2d3df9c61b3495',
             };
         }
-        if (isInAuRegion()) {
+        if (isInAuOrNz()) {
             return {
                 placement: '5cf05e1705a2d57ba5d51e03f2af9208',
             };

@@ -2,11 +2,11 @@
 
 import once from 'lodash/once';
 import { getBreakpoint, isBreakpoint } from 'lib/detect';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
+import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
 import type { HeaderBiddingSize } from './types';
 
 const isInAppnexusUSAdapterTestVariant = (): boolean =>
@@ -28,8 +28,6 @@ const stripPrefix = (s: string, prefix: string): string => {
     return s.replace(re, '');
 };
 
-const currentGeoLocation = once((): string => geolocationGetSync());
-
 const contains = (
     sizes: HeaderBiddingSize[],
     size: HeaderBiddingSize
@@ -47,17 +45,6 @@ export const removeFalseyValues = (o: {
 
 export const stripDfpAdPrefixFrom = (s: string): string =>
     stripPrefix(s, 'dfp-ad--');
-
-export const isInUkRegion = (): boolean => currentGeoLocation() === 'GB';
-
-export const isInUsRegion = (): boolean =>
-    ['US', 'CA'].includes(currentGeoLocation());
-
-export const isInAuRegion = (): boolean =>
-    ['AU', 'NZ'].includes(currentGeoLocation());
-
-export const isInRowRegion = (): boolean =>
-    !isInUkRegion() && !isInUsRegion() && !isInAuRegion();
 
 export const containsMpu = (sizes: HeaderBiddingSize[]): boolean =>
     contains(sizes, [300, 250]);
@@ -123,16 +110,16 @@ export const getRandomIntInclusive = (
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeSonobi = (): boolean => isInUsRegion();
+export const shouldIncludeSonobi = (): boolean => isInUsOrCa();
 
-export const shouldIncludeOpenx = (): boolean => !isInUsRegion();
+export const shouldIncludeOpenx = (): boolean => !isInUsOrCa();
 
-export const shouldIncludeTrustX = (): boolean => isInUsRegion();
+export const shouldIncludeTrustX = (): boolean => isInUsOrCa();
 
 export const shouldIncludePangaea = (): boolean =>
     isInVariantSynchronous(pangaeaAdapterTest, 'variant');
 
-export const shouldIncludeTripleLift = (): boolean => isInUsRegion();
+export const shouldIncludeTripleLift = (): boolean => isInUsOrCa();
 
 export const shouldIncludeAdYouLike = (
     slotSizes: HeaderBiddingSize[]
@@ -140,25 +127,25 @@ export const shouldIncludeAdYouLike = (
 
 // TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
 export const shouldUseOzoneAdaptor = (): boolean =>
-    !isInUsRegion() && !isInAuRegion() && config.get('switches.prebidOzone');
+    !isInUsOrCa() && !isInAuOrNz() && config.get('switches.prebidOzone');
 
 export const shouldIncludeAppNexus = (): boolean =>
-    isInAppnexusUSAdapterTestVariant() || !isInUsRegion();
+    isInAppnexusUSAdapterTestVariant() || !isInUsOrCa();
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views
-    isInUkRegion() &&
+    isInUk() &&
     (config.get('page.isDev', true) || getRandomIntInclusive(1, 10) === 1);
 
 export const shouldIncludeImproveDigital = (): boolean =>
-    isInUkRegion() || isInRowRegion();
+    isInUk() || isInRow();
 
 export const shouldIncludeMobileSticky = once(
     (): boolean =>
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
-            (isInUsRegion() || isInAuRegion()) &&
+            (isInUsOrCa() || isInAuOrNz()) &&
             config.get('page.contentType') === 'Article' &&
             !config.get('page.isHosted'))
 );

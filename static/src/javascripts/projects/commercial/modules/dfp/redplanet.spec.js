@@ -2,14 +2,14 @@
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
-import { isInAuRegion as isInAuRegion_ } from 'commercial/modules/header-bidding/utils';
+import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import config from 'lib/config';
 import { init } from './redplanet';
 
 
 const onIabConsentNotification: any = onIabConsentNotification_;
-const isInAuRegion: any = isInAuRegion_;
+const isInAuOrNz: any = isInAuOrNz_;
 const trueConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
 
@@ -27,7 +27,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/utils');
+jest.mock('common/modules/commercial/geo-utils');
 
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
@@ -69,7 +69,7 @@ describe('init', () => {
 
     it('should initialise redplanet when all conditions are true with right params', async () => {
         commercialFeatures.launchpad = true;
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         config.set('ophan.browserId', '123');
         config.set('page.section', 'uk');
         config.set('page.sectionName', 'Politics');
@@ -102,7 +102,7 @@ describe('init', () => {
 
     it('should not initialise redplanet when user consented false', async () => {
         commercialFeatures.launchpad = true;
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         onIabConsentNotification.mockImplementation(falseConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
@@ -110,7 +110,7 @@ describe('init', () => {
 
     it('should not initialise redplanet when launchpad conditions are false', async () => {
         commercialFeatures.launchpad = false;
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         onIabConsentNotification.mockImplementation(trueConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
@@ -118,7 +118,7 @@ describe('init', () => {
 
     it('should not initialise redplanet when user not in AUS regions', async () => {
         commercialFeatures.launchpad = true;
-        isInAuRegion.mockReturnValue(false);
+        isInAuOrNz.mockReturnValue(false);
         onIabConsentNotification.mockImplementation(trueConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();

@@ -37,14 +37,9 @@ jest.mock('lib/config', () => {
     });
 });
 
-jest.mock('commercial/modules/header-bidding/utils', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
-    const original = jest.requireActual('commercial/modules/header-bidding/utils');
-    return {
-        ...original,
-        isInAuRegion: jest.fn().mockReturnValue(true),
-    };
-});
+jest.mock('common/modules/commercial/geo-utils', () => ({
+        isInAuOrNz: jest.fn().mockReturnValue(true)
+}));
 
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
