@@ -40,7 +40,7 @@ type PageTargeting = {
 };
 
 let myPageTargetting: {} = {};
-let latestConsentState;
+let latestConsentCanRun;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -272,12 +272,15 @@ const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
     onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        // typeof state === 'boolean' means CCPA mode is on
+        const canRun =
+            typeof state === 'boolean'
+                ? !state
+                : state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (consentState !== latestConsentState) {
-            myPageTargetting = buildPageTargetting(consentState);
-            latestConsentState = consentState;
+        if (canRun !== latestConsentCanRun) {
+            myPageTargetting = buildPageTargetting(canRun);
+            latestConsentCanRun = canRun;
         }
     });
 
@@ -286,7 +289,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
 const resetPageTargeting = (): void => {
     myPageTargetting = {};
-    latestConsentState = undefined;
+    latestConsentCanRun = undefined;
 };
 
 export {

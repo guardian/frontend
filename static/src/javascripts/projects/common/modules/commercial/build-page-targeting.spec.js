@@ -58,14 +58,16 @@ jest.mock('@guardian/consent-management-platform', () => ({
     onIabConsentNotification: jest.fn(),
 }));
 
-const trueConsentMock = (callback): void =>
+const tcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const falseConsentMock = (callback): void =>
+const tcfWithoutConsentMock = (callback): void =>
     callback({ '1': false, '2': false, '3': false, '4': false, '5': false });
-const nullConsentMock = (callback): void =>
+const tcfNullConsentMock = (callback): void =>
     callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
-const mixedConsentMock = (callback): void =>
+const tcfMixedConsentMock = (callback): void =>
     callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
+const ccpaWithConsentMock = (callback): void => callback(false);
+const ccpaWithoutConsentMock = (callback): void => callback(true);
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -106,7 +108,7 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(nullConsentMock);
+        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -160,19 +162,27 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+        onIabConsentNotification.mockImplementation(tcfWithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(falseConsentMock);
+        onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(nullConsentMock);
+        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(mixedConsentMock);
+        onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        expect(getPageTargeting().pa).toBe('t');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 
