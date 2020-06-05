@@ -248,6 +248,11 @@ object TestGroups {
     // User is participant of the combined experiment if they are participant in either of the two base experiments,
     // else are control if control in either of the two base experiments,
     // else are not in the test.
+
+    // This function assumes that the two buckets are distinct, and in particular that the same user cannot be
+    // participant of one and control of the other at the same time.
+    // If buckets are not distinct do not use it!
+    
     (group1, group2) match {
       case ("participant", _) => "participant"
       case (_, "participant") => "participant"
