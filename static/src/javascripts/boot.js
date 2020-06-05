@@ -34,7 +34,7 @@ const go = () => {
 
         // Start CMP
         if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
-            init({ useCppa: true });
+            init({ useCcpa: true });
         }
 
         // 2. once standard is done, next is commercial
