@@ -328,3 +328,24 @@
     bottom: 0;
     z-index: -1;
 }
+
+// VARIANT DESIGN - article gradient overlay changes // vii-variant
+
+.signin-gate__content--var {
+    padding-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        padding-top: $gs-baseline * 3;
+    }
+}
+
+.overlay--var {
+    height: 70% !important;
+    background-image: linear-gradient(to top, $brightness-100, $brightness-100 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+.overlay--comment--var {
+    height: 70% !important;;
+    background-image: linear-gradient(to top, $opinion-faded , $opinion-faded 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+

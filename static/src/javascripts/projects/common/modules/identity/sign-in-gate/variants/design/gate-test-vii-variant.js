@@ -7,6 +7,7 @@ import {
     addClickHandler,
     setUserDismissedGate,
     showGate,
+    addOverlayVariantCSS,
 } from '../../helper';
 
 // add the html template as the return of the function below
@@ -18,7 +19,7 @@ const htmlTemplate: ({
     guUrl: string,
 }) => string = ({ signInUrl, guUrl }) => `
 <div class="signin-gate">
-    <div class="signin-gate__content">
+    <div class="signin-gate__content--var">
         <div class="signin-gate__header--var">
             <h1 class="signin-gate__header--text--var">Register for free and <br>continue reading</h1>
         </div>
@@ -79,6 +80,11 @@ export const designShow: ({
             guUrl,
         }),
         handler: ({ articleBody, shadowArticleBody }) => {
+            addOverlayVariantCSS({
+                element: shadowArticleBody,
+                selector: '.signin-gate__first-paragraph-overlay',
+            });
+
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,

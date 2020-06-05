@@ -243,6 +243,20 @@ export const setTemplate: ({
     ${template}
 `;
 
+export const addOverlayVariantCSS: ({
+    element: HTMLElement,
+    selector: string,
+}) => void = ({ element, selector }) => {
+    const overlay = element.querySelector(selector);
+    if (overlay) {
+        if (config.get(`page.tones`) === 'Comment') {
+            overlay.classList.add('overlay--comment--var');
+        } else {
+            overlay.classList.add('overlay--var');
+        }
+    }
+};
+
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function
 export const showGate: ({
