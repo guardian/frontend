@@ -116,7 +116,7 @@ const reset = () => {
     fillAdvertSlots.mockReset();
 };
 
-const fakeTrueConsent = {
+const tcfWithConsent = {
     '1': true,
     '2': true,
     '3': true,
@@ -124,7 +124,7 @@ const fakeTrueConsent = {
     '5': true,
 };
 
-const fakeFalseConsent = {
+const tcfWithoutConsent = {
     '1': false,
     '2': false,
     '3': false,
@@ -132,7 +132,7 @@ const fakeFalseConsent = {
     '5': false,
 };
 
-const fakeNullConsent = {
+const tcfNullConsent = {
     '1': null,
     '2': null,
     '3': null,
@@ -140,13 +140,17 @@ const fakeNullConsent = {
     '5': null,
 };
 
-const fakeMixedConsent = {
+const tcfMixedConsent = {
     '1': true,
     '2': false,
     '3': false,
     '4': false,
     '5': false,
 };
+
+const ccpaWithConsent = false;
+
+const ccpaWithoutConsent = true;
 
 describe('DFP', () => {
     const domSnippet = `
@@ -444,9 +448,9 @@ describe('DFP', () => {
     });
 
     describe('NPA flag is set correctly', () => {
-        it('when full IAB consent was given', () => {
+        it('when full TCF consent was given', () => {
             onIabConsentNotification.mockImplementation(callback =>
-                callback(fakeTrueConsent)
+                callback(tcfWithConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -454,9 +458,9 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(0);
             });
         });
-        it('when no IAB consent preferences were specified', () => {
+        it('when no TCF consent preferences were specified', () => {
             onIabConsentNotification.mockImplementation(callback =>
-                callback(fakeNullConsent)
+                callback(tcfNullConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -464,9 +468,9 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(0);
             });
         });
-        it('when full IAB consent was denied', () => {
+        it('when full TCF consent was denied', () => {
             onIabConsentNotification.mockImplementation(callback =>
-                callback(fakeFalseConsent)
+                callback(tcfWithoutConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -474,14 +478,34 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(1);
             });
         });
-        it('when only partial IAB consent was given', () => {
+        it('when only partial TCF consent was given', () => {
             onIabConsentNotification.mockImplementation(callback =>
-                callback(fakeMixedConsent)
+                callback(tcfMixedConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);
+            });
+        });
+        it('when CCPA consent was given', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(ccpaWithConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(0);
+            });
+        });
+        it('when CCPA consent was denied', () => {
+            onIabConsentNotification.mockImplementation(callback =>
+                callback(ccpaWithoutConsent)
+            );
+            prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(0);
             });
         });
     });

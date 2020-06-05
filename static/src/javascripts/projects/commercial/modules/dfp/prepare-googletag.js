@@ -103,7 +103,11 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            const npaFlag = Object.values(state).includes(false);
+            // typeof state === 'boolean' means CCPA mode is on
+            const npaFlag =
+                typeof state === 'boolean'
+                    ? state
+                    : Object.values(state).includes(false);
 
             window.googletag.cmd.push(() => {
                 window.googletag
