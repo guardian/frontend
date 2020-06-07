@@ -1,5 +1,5 @@
 @import org.joda.time.DateTime
-@import model.GUDateTimeFormat
+@import model.GUDateTimeFormatNew
 @import views.support.{GuDateFormatLegacy}
 
 @(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
@@ -10,7 +10,7 @@
         @if(isMinute) {
             <span class="content__dateline-time">@GuDateFormatLegacy(webPublicationDate, "E d MMM yyyy")</span>
         } else {
-            @GuDateFormatLegacy(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(webPublicationDate, request)</span>
+            @GuDateFormatLegacy(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(webPublicationDate, request)</span>
         }
     </time>
     @if(isLiveBlog) {
@@ -22,7 +22,7 @@
         data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
         @optItemProp.map { itemProp => itemprop="@itemProp" }
         >
-            @label @GuDateFormatLegacy(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(date, request)</span>
+            @label @GuDateFormatLegacy(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(date, request)</span>
         </time>
     }
 

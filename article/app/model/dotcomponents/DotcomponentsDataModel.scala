@@ -11,7 +11,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, GUDateTimeFormat}
+import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, GUDateTimeFormatNew}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -329,7 +329,7 @@ object DotcomponentsDataModel {
 
     def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, isMainBlock: Boolean, isImmersive: Boolean): Block = {
       def format(instant: Long, edition: Edition): String = {
-        GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(instant), edition.timezone)
+        GUDateTimeFormatNew.dateTimeToLiveBlogDisplay(new DateTime(instant), edition.timezone)
       }
 
       val createdOn = block.createdDate.map(_.dateTime)
@@ -604,7 +604,7 @@ object DotcomponentsDataModel {
       pagination = pagination,
       author = author,
       webPublicationDate = article.trail.webPublicationDate.toString, // TODO check format
-      webPublicationDateDisplay = GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      webPublicationDateDisplay = GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = Edition(request).id,
       pageId = article.metadata.id,

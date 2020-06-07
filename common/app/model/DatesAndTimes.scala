@@ -9,10 +9,10 @@ import play.api.mvc.RequestHeader
 
 /*
   date: 07th June 2020
-  Note GuDateFormatOld is a copy of views.support.GuDateFormatLegacy
+  Note GuDateTimeFormatOld is a copy of views.support.GuDateFormatLegacy
  */
 
-object GuDateFormatOld {
+object GuDateTimeFormatOld {
   def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
     apply(date, Edition(request), pattern, tzOverride)
   }
@@ -30,7 +30,7 @@ object GuDateFormatOld {
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
 
-object GUDateTimeFormat {
+object GUDateTimeFormatNew {
   def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
     val edition = Edition(request)
     formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition)
