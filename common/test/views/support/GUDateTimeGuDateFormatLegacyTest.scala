@@ -4,7 +4,7 @@ import common.editions
 import org.joda.time.DateTime
 import org.scalatest.{FreeSpec, Matchers}
 
-class GUDateTimeFormatTest extends FreeSpec with Matchers {
+class GUDateTimeGuDateFormatLegacyTest extends FreeSpec with Matchers {
   val date = DateTime.parse("2019-05-08T10:26:11.000+10:00")
   "formatDateTimeForDisplayGivenEdition" - {
     "correctly handles Australian to US timezone conversion" in {

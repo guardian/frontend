@@ -1,28 +1,28 @@
 @import org.joda.time.DateTime
 @import model.GUDateTimeFormat
-@import views.support.{Format}
+@import views.support.{GuDateFormatLegacy}
 
 @(webPublicationDate: DateTime, lastModified: DateTime, hasBeenModified: Boolean, firstPublicationDate: Option[DateTime], isLiveBlog: Boolean = false, isLive: Boolean = false, isMinute: Boolean = false)(implicit request: RequestHeader)
 
 <p class="@if(!isMinute){content__dateline}@if(isMinute){content__dateline--minute-article}" aria-hidden="true">
-    <time itemprop="datePublished" datetime='@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
+    <time itemprop="datePublished" datetime='@GuDateFormatLegacy(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@webPublicationDate.getMillis" class="content__dateline-wpd js-wpd">
         @if(isMinute) {
-            <span class="content__dateline-time">@Format(webPublicationDate, "E d MMM yyyy")</span>
+            <span class="content__dateline-time">@GuDateFormatLegacy(webPublicationDate, "E d MMM yyyy")</span>
         } else {
-            @Format(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(webPublicationDate, request)</span>
+            @GuDateFormatLegacy(webPublicationDate, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(webPublicationDate, request)</span>
         }
     </time>
     @if(isLiveBlog) {
-        <meta itemprop="coverageStartTime" content="@Format(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
+        <meta itemprop="coverageStartTime" content="@GuDateFormatLegacy(webPublicationDate, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 
     @secondaryDateLine(date: DateTime, label: String, optItemProp: Option[String] = None) = {
-        <time datetime='@Format(date, "yyyy-MM-dd'T'HH:mm:ssZ")'
+        <time datetime='@GuDateFormatLegacy(date, "yyyy-MM-dd'T'HH:mm:ssZ")'
         data-timestamp="@date.getMillis" class="content__dateline-lm js-lm u-h"
         @optItemProp.map { itemProp => itemprop="@itemProp" }
         >
-            @label @Format(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(date, request)</span>
+            @label @GuDateFormatLegacy(date, "E d MMM yyyy") <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(date, request)</span>
         </time>
     }
 
@@ -35,7 +35,7 @@
     }}
 
     @if(isLiveBlog && !isLive) {
-        <meta itemprop="coverageEndTime" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
+        <meta itemprop="coverageEndTime" content="@GuDateFormatLegacy(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
     }
 </p>
-<meta itemprop="dateModified" content="@Format(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">
+<meta itemprop="dateModified" content="@GuDateFormatLegacy(lastModified, "yyyy-MM-dd'T'HH:mm:ssZ")">

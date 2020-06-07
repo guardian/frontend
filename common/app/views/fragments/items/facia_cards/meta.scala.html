@@ -1,6 +1,6 @@
 @(item: layout.ContentCard)(implicit request: RequestHeader)
 
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 <div class="fc-item__meta js-item__meta">
     @for(publishedAt <- item.webPublicationDate; timeStampDisplay <- item.timeStampDisplay) {
@@ -10,7 +10,7 @@
         data-relativeformat="short">
             @fragments.inlineSvg("clock", "icon")
         <span class="fc-timestamp__text">
-            <span class="u-h">Published: </span>@Format(publishedAt, timeStampDisplay.formatString)
+            <span class="u-h">Published: </span>@GuDateFormatLegacy(publishedAt, timeStampDisplay.formatString)
         </span>
         </time>
     }

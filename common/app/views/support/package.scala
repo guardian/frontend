@@ -115,7 +115,7 @@ object `package` {
   }
 }
 
-object Format {
+object GuDateFormatLegacy {
   def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
     apply(date, Edition(request), pattern, tzOverride)
   }
