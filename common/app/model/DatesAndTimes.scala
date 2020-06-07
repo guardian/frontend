@@ -1,9 +1,34 @@
 package model
 
+import java.text.DecimalFormat
+
 import common.Edition
-import org.joda.time.{DateTime, DateTimeZone}
+import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import play.api.mvc.RequestHeader
+
+/*
+  date: 07th June 2020
+  Note GuDateFormatOld is a copy of views.support.GuDateFormatLegacy
+ */
+
+object GuDateFormatOld {
+  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
+    apply(date, Edition(request), pattern, tzOverride)
+  }
+
+  def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
+    val timeZone = tzOverride match {
+      case Some(tz) => tz
+      case _ => edition.timezone
+    }
+    date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
+  }
+
+  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)
+
+  def apply(a: Int): String = new DecimalFormat("#,###").format(a)
+}
 
 object GUDateTimeFormat {
   def formatDateTimeForDisplay(date: DateTime, request: RequestHeader): String = {
