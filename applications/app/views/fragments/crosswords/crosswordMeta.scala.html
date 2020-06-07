@@ -1,6 +1,5 @@
+@import model.GUDateTimeFormat
 @(crosswordPage: crosswords.CrosswordPageWithContent)(implicit requestHeader: RequestHeader)
-@import views.support.GUDateTimeFormat
-
 <div class="crossword__meta">
     @crosswordPage.crossword.creator.map { creator =>
 

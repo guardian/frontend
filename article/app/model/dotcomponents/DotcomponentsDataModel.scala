@@ -11,7 +11,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
+import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, GUDateTimeFormat}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -20,7 +20,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
 import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
