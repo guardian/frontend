@@ -2,7 +2,7 @@ package model.dotcomponents
 
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.{DesignType, AdvertisementFeature}
+import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import common.Maps.RichMap
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
@@ -11,7 +11,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Badges, Canonical, LiveBlogPage, PageWithStoryPackage, Pillar, SubMetaLinks}
+import model.{ArticleDateTimes, Badges, Canonical, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -20,7 +20,7 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, GUDateTimeFormat, ImgSrc, Item300}
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
 import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
@@ -50,6 +50,8 @@ case class Block(
     firstPublished: Option[Long],
     firstPublishedDisplay: Option[String],
     title: Option[String],
+    primaryDateLine: String,
+    secondaryDateLine: String
 )
 
 case class Pagination(
@@ -327,28 +329,32 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, isMainBlock: Boolean, isImmersive: Boolean): Block = {
-      def format(instant: Long, edition: Edition): String = {
-        GUDateTimeFormat.dateTimeToLiveBlogDisplay(new DateTime(instant), edition.timezone)
-      }
+    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
 
+      // For createdOn and createdOnDisplay we are going to carry on use the block information
+      // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
+      // Todo: Check whether they are used on DCR or not and if not remove them from the model
       val createdOn = block.createdDate.map(_.dateTime)
-      val createdOnDisplay = createdOn.map(dt => format(dt, edition))
-      val lastUpdated = block.lastModifiedDate.map(_.dateTime)
-      val lastUpdatedDisplay = block.lastModifiedDate.map(dt => format(dt.dateTime, edition))
-      val firstPublished = block.firstPublishedDate.orElse(block.createdDate).map(_.dateTime)
-      val firstPublishedDisplay = firstPublished.map(dt => format(dt, edition))
+      val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+      // last updated (in both versions) and first published (in both versions) are going to
+      // be computed from the article metadata.
+      // For this we introduced ArticleDateTimes in DatesAndTimes.
+      // This is meant to ensure that DCP and DCR use the same dates.
+      val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
 
       Block(
         id = block.id,
         elements = blockElementsToPageElements(block.elements, shouldAddAffiliateLinks, isMainBlock, isImmersive),
         createdOn = createdOn,
         createdOnDisplay = createdOnDisplay,
-        lastUpdated = lastUpdated,
-        lastUpdatedDisplay = lastUpdatedDisplay,
+        lastUpdated = Some(displayedDateTimes.lastUpdated),
+        lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
         title = block.title,
-        firstPublished = firstPublished,
-        firstPublishedDisplay = firstPublishedDisplay,
+        firstPublished = Some(displayedDateTimes.firstPublished),
+        firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
+        primaryDateLine = displayedDateTimes.primaryDateLine,
+        secondaryDateLine = displayedDateTimes.secondaryDateLine
       )
     }
 
@@ -424,9 +430,16 @@ object DotcomponentsDataModel {
       case article => blocks.body.getOrElse(Nil)
     }
 
+    val articleDateTimes = ArticleDateTimes(
+      webPublicationDate = article.trail.webPublicationDate,
+      firstPublicationDate = article.fields.firstPublicationDate,
+      hasBeenModified = article.content.hasBeenModified,
+      lastModificationDate = article.fields.lastModified
+    )
+
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive)).toList
+      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes)).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -443,14 +456,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), true, article.isImmersive))
+      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), true, article.isImmersive, articleDateTimes))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive))
+        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes))
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
@@ -604,7 +617,7 @@ object DotcomponentsDataModel {
       pagination = pagination,
       author = author,
       webPublicationDate = article.trail.webPublicationDate.toString, // TODO check format
-      webPublicationDateDisplay = GUDateTimeFormat.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      webPublicationDateDisplay = GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = Edition(request).id,
       pageId = article.metadata.id,

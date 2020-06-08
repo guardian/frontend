@@ -6,11 +6,11 @@ import model.liveblog.BodyBlock
 import org.joda.time.DateTime
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.RequestHeader
-import views.support.Format
+import views.support.GuDateFormatLegacy
 
 object BlogPosting {
 
-  def zulu(date: DateTime)(implicit request: RequestHeader): String = Format(date, "yyyy-MM-dd'T'HH:mm:ssZ")
+  def zulu(date: DateTime)(implicit request: RequestHeader): String = GuDateFormatLegacy(date, "yyyy-MM-dd'T'HH:mm:ssZ")
 
   def apply(blog: Article, block: BodyBlock)(implicit request: RequestHeader): JsValue = {
 
@@ -18,7 +18,7 @@ object BlogPosting {
       case Some(date) => zulu(date)
       case None => zulu(blog.trail.webPublicationDate)
     }
-    
+
     def blockLastModifiedDate(block: BodyBlock) = block.lastModifiedDate match {
       case Some(date) => zulu(date)
       case None => zulu(blog.content.fields.lastModified)
@@ -57,7 +57,7 @@ object BlogPosting {
       /* Schema.org -- Date of first broadcast/publication */
       "datePublished" -> blockFirstPublishedDate(block),
       /*  Schema.org -- The date on which the CreativeWork was most recently modified or when the item's entry was modified within a DataFeed */
-      "dateModified" -> blockLastModifiedDate(block), 
+      "dateModified" -> blockLastModifiedDate(block),
       "articleBody" -> blockBody(block)
     )
 

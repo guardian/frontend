@@ -1,10 +1,10 @@
 package models
 
-import com.gu.contentapi.client.utils.{Article, DesignType}
+import com.gu.contentapi.client.utils.{Article}
 import common.LinkTo
-import model.pressed.{Image, MediaType, PressedContent}
+import model.pressed.{PressedContent}
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, CutOut, GUDateTimeFormat, ImgSrc, RemoveOuterParaHtml}
+import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
