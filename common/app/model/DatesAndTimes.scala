@@ -18,22 +18,37 @@ case class DisplayedDateTimesDCR(
   firstPublished: Long,
   firstPublishedDisplay: String,
   lastUpdated: Long,
-  lastUpdatedDisplay: String
+  lastUpdatedDisplay: String,
+  primaryDateLine: String,
+  secondaryDateLine: String
 )
 
 object ArticleDateTimes {
   def makeDisplayedDateTimesDCR(articleDateTimes: ArticleDateTimes, request: RequestHeader): DisplayedDateTimesDCR = {
-    val firstPublished = articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate).toInstant.getMillis
-    val firstPublishedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(firstPublished), request)
 
-    val lastUpdated = articleDateTimes.lastModificationDate.toInstant.getMillis
-    val lastUpdatedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(lastUpdated), request)
+    val firstPublishedDateTime = articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate)
+    val firstPublishedLong = firstPublishedDateTime.toInstant.getMillis
+    val firstPublishedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(firstPublishedDateTime, request)
+
+    val lastUpdatedDateTime = articleDateTimes.lastModificationDate
+    val lastUpdatedLong = lastUpdatedDateTime.toInstant.getMillis
+    val lastUpdatedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(lastUpdatedDateTime, request)
+
+    val primaryDateLine = GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.webPublicationDate, request)
+    val secondaryDateLine =
+      if (articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate) ) {
+        s"First published on ${GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)}"
+      } else {
+        s"Last modified on ${GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)}"
+      }
 
     DisplayedDateTimesDCR(
-      firstPublished,
+      firstPublishedLong,
       firstPublishedDisplay,
-      lastUpdated,
-      lastUpdatedDisplay
+      lastUpdatedLong,
+      lastUpdatedDisplay,
+      primaryDateLine,
+      secondaryDateLine
     )
   }
 }

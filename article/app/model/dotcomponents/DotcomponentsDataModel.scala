@@ -50,6 +50,8 @@ case class Block(
     firstPublished: Option[Long],
     firstPublishedDisplay: Option[String],
     title: Option[String],
+    primaryDateLine: String,
+    secondaryDateLine: String
 )
 
 case class Pagination(
@@ -351,6 +353,8 @@ object DotcomponentsDataModel {
         title = block.title,
         firstPublished = Some(displayedDateTimes.firstPublished),
         firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
+        primaryDateLine = displayedDateTimes.primaryDateLine,
+        secondaryDateLine = displayedDateTimes.secondaryDateLine
       )
     }
 
