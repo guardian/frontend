@@ -484,4 +484,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val discountCodeLinks = Switch(
+    SwitchGroup.Feature,
+    "discount-code-site-links",
+    "This switch is a reminder to remove discount code site links from the nav and footer when no longer needed. It does not control any behaviour.",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 8),
+    exposeClientSide = true
+  )
+
 }
