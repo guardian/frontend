@@ -7,9 +7,41 @@ import org.joda.time.{DateTime, DateTimeZone, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import play.api.mvc.RequestHeader
 
+case class ArticleDateTimes(
+  webPublicationDate: DateTime,
+  firstPublicationDate: Option[DateTime],
+  hasBeenModified: Boolean,
+  lastModificationDate: DateTime
+)
+
+case class DisplayedDateTimesDCR(
+  firstPublished: Long,
+  firstPublishedDisplay: String,
+  lastUpdated: Long,
+  lastUpdatedDisplay: String
+)
+
+object ArticleDateTimes {
+  def makeDisplayedDateTimesDCR(articleDateTimes: ArticleDateTimes, request: RequestHeader): DisplayedDateTimesDCR = {
+    val firstPublished = articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate).toInstant.getMillis
+    val firstPublishedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(firstPublished), request)
+
+    val lastUpdated = articleDateTimes.lastModificationDate.toInstant.getMillis
+    val lastUpdatedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(lastUpdated), request)
+
+    DisplayedDateTimesDCR(
+      firstPublished,
+      firstPublishedDisplay,
+      lastUpdated,
+      lastUpdatedDisplay
+    )
+  }
+}
+
 /*
   date: 07th June 2020
   Note GuDateTimeFormatOld is a copy of views.support.GuDateFormatLegacy
+  This is a temporary measure before decommission views.support.GuDateFormatLegacy
  */
 
 object GuDateTimeFormatOld {
