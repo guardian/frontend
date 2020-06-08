@@ -8,6 +8,7 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import { show as showCMPModule } from 'common/modules/ui/cmp-ui';
 import { submitClickEventTracking } from './component-event-tracking';
 import type { CurrentABTest } from './types';
 
@@ -189,6 +190,13 @@ export const addClickHandler: ({
     });
 };
 
+// shows the CMP (consent management platform) module
+export const showPrivacySettingsCMPModule: () => void = () => {
+    if (config.get('switches.cmpUi', true)) {
+        showCMPModule(true);
+    }
+};
+
 // add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
     element: HTMLElement,
@@ -254,6 +262,20 @@ export const setTemplate: ({
     </div>
     ${template}
 `;
+
+export const addOverlayVariantCSS: ({
+    element: HTMLElement,
+    selector: string,
+}) => void = ({ element, selector }) => {
+    const overlay = element.querySelector(selector);
+    if (overlay) {
+        if (config.get(`page.tones`) === 'Comment') {
+            overlay.classList.add('overlay--comment--var');
+        } else {
+            overlay.classList.add('overlay--var');
+        }
+    }
+};
 
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function

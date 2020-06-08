@@ -38,6 +38,10 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => undefined),
 }));
 
+jest.mock('common/modules/ui/cmp-ui', () => ({
+    get: jest.fn(() => undefined),
+}));
+
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => ''),
 }));

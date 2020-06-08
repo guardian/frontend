@@ -12,7 +12,7 @@ import {
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from '../design/centesimus';
+import { designShow } from '../design/centesimus-control-1';
 
 // define the variant name here
 const variant = 'centesimus-control-1';

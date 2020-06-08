@@ -1,12 +1,14 @@
 // @flow
 import mediator from 'lib/mediator';
 import type { CurrentABTest } from '../../types';
-import { withComponentId, componentName } from '../../component';
+import { componentName, withComponentId } from '../../component';
 import {
     addOpinionBgColour,
     addClickHandler,
     setUserDismissedGate,
     showGate,
+    showPrivacySettingsCMPModule,
+    addOverlayVariantCSS,
     setGatePageTargeting,
 } from '../../helper';
 
@@ -19,37 +21,48 @@ const htmlTemplate: ({
     guUrl: string,
 }) => string = ({ signInUrl, guUrl }) => `
 <div class="signin-gate">
-    <div class="signin-gate__content">
-        <div class="signin-gate__header">
-            <h1 class="signin-gate__header--text">Register for free and continue reading</h1>
+    <div class="signin-gate__content--var">
+        <div class="signin-gate__header--var">
+            <h1 class="signin-gate__header--text--var">Register for free and <br>continue reading</h1>
         </div>
-        <div class="signin-gate__benefits syndication--bottom">
-            <p class="signin-gate__benefits--text">
-                The Guardian’s independent journalism is still free to read
+        <div class="signin-gate__benefits--var signin-gate__margin-top--var">
+            <p class="signin-gate__benefits--text--var">
+                It’s important to say this is not a step towards a paywall
             </p>
         </div>
-        <div class="signin-gate__paragraph syndication--bottom">
-            <p class="signin-gate__paragraph--text">
-                Registering lets us understand you better. This means that we can build better products and start to personalise the adverts you see so we can charge more from advertisers in the future.
+        <div class="signin-gate__paragraph--var">
+            <p class="signin-gate__paragraph--text--var">
+               We need more readers to register with us to help sustain our independent, quality journalism. Without you taking this simple step, we miss out on revenues from personalised advertising – a critical source of funding for our future.
+            </p>
+            <p class="signin-gate__paragraph--text--var">
+               Through doing so, you’ll help ensure that our reporting remains freely available to everyone, and if we recognise you when you come back, we can improve your news experience too.
+               You can still control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>. Thank you.
             </p>
         </div>
         <div class="signin-gate__buttons">
-            <a class="signin-gate__button signin-gate__button--primary js-signin-gate__register-button" href="${signInUrl}">
+            <a class="signin-gate__button signin-gate__button--primary--var js-signin-gate__register-button" href="${signInUrl}">
                 Register for free
             </a>
-            <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
+            <a class="signin-gate__dismiss--var js-signin-gate__dismiss" href="#maincontent">I’ll do it later</a>
         </div>
-        <div class="signin-gate__padding-bottom signin-gate__buttons">
-            Already registered, contributed or subscribed?&nbsp;<a class="signin-gate__link js-signin-gate__sign-in signin-gate__link-no-ptm signin-gate__center-424" href="${signInUrl}">Sign in</a>
+        <div class="signin-gate__benefits--var signin-gate__margin-top--var">
+         <p class="signin-gate__benefits--text--var">
+            Have a subscription? Made a contribution? Already registered?
+        </p>
+            <a class="signin-gate__link--var signin-gate__signin--var js-signin-gate__sign-in signin-gate__link-no-ptm signin-gate__center-424" href="${signInUrl}">Sign in</a>
         </div>
-        <div class="signin-gate__buttons">
-            <a class="signin-gate__link js-signin-gate__why" href="${guUrl}/membership/2019/dec/20/signing-in-to-the-guardian">Why register & how does it help?</a>
-        </div>
-        <div class="signin-gate__buttons">
-            <a class="signin-gate__link js-signin-gate__how" href="${guUrl}/info/2014/nov/03/why-your-data-matters-to-us-full-text">How will my information & data be used?</a>
-        </div>
-        <div class="signin-gate__buttons">
-            <a class="signin-gate__link js-signin-gate__help" href="${guUrl}/help/identity-faq">Get help with registering or signing in</a>
+        <div class="signin-gate__faqlinks--var signin-gate__margin-top--var">
+        <div class="signin-gate__faqlinks--fullwidth--var"></div>
+
+            <div class="signin-gate__buttons">
+                <a class="signin-gate__link--var js-signin-gate__why" href="${guUrl}/membership/2019/dec/20/signing-in-to-the-guardian">Why register & how does it help?</a>
+            </div>
+            <div class="signin-gate__buttons">
+                <a class="signin-gate__link--var js-signin-gate__how" href="${guUrl}/info/2014/nov/03/why-your-data-matters-to-us-full-text">How will my information & data be used?</a>
+            </div>
+            <div class="signin-gate__buttons">
+                <a class="signin-gate__link--var js-signin-gate__help" href="${guUrl}/help/identity-faq">Get help with registering or signing in</a>
+            </div>
         </div>
     </div>
 </div>
@@ -70,6 +83,11 @@ export const designShow: ({
             guUrl,
         }),
         handler: ({ articleBody, shadowArticleBody }) => {
+            addOverlayVariantCSS({
+                element: shadowArticleBody,
+                selector: '.signin-gate__first-paragraph-overlay',
+            });
+
             // check if comment, and add comment/opinion bg colour
             addOpinionBgColour({
                 element: shadowArticleBody,
@@ -151,6 +169,17 @@ export const designShow: ({
                 abTest,
                 component: ophanComponent,
                 value: 'help-link',
+            });
+
+            // add click handler for the privacy settings link
+            // to show the consent management platform module
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '#js-signin-gate__privacy',
+                abTest,
+                component: ophanComponent,
+                value: 'privacy-settings-link',
+                callback: showPrivacySettingsCMPModule,
             });
         },
     });

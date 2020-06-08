@@ -1,3 +1,4 @@
+
 .signin-gate {
     clear: left;
     margin-bottom: $gs-baseline * 2;
@@ -86,10 +87,10 @@
     font-weight: 700;
     font-size: 17px;
     align-self: center;
-    padding-left: $gs-baseline * 1.5;
+    margin-left: $gs-baseline * 1.5;
     @include mq(424px) {
         align-self: auto;
-        padding-left: $gs-baseline * 2
+        margin-left: $gs-baseline * 2
     }
 }
 
@@ -132,7 +133,7 @@
     position: relative;
     white-space: nowrap;
 
-    &:hover, &:focus {
+    &:hover {
         outline: 0;
     }
 
@@ -182,7 +183,6 @@
     }
 }
 
-
 .signin-gate__benefits {
     border-top: 1px solid $brightness-46;
     padding-bottom: $gs-baseline;
@@ -215,3 +215,137 @@
         color: $lifestyle-main
     }
 }
+
+// VARIANT DESIGN - vii-variant //
+
+.signin-gate__header--var {
+    @include fs-header(3);
+    border-top: 1px solid $brightness-7;
+    @include mq(tablet) {
+        border-top: 2px solid $brightness-7;
+    }
+}
+
+.signin-gate__benefits--var {
+    border-top: 1px solid $brightness-86;
+    padding-bottom: $gs-baseline;
+}
+
+.signin-gate__benefits--text--var {
+    font-family: $f-sans-serif-text;
+    font-size: 20px;
+    font-weight: bold;
+    color: $brightness-7;
+    padding-top: $gs-baseline / 3;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+}
+
+.signin-gate__margin-top--var {
+    margin-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        margin-top: $gs-baseline * 3;
+    }
+}
+
+.signin-gate__link--var {
+    @include fs-textSans(5);
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-size: 17px;
+    padding-top: 10px;
+    &-no-ptm {
+        padding-top: 0px;
+    }
+    @include mq(424px) {
+        padding-top: 0px;
+    }
+}
+
+.signin-gate__dismiss--var {
+    @include fs-textSans(5);
+    color: $brand-main !important;
+    font-weight: 700;
+    font-size: 17px;
+    align-self: center;
+    margin-left: $gs-baseline * 1.5;
+    @include mq(424px) {
+        align-self: auto;
+        margin-left: $gs-baseline * 2
+    }
+}
+
+.signin-gate__signin--var {
+    color: $sport-main !important;
+}
+
+.signin-gate__paragraph--text--var {
+    font-family: $f-sans-serif-text;
+    font-size: 17px;
+    margin-bottom: $gs-baseline * 2;
+    @include mq(tablet) {
+        font-size: 1h7px;
+    }
+}
+
+.signin-gate__header--text--var {
+    font-weight: bold;
+    line-height: 1.25em;
+    font-size: 28px;
+    @include mq(tablet) {
+        font-size: 32px;
+    }
+}
+
+.signin-gate__button--primary--var {
+    background-color: $brand-main;
+    color: $brightness-100 !important;
+    padding: 0 20px;
+    &:hover, &:focus {
+        background-color: $brand-dark;
+    }
+}
+
+.signin-gate__paragraph--var {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__faqlinks--var {
+    background-color: $brightness-97;
+    padding-bottom: $gs-baseline * 3;
+    padding-top: $gs-baseline * 1;
+    position: relative;
+}
+
+.signin-gate__faqlinks--fullwidth--var {
+    background-color: $brightness-97;
+    width: 200vw;
+    height: inherit;
+    position: absolute;
+    left: calc(50% - 50vw);
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+}
+
+// VARIANT DESIGN - article gradient overlay changes // vii-variant
+
+.signin-gate__content--var {
+    padding-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        padding-top: $gs-baseline * 3;
+    }
+}
+
+.overlay--var {
+    height: 70% !important;
+    background-image: linear-gradient(to top, $brightness-100, $brightness-100 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+.overlay--comment--var {
+    height: 70% !important;;
+    background-image: linear-gradient(to top, $opinion-faded , $opinion-faded 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+

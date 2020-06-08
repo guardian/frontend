@@ -5,7 +5,7 @@ import raven from 'lib/raven';
 
 let initUi;
 
-const show = (forceModal: ?boolean): Promise<boolean> => {
+export const show = (forceModal: ?boolean): Promise<boolean> => {
     if (initUi) {
         initUi();
     } else {

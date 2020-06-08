@@ -10,7 +10,7 @@ export const signInGateCentesimus: ABTest = {
     author: 'vlbee',
     description:
         'Show sign in gate to 100% of users on 3rd article view of simple article templates, with higher priority over banners and epic',
-    audience: 0.9999,
+    audience: 0.9997,
     audienceOffset: 0.0,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:

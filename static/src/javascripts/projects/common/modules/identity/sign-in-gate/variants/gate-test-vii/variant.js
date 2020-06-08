@@ -1,6 +1,6 @@
 // @flow
-import type { CurrentABTest, SignInGateVariant } from '../types';
-import { componentName } from '../component';
+import type { CurrentABTest, SignInGateVariant } from '../../types';
+import { componentName } from '../../component';
 import {
     hasUserDismissedGate,
     isNPageOrHigherPageView,
@@ -9,13 +9,13 @@ import {
     isInvalidSection,
     isIOS9,
     setGatePageTargeting,
-} from '../helper';
+} from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from './design/example';
+import { designShow } from '../design/gate-test-vii-variant';
 
 // define the variant name here
-const variant = 'example';
+const variant = 'vii-variant';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {
