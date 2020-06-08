@@ -3,7 +3,7 @@
 import config from 'lib/config';
 import { commercialFeatures } from "common/modules/commercial/commercial-features";
 import { onIabConsentNotification } from "@guardian/consent-management-platform";
-import { isInAuRegion } from "commercial/modules/header-bidding/utils";
+import { isInAuOrNz } from "common/modules/commercial/geo-utils";
 import { isInVariantSynchronous } from "common/modules/experiments/ab";
 import { commercialRedplanet } from "common/modules/experiments/tests/commercial-redplanet-aus";
 
@@ -43,7 +43,7 @@ const setupRedplanet: () => Promise<void> = () => {
 };
 
 export const init = (): Promise<void> => {
-    if (commercialFeatures.launchpad && isInAuRegion() && isInVariantSynchronous(commercialRedplanet, 'variant')) {
+    if (commercialFeatures.launchpad && isInAuOrNz() && isInVariantSynchronous(commercialRedplanet, 'variant')) {
         return setupRedplanet();
     }
     return Promise.resolve();

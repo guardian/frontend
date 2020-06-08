@@ -1,14 +1,14 @@
 // @flow
 import config from 'lib/config';
+import { isInUsOrCa as isInUsOrCa_,
+    isInAuOrNz as isInAuOrNz_} from 'common/modules/commercial/geo-utils';
 import {
     _,
     getAppNexusDirectBidParams,
     getAppNexusServerSideBidParams,
 } from './appnexus';
 import {
-    getBreakpointKey as getBreakpointKey_,
-    isInAuRegion as isInAuRegion_,
-    isInUsRegion as isInUsRegion_,
+    getBreakpointKey as getBreakpointKey_
 } from '../utils';
 import type { HeaderBiddingSize } from '../types';
 
@@ -28,10 +28,13 @@ jest.mock('../utils', () => {
     return {
         ...original,
         getBreakpointKey: jest.fn(),
-        isInAuRegion: jest.fn(),
-        isInUsRegion: jest.fn(),
     };
 });
+
+jest.mock('common/modules/commercial/geo-utils', () => ({
+        isInAuOrNz: jest.fn(),
+        isInUsOrCa: jest.fn(),
+}));
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -50,8 +53,8 @@ const {
 } = _;
 
 const getBreakpointKey: any = getBreakpointKey_;
-const isInAuRegion: any = isInAuRegion_;
-const isInUsRegion: any = isInUsRegion_;
+const isInAuOrNz: any = isInAuOrNz_;
+const isInUsOrCa: any = isInUsOrCa_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -135,21 +138,21 @@ describe('getAppNexusDirectPlacementId', () => {
     ];
 
     test('should return the expected values when in AU region and desktop device', () => {
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size))
         ).toEqual(['11016434', '11016434', '11016434', '11016434', '11016434']);
     });
 
     test('should return the expected values when in US  and desktop device', () => {
-        isInUsRegion.mockReturnValue(true);
+        isInUsOrCa.mockReturnValue(true);
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size))
         ).toEqual(['4848330', '4848330', '4848330', '4848330', '4848330']);
     });
 
     test('should return the expected values for ROW when on desktop device', () => {
-        isInAuRegion.mockReturnValue(false);
+        isInAuOrNz.mockReturnValue(false);
         getBreakpointKey.mockReturnValue('D');
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size))
@@ -158,7 +161,7 @@ describe('getAppNexusDirectPlacementId', () => {
 
     test('should return the expected values for ROW when on tablet device', () => {
         getBreakpointKey.mockReturnValue('T');
-        isInAuRegion.mockReturnValue(false);
+        isInAuOrNz.mockReturnValue(false);
         expect(
             prebidSizes.map(size => getAppNexusDirectPlacementId(size))
         ).toEqual(['4371641', '9251752', '9251752', '4371640', '9251752']);
@@ -168,8 +171,8 @@ describe('getAppNexusDirectPlacementId', () => {
 describe('getAppNexusPlacementId', () => {
     beforeEach(() => {
         resetConfig();
-        isInAuRegion.mockReturnValue(false);
-        isInUsRegion.mockReturnValue(false);
+        isInAuOrNz.mockReturnValue(false);
+        isInUsOrCa.mockReturnValue(false);
         window.OzoneLotameData = { some: 'lotamedata' };
     });
 
@@ -225,8 +228,8 @@ describe('getAppNexusPlacementId', () => {
 
     test('should return the default value if in US or AU regions', () => {
         getBreakpointKey.mockReturnValue('D');
-        isInAuRegion.mockReturnValueOnce(true);
-        isInUsRegion.mockReturnValueOnce(true);
+        isInAuOrNz.mockReturnValueOnce(true);
+        isInUsOrCa.mockReturnValueOnce(true);
         expect(getAppNexusPlacementId([[300, 250]])).toEqual('13915593');
         expect(getAppNexusPlacementId([[970, 250]])).toEqual('13915593');
         expect(getAppNexusPlacementId([[1, 2]])).toEqual('13915593');
@@ -275,7 +278,7 @@ describe('getAppNexusDirectBidParams', () => {
 
     test('should include placementId for AU region when invCode switch is off', () => {
         getBreakpointKey.mockReturnValue('M');
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '11016434',
@@ -285,7 +288,7 @@ describe('getAppNexusDirectBidParams', () => {
     test('should exclude placementId for AU region when including member and invCode', () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
-        isInAuRegion.mockReturnValueOnce(true);
+        isInAuOrNz.mockReturnValueOnce(true);
         expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: {
                 edition: 'UK',
