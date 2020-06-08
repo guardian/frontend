@@ -8,6 +8,7 @@ import {
     isInvalidArticleType,
     isInvalidSection,
     isIOS9,
+    setGatePageTargeting,
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
@@ -17,17 +18,22 @@ import { designShow } from '../design/gate-test-vii-variant';
 const variant = 'vii-variant';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: (name?: string) => boolean = (name = '') =>
-    !hasUserDismissedGate({
-        name,
-        variant,
-        componentName,
-    }) &&
-    isNPageOrHigherPageView(3) &&
-    !isLoggedIn() &&
-    !isInvalidArticleType() &&
-    !isInvalidSection() &&
-    !isIOS9();
+const canShow: (name?: string) => boolean = (name = '') => {
+    const canShowCheck =
+        !hasUserDismissedGate({
+            name,
+            variant,
+            componentName,
+        }) &&
+        isNPageOrHigherPageView(3) &&
+        !isLoggedIn() &&
+        !isInvalidArticleType() &&
+        !isInvalidSection() &&
+        !isIOS9();
+
+    setGatePageTargeting(canShowCheck);
+    return canShowCheck;
+};
 
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>

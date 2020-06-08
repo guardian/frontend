@@ -9,6 +9,7 @@ import {
     showGate,
     showPrivacySettingsCMPModule,
     addOverlayVariantCSS,
+    setGatePageTargeting,
 } from '../../helper';
 
 // add the html template as the return of the function below
@@ -108,6 +109,10 @@ export const designShow: ({
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
                     shadowArticleBody.remove();
+
+                    // The page does not reload when a user dismisses the gate,
+                    // so we must reset page targeting params dynamically via googletags
+                    setGatePageTargeting(false);
 
                     // Tell other things the article has been redisplayed
                     mediator.emit('page:article:redisplayed');
