@@ -37,7 +37,7 @@ afterAll(() => {
 describe('Plista Outbrain renderer', () => {
     it('should display Outbrain for UK, US and International Edition', done => {
         ['uk', 'us', 'int'].forEach((edition, index) => {
-            config.set('switches.plistaForOutbrainAu', true);
+            config.set('switches.plistaForAu', true);
             config.set('page.edition', edition);
             initPlistaRenderer().then(() => {
                 if (index === 2) {
@@ -48,7 +48,7 @@ describe('Plista Outbrain renderer', () => {
     });
 
     it('should pick Plista for AU', done => {
-        config.set('switches.plistaForOutbrainAu', true);
+        config.set('switches.plistaForAu', true);
         config.set('page.edition', 'AU');
         initPlistaRenderer().then(() => {
             expect(plista.init).toHaveBeenCalled();

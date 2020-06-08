@@ -59,10 +59,10 @@ trait FeatureSwitches {
 
   val PlistaForAU = Switch(
     SwitchGroup.Feature,
-    "plista-for-outbrain-au",
-    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
+    "plista-for-au",
+    "Enable the Plista content recommendation widget in Australia",
+    owners = group(Commercial),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )

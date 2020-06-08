@@ -11,7 +11,7 @@ import conf.Configuration
 import conf.switches.Switches._
 import conf.cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
+import model.content.{Atoms, MediaAssetPlatform, MediaAtom, QuizAtom}
 import model.pressed._
 import org.jsoup.{Jsoup, nodes}
 import org.jsoup.safety.Whitelist
@@ -348,7 +348,7 @@ final case class Content(
     "twitter:card" -> "summary_large_image"
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
-  val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
+  val quizzes: Seq[QuizAtom] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 
   lazy val submetaLinks: SubMetaLinks =

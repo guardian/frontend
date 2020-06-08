@@ -199,6 +199,8 @@ export const fetchAndRenderEpic = (id: string) => {
                             trackingCampaignId,
                             componentType,
                             products,
+                            meta.abTestVariant.showTicker,
+                            meta.abTestVariant.tickerSettings,
                         )})
             }
         })

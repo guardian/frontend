@@ -38,7 +38,7 @@ const init = (): Promise<void> => {
     */
 
     const edition = config.get('page.edition', '').toLowerCase();
-    const isSwitchOn = config.get('switches.plistaForOutbrainAu');
+    const isSwitchOn = config.get('switches.plistaForAu');
     const shouldUsePlista: boolean = isSwitchOn && edition === 'au';
 
     if (shouldUsePlista) {

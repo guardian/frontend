@@ -75,9 +75,6 @@ const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> =>
             return true;
         });
 
-const twoOrMorePageViews = (currentPageViews: number) =>
-    currentPageViews >= 2;
-
 const pageIsIdentity = (): boolean =>
     config.get('page.contentType') === 'Identity' ||
     config.get('page.section') === 'identity';
@@ -198,7 +195,7 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
-        twoOrMorePageViews(pageviews) &&
+            pageviews >= 4 &&
             !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&

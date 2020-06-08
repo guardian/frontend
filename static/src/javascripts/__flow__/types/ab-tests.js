@@ -1,4 +1,5 @@
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import type { TickerSettings } from 'common/modules/commercial/ticker';
 
 type ListenerFunction = (f: () => void) => void;
 
@@ -31,7 +32,8 @@ declare type EpicVariant = Variant & {
     componentName: string,
     template: EpicTemplate,
     classNames: string[],
-    showTicker: boolean,
+    showTicker?: boolean,    // Deprecated, use tickerSettings instead
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
 
     buttonTemplate?: (
@@ -119,6 +121,7 @@ declare type InitEpicABTestVariant = {
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
     supportBaseURL?: string,
     backgroundImageUrl?: string,

@@ -55,13 +55,13 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
-import { initTicker } from 'common/modules/commercial/ticker';
+import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
-import {getCookie} from "lib/cookies";
+import {getCookie} from 'lib/cookies';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
@@ -131,7 +131,7 @@ const controlTemplate: EpicTemplate = (
               )
             : undefined,
         epicClassNames: variant.classNames,
-        showTicker: variant.showTicker,
+        showTicker: variant.showTicker || !!variant.tickerSettings,
         showReminderFields: variant.showReminderFields,
         backgroundImageUrl: variant.backgroundImageUrl,
     });
@@ -302,7 +302,8 @@ const setupOphanView = (
     trackingCampaignId: string,
     componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false
+    showTicker: boolean = false,
+    tickerSettings: ?TickerSettings,
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -327,8 +328,8 @@ const setupOphanView = (
 
         mediator.emit('register:end', trackingCampaignId);
 
-        if (showTicker) {
-            initTicker('.js-epic-ticker');
+        if (showTicker || !!tickerSettings) {
+            initTicker('.js-epic-ticker', tickerSettings);
         }
 
         if (config.get('switches.showContributionReminder')) {
@@ -407,6 +408,7 @@ const makeEpicABTestVariant = (
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        tickerSettings: initVariant.tickerSettings,
         showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
 
@@ -528,6 +530,7 @@ const makeEpicABTestVariant = (
                                         parentTest.componentType,
                                         initVariant.products,
                                         initVariant.showTicker,
+                                        initVariant.tickerSettings,
                                     );
                                 });
                             }
@@ -768,6 +771,7 @@ export const buildConfiguredEpicTestFromJson = (
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
             showTicker: variant.showTicker,
+            tickerSettings: variant.tickerSettings ? parseTickerSettings(variant.tickerSettings) : null,
             showReminderFields: variant.showReminderFields,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?

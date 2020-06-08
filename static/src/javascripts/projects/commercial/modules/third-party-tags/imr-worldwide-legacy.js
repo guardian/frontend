@@ -1,5 +1,6 @@
 // @flow
 import config from 'lib/config';
+import { isInAuRegion } from "commercial/modules/header-bidding/utils";
 
 // nol_t is a global function defined by the IMR worldwide library
 // eslint-disable-next-line camelcase
@@ -17,7 +18,7 @@ const onLoad = () => {
 };
 
 export const imrWorldwideLegacy: ThirdPartyTag = {
-    shouldRun: config.get('switches.imrWorldwide'),
+    shouldRun: config.get('switches.imrWorldwide') && isInAuRegion(),
     url: '//secure-au.imrworldwide.com/v60.js',
     onLoad,
 };

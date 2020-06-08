@@ -7,7 +7,7 @@ import conf.Configuration
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 
 final case class Atoms(
-  quizzes: Seq[Quiz],
+  quizzes: Seq[QuizAtom],
   media: Seq[MediaAtom],
   interactives: Seq[InteractiveAtom],
   recipes: Seq[RecipeAtom],
@@ -62,7 +62,7 @@ object Atoms extends common.Logging {
 
   def make(content: contentapi.Content, pageShares: ShareLinkMeta = ShareLinkMeta(Nil, Nil)): Option[Atoms] = {
     content.atoms.map { atoms =>
-      val quizzes = extract(atoms.quizzes, atom => { Quiz.make(content.id, atom, pageShares) })
+      val quizzes = extract(atoms.quizzes, atom => { QuizAtom.make(content.id, atom, pageShares) })
 
       val media = extract(atoms.media, atom => {
         MediaAtom.make(atom)
