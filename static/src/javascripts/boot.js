@@ -10,6 +10,9 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import 'projects/commercial/modules/cmp/stub';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
+import { init } from '@guardian/consent-management-platform';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -28,6 +31,11 @@ const go = () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
+
+        // Start CMP
+        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+            init({ useCcpa: true });
+        }
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {

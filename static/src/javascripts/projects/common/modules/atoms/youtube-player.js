@@ -37,7 +37,11 @@ type Handlers = {
 
 let consentState;
 onIabConsentNotification(state => {
-    consentState = state[1] && state[2] && state[3] && state[4] && state[5];
+    // typeof state === 'boolean' means CCPA mode is on
+    consentState =
+        typeof state === 'boolean'
+            ? !state
+            : state[1] && state[2] && state[3] && state[4] && state[5];
 });
 
 const onPlayerStateChangeEvent = (

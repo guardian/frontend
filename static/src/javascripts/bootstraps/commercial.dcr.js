@@ -28,7 +28,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
-import {init as initRedplanet} from "commercial/modules/dfp/redplanet";
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],

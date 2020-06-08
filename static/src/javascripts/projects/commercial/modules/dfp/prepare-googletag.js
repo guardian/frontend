@@ -103,13 +103,21 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            const npaFlag = Object.values(state).includes(false);
-
-            window.googletag.cmd.push(() => {
-                window.googletag
-                    .pubads()
-                    .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-            });
+            // typeof state === 'boolean' means CCPA mode is on
+            if (typeof state === 'boolean') {
+                window.googletag.cmd.push(() => {
+                    window.googletag.pubads().setPrivacySettings({
+                        restrictDataProcessing: state,
+                    });
+                });
+            } else {
+                const npaFlag = Object.values(state).includes(false);
+                window.googletag.cmd.push(() => {
+                    window.googletag
+                        .pubads()
+                        .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+                });
+            }
         });
 
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
