@@ -37,6 +37,7 @@ type PageTargeting = {
     tn: string,
     slot: string,
     permutive: string,
+    urlkw: string,
 };
 
 let myPageTargetting: {} = {};
@@ -161,6 +162,15 @@ const getWhitelistedQueryParams = (): {} => {
     return pick(getUrlVars(), whiteList);
 };
 
+const getUrlKeywords = (pageId: string): string => {
+    if (pageId) {
+        const segments = pageId.split('/');
+        const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
+        return lastPathname.replace(/-/g, ',');
+    }
+    return ''
+};
+
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     flattenDeep(
         Object.keys(obj)
@@ -244,6 +254,7 @@ const buildPageTargetting = (
             // validating ad performance on DCR (against DCR eligible pages)
             // and can be decomissioned after Pascal and D&I no longer need the flag.
             inskin: inskinTargetting(),
+            urlkw: getUrlKeywords(page.pageId),
         },
         page.sharedAdTargeting,
         paTargeting,
