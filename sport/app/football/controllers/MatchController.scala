@@ -48,7 +48,7 @@ sealed trait NsAnswer
 
 case class EventAnswer(eventTime: String, eventType: String) extends NsAnswer
 case class PlayerAnswer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends NsAnswer
-case class TeamAnswer(lineup: Seq[PlayerAnswer], possession: Int, shotsOn: Int, shotsOff: Int, corners: Int, fouls: Int, colours: String) extends NsAnswer
+case class TeamAnswer(name: String, lineup: Seq[PlayerAnswer], possession: Int, shotsOn: Int, shotsOff: Int, corners: Int, fouls: Int, colours: String) extends NsAnswer
 case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
 
 object NsAnswer {
@@ -65,7 +65,7 @@ object NsAnswer {
 
   def makeTeam(team: LineUpTeam, teamPossession: Int, teamColour: String): TeamAnswer = {
     val players = makePlayers(team)
-    TeamAnswer(players, teamPossession, team.shotsOn, team.shotsOff, team.corners, team.fouls, teamColour)
+    TeamAnswer(team.name, players, teamPossession, team.shotsOn, team.shotsOff, team.corners, team.fouls, teamColour)
   }
 
   def makeFromFootballMatch(matchId: String, lineUp: LineUp): MatchDataAnswer = {
