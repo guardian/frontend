@@ -334,4 +334,20 @@ describe('Build Page Targeting', () => {
             expect(getPageTargeting().ref).toEqual(undefined);
         });
     });
+
+    describe('URL Keywords', () => {
+        it('should return correct keywords from pageId', () => {
+            expect(getPageTargeting().urlkw).toEqual('footballweekly')
+        });
+
+        it('should extract multiple url keywords correctly', () => {
+            config.page.pageId = 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london'
+            expect(getPageTargeting().urlkw).toEqual('harry,potter,cursed,child,review,palace,theatre,london')
+        });
+
+        it('should get correct keywords when trailing slash is present', () => {
+            config.page.pageId = 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/'
+            expect(getPageTargeting().urlkw).toEqual('harry,potter,cursed,child,review,palace,theatre,london')
+        });
+    })
 });
