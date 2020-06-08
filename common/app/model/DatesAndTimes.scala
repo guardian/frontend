@@ -37,9 +37,9 @@ object ArticleDateTimes {
     val primaryDateLine = GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.webPublicationDate, request)
     val secondaryDateLine =
       if (articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate) ) {
-        s"First published on ${GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)}"
+        GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
       } else {
-        s"Last modified on ${GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)}"
+        GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
       }
 
     DisplayedDateTimesDCR(
