@@ -32,17 +32,19 @@ const initialise = (): void => {
 const setupRedplanet: () => Promise<void> = () => {
     onIabConsentNotification(state => {
         // typeof state === 'boolean' means CCPA mode is on
-        const canRun =
-            typeof state === 'boolean'
-                ? !state
-                : state[1] && state[2] && state[3] && state[4] && state[5];
+        // CCPA only runs in the US and Redplanet only runs in Australia
+        // so this should never happen
+        if (typeof state !== 'boolean') {
+            const canRun =
+                state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!initialised && canRun) {
-            initialised = true;
-            return import('lib/launchpad.js').then(() => {
-                initialise();
-                return Promise.resolve();
-            });
+            if (!initialised && canRun) {
+                initialised = true;
+                return import('lib/launchpad.js').then(() => {
+                    initialise();
+                    return Promise.resolve();
+                });
+            }
         }
     });
     return Promise.resolve();

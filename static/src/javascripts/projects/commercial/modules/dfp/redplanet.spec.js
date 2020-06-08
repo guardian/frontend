@@ -114,14 +114,6 @@ describe('init', () => {
         expect(window.launchpad).not.toBeCalled();
     });
 
-    it('should not initialise redplanet when user CCPA consent has not been given', async () => {
-        commercialFeatures.launchpad = true;
-        isInAuOrNz.mockReturnValue(true);
-        onIabConsentNotification.mockReturnValue(true);
-        await init();
-        expect(window.launchpad).not.toBeCalled();
-    });
-
     it('should not initialise redplanet when launchpad conditions are false', async () => {
         commercialFeatures.launchpad = false;
         isInAuOrNz.mockReturnValue(true);
