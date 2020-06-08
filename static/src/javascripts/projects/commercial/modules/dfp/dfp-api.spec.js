@@ -201,6 +201,7 @@ describe('DFP', () => {
             collapseEmptyDivs: jest.fn(),
             refresh: jest.fn(),
             setRequestNonPersonalizedAds: jest.fn(),
+            setPrivacySettings: jest.fn(),
         };
         const sizeMapping = {
             sizes: [],
@@ -488,14 +489,18 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(1);
             });
         });
+    });
+    describe('restrictDataProcessing flag is set correctly', () => {
         it('when CCPA consent was given', () => {
             onIabConsentNotification.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
-                    window.googletag.pubads().setRequestNonPersonalizedAds
-                ).toHaveBeenCalledWith(0);
+                    window.googletag.pubads().setPrivacySettings
+                ).toHaveBeenCalledWith({
+                    restrictDataProcessing: false,
+                });
             });
         });
         it('when CCPA consent was denied', () => {
@@ -504,8 +509,10 @@ describe('DFP', () => {
             );
             prepareGoogletag().then(() => {
                 expect(
-                    window.googletag.pubads().setRequestNonPersonalizedAds
-                ).toHaveBeenCalledWith(0);
+                    window.googletag.pubads().setPrivacySettings
+                ).toHaveBeenCalledWith({
+                    restrictDataProcessing: true,
+                });
             });
         });
     });
