@@ -97,7 +97,7 @@ describe('Navigation', () => {
             '',
         ];
         expect(paths.map(getDiscountCodePath)).toEqual([
-            'us',
+            'uk',
             '',
             'uk',
             'au',
