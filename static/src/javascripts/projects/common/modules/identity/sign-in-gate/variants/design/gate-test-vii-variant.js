@@ -31,7 +31,7 @@ const htmlTemplate: ({
         </div>
         <div class="signin-gate__paragraph--var">
             <p class="signin-gate__paragraph--text--var">
-               We need more readers to register with us to help sustain our independent, quality journalism. Without you taking this simple step, we miss out on revenues from personalised advertising - a critical source of funding for our future.
+               We need more readers to register with us to help sustain our independent, quality journalism. Without you taking this simple step, we miss out on revenues from personalised advertising – a critical source of funding for our future.
             </p>
             <p class="signin-gate__paragraph--text--var">
                Through doing so, you’ll help ensure that our reporting remains freely available to everyone, and if we recognise you when you come back, we can improve your news experience too.
