@@ -168,7 +168,7 @@ const getUrlKeywords = (pageId: string): Array<string> => {
         const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
         return lastPathname.split('-');
     }
-    return []
+    return [];
 };
 
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
@@ -211,8 +211,16 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
+const getCcpaValue = (ccpaState: boolean | null): string => {
+    if (ccpaState === null) {
+        return 'n/a';
+    }
+    return ccpaState ? 't' : 'f';
+};
+
 const buildPageTargetting = (
-    adConsentState: boolean | null
+    adConsentState: boolean | null,
+    ccpaState: boolean | null
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -255,6 +263,7 @@ const buildPageTargetting = (
             // and can be decomissioned after Pascal and D&I no longer need the flag.
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
+            ccpa: getCcpaValue(ccpaState),
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -290,7 +299,8 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 : state[1] && state[2] && state[3] && state[4] && state[5];
 
         if (canRun !== latestConsentCanRun) {
-            myPageTargetting = buildPageTargetting(canRun);
+            const ccpaState = typeof state === 'boolean' ? state : null;
+            myPageTargetting = buildPageTargetting(canRun, ccpaState);
             latestConsentCanRun = canRun;
         }
     });
