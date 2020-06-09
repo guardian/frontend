@@ -37,7 +37,7 @@ const htmlTemplate: ({
             <a class="signin-gate__button signin-gate__button--primary js-signin-gate__register-button" href="${signInUrl}">
                 Register for free
             </a>
-            <a class="signin-gate__dismiss js-signin-gate__dismiss" href="#maincontent">Not Now</a>
+            <button class="signin-gate__dismiss js-signin-gate__dismiss" href="">Not Now</button>
         </div>
         <div class="signin-gate__padding-bottom signin-gate__buttons">
             Already registered, contributed or subscribed?&nbsp;<a class="signin-gate__link js-signin-gate__sign-in signin-gate__link-no-ptm signin-gate__center-424" href="${signInUrl}">Sign in</a>
@@ -88,6 +88,10 @@ export const designShow: ({
                 component: ophanComponent,
                 value: 'not-now',
                 callback: () => {
+                    // reposition window to top of page without affecting browser's 'back' navigation
+                    const maincontent = document.getElementById('maincontent');
+                    if (maincontent) maincontent.scrollIntoView(true);
+
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
                     shadowArticleBody.remove();
