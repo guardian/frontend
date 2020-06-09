@@ -82,6 +82,8 @@
 
 .signin-gate__dismiss {
     @include fs-textSans(5);
+    background: 0;
+    border: 0;
     color: $brightness-7 !important;
     text-decoration: underline;
     font-weight: 700;
@@ -266,6 +268,8 @@
 .signin-gate__dismiss--var {
     @include fs-textSans(5);
     color: $brand-main !important;
+    background: 0;
+    border: 0;
     font-weight: 700;
     font-size: 17px;
     align-self: center;
