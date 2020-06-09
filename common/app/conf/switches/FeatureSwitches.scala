@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "If on, will use smaller heading font for Vodafone slogan title on email fronts. This is to keep it from introducing horizontal scrolling at the mobile breakpoint. We can remove this once their campaign is over. Editorial owner is celine.bijleveld.",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 1),
+    sellByDate = new LocalDate(2020, 8, 11),
     exposeClientSide = false,
   )
 
