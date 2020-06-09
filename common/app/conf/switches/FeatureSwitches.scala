@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "If on, will use smaller heading font for Vodafone slogan title on email fronts. This is to keep it from introducing horizontal scrolling at the mobile breakpoint. We can remove this once their campaign is over. Editorial owner is celine.bijleveld.",
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 1),
+    sellByDate = new LocalDate(2020, 8, 11),
     exposeClientSide = false,
   )
 
@@ -481,6 +481,16 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 6, 15),
+    exposeClientSide = true
+  )
+
+  val discountCodeLinks = Switch(
+    SwitchGroup.Feature,
+    "discount-code-site-links",
+    "This switch is a reminder to remove discount code site links from the nav and footer when no longer needed. It does not control any behaviour.",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 8),
     exposeClientSide = true
   )
 
