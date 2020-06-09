@@ -162,13 +162,13 @@ const getWhitelistedQueryParams = (): {} => {
     return pick(getUrlVars(), whiteList);
 };
 
-const getUrlKeywords = (pageId: string): string => {
+const getUrlKeywords = (pageId: string): Array<string> => {
     if (pageId) {
         const segments = pageId.split('/');
         const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
-        return lastPathname.replace(/-/g, ',');
+        return lastPathname.split('-');
     }
-    return ''
+    return []
 };
 
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
