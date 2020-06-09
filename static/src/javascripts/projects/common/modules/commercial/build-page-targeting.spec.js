@@ -186,6 +186,31 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().pa).toBe('f');
     });
 
+    it('Should correctly set the CCPA state (ccpa) param', () => {
+        onIabConsentNotification.mockImplementation(tcfWithConsentMock);
+        expect(getPageTargeting().ccpa).toBe('n/a');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
+        expect(getPageTargeting().ccpa).toBe('n/a');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        expect(getPageTargeting().ccpa).toBe('n/a');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        expect(getPageTargeting().ccpa).toBe('n/a');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        expect(getPageTargeting().ccpa).toBe('f');
+
+        _.resetPageTargeting();
+        onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
+        expect(getPageTargeting().ccpa).toBe('t');
+    });
+
     it('should set correct edition param', () => {
         expect(getPageTargeting().edition).toBe('us');
     });
@@ -236,6 +261,7 @@ describe('Build Page Targeting', () => {
             cc: 'US',
             rp: 'dotcom-platform',
             dcre: 'f',
+            ccpa: 'n/a',
         });
     });
 
@@ -347,17 +373,37 @@ describe('Build Page Targeting', () => {
 
     describe('URL Keywords', () => {
         it('should return correct keywords from pageId', () => {
-            expect(getPageTargeting().urlkw).toEqual(['footballweekly'])
+            expect(getPageTargeting().urlkw).toEqual(['footballweekly']);
         });
 
         it('should extract multiple url keywords correctly', () => {
-            config.page.pageId = 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london'
-            expect(getPageTargeting().urlkw).toEqual(['harry','potter','cursed','child','review','palace','theatre','london'])
+            config.page.pageId =
+                'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
+            expect(getPageTargeting().urlkw).toEqual([
+                'harry',
+                'potter',
+                'cursed',
+                'child',
+                'review',
+                'palace',
+                'theatre',
+                'london',
+            ]);
         });
 
         it('should get correct keywords when trailing slash is present', () => {
-            config.page.pageId = 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/'
-            expect(getPageTargeting().urlkw).toEqual(['harry','potter','cursed','child','review','palace','theatre','london'])
+            config.page.pageId =
+                'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
+            expect(getPageTargeting().urlkw).toEqual([
+                'harry',
+                'potter',
+                'cursed',
+                'child',
+                'review',
+                'palace',
+                'theatre',
+                'london',
+            ]);
         });
-    })
+    });
 });
