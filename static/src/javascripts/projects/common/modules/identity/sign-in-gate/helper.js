@@ -10,7 +10,7 @@ import {
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { show as showCMPModule } from 'common/modules/ui/cmp-ui';
 import { submitClickEventTracking } from './component-event-tracking';
-import type { CurrentABTest } from './types';
+import type { CurrentABTest, GateStatus } from './types';
 
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;
@@ -51,13 +51,26 @@ export const hasUserDismissedGate: ({
 };
 
 // Dynamically sets the gate custom parameter for Google ad request page targeting
-export const setGatePageTargeting = (canShow: boolean): void => {
-    if (window.googletag) {
-        window.googletag.cmd.push(() => {
-            window.googletag
-                .pubads()
-                .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice "t"/"f"
-        });
+export const setGatePageTargeting = (
+    isGateDismissed: boolean,
+    canShowCheck: boolean
+) => {
+    const setGoogleTargeting = (canShow: GateStatus): void => {
+        if (window.googletag) {
+            window.googletag.cmd.push(() => {
+                window.googletag
+                    .pubads()
+                    .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice to "t"/"f"/"d"/"s"
+            });
+        }
+    };
+
+    if (isUserLoggedIn) {
+        setGoogleTargeting('signed in');
+    } else if (isGateDismissed) {
+        setGoogleTargeting('dismissed');
+    } else {
+        setGoogleTargeting(canShowCheck);
     }
 };
 

@@ -112,7 +112,7 @@ export const designShow: ({
 
                     // The page does not reload when a user dismisses the gate,
                     // so we must reset page targeting params dynamically via googletags
-                    setGatePageTargeting(false);
+                    setGatePageTargeting(true, false);
 
                     // Tell other things the article has been redisplayed
                     mediator.emit('page:article:redisplayed');
