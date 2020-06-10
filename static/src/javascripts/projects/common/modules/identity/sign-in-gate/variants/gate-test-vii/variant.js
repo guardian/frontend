@@ -19,19 +19,20 @@ const variant = 'vii-variant';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {
+    const isGateDismissed = hasUserDismissedGate({
+        name,
+        variant,
+        componentName,
+    });
     const canShowCheck =
-        !hasUserDismissedGate({
-            name,
-            variant,
-            componentName,
-        }) &&
+        !isGateDismissed &&
         isNPageOrHigherPageView(3) &&
         !isLoggedIn() &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
         !isIOS9();
 
-    setGatePageTargeting(canShowCheck);
+    setGatePageTargeting(isGateDismissed, canShowCheck);
     return canShowCheck;
 };
 

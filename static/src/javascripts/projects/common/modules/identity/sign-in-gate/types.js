@@ -15,6 +15,8 @@ export type ComponentEventParams = {
     visitId?: string,
 };
 
+export type GateStatus = boolean | 'dismissed' | 'signed in';
+
 export type SignInGateVariant = {
     show: ({
         abTest: CurrentABTest,
