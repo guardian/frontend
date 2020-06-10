@@ -12,6 +12,17 @@ import { show as showCMPModule } from 'common/modules/ui/cmp-ui';
 import { submitClickEventTracking } from './component-event-tracking';
 import type { CurrentABTest, GateStatus } from './types';
 
+// Helper for setGatePageTargeting function
+const setGoogleTargeting = (canShow: GateStatus): void => {
+    if (window.googletag) {
+        window.googletag.cmd.push(() => {
+            window.googletag
+                .pubads()
+                .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice to "t"/"f"/"d"/"s"
+        });
+    }
+};
+
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;
 
@@ -54,18 +65,8 @@ export const hasUserDismissedGate: ({
 export const setGatePageTargeting = (
     isGateDismissed: boolean,
     canShowCheck: boolean
-) => {
-    const setGoogleTargeting = (canShow: GateStatus): void => {
-        if (window.googletag) {
-            window.googletag.cmd.push(() => {
-                window.googletag
-                    .pubads()
-                    .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice to "t"/"f"/"d"/"s"
-            });
-        }
-    };
-
-    if (isUserLoggedIn) {
+): void => {
+    if (isUserLoggedIn()) {
         setGoogleTargeting('signed in');
     } else if (isGateDismissed) {
         setGoogleTargeting('dismissed');
