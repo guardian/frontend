@@ -302,7 +302,7 @@ object QandaAtom {
 }
 
 // ----------------------------------------
-// Quiz
+// QuizAtom
 // ----------------------------------------
 
 final case class QuizAtom(
