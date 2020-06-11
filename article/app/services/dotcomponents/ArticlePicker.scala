@@ -127,7 +127,7 @@ object ArticlePageChecks {
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
-  def isNotDenyListed(page: PageWithStoryPackage): Boolean = {
+  def isNotInDenyList(page: PageWithStoryPackage): Boolean = {
     !page.item.tags.tags.exists(s=>tagsDenyList(s.id))
   }
 
@@ -153,7 +153,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotDenyListed", ArticlePageChecks.isNotDenyListed(page)),
+      ("isNotInDenyList", ArticlePageChecks.isNotInDenyList(page)),
       ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
   }
@@ -175,7 +175,7 @@ object ArticlePicker {
         "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
-        "isNotDenyListed",
+        "isNotInDenyList",
         "isNotPaidContent"
       )
     )
