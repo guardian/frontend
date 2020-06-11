@@ -16,8 +16,8 @@ const subscriptionBannerTemplate = (
 <div id="js-site-message--subscription-banner" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            <div>The world is changing by the minute.</div>
-            <div>Keep up with a digital subscription.</div>
+            <div class="site-message--subscription-banner__no-wrap">The world is changing by the minute.</div>
+            <div class="site-message--subscription-banner__no-wrap">Keep up with a digital subscription.</div>
         </h3>
 
         <div class="site-message--subscription-banner__description">
