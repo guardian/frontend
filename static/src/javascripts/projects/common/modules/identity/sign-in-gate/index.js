@@ -60,12 +60,23 @@ const show: () => Promise<boolean> = () =>
             `${config.get('page.host')}/${config.get('page.pageId')}`
         );
 
+        // get the view id to attach to component event params
+        let viewId = '';
+        if (
+            window.guardian &&
+            window.guardian.ophan &&
+            window.guardian.ophan.viewId
+        ) {
+            viewId = window.guardian.ophan.viewId;
+        }
+
         // set the component event params to be included in the query
         const queryParams: ComponentEventParams = {
             componentType: 'signingate',
             componentId: test.ophanComponentId,
             abTestName: test.dataLinkNames || test.id,
             abTestVariant: variant.name,
+            viewId
         };
 
         // attach the browser id to component event params

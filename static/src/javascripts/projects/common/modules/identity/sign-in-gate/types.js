@@ -10,7 +10,7 @@ export type ComponentEventParams = {
     componentId?: string,
     abTestName: string,
     abTestVariant: string,
-    viewId?: string,
+    viewId: string,
     browserId?: string,
     visitId?: string,
 };
