@@ -1,9 +1,6 @@
 // @flow strict
 
-import { getSync as geolocationGetSync } from 'lib/geolocation';
-import once from 'lodash/once';
-
-const currentGeoLocation = once((): string => geolocationGetSync());
+import {isInUsa} from "common/modules/commercial/geo-utils";
 
 export const ccpaCmpTest: ABTest = {
     id: 'CmpCcpaTest',
@@ -19,7 +16,7 @@ export const ccpaCmpTest: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome: 'The Sourcepoint CCPA CMP works with the existing TCFv1 CMP',
     showForSensitive: true,
-    canRun: () => ['US'].includes(currentGeoLocation()),
+    canRun: () => isInUsa(),
     variants: [
         {
             id: 'control',
