@@ -84,7 +84,7 @@ case class MembershipBlockElement(
   image: Option[String],
   price: Option[String]
 ) extends PageElement
-case class ProfileBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class ProfileAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
@@ -127,7 +127,7 @@ object PageElement {
       case _: ImageBlockElement => true
       case _: InstagramBlockElement => true
       case _: MapBlockElement => true
-      case _: ProfileBlockElement => true
+      case _: ProfileAtomBlockElement => true
       case _: PullquoteBlockElement => true
       case _: QABlockElement => true
       case _: RichLinkBlockElement => true
@@ -314,7 +314,7 @@ object PageElement {
           }
 
           case Some(guide: GuideAtom) => {
-            Some(ProfileBlockElement(
+            Some(ProfileAtomBlockElement(
               id = guide.id,
               label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
@@ -349,7 +349,7 @@ object PageElement {
           }
 
           case Some(profile: ProfileAtom) => {
-            Some(ProfileBlockElement(
+            Some(ProfileAtomBlockElement(
               id = profile.id,
               label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
@@ -507,7 +507,7 @@ object PageElement {
   implicit val InteractiveIframeElementWrites: Writes[AtomEmbedUrlBlockElement] = Json.writes[AtomEmbedUrlBlockElement]
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
-  implicit val ProfileBlockElementWrites = Json.writes[ProfileBlockElement]
+  implicit val ProfileBlockElementWrites = Json.writes[ProfileAtomBlockElement]
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
   implicit val QABlockElementWrites = Json.writes[QABlockElement]
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
