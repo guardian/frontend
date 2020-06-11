@@ -188,19 +188,19 @@ describe('Build Page Targeting', () => {
 
     it('Should correctly set the CCPA state (ccpa) param', () => {
         onIabConsentNotification.mockImplementation(tcfWithConsentMock);
-        expect(getPageTargeting().ccpa).toBe('n/a');
+        expect(getPageTargeting().ccpa).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
-        expect(getPageTargeting().ccpa).toBe('n/a');
+        expect(getPageTargeting().ccpa).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfNullConsentMock);
-        expect(getPageTargeting().ccpa).toBe('n/a');
+        expect(getPageTargeting().ccpa).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
-        expect(getPageTargeting().ccpa).toBe('n/a');
+        expect(getPageTargeting().ccpa).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
@@ -261,7 +261,7 @@ describe('Build Page Targeting', () => {
             cc: 'US',
             rp: 'dotcom-platform',
             dcre: 'f',
-            ccpa: 'n/a',
+            ccpa: 'na',
         });
     });
 

@@ -213,7 +213,7 @@ const buildAppNexusTargeting = once(
 
 const getCcpaValue = (ccpaState: boolean | null): string => {
     if (ccpaState === null) {
-        return 'n/a';
+        return 'na';
     }
     return ccpaState ? 't' : 'f';
 };
