@@ -314,7 +314,7 @@ object PageElement {
           }
 
           case Some(guide: GuideAtom) => {
-            Some(ProfileAtomBlockElement(
+            Some(GuideAtomBlockElement(
               id = guide.id,
               label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
