@@ -67,7 +67,7 @@ case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: O
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
-case class GuideBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class GuideAtomBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
@@ -122,7 +122,7 @@ object PageElement {
       case _: DisclaimerBlockElement => true
       case _: EmbedBlockElement => true
       case _: ExplainerAtomBlockElement => true
-      case _: GuideBlockElement => true
+      case _: GuideAtomBlockElement => true
       case _: GuVideoBlockElement => true
       case _: ImageBlockElement => true
       case _: InstagramBlockElement => true
@@ -496,7 +496,7 @@ object PageElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] = Json.writes[ExplainerAtomBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
-  implicit val GuideBlockElementWrites = Json.writes[GuideBlockElement]
+  implicit val GuideBlockElementWrites = Json.writes[GuideAtomBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 
