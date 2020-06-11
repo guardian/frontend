@@ -67,7 +67,7 @@ case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: O
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
-case class GuideAtomBlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
