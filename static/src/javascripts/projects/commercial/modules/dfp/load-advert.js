@@ -30,6 +30,9 @@ const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
 };
 
 export const loadAdvert = (advert: Advert): void => {
+    console.log("*** load advert");
+    console.log(advert.whenSlotReady);
+
     advert.whenSlotReady
         .catch(() => {
             // The display needs to be called, even in the event of an error.

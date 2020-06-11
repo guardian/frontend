@@ -41,6 +41,9 @@ const insertAdAtPara = (
         sizes,
     });
 
+    console.log("*** insert ads at para");
+    console.log(ads);
+
     return fastdom
         .write(() =>
             ads.forEach(ad => {
@@ -270,6 +273,7 @@ const doInit = (): Promise<boolean> => {
 };
 
 export const init = (): Promise<boolean> => {
+    console.log("*** init articleBodyAdverts");
     // Also init when the main article is redisplayed
     // For instance by the signin gate.
     mediator.on('page:article:redisplayed', () => {

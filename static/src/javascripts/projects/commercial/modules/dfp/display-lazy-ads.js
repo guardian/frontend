@@ -24,6 +24,9 @@ const displayLazyAds = (): void => {
 
     instantLoad();
 
+    console.log("*** display lazy ads")
+    console.log(dfpEnv.advertsToLoad);
+
     dfpEnv.advertsToLoad.forEach(
         (advert: Advert): void => {
             enableLazyLoad(advert);

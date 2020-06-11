@@ -39,6 +39,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-comscore', initComscore],
 ];
 
+console.log("*** commercial DCR adfree??", commercialFeatures.adFree)
 if (!commercialFeatures.adFree) {
     commercialModules.push(
         ['cm-prepare-prebid', preparePrebid],

@@ -11,16 +11,24 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
 
     dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
     if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
+        console.log("*** lazy 1")
         queueAdvert(advert);
         enableLazyLoad(advert);
     } else {
+        console.log("*** loadAdvert")
         loadAdvert(advert);
     }
 };
 
 const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
+    console.log("*** addSlot");
+    console.log(adSlot);
     window.googletag.cmd.push(() => {
+        console.log("*** push cmd")
+        console.log("adSlot.id", adSlot.id);
+        console.log("dfpEnv.advertIds", dfpEnv.advertIds);
         if (!(adSlot.id in dfpEnv.advertIds)) {
+            console.log("dynamically add ad slot");
             // dynamically add ad slot
             displayAd(adSlot, forceDisplay);
         }

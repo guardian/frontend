@@ -68,6 +68,13 @@ class Advert {
 
         this.id = adSlotNode.id;
         this.node = adSlotNode;
+
+       /* console.log("*** Advert constructor");
+        console.log("sizes", sizes);
+        console.log("slotDefinition", slotDefinition);
+        console.log("adSlotNode", adSlotNode);
+        console.log("adSlotNode.id", adSlotNode.id);
+*/
         this.sizes = sizes;
         this.size = null;
         this.slot = slotDefinition.slot;
