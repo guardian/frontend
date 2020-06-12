@@ -45,48 +45,48 @@ case class MatchNav(
   them to a single model file.
  */
 
-sealed trait Ns1Answer
-case class Event1Answer(eventTime: String, eventType: String) extends Ns1Answer
-case class Player1Answer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends Ns1Answer
-case class Team1Answer(
-   id: String,
-   name: String,
-   players: Seq[Player1Answer],
-   score: Int,
-   scorers: List[String],
-   possession: Int,
-   shotsOn: Int,
-   shotsOff: Int,
-   corners: Int,
-   fouls: Int,
-   colours: String,
-   crest: String
-) extends Ns1Answer
-case class Competition1Answer(fullName: Option[String]) extends Ns1Answer
-case class MatchData1Answer(
+sealed trait NxAnswer
+case class NxEvent(eventTime: String, eventType: String) extends NxAnswer
+case class NxPlayer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends NxAnswer
+case class NxTeam(
+  id: String,
+  name: String,
+  players: Seq[NxPlayer],
+  score: Int,
+  scorers: List[String],
+  possession: Int,
+  shotsOn: Int,
+  shotsOff: Int,
+  corners: Int,
+  fouls: Int,
+  colours: String,
+  crest: String
+) extends NxAnswer
+case class NxCompetition(fullName: Option[String]) extends NxAnswer
+case class NxMatchData(
   id: String,
   isResult: Boolean,
-  homeTeam: Team1Answer,
-  awayTeam: Team1Answer,
-  competition: Competition1Answer,
+  homeTeam: NxTeam,
+  awayTeam: NxTeam,
+  competition: NxCompetition,
   isLive: Boolean,
   venue: String,
   comments: String
-) extends Ns1Answer
+) extends NxAnswer
 
-object Ns1Answer {
+object NxAnswer {
   val reportedEventTypes = List("booking", "dismissal", "substitution")
-  def make1Players(team: LineUpTeam): Seq[Player1Answer] = {
+  def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
     team.players.map{ player =>
       val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
         EventAnswer(event.eventTime, event.eventType)
       }
-      Player1Answer(player.id, player.name, player.position, player.lastName, player.substitute, player.timeOnPitch, player.shirtNumber, events)
+      NxPlayer(player.id, player.name, player.position, player.lastName, player.substitute, player.timeOnPitch, player.shirtNumber, events)
     }
   }
-  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): Team1Answer = {
-    val players = make1Players(teamV2)
-    Team1Answer(
+  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): NxTeam = {
+    val players = makePlayers(teamV2)
+    NxTeam(
       teamV1.id,
       teamV1.name,
       players = players,
@@ -102,25 +102,25 @@ object Ns1Answer {
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png"
     )
   }
-  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, competition: Option[Competition], isResult: Boolean, isLive: Boolean): MatchData1Answer = {
+  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, competition: Option[Competition], isResult: Boolean, isLive: Boolean): NxMatchData = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
-    MatchData1Answer(
+    NxMatchData(
       id = theMatch.id,
       isResult = isResult,
       homeTeam = makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
       awayTeam = makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
-      competition = Competition1Answer(competition.map(_.fullName)),
+      competition = NxCompetition(competition.map(_.fullName)),
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse("")
     )
   }
 
-  implicit val EventAnswerWrites: Writes[Event1Answer] = Json.writes[Event1Answer]
-  implicit val PlayerAnswerWrites: Writes[Player1Answer] = Json.writes[Player1Answer]
-  implicit val TeamAnswerWrites: Writes[Team1Answer] = Json.writes[Team1Answer]
-  implicit val CompetitionAnswerWrites: Writes[Competition1Answer] = Json.writes[Competition1Answer]
-  implicit val MatchDataAnswerWrites: Writes[MatchData1Answer] = Json.writes[MatchData1Answer]
+  implicit val EventAnswerWrites: Writes[NxEvent] = Json.writes[NxEvent]
+  implicit val PlayerAnswerWrites: Writes[NxPlayer] = Json.writes[NxPlayer]
+  implicit val TeamAnswerWrites: Writes[NxTeam] = Json.writes[NxTeam]
+  implicit val CompetitionAnswerWrites: Writes[NxCompetition] = Json.writes[NxCompetition]
+  implicit val MatchDataAnswerWrites: Writes[NxMatchData] = Json.writes[NxMatchData]
 }
 
 class MoreOnMatchController(
@@ -154,7 +154,7 @@ class MoreOnMatchController(
       } yield {
         Cached(if(theMatch.isLive) 10 else 300) {
           if (request.forceDCR) {
-            JsonComponent(Json.toJson(Ns1Answer.makeFromFootballMatch(theMatch, lineup, competition, theMatch.isResult, theMatch.isLive)))
+            JsonComponent(Json.toJson(NxAnswer.makeFromFootballMatch(theMatch, lineup, competition, theMatch.isResult, theMatch.isLive)))
           } else {
             JsonComponent(
               "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
