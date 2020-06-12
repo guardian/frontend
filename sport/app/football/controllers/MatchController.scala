@@ -50,7 +50,9 @@ sealed trait NsAnswer
 case class EventAnswer(eventTime: String, eventType: String) extends NsAnswer
 case class PlayerAnswer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends NsAnswer
 case class TeamAnswer(
+   id: String,
    name: String,
+   players: Seq[PlayerAnswer],
    lineup: Seq[PlayerAnswer],
    score: Int,
    scorers: List[String],
@@ -79,7 +81,9 @@ object NsAnswer {
   def makeTeamAnswer(teamV1: MatchDayTeam , teamV2: LineUpTeam, teamPossession: Int, teamColour: String): TeamAnswer = {
     val players = makePlayers(teamV2)
     TeamAnswer(
+      teamV1.id,
       teamV1.name,
+      players = players,
       lineup = players,
       score = teamV1.score.getOrElse(0),
       scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").toList),
