@@ -1,6 +1,9 @@
 // @flow
 import config from 'lib/config';
-import { shouldShow } from '@guardian/consent-management-platform';
+import {
+    shouldShow,
+    showPrivacyManager,
+} from '@guardian/consent-management-platform';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
 import raven from 'lib/raven';
@@ -21,7 +24,11 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        require('common/modules/cmp-ui').init(!!forceModal);
+                        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+                            showPrivacyManager();
+                        } else {
+                            require('common/modules/cmp-ui').init(!!forceModal);
+                        }
                     },
                     []
                 );
