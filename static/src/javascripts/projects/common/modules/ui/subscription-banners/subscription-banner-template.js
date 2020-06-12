@@ -16,12 +16,13 @@ const subscriptionBannerTemplate = (
 <div id="js-site-message--subscription-banner" class="site-message--subscription-banner">
     <div class="site-message--subscription-banner__inner">
         <h3 class="site-message--subscription-banner__title">
-            Make us part of your new normal
+            <span class="site-message--subscription-banner__no-wrap">The world is changing by the minute.</span>
+            <span class="site-message--subscription-banner__no-wrap">Keep up with a digital subscription.</span>
         </h3>
 
         <div class="site-message--subscription-banner__description">
             <p>Two Guardian apps, with you every day. <b>The Daily</b>,
-            joining you in time for breakfast to share politics, culture, food and opinion.
+            joining you in the morning to share politics, culture, food and opinion.
             <b>Live</b>, constantly by your side, keeping you connected with the outside world.</p>
         </div>
 

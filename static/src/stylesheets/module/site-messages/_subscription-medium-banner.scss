@@ -109,7 +109,9 @@ $teal-green: #006d67;
 }
 
 .site-message--subscription-banner__no-wrap {
-    white-space: nowrap;
+    @include mq($from: mobileLandscape) {
+        white-space: nowrap;
+    }
 }
 
 .site-message--subscription-banner__cta-container {
