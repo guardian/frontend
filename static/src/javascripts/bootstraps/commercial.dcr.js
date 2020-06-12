@@ -177,5 +177,11 @@ const bootCommercial = (): Promise<void> => {
             );
         });
 };
+console.log('*** window.guardian.mustardCut ', window.guardian.mustardCut);
+console.log('*** window.guardian.polyfilled ', window.guardian.polyfilled);
 
-bootCommercial();
+if (window.guardian.mustardCut || window.guardian.polyfilled) {
+    bootCommercial();
+} else {
+    window.guardian.queue.push(bootCommercial);
+}
