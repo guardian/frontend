@@ -148,14 +148,19 @@ class MoreOnMatchController(
 
       lazy val competition = competitionsService.competitionForMatch(theMatch.id)
 
-      for {
-        filtered <- related map { _ filter hasExactlyTwoTeams }
-        lineup <- competitionsService.getLineup(theMatch)
-      } yield {
-        Cached(if(theMatch.isLive) 10 else 300) {
-          if (request.forceDCR) {
+      if (request.forceDCR) {
+        for {
+          lineup <- competitionsService.getLineup(theMatch)
+        } yield {
+          Cached(if(theMatch.isLive) 10 else 300) {
             JsonComponent(Json.toJson(NxAnswer.makeFromFootballMatch(theMatch, lineup, competition, theMatch.isResult, theMatch.isLive)))
-          } else {
+          }
+        }
+      } else {
+        for {
+          filtered <- related map { _ filter hasExactlyTwoTeams }
+        } yield {
+          Cached(if(theMatch.isLive) 10 else 300) {
             JsonComponent(
               "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
               "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
