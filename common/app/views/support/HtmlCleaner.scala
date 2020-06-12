@@ -598,7 +598,7 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     captionTitle.addClass("gallery__caption__title")
     captionTitle.html(captionTitleText)
 
-    galleryCaption.prependChild(captionTitle)
+    galleryCaption.body.prependChild(captionTitle)
 
     galleryCaption
   }
