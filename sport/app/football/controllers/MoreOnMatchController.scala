@@ -7,12 +7,12 @@ import feed.CompetitionsService
 import football.model.FootballMatchTrail
 import implicits.{Football, Requests}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.{Cached, Content, ContentType, NoCache}
+import model.{Cached, Competition, Content, ContentType, NoCache, TeamColours}
 import org.joda.time.{DateTime, Days, LocalDate}
 import org.joda.time.format.DateTimeFormat
 import com.github.nscala_time.time.Imports
 import com.github.nscala_time.time.Imports._
-import pa.FootballMatch
+import pa.{FootballMatch, LineUp, LineUpTeam, MatchDayTeam}
 import play.api.libs.json._
 import play.api.mvc._
 import play.twirl.api.Html
@@ -34,6 +34,93 @@ case class MatchNav(
   lazy val hasMinByMin = minByMin.isDefined
   lazy val hasReport = matchReport.isDefined
   lazy val hasPreview = preview.isDefined
+}
+
+/*
+  Date: 12th June 2020
+  Author: Pascal
+
+  For the moment I am essentially reproducing here what I did for MatchController.scala
+  If the two sets of classes turn out to be the same (or one an extension of the other) then I will move
+  them to a single model file.
+ */
+
+sealed trait NxAnswer
+case class NxEvent(eventTime: String, eventType: String) extends NxAnswer
+case class NxPlayer(id: String, name: String, position: String, lastName: String, substitute: Boolean, timeOnPitch: String, shirtNumber: String, events: Seq[EventAnswer]) extends NxAnswer
+case class NxTeam(
+  id: String,
+  name: String,
+  players: Seq[NxPlayer],
+  score: Int,
+  scorers: List[String],
+  possession: Int,
+  shotsOn: Int,
+  shotsOff: Int,
+  corners: Int,
+  fouls: Int,
+  colours: String,
+  crest: String
+) extends NxAnswer
+case class NxCompetition(fullName: Option[String]) extends NxAnswer
+case class NxMatchData(
+  id: String,
+  isResult: Boolean,
+  homeTeam: NxTeam,
+  awayTeam: NxTeam,
+  competition: NxCompetition,
+  isLive: Boolean,
+  venue: String,
+  comments: String
+) extends NxAnswer
+
+object NxAnswer {
+  val reportedEventTypes = List("booking", "dismissal", "substitution")
+  def makePlayers(team: LineUpTeam): Seq[NxPlayer] = {
+    team.players.map{ player =>
+      val events = player.events.filter(event => NsAnswer.reportedEventTypes.contains(event.eventType)).map { event =>
+        EventAnswer(event.eventTime, event.eventType)
+      }
+      NxPlayer(player.id, player.name, player.position, player.lastName, player.substitute, player.timeOnPitch, player.shirtNumber, events)
+    }
+  }
+  def makeTeamAnswer(teamV1: MatchDayTeam, teamV2: LineUpTeam, teamPossession: Int, teamColour: String): NxTeam = {
+    val players = makePlayers(teamV2)
+    NxTeam(
+      teamV1.id,
+      teamV1.name,
+      players = players,
+      score = teamV1.score.getOrElse(0),
+      scorers = teamV1.scorers.fold(Nil: List[String])(_.split(",").map(scorer => {
+        scorer.replace("(", "").replace(")", "")}).toList),
+      possession = teamPossession,
+      shotsOn = teamV2.shotsOn,
+      shotsOff = teamV2.shotsOff,
+      corners = teamV2.corners,
+      fouls = teamV2.fouls,
+      colours = teamColour,
+      crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png"
+    )
+  }
+  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, competition: Option[Competition], isResult: Boolean, isLive: Boolean): NxMatchData = {
+    val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
+    NxMatchData(
+      id = theMatch.id,
+      isResult = isResult,
+      homeTeam = makeTeamAnswer(theMatch.homeTeam, lineUp.homeTeam, lineUp.homeTeamPossession, teamColours.home),
+      awayTeam = makeTeamAnswer(theMatch.awayTeam, lineUp.awayTeam, lineUp.awayTeamPossession, teamColours.away),
+      competition = NxCompetition(competition.map(_.fullName)),
+      isLive = isLive,
+      venue = theMatch.venue.map(_.name).getOrElse(""),
+      comments = theMatch.comments.getOrElse("")
+    )
+  }
+
+  implicit val EventAnswerWrites: Writes[NxEvent] = Json.writes[NxEvent]
+  implicit val PlayerAnswerWrites: Writes[NxPlayer] = Json.writes[NxPlayer]
+  implicit val TeamAnswerWrites: Writes[NxTeam] = Json.writes[NxTeam]
+  implicit val CompetitionAnswerWrites: Writes[NxCompetition] = Json.writes[NxCompetition]
+  implicit val MatchDataAnswerWrites: Writes[NxMatchData] = Json.writes[NxMatchData]
 }
 
 class MoreOnMatchController(
@@ -59,41 +146,21 @@ class MoreOnMatchController(
         case _ => None
       }.getOrElse("")
 
-
       lazy val competition = competitionsService.competitionForMatch(theMatch.id)
 
-      related map { _ filter hasExactlyTwoTeams } map { filtered =>
-        Cached(if(theMatch.isLive) 10 else 300) {
-          if (request.forceDCR) {
-            JsonComponent(
-              "id" -> theMatch.id,
-              "isLive" -> theMatch.isLive,
-              "isResult" -> theMatch.isResult,
-              "comments" -> theMatch.comments.getOrElse(""),
-              "venue" -> theMatch.venue.map(_.name).getOrElse(""),
-              "homeTeam" -> Json.obj(
-                "name" -> theMatch.homeTeam.name,
-                "id" -> theMatch.homeTeam.id,
-                "score" -> theMatch.homeTeam.score,
-                "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.homeTeam.id}.png",
-                "scorers" -> theMatch.homeTeam.scorers.getOrElse("").split(",").map(scorer => {
-                  scorer.replace("(", "").replace(")", "")
-                })
-              ),
-              "awayTeam" -> Json.obj(
-                "name" -> theMatch.awayTeam.name,
-                "id" -> theMatch.awayTeam.id,
-                "score" -> theMatch.awayTeam.score,
-                "crest" -> s"${Configuration.staticSport.path}/football/crests/120/${theMatch.awayTeam.id}.png",
-                "scorers" -> theMatch.awayTeam.scorers.getOrElse("").split(",").map(scorer => {
-                  scorer.replace("(", "").replace(")", "")
-                })
-              ),
-              "competition" -> Json.obj(
-                "fullName" -> competition.map(_.fullName)
-              )
-            )
-          } else {
+      if (request.forceDCR) {
+        for {
+          lineup <- competitionsService.getLineup(theMatch)
+        } yield {
+          Cached(if(theMatch.isLive) 10 else 300) {
+            JsonComponent(Json.toJson(NxAnswer.makeFromFootballMatch(theMatch, lineup, competition, theMatch.isResult, theMatch.isLive)))
+          }
+        }
+      } else {
+        for {
+          filtered <- related map { _ filter hasExactlyTwoTeams }
+        } yield {
+          Cached(if(theMatch.isLive) 10 else 300) {
             JsonComponent(
               "nav" -> football.views.html.fragments.matchNav(populateNavModel(theMatch, filtered)),
               "matchSummary" -> football.views.html.fragments.matchSummary(theMatch, competitionsService.competitionForMatch(theMatch.id), responsive = true),
