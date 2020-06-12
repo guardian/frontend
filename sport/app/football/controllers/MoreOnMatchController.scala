@@ -41,7 +41,7 @@ case class MatchNav(
   Author: Pascal
 
   For the moment I am essentially reproducing here what I did for MatchController.scala
-  If the two sets of classes turn our to be the same (or one an extension of the other) then I will move
+  If the two sets of classes turn out to be the same (or one an extension of the other) then I will move
   them to a single model file.
  */
 
