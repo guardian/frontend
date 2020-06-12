@@ -10,10 +10,11 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { getBreakpoint } from 'lib/detect';
 
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type bonzo from 'bonzo';
-import {getBreakpoint} from 'lib/detect';
+
 
 const createCommentSlots = (
     canBeDmpu: boolean
