@@ -13,6 +13,7 @@ import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
 
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type bonzo from 'bonzo';
+import {getBreakpoint} from 'lib/detect';
 
 const createCommentSlots = (
     canBeDmpu: boolean
@@ -99,8 +100,8 @@ const runSecondStage = (
 
 export const initCommentAdverts = (): Promise<boolean> => {
     const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
-
-    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
+    const isMobile = getBreakpoint() === 'mobile';
+    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
         return Promise.resolve(false);
     }
 
