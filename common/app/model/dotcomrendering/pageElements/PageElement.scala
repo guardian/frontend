@@ -55,7 +55,7 @@ object Sponsorship {
 sealed trait PageElement
 
 case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
-case class AtomEmbedUrlBlockElement(url: String) extends PageElement
+case class AtomEmbedUrlBlockElement(id: String, url: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
@@ -296,6 +296,7 @@ object PageElement {
             val encodedId = URLEncoder.encode(audio.id, "UTF-8")
             // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
             Some(AtomEmbedUrlBlockElement(
+              id = audio.id,
               url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId"
             ))
             // -----------------------------------
@@ -305,6 +306,7 @@ object PageElement {
             val encodedId = URLEncoder.encode(chart.id, "UTF-8")
             // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
             Some(AtomEmbedUrlBlockElement(
+              id = chart.id,
               url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId"
             ))
           }
@@ -327,6 +329,7 @@ object PageElement {
           case Some(interactive: InteractiveAtom) => {
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(AtomEmbedUrlBlockElement(
+              id = interactive.id,
               url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
             ))
           }
@@ -404,7 +407,15 @@ object PageElement {
       }.toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution)).toList
-      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => AtomEmbedUrlBlockElement(url)).toList
+      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => AtomEmbedUrlBlockElement("", url)).toList
+        // date: 13th June
+        // author: Pascal
+        // `Interactive`s and `InteractiveAtoms` which are not the same thing, are being both transported to DCR using
+        // the AtomEmbedUrlBlockElement. This was fine as long as we embedded only the URL, but is no longer fine
+        // now that we want to send the atom id across and given that `Interactive`s don't have one. I am putting an
+        // empty Id here for the moment, but will soon give to Interactives their own BlockElement to avoid the confusion
+        // and any problem.
+
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
