@@ -64,6 +64,7 @@ case class TeamAnswer(
    colours: String,
    crest: String
 ) extends NsAnswer
+
 case class MatchDataAnswer(id: String, homeTeam: TeamAnswer, awayTeam: TeamAnswer) extends NsAnswer
 
 object NsAnswer {
