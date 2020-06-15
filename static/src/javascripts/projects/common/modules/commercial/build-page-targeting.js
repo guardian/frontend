@@ -211,7 +211,7 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const getCcpaValue = (ccpaState: boolean | null): string => {
+const getRdpValue = (ccpaState: boolean | null): string => {
     if (ccpaState === null) {
         return 'na';
     }
@@ -263,7 +263,7 @@ const buildPageTargetting = (
             // and can be decomissioned after Pascal and D&I no longer need the flag.
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
-            ccpa: getCcpaValue(ccpaState),
+            rdp: getRdpValue(ccpaState),
         },
         page.sharedAdTargeting,
         paTargeting,
