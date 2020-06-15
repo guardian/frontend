@@ -2,6 +2,7 @@
 import config from 'lib/config';
 import {
     shouldShow,
+    checkWillShowUi,
     showPrivacyManager,
 } from '@guardian/consent-management-platform';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
@@ -79,11 +80,14 @@ export const addPrivacySettingsLink = (): void => {
 
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
-    canShow: (): Promise<boolean> =>
-        Promise.resolve(
-            config.get('switches.cmpUi', true) &&
-                shouldShow() &&
-                !isInVariantSynchronous(ccpaCmpTest, 'variant')
-        ),
+    canShow: (): Promise<boolean> => {
+        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+            return checkWillShowUi();
+        }
+        return Promise.resolve(
+            config.get('switches.cmpUi', true) && shouldShow()
+        );
+    },
+
     show,
 };

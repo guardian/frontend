@@ -1,6 +1,9 @@
 // @flow
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
-import { shouldShow } from '@guardian/consent-management-platform';
+import {
+    shouldShow,
+    checkWillShowUi,
+} from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { consentManagementPlatformUi } from './cmp-ui';
 
@@ -8,6 +11,7 @@ jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
     shouldShow: jest.fn(),
+    checkWillShowUi: jest.fn(),
 }));
 
 jest.mock('lib/report-error', () => jest.fn());
@@ -46,13 +50,14 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('return false if user is in CCPA variant', () => {
+            it('returns checkWillShowUi if user is in CCPA variant', () => {
                 config.set('switches.cmpUi', true);
-                shouldShow.mockReturnValue(true);
+                checkWillShowUi.mockReturnValue(Promise.resolve(true));
                 isInVariantSynchronous.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
-                    expect(show).toBe(false);
+                    expect(checkWillShowUi).toHaveBeenCalledTimes(1);
+                    expect(show).toBe(true);
                 });
             });
         });
