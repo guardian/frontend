@@ -1,4 +1,5 @@
 // @flow
+import reportError from 'lib/report-error';
 
 export type Config = { [string]: any };
 
@@ -18,6 +19,13 @@ const get = (path: string = '', defaultValue: any): any => {
     if (typeof value !== 'undefined') {
         return value;
     }
+    
+     // Capture in sentry
+    reportError(
+        new Error(`Accesing config that doesn't exist: ${path}. Falling back to default: ${defaultValue}`),
+        { feature: 'frontend-lib' },
+        false
+    );
 
     return defaultValue;
 };
