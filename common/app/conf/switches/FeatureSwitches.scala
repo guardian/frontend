@@ -468,9 +468,9 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "show-contribution-reminder",
     "This toggles the contribution reminder",
-    owners = Seq(Owner.withGithub("JoeMG")),
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 15),
+    sellByDate = new LocalDate(2020, 8, 25), //Cut off 1 week before September
     exposeClientSide = true
   )
 
