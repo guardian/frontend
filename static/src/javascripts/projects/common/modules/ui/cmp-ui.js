@@ -58,7 +58,12 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = 'Privacy settings';
+            newPrivacyLink.innerText = isInVariantSynchronous(
+                ccpaCmpTest,
+                'variant'
+            )
+                ? 'California resident – Do Not Sell'
+                : 'Privacy settings';
 
             const newPrivacyLinkListItem: Element = privacyLinkListItem.cloneNode(
                 false
