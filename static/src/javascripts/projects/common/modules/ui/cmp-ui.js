@@ -26,7 +26,9 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                     },
                     () => {
                         if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
-                            showPrivacyManager();
+                            if (forceModal) {
+                                showPrivacyManager();
+                            }
                         } else {
                             require('common/modules/cmp-ui').init(!!forceModal);
                         }
@@ -93,6 +95,5 @@ export const consentManagementPlatformUi = {
             config.get('switches.cmpUi', true) && shouldShow()
         );
     },
-
     show,
 };
