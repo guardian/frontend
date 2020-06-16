@@ -38,46 +38,12 @@ const fillAdvertSlots = (): Promise<void> => {
             config.get('isDotcomRendering', false) &&
             getBreakpoint() === 'mobile'
         // Get all ad slots
-        const adSlotsQuery = qwery(dfpEnv.adSlotSelector);
 
-        /*const adSlotsSelector = Array.prototype.slice.apply(
-            document.querySelectorAll(dfpEnv.adSlotSelector)
-        );*/
+        console.log("do I see this error?!");
+        const x = {};
+        x.filter(()=> true);
 
-        //console.log("do I see this errror?!");
-        //document.querySelectorAll(dfpEnv.adSlotSelector).filter(()=> true);
-        //console.log("*** adSlotsQuery", adSlotsQuery);
-       /* console.log("*** adSlotsSelector", adSlotsSelector);
-
-        console.log("**  filter1 ",  adSlotsSelector
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds)));
-
-        console.log("**  filter2 ",  adSlotsSelector
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
-            .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav')));
-        */
-
-        /*const twoFilters = adSlotsQuery
-            .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
-            .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'));
-
-        console.log("result length", twoFilters.length);
-
-        console.log("twoFilters[3] newAdvert", new Advert(twoFilters[3]));
-        console.log("twoFilters[0] newAdvert", new Advert(twoFilters[0]));
-        console.log("twoFilters[1] newAdvert", new Advert(twoFilters[1]));
-        console.log("twoFilters[2] newAdvert", new Advert(twoFilters[2]));
-        //console.log("twoFilters[3] ", twoFilters[3]);
-        console.log("twoFilters[3] newAdvert", new Advert(twoFilters[3]));
-        console.log("twoFilters[4] newAdvert", new Advert(twoFilters[4]));
-        console.log("twoFilters[5] newAdvert", new Advert(twoFilters[5]));*/
-        /*console.log("empty map", twoFilters.map(() => {
-            return {};
-        }));*/
-        /*console.log("filtered MAP ", twoFilters
-            .map(adSlot => new Advert(adSlot)));*/
-
-        const adverts =  adSlotsQuery
+        const adverts =  qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
             // TODO: find cleaner workaround
             // we need to not init top-above-nav on mobile view in DCR
@@ -86,7 +52,7 @@ const fillAdvertSlots = (): Promise<void> => {
             .filter(adSlot => !(isDCRMobile && adSlot.id === 'dfp-ad--top-above-nav'))
             .map(adSlot => new Advert(adSlot));
 
-        console.log("*** adverds", adverts);
+        console.log("*** adverts", adverts);
 
         const currentLength = dfpEnv.adverts.length;
         dfpEnv.adverts = dfpEnv.adverts.concat(adverts);

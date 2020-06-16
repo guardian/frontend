@@ -30,6 +30,8 @@ import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 
+console.log("*** Commercial DCR Loaded")
+
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
@@ -179,4 +181,11 @@ const bootCommercial = (): Promise<void> => {
         });
 };
 
-bootCommercial();
+console.log('*** window.guardian.mustardCut ', window.guardian.mustardCut);
+console.log('*** window.guardian.polyfilled ', window.guardian.polyfilled);
+
+if (window.guardian.mustardCut || window.guardian.polyfilled) {
+    bootCommercial();
+} else {
+    window.guardian.queue.push(bootCommercial);
+}
