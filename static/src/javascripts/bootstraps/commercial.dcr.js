@@ -178,4 +178,8 @@ const bootCommercial = (): Promise<void> => {
         });
 };
 
-bootCommercial();
+if (window.guardian.mustardCut || window.guardian.polyfilled) {
+    bootCommercial();
+} else {
+    window.guardian.queue.push(bootCommercial);
+}
