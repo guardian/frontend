@@ -68,7 +68,7 @@ object ArticlePageChecks {
   }
 
   // Custom Tag that can be added to articles + special reports tags while we don't support them
-  private[this] val tagsDenyList: Set[String] = Set(
+  private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
     "business/series/undercover-in-the-chicken-industry",
     "business/series/britains-debt-timebomb",
@@ -127,8 +127,8 @@ object ArticlePageChecks {
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
-  def isNotInDenyList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s=>tagsDenyList(s.id))
+  def isNotInBlockList(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(s=>tagsBlockList(s.id))
   }
 
 }
@@ -153,7 +153,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInDenyList", ArticlePageChecks.isNotInDenyList(page)),
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
       ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
   }
@@ -175,7 +175,7 @@ object ArticlePicker {
         "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
-        "isNotInDenyList",
+        "isNotInBlockList",
         "isNotPaidContent"
       )
     )
