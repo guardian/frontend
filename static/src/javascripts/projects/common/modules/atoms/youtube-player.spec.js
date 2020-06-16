@@ -52,7 +52,7 @@ describe('create ads config', () => {
         expect(result.disableAds).toBeFalsy();
     });
 
-    it('in non ad-free, returns false nonPersonalizedAds without consent in TCF', () => {
+    it('in non ad-free, returns false nonPersonalizedAd without consent in TCF', () => {
         const result = youtubePlayer.createAdsConfig(false, false, null);
 
         if (result.hasOwnProperty('nonPersonalizedAd')) {
@@ -60,7 +60,7 @@ describe('create ads config', () => {
         }
     });
 
-    it('in non ad-free, returns true nonPersonalizedAds with consent in TCF', () => {
+    it('in non ad-free, returns true nonPersonalizedAd with consent in TCF', () => {
         const result = youtubePlayer.createAdsConfig(false, true, null);
 
         expect(result.nonPersonalizedAd).toBeFalsy();
@@ -88,23 +88,29 @@ describe('create ads config', () => {
         }
     });
 
-    it('in non ad-free, returns no nonPersonalizedAds param in CCPA', () => {
+    it('in non ad-free, returns no nonPersonalizedAd param in CCPA', () => {
         const result = youtubePlayer.createAdsConfig(false, null, false);
 
-        expect(result.nonPersonalizedAds).toBeUndefined();
+        expect(result.nonPersonalizedAd).toBeUndefined();
     });
 
     it('in non ad-free includes adUnit', () => {
         const result = youtubePlayer.createAdsConfig(false, null, null);
 
-        expect(result.adTagParameters.iu).toEqual('adunit');
+        expect(result.adTagParameters).toBeDefined();
+        if (result.adTagParameters) {
+            expect(result.adTagParameters.iu).toEqual('adunit');
+        }
     });
 
     it('in non ad-free includes url-escaped targeting params', () => {
         const result = youtubePlayer.createAdsConfig(false, null, null);
 
-        expect(result.adTagParameters.cust_params).toEqual(
-            'key%3Dvalue%26permutive%3D42'
-        );
+        expect(result.adTagParameters).toBeDefined();
+        if (result.adTagParameters) {
+            expect(result.adTagParameters.cust_params).toEqual(
+                'key%3Dvalue%26permutive%3D42'
+            );
+        }
     });
 });

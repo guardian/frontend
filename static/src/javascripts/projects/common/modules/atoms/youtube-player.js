@@ -35,6 +35,29 @@ type Handlers = {
     onPlayerStateChange: (event: Object) => void,
 };
 
+interface AdsConfig {
+    adTagParameters?: {
+        iu: any,
+        cust_params: string,
+    };
+    disableAds?: boolean;
+    nonPersonalizedAd?: boolean;
+    restrictedDataProcessor?: boolean;
+}
+
+// const adsConfig: Object = {
+//     adTagParameters: {
+//         iu: config.get('page.adUnit'),
+//         cust_params: encodeURIComponent(constructQuery(custParams)),
+//     },
+// };
+
+// if (ccpaStateFlag === null) {
+//     adsConfig.nonPersonalizedAd = !tcfStateFlag;
+// } else {
+//     adsConfig.restrictedDataProcessor = ccpaStateFlag;
+// }
+
 let tcfState = null;
 let ccpaState = null;
 onIabConsentNotification(state => {
@@ -110,7 +133,7 @@ const createAdsConfig = (
     adFree: boolean,
     tcfStateFlag: boolean | null,
     ccpaStateFlag: boolean | null
-): Object => {
+): AdsConfig => {
     if (adFree) {
         return { disableAds: true };
     }
@@ -118,7 +141,7 @@ const createAdsConfig = (
     const custParams = getPageTargeting();
     custParams.permutive = getPermutivePFPSegments();
 
-    const adsConfig: Object = {
+    const adsConfig: AdsConfig = {
         adTagParameters: {
             iu: config.get('page.adUnit'),
             cust_params: encodeURIComponent(constructQuery(custParams)),
