@@ -1,11 +1,13 @@
 // @flow
-import { isInUsa } from 'common/modules/commercial/geo-utils';
+// import { isInUsa } from 'common/modules/commercial/geo-utils';
 
-let isInTest;
+// let isInTest;
 
-const isInServerSideTest = (): boolean => true;
+// const isInServerSideTest = (): boolean => true;
 
-export const isInCcpaTest = (): boolean => {
-    isInTest = isInTest || (isInUsa() && isInServerSideTest());
-    return isInTest;
-};
+// export const isInCcpaTest = (): boolean => {
+//     isInTest = isInTest || (isInUsa() && isInServerSideTest());
+//     return isInTest;
+// };
+
+export const isInCcpaTest = (): boolean => true;
