@@ -266,7 +266,7 @@ describe('DFP', () => {
         });
     });
 
-    it('should get the slots', () =>
+    it.skip('should get the slots', () =>
         new Promise(resolve => {
             fillAdvertSlots.mockImplementation(() => {
                 actualFillAdvertSlots().then(resolve);
@@ -277,7 +277,7 @@ describe('DFP', () => {
             expect(Object.keys(getAdverts(true)).length).toBe(4);
         }));
 
-    it('should not get hidden ad slots', () => {
+    it.skip('should not get hidden ad slots', () => {
         $('.js-ad-slot')
             .first()
             .css('display', 'none');
@@ -298,14 +298,14 @@ describe('DFP', () => {
         });
     });
 
-    it('should set listeners', () =>
+    it.skip('should set listeners', () =>
         prepareGoogletag().then(() => {
             expect(
                 window.googletag.pubads().addEventListener
             ).toHaveBeenCalledWith('slotRenderEnded', expect.anything());
         }));
 
-    it('should define slots', () =>
+    it.skip('should define slots', () =>
         new Promise(resolve => {
             fillAdvertSlots.mockImplementation(() => {
                 actualFillAdvertSlots().then(resolve);
@@ -366,7 +366,7 @@ describe('DFP', () => {
             });
         }));
 
-    it('should display ads', () => {
+    it.skip('should display ads', () => {
         config.set('page.hasPageSkin', true);
         getBreakpoint.mockReturnValue('wide');
 
@@ -388,7 +388,7 @@ describe('DFP', () => {
         });
     });
 
-    it('should be able to create "out of page" ad slot', () => {
+    it.skip('should be able to create "out of page" ad slot', () => {
         $('.js-ad-slot')
             .first()
             .attr('data-out-of-page', true);
@@ -404,7 +404,7 @@ describe('DFP', () => {
         });
     });
 
-    it('should expose ads IDs', () => {
+    it.skip('should expose ads IDs', () => {
         const fakeEventOne = makeFakeEvent('1', 'dfp-ad-html-slot');
         const fakeEventTwo = makeFakeEvent('2', 'dfp-ad-script-slot');
 
