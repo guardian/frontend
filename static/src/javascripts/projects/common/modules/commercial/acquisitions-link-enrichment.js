@@ -1,6 +1,8 @@
-// @flow
+ACQUISITION_LINK_CLASS// @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
+import fetchJSON from 'lib/fetch-json';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -111,7 +113,30 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
     });
 };
 
+const setupAusMomentHeader = () => {
+    const ausHeading = document.querySelector('.new-header__cta-bar-aus-moment');
+    if (ausHeading) {
+        const subHeadings = ausHeading.getElementsByClassName('cta-bar__subheading-aus-moment');
+        if (subHeadings) {
+            // TODO - store in cookie
+            fetchJSON('https://support.theguardian.com/supporters-ticker.json', {
+                mode: 'cors',
+            }).then(data => {
+                const total = parseInt(data.total, 10);
+
+                if (!Number.isNaN(Number(total))) {
+                    for (let i = 0; i < subHeadings.length; i++) {
+                        // TODO - punctuation
+                        subHeadings.item(i).innerHTML = `We're funded by ${total} readers across Australia`
+                    }
+                }
+            })
+        }
+    }
+};
+
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
     enrichAcquisitionLinksOnPage();
+    setupAusMomentHeader();
 };

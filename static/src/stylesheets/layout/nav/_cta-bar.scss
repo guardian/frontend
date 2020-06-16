@@ -39,6 +39,28 @@
     }
 }
 
+.new-header__cta-bar-aus-moment {
+    .js-aus-moment-header-supporter {
+        display: none;
+    }
+}
+
+.new-header__cta-bar-aus-moment {
+    .hide-support-messaging &,
+    .is-recent-contributor & {
+        .js-aus-moment-header-non-supporter {
+            display: none;
+        }
+        .js-aus-moment-header-supporter {
+            display: block;
+        }
+
+        .cta-bar__cta {
+            display: none;
+        }
+    }
+}
+
 .cta-bar__text {
     display: block;
     margin: ($gs-baseline / 4) 0 9px;
