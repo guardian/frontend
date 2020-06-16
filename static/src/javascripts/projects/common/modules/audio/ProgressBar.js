@@ -118,7 +118,7 @@ export default class ProgressBar extends Component<Props, State> {
     render() {
         return (
             <Progress
-                innerRef={this.getElement}
+                ref={this.getElement}
                 backgroundColor={this.props.backgroundColor}
                 highlightColor={this.props.highlightColor}
                 barContext={this.props.barContext}

@@ -492,7 +492,7 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.duration} />
                 </TimeContainer>
                 <WaveAndTrack>
-                    <FakeWave innerRef={this.setGeometry} onClick={this.seek}>
+                    <FakeWave ref={this.setGeometry} onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
