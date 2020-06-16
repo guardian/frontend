@@ -45,19 +45,6 @@ interface AdsConfig {
     restrictedDataProcessor?: boolean;
 }
 
-// const adsConfig: Object = {
-//     adTagParameters: {
-//         iu: config.get('page.adUnit'),
-//         cust_params: encodeURIComponent(constructQuery(custParams)),
-//     },
-// };
-
-// if (ccpaStateFlag === null) {
-//     adsConfig.nonPersonalizedAd = !tcfStateFlag;
-// } else {
-//     adsConfig.restrictedDataProcessor = ccpaStateFlag;
-// }
-
 let tcfState = null;
 let ccpaState = null;
 onIabConsentNotification(state => {
