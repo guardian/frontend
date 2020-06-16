@@ -15,9 +15,11 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import React, { render } from 'preact-compat';
+/* eslint-disable import/no-namespace */
 import * as emotionCore from "@emotion/core";
 import * as emotionTheming from "emotion-theming";
 import * as emotion from "emotion";
+/* eslint-enable import/no-namespace */
 
 
 import {
@@ -167,11 +169,11 @@ const buildEpicPayload = () => {
 
 const buildBannerPayload = () => {
     const tracking = {
-        //TODO: implement
+        // TODO: implement
     };
 
     const targeting = {
-        //TODO: implement
+        // TODO: implement
     };
 
     return {
@@ -234,7 +236,7 @@ export const renderBanner = (module) => {
             const Banner = bannerModule.Banner;
             const props = { ...bannerModule.props };
 
-            //TODO: tracking
+            // TODO: tracking
 
             return fastdom.write(() => {
                 const container = document.createElement('div');

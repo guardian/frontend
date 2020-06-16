@@ -1,3 +1,5 @@
+// @flow
+
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { fetchBannerData, renderBanner } from 'common/modules/commercial/contributions-service';
 
