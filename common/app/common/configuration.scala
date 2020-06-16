@@ -147,11 +147,11 @@ class GuardianConfiguration extends Logging {
   }
 
   object rendering {
-    lazy val renderingEndpoint = "http://localhost:3030/Article" //configuration.getMandatoryStringProperty("rendering.endpoint")
+    lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
     lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
     lazy val sentryHost = configuration.getMandatoryStringProperty("rendering.sentryHost")
     lazy val sentryPublicApiKey = configuration.getMandatoryStringProperty("rendering.sentryPublicApiKey")
-    lazy val timeout = 30.seconds
+    lazy val timeout = 2.seconds
     lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
