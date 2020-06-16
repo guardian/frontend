@@ -1,10 +1,7 @@
 // @flow
 /* eslint-disable no-nested-ternary */
-import {
-    React,
-    Component,
-    styled,
-} from '@guardian/dotcom-rendering/packages/guui';
+import React, { Component } from 'react';
+import styled from '@emotion/styled';
 import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
     leftCol,

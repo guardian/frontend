@@ -1,9 +1,6 @@
 // @flow
-import {
-    React,
-    Component,
-    styled,
-} from '@guardian/dotcom-rendering/packages/guui';
+import React, { Component } from 'react';
+import styled from '@emotion/styled';
 
 import AuralAid from './AuralAid';
 import Slider from './Slider';
