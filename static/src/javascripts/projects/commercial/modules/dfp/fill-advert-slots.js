@@ -39,10 +39,6 @@ const fillAdvertSlots = (): Promise<void> => {
             getBreakpoint() === 'mobile'
         // Get all ad slots
 
-        console.log("do I see this error?!");
-        const x = {};
-        x.filter(()=> true);
-
         const adverts =  qwery(dfpEnv.adSlotSelector)
             .filter(adSlot => !(adSlot.id in dfpEnv.advertIds))
             // TODO: find cleaner workaround
