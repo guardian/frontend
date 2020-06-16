@@ -5,7 +5,7 @@ import config from 'lib/config';
 let isInTest;
 
 const isInServerSideTest = (): boolean =>
-    config.get('tests.ccpaCmp') === 'variant';
+    config.get('tests.ccpaCmpVariant') === 'variant';
 
 export const isInCcpaTest = (): boolean => {
     if (typeof isInTest === 'undefined') {
