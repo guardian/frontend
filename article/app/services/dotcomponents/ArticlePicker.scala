@@ -43,6 +43,7 @@ object ArticlePageChecks {
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
       case _: InstagramBlockElement => false
+      case _: TableBlockElement => false
       case _: SoundcloudBlockElement => false
       case ContentAtomBlockElement(_, atomtype) => {
         // ContentAtomBlockElement was expanded to include atomtype.
@@ -252,7 +253,7 @@ object TestGroups {
     // This function assumes that the two buckets are distinct, and in particular that the same user cannot be
     // participant of one and control of the other at the same time.
     // If buckets are not distinct do not use it!
-    
+
     (group1, group2) match {
       case ("participant", _) => "participant"
       case (_, "participant") => "participant"
