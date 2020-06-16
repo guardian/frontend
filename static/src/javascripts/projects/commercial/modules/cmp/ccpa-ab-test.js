@@ -1,14 +1,15 @@
 // @flow
-// import { isInUsa } from 'common/modules/commercial/geo-utils';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 
-// let isInTest;
+let isInTest;
 
-const isInServerSideTest = (): boolean => config.get('tests.ccpaCmp', false);
+const isInServerSideTest = (): boolean =>
+    config.get('tests.ccpaCmp') === 'variant';
 
-// export const isInCcpaTest = (): boolean => {
-//     isInTest = isInTest || (isInUsa() && isInServerSideTest());
-//     return isInTest;
-// };
-
-export const isInCcpaTest = (): boolean => isInServerSideTest();
+export const isInCcpaTest = (): boolean => {
+    if (typeof isInTest === 'undefined') {
+        isInTest = isInUsa() && isInServerSideTest();
+    }
+    return isInTest;
+};
