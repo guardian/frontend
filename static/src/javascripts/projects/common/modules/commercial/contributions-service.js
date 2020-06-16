@@ -13,6 +13,12 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import fetchJson from 'lib/fetch-json';
+import React, { render } from 'preact-compat';
+import * as emotionCore from "@emotion/core";
+import * as emotionTheming from "emotion-theming";
+import * as emotion from "emotion";
+
 
 import {
     getLastOneOffContributionDate,
@@ -119,7 +125,7 @@ const executeJS = (container: HTMLElement | ShadowRoot, js: string) => {
     }
 };
 
-const buildPayload = () => {
+const buildEpicPayload = () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
@@ -159,6 +165,21 @@ const buildPayload = () => {
     };
 };
 
+const buildBannerPayload = () => {
+    const tracking = {
+        //TODO: implement
+    };
+
+    const targeting = {
+        //TODO: implement
+    };
+
+    return {
+        tracking,
+        targeting,
+    };
+};
+
 const checkResponseOk = response => {
     if (response.ok) {
         return response;
@@ -169,8 +190,70 @@ const checkResponseOk = response => {
     );
 };
 
+// TODO: add this to the client library
+const getStickyBottomBanner = (payload: {}) => {
+    const URL = 'https://contributions.guardianapis.com/banner';
+    const json = JSON.stringify(payload);
+
+    return fetchJson(URL, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+};
+
+export const fetchBannerData = () => {
+    const payload = buildBannerPayload();
+
+    return getStickyBottomBanner(payload)
+        .then(json => {
+            if (!json.data) {
+                return null;
+            }
+
+            const { module } = json.data;
+
+            return module;
+        });
+};
+
+export const renderBanner = (module) => {
+    if(!module) {
+        return null;
+    }
+
+    window.guardian.automat = {
+        react: React,
+        emotionCore,
+        emotionTheming,
+        emotion,
+    };
+
+    return import(/* webpackIgnore: true */ module.url.replace('}', ''))
+        .then(bannerModule => {
+            const Banner = bannerModule.Banner;
+            const props = { ...bannerModule.props };
+
+            //TODO: tracking
+
+            return fastdom.write(() => {
+                const container = document.createElement('div');
+                document.body.insertAdjacentElement('beforeend', container);
+
+                return render(
+                    <Banner {...props} />,
+                    container
+                );
+            }).then(() => true);
+        })
+        .catch(error => {
+            console.log(error);
+            reportError(error, {}, false);
+        });
+};
+
 export const fetchAndRenderEpic = (id: string) => {
-    const payload = buildPayload();
+    const payload = buildEpicPayload();
     const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
     const componentType = 'ACQUISITIONS_EPIC';
     const viewEvent = makeEvent(id, 'view');
@@ -178,7 +261,7 @@ export const fetchAndRenderEpic = (id: string) => {
     getBodyEnd(payload)
         .then(checkResponseOk)
         .then(response => response.json())
-         .then(json => {
+        .then(json => {
             if (json && json.data) {
                 const { html, css, js, meta } = json.data;
                 const trackingCampaignId = `${meta.campaignId}`;
