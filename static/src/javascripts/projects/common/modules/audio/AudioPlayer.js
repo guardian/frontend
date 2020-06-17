@@ -21,6 +21,7 @@ import { registerOphanListeners } from './utils';
 
 import Time from './Time';
 
+// $FlowFixMe
 const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],

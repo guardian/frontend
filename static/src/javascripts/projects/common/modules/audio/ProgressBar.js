@@ -5,6 +5,7 @@ import styled from '@emotion/styled';
 import AuralAid from './AuralAid';
 import Slider from './Slider';
 
+// $FlowFixMe
 const Progress = styled('div')(
     ({ backgroundColor, height, highlightColor, barContext }) => ({
         alignItems: 'stretch',
