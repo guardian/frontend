@@ -63,6 +63,11 @@
     }
 }
 
+.cta-bar__aus-moment-count {
+    color: $highlight-main;
+    font-weight: 700;
+}
+
 .cta-bar__text {
     display: block;
     margin: ($gs-baseline / 4) 0 9px;
