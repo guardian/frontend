@@ -2,7 +2,7 @@ ACQUISITION_LINK_CLASS// @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 import fetchJSON from 'lib/fetch-json';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { getCookie, addCookie } from 'lib/cookies';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -113,24 +113,40 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
     });
 };
 
+const AUS_MOMENT_SUPPORTER_COUNT_COOKIE_NAME = 'gu_aus_moment_supporter_count';
+
 const setupAusMomentHeader = () => {
     const ausHeading = document.querySelector('.new-header__cta-bar-aus-moment');
     if (ausHeading) {
-        const subHeadings = ausHeading.getElementsByClassName('cta-bar__subheading-aus-moment');
-        if (subHeadings) {
-            // TODO - store in cookie
-            fetchJSON('https://support.theguardian.com/supporters-ticker.json', {
-                mode: 'cors',
-            }).then(data => {
-                const total = parseInt(data.total, 10);
+
+        const countElements = ausHeading.getElementsByClassName('cta-bar__aus-moment-count');
+        if (countElements) {
+
+            const insertCount = (totalRaw: string) => {
+                const total = parseInt(totalRaw, 10);
 
                 if (!Number.isNaN(Number(total))) {
-                    for (let i = 0; i < subHeadings.length; i++) {
-                        // TODO - punctuation
-                        subHeadings.item(i).innerHTML = `We're funded by ${total} readers across Australia`
+                    for (let i = 0; i < countElements.length; i++) {
+                        countElements.item(i).innerHTML = `${total.toLocaleString()} `
                     }
                 }
-            })
+            };
+
+            const cookieValue = getCookie(AUS_MOMENT_SUPPORTER_COUNT_COOKIE_NAME);
+            if (cookieValue) {
+                insertCount(cookieValue);
+            } else {
+                fetchJSON('https://support.theguardian.com/supporters-ticker.json', {
+                    mode: 'cors',
+                }).then(data => {
+                    const total = data.total;
+
+                    if (total) {
+                        addCookie(AUS_MOMENT_SUPPORTER_COUNT_COOKIE_NAME, total, 1);
+                        insertCount(total)
+                    }
+                })
+            }
         }
     }
 };

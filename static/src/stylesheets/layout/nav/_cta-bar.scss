@@ -1,12 +1,14 @@
 .new-header__cta-bar {
-    position: absolute;
-    top: 30px;
-    left: $gs-gutter / 2;
-
     .hide-support-messaging &,
     .is-recent-contributor & {
         display: none;
     }
+}
+
+.new-header__cta-bar-aus-moment {
+    position: absolute;
+    top: 30px;
+    left: $gs-gutter / 2;
 
     @include mq(mobileMedium) {
         top: 37px;
