@@ -3,7 +3,7 @@ import React from 'react';
 import styled from '@emotion/styled';
 
 // $FlowFixMe
-const VisuallyHidden: any = styled('span')({
+const VisuallyHidden = styled('span')({
     height: '1px',
     overflow: 'hidden',
     position: 'absolute',
