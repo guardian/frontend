@@ -1,13 +1,9 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
 import config from 'lib/config';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
+import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 
-if (
-    config.get('switches.enableConsentManagementService') &&
-    !isInVariantSynchronous(ccpaCmpTest, 'variant')
-) {
+if (config.get('switches.enableConsentManagementService') && !isInCcpaTest()) {
     try {
         (function stubCMP(document, window) {
             if (!window.__cmp) {
