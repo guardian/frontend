@@ -2,10 +2,10 @@
 import config from 'lib/config';
 import {
     shouldShow,
+    checkWillShowUi,
     showPrivacyManager,
 } from '@guardian/consent-management-platform';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
+import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 import raven from 'lib/raven';
 
 let initUi;
@@ -24,8 +24,10 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
-                            showPrivacyManager();
+                        if (isInCcpaTest()) {
+                            if (forceModal) {
+                                showPrivacyManager();
+                            }
                         } else {
                             require('common/modules/cmp-ui').init(!!forceModal);
                         }
@@ -57,7 +59,9 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = 'Privacy settings';
+            newPrivacyLink.innerText = isInCcpaTest()
+                ? 'California resident – Do Not Sell'
+                : 'Privacy settings';
 
             const newPrivacyLinkListItem: Element = privacyLinkListItem.cloneNode(
                 false
@@ -79,11 +83,13 @@ export const addPrivacySettingsLink = (): void => {
 
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
-    canShow: (): Promise<boolean> =>
-        Promise.resolve(
-            config.get('switches.cmpUi', true) &&
-                shouldShow() &&
-                !isInVariantSynchronous(ccpaCmpTest, 'variant')
-        ),
+    canShow: (): Promise<boolean> => {
+        if (isInCcpaTest()) {
+            return checkWillShowUi();
+        }
+        return Promise.resolve(
+            config.get('switches.cmpUi', true) && shouldShow()
+        );
+    },
     show,
 };

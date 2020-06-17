@@ -35,13 +35,25 @@ type Handlers = {
     onPlayerStateChange: (event: Object) => void,
 };
 
-let consentState;
+interface AdsConfig {
+    adTagParameters?: {
+        iu: any,
+        cust_params: string,
+    };
+    disableAds?: boolean;
+    nonPersonalizedAd?: boolean;
+    restrictedDataProcessor?: boolean;
+}
+
+let tcfState = null;
+let ccpaState = null;
 onIabConsentNotification(state => {
     // typeof state === 'boolean' means CCPA mode is on
-    consentState =
-        typeof state === 'boolean'
-            ? !state
-            : state[1] && state[2] && state[3] && state[4] && state[5];
+    if (typeof state === 'boolean') {
+        ccpaState = state;
+    } else {
+        tcfState = state[1] && state[2] && state[3] && state[4] && state[5];
+    }
 });
 
 const onPlayerStateChangeEvent = (
@@ -106,8 +118,9 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
-    wantPersonalisedAds: boolean
-): Object => {
+    tcfStateFlag: boolean | null,
+    ccpaStateFlag: boolean | null
+): AdsConfig => {
     if (adFree) {
         return { disableAds: true };
     }
@@ -115,13 +128,20 @@ const createAdsConfig = (
     const custParams = getPageTargeting();
     custParams.permutive = getPermutivePFPSegments();
 
-    return {
-        nonPersonalizedAd: !wantPersonalisedAds,
+    const adsConfig: AdsConfig = {
         adTagParameters: {
             iu: config.get('page.adUnit'),
             cust_params: encodeURIComponent(constructQuery(custParams)),
         },
     };
+
+    if (ccpaStateFlag === null) {
+        adsConfig.nonPersonalizedAd = !tcfStateFlag;
+    } else {
+        adsConfig.restrictedDataProcessor = ccpaStateFlag;
+    }
+
+    return adsConfig;
 };
 
 const setupPlayer = (
@@ -145,7 +165,8 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        !!consentState
+        tcfState,
+        ccpaState
     );
 
     return new window.YT.Player(elt.id, {
