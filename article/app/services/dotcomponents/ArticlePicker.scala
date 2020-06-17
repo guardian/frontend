@@ -4,7 +4,7 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, DotcomRendering2, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{BlockElement, ContentAtomBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TextBlockElement, TweetBlockElement}
+import model.liveblog.{BlockElement, ContentAtomBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
 import model.dotcomrendering.pageElements.SoundcloudBlockElement
 import play.api.mvc.RequestHeader
 import views.support.Commercial
@@ -43,10 +43,11 @@ object ArticlePageChecks {
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
       case _: InstagramBlockElement => false
+      case _: TableBlockElement => false
       case _: SoundcloudBlockElement => false
       case ContentAtomBlockElement(_, atomtype) => {
         // ContentAtomBlockElement was expanded to include atomtype.
-        // To whitelist an atom type, just add it to supportedAtomTypes
+        // To support an atom type, just add it to supportedAtomTypes
         val supportedAtomTypes = List("explainer")
         !supportedAtomTypes.contains(atomtype)
       }
@@ -68,7 +69,7 @@ object ArticlePageChecks {
   }
 
   // Custom Tag that can be added to articles + special reports tags while we don't support them
-  private[this] val tagsBlacklist: Set[String] = Set(
+  private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
     "business/series/undercover-in-the-chicken-industry",
     "business/series/britains-debt-timebomb",
@@ -127,8 +128,8 @@ object ArticlePageChecks {
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
-  def isNotBlackListed(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s=>tagsBlacklist(s.id))
+  def isNotInBlockList(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(s=>tagsBlockList(s.id))
   }
 
 }
@@ -153,13 +154,13 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotBlackListed", ArticlePageChecks.isNotBlackListed(page)),
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
       ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
     )
   }
 
-  def isInWhitelist(path: String): Boolean = {
-    // our whitelist is only one article at the moment
+  def isInAllowList(path: String): Boolean = {
+    // our allow-list is only one article at the moment
     path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
   }
 
@@ -168,14 +169,14 @@ object ArticlePicker {
   }
 
   def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val whitelistFeatures = primaryFeatures(page, request)
-    val article100PercentPageFeatures = whitelistFeatures.filterKeys(
+    val allowListFeatures = primaryFeatures(page, request)
+    val article100PercentPageFeatures = allowListFeatures.filterKeys(
       Set(
         "isSupportedType",
         "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
-        "isNotBlackListed",
+        "isNotInBlockList",
         "isNotPaidContent"
       )
     )
@@ -184,7 +185,7 @@ object ArticlePicker {
   }
 
   def dcrForced(request: RequestHeader): Boolean = {
-    request.forceDCR || isInWhitelist(request.path)
+    request.forceDCR || isInAllowList(request.path)
   }
 
   def dcrDisabled(request: RequestHeader): Boolean = {
@@ -218,7 +219,7 @@ object ArticlePicker {
       case Excluded => "excluded"
     }
 
-    // include features that we wish to log but not whitelist against
+    // include features that we wish to log but not allow-list against
     val features = primaryChecks.mapValues(_.toString) +
       ("dcrTestGroup" -> TestGroups.combinator(testGroup(DotcomRendering1), testGroup(DotcomRendering2))) +
       ("userIsInCohort" -> (userInDCRTest1 || userInDCRTest2).toString) +
@@ -252,7 +253,7 @@ object TestGroups {
     // This function assumes that the two buckets are distinct, and in particular that the same user cannot be
     // participant of one and control of the other at the same time.
     // If buckets are not distinct do not use it!
-    
+
     (group1, group2) match {
       case ("participant", _) => "participant"
       case (_, "participant") => "participant"

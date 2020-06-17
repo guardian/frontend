@@ -16,9 +16,9 @@ const buildImage = (url: string): string =>
     </div>`;
 
 export const defaultReminderFields: ReminderFields = {
-    reminderCTA: 'Remind me in July',
-    reminderDate: '2020-07-19 00:00:00',
-    reminderDateAsString: 'July 2020',
+    reminderCTA: 'Remind me in September',
+    reminderDate: '2020-09-15 00:00:00',
+    reminderDateAsString: 'September 2020',
 };
 
 export const acquisitionsEpicControlTemplate = ({

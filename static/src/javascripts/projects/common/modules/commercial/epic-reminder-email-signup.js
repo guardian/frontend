@@ -184,9 +184,8 @@ const epicReminderEmailSignup = (fields: Fields) => {
             ? ctaAttribute.toLowerCase().replace(/\s/g, '-')
             : '';
 
-        // For second round of testing, the events will be either (tested):
-        // precontribution-reminder-prompt-copy-remind-me-in-july or
-        // precontribution-reminder-prompt-copy-support-us-later
+        // For second round of testing, the events will be
+        // precontribution-reminder-prompt-copy-remind-me-in-september
         submitClickEvent({
             component: {
                 componentType: 'ACQUISITIONS_OTHER',

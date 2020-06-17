@@ -14,7 +14,7 @@
     "@emotion/core": "^10.0.27",
     "@guardian/atom-renderer": "1.1.6",
     "@guardian/automat-client": "^0.2.16",
-    "@guardian/consent-management-platform": "3.3.0",
+    "@guardian/consent-management-platform": "3.4.2",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "@guardian/src-button": "^0.16.1",
     "@guardian/src-foundations": "^0.16.1",

@@ -186,29 +186,29 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().pa).toBe('f');
     });
 
-    it('Should correctly set the CCPA state (ccpa) param', () => {
+    it('Should correctly set the RDP flag (rdp) param', () => {
         onIabConsentNotification.mockImplementation(tcfWithConsentMock);
-        expect(getPageTargeting().ccpa).toBe('na');
+        expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
-        expect(getPageTargeting().ccpa).toBe('na');
+        expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfNullConsentMock);
-        expect(getPageTargeting().ccpa).toBe('na');
+        expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
-        expect(getPageTargeting().ccpa).toBe('na');
+        expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
-        expect(getPageTargeting().ccpa).toBe('f');
+        expect(getPageTargeting().rdp).toBe('f');
 
         _.resetPageTargeting();
         onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
-        expect(getPageTargeting().ccpa).toBe('t');
+        expect(getPageTargeting().rdp).toBe('t');
     });
 
     it('should set correct edition param', () => {
@@ -261,7 +261,7 @@ describe('Build Page Targeting', () => {
             cc: 'US',
             rp: 'dotcom-platform',
             dcre: 'f',
-            ccpa: 'na',
+            rdp: 'na',
         });
     });
 
