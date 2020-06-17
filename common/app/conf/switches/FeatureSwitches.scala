@@ -500,7 +500,7 @@ trait FeatureSwitches {
     "Enables the Aus moment special header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 8, 1),
+    sellByDate = new LocalDate(2020, 8, 3),
     exposeClientSide = true
   )
 
