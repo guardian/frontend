@@ -1,5 +1,7 @@
 package model.dotcomponents
 
+import java.net.URLEncoder
+
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
@@ -238,7 +240,10 @@ case class DataModelV3(
   // slot machine (temporary for contributions development)
   slotMachineFlags: String,
   contributionsServiceUrl: String,
-  badge: Option[DCRBadge]
+  badge: Option[DCRBadge],
+
+  // Match Data
+  matchDataApiUrl: Option[String] // Optional url used for match data
 )
 
 object DataModelV3 {
@@ -294,7 +299,8 @@ object DataModelV3 {
       "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
       "slotMachineFlags" -> model.slotMachineFlags,
       "contributionsServiceUrl" -> model.contributionsServiceUrl,
-      "badge" -> model.badge
+      "badge" -> model.badge,
+      "matchDataApiUrl" -> model.matchDataApiUrl
     )
   }
 
@@ -584,6 +590,60 @@ object DotcomponentsDataModel {
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
 
+    println(articlePage.getJavascriptConfig("references"))
+
+    def makeMatchApiUrl(articlePage: PageWithStoryPackage): Option[String] = {
+
+      def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
+        val sequence = references match {
+          case JsArray(elements) => Some(elements)
+          case _ => None
+        }
+        sequence
+      }
+
+      def entryToDataPair(entry: JsValue): Option[(String, String)] = {
+        /*
+            Examples:
+            {
+              "esa-football-team": "/\" + \"football/\" + \"team/\" + \"331"
+            }
+            {
+              "pa-football-competition": "500"
+            }
+            {
+              "pa-football-team": "26305"
+            }
+         */
+        val obj = entry.as[JsObject]
+        obj.fields.map(pair => (pair._1, pair._2.as[String])).headOption
+      }
+
+      val optionalUrl: Option[String] = for {
+        references <- articlePage.getJavascriptConfig.get("references")
+        entries1 <- extraction1(references)
+        entries2 = entries1
+                    .map(entryToDataPair(_))
+                    .filter( _.isDefined )
+                    .map( _.get ) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
+                    .filter( _._1 == "pa-football-team" )
+      } yield {
+        val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
+        entries2.toList match {
+          case e1 :: e2 :: _ => s"${Configuration.ajax.url}/football/api/match-nav/2020/03/11/${e1._2}/${e2._2}.json?page=${pageId}"
+          case _ => ""
+        }
+      }
+
+      // We need one more transformation because we could have a Some(""), which we don't want
+
+      if (optionalUrl.getOrElse("").size>0) {
+        optionalUrl
+      } else {
+        None
+      }
+    }
+
     val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
 
@@ -658,7 +718,10 @@ object DotcomponentsDataModel {
 
       slotMachineFlags = request.slotMachineFlags,
       contributionsServiceUrl = Configuration.contributionsService.url,
-      badge = badge
+      badge = badge,
+
+      // Match Data
+      matchDataApiUrl = makeMatchApiUrl(articlePage)
     )
   }
 }
