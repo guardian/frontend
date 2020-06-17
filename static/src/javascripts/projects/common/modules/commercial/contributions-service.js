@@ -29,7 +29,8 @@ import {
 } from 'common/modules/commercial/user-features';
 
 type ServiceModule = {
-    url: string
+    url: string,
+    props: {}
 };
 
 const buildKeywordTags = page => {
@@ -239,7 +240,7 @@ export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     return import(/* webpackIgnore: true */ module.url)
         .then(bannerModule => {
             const Banner = bannerModule.Banner;
-            const props = { ...bannerModule.props };
+            const props = module.props;
 
             // TODO: tracking
 
