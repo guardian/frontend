@@ -8,9 +8,7 @@ const messageCode = 'reader-revenue-banner';
 
 let data = null;
 
-const show = (): Promise<boolean> => {
-    renderBanner(data);
-};
+const show = () => renderBanner(data);
 
 const canShow = (): Promise<boolean> => {
     const enabled = false;

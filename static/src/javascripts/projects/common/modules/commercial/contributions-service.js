@@ -28,6 +28,10 @@ import {
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
 
+type ServiceModule = {
+    url: string
+};
+
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
     const keywords = page.keywords.split(',');
@@ -204,7 +208,7 @@ const getStickyBottomBanner = (payload: {}) => {
     });
 };
 
-export const fetchBannerData = () => {
+export const fetchBannerData: () => Promise<?ServiceModule> = () => {
     const payload = buildBannerPayload();
 
     return getStickyBottomBanner(payload)
@@ -219,9 +223,9 @@ export const fetchBannerData = () => {
         });
 };
 
-export const renderBanner = (module) => {
+export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     if(!module) {
-        return null;
+        return Promise.resolve(false);
     }
 
     window.guardian.automat = {
@@ -231,7 +235,8 @@ export const renderBanner = (module) => {
         emotion,
     };
 
-    return import(/* webpackIgnore: true */ module.url.replace('}', ''))
+    // $FlowFixMe
+    return import(/* webpackIgnore: true */ module.url)
         .then(bannerModule => {
             const Banner = bannerModule.Banner;
             const props = { ...bannerModule.props };
@@ -240,7 +245,9 @@ export const renderBanner = (module) => {
 
             return fastdom.write(() => {
                 const container = document.createElement('div');
-                document.body.insertAdjacentElement('beforeend', container);
+                if(document.body) {
+                    document.body.insertAdjacentElement('beforeend', container);
+                }
 
                 return render(
                     <Banner {...props} />,
