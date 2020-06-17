@@ -2,7 +2,7 @@
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 import fetchJSON from 'lib/fetch-json';
-import { getCookie, addCookie } from 'lib/cookies';
+import { getCookie, addForMinutes as addCookie } from 'lib/cookies';
 import config from "lib/config";
 
 // Currently the only acquisition components on the site are
@@ -146,7 +146,7 @@ const setupAusMomentHeader = () => {
                     const total = data.total;
 
                     if (total) {
-                        addCookie(AUS_MOMENT_SUPPORTER_COUNT_COOKIE_NAME, total, 1);
+                        addCookie(AUS_MOMENT_SUPPORTER_COUNT_COOKIE_NAME, total, 60);
                         insertCount(total)
                     }
                 })
