@@ -1,8 +1,9 @@
-ACQUISITION_LINK_CLASS// @flow
+// @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 import fetchJSON from 'lib/fetch-json';
 import { getCookie, addCookie } from 'lib/cookies';
+import config from "lib/config";
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
@@ -126,8 +127,11 @@ const setupAusMomentHeader = () => {
                 const total = parseInt(totalRaw, 10);
 
                 if (!Number.isNaN(Number(total))) {
-                    for (let i = 0; i < countElements.length; i++) {
-                        countElements.item(i).innerHTML = `${total.toLocaleString()} `
+                    for (let i = 0; i < countElements.length; i+=1) {
+                        const element = countElements.item(i);
+                        if (element) {
+                            element.innerHTML = `${total.toLocaleString()} `
+                        }
                     }
                 }
             };
@@ -154,5 +158,8 @@ const setupAusMomentHeader = () => {
 export const init = (): void => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
     enrichAcquisitionLinksOnPage();
-    setupAusMomentHeader();
+
+    if (config.get('switches.ausMoment2020Header')) {
+        setupAusMomentHeader();
+    }
 };

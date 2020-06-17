@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch, ausMoment2020Header }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -34,7 +34,7 @@
             @defining(Edition(request).id.toLowerCase()) { editionId =>
                 <div class="@{if (editionId == "au") "new-header__cta-bar-aus-moment" else "new-header__cta-bar"} hide-until-mobile">
                     @if(!page.metadata.hasSlimHeader) {
-                        @if(editionId == "au") {
+                        @if(editionId == "au" && ausMoment2020Header.isSwitchedOn) {
                             <div class="cta-bar__text hide-until-tablet js-aus-moment-header-supporter">
                                 <div class="cta-bar__heading">
                                     Welcome back

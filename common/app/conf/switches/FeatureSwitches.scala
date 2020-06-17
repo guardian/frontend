@@ -494,4 +494,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val ausMoment2020Header = Switch(
+    SwitchGroup.Feature,
+    "aus-moment-2020-header",
+    "Enables the Aus moment special header",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 8, 1),
+    exposeClientSide = true
+  )
+
 }
