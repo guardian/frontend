@@ -141,7 +141,7 @@
         documentElement.style.fontSize = baseFontSize
     }
 
-    if (!shouldHideSupportMessaging()) {
+    if (shouldHideSupportMessaging()) {
         docClass += ' hide-support-messaging';
     }
 
