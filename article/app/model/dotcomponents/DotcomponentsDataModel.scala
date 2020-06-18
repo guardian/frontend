@@ -26,6 +26,7 @@ import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, I
 import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
+import org.joda.time.format.DateTimeFormat
 import views.support.JavaScriptPage
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -626,7 +627,12 @@ object DotcomponentsDataModel {
       } yield {
         val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
         entries2.toList match {
-          case e1 :: e2 :: _ => s"${Configuration.ajax.url}/football/api/match-nav/2020/03/11/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
+          case e1 :: e2 :: _ => {
+            val year = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
+            val month = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
+            val day = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
+            s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
+          }
           case _ => ""
         }
       }
