@@ -5,7 +5,7 @@ import {
     checkWillShowUi,
     showPrivacyManager,
 } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import raven from 'lib/raven';
 
 let initUi;

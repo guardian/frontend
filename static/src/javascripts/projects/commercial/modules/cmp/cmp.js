@@ -5,7 +5,7 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';

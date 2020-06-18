@@ -10,7 +10,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import 'projects/commercial/modules/cmp/stub';
-import { isCcpaApplicable } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { init } from '@guardian/consent-management-platform';
 
 // Let webpack know where to get files from

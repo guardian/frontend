@@ -1,5 +1,5 @@
 // @flow
-import { isCcpaApplicable as isCcpaApplicable_ } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable as isCcpaApplicable_ } from 'commercial/modules/cmp/ccpa-cmp';
 import {
     shouldShow,
     checkWillShowUi,
@@ -17,7 +17,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
 jest.mock('lib/report-error', () => jest.fn());
 
 const isCcpaApplicable: any = isCcpaApplicable_;
-jest.mock('projects/commercial/modules/cmp/ccpa-ab-test', () => ({
+jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
     isCcpaApplicable: jest.fn(),
 }));
 
