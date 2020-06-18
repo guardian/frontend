@@ -174,9 +174,40 @@ describe('Generating Permutive payload utils', () => {
                     identity: false,
                 },
             };
+            const config3 = {
+                page: {
+                    pageId: 'the-abcs-of-recruiting-teachers-remotely/2020/may/01/',
+                    headline: 'Teacher training',
+                    contentType: 'Article',
+                    section: 'the-abcs-of-recruiting-teachers-remotely',
+                    author: 'Ross Morrison McGill',
+                    keywords: 'The ABCs of recruiting teachers remotely',
+                    webPublicationDate: 1588334970000,
+                    tones: 'Advertisement Features', // ignored
+                    toneIds: 'tone/advertisement-features',
+                    edition: 'UK',
+                },
+            };
+            const expected3 = {
+                content: {
+                    id: 'the-abcs-of-recruiting-teachers-remotely/2020/may/01/',
+                    title: 'Teacher training',
+                    type: 'Article',
+                    section: 'the-abcs-of-recruiting-teachers-remotely',
+                    authors: ['Ross Morrison McGill'],
+                    keywords: ['The ABCs of recruiting teachers remotely'],
+                    publishedAt: '2020-05-01T12:09:30.000Z',
+                    tone: 'tone/advertisement-features',
+                },
+                user: {
+                    edition: 'UK',
+                    identity: false,
+                },
+            };
 
             expect(_.generatePayload(config1)).toEqual(expected1);
             expect(_.generatePayload(config2)).toEqual(expected2);
+            expect(_.generatePayload(config3)).toEqual(expected3);
         });
         it('generates valid payload for `user` sub schema', () => {
             const config1 = { page: {}, user: {} };

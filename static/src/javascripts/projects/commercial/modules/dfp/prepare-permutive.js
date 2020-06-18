@@ -14,6 +14,7 @@ type PermutiveSchema = {
         keywords?: Array<string>,
         publishedAt?: string,
         series?: string,
+        tone?: string,
     },
     user: {
         edition?: string,
@@ -60,6 +61,7 @@ const generatePayload = (
         webPublicationDate,
         series,
         edition,
+        toneIds,
     } = page;
 
     const safeAuthors = (author && typeof author === 'string'
@@ -85,6 +87,7 @@ const generatePayload = (
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
             series,
+            tone: toneIds,
         },
         user: {
             edition,
