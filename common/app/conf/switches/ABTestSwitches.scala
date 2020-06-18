@@ -176,15 +176,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
-    ABTests,
-    "ab-cmp-ccpa-test",
-    "Test new CMP implementation for CCPA alongside TCFv1",
-    owners = Seq(Owner.withGithub("buck06191"),
-      Owner.withGithub("ripecosta"),
-      Owner.withGithub("sndrs")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
-    exposeClientSide = true
-  )
 }
