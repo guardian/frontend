@@ -9,7 +9,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldTLSSupportDeprecation,
     DotcomRendering1,
     DotcomRendering2,
-    DCRBubble
+    DCRBubble,
+    CcpaCmp
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -19,7 +20,7 @@ object OldTLSSupportDeprecation extends Experiment(
   name = "old-tls-support-deprecation",
   description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2020, 6, 17),
+  sellByDate = new LocalDate(2020, 11, 11),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
 )
@@ -46,4 +47,12 @@ object DCRBubble extends Experiment(
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
+)
+
+object CcpaCmp extends Experiment(
+  name = "ccpa-cmp",
+  description = "Shows CCPA banner instead of TCFv1 banner",
+  owners = Seq(Owner.withGithub("ripecosta")),
+  sellByDate = new LocalDate(2020, 7, 3),
+  participationGroup = Perc1C
 )

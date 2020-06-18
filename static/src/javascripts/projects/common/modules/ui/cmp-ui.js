@@ -5,8 +5,7 @@ import {
     checkWillShowUi,
     showPrivacyManager,
 } from '@guardian/consent-management-platform';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
+import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 import raven from 'lib/raven';
 
 let initUi;
@@ -25,7 +24,7 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+                        if (isInCcpaTest()) {
                             if (forceModal) {
                                 showPrivacyManager();
                             }
@@ -60,10 +59,7 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = isInVariantSynchronous(
-                ccpaCmpTest,
-                'variant'
-            )
+            newPrivacyLink.innerText = isInCcpaTest()
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
@@ -88,7 +84,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+        if (isInCcpaTest()) {
             return checkWillShowUi();
         }
         return Promise.resolve(

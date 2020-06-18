@@ -10,8 +10,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import 'projects/commercial/modules/cmp/stub';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { ccpaCmpTest } from 'common/modules/experiments/tests/cmp-ccpa-test';
+import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 import { init } from '@guardian/consent-management-platform';
 
 // Let webpack know where to get files from
@@ -33,7 +32,7 @@ const go = () => {
         bootStandard();
 
         // Start CMP
-        if (isInVariantSynchronous(ccpaCmpTest, 'variant')) {
+        if (isInCcpaTest()) {
             init({ useCcpa: true });
         }
 
