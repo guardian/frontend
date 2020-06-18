@@ -5,7 +5,7 @@ import {
     checkWillShowUi,
     showPrivacyManager,
 } from '@guardian/consent-management-platform';
-import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 import raven from 'lib/raven';
 
 let initUi;
@@ -24,7 +24,7 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isInCcpaTest()) {
+                        if (isCcpaApplicable()) {
                             if (forceModal) {
                                 showPrivacyManager();
                             }
@@ -59,7 +59,7 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = isInCcpaTest()
+            newPrivacyLink.innerText = isCcpaApplicable()
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
@@ -84,7 +84,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInCcpaTest()) {
+        if (isCcpaApplicable()) {
             return checkWillShowUi();
         }
         return Promise.resolve(

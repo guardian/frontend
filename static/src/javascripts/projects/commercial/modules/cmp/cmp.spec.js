@@ -5,7 +5,7 @@ import { _, init } from './cmp';
 import { log as log_ } from './log';
 
 jest.mock('projects/commercial/modules/cmp/ccpa-ab-test', () => ({
-    isInCcpaTest: () => false,
+    isCcpaApplicable: () => false,
 }));
 
 jest.mock('lib/raven');

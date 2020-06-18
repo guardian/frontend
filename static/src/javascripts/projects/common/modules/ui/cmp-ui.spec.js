@@ -1,5 +1,5 @@
 // @flow
-import { isInCcpaTest as isInCcpaTest_ } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable as isCcpaApplicable_ } from 'projects/commercial/modules/cmp/ccpa-ab-test';
 import {
     shouldShow,
     checkWillShowUi,
@@ -16,9 +16,9 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 jest.mock('lib/report-error', () => jest.fn());
 
-const isInCcpaTest: any = isInCcpaTest_;
+const isCcpaApplicable: any = isCcpaApplicable_;
 jest.mock('projects/commercial/modules/cmp/ccpa-ab-test', () => ({
-    isInCcpaTest: jest.fn(),
+    isCcpaApplicable: jest.fn(),
 }));
 
 describe('cmp-ui', () => {
@@ -53,7 +53,7 @@ describe('cmp-ui', () => {
             it('returns checkWillShowUi if user is in CCPA variant', () => {
                 config.set('switches.cmpUi', true);
                 checkWillShowUi.mockReturnValue(Promise.resolve(true));
-                isInCcpaTest.mockReturnValue(true);
+                isCcpaApplicable.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(checkWillShowUi).toHaveBeenCalledTimes(1);

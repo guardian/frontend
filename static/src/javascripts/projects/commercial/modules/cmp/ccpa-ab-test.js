@@ -2,14 +2,11 @@
 import { isInUsa } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 
-let isInTest;
+let ccpaApplicable;
 
-const isInServerSideTest = (): boolean =>
-    config.get('tests.ccpaCmpVariant') === 'variant';
-
-export const isInCcpaTest = (): boolean => {
-    if (typeof isInTest === 'undefined') {
-        isInTest = isInUsa() && isInServerSideTest();
+export const isCcpaApplicable = (): boolean => {
+    if (typeof ccpaApplicable === 'undefined') {
+        ccpaApplicable = isInUsa() && config.get('switches.ccpaCmpUi', true);
     }
-    return isInTest;
+    return ccpaApplicable;
 };
