@@ -1,10 +1,7 @@
 // @flow
 /* eslint-disable no-nested-ternary */
-import {
-    React,
-    Component,
-    styled,
-} from '@guardian/dotcom-rendering/packages/guui';
+import React, { Component } from 'react';
+import styled from '@emotion/styled';
 import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
 import {
     leftCol,
@@ -24,6 +21,7 @@ import { registerOphanListeners } from './utils';
 
 import Time from './Time';
 
+// $FlowFixMe
 const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
@@ -495,7 +493,7 @@ export class AudioPlayer extends Component<Props, State> {
                     <Time t={this.state.duration} />
                 </TimeContainer>
                 <WaveAndTrack>
-                    <FakeWave innerRef={this.setGeometry} onClick={this.seek}>
+                    <FakeWave ref={this.setGeometry} onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
