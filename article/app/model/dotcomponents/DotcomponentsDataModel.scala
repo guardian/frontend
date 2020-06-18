@@ -243,7 +243,7 @@ case class DataModelV3(
   badge: Option[DCRBadge],
 
   // Match Data
-  matchDataApiUrl: Option[String] // Optional url used for match data
+  matchUrl: Option[String] // Optional url used for match data
 )
 
 object DataModelV3 {
@@ -300,7 +300,7 @@ object DataModelV3 {
       "slotMachineFlags" -> model.slotMachineFlags,
       "contributionsServiceUrl" -> model.contributionsServiceUrl,
       "badge" -> model.badge,
-      "matchDataApiUrl" -> model.matchDataApiUrl
+      "matchUrl" -> model.matchUrl
     )
   }
 
@@ -316,9 +316,7 @@ object DataModelV3 {
 }
 
 object DotcomponentsDataModel {
-
   val VERSION = 2
-
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DataModelV3 = {
 
     val article = articlePage.article
@@ -590,9 +588,7 @@ object DotcomponentsDataModel {
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
 
-    println(articlePage.getJavascriptConfig("references"))
-
-    def makeMatchApiUrl(articlePage: PageWithStoryPackage): Option[String] = {
+    def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
 
       def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
         val sequence = references match {
@@ -643,6 +639,8 @@ object DotcomponentsDataModel {
         None
       }
     }
+
+    println(makeMatchUrl(articlePage))
 
     val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
@@ -721,7 +719,7 @@ object DotcomponentsDataModel {
       badge = badge,
 
       // Match Data
-      matchDataApiUrl = makeMatchApiUrl(articlePage)
+      matchUrl = makeMatchUrl(articlePage)
     )
   }
 }
