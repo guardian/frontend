@@ -626,7 +626,7 @@ object DotcomponentsDataModel {
       } yield {
         val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
         entries2.toList match {
-          case e1 :: e2 :: _ => s"${Configuration.ajax.url}/football/api/match-nav/2020/03/11/${e1._2}/${e2._2}.json?page=${pageId}"
+          case e1 :: e2 :: _ => s"${Configuration.ajax.url}/football/api/match-nav/2020/03/11/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
           case _ => ""
         }
       }
