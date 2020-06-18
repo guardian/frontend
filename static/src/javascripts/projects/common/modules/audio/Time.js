@@ -1,5 +1,5 @@
 // @flow
-import { React } from '@guardian/dotcom-rendering/packages/guui';
+import React from 'react';
 import { formatTime } from './utils';
 
 type Props = {

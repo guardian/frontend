@@ -1,6 +1,8 @@
 // @flow
-import { React, styled } from '@guardian/dotcom-rendering/packages/guui';
+import React from 'react';
+import styled from '@emotion/styled';
 
+// $FlowFixMe
 const VisuallyHidden = styled('span')({
     height: '1px',
     overflow: 'hidden',

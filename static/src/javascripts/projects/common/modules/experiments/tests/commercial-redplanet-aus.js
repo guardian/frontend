@@ -1,8 +1,6 @@
 // @flow strict
-import { getSync as geolocationGetSync } from 'lib/geolocation';
-import once from 'lodash/once';
 
-const currentGeoLocation = once((): string => geolocationGetSync());
+import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 export const commercialRedplanet: ABTest = {
     id: 'CommercialRedplanet',
@@ -10,14 +8,14 @@ export const commercialRedplanet: ABTest = {
     expiry: '2020-10-01',
     author: 'Ioanna Kyprianou',
     description: 'Test redplanet in AUS',
-    audience: 0.0,
+    audience: 0.01,
     audienceOffset: 0.0,
     successMeasure: 'Redplanet integration in AUS works',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'Redplanet integration in AUS works',
     showForSensitive: true,
-    canRun: () => ['AU', 'NZ'].includes(currentGeoLocation()),
+    canRun: () => isInAuOrNz(),
     variants: [
         {
             id: 'control',
