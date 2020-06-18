@@ -27,6 +27,16 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val CcpaCmpUi = Switch(
+    SwitchGroup.Feature,
+    "ccpa-cmp-ui",
+    "If this switch is on, the CCPA CMP UI will be available to users in America.",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
