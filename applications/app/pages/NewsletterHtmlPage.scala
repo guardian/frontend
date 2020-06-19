@@ -12,10 +12,10 @@ import views.html.fragments._
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.signup.newsletterContent
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
@@ -40,6 +40,7 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(

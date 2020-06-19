@@ -54,6 +54,7 @@ object StoryHtmlPage {
         head,
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking(),
         htmlDcrCouldRender(pageWithStoryPackage, request)
       ),

@@ -50,6 +50,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         frontMeta(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
