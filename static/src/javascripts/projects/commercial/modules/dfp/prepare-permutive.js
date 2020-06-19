@@ -76,6 +76,10 @@ const generatePayload = (
         webPublicationDate && typeof webPublicationDate === 'number'
             ? new Date(webPublicationDate).toISOString()
             : '';
+    const safeToneIds = (toneIds && typeof toneIds === 'string'
+            ? toneIds.split(',')
+            : []
+    ).map(str => str.trim());
     const cleanPayload = removeEmpty({
         content: {
             premium: isPaidContent,
@@ -87,7 +91,7 @@ const generatePayload = (
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
             series,
-            tone: toneIds,
+            tone: safeToneIds,
         },
         user: {
             edition,

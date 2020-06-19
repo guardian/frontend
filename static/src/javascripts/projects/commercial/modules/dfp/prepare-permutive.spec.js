@@ -184,7 +184,7 @@ describe('Generating Permutive payload utils', () => {
                     keywords: 'The ABCs of recruiting teachers remotely',
                     webPublicationDate: 1588334970000,
                     tones: 'Advertisement Features', // ignored
-                    toneIds: 'tone/advertisement-features',
+                    toneIds: 'tone/advertisement-features,tone/minutebyminute',
                     edition: 'UK',
                 },
             };
@@ -197,7 +197,7 @@ describe('Generating Permutive payload utils', () => {
                     authors: ['Ross Morrison McGill'],
                     keywords: ['The ABCs of recruiting teachers remotely'],
                     publishedAt: '2020-05-01T12:09:30.000Z',
-                    tone: 'tone/advertisement-features',
+                    tone: ['tone/advertisement-features', 'tone/minutebyminute'],
                 },
                 user: {
                     edition: 'UK',
