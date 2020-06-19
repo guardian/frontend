@@ -1,7 +1,10 @@
 // @flow
 
-import React, { Component } from 'react';
-import { render } from 'react-dom';
+import {
+    Component,
+    React,
+    render,
+} from '@guardian/dotcom-rendering/packages/guui';
 import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan, registerOphanListeners } from './utils';
 
