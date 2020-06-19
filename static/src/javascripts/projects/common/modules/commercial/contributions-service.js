@@ -44,6 +44,26 @@ const buildKeywordTags = page => {
     }));
 };
 
+interface AutomatJsCallback {
+    buttonCopyAsString: string;
+}
+
+const onReminderOpen = (callbackParams: AutomatJsCallback) => {
+    const { buttonCopyAsString } = callbackParams;
+    submitClickEvent({
+        component: {
+            componentType: 'ACQUISITIONS_OTHER',
+            id: 'precontribution-reminder-prompt-clicked',
+        },
+    });
+    submitClickEvent({
+        component: {
+            componentType: 'ACQUISITIONS_OTHER',
+            id: `precontribution-reminder-prompt-copy-${buttonCopyAsString}`,
+        },
+    });
+};
+
 const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> => {
     return fastdom.write(() => {
         const target = document.querySelector(
@@ -74,62 +94,13 @@ const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> =>
             shadowRoot = container.attachShadow({
                 mode: 'open',
             });
-            render(<ContributionsEpic {...props} />, shadowRoot);
+            render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, shadowRoot);
         } else {
-            render(<ContributionsEpic {...props} />, container);
+            render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, container);
         }
 
         return container;
     });
-};
-
-interface InitAutomatJsConfig {
-    epicRoot: HTMLElement | ShadowRoot;
-    onReminderOpen?: Function;
-}
-
-interface AutomatJsCallback {
-    buttonCopyAsString: string;
-}
-
-// TODO introduce better way to support client-side behaviour
-const executeJS = (container: HTMLElement | ShadowRoot, js: string) => {
-    if (!js) {
-        return;
-    }
-
-    try {
-        // eslint-disable-next-line no-eval
-        window.eval(js);
-        if (
-            typeof window.initAutomatJs ===
-            'function'
-        ) {
-            const initAutomatJsConfig: InitAutomatJsConfig = {
-                epicRoot: container,
-                onReminderOpen: (callbackParams: AutomatJsCallback) => {
-                    const { buttonCopyAsString } = callbackParams;
-                    submitClickEvent({
-                        component: {
-                            componentType: 'ACQUISITIONS_OTHER',
-                            id: 'precontribution-reminder-prompt-clicked',
-                        },
-                    });
-                    submitClickEvent({
-                        component: {
-                            componentType: 'ACQUISITIONS_OTHER',
-                            id: `precontribution-reminder-prompt-copy-${buttonCopyAsString}`,
-                        },
-                    });
-                },
-            };
-            window.initAutomatJs(initAutomatJsConfig);
-        }
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-        reportError(error, {}, false);
-    }
 };
 
 const buildEpicPayload = () => {
