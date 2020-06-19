@@ -1171,6 +1171,13 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
+"@guardian/shimport@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@guardian/shimport/-/shimport-1.0.2.tgz#96c71153553a90f5a7b2a45dfc78196eb14e76f1"
+  integrity sha512-o35TxvMFfpQTGL6flW0ggIfU4tPlXp0PqY9vPL2Fx+68qy+s+uX4T0+dN3+JeoBad9QrRZoHfZPALvZlrRWfHw==
+  dependencies:
+    tslib "^2.0.0"
+
 "@guardian/src-button@^0.16.1":
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-button/-/src-button-0.16.1.tgz#f8833c8906f00a9f36295901282529220452d647"
@@ -3841,6 +3848,11 @@ duplexify@^3.4.2, duplexify@^3.6.0:
     inherits "^2.0.1"
     readable-stream "^2.0.0"
     stream-shift "^1.0.0"
+
+dynamic-import-polyfill@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/dynamic-import-polyfill/-/dynamic-import-polyfill-0.1.1.tgz#e1f9eb1876ee242bd56572f8ed4df768e143083f"
+  integrity sha512-m953zv0w5oDagTItWm6Auhmk/pY7EiejaqiVbnzSS3HIjh1FCUeK7WzuaVtWPNs58A+/xpIE+/dVk6pKsrua8g==
 
 easy-extender@^2.3.4:
   version "2.3.4"
@@ -10796,6 +10808,11 @@ tryit@^1.0.1:
 tslib@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/tslib/-/tslib-1.9.3.tgz#d7e4dd79245d85428c4d7e4822a79917954ca286"
+
+tslib@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/tslib/-/tslib-2.0.0.tgz#18d13fc2dce04051e20f074cc8387fd8089ce4f3"
+  integrity sha512-lTqkx847PI7xEDYJntxZH89L2/aXInsyF2luSafe/+0fHOMjlBNXdH6th7f70qxLDhul7KZK0zC8V5ZIyHl0/g==
 
 tsml@1.0.1:
   version "1.0.1"
