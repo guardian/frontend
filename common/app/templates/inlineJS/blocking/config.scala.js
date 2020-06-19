@@ -18,6 +18,7 @@ window.guardian = {
     isModernBrowser : isModernBrowser,
     isEnhanced:
         window.shouldEnhance && isModernBrowser,
+    supportsModules: window.guardian && window.guardian.supportsModules !== false,
     css: {
         loaded: false
     },

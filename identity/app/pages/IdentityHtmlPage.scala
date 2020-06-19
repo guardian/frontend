@@ -11,8 +11,8 @@ import views.html.fragments._
 import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
-import html.HtmlPageHelpers.{ContentCSSFile}
+import views.html.fragments.page.head._
+import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 
 object IdentityHtmlPage {
@@ -40,6 +40,7 @@ object IdentityHtmlPage {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses())(
