@@ -1,6 +1,7 @@
 // @flow
 
 import { fetchAndRenderEpic } from "common/modules/commercial/contributions-service";
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 
 const id = 'RemoteEpicVariants';
@@ -10,6 +11,9 @@ const remoteVariant: Variant = {
     test: () => fetchAndRenderEpic(id),
     canRun: () => true,
 };
+
+const geolocation = geolocationGetSync();
+console.log('geolocation: ', geolocation);
 
 export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     id,
@@ -23,7 +27,7 @@ export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     audienceCriteria: "All",
     variants: [remoteVariant],
     canRun: () =>
-         config.get("switches.abRemoteEpicVariants") && Math.random() < 0.01 // set test % here
+         config.get("switches.abRemoteEpicVariants") && geolocation !== 'AU' && Math.random() < 0.01// set test % here
     ,
 
     variantToRun: remoteVariant,
