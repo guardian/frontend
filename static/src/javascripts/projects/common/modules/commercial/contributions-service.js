@@ -237,7 +237,7 @@ export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     };
 
     // $FlowFixMe
-    return import(/* webpackIgnore: true */ module.url)
+    return window.guardian.functions.import(/* webpackIgnore: true */ module.url)
         .then(bannerModule => {
             const Banner = bannerModule.Banner;
             const props = module.props;
