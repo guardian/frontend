@@ -18,6 +18,7 @@ import { render } from 'preact-x';
 import React from 'preact-x/compat';
 /* eslint-disable import/no-namespace */
 import * as emotionCore from "@emotion/core";
+import createCache from '@emotion/cache'
 import * as emotionTheming from "emotion-theming";
 import * as emotion from "emotion";
 /* eslint-enable import/no-namespace */
@@ -89,12 +90,16 @@ const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> =>
 
         // use Shadow Dom if found
         let shadowRoot;
-        const useShadowDomIfAvailable = false;
+        const useShadowDomIfAvailable = true;
         if (useShadowDomIfAvailable && container.attachShadow) {
             shadowRoot = container.attachShadow({
                 mode: 'open',
             });
-            render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, shadowRoot);
+            const innerContainer = document.createElement('div');
+            shadowRoot.appendChild(innerContainer);
+            const CacheProvider = emotionCore.CacheProvider;
+            const emotionCache = createCache({ container: innerContainer });
+            render(<CacheProvider value={emotionCache}><ContributionsEpic {...props} onReminderOpen={onReminderOpen} /></CacheProvider>, innerContainer);
         } else {
             render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, container);
         }
