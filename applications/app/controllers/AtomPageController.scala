@@ -85,10 +85,15 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
         /*
           mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
           author: Pascal
+          text: This code is experimental and was introduced on May 2020 as a way to demonstrate
+                showing atoms from first principles. It should not be considered ready for wide use because
+                the atom is showing fine but there are some missing bits in the HTML template.
 
-          This code is experimental and was introduced on May 2020 as a way to demonstrate
-          showing atoms from first principles. It should not be considered ready for wide use because
-          the atom is showing fine but there are some missing bits in the HTML template.
+          Last update: 19th June 2020
+          author: Pascal
+          text: I am leaving this cde here as an example that may be useful in the future.
+                As far as he original idea of embedding atoms to be rendered by DCR, we have
+                decided to use atoms-rendering: https://github.com/guardian/atoms-rendering
          */
 
         val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
