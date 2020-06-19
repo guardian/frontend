@@ -278,30 +278,17 @@ object PageElement {
         (extractAtom match {
 
           case Some(audio: AudioAtom) => {
-            /*
-              author: Pascal
-              date: 20th May 2020
 
-              Ultimately, meaning when the Component is ready in DCR we want to pass metadata carried by
-              the AudioAtomBlockElement, but for the moment we are going to use the AtomEmbedUrlBlockElement
-              which is experimental.
-
-             */
-
-            // -----------------------------------
             // Using the AudioAtomBlockElement:
-            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
-            // -----------------------------------
+            // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
 
-            // -----------------------------------
             // Using the AtomEmbedUrlBlockElement:
-            val encodedId = URLEncoder.encode(audio.id, "UTF-8")
-            // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
+            val encodedId = URLEncoder.encode(audio.id, "UTF-8") // chart.id is a uuid, so there is no real need
+                                                                 // to url-encode it but just to be safe
             Some(AtomEmbedUrlBlockElement(
               id = audio.id,
               url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId"
             ))
-            // -----------------------------------
           }
 
           case Some(chart: ChartAtom) => {
