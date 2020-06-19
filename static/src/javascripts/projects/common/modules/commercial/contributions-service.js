@@ -44,9 +44,7 @@ const buildKeywordTags = page => {
     }));
 };
 
-const renderEpic = (html: string, css: string): Promise<[HTMLElement, ?ShadowRoot]> => {
-    const content = `<style>${css}</style>${html}`;
-
+const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> => {
     return fastdom.write(() => {
         const target = document.querySelector(
             '.submeta'
@@ -71,16 +69,17 @@ const renderEpic = (html: string, css: string): Promise<[HTMLElement, ?ShadowRoo
 
         // use Shadow Dom if found
         let shadowRoot;
-        if (container.attachShadow) {
+        const useShadowDomIfAvailable = false;
+        if (useShadowDomIfAvailable && container.attachShadow) {
             shadowRoot = container.attachShadow({
                 mode: 'open',
             });
-            shadowRoot.innerHTML = content;
+            render(<ContributionsEpic {...props} />, shadowRoot);
         } else {
-            container.innerHTML = content;
+            render(<ContributionsEpic {...props} />, container);
         }
 
-        return [container, shadowRoot];
+        return container;
     });
 };
 
@@ -269,34 +268,55 @@ export const fetchAndRenderEpic = (id: string) => {
     const componentType = 'ACQUISITIONS_EPIC';
     const viewEvent = makeEvent(id, 'view');
 
-    getBodyEnd(payload)
+    // TODO: Fix the URL here
+    const contributionsServiceUrl = 'http://localhost:8080';
+    getBodyEnd(payload, `${contributionsServiceUrl}/epic?dataOnly=true`)
         .then(checkResponseOk)
         .then(response => response.json())
         .then(json => {
-            if (json && json.data) {
-                const { html, css, js, meta } = json.data;
-                const trackingCampaignId = `${meta.campaignId}`;
-
-                emitBeginEvent(trackingCampaignId);
-                setupClickHandling(meta.abTestName, meta.abTestVariant, componentType, meta.campaignCode, products);
-
-                renderEpic(html, css)
-                    .then(([el, shadowRoot]) => {
-                        executeJS(shadowRoot || el, js);
-                        submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode)
-                        setupOphanView(
-                            el,
-                            viewEvent,
-                            meta.abTestName,
-                            meta.abTestVariant,
-                            meta.campaignCode,
-                            trackingCampaignId,
-                            componentType,
-                            products,
-                            meta.abTestVariant.showTicker,
-                            meta.abTestVariant.tickerSettings,
-                        )})
+            if (!json || !json.data) {
+                return;
             }
+
+            const { module, meta } = json.data;
+
+            if (!module) {
+                return;
+            }
+
+            // TODO: share this between banner and epic?
+            window.guardian.automat = {
+                react: React,
+                emotionCore,
+                emotionTheming,
+                emotion,
+            };
+
+            // $FlowFixMe
+            return import(/* webpackIgnore: true */ module.url)
+                .then(epicModule => {
+                    const trackingCampaignId = `${meta.campaignId}`;
+
+                    emitBeginEvent(trackingCampaignId);
+                    // TODO: verify this click handling still works
+                    setupClickHandling(meta.abTestName, meta.abTestVariant, componentType, meta.campaignCode, products);
+
+                    return renderEpic(epicModule.ContributionsEpic, module.props)
+                        .then(el => {
+                            submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode)
+                            setupOphanView(
+                                el,
+                                viewEvent,
+                                meta.abTestName,
+                                meta.abTestVariant,
+                                meta.campaignCode,
+                                trackingCampaignId,
+                                componentType,
+                                products,
+                                meta.abTestVariant.showTicker,
+                                meta.abTestVariant.tickerSettings,
+                            )})
+                })
         })
         .catch(error => {
             console.log(error);
