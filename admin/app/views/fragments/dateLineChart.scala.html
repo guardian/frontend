@@ -4,15 +4,18 @@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
 
 <script type="text/javascript">
-    new google.visualization.LineChart(document.getElementById('@chart.id'))
-        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-            title: '@chart.name',
-            colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
-            legend: { position: 'bottom' },
-            chartArea: { width: '85%' },
-            titleTextStyle: {color: '#999'},
-            fontName : 'Georgia',
-            smoothLine: true,
-            vAxis: {@chart.vAxisTitle.map{ vAxisTitle => title: '@vAxisTitle', } viewWindow: {min: 0}}
-        });
+    function drawChart() {
+        new google.visualization.LineChart(document.getElementById('@chart.id'))
+            .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                title: '@chart.name',
+                colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
+                legend: { position: 'bottom' },
+                chartArea: { width: '85%' },
+                titleTextStyle: {color: '#999'},
+                fontName : 'Georgia',
+                smoothLine: true,
+                vAxis: {@chart.vAxisTitle.map{ vAxisTitle => title: '@vAxisTitle', } viewWindow: {min: 0}}
+            });
+        }
+    google.charts.setOnLoadCallback(drawChart);
 </script>
