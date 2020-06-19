@@ -14,7 +14,7 @@ type PermutiveSchema = {
         keywords?: Array<string>,
         publishedAt?: string,
         series?: string,
-        tone?: string,
+        tone?: Array<string>,
     },
     user: {
         edition?: string,
