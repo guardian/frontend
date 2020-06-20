@@ -6,6 +6,7 @@ import dynamicImportPolyfill from 'dynamic-import-polyfill';
 // browsers that support modules.**
 const initialiseDynamicImport = () => {
     try {
+        // Resolves to: import = (url) => import(url);
         /* eslint-disable no-new-func */
         window.guardian.functions.import = new Function(
             'url',
