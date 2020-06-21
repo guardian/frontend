@@ -121,6 +121,7 @@
     "pify": "^3.0.0",
     "postcss": "^6.0.10",
     "postcss-pxtorem": "^4.0.1",
+    "preact-x": "npm:preact@10.3.1",
     "prettier": "^1.16.4",
     "prettysize": "^0.1.0",
     "raw-loader": "^0.5.1",
@@ -162,7 +163,8 @@
       "^(.*)\\.svg$": "<rootDir>/__mocks__/svgMock.js",
       "^(.*)\\.html$": "<rootDir>/__mocks__/templateMock.js",
       "ophan/ng": "ophan-tracker-js",
-      "ophan/embed": "ophan-tracker-js/build/ophan.embed"
+      "ophan/embed": "ophan-tracker-js/build/ophan.embed",
+      "preact/hooks": "preact-x/hooks"
     },
     "testResultsProcessor": "jest-teamcity-reporter",
     "setupFilesAfterEnv": [

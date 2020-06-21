@@ -14,7 +14,8 @@ import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
-import React, { render } from 'preact-compat';
+import { render } from 'preact-x';
+import React from 'preact-x/compat';
 /* eslint-disable import/no-namespace */
 import * as emotionCore from "@emotion/core";
 import * as emotionTheming from "emotion-theming";
