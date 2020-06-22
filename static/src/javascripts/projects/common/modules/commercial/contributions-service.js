@@ -200,7 +200,7 @@ const checkResponseOk = response => {
 
 // TODO: add this to the client library
 const getStickyBottomBanner = (payload: {}) => {
-    const URL = 'https://contributions.guardianapis.com/banner';
+    const URL = 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
     return fetchJson(URL, {
