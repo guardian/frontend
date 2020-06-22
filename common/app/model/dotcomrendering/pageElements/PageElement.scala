@@ -54,8 +54,8 @@ object Sponsorship {
 
 sealed trait PageElement
 
-case class AtomEmbedMarkupBlockElement(id: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
-case class AtomEmbedUrlBlockElement(id: String, url: String) extends PageElement
+case class AtomEmbedBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
+case class InteractiveBlockElement(url: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
@@ -113,8 +113,7 @@ object PageElement {
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
     element match {
-      case _: AtomEmbedUrlBlockElement => true
-      case _: AtomEmbedMarkupBlockElement => true
+      case _: AtomEmbedBlockElement => true
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: BlockquoteBlockElement => true
@@ -282,12 +281,15 @@ object PageElement {
             // Using the AudioAtomBlockElement:
             // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
 
-            // Using the AtomEmbedUrlBlockElement:
+            // Using the AtomEmbedBlockElement:
             val encodedId = URLEncoder.encode(audio.id, "UTF-8") // chart.id is a uuid, so there is no real need
                                                                  // to url-encode it but just to be safe
-            Some(AtomEmbedUrlBlockElement(
+            Some(AtomEmbedBlockElement(
               id = audio.id,
-              url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId"
+              url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId",
+              html = None,
+              css = None,
+              js = None
             ))
           }
 
@@ -317,9 +319,12 @@ object PageElement {
 
           case Some(interactive: InteractiveAtom) => {
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
-            Some(AtomEmbedUrlBlockElement(
+            Some(AtomEmbedBlockElement(
               id = interactive.id,
-              url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId"
+              url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId",
+              html = Some(interactive.html),
+              css = Some(interactive.css),
+              js = interactive.mainJS
             ))
           }
 
@@ -396,15 +401,7 @@ object PageElement {
       }.toList
 
       case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution)).toList
-      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => AtomEmbedUrlBlockElement("", url)).toList
-        // date: 13th June
-        // author: Pascal
-        // `Interactive`s and `InteractiveAtoms` which are not the same thing, are being both transported to DCR using
-        // the AtomEmbedUrlBlockElement. This was fine as long as we embedded only the URL, but is no longer fine
-        // now that we want to send the atom id across and given that `Interactive`s don't have one. I am putting an
-        // empty Id here for the moment, but will soon give to Interactives their own BlockElement to avoid the confusion
-        // and any problem.
-
+      case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
       case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
@@ -500,12 +497,11 @@ object PageElement {
   implicit val GuideBlockElementWrites = Json.writes[GuideAtomBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
-
+  implicit val AtomEmbedBlockElementWrites: Writes[AtomEmbedBlockElement] = Json.writes[AtomEmbedBlockElement]
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
-  implicit val InteractiveBlockElementWrites: Writes[AtomEmbedMarkupBlockElement] = Json.writes[AtomEmbedMarkupBlockElement]
-  implicit val InteractiveIframeElementWrites: Writes[AtomEmbedUrlBlockElement] = Json.writes[AtomEmbedUrlBlockElement]
+  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
   implicit val ProfileBlockElementWrites = Json.writes[ProfileAtomBlockElement]
