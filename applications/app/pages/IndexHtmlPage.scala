@@ -45,6 +45,7 @@ object IndexHtml {
         headContent,
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(

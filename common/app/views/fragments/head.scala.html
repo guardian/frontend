@@ -27,16 +27,9 @@
     @fragments.stylesheets(projectName, content.exists(_.tags.isCrossword), content.exists(_.tags.isInteractive))
 }
 
-@*
-Protect against ReferenceErrors in IE:
-`window.console` only exists when the dev tools are open. If you reference
-something that doesn't exist, JavaScript will throw a `ReferenceError`. Here, we
-ensure console always exists one can safely reference it.
-Example: http://output.jsbin.com/jodureg/1
-*@
-<script>
-    window.console = window.console || undefined;
-</script>
+@fragments.page.head.fixIEReferenceErrors();
+
+@fragments.page.head.checkModuleSupport();
 
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking()

@@ -49,6 +49,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(

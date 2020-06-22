@@ -51,6 +51,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(
