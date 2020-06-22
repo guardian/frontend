@@ -48,9 +48,9 @@
         </style>
 
         @if(hasCharts){
-            <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+            <script src="https://www.gstatic.com/charts/loader.js"></script>
             <script type="text/javascript">
-                google.load("visualization", "1", {packages:["corechart"]});
+                google.charts.load('current', {packages: ['corechart']});
             </script>
         }
 
