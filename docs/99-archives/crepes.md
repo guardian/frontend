@@ -5,11 +5,11 @@ Quantities are in metric system, because science.
 ## Ingredients
 
 - 250 g plain flour
-- a bit of buckwheat flour (aka farine de blé noir / sarazin in French stores)
+- a bit of buckwheat flour (aka _farine de blé noir_ or _sarrazin/sarrasin_ in French stores)
 - 100 g sugar
 - a pinch of salt
 - 3 eggs
-- 1/2 l of milk (a pint, for you bloody Brits)
+- 1/2 L of milk (a pint, for you bloody Brits)
 
 ## Steps
 
