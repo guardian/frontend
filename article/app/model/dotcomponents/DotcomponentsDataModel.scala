@@ -646,8 +646,6 @@ object DotcomponentsDataModel {
       }
     }
 
-    println(makeMatchUrl(articlePage))
-
     val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
 
