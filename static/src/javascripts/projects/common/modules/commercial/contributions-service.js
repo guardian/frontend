@@ -238,7 +238,7 @@ export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     };
 
     // $FlowFixMe
-    return window.guardian.functions.import(module.url)
+    return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule.Banner;
             const props = module.props;
