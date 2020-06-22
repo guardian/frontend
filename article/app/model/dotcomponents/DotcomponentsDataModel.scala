@@ -530,11 +530,7 @@ object DotcomponentsDataModel {
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
-
-    val jsPageData = Configuration.javascript.pageData mapKeys { key =>
-      CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
-    }
-
+    
     val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
