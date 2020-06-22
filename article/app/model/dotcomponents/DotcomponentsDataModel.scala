@@ -244,7 +244,8 @@ case class DataModelV3(
   badge: Option[DCRBadge],
 
   // Match Data
-  matchUrl: Option[String] // Optional url used for match data
+  matchUrl: Option[String], // Optional url used for match data
+  campaigns: Option[JsValue]
 )
 
 object DataModelV3 {
@@ -301,7 +302,8 @@ object DataModelV3 {
       "slotMachineFlags" -> model.slotMachineFlags,
       "contributionsServiceUrl" -> model.contributionsServiceUrl,
       "badge" -> model.badge,
-      "matchUrl" -> model.matchUrl
+      "matchUrl" -> model.matchUrl,
+      "campaigns" -> model.campaigns
     )
   }
 
@@ -530,7 +532,7 @@ object DotcomponentsDataModel {
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
-    
+
     val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
@@ -720,7 +722,8 @@ object DotcomponentsDataModel {
       badge = badge,
 
       // Match Data
-      matchUrl = makeMatchUrl(articlePage)
+      matchUrl = makeMatchUrl(articlePage),
+      campaigns = articlePage.getJavascriptConfig.get("campaigns")
     )
   }
 }
