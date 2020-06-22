@@ -13,12 +13,26 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import fetchJson from 'lib/fetch-json';
+import { render } from 'preact-x';
+import React from 'preact-x/compat';
+/* eslint-disable import/no-namespace */
+import * as emotionCore from "@emotion/core";
+import * as emotionTheming from "emotion-theming";
+import * as emotion from "emotion";
+/* eslint-enable import/no-namespace */
+
 
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+
+type ServiceModule = {
+    url: string,
+    props: {}
+};
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -119,7 +133,7 @@ const executeJS = (container: HTMLElement | ShadowRoot, js: string) => {
     }
 };
 
-const buildPayload = () => {
+const buildEpicPayload = () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
@@ -159,6 +173,21 @@ const buildPayload = () => {
     };
 };
 
+const buildBannerPayload = () => {
+    const tracking = {
+        // TODO: implement
+    };
+
+    const targeting = {
+        // TODO: implement
+    };
+
+    return {
+        tracking,
+        targeting,
+    };
+};
+
 const checkResponseOk = response => {
     if (response.ok) {
         return response;
@@ -169,8 +198,73 @@ const checkResponseOk = response => {
     );
 };
 
+// TODO: add this to the client library
+const getStickyBottomBanner = (payload: {}) => {
+    const URL = 'https://contributions.guardianapis.com/banner';
+    const json = JSON.stringify(payload);
+
+    return fetchJson(URL, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: json,
+    });
+};
+
+export const fetchBannerData: () => Promise<?ServiceModule> = () => {
+    const payload = buildBannerPayload();
+
+    return getStickyBottomBanner(payload)
+        .then(json => {
+            if (!json.data) {
+                return null;
+            }
+
+            const { module } = json.data;
+
+            return module;
+        });
+};
+
+export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
+    if(!module) {
+        return Promise.resolve(false);
+    }
+
+    window.guardian.automat = {
+        react: React,
+        emotionCore,
+        emotionTheming,
+        emotion,
+    };
+
+    // $FlowFixMe
+    return window.guardianPolyfilledImport(module.url)
+        .then(bannerModule => {
+            const Banner = bannerModule.Banner;
+            const props = module.props;
+
+            // TODO: tracking
+
+            return fastdom.write(() => {
+                const container = document.createElement('div');
+                if(document.body) {
+                    document.body.insertAdjacentElement('beforeend', container);
+                }
+
+                return render(
+                    <Banner {...props} />,
+                    container
+                );
+            }).then(() => true);
+        })
+        .catch(error => {
+            console.log(error);
+            reportError(error, {}, false);
+        });
+};
+
 export const fetchAndRenderEpic = (id: string) => {
-    const payload = buildPayload();
+    const payload = buildEpicPayload();
     const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
     const componentType = 'ACQUISITIONS_EPIC';
     const viewEvent = makeEvent(id, 'view');
@@ -178,7 +272,7 @@ export const fetchAndRenderEpic = (id: string) => {
     getBodyEnd(payload)
         .then(checkResponseOk)
         .then(response => response.json())
-         .then(json => {
+        .then(json => {
             if (json && json.data) {
                 const { html, css, js, meta } = json.data;
                 const trackingCampaignId = `${meta.campaignId}`;
