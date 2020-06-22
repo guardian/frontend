@@ -39,7 +39,7 @@ export const init = (): void => {
 
     if (window.guardian.supportsModules) {
         initialiseDynamicImport();
+    } else {
+        initialiseDynamicImportLegacy();
     }
-
-    initialiseDynamicImportLegacy();
 };
