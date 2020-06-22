@@ -8,13 +8,13 @@ const initialiseDynamicImport = () => {
     try {
         // Resolves to: import = (url) => import(url);
         /* eslint-disable no-new-func */
-        window.guardian.functions.import = new Function(
+        window.guardianPolyfilledImport = new Function(
             'url',
             `return import(url)`,
         );
     } catch (e) {
         dynamicImportPolyfill.initialize({
-            importFunctionName: 'guardian.functions.import',
+            importFunctionName: 'guardianPolyfilledImport',
         });
     }
 };
@@ -25,21 +25,19 @@ const initialiseDynamicImportLegacy = () =>
     import(/* webpackChunkName: "shimport" */ '@guardian/shimport').then(
         shimport => {
             shimport.initialise(); // note this adds a __shimport__ global
-            window.guardian.functions.import = shimport.load;
+            window.guardianPolyfilledImport = shimport.load;
         },
     );
 
 export const init = (): void => {
-    window.guardian.functions = {
-        import: (url: string) =>
-            Promise.reject(
-                new Error(`import not polyfilled; attempted import(${url})`),
-            ),
-    };
+    window.guardianPolyfilledImport = (url: string) =>
+        Promise.reject(
+            new Error(`import not polyfilled; attempted import(${url})`),
+        );
 
     if (window.guardian.supportsModules) {
         initialiseDynamicImport();
+    } else {
+        initialiseDynamicImportLegacy();
     }
-
-    initialiseDynamicImportLegacy();
 };
