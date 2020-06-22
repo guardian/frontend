@@ -10,7 +10,7 @@
 <script id='google_analytics'>
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
-    const pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
+    var pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
 }
 
 
