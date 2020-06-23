@@ -435,7 +435,7 @@ object DotcomponentsDataModel {
     } else elems
   }
 
-  def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
+  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
     val elems = capiElems.toList.flatMap(el => PageElement.make(
       element = el,
@@ -448,7 +448,7 @@ object DotcomponentsDataModel {
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
 
-  def toBlock(block: APIBlock, article: Article, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+  private def toBlock(block: APIBlock, article: Article, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
 
     // For createdOn and createdOnDisplay we are going to carry on use the block information
     // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
