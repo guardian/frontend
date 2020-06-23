@@ -32,6 +32,26 @@
 <link rel="preconnect" href="@Configuration.images.host" />
 <link rel="preconnect" href="//interactive.guim.co.uk" />
 <link rel="preconnect" href="//www.google-analytics.com" />
+<script>
+  // Object.oldFreeze = Object.freeze;
+  // Object.freeze = function(object) {
+  //   console.log("Something freezing", new Error().stack);
+  //   return object;
+  //   return Object.oldFreeze(object);
+  // };
+  // Object.oldSeal = Object.seal;
+  // Object.seal = function(object) {
+  //   console.log("Something sealing", new Error().stack);
+  //   return object;
+  //   return Object.oldSeal(object);
+  // };
+  // Object.oldPreventExtensions = Object.preventExtensions;
+  // Object.preventExtensions = function(object) {
+  //   console.log("Something preventing extensions", new Error().stack);
+  //   return object;
+  //   return Object.oldPreventExtensions(object);
+  // };
+</script>
 
 
 @if(ComscoreSwitch.isSwitchedOn) {
@@ -187,3 +207,4 @@ As a European publisher, we need to include snippets and thumbnails in our searc
 https://developers.google.com/search/reference/robots_meta_tag
 *@
 <meta name="robots" content="max-image-preview:large">
+<meta http-equiv="Content-Security-Policy" content="default-src http:; script-src http: 'unsafe-inline' 'unsafe-eval'; frame-src http: data:; style-src http: 'unsafe-inline'; img-src http: data: blob:; media-src http: data: blob:; font-src http: data:; connect-src http: wss:; child-src http: blob:">
