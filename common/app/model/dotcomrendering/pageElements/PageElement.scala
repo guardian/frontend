@@ -229,7 +229,7 @@ object PageElement {
           imageSources
         ))
 
-      case Audio => extractAudio(element).toList
+      case Audio => audioToPageElement(element).toList
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -421,7 +421,7 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private def extractAudio(element: ApiBlockElement) = {
+  private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
       html <- d.html
