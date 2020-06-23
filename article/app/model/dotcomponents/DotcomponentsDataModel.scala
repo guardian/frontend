@@ -318,6 +318,64 @@ object DataModelV3 {
 
 object DotcomponentsDataModel {
   val VERSION = 2
+
+  def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
+
+    def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
+      val sequence = references match {
+        case JsArray(elements) => Some(elements)
+        case _ => None
+      }
+      sequence
+    }
+
+    def entryToDataPair(entry: JsValue): Option[(String, String)] = {
+      /*
+          Examples:
+          {
+            "esa-football-team": "/\" + \"football/\" + \"team/\" + \"331"
+          }
+          {
+            "pa-football-competition": "500"
+          }
+          {
+            "pa-football-team": "26305"
+          }
+       */
+      val obj = entry.as[JsObject]
+      obj.fields.map(pair => (pair._1, pair._2.as[String])).headOption
+    }
+
+    val optionalUrl: Option[String] = for {
+      references <- articlePage.getJavascriptConfig.get("references")
+      entries1 <- extraction1(references)
+      entries2 = entries1
+        .map(entryToDataPair(_))
+        .filter( _.isDefined )
+        .map( _.get ) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
+        .filter( _._1 == "pa-football-team" )
+    } yield {
+      val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
+      entries2.toList match {
+        case e1 :: e2 :: _ => {
+          val year = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
+          val month = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
+          val day = articlePage.article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
+          s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
+        }
+        case _ => ""
+      }
+    }
+
+    // We need one more transformation because we could have a Some(""), which we don't want
+
+    if (optionalUrl.getOrElse("").size>0) {
+      optionalUrl
+    } else {
+      None
+    }
+  }
+
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DataModelV3 = {
 
     val article = articlePage.article
@@ -472,11 +530,7 @@ object DotcomponentsDataModel {
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
-
-    val jsPageData = Configuration.javascript.pageData mapKeys { key =>
-      CamelCase.fromHyphenated(key.split('.').lastOption.getOrElse(""))
-    }
-
+    
     val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
     })
@@ -588,63 +642,6 @@ object DotcomponentsDataModel {
       stage = common.Environment.stage,
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
-
-    def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
-
-      def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
-        val sequence = references match {
-          case JsArray(elements) => Some(elements)
-          case _ => None
-        }
-        sequence
-      }
-
-      def entryToDataPair(entry: JsValue): Option[(String, String)] = {
-        /*
-            Examples:
-            {
-              "esa-football-team": "/\" + \"football/\" + \"team/\" + \"331"
-            }
-            {
-              "pa-football-competition": "500"
-            }
-            {
-              "pa-football-team": "26305"
-            }
-         */
-        val obj = entry.as[JsObject]
-        obj.fields.map(pair => (pair._1, pair._2.as[String])).headOption
-      }
-
-      val optionalUrl: Option[String] = for {
-        references <- articlePage.getJavascriptConfig.get("references")
-        entries1 <- extraction1(references)
-        entries2 = entries1
-                    .map(entryToDataPair(_))
-                    .filter( _.isDefined )
-                    .map( _.get ) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
-                    .filter( _._1 == "pa-football-team" )
-      } yield {
-        val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
-        entries2.toList match {
-          case e1 :: e2 :: _ => {
-            val year = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("yyy"))
-            val month = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("MM"))
-            val day = article.trail.webPublicationDate.toString(DateTimeFormat.forPattern("dd"))
-            s"${Configuration.ajax.url}/football/api/match-nav/${year}/${month}/${day}/${e1._2}/${e2._2}.json?dcr=true&page=${pageId}"
-          }
-          case _ => ""
-        }
-      }
-
-      // We need one more transformation because we could have a Some(""), which we don't want
-
-      if (optionalUrl.getOrElse("").size>0) {
-        optionalUrl
-      } else {
-        None
-      }
-    }
 
     val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
