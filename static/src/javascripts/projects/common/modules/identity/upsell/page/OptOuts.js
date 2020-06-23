@@ -1,6 +1,6 @@
 // @flow
 
-import React from 'preact-compat';
+import React from 'preact/compat';
 import { Block } from '../block/Block';
 import { OptOutsList } from '../opt-outs/OptOutsList';
 

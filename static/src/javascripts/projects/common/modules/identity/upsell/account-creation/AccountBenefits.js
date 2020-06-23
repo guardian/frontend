@@ -1,5 +1,5 @@
 // @flow
-import React from 'preact-compat';
+import React from 'preact/compat';
 import config from 'lib/config';
 
 type BenefitCta = {

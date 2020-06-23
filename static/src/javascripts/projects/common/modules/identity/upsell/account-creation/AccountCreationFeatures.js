@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { AccountActionableBenefits } from './AccountBenefits';
 
 export class AccountCreationFeatures extends Component {

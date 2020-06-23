@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { ConfirmButton } from 'common/modules/crosswords/confirm-button';
 
 const buttonClassName = 'button button--primary';

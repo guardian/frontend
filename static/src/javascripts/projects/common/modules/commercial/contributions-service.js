@@ -14,8 +14,8 @@ import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
-import { render } from 'preact-x';
-import React from 'preact-x/compat';
+import { render } from 'preact';
+import React from 'preact/compat';
 /* eslint-disable import/no-namespace */
 import * as emotionCore from "@emotion/core";
 import createCache from '@emotion/cache'
@@ -90,7 +90,7 @@ const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> =>
 
         // use Shadow Dom if found
         let shadowRoot;
-        const useShadowDomIfAvailable = true;
+        const useShadowDomIfAvailable = false;
         if (useShadowDomIfAvailable && container.attachShadow) {
             shadowRoot = container.attachShadow({
                 mode: 'open',

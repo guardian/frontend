@@ -1,6 +1,6 @@
 // @flow
 
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import { getConsentWording } from './wordings';
 import type { ConsentWording, CheckboxWording } from './wordings';

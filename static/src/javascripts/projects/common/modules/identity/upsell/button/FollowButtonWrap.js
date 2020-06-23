@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import envelopeRemove from 'svgs/icon/envelope-remove.svg';
 import envelopeAdd from 'svgs/icon/envelope-add.svg';
 import tick from 'svgs/icon/tick.svg';

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 const timeout = 2000;

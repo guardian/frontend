@@ -103,12 +103,6 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
             },
-            {
-              include: path.resolve(__dirname, "node_modules/preact-x"),
-              resolve: {
-                alias: { 'preact': 'preact-x' },
-              }
-            },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This
             // module below exposes a loader that catches requests for

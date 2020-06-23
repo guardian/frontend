@@ -1,6 +1,6 @@
 // @flow
 
-import React, { render } from 'preact-compat';
+import React, { render } from 'preact/compat';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';

@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { AccountCreationForm } from './AccountCreationForm';
 import { AccountActionableBenefits, AccountBenefits } from './AccountBenefits';
 import { Block } from '../block/Block';

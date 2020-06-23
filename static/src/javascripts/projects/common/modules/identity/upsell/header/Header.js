@@ -1,5 +1,5 @@
 // @flow
-import React from 'preact-compat';
+import React from 'preact/compat';
 import circlesLeft from './circles-left.svg';
 import circlesRight from './circles-right.svg';
 

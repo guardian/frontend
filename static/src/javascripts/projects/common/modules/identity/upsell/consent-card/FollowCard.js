@@ -1,5 +1,5 @@
 // @flow
-import React from 'preact-compat';
+import React from 'preact/compat';
 import { FollowButtonWrap } from 'common/modules/identity/upsell/button/FollowButtonWrap';
 import type { Consent } from '../store/types';
 

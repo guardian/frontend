@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { gridSize } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import { classNames } from 'common/modules/crosswords/classNames';

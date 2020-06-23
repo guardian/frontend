@@ -1,5 +1,5 @@
 // @flow
-import React, { Component, render } from 'preact-compat';
+import React, { Component, render } from 'preact/compat';
 import {
     getPopularFiltered,
     deleteFromSummary,
