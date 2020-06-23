@@ -249,6 +249,7 @@ case class DataModelV3(
 )
 
 object DataModelV3 {
+
   implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
   implicit val writes = new Writes[DataModelV3] {
@@ -319,7 +320,6 @@ object DataModelV3 {
 }
 
 object DotcomponentsDataModel {
-  val VERSION = 2
 
   def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
 
