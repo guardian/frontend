@@ -1,6 +1,7 @@
 // @flow
 
 import { fetchAndRenderEpic } from "common/modules/commercial/contributions-service";
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 
 const id = 'RemoteEpicVariants';
@@ -22,8 +23,14 @@ export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     successMeasure: "Revenue/impressions equivalent to local variants",
     audienceCriteria: "All",
     variants: [remoteVariant],
-    canRun: () =>
-         config.get("switches.abRemoteEpicVariants") && Math.random() < 0.01 // set test % here
+    canRun: () => {
+        // Delay geolocation due to known race condition
+        // https://github.com/guardian/frontend/pull/22322
+        const geolocation = geolocationGetSync();
+        console.log('geolocation: ', geolocation);
+        return config.get("switches.abRemoteEpicVariants") && geolocation !== 'AU' && Math.random() < 0.01// set test % here
+    }
+
     ,
 
     variantToRun: remoteVariant,
