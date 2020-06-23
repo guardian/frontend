@@ -1,6 +1,8 @@
 // @flow strict
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
+import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
 const errorHandler = (error: Error) => {
     // Looks like some plugins block ad-verification
@@ -9,16 +11,16 @@ const errorHandler = (error: Error) => {
 };
 
 interface impressionsDfpObject {
-    s: string;  // Slot element ID
+    s: string; // Slot element ID
     ad: string; // Advertiser ID
-    c: string;  // Creative ID
-    I: string;  // Line item ID
-    o: string;  // Order ID
-    A: string;  // Ad unit name
-    y: string;  // Yield group ID (Exchange Bidder)
+    c: string; // Creative ID
+    I: string; // Line item ID
+    o: string; // Order ID
+    A: string; // Ad unit name
+    y: string; // Yield group ID (Exchange Bidder)
 }
 
-const confiantRefreshedSlots =[];
+const confiantRefreshedSlots = [];
 
 const refreshBlockedSlotOnce = (
     blockingType: number,
@@ -27,31 +29,39 @@ const refreshBlockedSlotOnce = (
     wrapperId: string,
     tagId: string,
     impressionsData: {
-        preBid: { adId?: string, cpm?: number },
-        dfp: impressionsDfpObject,
+        prebid?: { adId?: string, cpm?: number, s: string },
+        dfp?: impressionsDfpObject,
     }
 ): Promise<void> => {
-    console.log('*** Already refreshed slots: ', confiantRefreshedSlots);
-    console.log('*** Callback run for slot ', impressionsData.dfp.s);
-    const blockedSlotPath =
+    const prebidSlotElementId =
+        typeof impressionsData !== 'undefined' &&
+        typeof impressionsData.prebid !== 'undefined'
+            ? impressionsData.prebid.s
+            : '';
+    const dfpSlotElementId =
         typeof impressionsData !== 'undefined' &&
         typeof impressionsData.dfp !== 'undefined'
             ? impressionsData.dfp.s
-            : null;
-    console.log("*** Has slot already been refreshed? ", confiantRefreshedSlots.includes(blockedSlotPath))
+            : '';
+    const blockedSlotPath: string =
+        prebidSlotElementId !== '' ? prebidSlotElementId : dfpSlotElementId;
+    const blockedSlotPathExists = !!blockedSlotPath;
     // check if ad is blocked and haven't refreshed the slot yet.
-    if (isBlocked && !confiantRefreshedSlots.includes(blockedSlotPath) ) {
-        console.log('*** Ad slot blocked');
+    if (
+        isBlocked &&
+        blockedSlotPathExists &&
+        !confiantRefreshedSlots.includes(blockedSlotPath)
+    ) {
         const slots = window.googletag.pubads().getSlots();
-        slots.forEach((currentSlot) => {
+        slots.forEach(currentSlot => {
             if (blockedSlotPath === currentSlot.getSlotElementId()) {
-                console.log('*** Refreshing blocked ad slot ', currentSlot);
                 // refresh the blocked slot to get new ad
-                window.googletag.pubads().refresh([currentSlot]);
+                const advert = getAdvertById(blockedSlotPath);
+                if (advert) refreshAdvert(advert);
                 // mark it as refreshed so it won't refresh multiple time
                 confiantRefreshedSlots.push(blockedSlotPath);
             }
-        })
+        });
     }
     return Promise.resolve();
 };
@@ -64,7 +74,6 @@ export const init = (): Promise<void> => {
             { async: true }
         )
             .then(() => {
-                window.confiant.settings.devMode= true; // This blocks ads on page
                 window.confiant.settings.callback = refreshBlockedSlotOnce;
             })
             .catch(errorHandler);
