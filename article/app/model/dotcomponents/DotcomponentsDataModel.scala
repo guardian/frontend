@@ -417,6 +417,24 @@ object DotcomponentsDataModel {
     relevantBlocks.filter(block => ids(block.id))
   }
 
+  private def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+    if (affiliateLinks) {
+      val hasLinks = capiElems.exists(elem => elem.`type` match {
+        case Text => {
+          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+        }
+        case _ => false
+      })
+
+      if (hasLinks) {
+        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
+      } else {
+        elems
+      }
+    } else elems
+  }
+
   // -----------------------------------------------------------------------
 
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
@@ -435,7 +453,7 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
 
       // For createdOn and createdOnDisplay we are going to carry on use the block information
       // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
@@ -476,24 +494,6 @@ object DotcomponentsDataModel {
       addDisclaimer(elems, capiElems, affiliateLinks)
     }
 
-    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
-      if (affiliateLinks) {
-        val hasLinks = capiElems.exists(elem => elem.`type` match {
-          case Text => {
-            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-          }
-          case _ => false
-        })
-
-        if (hasLinks) {
-          elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
-        } else {
-          elems
-        }
-      } else elems
-    }
-
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
@@ -508,7 +508,7 @@ object DotcomponentsDataModel {
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes)).toList
+      .map(block => toBlock(block, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes)).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -525,14 +525,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), true, article.isImmersive, articleDateTimes))
+      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes))
+        .map(block => toBlock(block, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes))
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
