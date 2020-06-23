@@ -402,6 +402,21 @@ object DotcomponentsDataModel {
     }.getOrElse("news")
   }
 
+  private def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
+    val last60 = blocks.requestedBodyBlocks
+      .getOrElse(Map.empty[String, Seq[APIBlock]])
+      .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
+      .toList
+
+    // For the newest page, the last 60 blocks are requested, but for other page,
+    // all of the blocks have been requested and returned in the blocks.body bit
+    // of the response so we use those
+    val relevantBlocks = if (last60.isEmpty) blocks.body.getOrElse(Nil) else last60
+
+    val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
+    relevantBlocks.filter(block => ids(block.id))
+  }
+
   // -----------------------------------------------------------------------
 
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
@@ -477,21 +492,6 @@ object DotcomponentsDataModel {
           elems
         }
       } else elems
-    }
-
-    def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
-      val last60 = blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
-        .toList
-
-      // For the newest page, the last 60 blocks are requested, but for other page,
-      // all of the blocks have been requested and returned in the blocks.body bit
-      // of the response so we use those
-      val relevantBlocks = if (last60.isEmpty) blocks.body.getOrElse(Nil) else last60
-
-      val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
-      relevantBlocks.filter(block => ids(block.id))
     }
 
     val bodyBlocksRaw = articlePage match {
