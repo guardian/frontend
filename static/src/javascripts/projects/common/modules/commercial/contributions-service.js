@@ -201,7 +201,7 @@ const buildBannerPayload = () => {
 
     const targeting = {
         alreadyVisitedCount: getVisitCount(),
-        shouldHideReaderRevenue: guardian.config.page.shouldHideReaderRevenue || false,
+        shouldHideReaderRevenue: page.shouldHideReaderRevenue,
         isPaidContent: page.isPaidContent,
         showSupportMessaging: !shouldNotBeShownSupportMessaging(),
         engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt'),
