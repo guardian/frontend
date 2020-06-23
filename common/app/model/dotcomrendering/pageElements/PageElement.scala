@@ -60,6 +60,7 @@ case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, t
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
+case class CalloutBlockElement(id: String) extends PageElement
 case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -118,6 +119,7 @@ object PageElement {
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: BlockquoteBlockElement => true
+      case _: CalloutBlockElement => true
       case _: ChartAtomBlockElement => true
       case _: CommentBlockElement => true
       case _: ContentAtomBlockElement => true
@@ -229,7 +231,10 @@ object PageElement {
           imageSources
         ))
 
-      case Audio => extractAudio(element).toList
+      case Audio => audioToPageElement(element).toList
+                      // This process returns either:
+                      // 1. SoundcloudBlockElement
+                      // 2. AudioBlockElement
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -272,7 +277,11 @@ object PageElement {
         )
       }).toList
 
-      case Embed => extractEmbed(element).toList
+      case Embed => embedToPageElement(element).toList
+                      // This process returns either:
+                      // 1. SoundcloudBlockElement
+                      // 2. EmbedBlockElement
+                      // 3. CalloutBlockElement
 
       case Contentatom =>
         (extractAtom match {
@@ -421,7 +430,18 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private def extractAudio(element: ApiBlockElement) = {
+  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+    val src = getIframeSrc(html)
+    src.flatMap { s =>
+      (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
+        case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
+        case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
+        case _ => None
+      }
+    }
+  }
+
+  private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
       html <- d.html
@@ -431,24 +451,13 @@ object PageElement {
     }
   }
 
-  private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
+  private def embedToPageElement(element: ApiBlockElement): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
       extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
-    }
-  }
-
-  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
-    val src = getIframeSrc(html)
-    src.flatMap { s =>
-        (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
-          case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
-          case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
-          case _ => None
-        }
     }
   }
 
@@ -488,6 +497,7 @@ object PageElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
+  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
