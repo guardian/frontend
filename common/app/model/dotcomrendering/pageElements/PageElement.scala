@@ -447,8 +447,14 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-      extractSoundcloud(html, mandatory) getOrElse AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloud(html, mandatory) getOrElse
+      AudioBlockElement(element.assets.map(AudioAsset.make))
     }
+  }
+
+  private def extractCallout(html: String): Option[CalloutBlockElement] = {
+    val answer = None: Option[CalloutBlockElement]
+    answer
   }
 
   private def embedToPageElement(element: ApiBlockElement): Option[PageElement] = {
@@ -457,7 +463,9 @@ object PageElement {
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+      extractSoundcloud(html, mandatory)
+        .getOrElse(extractCallout(html: String)
+          .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
     }
   }
 
