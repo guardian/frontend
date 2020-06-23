@@ -27,7 +27,9 @@
     @fragments.stylesheets(projectName, content.exists(_.tags.isCrossword), content.exists(_.tags.isInteractive))
 }
 
-@fragments.page.head.fixIEReferenceErrors();
+@fragments.page.head.fixIEReferenceErrors()
+
+@fragments.page.head.checkModuleSupport()
 
 @* inline JS - blocking *@
 @fragments.inlineJSBlocking()
