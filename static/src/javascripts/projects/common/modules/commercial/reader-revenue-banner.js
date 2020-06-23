@@ -1,14 +1,14 @@
 // @flow
 
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { fetchBannerData, renderBanner } from 'common/modules/commercial/contributions-service';
+import { fetchBannerData, renderBanner, type BannerDataResponse } from 'common/modules/commercial/contributions-service';
 
 
 const messageCode = 'reader-revenue-banner';
 
-let data = null;
+let data: ?BannerDataResponse = null;
 
-const show = () => renderBanner(data);
+const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
 const canShow = (): Promise<boolean> => {
     const enabled = true;
@@ -19,9 +19,12 @@ const canShow = (): Promise<boolean> => {
     }
 
     return fetchBannerData()
-        .then(response => {
-            data = response;
-            return data !== null;
+        .then((response: ?BannerDataResponse)  => {
+            if (response) {
+                data = response;
+                return true;
+            }
+            return false;
         });
 };
 

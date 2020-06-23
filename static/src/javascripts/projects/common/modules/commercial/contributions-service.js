@@ -33,6 +33,7 @@ import userPrefs from "common/modules/user-prefs";
 
 type ServiceModule = {
     url: string,
+    name: string,
     props: {}
 };
 
@@ -42,7 +43,7 @@ type Meta = {
     campaignCode: string,
 }
 
-type BannerDataResponse = {
+export type BannerDataResponse = {
     data: {
         module: ServiceModule,
         meta: Meta
@@ -247,12 +248,12 @@ export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
                 return null;
             }
 
-            return json.data;
+            return (json: BannerDataResponse);
         });
 };
 
-export const renderBanner: (?BannerDataResponse) => Promise<boolean> = (response) => {
-    const { module, meta } = response;
+export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
+    const { module, meta } = response.data;
     if (!module) {
         return Promise.resolve(false);
     }
