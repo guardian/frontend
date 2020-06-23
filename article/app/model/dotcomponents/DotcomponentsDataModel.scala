@@ -316,7 +316,6 @@ object DCRDataModel {
       case JsObject(fields) => JsObject(fields.filterNot{ case (_, value) => value == JsNull })
       case other => other
     }
-
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
   }
@@ -324,7 +323,7 @@ object DCRDataModel {
 
 object DotcomponentsDataModel {
 
-  def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
+  private def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -380,6 +379,12 @@ object DotcomponentsDataModel {
       None
     }
   }
+
+  private def designTypeAsString(designType: Option[DesignType]): String = {
+    designType.map(_.toString).getOrElse("Article")
+  }
+
+  // -----------------------------------------------------------------------
 
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
 
@@ -487,10 +492,6 @@ object DotcomponentsDataModel {
         else if (pillar.toString.toLowerCase == "arts") "culture"
         else pillar.toString.toLowerCase()
       }.getOrElse("news")
-    }
-
-    def asString(designType: Option[DesignType]): String = {
-      designType.map(_.toString).getOrElse("Article")
     }
 
     val bodyBlocksRaw = articlePage match {
@@ -712,7 +713,7 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = asString(article.metadata.designType),
+      designType = designTypeAsString(article.metadata.designType),
       pageFooter = pageFooter,
       publication = article.content.publication,
 
