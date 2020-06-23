@@ -307,7 +307,7 @@ export class AudioPlayer extends Component<Props, State> {
         const percentPlayed = this.audio.currentTime / this.state.duration;
 
         // pause when it gets to the end
-        if (this.audio.currentTime > this.state.duration - 1) {
+        if (this.audio.currentTime >= this.state.duration) {
             this.resetAudio();
         } else if (!this.state.grabbing) {
             const currentOffsetPx = this.state.waveWidthPx * percentPlayed;
