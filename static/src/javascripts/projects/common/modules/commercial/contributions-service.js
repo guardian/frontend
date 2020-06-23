@@ -205,7 +205,7 @@ const buildBannerPayload = () => {
         shouldHideReaderRevenue: page.shouldHideReaderRevenue,
         isPaidContent: page.isPaidContent,
         showSupportMessaging: !shouldNotBeShownSupportMessaging(),
-        engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt'),
+        engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: geolocationGetSync(),
     };
