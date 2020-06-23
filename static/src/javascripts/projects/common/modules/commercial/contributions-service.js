@@ -13,7 +13,7 @@ import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import { render } from 'preact-x';
 import React from 'preact-x/compat';
@@ -268,11 +268,10 @@ export const renderBanner: (?BannerDataResponse) => Promise<boolean> = (response
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
-            // TODO: tracking
 
             return fastdom.write(() => {
                 const container = document.createElement('div');
-                container.classList.add('site-message--banner')
+                container.classList.add('site-message--banner');
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
@@ -281,10 +280,30 @@ export const renderBanner: (?BannerDataResponse) => Promise<boolean> = (response
                     <Banner {...module.props} />,
                     container
                 );
-            }).then(() => true);
+            }).then(() => {
+                const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
+                const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
+
+                submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode);
+
+                // Submit view event now, as the standard view tracking is unreliable if the component is instantly in view
+                submitViewEvent({
+                    component: {
+                        componentType,
+                        products,
+                        campaignCode: meta.campaignCode,
+                        id: meta.campaignCode,
+                    },
+                    abTest: {
+                        name: meta.abTestName,
+                        variant: meta.abTestVariant,
+                    }
+                }
+                );
+                return true
+            });
         })
         .catch(error => {
-            debugger
             console.log(error);
             reportError(error, {}, false);
         });
