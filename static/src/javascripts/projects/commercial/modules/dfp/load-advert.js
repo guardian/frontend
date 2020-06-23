@@ -51,14 +51,14 @@ export const refreshAdvert = (advert: Advert): void => {
     // advert.size contains the effective size being displayed prior to refreshing
     advert.whenSlotReady
         .then(() => {
-            const prepidPromise = prebid.requestBids(advert, prebidSlot =>
+            const prebidPromise = prebid.requestBids(advert, prebidSlot =>
                 forcedSlotSize(advert, prebidSlot)
             );
 
             const a9Promise = a9.requestBids(advert, a9Slot =>
                 forcedSlotSize(advert, a9Slot)
             );
-            return Promise.all([prepidPromise, a9Promise]);
+            return Promise.all([prebidPromise, a9Promise]);
         })
         .then(() => {
             advert.slot.setTargeting('refreshed', 'true');
