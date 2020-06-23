@@ -155,7 +155,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -277,7 +277,7 @@ object PageElement {
         )
       }).toList
 
-      case Embed => embedToPageElement(element).toList
+      case Embed => embedToPageElement(element, campaigns).toList
                       // This process returns either:
                       // 1. SoundcloudBlockElement
                       // 2. EmbedBlockElement
@@ -452,19 +452,25 @@ object PageElement {
     }
   }
 
-  private def extractCallout(html: String): Option[CalloutBlockElement] = {
-    val answer = None: Option[CalloutBlockElement]
-    answer
+  private def extractCallout(html: String, campaigns: Option[JsValue]): Option[CalloutBlockElement] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    val tagName = doc.getElementsByTag("div").asScala.headOption.map(_.attr("data-callout-tagname"))
+    for {
+      name <- tagName
+      cpgs <- campaigns
+    } yield {
+      CalloutBlockElement("Id12345")
+    }
   }
 
-  private def embedToPageElement(element: ApiBlockElement): Option[PageElement] = {
+  private def embedToPageElement(element: ApiBlockElement, campaigns: Option[JsValue]): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
       extractSoundcloud(html, mandatory)
-        .getOrElse(extractCallout(html: String)
+        .getOrElse(extractCallout(html: String, campaigns)
           .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
     }
   }
@@ -487,7 +493,6 @@ object PageElement {
       originalUrl <- data.originalUrl
       height <- data.height
       width <- data.width
-
       url = data.url.getOrElse(originalUrl)
     } yield {
       source match {

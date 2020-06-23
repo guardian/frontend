@@ -435,7 +435,7 @@ object DotcomponentsDataModel {
     } else elems
   }
 
-  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
+  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue]): List[PageElement] = {
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
     val elems = capiElems.toList.flatMap(el => PageElement.make(
       element = el,
@@ -443,12 +443,15 @@ object DotcomponentsDataModel {
       pageUrl = request.uri,
       atoms = atoms,
       isMainBlock,
-      isImmersive
+      isImmersive,
+      campaigns
     )).filter(PageElement.isSupported)
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
 
-  private def toBlock(block: APIBlock, article: Article, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+  private def toBlock(block: APIBlock, page: PageWithStoryPackage, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+
+    val article = page.article
 
     // For createdOn and createdOnDisplay we are going to carry on use the block information
     // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
@@ -461,10 +464,11 @@ object DotcomponentsDataModel {
     // For this we introduced ArticleDateTimes in DatesAndTimes.
     // This is meant to ensure that DCP and DCR use the same dates.
     val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
+    val campaigns = page.getJavascriptConfig.get("campaigns")
 
     Block(
       id = block.id,
-      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive),
+      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive, campaigns),
       createdOn = createdOn,
       createdOnDisplay = createdOnDisplay,
       lastUpdated = Some(displayedDateTimes.lastUpdated),
@@ -479,9 +483,9 @@ object DotcomponentsDataModel {
 
   // -----------------------------------------------------------------------
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
+  def fromArticle(page: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
 
-    val article = articlePage.article
+    val article = page.article
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
@@ -494,7 +498,7 @@ object DotcomponentsDataModel {
       tagPaths = article.content.tags.tags.map(_.id)
     )
 
-    val bodyBlocksRaw = articlePage match {
+    val bodyBlocksRaw = page match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
       case article => blocks.body.getOrElse(Nil)
     }
@@ -508,9 +512,9 @@ object DotcomponentsDataModel {
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, article, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes)).toList
+      .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes)).toList
 
-    val pagination = articlePage match {
+    val pagination = page match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
         Pagination(
           currentPage = liveblog.currentPage.currentPage.pageNumber,
@@ -525,17 +529,17 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, article, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes))
+      blocks.main.map(block => toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, article, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes))
+        .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes))
     }
 
-    val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
+    val jsConfig = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
 
     val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
       acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
@@ -544,7 +548,7 @@ object DotcomponentsDataModel {
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
     val linkedData: List[LinkedData] = {
-      articlePage match {
+      page match {
         case liveblog: LiveBlogPage => LinkedData.forLiveblog(
           liveblog = liveblog,
           blocks = bodyBlocksRaw,
@@ -559,8 +563,8 @@ object DotcomponentsDataModel {
       }
     }
 
-    val openGraphData: Map[String, String] = articlePage.getOpenGraphProperties;
-    val twitterData: Map[String, String] = articlePage.getTwitterProperties
+    val openGraphData: Map[String, String] = page.getOpenGraphProperties;
+    val twitterData: Map[String, String] = page.getTwitterProperties
 
     val allTags = article.tags.tags.map(
       t => Tag(
@@ -611,7 +615,7 @@ object DotcomponentsDataModel {
     )
 
     val nav = {
-      val navMenu = NavMenu(articlePage, Edition(request))
+      val navMenu = NavMenu(page, Edition(request))
       Nav(
         currentUrl = navMenu.currentUrl,
         pillars = navMenu.pillars,
@@ -649,7 +653,7 @@ object DotcomponentsDataModel {
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
     )
 
-    val jsPageConfig = JavaScriptPage.getMap(articlePage, Edition(request), false)
+    val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
 
     val author = Author(
@@ -704,7 +708,7 @@ object DotcomponentsDataModel {
       guardianBaseURL = Configuration.site.host,
       contentType = jsConfig("contentType").getOrElse(""),
       hasRelated = article.content.showInRelated,
-      hasStoryPackage = articlePage.related.hasStoryPackage,
+      hasStoryPackage = page.related.hasStoryPackage,
       beaconURL = Configuration.debug.beaconUrl,
       isCommentable = article.trail.isCommentable,
       commercialProperties = commercial.editionCommercialProperties,
@@ -726,8 +730,8 @@ object DotcomponentsDataModel {
       badge = badge,
 
       // Match Data
-      matchUrl = makeMatchUrl(articlePage),
-      campaigns = articlePage.getJavascriptConfig.get("campaigns")
+      matchUrl = makeMatchUrl(page),
+      campaigns = page.getJavascriptConfig.get("campaigns")
     )
   }
 }
