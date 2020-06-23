@@ -47,7 +47,7 @@ export const isArticleWorthAnEpicImpression = (
             : true;
         const keywordIdsMatch = propertiesToExclude.keywordIds
             ? propertiesToExclude.keywordIds.every(keywordId =>
-                  page.keywordIds.includes(keywordId)
+                  page.keywordIds && page.keywordIds.includes(keywordId)
               )
             : true;
         return sectionsMatch && toneIdsMatch && keywordIdsMatch;

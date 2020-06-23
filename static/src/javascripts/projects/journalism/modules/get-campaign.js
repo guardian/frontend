@@ -4,7 +4,7 @@ import config from 'lib/config';
 export const getCampaigns = () => {
     // eslint-disable-next-line
     const isCallout = campaign => campaign.fields._type === 'callout';
-    const allCampaigns = config.get('page.campaigns');
+    const allCampaigns = config.get('page.campaigns') || [];
     const allCallouts = allCampaigns.filter(isCallout);
 
     return allCallouts.reduce((acc, curr) => {
