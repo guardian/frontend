@@ -7,12 +7,13 @@ import {
     emitBeginEvent,
     setupClickHandling,
     makeEvent, submitOphanInsert,
+    getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
+import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import { render } from 'preact-x';
 import React from 'preact-x/compat';
@@ -28,11 +29,26 @@ import {
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import userPrefs from "common/modules/user-prefs";
 
 type ServiceModule = {
     url: string,
+    name: string,
     props: {}
 };
+
+type Meta = {
+    abTestName: string,
+    abTestVariant: string,
+    campaignCode: string,
+}
+
+export type BannerDataResponse = {
+    data: {
+        module: ServiceModule,
+        meta: Meta
+    }
+}
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -174,12 +190,24 @@ const buildEpicPayload = () => {
 };
 
 const buildBannerPayload = () => {
+    const page = config.get('page');
+
     const tracking = {
-        // TODO: implement
+        ophanPageId: config.get('ophan.pageViewId'),
+        ophanComponentId: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        platformId: 'GUARDIAN_WEB',
+        clientName: 'frontend',
+        referrerUrl: window.location.origin + window.location.pathname,
     };
 
     const targeting = {
-        // TODO: implement
+        alreadyVisitedCount: getVisitCount(),
+        shouldHideReaderRevenue: page.shouldHideReaderRevenue,
+        isPaidContent: page.isPaidContent,
+        showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+        engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
+        mvtId: getMvtValue(),
+        countryCode: geolocationGetSync(),
     };
 
     return {
@@ -210,7 +238,7 @@ const getStickyBottomBanner = (payload: {}) => {
     });
 };
 
-export const fetchBannerData: () => Promise<?ServiceModule> = () => {
+export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
     const payload = buildBannerPayload();
 
     return getStickyBottomBanner(payload)
@@ -219,14 +247,13 @@ export const fetchBannerData: () => Promise<?ServiceModule> = () => {
                 return null;
             }
 
-            const { module } = json.data;
-
-            return module;
+            return (json: BannerDataResponse);
         });
 };
 
-export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
-    if(!module) {
+export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
+    const { module, meta } = response.data;
+    if (!module) {
         return Promise.resolve(false);
     }
 
@@ -240,22 +267,41 @@ export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     // $FlowFixMe
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
-            const Banner = bannerModule.Banner;
-            const props = module.props;
-
-            // TODO: tracking
+            const Banner = bannerModule[module.name];
 
             return fastdom.write(() => {
                 const container = document.createElement('div');
-                if(document.body) {
+                container.classList.add('site-message--banner');
+                if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
 
                 return render(
-                    <Banner {...props} />,
+                    <Banner {...module.props} />,
                     container
                 );
-            }).then(() => true);
+            }).then(() => {
+                const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
+                const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
+
+                submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode);
+
+                // Submit view event now, as the standard view tracking is unreliable if the component is instantly in view
+                submitViewEvent({
+                    component: {
+                        componentType,
+                        products,
+                        campaignCode: meta.campaignCode,
+                        id: meta.campaignCode,
+                    },
+                    abTest: {
+                        name: meta.abTestName,
+                        variant: meta.abTestVariant,
+                    }
+                }
+                );
+                return true
+            });
         })
         .catch(error => {
             console.log(error);
