@@ -272,7 +272,7 @@ object PageElement {
         )
       }).toList
 
-      case Embed => extractEmbed(element).toList
+      case Embed => embedToPageElement(element).toList
 
       case Contentatom =>
         (extractAtom match {
@@ -431,7 +431,7 @@ object PageElement {
     }
   }
 
-  private def extractEmbed(element: ApiBlockElement): Option[PageElement] = {
+  private def embedToPageElement(element: ApiBlockElement): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
