@@ -120,7 +120,6 @@ case class Config(
   stage: String,
   frontendAssetsFullURL: String,
   ampIframeUrl: String,
-
 )
 
 object Config {
@@ -190,7 +189,11 @@ object PageFooter {
   implicit val writes = Json.writes[PageFooter]
 }
 
-case class DataModelV3(
+// -----------------------------------------------------------------
+// DCR DataModel
+// -----------------------------------------------------------------
+
+case class DCRDataModel(
   version: Int,
   headline: String,
   standfirst: String,
@@ -248,12 +251,12 @@ case class DataModelV3(
   campaigns: Option[JsValue]
 )
 
-object DataModelV3 {
+object DCRDataModel {
 
   implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
-  implicit val writes = new Writes[DataModelV3] {
-    def writes(model: DataModelV3) = Json.obj(
+  implicit val writes = new Writes[DCRDataModel] {
+    def writes(model: DCRDataModel) = Json.obj(
       "version" -> model.version,
       "headline" -> model.headline,
       "standfirst" -> model.standfirst,
@@ -308,7 +311,7 @@ object DataModelV3 {
     )
   }
 
-  def toJson(model: DataModelV3): String = {
+  def toJson(model: DCRDataModel): String = {
     def withoutNull(json: JsValue): JsValue = json match {
       case JsObject(fields) => JsObject(fields.filterNot{ case (_, value) => value == JsNull })
       case other => other
@@ -378,7 +381,7 @@ object DotcomponentsDataModel {
     }
   }
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DataModelV3 = {
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
 
     val article = articlePage.article
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
@@ -666,7 +669,7 @@ object DotcomponentsDataModel {
 
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
 
-    DataModelV3(
+    DCRDataModel(
       version = 3,
       headline = article.trail.headline,
       standfirst = article.fields.standfirst.getOrElse(""),

@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomponents.{DataModelV3, DotcomponentsDataModel, PageType}
+import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel, PageType}
 import model.{ContentType, PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -86,7 +86,7 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
-    DataModelV3.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, pageType))
+    DCRDataModel.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, pageType))
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
