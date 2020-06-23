@@ -13,7 +13,7 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{ArticleDateTimes, Badges, Canonical, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
+import model.{Article, ArticleDateTimes, Badges, Canonical, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -120,7 +120,6 @@ case class Config(
   stage: String,
   frontendAssetsFullURL: String,
   ampIframeUrl: String,
-
 )
 
 object Config {
@@ -190,7 +189,11 @@ object PageFooter {
   implicit val writes = Json.writes[PageFooter]
 }
 
-case class DataModelV3(
+// -----------------------------------------------------------------
+// DCR DataModel
+// -----------------------------------------------------------------
+
+case class DCRDataModel(
   version: Int,
   headline: String,
   standfirst: String,
@@ -248,11 +251,12 @@ case class DataModelV3(
   campaigns: Option[JsValue]
 )
 
-object DataModelV3 {
+object DCRDataModel {
+
   implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
-  implicit val writes = new Writes[DataModelV3] {
-    def writes(model: DataModelV3) = Json.obj(
+  implicit val writes = new Writes[DCRDataModel] {
+    def writes(model: DCRDataModel) = Json.obj(
       "version" -> model.version,
       "headline" -> model.headline,
       "standfirst" -> model.standfirst,
@@ -307,21 +311,19 @@ object DataModelV3 {
     )
   }
 
-  def toJson(model: DataModelV3): String = {
+  def toJson(model: DCRDataModel): String = {
     def withoutNull(json: JsValue): JsValue = json match {
       case JsObject(fields) => JsObject(fields.filterNot{ case (_, value) => value == JsNull })
       case other => other
     }
-
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
   }
 }
 
 object DotcomponentsDataModel {
-  val VERSION = 2
 
-  def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
+  private def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
 
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
@@ -378,10 +380,108 @@ object DotcomponentsDataModel {
     }
   }
 
-  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DataModelV3 = {
+  private def designTypeAsString(designType: Option[DesignType]): String = {
+    designType.map(_.toString).getOrElse("Article")
+  }
+
+  private def buildFullCommercialUrl(bundlePath: String): String = {
+    // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
+    if(Configuration.environment.isProd || Configuration.environment.isCode){
+      Static(bundlePath)
+    } else {
+      s"${Configuration.site.host}${Static(bundlePath)}"
+    }
+  }
+
+  // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
+  private def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
+    pillar.map { pillar =>
+      if (designType == AdvertisementFeature) "labs"
+      else if (pillar.toString.toLowerCase == "arts") "culture"
+      else pillar.toString.toLowerCase()
+    }.getOrElse("news")
+  }
+
+  private def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
+    val last60 = blocks.requestedBodyBlocks
+      .getOrElse(Map.empty[String, Seq[APIBlock]])
+      .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
+      .toList
+
+    // For the newest page, the last 60 blocks are requested, but for other page,
+    // all of the blocks have been requested and returned in the blocks.body bit
+    // of the response so we use those
+    val relevantBlocks = if (last60.isEmpty) blocks.body.getOrElse(Nil) else last60
+
+    val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
+    relevantBlocks.filter(block => ids(block.id))
+  }
+
+  private def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+    if (affiliateLinks) {
+      val hasLinks = capiElems.exists(elem => elem.`type` match {
+        case Text => {
+          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+        }
+        case _ => false
+      })
+
+      if (hasLinks) {
+        elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
+      } else {
+        elems
+      }
+    } else elems
+  }
+
+  def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
+    val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
+    val elems = capiElems.toList.flatMap(el => PageElement.make(
+      element = el,
+      addAffiliateLinks = affiliateLinks,
+      pageUrl = request.uri,
+      atoms = atoms,
+      isMainBlock,
+      isImmersive
+    )).filter(PageElement.isSupported)
+    addDisclaimer(elems, capiElems, affiliateLinks)
+  }
+
+  def toBlock(block: APIBlock, article: Article, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+
+    // For createdOn and createdOnDisplay we are going to carry on use the block information
+    // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
+    // Todo: Check whether they are used on DCR or not and if not remove them from the model
+    val createdOn = block.createdDate.map(_.dateTime)
+    val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+    // last updated (in both versions) and first published (in both versions) are going to
+    // be computed from the article metadata.
+    // For this we introduced ArticleDateTimes in DatesAndTimes.
+    // This is meant to ensure that DCP and DCR use the same dates.
+    val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
+
+    Block(
+      id = block.id,
+      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive),
+      createdOn = createdOn,
+      createdOnDisplay = createdOnDisplay,
+      lastUpdated = Some(displayedDateTimes.lastUpdated),
+      lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
+      title = block.title,
+      firstPublished = Some(displayedDateTimes.firstPublished),
+      firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
+      primaryDateLine = displayedDateTimes.primaryDateLine,
+      secondaryDateLine = displayedDateTimes.secondaryDateLine
+    )
+  }
+
+  // -----------------------------------------------------------------------
+
+  def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
 
     val article = articlePage.article
-    val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
@@ -393,102 +493,6 @@ object DotcomponentsDataModel {
       alwaysOffTags = affiliateLinks.alwaysOffTags,
       tagPaths = article.content.tags.tags.map(_.id)
     )
-
-    def toBlock(block: APIBlock, shouldAddAffiliateLinks: Boolean, edition: Edition, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
-
-      // For createdOn and createdOnDisplay we are going to carry on use the block information
-      // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
-      // Todo: Check whether they are used on DCR or not and if not remove them from the model
-      val createdOn = block.createdDate.map(_.dateTime)
-      val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
-
-      // last updated (in both versions) and first published (in both versions) are going to
-      // be computed from the article metadata.
-      // For this we introduced ArticleDateTimes in DatesAndTimes.
-      // This is meant to ensure that DCP and DCR use the same dates.
-      val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
-
-      Block(
-        id = block.id,
-        elements = blockElementsToPageElements(block.elements, shouldAddAffiliateLinks, isMainBlock, isImmersive),
-        createdOn = createdOn,
-        createdOnDisplay = createdOnDisplay,
-        lastUpdated = Some(displayedDateTimes.lastUpdated),
-        lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
-        title = block.title,
-        firstPublished = Some(displayedDateTimes.firstPublished),
-        firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
-        primaryDateLine = displayedDateTimes.primaryDateLine,
-        secondaryDateLine = displayedDateTimes.secondaryDateLine
-      )
-    }
-
-    def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
-      val elems = capiElems.toList.flatMap(el => PageElement.make(
-        element = el,
-        addAffiliateLinks = affiliateLinks,
-        pageUrl = request.uri,
-        atoms = atoms,
-        isMainBlock,
-        isImmersive
-      )).filter(PageElement.isSupported)
-      addDisclaimer(elems, capiElems, affiliateLinks)
-    }
-
-    def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
-      if (affiliateLinks) {
-        val hasLinks = capiElems.exists(elem => elem.`type` match {
-          case Text => {
-            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-          }
-          case _ => false
-        })
-
-        if (hasLinks) {
-          elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
-        } else {
-          elems
-        }
-      } else elems
-    }
-
-    def buildFullCommercialUrl(bundlePath: String): String = {
-      // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
-      if(Configuration.environment.isProd || Configuration.environment.isCode){
-        Static(bundlePath)
-      } else {
-        s"${Configuration.site.host}${Static(bundlePath)}"
-      }
-    }
-
-    def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
-      val last60 = blocks.requestedBodyBlocks
-        .getOrElse(Map.empty[String, Seq[APIBlock]])
-        .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
-        .toList
-
-      // For the newest page, the last 60 blocks are requested, but for other page,
-      // all of the blocks have been requested and returned in the blocks.body bit
-      // of the response so we use those
-      val relevantBlocks = if (last60.isEmpty) blocks.body.getOrElse(Nil) else last60
-
-      val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
-      relevantBlocks.filter(block => ids(block.id))
-    }
-
-    // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
-    def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-      pillar.map { pillar =>
-        if (designType == AdvertisementFeature) "labs"
-        else if (pillar.toString.toLowerCase == "arts") "culture"
-        else pillar.toString.toLowerCase()
-      }.getOrElse("news")
-    }
-
-    def asString(designType: Option[DesignType]): String = {
-      designType.map(_.toString).getOrElse("Article")
-    }
 
     val bodyBlocksRaw = articlePage match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
@@ -504,7 +508,7 @@ object DotcomponentsDataModel {
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes)).toList
+      .map(block => toBlock(block, article, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes)).toList
 
     val pagination = articlePage match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -521,14 +525,14 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), true, article.isImmersive, articleDateTimes))
+      blocks.main.map(block => toBlock(block, article, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, shouldAddAffiliateLinks, Edition(request), false, article.isImmersive, articleDateTimes))
+        .map(block => toBlock(block, article, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes))
     }
 
     val jsConfig = (k: String) => articlePage.getJavascriptConfig.get(k).map(_.as[String])
@@ -666,7 +670,7 @@ object DotcomponentsDataModel {
 
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
 
-    DataModelV3(
+    DCRDataModel(
       version = 3,
       headline = article.trail.headline,
       standfirst = article.fields.standfirst.getOrElse(""),
@@ -709,7 +713,7 @@ object DotcomponentsDataModel {
       trailText = article.trail.fields.trailText.getOrElse(""),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = asString(article.metadata.designType),
+      designType = designTypeAsString(article.metadata.designType),
       pageFooter = pageFooter,
       publication = article.content.publication,
 
