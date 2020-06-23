@@ -421,6 +421,17 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
+  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+    val src = getIframeSrc(html)
+    src.flatMap { s =>
+      (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
+        case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
+        case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
+        case _ => None
+      }
+    }
+  }
+
   private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
@@ -438,17 +449,6 @@ object PageElement {
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
       extractSoundcloud(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
-    }
-  }
-
-  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
-    val src = getIframeSrc(html)
-    src.flatMap { s =>
-        (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
-          case (Some(track), _) => Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory))
-          case (_, Some(playlist)) => Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory))
-          case _ => None
-        }
     }
   }
 
