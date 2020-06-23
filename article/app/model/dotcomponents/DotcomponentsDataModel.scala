@@ -384,6 +384,24 @@ object DotcomponentsDataModel {
     designType.map(_.toString).getOrElse("Article")
   }
 
+  private def buildFullCommercialUrl(bundlePath: String): String = {
+    // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
+    if(Configuration.environment.isProd || Configuration.environment.isCode){
+      Static(bundlePath)
+    } else {
+      s"${Configuration.site.host}${Static(bundlePath)}"
+    }
+  }
+
+  // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
+  private def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
+    pillar.map { pillar =>
+      if (designType == AdvertisementFeature) "labs"
+      else if (pillar.toString.toLowerCase == "arts") "culture"
+      else pillar.toString.toLowerCase()
+    }.getOrElse("news")
+  }
+
   // -----------------------------------------------------------------------
 
   def fromArticle(articlePage: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
@@ -461,15 +479,6 @@ object DotcomponentsDataModel {
       } else elems
     }
 
-    def buildFullCommercialUrl(bundlePath: String): String = {
-      // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
-      if(Configuration.environment.isProd || Configuration.environment.isCode){
-        Static(bundlePath)
-      } else {
-        s"${Configuration.site.host}${Static(bundlePath)}"
-      }
-    }
-
     def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
       val last60 = blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
@@ -483,15 +492,6 @@ object DotcomponentsDataModel {
 
       val ids = liveblog.currentPage.currentPage.blocks.map(_.id).toSet
       relevantBlocks.filter(block => ids(block.id))
-    }
-
-    // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
-    def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-      pillar.map { pillar =>
-        if (designType == AdvertisementFeature) "labs"
-        else if (pillar.toString.toLowerCase == "arts") "culture"
-        else pillar.toString.toLowerCase()
-      }.getOrElse("news")
     }
 
     val bodyBlocksRaw = articlePage match {
