@@ -7,6 +7,7 @@ import {
     emitBeginEvent,
     setupClickHandling,
     makeEvent, submitOphanInsert,
+    getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
@@ -28,11 +29,25 @@ import {
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import userPrefs from "common/modules/user-prefs";
 
 type ServiceModule = {
     url: string,
     props: {}
 };
+
+type Meta = {
+    abTestName: string,
+    abTestVariant: string,
+    campaignCode: string,
+}
+
+type BannerDataResponse = {
+    data: {
+        module: ServiceModule,
+        meta: Meta
+    }
+}
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -174,12 +189,24 @@ const buildEpicPayload = () => {
 };
 
 const buildBannerPayload = () => {
+    const page = config.get('page');
+
     const tracking = {
-        // TODO: implement
+        ophanPageId: config.get('ophan.pageViewId'),
+        ophanComponentId: 'ACQUISITIONS_ENGAGEMENT_BANNER',
+        platformId: 'GUARDIAN_WEB',
+        clientName: 'frontend',
+        referrerUrl: window.location.origin + window.location.pathname,
     };
 
     const targeting = {
-        // TODO: implement
+        alreadyVisitedCount: getVisitCount(),
+        shouldHideReaderRevenue: guardian.config.page.shouldHideReaderRevenue || false,
+        isPaidContent: page.isPaidContent,
+        showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+        engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt'),
+        mvtId: getMvtValue(),
+        countryCode: geolocationGetSync(),
     };
 
     return {
@@ -200,7 +227,8 @@ const checkResponseOk = response => {
 
 // TODO: add this to the client library
 const getStickyBottomBanner = (payload: {}) => {
-    const URL = 'https://contributions.guardianapis.com/banner';
+    // const URL = 'https://contributions.guardianapis.com/banner';
+    const URL = 'http://localhost:8082/banner';
     const json = JSON.stringify(payload);
 
     return fetchJson(URL, {
@@ -210,7 +238,7 @@ const getStickyBottomBanner = (payload: {}) => {
     });
 };
 
-export const fetchBannerData: () => Promise<?ServiceModule> = () => {
+export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
     const payload = buildBannerPayload();
 
     return getStickyBottomBanner(payload)
@@ -219,14 +247,13 @@ export const fetchBannerData: () => Promise<?ServiceModule> = () => {
                 return null;
             }
 
-            const { module } = json.data;
-
-            return module;
+            return json.data;
         });
 };
 
-export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
-    if(!module) {
+export const renderBanner: (?BannerDataResponse) => Promise<boolean> = (response) => {
+    const { module, meta } = response;
+    if (!module) {
         return Promise.resolve(false);
     }
 
@@ -240,24 +267,24 @@ export const renderBanner: (?ServiceModule) => Promise<boolean> = (module) => {
     // $FlowFixMe
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
-            const Banner = bannerModule.Banner;
-            const props = module.props;
-
+            const Banner = bannerModule[module.name];
             // TODO: tracking
 
             return fastdom.write(() => {
                 const container = document.createElement('div');
-                if(document.body) {
+                container.classList.add('site-message--banner')
+                if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
 
                 return render(
-                    <Banner {...props} />,
+                    <Banner {...module.props} />,
                     container
                 );
             }).then(() => true);
         })
         .catch(error => {
+            debugger
             console.log(error);
             reportError(error, {}, false);
         });

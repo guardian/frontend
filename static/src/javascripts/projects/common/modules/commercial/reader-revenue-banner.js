@@ -11,7 +11,7 @@ let data = null;
 const show = () => renderBanner(data);
 
 const canShow = (): Promise<boolean> => {
-    const enabled = false;
+    const enabled = true;
 
     // Temporarily disable banner while service is developed to serve actual banner and logic
     if(!enabled) {
@@ -19,8 +19,8 @@ const canShow = (): Promise<boolean> => {
     }
 
     return fetchBannerData()
-        .then(moduleData => {
-            data = moduleData;
+        .then(response => {
+            data = response;
             return data !== null;
         });
 };
