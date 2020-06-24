@@ -60,7 +60,13 @@ case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, t
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
-case class CalloutBlockElement(jsobject: JsObject) extends PageElement
+
+case class CalloutBlockElement(id: String, activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
+case class CalloutFormField(id: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String)
+object CalloutFormField {
+  implicit val CalloutFormFieldWrites: Writes[CalloutFormField] = Json.writes[CalloutFormField]
+}
+
 case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -232,9 +238,9 @@ object PageElement {
         ))
 
       case Audio => audioToPageElement(element).toList
-                      // This process returns either:
-                      // 1. SoundcloudBlockElement
-                      // 2. AudioBlockElement
+                    // This process returns either:
+                    // 1. SoundcloudBlockElement
+                    // 2. AudioBlockElement
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -278,10 +284,10 @@ object PageElement {
       }).toList
 
       case Embed => embedToPageElement(element, campaigns).toList
-                      // This process returns either:
-                      // 1. SoundcloudBlockElement
-                      // 2. EmbedBlockElement
-                      // 3. CalloutBlockElement
+                    // This process returns either:
+                    // 1. SoundcloudBlockElement
+                    // 2. EmbedBlockElement
+                    // 3. CalloutBlockElement
 
       case Contentatom =>
         (extractAtom match {
@@ -453,8 +459,8 @@ object PageElement {
   }
 
   private def extractCallout(html: String, campaigns: Option[JsValue]): Option[CalloutBlockElement] = {
-    def extractCampaignPerTagName(campaigns: JsValue): JsObject = {
-      val json: JsValue = Json.parse("""
+    def extractCampaignPerTagName(campaigns: JsValue, name: String): Option[JsObject] = {
+      val jsValue1: JsValue = Json.parse("""
           {
             "id": "b06a08e0-ca5f-410c-a28b-95e7d7ca37b7",
             "name": "CALLOUT: Coronavirus",
@@ -558,7 +564,32 @@ object PageElement {
             }
           }
         """)
-      json.asInstanceOf[JsObject]
+      Some(jsValue1.asInstanceOf[JsObject])
+    }
+    def formFieldJsValueItemToCalloutFormField( item: JsValue ) : CalloutFormField = {
+      val id = (item \ "id").as[String]
+      val name = (item \ "name").as[String]
+      val description = (item \ "name").as[String]
+      val required: Boolean = (item \ "required").as[String] == "1"
+      val hideLabel: Boolean = (item \ "hide_label").as[String] == "1"
+      val label = (item \ "name").as[String]
+      CalloutFormField(id, name, description, required, hideLabel, label)
+    }
+    def campaignJsObjectToCalloutBlockElement(campaign: JsObject): Option[CalloutBlockElement] = {
+      val id = (campaign \ "id").as[String]
+      val activeFrom = (campaign \ "activeFrom").as[Long]
+      val displayOnSensitive = (campaign \ "displayOnSensitive").as[Boolean]
+      val formId = (campaign \ "fields" \ "formId").as[Int]
+      val title = (campaign \ "name").as[String]
+      val description = (campaign \ "fields" \ "description").as[String]
+      val tagName = (campaign \ "fields" \ "tagName").as[String]
+      val formFields1 = (campaign \ "fields" \ "formFields").get.as[JsArray]
+      val formFields2 = formFields1
+        .value
+        .map(formFieldJsValueItemToCalloutFormField(_))
+        .toList
+      val element = CalloutBlockElement(id, activeFrom, displayOnSensitive, formId, title, description, tagName, formFields2)
+      Some(element)
     }
 
     val doc = Jsoup.parseBodyFragment(html)
@@ -566,9 +597,10 @@ object PageElement {
     for {
       name <- tagName
       cpgs <- campaigns
+      campaign <- extractCampaignPerTagName(cpgs, name)
+      element <- campaignJsObjectToCalloutBlockElement(campaign)
     } yield {
-      val campagne = extractCampaignPerTagName(cpgs)
-      CalloutBlockElement(campagne)
+      element
     }
   }
 

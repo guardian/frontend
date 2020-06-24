@@ -504,4 +504,14 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val remoteBanner = Switch(
+    SwitchGroup.Feature,
+    "remote-banner",
+    "Enables the banner fetched from contributions-service",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 8, 3),
+    exposeClientSide = true
+  )
+
 }
