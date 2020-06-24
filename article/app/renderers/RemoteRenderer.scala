@@ -6,17 +6,21 @@ import common.Logging
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel}
+import model.{CacheTime}
 import model.{Cached, PageWithStoryPackage, NoCache}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
+import play.api.mvc.Results.NotFound
 import play.twirl.api.Html
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomponents.PageType
+
+
 
 class RemoteRenderer extends Logging {
 
@@ -47,7 +51,8 @@ class RemoteRenderer extends Logging {
               Cached(article)(RevalidatableResult.Ok(Html(response.body)))
                 .withHeaders("X-GU-Dotcomponents" -> "true")
             case 404 =>
-              NoCache(play.api.mvc.Results.NotFound("Remote renderer page not found (404)"))
+              Cached(CacheTime.NotFound)(WithoutRevalidationResult(NotFound))
+                .withHeaders("X-GU-Dotcomponents" -> "true")
             case 400 =>
               // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
               NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
