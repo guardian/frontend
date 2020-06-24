@@ -46,6 +46,8 @@ class RemoteRenderer extends Logging {
             case 200 =>
               Cached(article)(RevalidatableResult.Ok(Html(response.body)))
                 .withHeaders("X-GU-Dotcomponents" -> "true")
+            case 404 =>
+              NoCache(play.api.mvc.Results.NotFound("Remote renderer page not found (404)"))
             case 400 =>
               // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
               NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
