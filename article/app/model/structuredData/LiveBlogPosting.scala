@@ -6,7 +6,7 @@ import model.liveblog._
 import org.joda.time.DateTime
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
-import views.support.Format
+import views.support.GuDateFormatLegacy
 
 // Since Json-Ld has fields that start with the @ character I can't just marshall it from
 // case classes which would be simpler. I've opted to construct the JsonValues manually. I
@@ -14,7 +14,7 @@ import views.support.Format
 
 object LiveBlogPosting {
 
-  def zulu(date: DateTime)(implicit request: RequestHeader): String = Format(date, "yyyy-MM-dd'T'HH:mm:ssZ")
+  def zulu(date: DateTime)(implicit request: RequestHeader): String = GuDateFormatLegacy(date, "yyyy-MM-dd'T'HH:mm:ssZ")
 
   def apply(blog: Article, blocks: Seq[BodyBlock])(implicit request: RequestHeader): JsValue = {
 

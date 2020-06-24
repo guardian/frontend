@@ -21,7 +21,6 @@ import userPrefs from 'common/modules/user-prefs';
 import { local as storage } from 'lib/storage';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { initCheckMediator } from 'common/modules/check-mediator';
 import { addEventListener } from 'lib/events';
 import {
     isUserLoggedIn,
@@ -33,6 +32,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
+import { init as initDynamicImport } from 'lib/dynamic-import-init';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -202,6 +202,9 @@ const bootStandard = (): void => {
     addScrollHandler();
     addResizeHandler();
 
+    // polyfill dynamic import
+    initDynamicImport();
+
     // Set adtest query if url param declares it
     setAdTestCookie();
 
@@ -242,9 +245,6 @@ const bootStandard = (): void => {
             sw.postMessage({ ias });
         });
     }
-
-    // initilaise the email/outbrain check mediator
-    initCheckMediator();
 
     ophan.setEventEmitter(mediator);
 

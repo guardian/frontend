@@ -43,6 +43,7 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = bodyClasses)(

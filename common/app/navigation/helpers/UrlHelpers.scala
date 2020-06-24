@@ -90,6 +90,4 @@ object UrlHelpers {
     } else {
       s"https://jobs.theguardian.com/?INTCMP=jobs_${editionId}_web_newheader"
     }
-
-  def getSoulmatesUrl: String = "https://soulmates.theguardian.com/?INTCMP=soulmates_uk_web_newheader"
 }

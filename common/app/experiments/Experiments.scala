@@ -7,7 +7,10 @@ import org.joda.time.LocalDate
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
-    DotcomRendering
+    DotcomRendering1,
+    DotcomRendering2,
+    DCRBubble,
+    CcpaCmp
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -17,15 +20,39 @@ object OldTLSSupportDeprecation extends Experiment(
   name = "old-tls-support-deprecation",
   description = "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
   owners = Seq(Owner.withGithub("siadcock")),
-  sellByDate = new LocalDate(2020, 6, 17),
+  sellByDate = new LocalDate(2020, 11, 11),
   // Custom group based on header set in Fastly
   participationGroup = TLSSupport
 )
 
-object DotcomRendering extends Experiment(
-  name = "dotcom-rendering",
-  description = "Show DCR pages to users",
+object DotcomRendering1 extends Experiment(
+  name = "dotcom-rendering-1",
+  description = "Show DCR pages to users including those with comments (1)",
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
-  participationGroup = Perc5A // Also see ArticlePicker.scala - our main filter mechanism is by page features
+  participationGroup = Perc20A // Also see ArticlePicker.scala - our main filter mechanism is by page features
+)
+
+object DotcomRendering2 extends Experiment(
+  name = "dotcom-rendering-2",
+  description = "Show DCR pages to users including those with comments (2)",
+  owners = Seq(Owner.withGithub("shtukas")),
+  sellByDate = new LocalDate(2020, 12, 1),
+  participationGroup = Perc10A // Also see ArticlePicker.scala - our main filter mechanism is by page features
+)
+
+object DCRBubble extends Experiment(
+  name = "always-dcr-rendering",
+  description = "Use DCR for all article pages (equivalent to always adding ?dcr)",
+  owners = Seq(Owner.withGithub("shtukas")),
+  sellByDate = new LocalDate(2020, 12, 1),
+  participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
+)
+
+object CcpaCmp extends Experiment(
+  name = "ccpa-cmp",
+  description = "Shows CCPA banner instead of TCFv1 banner",
+  owners = Seq(Owner.withGithub("ripecosta")),
+  sellByDate = new LocalDate(2020, 7, 3),
+  participationGroup = Perc1C
 )

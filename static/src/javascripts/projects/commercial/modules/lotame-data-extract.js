@@ -21,7 +21,7 @@ const shouldLoadLotame = (): boolean => {
 // Fetches Lotame Data for the Ozone project
 // and stores in in window.OzoneLotameData
 const init = (): Promise<void> => {
-    if (!shouldLoadLotame || commercialFeatures.shouldBlockAnalytics) {
+    if (!shouldLoadLotame || commercialFeatures.isSecureContact) {
         return Promise.resolve();
     }
     return loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')

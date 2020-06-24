@@ -7,8 +7,10 @@ import model._
 import model.content._
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentatom.renderer.{ArticleAtomRenderer, ArticleConfiguration}
 import play.api.mvc._
 import play.twirl.api.Html
+
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import play.api.data.Form
@@ -21,10 +23,11 @@ import play.api.libs.ws.{WSClient, WSResponse}
 class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
 
   case class AnswersSignupForm(
-                        email: String,
-                        listId: Int,
-                        referrer: Option[String],
-                        campaignCode: Option[String])
+    email: String,
+    listId: Int,
+    referrer: Option[String],
+    campaignCode: Option[String]
+  )
 
   val answersSignupForm: Form[AnswersSignupForm] = Form(
     mapping(
@@ -77,19 +80,43 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
 
   def render(atomType: String, id: String, isJsEnabled: Boolean, hasVerticalScrollbar: Boolean, inApp: Boolean): Action[AnyContent] = Action.async { implicit request =>
     lookup(s"atom/$atomType/$id") map {
-      case Left(model: MediaAtom) =>
-        renderAtom(MediaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: GuideAtom) =>
-        renderAtom(GuideAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: ProfileAtom) =>
-        renderAtom(ProfileAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: QandaAtom) =>
-        renderAtom(QandaAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: TimelineAtom) =>
-        renderAtom(TimelineAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
-      case Left(model: InteractiveAtom) => {
-        renderAtom(InteractiveAtomPage(model, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: AudioAtom) => {
+
+        /*
+          mark: 57cadc98-16c0-49ac-8bba-c96144c488a7
+          author: Pascal
+          text: This code is experimental and was introduced on May 2020 as a way to demonstrate
+                showing atoms from first principles. It should not be considered ready for wide use because
+                the atom is showing fine but there are some missing bits in the HTML template.
+
+          Last update: 19th June 2020
+          author: Pascal
+          text: I am leaving this cde here as an example that may be useful in the future.
+                As far as he original idea of embedding atoms to be rendered by DCR, we have
+                decided to use atoms-rendering: https://github.com/guardian/atoms-rendering
+         */
+
+        val articleConfig: ArticleConfiguration = Atoms.articleConfig(true)
+        val html1: String = ArticleAtomRenderer.getHTML(atom.atom, articleConfig)
+        val css: ArticleAtomRenderer.CSS = ArticleAtomRenderer.getCSS(atom.atom.atomType) // Option[String]
+        val js: ArticleAtomRenderer.JS = ArticleAtomRenderer.getJS(atom.atom.atomType)    // Option[String]
+        val html2: Html = views.html.fragments.atoms.audio(atom.id, Html(html1), css, js)
+        Ok(html2)
       }
+      case Left(atom: ChartAtom) =>
+        renderAtom(ChartAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: GuideAtom) =>
+        renderAtom(GuideAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: InteractiveAtom) =>
+        renderAtom(InteractiveAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: MediaAtom) =>
+        renderAtom(MediaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: ProfileAtom) =>
+        renderAtom(ProfileAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: QandaAtom) =>
+        renderAtom(QandaAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
+      case Left(atom: TimelineAtom) =>
+        renderAtom(TimelineAtomPage(atom, withJavaScript = isJsEnabled, withVerticalScrollbar = hasVerticalScrollbar))
       case Left(_) =>
         renderOther(NotFound)
       case Right(other) =>
@@ -109,16 +136,18 @@ class AtomPageController(contentApiClient: ContentApiClient, wsClient: WSClient,
   }
 
   def makeAtom(apiAtom: ItemResponse): Option[Atom] = {
-    apiAtom.media.map(atom => MediaAtom.make(atom = atom)) orElse
-    apiAtom.guide.map(atom => GuideAtom.make(atom))                             orElse
-    apiAtom.profile.map(atom => ProfileAtom.make(atom))                         orElse
-    apiAtom.qanda.map(atom => QandaAtom.make(atom))                             orElse
-    apiAtom.timeline.map(atom => TimelineAtom.make(atom))                       orElse
-    apiAtom.interactive.map(atom => InteractiveAtom.make(atom))                 orElse
+    apiAtom.audio.map(atom => AudioAtom.make(atom))               orElse
+    apiAtom.chart.map(atom => ChartAtom.make(atom))               orElse
+    apiAtom.guide.map(atom => GuideAtom.make(atom))               orElse
+    apiAtom.interactive.map(atom => InteractiveAtom.make(atom))   orElse
+    apiAtom.media.map(atom => MediaAtom.make(atom = atom))        orElse
+    apiAtom.profile.map(atom => ProfileAtom.make(atom))           orElse
+    apiAtom.qanda.map(atom => QandaAtom.make(atom))               orElse
+    apiAtom.timeline.map(atom => TimelineAtom.make(atom))         orElse
     /*
-    apiAtom.quiz.map(atom => Quiz.make(atom))                                   orElse
-    apiAtom.review.map(atom => RecipeAtom.make(atom))                           orElse
-    apiAtom.recipe.map(atom => ReviewAtom.make(atom))                           orElse
+    apiAtom.quiz.map(atom => Quiz.make(atom))                     orElse
+    apiAtom.review.map(atom => RecipeAtom.make(atom))             orElse
+    apiAtom.recipe.map(atom => ReviewAtom.make(atom))             orElse
     */
     None
   }

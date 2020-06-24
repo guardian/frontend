@@ -64,5 +64,5 @@ package object quiz {
     fields: Map[String, JsValue]
   )
 
-  def postUrl(quiz: model.content.Quiz): String = s"/atom/quiz/${quiz.id}/${quiz.path}"
+  def postUrl(quiz: model.content.QuizAtom): String = s"/atom/quiz/${quiz.id}/${quiz.path}"
 }

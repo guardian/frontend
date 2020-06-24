@@ -1,12 +1,14 @@
 .new-header__cta-bar {
-    position: absolute;
-    top: 30px;
-    left: $gs-gutter / 2;
-
     .hide-support-messaging &,
     .is-recent-contributor & {
         display: none;
     }
+}
+
+.new-header__cta-bar, .new-header__cta-bar-aus-moment {
+    position: absolute;
+    top: 30px;
+    left: $gs-gutter / 2;
 
     @include mq(mobileMedium) {
         top: 37px;
@@ -37,6 +39,33 @@
             display: none;
         }
     }
+}
+
+.new-header__cta-bar-aus-moment {
+    .js-aus-moment-header-supporter {
+        display: none;
+    }
+}
+
+.new-header__cta-bar-aus-moment {
+    .hide-support-messaging &,
+    .is-recent-contributor & {
+        .js-aus-moment-header-non-supporter {
+            display: none;
+        }
+        .js-aus-moment-header-supporter {
+            display: block;
+        }
+
+        .cta-bar__cta {
+            display: none;
+        }
+    }
+}
+
+.cta-bar__aus-moment-count {
+    color: $highlight-main;
+    font-weight: 700;
 }
 
 .cta-bar__text {

@@ -18,49 +18,42 @@ object DropdownMenus {
 
   val accountDropdownMenu: List[DropdownMenuItem] = List(
     DropdownMenuItem(
-      linkName = Some("comment activity"),
-      label = "Comments & replies",
-      classList = List("js-add-comment-activity-link"),
-      parentClassList = List("u-h","js-show-comment-activity")
+      href = Some(Configuration.id.mmaUrl),
+      linkName = Some("account overview"),
+      label = "Account overview",
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/public/edit"),
-      linkName = Some("edit profile"),
-      label = "Public profile",
+      href = Some(s"${Configuration.id.mmaUrl}/public-settings"),
+      linkName = Some("profile"),
+      label = "Profile",
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/account/edit"),
-      linkName = Some("account details"),
-      label = "Account details",
-    ),
-    DropdownMenuItem(
-      href = Some(s"${Configuration.id.url}/email-prefs"),
+      href = Some(s"${Configuration.id.mmaUrl}/email-prefs"),
       linkName = Some("email prefs"),
       label = "Emails & marketing"
     ),
     DropdownMenuItem(
-      href = Some(s"${Configuration.id.mmaUrl}/membership"),
-      linkName = Some("membership"),
-      label = "Membership",
+      href = Some(s"${Configuration.id.mmaUrl}/account-settings"),
+      linkName = Some("settings"),
+      label = "Settings",
+    ),
+    DropdownMenuItem(
+      href = Some(s"${Configuration.id.mmaUrl}/help"),
+      linkName = Some("help"),
+      label = "Help",
+    ),
+    DropdownMenuItem(
+      linkName = Some("comment activity"),
+      label = "Comments & replies",
+      classList = List("js-add-comment-activity-link"),
+      parentClassList = List("u-h","js-show-comment-activity"),
       divider = true,
-    ),
-    DropdownMenuItem(
-      href = Some(s"${Configuration.id.mmaUrl}/contributions"),
-      linkName = Some("contributions"),
-      label = "Contributions",
-    ),
-    DropdownMenuItem(
-      href = Some(s"${Configuration.id.mmaUrl}/subscriptions"),
-      linkName = Some("subscriptions"),
-      label = "Subscriptions",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.url}/signout"),
       linkName = Some("sign out"),
       label = "Sign out",
-      icon = Some(
-        "log-off"
-      ),
+      icon = Some("log-off"),
       divider = true,
     )
   )

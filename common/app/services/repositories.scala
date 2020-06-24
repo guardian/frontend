@@ -110,6 +110,7 @@ trait Index extends ConciergeRepository with Collections {
   ))
 
   def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
 
     val maybeSection = sectionsLookUp.get(path)
@@ -124,8 +125,28 @@ trait Index extends ConciergeRepository with Collections {
       */
     val queryPath = maybeSection.fold(path)(s => SectionTagLookUp.tagId(s.id))
 
+    // Old version
+    // val pageSize = IndexPagePagination.pageSize
+
+    /*
+       Current version [ March/April 20202 ] (Pascal)
+
+       During coronavirus news cycles some profiles had such a particular tag page
+       that the corresponding CAPI query used to make the RSS page was timing out.
+       I made this modification to handle one such profile "profile/helenasmith"
+       by reducing the page size.
+
+       If another profiles causes problem then just add it to the list.
+       This solution is efficient and avoid the arguably un-necessary pain of refactoring RSS.
+       This solution can be re-evaluated later
+    */
+    val exceptionalProfilePathsForRss = List("profile/helenasmith")
+    val isExceptionalProfileForRss = exceptionalProfilePathsForRss.contains(path)
+    val reducedPageSize = 5 // Determined through trial and error.
+    val pageSize = if (isRss && isExceptionalProfileForRss) reducedPageSize else IndexPagePagination.pageSize
+
     val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
-      .pageSize(IndexPagePagination.pageSize)
+      .pageSize(pageSize)
       .showFields(fields)
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse

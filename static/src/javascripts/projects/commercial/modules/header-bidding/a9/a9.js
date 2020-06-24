@@ -27,16 +27,20 @@ class A9AdUnit {
     }
 }
 
-let requestQueue: Promise<void> = Promise.resolve();
 let initialised: boolean = false;
+let requestQueue: Promise<void> = Promise.resolve();
+
 const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
     onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        // typeof state === 'boolean' means CCPA mode is on
+        const canRun =
+            typeof state === 'boolean'
+                ? !state
+                : state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!initialised && consentState) {
+        if (!initialised && canRun) {
             initialised = true;
             window.apstag.init({
                 pubID: config.get('page.a9PublisherId'),
@@ -92,4 +96,11 @@ const requestBids = (
 export default {
     initialise,
     requestBids,
+};
+
+export const _ = {
+    resetModule: () => {
+        initialised = false;
+        requestQueue = Promise.resolve();
+    },
 };

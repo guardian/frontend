@@ -30,8 +30,6 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
-import { commercialGptPath } from 'common/modules/experiments/tests/commercial-gpt-path';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 initMessenger(
     type,
@@ -105,21 +103,31 @@ export const init = (): Promise<void> => {
         );
 
         onIabConsentNotification(state => {
-            const npaFlag = Object.values(state).includes(false);
-
-            window.googletag.cmd.push(() => {
-                window.googletag
-                    .pubads()
-                    .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-            });
+            // typeof state === 'boolean' means CCPA mode is on
+            if (typeof state === 'boolean') {
+                window.googletag.cmd.push(() => {
+                    window.googletag.pubads().setPrivacySettings({
+                        restrictDataProcessing: state,
+                    });
+                });
+            } else {
+                const npaFlag = Object.values(state).includes(false);
+                window.googletag.cmd.push(() => {
+                    window.googletag
+                        .pubads()
+                        .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+                });
+            }
         });
 
-        const gptPath = isInVariantSynchronous(commercialGptPath, 'variant')
-            ? '//securepubads.g.doubleclick.net/tag/js/gpt.js'
-            : config.get('libs.googletag');
-
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(gptPath, { async: false });
+        return loadScript(
+            config.get(
+                'libs.googletag',
+                '//www.googletagservices.com/tag/js/gpt.js'
+            ),
+            { async: false }
+        );
     };
 
     if (commercialFeatures.dfpAdvertising) {

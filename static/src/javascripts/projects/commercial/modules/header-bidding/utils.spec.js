@@ -6,11 +6,10 @@ import {
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
 import config from 'lib/config';
+import { _} from "common/modules/commercial/geo-utils";
 import {
     getLargestSize,
     getBreakpointKey,
-    isInRowRegion,
-    isInUkRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
@@ -70,6 +69,7 @@ const resetConfig = () => {
 describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
+        _.resetModule();
         resetConfig();
     });
 
@@ -276,35 +276,6 @@ describe('Utils', () => {
         expect(result).toEqual({
             testString: 'non empty string',
         });
-    });
-
-    test('isInUkRegion should return true if geolocation is GB', () => {
-        getSync.mockReturnValue('GB');
-        expect(isInUkRegion()).toBe(true);
-    });
-
-    test('isInUkRegion should return false if geolocation is not GB', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInUkRegion()).toBe(false);
-        }
-    });
-
-    test('isInRowRegion should return false if geolocation is GB, US, CA, AU or NZ', () => {
-        const testGeos = ['GB', 'US', 'CA', 'AU', 'NZ'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInRowRegion()).toBe(false);
-        }
-    });
-
-    test('isInRowRegion should return true if geolocation is not GB, US, CA, AU or NZ', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInRowRegion()).toBe(true);
-        }
     });
 
     ['US', 'CA', 'AU', 'NZ'].forEach(region => {

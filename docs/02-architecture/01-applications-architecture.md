@@ -79,7 +79,7 @@ Discussion app is responsible to serve all content related to article comments:
 [All supported routes](https://github.com/guardian/frontend/blob/master/discussion/conf/routes)
 
 # Commercial
-Commercial app serves all commercial components (Travel offers, Masterclasses, Soulmates, Money, Book, Live events or Hosted content).
+Commercial app serves all commercial components (Travel offers, Masterclasses, Money, Book, Live events or Hosted content).
 
 [All supported routes](https://github.com/guardian/frontend/blob/master/commercial/conf/routes)
 

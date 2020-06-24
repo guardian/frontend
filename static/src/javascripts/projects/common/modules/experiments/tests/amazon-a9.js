@@ -3,7 +3,7 @@
 export const amazonA9Test: ABTest = {
     id: 'CommercialA9',
     start: '2019-05-09',
-    expiry: '2020-04-09',
+    expiry: '2020-07-01',
     author: 'Ioanna Kyprianou',
     description: 'This is to test amazon a9 header bidding',
     audience: 0.01,
@@ -12,6 +12,7 @@ export const amazonA9Test: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'Amazon a9 successfully run in parallel with prebid',
+    showForSensitive: false,
     canRun: () => true,
     variants: [
         {

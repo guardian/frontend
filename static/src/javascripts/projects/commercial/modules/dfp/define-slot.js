@@ -5,7 +5,6 @@ import { breakpoints } from 'lib/detect';
 import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
-import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
 import type { Slot } from 'commercial/types';
 
 const adUnit = once(() => {
@@ -53,19 +52,6 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
-// The high-merch slot targeting requires Promise-based data about the page.
-const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
-    if (!['merchandising-high', 'merchandising'].includes(slotTarget)) {
-        return Promise.resolve();
-    }
-
-    return getOutbrainComplianceTargeting().then(keyValues => {
-        keyValues.forEach((value, key) => {
-            slot.setTargeting(key, value);
-        });
-    });
-};
-
 const adomikClassify = (): string => {
     const rand = Math.random();
 
@@ -97,13 +83,12 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
     const sizeOpts = getSizeOpts(sizes);
     const id = adSlotNode.id;
     let slot;
-    let slotReady;
+    let slotReady = Promise.resolve();
 
     if (adSlotNode.getAttribute('data-out-of-page')) {
         slot = window.googletag
             .defineOutOfPageSlot(adUnit(), id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = Promise.resolve();
     } else {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
@@ -111,7 +96,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         if (isEligibleForOutstream(slotTarget)) {
             allowSafeFrameToExpand(slot);
         }
-        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
     /*
@@ -204,11 +188,8 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 timeoutId = setTimeout(resolve, iasTimeoutDuration);
             });
 
-        slotReady = slotReady.then(() =>
-            Promise.race([iasTimeout(), iasDataPromise])
-        );
+        slotReady = Promise.race([iasTimeout(), iasDataPromise]);
     }
-
     const isBn = config.get('page.isbn');
 
     if (slotTarget === 'im' && isBn) {

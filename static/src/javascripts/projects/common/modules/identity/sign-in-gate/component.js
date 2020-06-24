@@ -4,7 +4,9 @@
 export const componentName = 'sign-in-gate';
 
 // set the ophan component tracking vars
-export const component: OphanComponent = {
+export const withComponentId: (id: string) => OphanComponent = (
+    id: string = ''
+) => ({
     componentType: 'SIGN_IN_GATE',
-    id: 'tertius_test',
-};
+    id,
+});

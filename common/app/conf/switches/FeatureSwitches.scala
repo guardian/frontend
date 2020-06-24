@@ -57,22 +57,12 @@ trait FeatureSwitches {
     exposeClientSide = false
   )
 
-  val OutbrainSwitch = Switch(
+  val PlistaForAU = Switch(
     SwitchGroup.Feature,
-    "outbrain",
-    "Enable the Outbrain content recommendation widget on web and AMP.",
-    owners = Seq(Owner.withGithub("johnduffell")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val PlistaForOutbrainAU = Switch(
-    SwitchGroup.Feature,
-    "plista-for-outbrain-au",
-    "Enable the Plista content recommendation widget to replace that of Outbrain for AU edition (for web only).",
-    owners = Seq(Owner.withGithub("JonNorman")),
-    safeState = Off,
+    "plista-for-au",
+    "Enable the Plista content recommendation widget in Australia",
+    owners = group(Commercial),
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true
   )
@@ -195,16 +185,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
-  )
-
-  val VideoJSSwitch = Switch(
-    SwitchGroup.Feature,
-    "videojs",
-    "If this is switched on then videos are enhanced using VideoJS",
-    owners = Seq(Owner.withGithub("gtrufitt")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 3, 31),
     exposeClientSide = true
   )
 
@@ -473,4 +453,65 @@ trait FeatureSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val vodafoneEmailHack = Switch(
+    SwitchGroup.Feature,
+    "vodafone-email-hack",
+    "If on, will use smaller heading font for Vodafone slogan title on email fronts. This is to keep it from introducing horizontal scrolling at the mobile breakpoint. We can remove this once their campaign is over. Editorial owner is celine.bijleveld.",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = On,
+    sellByDate = new LocalDate(2020, 8, 11),
+    exposeClientSide = false,
+  )
+
+  val contributionReminder = Switch(
+    SwitchGroup.Feature,
+    "show-contribution-reminder",
+    "This toggles the contribution reminder",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 8, 25), //Cut off 1 week before September
+    exposeClientSide = true
+  )
+
+  val articlesViewedOptOut = Switch(
+    SwitchGroup.Feature,
+    "show-articles-viewed-opt-out",
+    "This toggles the articles viewed count opt out in the epic",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 6, 15),
+    exposeClientSide = true
+  )
+
+  val discountCodeLinks = Switch(
+    SwitchGroup.Feature,
+    "discount-code-site-links",
+    "This switch is a reminder to remove discount code site links from the nav and footer when no longer needed. It does not control any behaviour.",
+    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 8),
+    exposeClientSide = true
+  )
+
+  val ausMoment2020Header = Switch(
+    SwitchGroup.Feature,
+    "aus-moment-2020-header",
+    "Enables the Aus moment special header",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 8, 3),
+    exposeClientSide = true
+  )
+
+  val remoteBanner = Switch(
+    SwitchGroup.Feature,
+    "remote-banner",
+    "Enables the banner fetched from contributions-service",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 8, 3),
+    exposeClientSide = true
+  )
+
 }

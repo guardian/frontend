@@ -172,15 +172,8 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            // Old VideoJS player
             fastdom
-                .read(() =>
-                    qwery(
-                        `${
-                            config.get('switches.videojs') ? 'video, ' : ''
-                        } audio`
-                    )
-                )
+                .read(() => qwery('audio'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -198,25 +191,23 @@ const bootEnhanced = (): void => {
                 });
 
             // Native video player enhancements
-            if (!config.get('switches.videojs')) {
-                fastdom
-                    .read(() => qwery('video'))
-                    .then(els => {
-                        if (els.length) {
-                            require.ensure(
-                                [],
-                                require => {
-                                    bootstrapContext(
-                                        'video-player',
-                                        require('bootstraps/enhanced/video-player')
-                                            .initVideoPlayer
-                                    );
-                                },
-                                'video-player'
-                            );
-                        }
-                    });
-            }
+            fastdom
+                .read(() => qwery('video'))
+                .then(els => {
+                    if (els.length) {
+                        require.ensure(
+                            [],
+                            require => {
+                                bootstrapContext(
+                                    'video-player',
+                                    require('bootstraps/enhanced/video-player')
+                                        .initVideoPlayer
+                                );
+                            },
+                            'video-player'
+                        );
+                    }
+                });
 
             if (config.get('page.contentType') === 'Gallery') {
                 require.ensure(

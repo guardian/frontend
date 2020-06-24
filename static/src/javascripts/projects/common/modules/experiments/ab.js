@@ -36,12 +36,16 @@ import {
     compareVariantDecision,
     getViewLog,
     getWeeklyArticleHistory,
-} from '@guardian/slot-machine-client';
+} from '@guardian/automat-client';
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldNotBeShownSupportMessaging,
 } from 'common/modules/commercial/user-features';
+import {
+    automatLog,
+    logAutomatEvent,
+} from 'common/modules/experiments/automatLog';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
@@ -55,7 +59,7 @@ const buildKeywordTags = page => {
 };
 
 export const getEpicTestToRun = memoize(
-    (): Promise<?Runnable<EpicABTest>> => {
+    (): Promise<?Runnable<ABTest>> => {
         const highPriorityHardCodedTests = hardCodedEpicTests.filter(
             test => test.highPriority
         );
@@ -65,6 +69,13 @@ export const getEpicTestToRun = memoize(
 
         if (config.get('switches.useConfiguredEpicTests')) {
             return getConfiguredEpicTests().then(configuredEpicTests => {
+                // We want to confirm that the epic tests are getting loaded as we see a
+                // lot of cases where we suspect they are not.
+                logAutomatEvent({
+                    key: 'testIDs',
+                    value: configuredEpicTests.map(test => test.id),
+                });
+
                 configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
@@ -76,7 +87,7 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
-                const result = firstRunnableTest<EpicABTest>([
+                const result = firstRunnableTest<AcquisitionsABTest>([
                     hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
@@ -86,10 +97,13 @@ export const getEpicTestToRun = memoize(
 
                 const page = config.get('page');
 
-                // No point in going forward with variant comparison unless
-                // we're in an Article (excludes e.g. live blogs which aren't
-                // supported yet)
-                if (page.contentType !== 'Article') {
+                // No point in going forward with variant comparison in
+                // these cases
+                if (
+                    page.contentType !== 'Article' ||
+                    configuredEpicTests.length === 0 ||
+                    (result && result.id !== 'RemoteEpicVariants')
+                ) {
                     return result;
                 }
 
@@ -106,8 +120,10 @@ export const getEpicTestToRun = memoize(
                                 sectionName: page.section,
                                 shouldHideReaderRevenue:
                                     page.shouldHideReaderRevenue,
-                                isMinuteArticle: config.hasTone('Minute'),
-                                isPaidContent: page.isPaidContent,
+                                isMinuteArticle: page.isMinuteArticle,
+                                isPaidContent:
+                                    page.sponsorshipType === 'paid-content',
+                                isSensitive: page.isSensitive,
                                 tags: buildKeywordTags(page),
                                 countryCode,
                                 showSupportMessaging: !shouldNotBeShownSupportMessaging(),
@@ -121,6 +137,11 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
+                            expectedCampaignId: result ? result.campaignId  : '',
+                            expectedCampaignCode: result
+                                ? result.variantToRun.campaignCode
+                                : '',
+                            frontendLog: automatLog,
                         });
                     }
                 }
@@ -128,8 +149,9 @@ export const getEpicTestToRun = memoize(
                 return result;
             });
         }
+
         return Promise.resolve(
-            firstRunnableTest<EpicABTest>([
+            firstRunnableTest<ABTest>([
                 hardCodedPriorityEpicTest,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,

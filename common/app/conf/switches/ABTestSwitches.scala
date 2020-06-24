@@ -8,16 +8,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-epic-precontribution-reminder-round-two",
-    "Test the effect of the reminder on conversion rate",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -31,6 +21,26 @@ trait ABTestSwitches {
     "ab-contributions-banner-articles-viewed",
     "show number of articles viewed in contributions banner",
     owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-banner-articles-viewed-opt-out",
+    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
+    owners = Seq(Owner.withGithub("michaelbjacobson")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 11, 27),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-contributions-covid-banner-round-two",
+    "Covid crisis",
+    owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
@@ -92,7 +102,17 @@ trait ABTestSwitches {
     "Test Amazon A9 header bidding",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 4),
+    sellByDate = new LocalDate(2020, 7, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-commercial-redplanet",
+    "Test Redplanet",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 10, 1),
     exposeClientSide = true
   )
 
@@ -108,41 +128,52 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remote-render-epic-round-two",
-    "A/B test local vs remote render of default epic, to validate Slot Machine approach and work to date",
-    owners = Seq(Owner.withGithub("tjmw"), Owner.withGithub("nicl")),
+    "ab-sign-in-gate-patientia",
+    "Marathon sign in gate test on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 2),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-tertius",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    "ab-sign-in-gate-vii",
+    "Test new design on 3rd article view",
+    owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 1),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-frontend-dotcom-rendering-epic",
-    "A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance",
-    owners = Seq(Owner.withGithub("andre1050")),
+    "ab-sign-in-gate-centesimus",
+    "Show sign in gate to 100% of users on 3rd article view",
+    owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 13),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
   )
 
   Switch(
     ABTests,
-    "ab-commercial-gpt-path",
-    "0% a/b test for new gpt.js path",
-    owners = Seq(Owner.withGithub("GHaberis")),
+    "ab-amp-zero-test-experiment",
+    "A/B test to test amp-experiment tag functionality on prod",
+    owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 27),
+    sellByDate = new LocalDate(2020, 8, 3),
     exposeClientSide = true
   )
+
+  Switch(
+    ABTests,
+    "ab-remote-epic-variants",
+    "Serve epics from remote service for subset of audience",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 7, 1),
+    exposeClientSide = true,
+  )
+
 }

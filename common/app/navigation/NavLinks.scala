@@ -185,7 +185,6 @@ private object NavLinks {
   val pictures = NavLink("Pictures", "/inpictures")
   val newsletters = NavLink("Newsletters", "/email-newsletters")
   val jobs = NavLink("Search jobs", "https://jobs.theguardian.com")
-  val dating = NavLink("Dating", "https://soulmates.theguardian.com")
   val apps = NavLink("The Guardian app", "https://www.theguardian.com/mobile/2014/may/29/the-guardian-for-mobile-and-tablet")
   val ukMasterClasses = NavLink("Masterclasses", "/guardian-masterclasses")
   val printShop = NavLink("Guardian Print Shop", "/artanddesign/series/gnm-print-sales")
@@ -196,6 +195,7 @@ private object NavLinks {
   val discountCoupons = NavLink("Coupons", s"https://discountcode.theguardian.com", classList = Seq("js-discount-code-link")) // this gets manipulated client side in navigation.js
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
+  val jobsRecruiter = NavLink("Hire with Guardian Jobs" , "https://recruiters.theguardian.com/?utm_source=gdnwb&utm_medium=navbar&utm_campaign=Guardian_Navbar_Recruiters&CMP_TU=trdmkt&CMP_BUNIT=jobs")
   val guardianMasterClasses = NavLink("Guardian Masterclasses", "/guardian-masterclasses",
     children = List(
       NavLink("Journalism", "/guardian-masterclasses/journalism"),
@@ -515,7 +515,7 @@ private object NavLinks {
 
   val ukBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_uk_web_newheader_dropdown"),
-    dating.copy(url = dating.url + "?INTCMP=soulmates_uk_web_newheader_dropdown"),
+    jobsRecruiter,
     holidays.copy(url = holidays.url + "?INTCMP=holidays_uk_web_newheader"),
     guardianLive,
     ukMasterClasses,
@@ -539,7 +539,6 @@ private object NavLinks {
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
-    dating.copy(url = dating.url + "?INTCMP=soulmates_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
     discountCodes,
@@ -704,4 +703,3 @@ case class NavigationData (
   tagPages: List[String] = NavLinks.tagPages
 
 )
-

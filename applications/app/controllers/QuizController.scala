@@ -4,7 +4,7 @@ import common._
 import conf.Configuration
 import contentapi.ContentApiClient
 import model._
-import model.content.{Atoms, Quiz}
+import model.content.{Atoms, QuizAtom}
 import pages.ContentHtmlPage
 import play.api.mvc._
 import quiz.form
@@ -15,7 +15,7 @@ import scala.concurrent.Future
 case class QuizAnswersPage(
   inputs: form.Inputs,
   contentPage: String,
-  quiz: Quiz) extends model.StandalonePage {
+  quiz: QuizAtom) extends model.StandalonePage {
   override val metadata = MetaData.make("quiz atom", Some(SectionId.fromId("quizzes")), quiz.title)
 
   val results: form.QuizResults = form.checkUsersAnswers(inputs, quiz)

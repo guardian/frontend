@@ -15,6 +15,10 @@ import { runnableTestsToParticipations } from 'common/modules/experiments/ab-uti
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
 
+jest.mock('common/modules/experiments/ab', () => ({
+    logAutomatEvent: () => {},
+}));
+
 /* eslint guardian-frontend/global-config: "off" */
 /* eslint guardian-frontend/no-direct-access-config: "off" */
 const cfg = window.guardian.config;

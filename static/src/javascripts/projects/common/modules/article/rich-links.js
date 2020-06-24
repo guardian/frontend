@@ -126,11 +126,7 @@ const getSpacefinderRules = (): SpacefinderRules => ({
                 ? 200
                 : 0,
             minBelow: 0,
-        },
-        '.js-article__body--type-numbered-list > h2': {
-            minAbove: 100,
-            minBelow: 200,
-        },
+        }
     },
 });
 
@@ -149,12 +145,16 @@ const insertTagRichLink = (): Promise<void> => {
     const isSensitive: boolean =
         config.get('page.shouldHideAdverts') ||
         !config.get('page.showRelatedContent');
+    // Richlinks are just generally unhappy in numbered list articles
+    // Example https://theguardian.com/environment/2020/jun/19/why-you-should-go-animal-free-arguments-in-favour-of-meat-eating-debunked-plant-based
+    const isNumberedListArticle = document.querySelectorAll('.js-article__body--type-numbered-list').length > 0;
 
     if (
         config.get('page.richLink') &&
         !config.get('page.richLink').includes(config.get('page.pageId')) &&
         !isSensitive &&
-        !isDuplicate
+        !isDuplicate &&
+        !isNumberedListArticle
     ) {
         return spaceFiller
             .fillSpace(getSpacefinderRules(), (paras: HTMLElement[]) => {

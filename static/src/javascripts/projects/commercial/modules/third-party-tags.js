@@ -11,7 +11,7 @@ import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { permutive } from 'commercial/modules/third-party-tags/permutive';
-import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
 import {
@@ -68,10 +68,13 @@ const insertScripts = (
     });
 
     onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        // typeof state === 'boolean' means CCPA mode is on
+        const canRun =
+            typeof state === 'boolean'
+                ? !state
+                : state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (!advertisingScriptsInserted && consentState) {
+        if (!advertisingScriptsInserted && canRun) {
             addScripts(advertisingServices);
             advertisingScriptsInserted = true;
         }
@@ -110,7 +113,7 @@ const init = (): Promise<boolean> => {
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        initPlistaOutbrainRenderer();
+        initPlistaRenderer();
     }
 
     loadOther();

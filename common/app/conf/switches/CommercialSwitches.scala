@@ -208,16 +208,6 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
-  val SoulmatesFeedSwitch = Switch(
-    SwitchGroup.CommercialFeeds,
-    "gu-soulmates",
-    "If this switch is on, commercial components will be fed by soulmates feed.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = false
-  )
-
   val GuBookshopFeedsSwitch = Switch(
     SwitchGroup.CommercialFeeds,
     "gu-bookshop",
@@ -388,6 +378,15 @@ trait CommercialSwitches {
     exposeClientSide = false
   )
 
+  val redplanetForAUSSwitch: Switch = Switch(
+    group = CommercialPrebid,
+    name = "redplanet-for-aus",
+    description = "Turn on Redplanet in AUS",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
 }
 
 trait PrebidSwitches {

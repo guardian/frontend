@@ -39,13 +39,13 @@ import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-pr
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
-import { subscriptionBanner } from 'common/modules/ui/subscription-banner';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
+import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
@@ -60,6 +60,7 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
+import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -307,6 +308,7 @@ const initialiseBanner = (): void => {
         consentManagementPlatformUi,
         breakingNews,
         signInGate,
+        readerRevenueBanner,
         membershipBanner,
         membershipEngagementBanner,
         subscriptionBanner,

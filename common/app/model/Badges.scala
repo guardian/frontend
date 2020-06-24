@@ -69,12 +69,16 @@ object Badges {
   val ukElection2019 = Badge("politics/general-election-2019", Static("images/badges/ge2019-badge.svg"))
   val lostInPolitics = Badge("politics/series/lost-in-politics", Static("images/badges/lost-in-politics-badge.svg"))
   val thisIsEurope = Badge("world/series/this-is-europe", Static("images/badges/this-is-europe.svg"))
+  val coronavirus = Badge("world/series/coronavirus-100-days-that-changed-the-world", Static("images/badges/corona-badge.svg"))
+  val auGreenRecovery = Badge("australia-news/series/the-green-recovery", Static("images/badges/green-recovery.svg"))
+  val greenRecovery = Badge("environment/series/the-green-recovery", Static("images/badges/green-recovery.svg"))
+  val culturePeril = Badge("culture/series/culture-in-peril", Static("images/badges/culture-badge.svg"))
 
   val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
     brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport,
     nhs70, cricketWorldCup, womensWorldCup, greenBlood, usElections2020, ausElection, midterm, theNewPopulism,
     theImplantFiles, theRealBorisJohnson, johnsonsPromises, rugbyWorldCup, behindTheLines, theEmptyDoorway, yemenAtWar,
-    thePolluters, youthJustice, ukElection2019, lostInPolitics, thisIsEurope)
+    thePolluters, youthJustice, ukElection2019, lostInPolitics, thisIsEurope, coronavirus, auGreenRecovery, greenRecovery, culturePeril)
 
   def badgeFor(c: ContentType): Option[Badge] = {
     badgeForTags(c.tags.tags.map(_.id))

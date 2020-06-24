@@ -29,8 +29,8 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
 
   private def customFields: List[LogField] = DotcomponentsLoggerFields(request).customFields
 
-  def fieldsFromResults(results: Map[String, Boolean]):List[LogField] =
-    results.map({ case (k, v) => LogFieldString(k, v.toString)}).toList
+  def fieldsFromResults(results: Map[String, String]):List[LogField] =
+    results.map({ case (k, v) => LogFieldString(k, v)}).toList
 
   def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] = List(
     LogFieldString(
@@ -52,7 +52,7 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
   }
 
 
-  def results(message: String, results: Map[String, Boolean], page: PageWithStoryPackage): Unit = {
+  def results(message: String, results: Map[String, String], page: PageWithStoryPackage): Unit = {
     logInfoWithCustomFields(message, customFields ++ fieldsFromResults(results) ++ elementsLogFieldFromPage(page))
   }
 

@@ -82,7 +82,7 @@ const enableMegaNavToggle = (): void => {
 const getDiscountCodePath = (path: string): string => {
     const firstPart = path.split('/')[1];
     if (firstPart === 'us' || firstPart === 'us-news') {
-        return 'us';
+        return 'uk'; // Send US -> UK for now as requested. All these sites should be decommissioned soon anyway.
     } else if (firstPart === 'uk' || firstPart === 'uk-news') {
         return 'uk';
     } else if (firstPart === 'au' || firstPart === 'australia-news') {

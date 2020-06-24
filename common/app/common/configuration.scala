@@ -155,6 +155,10 @@ class GuardianConfiguration extends Logging {
     lazy val circuitBreakerMaxFailures = 10 // we should increase this as DCR sees increasing usage
   }
 
+  object contributionsService {
+    lazy val url = configuration.getMandatoryStringProperty("contributionsService.url")
+  }
+
   object weather {
     lazy val apiKey = configuration.getStringProperty("weather.api.key")
   }
@@ -239,7 +243,7 @@ class GuardianConfiguration extends Logging {
   }
 
   object googletag {
-    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//www.googletagservices.com/tag/js/gpt.js")
+    lazy val jsLocation = configuration.getStringProperty("googletag.js.location").getOrElse("//securepubads.g.doubleclick.net/tag/js/gpt.js")
   }
 
   // Amazon A9 APS Transparent Ad Marketplace library

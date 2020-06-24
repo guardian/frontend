@@ -13,7 +13,7 @@
     <div class="identity-forms-email-wrap">
         <header>@user.primaryEmailAddress</header>
         <aside>
-            Is the email not correct? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.redirectToAccountSettings.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
+            Not the right email? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.redirectToAccountSettings.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
         </aside>
     </div>
 }
@@ -28,7 +28,7 @@
         @emailBlock
         <div class="identity-forms-message__body">
             @if(isSignupFlow) {
-                <p>We've sent you an email – please open it up and click on the button. This is so we can verify it's you and help you create a password to complete your Guardian account.</p>
+                <p>We've sent you an email – please open it up and click on the verify button to confirm your email address.</p>
             } else {
                 <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
             }

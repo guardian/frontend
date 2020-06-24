@@ -37,10 +37,11 @@ type PageTargeting = {
     tn: string,
     slot: string,
     permutive: string,
+    urlkw: string,
 };
 
 let myPageTargetting: {} = {};
-let latestConsentState;
+let latestConsentCanRun;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -161,6 +162,15 @@ const getWhitelistedQueryParams = (): {} => {
     return pick(getUrlVars(), whiteList);
 };
 
+const getUrlKeywords = (pageId: string): Array<string> => {
+    if (pageId) {
+        const segments = pageId.split('/');
+        const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
+        return lastPathname.split('-');
+    }
+    return [];
+};
+
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     flattenDeep(
         Object.keys(obj)
@@ -201,8 +211,16 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
+const getRdpValue = (ccpaState: boolean | null): string => {
+    if (ccpaState === null) {
+        return 'na';
+    }
+    return ccpaState ? 't' : 'f';
+};
+
 const buildPageTargetting = (
-    adConsentState: boolean | null
+    adConsentState: boolean | null,
+    ccpaState: boolean | null
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -244,6 +262,8 @@ const buildPageTargetting = (
             // validating ad performance on DCR (against DCR eligible pages)
             // and can be decomissioned after Pascal and D&I no longer need the flag.
             inskin: inskinTargetting(),
+            urlkw: getUrlKeywords(page.pageId),
+            rdp: getRdpValue(ccpaState),
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -272,12 +292,16 @@ const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
     onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        // typeof state === 'boolean' means CCPA mode is on
+        const canRun =
+            typeof state === 'boolean'
+                ? !state
+                : state[1] && state[2] && state[3] && state[4] && state[5];
 
-        if (consentState !== latestConsentState) {
-            myPageTargetting = buildPageTargetting(consentState);
-            latestConsentState = consentState;
+        if (canRun !== latestConsentCanRun) {
+            const ccpaState = typeof state === 'boolean' ? state : null;
+            myPageTargetting = buildPageTargetting(canRun, ccpaState);
+            latestConsentCanRun = canRun;
         }
     });
 
@@ -286,7 +310,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
 const resetPageTargeting = (): void => {
     myPageTargetting = {};
-    latestConsentState = undefined;
+    latestConsentCanRun = undefined;
 };
 
 export {

@@ -1,0 +1,50 @@
+@import common.InlineJs
+@import model.content.ChartAtom
+@import templates.inlineJS.nonBlocking.js.{interactiveFonts, interactiveResize}
+@import play.twirl.api.HtmlFormat
+
+@(chart: ChartAtom, shouldFence: Boolean)(implicit context: model.ApplicationContext)
+
+@iframeBody = {
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="utf-8">
+            <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+            <script>
+                @InlineJs(interactiveFonts().body, "interactiveFonts.js")
+            </script>
+            <style>
+                @HtmlFormat.raw(chart.css)
+            </style>
+        </head>
+        <body>
+            @HtmlFormat.raw(chart.html)
+
+            @for(js <- chart.mainJS) {
+                <script>
+                    @HtmlFormat.raw(js)
+                </script>
+            }
+            <script>
+                @InlineJs(interactiveResize().body, "interactiveResize.js")
+            </script>
+        </body>
+    </html>
+}
+
+@if(shouldFence) {
+    <iframe class="interactive-atom-fence" srcdoc="@iframeBody.toString"></iframe>
+} else {
+    <figure class="interactive interactive-atom">
+        <style>
+            @HtmlFormat.raw(chart.css)
+        </style>
+        @HtmlFormat.raw(chart.html)
+        @for(js <- chart.mainJS) {
+            <script>
+                @HtmlFormat.raw(js)
+            </script>
+        }
+    </figure>
+}

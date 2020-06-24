@@ -3,6 +3,11 @@
 @import views.html.fragments.langAttributes
 @import views.support.ContributorLinks
 @import views.support.TrailCssClasses.toneClass
+@import views.support.ContentOldAgeDescriber
+
+@ageNotice() = @{
+    ContentOldAgeDescriber(article.content)
+}
 
 <header class="content__head content__head--article tonal__head tonal__head--@toneClass(article)
     @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) { content__head--byline-pic}">
@@ -11,10 +16,17 @@
 
     <div class="content__header tonal__header">
         <div class="u-cf">
+            @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
+                @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
+            }
 
             <h1 class="content__headline @if(article.content.hasTonalHeaderByline) {content__headline--no-margin-bottom}" articleprop="headline" @langAttributes(article.content)>
                 @Html(article.trail.headline)
             </h1>
+
+            @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
+                @fragments.contentAgeNotice(ageNotice, isHidden = true)
+            }
 
             @if(article.content.hasTonalHeaderByline && article.tags.hasLargeContributorImage) {
                 @fragments.meta.bylineImage(article.tags)

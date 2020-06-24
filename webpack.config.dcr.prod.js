@@ -12,8 +12,8 @@ const config = require('./webpack.config.dcr.js');
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
     output: {
-        filename: `[chunkhash]/graun.[name].js`,
-        chunkFilename: `[chunkhash]/graun.[name].js`,
+        filename: `[chunkhash]/graun.[name].dcr.js`,
+        chunkFilename: `[chunkhash]/graun.[name].dcr.js`,
     },
     devtool: 'source-map',
     plugins: [

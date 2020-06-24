@@ -1,12 +1,14 @@
 // @flow
 
-import a9 from 'commercial/modules/header-bidding/a9/a9';
+import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
 import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 
 const onIabConsentNotification: any = onIabConsentNotification_;
 
-const trueConsentMock = (callback): void =>
+const TcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
+
+const CcpaWithConsentMock = (callback): void => callback(false);
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>
@@ -27,6 +29,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 beforeEach(async () => {
     jest.resetModules();
+    _.resetModule();
     window.apstag = {
         init: jest.fn(),
         fetchBids: jest.fn().mockImplementation(() => Promise.resolve([])),
@@ -39,8 +42,15 @@ afterAll(() => {
 });
 
 describe('initialise', () => {
-    it('should generate initialise A9 library', () => {
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+    it('should generate initialise A9 library when TCF consent has been given', () => {
+        onIabConsentNotification.mockImplementation(TcfWithConsentMock);
+        a9.initialise();
+        expect(window.apstag).toBeDefined();
+        expect(window.apstag.init).toHaveBeenCalled();
+    });
+
+    it('should generate initialise A9 library when CCPA consent has been given', () => {
+        onIabConsentNotification.mockImplementation(CcpaWithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();

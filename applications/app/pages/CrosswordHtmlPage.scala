@@ -9,14 +9,14 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import crosswords.{AccessibleCrosswordPage, CrosswordPage, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults}
 import views.html.fragments._
-import crosswords.{accessibleCrosswordContent, crosswordContent, crosswordNoResult, crosswordSearch, printableCrosswordBody}
+import crosswords._
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
-import views.html.fragments.page.head.{fixIEReferenceErrors, headTag, titleTag, weAreHiring}
+import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
@@ -48,6 +48,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       bodyTag(classes = defaultBodyClasses)(
@@ -80,6 +81,7 @@ object PrintableCrosswordHtmlPage extends HtmlPage[CrosswordPageWithSvg] {
         metaData(),
         styles(CrosswordHtmlPage.allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking()
       ),
       printableCrosswordBody()

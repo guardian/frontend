@@ -1,10 +1,14 @@
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import type { TickerSettings } from 'common/modules/commercial/ticker';
 
 type ListenerFunction = (f: () => void) => void;
 
-declare type EpicCta = {url: string, ctaText: string};
+declare type EpicCta = { url: string, ctaText: string };
 
-declare type EpicTemplate = (EpicVariant, AcquisitionsEpicTemplateCopy) => string;
+declare type EpicTemplate = (
+    EpicVariant,
+    AcquisitionsEpicTemplateCopy
+) => string;
 
 declare type Variant = {
     id: string,
@@ -14,7 +18,6 @@ declare type Variant = {
     impression?: ListenerFunction,
     success?: ListenerFunction,
     engagementBannerParams?: EngagementBannerTestParams,
-    deploymentRules?: DeploymentRules,
 };
 
 declare type EpicVariant = Variant & {
@@ -29,15 +32,20 @@ declare type EpicVariant = Variant & {
     componentName: string,
     template: EpicTemplate,
     classNames: string[],
-    showTicker: boolean,
+    showTicker?: boolean,    // Deprecated, use tickerSettings instead
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
 
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
+    buttonTemplate?: (
+        primaryCta: EpicCta,
+        secondaryCta?: EpicCta,
+        reminderCta?: ReminderFields
+    ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
     backgroundImageUrl?: string,
-}
+};
 
 declare type ABTest = {
     id: string,
@@ -49,16 +57,17 @@ declare type ABTest = {
     audienceOffset: number,
     successMeasure: string,
     audienceCriteria: string,
-    showForSensitive?: boolean,
+    showForSensitive: boolean,
     idealOutcome?: string,
     dataLinkNames?: string,
+    ophanComponentId?: string,
     variants: $ReadOnlyArray<Variant>,
     canRun: () => boolean,
     notInTest?: () => void,
 };
 
 declare type Runnable<T: ABTest> = T & {
-    variantToRun: Variant;
+    variantToRun: Variant,
 };
 
 declare type AcquisitionsABTest = ABTest & {
@@ -77,9 +86,9 @@ declare type ArticlesViewedSettings = {
     minViews?: number,
     maxViews?: number,
     count: number,
-}
+};
 
-declare type DeploymentRules = 'AlwaysAsk' | MaxViews
+declare type DeploymentRules = 'AlwaysAsk' | MaxViews;
 
 declare type EpicABTest = AcquisitionsABTest & {
     campaignPrefix: string,
@@ -90,34 +99,40 @@ declare type EpicABTest = AcquisitionsABTest & {
     insertEvent: string,
     viewEvent: string,
     highPriority: boolean,
+    deploymentRules: DeploymentRules,
 };
 
 declare type InitEpicABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
     test?: (html: string, variant: EpicVariant, parentTest: EpicABTest) => void,
-    deploymentRules?: DeploymentRules,
     countryGroups?: string[],
     tagIds?: string[],
     sections?: string[],
     excludedTagIds?: string[],
     excludedSections?: string[],
-    buttonTemplate?: (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderCta?: ReminderFields) => string,
+    buttonTemplate?: (
+        primaryCta: EpicCta,
+        secondaryCta?: EpicCta,
+        reminderCta?: ReminderFields
+    ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
     copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
+    tickerSettings?: TickerSettings | null,
     showReminderFields?: ReminderFields | null,
     supportBaseURL?: string,
     backgroundImageUrl?: string,
     canRun?: () => boolean,
+    template?: EpicTemplate,
 };
 
 declare type InitBannerABTestVariant = {
     id: string,
     products: $ReadOnlyArray<OphanProduct>,
-    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>
+    engagementBannerParams: () => Promise<?EngagementBannerTemplateParams>,
 };
 
 declare type InitEpicABTest = {
@@ -146,7 +161,7 @@ declare type InitEpicABTest = {
     geolocation: ?string,
     highPriority: boolean,
     articlesViewedSettings?: ArticlesViewedSettings,
-}
+};
 
 declare type Interaction = {
     component: string,

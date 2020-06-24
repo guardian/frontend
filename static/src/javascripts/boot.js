@@ -7,8 +7,11 @@ import domready from 'domready';
 import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
-import { capturePerfTimings } from 'lib/capture-perf-timings';
+import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
+import 'projects/commercial/modules/cmp/stub';
+import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { init } from '@guardian/consent-management-platform';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -27,6 +30,11 @@ const go = () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
+
+        // Start CMP
+        if (isInCcpaTest()) {
+            init({ useCcpa: true });
+        }
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
@@ -93,9 +101,9 @@ const go = () => {
             }),
         ]).then(() => {
             if (document.readyState === 'complete') {
-                capturePerfTimings();
+                captureOphanInfo();
             } else {
-                window.addEventListener('load', capturePerfTimings);
+                window.addEventListener('load', captureOphanInfo);
             }
         });
     });
