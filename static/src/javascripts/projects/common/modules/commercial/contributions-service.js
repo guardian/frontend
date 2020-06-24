@@ -27,7 +27,7 @@ import * as emotion from "emotion";
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
-    shouldNotBeShownSupportMessaging,
+    shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
 
@@ -173,7 +173,7 @@ const buildEpicPayload = () => {
         isPaidContent: page.isPaidContent,
         isSensitive: page.isSensitive,
         tags: buildKeywordTags(page),
-        showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+        showSupportMessaging: !shouldHideSupportMessaging(),
         isRecurringContributor: isRecurringContributor(),
         lastOneOffContributionDate:
             getLastOneOffContributionDate() || undefined,
@@ -204,7 +204,7 @@ const buildBannerPayload = () => {
         alreadyVisitedCount: getVisitCount(),
         shouldHideReaderRevenue: page.shouldHideReaderRevenue,
         isPaidContent: page.isPaidContent,
-        showSupportMessaging: !shouldNotBeShownSupportMessaging(),
+        showSupportMessaging: !shouldHideSupportMessaging(),
         engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: geolocationGetSync(),
