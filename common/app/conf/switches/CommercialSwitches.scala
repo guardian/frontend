@@ -32,7 +32,7 @@ trait CommercialSwitches {
     "ccpa-cmp-ui",
     "If this switch is on, the CCPA CMP UI will be available to users in America.",
     owners = group(Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true
   )
