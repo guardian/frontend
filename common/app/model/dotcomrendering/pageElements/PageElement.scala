@@ -54,8 +54,6 @@ object Sponsorship {
 
 sealed trait PageElement
 
-case class AtomEmbedBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
-case class InteractiveBlockElement(url: String) extends PageElement
 case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
@@ -68,10 +66,13 @@ case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: O
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
+case class GenericAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement // The GenericAtomBlockElement is an atom that is modeled as an interactive atom in DCR
 case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
+case class InteractiveAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
+case class InteractiveBlockElement(url: String) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
 case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String) extends PageElement
 case class MembershipBlockElement(
@@ -113,7 +114,6 @@ object PageElement {
   def isSupported(element: PageElement): Boolean = {
     // remove unsupported elements. Cross-reference with dotcom-rendering supported elements.
     element match {
-      case _: AtomEmbedBlockElement => true
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: BlockquoteBlockElement => true
@@ -123,10 +123,12 @@ object PageElement {
       case _: DisclaimerBlockElement => true
       case _: EmbedBlockElement => true
       case _: ExplainerAtomBlockElement => true
+      case _: GenericAtomBlockElement => true
       case _: GuideAtomBlockElement => true
       case _: GuVideoBlockElement => true
       case _: ImageBlockElement => true
       case _: InstagramBlockElement => true
+      case _: InteractiveAtomBlockElement => true
       case _: MapBlockElement => true
       case _: ProfileAtomBlockElement => true
       case _: PullquoteBlockElement => true
@@ -281,10 +283,11 @@ object PageElement {
             // Using the AudioAtomBlockElement:
             // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
 
-            // Using the AtomEmbedBlockElement:
+            // Using the GenericAtomBlockElement:
+            // This will esentially resolve to an InteractiveAtom on DCR
             val encodedId = URLEncoder.encode(audio.id, "UTF-8") // chart.id is a uuid, so there is no real need
                                                                  // to url-encode it but just to be safe
-            Some(AtomEmbedBlockElement(
+            Some(GenericAtomBlockElement(
               id = audio.id,
               url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId",
               html = None,
@@ -319,7 +322,7 @@ object PageElement {
 
           case Some(interactive: InteractiveAtom) => {
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
-            Some(AtomEmbedBlockElement(
+            Some(InteractiveAtomBlockElement(
               id = interactive.id,
               url = s"${Configuration.ajax.url}/embed/atom/interactive/$encodedId",
               html = Some(interactive.html),
@@ -494,13 +497,14 @@ object PageElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
   implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] = Json.writes[ExplainerAtomBlockElement]
   implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
+  implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
   implicit val GuideBlockElementWrites = Json.writes[GuideAtomBlockElement]
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
-  implicit val AtomEmbedBlockElementWrites: Writes[AtomEmbedBlockElement] = Json.writes[AtomEmbedBlockElement]
   implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
   implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
+  implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] = Json.writes[InteractiveAtomBlockElement]
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
   implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
