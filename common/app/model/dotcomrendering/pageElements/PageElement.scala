@@ -66,7 +66,11 @@ case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: O
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
-case class GenericAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement // The GenericAtomBlockElement is an atom that is modeled as an interactive atom in DCR
+case class GenericAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement 
+           // GenericAtomBlockElement is the only BlockElement, despite following the Atom BlockElement naming convention, that doesn't correspond to a single atom type.
+           // We use it to carry to DCR atoms that do not (yet) have their on dedicated BlockElement and are rendered in DCR as iframes.
+           //     - {url} for src
+           //     - {html, css, js} for srcdoc
 case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
