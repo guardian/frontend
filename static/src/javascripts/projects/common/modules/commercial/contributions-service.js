@@ -14,8 +14,9 @@ import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import { submitClickEvent } from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
-import { render } from 'preact-x';
-import React from 'preact-x/compat';
+// Need to import createElement here so it's included in the bundle
+// eslint-disable-next-line no-unused-vars
+import React, { render, createElement } from 'preact-x/compat';
 /* eslint-disable import/no-namespace */
 import * as emotionCore from "@emotion/core";
 import createCache from '@emotion/cache'
@@ -95,11 +96,22 @@ const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> =>
             shadowRoot = container.attachShadow({
                 mode: 'open',
             });
-            const innerContainer = document.createElement('div');
-            shadowRoot.appendChild(innerContainer);
-            const CacheProvider = emotionCore.CacheProvider;
-            const emotionCache = createCache({ container: innerContainer });
-            render(<CacheProvider value={emotionCache}><ContributionsEpic {...props} onReminderOpen={onReminderOpen} /></CacheProvider>, innerContainer);
+            const stylesWrapper = document.createElement('div');
+            const contentsWrapper = document.createElement('div');
+            shadowRoot.appendChild(stylesWrapper);
+            shadowRoot.appendChild(contentsWrapper);
+
+            // Rendering module inside Shadow DOM means we won't see styles
+            // added by Emotion to the document head; wrapping the component in
+            // a CacheProvider enables us to copy the styles into the Shadow DOM
+            const { CacheProvider } = emotionCore;
+            const emotionCache = createCache({ container: stylesWrapper });
+            render(
+                <CacheProvider value={emotionCache}>
+                  <ContributionsEpic {...props} onReminderOpen={onReminderOpen} />
+                </CacheProvider>,
+                contentsWrapper
+              );
         } else {
             render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, container);
         }

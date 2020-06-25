@@ -12,6 +12,7 @@
   "dependencies": {
     "@babel/runtime": "^7.2.0",
     "@emotion/core": "^10.0.27",
+    "@emotion/cache": "^10.0.29",
     "@emotion/styled": "^10.0.27",
     "@guardian/atom-renderer": "1.1.6",
     "@guardian/automat-client": "^0.2.16",
@@ -61,6 +62,7 @@
     "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
     "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-transform-react-jsx": "^7.10.3",
     "@babel/plugin-transform-runtime": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
     "@babel/preset-flow": "^7.0.0",
