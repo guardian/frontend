@@ -116,6 +116,7 @@ case class Config(
   switches: Map[String, Boolean],
   abTests: Map[String, String],
   commercialBundleUrl: String,
+  commercialBundlesUrls: Map[String, String],
   googletagUrl: String,
   stage: String,
   frontendAssetsFullURL: String,
@@ -643,6 +644,10 @@ object DotcomponentsDataModel {
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
       commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
+      commercialBundlesUrls = Map(
+        "javascripts" -> buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
+        "stylesheets" -> buildFullCommercialUrl("stylesheets/graun.commercial.dcr.css")
+      ),
       ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,

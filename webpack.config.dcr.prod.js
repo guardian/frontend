@@ -7,15 +7,28 @@ const Visualizer = require('webpack-visualizer-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
     .BundleAnalyzerPlugin;
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const config = require('./webpack.config.dcr.js');
 
 module.exports = webpackMerge.smart(config, {
     mode: 'production',
     output: {
-        filename: `[chunkhash]/graun.[name].dcr.js`,
-        chunkFilename: `[chunkhash]/graun.[name].dcr.js`,
+        filename: `[name]/[chunkhash]/graun.commercial.dcr.js`,
+        chunkFilename: `[name]/[chunkhash]/graun.commercial.dcr.js`,
     },
     devtool: 'source-map',
+    module: {
+        rules: [
+            {
+                test: /\.scss$/,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
     plugins: [
         new Visualizer({
             filename: './dcr-webpack-stats.html',
@@ -31,6 +44,11 @@ module.exports = webpackMerge.smart(config, {
         new UglifyJSPlugin({
             parallel: true,
             sourceMap: true,
+        }),
+        new MiniCssExtractPlugin({
+            filename: `[name]/[chunkhash]/graun.commercial.dcr.css`,
+            chunkFilename: `[name]/[chunkhash]/graun.commercial.dcr.css`,
+            sourceMap: false,
         }),
     ],
 });

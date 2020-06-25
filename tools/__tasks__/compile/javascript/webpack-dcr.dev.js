@@ -9,7 +9,7 @@ const chalk = require('chalk');
 const config = require('../../../../webpack.config.dcr.dev.js');
 
 module.exports = {
-    description: 'Create Webpack commercial.js bundle for dotcom-rendering',
+    description: 'Create Webpack commercial.js and commercial.css bundles for dotcom-rendering',
     task: () =>
         new Observable(observer => {
             config.plugins = [

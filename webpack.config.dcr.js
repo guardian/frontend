@@ -5,9 +5,10 @@ const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const config = require('./webpack.config.js');
 
+
 // override JS entry points
 config.entry = {
-    'commercial': path.join(
+    javascripts: path.join(
         __dirname,
         'static',
         'src',
@@ -15,10 +16,19 @@ config.entry = {
         'bootstraps',
         'commercial.dcr.js'
     ),
+    stylesheets: path.join(
+        __dirname,
+        'static',
+        'src',
+        'stylesheets',
+        'module',
+        'commercial',
+        '_creatives-dcr.scss',
+    ),
 };
 
 module.exports = webpackMerge.smart(config, {
     output: {
-        path: path.join(__dirname, 'static', 'target', 'javascripts'),
+        path: path.join(__dirname, 'static', 'target'),
     },
 });
