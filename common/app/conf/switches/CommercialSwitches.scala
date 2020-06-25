@@ -30,7 +30,7 @@ trait CommercialSwitches {
   val CcpaCmpUi = Switch(
     SwitchGroup.Feature,
     "ccpa-cmp-ui",
-    "If this switch is on, the CCPA CMP UI will be available to users in America.",
+    "If this switch is on, the CCPA CMP UI will be available to users in the USA.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
