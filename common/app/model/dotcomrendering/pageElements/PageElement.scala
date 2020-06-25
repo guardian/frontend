@@ -284,7 +284,7 @@ object PageElement {
             // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
 
             // Using the GenericAtomBlockElement:
-            // This will esentially resolve to an InteractiveAtom on DCR
+            // This will be rendered like an InteractiveAtom on DCR
             val encodedId = URLEncoder.encode(audio.id, "UTF-8") // chart.id is a uuid, so there is no real need
                                                                  // to url-encode it but just to be safe
             Some(GenericAtomBlockElement(
