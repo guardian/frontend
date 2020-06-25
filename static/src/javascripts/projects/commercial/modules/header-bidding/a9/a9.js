@@ -34,19 +34,24 @@ const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
     onIabConsentNotification(state => {
-        // typeof state === 'boolean' means CCPA mode is on
-        const canRun =
-            typeof state === 'boolean'
-                ? !state
-                : state[1] && state[2] && state[3] && state[4] && state[5];
-
-        if (!initialised && canRun) {
-            initialised = true;
-            window.apstag.init({
+        if (!initialised) {
+            const apstagConfig = {
                 pubID: config.get('page.a9PublisherId'),
                 adServer: 'googletag',
                 bidTimeout: bidderTimeout,
-            });
+            }
+            // typeof state === 'boolean' means CCPA mode is on
+            if (typeof state === 'boolean') {
+                initialised = true;
+                window.apstag.init({
+                    ...apstagConfig,
+                    us_privacy: `1Y${  state ? 'Y' : 'N'  }N`
+                });
+            } else if (state[1] && state[2] && state[3] && state[4] && state[5]){
+                // TCF Mode
+                initialised = true;
+                window.apstag.init(apstagConfig);
+            }
         }
     });
 };

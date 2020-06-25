@@ -1,5 +1,7 @@
 // @flow strict
 
+import { isInUsOrCa } from 'common/modules/commercial/geo-utils';
+
 export const amazonA9Test: ABTest = {
     id: 'CommercialA9',
     start: '2019-05-09',
@@ -13,7 +15,7 @@ export const amazonA9Test: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome: 'Amazon a9 successfully run in parallel with prebid',
     showForSensitive: false,
-    canRun: () => true,
+    canRun: () => isInUsOrCa(),
     variants: [
         {
             id: 'control',
