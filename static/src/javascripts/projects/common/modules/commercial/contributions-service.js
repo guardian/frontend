@@ -66,59 +66,57 @@ const onReminderOpen = (callbackParams: AutomatJsCallback) => {
     });
 };
 
-const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> => {
-    return fastdom.write(() => {
-        const target = document.querySelector(
-            '.submeta'
+const renderEpic = (ContributionsEpic: any, props: any): Promise<HTMLElement> => fastdom.write(() => {
+    const target = document.querySelector(
+        '.submeta'
+    );
+
+    if (!target) {
+        throw new Error(
+            'Could not find target element for Epic'
         );
+    }
 
-        if (!target) {
-            throw new Error(
-                'Could not find target element for Epic'
+    const parent = target.parentNode;
+
+    if (!parent) {
+        throw new Error(
+            'Could not find parent element for Epic'
+        );
+    }
+
+    const container = document.createElement('div');
+    parent.insertBefore(container, target);
+
+    // use Shadow Dom if found
+    let shadowRoot;
+    const useShadowDomIfAvailable = true;
+    if (useShadowDomIfAvailable && container.attachShadow) {
+        shadowRoot = container.attachShadow({
+            mode: 'open',
+        });
+        const stylesWrapper = document.createElement('div');
+        const contentsWrapper = document.createElement('div');
+        shadowRoot.appendChild(stylesWrapper);
+        shadowRoot.appendChild(contentsWrapper);
+
+        // Rendering module inside Shadow DOM means we won't see styles
+        // added by Emotion to the document head; wrapping the component in
+        // a CacheProvider enables us to copy the styles into the Shadow DOM
+        const { CacheProvider } = emotionCore;
+        const emotionCache = createCache({ container: stylesWrapper });
+        render(
+            <CacheProvider value={emotionCache}>
+                <ContributionsEpic {...props} onReminderOpen={onReminderOpen} />
+            </CacheProvider>,
+            contentsWrapper
             );
-        }
+    } else {
+        render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, container);
+    }
 
-        const parent = target.parentNode;
-
-        if (!parent) {
-            throw new Error(
-                'Could not find parent element for Epic'
-            );
-        }
-
-        const container = document.createElement('div');
-        parent.insertBefore(container, target);
-
-        // use Shadow Dom if found
-        let shadowRoot;
-        const useShadowDomIfAvailable = true;
-        if (useShadowDomIfAvailable && container.attachShadow) {
-            shadowRoot = container.attachShadow({
-                mode: 'open',
-            });
-            const stylesWrapper = document.createElement('div');
-            const contentsWrapper = document.createElement('div');
-            shadowRoot.appendChild(stylesWrapper);
-            shadowRoot.appendChild(contentsWrapper);
-
-            // Rendering module inside Shadow DOM means we won't see styles
-            // added by Emotion to the document head; wrapping the component in
-            // a CacheProvider enables us to copy the styles into the Shadow DOM
-            const { CacheProvider } = emotionCore;
-            const emotionCache = createCache({ container: stylesWrapper });
-            render(
-                <CacheProvider value={emotionCache}>
-                  <ContributionsEpic {...props} onReminderOpen={onReminderOpen} />
-                </CacheProvider>,
-                contentsWrapper
-              );
-        } else {
-            render(<ContributionsEpic {...props} onReminderOpen={onReminderOpen} />, container);
-        }
-
-        return container;
-    });
-};
+    return container;
+});
 
 const buildEpicPayload = () => {
     const ophan = config.get('ophan');
