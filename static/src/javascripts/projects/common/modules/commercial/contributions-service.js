@@ -305,8 +305,9 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
             });
         })
         .catch(error => {
-            console.log(error);
-            reportError(error, {}, false);
+            console.log(`Error importing remote banner: ${error}`);
+            reportError(new Error(`Error importing remote banner: ${error}`), {}, false);
+            return false;
         });
 };
 
