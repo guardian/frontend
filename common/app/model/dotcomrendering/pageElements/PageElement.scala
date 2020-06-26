@@ -66,7 +66,7 @@ case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: O
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
-case class GenericAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement 
+case class GenericAtomBlockElement(id: String, url: String, html: Option[String], css: Option[String], js: Option[String]) extends PageElement
            // GenericAtomBlockElement is the only BlockElement, despite following the Atom BlockElement naming convention, that doesn't correspond to a single atom type.
            // We use it to carry to DCR atoms that do not (yet) have their on dedicated BlockElement and are rendered in DCR as iframes.
            //     - {url} for src
@@ -104,7 +104,7 @@ case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class VideoBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
 case class VideoFacebookBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
 case class VideoVimeoBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
@@ -466,7 +466,7 @@ object PageElement {
     } getOrElse Map()
   }
 
-  private def getVimeoEmbedUrl(html: Option[String]): Option[String] = {
+  private def getEmbedUrl(html: Option[String]): Option[String] = {
     html match {
       case Some(ht) => getIframeSrc(ht)
       case _ => None
@@ -485,8 +485,8 @@ object PageElement {
       url = data.url.getOrElse(originalUrl)
     } yield {
       source match {
-        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, height, width, Role(data.role))
-        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, getVimeoEmbedUrl(data.html), height, width, Role(data.role))
+        case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
+        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
         case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
         case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
       }
