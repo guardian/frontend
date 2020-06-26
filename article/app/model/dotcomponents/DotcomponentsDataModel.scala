@@ -115,7 +115,7 @@ object Pagination {
 case class Config(
   switches: Map[String, Boolean],
   abTests: Map[String, String],
-  commercialBundleUrl: String, // TODO: remove this deprecated element
+  commercialBundleUrl: String, // TODO: deprecate once bundles are live in DCR
   commercialBundlesUrls: Map[String, String],
   googletagUrl: String,
   stage: String,
@@ -643,7 +643,7 @@ object DotcomponentsDataModel {
     val config = Config(
       switches = switches,
       abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"), // TODO: remove this deprecated element
+      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"), // TODO: deprecate once bundles are live in DCR
       commercialBundlesUrls = Map(
         "javascripts" -> buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
         "stylesheets" -> buildFullCommercialUrl("stylesheets/graun.commercial.dcr.css")
