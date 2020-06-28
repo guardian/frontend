@@ -1,9 +1,9 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
 import config from 'lib/config';
-import { isInCcpaTest } from 'projects/commercial/modules/cmp/ccpa-ab-test';
+import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 
-if (config.get('switches.enableConsentManagementService') && !isInCcpaTest()) {
+if (config.get('switches.enableConsentManagementService') && !isCcpaApplicable()) {
     try {
         (function stubCMP(document, window) {
             if (!window.__cmp) {

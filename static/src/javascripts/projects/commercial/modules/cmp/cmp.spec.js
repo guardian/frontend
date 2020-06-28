@@ -4,8 +4,8 @@ import fetchJson from 'lib/fetch-json';
 import { _, init } from './cmp';
 import { log as log_ } from './log';
 
-jest.mock('projects/commercial/modules/cmp/ccpa-ab-test', () => ({
-    isInCcpaTest: () => false,
+jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
+    isCcpaApplicable: () => false,
 }));
 
 jest.mock('lib/raven');

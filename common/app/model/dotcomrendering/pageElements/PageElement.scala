@@ -97,10 +97,10 @@ case class TextBlockElement(html: String) extends PageElement
 case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
-case class VideoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoVimeoBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption:String, url:String, originalUrl:String, height:Int, width:Int, role: Role) extends PageElement
+case class VideoBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
@@ -430,7 +430,7 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
-  private def extractSoundcloud(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
+  private def extractSoundcloudBlockElement(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
     src.flatMap { s =>
       (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
@@ -447,8 +447,8 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-      extractSoundcloud(html, mandatory) getOrElse
-      AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloudBlockElement(html, mandatory) getOrElse
+        AudioBlockElement(element.assets.map(AudioAsset.make))
     }
   }
 
@@ -458,7 +458,7 @@ object PageElement {
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloud(html, mandatory)
+      extractSoundcloudBlockElement(html, mandatory)
         .getOrElse(CalloutExtraction.extractCallout(html: String, campaigns)
           .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
     }
@@ -474,6 +474,13 @@ object PageElement {
     } getOrElse Map()
   }
 
+  private def getVimeoEmbedUrl(html: Option[String]): Option[String] = {
+    html match {
+      case Some(ht) => getIframeSrc(ht)
+      case _ => None
+    }
+  }
+
   private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
     for {
       data <- element.videoTypeData
@@ -486,7 +493,7 @@ object PageElement {
     } yield {
       source match {
         case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, height, width, Role(data.role))
-        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, getVimeoEmbedUrl(data.html), height, width, Role(data.role))
         case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
         case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
       }
