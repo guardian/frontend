@@ -4,7 +4,6 @@ import org.jsoup.Jsoup
 import play.api.libs.json._
 
 import scala.collection.JavaConverters._
-import scala.util.Try
 
 case class CalloutFormField(id: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String)
 object CalloutFormField {
