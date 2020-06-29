@@ -5,7 +5,7 @@ import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, Dot
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ContentAtomBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
-import model.dotcomrendering.pageElements.SoundcloudBlockElement
+import model.dotcomrendering.pageElements.{SoundcloudBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -45,6 +45,8 @@ object ArticlePageChecks {
       case _: InstagramBlockElement => false
       case _: TableBlockElement => false
       case _: SoundcloudBlockElement => false
+      case _: VideoVimeoBlockElement => false
+      case _: VideoYoutubeBlockElement => false
       case ContentAtomBlockElement(_, atomtype) => {
         // ContentAtomBlockElement was expanded to include atomtype.
         // To support an atom type, just add it to supportedAtomTypes
