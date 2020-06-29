@@ -487,7 +487,7 @@ object PageElement {
       source match {
         case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
         case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
-        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
         case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
       }
     }
