@@ -7,16 +7,16 @@ import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experime
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
 import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateCentesimus } from 'common/modules/experiments/tests/sign-in-gate-centesimus';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
+import { commercialRedplanet } from 'common/modules/experiments/tests/commercial-redplanet-aus';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    amazonA9Test,
+    commercialRedplanet,
     connatixTest,
     xaxisAdapterTest,
     appnexusUSAdapter,
