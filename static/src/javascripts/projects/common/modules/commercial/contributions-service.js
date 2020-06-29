@@ -273,6 +273,13 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
             return fastdom.write(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
+
+                // Override the css that is added to the container when an ad takeover happens
+                container.style.width = 'auto !important';
+                container.style.zIndex = '999 !important';
+                container.style.background = 'none !important';
+                container.style.top = 'auto !important';
+
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
