@@ -273,6 +273,8 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
             return fastdom.write(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
+                container.classList.add('remote-banner');
+
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
