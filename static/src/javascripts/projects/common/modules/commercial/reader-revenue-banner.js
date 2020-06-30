@@ -15,7 +15,8 @@ const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
 const canShow = (): Promise<boolean> => {
     const countryCode = geolocationGetSync();
-    const enabled = config.get('switches.remoteBanner') && countryCode === 'AU';
+    const forceBanner = window.location.search.includes('force-remote-banner=true');
+    const enabled = (config.get('switches.remoteBanner') && countryCode === 'AU') || forceBanner;
 
     if (!enabled) {
         return Promise.resolve(false);
