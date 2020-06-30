@@ -49,6 +49,8 @@ class HostedContentController(
     } recover {
       case e: ContentApiError if e.httpStatus == 410 =>
         cached(commercialExpired(wasAHostedPage = true))
+      case e: ContentApiError if e.httpStatus == 404 =>
+        NoCache(NotFound)
     }
   }
 
