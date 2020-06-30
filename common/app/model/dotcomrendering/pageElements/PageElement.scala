@@ -58,6 +58,7 @@ case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, t
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
+case class CalloutBlockElementXp(id: String, activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
 case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -121,6 +122,7 @@ object PageElement {
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: BlockquoteBlockElement => true
+      case _: CalloutBlockElementXp => true
       case _: ChartAtomBlockElement => true
       case _: CommentBlockElement => true
       case _: ContentAtomBlockElement => true
@@ -158,7 +160,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -235,6 +237,9 @@ object PageElement {
         ))
 
       case Audio => audioToPageElement(element).toList
+                    // This process returns either:
+                    // 1. SoundcloudBlockElement
+                    // 2. AudioBlockElement
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -277,7 +282,11 @@ object PageElement {
         )
       }).toList
 
-      case Embed => embedToPageElement(element).toList
+      case Embed => embedToPageElement(element, campaigns).toList
+                    // This process returns either:
+                    // 1. SoundcloudBlockElement
+                    // 2. EmbedBlockElement
+                    // 3. CalloutBlockElement
 
       case Contentatom =>
         (extractAtom match {
@@ -442,17 +451,20 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-      extractSoundcloudBlockElement(html, mandatory) getOrElse AudioBlockElement(element.assets.map(AudioAsset.make))
+      extractSoundcloudBlockElement(html, mandatory) getOrElse
+        AudioBlockElement(element.assets.map(AudioAsset.make))
     }
   }
 
-  private def embedToPageElement(element: ApiBlockElement): Option[PageElement] = {
+  private def embedToPageElement(element: ApiBlockElement, campaigns: Option[JsValue]): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloudBlockElement(html, mandatory) getOrElse EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+      extractSoundcloudBlockElement(html, mandatory)
+        .getOrElse(CalloutExtraction.extractCallout(html: String, campaigns)
+          .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
     }
   }
 
@@ -481,7 +493,6 @@ object PageElement {
       originalUrl <- data.originalUrl
       height <- data.height
       width <- data.width
-
       url = data.url.getOrElse(originalUrl)
     } yield {
       source match {
@@ -499,6 +510,7 @@ object PageElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
+  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElementXp] = Json.writes[CalloutBlockElementXp]
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
