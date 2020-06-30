@@ -103,7 +103,7 @@ case class TimelineBlockElement(id: String, title: String, description: Option[S
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
 case class VideoBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
 case class VideoVimeoBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
 case class VideoYoutubeBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
@@ -498,7 +498,7 @@ object PageElement {
       source match {
         case "YouTube" => VideoYoutubeBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
         case "Vimeo" => VideoVimeoBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
-        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, height, width, Role(data.role))
+        case "Facebook" => VideoFacebookBlockElement(caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role))
         case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role))
       }
     }
