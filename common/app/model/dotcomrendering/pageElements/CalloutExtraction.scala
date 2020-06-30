@@ -164,7 +164,7 @@ object CalloutExtraction {
     for {
       name     <- tagName
       cpgs     <- campaigns
-      campaign <- extractCampaignPerTagName(campaignsX1, name)
+      campaign <- extractCampaignPerTagName(cpgs, name)
       element  <- campaignJsObjectToCalloutBlockElement(campaign)
     } yield {
       element
