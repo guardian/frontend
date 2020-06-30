@@ -80,7 +80,7 @@ class RemoteRenderer extends Logging {
     pageType: PageType
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
-    val json = DCRDataModel.toJson(dataModel)
+    val json = DataModelV3.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.AMPArticleEndpoint)
   }
 
@@ -92,7 +92,7 @@ class RemoteRenderer extends Logging {
     pageType: PageType
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
-    val json = DCRDataModel.toJson(dataModel)
+    val json = DataModelV3.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.renderingEndpoint)
   }
 }
