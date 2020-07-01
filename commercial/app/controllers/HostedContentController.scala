@@ -7,7 +7,7 @@ import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
@@ -50,7 +50,7 @@ class HostedContentController(
       case e: ContentApiError if e.httpStatus == 410 =>
         cached(commercialExpired(wasAHostedPage = true))
       case e: ContentApiError if e.httpStatus == 404 =>
-        NoCache(NotFound)
+        Cached(cacheDuration)(WithoutRevalidationResult(NotFound))
     }
   }
 
