@@ -32,6 +32,14 @@ const addClassIfHasClass = (newClassNames: Array<string>) =>
                     newClassNames.forEach(className => {
                         advert.node.classList.add(className);
                     });
+                    // Add 100% width from _adslot.scss
+                    if (
+                        !newClassNames.includes('ad-slot--im') &&
+                        !newClassNames.includes('ad-slot--carrot') &&
+                        !newClassNames.includes('ad-slot--offset-right') &&
+                        newClassNames.includes('ad-slot--fluid')
+                    )
+                        advert.node.style.width = '100%';
                 });
             }
             return Promise.resolve();
