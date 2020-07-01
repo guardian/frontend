@@ -99,23 +99,20 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent.appendChild(background);
 
         // Inject styles (from _creatives.scss)
-        backgroundParent.setAttribute("style", `
-            contain: size layout style;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: -1;
-            clip: rect(0, auto, auto, 0);
-        `)
-        background.setAttribute("style", `
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            transition: background 100ms ease;
-        `)
+        backgroundParent.style.contain = 'size layout style';
+        backgroundParent.style.position = 'absolute';
+        backgroundParent.style.top = 0;
+        backgroundParent.style.left = 0;
+        backgroundParent.style.right = 0;
+        backgroundParent.style.bottom = 0;
+        backgroundParent.style.zIndex = -1;
+        backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
+
+        background.style.top = 0;
+        background.style.left = 0;
+        background.style.right = 0;
+        background.style.bottom = 0;
+        background.style.transition = 'background 100ms ease';
 
         return fastdom
             .write(() => {
@@ -135,6 +132,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             );
                         }
                     } else {
+                        console.log('we are about to add the element');
                         adSlot.insertBefore(
                             backgroundParent,
                             adSlot.firstChild
@@ -155,11 +153,10 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         }`;
 
         // This is improted from _creatives.css
-        if(specs.scrollType === 'fixed')
-            background.style.position = "fixed";
+        if (specs.scrollType === 'fixed') background.style.position = 'fixed';
 
-        if(specs.scrollType === 'parallax')
-            background.style.position = "absolute";
+        if (specs.scrollType === 'parallax')
+            background.style.position = 'absolute';
 
         Object.assign(background.style, specStyles);
 
