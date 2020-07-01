@@ -5,7 +5,7 @@ import play.api.libs.json._
 
 import scala.collection.JavaConverters._
 
-case class CalloutFormField(id: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String)
+case class CalloutFormField(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String)
 object CalloutFormField {
   implicit val CalloutFormFieldWrites: Writes[CalloutFormField] = Json.writes[CalloutFormField]
 }
@@ -21,13 +21,14 @@ object CalloutExtraction {
   private def formFieldItemToCalloutFormField( item: JsValue ) : Option[CalloutFormField] = {
     for {
       id          <- (item \ "id").asOpt[String]
+      type_       <- (item \ "type").asOpt[String]
       name        <- (item \ "name").asOpt[String]
       description <- (item \ "name").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "name").asOpt[String]
     } yield {
-      CalloutFormField(id, name, description, required == "1", hideLabel == "1", label)
+      CalloutFormField(id, type_, name, description, required == "1", hideLabel == "1", label)
     }
   }
 
