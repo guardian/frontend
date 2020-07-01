@@ -1,10 +1,13 @@
 // @flow
 
 // Trigger test in Dev
-// http://m.thegulocal.com/uk#ab-SignInGateCentesimus=centesimus-control-1
+// http://m.thegulocal.com/uk#ab-SignInGateCentesimus=centesimus-control-2
+
+// Centesismus (100%) test is a feature switch where we roll out winning changes from other AB sign in gate tests
+// The number represents the design version being used.
 
 export const signInGateCentesimus: ABTest = {
-    id: 'SignInGateCentesimus',
+    id: 'SignInGateCentesimus2',
     start: '2020-05-20',
     expiry: '2020-12-01',
     author: 'vlbee',
@@ -15,15 +18,15 @@ export const signInGateCentesimus: ABTest = {
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
         '3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss, not on help, info sections etc. Exclude iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
-    ophanComponentId: 'centesimus_test',
-    dataLinkNames: 'SignInGateCentesimus',
+    ophanComponentId: 'centesimus_test_2',
+    dataLinkNames: 'SignInGateCentesimus2',
     idealOutcome:
         'Increase the number of users signed in whilst running at a reasonable scale',
     showForSensitive: false,
     canRun: () => true,
     variants: [
         {
-            id: 'centesimus-control-1',
+            id: 'centesimus-control-2',
             test: (): void => {},
         },
         // {
