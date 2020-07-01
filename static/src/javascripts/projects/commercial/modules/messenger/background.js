@@ -101,16 +101,16 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         // Inject styles (from _creatives.scss)
         backgroundParent.style.contain = 'size layout style';
         backgroundParent.style.position = 'absolute';
-        backgroundParent.style.top = 0;
-        backgroundParent.style.left = 0;
-        backgroundParent.style.right = 0;
-        backgroundParent.style.bottom = 0;
+        backgroundParent.style.top = '0';
+        backgroundParent.style.left = '0';
+        backgroundParent.style.right = '0';
+        backgroundParent.style.bottom = '0';
         backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
 
-        background.style.top = 0;
-        background.style.left = 0;
-        background.style.right = 0;
-        background.style.bottom = 0;
+        background.style.top = '0';
+        background.style.left = '0';
+        background.style.right = '0';
+        background.style.bottom = '0';
         background.style.transition = 'background 100ms ease';
 
         return fastdom
