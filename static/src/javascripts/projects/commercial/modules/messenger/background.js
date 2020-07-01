@@ -105,7 +105,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent.style.left = 0;
         backgroundParent.style.right = 0;
         backgroundParent.style.bottom = 0;
-        backgroundParent.style.zIndex = -1;
         backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
 
         background.style.top = 0;
