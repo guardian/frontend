@@ -6,10 +6,7 @@ let ccpaApplicable;
 
 export const isCcpaApplicable = (): boolean => {
     if (typeof ccpaApplicable === 'undefined') {
-        ccpaApplicable =
-            isInUsa() &&
-            (config.get('switches.ccpaCmpUi', false) ||
-                config.get('tests.ccpaCmpVariant') === 'variant');
+        ccpaApplicable = isInUsa() && config.get('switches.ccpaCmpUi', false);
     }
     return ccpaApplicable;
 };

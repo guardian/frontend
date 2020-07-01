@@ -9,8 +9,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldTLSSupportDeprecation,
     DotcomRendering1,
     DotcomRendering2,
-    DCRBubble,
-    CcpaCmp
+    DCRBubble
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -47,12 +46,4 @@ object DCRBubble extends Experiment(
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
-)
-
-object CcpaCmp extends Experiment(
-  name = "ccpa-cmp",
-  description = "Shows CCPA banner instead of TCFv1 banner",
-  owners = Seq(Owner.withGithub("ripecosta")),
-  sellByDate = new LocalDate(2020, 7, 3),
-  participationGroup = Perc1C
 )
