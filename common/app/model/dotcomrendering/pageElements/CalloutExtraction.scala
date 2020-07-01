@@ -5,8 +5,18 @@ import play.api.libs.json._
 
 import scala.collection.JavaConverters._
 
-case class CalloutFormField(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String)
+sealed trait CalloutFormField
+case class CalloutFormFieldBase(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String) extends CalloutFormField
+case class CalloutFormFieldRadio(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldCheckbox(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldSelect(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+
 object CalloutFormField {
+  implicit val CalloutFormFieldBaseWrites: Writes[CalloutFormFieldBase] = Json.writes[CalloutFormFieldBase]
+  implicit val CalloutFormFieldRadioWrites: Writes[CalloutFormFieldRadio] = Json.writes[CalloutFormFieldRadio]
+  implicit val CalloutFormFieldCheckboxWrites: Writes[CalloutFormFieldCheckbox] = Json.writes[CalloutFormFieldCheckbox]
+  implicit val CalloutFormFieldSelectWrites: Writes[CalloutFormFieldSelect] = Json.writes[CalloutFormFieldSelect]
+
   implicit val CalloutFormFieldWrites: Writes[CalloutFormField] = Json.writes[CalloutFormField]
 }
 
@@ -18,7 +28,7 @@ object CalloutExtraction {
       .map(_.asInstanceOf[JsObject]).headOption
   }
 
-  private def formFieldItemToCalloutFormField( item: JsValue ) : Option[CalloutFormField] = {
+  private def formFieldItemToCalloutFormFieldBase(item: JsValue) : Option[CalloutFormFieldBase] = {
     for {
       id          <- (item \ "id").asOpt[String]
       type_       <- (item \ "type").asOpt[String]
@@ -28,7 +38,65 @@ object CalloutExtraction {
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "name").asOpt[String]
     } yield {
-      CalloutFormField(id, type_, name, description, required == "1", hideLabel == "1", label)
+      CalloutFormFieldBase(id, type_, name, description, required == "1", hideLabel == "1", label)
+    }
+  }
+
+  private def formFieldItemToCalloutFormFieldRadio(item: JsValue) : Option[CalloutFormFieldRadio] = {
+    for {
+      id          <- (item \ "id").asOpt[String]
+      type_       <- (item \ "type").asOpt[String]
+      name        <- (item \ "name").asOpt[String]
+      description <- (item \ "name").asOpt[String]
+      required    <- (item \ "required").asOpt[String]
+      hideLabel   <- (item \ "hide_label").asOpt[String]
+      label       <- (item \ "name").asOpt[String]
+      options     <- (item \ "options").asOpt[JsArray]
+    } yield {
+      CalloutFormFieldRadio(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+    }
+  }
+
+  private def formFieldItemToCalloutFormFieldCheckbox(item: JsValue) : Option[CalloutFormFieldCheckbox] = {
+    for {
+      id          <- (item \ "id").asOpt[String]
+      type_       <- (item \ "type").asOpt[String]
+      name        <- (item \ "name").asOpt[String]
+      description <- (item \ "name").asOpt[String]
+      required    <- (item \ "required").asOpt[String]
+      hideLabel   <- (item \ "hide_label").asOpt[String]
+      label       <- (item \ "name").asOpt[String]
+      options     <- (item \ "options").asOpt[JsArray]
+    } yield {
+      CalloutFormFieldCheckbox(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+    }
+  }
+
+  private def formFieldItemToCalloutFormFieldSelect(item: JsValue) : Option[CalloutFormFieldSelect] = {
+    for {
+      id          <- (item \ "id").asOpt[String]
+      type_       <- (item \ "type").asOpt[String]
+      name        <- (item \ "name").asOpt[String]
+      description <- (item \ "name").asOpt[String]
+      required    <- (item \ "required").asOpt[String]
+      hideLabel   <- (item \ "hide_label").asOpt[String]
+      label       <- (item \ "name").asOpt[String]
+      options     <- (item \ "options").asOpt[JsArray]
+    } yield {
+      CalloutFormFieldSelect(id, type_, name, description, required == "1", hideLabel == "1", label, options)
+    }
+  }
+
+  private def formFieldItemToCalloutFormField(item: JsValue) : Option[CalloutFormField] = {
+    (item \ "type").asOpt[String] match {
+      case None => None
+      case Some("textarea") => formFieldItemToCalloutFormFieldBase(item)
+      case Some("text") => formFieldItemToCalloutFormFieldBase(item)
+      case Some("file") => formFieldItemToCalloutFormFieldBase(item)
+      case Some("radio") => formFieldItemToCalloutFormFieldRadio(item: JsValue)
+      case Some("checkbox") => formFieldItemToCalloutFormFieldCheckbox(item: JsValue)
+      case Some("select") => formFieldItemToCalloutFormFieldSelect(item: JsValue)
+      case _ => None
     }
   }
 
