@@ -158,7 +158,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
             specs.scrollType
         }`;
 
-        // This is improted from _creatives.css
+        // This is imported from _creatives.css
         if (specs.scrollType === 'fixed') background.style.position = 'fixed';
 
         if (specs.scrollType === 'parallax')
