@@ -102,7 +102,7 @@ trait ABTestSwitches {
     "Test Amazon A9 header bidding",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
+    sellByDate = new LocalDate(2020, 10, 1),
     exposeClientSide = true
   )
 
@@ -172,7 +172,7 @@ trait ABTestSwitches {
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
+    sellByDate = new LocalDate(2020, 7, 21),
     exposeClientSide = true,
   )
 
