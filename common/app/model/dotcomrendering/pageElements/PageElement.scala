@@ -58,7 +58,7 @@ case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, t
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
-case class CalloutBlockElementXp(id: String, activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
+case class CalloutBlockElement(id: String, activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
 case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -122,7 +122,7 @@ object PageElement {
       case _: AudioBlockElement => true
       case _: AudioAtomBlockElement => true
       case _: BlockquoteBlockElement => true
-      case _: CalloutBlockElementXp => true
+      case _: CalloutBlockElement => true
       case _: ChartAtomBlockElement => true
       case _: CommentBlockElement => true
       case _: ContentAtomBlockElement => true
@@ -510,7 +510,7 @@ object PageElement {
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
-  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElementXp] = Json.writes[CalloutBlockElementXp]
+  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
   implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
   implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
   implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]

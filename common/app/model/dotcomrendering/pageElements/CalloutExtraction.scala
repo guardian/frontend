@@ -100,7 +100,7 @@ object CalloutExtraction {
     }
   }
 
-  private def campaignJsObjectToCalloutBlockElement(campaign: JsObject): Option[CalloutBlockElementXp] = {
+  private def campaignJsObjectToCalloutBlockElement(campaign: JsObject): Option[CalloutBlockElement] = {
     for {
       id                 <- (campaign \ "id").asOpt[String]
       activeFrom         <- (campaign \ "activeFrom").asOpt[Long]
@@ -115,11 +115,11 @@ object CalloutExtraction {
         .value
         .flatMap(formFieldItemToCalloutFormField(_))
         .toList
-      CalloutBlockElementXp(id, activeFrom, displayOnSensitive, formId, title, description, tagName, formFields2)
+      CalloutBlockElement(id, activeFrom, displayOnSensitive, formId, title, description, tagName, formFields2)
     }
   }
 
-  def extractCallout(html: String, campaigns: Option[JsValue]): Option[CalloutBlockElementXp] = {
+  def extractCallout(html: String, campaigns: Option[JsValue]): Option[CalloutBlockElement] = {
 
     val campaignsX1: JsValue = Json.parse("""
   [
