@@ -138,7 +138,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             );
                         }
                     } else {
-                        console.log('we are about to add the element');
                         adSlot.insertBefore(
                             backgroundParent,
                             adSlot.firstChild
