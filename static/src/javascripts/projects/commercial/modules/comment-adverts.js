@@ -10,9 +10,11 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { getBreakpoint } from 'lib/detect';
 
 import type { Advert } from 'commercial/modules/dfp/Advert';
 import type bonzo from 'bonzo';
+
 
 const createCommentSlots = (
     canBeDmpu: boolean
@@ -99,8 +101,8 @@ const runSecondStage = (
 
 export const initCommentAdverts = (): Promise<boolean> => {
     const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
-
-    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
+    const isMobile = getBreakpoint() === 'mobile';
+    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
         return Promise.resolve(false);
     }
 
