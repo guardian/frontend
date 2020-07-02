@@ -2,7 +2,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportError from 'lib/report-error';
-import { ConsentManagementPlatform } from '@guardian/consent-management-platform/lib/ConsentManagementPlatform';
+import { ConsentManagementPlatform } from '@guardian/consent-management-platform/dist/ConsentManagementPlatform';
 import { setErrorHandler } from '@guardian/consent-management-platform';
 
 export const init = (forceModal: boolean) => {
