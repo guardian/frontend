@@ -163,10 +163,10 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
             specs.scrollType
         }`;
 
-        // This is imported from _creatives.css
-        if (specs.scrollType === 'fixed') background.style.position = 'fixed';
-
-        if (specs.scrollType === 'parallax')
+        if (
+            config.get('isDotcomRendering', false) &&
+            specs.scrollType === 'parallax'
+        )
             background.style.position = 'absolute';
 
         Object.assign(background.style, specStyles);
@@ -180,6 +180,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 })
                 .then(rect =>
                     fastdom.write(() => {
+                        if (config.get('isDotcomRendering', false)) {
+                            background.style.position = 'fixed';
+                        }
                         if (specStyles.backgroundColor) {
                             backgroundParent.style.backgroundColor =
                                 specStyles.backgroundColor;

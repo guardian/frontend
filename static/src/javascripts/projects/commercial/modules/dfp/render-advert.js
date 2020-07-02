@@ -34,6 +34,7 @@ const addClassIfHasClass = (newClassNames: Array<string>) =>
                     });
                     // Add 100% width from _adslot.scss
                     if (
+                        config.get('isDotcomRendering', false)
                         !newClassNames.includes('ad-slot--im') &&
                         !newClassNames.includes('ad-slot--carrot') &&
                         !newClassNames.includes('ad-slot--offset-right') &&
