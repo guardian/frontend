@@ -1,6 +1,7 @@
 // @flow
 
 import qwery from 'qwery';
+import config from 'lib/config';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import { Advert } from 'commercial/modules/dfp/Advert';
