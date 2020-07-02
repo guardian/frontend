@@ -100,8 +100,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent.appendChild(background);
 
         // Inject styles in DCR (from _creatives.scss)
-        if (config.get('isDotcomRendering')) {
-            backgroundParent.style.contain = 'size layout style';
+        if (config.get('isDotcomRendering', false)) {
             backgroundParent.style.position = 'absolute';
             backgroundParent.style.top = '0';
             backgroundParent.style.left = '0';
@@ -121,7 +120,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 if (backgroundParent) {
                     // Create a stacking context in DCR
                     if (
-                        config.get('isDotcomRendering') &&
+                        config.get('isDotcomRendering', false) &&
                         adSlot.firstChild &&
                         adSlot.firstChild instanceof HTMLElement
                     )
@@ -130,6 +129,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
                         adSlot.style.marginBottom = '12px';
+
+                        if (config.get('isDotcomRendering', false))
+                            background.style.position = 'fixed';
 
                         if (specs.ctaUrl != null) {
                             const ctaURLAnchor = document.createElement('a');
