@@ -148,16 +148,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-amp-zero-test-experiment",
-    "A/B test to test amp-experiment tag functionality on prod",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 8, 3),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-remote-epic-variants",
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
