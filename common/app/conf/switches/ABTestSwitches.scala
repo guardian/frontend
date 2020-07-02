@@ -138,17 +138,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-vii",
-    "Test new design on 3rd article view",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-centesimus",
+    "ab-sign-in-gate-centesimus-2",
     "Show sign in gate to 100% of users on 3rd article view",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
