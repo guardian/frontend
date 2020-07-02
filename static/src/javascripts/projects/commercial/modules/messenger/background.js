@@ -116,7 +116,13 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         return fastdom
             .write(() => {
                 if (backgroundParent) {
-                    // adSlot.firstChild.style.contain = 'layout'; // TODO: create a stacking context
+                    // Create a stacking context
+                    if (
+                        adSlot.firstChild &&
+                        adSlot.firstChild instanceof HTMLElement
+                    )
+                        adSlot.firstChild.style.contain = 'layout';
+
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
                         adSlot.style.marginBottom = '12px';
