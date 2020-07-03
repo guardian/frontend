@@ -162,7 +162,7 @@ trait ConsentsJourney
           emailFilledForm,
           guestPasswordSetForm.getOrElse(GuestPasswordForm.form()),
           newsletterService.getEmailSubscriptions(emailFilledForm),
-          EmailNewsletters.all)
+          EmailNewsletters.publicNewsletters)
       )(page, request, context))
     }
   }
@@ -186,7 +186,7 @@ trait ConsentsJourney
           idUrlBuilder,
           emailFilledForm,
           newsletterService.getEmailSubscriptions(emailFilledForm),
-          EmailNewsletters.all,
+          EmailNewsletters.publicNewsletters,
           consentHint,
           skin = None
         ))(page, request, context)
