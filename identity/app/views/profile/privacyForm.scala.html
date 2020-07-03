@@ -3,18 +3,18 @@
 @import com.gu.identity.model.Consent
 @import com.gu.identity.model.Consent._
 @import model.IdentityPage
+@import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 @import views.support.fragment.Switch._
 @import views.support.fragment.ConsentChannel._
 
-@import com.gu.identity.model.EmailNewsletter
 @(idUrlBuilder: services.IdentityUrlBuilder,
   idRequest: services.IdentityRequest,
   user: com.gu.identity.model.User,
   privacyForm: Form[_root_.form.PrivacyFormData],
   emailPrefsForm: Form[EmailPrefsData],
   emailSubscriptions: List[String],
-  availableLists: List[EmailNewsletter],
+  availableLists: EmailNewsletters,
   consentsUpdated: Boolean = false,
   consentHint: Option[String] = None
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
