@@ -248,7 +248,6 @@ case class DCRDataModel(
 
   // Match Data
   matchUrl: Option[String], // Optional url used for match data
-  campaigns: Option[JsValue]
 )
 
 object DCRDataModel {
@@ -306,8 +305,7 @@ object DCRDataModel {
       "slotMachineFlags" -> model.slotMachineFlags,
       "contributionsServiceUrl" -> model.contributionsServiceUrl,
       "badge" -> model.badge,
-      "matchUrl" -> model.matchUrl,
-      "campaigns" -> model.campaigns
+      "matchUrl" -> model.matchUrl
     )
   }
 
@@ -450,7 +448,7 @@ object DotcomponentsDataModel {
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
 
-  private def toBlock(block: APIBlock, page: PageWithStoryPackage, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes): Block = {
+  private def toBlock(block: APIBlock, page: PageWithStoryPackage, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes, calloutsUrl: Option[String]): Block = {
 
     val article = page.article
 
@@ -466,7 +464,6 @@ object DotcomponentsDataModel {
     // This is meant to ensure that DCP and DCR use the same dates.
     val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
-    val calloutsUrl: Option[String] = page.getJavascriptConfig.get("calloutsUrl").flatMap(_.asOpt[String])
 
     Block(
       id = block.id,
@@ -488,6 +485,24 @@ object DotcomponentsDataModel {
   def fromArticle(page: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
 
     val article = page.article
+
+    val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
+      acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+    })
+
+    val config = Config(
+      switches = switches,
+      abTests = ActiveExperiments.getJsMap(request),
+      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
+      ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
+      googletagUrl = Configuration.googletag.jsLocation,
+      stage = common.Environment.stage,
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
+    )
+
+    val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false)
+    val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
+    val calloutsUrl = combinedConfig.fields.toList.filter(entry => entry._1 == "calloutsUrl").headOption.flatMap( entry => entry._2.asOpt[String] )
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
@@ -514,7 +529,7 @@ object DotcomponentsDataModel {
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes)).toList
+      .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes, calloutsUrl)).toList
 
     val pagination = page match {
       case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
@@ -531,21 +546,17 @@ object DotcomponentsDataModel {
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes))
+      blocks.main.map(block => toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes, calloutsUrl))
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes))
+        .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes, calloutsUrl))
     }
 
     val jsConfig = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
-
-    val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
-      acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-    })
 
     // See https://developers.google.com/search/docs/data-types/article (and the AMP info too)
     // For example, we need to provide an image of at least 1200px width to be valid here
@@ -645,19 +656,6 @@ object DotcomponentsDataModel {
 
     val byline = article.trail.byline
 
-    val config = Config(
-      switches = switches,
-      abTests = ActiveExperiments.getJsMap(request),
-      commercialBundleUrl = buildFullCommercialUrl("javascripts/graun.commercial.dcr.js"),
-      ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
-      googletagUrl = Configuration.googletag.jsLocation,
-      stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
-    )
-
-    val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false)
-    val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-
     val author = Author(
       byline = byline,
       twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle)
@@ -732,8 +730,7 @@ object DotcomponentsDataModel {
       badge = badge,
 
       // Match Data
-      matchUrl = makeMatchUrl(page),
-      campaigns = page.getJavascriptConfig.get("campaigns")
+      matchUrl = makeMatchUrl(page)
     )
   }
 }
