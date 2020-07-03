@@ -1,8 +1,8 @@
 @import views.support.RenderClasses
+@import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 @import controllers.editprofile.ProfileForms
 
-@import com.gu.identity.model.EmailNewsletter
 @(
     activeUrl: String,
     user: com.gu.identity.model.User,
@@ -11,7 +11,7 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: List[EmailNewsletter],
+    availableLists: EmailNewsletters,
     consentsUpdated: Boolean,
     consentHint: Option[String],
     changedEmail: Option[String] = None
