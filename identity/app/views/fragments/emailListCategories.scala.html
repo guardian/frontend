@@ -1,11 +1,11 @@
 @import _root_.form.IdFormHelpers.nonInputFields
-@import _root_.com.gu.identity.model.{EmailNewsletter, EmailNewsletters}
+@import _root_.com.gu.identity.model.EmailNewsletter
 @import services.EmailPrefsData
 @import views.support.`package`.Seq2zipWithRowInfo
 
 @(
     emailPrefsForm: Form[EmailPrefsData],
-    availableLists: EmailNewsletters,
+    availableLists: List[EmailNewsletter],
     emailSubscriptions: List[String],
     startsOpen: Boolean = false
 )(implicit request: RequestHeader, messages: play.api.i18n.Messages)
@@ -41,7 +41,7 @@
     ).zipWithIndex.map { case (theme, index) =>
         @emailListCategoryList(
             theme,
-            availableLists.subscriptions.filter(_.theme == theme),
+            availableLists.filter(_.theme == theme),
             (startsOpen == true && index == 0)
         )
     }

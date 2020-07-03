@@ -130,7 +130,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
             idUrlBuilder,
             emailFilledForm,
             newsletterService.getEmailSubscriptions(emailFilledForm),
-            EmailNewsletters.all,
+            EmailNewsletters.publicNewsletters,
             consentsUpdated,
             consentHint,
             changedEmail
