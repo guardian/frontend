@@ -58,7 +58,7 @@ case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, t
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
-case class CalloutBlockElement(id: String, activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
+case class CalloutBlockElement(id: String, calloutsUrl: Option[String], activeFrom: Long, displayOnSensitive: Boolean, formId: Int, title: String, description: String, tagName: String, formFields: List[CalloutFormField]) extends PageElement
 case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
@@ -160,7 +160,7 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue]): List[PageElement] = {
+  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue], calloutsUrl: Option[String]): List[PageElement] = {
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -282,7 +282,7 @@ object PageElement {
         )
       }).toList
 
-      case Embed => embedToPageElement(element, campaigns).toList
+      case Embed => embedToPageElement(element, campaigns, calloutsUrl).toList
                     // This process returns either:
                     // 1. SoundcloudBlockElement
                     // 2. EmbedBlockElement
@@ -456,14 +456,14 @@ object PageElement {
     }
   }
 
-  private def embedToPageElement(element: ApiBlockElement, campaigns: Option[JsValue]): Option[PageElement] = {
+  private def embedToPageElement(element: ApiBlockElement, campaigns: Option[JsValue], calloutsUrl: Option[String]): Option[PageElement] = {
     for {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
       extractSoundcloudBlockElement(html, mandatory)
-        .getOrElse(CalloutExtraction.extractCallout(html: String, campaigns)
+        .getOrElse(CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl)
           .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
     }
   }

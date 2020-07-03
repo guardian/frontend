@@ -435,7 +435,7 @@ object DotcomponentsDataModel {
     } else elems
   }
 
-  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue]): List[PageElement] = {
+  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue], calloutsUrl: Option[String]): List[PageElement] = {
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
     val elems = capiElems.toList.flatMap(el => PageElement.make(
       element = el,
@@ -444,7 +444,8 @@ object DotcomponentsDataModel {
       atoms = atoms,
       isMainBlock,
       isImmersive,
-      campaigns
+      campaigns,
+      calloutsUrl
     )).filter(PageElement.isSupported)
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
@@ -465,10 +466,11 @@ object DotcomponentsDataModel {
     // This is meant to ensure that DCP and DCR use the same dates.
     val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
+    val calloutsUrl = page.getJavascriptConfig.get("calloutsUrl").map(_.toString())
 
     Block(
       id = block.id,
-      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive, campaigns),
+      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive, campaigns, calloutsUrl),
       createdOn = createdOn,
       createdOnDisplay = createdOnDisplay,
       lastUpdated = Some(displayedDateTimes.lastUpdated),
