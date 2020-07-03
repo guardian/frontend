@@ -100,6 +100,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent.appendChild(background);
 
         // Inject styles in DCR (from _creatives.scss)
+        // mark: 0bf74539-5466-4907-ae7b-c0d8fc41112d
         if (config.get('isDotcomRendering', false)) {
             backgroundParent.style.position = 'absolute';
             backgroundParent.style.top = '0';
