@@ -466,7 +466,7 @@ object DotcomponentsDataModel {
     // This is meant to ensure that DCP and DCR use the same dates.
     val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
-    val calloutsUrl = page.getJavascriptConfig.get("calloutsUrl").map(_.toString())
+    val calloutsUrl: Option[String] = page.getJavascriptConfig.get("calloutsUrl").flatMap(_.asOpt[String])
 
     Block(
       id = block.id,
