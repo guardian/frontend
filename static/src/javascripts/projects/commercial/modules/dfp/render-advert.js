@@ -1,6 +1,7 @@
 // @flow
 
 import qwery from 'qwery';
+import config from 'lib/config';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import { Advert } from 'commercial/modules/dfp/Advert';
@@ -32,6 +33,15 @@ const addClassIfHasClass = (newClassNames: Array<string>) =>
                     newClassNames.forEach(className => {
                         advert.node.classList.add(className);
                     });
+                    // Add 100% width from _adslot.scss
+                    if (
+                        config.get('isDotcomRendering', false) &&
+                        !newClassNames.includes('ad-slot--im') &&
+                        !newClassNames.includes('ad-slot--carrot') &&
+                        !newClassNames.includes('ad-slot--offset-right') &&
+                        newClassNames.includes('ad-slot--fluid')
+                    )
+                        advert.node.style.width = '100%';
                 });
             }
             return Promise.resolve();

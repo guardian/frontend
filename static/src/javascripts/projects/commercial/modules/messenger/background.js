@@ -1,4 +1,5 @@
 // @flow
+import config from 'lib/config';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
@@ -98,12 +99,39 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         const background = document.createElement('div');
         backgroundParent.appendChild(background);
 
+        // Inject styles in DCR (from _creatives.scss)
+        if (config.get('isDotcomRendering', false)) {
+            backgroundParent.style.position = 'absolute';
+            backgroundParent.style.top = '0';
+            backgroundParent.style.left = '0';
+            backgroundParent.style.right = '0';
+            backgroundParent.style.bottom = '0';
+            backgroundParent.style.clip = 'rect(0, auto, auto, 0)';
+
+            background.style.top = '0';
+            background.style.left = '0';
+            background.style.right = '0';
+            background.style.bottom = '0';
+            background.style.transition = 'background 100ms ease';
+        }
+
         return fastdom
             .write(() => {
                 if (backgroundParent) {
+                    // Create a stacking context in DCR
+                    if (
+                        config.get('isDotcomRendering', false) &&
+                        adSlot.firstChild &&
+                        adSlot.firstChild instanceof HTMLElement
+                    )
+                        adSlot.firstChild.style.contain = 'layout';
+
                     if (specs.scrollType === 'interscroller') {
                         adSlot.style.height = '85vh';
                         adSlot.style.marginBottom = '12px';
+
+                        if (config.get('isDotcomRendering', false))
+                            background.style.position = 'fixed';
 
                         if (specs.ctaUrl != null) {
                             const ctaURLAnchor = document.createElement('a');
@@ -135,6 +163,12 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
             specs.scrollType
         }`;
 
+        if (
+            config.get('isDotcomRendering', false) &&
+            specs.scrollType === 'parallax'
+        )
+            background.style.position = 'absolute';
+
         Object.assign(background.style, specStyles);
 
         if (specs.scrollType === 'fixed') {
@@ -146,6 +180,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 })
                 .then(rect =>
                     fastdom.write(() => {
+                        if (config.get('isDotcomRendering', false)) {
+                            background.style.position = 'fixed';
+                        }
                         if (specStyles.backgroundColor) {
                             backgroundParent.style.backgroundColor =
                                 specStyles.backgroundColor;
