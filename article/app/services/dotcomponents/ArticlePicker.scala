@@ -5,7 +5,7 @@ import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, Dot
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{BlockElement, ContentAtomBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
-import model.dotcomrendering.pageElements.{SoundcloudBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement, VideoFacebookBlockElement}
+import model.dotcomrendering.pageElements.{DocumentBlockElement, SoundcloudBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement, VideoFacebookBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -37,14 +37,16 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
 
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
-      case _: TextBlockElement => false
+
+      case _: DocumentBlockElement => false
       case _: ImageBlockElement => false
-      case _: TweetBlockElement => false
+      case _: InstagramBlockElement => false
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
-      case _: InstagramBlockElement => false
-      case _: TableBlockElement => false
       case _: SoundcloudBlockElement => false
+      case _: TableBlockElement => false
+      case _: TextBlockElement => false
+      case _: TweetBlockElement => false
       case _: VideoFacebookBlockElement => false
       case _: VideoVimeoBlockElement => false
       case _: VideoYoutubeBlockElement => false

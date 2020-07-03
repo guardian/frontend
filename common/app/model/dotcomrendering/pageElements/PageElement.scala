@@ -63,7 +63,7 @@ case class ChartAtomBlockElement(id: String, url: String) extends PageElement
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(body: String, avatarURL: String, profileURL: String, profileName: String, permalink: String, dateTime: String) extends PageElement
 case class ContentAtomBlockElement(atomId: String) extends PageElement
-case class DocumentBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+case class DocumentBlockElement(embedUrl: Option[String], height: Option[Int], width: Option[Int], title: Option[String], isMandatory: Option[Boolean]) extends PageElement
 case class DisclaimerBlockElement(html: String) extends PageElement
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean) extends PageElement
 case class FormBlockElement(html: Option[String]) extends PageElement
@@ -127,6 +127,7 @@ object PageElement {
       case _: CommentBlockElement => true
       case _: ContentAtomBlockElement => true
       case _: DisclaimerBlockElement => true
+      case _: DocumentBlockElement => true
       case _: EmbedBlockElement => true
       case _: ExplainerAtomBlockElement => true
       case _: GenericAtomBlockElement => true
@@ -153,7 +154,6 @@ object PageElement {
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
-      case doc: DocumentBlockElement if doc.isMandatory.exists(identity) => true
       case _: CodeBlockElement => true // Currently will just fail over at DCR
 
       case _ => false
@@ -420,7 +420,7 @@ object PageElement {
       case Interactive => element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html)).toList
-      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Document => element.documentTypeData.map(d => DocumentBlockElement(getEmbedUrl(d.html), d.width, d.height, d.title, d.isMandatory)).toList
       case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined)).toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html)).toList
       case Code => List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
