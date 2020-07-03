@@ -248,7 +248,6 @@ case class DCRDataModel(
 
   // Match Data
   matchUrl: Option[String], // Optional url used for match data
-  campaigns: Option[JsValue]
 )
 
 object DCRDataModel {
@@ -306,8 +305,7 @@ object DCRDataModel {
       "slotMachineFlags" -> model.slotMachineFlags,
       "contributionsServiceUrl" -> model.contributionsServiceUrl,
       "badge" -> model.badge,
-      "matchUrl" -> model.matchUrl,
-      "campaigns" -> model.campaigns
+      "matchUrl" -> model.matchUrl
     )
   }
 
@@ -732,8 +730,7 @@ object DotcomponentsDataModel {
       badge = badge,
 
       // Match Data
-      matchUrl = makeMatchUrl(page),
-      campaigns = page.getJavascriptConfig.get("campaigns")
+      matchUrl = makeMatchUrl(page)
     )
   }
 }
