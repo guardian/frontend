@@ -316,21 +316,9 @@
 }
 
 .signin-gate__faqlinks--var {
-    background-color: $brightness-97;
     padding-bottom: $gs-baseline * 3;
     padding-top: $gs-baseline * 1;
     position: relative;
-}
-
-.signin-gate__faqlinks--fullwidth--var {
-    background-color: $brightness-97;
-    width: 100%;
-    height: inherit;
-    position: absolute;
-    left: -$gs-baseline;
-    top: 0;
-    bottom: 0;
-    z-index: -1;
 }
 
 // VARIANT DESIGN - article gradient overlay changes // vii-variant
