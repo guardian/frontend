@@ -324,10 +324,10 @@
 
 .signin-gate__faqlinks--fullwidth--var {
     background-color: $brightness-97;
-    width: 200vw;
+    width: 100%;
     height: inherit;
     position: absolute;
-    left: calc(50% - 50vw);
+    left: -$gs-baseline;
     top: 0;
     bottom: 0;
     z-index: -1;
