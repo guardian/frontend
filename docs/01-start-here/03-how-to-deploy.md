@@ -12,8 +12,6 @@ _The Guardian frontend uses Continuous Deployment, any code pushed to the master
 2. Once the build step is completed, it will be automatically deployed to PROD.
 2a. Prout will send a notification when the deployment has completed
 3. Verify that your change works properly.
-3a. Check the [Deploy dashboard](https://kibana.gu-web.net/goto/643979153f817c4bb1b64f7d56a395a7) (Private) for any potential issue.
-
 
 ## Blocking deployment
 
