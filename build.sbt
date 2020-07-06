@@ -57,7 +57,7 @@ val common = library("common").settings(
     capiAws,
     okhttp,
     jsonSchema
-  )
+  ) ++ jackson
 ).settings(
     mappings in TestAssets ~= filterAssets
 )
