@@ -106,7 +106,7 @@ object CalloutExtraction {
       activeFrom         <- (campaign \ "activeFrom").asOpt[Long]
       displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
       formId             <- (campaign \ "fields" \ "formId").asOpt[Int]
-      title              <- (campaign \ "name").asOpt[String]
+      title              <- (campaign \ "fields" \ "callout").asOpt[String]
       description        <- (campaign \ "fields" \ "description").asOpt[String]
       tagName            <- (campaign \ "fields" \ "tagName").asOpt[String]
       formFields1        <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
