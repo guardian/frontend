@@ -142,7 +142,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             );
                         }
 
-                        if (config.get('isDotcomRendering', false) || true) {
+                        if (config.get('isDotcomRendering', false)) {
                             background.style.position = 'fixed';
                             const bottomLine = document.createElement('div');
                             bottomLine.classList.add('ad-slot__line');
