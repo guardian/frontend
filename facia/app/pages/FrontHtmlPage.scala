@@ -25,7 +25,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     val html: Html = frontBody(page)
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
+      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition, request.getQueryString("adtest"))),
       CommercialMPUForFronts()
     )
   }

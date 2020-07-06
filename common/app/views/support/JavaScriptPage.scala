@@ -13,9 +13,9 @@ import play.api.libs.json._
 
 object JavaScriptPage {
 
-  def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
+  def get(page: Page, edition: Edition, isPreview: Boolean, adTestParam: Option[String]): JsValue = Json.toJson(getMap(page, edition, isPreview, adTestParam))
 
-  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String,JsValue] = {
+  def getMap(page: Page, edition: Edition, isPreview: Boolean, adTestParam: Option[String]): Map[String,JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -41,7 +41,7 @@ object JavaScriptPage {
 
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
-      "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
+      "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition, adTestParam)),
       "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true

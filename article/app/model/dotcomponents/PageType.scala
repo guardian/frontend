@@ -20,14 +20,15 @@ object PageType {
   implicit val writes = Json.writes[PageType]
 
   def apply(articlePage: PageWithStoryPackage, request: RequestHeader, context: ApplicationContext): PageType = {
+    val adTestParam = request.getQueryString("adtest");
     PageType(
-      getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("isFront", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
       context.isPreview,
-      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
+      getMap(articlePage, Edition(request), false, adTestParam).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
     )
   }
 }

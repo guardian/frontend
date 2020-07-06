@@ -26,7 +26,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
     import views.support.{BulletCleaner, CommercialComponentHigh}
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.metadata.hasPageSkin(edition)),
+      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.metadata.hasPageSkin(edition, request.getQueryString("adtest"))),
     )
   }
 

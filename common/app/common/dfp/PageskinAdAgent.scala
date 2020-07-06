@@ -55,9 +55,18 @@ trait PageskinAdAgent {
   }
 
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
-  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
+  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition, adTestParam: Option[String]): Boolean = {
+      if (metaData.isFront) {
+         findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
+      } else false
+
     if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
+      findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
+        if (sponsorship.targetsAdTest) {
+          sponsorship.adTestValue.getOrElse("") == adTestParam.getOrElse("")
+        } else {
+          true
+        })
     } else false
   }
 
