@@ -25,7 +25,7 @@ import scala.concurrent.duration._
 
     val result = new StrictTransportSecurityHeaderFilter().apply(action _)(request)
 
-    Await.result(result, 1.second).header.headers("Strict-Transport-Security") should equal("max-age=31536000; preload")
+    Await.result(result, 1.second).header.headers("Strict-Transport-Security") should equal("max-age=31536000; includeSubDomains; preload")
   }
 
 }
