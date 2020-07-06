@@ -131,9 +131,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                         adSlot.style.height = '85vh';
                         adSlot.style.marginBottom = '12px';
 
-                        if (config.get('isDotcomRendering', false))
-                            background.style.position = 'fixed';
-
                         if (specs.ctaUrl != null) {
                             const ctaURLAnchor = document.createElement('a');
                             ctaURLAnchor.href = specs.ctaUrl;
@@ -143,6 +140,17 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                                 ctaURLAnchor,
                                 adSlot.firstChild
                             );
+                        }
+
+                        if (config.get('isDotcomRendering', false)) {
+                            background.style.position = 'fixed';
+                            const bottomLine = document.createElement('div');
+                            bottomLine.classList.add('ad-slot__line');
+                            bottomLine.style.position = 'absolute';
+                            bottomLine.style.width = '100%';
+                            bottomLine.style.bottom = '0';
+                            bottomLine.style.borderBottom = '1px solid #dcdcdc';
+                            backgroundParent.appendChild(bottomLine);
                         }
                     } else {
                         adSlot.insertBefore(
