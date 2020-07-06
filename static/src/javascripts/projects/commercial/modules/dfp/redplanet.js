@@ -4,8 +4,6 @@ import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { commercialRedplanet } from 'common/modules/experiments/tests/commercial-redplanet-aus';
 
 let initialised = false;
 
@@ -53,8 +51,7 @@ const setupRedplanet: () => Promise<void> = () => {
 export const init = (): Promise<void> => {
     if (
         commercialFeatures.launchpad &&
-        isInAuOrNz() &&
-        isInVariantSynchronous(commercialRedplanet, 'variant')
+        isInAuOrNz()
     ) {
         return setupRedplanet();
     }

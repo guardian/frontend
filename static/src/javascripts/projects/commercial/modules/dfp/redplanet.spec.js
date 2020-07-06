@@ -3,7 +3,6 @@
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import config from 'lib/config';
 import { init } from './redplanet';
 
@@ -15,7 +14,6 @@ const trueConsentMock = (callback): void =>
 const falseConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': false });
 
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -72,9 +70,6 @@ describe('init', () => {
         config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
         onIabConsentNotification.mockImplementation(trueConsentMock);
-        isInVariantSynchronous.mockImplementation(
-            (testId, variantId) => variantId === 'variant'
-        );
 
         await init();
 
