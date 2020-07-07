@@ -316,9 +316,27 @@
 }
 
 .signin-gate__faqlinks--var {
+    background-color: $brightness-97;
     padding-bottom: $gs-baseline * 3;
     padding-top: $gs-baseline * 1;
     position: relative;
+}
+
+.signin-gate__faqlinks--fullwidth--var {
+    background-color: $brightness-97;
+    z-index: -1;
+}
+
+.signin-gate__faqlinks--fullwidth--var:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -9999px;
+    right: 0;
+    border-left: 9999px solid $brightness-97;
+    box-shadow: 9999px 0 0 $brightness-97;
+    z-index: -1;
 }
 
 // VARIANT DESIGN - article gradient overlay changes // vii-variant
