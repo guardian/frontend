@@ -6,10 +6,10 @@ import play.api.libs.json._
 import scala.collection.JavaConverters._
 
 sealed trait CalloutFormField
-case class CalloutFormFieldBase(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String) extends CalloutFormField
-case class CalloutFormFieldRadio(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
-case class CalloutFormFieldCheckbox(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
-case class CalloutFormFieldSelect(id: String, `type`: String, name: String, description: String, required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldBase(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String) extends CalloutFormField
+case class CalloutFormFieldRadio(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldCheckbox(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldSelect(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
 
 object CalloutFormField {
   implicit val CalloutFormFieldBaseWrites: Writes[CalloutFormFieldBase] = Json.writes[CalloutFormFieldBase]
@@ -29,11 +29,11 @@ object CalloutExtraction {
   }
 
   private def formFieldItemToCalloutFormFieldBase(item: JsValue) : Option[CalloutFormFieldBase] = {
+    val description = (item \ "description").asOpt[String]
     for {
       id          <- (item \ "id").asOpt[String]
       type_       <- (item \ "type").asOpt[String]
       name        <- (item \ "name").asOpt[String]
-      description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "label").asOpt[String]
@@ -43,11 +43,11 @@ object CalloutExtraction {
   }
 
   private def formFieldItemToCalloutFormFieldRadio(item: JsValue) : Option[CalloutFormFieldRadio] = {
+    val description = (item \ "description").asOpt[String]
     for {
       id          <- (item \ "id").asOpt[String]
       type_       <- (item \ "type").asOpt[String]
       name        <- (item \ "name").asOpt[String]
-      description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "label").asOpt[String]
@@ -58,11 +58,11 @@ object CalloutExtraction {
   }
 
   private def formFieldItemToCalloutFormFieldCheckbox(item: JsValue) : Option[CalloutFormFieldCheckbox] = {
+    val description = (item \ "description").asOpt[String]
     for {
       id          <- (item \ "id").asOpt[String]
       type_       <- (item \ "type").asOpt[String]
       name        <- (item \ "name").asOpt[String]
-      description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "label").asOpt[String]
@@ -73,11 +73,11 @@ object CalloutExtraction {
   }
 
   private def formFieldItemToCalloutFormFieldSelect(item: JsValue) : Option[CalloutFormFieldSelect] = {
+    val description = (item \ "description").asOpt[String]
     for {
       id          <- (item \ "id").asOpt[String]
       type_       <- (item \ "type").asOpt[String]
       name        <- (item \ "name").asOpt[String]
-      description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
       label       <- (item \ "label").asOpt[String]
