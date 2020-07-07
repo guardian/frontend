@@ -12,6 +12,7 @@ import org.scalatest.{FlatSpec, Matchers}
 class PageskinAdAgentTest extends FlatSpec with Matchers {
   val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
   val noAdTestParam: Option[String] = None
+  val mockedAdTestParam: Option[String] = Some("test-page-skin")
   val commercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
     editionAdTargetings = Set(EditionAdTargeting(defaultEdition, Some(keywordParamSet))),
@@ -159,9 +160,9 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", sportIndexFrontMeta, defaultEdition, noAdTestParam) should be(true)
   }
 
-  "non production DfpAgent" should "should recognise adtest targetted line items" in {
+  "non production DfpAgent" should "should recognise adtest targetted line items only if the request includes adtest param" in {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
-      defaultEdition, noAdTestParam) should be(
+      defaultEdition, mockedAdTestParam) should be(
       true)
   }
 
