@@ -36,7 +36,7 @@ object CalloutExtraction {
       description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "name").asOpt[String]
+      label       <- (item \ "label").asOpt[String]
     } yield {
       CalloutFormFieldBase(id, type_, name, description, required == "1", hideLabel == "1", label)
     }
@@ -50,7 +50,7 @@ object CalloutExtraction {
       description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "name").asOpt[String]
+      label       <- (item \ "label").asOpt[String]
       options     <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldRadio(id, type_, name, description, required == "1", hideLabel == "1", label, options)
@@ -65,7 +65,7 @@ object CalloutExtraction {
       description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "name").asOpt[String]
+      label       <- (item \ "label").asOpt[String]
       options     <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldCheckbox(id, type_, name, description, required == "1", hideLabel == "1", label, options)
@@ -80,7 +80,7 @@ object CalloutExtraction {
       description <- (item \ "description").asOpt[String]
       required    <- (item \ "required").asOpt[String]
       hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "name").asOpt[String]
+      label       <- (item \ "label").asOpt[String]
       options     <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldSelect(id, type_, name, description, required == "1", hideLabel == "1", label, options)
