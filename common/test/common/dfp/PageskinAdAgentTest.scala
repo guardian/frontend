@@ -166,8 +166,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       true)
   }
 
-  "production DfpAgent" should "should recognise adtest targetted line items" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition, noAdTestParam) should be(true)
+  "production DfpAgent" should "should recognise adtest targetted line items only if the request includes the same adtest param" in {
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition, mockedAdTestParam) should be(true)
   }
 
   "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
