@@ -52,8 +52,7 @@ const htmlTemplate: ({
             <a class="signin-gate__link--var signin-gate__signin--var js-signin-gate__sign-in signin-gate__link-no-ptm signin-gate__center-424" href="${signInUrl}">Sign in</a>
         </div>
         <div class="signin-gate__faqlinks--var signin-gate__margin-top--var">
-        <div class="signin-gate__faqlinks--fullwidth--var"></div>
-
+            <div class="signin-gate__faqlinks--fullwidth--var"></div>
             <div class="signin-gate__buttons">
                 <a class="signin-gate__link--var js-signin-gate__why" href="${guUrl}/membership/2019/dec/20/signing-in-to-the-guardian">Why register & how does it help?</a>
             </div>
