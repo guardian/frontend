@@ -152,6 +152,7 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
   val edition: Edition = mock[Edition]
   val sensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
   val nonSensitiveContentFields = Some(ContentFields(sensitive = Some(true)))
+  val noAdTestParam: Option[String] = None
 
 
   when(edition.id) thenReturn "GB"
@@ -159,31 +160,31 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
   "ContentJavascriptConfig" should "set shouldHideReaderRevenue to true for a sensitive article, published before the cutoff date, no RR flag" in {
 
     val content = Content(article.copy(webPublicationDate = dateBeforeCutoff, fields =  Some(ContentFields(sensitive = Some(true)))))
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should equal (Some(JsBoolean(true)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false, noAdTestParam).get("shouldHideReaderRevenue") should equal (Some(JsBoolean(true)))
   }
 
   it should "set shouldHideReaderRevenue to false for a non-sensitive article, published before the cutoff date, no RR flag" in {
 
     val content =  Content(article.copy(webPublicationDate = dateBeforeCutoff, fields = Some(ContentFields(sensitive = Some(false)))))
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false, noAdTestParam).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
   }
 
   it should "set shouldHideReaderRevenue to false for a sensitive article, published after the cutoff date, sHHR flag set to false" in {
 
     val content = Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(true), shouldHideReaderRevenue = Some(false)))))
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false, noAdTestParam).get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
   }
 
   it should "set shouldHideReaderRevenue to true for a sensitive article, published after the cutoff date, sHHR flag set to true" in {
 
     val content = Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(true), shouldHideReaderRevenue = Some(true)))))
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview = false, noAdTestParam).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
   it should "set shouldHideReaderRevenue to true for a non sensitive article, published after the cutoff date, sHHR flag set to true" in {
 
     val content =  Content(article.copy(webPublicationDate = dateAfterCutoff, fields = Some(ContentFields(sensitive = Some(false), shouldHideReaderRevenue = Some(true)))))
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview =false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, isPreview =false, noAdTestParam).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
   it should "set shouldHideReaderRevenue to true for any article that is Paid Content, regardless of the state of the shouldHideReaderRevenue flag in the CAPI response" in {
@@ -196,7 +197,7 @@ class ContentTest extends FlatSpec with Matchers with GuiceOneAppPerSuite with i
           tags = List(tag(s"tone/advertisement-features"))
         )
       )
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, false).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
+    JavaScriptPage.getMap(SimpleContentPage(content), edition, false, noAdTestParam).get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
 

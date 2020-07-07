@@ -11,6 +11,7 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class PageskinAdAgentTest extends FlatSpec with Matchers {
   val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
+  val noAdTestParam: Option[String] = None
   val commercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
     editionAdTargetings = Set(EditionAdTargeting(defaultEdition, Some(keywordParamSet))),
@@ -130,42 +131,42 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Uk) should be(true)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Uk, noAdTestParam) should be(true)
   }
 
   it should "be true for a series front" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/fake-series-adunit/new-view-series", colourSeriesMeta, Uk ) should be(true)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/fake-series-adunit/new-view-series", colourSeriesMeta, Uk, noAdTestParam) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Au) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Au, noAdTestParam) should be(false)
   }
 
   it should "be false for a front without a pageskin" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/culture/front", pressedFrontMeta, defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/culture/front", pressedFrontMeta, defaultEdition, noAdTestParam) should be(false)
   }
 
   it should "be false for a front with a pageskin in no edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, defaultEdition) should be(false)
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, Us) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, defaultEdition, noAdTestParam) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, Us, noAdTestParam) should be(false)
   }
 
   it should "be false for a content (non-front) page" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport", articleMeta, defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport", articleMeta, defaultEdition, noAdTestParam) should be(false)
   }
 
   it should "be true for an index front (tag page)" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", sportIndexFrontMeta, defaultEdition) should be(true)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", sportIndexFrontMeta, defaultEdition, noAdTestParam) should be(true)
   }
 
   "non production DfpAgent" should "should recognise adtest targetted line items" in {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
-      defaultEdition) should be(
+      defaultEdition, noAdTestParam) should be(
       true)
   }
 
   "production DfpAgent" should "should recognise adtest targetted line items" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(true)
+    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition, noAdTestParam) should be(true)
   }
 
   "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
