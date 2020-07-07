@@ -31,10 +31,6 @@ object HtmlPageHelpers {
 
   def defaultBodyClasses()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
     val edition = Edition(request)
-    print("*** page")
-    print(page)
-    print("*** request adtest")
-    print(request.getQueryString("adtest"))
 
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition, request.getQueryString("adtest"))),
