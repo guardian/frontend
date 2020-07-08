@@ -23,7 +23,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   def renderContributionsBannerAdmin: Action[AnyContent] = Action { implicit request =>
-    NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions)))
+    NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions.filterNot(_ == EU))))
   }
 
   def renderSubscriptionsBannerAdmin: Action[AnyContent] = Action { implicit request =>
@@ -35,7 +35,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   def redeploySubscriptionsBanner(region: String): Action[AnyContent] = redeployBanner(region, SubscriptionsBanner)
 
   def redeployBanner(region: String, bannerType: BannerType): Action[AnyContent] = Action.async { implicit request =>
-    ReaderRevenueRegion.fromString(region).fold(Future.successful(redeployFailed(new Throwable("attempted to redeploy banner in unknown region"), bannerType))){ region: ReaderRevenueRegion =>
+    ReaderRevenueRegion.fromName(region).fold(Future.successful(redeployFailed(new Throwable("attempted to redeploy banner in unknown region"), bannerType))){ region: ReaderRevenueRegion =>
       val requester: String = UserIdentity.fromRequest(request) map(_.fullName) getOrElse "unknown user (dev-build?)"
       val millisSinceEpoch = DateTime.now.getMillis()
       val jsonLog: JsValue = Json.toJson(BannerDeploy(millisSinceEpoch))
