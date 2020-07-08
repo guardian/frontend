@@ -101,8 +101,8 @@ class ArticleController(
     val pageType: PageType = PageType(article, request, context)
     output = output + "\n" + s"pageType: ${pageType.toString}"
 
-    Future.successful(Ok(output))
-    /*
+    log.logger.info(output)
+
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
@@ -112,7 +112,6 @@ class ArticleController(
       case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, pageType)
       case AmpFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
     }
-     */
   }
 
   private def mapModel(path: String, range: BlockRange)(render: (ArticlePage, Blocks) => Future[Result])(implicit request: RequestHeader): Future[Result] = {
