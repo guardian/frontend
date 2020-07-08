@@ -73,7 +73,7 @@ describe('initialise', () => {
                     timeout: 200,
                 },
                 usp: {
-                    timeout: 8000
+                    timeout: 1500
                 }
 
             },

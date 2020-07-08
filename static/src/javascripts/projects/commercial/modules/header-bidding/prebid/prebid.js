@@ -92,7 +92,7 @@ const consentManagement: ConsentManagement = {
         allowAuctionWithoutConsent: true,
     },
     usp: {
-        timeout: 8000,
+        timeout: 1500,
     }
 };
 
