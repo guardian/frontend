@@ -23,7 +23,7 @@ class ReaderRevenueAdminController(wsClient: WSClient, val controllerComponents:
   }
 
   def renderContributionsBannerAdmin: Action[AnyContent] = Action { implicit request =>
-    NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions)))
+    NoCache(Ok(views.html.readerRevenue.bannerDeploys(ReaderRevenueRegion.allRegions.filterNot(_ == EU))))
   }
 
   def renderSubscriptionsBannerAdmin: Action[AnyContent] = Action { implicit request =>
