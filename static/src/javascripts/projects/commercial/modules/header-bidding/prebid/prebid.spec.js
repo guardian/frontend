@@ -67,9 +67,15 @@ describe('initialise', () => {
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
-                allowAuctionWithoutConsent: true,
-                cmpApi: 'iab',
-                timeout: 200,
+                gdpr: {
+                    allowAuctionWithoutConsent: true,
+                    cmpApi: 'iab',
+                    timeout: 200,
+                },
+                usp: {
+                    timeout: 1500
+                }
+
             },
             customPriceBucket: {
                 buckets: [

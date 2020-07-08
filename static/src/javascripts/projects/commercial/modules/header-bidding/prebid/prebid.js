@@ -22,10 +22,19 @@ type EnableAnalyticsConfig = {
     },
 };
 
-type ConsentManagement = {
+type GDPRConfig = {
     cmpApi: string,
     timeout: number,
     allowAuctionWithoutConsent: boolean,
+};
+
+type USPConfig = {
+    timeout: number,
+};
+
+type ConsentManagement = {
+    gdpr: GDPRConfig,
+    usp: USPConfig,
 };
 
 type UserSync =
@@ -77,9 +86,14 @@ type PbjsEventHandler = PbjsEventData => void;
 const bidderTimeout: number = 1500;
 
 const consentManagement: ConsentManagement = {
-    cmpApi: 'iab',
-    timeout: 200,
-    allowAuctionWithoutConsent: true,
+    gdpr: {
+        cmpApi: 'iab',
+        timeout: 200,
+        allowAuctionWithoutConsent: true,
+    },
+    usp: {
+        timeout: 1500,
+    }
 };
 
 class PrebidAdUnit {
