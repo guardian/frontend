@@ -56,7 +56,11 @@ const hasAcknowledged = bannerRedeploymentDate => {
 const selectorName = (bannerName: string) => (actionId: ?string) =>
     `#js-site-message--${bannerName}${actionId ? `__${actionId}` : ''}`;
 
-const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> => fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
+/**
+ * We're temporarily using the "/united-kingdom" route
+ * for users in the "european-union" region.
+ */
+const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> => fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region === 'european-union' ? 'united-kingdom' : region}`, {
         mode: 'cors',
     })
         .then(resp => hasAcknowledged(resp.time))
