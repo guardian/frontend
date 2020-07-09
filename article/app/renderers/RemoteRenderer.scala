@@ -34,13 +34,13 @@ class RemoteRenderer extends Logging {
     article: PageWithStoryPackage,
     endpoint: String
   )(implicit request: RequestHeader): Future[Result] = {
-    println(endpoint)
     def get(): Future[Result] = {
       ws.url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
         .post(payload)
         .map(response => {
+          log.logger.info("GetResponse: " + response.toString)
           response.status match {
             case 200 =>
               Cached(article)(RevalidatableResult.Ok(Html(response.body)))
@@ -85,9 +85,7 @@ class RemoteRenderer extends Logging {
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
     val json = DCRDataModel.toJson(dataModel)
-    log.logger.info("Mark Test")
     log.logger.info("Datamodel: " + dataModel.toString)
-    log.logger.info("Json: ", json)
     get(ws, json, page, Configuration.rendering.renderingEndpoint)
   }
 }
