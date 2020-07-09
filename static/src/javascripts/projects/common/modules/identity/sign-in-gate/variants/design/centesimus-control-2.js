@@ -10,6 +10,8 @@ import {
     showPrivacySettingsCMPModule,
     addOverlayVariantCSS,
     setGatePageTargeting,
+    gateBorderFix,
+    addCSSOnOpinion
 } from '../../helper';
 
 // add the html template as the return of the function below
@@ -82,6 +84,21 @@ export const designShow: ({
             guUrl,
         }),
         handler: ({ articleBody, shadowArticleBody }) => {
+            // fix the border on the faqlinks
+            gateBorderFix();
+
+            addCSSOnOpinion({
+                element: shadowArticleBody,
+                selector: '.signin-gate__faqlinks--fullwidth--var',
+                css: 'signin-gate__faqlinks--fullwidth--var--comment',
+            });
+
+            addCSSOnOpinion({
+                element: shadowArticleBody,
+                selector: '.signin-gate__faqlinks--var',
+                css: 'signin-gate__faqlinks--var--comment',
+            });
+
             addOverlayVariantCSS({
                 element: shadowArticleBody,
                 selector: '.signin-gate__first-paragraph-overlay',
