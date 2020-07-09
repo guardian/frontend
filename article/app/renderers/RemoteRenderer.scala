@@ -35,6 +35,7 @@ class RemoteRenderer extends Logging {
     endpoint: String
   )(implicit request: RequestHeader): Future[Result] = {
     def get(): Future[Result] = {
+      log.logger.info("Endpoint: " + endpoint)
       ws.url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
@@ -86,6 +87,9 @@ class RemoteRenderer extends Logging {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
     val json = DCRDataModel.toJson(dataModel)
     log.logger.info("Datamodel: " + dataModel.toString)
+    log.logger.info("JsonModel: " + json.toString)
+    log.logger.info("PageSchema: " + page.articleSchemas.toString)
+    log.logger.info("PageArticle: " + page.article.toString)
     get(ws, json, page, Configuration.rendering.renderingEndpoint)
   }
 }
