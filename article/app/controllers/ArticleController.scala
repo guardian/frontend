@@ -37,11 +37,7 @@ class ArticleController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   // Replace Canonical with ArticleBlocks
   //  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
-<<<<<<< HEAD
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
-=======
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, ArticleBlocks)((article, blocks) => render(path, article, blocks))
->>>>>>> 204046967f4d8fc078803e96344a56e85d3d9c77
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
