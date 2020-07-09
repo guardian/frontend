@@ -36,7 +36,7 @@ class PublicationController(
                   year: String,
                   month: String,
                   day: String,
-                  tail: String): Action[AnyContent] = Action.async { implicit request =>
+                  tail: String): Action[AnyContent] =Action.async { implicit request =>
 
     val reqDate = requestedDate(s"$year/$month/$day")
 
@@ -54,6 +54,8 @@ class PublicationController(
       } else {
         s"$publication/${urlFormat(reqDate)}"
       }
+      log.logger.info("NewPath: " + newPath)
+      //articleController.renderArticle(newPath)
       articleController.renderItem(newPath)
     }
   }
