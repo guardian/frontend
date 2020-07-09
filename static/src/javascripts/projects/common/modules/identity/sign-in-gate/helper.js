@@ -211,6 +211,20 @@ export const showPrivacySettingsCMPModule: () => void = () => {
     }
 };
 
+// add extra css on a given selector on an opinion page
+export const addCSSOnOpinion: ({
+    element: HTMLElement,
+    selector: string,
+    css: string
+}) => void = ({ element, selector, css }) => {
+    if (config.get(`page.tones`) === 'Comment') {
+        const selection = element.querySelector(selector);
+        if (selection) {
+            selection.classList.add(css);
+        }
+    }
+}
+
 // add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
     element: HTMLElement,
@@ -277,6 +291,7 @@ export const setTemplate: ({
     ${template}
 `;
 
+// add opinion bg colour to gate fade
 export const addOverlayVariantCSS: ({
     element: HTMLElement,
     selector: string,
@@ -290,6 +305,15 @@ export const addOverlayVariantCSS: ({
         }
     }
 };
+
+// helper method to fix the border on the faqlinks bg colour
+export const gateBorderFix = () => {
+    const contentMainColumn = document.querySelector('.js-content-main-column');
+
+    if (contentMainColumn) {
+        contentMainColumn.classList.add('signin-gate__content-main-column__border-fix');
+    }
+}
 
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function
