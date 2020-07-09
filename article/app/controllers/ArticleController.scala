@@ -100,6 +100,7 @@ class ArticleController(
       case HtmlFormat if tier == RemoteRender => {
         // remoteRenderer.getArticle(ws, path, article, blocks, pageType)
         // Future.successful(Ok(output))
+        log.logger.info(s"Pascal 10:05")
         remoteRenderer.getArticle(ws, path, article, blocks, pageType)
 
       }
