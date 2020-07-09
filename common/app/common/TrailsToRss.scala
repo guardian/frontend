@@ -17,7 +17,6 @@ import play.api.mvc.RequestHeader
 import views.support.{Item140, Item460, ImageProfile}
 
 import scala.collection.JavaConverters._
-import scala.collection.JavaConverters._
 
 object TrailsToRss extends implicits.Collections {
 
