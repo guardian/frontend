@@ -90,26 +90,18 @@ class ArticleController(
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): Future[Result] = {
-    var output: String = ""
-
     val tier = ArticlePicker.getTier(article)
-    output = output + "\n" + s"tier: ${tier.toString}"
-
     val isAmpSupported = article.article.content.shouldAmplify
-    output = output + "\n" + s"isAmpSupported: ${isAmpSupported.toString}"
-
     val pageType: PageType = PageType(article, request, context)
-    output = output + "\n" + s"pageType: ${pageType.toString}"
-
-    log.logger.info(output)
-
     request.getRequestFormat match {
       case JsonFormat if request.forceDCR => Future.successful(common.renderJson(getGuuiJson(article, blocks), article).as("application/json"))
       case JsonFormat => Future.successful(common.renderJson(getJson(article), article))
       case EmailFormat => Future.successful(common.renderEmail(ArticleEmailHtmlPage.html(article), article))
       case HtmlFormat if tier == RemoteRender => {
         // remoteRenderer.getArticle(ws, path, article, blocks, pageType)
-        Future.successful(Ok(output))
+        // Future.successful(Ok(output))
+        remoteRenderer.getArticle(ws, path, article, blocks, pageType)
+
       }
       case HtmlFormat => Future.successful(common.renderHtml(ArticleHtmlPage.html(article), article))
       case AmpFormat if isAmpSupported => remoteRenderer.getAMPArticle(ws, path, article, blocks, pageType)

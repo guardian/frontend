@@ -36,7 +36,6 @@ class RemoteRenderer extends Logging {
   )(implicit request: RequestHeader): Future[Result] = {
 
     def get(): Future[Result] = {
-
       ws.url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
