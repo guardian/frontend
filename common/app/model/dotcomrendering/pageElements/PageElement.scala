@@ -136,6 +136,7 @@ object PageElement {
       case _: ImageBlockElement => true
       case _: InstagramBlockElement => true
       case _: InteractiveAtomBlockElement => true
+      case _: InteractiveBlockElement => true
       case _: MapBlockElement => true
       case _: ProfileAtomBlockElement => true
       case _: PullquoteBlockElement => true
