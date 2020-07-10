@@ -66,11 +66,4 @@ trait PageskinAdAgent {
         })
     } else false
   }
-
-  // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
-  def hasPageSkinOrAdTestPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
-    if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
-    } else false
-  }
 }

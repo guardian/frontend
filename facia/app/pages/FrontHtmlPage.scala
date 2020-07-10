@@ -56,7 +56,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        pageSkin() when page.metadata.hasPageSkin(Edition(request), request.getQueryString("adtest")),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
