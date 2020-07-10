@@ -55,8 +55,8 @@ class PublicationController(
         s"$publication/${urlFormat(reqDate)}"
       }
       log.logger.info("NewPath: " + newPath)
-      //articleController.renderArticle(newPath)
-      articleController.renderItem(newPath)
+      articleController.renderArticle(newPath)
+      //articleController.renderItem(newPath)
     }
   }
 

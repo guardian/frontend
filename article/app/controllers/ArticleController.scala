@@ -36,8 +36,8 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   // Replace Canonical with ArticleBlocks
-  //  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, ArticleBlocks)((article, blocks) => render(path, article, blocks))
+  //override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
