@@ -60,6 +60,24 @@
         .cta-bar__cta {
             display: none;
         }
+
+        .cta-bar__aus-map-cta {
+            display: block;
+        }
+    }
+}
+
+.new-header__cta-bar-aus-moment .cta-bar__aus-map-cta {
+    color: $brightness-100;
+    border-radius: 18px;
+    border: 1px solid $brightness-100;
+    background: none;
+    margin-top: 5px;
+
+    &:hover,
+    &:focus {
+        color: $brightness-100;
+        background-color: $brand-dark;
     }
 }
 
