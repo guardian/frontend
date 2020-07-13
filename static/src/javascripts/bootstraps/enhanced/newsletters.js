@@ -45,7 +45,7 @@ const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
 };
 
 const modifyDataLinkName = (modifier: string) => (el: HTMLButtonElement) : void => {
-    const firstStageName = el.getAttribute('data-link-name') || ""
+    const firstStageName = el.getAttribute('data-link-name') || "undefined-data-link-name"
     el.setAttribute('data-link-name', firstStageName + modifier)
 }
 
