@@ -69,15 +69,13 @@
 
 .new-header__cta-bar-aus-moment .cta-bar__aus-map-cta {
     color: $brightness-100;
-    border-radius: 18px;
-    border: 1px solid $brightness-100;
-    background: none;
+    background-color: #2c4c86;
     margin-top: 5px;
 
     &:hover,
     &:focus {
         color: $brightness-100;
-        background-color: $brand-dark;
+        background-color: #55698e;
     }
 }
 
