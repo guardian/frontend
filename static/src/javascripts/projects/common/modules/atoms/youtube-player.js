@@ -11,6 +11,13 @@ import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
     if (window.YT && window.YT.Player) {

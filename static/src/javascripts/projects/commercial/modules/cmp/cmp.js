@@ -10,6 +10,13 @@ import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
 
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
 // Avoid Flow and eslint to complain about this import not being available
 // in a fresh checkout.
 // See tools/tools/__tasks__/compile/data/aib_cmp.js to understand
@@ -31,6 +38,7 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
+import { isInTcfv2Test } from './tcfv2-test';
 
 type MessageData = {
     __cmpCall: ?{
@@ -279,7 +287,7 @@ class CmpService {
 
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
-    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable()) {
+    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
         let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};

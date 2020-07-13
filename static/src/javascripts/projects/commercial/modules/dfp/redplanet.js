@@ -5,6 +5,13 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
 let initialised = false;
 
 const initialise = (): void => {
@@ -49,10 +56,7 @@ const setupRedplanet: () => Promise<void> = () => {
 };
 
 export const init = (): Promise<void> => {
-    if (
-        commercialFeatures.launchpad &&
-        isInAuOrNz()
-    ) {
+    if (commercialFeatures.launchpad && isInAuOrNz()) {
         return setupRedplanet();
     }
     return Promise.resolve();

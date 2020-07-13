@@ -21,6 +21,13 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
 type PageTargeting = {
     sens: string,
     url: string,
@@ -254,9 +261,9 @@ const buildPageTargetting = (
                 config.get('page.dcrCouldRender', false)
                     ? 't'
                     : 'f',
-                       // Indicates whether the page is DCR eligible. This happens when the page
-                       // was DCR eligible and was actually rendered by DCR or
-                       // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+            // Indicates whether the page is DCR eligible. This happens when the page
+            // was DCR eligible and was actually rendered by DCR or
+            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),

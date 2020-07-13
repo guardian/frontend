@@ -31,6 +31,13 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
 initMessenger(
     type,
     getStyles,
