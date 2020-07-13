@@ -9,7 +9,13 @@ import type {
     HeaderBiddingSize,
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
+
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 class A9AdUnit {
     slotID: ?string;

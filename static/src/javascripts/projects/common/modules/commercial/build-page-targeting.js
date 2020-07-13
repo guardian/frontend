@@ -12,7 +12,6 @@ import { getUrlVars } from 'lib/url';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
@@ -20,6 +19,13 @@ import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
+
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 type PageTargeting = {
     sens: string,
@@ -254,9 +260,9 @@ const buildPageTargetting = (
                 config.get('page.dcrCouldRender', false)
                     ? 't'
                     : 'f',
-                       // Indicates whether the page is DCR eligible. This happens when the page
-                       // was DCR eligible and was actually rendered by DCR or
-                       // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
+            // Indicates whether the page is DCR eligible. This happens when the page
+            // was DCR eligible and was actually rendered by DCR or
+            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),

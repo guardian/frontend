@@ -14,10 +14,15 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
-import {
-    onIabConsentNotification,
-    onGuConsentNotification,
-} from '@guardian/consent-management-platform';
+
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
+
+const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;

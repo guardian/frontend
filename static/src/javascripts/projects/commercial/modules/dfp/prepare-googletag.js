@@ -8,7 +8,6 @@ import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -30,6 +29,13 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
+
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onIabConsentNotification = isInTcfv2Test()
+    ? cmp.onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 initMessenger(
     type,
