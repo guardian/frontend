@@ -6,13 +6,13 @@ import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
-import { getPermutivePFPSegments } from '../commercial/permutive';
 
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const onIabConsentNotification = isInTcfv2Test()
     ? cmp.onConsentChange

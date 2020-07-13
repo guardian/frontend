@@ -12,8 +12,8 @@ import reportError from 'lib/report-error';
 import 'projects/commercial/modules/cmp/stub';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable

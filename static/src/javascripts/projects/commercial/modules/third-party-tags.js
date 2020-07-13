@@ -14,6 +14,7 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
+
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 

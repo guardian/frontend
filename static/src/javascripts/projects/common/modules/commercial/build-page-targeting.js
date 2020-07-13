@@ -12,7 +12,6 @@ import { getUrlVars } from 'lib/url';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
@@ -21,8 +20,8 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 const onIabConsentNotification = isInTcfv2Test()
     ? cmp.onConsentChange
