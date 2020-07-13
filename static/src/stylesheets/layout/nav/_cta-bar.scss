@@ -74,6 +74,7 @@
 
     &:hover,
     &:focus {
+        color: $brightness-100;
         background-color: #2c4c86;
     }
 }
