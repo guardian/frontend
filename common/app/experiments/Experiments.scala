@@ -9,7 +9,8 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldTLSSupportDeprecation,
     DotcomRendering1,
     DotcomRendering2,
-    DCRBubble
+    DCRBubble,
+    TCFv2
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -53,5 +54,5 @@ object TCFv2 extends Experiment(
   description = "Use TCFv2 CMP",
   owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
   sellByDate = new LocalDate(2020, 8, 24),
-  participationGroup = Perc0A 
+  participationGroup = Perc0A
 )
