@@ -1,3 +1,4 @@
+@import views.support.ImgSrc
 @(item: layout.ContentCard, containerIndex: Int, index: Int, visibilityDataAttribute: String, isFirstContainer: Boolean, isList: Boolean)(implicit request: RequestHeader)
 
 @import layout.{FaciaWidths, FrontendLatestSnap}
@@ -129,8 +130,7 @@ data-test-id="facia-card"
             case Some(svg@CrosswordSvg(_)) => {
                 <div class="fc-item__media-wrapper">
                     <div class="fc-item__image-container u-responsive-ratio inlined-image">
-                        <object type="image/svg+xml" data="@svg.imageUrl" class="responsive-img" alt=""
-                        role="presentation" data-crossword-id="@svg.persistenceId" ></object>
+                        <img class="responsive-img" src="@svg.imageUrl" data-crossword-id="@svg.persistenceId" alt="">
                     </div>
                 </div>
             }
