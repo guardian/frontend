@@ -47,3 +47,11 @@ object DCRBubble extends Experiment(
   sellByDate = new LocalDate(2020, 12, 1),
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
 )
+
+object TCFv2 extends Experiment(
+  name = "use-tcfv2",
+  description = "Use TCFv2 CMP",
+  owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+  sellByDate = new LocalDate(2020, 8, 24),
+  participationGroup = Perc0A 
+)
