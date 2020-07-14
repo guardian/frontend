@@ -33,7 +33,7 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
-import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
+import { setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
@@ -93,14 +93,9 @@ const replaceCountryName = (text: string, countryName: ?string): string =>
 const replaceArticlesViewed = (text: string, count: ?number): string => {
     if (count) {
         const countValue = count;   // Flow gets confused about the value in count if we don't reassign to another const
-        // A/B test the opt-out feature if the switch is enabled
-        if (optOutEnabled() && userIsInArticlesViewedOptOutTest()) {
-            return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
-                epicArticlesViewedOptOutTemplate(countValue, nextWord)
-            );
-        }
-
-        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}</span>`)
+        return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
+            epicArticlesViewedOptOutTemplate(countValue, nextWord)
+        );
     }
     return text;
 };

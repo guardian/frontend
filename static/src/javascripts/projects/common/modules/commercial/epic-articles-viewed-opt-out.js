@@ -1,18 +1,11 @@
 // @flow
 
-import config from "lib/config";
-import {getMvtNumValues, getMvtValue} from "common/modules/analytics/mvt-cookie";
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
 import {addCookie} from "lib/cookies";
 import { local } from 'lib/storage';
 import reportError from "lib/report-error";
-
-const optOutEnabled = () => config.get('switches.showArticlesViewedOptOut');
-// Show the opt-out to 50% of the audience. We do not use `mvt % 2` here because then it would align
-// with the variants of the underlying A/B tests and distort the results
-const userIsInArticlesViewedOptOutTest = () => Number(getMvtValue()) < getMvtNumValues() / 2;
 
 type ArticlesViewedOptOutElements = {
     checkbox: HTMLInputElement,
@@ -133,59 +126,53 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
 };
 
 const onEpicViewed = () => {
-    if (optOutEnabled()) {
-        // Send the view event if this is an epic with an articles-viewed count.
-        // Send for both the control and the variant, so that we can measure impact on conversions.
-        const getArticleCountViewEventId = (): ?string => {
-            if (document.querySelector('.epic-article-count')) {
-                return 'articles-viewed-opt-out_view-variant';
-            } else if (document.querySelector('.epic-article-count__normal')) {
-                return 'articles-viewed-opt-out_view-control';
-            } 
-                return null;    // no articles-viewed count
-            
-        };
-
-        const viewEventId = getArticleCountViewEventId();
-        if (viewEventId) {
-            submitViewEvent({
-                component: {
-                    componentType: 'ACQUISITIONS_OTHER',
-                    id: viewEventId,
-                },
-            });
+    // Send the view event if this is an epic with an articles-viewed count.
+    // Send for both the control and the variant, so that we can measure impact on conversions.
+    const getArticleCountViewEventId = (): ?string => {
+        if (document.querySelector('.epic-article-count')) {
+            return 'articles-viewed-opt-out_view-variant';
+        } else if (document.querySelector('.epic-article-count__normal')) {
+            return 'articles-viewed-opt-out_view-control';
         }
+            return null;    // no articles-viewed count
+
+    };
+
+    const viewEventId = getArticleCountViewEventId();
+    if (viewEventId) {
+        submitViewEvent({
+            component: {
+                componentType: 'ACQUISITIONS_OTHER',
+                id: viewEventId,
+            },
+        });
     }
 };
 
 const setupArticlesViewedOptOut = () => {
-    if (optOutEnabled()) {
-        // If this element exists then they're in the variant
-        const articleCountElement = document.querySelector('.epic-article-count');
+    // If this element exists then they're in the variant
+    const articleCountElement = document.querySelector('.epic-article-count');
 
-        if (articleCountElement) {
-            const elements: ?ArticlesViewedOptOutElements = getElements(articleCountElement);
+    if (articleCountElement) {
+        const elements: ?ArticlesViewedOptOutElements = getElements(articleCountElement);
 
-            if (elements) {
-                setupHandlers(elements);
-            } else {
-                reportError(
-                    new Error(
-                        `Error setting up articles viewed opt-out in epic: unable to find all elements.`
-                    ),
-                    {
-                        feature: 'epic',
-                    },
-                    false
-                );
-            }
+        if (elements) {
+            setupHandlers(elements);
+        } else {
+            reportError(
+                new Error(
+                    `Error setting up articles viewed opt-out in epic: unable to find all elements.`
+                ),
+                {
+                    feature: 'epic',
+                },
+                false
+            );
         }
     }
 };
 
 export {
-    optOutEnabled,
-    userIsInArticlesViewedOptOutTest,
     setupArticlesViewedOptOut,
     onEpicViewed,
 }
