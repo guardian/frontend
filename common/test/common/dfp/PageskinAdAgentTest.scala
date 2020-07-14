@@ -164,7 +164,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
 
   "non production DfpAgent" should "should recognise adtest targetted line items only if the request includes the same adtest param" in {
     NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
-      defaultEdition, requestWithNoAdTestParam) should be(
+      defaultEdition, requestWithAdTestParam) should be(
       true)
   }
 
