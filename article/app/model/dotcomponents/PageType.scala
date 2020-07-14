@@ -21,13 +21,13 @@ object PageType {
 
   def apply(articlePage: PageWithStoryPackage, request: RequestHeader, context: ApplicationContext): PageType = {
     PageType(
-      getMap(articlePage, Edition(request), false).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isFront", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
-      getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, request).getOrElse("hasShowcaseMainElement", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, request).getOrElse("isFront", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, request).getOrElse("isLiveBlog", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, request).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
+      getMap(articlePage, Edition(request), false, request).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
       context.isPreview,
-      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
+      getMap(articlePage, Edition(request), false, request).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
     )
   }
 }
