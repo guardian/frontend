@@ -60,6 +60,7 @@ import {
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
+import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 
 const initialiseTopNavItems = (): void => {
@@ -306,6 +307,7 @@ const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
         consentManagementPlatformUi,
+        brazeBanner,
         breakingNews,
         signInGate,
         membershipBanner,
