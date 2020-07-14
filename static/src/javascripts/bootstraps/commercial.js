@@ -28,6 +28,21 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
+import appboy from '@braze/web-sdk';
+
+console.log("initializing braze", appboy);
+appboy.initialize('API_KEY', {enableLogging: true, noCookies: true, baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',  enableHtmlInAppMessages: true});
+
+const f = function(...args){
+    console.log(args);
+    appboy.display.showInAppMessage(args[0]);
+    return true;
+}
+
+appboy.subscribeToInAppMessage(f);
+
+appboy.changeUser('BRAZE_USER_ID');
+appboy.openSession();
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
