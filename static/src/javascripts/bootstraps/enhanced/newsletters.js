@@ -100,8 +100,8 @@ const createSubscriptionFormEventHandlers = (buttonEl: HTMLButtonElement): void 
 };
 
 const modifyFormForSignedIn = (el) => {
-    modifyLinkNamesForSignedInUser(el)
-    createSubscriptionFormEventHandlers(el)
+    modifyLinkNamesForSignedInUser(el);
+    createSubscriptionFormEventHandlers(el);
 }
 
 const showSignupForm = (buttonEl: HTMLButtonElement): void => {
