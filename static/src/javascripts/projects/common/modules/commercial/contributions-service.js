@@ -206,8 +206,12 @@ const buildBannerPayload = () => {
         isPaidContent: page.isPaidContent,
         showSupportMessaging: !shouldHideSupportMessaging(),
         engagementBannerLastClosedAt: userPrefs.get('engagementBannerLastClosedAt') || undefined,
+        subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: geolocationGetSync(),
+        switches: {
+            remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
+        }
     };
 
     return {
