@@ -31,7 +31,12 @@ import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 import appboy from '@braze/web-sdk';
 
 console.log("initializing braze", appboy);
-appboy.initialize('API_KEY', {enableLogging: true, noCookies: true, baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',  enableHtmlInAppMessages: true});
+appboy.initialize('API_KEY', {
+    enableLogging: true,
+    noCookies: true,
+    baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
+    enableHtmlInAppMessages: true
+});
 
 const f = function(...args){
     console.log(args);
