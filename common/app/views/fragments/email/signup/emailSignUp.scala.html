@@ -53,7 +53,7 @@
                 <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 
             </div>
-            <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
+            <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large" data-link-name="email-subscribe @componentClass-@listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
         </div>
     </form>
 }
