@@ -49,9 +49,9 @@ const modifyDataLinkName = (modifier: string) => (el: HTMLButtonElement) : void 
     el.setAttribute('data-link-name', firstStageName + modifier)
 }
 
-const modifyAtSecondStage = (el: HTMLButtonElement) => modifyDataLinkName('-second-stage')(el)
+const modifyLinkNamesForSecondStage = (el: HTMLButtonElement) => modifyDataLinkName('-second-stage')(el)
 
-const modifyForSignedIn = (el: HTMLButtonElement) => modifyDataLinkName('-signed-in')(el)
+const modifyLinkNamesForSignedInUser = (el: HTMLButtonElement) => modifyDataLinkName('-signed-in')(el)
 
 const submitForm = (
     form: ?HTMLFormElement,
@@ -89,7 +89,7 @@ const submitForm = (
     });
 };
 
-const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
+const createSubscriptionFormEventHandlers = (buttonEl: HTMLButtonElement): void => {
     bean.on(buttonEl, 'click', event => {
         event.preventDefault();
         const form = buttonEl.form;
@@ -98,6 +98,11 @@ const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
         }
     });
 };
+
+const modifyFormForSignedIn = (el) => {
+    modifyLinkNamesForSignedInUser(el)
+    createSubscriptionFormEventHandlers(el)
+}
 
 const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     const form = buttonEl.form;
@@ -108,7 +113,8 @@ const showSignupForm = (buttonEl: HTMLButtonElement): void => {
             .focus();
         $(`.${classes.signupButton}`, form).addClass(classes.styleSignup);
         $(`.${classes.previewButton}`, meta).addClass('is-hidden');
-        subscribeToEmail(buttonEl);
+        modifyLinkNamesForSecondStage(buttonEl)
+        createSubscriptionFormEventHandlers(buttonEl);
     });
 };
 
@@ -123,7 +129,6 @@ const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
     fastdom.write(() => {
         buttonEl.setAttribute('type', 'button');
         bean.on(buttonEl, 'click', () => {
-            modifyAtSecondStage(buttonEl)
             showSignupForm(buttonEl);
         });
     });
@@ -135,8 +140,7 @@ const enhanceNewsletters = (): void => {
         getUserFromApi(userFromId => {
             if (userFromId && userFromId.primaryEmailAddress) {
                 updatePageForLoggedIn(userFromId.primaryEmailAddress);
-                $.forEachElement(`.${classes.signupButton}`, modifyForSignedIn);
-                $.forEachElement(`.${classes.signupButton}`, subscribeToEmail);
+                $.forEachElement(`.${classes.signupButton}`, modifyFormForSignedIn);
             }
         });
     } else {
