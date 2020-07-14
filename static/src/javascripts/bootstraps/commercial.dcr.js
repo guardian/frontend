@@ -30,6 +30,27 @@ import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 
+import appboy from '@braze/web-sdk';
+
+console.log("initializing braze", appboy);
+appboy.initialize('API_KEY', {
+    enableLogging: true,
+    noCookies: true,
+    baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
+    enableHtmlInAppMessages: true
+});
+
+const f = function(...args){
+    console.log(args);
+    appboy.display.showInAppMessage(args[0]);
+    return true;
+}
+
+appboy.subscribeToInAppMessage(f);
+
+appboy.changeUser('BRAZE_USER_ID');
+appboy.openSession();
+
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
