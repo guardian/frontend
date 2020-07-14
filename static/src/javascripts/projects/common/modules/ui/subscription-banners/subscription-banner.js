@@ -26,9 +26,11 @@ import type { BannerTracking } from './subscription-banner-tracking';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 
+const remoteSubscriptionsBannerSwitchIsOn = config.get('switches.remoteBanner', false) && config.get('switches.remoteSubscriptionsBanner', false)
+
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
-) && !config.get('switches.remoteBanner', false) && !config.get('switches.remoteSubscriptionsBanner', false);
+) && !remoteSubscriptionsBannerSwitchIsOn;
 
 const pageviews: number = local.get('gu.alreadyVisited');
 
