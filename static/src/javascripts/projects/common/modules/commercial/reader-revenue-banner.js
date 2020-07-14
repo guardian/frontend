@@ -13,7 +13,7 @@ let data: ?BannerDataResponse = null;
 const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
 const canShow = (): Promise<boolean> => {
-    if (!config.get('switches.remoteBanner')) {
+    if (!config.get('switches.remoteBanner', false)) {
         return Promise.resolve(false);
     }
 

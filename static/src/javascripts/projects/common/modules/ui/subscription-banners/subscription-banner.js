@@ -28,7 +28,8 @@ const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
-);
+) && !config.get('switches.remoteBanner', false) && !config.get('switches.remoteSubscriptionsBanner', false);
+
 const pageviews: number = local.get('gu.alreadyVisited');
 
 const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
@@ -191,11 +192,11 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
+            subscriptionBannerSwitchIsOn &&
             pageviews >= 4 &&
             !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
-            subscriptionBannerSwitchIsOn &&
             !pageIsIdentity()
     );
 
