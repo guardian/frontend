@@ -41,6 +41,7 @@ object SwitchGroup {
   val Membership = SwitchGroup("Membership")
   val Journalism = SwitchGroup("Journalism")
   val Privacy = SwitchGroup("Privacy")
+  val TX = SwitchGroup("TX")
 }
 
 trait Initializable[T] extends Logging {
@@ -175,7 +176,8 @@ object Switches
     with PerformanceSwitches
     with MonitoringSwitches
     with IdentitySwitches
-    with JournalismSwitches {
+    with JournalismSwitches
+    with TXSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
 

@@ -85,6 +85,7 @@ object JavaScriptPage {
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
       ("cardStyle", JsString(cardStyle)),
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
+      ("brazeApiKey", JsString(Configuration.braze.apiKey)),
     )
   }
 }
