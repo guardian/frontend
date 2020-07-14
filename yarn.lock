@@ -1024,6 +1024,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@braze/web-sdk@^2.6.0":
+  version "2.6.0"
+  resolved "https://registry.yarnpkg.com/@braze/web-sdk/-/web-sdk-2.6.0.tgz#80908176571c16b7aa752aedf74d557d54427ec1"
+  integrity sha512-+TM8Fekl07B5Fjbh4WoE2IQy+QAA1t8bJTQ8gHZxGhfPoc7jsoaKGYeV3SKFAkaOx7jjjKix23Q6wD4oZjg7Lg==
+
 "@emotion/cache@^10.0.27":
   version "10.0.29"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.29.tgz#87e7e64f412c060102d589fe7c6dc042e6f9d1e0"
