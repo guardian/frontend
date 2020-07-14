@@ -1150,12 +1150,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.16.tgz#3ef47e7f49e633aea51c67f061d8d313a26fa9bc"
   integrity sha512-SgNU2bgiyQaXNfqanx4SDmxqAhXW6QBCTk4tRnCgV9Ht6noRl7UsDfx4I0u+M4H3TRnK4I/i2mmlJBtnuwhxEg==
 
-"@guardian/consent-management-platform@4.0.0-1":
-  version "4.0.0-1"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-1.tgz#0368024793920e4e99f1a7352abffbf89cebccb9"
-  integrity sha512-eT1H133qrBhgkMKEl2Nze/JTXLLnNOgDhLvXevi+6EIwXCkUtLLbwebe3py6GEsMOajSTZDYnmL7XunMlnxRNA==
+"@guardian/consent-management-platform@4.0.0-2":
+  version "4.0.0-2"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-2.tgz#ad055a1f7470f440863d049b36a27bb41ed5d990"
+  integrity sha512-FCgl/6MgH7NU+Qg950DjF+avisQunZK9Rs0ZMIzcFzXT8QO3SJn9H4n1y4Y0RqUGe4V40n+5KmcgCfGAkwsBmA==
   dependencies:
-    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.8"
+    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.9"
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -1169,10 +1169,10 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.8":
-  version "3.4.8"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.8.tgz#01c8e9894a93ec581024f59d53038ffd915ddc8c"
-  integrity sha512-NZHnq4ayk+tERo72aaTIGJE0uOV/zXFXJUYw2y9M2KKgwqSMQ5ht82jmsLeuEmgVg79EYjKgPWIXU8KeWFShNQ==
+"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.9":
+  version "3.4.9"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.9.tgz#6bd6108e12cb122c4a1fcba4ae657f4d0b67ad0b"
+  integrity sha512-9TRCahVCILDvD78xQpADaZMqqUZM1opsBXKPasVdEt3hnRyMwVB+l68DpydIEK8DZE9S2jxbuqtOEKrci/qMsw==
   dependencies:
     consent-string "1.5.2"
     js-cookie "2.2.1"

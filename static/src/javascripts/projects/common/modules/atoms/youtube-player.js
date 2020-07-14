@@ -9,13 +9,13 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const onIabConsentNotification = isInTcfv2Test()
-    ? cmp.onConsentChange
+    ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
