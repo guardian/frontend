@@ -25,7 +25,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     val html: Html = frontBody(page)
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition, request.getQueryString("adtest"))),
+      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition, request)),
       CommercialMPUForFronts()
     )
   }
@@ -56,7 +56,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkin(Edition(request), request.getQueryString("adtest")),
+        pageSkin() when page.metadata.hasPageSkin(Edition(request), request),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),

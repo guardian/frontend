@@ -33,7 +33,7 @@ object HtmlPageHelpers {
     val edition = Edition(request)
 
     Map(
-      ("has-page-skin", page.metadata.hasPageSkin(edition, request.getQueryString("adtest"))),
+      ("has-page-skin", page.metadata.hasPageSkin(edition, request)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
       ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"))
   }
