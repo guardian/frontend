@@ -44,6 +44,15 @@ const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
     });
 };
 
+const modifyDataLinkName = (modifier: string) => (el: HTMLButtonElement) : void => {
+    const firstStageName = el.getAttribute('data-link-name') || "undefined-data-link-name"
+    el.setAttribute('data-link-name', firstStageName + modifier)
+}
+
+const modifyLinkNamesForSecondStage = (el: HTMLButtonElement) => modifyDataLinkName('-second-stage')(el)
+
+const modifyLinkNamesForSignedInUser = (el: HTMLButtonElement) => modifyDataLinkName('-signed-in')(el)
+
 const submitForm = (
     form: ?HTMLFormElement,
     buttonEl: HTMLButtonElement
@@ -80,7 +89,7 @@ const submitForm = (
     });
 };
 
-const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
+const createSubscriptionFormEventHandlers = (buttonEl: HTMLButtonElement): void => {
     bean.on(buttonEl, 'click', event => {
         event.preventDefault();
         const form = buttonEl.form;
@@ -89,6 +98,11 @@ const subscribeToEmail = (buttonEl: HTMLButtonElement): void => {
         }
     });
 };
+
+const modifyFormForSignedIn = (el) => {
+    modifyLinkNamesForSignedInUser(el);
+    createSubscriptionFormEventHandlers(el);
+}
 
 const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     const form = buttonEl.form;
@@ -99,7 +113,8 @@ const showSignupForm = (buttonEl: HTMLButtonElement): void => {
             .focus();
         $(`.${classes.signupButton}`, form).addClass(classes.styleSignup);
         $(`.${classes.previewButton}`, meta).addClass('is-hidden');
-        subscribeToEmail(buttonEl);
+        modifyLinkNamesForSecondStage(buttonEl)
+        createSubscriptionFormEventHandlers(buttonEl);
     });
 };
 
@@ -125,7 +140,7 @@ const enhanceNewsletters = (): void => {
         getUserFromApi(userFromId => {
             if (userFromId && userFromId.primaryEmailAddress) {
                 updatePageForLoggedIn(userFromId.primaryEmailAddress);
-                $.forEachElement(`.${classes.signupButton}`, subscribeToEmail);
+                $.forEachElement(`.${classes.signupButton}`, modifyFormForSignedIn);
             }
         });
     } else {
