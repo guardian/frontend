@@ -1,14 +1,22 @@
 // @flow
-import { onGuConsentNotification as onGuConsentNotification_ } from '@guardian/consent-management-platform';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { oldCmp } from '@guardian/consent-management-platform';
 import { init, _ } from './comscore';
 
-const onGuConsentNotification: any = onGuConsentNotification_;
-
 jest.mock('@guardian/consent-management-platform', () => ({
-    onGuConsentNotification: jest.fn(),
+    oldCmp: {
+        onGuConsentNotification: jest.fn(),
+        onIabConsentNotification: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
 }));
+
+// Force TCFv1
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest.fn().mockReturnValue(false),
+}));
+const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
