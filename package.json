@@ -171,10 +171,7 @@
       "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
     ],
     "testEnvironment": "jest-environment-jsdom-global",
-    "testURL": "http://testurl.theguardian.com",
-    "transformIgnorePatterns": [
-      "<rootDir>/(node_modules)/"
-    ]
+    "testURL": "http://testurl.theguardian.com"
   },
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",
