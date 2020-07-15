@@ -25,6 +25,19 @@ jest.mock('commercial/modules/cmp/log', () => ({
     },
 }));
 
+jest.mock('@guardian/consent-management-platform', () => ({
+    oldCmp: {
+        onIabConsentNotification: jest.fn(),
+        onGuConsentNotification: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
+}));
+
+// Force TCFv1
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest.fn().mockReturnValue(false),
+}));
+
 const shortVendorList = {
     version: 1,
     purposeIDs: [1, 2, 3, 4],

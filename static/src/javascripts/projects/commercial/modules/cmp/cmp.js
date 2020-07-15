@@ -325,4 +325,4 @@ export const init = (): void => {
     }
 };
 
-export const _ = { CmpService, readConsentCookie };
+export const _ = { oldCmp, onConsentChange, CmpService, readConsentCookie };
