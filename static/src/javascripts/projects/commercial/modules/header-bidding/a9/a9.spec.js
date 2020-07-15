@@ -2,9 +2,7 @@
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
 import {
-    onConsentChange as onConsentChange_,
     oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
-import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
 
 const oldCmp: any = oldCmp_;
 
