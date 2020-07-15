@@ -1,9 +1,14 @@
 // @flow
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
+import {
+    onConsentChange as onConsentChange_,
+    oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
 
-const onIabConsentNotification: any = onIabConsentNotification_;
+const onConsentChange: any = onConsentChange_;
+const oldCmp: any = oldCmp_;
+const isInTcfv2Test: any = isInTcfv2Test_;
 
 const TcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
@@ -15,6 +20,12 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest
+        .fn()
+        .mockImplementation(() => false),
+}));
+
 jest.mock('commercial/modules/header-bidding/slot-config', () => ({
     slots: jest
         .fn()
@@ -24,7 +35,10 @@ jest.mock('commercial/modules/header-bidding/slot-config', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
+    oldCmp: {
+        onIabConsentNotification: jest.fn()
+    },
+    onConsentChange: jest.fn()
 }));
 
 beforeEach(async () => {
@@ -43,14 +57,14 @@ afterAll(() => {
 
 describe('initialise', () => {
     it('should generate initialise A9 library when TCF consent has been given', () => {
-        onIabConsentNotification.mockImplementation(TcfWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(TcfWithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();
     });
 
     it('should generate initialise A9 library when CCPA consent has been given', () => {
-        onIabConsentNotification.mockImplementation(CcpaWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(CcpaWithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();
