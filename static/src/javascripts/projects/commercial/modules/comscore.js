@@ -6,8 +6,12 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { isInTcfv2Test } from './cmp/tcfv2-test';
 
 const onGuConsentNotification = isInTcfv2Test()
-    ? () => {
-          console.warn('the onGuConsentNotification method is deprecated');
+    ? (fake, args) => {
+          console.warn(
+              'the onGuConsentNotification method is deprecated',
+              fake,
+              args
+          );
       }
     : oldCmp.onGuConsentNotification;
 

@@ -23,8 +23,12 @@ const onIabConsentNotification = isInTcfv2Test()
     : oldCmp.onIabConsentNotification;
 
 const onGuConsentNotification = isInTcfv2Test()
-    ? () => {
-          console.warn('the onGuConsentNotification method is deprecated');
+    ? (fake, args) => {
+          console.warn(
+              'the onGuConsentNotification method is deprecated',
+              fake,
+              args
+          );
       }
     : oldCmp.onGuConsentNotification;
 
