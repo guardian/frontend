@@ -4,13 +4,7 @@ import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onGuConsentNotification = isInTcfv2Test()
-    ? () => {
-          console.warn('[CMP—TCFv2] this method is deprecated');
-      }
-    : oldCmp.onGuConsentNotification;
+const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 type comscoreGlobals = {
     c1: string,

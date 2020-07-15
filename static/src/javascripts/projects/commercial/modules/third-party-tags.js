@@ -22,11 +22,7 @@ const onIabConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
-const onGuConsentNotification = isInTcfv2Test()
-    ? () => {
-          console.warn('[CMP—TCFv2] this method is deprecated');
-      }
-    : oldCmp.onGuConsentNotification;
+const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
