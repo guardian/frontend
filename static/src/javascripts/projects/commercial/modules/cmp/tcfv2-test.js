@@ -10,16 +10,7 @@ const isInServerSideTest = (): boolean =>
 
 export const isInTcfv2Test = (): boolean => {
     if (typeof isInTest === 'undefined') {
-        console.log(
-            '[CMP—TCFv2]',
-            'isInUsa',
-            isInUsa(),
-            '—',
-            'isInServerSideTest',
-            isInServerSideTest()
-        );
-        // TODO REMOVE true which is used for testing
-        isInTest = true || (!isInUsa() && isInServerSideTest());
+        isInTest = !isInUsa() && isInServerSideTest();
     }
 
     return isInTest;

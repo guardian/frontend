@@ -10,7 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     DotcomRendering1,
     DotcomRendering2,
     DCRBubble,
-    TCFv2
+    UseTCFv2
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -49,7 +49,7 @@ object DCRBubble extends Experiment(
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
 )
 
-object TCFv2 extends Experiment(
+object UseTCFv2 extends Experiment(
   name = "use-tcfv2",
   description = "Use TCFv2 CMP",
   owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
