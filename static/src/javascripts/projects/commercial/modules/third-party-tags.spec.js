@@ -1,21 +1,27 @@
 // @flow
-import {
-    onIabConsentNotification as onIabConsentNotification_,
-    onGuConsentNotification as onGuConsentNotification_,
-} from '@guardian/consent-management-platform';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
-
-const onIabConsentNotification: any = onIabConsentNotification_;
-const onGuConsentNotification: any = onGuConsentNotification_;
 
 const { insertScripts, loadOther } = _;
 
 jest.mock('lib/raven');
+
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
-    onGuConsentNotification: jest.fn(),
+    oldCmp: {
+        onIabConsentNotification: jest.fn(),
+        onGuConsentNotification: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
 }));
+
+// Force TCFv1
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest.fn().mockReturnValue(false),
+}));
+const onIabConsentNotification = oldCmp.onIabConsentNotification;
+const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 beforeEach(() => {
     const firstScript = document.createElement('script');
