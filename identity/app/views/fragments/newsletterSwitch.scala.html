@@ -56,5 +56,6 @@
     field = newsletterField,
     extraFields = Nil,
     footer = Some(buildFooter(newsletter)),
-    skin = skin
+    skin = skin,
+    newsletterIdentityName = Some(newsletter.identityName)
 )(nonInputFields, messages)
