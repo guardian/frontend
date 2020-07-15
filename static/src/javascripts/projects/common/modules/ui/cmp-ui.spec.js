@@ -1,8 +1,6 @@
 // @flow
 import { isCcpaApplicable as isCcpaApplicable_ } from 'commercial/modules/cmp/ccpa-cmp';
-import {
-    shouldShow,
-    checkWillShowUi,
+import { oldCmp,
 } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { consentManagementPlatformUi } from './cmp-ui';
@@ -10,8 +8,11 @@ import { consentManagementPlatformUi } from './cmp-ui';
 jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    shouldShow: jest.fn(),
-    checkWillShowUi: jest.fn(),
+    oldCmp: {
+        shouldShow: jest.fn(),
+        checkWillShowUi: jest.fn(),
+    },
+    onConsentChange: jest.fn()
 }));
 
 jest.mock('lib/report-error', () => jest.fn());
@@ -19,6 +20,12 @@ jest.mock('lib/report-error', () => jest.fn());
 const isCcpaApplicable: any = isCcpaApplicable_;
 jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
     isCcpaApplicable: jest.fn(),
+}));
+
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest
+        .fn()
+        .mockImplementation(() => false),
 }));
 
 describe('cmp-ui', () => {
@@ -29,14 +36,14 @@ describe('cmp-ui', () => {
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
             it('return true if shouldShow returns true', () => {
-                shouldShow.mockReturnValue(true);
+                oldCmp.shouldShow.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(true);
                 });
             });
             it('return false if shouldShow returns false', () => {
-                shouldShow.mockReturnValue(false);
+                oldCmp.shouldShow.mockReturnValue(false);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);
@@ -52,11 +59,11 @@ describe('cmp-ui', () => {
 
             it('returns checkWillShowUi if user is in CCPA variant', () => {
                 config.set('switches.cmpUi', true);
-                checkWillShowUi.mockReturnValue(Promise.resolve(true));
+                oldCmp.checkWillShowUi.mockReturnValue(Promise.resolve(true));
                 isCcpaApplicable.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
-                    expect(checkWillShowUi).toHaveBeenCalledTimes(1);
+                    expect(oldCmp.checkWillShowUi).toHaveBeenCalledTimes(1);
                     expect(show).toBe(true);
                 });
             });
