@@ -23,31 +23,12 @@ import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banne
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
+import { init as initBraze } from 'commercial/modules/braze';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
-import appboy from '@braze/web-sdk';
-
-console.log("initializing braze", appboy);
-appboy.initialize('API_KEY', {
-    enableLogging: true,
-    noCookies: true,
-    baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
-    enableHtmlInAppMessages: true
-});
-
-const f = function(...args){
-    console.log(args);
-    appboy.display.showInAppMessage(args[0]);
-    return true;
-}
-
-appboy.subscribeToInAppMessage(f);
-
-appboy.changeUser('BRAZE_USER_ID');
-appboy.openSession();
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
@@ -77,7 +58,8 @@ if (!commercialFeatures.adFree) {
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
         ['cm-commentAdverts', initCommentAdverts],
-        ['rr-adblock-ask', initAdblockAsk]
+        ['rr-adblock-ask', initAdblockAsk],
+        ['tx-braze', initBraze]
     );
 }
 
