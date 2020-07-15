@@ -17,6 +17,7 @@ jest.mock('lib/config', () => ({
         if (key === 'isDotcomRendering') {
             return false;
         }
+        if (key === 'page.edition') return 'UK';
         throw new Error(
             `Unexpected config lookup '${key}', check the mock is still correct`
         );
@@ -24,7 +25,16 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
+    oldCmp: {
+        onIabConsentNotification: jest.fn(),
+        onGuConsentNotification: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
+}));
+
+// Force TCFv1
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest.fn().mockReturnValue(false),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
