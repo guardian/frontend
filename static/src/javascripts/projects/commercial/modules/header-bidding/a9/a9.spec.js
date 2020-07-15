@@ -6,9 +6,7 @@ import {
     oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
 import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
 
-const onConsentChange: any = onConsentChange_;
 const oldCmp: any = oldCmp_;
-const isInTcfv2Test: any = isInTcfv2Test_;
 
 const TcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
