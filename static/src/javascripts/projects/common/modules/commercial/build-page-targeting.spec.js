@@ -16,8 +16,10 @@ import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
+import {
+    oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
 
+const oldCmp: any = oldCmp_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
@@ -25,12 +27,16 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
-const onIabConsentNotification: any = onIabConsentNotification_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
+}));
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest
+        .fn()
+        .mockImplementation(() => false),
 }));
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -55,7 +61,10 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
+    oldCmp: {
+        onIabConsentNotification: jest.fn()
+    },
+    onConsentChange: jest.fn()
 }));
 
 const tcfWithConsentMock = (callback): void =>
@@ -108,7 +117,7 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -162,52 +171,52 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        onIabConsentNotification.mockImplementation(tcfWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfWithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 
     it('Should correctly set the RDP flag (rdp) param', () => {
-        onIabConsentNotification.mockImplementation(tcfWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfWithConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
         expect(getPageTargeting().rdp).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
         expect(getPageTargeting().rdp).toBe('t');
     });
 
