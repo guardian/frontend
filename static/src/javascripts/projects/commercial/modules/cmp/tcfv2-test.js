@@ -9,8 +9,6 @@ const isInServerSideTest = (): boolean =>
     config.get('tests.useTcfv2Variant') === 'variant';
 
 export const isInTcfv2Test = (): boolean => {
-    return true; // TODO: Remove!
-
     if (typeof isInTest === 'undefined') {
         console.log(
             '[CMP—TCFv2]',
@@ -20,7 +18,8 @@ export const isInTcfv2Test = (): boolean => {
             'isInServerSideTest',
             isInServerSideTest()
         );
-        isInTest = !isInUsa() && isInServerSideTest();
+        // TODO REMOVE true which is used for testing
+        isInTest = true || (!isInUsa() && isInServerSideTest());
     }
 
     return isInTest;
