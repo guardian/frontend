@@ -20,11 +20,11 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 const onIabConsentNotification = isInTcfv2Test()
-    ? cmp.onConsentChange
+    ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
 type PageTargeting = {

@@ -34,6 +34,11 @@ const go = () => {
         bootStandard();
 
         // Start CMP
+        console.log('[CMP—TCFv2]', {
+            isInTcfv2Test: isInTcfv2Test(),
+            isCcpaApplicable: isCcpaApplicable(),
+            isInUsa: isInUsa(),
+        });
         if (isCcpaApplicable()) {
             oldCmp.init({ useCcpa: true });
         } else if (isInTcfv2Test()) {

@@ -10,11 +10,11 @@ import type {
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 const onIabConsentNotification = isInTcfv2Test()
-    ? cmp.onConsentChange
+    ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
 class A9AdUnit {

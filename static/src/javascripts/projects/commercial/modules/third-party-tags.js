@@ -15,14 +15,18 @@ import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
 
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 const onIabConsentNotification = isInTcfv2Test()
-    ? cmp.onConsentChange
+    ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
-const onGuConsentNotification = oldCmp.onGuConsentNotification;
+const onGuConsentNotification = isInTcfv2Test()
+    ? () => {
+          console.warn('[CMP—TCFv2] this method is deprecated');
+      }
+    : oldCmp.onGuConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;

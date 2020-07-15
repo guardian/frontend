@@ -4,11 +4,11 @@ import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 const onIabConsentNotification = isInTcfv2Test()
-    ? cmp.onConsentChange
+    ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
 let initialised = false;
