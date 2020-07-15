@@ -3,8 +3,13 @@ import { oldCmp } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isInTcfv2Test } from './cmp/tcfv2-test';
 
-const onGuConsentNotification = oldCmp.onGuConsentNotification;
+const onGuConsentNotification = isInTcfv2Test()
+    ? () => {
+          console.warn('the onGuConsentNotification method is deprecated');
+      }
+    : oldCmp.onGuConsentNotification;
 
 type comscoreGlobals = {
     c1: string,
