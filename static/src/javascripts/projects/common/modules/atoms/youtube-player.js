@@ -14,7 +14,7 @@ import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
-const onIabConsentNotification = isInTcfv2Test()
+const onCMPConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
@@ -54,12 +54,13 @@ interface AdsConfig {
 
 let tcfState = null;
 let ccpaState = null;
-onIabConsentNotification(state => {
+onCMPConsentNotification(state => {
     // typeof state === 'boolean' means CCPA mode is on
     if (typeof state === 'boolean') {
         ccpaState = state;
     } else {
-        tcfState = state[1] && state[2] && state[3] && state[4] && state[5];
+        tcfState = state.tcfv2 ? Object.values(state.tcfv2).every(Boolean) :
+            state[1] && state[2] && state[3] && state[4] && state[5];
     }
 });
 
