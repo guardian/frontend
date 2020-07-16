@@ -13,7 +13,7 @@ import type {
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
-const onIabConsentNotification = isInTcfv2Test()
+const onCMPConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
@@ -39,12 +39,18 @@ let requestQueue: Promise<void> = Promise.resolve();
 const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
-    onIabConsentNotification(state => {
-        // typeof state === 'boolean' means CCPA mode is on
-        const canRun =
-            typeof state === 'boolean'
-                ? !state
-                : state[1] && state[2] && state[3] && state[4] && state[5];
+    onCMPConsentNotification(state => {
+        let canRun: boolean;
+        if (typeof state === 'boolean') {
+            // CCPA mode
+            canRun = !state;
+        } else if (typeof state.tcfv2 !== 'undefined') {
+            // TCFv2 mode,
+            canRun = Object.values(state.tcfv2).every(Boolean);
+        } else {
+            // TCFv1 mode
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+        }
 
         if (!initialised && canRun) {
             initialised = true;
