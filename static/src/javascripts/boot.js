@@ -36,10 +36,7 @@ const go = () => {
         // Start CMP
         if (isCcpaApplicable()) {
             oldCmp.init({ useCcpa: true });
-        } else if (
-            isInTcfv2Test() &&
-            window.location.search.includes('_sp_env=stage') // TODO: enable live Sourcepoint campaign
-        ) {
+        } else if (isInTcfv2Test()) {
             cmp.init({ isInUsa: isInUsa() });
         }
 
