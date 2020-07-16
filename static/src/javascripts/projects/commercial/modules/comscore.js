@@ -1,16 +1,17 @@
 // @flow strict
-import { oldCmp } from '@guardian/consent-management-platform';
+import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInTcfv2Test } from './cmp/tcfv2-test';
 
+// TODO: Remove oldCmp.onGuConsentNotification and justuse onConsentChange when tcfv2 is released
 const onGuConsentNotification = isInTcfv2Test()
-    ? (fake, args) => {
+    ? (fake, callback) => {
+          onConsentChange(callback);
           console.warn(
               'the onGuConsentNotification method is deprecated',
-              fake,
-              args
+              fake
           );
       }
     : oldCmp.onGuConsentNotification;
