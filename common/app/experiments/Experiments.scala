@@ -3,6 +3,8 @@ package experiments
 import conf.switches.{Owner, SwitchGroup}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
+import conf.switches.Owner.group
+import conf.switches.SwitchGroup.Commercial
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
@@ -52,7 +54,7 @@ object DCRBubble extends Experiment(
 object UseTCFv2 extends Experiment(
   name = "use-tcfv2",
   description = "Use TCFv2 CMP",
-  owners = Seq(Owner.withEmail("commercial.dev@guardian.co.uk")),
+  owners = group(Commercial),
   sellByDate = new LocalDate(2020, 8, 24),
   participationGroup = Perc0A
 )

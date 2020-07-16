@@ -7,7 +7,7 @@ import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
-const onIabConsentNotification = isInTcfv2Test()
+const onCMPConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
@@ -34,13 +34,19 @@ const initialise = (): void => {
 };
 
 const setupRedplanet: () => Promise<void> = () => {
-    onIabConsentNotification(state => {
+    onCMPConsentNotification(state => {
         // typeof state === 'boolean' means CCPA mode is on
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
         if (typeof state !== 'boolean') {
-            const canRun =
-                state[1] && state[2] && state[3] && state[4] && state[5];
+            let canRun: boolean;
+            if (typeof state.tcfv2 !== 'undefined') {
+                // TCFv2 mode,
+                canRun = Object.values(state.tcfv2).every(Boolean);
+            } else {
+                // TCFv1 mode
+                canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+            }
 
             if (!initialised && canRun) {
                 initialised = true;
