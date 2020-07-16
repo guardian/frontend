@@ -38,6 +38,8 @@ const go = () => {
             oldCmp.init({ useCcpa: true });
         } else if (isInTcfv2Test()) {
             cmp.init({ isInUsa: isInUsa() });
+        } else {
+            // do nothing, TCFv1 CMP auto initialises
         }
 
         // 2. once standard is done, next is commercial
