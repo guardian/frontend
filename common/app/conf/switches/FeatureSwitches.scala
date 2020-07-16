@@ -504,4 +504,13 @@ trait FeatureSwitches {
     exposeClientSide = true
   )
 
+  val remoteSubscriptionsBanner = Switch(
+    SwitchGroup.Feature,
+    "remote-subscriptions-banner",
+    "Enables the subscriptions banner fetched from contributions-service",
+    owners = Seq(Owner.withGithub("GHaberis")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 8, 3),
+    exposeClientSide = true
+  )
 }
