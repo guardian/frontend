@@ -22,17 +22,6 @@ const onCMPConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
-// TODO: Remove oldCmp.onGuConsentNotification and justuse onConsentChange when tcfv2 is released
-const onGuConsentNotification = isInTcfv2Test()
-    ? (fake, callback) => {
-        onConsentChange(callback);
-        console.warn(
-            'the onGuConsentNotification method is deprecated',
-            fake
-        );
-    }
-    : oldCmp.onGuConsentNotification;
-
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
 
@@ -74,7 +63,7 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag>
 ): void => {
-    onGuConsentNotification('performance', state => {
+    oldCmp.onGuConsentNotification('performance', state => {
         if (!performanceScriptsInserted && state) {
             addScripts(performanceServices);
             performanceScriptsInserted = true;
