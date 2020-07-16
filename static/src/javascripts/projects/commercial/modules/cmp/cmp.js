@@ -295,12 +295,12 @@ export const init = (): void => {
             // Initialize the store with all of our consent data
             const store = generateStore();
             /**
-             * If instance of cmpService exists get it's eventListeners
+             * If instance of cmp exists get it's eventListeners
              * as we'll need to add them to the new instance of cmp.
              */
             const eventListeners = cmp ? cmp.eventListeners : {};
 
-            // Create new instance of cmp and assign to cmp
+            // Create new instance of cmpService and assign to cmp
             cmp = new CmpService(store, eventListeners);
 
             // Set window[CMP_GLOBAL_NAME] to new `cmp.processCommand`
