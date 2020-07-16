@@ -34,14 +34,12 @@ const go = () => {
         bootStandard();
 
         // Start CMP
-        console.log('[CMP—TCFv2]', {
-            isInTcfv2Test: isInTcfv2Test(),
-            isCcpaApplicable: isCcpaApplicable(),
-            isInUsa: isInUsa(),
-        });
         if (isCcpaApplicable()) {
             oldCmp.init({ useCcpa: true });
-        } else if (isInTcfv2Test()) {
+        } else if (
+            isInTcfv2Test() &&
+            window.location.search.includes('_sp_env=stage') // TODO: enable live Sourcepoint campaign
+        ) {
             cmp.init({ isInUsa: isInUsa() });
         }
 
