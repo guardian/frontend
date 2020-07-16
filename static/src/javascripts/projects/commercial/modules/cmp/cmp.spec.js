@@ -8,6 +8,9 @@ jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
     isCcpaApplicable: () => false,
 }));
 
+// TODO: Investigate why we need to mock the CMP
+jest.mock('@guardian/consent-management-platform', () => ({}));
+
 jest.mock('lib/raven');
 jest.mock('lib/fetch-json', () => jest.fn());
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
@@ -23,19 +26,6 @@ jest.mock('commercial/modules/cmp/log', () => ({
         warn: jest.fn(),
         info: jest.fn(),
     },
-}));
-
-jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onIabConsentNotification: jest.fn(),
-        onGuConsentNotification: jest.fn(),
-    },
-    onConsentChange: jest.fn(),
-}));
-
-// Force TCFv1
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockReturnValue(false),
 }));
 
 const shortVendorList = {

@@ -300,7 +300,7 @@ export const init = (): void => {
              */
             const eventListeners = cmp ? cmp.eventListeners : {};
 
-            // Create new instance of cmpService and assign to cmp
+            // Create new instance of CmpService and assign to cmp
             cmp = new CmpService(store, eventListeners);
 
             // Set window[CMP_GLOBAL_NAME] to new `cmp.processCommand`
@@ -320,4 +320,4 @@ export const init = (): void => {
     }
 };
 
-export const _ = { oldCmp, CmpService, readConsentCookie };
+export const _ = { CmpService, readConsentCookie };
