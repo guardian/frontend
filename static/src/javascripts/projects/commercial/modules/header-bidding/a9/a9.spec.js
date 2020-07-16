@@ -1,8 +1,7 @@
 // @flow
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import {
-    oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
 
 const oldCmp: any = oldCmp_;
 
