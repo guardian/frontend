@@ -1,6 +1,6 @@
 // @flow strict
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
 
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
@@ -33,10 +33,6 @@ import type {
     VendorConsentResponse,
 } from './types';
 import { isInTcfv2Test } from './tcfv2-test';
-
-const onIabConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 type MessageData = {
     __cmpCall: ?{
@@ -286,7 +282,7 @@ class CmpService {
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
     if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
-        let cmpService: ?CmpService;
+        let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
 
@@ -296,33 +292,33 @@ export const init = (): void => {
          * state. If consent state updates via the UI the callback will be triggered
          * again which will update cmp with the new consent state.
          */
-        onIabConsentNotification(() => {
+        oldCmp.onIabConsentNotification(() => {
             // Initialize the store with all of our consent data
             const store = generateStore();
             /**
              * If instance of cmpService exists get it's eventListeners
              * as we'll need to add them to the new instance of cmp.
              */
-            const eventListeners = cmpService ? cmpService.eventListeners : {};
+            const eventListeners = cmp ? cmp.eventListeners : {};
 
-            // Create new instance of CmpService and assign to cmp
-            cmpService = new CmpService(store, eventListeners);
+            // Create new instance of cmp and assign to cmp
+            cmp = new CmpService(store, eventListeners);
 
             // Set window[CMP_GLOBAL_NAME] to new `cmp.processCommand`
-            window[CMP_GLOBAL_NAME] = cmpService.processCommand;
+            window[CMP_GLOBAL_NAME] = cmp.processCommand;
         });
 
         // Just required when we first initialise cmp on page load
-        if (cmpService) {
-            cmpService.commandQueue = commandQueue;
-            cmpService.isLoaded = true;
-            cmpService.notify('isLoaded');
+        if (cmp) {
+            cmp.commandQueue = commandQueue;
+            cmp.isLoaded = true;
+            cmp.notify('isLoaded');
             // Execute any previously queued command
-            cmpService.processCommandQueue();
-            cmpService.cmpReady = true;
-            cmpService.notify('cmpReady');
+            cmp.processCommandQueue();
+            cmp.cmpReady = true;
+            cmp.notify('cmpReady');
         }
     }
 };
 
-export const _ = { oldCmp, onConsentChange, CmpService, readConsentCookie };
+export const _ = { oldCmp, CmpService, readConsentCookie };
