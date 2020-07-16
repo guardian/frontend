@@ -32,11 +32,7 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
-import { isInTcfv2Test } from './tcfv2-test';
-
-const onIabConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+import { isInTcfv2Test } from './tcfv2-test'
 
 type MessageData = {
     __cmpCall: ?{
@@ -296,7 +292,7 @@ export const init = (): void => {
          * state. If consent state updates via the UI the callback will be triggered
          * again which will update cmp with the new consent state.
          */
-        onIabConsentNotification(() => {
+        oldCmp.onIabConsentNotification(() => {
             // Initialize the store with all of our consent data
             const store = generateStore();
             /**

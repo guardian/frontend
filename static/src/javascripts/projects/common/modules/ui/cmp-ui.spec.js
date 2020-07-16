@@ -1,7 +1,6 @@
 // @flow
 import { isCcpaApplicable as isCcpaApplicable_ } from 'commercial/modules/cmp/ccpa-cmp';
-import { oldCmp,
-} from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { consentManagementPlatformUi } from './cmp-ui';
 
