@@ -33,7 +33,7 @@ import { init as viewport } from 'commercial/modules/messenger/viewport';
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
-const onIabConsentNotification = isInTcfv2Test()
+const onCMPConsentNotification = isInTcfv2Test()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
@@ -108,7 +108,7 @@ export const init = (): Promise<void> => {
             }
         );
 
-        onIabConsentNotification(state => {
+        onCMPConsentNotification(state => {
             // typeof state === 'boolean' means CCPA mode is on
             if (typeof state === 'boolean') {
                 window.googletag.cmd.push(() => {
@@ -117,7 +117,14 @@ export const init = (): Promise<void> => {
                     });
                 });
             } else {
-                const npaFlag = Object.values(state).includes(false);
+                let npaFlag: boolean;
+                if (typeof state.tcfv2 !== 'undefined') {
+                    // TCFv2 mode,
+                    npaFlag = Object.values(state.tcfv2).every(Boolean);
+                } else {
+                    // TCFv1 mode
+                    npaFlag = Object.values(state).includes(false);
+                }
                 window.googletag.cmd.push(() => {
                     window.googletag
                         .pubads()
