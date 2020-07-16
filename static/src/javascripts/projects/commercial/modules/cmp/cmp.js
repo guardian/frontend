@@ -1,11 +1,10 @@
 // @flow strict
 
-import { oldCmp } from '@guardian/consent-management-platform';
-
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
+import { oldCmp } from '@guardian/consent-management-platform';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { log } from './log';
 import { CmpStore } from './store';
