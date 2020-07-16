@@ -245,10 +245,10 @@ class CmpService {
 
     receiveMessage = ({ data, origin, source }: MessageEvent): void => {
         if (data instanceof Object) {
-            const { __cmpCall: cmpSource }: MessageData = data;
-            if (cmpSource) {
+            const { __cmpCall: cmp }: MessageData = data;
+            if (cmp) {
                 log.info(`Message from: ${origin}`);
-                const { callId, command, parameter } = cmpSource;
+                const { callId, command, parameter } = cmp;
                 if (source && source.postMessage) {
                     this.processCommand(command, parameter, returnValue =>
                         source.postMessage(
