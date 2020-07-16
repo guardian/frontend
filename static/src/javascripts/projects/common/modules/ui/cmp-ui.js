@@ -3,7 +3,7 @@ import config from 'lib/config';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import raven from 'lib/raven';
-import { isInTcfv2Test } from "commercial/modules/cmp/tcfv2-test";
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 let initUi;
 

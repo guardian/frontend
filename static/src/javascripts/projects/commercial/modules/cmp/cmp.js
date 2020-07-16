@@ -1,11 +1,10 @@
 // @flow strict
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
+import { oldCmp } from '@guardian/consent-management-platform';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -32,7 +31,7 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
-import { isInTcfv2Test } from './tcfv2-test'
+import { isInTcfv2Test } from './tcfv2-test';
 
 type MessageData = {
     __cmpCall: ?{
@@ -246,10 +245,10 @@ class CmpService {
 
     receiveMessage = ({ data, origin, source }: MessageEvent): void => {
         if (data instanceof Object) {
-            const { __cmpCall: cmpSource }: MessageData = data;
-            if (cmpSource) {
+            const { __cmpCall: cmp }: MessageData = data;
+            if (cmp) {
                 log.info(`Message from: ${origin}`);
-                const { callId, command, parameter } = cmpSource;
+                const { callId, command, parameter } = cmp;
                 if (source && source.postMessage) {
                     this.processCommand(command, parameter, returnValue =>
                         source.postMessage(
@@ -282,7 +281,7 @@ class CmpService {
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
     if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
-        let cmpService: ?CmpService;
+        let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
 
@@ -296,29 +295,29 @@ export const init = (): void => {
             // Initialize the store with all of our consent data
             const store = generateStore();
             /**
-             * If instance of cmpService exists get it's eventListeners
+             * If instance of cmp exists get it's eventListeners
              * as we'll need to add them to the new instance of cmp.
              */
-            const eventListeners = cmpService ? cmpService.eventListeners : {};
+            const eventListeners = cmp ? cmp.eventListeners : {};
 
             // Create new instance of CmpService and assign to cmp
-            cmpService = new CmpService(store, eventListeners);
+            cmp = new CmpService(store, eventListeners);
 
             // Set window[CMP_GLOBAL_NAME] to new `cmp.processCommand`
-            window[CMP_GLOBAL_NAME] = cmpService.processCommand;
+            window[CMP_GLOBAL_NAME] = cmp.processCommand;
         });
 
         // Just required when we first initialise cmp on page load
-        if (cmpService) {
-            cmpService.commandQueue = commandQueue;
-            cmpService.isLoaded = true;
-            cmpService.notify('isLoaded');
+        if (cmp) {
+            cmp.commandQueue = commandQueue;
+            cmp.isLoaded = true;
+            cmp.notify('isLoaded');
             // Execute any previously queued command
-            cmpService.processCommandQueue();
-            cmpService.cmpReady = true;
-            cmpService.notify('cmpReady');
+            cmp.processCommandQueue();
+            cmp.cmpReady = true;
+            cmp.notify('cmpReady');
         }
     }
 };
 
-export const _ = { oldCmp, onConsentChange, CmpService, readConsentCookie };
+export const _ = { CmpService, readConsentCookie };
