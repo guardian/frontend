@@ -16,8 +16,7 @@ import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import {
-    oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
 
 const oldCmp: any = oldCmp_;
 const getCookie: any = getCookie_;
@@ -34,9 +33,7 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn()
-        .mockImplementation(() => false),
+    isInTcfv2Test: jest.fn().mockImplementation(() => false),
 }));
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -62,9 +59,9 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     oldCmp: {
-        onIabConsentNotification: jest.fn()
+        onIabConsentNotification: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    onConsentChange: jest.fn(),
 }));
 
 const tcfWithConsentMock = (callback): void =>
@@ -175,7 +172,9 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(
+            tcfWithoutConsentMock
+        );
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
@@ -191,7 +190,9 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(
+            ccpaWithoutConsentMock
+        );
         expect(getPageTargeting().pa).toBe('f');
     });
 
@@ -200,7 +201,9 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(
+            tcfWithoutConsentMock
+        );
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
@@ -216,7 +219,9 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().rdp).toBe('f');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithoutConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(
+            ccpaWithoutConsentMock
+        );
         expect(getPageTargeting().rdp).toBe('t');
     });
 
