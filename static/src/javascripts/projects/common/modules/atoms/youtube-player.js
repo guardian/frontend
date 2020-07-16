@@ -8,7 +8,6 @@ import { getPageTargeting } from 'common/modules/commercial/build-page-targeting
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
-
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
