@@ -4,6 +4,7 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues}
 import common.Edition
 import model.MetaData
+import org.slf4j.LoggerFactory
 import play.api.mvc.RequestHeader
 
 trait PageskinAdAgent {
@@ -58,21 +59,22 @@ trait PageskinAdAgent {
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
   // If the sponsorship is targetting an adtest we also consider that the request URL includes the same adtest param
   def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition, request: RequestHeader): Boolean = {
-    println("*** Is Front ", metaData.isFront)
+    val logger = LoggerFactory.getLogger(this.getClass)
+    logger.info("*** Is Front ", metaData.isFront)
     if (metaData.isFront) {
       val adTestParam = request.getQueryString("adtest")
-      println("*** adTestParam ", adTestParam)
+      logger.info("*** adTestParam ", adTestParam)
       val shouldShow = findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
         if (sponsorship.targetsAdTest) {
-          print("*** sponsorship.targetsAdTest", sponsorship.targetsAdTest)
-          print("*** sponsorship", sponsorship)
+          logger.info("*** sponsorship.targetsAdTest", sponsorship.targetsAdTest)
+          logger.info("*** sponsorship", sponsorship)
           sponsorship.adTestValue == adTestParam
         } else {
-          print("*** SPONSORSHIP DOESNT TARGET TEST")
-          print("*** sponsorship", sponsorship)
+          logger.info("*** SPONSORSHIP DOESNT TARGET TEST")
+          logger.info("*** sponsorship", sponsorship)
           true
         })
-      print("*** SHOULD SHOW", shouldShow)
+      logger.info("*** SHOULD SHOW", shouldShow)
       shouldShow
     } else false
   }
