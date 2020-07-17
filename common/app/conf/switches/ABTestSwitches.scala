@@ -118,9 +118,19 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-centesimus-2",
-    "Show sign in gate to 100% of users on 3rd article view",
-    owners = Seq(Owner.withGithub("vlbee")),
+    "ab-sign-in-gate-main-control-1",
+    "Show sign in gate to 100% of users on 3rd article view, control audience",
+    owners = Seq(Owner.withGithub("coldlink")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-main-variant-1",
+    "Show sign in gate to 100% of users on 3rd article view, variant/full audience",
+    owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true
