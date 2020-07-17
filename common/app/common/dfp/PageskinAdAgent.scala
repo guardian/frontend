@@ -60,21 +60,21 @@ trait PageskinAdAgent {
   // If the sponsorship is targetting an adtest we also consider that the request URL includes the same adtest param
   def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition, request: RequestHeader): Boolean = {
     val logger = LoggerFactory.getLogger(this.getClass)
-    logger.info("*** Is Front ", metaData.isFront)
+    logger.info(s"*** Is Front ${metaData.isFront}")
     if (metaData.isFront) {
       val adTestParam = request.getQueryString("adtest")
-      logger.info("*** adTestParam ", adTestParam)
+      logger.info(s"*** adTestParam $adTestParam")
       val shouldShow = findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
         if (sponsorship.targetsAdTest) {
-          logger.info("*** sponsorship.targetsAdTest", sponsorship.targetsAdTest)
-          logger.info("*** sponsorship", sponsorship)
+          logger.info(s"*** sponsorship.targetsAdTest ${sponsorship.targetsAdTest}")
+          logger.info(s"*** sponsorship $sponsorship")
           sponsorship.adTestValue == adTestParam
         } else {
           logger.info("*** SPONSORSHIP DOESNT TARGET TEST")
-          logger.info("*** sponsorship", sponsorship)
+          logger.info(s"*** sponsorship $sponsorship")
           true
         })
-      logger.info("*** SHOULD SHOW", shouldShow)
+      logger.info(s"*** SHOULD SHOW $shouldShow")
       shouldShow
     } else false
   }
