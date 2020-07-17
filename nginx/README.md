@@ -2,20 +2,28 @@
 
 ## Install dependencies
 
-__Mac:__ [Install Homebrew:](http://brew.sh/#install)
+### Mac
 
-    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+[Install Homebrew](http://brew.sh/#install).
 
-    brew bundle
+```
+$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-__Other operating systems:__
+$ brew bundle
+```
+
+### Other operating systems
+
 You need to install:
-- nginx
-- [dev-nginx](https://github.com/guardian/dev-nginx)
 
+- [nginx](https://www.nginx.com/)
+- [dev-nginx](https://github.com/guardian/dev-nginx)
 
 ## Configure Nginx with SSL
 
 1. Run `nginx/setup.sh`
-1. To setup Dotcom Identity Fronted follow [identity-platform README](https://github.com/guardian/identity-platform)
+1. To setup Dotcom Identity Frontend follow the [identity-platform README](https://github.com/guardian/identity-platform)
 
+## Access the Site
+
+Visit https://m.thegulocal.com/.
