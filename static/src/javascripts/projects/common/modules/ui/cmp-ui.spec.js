@@ -58,10 +58,12 @@ describe('cmp-ui', () => {
             });
 
             it('returns willShowPrivacyMessage if user is in CCPA/TCFv2 variant', () => {
+                // $FlowFixMe
                 isInUsa.mockReturnValue(true);
+                // $FlowFixMe
                 isInTcfv2Test.mockReturnValue(true);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return consentManagementPlatformUi.canShow().then(() => {
                     expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
                 });
             });
