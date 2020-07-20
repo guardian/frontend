@@ -6,7 +6,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
@@ -17,10 +16,6 @@ import { connatix } from 'commercial/modules/third-party-tags/connatix';
 
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
@@ -70,21 +65,34 @@ const insertScripts = (
         }
     });
 
+    const onCMPConsentNotification = isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
+
     onCMPConsentNotification(state => {
-        let canRun: boolean;
+        let consentedAdvertisingServices = [];
         if (typeof state === 'boolean') {
             // CCPA mode
-            canRun = !state;
+            if (!state) consentedAdvertisingServices = [...advertisingServices];
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
-        } else {
+            consentedAdvertisingServices = advertisingServices.filter(script => {
+                if (typeof script.sourcepointId !== 'undefined' &&
+                    typeof state.tcfv2.customVendors.grants[script.sourcepointId] !== 'undefined') {
+                    return state.tcfv2.customVendors.grants[script.sourcepointId].vendorGrant;
+                }
+                return Object.values(state.tcfv2.tcfData).every(Boolean);
+            });
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+            consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (!advertisingScriptsInserted && canRun) {
-            addScripts(advertisingServices);
+        if (
+            !advertisingScriptsInserted &&
+            consentedAdvertisingServices.length > 0
+        ) {
+            addScripts(consentedAdvertisingServices);
             advertisingScriptsInserted = true;
         }
     });
@@ -93,7 +101,6 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        simpleReach,
         permutive,
         ias,
         inizio,
