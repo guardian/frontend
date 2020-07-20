@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import controllers.ArticlePage
-import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, DotcomRendering2, Excluded, Experiment, Participant}
+import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{AudioBlockElement, BlockElement, ContentAtomBlockElement, DocumentBlockElement, GuVideoBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement, VideoBlockElement}
@@ -203,15 +203,14 @@ object ArticlePicker {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
 
-    val userInDCRTest1 = ActiveExperiments.isParticipating(DotcomRendering1)
-    val userInDCRTest2 = ActiveExperiments.isParticipating(DotcomRendering2)
+    val userInDCRTest = ActiveExperiments.isParticipating(DotcomRendering)
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
       if (dcrDisabled(request)) LocalRenderArticle
       else if (dcrForced(request)) RemoteRender
       else if (userInDCRBubble) RemoteRender
-      else if ((userInDCRTest1 || userInDCRTest2) && hasPrimaryFeatures) RemoteRender
+      else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
@@ -226,8 +225,8 @@ object ArticlePicker {
 
     // include features that we wish to log but not allow-list against
     val features = primaryChecks.mapValues(_.toString) +
-      ("dcrTestGroup" -> TestGroups.combinator(testGroup(DotcomRendering1), testGroup(DotcomRendering2))) +
-      ("userIsInCohort" -> (userInDCRTest1 || userInDCRTest2).toString) +
+      ("dcrTestGroup" -> testGroup(DotcomRendering)) +
+      ("userIsInCohort" -> userInDCRTest.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> hasPrimaryFeatures.toString) +
@@ -240,31 +239,5 @@ object ArticlePicker {
     }
 
     tier
-  }
-}
-
-object TestGroups {
-  /*
-    This was introduced when DotcomRendering became DotcomRendering1 and DotcomRendering2
-    so that we could have 30% of the audience eligible for DCR rendering, a percentage between
-    20% and 50% that could not be achieved with a single test. The problem to solve was to make both
-    tests behave like one.
-   */
-  def combinator(group1: String, group2: String): String = {
-    // User is participant of the combined experiment if they are participant in either of the two base experiments,
-    // else are control if control in either of the two base experiments,
-    // else are not in the test.
-
-    // This function assumes that the two buckets are distinct, and in particular that the same user cannot be
-    // participant of one and control of the other at the same time.
-    // If buckets are not distinct do not use it!
-
-    (group1, group2) match {
-      case ("participant", _) => "participant"
-      case (_, "participant") => "participant"
-      case ("control", _) => "control"
-      case (_, "control") => "control"
-      case _ => "excluded"
-    }
   }
 }
