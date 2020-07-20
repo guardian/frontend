@@ -71,20 +71,27 @@ const insertScripts = (
     });
 
     onCMPConsentNotification(state => {
-        let canRun: boolean;
+        let consentedAdvertisingServices = [];
         if (typeof state === 'boolean') {
             // CCPA mode
-            canRun = !state;
+            if (!state) consentedAdvertisingServices = [...advertisingServices];
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
-        } else {
+            consentedAdvertisingServices = advertisingServices.filter(script =>
+                typeof script.sourcepointId !== 'undefined'
+                    ? state.tcfv2.customVendors.grants[script.sourcepointId]
+                    : Object.values(state.tcfv2.tcfData).every(Boolean)
+            );
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+            consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (!advertisingScriptsInserted && canRun) {
-            addScripts(advertisingServices);
+        if (
+            !advertisingScriptsInserted &&
+            consentedAdvertisingServices.length > 0
+        ) {
+            addScripts(consentedAdvertisingServices);
             advertisingScriptsInserted = true;
         }
     });
