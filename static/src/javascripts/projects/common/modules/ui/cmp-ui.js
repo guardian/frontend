@@ -56,7 +56,7 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = isCcpaApplicable()
+            newPrivacyLink.innerText = isInUsa()
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
@@ -82,7 +82,7 @@ export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (isInUsa() || isInTcfv2Test()) {
-            return cmp.willShowPrivacyMessage();
+            return Promise.resolve(cmp.willShowPrivacyMessage());
         }
         return Promise.resolve(
             config.get('switches.cmpUi', true) && oldCmp.shouldShow()

@@ -1,7 +1,8 @@
 // @flow
-import { isCcpaApplicable as isCcpaApplicable_ } from 'commercial/modules/cmp/ccpa-cmp';
-import { oldCmp } from '@guardian/consent-management-platform';
 import config from 'lib/config';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { consentManagementPlatformUi } from './cmp-ui';
 
 jest.mock('lib/raven');
@@ -11,20 +12,20 @@ jest.mock('@guardian/consent-management-platform', () => ({
         shouldShow: jest.fn(),
         checkWillShowUi: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
 }));
 
 jest.mock('lib/report-error', () => jest.fn());
 
-const isCcpaApplicable: any = isCcpaApplicable_;
-jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
-    isCcpaApplicable: jest.fn(),
+jest.mock('common/modules/commercial/geo-utils', () => ({
+    isInUsa: jest.fn(),
 }));
 
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn()
-        .mockImplementation(() => false),
+    isInTcfv2Test: jest.fn(),
 }));
 
 describe('cmp-ui', () => {
@@ -56,14 +57,12 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns checkWillShowUi if user is in CCPA variant', () => {
-                config.set('switches.cmpUi', true);
-                oldCmp.checkWillShowUi.mockReturnValue(Promise.resolve(true));
-                isCcpaApplicable.mockReturnValue(true);
+            it('returns willShowPrivacyMessage if user is in CCPA/TCFv2 variant', () => {
+                isInUsa.mockReturnValue(true);
+                isInTcfv2Test.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
-                    expect(oldCmp.checkWillShowUi).toHaveBeenCalledTimes(1);
-                    expect(show).toBe(true);
+                    expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
                 });
             });
         });
