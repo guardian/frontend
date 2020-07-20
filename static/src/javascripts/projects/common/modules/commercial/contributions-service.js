@@ -27,6 +27,7 @@ import * as emotion from "emotion";
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
+    hasOptedOutOfArticleCount,
     shouldHideSupportMessaging,
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
@@ -180,7 +181,8 @@ const buildEpicPayload = () => {
         mvtId: getMvtValue(),
         countryCode,
         epicViewLog: getViewLog(),
-        weeklyArticleHistory: getWeeklyArticleHistory()
+        weeklyArticleHistory: getWeeklyArticleHistory(),
+        hasOptedOutOfArticleCount: hasOptedOutOfArticleCount()
     };
 
     return {

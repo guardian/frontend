@@ -12,6 +12,7 @@ const AD_FREE_USER_COOKIE = 'GU_AF1';
 const ACTION_REQUIRED_FOR_COOKIE = 'gu_action_required_for';
 const DIGITAL_SUBSCRIBER_COOKIE = 'gu_digital_subscriber';
 const HIDE_SUPPORT_MESSAGING_COOKIE = 'gu_hide_support_messaging';
+const OPT_OUT_OF_ARTICLE_COUNT_COOKIE = 'gu_article_count_opt_out';
 
 // These cookies come from the user attributes API
 const RECURRING_CONTRIBUTOR_COOKIE = 'gu_recurring_contributor';
@@ -306,6 +307,9 @@ const fakeOneOffContributor = (): void => {
 const isAdFreeUser = (): boolean =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
+const hasOptedOutOfArticleCount = (): boolean =>
+    getCookie(OPT_OUT_OF_ARTICLE_COUNT_COOKIE) !== null;
+
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
 const extendContribsCookieExpiry = (): void => {
     const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
@@ -334,6 +338,7 @@ export {
     isRecentOneOffContributor,
     isRecurringContributor,
     isDigitalSubscriber,
+    hasOptedOutOfArticleCount,
     shouldHideSupportMessaging,
     refresh,
     deleteOldData,
