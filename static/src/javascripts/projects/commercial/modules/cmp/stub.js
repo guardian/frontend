@@ -1,9 +1,9 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
 import config from 'lib/config';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 
-if (config.get('switches.enableConsentManagementService') && !isCcpaApplicable()) {
+if (config.get('switches.enableConsentManagementService') && !isInUsa()) {
     try {
         (function stubCMP(document, window) {
             if (!window.__cmp) {

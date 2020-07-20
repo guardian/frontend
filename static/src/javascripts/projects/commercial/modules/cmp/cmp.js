@@ -5,7 +5,7 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 import { oldCmp } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -280,7 +280,7 @@ class CmpService {
 
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
-    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
+    if (window[CMP_GLOBAL_NAME] && !isInUsa() && !isInTcfv2Test()) {
         let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
