@@ -1,17 +1,17 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
-import idapiclient.responses.Error
+import idapiclient.responses.{CookieResponse, CookiesResponse, Error}
 import idapiclient.{Auth, IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
+import org.joda.time.DateTime
 import org.mockito.AdditionalAnswers.returnsFirstArg
 import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
-import play.api.mvc.{ControllerComponents, Request, RequestHeader}
+import play.api.mvc.{ControllerComponents, Cookie, Request, RequestHeader}
 import play.api.test.Helpers._
 import services._
 import test._
@@ -36,6 +36,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val trackingData = mock[TrackingData]
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
+  val signinService = mock[PlaySigninService]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
   when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(Right({}))
@@ -64,6 +65,7 @@ class EmailVerificationControllerTest extends path.FreeSpec
     idRequestParser,
     identityUrlBuilder,
     returnUrlVerifier,
+    signinService,
     play.api.test.Helpers.stubControllerComponents()
   )(testApplicationContext)
 
@@ -99,19 +101,28 @@ class EmailVerificationControllerTest extends path.FreeSpec
     val token = "myToken"
 
     "when the api call succeeds" - {
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(())))
+      val expiry = new DateTime(1595243635000L)
+      val cookieResponse = CookiesResponse(expiry, List(CookieResponse("key", "value")))
+      val playCookie = Cookie("key", "value")
+      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(cookieResponse)))
 
       "should redirect to default consent journey" in {
+        reset(signinService)
+        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
         redirectLocation(result).get should include("/consents?")
+        cookies(result).get("key").get.value shouldBe "value"
       }
 
       "should redirect to original returnUrl if it was already a consent journey" in {
+        reset(signinService)
+        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
         when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents"))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
         redirectLocation(result).get should include("/consents")
+        cookies(result).get("key").get.value shouldBe "value"
       }
     }
 
