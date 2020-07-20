@@ -48,8 +48,8 @@ class DevParametersHttpRequestHandler(
     "heatmap", // used by ophan javascript to enable the heatmap
     "format", // used to determine whether HTML should be served in email-friendly format or not
     "timestamp", //used to get specific builds for inteactive serviceworkers
-    "pbjs_debug", // set to true to enable prebid debugging,
-    "amzn_debug_mode" // set to 1 to enable A9 debugging
+    "pbjs_debug", // set to `true` to enable prebid debugging,
+    "amzn_debug_mode", // set to `1` to enable A9 debugging
   )
 
   val commercialParams = Seq(

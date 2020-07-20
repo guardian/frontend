@@ -8,7 +8,6 @@ import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -30,6 +29,13 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
+
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onCMPConsentNotification = isInTcfv2Test()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 initMessenger(
     type,
@@ -102,7 +108,7 @@ export const init = (): Promise<void> => {
             }
         );
 
-        onIabConsentNotification(state => {
+        onCMPConsentNotification(state => {
             // typeof state === 'boolean' means CCPA mode is on
             if (typeof state === 'boolean') {
                 window.googletag.cmd.push(() => {
@@ -111,7 +117,14 @@ export const init = (): Promise<void> => {
                     });
                 });
             } else {
-                const npaFlag = Object.values(state).includes(false);
+                let npaFlag: boolean;
+                if (typeof state.tcfv2 !== 'undefined') {
+                    // TCFv2 mode,
+                    npaFlag = Object.values(state.tcfv2).every(Boolean);
+                } else {
+                    // TCFv1 mode
+                    npaFlag = Object.values(state).includes(false);
+                }
                 window.googletag.cmd.push(() => {
                     window.googletag
                         .pubads()

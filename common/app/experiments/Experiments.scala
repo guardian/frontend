@@ -3,13 +3,16 @@ package experiments
 import conf.switches.{Owner, SwitchGroup}
 import experiments.ParticipationGroups._
 import org.joda.time.LocalDate
+import conf.switches.Owner.group
+import conf.switches.SwitchGroup.Commercial
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
     DotcomRendering1,
     DotcomRendering2,
-    DCRBubble
+    DCRBubble,
+    UseTCFv2
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -46,4 +49,12 @@ object DCRBubble extends Experiment(
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
+)
+
+object UseTCFv2 extends Experiment(
+  name = "use-tcfv2",
+  description = "Use TCFv2 CMP",
+  owners = group(Commercial),
+  sellByDate = new LocalDate(2020, 8, 24),
+  participationGroup = Perc0A
 )

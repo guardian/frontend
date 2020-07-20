@@ -8,6 +8,9 @@ jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
     isCcpaApplicable: () => false,
 }));
 
+// TODO: Investigate why we need to mock the CMP
+jest.mock('@guardian/consent-management-platform', () => ({}));
+
 jest.mock('lib/raven');
 jest.mock('lib/fetch-json', () => jest.fn());
 const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);

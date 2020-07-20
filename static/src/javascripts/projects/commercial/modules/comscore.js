@@ -1,5 +1,5 @@
 // @flow strict
-import { onGuConsentNotification } from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -52,7 +52,7 @@ const initOnConsent = (state: boolean | null) => {
 
 export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
-        onGuConsentNotification('performance', initOnConsent);
+        oldCmp.onGuConsentNotification('performance', initOnConsent);
     }
 
     return Promise.resolve();

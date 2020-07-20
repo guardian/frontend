@@ -14,10 +14,13 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
-import {
-    onIabConsentNotification,
-    onGuConsentNotification,
-} from '@guardian/consent-management-platform';
+
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
+const onCMPConsentNotification = isInTcfv2Test()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
@@ -60,19 +63,25 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag>
 ): void => {
-    onGuConsentNotification('performance', state => {
+    oldCmp.onGuConsentNotification('performance', state => {
         if (!performanceScriptsInserted && state) {
             addScripts(performanceServices);
             performanceScriptsInserted = true;
         }
     });
 
-    onIabConsentNotification(state => {
-        // typeof state === 'boolean' means CCPA mode is on
-        const canRun =
-            typeof state === 'boolean'
-                ? !state
-                : state[1] && state[2] && state[3] && state[4] && state[5];
+    onCMPConsentNotification(state => {
+        let canRun: boolean;
+        if (typeof state === 'boolean') {
+            // CCPA mode
+            canRun = !state;
+        } else if (typeof state.tcfv2 !== 'undefined') {
+            // TCFv2 mode,
+            canRun = Object.values(state.tcfv2).every(Boolean);
+        } else {
+            // TCFv1 mode
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+        }
 
         if (!advertisingScriptsInserted && canRun) {
             addScripts(advertisingServices);

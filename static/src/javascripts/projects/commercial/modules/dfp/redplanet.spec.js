@@ -1,12 +1,13 @@
 // @flow
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
+import {
+    oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 import { init } from './redplanet';
 
-const onIabConsentNotification: any = onIabConsentNotification_;
+const oldCmp: any = oldCmp_;
 const isInAuOrNz: any = isInAuOrNz_;
 const trueConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
@@ -17,6 +18,12 @@ const falseConsentMock = (callback): void =>
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
+}));
+
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest
+        .fn()
+        .mockImplementation(() => false),
 }));
 
 jest.mock('commercial/modules/dfp/Advert', () =>
@@ -44,7 +51,10 @@ jest.mock('lib/load-script', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
+    oldCmp: {
+        onIabConsentNotification: jest.fn()
+    },
+    onConsentChange: jest.fn()
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -69,7 +79,7 @@ describe('init', () => {
         config.set('page.section', 'uk');
         config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
 
         await init();
 
@@ -104,7 +114,7 @@ describe('init', () => {
     it('should not initialise redplanet when user TCF consent has not been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        onIabConsentNotification.mockImplementation(falseConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(falseConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
@@ -112,7 +122,7 @@ describe('init', () => {
     it('should not initialise redplanet when launchpad conditions are false', async () => {
         commercialFeatures.launchpad = false;
         isInAuOrNz.mockReturnValue(true);
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
@@ -120,7 +130,7 @@ describe('init', () => {
     it('should not initialise redplanet when user not in AUS regions', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(false);
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });

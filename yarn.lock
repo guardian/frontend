@@ -1150,14 +1150,12 @@
   resolved "https://registry.yarnpkg.com/@guardian/automat-client/-/automat-client-0.2.16.tgz#3ef47e7f49e633aea51c67f061d8d313a26fa9bc"
   integrity sha512-SgNU2bgiyQaXNfqanx4SDmxqAhXW6QBCTk4tRnCgV9Ht6noRl7UsDfx4I0u+M4H3TRnK4I/i2mmlJBtnuwhxEg==
 
-"@guardian/consent-management-platform@3.4.5":
-  version "3.4.5"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.5.tgz#6d26f70b76d0ddd4ed1090433c992d61ccfbb9c7"
-  integrity sha512-aQvZ7aWrTAnda8FoWWoH9PTGRJQc4CQ7aO7oqkGgx0C3MJKayzLYe1Gsa3jlB5fuh4b8Nrw71PQ9HFglPmjEaw==
+"@guardian/consent-management-platform@4.0.0-5":
+  version "4.0.0-5"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-5.tgz#2980e4794754c3a297ea172cfe11712b08b5f54c"
+  integrity sha512-yhcSVOQ8ULHSNHe88RXemvKxzFG5uMmv0Qul3GU9S5KUsrq/KdPFnnbdt72H+dH9l2AtffxX2oJ42TZcSAriJw==
   dependencies:
-    consent-string "1.5.2"
-    js-cookie "2.2.1"
-    whatwg-fetch "3.0.0"
+    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.9"
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -1170,6 +1168,15 @@
     filesizegzip "^2.0.0"
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
+
+"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.9":
+  version "3.4.9"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.9.tgz#6bd6108e12cb122c4a1fcba4ae657f4d0b67ad0b"
+  integrity sha512-9TRCahVCILDvD78xQpADaZMqqUZM1opsBXKPasVdEt3hnRyMwVB+l68DpydIEK8DZE9S2jxbuqtOEKrci/qMsw==
+  dependencies:
+    consent-string "1.5.2"
+    js-cookie "2.2.1"
+    whatwg-fetch "3.0.0"
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"

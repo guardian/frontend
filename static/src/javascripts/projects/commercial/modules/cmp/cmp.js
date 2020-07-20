@@ -4,7 +4,7 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import { log } from './log';
 import { CmpStore } from './store';
@@ -31,6 +31,7 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
+import { isInTcfv2Test } from './tcfv2-test';
 
 type MessageData = {
     __cmpCall: ?{
@@ -279,7 +280,7 @@ class CmpService {
 
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
-    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable()) {
+    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
         let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};
@@ -290,7 +291,7 @@ export const init = (): void => {
          * state. If consent state updates via the UI the callback will be triggered
          * again which will update cmp with the new consent state.
          */
-        onIabConsentNotification(() => {
+        oldCmp.onIabConsentNotification(() => {
             // Initialize the store with all of our consent data
             const store = generateStore();
             /**

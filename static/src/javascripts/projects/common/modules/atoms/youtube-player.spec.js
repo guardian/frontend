@@ -24,7 +24,14 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
+    oldCmp: {
+        onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
+    },
+}));
+
+// Force TCFv1
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest.fn().mockReturnValue(false),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({

@@ -2,8 +2,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import reportError from 'lib/report-error';
-import { ConsentManagementPlatform } from '@guardian/consent-management-platform/dist/ConsentManagementPlatform';
-import { setErrorHandler } from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
+
+const ConsentManagementPlatform = oldCmp.ConsentManagementPlatform;
+const setErrorHandler = oldCmp.setErrorHandler;
 
 export const init = (forceModal: boolean) => {
     const container = document.createElement('div');

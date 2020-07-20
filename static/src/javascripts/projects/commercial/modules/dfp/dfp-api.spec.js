@@ -9,7 +9,9 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
+import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+
+const oldCmp: any = oldCmp_;
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -18,10 +20,14 @@ const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
 
 const getBreakpoint: any = getBreakpoint_;
 const fillAdvertSlots: any = fillAdvertSlots_;
-const onIabConsentNotification: any = onIabConsentNotification_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
+}));
+jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
+    isInTcfv2Test: jest
+        .fn()
+        .mockImplementation(() => false),
 }));
 jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
@@ -93,7 +99,10 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
+    oldCmp: {
+        onIabConsentNotification: jest.fn()
+    },
+    onConsentChange: jest.fn()
 }));
 
 let $style;
@@ -450,7 +459,7 @@ describe('DFP', () => {
 
     describe('NPA flag is set correctly', () => {
         it('when full TCF consent was given', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfWithConsent)
             );
             prepareGoogletag().then(() => {
@@ -460,7 +469,7 @@ describe('DFP', () => {
             });
         });
         it('when no TCF consent preferences were specified', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfNullConsent)
             );
             prepareGoogletag().then(() => {
@@ -470,7 +479,7 @@ describe('DFP', () => {
             });
         });
         it('when full TCF consent was denied', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfWithoutConsent)
             );
             prepareGoogletag().then(() => {
@@ -480,7 +489,7 @@ describe('DFP', () => {
             });
         });
         it('when only partial TCF consent was given', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfMixedConsent)
             );
             prepareGoogletag().then(() => {
@@ -492,7 +501,7 @@ describe('DFP', () => {
     });
     describe('restrictDataProcessing flag is set correctly', () => {
         it('when CCPA consent was given', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
             prepareGoogletag().then(() => {
@@ -504,7 +513,7 @@ describe('DFP', () => {
             });
         });
         it('when CCPA consent was denied', () => {
-            onIabConsentNotification.mockImplementation(callback =>
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(ccpaWithoutConsent)
             );
             prepareGoogletag().then(() => {

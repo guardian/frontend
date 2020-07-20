@@ -1,12 +1,9 @@
 // @flow
 import config from 'lib/config';
-import {
-    shouldShow,
-    checkWillShowUi,
-    showPrivacyManager,
-} from '@guardian/consent-management-platform';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import raven from 'lib/raven';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 let initUi;
 
@@ -26,7 +23,11 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                     () => {
                         if (isCcpaApplicable()) {
                             if (forceModal) {
-                                showPrivacyManager();
+                                oldCmp.showPrivacyManager();
+                            }
+                        } else if (isInTcfv2Test()) {
+                            if (forceModal) {
+                                cmp.showPrivacyManager();
                             }
                         } else {
                             require('common/modules/cmp-ui').init(!!forceModal);
@@ -85,10 +86,13 @@ export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (isCcpaApplicable()) {
-            return checkWillShowUi();
+            return oldCmp.checkWillShowUi();
+        }
+        if (isInTcfv2Test()) {
+            return cmp.willShowPrivacyMessage();
         }
         return Promise.resolve(
-            config.get('switches.cmpUi', true) && shouldShow()
+            config.get('switches.cmpUi', true) && oldCmp.shouldShow()
         );
     },
     show,

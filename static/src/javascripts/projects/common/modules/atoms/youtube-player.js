@@ -6,10 +6,16 @@ import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
 import { getPermutivePFPSegments } from '../commercial/permutive';
+
+const onCMPConsentNotification = isInTcfv2Test()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -47,12 +53,13 @@ interface AdsConfig {
 
 let tcfState = null;
 let ccpaState = null;
-onIabConsentNotification(state => {
+onCMPConsentNotification(state => {
     // typeof state === 'boolean' means CCPA mode is on
     if (typeof state === 'boolean') {
         ccpaState = state;
     } else {
-        tcfState = state[1] && state[2] && state[3] && state[4] && state[5];
+        tcfState = state.tcfv2 ? Object.values(state.tcfv2).every(Boolean) :
+            state[1] && state[2] && state[3] && state[4] && state[5];
     }
 });
 

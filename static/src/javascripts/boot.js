@@ -11,7 +11,9 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import 'projects/commercial/modules/cmp/stub';
 import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
-import { init } from '@guardian/consent-management-platform';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -33,7 +35,11 @@ const go = () => {
 
         // Start CMP
         if (isCcpaApplicable()) {
-            init({ useCcpa: true });
+            oldCmp.init({ useCcpa: true });
+        } else if (isInTcfv2Test()) {
+            cmp.init({ isInUsa: isInUsa() });
+        } else {
+            // do nothing, TCFv1 CMP auto initialises
         }
 
         // 2. once standard is done, next is commercial
