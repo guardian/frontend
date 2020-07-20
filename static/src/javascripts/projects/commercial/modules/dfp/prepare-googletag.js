@@ -7,6 +7,9 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -30,12 +33,10 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification =
+    isInUsa() || isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
 initMessenger(
     type,

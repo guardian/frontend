@@ -4,18 +4,20 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification =
+    isInUsa() || isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -58,8 +60,9 @@ onCMPConsentNotification(state => {
     if (typeof state === 'boolean') {
         ccpaState = state;
     } else {
-        tcfState = state.tcfv2 ? Object.values(state.tcfv2).every(Boolean) :
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        tcfState = state.tcfv2
+            ? Object.values(state.tcfv2).every(Boolean)
+            : state[1] && state[2] && state[3] && state[4] && state[5];
     }
 });
 

@@ -1,8 +1,8 @@
 // @flow
 import config from 'lib/config';
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import raven from 'lib/raven';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 let initUi;
@@ -21,11 +21,7 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isCcpaApplicable()) {
-                            if (forceModal) {
-                                oldCmp.showPrivacyManager();
-                            }
-                        } else if (isInTcfv2Test()) {
+                        if (isInUsa() || isInTcfv2Test()) {
                             if (forceModal) {
                                 cmp.showPrivacyManager();
                             }
@@ -85,10 +81,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isCcpaApplicable()) {
-            return oldCmp.checkWillShowUi();
-        }
-        if (isInTcfv2Test()) {
+        if (isInUsa() || isInTcfv2Test()) {
             return cmp.willShowPrivacyMessage();
         }
         return Promise.resolve(

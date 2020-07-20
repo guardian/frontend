@@ -1,6 +1,10 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -10,12 +14,10 @@ import type {
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification =
+    isInUsa() || isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
 class A9AdUnit {
     slotID: ?string;

@@ -1,15 +1,15 @@
 // @flow strict
 
 import config from 'lib/config';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
-
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isInAuOrNz, isInUsa } from 'common/modules/commercial/geo-utils';
 
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification =
+    isInUsa() || isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
 let initialised = false;
 
@@ -45,7 +45,8 @@ const setupRedplanet: () => Promise<void> = () => {
                 canRun = Object.values(state.tcfv2).every(Boolean);
             } else {
                 // TCFv1 mode
-                canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+                canRun =
+                    state[1] && state[2] && state[3] && state[4] && state[5];
             }
 
             if (!initialised && canRun) {
