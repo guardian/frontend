@@ -446,6 +446,21 @@ object PageElement {
     }
   }
 
+  def liveBlogAudioBlockElementResolvesToPageElementSoundcloudBlockElement(element: ApiBlockElement): Boolean = {
+    /*
+      date: July 20th 2020
+      author: Pascal
+      This function was introduced to be able to know from the article picker whether or not
+      an AudioBlockElement given to the article picker's function "hasOnlySupportedElements" would
+      resolve to a SoundcloudBlockElement (which we currently support in DCR) or an AudioBlockElement
+      (which DCR doesn't yet support).
+     */
+    audioToPageElement(element: ApiBlockElement) match {
+      case Some(_: SoundcloudBlockElement) => true
+      case _ => false
+    }
+  }
+
   private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
