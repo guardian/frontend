@@ -26,7 +26,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
     import views.support.{BulletCleaner, CommercialComponentHigh}
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.metadata.hasPageSkin(edition, request)),
+      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.metadata.hasPageSkin(edition)),
     )
   }
 
@@ -76,7 +76,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkin(Edition(request), request),
+        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
