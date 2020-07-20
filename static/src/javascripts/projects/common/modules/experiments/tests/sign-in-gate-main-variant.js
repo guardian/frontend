@@ -1,13 +1,10 @@
 // @flow
 
-// Trigger test in Dev
-// http://m.thegulocal.com/uk#ab-SignInGateCentesimus=centesimus-control-2
-
-// Centesismus (100%) test is a feature switch where we roll out winning changes from other AB sign in gate tests
-// The number represents the design version being used.
+// Main test is a feature switch where we roll out winning changes from other AB sign in gate tests
+// variant audience sees the gate
 
 export const signInGateMainVariant: ABTest = {
-    id: 'SignInGateMainVariant1',
+    id: 'SignInGateMainVariant',
     start: '2020-05-20',
     expiry: '2020-12-01',
     author: 'Mahesh Makani',

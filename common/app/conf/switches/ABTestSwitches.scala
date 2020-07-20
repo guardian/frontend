@@ -118,7 +118,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-main-control-1",
+    "ab-sign-in-gate-main-control",
     "Show sign in gate to 100% of users on 3rd article view, control audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
@@ -128,7 +128,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-main-variant-1",
+    "ab-sign-in-gate-main-variant",
     "Show sign in gate to 100% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
