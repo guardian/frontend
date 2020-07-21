@@ -679,6 +679,10 @@ class GuardianConfiguration extends Logging {
     lazy val externalEmbedHost = configuration.getMandatoryStringProperty("guardian.page.externalEmbedHost")
   }
 
+  object braze {
+    lazy val apiKey = configuration.getStringProperty("braze.apikey").getOrElse("")
+  }
+
 }
 
 object ManifestData {

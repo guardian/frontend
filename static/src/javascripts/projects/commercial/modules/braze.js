@@ -1,12 +1,14 @@
 // @flow
 
 import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import config from 'lib/config';
 
-const apiKey = 'XXX';
 const brazeUuid = 'XXX';
 let didAlreadyRun = false;
 
 export const init = (): Promise<any> => {
+    const apiKey = config.get('page.brazeApiKey');
+    if (!apiKey) return Promise.reject("Braze API key not set.");
     console.log("Initializing Braze");
 
     onIabConsentNotification(state => {
