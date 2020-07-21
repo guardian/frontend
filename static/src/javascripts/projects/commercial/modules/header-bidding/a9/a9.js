@@ -37,6 +37,7 @@ let initialised: boolean = false;
 let requestQueue: Promise<void> = Promise.resolve();
 
 const bidderTimeout: number = 1500;
+const SOURCEPOINT_ID: string = '5edf9a821dc4e95986b66df4';
 
 const initialise = (): void => {
     onCMPConsentNotification(state => {
@@ -46,7 +47,11 @@ const initialise = (): void => {
             canRun = !state;
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
+            if (typeof state.tcfv2.customVendors.grants[SOURCEPOINT_ID] !== 'undefined') {
+                canRun = state.tcfv2.customVendors.grants[SOURCEPOINT_ID].vendorGrant;
+            } else {
+                canRun = Object.values(state.tcfv2).every(Boolean);
+            }
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
