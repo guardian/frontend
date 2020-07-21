@@ -102,10 +102,10 @@ case class TextBlockElement(html: String) extends PageElement
 case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent]) extends PageElement
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
 case class UnknownBlockElement(html: Option[String]) extends PageElement
-case class VideoBlockElement(caption: String, url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
-case class VideoFacebookBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
-case class VideoVimeoBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
-case class VideoYoutubeBlockElement(caption: String, url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
+case class VideoBlockElement(caption: Option[String], url: String, originalUrl: String, height: Int, width: Int, role: Role) extends PageElement
+case class VideoFacebookBlockElement(caption: Option[String], url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
+case class VideoVimeoBlockElement(caption: Option[String], url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
+case class VideoYoutubeBlockElement(caption: Option[String], url: String, originalUrl: String, embedUrl: Option[String], height: Int, width: Int, role: Role) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
 case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String) extends PageElement
@@ -508,7 +508,7 @@ object PageElement {
     for {
       data <- element.videoTypeData
       source <- data.source
-      caption <- data.caption
+      caption = data.caption
       originalUrl <- data.originalUrl
       height <- data.height
       width <- data.width
