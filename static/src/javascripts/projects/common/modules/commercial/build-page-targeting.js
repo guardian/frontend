@@ -290,7 +290,6 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
-    console.log("isInTcfv2Test()", isInTcfv2Test())
     const onCMPConsentNotification = isInTcfv2Test()
         ? onConsentChange
         : oldCmp.onIabConsentNotification;
