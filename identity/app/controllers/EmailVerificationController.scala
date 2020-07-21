@@ -2,13 +2,14 @@ package controllers
 
 import java.net.{URI, URLEncoder}
 
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, Result}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
-import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, ReturnUrlVerifier}
+import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
+import idapiclient.responses.CookiesResponse
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
@@ -21,6 +22,7 @@ class EmailVerificationController(api: IdApiClient,
   idRequestParser: IdRequestParser,
   idUrlBuilder: IdentityUrlBuilder,
   returnUrlVerifier: ReturnUrlVerifier,
+  signinService: PlaySigninService,
   val controllerComponents: ControllerComponents
 )(implicit context: ApplicationContext)
   extends BaseController with ImplicitControllerExecutionContext with SafeLogging {
@@ -38,12 +40,12 @@ class EmailVerificationController(api: IdApiClient,
           val validationState = response match {
             case Left(errors) =>
               errors.head.message match {
-                case "User Already Validated" => validated
+                case "User Already Validated" => alreadyValidated
                 case "Token expired" => expired
                 case error => logger.warn("Error validating email: " + error); invalid
               }
 
-            case Right(_) => validated
+            case Right(cookies) => validatedWithSession(cookies)
           }
           val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
           val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
@@ -57,7 +59,10 @@ class EmailVerificationController(api: IdApiClient,
                 val consentJourneyPath = "^\\/consents([?/#].*)?$".r
                 consentJourneyPath.findFirstMatchIn(uri.getPath).map(_ => verifiedReturnUrl)
               }
-            SeeOther(redirectUrl.getOrElse(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl")))
+
+            val cookies = validationState.authenticationCookies.map(signinService.getCookies(_, rememberMe = true)).getOrElse(Nil)
+
+            SeeOther(redirectUrl.getOrElse(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl"))).withCookies(cookies:_*)
           } else {
             Ok(IdentityHtmlPage.html(views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl))(page, request, context))
           }
@@ -92,9 +97,11 @@ class EmailVerificationController(api: IdApiClient,
   }
 }
 
-sealed case class ValidationState(isValidated: Boolean, isExpired: Boolean)
+sealed case class ValidationState(isValidated: Boolean, isExpired: Boolean, authenticationCookies: Option[CookiesResponse] = None)
+
 object ValidationState {
-  val validated = new ValidationState(true, false)
-  val expired = new ValidationState(false, true)
-  val invalid = new ValidationState(false, false)
+  def validatedWithSession(autheniticationCookies: CookiesResponse): ValidationState = ValidationState(isValidated = true, isExpired = false, Some(autheniticationCookies))
+  val alreadyValidated = ValidationState(isValidated = true, isExpired = false)
+  val expired = ValidationState(isValidated = false, isExpired = true)
+  val invalid = ValidationState(isValidated = false, isExpired = false)
 }
