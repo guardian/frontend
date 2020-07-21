@@ -50,7 +50,7 @@ const initialise = (): void => {
             if (typeof state.tcfv2.customVendors.grants[SOURCEPOINT_ID] !== 'undefined') {
                 canRun = state.tcfv2.customVendors.grants[SOURCEPOINT_ID].vendorGrant;
             } else {
-                canRun = Object.values(state.tcfv2).every(Boolean);
+                canRun = Object.values(state.tcfv2.tcfData).every(Boolean);
             }
         } else {
             // TCFv1 mode

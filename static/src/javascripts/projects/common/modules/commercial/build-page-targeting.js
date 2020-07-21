@@ -23,10 +23,6 @@ import pickBy from 'lodash/pickBy';
 import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 type PageTargeting = {
     sens: string,
     url: string,
@@ -217,16 +213,17 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const getRdpValue = (ccpaState: boolean | null): string => {
-    if (ccpaState === null) {
+const getSPConsentValue = (spState: boolean | null): string => {
+    if (spState === null) {
         return 'na';
     }
-    return ccpaState ? 't' : 'f';
+    return spState ? 't' : 'f';
 };
 
 const buildPageTargetting = (
     adConsentState: boolean | null,
-    ccpaState: boolean | null
+    ccpaState: boolean | null,
+    tcfv2State: boolean | null,
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -265,7 +262,8 @@ const buildPageTargetting = (
             // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
-            rdp: getRdpValue(ccpaState),
+            rdp: getSPConsentValue(ccpaState),
+            consent_tcfv2: getSPConsentValue(tcfv2State),
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -292,15 +290,20 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+    console.log("isInTcfv2Test()", isInTcfv2Test())
+    const onCMPConsentNotification = isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
     onCMPConsentNotification(state => {
-        let canRun: boolean;
+        let canRun: boolean | null;
         if (typeof state === 'boolean') {
             // CCPA mode
             canRun = !state;
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
+            canRun = Object.values(state.tcfv2.tcfData).every(p => p === null) ? null :
+                Object.values(state.tcfv2.tcfData).every(Boolean);
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
@@ -308,7 +311,8 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
         if (canRun !== latestConsentCanRun) {
             const ccpaState = typeof state === 'boolean' ? state : null;
-            myPageTargetting = buildPageTargetting(canRun, ccpaState);
+            const tcfv2State = typeof state.tcfv2 !== 'undefined' ? canRun : null;
+            myPageTargetting = buildPageTargetting(canRun, ccpaState, tcfv2State);
             latestConsentCanRun = canRun;
         }
     });

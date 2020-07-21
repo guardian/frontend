@@ -120,7 +120,7 @@ export const init = (): Promise<void> => {
                 let npaFlag: boolean;
                 if (typeof state.tcfv2 !== 'undefined') {
                     // TCFv2 mode,
-                    npaFlag = Object.values(state.tcfv2).every(Boolean);
+                    npaFlag = Object.values(state.tcfv2.tcfData).includes(false);
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
