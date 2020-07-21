@@ -255,7 +255,7 @@ object PageElement {
             Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else videoDataFor(element).toList
+        else videoToPageElement(element).toList
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -504,7 +504,7 @@ object PageElement {
     }
   }
 
-  private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
+  private def videoToPageElement(element: ApiBlockElement): Option[PageElement] = {
     for {
       data <- element.videoTypeData
       source <- data.source
