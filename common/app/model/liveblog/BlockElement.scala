@@ -27,7 +27,10 @@ case class AudioBlockElement(element: ApiBlockElement, assets: Seq[AudioAsset]) 
   the article picker will not need to segregate between variations of the AudioBlockElement. At this point
   the AudioBlockElement can lose the element attribute.
 
+  mark: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
+
  */
+
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends BlockElement
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement

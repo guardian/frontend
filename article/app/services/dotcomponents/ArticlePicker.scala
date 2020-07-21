@@ -2,10 +2,10 @@ package services.dotcomponents
 
 import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, DotcomRendering2, Excluded, Experiment, Participant}
-import model.PageWithStoryPackage
+import model.{AudioAsset, PageWithStoryPackage}
 import implicits.Requests._
-import model.liveblog.{BlockElement, ContentAtomBlockElement, DocumentBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
-import model.dotcomrendering.pageElements.{SoundcloudBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement, VideoFacebookBlockElement}
+import model.liveblog.{AudioBlockElement, BlockElement, ContentAtomBlockElement, DocumentBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
+import model.dotcomrendering.pageElements.{SoundcloudBlockElement, VideoFacebookBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -37,7 +37,11 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
 
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
-
+      case _: AudioBlockElement => {
+        val e = blockElement.asInstanceOf[AudioBlockElement].element
+        val resolve = model.dotcomrendering.pageElements.PageElement.audiIsDCRSupported(e)
+        !resolve
+      }
       case _: DocumentBlockElement => false
       case _: ImageBlockElement => false
       case _: InstagramBlockElement => false
