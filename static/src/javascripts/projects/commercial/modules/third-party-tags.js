@@ -72,16 +72,29 @@ const insertScripts = (
 
     onCMPConsentNotification(state => {
         let consentedAdvertisingServices = [];
+        console.log("*** BEFORE Advertising services ", advertisingServices);
         if (typeof state === 'boolean') {
             // CCPA mode
             if (!state) consentedAdvertisingServices = [...advertisingServices];
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            consentedAdvertisingServices = advertisingServices.filter(script =>
-                typeof script.sourcepointId !== 'undefined'
-                    ? state.tcfv2.customVendors.grants[script.sourcepointId]
-                    : Object.values(state.tcfv2.tcfData).every(Boolean)
+            consentedAdvertisingServices = advertisingServices.filter(script => {
+                console.log("state.tcfv2.customVendors.grants[script.sourcepointId]", state.tcfv2.customVendors.grants[script.sourcepointId])
+                if (typeof script.sourcepointId !== 'undefined' &&
+                    typeof state.tcfv2.customVendors.grants[script.sourcepointId] !== 'undefined') {
+                    console.log("** YES SOURCEPOINT ID FOR ", script.sourcepointId)
+                    console.log("** YES SOURCEPOINT ID URL ", script.url)
+                    console.log("vendorGrant", state.tcfv2.customVendors.grants[script.sourcepointId].vendorGrant)
+                    return state.tcfv2.customVendors.grants[script.sourcepointId].vendorGrant;
+                }
+                console.log("** NO SOURCEPOINT ID FOR ", script.sourcepointId);
+                console.log("** NO SOURCEPOINT ID URL ", script.url);
+                console.log("** NO GRANT ID FOR ", state.tcfv2.customVendors.grants[script.sourcepointId]);
+                return Object.values(state.tcfv2.tcfData).every(Boolean);
+            }
+
             );
+            console.log(" *** TCFv2 consentedAdvertisingServices", consentedAdvertisingServices);
         } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
             consentedAdvertisingServices = [...advertisingServices];
