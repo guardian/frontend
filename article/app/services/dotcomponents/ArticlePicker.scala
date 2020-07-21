@@ -2,10 +2,9 @@ package services.dotcomponents
 
 import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering1, DotcomRendering2, Excluded, Experiment, Participant}
-import model.{AudioAsset, PageWithStoryPackage}
+import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{AudioBlockElement, BlockElement, ContentAtomBlockElement, DocumentBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement}
-import model.dotcomrendering.pageElements.{SoundcloudBlockElement, VideoFacebookBlockElement, VideoVimeoBlockElement, VideoYoutubeBlockElement}
+import model.liveblog.{AudioBlockElement, BlockElement, ContentAtomBlockElement, DocumentBlockElement, GuVideoBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement, VideoBlockElement}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -45,15 +44,13 @@ object ArticlePageChecks {
       case _: DocumentBlockElement => false
       case _: ImageBlockElement => false
       case _: InstagramBlockElement => false
+      case _: GuVideoBlockElement => false
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
-      case _: SoundcloudBlockElement => false
       case _: TableBlockElement => false
       case _: TextBlockElement => false
       case _: TweetBlockElement => false
-      case _: VideoFacebookBlockElement => false
-      case _: VideoVimeoBlockElement => false
-      case _: VideoYoutubeBlockElement => false
+      case _: VideoBlockElement => false
       case ContentAtomBlockElement(_, atomtype) => {
         // ContentAtomBlockElement was expanded to include atomtype.
         // To support an atom type, just add it to supportedAtomTypes
