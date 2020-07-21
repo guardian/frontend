@@ -2,14 +2,13 @@
 
 import config from 'lib/config';
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInAuOrNz, isInUsa } from 'common/modules/commercial/geo-utils';
+import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
-const onCMPConsentNotification =
-    isInUsa() || isInTcfv2Test()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification = shouldUseSourcepointCmp()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 let initialised = false;
 

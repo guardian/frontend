@@ -10,8 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
@@ -23,10 +22,9 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-const onCMPConsentNotification =
-    isInUsa() || isInTcfv2Test()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification = shouldUseSourcepointCmp()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 type PageTargeting = {
     sens: string,

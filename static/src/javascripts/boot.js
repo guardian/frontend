@@ -11,7 +11,7 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp } from '@guardian/consent-management-platform';
 import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import 'projects/commercial/modules/cmp/stub';
 
 // Let webpack know where to get files from
@@ -33,7 +33,8 @@ const go = () => {
         bootStandard();
 
         // Start CMP
-        if (isInUsa() || isInTcfv2Test()) {
+        if (shouldUseSourcepointCmp()) {
+            // CCPA and TCFv2
             cmp.init({ isInUsa: isInUsa() });
         } else {
             // do nothing, TCFv1 CMP auto initialises

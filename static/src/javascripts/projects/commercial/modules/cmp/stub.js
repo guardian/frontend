@@ -1,9 +1,12 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
 import config from 'lib/config';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 
-if (config.get('switches.enableConsentManagementService') && !isInUsa()) {
+if (
+    config.get('switches.enableConsentManagementService') &&
+    !shouldUseSourcepointCmp()
+) {
     try {
         (function stubCMP(document, window) {
             if (!window.__cmp) {

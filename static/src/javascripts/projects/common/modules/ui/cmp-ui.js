@@ -2,8 +2,8 @@
 import config from 'lib/config';
 import raven from 'lib/raven';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
 
 let initUi;
 
@@ -21,7 +21,7 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isInUsa() || isInTcfv2Test()) {
+                        if (shouldUseSourcepointCmp()) {
                             if (forceModal) {
                                 cmp.showPrivacyManager();
                             }
@@ -81,7 +81,7 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isInUsa() || isInTcfv2Test()) {
+        if (shouldUseSourcepointCmp()) {
             return Promise.resolve(cmp.willShowPrivacyMessage());
         }
         return Promise.resolve(

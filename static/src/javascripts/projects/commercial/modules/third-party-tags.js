@@ -3,8 +3,7 @@
 
 import fastdom from 'lib/fastdom-promise';
 import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -18,10 +17,9 @@ import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
 
-const onCMPConsentNotification =
-    isInUsa() || isInTcfv2Test()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
+const onCMPConsentNotification = shouldUseSourcepointCmp()
+    ? onConsentChange
+    : oldCmp.onIabConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
