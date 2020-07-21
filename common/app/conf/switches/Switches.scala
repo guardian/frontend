@@ -34,6 +34,7 @@ object SwitchGroup {
   val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
   val Journalism = SwitchGroup("Journalism")
+  val TX = SwitchGroup("TX")
 }
 
 
@@ -161,7 +162,8 @@ with DiscussionSwitches
 with PerformanceSwitches
 with MonitoringSwitches
 with IdentitySwitches
-with JournalismSwitches {
+with JournalismSwitches
+with TXSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
 

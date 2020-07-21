@@ -7,6 +7,8 @@ const brazeUuid = 'XXX';
 let didAlreadyRun = false;
 
 export const init = (): Promise<any> => {
+    const brazeSwitch = config.get('switches.brazeSwitch');
+    if (!brazeSwitch) return Promise.resolve();
     const apiKey = config.get('page.brazeApiKey');
     if (!apiKey) return Promise.reject(new Error('Braze API key not set.'));
     console.log("Initializing Braze");
