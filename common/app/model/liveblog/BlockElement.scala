@@ -10,7 +10,24 @@ case class TextBlockElement(html: Option[String]) extends BlockElement
 case class TweetBlockElement(html: Option[String]) extends BlockElement
 case class PullquoteBlockElement(html: Option[String]) extends BlockElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends BlockElement
-case class AudioBlockElement(assets: Seq[AudioAsset]) extends BlockElement
+case class AudioBlockElement(element: ApiBlockElement, assets: Seq[AudioAsset]) extends BlockElement
+/*
+
+  date: 21st July 2020
+  author: Pascal
+
+  I have modified the AudioBlockElement to carry the original ApiBlockElement.
+
+  This, because the model.liveblog.BlockElement classes are considered by the DCR article picker
+  which decides whether or not the BlockElement is supported, but in the case of the AudioBlockElement
+  some instances of it are supported and others are not. Having access to the ApiBlockElement
+  helps with that decision.
+
+  There will be a moment in few weeks when all the variations of the AudioBlockElement will be supported by DCR, and
+  the article picker will not need to segregate between variations of the AudioBlockElement. At this point
+  the AudioBlockElement can lose the element attribute.
+
+ */
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends BlockElement
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
@@ -89,7 +106,7 @@ object BlockElement {
         element.imageTypeData.flatMap(_.displayCredit)
       ))
 
-      case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))
+      case Audio => Some(AudioBlockElement(element, element.assets.map(AudioAsset.make)))
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -156,7 +173,11 @@ object BlockElement {
 
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
-  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = new Writes[AudioBlockElement] {
+    def writes(audio: AudioBlockElement): JsObject = Json.obj(
+      "assets" -> audio.assets
+    )
+  }
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
