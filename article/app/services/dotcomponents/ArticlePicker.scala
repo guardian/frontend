@@ -44,7 +44,6 @@ object ArticlePageChecks {
       case _: DocumentBlockElement => false
       case _: ImageBlockElement => false
       case _: InstagramBlockElement => false
-      case _: GuVideoBlockElement => false
       case _: PullquoteBlockElement => false
       case _: RichLinkBlockElement => false
       case _: TableBlockElement => false
