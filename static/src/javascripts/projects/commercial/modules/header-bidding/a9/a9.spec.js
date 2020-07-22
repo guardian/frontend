@@ -1,8 +1,11 @@
 // @flow
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { oldCmp as oldCmp_, onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
-import { isInTcfv2Test as isInTcfv2Test_} from 'commercial/modules/cmp/tcfv2-test';
+import {
+    oldCmp as oldCmp_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
+import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
 
 const oldCmp: any = oldCmp_;
 const isInTcfv2Test: any = isInTcfv2Test_;
@@ -12,7 +15,9 @@ const TcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
 
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2 : { customVendors: { grants: { '5edf9a821dc4e95986b66df4': { vendorGrant: true }}}}});
+    callback({
+        tcfv2: { customVendors: { '5edf9a821dc4e95986b66df4': true } },
+    });
 
 const CcpaWithConsentMock = (callback): void => callback(false);
 
@@ -22,8 +27,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
 );
 
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn(),
+    isInTcfv2Test: jest.fn(),
 }));
 
 jest.mock('commercial/modules/header-bidding/slot-config', () => ({
@@ -36,9 +40,9 @@ jest.mock('commercial/modules/header-bidding/slot-config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     oldCmp: {
-        onIabConsentNotification: jest.fn()
+        onIabConsentNotification: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    onConsentChange: jest.fn(),
 }));
 
 beforeEach(async () => {
