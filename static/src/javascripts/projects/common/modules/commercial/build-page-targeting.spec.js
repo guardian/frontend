@@ -81,11 +81,11 @@ const ccpaWithConsentMock = (callback): void => callback(false);
 const ccpaWithoutConsentMock = (callback): void => callback(true);
 
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2 : { tcfData: {  '1':  true , '2': true }, eventStatus: 'useractioncomplete'}});
+    callback({ tcfv2 : { consents: {  '1':  true , '2': true }, eventStatus: 'useractioncomplete'}});
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2 : { tcfData: { }, eventStatus: 'cmpuishown' }});
+    callback({ tcfv2 : { consents: { }, eventStatus: 'cmpuishown' }});
 const tcfv2MixedConsentMock = (callback): void =>
-    callback({ tcfv2 : { tcfData: {  '1':  true , '2': false }, eventStatus: 'useractioncomplete'}});
+    callback({ tcfv2 : { consents: {  '1':  true , '2': false }, eventStatus: 'useractioncomplete'}});
 
 
 describe('Build Page Targeting', () => {

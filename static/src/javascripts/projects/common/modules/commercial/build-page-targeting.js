@@ -309,8 +309,8 @@ const getPageTargeting = (): { [key: string]: mixed } => {
             canRun = !state;
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = state.tcfv2.tcfData ? Object.keys(state.tcfv2.tcfData).length > 0 &&
-                Object.values(state.tcfv2.tcfData).every(Boolean): false;
+            canRun = state.tcfv2.consents ? Object.keys(state.tcfv2.consents).length > 0 &&
+                Object.values(state.tcfv2.consents).every(Boolean): false;
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
