@@ -14,10 +14,11 @@ describe('twitterUwt', () => {
 
     it('shouldRun to be false if the switch is off', () => {
         config.set('switches.twitterUwt', false);
-        const { shouldRun, url, onLoad } = twitterUwt();
+        const { shouldRun, url, onLoad, sourcepointId } = twitterUwt();
 
         expect(shouldRun).toEqual(false);
         expect(url).toEqual('//static.ads-twitter.com/uwt.js');
         expect(onLoad).toBeDefined();
+        expect(sourcepointId).toBe('5e71760b69966540e4554f01');
     });
 });

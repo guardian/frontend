@@ -23,10 +23,6 @@ import pickBy from 'lodash/pickBy';
 import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 type PageTargeting = {
     sens: string,
     url: string,
@@ -292,15 +288,18 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+    const onCMPConsentNotification = isInTcfv2Test()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
     onCMPConsentNotification(state => {
-        let canRun: boolean;
+        let canRun: boolean | null;
         if (typeof state === 'boolean') {
             // CCPA mode
             canRun = !state;
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
+            canRun = Object.values(state.tcfv2.tcfData).every(Boolean);
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
