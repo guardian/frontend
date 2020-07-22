@@ -41,6 +41,8 @@ type Meta = {
     abTestName: string,
     abTestVariant: string,
     campaignCode: string,
+    componentType: OphanComponentType,
+    products?: OphanProduct[]
 }
 
 export type BannerDataResponse = {
@@ -158,7 +160,6 @@ const buildEpicPayload = () => {
 
     const tracking = {
         ophanPageId: ophan.pageViewId,
-        ophanComponentId: 'ACQUISITIONS_EPIC',
         platformId: 'GUARDIAN_WEB',
         clientName: 'frontend',
         referrerUrl:
@@ -192,9 +193,9 @@ const buildEpicPayload = () => {
 const buildBannerPayload = () => {
     const page = config.get('page');
 
+    // TODO: Is there any reason we send this to the server?
     const tracking = {
         ophanPageId: config.get('ophan.pageViewId'),
-        ophanComponentId: 'ACQUISITIONS_ENGAGEMENT_BANNER',
         platformId: 'GUARDIAN_WEB',
         clientName: 'frontend',
         referrerUrl: window.location.origin + window.location.pathname,
@@ -257,7 +258,10 @@ export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
 };
 
 export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
-    const { module, meta } = response.data;
+    const { module, meta } : {
+        module: ServiceModule,
+        meta: Meta
+    } = response.data;
     if (!module) {
         return Promise.resolve(false);
     }
@@ -288,25 +292,30 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                     container
                 );
             }).then(() => {
-                const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
-                const componentType = 'ACQUISITIONS_ENGAGEMENT_BANNER';
+                const {
+                    abTestName,
+                    abTestVariant,
+                    componentType,
+                    products = [],
+                    campaignCode
+                } = meta;
 
-                submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode);
+                submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
 
                 // Submit view event now, as the standard view tracking is unreliable if the component is instantly in view
                 submitViewEvent({
                     component: {
                         componentType,
                         products,
-                        campaignCode: meta.campaignCode,
-                        id: meta.campaignCode,
+                        campaignCode,
+                        id: campaignCode,
                     },
                     abTest: {
-                        name: meta.abTestName,
-                        variant: meta.abTestVariant,
+                        name: abTestName,
+                        variant: abTestVariant,
                     }
-                }
-                );
+                });
+
                 return true
             });
         })
@@ -319,8 +328,6 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
 
 export const fetchAndRenderEpic = (id: string) => {
     const payload = buildEpicPayload();
-    const products = ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'];
-    const componentType = 'ACQUISITIONS_EPIC';
     const viewEvent = makeEvent(id, 'view');
 
     getBodyEnd(payload)
@@ -329,26 +336,34 @@ export const fetchAndRenderEpic = (id: string) => {
         .then(json => {
             if (json && json.data) {
                 const { html, css, js, meta } = json.data;
-                const trackingCampaignId = `${meta.campaignId}`;
+                const {
+                    abTestName,
+                    abTestVariant,
+                    componentType,
+                    products = [],
+                    campaignCode,
+                    campaignId
+                } = meta;
+                const trackingCampaignId = `${campaignId}`;
 
                 emitBeginEvent(trackingCampaignId);
-                setupClickHandling(meta.abTestName, meta.abTestVariant, componentType, meta.campaignCode, products);
+                setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
 
                 renderEpic(html, css)
                     .then(([el, shadowRoot]) => {
                         executeJS(shadowRoot || el, js);
-                        submitOphanInsert(meta.abTestName, meta.abTestVariant, componentType, products, meta.campaignCode)
+                        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
                         setupOphanView(
                             el,
                             viewEvent,
-                            meta.abTestName,
-                            meta.abTestVariant,
-                            meta.campaignCode,
+                            abTestName,
+                            abTestVariant,
+                            campaignCode,
                             trackingCampaignId,
                             componentType,
                             products,
-                            meta.abTestVariant.showTicker,
-                            meta.abTestVariant.tickerSettings,
+                            abTestVariant.showTicker,
+                            abTestVariant.tickerSettings,
                         )})
             }
         })
