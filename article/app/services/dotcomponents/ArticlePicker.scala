@@ -104,8 +104,6 @@ object ArticlePageChecks {
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = ! page.article.tags.isPaidContent
 
-  def mainMediaIsNotShowcase(page: PageWithStoryPackage): Boolean = ! page.article.elements.mainPicture.flatMap(_.images.masterImage.flatMap(_.role)).contains("showcase")
-
   def isSupportedTone(page: PageWithStoryPackage): Boolean = {
     Set(
       "tone/albumreview",
@@ -159,8 +157,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
-      ("mainMediaIsNotShowcase", ArticlePageChecks.mainMediaIsNotShowcase(page)),
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page))
     )
   }
 
