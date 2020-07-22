@@ -16,9 +16,12 @@ import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import { oldCmp as oldCmp_, onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
+
 
 const oldCmp: any = oldCmp_;
+const onConsentChange: any = onConsentChange_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
@@ -26,6 +29,7 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
+const isInTcfv2Test: any = isInTcfv2Test_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -33,7 +37,7 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockImplementation(() => false),
+    isInTcfv2Test: jest.fn(),
 }));
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -72,8 +76,17 @@ const tcfNullConsentMock = (callback): void =>
     callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
 const tcfMixedConsentMock = (callback): void =>
     callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
+
 const ccpaWithConsentMock = (callback): void => callback(false);
 const ccpaWithoutConsentMock = (callback): void => callback(true);
+
+const tcfv2WithConsentMock = (callback): void =>
+    callback({ tcfv2 : { tcfData: {  '1':  true , '2': true }, eventStatus: 'useractioncomplete'}});
+const tcfv2WithoutConsentMock = (callback): void =>
+    callback({ tcfv2 : { tcfData: { }, eventStatus: 'cmpuishown' }});
+const tcfv2MixedConsentMock = (callback): void =>
+    callback({ tcfv2 : { tcfData: {  '1':  true , '2': false }, eventStatus: 'useractioncomplete'}});
+
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -225,6 +238,36 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().rdp).toBe('t');
     });
 
+    it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
+        _.resetPageTargeting();
+        isInTcfv2Test.mockImplementation(() => true)
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('t');
+        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+
+        _.resetPageTargeting();
+        isInTcfv2Test.mockImplementation(() => true)
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('f');
+        expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
+
+        _.resetPageTargeting();
+        isInTcfv2Test.mockImplementation(() => true)
+        onConsentChange.mockImplementation(tcfv2MixedConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('f');
+        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+
+        _.resetPageTargeting();
+        isInTcfv2Test.mockImplementation(() => false)
+        onConsentChange.mockImplementation(tcfWithConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('na');
+        expect(getPageTargeting().cmp_interaction).toBe('na');
+    });
+
     it('should set correct edition param', () => {
         expect(getPageTargeting().edition).toBe('us');
     });
@@ -276,6 +319,8 @@ describe('Build Page Targeting', () => {
             rp: 'dotcom-platform',
             dcre: 'f',
             rdp: 'na',
+            consent_tcfv2: 'na',
+            cmp_interaction: 'na',
         });
     });
 
