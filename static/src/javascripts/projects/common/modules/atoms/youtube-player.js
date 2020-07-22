@@ -58,8 +58,9 @@ onCMPConsentNotification(state => {
     if (typeof state === 'boolean') {
         ccpaState = state;
     } else {
-        tcfState = state.tcfv2 ? Object.values(state.tcfv2.tcfData).every(Boolean) :
-            state[1] && state[2] && state[3] && state[4] && state[5];
+        tcfState = state.tcfv2
+            ? Object.values(state.tcfv2.consents).every(Boolean)
+            : state[1] && state[2] && state[3] && state[4] && state[5];
     }
 });
 

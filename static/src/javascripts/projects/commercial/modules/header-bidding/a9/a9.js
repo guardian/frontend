@@ -46,10 +46,12 @@ const initialise = (): void => {
             canRun = !state;
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            if (typeof state.tcfv2.customVendors.grants[SOURCEPOINT_ID] !== 'undefined') {
-                canRun = state.tcfv2.customVendors.grants[SOURCEPOINT_ID].vendorGrant;
+            if (
+                typeof state.tcfv2.customVendors[SOURCEPOINT_ID] !== 'undefined'
+            ) {
+                canRun = state.tcfv2.customVendors[SOURCEPOINT_ID];
             } else {
-                canRun = Object.values(state.tcfv2.tcfData).every(Boolean);
+                canRun = Object.values(state.tcfv2.consents).every(Boolean);
             }
         } else {
             // TCFv1 mode

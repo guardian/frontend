@@ -76,13 +76,14 @@ const insertScripts = (
             if (!state) consentedAdvertisingServices = [...advertisingServices];
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            consentedAdvertisingServices = advertisingServices.filter(script => {
-                if (typeof script.sourcepointId !== 'undefined' &&
-                    typeof state.tcfv2.customVendors.grants[script.sourcepointId] !== 'undefined') {
-                    return state.tcfv2.customVendors.grants[script.sourcepointId].vendorGrant;
+            consentedAdvertisingServices = advertisingServices.filter(
+                script => {
+                    if (typeof script.sourcepointId !== 'undefined') {
+                        return state.tcfv2.customVendors[script.sourcepointId];
+                    }
+                    return Object.values(state.tcfv2.consents).every(Boolean);
                 }
-                return Object.values(state.tcfv2.tcfData).every(Boolean);
-            });
+            );
         } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
             consentedAdvertisingServices = [...advertisingServices];

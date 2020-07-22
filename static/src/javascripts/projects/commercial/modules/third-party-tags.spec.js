@@ -1,5 +1,8 @@
 // @flow
-import { oldCmp, onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import {
+    oldCmp,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
 import { init, _ } from './third-party-tags';
@@ -26,9 +29,9 @@ const onIabConsentNotification = oldCmp.onIabConsentNotification;
 const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2 : { customVendors: { grants: { '1': { vendorGrant: true }, '2': { vendorGrant: false }}}}});
+    callback({ tcfv2: { customVendors: { '1': true, '2': false } } });
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2 : { customVendors: { grants: { '1': { vendorGrant: false }, '2': { vendorGrant: false }}}}});
+    callback({ tcfv2: { customVendors: { '1': false, '2': false } } });
 
 beforeEach(() => {
     const firstScript = document.createElement('script');
@@ -182,10 +185,7 @@ describe('third party tags', () => {
             _.reset();
             isInTcfv2Test.mockImplementation(() => true);
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
-            insertScripts(
-                [fakeThirdPartyAdvertisingTag],
-                []
-            );
+            insertScripts([fakeThirdPartyAdvertisingTag], []);
             expect(document.scripts.length).toBe(2);
         });
 
@@ -193,10 +193,7 @@ describe('third party tags', () => {
             _.reset();
             isInTcfv2Test.mockImplementation(() => true);
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-            insertScripts(
-                [fakeThirdPartyAdvertisingTag],
-                []
-            );
+            insertScripts([fakeThirdPartyAdvertisingTag], []);
             expect(document.scripts.length).toBe(1);
         });
     });
