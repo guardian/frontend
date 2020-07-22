@@ -85,7 +85,7 @@ const tcfv2WithConsentMock = (callback): void =>
 const tcfv2WithoutConsentMock = (callback): void =>
     callback({ tcfv2 : { consents: { }, eventStatus: 'cmpuishown' }});
 const tcfv2MixedConsentMock = (callback): void =>
-    callback({ tcfv2 : { consents: {  '1':  true , '2': false }, eventStatus: 'useractioncomplete'}});
+    callback({ tcfv2 : { consents: {  '1':  false , '2': true }, eventStatus: 'useractioncomplete'}});
 
 
 describe('Build Page Targeting', () => {
