@@ -295,30 +295,15 @@ div.contributions__secondary-button.contributions__secondary-button--epic {
 }
 
 .contributions__epic-image {
-    display: none;
-    @include mq($from: tablet) {
-        display: block;
-    }
+    margin: 12px 0 8px;
 
-    margin: 10px -5px 12px;
-    height: 150px;
-    width: calc(100% + 10px);
+    @include mq($from: tablet) {
+        margin: 10px 0;
+    }
 
     img {
         height: 100%;
         width: 100%;
         object-fit: cover;
-    }
-}
-
-.contributions__epic--with-image {
-    .contributions__title {
-        @include fs-header(5);
-        font-size: 28px;
-        line-height: 28px;
-    }
-
-    p:last-child {
-        font-weight: bold;
     }
 }

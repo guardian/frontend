@@ -41,7 +41,7 @@ const setupRedplanet: () => Promise<void> = () => {
             let canRun: boolean;
             if (typeof state.tcfv2 !== 'undefined') {
                 // TCFv2 mode,
-                canRun = Object.values(state.tcfv2).every(Boolean);
+                canRun = Object.values(state.tcfv2.consents).every(Boolean);
             } else {
                 // TCFv1 mode
                 canRun =

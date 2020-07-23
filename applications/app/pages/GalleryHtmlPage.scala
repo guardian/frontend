@@ -49,7 +49,7 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkin(Edition(request), request),
+        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
         galleryTop(),
         breakingNewsDiv(),
         galleryBody(page),

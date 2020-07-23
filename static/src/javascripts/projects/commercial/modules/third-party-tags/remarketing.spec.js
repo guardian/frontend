@@ -11,13 +11,16 @@ describe('Remarketing', () => {
     });
 
     it('should exist', () => {
-        const { shouldRun, url, onLoad } = remarketing();
+        const { shouldRun, url, onLoad, sourcepointId } = remarketing();
 
         expect(shouldRun).toEqual(true);
         expect(url).toEqual(
             expect.stringContaining('www.googleadservices.com')
         );
         expect(onLoad).toBeDefined();
+        expect(sourcepointId).toBe(
+            '5ed0eb688a76503f1016578f'
+        );
     });
 
     it('shouldRun to be true if ad the switch is on', () => {

@@ -8,7 +8,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
@@ -16,10 +15,6 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
-
-const onCMPConsentNotification = shouldUseSourcepointCmp()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
@@ -69,21 +64,35 @@ const insertScripts = (
         }
     });
 
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
+
     onCMPConsentNotification(state => {
-        let canRun: boolean;
+        let consentedAdvertisingServices = [];
         if (typeof state === 'boolean') {
             // CCPA mode
-            canRun = !state;
+            if (!state) consentedAdvertisingServices = [...advertisingServices];
         } else if (typeof state.tcfv2 !== 'undefined') {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
-        } else {
+            consentedAdvertisingServices = advertisingServices.filter(
+                script => {
+                    if (typeof script.sourcepointId !== 'undefined') {
+                        return state.tcfv2.customVendors[script.sourcepointId];
+                    }
+                    return Object.values(state.tcfv2.consents).every(Boolean);
+                }
+            );
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+            consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (!advertisingScriptsInserted && canRun) {
-            addScripts(advertisingServices);
+        if (
+            !advertisingScriptsInserted &&
+            consentedAdvertisingServices.length > 0
+        ) {
+            addScripts(consentedAdvertisingServices);
             advertisingScriptsInserted = true;
         }
     });
@@ -92,7 +101,6 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        simpleReach,
         permutive,
         ias,
         inizio,

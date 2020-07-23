@@ -255,7 +255,7 @@ object PageElement {
             Role(element.videoTypeData.flatMap(_.role)))
           )
         }
-        else videoDataFor(element).toList
+        else videoToPageElement(element).toList
 
       case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
         m.originalUrl,
@@ -446,6 +446,24 @@ object PageElement {
     }
   }
 
+  def audiIsDCRSupported(element: ApiBlockElement): Boolean = {
+    /*
+      date: July 21th 2020
+      author: Pascal
+
+      This function was introduced to be able to know from the article picker whether or not
+      an AudioBlockElement given to the article picker's function "hasOnlySupportedElements" would
+      resolve to a SoundcloudBlockElement (which we currently support in DCR) or an AudioBlockElement
+      (which DCR doesn't yet support).
+
+      See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
+     */
+    audioToPageElement(element: ApiBlockElement) match {
+      case Some(_: SoundcloudBlockElement) => true
+      case _ => false
+    }
+  }
+
   private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
@@ -486,7 +504,7 @@ object PageElement {
     }
   }
 
-  private def videoDataFor(element: ApiBlockElement): Option[PageElement] = {
+  private def videoToPageElement(element: ApiBlockElement): Option[PageElement] = {
     for {
       data <- element.videoTypeData
       source <- data.source
