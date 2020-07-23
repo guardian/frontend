@@ -293,11 +293,11 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
     onCMPConsentNotification(state => {
         let canRun: boolean | null;
-        if (typeof state === 'boolean') {
+        if (state.ccpa) {
             // CCPA mode
-            canRun = !state;
-        } else if (typeof state.tcfv2 !== 'undefined') {
-            // TCFv2 mode,
+            canRun = !state.ccpa.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
             canRun = Object.values(state.tcfv2.consents).every(Boolean);
         } else {
             // TCFv1 mode
@@ -305,7 +305,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
         }
 
         if (canRun !== latestConsentCanRun) {
-            const ccpaState = typeof state === 'boolean' ? state : null;
+            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
             myPageTargetting = buildPageTargetting(canRun, ccpaState);
             latestConsentCanRun = canRun;
         }
