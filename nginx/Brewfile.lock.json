@@ -1,0 +1,24 @@
+{
+  "entries": {
+    "tap": {
+      "guardian/devtools": {
+        "revision": "2d60a611b3029011019b6cb9d3e27d53408dcdfd"
+      }
+    },
+    "brew": {
+      "guardian/devtools/dev-nginx": null
+    }
+  },
+  "system": {
+    "macos": {
+      "mojave": {
+        "HOMEBREW_VERSION": "2.4.8",
+        "HOMEBREW_PREFIX": "/usr/local",
+        "Homebrew/homebrew-core": "acbc441d6aae6a4f122c0bd4a17a3a94d07fa7a4",
+        "CLT": "10.3.0.0.1.1562985497",
+        "Xcode": "10.3",
+        "macOS": "10.14.6"
+      }
+    }
+  }
+}
