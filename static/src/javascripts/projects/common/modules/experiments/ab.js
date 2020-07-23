@@ -36,7 +36,7 @@ import {
     compareVariantDecision,
     getViewLog,
     getWeeklyArticleHistory,
-} from '@guardian/automat-client';
+} from '@guardian/automat-contributions';
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
