@@ -32,9 +32,8 @@ jest.mock('@guardian/consent-management-platform', () => ({
     },
 }));
 
-// Force TCFv1
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockReturnValue(false),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn().mockReturnValue(false),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
