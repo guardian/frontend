@@ -13,7 +13,7 @@ import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {submitClickEvent, submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import { render } from 'preact-x';
 import React from 'preact-x/compat';
@@ -288,7 +288,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                 }
 
                 return render(
-                    <Banner {...module.props} />,
+                    <Banner {...module.props} submitComponentEvent={submitComponentEvent} />,
                     container
                 );
             }).then(() => {
