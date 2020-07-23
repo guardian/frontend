@@ -108,17 +108,17 @@ export const init = (): Promise<void> => {
         );
 
         onCMPConsentNotification(state => {
-            // typeof state === 'boolean' means CCPA mode is on
-            if (typeof state === 'boolean') {
+            if (state.ccpa) {
+                // CCPA mode
                 window.googletag.cmd.push(() => {
                     window.googletag.pubads().setPrivacySettings({
-                        restrictDataProcessing: state,
+                        restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
             } else {
                 let npaFlag: boolean;
-                if (typeof state.tcfv2 !== 'undefined') {
-                    // TCFv2 mode,
+                if (state.tcfv2) {
+                    // TCFv2 mode
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);

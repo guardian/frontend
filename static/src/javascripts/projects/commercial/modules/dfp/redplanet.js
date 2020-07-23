@@ -34,13 +34,13 @@ const initialise = (): void => {
 
 const setupRedplanet: () => Promise<void> = () => {
     onCMPConsentNotification(state => {
-        // typeof state === 'boolean' means CCPA mode is on
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
-        if (typeof state !== 'boolean') {
+        if (!state.ccpa) {
+            // not CCPA mode
             let canRun: boolean;
-            if (typeof state.tcfv2 !== 'undefined') {
-                // TCFv2 mode,
+            if (state.tcfv2) {
+                // TCFv2 mode
                 canRun = Object.values(state.tcfv2.consents).every(Boolean);
             } else {
                 // TCFv1 mode

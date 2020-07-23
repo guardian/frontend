@@ -54,9 +54,8 @@ interface AdsConfig {
 let tcfState = null;
 let ccpaState = null;
 onCMPConsentNotification(state => {
-    // typeof state === 'boolean' means CCPA mode is on
-    if (typeof state === 'boolean') {
-        ccpaState = state;
+    if (state.ccpa) {
+        ccpaState = state.doNotSell;
     } else {
         tcfState = state.tcfv2
             ? Object.values(state.tcfv2.consents).every(Boolean)

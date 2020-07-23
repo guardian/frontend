@@ -19,7 +19,8 @@ const tcfv2WithConsentMock = (callback): void =>
         tcfv2: { customVendors: { '5edf9a821dc4e95986b66df4': true } },
     });
 
-const CcpaWithConsentMock = (callback): void => callback(false);
+const CcpaWithConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: false } });
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>
