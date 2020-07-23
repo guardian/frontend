@@ -193,7 +193,7 @@ const buildEpicPayload = () => {
 const buildBannerPayload = () => {
     const page = config.get('page');
 
-    // TODO: Is there any reason we send this to the server?
+    // TODO: Review whether we need to send all of this in the payload to the server
     const tracking = {
         ophanPageId: config.get('ophan.pageViewId'),
         platformId: 'GUARDIAN_WEB',
@@ -344,9 +344,8 @@ export const fetchAndRenderEpic = (id: string) => {
                     campaignCode,
                     campaignId
                 } = meta;
-                const trackingCampaignId = `${campaignId}`;
 
-                emitBeginEvent(trackingCampaignId);
+                emitBeginEvent(campaignId);
                 setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
 
                 renderEpic(html, css)
@@ -359,7 +358,7 @@ export const fetchAndRenderEpic = (id: string) => {
                             abTestName,
                             abTestVariant,
                             campaignCode,
-                            trackingCampaignId,
+                            campaignId,
                             componentType,
                             products,
                             abTestVariant.showTicker,
