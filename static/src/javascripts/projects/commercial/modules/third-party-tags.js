@@ -70,11 +70,11 @@ const insertScripts = (
 
     onCMPConsentNotification(state => {
         let consentedAdvertisingServices = [];
-        if (typeof state.ccpa === 'boolean') {
+        if (state.ccpa) {
             // CCPA mode
-            if (!state.ccpa)
+            if (!state.ccpa.doNotSell)
                 consentedAdvertisingServices = [...advertisingServices];
-        } else if (typeof state.tcfv2 !== 'undefined') {
+        } else if (state.tcfv2) {
             // TCFv2 mode,
             consentedAdvertisingServices = advertisingServices.filter(
                 script => {
