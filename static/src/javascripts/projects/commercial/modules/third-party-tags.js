@@ -57,31 +57,12 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag>
 ): void => {
-    if (shouldUseSourcepointCmp()) {
-        onConsentChange(state => {
-            let canLoadScripts = false;
-            if (
-                typeof state.tcfv2 !== 'undefined' &&
-                typeof state.tcfv2.consents !== 'undefined' &&
-                state.tcfv2.consents[1] && // Store and/or access information on a device
-                state.tcfv2.consents[7] && // Measure ad performance
-                state.tcfv2.consents[8] // Measure content performance
-            )
-                canLoadScripts = true;
-            else if (typeof state.ccpa === 'boolean' && !state.ccpa)
-                canLoadScripts = true;
-
-            if (canLoadScripts) addScripts(performanceServices);
-            performanceScriptsInserted = canLoadScripts;
-        });
-    } else {
-        oldCmp.onGuConsentNotification('performance', state => {
-            if (!performanceScriptsInserted && state) {
-                addScripts(performanceServices);
-                performanceScriptsInserted = true;
-            }
-        });
-    }
+    oldCmp.onGuConsentNotification('performance', state => {
+        if (!performanceScriptsInserted && state) {
+            addScripts(performanceServices);
+            performanceScriptsInserted = true;
+        }
+    });
 
     const onCMPConsentNotification = shouldUseSourcepointCmp()
         ? onConsentChange

@@ -172,6 +172,9 @@ describe('third party tags', () => {
             onConsentChange.mockImplementation(callback =>
                 callback({ ccpa: false })
             );
+            onGuConsentNotification.mockImplementation((state, callback) =>
+                callback(true)
+            );
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
@@ -183,6 +186,9 @@ describe('third party tags', () => {
             shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(callback =>
                 callback({ ccpa: true })
+            );
+            onGuConsentNotification.mockImplementation((state, callback) =>
+                callback(false)
             );
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
