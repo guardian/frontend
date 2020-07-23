@@ -5,10 +5,10 @@ import {
     oldCmp as oldCmp_,
     onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 
 const oldCmp: any = oldCmp_;
-const isInTcfv2Test: any = isInTcfv2Test_;
+const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 const onConsentChange: any = onConsentChange_;
 
 const TcfWithConsentMock = (callback): void =>
@@ -26,8 +26,8 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn(),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 jest.mock('commercial/modules/header-bidding/slot-config', () => ({
@@ -68,7 +68,7 @@ describe('initialise', () => {
     });
 
     it('should generate initialise A9 library when TCFv2 consent has been given', () => {
-        isInTcfv2Test.mockImplementation(() => true);
+        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
@@ -76,7 +76,8 @@ describe('initialise', () => {
     });
 
     it('should generate initialise A9 library when CCPA consent has been given', () => {
-        oldCmp.onIabConsentNotification.mockImplementation(CcpaWithConsentMock);
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(CcpaWithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();

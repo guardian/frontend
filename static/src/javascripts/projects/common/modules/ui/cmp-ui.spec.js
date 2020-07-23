@@ -1,8 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { cmp, oldCmp } from '@guardian/consent-management-platform';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { consentManagementPlatformUi } from './cmp-ui';
 
 jest.mock('lib/raven');
@@ -20,12 +19,8 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 jest.mock('lib/report-error', () => jest.fn());
 
-jest.mock('common/modules/commercial/geo-utils', () => ({
-    isInUsa: jest.fn(),
-}));
-
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn(),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 describe('cmp-ui', () => {
@@ -57,11 +52,9 @@ describe('cmp-ui', () => {
                 });
             });
 
-            it('returns willShowPrivacyMessage if user is in CCPA/TCFv2 variant', () => {
+            it('returns willShowPrivacyMessage if using Sourcepoint CMP', () => {
                 // $FlowFixMe
-                isInUsa.mockReturnValue(true);
-                // $FlowFixMe
-                isInTcfv2Test.mockReturnValue(true);
+                shouldUseSourcepointCmp.mockReturnValue(true);
 
                 return consentManagementPlatformUi.canShow().then(() => {
                     expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);

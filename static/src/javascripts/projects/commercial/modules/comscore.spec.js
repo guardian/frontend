@@ -13,9 +13,6 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 // Force TCFv1
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockReturnValue(false),
-}));
 const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 jest.mock('lib/load-script', () => ({
