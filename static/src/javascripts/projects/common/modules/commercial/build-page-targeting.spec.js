@@ -65,17 +65,9 @@ jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
 }));
 
+// TCFv1
 const tcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const tcfWithoutConsentMock = (callback): void =>
-    callback({
-        '1': false,
-        '2': false,
-        '3': false,
-        '4': false,
-        '5': false,
-    });
-const tcfNullConsentMock = (callback): void => callback({});
 const tcfMixedConsentMock = (callback): void =>
     callback({
         '1': false,
@@ -84,11 +76,14 @@ const tcfMixedConsentMock = (callback): void =>
         '4': false,
         '5': true,
     });
+
+// CCPA
 const ccpaWithConsentMock = (callback): void =>
     callback({ ccpa: { doNotSell: false } });
 const ccpaWithoutConsentMock = (callback): void =>
     callback({ ccpa: { doNotSell: true } });
 
+// TCFv2
 const tcfv2WithConsentMock = (callback): void =>
     callback({
         tcfv2: {
@@ -172,7 +167,7 @@ describe('Build Page Targeting', () => {
     afterEach(() => {
         jest.resetAllMocks();
     });
-    /*
+
     it('should exist', () => {
         expect(getPageTargeting).toBeDefined();
     });
@@ -308,7 +303,7 @@ describe('Build Page Targeting', () => {
     it('should not contain an ad-free targeting value', () => {
         expect(getPageTargeting().af).toBeUndefined();
     });
-*/
+
     it('should remove empty values', () => {
         config.page = {};
         config.ophan = { pageViewId: '123456' };
@@ -332,7 +327,7 @@ describe('Build Page Targeting', () => {
             cmp_interaction: 'na',
         });
     });
-    /*
+
     describe('Breakpoint targeting', () => {
         it('should set correct breakpoint targeting for a mobile device', () => {
             getBreakpoint.mockReturnValue('mobile');
@@ -474,5 +469,4 @@ describe('Build Page Targeting', () => {
             ]);
         });
     });
-    */
 });
