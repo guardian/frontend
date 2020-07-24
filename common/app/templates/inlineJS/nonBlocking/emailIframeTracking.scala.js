@@ -7,7 +7,7 @@ const sendEvent = (payload, eventType) => {
             ((Math.random() * 36) | 0).toString(36)
         ),
         type: `ophan-iframe-${eventType}`,
-        iframeId: window.frameElement.id,
+        iframeId: window.frameElement ? window.frameElement.id : null,
         value: payload,
     };
     window.parent.postMessage(msg, '*');
