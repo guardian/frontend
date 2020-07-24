@@ -6,15 +6,22 @@ import { getUserFromApi } from '../../common/modules/identity/api';
 
 let didAlreadyRun = false;
 
+const getBrazeUuid = (): Promise<string> =>
+    new Promise(resolve => {
+        getUserFromApi(user => {
+            if (user && user.privateFields && user.privateFields.brazeUuid){
+                resolve(user.privateFields.brazeUuid)
+            }
+        })
+    })
 
 export const init = (): Promise<any> => {
     const brazeSwitch = config.get('switches.brazeSwitch');
     if (!brazeSwitch) return Promise.resolve();
     const apiKey = config.get('page.brazeApiKey');
     if (!apiKey) return Promise.reject(new Error('Braze API key not set.'));
-    console.log("Initializing Braze");
-    getUserFromApi(user => {
-        const brazeUuid = user.privateFields.brazeUuid;
+    getBrazeUuid().then(brazeUuid => {
+        console.log("Initializing Braze");
         onIabConsentNotification(state => {
             console.log("consent state", state);
             const canRun = !didAlreadyRun && state[1] && state[2] && state[3] && state[4] && state[5];
@@ -48,3 +55,5 @@ export const init = (): Promise<any> => {
 
     return Promise.resolve();
 }
+
+
