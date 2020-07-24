@@ -4,10 +4,6 @@ import fetchJson from 'lib/fetch-json';
 import { _, init } from './cmp';
 import { log as log_ } from './log';
 
-jest.mock('projects/commercial/modules/cmp/ccpa-cmp', () => ({
-    isCcpaApplicable: () => false,
-}));
-
 // TODO: Investigate why we need to mock the CMP
 jest.mock('@guardian/consent-management-platform', () => ({}));
 

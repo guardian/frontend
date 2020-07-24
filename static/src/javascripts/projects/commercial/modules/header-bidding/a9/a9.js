@@ -1,6 +1,9 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -9,9 +12,6 @@ import type {
     HeaderBiddingSize,
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
-
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 class A9AdUnit {
     slotID: ?string;
@@ -36,16 +36,17 @@ const bidderTimeout: number = 1500;
 const SOURCEPOINT_ID: string = '5edf9a821dc4e95986b66df4';
 
 const initialise = (): void => {
-    const onCMPConsentNotification = isInTcfv2Test()
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
         ? onConsentChange
         : oldCmp.onIabConsentNotification;
+
     onCMPConsentNotification(state => {
         let canRun: boolean;
-        if (typeof state === 'boolean') {
+        if (state.ccpa) {
             // CCPA mode
-            canRun = !state;
-        } else if (typeof state.tcfv2 !== 'undefined') {
-            // TCFv2 mode,
+            canRun = !state.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
             if (
                 typeof state.tcfv2.customVendors[SOURCEPOINT_ID] !== 'undefined'
             ) {

@@ -7,6 +7,8 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -30,10 +32,7 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
+const onCMPConsentNotification = shouldUseSourcepointCmp()
     ? onConsentChange
     : oldCmp.onIabConsentNotification;
 
@@ -109,17 +108,17 @@ export const init = (): Promise<void> => {
         );
 
         onCMPConsentNotification(state => {
-            // typeof state === 'boolean' means CCPA mode is on
-            if (typeof state === 'boolean') {
+            if (state.ccpa) {
+                // CCPA mode
                 window.googletag.cmd.push(() => {
                     window.googletag.pubads().setPrivacySettings({
-                        restrictDataProcessing: state,
+                        restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
             } else {
                 let npaFlag: boolean;
-                if (typeof state.tcfv2 !== 'undefined') {
-                    // TCFv2 mode,
+                if (state.tcfv2) {
+                    // TCFv2 mode
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);

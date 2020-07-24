@@ -16,12 +16,9 @@ import { getSync as getSync_ } from 'lib/geolocation';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { oldCmp as oldCmp_, onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
-import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 
-
-const oldCmp: any = oldCmp_;
-const onConsentChange: any = onConsentChange_;
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
@@ -29,15 +26,15 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
-const isInTcfv2Test: any = isInTcfv2Test_;
+const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn(),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -68,25 +65,42 @@ jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
 }));
 
+// TCFv1
 const tcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const tcfWithoutConsentMock = (callback): void =>
-    callback({ '1': false, '2': false, '3': false, '4': false, '5': false });
-const tcfNullConsentMock = (callback): void =>
-    callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
 const tcfMixedConsentMock = (callback): void =>
-    callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
+    callback({
+        '1': false,
+        '2': true,
+        '3': true,
+        '4': false,
+        '5': true,
+    });
 
-const ccpaWithConsentMock = (callback): void => callback(false);
-const ccpaWithoutConsentMock = (callback): void => callback(true);
+// CCPA
+const ccpaWithConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: false } });
+const ccpaWithoutConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: true } });
 
+// TCFv2
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2 : { consents: {  '1':  true , '2': true }, eventStatus: 'useractioncomplete'}});
+    callback({
+        tcfv2: {
+            consents: { '1': true, '2': true },
+            eventStatus: 'useractioncomplete',
+        },
+    });
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2 : { consents: { }, eventStatus: 'cmpuishown' }});
+    callback({ tcfv2: { consents: {}, eventStatus: 'cmpuishown' } });
+const tcfv2NullConsentMock = (callback): void => callback({ tcfv2: {} });
 const tcfv2MixedConsentMock = (callback): void =>
-    callback({ tcfv2 : { consents: {  '1':  false , '2': true }, eventStatus: 'useractioncomplete'}});
-
+    callback({
+        tcfv2: {
+            consents: { '1': false, '2': true },
+            eventStatus: 'useractioncomplete',
+        },
+    });
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -127,7 +141,8 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -181,88 +196,77 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        oldCmp.onIabConsentNotification.mockImplementation(tcfWithConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(
-            tcfWithoutConsentMock
-        );
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        onConsentChange.mockImplementation(tcfv2MixedConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        onConsentChange.mockImplementation(ccpaWithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(
-            ccpaWithoutConsentMock
-        );
+        onConsentChange.mockImplementation(ccpaWithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
     });
 
     it('Should correctly set the RDP flag (rdp) param', () => {
-        oldCmp.onIabConsentNotification.mockImplementation(tcfWithConsentMock);
+        onConsentChange.mockImplementation(tcfWithConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(
-            tcfWithoutConsentMock
-        );
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfNullConsentMock);
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(tcfMixedConsentMock);
+        onConsentChange.mockImplementation(tcfMixedConsentMock);
         expect(getPageTargeting().rdp).toBe('na');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(ccpaWithConsentMock);
+        onConsentChange.mockImplementation(ccpaWithConsentMock);
         expect(getPageTargeting().rdp).toBe('f');
 
         _.resetPageTargeting();
-        oldCmp.onIabConsentNotification.mockImplementation(
-            ccpaWithoutConsentMock
-        );
+        onConsentChange.mockImplementation(ccpaWithoutConsentMock);
         expect(getPageTargeting().rdp).toBe('t');
     });
 
     it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
         _.resetPageTargeting();
-        isInTcfv2Test.mockImplementation(() => true)
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('t');
         expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
 
         _.resetPageTargeting();
-        isInTcfv2Test.mockImplementation(() => true)
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('f');
         expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
 
         _.resetPageTargeting();
-        isInTcfv2Test.mockImplementation(() => true)
         onConsentChange.mockImplementation(tcfv2MixedConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('f');
         expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
 
         _.resetPageTargeting();
-        isInTcfv2Test.mockImplementation(() => false)
-        onConsentChange.mockImplementation(tcfWithConsentMock);
+        shouldUseSourcepointCmp.mockImplementation(() => false);
+        oldCmp.onIabConsentNotification.mockImplementation(tcfWithConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('na');
         expect(getPageTargeting().cmp_interaction).toBe('na');
@@ -319,7 +323,7 @@ describe('Build Page Targeting', () => {
             rp: 'dotcom-platform',
             dcre: 'f',
             rdp: 'na',
-            consent_tcfv2: 'na',
+            consent_tcfv2: 'f',
             cmp_interaction: 'na',
         });
     });
