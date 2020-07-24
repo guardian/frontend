@@ -11,6 +11,7 @@ import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
 import qs from 'qs';
 import reqwest from 'reqwest';
+import { createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
 let userFromCookieCache = null;
 
@@ -165,7 +166,7 @@ export const redirectTo = (url: string): void => {
     window.location.assign(url);
 };
 
-export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
+export const getUserOrSignIn = (componentId: string, paramUrl: ?string): ?Object => {
     let returnUrl = paramUrl;
 
     if (isUserLoggedIn()) {
@@ -173,7 +174,12 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     }
 
     returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    const url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+    let url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+
+    if (componentId) {
+        url += `&${createAuthenticationComponentEventParams(componentId)}`
+    }
+
     redirectTo(url);
 };
 

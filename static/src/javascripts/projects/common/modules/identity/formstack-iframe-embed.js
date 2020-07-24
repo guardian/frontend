@@ -125,7 +125,7 @@ class FormstackEmbedIframe {
 
     init(): void {
         // User object required to populate fields
-        const user = getUserOrSignIn();
+        const user = getUserOrSignIn('signin_from_formstack');
 
         if (!user) {
             return;

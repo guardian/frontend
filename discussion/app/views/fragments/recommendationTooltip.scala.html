@@ -1,4 +1,5 @@
 @import conf.Configuration
+@import navigation.AuthenticationComponentEvent._
 
 <div hidden class="tooltip-box tooltip-box--neutral tooltip-box--width4 js-rec-tooltip">
     <button
@@ -12,12 +13,12 @@
     <p class="tooltip-box__p">
         <a
             class="js-rec-tooltip-link"
-            href="@Configuration.id.url/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN_RECOMM"
+            href="@Configuration.id.url/signin?INTCMP=DOTCOM_COMMENTS_SIGNIN_RECOMM&@createAuthenticationComponentEventParams(SigninToRecommend)"
         >Sign in</a>
         or
         <a
             class="js-rec-tooltip-link"
-            href="@Configuration.id.url/register?INTCMP=DOTCOM_COMMENTS_REG_RECOMM"
+            href="@Configuration.id.url/register?INTCMP=DOTCOM_COMMENTS_REG_RECOMM&@createAuthenticationComponentEventParams(RegisterToRecommend)"
         >create your Guardian account</a>
         to recommend a comment
     </p>

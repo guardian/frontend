@@ -5,6 +5,7 @@
 @import views.support.{GuDateFormatLegacy, RenderClasses}
 @import views.support.`package`.withJsoup
 @import views.support.{BulletCleaner, InBodyLinkCleaner}
+@import navigation.AuthenticationComponentEvent._
 
 @(comment: Comment, isClosedForRecommendation: Boolean = true, isResponse: Boolean = false)(implicit request: RequestHeader)
 
@@ -108,7 +109,7 @@
                 </div>
                 @if(!comment.isBlocked){
                     <div class="d-comment__actions d-comment__actions--left modern-visible">
-                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@comment.webUrl"
+                        <a class="d-comment__action d-comment__action--reply" href="https://profile.theguardian.com/signin?returnUrl=@comment.webUrl&@createAuthenticationComponentEventParams(SigninToReply)"
                                 data-link-name="reply to comment" data-comment-id="@comment.id" role="button">
                             @fragments.inlineSvg("reply", "icon", List("blue"))
                             Reply
