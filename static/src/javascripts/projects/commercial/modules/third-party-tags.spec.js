@@ -170,7 +170,7 @@ describe('third party tags', () => {
             _.reset();
             shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(callback =>
-                callback({ ccpa: false })
+                callback({ ccpa: { doNotSell: false } })
             );
             onGuConsentNotification.mockImplementation((state, callback) =>
                 callback(true)
@@ -185,7 +185,7 @@ describe('third party tags', () => {
             _.reset();
             shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(callback =>
-                callback({ ccpa: true })
+                callback({ ccpa: { doNotSell: true } })
             );
             onGuConsentNotification.mockImplementation((state, callback) =>
                 callback(false)
