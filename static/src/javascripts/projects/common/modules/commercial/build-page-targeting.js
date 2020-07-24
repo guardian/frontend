@@ -219,9 +219,17 @@ const getRdpValue = (ccpaState: boolean | null): string => {
     return ccpaState ? 't' : 'f';
 };
 
+const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
+    if (shouldUseSourcepointCmp() && tcfv2State !== null) {
+        return tcfv2State ? 't' : 'f';
+    }
+    return 'na';
+};
+
 const buildPageTargetting = (
     adConsentState: boolean | null,
-    ccpaState: boolean | null
+    ccpaState: boolean | null,
+    tcfv2EventStatus: string | null
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -261,6 +269,8 @@ const buildPageTargetting = (
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            cmp_interaction: tcfv2EventStatus || 'na',
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -298,7 +308,10 @@ const getPageTargeting = (): { [key: string]: mixed } => {
             canRun = !state.ccpa.doNotSell;
         } else if (state.tcfv2) {
             // TCFv2 mode
-            canRun = Object.values(state.tcfv2.consents).every(Boolean);
+            canRun = state.tcfv2.consents
+                ? Object.keys(state.tcfv2.consents).length > 0 &&
+                  Object.values(state.tcfv2.consents).every(Boolean)
+                : false;
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
@@ -306,7 +319,12 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
         if (canRun !== latestConsentCanRun) {
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            myPageTargetting = buildPageTargetting(canRun, ccpaState);
+            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+            myPageTargetting = buildPageTargetting(
+                canRun,
+                ccpaState,
+                eventStatus
+            );
             latestConsentCanRun = canRun;
         }
     });
