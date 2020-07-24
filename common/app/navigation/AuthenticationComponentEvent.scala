@@ -14,12 +14,11 @@ object AuthenticationComponentEvent {
   case object SigninFromPasswordResetConfirmation extends ComponentEventId("signin_from_password_reset_confirmation")
 
   def createAuthenticationComponentEventParams(componentEventId: ComponentEventId): String = createAuthenticationComponentEventTuple(componentEventId) match {
-    case (key, value) => s"$key=$value"
+    case (key, value) => s"$key=${URLEncoder.encode(value, "UTF-8")}"
   }
 
   def createAuthenticationComponentEventTuple(componentEventId: ComponentEventId): (String, String) = {
     val eventParams = s"componentType=IDENTITY_AUTHENTICATION&componentId=${componentEventId.id}"
-    val encodedParams = URLEncoder.encode(eventParams, "UTF-8")
-    "componentEventParams" -> encodedParams
+    "componentEventParams" -> eventParams
   }
 }
