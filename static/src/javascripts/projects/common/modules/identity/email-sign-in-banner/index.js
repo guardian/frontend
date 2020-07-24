@@ -15,7 +15,7 @@ const userPrefsStoreKey = 'emailbanner.referrerEmail';
 
 const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;
 
-const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(emailPrefsLink)}&${createAuthenticationComponentEventParams('email-sign-in-banner')}`;
+const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(emailPrefsLink)}&${createAuthenticationComponentEventParams('email_sign_in_banner')}`;
 
 const isSecondEmailPageview = (): boolean => {
     const prefs = userPrefs.get(userPrefsStoreKey) || {};

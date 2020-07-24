@@ -4,6 +4,6 @@ import { createAuthenticationComponentEventParams } from "common/modules/identit
 
 describe('createAuthenticationComponentEventParams', () => {
     it('should create component event params using the component ID passed', () => {
-        expect(createAuthenticationComponentEventParams('some-component-id')).toBe('componentEventParams=componentType%3DIDENTITY_AUTHENTICATION%26componentId%3Dsome-component-id')
+        expect(createAuthenticationComponentEventParams('email_sign_in_banner')).toBe('componentEventParams=componentType%3DIDENTITY_AUTHENTICATION%26componentId%3Demail_sign_in_banner')
     })
 });
