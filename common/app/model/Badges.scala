@@ -72,7 +72,7 @@ object Badges {
   val auGreenRecovery = Badge("australia-news/series/the-green-recovery", Static("images/badges/green-recovery.svg"))
   val greenRecovery = Badge("environment/series/the-green-recovery", Static("images/badges/green-recovery.svg"))
   val culturePeril = Badge("culture/series/culture-in-peril", Static("images/badges/culture-badge.svg"))
-  val oneHundredDays = Badge("culture/series/climate-countdown", Static("images/badges/100days.svg"))
+  val oneHundredDays = Badge("us-news/series/climate-countdown", Static("images/badges/100days.svg"))
 
   val allBadges = Seq(newArrivals, brexitGamble, roadToTheVote, brexitFrontline, brexitDividedGenerations,
     brexitHowItCameToThis, londonVersus, beyondTheBlade, euElection, paradisePapers, cambridgeAnalytica, specialReport,
