@@ -6,11 +6,8 @@ import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
-const onCMPConsentNotification = shouldUseSourcepointCmp()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 let initialised = false;
+const SOURCEPOINT_ID: string = '5f199c302425a33f3f090f51';
 
 const initialise = (): void => {
     // Initialise Launchpad Tracker
@@ -33,6 +30,9 @@ const initialise = (): void => {
 };
 
 const setupRedplanet: () => Promise<void> = () => {
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
     onCMPConsentNotification(state => {
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
@@ -41,7 +41,13 @@ const setupRedplanet: () => Promise<void> = () => {
             let canRun: boolean;
             if (state.tcfv2) {
                 // TCFv2 mode
-                canRun = Object.values(state.tcfv2.consents).every(Boolean);
+                if (
+                    typeof state.tcfv2.customVendors[SOURCEPOINT_ID] !== 'undefined'
+                ) {
+                    canRun = state.tcfv2.customVendors[SOURCEPOINT_ID];
+                } else {
+                    canRun = Object.values(state.tcfv2.consents).every(Boolean);
+                }
             } else {
                 // TCFv1 mode
                 canRun =
@@ -65,4 +71,8 @@ export const init = (): Promise<void> => {
         return setupRedplanet();
     }
     return Promise.resolve();
+};
+
+export const resetModule = () => {
+    initialised = false;
 };
