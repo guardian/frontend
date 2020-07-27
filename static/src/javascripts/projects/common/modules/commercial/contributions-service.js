@@ -14,6 +14,7 @@ import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import fetchJson from 'lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
 import { getCookie } from 'lib/cookies';
@@ -240,6 +241,11 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                         variant: abTestVariant,
                     }
                 });
+
+                // track banner view event in Google Analytics for subscriptions banner
+                if (componentType === 'ACQUISITIONS_SUBSCRIPTIONS_BANNER') {
+                    trackNonClickInteraction('subscription-banner : display')
+                }
 
                 return true
             });
