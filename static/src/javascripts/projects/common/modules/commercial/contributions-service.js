@@ -16,7 +16,8 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
-
+import {ARTICLES_VIEWED_OPT_OUT_COOKIE} from 'common/modules/commercial/user-features';
+import { getCookie } from 'lib/cookies';
 
 import {
     getLastOneOffContributionDate,
@@ -110,7 +111,7 @@ const buildEpicPayload = () => {
         countryCode,
         epicViewLog: getViewLog(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: false,
+        hasOptedOutOfArticleCount: getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
     };
 
     return {
