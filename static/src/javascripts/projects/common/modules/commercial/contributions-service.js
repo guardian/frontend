@@ -16,13 +16,13 @@ import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import fetchJson from 'lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
-import {ARTICLES_VIEWED_OPT_OUT_COOKIE} from 'common/modules/commercial/user-features';
 import { getCookie } from 'lib/cookies';
 
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
 
