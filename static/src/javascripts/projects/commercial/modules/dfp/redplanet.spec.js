@@ -147,7 +147,7 @@ describe('init', () => {
         expect(window.launchpad).toBeCalled();
     });
 
-    it('should not initialise redplanet initialise when TCFv2 consent has not been given', async () => {
+    it('should not initialise redplanet when TCFv2 consent has not been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
         shouldUseSourcepointCmp.mockImplementation(() => true);
