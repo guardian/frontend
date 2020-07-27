@@ -79,6 +79,9 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
+const CcpaWithConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: false } });
+
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 
 describe('init', () => {
@@ -154,6 +157,14 @@ describe('init', () => {
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
+    });
+
+    it('should throw an error when on CCPA mode', async () => {
+        commercialFeatures.launchpad = true;
+        isInAuOrNz.mockReturnValue(true);
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(CcpaWithConsentMock);
+        expect(await init).toThrow(`Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`);
     });
 
     it('should not initialise redplanet when launchpad conditions are false', async () => {
