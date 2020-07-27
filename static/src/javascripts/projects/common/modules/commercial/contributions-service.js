@@ -111,7 +111,7 @@ const buildEpicPayload = () => {
         countryCode,
         epicViewLog: getViewLog(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
     };
 
     return {
@@ -214,7 +214,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    false
+                    true
                 );
             }).then(() => {
                 const {
