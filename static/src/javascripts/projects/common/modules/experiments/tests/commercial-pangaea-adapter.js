@@ -7,7 +7,7 @@ const currentGeoLocation = once((): string => geolocationGetSync());
 export const pangaeaAdapterTest: ABTest = {
     id: 'CommercialPangaeaAdapter',
     start: '2019-10-08',
-    expiry: '2020-07-30',
+    expiry: '2020-09-30',
     author: 'Ioanna Kyprianou',
     description: 'Test adding pangaea in prebid in US & AU regions',
     audience: 0.0,
