@@ -36,7 +36,7 @@
     "fence": "guardian/fence#0.2.11",
     "lodash": "^4.17.13",
     "object-fit-videos": "^1.0.3",
-    "ophan-tracker-js": "1.3.20",
+    "ophan-tracker-js": "1.3.21",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.4",
     "prebid.js": "https://github.com/guardian/Prebid.js#681fbb",

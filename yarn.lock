@@ -8180,10 +8180,10 @@ openurl@1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/openurl/-/openurl-1.1.1.tgz#3875b4b0ef7a52c156f0db41d4609dbb0f94b387"
 
-ophan-tracker-js@1.3.20:
-  version "1.3.20"
-  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.20.tgz#eaa76de7b860fa3254986f9783c8f404d0e412c7"
-  integrity sha512-Rc2DUbfGvZgraKoKg/p2btnTN/ugu2axI3bcn59jz8kVyyrauegP+zgmtFFnW0gU154IvHDw/Zd+8oRQ1O0xrg==
+ophan-tracker-js@1.3.21:
+  version "1.3.21"
+  resolved "https://registry.yarnpkg.com/ophan-tracker-js/-/ophan-tracker-js-1.3.21.tgz#b81463c1b96249e32f28ff42aa433ed00f143cc0"
+  integrity sha512-hroyMjdQbx3ywDJmYsCpY2Qcff1aYmH5M0wZSi56smSPUHP0SziRaMJx34G9rEKR8UL6EBUO6KIHSYyKcto5hg==
 
 opn@5.3.0:
   version "5.3.0"
