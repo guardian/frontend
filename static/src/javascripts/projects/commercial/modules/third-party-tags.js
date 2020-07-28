@@ -78,7 +78,10 @@ const insertScripts = (
             // TCFv2 mode,
             consentedAdvertisingServices = advertisingServices.filter(
                 script => {
-                    if (typeof script.sourcepointId !== 'undefined') {
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
+                        typeof state.tcfv2.customVendors !== 'undefined'
+                    ) {
                         return state.tcfv2.customVendors[script.sourcepointId];
                     }
                     return Object.values(state.tcfv2.consents).every(Boolean);

@@ -37,12 +37,15 @@ const setupRedplanet: () => Promise<void> = () => {
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
         if (state.ccpa) {
-            throw new Error(`Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`);
+            throw new Error(
+                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`
+            );
         }
         let canRun: boolean;
         if (state.tcfv2) {
             // TCFv2 mode
             if (
+                typeof state.tcfv2.customVendors !== 'undefined' &&
                 typeof state.tcfv2.customVendors[SOURCEPOINT_ID] !== 'undefined'
             ) {
                 canRun = state.tcfv2.customVendors[SOURCEPOINT_ID];
@@ -51,8 +54,7 @@ const setupRedplanet: () => Promise<void> = () => {
             }
         } else {
             // TCFv1 mode
-            canRun =
-                state[1] && state[2] && state[3] && state[4] && state[5];
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
         }
 
         if (!initialised && canRun) {

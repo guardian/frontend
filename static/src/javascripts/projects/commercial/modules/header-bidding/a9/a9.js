@@ -48,6 +48,7 @@ const initialise = (): void => {
         } else if (state.tcfv2) {
             // TCFv2 mode
             if (
+                typeof state.tcfv2.customVendors !== 'undefined' &&
                 typeof state.tcfv2.customVendors[SOURCEPOINT_ID] !== 'undefined'
             ) {
                 canRun = state.tcfv2.customVendors[SOURCEPOINT_ID];
