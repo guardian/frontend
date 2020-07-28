@@ -13,7 +13,7 @@ export const createAuthenticationComponentEvent = (componentId: AuthenticationCo
         params.viewId = pageViewId;
     }
 
-    return encodeURIComponent(constructQuery(params));
+    return constructQuery(params);
 };
 
-export const createAuthenticationComponentEventParams = (componentId: AuthenticationComponentId, pageViewId?: string) => `componentEventParams=${createAuthenticationComponentEvent(componentId, pageViewId)}`;
+export const createAuthenticationComponentEventParams = (componentId: AuthenticationComponentId, pageViewId?: string) => `componentEventParams=${encodeURIComponent(createAuthenticationComponentEvent(componentId, pageViewId))}`;
