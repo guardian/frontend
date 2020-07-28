@@ -80,9 +80,9 @@ const insertScripts = (
                 script => {
                     if (
                         typeof script.sourcepointId !== 'undefined' &&
-                        typeof state.tcfv2.customVendors !== 'undefined'
+                        typeof state.tcfv2.vendorConsents !== 'undefined'
                     ) {
-                        return state.tcfv2.customVendors[script.sourcepointId];
+                        return state.tcfv2.vendorConsents[script.sourcepointId];
                     }
                     return Object.values(state.tcfv2.consents).every(Boolean);
                 }

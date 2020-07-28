@@ -41,11 +41,11 @@ const tcfv2WithConsentMock = (callback): void =>
                 '7': true,
                 '8': true,
             },
-            customVendors: { '100': true, '200': false },
+            vendorConsents: { '100': true, '200': false },
         },
     });
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2: { customVendors: { '100': false, '200': false } } });
+    callback({ tcfv2: { vendorConsents: { '100': false, '200': false } } });
 
 beforeEach(() => {
     const firstScript = document.createElement('script');

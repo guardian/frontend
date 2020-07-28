@@ -3,7 +3,8 @@
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     oldCmp as oldCmp_,
-    onConsentChange as onConsentChange_, } from '@guardian/consent-management-platform';
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
@@ -19,12 +20,12 @@ const falseConsentMock = (callback): void =>
 
 const tcfv2WithConsentMock = (callback): void =>
     callback({
-        tcfv2: { customVendors: { '5f199c302425a33f3f090f51': true } },
+        tcfv2: { vendorConsents: { '5f199c302425a33f3f090f51': true } },
     });
 
 const tcfv2WithoutConsentMock = (callback): void =>
     callback({
-        tcfv2: { customVendors: { '5f199c302425a33f3f090f51': false } },
+        tcfv2: { vendorConsents: { '5f199c302425a33f3f090f51': false } },
     });
 
 const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
@@ -39,9 +40,7 @@ jest.mock('commercial/modules/cmp/sourcepoint', () => ({
 }));
 
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn()
-        .mockImplementation(() => false),
+    isInTcfv2Test: jest.fn().mockImplementation(() => false),
 }));
 
 jest.mock('commercial/modules/dfp/Advert', () =>
@@ -70,9 +69,9 @@ jest.mock('lib/load-script', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     oldCmp: {
-        onIabConsentNotification: jest.fn()
+        onIabConsentNotification: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    onConsentChange: jest.fn(),
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -164,7 +163,9 @@ describe('init', () => {
         isInAuOrNz.mockReturnValue(true);
         shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(CcpaWithConsentMock);
-        expect(await init).toThrow(`Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`);
+        expect(await init).toThrow(
+            `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`
+        );
     });
 
     it('should not initialise redplanet when launchpad conditions are false', async () => {

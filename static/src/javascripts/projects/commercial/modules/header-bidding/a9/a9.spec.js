@@ -16,7 +16,7 @@ const TcfWithConsentMock = (callback): void =>
 
 const tcfv2WithConsentMock = (callback): void =>
     callback({
-        tcfv2: { customVendors: { '5edf9a821dc4e95986b66df4': true } },
+        tcfv2: { vendorConsents: { '5edf9a821dc4e95986b66df4': true } },
     });
 
 const CcpaWithConsentMock = (callback): void =>
