@@ -23,7 +23,7 @@ const shouldLoadLotame = (): boolean => {
 let initialised: boolean = false;
 
 // Fetches Lotame Data for the Ozone project
-const loadLotamePromise = () => loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
+const loadLotamePromise = (): Promise<void>  => loadScript('//ad.crwdcntrl.net/5/c=13271/pe=y/var=OzoneLotameData')
         .then(() => {
             if (config.get('isDotcomRendering', false)) {
                 // We do not need the LOTCC initialization for dotcom-rendering Ad Free
