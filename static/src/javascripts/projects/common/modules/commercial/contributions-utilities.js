@@ -378,6 +378,20 @@ const makeEpicABTestVariant = (
         initVariant.id
     );
 
+    const addTrackingToCta = (cta: EpicCta): EpicCta => ({
+        url: addTrackingCodesToUrl({
+            base: addCountryGroupToSupportLink(cta.url),
+            componentType: parentTest.componentType,
+            componentId,
+            campaignCode,
+            abTest: {
+                name: parentTest.id,
+                variant: initVariant.id,
+            },
+        }),
+        ctaText: cta.ctaText,
+    });
+
     return {
         id: initVariant.id,
         componentName: `mem_acquisition_${trackingCampaignId}_${
@@ -399,7 +413,7 @@ const makeEpicABTestVariant = (
         template: initVariant.template || parentTemplate,
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
-        secondaryCta: initVariant.secondaryCta,
+        secondaryCta: initVariant.secondaryCta && addTrackingToCta(initVariant.secondaryCta),
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
