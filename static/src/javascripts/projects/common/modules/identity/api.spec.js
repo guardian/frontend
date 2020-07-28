@@ -119,19 +119,19 @@ describe('Identity API', () => {
         window.location.assign(returnUrl);
 
         getCookieStub.mockImplementationOnce(() => null);
-        getUserOrSignIn();
+        getUserOrSignIn('email_sign_in_banner');
 
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);
     });
 
     it('should not redirect to sign in when user is already signed in', () => {
-        const user = getUserOrSignIn();
+        const user = getUserOrSignIn('email_sign_in_banner');
         const displayName = user && user.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
@@ -142,12 +142,12 @@ describe('Identity API', () => {
         const returnUrl = 'http://www.theguardian.com/foo';
 
         getCookieStub.mockImplementationOnce(() => null);
-        getUserOrSignIn(returnUrl);
+        getUserOrSignIn('email_sign_in_banner', returnUrl);
 
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);

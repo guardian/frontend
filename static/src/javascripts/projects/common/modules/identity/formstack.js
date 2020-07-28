@@ -71,7 +71,7 @@ class Formstack {
 
     init(): void {
         // User object required to populate fields
-        let user = getUserOrSignIn();
+        let user = getUserOrSignIn('signin_from_formstack');
 
         if (!user) {
             user = {};
