@@ -8,7 +8,7 @@ const id = 'RemoteEpicVariants';
 
 const remoteVariant: Variant = {
     id: 'remote',
-    test: () => fetchAndRenderEpic(id),
+    test: (): void => { fetchAndRenderEpic(id) },
     canRun: () => true,
 };
 
@@ -27,7 +27,6 @@ export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
         // Delay geolocation due to known race condition
         // https://github.com/guardian/frontend/pull/22322
         const geolocation = geolocationGetSync();
-        console.log('geolocation: ', geolocation);
         return config.get("switches.abRemoteEpicVariants") && geolocation !== 'AU' && Math.random() < 0.01// set test % here
     }
 
