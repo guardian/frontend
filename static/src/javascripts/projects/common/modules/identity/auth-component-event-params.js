@@ -5,7 +5,7 @@ export type AuthenticationComponentId = 'email_sign_in_banner' | 'subscription_s
 
 export const createAuthenticationComponentEvent = (componentId: AuthenticationComponentId, pageViewId?: string) => {
     const params: Object = {
-        componentType: 'IDENTITY_AUTHENTICATION',
+        componentType: 'identityauthentication',
         componentId,
     };
 

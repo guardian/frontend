@@ -18,7 +18,7 @@ object AuthenticationComponentEvent {
   }
 
   def createAuthenticationComponentEventTuple(componentEventId: ComponentEventId): (String, String) = {
-    val eventParams = s"componentType=IDENTITY_AUTHENTICATION&componentId=${componentEventId.id}"
+    val eventParams = s"componentType=identityauthentication&componentId=${componentEventId.id}"
     "componentEventParams" -> eventParams
   }
 }

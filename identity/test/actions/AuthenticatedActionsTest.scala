@@ -24,7 +24,7 @@ import scala.concurrent.Future
 class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with ScalaFutures with Matchers with WithTestIdConfig with WithTestExecutionContext {
 
   trait TestFixture {
-    val expectedEventParameters = "componentEventParams=componentType%3DIDENTITY_AUTHENTICATION%26componentId%3Dsignin_redirect_for_action"
+    val expectedEventParameters = "componentEventParams=componentType%3Didentityauthentication%26componentId%3Dsignin_redirect_for_action"
 
     val authService = mock[AuthenticationService]
     val client: IdApiClient = mock[IdApiClient]

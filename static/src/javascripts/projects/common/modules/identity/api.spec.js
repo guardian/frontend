@@ -124,7 +124,7 @@ describe('Identity API', () => {
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}&componentEventParams=componentType%3DIDENTITY_AUTHENTICATION%26componentId%3Demail_sign_in_banner`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);
@@ -147,7 +147,7 @@ describe('Identity API', () => {
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}&componentEventParams=componentType%3DIDENTITY_AUTHENTICATION%26componentId%3Demail_sign_in_banner`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);
