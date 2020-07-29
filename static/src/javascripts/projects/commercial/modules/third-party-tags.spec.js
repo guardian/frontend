@@ -217,14 +217,17 @@ describe('third party tags', () => {
         });
 
         it('should not add already loaded tags ', () => {
-            fakeThirdPartyAdvertisingTag.loaded = true;
             shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []
             );
-            expect(document.scripts.length).toBe(1);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
+                []
+            );
+            expect(document.scripts.length).toBe(2);
         });
 
         it('should not add scripts to the document when TCFv2 consent has not been given', () => {
