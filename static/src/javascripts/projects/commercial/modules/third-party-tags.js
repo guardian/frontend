@@ -79,10 +79,13 @@ const insertScripts = (
             // TCFv2 mode,
             consentedAdvertisingServices = advertisingServices.filter(
                 script => {
-                    if (typeof script.sourcepointId !== 'undefined' &&
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
                         typeof state.tcfv2.vendorConsents !== 'undefined' &&
-                        typeof state.tcfv2.vendorConsents[script.sourcepointId] !== 'undefined')
-                    {
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
+                    ) {
                         return state.tcfv2.vendorConsents[script.sourcepointId];
                     }
                     return Object.values(state.tcfv2.consents).every(Boolean);
@@ -111,7 +114,7 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
-        lotame,
+        lotame(),
         connatix,
     ].filter(_ => _.shouldRun);
 
