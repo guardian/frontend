@@ -26,11 +26,13 @@ const hasRequiredConsents = (): Promise<void> =>
 export const init = (): Promise<any> => {
     const brazeSwitch = config.get('switches.brazeSwitch');
     if (!brazeSwitch) return Promise.resolve();
+
     const apiKey = config.get('page.brazeApiKey');
     if (!apiKey) return Promise.reject(new Error('Braze API key not set.'));
-    const dependencies = [getBrazeUuid(),hasRequiredConsents()]
-    Promise.all(dependencies).then(([brazeUuid]) => {
 
+    const dependencies = [getBrazeUuid(),hasRequiredConsents()]
+
+    Promise.all(dependencies).then(([brazeUuid]) => {
         console.log("Initializing Braze");
         import(/* webpackChunkName: "braze-web-sdk" */ '@braze/web-sdk').then(appboy => {
 
