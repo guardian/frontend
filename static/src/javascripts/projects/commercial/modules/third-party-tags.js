@@ -17,15 +17,12 @@ import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
-let advertisingScriptsInserted: boolean = false;
-let performanceScriptsInserted: boolean = false;
-
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
-    tags.forEach(tag => {
+    tags.filter(t => !t.loaded).forEach(tag => {
         if (tag.useImage === true) {
             new Image().src = tag.url;
         } else {
@@ -43,6 +40,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
             }
             frag.appendChild(script);
         }
+        tag.loaded = true;
     });
 
     if (hasScriptsToInsert) {
@@ -59,9 +57,8 @@ const insertScripts = (
     performanceServices: Array<ThirdPartyTag>
 ): void => {
     oldCmp.onGuConsentNotification('performance', state => {
-        if (!performanceScriptsInserted && state) {
+        if (state) {
             addScripts(performanceServices);
-            performanceScriptsInserted = true;
         }
     });
 
@@ -97,11 +94,9 @@ const insertScripts = (
         }
 
         if (
-            !advertisingScriptsInserted &&
             consentedAdvertisingServices.length > 0
         ) {
             addScripts(consentedAdvertisingServices);
-            advertisingScriptsInserted = true;
         }
     });
 };
@@ -150,8 +145,4 @@ export { init };
 export const _ = {
     insertScripts,
     loadOther,
-    reset: () => {
-        advertisingScriptsInserted = false;
-        performanceScriptsInserted = false;
-    },
 };

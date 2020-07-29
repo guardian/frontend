@@ -34,6 +34,7 @@ declare type ThirdPartyTag = {
     useImage?: boolean,
     attrs?: Array<TagAtrribute>,
     async?: boolean,
+    loaded?: boolean,
 };
 
 declare var jsdom: {
