@@ -22,7 +22,10 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
-    tags.filter(t => !t.loaded).forEach(tag => {
+    tags.forEach(tag => {
+        if (tag.loaded === true) {
+            return;
+        }
         if (tag.useImage === true) {
             new Image().src = tag.url;
         } else {
