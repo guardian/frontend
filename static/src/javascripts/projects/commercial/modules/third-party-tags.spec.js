@@ -114,19 +114,19 @@ describe('third party tags', () => {
     });
 
     describe('insertScripts', () => {
-        let fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
             sourcepointId: '100',
         };
-        let fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
             sourcepointId: '300',
         };
-        let fakeThirdPartyPerformanceTag: ThirdPartyTag = {
+        const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),
@@ -138,7 +138,6 @@ describe('third party tags', () => {
             fakeThirdPartyAdvertisingTag2.loaded = undefined;
             fakeThirdPartyPerformanceTag.loaded = undefined;
         });
-
 
         it('should add scripts to the document when TCF consent has been given', () => {
             onIabConsentNotification.mockImplementation(callback =>
