@@ -4,11 +4,11 @@ import {
     onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInTcfv2Test as isInTcfv2Test_ } from 'commercial/modules/cmp/tcfv2-test';
+import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
-const isInTcfv2Test: any = isInTcfv2Test_;
+const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 
 jest.mock('lib/raven');
 
@@ -20,18 +20,32 @@ jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
 }));
 
-// Force TCFv1
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn(),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
+
 const onConsentChange: any = onConsentChange_;
 const onIabConsentNotification = oldCmp.onIabConsentNotification;
 const onGuConsentNotification = oldCmp.onGuConsentNotification;
 
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2: { customVendors: { '1': true, '2': false } } });
+    callback({
+        tcfv2: {
+            consents: {
+                '1': true,
+                '2': false,
+                '3': false,
+                '4': false,
+                '5': false,
+                '6': false,
+                '7': true,
+                '8': true,
+            },
+            vendorConsents: { '100': true, '200': false },
+        },
+    });
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2: { customVendors: { '1': false, '2': false } } });
+    callback({ tcfv2: { vendorConsents: { '100': false, '200': false } } });
 
 beforeEach(() => {
     const firstScript = document.createElement('script');
@@ -104,13 +118,13 @@ describe('third party tags', () => {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
-            sourcepointId: '1',
+            sourcepointId: '100',
         };
         const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),
-            sourcepointId: '2',
+            sourcepointId: '200',
         };
         it('should add scripts to the document when TCF consent has been given', () => {
             _.reset();
@@ -154,8 +168,9 @@ describe('third party tags', () => {
         });
         it('should add scripts to the document when CCPA consent has been given', () => {
             _.reset();
-            onIabConsentNotification.mockImplementation(callback =>
-                callback(false)
+            shouldUseSourcepointCmp.mockImplementation(() => true);
+            onConsentChange.mockImplementation(callback =>
+                callback({ ccpa: { doNotSell: false } })
             );
             onGuConsentNotification.mockImplementation((state, callback) =>
                 callback(true)
@@ -168,8 +183,9 @@ describe('third party tags', () => {
         });
         it('should not add scripts to the document when CCPA consent has not been given', () => {
             _.reset();
-            onIabConsentNotification.mockImplementation(callback =>
-                callback(true)
+            shouldUseSourcepointCmp.mockImplementation(() => true);
+            onConsentChange.mockImplementation(callback =>
+                callback({ ccpa: { doNotSell: true } })
             );
             onGuConsentNotification.mockImplementation((state, callback) =>
                 callback(false)
@@ -183,17 +199,23 @@ describe('third party tags', () => {
 
         it('should only add consented custom vendors to the document for TCFv2', () => {
             _.reset();
-            isInTcfv2Test.mockImplementation(() => true);
+            shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
-            insertScripts([fakeThirdPartyAdvertisingTag], []);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyPerformanceTag],
+                []
+            );
             expect(document.scripts.length).toBe(2);
         });
 
         it('should not add scripts to the document when TCFv2 consent has not been given', () => {
             _.reset();
-            isInTcfv2Test.mockImplementation(() => true);
+            shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-            insertScripts([fakeThirdPartyAdvertisingTag], []);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyPerformanceTag],
+                []
+            );
             expect(document.scripts.length).toBe(1);
         });
     });

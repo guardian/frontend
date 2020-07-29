@@ -3,7 +3,6 @@
 import type { Banner } from 'common/modules/ui/bannerPicker';
 import { fetchBannerData, renderBanner, type BannerDataResponse } from 'common/modules/commercial/contributions-service';
 import config from "lib/config";
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import reportError from "lib/report-error";
 
 
@@ -14,9 +13,8 @@ let data: ?BannerDataResponse = null;
 const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
 const canShow = (): Promise<boolean> => {
-    const countryCode = geolocationGetSync();
     const forceBanner = window.location.search.includes('force-remote-banner=true');
-    const enabled = (config.get('switches.remoteBanner') && countryCode === 'AU') || forceBanner;
+    const enabled = config.get('switches.remoteBanner') || forceBanner;
 
     if (!enabled) {
         return Promise.resolve(false);

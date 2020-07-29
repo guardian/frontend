@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Test new implementation of xaxis adapter with multiple placement ids",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 
@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Test adding pangaea in prebid in US & AU regions",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 
@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test new us placement id for appnexus in US",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
+    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true
   )
 

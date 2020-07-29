@@ -5,7 +5,7 @@
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
 @import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
-@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch, ausMoment2020Header }
+@import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
     <header class="@RenderClasses(Map(
@@ -32,51 +32,39 @@
             </a>
 
             @defining(Edition(request).id.toLowerCase()) { editionId =>
-                @defining(editionId == "au" && ausMoment2020Header.isSwitchedOn) { ausMomentEnabled =>
-                    <div class="@{
-                        if(ausMomentEnabled) "new-header__cta-bar-aus-moment" else "new-header__cta-bar"
-                    } hide-until-mobile">
-                        @if(!page.metadata.hasSlimHeader) {
-                            @if(ausMomentEnabled) {
-                                <div class="cta-bar__text hide-until-tablet js-aus-moment-header-supporter">
+                @defining(editionId == "au") { ausEdition =>
+                    @if(ausEdition) {
+                        <div class="new-header__cta-bar-aus-moment hide-until-mobile">
+                            @if(!page.metadata.hasSlimHeader) {
+                                <div class="cta-bar__text-aus-supporter hide-until-tablet">
                                     <div class="cta-bar__heading">
                                         Thank you
                                     </div>
                                     <div class="cta-bar__subheading">
-                                        We're funded by <span class="cta-bar__aus-moment-count"></span>
-                                        readers across Australia.
-                                        <br/>
                                         <a class="cta-bar__cta cta-bar__aus-map-cta hide-until-tablet"
                                         data-link-name="nav2 : aus-map-cta"
                                         data-edition="@{
                                             editionId
                                         }"
                                         href="https://support.theguardian.com/aus-2020-map?INTCMP=Aus_moment_2020_frontend_header">
-                                            Hear from our supporters
+                                            Hear from other supporters
                                             @fragments.inlineSvg("arrow-right", "icon")
                                         </a>
                                     </div>
                                 </div>
-
-                                <div class="cta-bar__text hide-until-tablet js-aus-moment-header-non-supporter">
-                                    <div class="cta-bar__heading">
-                                        Support The Guardian
-                                    </div>
-                                    <div class="cta-bar__subheading">
-                                        We're funded by <span class="cta-bar__aus-moment-count"></span>
-                                        readers across Australia
-                                    </div>
-                                </div>
-                            } else {
-                                <div class="cta-bar__text hide-until-tablet">
-                                    <div class="cta-bar__heading">
-                                        Support The Guardian
-                                    </div>
-                                    <div class="cta-bar__subheading">
-                                        Available for everyone, funded by readers
-                                    </div>
-                                </div>
                             }
+                        </div>
+                    }
+                    <div class="new-header__cta-bar hide-until-mobile">
+                        @if(!page.metadata.hasSlimHeader) {
+                            <div class="cta-bar__text hide-until-tablet">
+                                <div class="cta-bar__heading">
+                                    Support The Guardian
+                                </div>
+                                <div class="cta-bar__subheading">
+                                    Available for everyone, funded by readers
+                                </div>
+                            </div>
                         }
 
                         <a class="cta-bar__cta hide-until-tablet js-change-become-member-link js-acquisition-link"

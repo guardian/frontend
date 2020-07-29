@@ -1,17 +1,13 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 let initialised = false;
+const SOURCEPOINT_ID: string = '5f199c302425a33f3f090f51';
 
 const initialise = (): void => {
     // Initialise Launchpad Tracker
@@ -34,28 +30,40 @@ const initialise = (): void => {
 };
 
 const setupRedplanet: () => Promise<void> = () => {
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
     onCMPConsentNotification(state => {
-        // typeof state === 'boolean' means CCPA mode is on
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
-        if (typeof state !== 'boolean') {
-            let canRun: boolean;
-            if (typeof state.tcfv2 !== 'undefined') {
-                // TCFv2 mode,
-                canRun = Object.values(state.tcfv2.consents).every(Boolean);
+        if (state.ccpa) {
+            throw new Error(
+                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`
+            );
+        }
+        let canRun: boolean;
+        if (state.tcfv2) {
+            // TCFv2 mode
+            if (
+                typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                typeof state.tcfv2.vendorConsents[SOURCEPOINT_ID] !==
+                    'undefined'
+            ) {
+                canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
             } else {
-                // TCFv1 mode
-                canRun =
-                    state[1] && state[2] && state[3] && state[4] && state[5];
+                canRun = Object.values(state.tcfv2.consents).every(Boolean);
             }
+        } else {
+            // TCFv1 mode
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+        }
 
-            if (!initialised && canRun) {
-                initialised = true;
-                return import('lib/launchpad.js').then(() => {
-                    initialise();
-                    return Promise.resolve();
-                });
-            }
+        if (!initialised && canRun) {
+            initialised = true;
+            return import('lib/launchpad.js').then(() => {
+                initialise();
+                return Promise.resolve();
+            });
         }
     });
     return Promise.resolve();
@@ -66,4 +74,8 @@ export const init = (): Promise<void> => {
         return setupRedplanet();
     }
     return Promise.resolve();
+};
+
+export const resetModule = () => {
+    initialised = false;
 };

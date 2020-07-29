@@ -3,6 +3,7 @@
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import templates.inlineJS.nonBlocking.js.emailIframeTracking
 @import play.api.Mode.Dev
 @import conf.Static
 @import views.support.RenderClasses
@@ -23,6 +24,10 @@
     @if(FontSwitch.isSwitchedOn) {
         @InlineJs(loadFonts().body, "loadFonts.js")
     }
+    </script>
+
+    <script>
+        @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
     </script>
 
 </head>

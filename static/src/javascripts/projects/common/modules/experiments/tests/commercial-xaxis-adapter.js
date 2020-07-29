@@ -3,7 +3,7 @@
 export const xaxisAdapterTest: ABTest = {
     id: 'CommercialXaxisAdapter',
     start: '2019-09-24',
-    expiry: '2020-07-30',
+    expiry: '2020-09-30',
     author: 'Ioanna Kyprianou',
     description:
         'Test new implementation of xaxis adapter with multiple placement ids',

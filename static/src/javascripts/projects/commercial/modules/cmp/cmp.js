@@ -5,7 +5,7 @@ import { getCookie } from 'lib/cookies';
 import { getUrlVars } from 'lib/url';
 import fetchJSON from 'lib/fetch-json';
 import { oldCmp } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { log } from './log';
 import { CmpStore } from './store';
 import { encodeVendorConsentData } from './cookie';
@@ -31,7 +31,6 @@ import type {
     VendorList,
     VendorConsentResponse,
 } from './types';
-import { isInTcfv2Test } from './tcfv2-test';
 
 type MessageData = {
     __cmpCall: ?{
@@ -280,7 +279,7 @@ class CmpService {
 
 export const init = (): void => {
     // Only run our CmpService if prepareCmp has added the CMP stub
-    if (window[CMP_GLOBAL_NAME] && !isCcpaApplicable() && !isInTcfv2Test()) {
+    if (window[CMP_GLOBAL_NAME] && !shouldUseSourcepointCmp()) {
         let cmp: ?CmpService;
         // Pull queued commands from the CMP stub
         const { commandQueue = [] } = window[CMP_GLOBAL_NAME] || {};

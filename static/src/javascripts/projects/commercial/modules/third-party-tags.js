@@ -2,6 +2,8 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -13,9 +15,7 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
-
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
@@ -65,21 +65,28 @@ const insertScripts = (
         }
     });
 
-    const onCMPConsentNotification = isInTcfv2Test()
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
         ? onConsentChange
         : oldCmp.onIabConsentNotification;
 
     onCMPConsentNotification(state => {
         let consentedAdvertisingServices = [];
-        if (typeof state === 'boolean') {
+        if (state.ccpa) {
             // CCPA mode
-            if (!state) consentedAdvertisingServices = [...advertisingServices];
-        } else if (typeof state.tcfv2 !== 'undefined') {
+            if (!state.ccpa.doNotSell)
+                consentedAdvertisingServices = [...advertisingServices];
+        } else if (state.tcfv2) {
             // TCFv2 mode,
             consentedAdvertisingServices = advertisingServices.filter(
                 script => {
-                    if (typeof script.sourcepointId !== 'undefined') {
-                        return state.tcfv2.customVendors[script.sourcepointId];
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
+                    ) {
+                        return state.tcfv2.vendorConsents[script.sourcepointId];
                     }
                     return Object.values(state.tcfv2.consents).every(Boolean);
                 }
@@ -107,6 +114,7 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
+        lotame(),
         connatix,
     ].filter(_ => _.shouldRun);
 

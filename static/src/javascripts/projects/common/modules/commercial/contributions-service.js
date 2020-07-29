@@ -1,6 +1,6 @@
 // @flow
 
-import { getBodyEnd, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-client';
+import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
@@ -13,21 +13,17 @@ import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitClickEvent, submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import fetchJson from 'lib/fetch-json';
-import { render } from 'preact-x';
-import React from 'preact-x/compat';
-/* eslint-disable import/no-namespace */
-import * as emotionCore from "@emotion/core";
-import * as emotionTheming from "emotion-theming";
-import * as emotion from "emotion";
-/* eslint-enable import/no-namespace */
-
+import { mountDynamic } from "@guardian/automat-modules";
+import { getCookie } from 'lib/cookies';
 
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
 
@@ -62,94 +58,28 @@ const buildKeywordTags = page => {
     }));
 };
 
-const renderEpic = (html: string, css: string): Promise<[HTMLElement, ?ShadowRoot]> => {
-    const content = `<style>${css}</style>${html}`;
-
-    return fastdom.write(() => {
-        const target = document.querySelector(
-            '.submeta'
+const epicEl = () => {
+    const target = document.querySelector(
+        '.submeta'
+    );
+    if (!target) {
+        throw new Error(
+            'Could not find target element for Epic'
         );
-
-        if (!target) {
-            throw new Error(
-                'Could not find target element for Epic'
-            );
-        }
-
-        const parent = target.parentNode;
-
-        if (!parent) {
-            throw new Error(
-                'Could not find parent element for Epic'
-            );
-        }
-
-        const container = document.createElement('div');
-        parent.insertBefore(container, target);
-
-        // use Shadow Dom if found
-        let shadowRoot;
-        if (container.attachShadow) {
-            shadowRoot = container.attachShadow({
-                mode: 'open',
-            });
-            shadowRoot.innerHTML = content;
-        } else {
-            container.innerHTML = content;
-        }
-
-        return [container, shadowRoot];
-    });
-};
-
-interface InitAutomatJsConfig {
-    epicRoot: HTMLElement | ShadowRoot;
-    onReminderOpen?: Function;
-}
-
-interface AutomatJsCallback {
-    buttonCopyAsString: string;
-}
-
-// TODO introduce better way to support client-side behaviour
-const executeJS = (container: HTMLElement | ShadowRoot, js: string) => {
-    if (!js) {
-        return;
     }
 
-    try {
-        // eslint-disable-next-line no-eval
-        window.eval(js);
-        if (
-            typeof window.initAutomatJs ===
-            'function'
-        ) {
-            const initAutomatJsConfig: InitAutomatJsConfig = {
-                epicRoot: container,
-                onReminderOpen: (callbackParams: AutomatJsCallback) => {
-                    const { buttonCopyAsString } = callbackParams;
-                    submitClickEvent({
-                        component: {
-                            componentType: 'ACQUISITIONS_OTHER',
-                            id: 'precontribution-reminder-prompt-clicked',
-                        },
-                    });
-                    submitClickEvent({
-                        component: {
-                            componentType: 'ACQUISITIONS_OTHER',
-                            id: `precontribution-reminder-prompt-copy-${buttonCopyAsString}`,
-                        },
-                    });
-                },
-            };
-            window.initAutomatJs(initAutomatJsConfig);
-        }
-    } catch (error) {
-        // eslint-disable-next-line no-console
-        console.error(error);
-        reportError(error, {}, false);
+    const parent = target.parentNode;
+    if (!parent) {
+        throw new Error(
+            'Could not find parent element for Epic'
+        );
     }
-};
+
+    const container = document.createElement('div');
+    parent.insertBefore(container, target);
+
+    return container;
+}
 
 const buildEpicPayload = () => {
     const ophan = config.get('ophan');
@@ -181,7 +111,8 @@ const buildEpicPayload = () => {
         mvtId: getMvtValue(),
         countryCode,
         epicViewLog: getViewLog(),
-        weeklyArticleHistory: getWeeklyArticleHistory()
+        weeklyArticleHistory: getWeeklyArticleHistory(),
+        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
     };
 
     return {
@@ -266,13 +197,6 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         return Promise.resolve(false);
     }
 
-    window.guardian.automat = {
-        react: React,
-        emotionCore,
-        emotionTheming,
-        emotion,
-    };
-
     // $FlowFixMe
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
@@ -287,9 +211,11 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                     document.body.insertAdjacentElement('beforeend', container);
                 }
 
-                return render(
-                    <Banner {...module.props} submitComponentEvent={submitComponentEvent} />,
-                    container
+                return mountDynamic(
+                    container,
+                    Banner,
+                    { submitComponentEvent, ...module.props},
+                    true
                 );
             }).then(() => {
                 const {
@@ -316,6 +242,11 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
                     }
                 });
 
+                // track banner view event in Google Analytics for subscriptions banner
+                if (componentType === 'ACQUISITIONS_SUBSCRIPTIONS_BANNER') {
+                    trackNonClickInteraction('subscription-banner : display')
+                }
+
                 return true
             });
         })
@@ -326,48 +257,52 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = (id: string) => {
-    const payload = buildEpicPayload();
-    const viewEvent = makeEvent(id, 'view');
+export const fetchAndRenderEpic = async (id: string): Promise<void> => {
+    try {
+        const payload = buildEpicPayload();
+        const viewEvent = makeEvent(id, 'view');
 
-    getBodyEnd(payload)
-        .then(checkResponseOk)
-        .then(response => response.json())
-        .then(json => {
-            if (json && json.data) {
-                const { html, css, js, meta } = json.data;
-                const {
-                    abTestName,
-                    abTestVariant,
-                    componentType,
-                    products = [],
-                    campaignCode,
-                    campaignId
-                } = meta;
+        const response = await getEpicMeta(payload);
+        checkResponseOk(response);
+        const json = await response.json();
 
-                emitBeginEvent(campaignId);
-                setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+        if (!json || !json.data) {
+            throw new Error("epic unexpected response format");
+        }
 
-                renderEpic(html, css)
-                    .then(([el, shadowRoot]) => {
-                        executeJS(shadowRoot || el, js);
-                        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
-                        setupOphanView(
-                            el,
-                            viewEvent,
-                            abTestName,
-                            abTestVariant,
-                            campaignCode,
-                            campaignId,
-                            componentType,
-                            products,
-                            abTestVariant.showTicker,
-                            abTestVariant.tickerSettings,
-                        )})
-            }
-        })
-        .catch(error => {
-            console.log(error);
-            reportError(error, {}, false);
-        });
-};
+        const {module, meta} = json.data;
+        const component = await window.guardianPolyfilledImport(module.url);
+        const el = epicEl();
+
+        const {
+            abTestName,
+            abTestVariant,
+            componentType,
+            products = [],
+            campaignCode,
+            campaignId
+        } = meta;
+
+        emitBeginEvent(campaignId);
+        setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+
+        mountDynamic(el, component.ContributionsEpic, module.props, true);
+
+        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
+        setupOphanView(
+            el,
+            viewEvent,
+            abTestName,
+            abTestVariant,
+            campaignCode,
+            campaignId,
+            componentType,
+            products,
+            abTestVariant.showTicker,
+            abTestVariant.tickerSettings,
+        );
+    } catch (error) {
+        console.log(`Error importing remote epic: ${error}`);
+        reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
+    }
+}
