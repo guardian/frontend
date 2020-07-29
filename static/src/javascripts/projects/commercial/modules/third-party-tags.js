@@ -15,6 +15,7 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
+import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
 let advertisingScriptsInserted: boolean = false;
 let performanceScriptsInserted: boolean = false;
@@ -80,7 +81,10 @@ const insertScripts = (
                 script => {
                     if (
                         typeof script.sourcepointId !== 'undefined' &&
-                        typeof state.tcfv2.vendorConsents !== 'undefined'
+                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
                     ) {
                         return state.tcfv2.vendorConsents[script.sourcepointId];
                     }
@@ -110,6 +114,7 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
+        lotame(),
         connatix,
     ].filter(_ => _.shouldRun);
 

@@ -1,5 +1,8 @@
 // @flow strict
+// TODO: Remove this module when TCFv2 is released on 100% of audience
+
 import { local } from 'lib/storage';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import type { VendorConsentResponse } from './types';
 
 type LotameError = {
@@ -86,6 +89,11 @@ const getLotameAdConsentFromCmp = (): Promise<VendorConsentResponse | null> =>
     });
 
 const init = (): Promise<void> => {
+    if (shouldUseSourcepointCmp()) {
+        // No custom CMP logic is needed if SP CMP is used.
+        // The script will not be embedded in the page at all by the third-party-tags
+        return Promise.resolve();
+    }
     if ('LOTCC' in window && 'setConsent' in window.LOTCC) {
         getLotameAdConsentFromCmp()
             .then(isConsentingData)
