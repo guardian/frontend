@@ -1145,15 +1145,15 @@
     style-loader "1.0.0"
     webpack "^4.2.0"
 
-"@guardian/automat-contributions@^0.3.5":
-  version "0.3.5"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.3.5.tgz#bb6d665a804ab96737f23bbcd47d93c5b66bfc6f"
-  integrity sha512-XwH1wifM0SJLwPFU7iGrlOhQyajPA+vF/0BOgXemtsILvCV1cibEWCjnsR5pL/kUoPt41p5q05kjSGaWL/sTWw==
+"@guardian/automat-contributions@^0.3.6":
+  version "0.3.6"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-contributions/-/automat-contributions-0.3.6.tgz#eeb47307522f88a8cb41ccfb34b7ecae36b363b0"
+  integrity sha512-v6LkzMQaE8MaR1aNBA+9QGBSt7ICjvsPOB3iNudhnKft1LP+99TZohOyroJKc1HPYL5fbR0Oe+5CVbpkfABgrg==
 
-"@guardian/automat-modules@^0.3.3":
-  version "0.3.3"
-  resolved "https://registry.yarnpkg.com/@guardian/automat-modules/-/automat-modules-0.3.3.tgz#f9808d343652082767cd276292a29214f384425a"
-  integrity sha512-fXHFy40c1032Ttmbex3wiHGXjkFnoMx4t1dQJwl/FF0U5HkhL++47ANFx8j73ZD/hggvYNRoxNYUq5vZwu3L0A==
+"@guardian/automat-modules@^0.3.7":
+  version "0.3.7"
+  resolved "https://registry.yarnpkg.com/@guardian/automat-modules/-/automat-modules-0.3.7.tgz#e08b4429b5c76dc1a2caa28cdd9630d033781bea"
+  integrity sha512-i2PdO7riWBleQf4gubv6rIqb92OMGHERoHTPZ5UDYkLhtwpz3eZxgqUANf5cCBCMF2k7Dy0ZuJsu1PZgpHkjXA==
   dependencies:
     "@emotion/core" "^10.0.28"
     "@guardian/src-foundations" "^1.9.0"
