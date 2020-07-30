@@ -271,6 +271,14 @@ describe('Build Page Targeting', () => {
 
         expect(getPageTargeting().consent_tcfv2).toBe('f');
         expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+
+        _.resetPageTargeting();
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(tcfWithConsentMock);
+        isInTcfv2Test.mockReturnValue(false);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('na');
+        expect(getPageTargeting().cmp_interaction).toBe('na');
     });
 
     it('should set correct edition param', () => {
