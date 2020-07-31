@@ -96,7 +96,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role, attribution: 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
-case class SpotifyBlockElement(html: String, title: String, caption: String) extends PageElement
+case class SpotifyBlockElement(html: String, title: Option[String], caption: Option[String]) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class TextBlockElement(html: String) extends PageElement
@@ -448,6 +448,17 @@ object PageElement {
     }
   }
 
+  private def extractSpotifyBlockElement(element: ApiBlockElement): Option[SpotifyBlockElement] = {
+    for {
+      d <- element.audioTypeData
+      html <- d.html
+      source <- d.source
+      if source == "Spotify" // We rely on the `source` field to decide whether or not this is an instance of Spotify
+    } yield {
+      SpotifyBlockElement(html, d.title, d.caption)
+    }
+  }
+
   def audiIsDCRSupported(element: ApiBlockElement): Boolean = {
     /*
       date: July 21th 2020
@@ -476,8 +487,11 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-      extractSoundcloudBlockElement(html, mandatory) getOrElse
-        AudioBlockElement(element.assets.map(AudioAsset.make))
+          extractSoundcloudBlockElement(html, mandatory)            getOrElse
+          (
+            extractSpotifyBlockElement(element)                     getOrElse
+            AudioBlockElement(element.assets.map(AudioAsset.make))
+          )
     }
   }
 
