@@ -96,7 +96,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role, attribution: 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
-case class SpotifyBlockElement(html: String) extends PageElement
+case class SpotifyBlockElement(html: String, title: String, caption: String) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class TextBlockElement(html: String) extends PageElement
