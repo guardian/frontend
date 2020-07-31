@@ -2,14 +2,15 @@
 
 ## Install dependencies
 
-### Mac
+### Mac (via Homebrew)
 
-[Install Homebrew](http://brew.sh/#install).
+First [install Homebrew](http://brew.sh/#install).
+
+Then:
 
 ```
-$ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-$ brew bundle
+$ cd nginx
+$ brew bundle # install deps from the Brewfile
 ```
 
 ### Other operating systems
@@ -22,7 +23,7 @@ You need to install:
 ## Configure Nginx with SSL
 
 1. Run `nginx/setup.sh`
-1. To setup Dotcom Identity Frontend follow the [identity-platform README](https://github.com/guardian/identity-platform)
+1. To setup Identity follow the [Identity README](../identity/README.md)
 
 ## Access the Site
 
