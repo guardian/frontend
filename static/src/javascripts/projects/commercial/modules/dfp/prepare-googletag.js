@@ -32,10 +32,6 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 
-const onCMPConsentNotification = shouldUseSourcepointCmp()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 initMessenger(
     type,
     getStyles,
@@ -107,7 +103,12 @@ export const init = (): Promise<void> => {
             }
         );
 
+        const onCMPConsentNotification = shouldUseSourcepointCmp()
+            ? onConsentChange
+            : oldCmp.onIabConsentNotification;
+
         onCMPConsentNotification(state => {
+            let canRun: boolean = true;
             if (state.ccpa) {
                 // CCPA mode
                 window.googletag.cmd.push(() => {
@@ -122,9 +123,11 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
+                    canRun = state.tcfv2.consents['1']; // Store and/or access information on a device
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
+                    // TODO: decide if purpose 1 should apply to TCFv1
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
@@ -132,16 +135,22 @@ export const init = (): Promise<void> => {
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
             }
-        });
 
-        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(
-            config.get(
-                'libs.googletag',
-                '//www.googletagservices.com/tag/js/gpt.js'
-            ),
-            { async: false }
-        );
+            // Load googletag if TCFv2 purpose 1 consent is not `false`.
+            // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+            // TODO: what if Prebid is also behind consent?
+            if (canRun) {
+                return loadScript(
+                    config.get(
+                        'libs.googletag',
+                        '//www.googletagservices.com/tag/js/gpt.js'
+                    ),
+                    { async: false }
+                );
+            }
+            // return Promise.resolve();
+        });
+        return Promise.resolve();
     };
 
     if (commercialFeatures.dfpAdvertising) {
