@@ -1,8 +1,9 @@
 // @flow strict
-import { oldCmp } from '@guardian/consent-management-platform';
+import {oldCmp, onConsentChange} from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import {isInTcfv2Test} from "commercial/modules/cmp/tcfv2-test";
 
 type comscoreGlobals = {
     c1: string,
@@ -11,9 +12,10 @@ type comscoreGlobals = {
     comscorekw?: string,
 };
 
-const comscoreSrc = '//sb.scorecardresearch.com/beacon.js';
+const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
 const comscoreC1 = '2';
 const comscoreC2 = '6035250';
+const SOURCEPOINT_ID: string = '5efefe25b8e05c06542b2a77';
 
 let initialised = false;
 
@@ -52,7 +54,15 @@ const initOnConsent = (state: boolean | null) => {
 
 export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
-        oldCmp.onGuConsentNotification('performance', initOnConsent);
+        if (isInTcfv2Test()) {
+            onConsentChange(state => {
+                if (state.tcfv2) {
+                    initOnConsent(state.tcfv2.vendorConsents[SOURCEPOINT_ID])
+                }
+            })
+        } else {
+            oldCmp.onGuConsentNotification('performance', initOnConsent);
+        }
     }
 
     return Promise.resolve();
