@@ -461,13 +461,13 @@ object PageElement {
 
   def audiIsDCRSupported(element: ApiBlockElement): Boolean = {
     /*
-      date: July 21th 2020
+      date: July 21th 2020 (updated 03rd August 2020)
       author: Pascal
 
       This function was introduced to be able to know from the article picker whether or not
       an AudioBlockElement given to the article picker's function "hasOnlySupportedElements" would
-      resolve to a SoundcloudBlockElement (which we currently support in DCR) or an AudioBlockElement
-      (which DCR doesn't yet support).
+      resolve to a SoundcloudBlockElement or a SpotifyBlockElement (which we currently support in DCR)
+      or an AudioBlockElement (which DCR doesn't yet support).
 
       See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
      */
@@ -477,6 +477,7 @@ object PageElement {
 
     audioToPageElement(element: ApiBlockElement) match {
       case Some(_: SoundcloudBlockElement) => true
+      case Some(_: SpotifyBlockElement) => true
       case _ => false
     }
   }
