@@ -13,6 +13,7 @@ import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-ga
 import { signInGateMainVariant } from "common/modules/experiments/tests/sign-in-gate-main-variant";
 import { signInGateMainControl } from "common/modules/experiments/tests/sign-in-gate-main-control";
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
+import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcfv2-googletag-prebid-enforcement';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -23,6 +24,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGatePatientia,
     signInGateMainVariant,
     signInGateMainControl,
+    googletagPrebidEnforcement,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;

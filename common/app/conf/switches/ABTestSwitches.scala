@@ -146,4 +146,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-tcfv2-googletag-prebid-enforcement",
+    "Put googletag and prebid behind TCFv2 Sourcepoint enforcement",
+    owners = Seq(Owner.withGithub("ioanna0")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true,
+  )
 }

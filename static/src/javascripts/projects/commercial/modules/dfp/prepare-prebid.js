@@ -10,6 +10,8 @@ import once from 'lodash/once';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcfv2-googletag-prebid-enforcement';
 
 const SOURCEPOINT_ID: string = '5f22bfd82a6b6c1afd1181a9';
 let moduleLoadResult = Promise.resolve();
@@ -18,28 +20,38 @@ if (!isGoogleProxy()) {
     moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
 }
 
+const loadPrebid: () => void = () => {
+    moduleLoadResult.then(() => {
+        if (
+            dfpEnv.hbImpl.prebid &&
+            commercialFeatures.dfpAdvertising &&
+            !commercialFeatures.adFree &&
+            !config.get('page.hasPageSkin') &&
+            !isGoogleProxy() &&
+            !shouldIncludeOnlyA9
+        ) {
+            getPageTargeting();
+            prebid.initialise(window);
+        }
+    })
+}
+
 const setupPrebid: () => Promise<void> = () => {
     let canRun: boolean = true;
+    const isInTcfv2EnforcementVariant = isInVariantSynchronous(googletagPrebidEnforcement, 'variant')
     if (shouldUseSourcepointCmp()) {
         onConsentChange(state => {
             // Only TCFv2 mode can prevent running Prebid
             if (state.tcfv2) canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-        });
-    }
-    if (canRun)
-        moduleLoadResult.then(() => {
-            if (
-                dfpEnv.hbImpl.prebid &&
-                commercialFeatures.dfpAdvertising &&
-                !commercialFeatures.adFree &&
-                !config.get('page.hasPageSkin') &&
-                !isGoogleProxy() &&
-                !shouldIncludeOnlyA9
-            ) {
-                getPageTargeting();
-                prebid.initialise(window);
+            if (canRun && isInTcfv2EnforcementVariant) {
+                loadPrebid();
+                return Promise.resolve();
             }
         });
+    }
+    if (canRun && !isInTcfv2EnforcementVariant)
+        loadPrebid();
+
     return Promise.resolve();
 };
 

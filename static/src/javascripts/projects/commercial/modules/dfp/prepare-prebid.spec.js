@@ -6,15 +6,21 @@ import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
 const onConsentChange: any = onConsentChange_;
 const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
+const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
+}));
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
 }));
 
 jest.mock('commercial/modules/header-bidding/prebid/prebid', () => ({
@@ -128,10 +134,13 @@ describe('init', () => {
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
-    it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true', async () => {
+    it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true in variant', async () => {
         dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'variant'
+        );
         shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
         await setupPrebid();
