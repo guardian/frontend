@@ -128,16 +128,7 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
-                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-                    if (canRun && isInTcfv2EnforcementVariant) {
-                        loadScript(
-                            config.get(
-                                'libs.googletag',
-                                '//www.googletagservices.com/tag/js/gpt.js'
-                            ),
-                            { async: false }
-                        );
-                    }
+                    canRun = isInTcfv2EnforcementVariant ? state.tcfv2.vendorConsents[SOURCEPOINT_ID] : true;
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
