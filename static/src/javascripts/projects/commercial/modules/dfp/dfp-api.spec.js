@@ -276,7 +276,7 @@ describe('DFP', () => {
     it('hides all ad slots when all DFP advertising is disabled', () => {
         commercialFeatures.dfpAdvertising = false;
 
-        return prepareGoogletag().then(() => {
+        prepareGoogletag().then(() => {
             const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
             expect(remainingAdSlots.length).toBe(0);
         });
@@ -459,7 +459,7 @@ describe('DFP', () => {
             oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfWithConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
                 ).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
@@ -472,7 +472,7 @@ describe('DFP', () => {
             oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfWithConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(0);
@@ -482,7 +482,7 @@ describe('DFP', () => {
             oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfNullConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(0);
@@ -492,7 +492,7 @@ describe('DFP', () => {
             oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfWithoutConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);
@@ -502,7 +502,7 @@ describe('DFP', () => {
             oldCmp.onIabConsentNotification.mockImplementation(callback =>
                 callback(tcfMixedConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);
@@ -515,7 +515,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings
                 ).toHaveBeenCalledWith({
@@ -528,7 +528,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithoutConsent)
             );
-            return prepareGoogletag().then(() => {
+            prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings
                 ).toHaveBeenCalledWith({

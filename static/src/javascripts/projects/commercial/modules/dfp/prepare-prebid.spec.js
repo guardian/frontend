@@ -46,10 +46,10 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 const tcfv2WithConsentMock = (callback): void =>
-    callback({ tcfv2: { consents: { '1': true } } });
+    callback({ tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true } }});
 
 const tcfv2WithoutConsentMock = (callback): void =>
-    callback({ tcfv2: { consents: { '1': false } } });
+    callback({ tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false } }});
 
 const fakeUserAgent = (userAgent: string): void => {
     const userAgentObject = {};
@@ -128,7 +128,7 @@ describe('init', () => {
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
-    it('should initialise Prebid if TCFv2 purpose 1 consent is given', async () => {
+    it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true', async () => {
         dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
@@ -138,7 +138,7 @@ describe('init', () => {
         expect(prebid.initialise).toBeCalled();
     });
 
-    it('should not initialise Prebid if TCFv2 purpose 1 consent is not given', async () => {
+    it('should not initialise Prebid if TCFv2 with correct Sourcepoint Id is false', async () => {
         dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;

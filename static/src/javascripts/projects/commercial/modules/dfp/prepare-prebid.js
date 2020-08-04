@@ -11,6 +11,7 @@ import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
+const SOURCEPOINT_ID: string = '5f22bfd82a6b6c1afd1181a9';
 let moduleLoadResult = Promise.resolve();
 
 if (!isGoogleProxy()) {
@@ -22,7 +23,7 @@ const setupPrebid: () => Promise<void> = () => {
     if (shouldUseSourcepointCmp()) {
         onConsentChange(state => {
             // Only TCFv2 mode can prevent running Prebid
-            if (state.tcfv2) canRun = state.tcfv2.consents['1']; // Store and/or access information on a device
+            if (state.tcfv2) canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
         });
     }
     if (canRun)

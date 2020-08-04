@@ -45,6 +45,8 @@ initMessenger(
     disableRefresh
 );
 
+const SOURCEPOINT_ID: string = '5f1aada6b8e05c306c0597d7';
+
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
@@ -123,7 +125,16 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
-                    canRun = state.tcfv2.consents['1']; // Store and/or access information on a device
+                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+                    if (canRun) {
+                        loadScript(
+                            config.get(
+                                'libs.googletag',
+                                '//www.googletagservices.com/tag/js/gpt.js'
+                            ),
+                            { async: false }
+                        );
+                    }
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
@@ -135,21 +146,11 @@ export const init = (): Promise<void> => {
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
             }
-
-            // Load googletag if TCFv2 purpose 1 consent is not `false`.
-            // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-            // TODO: what if Prebid is also behind consent?
-            if (canRun) {
-                return loadScript(
-                    config.get(
-                        'libs.googletag',
-                        '//www.googletagservices.com/tag/js/gpt.js'
-                    ),
-                    { async: false }
-                );
-            }
-            // return Promise.resolve();
         });
+
+        // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+        // TODO: what if Prebid is also behind consent?
+        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
         return Promise.resolve();
     };
 
