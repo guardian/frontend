@@ -141,7 +141,6 @@ export const init = (): Promise<void> => {
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
-                    // TODO: decide if purpose 1 should apply to TCFv1
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
@@ -152,7 +151,6 @@ export const init = (): Promise<void> => {
         });
 
         // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-        // TODO: what if Prebid is also behind consent?
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
         if (canRun && !isInTcfv2EnforcementVariant) {
             loadScript(
