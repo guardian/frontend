@@ -1,6 +1,6 @@
 // @flow
 
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
+import { oldCmp } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { getUserFromApi } from '../../common/modules/identity/api';
 
@@ -16,7 +16,7 @@ const getBrazeUuid = (): Promise<string> =>
 
 const hasRequiredConsents = (): Promise<void> =>
     new Promise(resolve => {
-        onIabConsentNotification(state => {
+        oldCmp.onIabConsentNotification(state => {
             if (state[1] && state[2] && state[3] && state[4] && state[5]) {
                 resolve()
             }
