@@ -276,7 +276,7 @@ describe('DFP', () => {
     it('hides all ad slots when all DFP advertising is disabled', () => {
         commercialFeatures.dfpAdvertising = false;
 
-        prepareGoogletag().then(() => {
+        return prepareGoogletag().then(() => {
             const remainingAdSlots = document.querySelectorAll('.js-ad-slot');
             expect(remainingAdSlots.length).toBe(0);
         });
