@@ -179,7 +179,7 @@ const sendCoreVital = ({ name, delta, id }: coreVitalsArgs): void => {
 const randomPerc = Math.random() * 100;
 const coreVitalsSampleRate = 5;
 
-if (coreVitalsSampleRate >= randomPerc) {
+if (randomPerc <= coreVitalsSampleRate) {
     // CLS and LCP are captured when the page lifecycle changes to 'hidden'.
     // https://developers.google.com/web/updates/2018/07/page-lifecycle-api#advice-hidden
     getCLS(sendCoreVital); // https://github.com/GoogleChrome/web-vitals#getcls (This is actually DCLS, as doesn't track CLS in iframes, see https://github.com/WICG/layout-instability#cumulative-scores)
