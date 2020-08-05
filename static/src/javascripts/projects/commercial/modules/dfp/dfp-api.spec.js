@@ -9,9 +9,15 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import {
+    oldCmp as oldCmp_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 
 const oldCmp: any = oldCmp_;
+const onConsentChange: any = onConsentChange_;
+const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -25,9 +31,7 @@ jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));
 jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn()
-        .mockImplementation(() => false),
+    isInTcfv2Test: jest.fn().mockImplementation(() => false),
 }));
 jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
@@ -100,9 +104,12 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     oldCmp: {
-        onIabConsentNotification: jest.fn()
+        onIabConsentNotification: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    onConsentChange: jest.fn(),
+}));
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 let $style;
@@ -157,9 +164,9 @@ const tcfMixedConsent = {
     '5': false,
 };
 
-const ccpaWithConsent = false;
+const ccpaWithConsent = { ccpa: { doNotSell: false } };
 
-const ccpaWithoutConsent = true;
+const ccpaWithoutConsent = { ccpa: { doNotSell: true } };
 
 describe('DFP', () => {
     const domSnippet = `
@@ -449,6 +456,9 @@ describe('DFP', () => {
 
     describe('keyword targeting', () => {
         it('should send page level keywords', () => {
+            oldCmp.onIabConsentNotification.mockImplementation(callback =>
+                callback(tcfWithConsent)
+            );
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
@@ -501,7 +511,8 @@ describe('DFP', () => {
     });
     describe('restrictDataProcessing flag is set correctly', () => {
         it('when CCPA consent was given', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
+            shouldUseSourcepointCmp.mockImplementation(() => true);
+            onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
             prepareGoogletag().then(() => {
@@ -513,7 +524,8 @@ describe('DFP', () => {
             });
         });
         it('when CCPA consent was denied', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
+            shouldUseSourcepointCmp.mockImplementation(() => true);
+            onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithoutConsent)
             );
             prepareGoogletag().then(() => {

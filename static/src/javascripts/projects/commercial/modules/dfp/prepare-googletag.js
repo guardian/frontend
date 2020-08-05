@@ -31,10 +31,8 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
-
-const onCMPConsentNotification = shouldUseSourcepointCmp()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcfv2-googletag-prebid-enforcement';
 
 initMessenger(
     type,
@@ -48,6 +46,8 @@ initMessenger(
     background,
     disableRefresh
 );
+
+const SOURCEPOINT_ID: string = '5f1aada6b8e05c306c0597d7';
 
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
@@ -107,6 +107,12 @@ export const init = (): Promise<void> => {
             }
         );
 
+        const onCMPConsentNotification = shouldUseSourcepointCmp()
+            ? onConsentChange
+            : oldCmp.onIabConsentNotification;
+
+        const isInTcfv2EnforcementVariant = isInVariantSynchronous(googletagPrebidEnforcement, 'variant')
+        let canRun: boolean = true;
         onCMPConsentNotification(state => {
             if (state.ccpa) {
                 // CCPA mode
@@ -122,6 +128,16 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
+                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+                    if (canRun && isInTcfv2EnforcementVariant) {
+                        loadScript(
+                            config.get(
+                                'libs.googletag',
+                                '//www.googletagservices.com/tag/js/gpt.js'
+                            ),
+                            { async: false }
+                        );
+                    }
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
@@ -134,14 +150,18 @@ export const init = (): Promise<void> => {
             }
         });
 
+        // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
         // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(
-            config.get(
-                'libs.googletag',
-                '//www.googletagservices.com/tag/js/gpt.js'
-            ),
-            { async: false }
-        );
+        if (canRun && !isInTcfv2EnforcementVariant) {
+            loadScript(
+                config.get(
+                    'libs.googletag',
+                    '//www.googletagservices.com/tag/js/gpt.js'
+                ),
+                { async: false }
+            );
+        }
+        return Promise.resolve();
     };
 
     if (commercialFeatures.dfpAdvertising) {
