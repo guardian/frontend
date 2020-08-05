@@ -5,6 +5,8 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses}
 
+@import views.support.ImgSrc
+@import views.support.ImageProfile
 @(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @trackingCode(target: String) = {@if(page.media.tags.isPodcast){podcast:subscribe:}@target:@page.media.metadata.webTitle}
@@ -53,7 +55,7 @@
             ; image <- podcast.image
             ) {
                 <div class="podcast__cover">
-                    <a href="@LinkTo {/@series.id}"><img src="@image" class="podcast__cover-image" alt></a>
+                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(220)))" class="podcast__cover-image" alt></a>
                 </div>
             }
 
