@@ -160,16 +160,6 @@ describe('init', () => {
         expect(prebid.initialise).not.toBeCalled();
     });
 
-    it('should not initialise Prebid if TCFv2 with correct Sourcepoint Id is false', async () => {
-        dfpEnv.hbImpl = { prebid: true, a9: false };
-        commercialFeatures.dfpAdvertising = true;
-        commercialFeatures.adFree = false;
-        shouldUseSourcepointCmp.mockImplementation(() => true);
-        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-        await setupPrebid();
-        expect(prebid.initialise).not.toBeCalled();
-    });
-
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {
         expect(isGoogleProxy()).toBe(false);
     });
