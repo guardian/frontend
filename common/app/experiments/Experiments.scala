@@ -47,5 +47,5 @@ object UseTCFv2 extends Experiment(
   description = "Use TCFv2 CMP",
   owners = group(Commercial),
   sellByDate = new LocalDate(2020, 8, 24),
-  participationGroup = Perc1A
+  participationGroup = Perc0A
 )
