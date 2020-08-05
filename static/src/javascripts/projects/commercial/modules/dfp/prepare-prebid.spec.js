@@ -147,6 +147,19 @@ describe('init', () => {
         expect(prebid.initialise).toBeCalled();
     });
 
+    it('should not initialise Prebid if TCFv2 consent with correct Sourcepoint Id is false but not in variant', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        isInVariantSynchronous.mockImplementation(
+            (testId, variantId) => variantId === 'notintest'
+        );
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        await setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
+    });
+
     it('should not initialise Prebid if TCFv2 with correct Sourcepoint Id is false', async () => {
         dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = true;
