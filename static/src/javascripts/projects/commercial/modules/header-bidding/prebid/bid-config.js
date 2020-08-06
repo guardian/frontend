@@ -15,6 +15,8 @@ import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
+import { getLotameData } from 'commercial/modules/third-party-tags/lotame';
+import type { LotameData } from 'commercial/modules/third-party-tags/lotame';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -291,6 +293,19 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
+const getOzoneTargeting = (): { } => {
+    const lotameData: LotameData = getLotameData();
+
+    if (typeof lotameData !== 'undefined') {
+        return {
+            ...PAGE_TARGETING,
+            'lotameSegs': lotameData.ozoneLotameData,
+            'lotamePid': lotameData.ozoneLotameProfileId,
+        }
+    }
+    return PAGE_TARGETING;
+};
+
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -346,12 +361,11 @@ const ozoneClientSideBidder: PrebidBidder = {
                 customData: [
                     {
                         settings: {},
-                        targeting: PAGE_TARGETING,
+                        targeting: getOzoneTargeting(),
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
-            window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
         ),
 };
 
