@@ -16,11 +16,10 @@ import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcf
 const SOURCEPOINT_ID: string = '5f22bfd82a6b6c1afd1181a9';
 let moduleLoadResult = Promise.resolve();
 
-if (!isGoogleProxy()) {
-    moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
-}
-
 const loadPrebid: () => void = () => {
+    if (!isGoogleProxy()) {
+        moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
+    }
     moduleLoadResult.then(() => {
         if (
             dfpEnv.hbImpl.prebid &&
