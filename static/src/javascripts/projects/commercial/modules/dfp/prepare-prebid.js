@@ -14,14 +14,8 @@ import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcfv2-googletag-prebid-enforcement';
 
 const SOURCEPOINT_ID: string = '5f22bfd82a6b6c1afd1181a9';
-let moduleLoadResult = Promise.resolve();
-
-if (!isGoogleProxy()) {
-    moduleLoadResult = import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid');
-}
 
 const loadPrebid: () => void = () => {
-    moduleLoadResult.then(() => {
         if (
             dfpEnv.hbImpl.prebid &&
             commercialFeatures.dfpAdvertising &&
@@ -30,10 +24,11 @@ const loadPrebid: () => void = () => {
             !isGoogleProxy() &&
             !shouldIncludeOnlyA9
         ) {
-            getPageTargeting();
-            prebid.initialise(window);
+            import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid').then(() => {
+                getPageTargeting();
+                prebid.initialise(window);
+            });
         }
-    })
 }
 
 const setupPrebid: () => Promise<void> = () => {
@@ -49,8 +44,9 @@ const setupPrebid: () => Promise<void> = () => {
             }
         });
     }
-    if (canRun && !isInTcfv2EnforcementVariant)
+    if (canRun && !isInTcfv2EnforcementVariant) {
         loadPrebid();
+    }
 
     return Promise.resolve();
 };
