@@ -92,6 +92,8 @@ object ArticlePageChecks {
     "artanddesign/series/guardian-print-shop"
   )
 
+  def isNotNumberedList(page: PageWithStoryPackage): Boolean = ! page.item.isNumberedList
+
   def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = ! page.item.isPhotoEssay
 
   def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
@@ -157,7 +159,8 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page))
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
+      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page))
     )
   }
 
