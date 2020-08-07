@@ -159,8 +159,8 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page))
-      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
+      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page))
     )
   }
 
