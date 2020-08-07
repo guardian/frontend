@@ -11,29 +11,35 @@ export type LotameData = {
 let lotameData: LotameData;
 
 const ozoneLotameCallback = (obj) => {
+    console.log("*** ozoneLotameCallback with", obj);
     lotameData = {
         ozoneLotameData: obj.getAudiences(),
         ozoneLotameProfileId: obj.getProfileId(),
     };
 }
 
-const onLoad = () => {
+const beforeLoad = () => {
+    console.log("*** BEFORE LOAD");
     // More details here: https://my.lotame.com/t/g9hxvnw/detailed-reference-guide
-    const lotameTagInput = {
-        data: {},
-        config: {
-            clientId: 12666,
-            onProfileReady(o){ ozoneLotameCallback(o);},
-        }
-    };
+    /* eslint-disable */
+    ! function() {
+        var lotameTagInput = {
+            data: {},
+            config: {
+                clientId: 12666,
+                onProfileReady: function(o){ ozoneLotameCallback(o);},
+                onTagReady: function(o){ console.log(['onTagReady: ', o]); }
+            }
+        };
 
-    // Lotame initialization
-    const lotameConfig = lotameTagInput.config || {};
-    const namespace = {};
-    window[`lotame_${  lotameConfig.clientId}`] = {};
-    namespace.config = lotameConfig;
-    namespace.data = lotameTagInput.data || {};
-    namespace.cmd = namespace.cmd || [];
+        // Lotame initialization
+        var lotameConfig = lotameTagInput.config || {};
+        var namespace = window['lotame_' + lotameConfig.clientId] = {};
+        namespace.config = lotameConfig;
+        namespace.data = lotameTagInput.data || {};
+        namespace.cmd = namespace.cmd || [];
+    } ();
+    /* eslint-enable */
 };
 
 
@@ -42,6 +48,6 @@ export const getLotameData: () => LotameData = () => lotameData;
 export const lotame: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.lotame', false) && isInTcfv2Test() && !(isInUsOrCa() || isInAuOrNz()),
     url: '//tags.crwdcntrl.net/lt/c/12666/lt.min.js',
-    onLoad,
+    beforeLoad,
     sourcepointId: '5ed6aeb1b8e05c241a63c71f',
 });
