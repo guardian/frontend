@@ -1,6 +1,7 @@
 // @flow
 import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
+import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 export type LotameData = {
     ozoneLotameData: Array<string>,
@@ -39,7 +40,7 @@ const onLoad = () => {
 export const getLotameData: () => LotameData = () => lotameData;
 
 export const lotame: () => ThirdPartyTag = () => ({
-    shouldRun: config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz()),
+    shouldRun: config.get('switches.lotame', false) && isInTcfv2Test() && !(isInUsOrCa() || isInAuOrNz()),
     url: '//tags.crwdcntrl.net/lt/c/12666/lt.min.js',
     onLoad,
     sourcepointId: '5ed6aeb1b8e05c241a63c71f',
