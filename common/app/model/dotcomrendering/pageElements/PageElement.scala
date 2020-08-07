@@ -97,7 +97,7 @@ case class PullquoteBlockElement(html: Option[String], role: Role, attribution: 
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
-case class SpotifyBlockElement(html: String, title: Option[String], caption: Option[String]) extends PageElement
+case class SpotifyBlockElement(embedUrl: Option[String], height: Option[Int], width: Option[Int], title: Option[String], caption: Option[String]) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class TextBlockElement(html: String) extends PageElement
@@ -442,6 +442,16 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
+  private[this] def getIframeWidth(html: String): Option[Int] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+  }
+
+    private[this] def getIframeHeight(html: String): Option[Int] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+  }
+
   private def extractSoundcloudBlockElement(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
     src.flatMap { s =>
@@ -460,11 +470,11 @@ object PageElement {
       source <- d.source
       if source == "Spotify" // We rely on the `source` field to decide whether or not this is an instance of Spotify
     } yield {
-      SpotifyBlockElement(html, d.title, d.caption)
+      SpotifyBlockElement(getEmbedUrl(d.html), getIframeHeight(html), getIframeWidth(html), d.title, d.caption)
     }
   }
 
-  def audiIsDCRSupported(element: ApiBlockElement): Boolean = {
+  def audioIsDCRSupported(element: ApiBlockElement): Boolean = {
     /*
       date: July 21th 2020 (updated 03rd August 2020)
       author: Pascal
