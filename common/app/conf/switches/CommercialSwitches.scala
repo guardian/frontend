@@ -37,10 +37,20 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
-  val TCFv2CmpUi = Switch(
+  val TCFv2DCR = Switch(
     SwitchGroup.Feature,
-    "tcfv2-cmp-ui",
-    "If this switch is on, the TCF v2 CMP UI will be available to users outside the USA.",
+    "tcfv2-dcr",
+    "If this switch is on, the TCF v2 CMP UI will be shown to users outside the USA on DCR.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val TCFv2Frontend = Switch(
+    SwitchGroup.Feature,
+    "tcfv2-frontend",
+    "If this switch is on, the TCF v2 CMP UI will be available to users outside the USA on frontend.",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
