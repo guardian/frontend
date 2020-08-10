@@ -54,8 +54,7 @@ object Sponsorship {
 
 sealed trait PageElement
 
-case class AudioAtomBlockElementAMP(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
-case class AudioAtomBlockElement(amp: AudioAtomBlockElementAMP) extends PageElement
+case class AudioAtomBlockElement(id: String, kicker: String, coverUrl: String, trackUrl: String, duration: Int, contentId: String) extends PageElement
 case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
@@ -313,8 +312,7 @@ object PageElement {
             ))
 
             // Using the AudioAtomBlockElement:
-            val amp = AudioAtomBlockElementAMP(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId)
-            Some(AudioAtomBlockElement(amp))
+            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
           }
 
           case Some(chart: ChartAtom) => {
@@ -553,7 +551,6 @@ object PageElement {
   // Below alphabetical order (modulo two exceptions)
 
   implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
-  implicit val AudioAtomBlockElementAMPWrites: Writes[AudioAtomBlockElementAMP] = Json.writes[AudioAtomBlockElementAMP]
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
   implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
   implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
