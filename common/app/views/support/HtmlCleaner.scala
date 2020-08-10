@@ -869,7 +869,7 @@ object AffiliateLinksCleaner {
     linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
 
     if (linksToReplace.nonEmpty) {
-        TextBlockElement(doc.outerHtml())
+        TextBlockElement(doc.body().html())
     } else {
         TextBlockElement(html)
     }
