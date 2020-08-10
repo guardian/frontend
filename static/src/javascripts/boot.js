@@ -35,7 +35,7 @@ const go = () => {
         // Start CMP
         if (shouldUseSourcepointCmp()) {
             // CCPA and TCFv2
-            cmp.init({ isInUsa: isInUsa() });
+            cmp.init({ pubData: config.get('guardian.config.ophan.browserId'), isInUsa: isInUsa() });
         } else {
             // do nothing, TCFv1 CMP auto initialises
         }
