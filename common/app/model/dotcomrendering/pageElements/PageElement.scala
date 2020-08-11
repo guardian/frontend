@@ -329,12 +329,13 @@ object PageElement {
           }
 
           case Some(guide: GuideAtom) => {
+            val html = guide.data.items.map(item => s"${item.title.map( t => s"<p><strong>${t}</strong></p>" ).getOrElse("")}${item.body}").mkString("")
             Some(GuideAtomBlockElement(
               id = guide.id,
               label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
-              html = guide.data.items.map(_.body).mkString(""),
+              html = html,
               credit = guide.credit.getOrElse("")
             ))
           }
