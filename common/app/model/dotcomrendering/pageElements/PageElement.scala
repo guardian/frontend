@@ -72,7 +72,13 @@ case class GenericAtomBlockElement(id: String, url: String, html: Option[String]
            // We use it to carry to DCR atoms that do not (yet) have their on dedicated BlockElement and are rendered in DCR as iframes.
            //     - {url} for src
            //     - {html, css, js} for srcdoc
-case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+
+case class GuideAtomBlockElementItem(title: Option[String], body: String)
+object GuideAtomBlockElementItem {
+  implicit val GuideAtomBlockElementItemWrites: Writes[GuideAtomBlockElementItem] = Json.writes[GuideAtomBlockElementItem]
+}
+case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, items: List[GuideAtomBlockElementItem], credit: String) extends PageElement
+
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
@@ -330,12 +336,14 @@ object PageElement {
 
           case Some(guide: GuideAtom) => {
             val html = guide.data.items.map(item => s"${item.title.map( t => s"<p><strong>${t}</strong></p>" ).getOrElse("")}${item.body}").mkString("")
+            val items = guide.data.items.toList.map(item => GuideAtomBlockElementItem(item.title, item.body))
             Some(GuideAtomBlockElement(
               id = guide.id,
               label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
               html = html,
+              items = items,
               credit = guide.credit.getOrElse("")
             ))
           }
