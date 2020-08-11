@@ -447,7 +447,7 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
   }
 
-    private[this] def getIframeHeight(html: String): Option[Int] = {
+  private[this] def getIframeHeight(html: String): Option[Int] = {
     val doc = Jsoup.parseBodyFragment(html)
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
   }
