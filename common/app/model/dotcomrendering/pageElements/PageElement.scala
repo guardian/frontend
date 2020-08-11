@@ -97,7 +97,13 @@ case class MembershipBlockElement(
   image: Option[String],
   price: Option[String]
 ) extends PageElement
-case class ProfileAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+
+case class ProfileAtomBlockElementItem(title: Option[String], body: String)
+object ProfileAtomBlockElementItem {
+  implicit val GuideAtomBlockElementItemWrites: Writes[ProfileAtomBlockElementItem] = Json.writes[ProfileAtomBlockElementItem]
+}
+case class ProfileAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, items: List[ProfileAtomBlockElementItem], credit: String) extends PageElement
+
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
@@ -377,12 +383,15 @@ object PageElement {
           }
 
           case Some(profile: ProfileAtom) => {
+            val html = profile.data.items.map(item => s"${item.title.map( t => s"<p><strong>${t}</strong></p>" ).getOrElse("")}${item.body}").mkString("")
+            val items = profile.data.items.toList.map(item => ProfileAtomBlockElementItem(item.title, item.body))
             Some(ProfileAtomBlockElement(
               id = profile.id,
               label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
-              html = profile.data.items.map(_.body).mkString(""),
+              html = html,
+              items = items,
               credit = profile.credit.getOrElse("")
             ))
           }
