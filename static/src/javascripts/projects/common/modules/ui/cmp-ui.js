@@ -1,9 +1,9 @@
 // @flow
 import config from 'lib/config';
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
 import raven from 'lib/raven';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
+import { cmp, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
 
 let initUi;
 
@@ -21,11 +21,7 @@ export const show = (forceModal: ?boolean): Promise<boolean> => {
                         },
                     },
                     () => {
-                        if (isCcpaApplicable()) {
-                            if (forceModal) {
-                                oldCmp.showPrivacyManager();
-                            }
-                        } else if (isInTcfv2Test()) {
+                        if (shouldUseSourcepointCmp()) {
                             if (forceModal) {
                                 cmp.showPrivacyManager();
                             }
@@ -60,7 +56,7 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = isCcpaApplicable()
+            newPrivacyLink.innerText = isInUsa()
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
@@ -85,11 +81,8 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (isCcpaApplicable()) {
-            return oldCmp.checkWillShowUi();
-        }
-        if (isInTcfv2Test()) {
-            return cmp.willShowPrivacyMessage();
+        if (shouldUseSourcepointCmp()) {
+            return Promise.resolve(cmp.willShowPrivacyMessage());
         }
         return Promise.resolve(
             config.get('switches.cmpUi', true) && oldCmp.shouldShow()

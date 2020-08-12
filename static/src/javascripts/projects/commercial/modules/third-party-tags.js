@@ -2,11 +2,12 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
@@ -14,16 +15,7 @@ import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { connatix } from 'commercial/modules/third-party-tags/connatix';
-
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
-let advertisingScriptsInserted: boolean = false;
-let performanceScriptsInserted: boolean = false;
+import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -31,6 +23,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     let hasScriptsToInsert = false;
 
     tags.forEach(tag => {
+        if (tag.loaded === true) {
+            return;
+        }
         if (tag.useImage === true) {
             new Image().src = tag.url;
         } else {
@@ -48,6 +43,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
             }
             frag.appendChild(script);
         }
+        tag.loaded = true;
     });
 
     if (hasScriptsToInsert) {
@@ -64,28 +60,46 @@ const insertScripts = (
     performanceServices: Array<ThirdPartyTag>
 ): void => {
     oldCmp.onGuConsentNotification('performance', state => {
-        if (!performanceScriptsInserted && state) {
+        if (state) {
             addScripts(performanceServices);
-            performanceScriptsInserted = true;
         }
     });
 
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
+
     onCMPConsentNotification(state => {
-        let canRun: boolean;
-        if (typeof state === 'boolean') {
+        let consentedAdvertisingServices = [];
+        if (state.ccpa) {
             // CCPA mode
-            canRun = !state;
-        } else if (typeof state.tcfv2 !== 'undefined') {
+            if (!state.ccpa.doNotSell)
+                consentedAdvertisingServices = [...advertisingServices];
+        } else if (state.tcfv2) {
             // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
-        } else {
+            consentedAdvertisingServices = advertisingServices.filter(
+                script => {
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
+                    ) {
+                        return state.tcfv2.vendorConsents[script.sourcepointId];
+                    }
+                    return Object.values(state.tcfv2.consents).every(Boolean);
+                }
+            );
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+            consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (!advertisingScriptsInserted && canRun) {
-            addScripts(advertisingServices);
-            advertisingScriptsInserted = true;
+        if (
+            consentedAdvertisingServices.length > 0
+        ) {
+            addScripts(consentedAdvertisingServices);
         }
     });
 };
@@ -93,12 +107,12 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        simpleReach,
         permutive,
         ias,
         inizio,
         fbPixel(),
         twitterUwt(),
+        lotame(),
         connatix,
     ].filter(_ => _.shouldRun);
 
@@ -134,8 +148,4 @@ export { init };
 export const _ = {
     insertScripts,
     loadOther,
-    reset: () => {
-        advertisingScriptsInserted = false;
-        performanceScriptsInserted = false;
-    },
 };

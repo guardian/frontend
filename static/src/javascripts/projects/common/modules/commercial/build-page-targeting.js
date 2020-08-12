@@ -9,6 +9,8 @@ import {
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
+import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
@@ -19,13 +21,7 @@ import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
-
-import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 type PageTargeting = {
     sens: string,
@@ -224,9 +220,17 @@ const getRdpValue = (ccpaState: boolean | null): string => {
     return ccpaState ? 't' : 'f';
 };
 
+const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
+    if (isInTcfv2Test() && tcfv2State !== null) {
+        return tcfv2State ? 't' : 'f';
+    }
+    return 'na';
+};
+
 const buildPageTargetting = (
     adConsentState: boolean | null,
-    ccpaState: boolean | null
+    ccpaState: boolean | null,
+    tcfv2EventStatus: string | null
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -266,6 +270,8 @@ const buildPageTargetting = (
             inskin: inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            cmp_interaction: tcfv2EventStatus || 'na',
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -292,23 +298,34 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
 
     onCMPConsentNotification(state => {
-        let canRun: boolean;
-        if (typeof state === 'boolean') {
+        let canRun: boolean | null;
+        if (state.ccpa) {
             // CCPA mode
-            canRun = !state;
-        } else if (typeof state.tcfv2 !== 'undefined') {
-            // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
+            canRun = !state.ccpa.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
+            canRun = state.tcfv2.consents
+                ? Object.keys(state.tcfv2.consents).length > 0 &&
+                  Object.values(state.tcfv2.consents).every(Boolean)
+                : false;
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
         }
 
         if (canRun !== latestConsentCanRun) {
-            const ccpaState = typeof state === 'boolean' ? state : null;
-            myPageTargetting = buildPageTargetting(canRun, ccpaState);
+            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+            myPageTargetting = buildPageTargetting(
+                canRun,
+                ccpaState,
+                eventStatus
+            );
             latestConsentCanRun = canRun;
         }
     });

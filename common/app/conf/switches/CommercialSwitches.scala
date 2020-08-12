@@ -37,6 +37,26 @@ trait CommercialSwitches {
     exposeClientSide = true
   )
 
+  val TCFv2DCR = Switch(
+    SwitchGroup.Feature,
+    "tcfv2-dcr",
+    "If this switch is on, the TCF v2 CMP UI will be shown to users outside the USA on DCR.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
+  val TCFv2Frontend = Switch(
+    SwitchGroup.Feature,
+    "tcfv2-frontend",
+    "If this switch is on, the TCF v2 CMP UI will be available to users outside the USA on frontend.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true
+  )
+
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",

@@ -13,4 +13,5 @@ export const remarketing: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.remarketing', false),
     url: '//www.googleadservices.com/pagead/conversion_async.js',
     onLoad,
+    sourcepointId: '5ed0eb688a76503f1016578f',
 });

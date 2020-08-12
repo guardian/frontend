@@ -1,9 +1,12 @@
 // @flow
 /* eslint-disable no-underscore-dangle */
 import config from 'lib/config';
-import { isCcpaApplicable } from 'commercial/modules/cmp/ccpa-cmp';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 
-if (config.get('switches.enableConsentManagementService') && !isCcpaApplicable()) {
+if (
+    config.get('switches.enableConsentManagementService') &&
+    !shouldUseSourcepointCmp()
+) {
     try {
         (function stubCMP(document, window) {
             if (!window.__cmp) {

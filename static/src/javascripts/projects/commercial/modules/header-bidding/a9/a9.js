@@ -1,6 +1,9 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -9,13 +12,6 @@ import type {
     HeaderBiddingSize,
     HeaderBiddingSlot,
 } from 'commercial/modules/header-bidding/types';
-
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 class A9AdUnit {
     slotID: ?string;
@@ -37,16 +33,29 @@ let initialised: boolean = false;
 let requestQueue: Promise<void> = Promise.resolve();
 
 const bidderTimeout: number = 1500;
+const SOURCEPOINT_ID: string = '5edf9a821dc4e95986b66df4';
 
 const initialise = (): void => {
+    const onCMPConsentNotification = shouldUseSourcepointCmp()
+        ? onConsentChange
+        : oldCmp.onIabConsentNotification;
+
     onCMPConsentNotification(state => {
         let canRun: boolean;
-        if (typeof state === 'boolean') {
+        if (state.ccpa) {
             // CCPA mode
-            canRun = !state;
-        } else if (typeof state.tcfv2 !== 'undefined') {
-            // TCFv2 mode,
-            canRun = Object.values(state.tcfv2).every(Boolean);
+            canRun = !state.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
+            if (
+                typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                typeof state.tcfv2.vendorConsents[SOURCEPOINT_ID] !==
+                    'undefined'
+            ) {
+                canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+            } else {
+                canRun = Object.values(state.tcfv2.consents).every(Boolean);
+            }
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];

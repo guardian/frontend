@@ -454,16 +454,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val vodafoneEmailHack = Switch(
-    SwitchGroup.Feature,
-    "vodafone-email-hack",
-    "If on, will use smaller heading font for Vodafone slogan title on email fronts. This is to keep it from introducing horizontal scrolling at the mobile breakpoint. We can remove this once their campaign is over. Editorial owner is celine.bijleveld.",
-    owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 8, 11),
-    exposeClientSide = false,
-  )
-
   val contributionReminder = Switch(
     SwitchGroup.Feature,
     "show-contribution-reminder",
@@ -481,16 +471,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 8),
-    exposeClientSide = true
-  )
-
-  val ausMoment2020Header = Switch(
-    SwitchGroup.Feature,
-    "aus-moment-2020-header",
-    "Enables the Aus moment special header",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 8, 3),
     exposeClientSide = true
   )
 

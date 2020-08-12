@@ -72,8 +72,10 @@ const fetch = (): void => {
     }).then(res => {
         const count = res.share_count || 0;
         counts.facebook = count;
-        addToShareCount(count);
-        updateTooltip();
+        if (count > 0) {
+            addToShareCount(count);
+            updateTooltip();
+        }
     });
 };
 

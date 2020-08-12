@@ -7,6 +7,8 @@ import play.api.mvc._
 import services._
 import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
+import navigation.AuthenticationComponentEvent._
+
 
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
@@ -29,7 +31,7 @@ class AuthenticatedActions(
 
     val params = List("returnUrl" -> returnUrl) ++
       List("INTCMP", "email", "CMP", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content","clientId","encryptedEmail","autoSignInToken") //only forward these if they exist in original query string
-        .flatMap(name => request.getQueryString(name).map(value => name -> value))
+        .flatMap(name => request.getQueryString(name).map(value => name -> value)) :+ createAuthenticationComponentEventTuple(SigninRedirect)
 
     val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, params)
 

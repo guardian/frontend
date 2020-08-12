@@ -11,7 +11,7 @@ import net.liftweb.json.compactRender
 import net.liftweb.json.JsonAST.JObject
 import net.liftweb.json.Serialization.write
 import utils.SafeLogging
-import idapiclient.requests.{DeletionBody, PasswordUpdate, TokenPassword, AutoSignInToken}
+import idapiclient.requests.{AutoSignInToken, DeletionBody, PasswordUpdate, TokenPassword}
 import org.slf4j.LoggerFactory
 import play.api.libs.ws.WSClient
 
@@ -136,8 +136,8 @@ class IdApiClient(
     delete(urlJoin("useremails", userId, "subscriptions"), Some(auth), Some(trackingParameters), Some(write(emailList))) map extractUnit
   }
 
-  def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[Unit]] =
-    post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extractUnit
+  def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[CookiesResponse]] =
+    post(urlJoin("user","validate-email", token), trackingParameters = Some(trackingParameters)) map extract[CookiesResponse](jsonField("cookies"))
 
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password

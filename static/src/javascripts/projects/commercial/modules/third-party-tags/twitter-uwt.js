@@ -13,5 +13,6 @@ const onLoad = () => {
 export const twitterUwt: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.twitterUwt', false),
     url: '//static.ads-twitter.com/uwt.js',
+    sourcepointId: '5e71760b69966540e4554f01',
     onLoad,
 });

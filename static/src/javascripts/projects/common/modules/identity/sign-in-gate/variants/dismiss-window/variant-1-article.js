@@ -2,37 +2,37 @@
 import type { CurrentABTest, SignInGateVariant } from '../../types';
 import { componentName } from '../../component';
 import {
-    hasUserDismissedGate,
-    isNPageOrHigherPageView,
     isLoggedIn,
+    isNPageOrHigherPageView,
     isInvalidArticleType,
     isInvalidSection,
     isIOS9,
     setGatePageTargeting,
+    unsetUserDismissedGate,
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from '../design/centesimus-control-2';
+import { designShow } from '../design/main-variant';
 
 // define the variant name here
-const variant = 'centesimus-control-2';
+const variant = 'dismiss-window-variant-1-article'; // reshow the gate on every article, regardless if user has previously dismissed gate
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: (name?: string) => boolean = (name = '') => {
-    const isGateDismissed = hasUserDismissedGate({
-        name,
-        variant,
+const canShow: () => boolean = () => {
+    // clears any previous dismissal from gu.prefs.signin-gate
+    unsetUserDismissedGate({
         componentName,
     });
+
     const canShowCheck =
-        !isGateDismissed &&
         isNPageOrHigherPageView(3) &&
         !isLoggedIn() &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
         !isIOS9();
 
-    setGatePageTargeting(isGateDismissed, canShowCheck);
+    // as we always show the gate irrespective of previous user dismissal, hardcode a "false" here
+    setGatePageTargeting(false, canShowCheck);
     return canShowCheck;
 };
 

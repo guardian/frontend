@@ -7,6 +7,8 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
+import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -30,13 +32,6 @@ import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
 
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
-
-const onCMPConsentNotification = isInTcfv2Test()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
-
 initMessenger(
     type,
     getStyles,
@@ -49,6 +44,8 @@ initMessenger(
     background,
     disableRefresh
 );
+
+const SOURCEPOINT_ID: string = '5f1aada6b8e05c306c0597d7';
 
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
@@ -108,19 +105,27 @@ export const init = (): Promise<void> => {
             }
         );
 
+        const onCMPConsentNotification = shouldUseSourcepointCmp()
+            ? onConsentChange
+            : oldCmp.onIabConsentNotification;
+
         onCMPConsentNotification(state => {
-            // typeof state === 'boolean' means CCPA mode is on
-            if (typeof state === 'boolean') {
+            let canRun: boolean = true;
+            if (state.ccpa) {
+                // CCPA mode
                 window.googletag.cmd.push(() => {
                     window.googletag.pubads().setPrivacySettings({
-                        restrictDataProcessing: state,
+                        restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
             } else {
                 let npaFlag: boolean;
-                if (typeof state.tcfv2 !== 'undefined') {
-                    // TCFv2 mode,
-                    npaFlag = Object.values(state.tcfv2).every(Boolean);
+                if (state.tcfv2) {
+                    // TCFv2 mode
+                    npaFlag =
+                        Object.keys(state.tcfv2.consents).length === 0 ||
+                        Object.values(state.tcfv2.consents).includes(false);
+                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
@@ -131,16 +136,19 @@ export const init = (): Promise<void> => {
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
             }
+            // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+            // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+            if (canRun) {
+                loadScript(
+                    config.get(
+                        'libs.googletag',
+                        '//www.googletagservices.com/tag/js/gpt.js'
+                    ),
+                    { async: false }
+                );
+            }
         });
-
-        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(
-            config.get(
-                'libs.googletag',
-                '//www.googletagservices.com/tag/js/gpt.js'
-            ),
-            { async: false }
-        );
+        return Promise.resolve();
     };
 
     if (commercialFeatures.dfpAdvertising) {

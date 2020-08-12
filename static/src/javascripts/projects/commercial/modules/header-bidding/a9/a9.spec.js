@@ -1,24 +1,34 @@
 // @flow
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { oldCmp as oldCmp_ } from '@guardian/consent-management-platform';
+import {
+    oldCmp as oldCmp_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
+import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 
 const oldCmp: any = oldCmp_;
+const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
+const onConsentChange: any = onConsentChange_;
 
 const TcfWithConsentMock = (callback): void =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
 
-const CcpaWithConsentMock = (callback): void => callback(false);
+const tcfv2WithConsentMock = (callback): void =>
+    callback({
+        tcfv2: { vendorConsents: { '5edf9a821dc4e95986b66df4': true } },
+    });
+
+const CcpaWithConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: false } });
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest
-        .fn()
-        .mockImplementation(() => false),
+jest.mock('commercial/modules/cmp/sourcepoint', () => ({
+    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 jest.mock('commercial/modules/header-bidding/slot-config', () => ({
@@ -31,9 +41,9 @@ jest.mock('commercial/modules/header-bidding/slot-config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     oldCmp: {
-        onIabConsentNotification: jest.fn()
+        onIabConsentNotification: jest.fn(),
     },
-    onConsentChange: jest.fn()
+    onConsentChange: jest.fn(),
 }));
 
 beforeEach(async () => {
@@ -58,8 +68,17 @@ describe('initialise', () => {
         expect(window.apstag.init).toHaveBeenCalled();
     });
 
+    it('should generate initialise A9 library when TCFv2 consent has been given', () => {
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        a9.initialise();
+        expect(window.apstag).toBeDefined();
+        expect(window.apstag.init).toHaveBeenCalled();
+    });
+
     it('should generate initialise A9 library when CCPA consent has been given', () => {
-        oldCmp.onIabConsentNotification.mockImplementation(CcpaWithConsentMock);
+        shouldUseSourcepointCmp.mockImplementation(() => true);
+        onConsentChange.mockImplementation(CcpaWithConsentMock);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();
