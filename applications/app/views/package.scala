@@ -39,7 +39,8 @@ object GalleryCaptionCleaners {
         page.gallery.content.fields.showAffiliateLinks,
         "gallery",
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
-        tags = page.gallery.content.tags.tags.map(_.id)))
+        tags = page.gallery.content.tags.tags.map(_.id),
+        page.gallery.content.fields.firstPublicationDate))
 
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
     cleanedHtml.outputSettings().prettyPrint(false)

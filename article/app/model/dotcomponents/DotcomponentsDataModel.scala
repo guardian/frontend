@@ -512,7 +512,8 @@ object DotcomponentsDataModel {
       supportedSections = affiliateLinks.affiliateLinkSections,
       defaultOffTags = affiliateLinks.defaultOffTags,
       alwaysOffTags = affiliateLinks.alwaysOffTags,
-      tagPaths = article.content.tags.tags.map(_.id)
+      tagPaths = article.content.tags.tags.map(_.id),
+      firstPublishedDate = article.content.fields.firstPublicationDate
     )
 
     val bodyBlocksRaw = page match {
