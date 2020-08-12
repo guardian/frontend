@@ -15,6 +15,7 @@ export type ComponentEventParams = {
     visitId?: string,
 };
 
+export type DismissalWindow = 'day' | 'dev';
 export type GateStatus = boolean | 'dismissed' | 'signed in';
 
 export type SignInGateVariant = {
