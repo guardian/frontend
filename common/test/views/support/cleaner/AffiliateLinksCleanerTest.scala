@@ -13,7 +13,7 @@ class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
 
   "shouldAddAffiliateLinks" should "correctly determine when to add affiliate links" in {
     val supportedSections = Set("film", "books", "fashion")
-    val oldPublishedDate = Some(new DateTime(2020, 7, 14, 0, 0))
+    val oldPublishedDate = Some(new DateTime(2020, 7, 13, 0, 0))
     val newPublishedDate = Some(new DateTime(2020, 7, 15, 0, 0))
 
     shouldAddAffiliateLinks(switchedOn = false, "film", None, supportedSections, Set.empty, Set.empty, List.empty, oldPublishedDate) should be (false)

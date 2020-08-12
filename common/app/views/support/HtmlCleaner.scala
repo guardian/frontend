@@ -904,7 +904,7 @@ object AffiliateLinksCleaner {
     tagPaths: List[String],
     firstPublishedDate: Option[DateTime]
   ): Boolean = {
-    val publishedCutOffDate = new DateTime(2020, 7, 15, 0, 0)
+    val publishedCutOffDate = new DateTime(2020, 7, 14, 0, 0)
 
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
     // date. The cut off date is to avoid needing consent, although this is not intended to be permanent
