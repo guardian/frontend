@@ -11,7 +11,7 @@ type comscoreGlobals = {
     comscorekw?: string,
 };
 
-const comscoreSrc = '//sb.scorecardresearch.com/beacon.js';
+const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
 const comscoreC1 = '2';
 const comscoreC2 = '6035250';
 
