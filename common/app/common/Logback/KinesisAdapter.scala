@@ -8,11 +8,13 @@ import akka.pattern.CircuitBreaker
 import ch.qos.logback.classic.spi.ILoggingEvent
 import com.amazonaws.ClientConfiguration
 import com.amazonaws.auth.AWSCredentialsProvider
+import com.amazonaws.retry.PredefinedRetryPolicies.SDKDefaultRetryCondition
 import com.amazonaws.retry.{PredefinedRetryPolicies, RetryPolicy}
 import com.amazonaws.services.kinesis.AmazonKinesisAsyncClient
 import com.gu.logback.appender.kinesis.KinesisAppender
-import scala.concurrent.duration._
+
 import scala.concurrent.Future
+import scala.concurrent.duration._
 
 // LogbackOperationsPool must be wired as a singleton
 class LogbackOperationsPool(val actorSystem: ActorSystem)  {
@@ -33,7 +35,12 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
   override protected def createClient(credentials: AWSCredentialsProvider, configuration: ClientConfiguration, executor: ThreadPoolExecutor): AmazonKinesisAsyncClient = {
     configuration.setMaxErrorRetry(0)
     configuration.setRetryPolicy(
-      new RetryPolicy(PredefinedRetryPolicies.NO_RETRY_POLICY.getRetryCondition, PredefinedRetryPolicies.DEFAULT_BACKOFF_STRATEGY, 0, true)
+      new RetryPolicy(
+        new SDKDefaultRetryCondition(),
+        PredefinedRetryPolicies.DEFAULT_BACKOFF_STRATEGY,
+        10,
+        true
+      )
     )
     new AmazonKinesisAsyncClient(credentials, configuration, executor)
   }
