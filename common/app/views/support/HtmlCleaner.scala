@@ -15,6 +15,7 @@ import model._
 import model.content._
 import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
 import navigation.ReaderRevenueSite
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -836,11 +837,12 @@ case class AffiliateLinksCleaner(
                                   showAffiliateLinks: Option[Boolean],
                                   contentType: String,
                                   appendDisclaimer: Option[Boolean] = None,
-                                  tags: List[String]) extends HtmlCleaner with Logging {
+                                  tags: List[String],
+                                  publishedDate: Option[DateTime]) extends HtmlCleaner with Logging {
 
   override def clean(document: Document): Document = {
     if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags)) {
+      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags, publishedDate)) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
@@ -899,9 +901,14 @@ object AffiliateLinksCleaner {
     supportedSections: Set[String],
     defaultOffTags: Set[String],
     alwaysOffTags: Set[String],
-    tagPaths: List[String]
+    tagPaths: List[String],
+    firstPublishedDate: Option[DateTime]
   ): Boolean = {
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+    val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
+
+    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
+    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
+    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {
