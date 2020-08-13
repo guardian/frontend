@@ -1163,10 +1163,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/consent-management-platform@4.0.0-10":
-  version "4.0.0-10"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-10.tgz#d34fafcd8c4dfd2fe301df3fbb283fa8007ad0d3"
-  integrity sha512-YwQVc1vNzA0YmXzbwQmW8MJmXKVkWR/clPTeV/eyaiK54d8ryydtEeFj3WU/3qTZapLy8x1mNAtfcaWeh078VA==
+"@guardian/consent-management-platform@4.0.0-14":
+  version "4.0.0-14"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-14.tgz#ee02f74ec22f0d7e6426ee5c0c0e96b884e4217d"
+  integrity sha512-4wtGYIsdtma+wT91rrqF7tvqPq4VqkdWQNOU2yNbxSsJwbGejo22Z0l+BkHyYIdXR76pNb/8zVTFR5HFREZYnQ==
   dependencies:
     "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.10"
 
