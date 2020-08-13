@@ -907,7 +907,7 @@ object AffiliateLinksCleaner {
     val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
 
     // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
-    // date. The cut off date is to avoid needing consent, although this is not intended to be permanent
+    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
     if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
