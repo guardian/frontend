@@ -1163,12 +1163,12 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/consent-management-platform@4.0.0-9":
-  version "4.0.0-9"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.0-9.tgz#9335485e5b98c7771498dee2bb892a5f94e27b19"
-  integrity sha512-JL2LpgbUcYz488kBAmCAAn0t8NtmT8s4LDXd2sVvRhZAThG4evGyJDD1fI9FhBmwvhAukRaet2SPr52hxt7zUQ==
+"@guardian/consent-management-platform@4.0.1-3":
+  version "4.0.1-3"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.0.1-3.tgz#3c29aea3d2f9551bb1a42a784d5ae46f97a9ae6c"
+  integrity sha512-QSSVZO/gAclMKNfmaDVJwnZuRmmL9O7uqu1F+aueJ8OGc3BxbYuKQmThbxFo5MG4y3teG65ZFo8S26EZimzhcQ==
   dependencies:
-    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.9"
+    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.10"
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -1182,10 +1182,10 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.9":
-  version "3.4.9"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.9.tgz#6bd6108e12cb122c4a1fcba4ae657f4d0b67ad0b"
-  integrity sha512-9TRCahVCILDvD78xQpADaZMqqUZM1opsBXKPasVdEt3hnRyMwVB+l68DpydIEK8DZE9S2jxbuqtOEKrci/qMsw==
+"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.10":
+  version "3.4.10"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.10.tgz#604e71d27c6bfa4664c83c55578a8aa73ff09d82"
+  integrity sha512-P3dTf9EqYhpH7JQ+Bg9MNoIQ08U4yD5j+s5epO9mNTaIBiX1BeOF3RcI3KNj/dBxSggaut0rBdQ82GN54Bg4jA==
   dependencies:
     consent-string "1.5.2"
     js-cookie "2.2.1"

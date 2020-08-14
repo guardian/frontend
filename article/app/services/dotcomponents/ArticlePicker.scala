@@ -38,7 +38,7 @@ object ArticlePageChecks {
     def unsupportedElement(blockElement: BlockElement) = blockElement match {
       case _: AudioBlockElement => {
         val e = blockElement.asInstanceOf[AudioBlockElement].element
-        val resolve = model.dotcomrendering.pageElements.PageElement.audiIsDCRSupported(e)
+        val resolve = model.dotcomrendering.pageElements.PageElement.audioIsDCRSupported(e)
         !resolve
       }
       case _: DocumentBlockElement => false
@@ -53,7 +53,7 @@ object ArticlePageChecks {
       case ContentAtomBlockElement(_, atomtype) => {
         // ContentAtomBlockElement was expanded to include atomtype.
         // To support an atom type, just add it to supportedAtomTypes
-        val supportedAtomTypes = List("explainer", "interactive", "qanda")
+        val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide")
         !supportedAtomTypes.contains(atomtype)
       }
       case _ => true
@@ -91,6 +91,8 @@ object ArticlePageChecks {
     "society/series/this-is-the-nhs",
     "artanddesign/series/guardian-print-shop"
   )
+
+  def isNotNumberedList(page: PageWithStoryPackage): Boolean = ! page.item.isNumberedList
 
   def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = ! page.item.isPhotoEssay
 
@@ -157,7 +159,8 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page))
+      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
+      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page))
     )
   }
 
@@ -204,8 +207,10 @@ object ArticlePicker {
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
-      if (dcrDisabled(request)) LocalRenderArticle
-      else if (dcrForced(request)) RemoteRender
+      if (dcrForced(request)) RemoteRender              // dcrForced doesn't check the switch. This means that RemoteRender
+                                                        // is always going to be selected if `?dcr=true`, regardless of
+                                                        // the switch.
+      else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
       else if (userInDCRBubble) RemoteRender
       else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle

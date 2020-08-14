@@ -31,8 +31,6 @@ import { init as resize } from 'commercial/modules/messenger/resize';
 import { init as scroll } from 'commercial/modules/messenger/scroll';
 import { init as type } from 'commercial/modules/messenger/type';
 import { init as viewport } from 'commercial/modules/messenger/viewport';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { googletagPrebidEnforcement } from 'common/modules/experiments/tests/tcfv2-googletag-prebid-enforcement';
 
 initMessenger(
     type,
@@ -111,9 +109,8 @@ export const init = (): Promise<void> => {
             ? onConsentChange
             : oldCmp.onIabConsentNotification;
 
-        const isInTcfv2EnforcementVariant = isInVariantSynchronous(googletagPrebidEnforcement, 'variant')
-        let canRun: boolean = true;
         onCMPConsentNotification(state => {
+            let canRun: boolean = true;
             if (state.ccpa) {
                 // CCPA mode
                 window.googletag.cmd.push(() => {
@@ -129,15 +126,6 @@ export const init = (): Promise<void> => {
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
                     canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-                    if (canRun && isInTcfv2EnforcementVariant) {
-                        loadScript(
-                            config.get(
-                                'libs.googletag',
-                                '//www.googletagservices.com/tag/js/gpt.js'
-                            ),
-                            { async: false }
-                        );
-                    }
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);
@@ -148,19 +136,18 @@ export const init = (): Promise<void> => {
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
             }
+            // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+            // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+            if (canRun) {
+                loadScript(
+                    config.get(
+                        'libs.googletag',
+                        '//www.googletagservices.com/tag/js/gpt.js'
+                    ),
+                    { async: false }
+                );
+            }
         });
-
-        // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
-        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        if (canRun && !isInTcfv2EnforcementVariant) {
-            loadScript(
-                config.get(
-                    'libs.googletag',
-                    '//www.googletagservices.com/tag/js/gpt.js'
-                ),
-                { async: false }
-            );
-        }
         return Promise.resolve();
     };
 
