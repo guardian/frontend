@@ -1,9 +1,9 @@
 // @flow strict
-import {oldCmp, onConsentChange} from '@guardian/consent-management-platform';
+import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {isInTcfv2Test} from "commercial/modules/cmp/tcfv2-test";
+import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 
 type comscoreGlobals = {
     c1: string,
@@ -54,12 +54,12 @@ const initOnConsent = (state: boolean | null) => {
 
 export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
-        if (isInTcfv2Test()) {
+        if (shouldUseSourcepointCmp()) {
             onConsentChange(state => {
                 if (state.tcfv2) {
-                    initOnConsent(state.tcfv2.vendorConsents[SOURCEPOINT_ID])
+                    initOnConsent(state.tcfv2.vendorConsents[SOURCEPOINT_ID]);
                 }
-            })
+            });
         } else {
             oldCmp.onGuConsentNotification('performance', initOnConsent);
         }
