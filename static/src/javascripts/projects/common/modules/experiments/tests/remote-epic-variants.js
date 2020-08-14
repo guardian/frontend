@@ -15,7 +15,7 @@ const remoteVariant: Variant = {
 export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     id,
     start: '2020-05-01',
-    expiry: '2020-07-21',
+    expiry: '2020-09-06',
     author: "Nicolas Long",
     description: "Pseudo-test to use remote service for % of contribution epics. Expected to run as highest priority test; the canRun will then narrow the audience.",
     audience: 1,
