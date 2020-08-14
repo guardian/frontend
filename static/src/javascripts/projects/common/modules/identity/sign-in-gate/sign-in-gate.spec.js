@@ -90,9 +90,8 @@ describe('Sign in gate test', () => {
 
     describe('canShow returns false', () => {
         it('should return false if not in correct test', () => {
-            // mock for each sign in gate test we have in experiments/tests
+            // mock twice as we have 2 tests
             fakeIsInABTestSynchronous
-                .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false);
