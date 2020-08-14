@@ -76,7 +76,13 @@ object BodyProcessor {
       TimestampCleaner(article),
       MinuteCleaner(article),
       GarnettQuoteCleaner,
-      AffiliateLinksCleaner(request.uri, article.content.metadata.sectionId, article.content.fields.showAffiliateLinks, "article", tags = article.content.tags.tags.map(_.id))
+      AffiliateLinksCleaner(
+        pageUrl = request.uri,
+        sectionId = article.content.metadata.sectionId,
+        showAffiliateLinks = article.content.fields.showAffiliateLinks,
+        contentType = "article",
+        tags = article.content.tags.tags.map(_.id),
+        publishedDate = article.content.fields.firstPublicationDate)
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))
   }

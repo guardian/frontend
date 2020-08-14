@@ -5,7 +5,7 @@ import config from 'lib/config';
 
 let isInTest;
 
-const isInServerSideTest = (): boolean => 
+const isInServerSideTest = (): boolean =>
     config.get('tests.useTcfv2Variant') === 'variant';
 
 export const isInTcfv2Test = (): boolean => {

@@ -72,7 +72,13 @@ case class GenericAtomBlockElement(id: String, url: String, html: Option[String]
            // We use it to carry to DCR atoms that do not (yet) have their on dedicated BlockElement and are rendered in DCR as iframes.
            //     - {url} for src
            //     - {html, css, js} for srcdoc
-case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+
+case class GuideAtomBlockElementItem(title: Option[String], body: String)
+object GuideAtomBlockElementItem {
+  implicit val GuideAtomBlockElementItemWrites: Writes[GuideAtomBlockElementItem] = Json.writes[GuideAtomBlockElementItem]
+}
+case class GuideAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, items: List[GuideAtomBlockElementItem], credit: String) extends PageElement
+
 case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, caption:String, url:String, originalUrl:String, role: Role) extends PageElement
 case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean], role: Role, imageSources: Seq[ImageSource]) extends PageElement
 case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
@@ -91,12 +97,18 @@ case class MembershipBlockElement(
   image: Option[String],
   price: Option[String]
 ) extends PageElement
-case class ProfileAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
+
+case class ProfileAtomBlockElementItem(title: Option[String], body: String)
+object ProfileAtomBlockElementItem {
+  implicit val GuideAtomBlockElementItemWrites: Writes[ProfileAtomBlockElementItem] = Json.writes[ProfileAtomBlockElementItem]
+}
+case class ProfileAtomBlockElement(id: String, label: String, title: String, img: Option[String], html: String, items: List[ProfileAtomBlockElementItem], credit: String) extends PageElement
+
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String) extends PageElement
 case class RichLinkBlockElement(url: Option[String], text: Option[String], prefix: Option[String], role: Role, sponsorship: Option[Sponsorship]) extends PageElement
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
-case class SpotifyBlockElement(html: String, title: Option[String], caption: Option[String]) extends PageElement
+case class SpotifyBlockElement(embedUrl: Option[String], height: Option[Int], width: Option[Int], title: Option[String], caption: Option[String]) extends PageElement
 case class SubheadingBlockElement(html: String) extends PageElement
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
 case class TextBlockElement(html: String) extends PageElement
@@ -310,6 +322,9 @@ object PageElement {
               css = None,
               js = None
             ))
+
+            // Using the AudioAtomBlockElement:
+            Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
           }
 
           case Some(chart: ChartAtom) => {
@@ -326,12 +341,15 @@ object PageElement {
           }
 
           case Some(guide: GuideAtom) => {
+            val html = guide.data.items.map(item => s"${item.title.map( t => s"<p><strong>${t}</strong></p>" ).getOrElse("")}${item.body}").mkString("")
+            val items = guide.data.items.toList.map(item => GuideAtomBlockElementItem(item.title, item.body))
             Some(GuideAtomBlockElement(
               id = guide.id,
               label = guide.data.typeLabel.getOrElse("Quick Guide") ,
               title = guide.atom.title.getOrElse(""),
               img = guide.image.flatMap(ImgSrc.getAmpImageUrl),
-              html = guide.data.items.map(_.body).mkString(""),
+              html = html,
+              items = items,
               credit = guide.credit.getOrElse("")
             ))
           }
@@ -365,12 +383,15 @@ object PageElement {
           }
 
           case Some(profile: ProfileAtom) => {
+            val html = profile.data.items.map(item => s"${item.title.map( t => s"<p><strong>${t}</strong></p>" ).getOrElse("")}${item.body}").mkString("")
+            val items = profile.data.items.toList.map(item => ProfileAtomBlockElementItem(item.title, item.body))
             Some(ProfileAtomBlockElement(
               id = profile.id,
               label = profile.data.typeLabel.getOrElse("Profile"),
               title = profile.atom.title.getOrElse(""),
               img = profile.image.flatMap(ImgSrc.getAmpImageUrl),
-              html = profile.data.items.map(_.body).mkString(""),
+              html = html,
+              items = items,
               credit = profile.credit.getOrElse("")
             ))
           }
@@ -437,6 +458,16 @@ object PageElement {
     doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("src"))
   }
 
+  private[this] def getIframeWidth(html: String): Option[Int] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("width").toInt)
+  }
+
+  private[this] def getIframeHeight(html: String): Option[Int] = {
+    val doc = Jsoup.parseBodyFragment(html)
+    doc.getElementsByTag("iframe").asScala.headOption.map(_.attr("height").toInt)
+  }
+
   private def extractSoundcloudBlockElement(html: String, isMandatory: Boolean): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
     src.flatMap { s =>
@@ -455,19 +486,19 @@ object PageElement {
       source <- d.source
       if source == "Spotify" // We rely on the `source` field to decide whether or not this is an instance of Spotify
     } yield {
-      SpotifyBlockElement(html, d.title, d.caption)
+      SpotifyBlockElement(getEmbedUrl(d.html), getIframeHeight(html), getIframeWidth(html), d.title, d.caption)
     }
   }
 
-  def audiIsDCRSupported(element: ApiBlockElement): Boolean = {
+  def audioIsDCRSupported(element: ApiBlockElement): Boolean = {
     /*
-      date: July 21th 2020
+      date: July 21th 2020 (updated 03rd August 2020)
       author: Pascal
 
       This function was introduced to be able to know from the article picker whether or not
       an AudioBlockElement given to the article picker's function "hasOnlySupportedElements" would
-      resolve to a SoundcloudBlockElement (which we currently support in DCR) or an AudioBlockElement
-      (which DCR doesn't yet support).
+      resolve to a SoundcloudBlockElement or a SpotifyBlockElement (which we currently support in DCR)
+      or an AudioBlockElement (which DCR doesn't yet support).
 
       See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
      */
@@ -477,6 +508,7 @@ object PageElement {
 
     audioToPageElement(element: ApiBlockElement) match {
       case Some(_: SoundcloudBlockElement) => true
+      case Some(_: SpotifyBlockElement) => true
       case _ => false
     }
   }
