@@ -207,8 +207,10 @@ object ArticlePicker {
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
-      if (dcrDisabled(request)) LocalRenderArticle
-      else if (dcrForced(request)) RemoteRender
+      if (dcrForced(request)) RemoteRender              // dcrForced doesn't check the switch. This means that RemoteRender
+                                                        // is always going to be selected if `?dcr=true`, regardless of
+                                                        // the switch.
+      else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
       else if (userInDCRBubble) RemoteRender
       else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
