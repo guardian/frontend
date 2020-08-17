@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Privacy}
+import conf.switches.SwitchGroup.{Privacy,Commercial}
 
 trait PrivacySwitches {
 
