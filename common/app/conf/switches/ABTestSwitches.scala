@@ -116,6 +116,16 @@ trait ABTestSwitches {
     exposeClientSide = true
   )
 
+   Switch(
+    ABTests,
+    "ab-sign-in-gate-dismiss-window",
+    "Show sign in gate to users on 3rd article view, then don't reshow (control), reshow next article (variant 1), reshow next day (variant 2)",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true
+  )
+
   Switch(
     ABTests,
     "ab-sign-in-gate-dismiss-window",
