@@ -21,7 +21,6 @@ import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 type PageTargeting = {
     sens: string,
@@ -221,9 +220,10 @@ const getRdpValue = (ccpaState: boolean | null): string => {
 };
 
 const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
-    if (isInTcfv2Test() && tcfv2State !== null) {
+    if (tcfv2State !== null) {
         return tcfv2State ? 't' : 'f';
     }
+    // TODO: unlikely to return `na`
     return 'na';
 };
 
