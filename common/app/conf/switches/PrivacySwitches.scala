@@ -3,7 +3,6 @@ package conf.switches
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Privacy}
-import org.joda.time.LocalDate
 
 trait PrivacySwitches {
 
