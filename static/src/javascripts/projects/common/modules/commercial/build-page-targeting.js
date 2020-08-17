@@ -9,6 +9,7 @@ import {
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
+import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
 import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
@@ -220,10 +221,9 @@ const getRdpValue = (ccpaState: boolean | null): string => {
 };
 
 const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
-    if (tcfv2State !== null) {
+    if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
         return tcfv2State ? 't' : 'f';
     }
-    // TODO: unlikely to return `na`
     return 'na';
 };
 

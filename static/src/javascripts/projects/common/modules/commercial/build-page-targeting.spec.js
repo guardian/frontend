@@ -13,6 +13,7 @@ import {
     getBreakpoint as getBreakpoint_,
 } from 'lib/detect';
 import { getSync as getSync_ } from 'lib/geolocation';
+import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFramework';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
@@ -27,6 +28,7 @@ const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
+const getPrivacyFramework: any = getPrivacyFramework_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
@@ -44,6 +46,9 @@ jest.mock('lib/detect', () => ({
 }));
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(),
+}));
+jest.mock('lib/getPrivacyFramework', () => ({
+    getPrivacyFramework: jest.fn(),
 }));
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
@@ -160,6 +165,7 @@ describe('Build Page Targeting', () => {
         local.set('gu.alreadyVisited', 0);
 
         getSync.mockReturnValue('US');
+        getPrivacyFramework.mockReturnValue({ ccpa: true });
 
         expect.hasAssertions();
     });
@@ -247,6 +253,8 @@ describe('Build Page Targeting', () => {
 
     it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
         _.resetPageTargeting();
+        getPrivacyFramework.mockReturnValue({ tcfv2: true });
+
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('t');
@@ -265,6 +273,7 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
 
         _.resetPageTargeting();
+        getPrivacyFramework.mockReturnValue({ tcfv1: true });
         shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfWithConsentMock);
 
