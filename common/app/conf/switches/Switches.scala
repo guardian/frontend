@@ -34,6 +34,7 @@ object SwitchGroup {
   val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
   val Journalism = SwitchGroup("Journalism")
+  val Privacy = SwitchGroup("Privacy")
 }
 
 
@@ -156,6 +157,7 @@ with ServerSideExperimentSwitches
 with FaciaSwitches
 with ABTestSwitches
 with CommercialSwitches
+with PrivacySwitches
 with PrebidSwitches
 with DiscussionSwitches
 with PerformanceSwitches
