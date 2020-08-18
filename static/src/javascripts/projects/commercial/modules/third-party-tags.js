@@ -2,8 +2,7 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -59,17 +58,19 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag>
 ): void => {
-    oldCmp.onGuConsentNotification('performance', state => {
-        if (state) {
-            addScripts(performanceServices);
-        }
+    onConsentChange(state => {
+        let canRun = false;
+        if (state.ccpa && !state.ccpa.doNotSell) canRun = true;
+        if (
+            state.tcfv2 &&
+            state.tcfv2.consents &&
+            Object.values(state.tcfv2.consents).every(Boolean)
+        )
+            canRun = true;
+        if (canRun) addScripts(performanceServices);
     });
 
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
-
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         let consentedAdvertisingServices = [];
         if (state.ccpa) {
             // CCPA mode
@@ -96,9 +97,7 @@ const insertScripts = (
             consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (
-            consentedAdvertisingServices.length > 0
-        ) {
+        if (consentedAdvertisingServices.length > 0) {
             addScripts(consentedAdvertisingServices);
         }
     });
