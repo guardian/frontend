@@ -58,7 +58,7 @@ object BodyProcessor {
       R2VideoCleaner,
       PictureCleaner(article),
       DropCaps(article.tags.isComment || article.tags.isFeature, article.isImmersive),
-      TagLinker(article),
+      TagLinker(article.tags, article.content.showInRelated),
       ImmersiveHeaders(article.isImmersive),
       FigCaptionCleaner,
       RichLinkCleaner(),

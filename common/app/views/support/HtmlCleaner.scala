@@ -331,7 +331,7 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
   }
 }
 
-case class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
+case class TagLinker(tags: Tags, showInRelated: Boolean)(implicit val edition: Edition) extends HtmlCleaner{
 
   private val group1 = "$1"
   private val group2 = "$2"
@@ -348,7 +348,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
   def clean(doc: Document): Document = {
 
-    if (article.content.showInRelated) {
+    if (showInRelated) {
 
       // Get all paragraphs which are not contained in a pullquote or in an instagram caption
       val paragraphs = doc.getElementsByTag("p").asScala.filterNot( p =>
@@ -361,7 +361,7 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
-      article.tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
+      tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
 
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
