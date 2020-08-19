@@ -10,8 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     OldTLSSupportDeprecation,
     DotcomRendering,
-    DCRBubble,
-    UseTCFv2
+    DCRBubble
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -40,12 +39,4 @@ object DCRBubble extends Experiment(
   owners = Seq(Owner.withGithub("shtukas")),
   sellByDate = new LocalDate(2020, 12, 1),
   participationGroup = Perc0B // Also see ArticlePicker.scala - our main filter mechanism is by page features
-)
-
-object UseTCFv2 extends Experiment(
-  name = "use-tcfv2",
-  description = "Use TCFv2 CMP",
-  owners = group(Commercial),
-  sellByDate = new LocalDate(2020, 8, 24),
-  participationGroup = Perc0A
 )

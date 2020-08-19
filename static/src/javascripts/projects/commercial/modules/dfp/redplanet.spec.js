@@ -39,10 +39,6 @@ jest.mock('commercial/modules/cmp/sourcepoint', () => ({
     shouldUseSourcepointCmp: jest.fn(),
 }));
 
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockImplementation(() => false),
-}));
-
 jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
