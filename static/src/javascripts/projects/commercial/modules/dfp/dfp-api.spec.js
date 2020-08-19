@@ -482,7 +482,7 @@ describe('DFP', () => {
     });
 
     describe('NPA flag is set correctly', () => {
-        it('when full TCF consent was given', () => {
+        it('when full TCFv2 consent was given', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2WithConsent)
             );
@@ -492,7 +492,7 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(0);
             });
         });
-        it('when no TCF consent preferences were specified', () => {
+        it('when no TCFv2 consent preferences were specified', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2NullConsent)
             );
@@ -502,7 +502,7 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(0);
             });
         });
-        it('when full TCF consent was denied', () => {
+        it('when full TCFv2 consent was denied', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2WithoutConsent)
             );
@@ -512,7 +512,7 @@ describe('DFP', () => {
                 ).toHaveBeenCalledWith(1);
             });
         });
-        it('when only partial TCF consent was given', () => {
+        it('when only partial TCFv2 consent was given', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2MixedConsent)
             );
