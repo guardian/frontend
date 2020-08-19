@@ -15,10 +15,17 @@ const buildImage = (url: string): string =>
         <img src="${url}" alt="Image for Guardian contributions message"/>
     </div>`;
 
-export const defaultReminderFields: ReminderFields = {
+// Temporarily hard-coded while we decide on requirement
+const defaultReminderFields: ReminderFields = {
     reminderCTA: 'Remind me in October',
     reminderDate: '2020-10-14 00:00:00',
     reminderDateAsString: 'October 2020',
+};
+const defaultReminderCutoff = new Date('2020-09-14');
+
+export const getDefaultReminderFields = (): ReminderFields | null => {
+    const now = new Date();
+    return now <= defaultReminderCutoff ? defaultReminderFields : null;
 };
 
 export const acquisitionsEpicControlTemplate = ({
@@ -46,7 +53,7 @@ export const acquisitionsEpicControlTemplate = ({
     ).join(' ');
 
 
-    const reminderFields = showReminderFields || defaultReminderFields;
+    const reminderFields = showReminderFields || getDefaultReminderFields();
 
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
@@ -74,7 +81,7 @@ export const acquisitionsEpicControlTemplate = ({
 
             ${footer ? buildFooter(footer) : ''}
 
-            ${canShowContributionsReminderFeature() ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
+            ${canShowContributionsReminderFeature() && reminderFields ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
         </div>
     </div>`;
 };
