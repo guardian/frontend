@@ -1163,10 +1163,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/consent-management-platform@^4.1.0":
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.1.0.tgz#5f2f3c0d9679ac6ea7a97db7af250b4a607fa655"
-  integrity sha512-dcKUdoXzU9+Awx/4gVyHpc8WP+rMiFZgox3ApS/dAGln/5yhUjFrH7sOuBOXOCPqYXYm3InesWZ5HG/71MOYvg==
+"@guardian/consent-management-platform@^4.1.1":
+  version "4.1.1"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.1.1.tgz#3120cfca3ad3939c44b0a6fe22828c36dff7f6f7"
+  integrity sha512-9OAzFAjqA6rkWa4AIcuo/FKtW2oGrI9mqqSGt0EZ6AUR7K1M91csssT1RBxjoYQKl77MdM+TqN90TiSmJQEcoA==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
