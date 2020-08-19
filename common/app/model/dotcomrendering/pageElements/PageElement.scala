@@ -1,17 +1,18 @@
 package model.dotcomrendering.pageElements
 
-import java.net.{URLEncoder}
+import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import common.Edition
 import conf.Configuration
-import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
+import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
+import model.{Article, AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
+import views.support.{ImgSrc, SrcSet}
 
 import scala.collection.JavaConverters._
 
@@ -175,7 +176,20 @@ object PageElement {
     }
   }
 
-  def make(element: ApiBlockElement, addAffiliateLinks: Boolean, pageUrl: String, atoms: Iterable[Atom], isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue], calloutsUrl: Option[String]): List[PageElement] = {
+  def make(
+    element: ApiBlockElement,
+    pageUrl: String,
+    article: Article,
+    addAffiliateLinks: Boolean,
+    isMainBlock: Boolean,
+    campaigns: Option[JsValue],
+    calloutsUrl: Option[String],
+    edition: Edition
+  ): List[PageElement] = {
+
+    val atoms = article.content.atoms.map(_.all).getOrElse(Seq())
+    val isImmersive = article.isImmersive
+
     def extractAtom: Option[Atom] = for {
       contentAtom <- element.contentAtomTypeData
       atom <- atoms.find(_.id == contentAtom.atomId)
@@ -186,12 +200,17 @@ object PageElement {
       case Text => for {
         block <- element.textTypeData.toList
         text <- block.html.toList
-        element <- Cleaner.split(text)
+        element <- HTML.tags(text)
       } yield { element match {
-        case ("h2", heading) => SubheadingBlockElement(heading)
-        case ("blockquote", blockquote) => BlockquoteBlockElement(blockquote)
-        case (_ , para) if (addAffiliateLinks) => AffiliateLinksCleaner.replaceLinksInElement(para, pageUrl = pageUrl, contentType = "article")
-        case (_, para) => TextBlockElement(para)
+        case ("h2", heading) =>
+          SubheadingBlockElement(heading)
+        case ("blockquote", blockquote) =>
+          BlockquoteBlockElement(blockquote)
+        case (_, para) =>
+          val tagLinks = Cleaners.tagLinks(article.tags, article.content.showInRelated, edition) _
+          val affiliateLinks = Cleaners.affiliateLinks(pageUrl) _
+          val transforms = if (addAffiliateLinks) affiliateLinks andThen tagLinks else tagLinks
+          transforms(TextBlockElement(para))
         }
       }
 
@@ -638,8 +657,8 @@ object PageElement {
 // Misc.
 // ------------------------------------------------------
 
-object Cleaner{
-  def split(html: String):List[(String, String)] = {
+object HTML {
+  def tags(html: String): List[(String, String)] = {
     Jsoup
       .parseBodyFragment(html)
       .body()
