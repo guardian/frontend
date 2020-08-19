@@ -21,14 +21,14 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('return true if shouldShow returns true', () => {
+            it('return true if cmp.willShowPrivacyMessage() returns true', () => {
                 cmp.willShowPrivacyMessage.mockImplementation(() => true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(true);
                 });
             });
-            it('return false if shouldShow returns false', () => {
+            it('return false if cmp.willShowPrivacyMessage() returns false', () => {
                 cmp.willShowPrivacyMessage.mockImplementation(() => false);
 
                 return consentManagementPlatformUi.canShow().then(show => {
