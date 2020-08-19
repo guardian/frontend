@@ -208,7 +208,8 @@ object PageElement {
           BlockquoteBlockElement(blockquote)
         case (_, para) =>
           val tagLinks = Cleaners.tagLinks(article.tags, article.content.showInRelated, edition) _
-          val transforms = if (addAffiliateLinks) Cleaners.affiliateLinks(pageUrl) _ andThen tagLinks else tagLinks
+          val affiliateLinks = Cleaners.affiliateLinks(pageUrl) _
+          val transforms = if (addAffiliateLinks) affiliateLinks andThen tagLinks else tagLinks
           transforms(TextBlockElement(para))
         }
       }
