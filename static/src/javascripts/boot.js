@@ -13,7 +13,6 @@ import { cmp } from '@guardian/consent-management-platform';
 import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
 import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getCookie } from 'lib/cookies';
-import 'projects/commercial/modules/cmp/stub';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
