@@ -72,7 +72,7 @@ case class NxMatchData(
   isLive: Boolean,
   venue: String,
   comments: String,
-  minByMinUrl: String
+  minByMinUrl: Option[String]
 ) extends NxAnswer
 
 object NxAnswer {
@@ -103,7 +103,13 @@ object NxAnswer {
       crest = s"${Configuration.staticSport.path}/football/crests/120/${teamV1.id}.png"
     )
   }
-  def makeFromFootballMatch(theMatch: FootballMatch, lineUp: LineUp, competition: Option[Competition], isResult: Boolean, isLive: Boolean): NxMatchData = {
+
+  def makeMinByMinUrl(implicit request: RequestHeader, theMatch: FootballMatch, related: Seq[ContentType]): Option[String] = {
+    val (_, minByMin, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    minByMin.map(x => LinkTo(x.url))
+  }
+
+  def makeFromFootballMatch(request: RequestHeader, theMatch: FootballMatch, related: Seq[ContentType],  lineUp: LineUp, competition: Option[Competition], isResult: Boolean, isLive: Boolean): NxMatchData = {
     val teamColours = TeamColours(lineUp.homeTeam, lineUp.awayTeam)
     NxMatchData(
       id = theMatch.id,
@@ -114,7 +120,7 @@ object NxAnswer {
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
       comments = theMatch.comments.getOrElse(""),
-      minByMinUrl = "https://www.theguardian.com/football/live/2020/aug/10/manchester-united-v-fc-copenhagen-europa-league-quarter-final-live"
+      minByMinUrl = makeMinByMinUrl(request, theMatch, related)
     )
   }
 
@@ -123,6 +129,29 @@ object NxAnswer {
   implicit val TeamAnswerWrites: Writes[NxTeam] = Json.writes[NxTeam]
   implicit val CompetitionAnswerWrites: Writes[NxCompetition] = Json.writes[NxCompetition]
   implicit val MatchDataAnswerWrites: Writes[NxMatchData] = Json.writes[NxMatchData]
+}
+
+object MatchMetadata extends Football with implicits.Dates {
+  def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[ContentType])(implicit request: RequestHeader):
+  (Option[FootballMatchTrail], Option[FootballMatchTrail], Option[FootballMatchTrail], FootballMatchTrail) = {
+    val matchDate = theMatch.date.toLocalDate
+    val matchReport = related.find { c =>
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
+        c.matchReport && !c.minByMin && !c.preview
+    }
+
+    val minByMin = related.find { c =>
+      val dateOfPublication = c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London"))
+      val dateOfMatch = theMatch.date.withZone(DateTimeZone.forID("Europe/London"))
+      dateOfPublication.sameDay(dateOfMatch) && c.minByMin && !c.preview
+    }
+    val preview = related.find { c =>
+      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
+        (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
+    }
+    val stats: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
+    (matchReport.map(FootballMatchTrail.toTrail), minByMin.map(FootballMatchTrail.toTrail), preview.map(FootballMatchTrail.toTrail), stats)
+  }
 }
 
 class MoreOnMatchController(
@@ -153,9 +182,10 @@ class MoreOnMatchController(
       if (request.forceDCR) {
         for {
           lineup <- competitionsService.getLineup(theMatch)
+          filtered <- related map { _ filter hasExactlyTwoTeams }
         } yield {
           Cached(if(theMatch.isLive) 10 else 300) {
-            JsonComponent(Json.toJson(NxAnswer.makeFromFootballMatch(theMatch, lineup, competition, theMatch.isResult, theMatch.isLive)))
+            JsonComponent(Json.toJson(NxAnswer.makeFromFootballMatch(request, theMatch, filtered, lineup, competition, theMatch.isResult, theMatch.isLive)))
           }
         }
       } else {
@@ -296,7 +326,7 @@ class MoreOnMatchController(
   private def canonicalRedirectForMatch(maybeMatch: Option[FootballMatch], request: RequestHeader)(implicit requestHeader: RequestHeader): Future[Result] = {
     maybeMatch.map { theMatch =>
       loadMoreOn(request, theMatch).map { related =>
-        val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
+        val (matchReport, minByMin, preview, stats) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
         val canonicalPage = matchReport.orElse(minByMin).orElse { if (theMatch.isFixture) preview else None }.getOrElse(stats)
 
         Cached(60)(WithoutRevalidationResult(Found(canonicalPage.url)))
@@ -310,29 +340,8 @@ class MoreOnMatchController(
   //for our purposes we expect exactly 2 football teams
   private def hasExactlyTwoTeams(content: ContentType): Boolean = content.tags.tags.count(_.isFootballTeam) == 2
 
-  private def fetchRelatedMatchContent(theMatch: FootballMatch, related: Seq[ContentType]):
-    (Option[FootballMatchTrail], Option[FootballMatchTrail], Option[FootballMatchTrail], FootballMatchTrail) = {
-    val matchDate = theMatch.date.toLocalDate
-    val matchReport = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) >= matchDate.toDateTimeAtStartOfDay &&
-        c.matchReport && !c.minByMin && !c.preview
-    }
-
-    val minByMin = related.find { c =>
-      val dateOfPublication = c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London"))
-      val dateOfMatch = theMatch.date.withZone(DateTimeZone.forID("Europe/London"))
-      dateOfPublication.sameDay(dateOfMatch) && c.minByMin && !c.preview
-    }
-    val preview = related.find { c =>
-      c.trail.webPublicationDate.withZone(DateTimeZone.forID("Europe/London")) <= matchDate.toDateTimeAtStartOfDay &&
-        (c.preview || c.squadSheet) && !c.matchReport && !c.minByMin
-    }
-    val stats: FootballMatchTrail = FootballMatchTrail.toTrail(theMatch)
-    (matchReport.map(FootballMatchTrail.toTrail), minByMin.map(FootballMatchTrail.toTrail), preview.map(FootballMatchTrail.toTrail), stats)
-  }
-
   private def populateNavModel(theMatch: FootballMatch, related: Seq[ContentType])(implicit request: RequestHeader): MatchNav = {
-    val (matchReport, minByMin, preview, stats) = fetchRelatedMatchContent(theMatch, related)
+    val (matchReport, minByMin, preview, stats) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
 
     val currentPage = request.getParameter("page").flatMap { pageId =>
       (stats :: List(matchReport, minByMin, preview).flatten).find(_.url.endsWith(pageId))
