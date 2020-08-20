@@ -434,19 +434,17 @@ object DotcomponentsDataModel {
   }
 
   private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue], calloutsUrl: Option[String]): List[PageElement] = {
-    val edition = Edition.apply(request)
-
+    val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
     val elems = capiElems.toList.flatMap(el => PageElement.make(
       element = el,
-      pageUrl = request.uri,
-      article = article,
       addAffiliateLinks = affiliateLinks,
+      pageUrl = request.uri,
+      atoms = atoms,
       isMainBlock,
+      isImmersive,
       campaigns,
-      calloutsUrl,
-      edition
+      calloutsUrl
     )).filter(PageElement.isSupported)
-
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
 

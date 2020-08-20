@@ -24,7 +24,7 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition): String =
+  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
     processUrl(url.trim, edition).url
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.metadata.url))
