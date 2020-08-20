@@ -30,9 +30,6 @@ const fillAdvertSlots: any = fillAdvertSlots_;
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockImplementation(() => false),
-}));
 jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
