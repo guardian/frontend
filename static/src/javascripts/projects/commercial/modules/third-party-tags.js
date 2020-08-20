@@ -59,15 +59,12 @@ const insertScripts = (
     performanceServices: Array<ThirdPartyTag>
 ): void => {
     onConsentChange(state => {
-        let canRun = false;
-        if (state.ccpa && !state.ccpa.doNotSell) canRun = true;
-        if (
+        const ccpaCanRun = state.ccpa && !state.ccpa.doNotSell;
+        const tcfv2CanRun =
             state.tcfv2 &&
             state.tcfv2.consents &&
-            Object.values(state.tcfv2.consents).every(Boolean)
-        )
-            canRun = true;
-        if (canRun) addScripts(performanceServices);
+            Object.values(state.tcfv2.consents).every(Boolean);
+        if (ccpaCanRun || tcfv2CanRun) addScripts(performanceServices);
     });
 
     onConsentChange(state => {
