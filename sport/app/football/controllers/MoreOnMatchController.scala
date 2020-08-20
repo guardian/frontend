@@ -105,7 +105,7 @@ object NxAnswer {
   }
 
   def makeMinByMinUrl(implicit request: RequestHeader, theMatch: FootballMatch, related: Seq[ContentType]): Option[String] = {
-    val (matchReport, minByMin, preview, stats) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
+    val (_, minByMin, _, _) = MatchMetadata.fetchRelatedMatchContent(theMatch, related)
     minByMin.map(x => LinkTo(x.url))
   }
 
