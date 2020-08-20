@@ -54,11 +54,10 @@ const initOnConsent = (state: boolean | null) => {
 export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
         onConsentChange(state => {
-            if (state.tcfv2) {
-                initOnConsent(state.tcfv2.vendorConsents[SOURCEPOINT_ID]);
-            } else if (state.ccpa) {
-                initOnConsent(!state.ccpa.doNotSell);
-            }
+            const canRunTcfv2 =
+                state.tcfv2 && state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+            const canRunCcpa = state.ccpa && !state.ccpa.doNotSell;
+            if (canRunTcfv2 || canRunCcpa) initOnConsent(true);
         });
     }
 
