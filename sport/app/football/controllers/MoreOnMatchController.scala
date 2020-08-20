@@ -71,7 +71,8 @@ case class NxMatchData(
   competition: NxCompetition,
   isLive: Boolean,
   venue: String,
-  comments: String
+  comments: String,
+  minByMinUrl: String
 ) extends NxAnswer
 
 object NxAnswer {
@@ -112,7 +113,8 @@ object NxAnswer {
       competition = NxCompetition(competition.map(_.fullName)),
       isLive = isLive,
       venue = theMatch.venue.map(_.name).getOrElse(""),
-      comments = theMatch.comments.getOrElse("")
+      comments = theMatch.comments.getOrElse(""),
+      minByMinUrl = "https://www.theguardian.com/football/live/2020/aug/10/manchester-united-v-fc-copenhagen-europa-league-quarter-final-live"
     )
   }
 
