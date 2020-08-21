@@ -7,8 +7,7 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -105,11 +104,7 @@ export const init = (): Promise<void> => {
             }
         );
 
-        const onCMPConsentNotification = shouldUseSourcepointCmp()
-            ? onConsentChange
-            : oldCmp.onIabConsentNotification;
-
-        onCMPConsentNotification(state => {
+        onConsentChange(state => {
             let canRun: boolean = true;
             if (state.ccpa) {
                 // CCPA mode
