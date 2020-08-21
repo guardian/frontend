@@ -35,11 +35,18 @@ object ArticleDateTimes {
     val lastUpdatedDisplay = GUDateTimeFormatNew.formatTimeForDisplay(lastUpdatedDateTime, request)
 
     val primaryDateLine = GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.webPublicationDate, request)
-    val secondaryDateLine =
+    /* val secondaryDateLine =
       if (articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate) ) {
         GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
       } else {
         GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
+      } */
+
+    val secondaryDateLine =
+      if (articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate.getOrElse("")) ) {
+        "First published on " + GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate), request)
+      } else {
+        "Last modified on " + GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
       }
 
     DisplayedDateTimesDCR(
