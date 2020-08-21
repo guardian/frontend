@@ -1,17 +1,10 @@
 // @flow
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
-import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
-
-const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 
 jest.mock('common/modules/commercial/geo-utils', () => ({
     isInUsOrCa: jest.fn().mockReturnValue(true),
     isInAuOrNz: jest.fn().mockReturnValue(false),
-}));
-
-jest.mock('commercial/modules/cmp/sourcepoint', () => ({
-    shouldUseSourcepointCmp: jest.fn().mockImplementation(() => false),
 }));
 
 describe('Lotame', () => {
@@ -23,7 +16,6 @@ describe('Lotame', () => {
     });
 
     it('should exist', () => {
-        shouldUseSourcepointCmp.mockReturnValue(true);
         const { shouldRun, url, sourcepointId } = lotame();
 
         expect(shouldRun).toEqual(true);
@@ -32,7 +24,6 @@ describe('Lotame', () => {
     });
 
     it('shouldRun to be true if ad the switch is on', () => {
-        shouldUseSourcepointCmp.mockReturnValue(true);
         const { shouldRun } = lotame();
 
         expect(shouldRun).toEqual(true);

@@ -1,7 +1,6 @@
 // @flow
 import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 
 export type LotameData = {
     ozoneLotameData: Array<string>,
@@ -50,9 +49,7 @@ export const getLotameData: () => LotameData = () => lotameData;
 
 export const lotame: () => ThirdPartyTag = () => ({
     shouldRun:
-        config.get('switches.lotame', false) &&
-        shouldUseSourcepointCmp() &&
-        !(isInUsOrCa() || isInAuOrNz()),
+        config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz()),
     url: '//tags.crwdcntrl.net/lt/c/12666/lt.min.js',
     beforeLoad,
     sourcepointId: '5ed6aeb1b8e05c241a63c71f',
