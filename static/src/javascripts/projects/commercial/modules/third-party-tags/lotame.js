@@ -1,6 +1,6 @@
 // @flow
-import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
+import { isInAuOrNz, isInUsOrCa } from 'common/modules/commercial/geo-utils';
 
 export type LotameData = {
     ozoneLotameData: Array<string>,
