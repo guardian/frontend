@@ -9,8 +9,8 @@ import {
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
-import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
@@ -21,7 +21,6 @@ import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
-import { isInTcfv2Test } from 'commercial/modules/cmp/tcfv2-test';
 
 type PageTargeting = {
     sens: string,
@@ -221,7 +220,7 @@ const getRdpValue = (ccpaState: boolean | null): string => {
 };
 
 const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
-    if (isInTcfv2Test() && tcfv2State !== null) {
+    if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
         return tcfv2State ? 't' : 'f';
     }
     return 'na';
@@ -298,11 +297,8 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
 
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         let canRun: boolean | null;
         if (state.ccpa) {
             // CCPA mode

@@ -9,15 +9,9 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import {
-    oldCmp as oldCmp_,
-    onConsentChange as onConsentChange_,
-} from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 
-const oldCmp: any = oldCmp_;
 const onConsentChange: any = onConsentChange_;
-const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -29,9 +23,6 @@ const fillAdvertSlots: any = fillAdvertSlots_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
-}));
-jest.mock('commercial/modules/cmp/tcfv2-test', () => ({
-    isInTcfv2Test: jest.fn().mockImplementation(() => false),
 }));
 jest.mock('lib/raven');
 jest.mock('common/modules/identity/api', () => ({
@@ -103,13 +94,7 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onIabConsentNotification: jest.fn(),
-    },
     onConsentChange: jest.fn(),
-}));
-jest.mock('commercial/modules/cmp/sourcepoint', () => ({
-    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 let $style;
@@ -132,36 +117,65 @@ const reset = () => {
     fillAdvertSlots.mockReset();
 };
 
-const tcfWithConsent = {
-    '1': true,
-    '2': true,
-    '3': true,
-    '4': true,
-    '5': true,
+const tcfv2WithConsent = {
+    tcfv2: {
+        consents: {
+            '1': true,
+            '2': true,
+            '3': true,
+            '4': true,
+            '5': true,
+        },
+        vendorConsents: {
+            '5f1aada6b8e05c306c0597d7': true, // Googletag
+        },
+    },
 };
 
-const tcfWithoutConsent = {
-    '1': false,
-    '2': false,
-    '3': false,
-    '4': false,
-    '5': false,
+const tcfv2WithoutConsent = {
+    tcfv2: {
+        consents: {
+            '1': false,
+            '2': false,
+            '3': false,
+            '4': false,
+            '5': false,
+        },
+        vendorConsents: {
+            '5f1aada6b8e05c306c0597d7': false, // Googletag
+        },
+    },
 };
 
-const tcfNullConsent = {
-    '1': null,
-    '2': null,
-    '3': null,
-    '4': null,
-    '5': null,
+// TODO: There is no null consent in the new CMP
+const tcfv2NullConsent = {
+    tcfv2: {
+        consents: {
+            '1': null,
+            '2': null,
+            '3': null,
+            '4': null,
+            '5': null,
+        },
+        vendorConsents: {
+            '5f1aada6b8e05c306c0597d7': null, // Googletag
+        },
+    },
 };
 
-const tcfMixedConsent = {
-    '1': true,
-    '2': false,
-    '3': false,
-    '4': false,
-    '5': false,
+const tcfv2MixedConsent = {
+    tcfv2: {
+        consents: {
+            '1': true,
+            '2': false,
+            '3': false,
+            '4': true,
+            '5': false,
+        },
+        vendorConsents: {
+            '5f1aada6b8e05c306c0597d7': true, // Googletag
+        },
+    },
 };
 
 const ccpaWithConsent = { ccpa: { doNotSell: false } };
@@ -456,8 +470,8 @@ describe('DFP', () => {
 
     describe('keyword targeting', () => {
         it('should send page level keywords', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
-                callback(tcfWithConsent)
+            onConsentChange.mockImplementation(callback =>
+                callback(tcfv2WithConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -469,8 +483,8 @@ describe('DFP', () => {
 
     describe('NPA flag is set correctly', () => {
         it('when full TCF consent was given', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
-                callback(tcfWithConsent)
+            onConsentChange.mockImplementation(callback =>
+                callback(tcfv2WithConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -479,8 +493,8 @@ describe('DFP', () => {
             });
         });
         it('when no TCF consent preferences were specified', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
-                callback(tcfNullConsent)
+            onConsentChange.mockImplementation(callback =>
+                callback(tcfv2NullConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -489,8 +503,8 @@ describe('DFP', () => {
             });
         });
         it('when full TCF consent was denied', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
-                callback(tcfWithoutConsent)
+            onConsentChange.mockImplementation(callback =>
+                callback(tcfv2WithoutConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -499,8 +513,8 @@ describe('DFP', () => {
             });
         });
         it('when only partial TCF consent was given', () => {
-            oldCmp.onIabConsentNotification.mockImplementation(callback =>
-                callback(tcfMixedConsent)
+            onConsentChange.mockImplementation(callback =>
+                callback(tcfv2MixedConsent)
             );
             prepareGoogletag().then(() => {
                 expect(
@@ -511,7 +525,6 @@ describe('DFP', () => {
     });
     describe('restrictDataProcessing flag is set correctly', () => {
         it('when CCPA consent was given', () => {
-            shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
@@ -524,7 +537,6 @@ describe('DFP', () => {
             });
         });
         it('when CCPA consent was denied', () => {
-            shouldUseSourcepointCmp.mockImplementation(() => true);
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithoutConsent)
             );

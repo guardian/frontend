@@ -1,7 +1,7 @@
 // @flow
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
-import { defaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import { getDefaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
 
@@ -48,10 +48,14 @@ export const epicButtonsTemplate = (
                 </a>`
         : '';
 
-    const showReminder = canShowContributionsReminderFeature();
-    const reminderCta = reminderFields ? reminderFields.reminderCTA : defaultReminderFields.reminderCTA;
+    const getReminderCta = (): ?string => {
+      const fields = reminderFields || getDefaultReminderFields();
+      return fields && fields.reminderCTA;
+    };
 
-    const reminderButton = showReminder
+    const reminderCta = canShowContributionsReminderFeature() && getReminderCta();
+
+    const reminderButton = reminderCta
         ? `<label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div data-cta-copy="${
                 reminderCta
@@ -61,7 +65,7 @@ export const epicButtonsTemplate = (
         </label>`
         : '';
 
-    const reminderInput = showReminder
+    const reminderInput = reminderCta
         ? `<input type="checkbox" id="epic-reminder__reveal-reminder" class="epic-reminder__reveal-reminder" />`
         : '';
 
