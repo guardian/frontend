@@ -9,7 +9,6 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 const onConsentChange: any = onConsentChange_;
-const spyConsent = jest.spyOn(_, 'initOnConsent');
 
 const tcfv2WithConsentMock = (callback): void =>
     callback({
@@ -65,32 +64,33 @@ describe('comscore init', () => {
         expect(onConsentChange).toBeCalled();
     });
 
-    describe.skip('Framework consent: running on consent', () => {
+    describe('Framework consent: running on consent', () => {
         beforeEach(() => {
             jest.resetAllMocks();
+            _.resetInit();
         });
 
         it('TCFv2 with consent: runs', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
             init();
-            expect(spyConsent).toBeCalledWith(true);
+            expect(loadScript).toBeCalled();
         });
 
         it('TCFv2 without consent: does not run', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
             init();
-            expect(spyConsent).not.toBeCalled();
+            expect(loadScript).not.toBeCalled();
         });
         it('CCPA with consent: runs', () => {
             onConsentChange.mockImplementation(ccpaWithConsentMock);
             init();
-            expect(spyConsent).toBeCalledWith(true);
+            expect(loadScript).toBeCalled();
         });
 
         it('CCPA without consent: runs', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
             init();
-            expect(spyConsent).toBeCalledWith(true);
+            expect(loadScript).toBeCalled();
         });
     });
 });

@@ -67,6 +67,9 @@ export const init = (): Promise<void> => {
 export const _ = {
     getGlobals,
     initOnConsent,
+    resetInit: () => {
+        initialised = false;
+    },
     comscoreSrc,
     comscoreC1,
     comscoreC2,
