@@ -70,4 +70,5 @@ export const _ = {
     comscoreSrc,
     comscoreC1,
     comscoreC2,
+    SOURCEPOINT_ID,
 };
