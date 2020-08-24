@@ -10,7 +10,6 @@ export type LotameData = {
 let lotameData: LotameData;
 
 const ozoneLotameCallback = obj => {
-    console.log('*** ozoneLotameCallback with', obj);
     lotameData = {
         ozoneLotameData: obj.getAudiences(),
         ozoneLotameProfileId: obj.getProfileId(),
@@ -18,7 +17,6 @@ const ozoneLotameCallback = obj => {
 };
 
 const beforeLoad = () => {
-    console.log('*** BEFORE LOAD');
     // More details here: https://my.lotame.com/t/g9hxvnw/detailed-reference-guide
     /* eslint-disable */
     !(function() {
