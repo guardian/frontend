@@ -26,9 +26,6 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
         if (tag.loaded === true) {
             return;
         }
-        if (tag.beforeLoad) {
-            tag.beforeLoad();
-        }
         if (tag.useImage === true) {
             new Image().src = tag.url;
         } else {
