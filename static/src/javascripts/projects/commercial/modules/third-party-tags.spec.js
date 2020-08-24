@@ -170,13 +170,13 @@ describe('third party tags', () => {
             );
             expect(document.scripts.length).toBe(3);
         });
-        it('should not add scripts to the document when TCFv2 consent has not been given', () => {
+        it('should only add performance scripts to the document when TCFv2 consent has not been given', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
             );
-            expect(document.scripts.length).toBe(1);
+            expect(document.scripts.length).toBe(2);
         });
         it('should add scripts to the document when CCPA consent has been given', () => {
             onConsentChange.mockImplementation(callback =>
@@ -188,7 +188,7 @@ describe('third party tags', () => {
             );
             expect(document.scripts.length).toBe(3);
         });
-        it('should not add scripts to the document when CCPA consent has not been given', () => {
+        it('should only add performance scripts to the document when CCPA consent has not been given', () => {
             onConsentChange.mockImplementation(callback =>
                 callback({ ccpa: { doNotSell: true } })
             );
@@ -196,7 +196,7 @@ describe('third party tags', () => {
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
             );
-            expect(document.scripts.length).toBe(1);
+            expect(document.scripts.length).toBe(2);
         });
 
         it('should only add consented custom vendors to the document for TCFv2', () => {

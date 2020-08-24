@@ -56,16 +56,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 
 const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag>
+    performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    onConsentChange(state => {
-        const ccpaCanRun = state.ccpa && !state.ccpa.doNotSell;
-        const tcfv2CanRun =
-            state.tcfv2 &&
-            state.tcfv2.consents &&
-            Object.values(state.tcfv2.consents).every(Boolean);
-        if (ccpaCanRun || tcfv2CanRun) addScripts(performanceServices);
-    });
+    addScripts(performanceServices);
 
     onConsentChange(state => {
         let consentedAdvertisingServices = [];
@@ -113,8 +106,8 @@ const loadOther = (): void => {
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+        imrWorldwide, // only in AU & NZ
+        imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
 
     insertScripts(advertisingServices, performanceServices);
