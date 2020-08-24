@@ -128,6 +128,7 @@ export const getAppNexusDirectBidParams = (
     };
 };
 
+// TODO are we using getAppNexusServerSideBidParams anywhere?
 export const getAppNexusServerSideBidParams = (
     sizes: HeaderBiddingSize[]
 ): PrebidAppNexusParams =>
