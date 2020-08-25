@@ -31,6 +31,7 @@ declare type ThirdPartyTag = {
     url: string,
     sourcepointId?: string,
     onLoad?: () => any,
+    beforeLoad?: () => any,
     useImage?: boolean,
     attrs?: Array<TagAtrribute>,
     async?: boolean,
