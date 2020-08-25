@@ -6,28 +6,20 @@ import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 
 let initUi;
 
-export const show = (forceModal: ?boolean): Promise<boolean> => {
+export const show = (): Promise<boolean> => {
     if (initUi) {
         initUi();
     } else {
-        require.ensure(
-            [],
-            () => {
-                initUi = raven.context(
-                    {
-                        tags: {
-                            feature: 'cmp',
-                        },
-                    },
-                    () => {
-                        if (forceModal) {
-                            cmp.showPrivacyManager();
-                        }
-                    },
-                    []
-                );
+        initUi = raven.context(
+            {
+                tags: {
+                    feature: 'cmp',
+                },
             },
-            'cmp'
+            () => {
+                cmp.showPrivacyManager();
+            },
+            []
         );
     }
 
@@ -67,7 +59,7 @@ export const addPrivacySettingsLink = (): void => {
             );
 
             newPrivacyLink.addEventListener('click', () => {
-                show(true);
+                show();
             });
         }
     }

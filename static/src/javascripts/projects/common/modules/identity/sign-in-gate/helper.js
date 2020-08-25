@@ -207,7 +207,7 @@ export const addClickHandler: ({
 // shows the CMP (consent management platform) module
 export const showPrivacySettingsCMPModule: () => void = () => {
     if (config.get('switches.cmpUi', true)) {
-        showCMPModule(true);
+        showCMPModule();
     }
 };
 
