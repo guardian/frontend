@@ -1,30 +1,7 @@
 // @flow
 import config from 'lib/config';
-import raven from 'lib/raven';
 import { cmp } from '@guardian/consent-management-platform';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-
-let initUi;
-
-export const show = (): Promise<boolean> => {
-    if (initUi) {
-        initUi();
-    } else {
-        initUi = raven.context(
-            {
-                tags: {
-                    feature: 'cmp',
-                },
-            },
-            () => {
-                cmp.showPrivacyManager();
-            },
-            []
-        );
-    }
-
-    return Promise.resolve(true);
-};
 
 export const addPrivacySettingsLink = (): void => {
     if (!config.get('switches.cmpUi', true)) {
@@ -59,7 +36,7 @@ export const addPrivacySettingsLink = (): void => {
             );
 
             newPrivacyLink.addEventListener('click', () => {
-                show();
+                cmp.showPrivacyManager();
             });
         }
     }
@@ -71,5 +48,5 @@ export const consentManagementPlatformUi = {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
         return Promise.resolve(cmp.willShowPrivacyMessage());
     },
-    show,
+    show: cmp.showPrivacyManager(),
 };
