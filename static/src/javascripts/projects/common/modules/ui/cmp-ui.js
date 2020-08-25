@@ -1,43 +1,7 @@
 // @flow
 import config from 'lib/config';
-import raven from 'lib/raven';
-import { cmp, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
-import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-
-let initUi;
-
-export const show = (forceModal: ?boolean): Promise<boolean> => {
-    if (initUi) {
-        initUi();
-    } else {
-        require.ensure(
-            [],
-            require => {
-                initUi = raven.context(
-                    {
-                        tags: {
-                            feature: 'cmp',
-                        },
-                    },
-                    () => {
-                        if (shouldUseSourcepointCmp()) {
-                            if (forceModal) {
-                                cmp.showPrivacyManager();
-                            }
-                        } else {
-                            require('common/modules/cmp-ui').init(!!forceModal);
-                        }
-                    },
-                    []
-                );
-            },
-            'cmp'
-        );
-    }
-
-    return Promise.resolve(true);
-};
+import { cmp } from '@guardian/consent-management-platform';
+import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 
 export const addPrivacySettingsLink = (): void => {
     if (!config.get('switches.cmpUi', true)) {
@@ -56,7 +20,7 @@ export const addPrivacySettingsLink = (): void => {
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
-            newPrivacyLink.innerText = isInUsa()
+            newPrivacyLink.innerText = getPrivacyFramework().ccpa
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
@@ -72,7 +36,7 @@ export const addPrivacySettingsLink = (): void => {
             );
 
             newPrivacyLink.addEventListener('click', () => {
-                show(true);
+                cmp.showPrivacyManager();
             });
         }
     }
@@ -81,12 +45,11 @@ export const addPrivacySettingsLink = (): void => {
 export const consentManagementPlatformUi = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
-        if (shouldUseSourcepointCmp()) {
-            return Promise.resolve(cmp.willShowPrivacyMessage());
-        }
-        return Promise.resolve(
-            config.get('switches.cmpUi', true) && oldCmp.shouldShow()
-        );
+        if (!config.get('switches.cmp', true)) return Promise.resolve(false);
+        return Promise.resolve(cmp.willShowPrivacyMessage());
     },
-    show,
+    show: (): Promise<boolean> => {
+        cmp.showPrivacyManager();
+        return Promise.resolve(true);
+    },
 };

@@ -8,7 +8,7 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { show as showCMPModule } from 'common/modules/ui/cmp-ui';
+import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
 import type { CurrentABTest, GateStatus, DismissalWindow } from './types';
 
@@ -245,7 +245,7 @@ export const addClickHandler: ({
 // shows the CMP (consent management platform) module
 export const showPrivacySettingsCMPModule: () => void = () => {
     if (config.get('switches.cmpUi', true)) {
-        showCMPModule(true);
+        cmp.showPrivacyManager();
     }
 };
 
