@@ -293,15 +293,15 @@ const getTripleLiftInventoryCode = (
 
 const getOzoneTargeting = (): { } => {
     const lotameData: LotameData = getLotameData();
-
+    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
     if (typeof lotameData !== 'undefined') {
         return {
-            ...buildAppNexusTargetingObject(getPageTargeting()),
+            ...appNexusTargetingObject,
             'lotameSegs': lotameData.ozoneLotameData,
             'lotamePid': lotameData.ozoneLotameProfileId,
         }
     }
-    return buildAppNexusTargetingObject(getPageTargeting());
+    return appNexusTargetingObject;
 };
 
 // Is pbtest being used?
