@@ -48,5 +48,8 @@ export const consentManagementPlatformUi = {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
         return Promise.resolve(cmp.willShowPrivacyMessage());
     },
-    show: cmp.showPrivacyManager(),
+    show: (): Promise<boolean> => {
+        cmp.showPrivacyManager();
+        return Promise.resolve(true);
+    },
 };
