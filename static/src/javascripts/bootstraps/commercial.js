@@ -29,11 +29,6 @@ import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-<<<<<<< HEAD
-    ['cm-lotame-data-extract', initLotameDataExtract],
-=======
-    ['cm-prepare-cmp', initCmpService],
->>>>>>> origin/master
     ['cm-comscore', initComscore],
 ];
 
