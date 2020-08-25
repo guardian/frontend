@@ -4,18 +4,13 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 
 import { getPermutivePFPSegments } from '../commercial/permutive';
-
-const onCMPConsentNotification = shouldUseSourcepointCmp()
-    ? onConsentChange
-    : oldCmp.onIabConsentNotification;
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -53,7 +48,7 @@ interface AdsConfig {
 
 let tcfState = null;
 let ccpaState = null;
-onCMPConsentNotification(state => {
+onConsentChange(state => {
     if (state.ccpa) {
         ccpaState = state.doNotSell;
     } else {

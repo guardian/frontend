@@ -10,8 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { oldCmp, onConsentChange } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
@@ -298,11 +297,8 @@ const buildPageTargetting = (
 
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
 
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         let canRun: boolean | null;
         if (state.ccpa) {
             // CCPA mode
