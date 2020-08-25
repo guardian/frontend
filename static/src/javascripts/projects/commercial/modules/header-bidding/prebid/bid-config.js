@@ -15,6 +15,8 @@ import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
+import { getLotameData } from 'commercial/modules/third-party-tags/lotame';
+import type { LotameData } from 'commercial/modules/third-party-tags/lotame';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -56,8 +58,6 @@ import {
     stripTrailingNumbersAbove1,
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
-
-const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
@@ -291,6 +291,19 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
+const getOzoneTargeting = (): { } => {
+    const lotameData: LotameData = getLotameData();
+    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
+    if (typeof lotameData !== 'undefined') {
+        return {
+            ...appNexusTargetingObject,
+            'lotameSegs': lotameData.ozoneLotameData,
+            'lotamePid': lotameData.ozoneLotameProfileId,
+        }
+    }
+    return appNexusTargetingObject;
+};
+
 // Is pbtest being used?
 const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
 // Helper for conditions
@@ -346,12 +359,11 @@ const ozoneClientSideBidder: PrebidBidder = {
                 customData: [
                     {
                         settings: {},
-                        targeting: PAGE_TARGETING,
+                        targeting: getOzoneTargeting(),
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
-            window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
         ),
 };
 
