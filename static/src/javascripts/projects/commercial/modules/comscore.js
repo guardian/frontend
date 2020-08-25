@@ -56,7 +56,7 @@ export const init = (): Promise<void> => {
         onConsentChange(state => {
             const canRunTcfv2 =
                 state.tcfv2 && state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-            const canRunCcpa = state.ccpa && !state.ccpa.doNotSell;
+            const canRunCcpa = !!state.ccpa; // always runs in CCPA
             if (canRunTcfv2 || canRunCcpa) initOnConsent(true);
         });
     }
@@ -67,7 +67,11 @@ export const init = (): Promise<void> => {
 export const _ = {
     getGlobals,
     initOnConsent,
+    resetInit: () => {
+        initialised = false;
+    },
     comscoreSrc,
     comscoreC1,
     comscoreC2,
+    SOURCEPOINT_ID,
 };
