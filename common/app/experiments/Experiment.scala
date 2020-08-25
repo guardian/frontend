@@ -6,11 +6,11 @@ import org.joda.time.LocalDate
 import play.api.mvc.RequestHeader
 
 abstract case class Experiment(
-  name: String,
-  description: String,
-  owners: Seq[Owner],
-  sellByDate: LocalDate,
-  participationGroup: ParticipationGroup
+    name: String,
+    description: String,
+    owners: Seq[Owner],
+    sellByDate: LocalDate,
+    participationGroup: ParticipationGroup,
 ) {
   val switch: Switch = Switch(
     SwitchGroup.ServerSideExperiments,
@@ -19,7 +19,7 @@ abstract case class Experiment(
     owners,
     conf.switches.Off,
     sellByDate,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   sealed abstract class ExperimentValue(val value: String)
@@ -35,21 +35,27 @@ abstract case class Experiment(
       .map(predicate)
       .getOrElse(false)
 
-  private def inVariant(implicit request: RequestHeader): Boolean = checkHeader(participationGroup.headerName, _ == variantValue.value)
-  private def inControl(implicit request: RequestHeader): Boolean = checkHeader(participationGroup.headerName, _ == controlValue.value)
-  private def matchesExtraHeader(implicit requestHeader: RequestHeader): Boolean = extraHeader.map(h => checkHeader(h.key, _ == h.value)).getOrElse(true)
+  private def inVariant(implicit request: RequestHeader): Boolean =
+    checkHeader(participationGroup.headerName, _ == variantValue.value)
+  private def inControl(implicit request: RequestHeader): Boolean =
+    checkHeader(participationGroup.headerName, _ == controlValue.value)
+  private def matchesExtraHeader(implicit requestHeader: RequestHeader): Boolean =
+    extraHeader.map(h => checkHeader(h.key, _ == h.value)).getOrElse(true)
 
   def canRun(implicit request: RequestHeader): Boolean = isSwitchedOn && priorCondition
 
-  def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && matchesExtraHeader && inVariant
+  def isParticipating[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean =
+    canRun && matchesExtraHeader && inVariant
   def isControl[A](implicit request: RequestHeader, canCheck: CanCheckExperiment): Boolean = canRun && inControl
   def value(implicit request: RequestHeader, canCheck: CanCheckExperiment): String = {
-    val experimentValue = if(isParticipating) variantValue else if(isControl) controlValue else unknownValue
+    val experimentValue = if (isParticipating) variantValue else if (isControl) controlValue else unknownValue
     experimentValue.value
   }
 
-  def priorCondition(implicit request: RequestHeader): Boolean = true // Can be overridden by experiments that requires some additional conditions to be true for the test to run
-  val extraHeader: Option[ExperimentHeader] = None // Can be overriden by experiments that requires another header for a request to participate in the test
+  def priorCondition(implicit request: RequestHeader): Boolean =
+    true // Can be overridden by experiments that requires some additional conditions to be true for the test to run
+  val extraHeader: Option[ExperimentHeader] =
+    None // Can be overriden by experiments that requires another header for a request to participate in the test
 
 }
 

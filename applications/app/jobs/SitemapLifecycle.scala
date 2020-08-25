@@ -8,9 +8,8 @@ import services.{NewsSiteMap, VideoSiteMap}
 
 import scala.concurrent.ExecutionContext
 
-class SiteMapLifecycle(jobs: JobScheduler,
-                       akkaAsync: AkkaAsync,
-                       siteMapJob: SiteMapJob)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class SiteMapLifecycle(jobs: JobScheduler, akkaAsync: AkkaAsync, siteMapJob: SiteMapJob)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
   override def start(): Unit = {
     jobs.deschedule("SiteMap")
@@ -25,9 +24,7 @@ class SiteMapLifecycle(jobs: JobScheduler,
 }
 
 class SiteMapJob(contentApiClient: ContentApiClient) extends Logging {
-  case class SiteMapContent(
-    news: xml.NodeSeq,
-    video: xml.NodeSeq)
+  case class SiteMapContent(news: xml.NodeSeq, video: xml.NodeSeq)
 
   private val newsSiteMap = new NewsSiteMap(contentApiClient)
   private val videoSiteMap = new VideoSiteMap(contentApiClient)
@@ -44,5 +41,3 @@ class SiteMapJob(contentApiClient: ContentApiClient) extends Logging {
 
   def siteMaps(): Option[SiteMapContent] = siteMapContent()
 }
-
-

@@ -14,20 +14,26 @@ import tools.{AssetMetricsCache, CloudWatch, LoadBalancer}
 import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
-class AdminLifecycle(appLifecycle: ApplicationLifecycle,
-                     jobs: JobScheduler,
-                     akkaAsync: AkkaAsync,
-                     emailService: EmailService,
-                     fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
-                     r2PagePressJob: R2PagePressJob,
-                     analyticsSanityCheckJob: AnalyticsSanityCheckJob,
-                     rebuildIndexJob: RebuildIndexJob)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+class AdminLifecycle(
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    emailService: EmailService,
+    fastlyCloudwatchLoadJob: FastlyCloudwatchLoadJob,
+    r2PagePressJob: R2PagePressJob,
+    analyticsSanityCheckJob: AnalyticsSanityCheckJob,
+    rebuildIndexJob: RebuildIndexJob,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent
+    with Logging {
 
-  appLifecycle.addStopHook { () => Future {
-    descheduleJobs()
-    CloudWatch.shutdown()
-    emailService.shutdown()
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      descheduleJobs()
+      CloudWatch.shutdown()
+      emailService.shutdown()
+    }
+  }
 
   lazy val adminPressJobStandardPushRateInMinutes: Int = Configuration.faciatool.adminPressJobStandardPushRateInMinutes
   lazy val adminPressJobHighPushRateInMinutes: Int = Configuration.faciatool.adminPressJobHighPushRateInMinutes
@@ -62,17 +68,17 @@ class AdminLifecycle(appLifecycle: ApplicationLifecycle,
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobHighFrequency", adminPressJobHighPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency)
+      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(HighFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobStandardFrequency", adminPressJobStandardPushRateInMinutes) {
-      if(FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency)
+      if (FrontPressJobSwitchStandardFrequency.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(StandardFrequency)
       Future.successful(())
     }
 
     jobs.scheduleEveryNMinutes("FrontPressJobLowFrequency", adminPressJobLowPushRateInMinutes) {
-      if(FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency)
+      if (FrontPressJobSwitch.isSwitchedOn) RefreshFrontsJob.runFrequency(akkaAsync)(LowFrequency)
       Future.successful(())
     }
 

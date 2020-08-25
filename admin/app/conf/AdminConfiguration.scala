@@ -10,23 +10,32 @@ object AdminConfiguration {
   import GuardianConfiguration._
 
   object pa {
-    lazy val footballApiKey = configuration.getStringProperty("pa.api.key")
-        .getOrElse(throw new RuntimeException("unable to load pa football api key"))
+    lazy val footballApiKey = configuration
+      .getStringProperty("pa.api.key")
+      .getOrElse(throw new RuntimeException("unable to load pa football api key"))
 
-    lazy val cricketApiKey = configuration.getStringProperty("pa.cricket.api.key")
-        .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
+    lazy val cricketApiKey = configuration
+      .getStringProperty("pa.cricket.api.key")
+      .getOrElse(throw new RuntimeException("unable to load pa cricket api key"))
 
     lazy val footballHost = PaClientConfig.baseUrl
     lazy val cricketHost = "http://cricket.api.press.net/v1"
     lazy val apiExplorer = "http://developer.press.net/io-docs"
   }
 
-  lazy val topStoriesKey = configuration.getStringProperty("top-stories.config").getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
+  lazy val topStoriesKey = configuration
+    .getStringProperty("top-stories.config")
+    .getOrElse(throw new RuntimeException("Top Stories file name is not setup"))
 
   object fastly {
-    lazy val key = configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
-    lazy val serviceId = configuration.getStringProperty("fastly.serviceId").getOrElse(throw new RuntimeException("Fastly service id not configured"))
-    lazy val ajaxServiceId = configuration.getStringProperty("fastly.ajax.serviceId").getOrElse(throw new RuntimeException("Fastly ajax service id not configured"))
+    lazy val key =
+      configuration.getStringProperty("fastly.key").getOrElse(throw new RuntimeException("Fastly key not configured"))
+    lazy val serviceId = configuration
+      .getStringProperty("fastly.serviceId")
+      .getOrElse(throw new RuntimeException("Fastly service id not configured"))
+    lazy val ajaxServiceId = configuration
+      .getStringProperty("fastly.ajax.serviceId")
+      .getOrElse(throw new RuntimeException("Fastly ajax service id not configured"))
   }
 
   object dfpApi {
@@ -37,10 +46,14 @@ object AdminConfiguration {
   }
 
   lazy val oauthCredentials: Option[OAuthCredentialsWithMultipleCallbacks] =
-      for {
-        oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
-        oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
-      } yield OAuthCredentialsWithMultipleCallbacks(oauthClientId, oauthSecret, configuration.getStringPropertiesSplitByComma("admin.oauth.callbacks"))
+    for {
+      oauthClientId <- configuration.getStringProperty("admin.oauth.clientid")
+      oauthSecret <- configuration.getStringProperty("admin.oauth.secret")
+    } yield OAuthCredentialsWithMultipleCallbacks(
+      oauthClientId,
+      oauthSecret,
+      configuration.getStringPropertiesSplitByComma("admin.oauth.callbacks"),
+    )
 
   lazy val omnitureCredentials: Option[OmnitureCredentials] =
     for {

@@ -17,34 +17,45 @@ import scala.concurrent.Future.successful
 
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
-class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with Logging with ImplicitControllerExecutionContext with AdminAuthController {
+class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+    context: ApplicationContext,
+) extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext
+    with AdminAuthController {
 
-  def renderPageDecache(): Action[AnyContent] = Action.async { implicit request =>
+  def renderPageDecache(): Action[AnyContent] =
+    Action.async { implicit request =>
       Future(NoCache(Ok(views.html.cache.pageDecache())))
-  }
-
-  def renderAjaxDecache(): Action[AnyContent] = Action.async { implicit request =>
-    Future(NoCache(Ok(views.html.cache.ajaxDecache())))
-  }
-
-  def decacheAjax(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
-    getSubmittedUrlPathMd5(request) match {
-      case Some(path) => CdnPurge.soft(wsClient, path, AjaxHost).map(message => NoCache(Ok(views.html.cache.ajaxDecache(message))))
-      case None => successful(BadRequest("No page submitted"))
     }
-  }
 
-  def decachePage(): Action[AnyContent] = AdminAuthAction.async { implicit request =>
-    getSubmittedUrlPathMd5(request) match {
-      case Some(md5Path) => CdnPurge.soft(wsClient, md5Path, GuardianHost).map(message => NoCache(Ok(views.html.cache.pageDecache(message))))
-      case None => successful(BadRequest("No page submitted"))
+  def renderAjaxDecache(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future(NoCache(Ok(views.html.cache.ajaxDecache())))
     }
-  }
+
+  def decacheAjax(): Action[AnyContent] =
+    AdminAuthAction.async { implicit request =>
+      getSubmittedUrlPathMd5(request) match {
+        case Some(path) =>
+          CdnPurge.soft(wsClient, path, AjaxHost).map(message => NoCache(Ok(views.html.cache.ajaxDecache(message))))
+        case None => successful(BadRequest("No page submitted"))
+      }
+    }
+
+  def decachePage(): Action[AnyContent] =
+    AdminAuthAction.async { implicit request =>
+      getSubmittedUrlPathMd5(request) match {
+        case Some(md5Path) =>
+          CdnPurge
+            .soft(wsClient, md5Path, GuardianHost)
+            .map(message => NoCache(Ok(views.html.cache.pageDecache(message))))
+        case None => successful(BadRequest("No page submitted"))
+      }
+    }
 
   private def getSubmittedUrlPathMd5(request: AuthenticatedRequest[AnyContent, UserIdentity]): Option[String] = {
-    request
-      .body.asFormUrlEncoded
+    request.body.asFormUrlEncoded
       .getOrElse(Map.empty)
       .get("url")
       .flatMap(_.headOption)

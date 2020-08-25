@@ -5,9 +5,9 @@ import play.api.data.Field
 
 object ConsentChannel {
   sealed abstract class ConsentChannelBehaviour(val id: String)
-  case object TextConsentChannel  extends ConsentChannelBehaviour("sms")
+  case object TextConsentChannel extends ConsentChannelBehaviour("sms")
   case object PhoneOptOutConsentChannel extends ConsentChannelBehaviour("phone_optout")
-  case object PostOptOutConsentChannel  extends ConsentChannelBehaviour("post_optout")
+  case object PostOptOutConsentChannel extends ConsentChannelBehaviour("post_optout")
   case object MarketResearchConsentChannel extends ConsentChannelBehaviour("market_research_optout")
   case object ProfilingConsentChannel extends ConsentChannelBehaviour("profiling_optout")
 
@@ -16,7 +16,7 @@ object ConsentChannel {
     PhoneOptOutConsentChannel.id,
     PostOptOutConsentChannel.id,
     MarketResearchConsentChannel.id,
-    ProfilingConsentChannel.id
+    ProfilingConsentChannel.id,
   )
 
   def channelsProvidedBy(user: User): List[ConsentChannelBehaviour] = {
@@ -26,7 +26,7 @@ object ConsentChannel {
     val channels = List(
       (TextConsentChannel -> telephoneDefined),
       (PhoneOptOutConsentChannel -> telephoneDefined),
-      (PostOptOutConsentChannel -> postcodeDefined)
+      (PostOptOutConsentChannel -> postcodeDefined),
     )
 
     channels.filter(_._2).map(_._1)
@@ -34,9 +34,9 @@ object ConsentChannel {
 
   /** Field is a channel and user has provided details for this channel */
   def isUsersChannel(consentField: Field, user: User): Boolean = {
-      consentField("id").value.exists { id =>
-        channelsIds.contains(id) && channelsProvidedBy(user).exists(_.id == id)
-      }
+    consentField("id").value.exists { id =>
+      channelsIds.contains(id) && channelsProvidedBy(user).exists(_.id == id)
+    }
   }
 
   def isSmsChannel(consentField: Field, user: User): Boolean =
@@ -45,13 +45,13 @@ object ConsentChannel {
   def isOptOutChannel(consentField: Field, user: User): Boolean =
     consentField("id").value match {
       case Some(PhoneOptOutConsentChannel.id) | Some(PostOptOutConsentChannel.id) => true
-      case _ => false
+      case _                                                                      => false
     }
 
-  def isMarketResearch(consentField: Field, user: User) : Boolean =
+  def isMarketResearch(consentField: Field, user: User): Boolean =
     consentField("id").value.exists(_ == MarketResearchConsentChannel.id)
 
-  def isProfilingChannel(consentField:Field, user: User): Boolean =
+  def isProfilingChannel(consentField: Field, user: User): Boolean =
     consentField("id").value.exists(_ == ProfilingConsentChannel.id)
 
   def isChannel(consentField: Field): Boolean = {
@@ -59,4 +59,3 @@ object ConsentChannel {
   }
 
 }
-

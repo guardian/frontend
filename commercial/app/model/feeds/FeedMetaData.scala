@@ -39,17 +39,18 @@ case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
-case class EventsFeedMetaData(feedName: String,
-                              accessToken: String,
-                              additionalParameters: Map[String, String] = Map.empty)
-  extends FeedMetaData {
+case class EventsFeedMetaData(
+    feedName: String,
+    accessToken: String,
+    additionalParameters: Map[String, String] = Map.empty,
+) extends FeedMetaData {
 
   val name = feedName
   val url = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
   override val parameters = Map(
     "token" -> accessToken,
     "status" -> "live",
-    "expand" -> "ticket_classes,venue"
+    "expand" -> "ticket_classes,venue",
   ) ++ additionalParameters
 
   override val timeout = 20.seconds

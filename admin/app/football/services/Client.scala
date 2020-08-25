@@ -14,7 +14,6 @@ import conf.AdminConfiguration
 import football.model.PA
 import model.ApplicationContext
 
-
 trait Client extends PaClient with Http {
 
   def apiKey: String
@@ -75,7 +74,8 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
     val file = new File(path)
     file.getParentFile().mkdirs()
     val writer = new java.io.PrintWriter(file)
-    try writer.write(contents) finally writer.close()
+    try writer.write(contents)
+    finally writer.close()
   }
 
   override def apiKey: String = "KEY"
@@ -88,20 +88,22 @@ trait PaFootballClient {
   implicit val context: ApplicationContext
   val wsClient: WSClient
 
-  lazy val client: Client = if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
+  lazy val client: Client =
+    if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
 
-  def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] = for {
-    competitions <- client.competitions.map(PA.filterCompetitions)
-    competitionTeams <- Future.traverse(competitions) {
-      comp => client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
-        case e: PaClientErrorsException =>
-          // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
-          log.error(s"PA Client error when fetching teams for competition $comp: ", e)
-          List()
+  def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] =
+    for {
+      competitions <- client.competitions.map(PA.filterCompetitions)
+      competitionTeams <- Future.traverse(competitions) { comp =>
+        client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
+          case e: PaClientErrorsException =>
+            // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
+            log.error(s"PA Client error when fetching teams for competition $comp: ", e)
+            List()
+        }
       }
+      allTeams = competitionTeams.flatten.distinct
+    } yield {
+      (competitions, allTeams)
     }
-    allTeams = competitionTeams.flatten.distinct
-  } yield {
-    (competitions, allTeams)
-  }
 }

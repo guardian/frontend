@@ -1,7 +1,10 @@
 package services
 
 import com.amazonaws.services.simplesystemsmanagement.model.{GetParameterRequest, GetParametersByPathRequest}
-import com.amazonaws.services.simplesystemsmanagement.{AWSSimpleSystemsManagement, AWSSimpleSystemsManagementClientBuilder}
+import com.amazonaws.services.simplesystemsmanagement.{
+  AWSSimpleSystemsManagement,
+  AWSSimpleSystemsManagementClientBuilder,
+}
 import common.GuardianConfiguration
 import conf.Configuration
 
@@ -10,13 +13,15 @@ import scala.collection.JavaConverters._
 
 class ParameterStore(region: String) {
 
-  private lazy val client: AWSSimpleSystemsManagement = Configuration.aws.credentials.map { credentials =>
-    AWSSimpleSystemsManagementClientBuilder
-      .standard()
-      .withCredentials(credentials)
-      .withRegion(region)
-      .build()
-  }.getOrElse(throw new RuntimeException("Failed to initialize AWSSimpleSystemsManagement"))
+  private lazy val client: AWSSimpleSystemsManagement = Configuration.aws.credentials
+    .map { credentials =>
+      AWSSimpleSystemsManagementClientBuilder
+        .standard()
+        .withCredentials(credentials)
+        .withRegion(region)
+        .build()
+    }
+    .getOrElse(throw new RuntimeException("Failed to initialize AWSSimpleSystemsManagement"))
 
   def get(key: String): String = {
     val parameterRequest = new GetParameterRequest().withWithDecryption(true).withName(key)
@@ -43,7 +48,7 @@ class ParameterStore(region: String) {
 
       Option(result.getNextToken) match {
         case Some(next) => pagination(accum ++ resultMap, Some(next))
-        case None => accum ++ resultMap
+        case None       => accum ++ resultMap
       }
     }
 

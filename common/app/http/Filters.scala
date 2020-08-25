@@ -19,7 +19,7 @@ class GzipperConfig() extends GzipFilterConfig {
   // These paths are used as a whitelist that means the server's
   // outgoing response for this request will be uncompressed.
   val excludeFromGzip = List(
-    "/esi/ad-call"
+    "/esi/ad-call",
   )
 
   override val shouldGzip: (RequestHeader, Result) => Boolean = (request, result) => {
@@ -28,13 +28,15 @@ class GzipperConfig() extends GzipFilterConfig {
 }
 class Gzipper(implicit val mat: Materializer) extends GzipFilter(new GzipperConfig)
 
-class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter with implicits.Requests {
+class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: ExecutionContext)
+    extends Filter
+    with implicits.Requests {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
-    nextFilter(request).map{ result =>
+    nextFilter(request).map { result =>
       if (request.isJson) {
         import result.header.headers
 
@@ -42,7 +44,7 @@ class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: Ex
         val vary = headers.get("Vary").fold(defaultVaryFields)(v => (v :: varyFields).mkString(","))
         result.withHeaders("Vary" -> vary)
 
-     } else {
+      } else {
         result
       }
     }
@@ -50,7 +52,11 @@ class JsonVaryHeadersFilter(implicit val mat: Materializer, executionContext: Ex
 }
 
 // this lets the CDN log the exact part of the backend this response came from
-class BackendHeaderFilter(implicit val mat: Materializer, context: ApplicationContext, executionContext: ExecutionContext) extends Filter {
+class BackendHeaderFilter(implicit
+    val mat: Materializer,
+    context: ApplicationContext,
+    executionContext: ExecutionContext,
+) extends Filter {
 
   private lazy val backendHeader = "X-Gu-Backend-App" -> context.applicationIdentity.name
 
@@ -66,7 +72,7 @@ class SurrogateKeyFilter(implicit val mat: Materializer, executionContext: Execu
 
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     val surrogateKey = DigestUtils.md5Hex(request.path)
-    nextFilter(request).map{ result =>
+    nextFilter(request).map { result =>
       // Surrogate keys are space delimited, so string them together if there are already some present
       val key = result.header.headers.get(SurrogateKeyHeader).map(key => s"$key $surrogateKey").getOrElse(surrogateKey)
       result.withHeaders(SurrogateKeyHeader -> key)
@@ -81,10 +87,10 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
     nextFilter(r).map { rh =>
       val experimentHeaders = experimentsResponseHeaders(r)
       val varyHeaderValues = rh.header.headers.get("Vary").toSeq ++ experimentHeaders.get("Vary").toSeq
-      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(",")))
-        .filterNot { case (_, v) => v.isEmpty }
-        .toSeq
-      rh.withHeaders(responseHeaders:_*)
+      val responseHeaders = (experimentHeaders + ("Vary" -> varyHeaderValues.mkString(","))).filterNot {
+        case (_, v) => v.isEmpty
+      }.toSeq
+      rh.withHeaders(responseHeaders: _*)
     }
   }
 
@@ -100,7 +106,8 @@ class ExperimentsFilter(implicit val mat: Materializer, executionContext: Execut
         val experimentVaryHeaders = Seq(experiment.participationGroup.headerName) ++ experiment.extraHeader.map(_.key)
         Seq(("Vary" -> experimentVaryHeaders.mkString(",")), ("X-GU-Depends-On-Experiments" -> experiment.name))
       }
-      .groupBy(_._1).map { case (k,v) => k -> v.map(_._2).mkString(",") }
+      .groupBy(_._1)
+      .map { case (k, v) => k -> v.map(_._2).mkString(",") }
 }
 
 class PanicSheddingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter {
@@ -116,49 +123,51 @@ class PanicSheddingFilter(implicit val mat: Materializer, executionContext: Exec
 object Filters {
   // NOTE - order is important here, Gzipper AFTER JsonVaryHeaders
   // which effectively means "JsonVaryHeaders goes around Gzipper"
-  def common(
-    implicit materializer: Materializer,
-    applicationContext: ApplicationContext,
-    executionContext: ExecutionContext
-  ): List[EssentialFilter] = List(
-    new RequestLoggingFilter,
-    new PanicSheddingFilter,
-    new JsonVaryHeadersFilter,
-    new ExperimentsFilter,
-    new Gzipper,
-    new BackendHeaderFilter,
-    new SurrogateKeyFilter,
-    new AmpFilter
-  )
+  def common(implicit
+      materializer: Materializer,
+      applicationContext: ApplicationContext,
+      executionContext: ExecutionContext,
+  ): List[EssentialFilter] =
+    List(
+      new RequestLoggingFilter,
+      new PanicSheddingFilter,
+      new JsonVaryHeadersFilter,
+      new ExperimentsFilter,
+      new Gzipper,
+      new BackendHeaderFilter,
+      new SurrogateKeyFilter,
+      new AmpFilter,
+    )
 
-  def preload(
-     implicit materializer: Materializer,
-     applicationContext: ApplicationContext,
-     executionContext: ExecutionContext
-   ): List[EssentialFilter] = List(
-    new H2PreloadFilter
-  )
+  def preload(implicit
+      materializer: Materializer,
+      applicationContext: ApplicationContext,
+      executionContext: ExecutionContext,
+  ): List[EssentialFilter] =
+    List(
+      new H2PreloadFilter,
+    )
 
 }
 
-class CommonFilters(
-  implicit mat: Materializer,
-  applicationContext: ApplicationContext,
-  executionContext: ExecutionContext
+class CommonFilters(implicit
+    mat: Materializer,
+    applicationContext: ApplicationContext,
+    executionContext: ExecutionContext,
 ) extends HttpFilters {
   val filters = Filters.common
 }
 
-class PreloadFilters(
-   implicit mat: Materializer,
-   applicationContext: ApplicationContext,
-   executionContext: ExecutionContext
- ) extends HttpFilters {
+class PreloadFilters(implicit
+    mat: Materializer,
+    applicationContext: ApplicationContext,
+    executionContext: ExecutionContext,
+) extends HttpFilters {
   val filters = Filters.preload
 }
 
-class CommonGzipFilter @Inject() (
-  implicit mat: Materializer
+class CommonGzipFilter @Inject() (implicit
+    mat: Materializer,
 ) extends HttpFilters {
 
   val filters = Seq(new Gzipper)

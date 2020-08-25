@@ -21,25 +21,27 @@ class SwitchesTest extends FlatSpec with Matchers with AppendedClues {
     else today
   }
 
-  def testSwitch: Switch = Switch(
-    testSwitchGroup,
-    "test-switch",
-    "exciting switch",
-    owners = Seq(Owner.withGithub("FakeOwner")),
-    safeState = Off,
-    sellByDate = switchExpiryDate,
-    exposeClientSide = true
-  )
+  def testSwitch: Switch =
+    Switch(
+      testSwitchGroup,
+      "test-switch",
+      "exciting switch",
+      owners = Seq(Owner.withGithub("FakeOwner")),
+      safeState = Off,
+      sellByDate = switchExpiryDate,
+      exposeClientSide = true,
+    )
 
-  def foreverSwitch: Switch = Switch(
-    testSwitchGroup,
-    "forever-switch",
-    "exciting switch",
-    owners = Seq(Owner.withGithub("FakeOwner")),
-    safeState = Off,
-    sellByDate = None,
-    exposeClientSide = true
-  )
+  def foreverSwitch: Switch =
+    Switch(
+      testSwitchGroup,
+      "forever-switch",
+      "exciting switch",
+      owners = Seq(Owner.withGithub("FakeOwner")),
+      safeState = Off,
+      sellByDate = None,
+      exposeClientSide = true,
+    )
 
   "Switches" should "not be near expiry over a week in advance" in {
     Switch.expiry(testSwitch, switchExpiryDate.minusDays(9)) should be(Switch.Expiry(Some(9), false, false))

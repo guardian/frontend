@@ -1,6 +1,5 @@
 package model.abtests
 
-
 import tools.{ABDataChart, ChartFormat, CloudWatch}
 import com.amazonaws.services.cloudwatch.model.GetMetricStatisticsRequest
 import org.joda.time.DateTime
@@ -28,16 +27,18 @@ object AbTests {
 
       for {
         cloudWatchResults <- Future.traverse(variants) { variant =>
-          CloudWatch.euWestClient.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-            .withStartTime(new DateTime().minusHours(6).toDate)
-            .withEndTime(new DateTime().toDate)
-            .withPeriod(360)
-            .withStatistics("Average")
-            .withNamespace("AbTests")
-            .withMetricName(s"$abTest-$variant")
-            .withDimensions(CloudWatch.stage))
+          CloudWatch.euWestClient.getMetricStatisticsFuture(
+            new GetMetricStatisticsRequest()
+              .withStartTime(new DateTime().minusHours(6).toDate)
+              .withEndTime(new DateTime().toDate)
+              .withPeriod(360)
+              .withStatistics("Average")
+              .withNamespace("AbTests")
+              .withMetricName(s"$abTest-$variant")
+              .withDimensions(CloudWatch.stage),
+          )
         }
-      } yield new ABDataChart(abTest, Seq("Time") ++ variants, ChartFormat.MultiLine, cloudWatchResults:_*)
+      } yield new ABDataChart(abTest, Seq("Time") ++ variants, ChartFormat.MultiLine, cloudWatchResults: _*)
     }
   }
 }

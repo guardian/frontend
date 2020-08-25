@@ -13,22 +13,24 @@ import scala.concurrent.duration._
 case class FastlyStatistic(service: String, region: String, timestamp: Long, name: String, value: String) {
   lazy val key: (String, String, String) = (service, name, region)
 
-  lazy val metric = new MetricDatum().
-    withMetricName(name).
-    withDimensions(new Dimension().withName("service").withValue(service),
-                   new Dimension().withName("region").withValue(region)).
-    withTimestamp(new DateTime(timestamp).toDate).
-    withValue(value.toDouble)
+  lazy val metric = new MetricDatum()
+    .withMetricName(name)
+    .withDimensions(
+      new Dimension().withName("service").withValue(service),
+      new Dimension().withName("region").withValue(region),
+    )
+    .withTimestamp(new DateTime(timestamp).toDate)
+    .withValue(value.toDouble)
 }
 
 class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
   private case class FastlyApiStat(
-    hits: Int,
-    miss: Int,
-    errors: Int,
-    service_id: String,
-    start_time: Long
+      hits: Int,
+      miss: Int,
+      errors: Int,
+      service_id: String,
+      start_time: Long,
   )
 
   private implicit val FastlyApiStatFormat = Json.format[FastlyApiStat]
@@ -37,24 +39,28 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
 
   def fetch()(implicit executionContext: ExecutionContext): Future[List[FastlyStatistic]] = {
 
-    val futureResponses: Future[List[JsValue]] = Future.sequence{
-      regions map { region =>
-        val request = wsClient.url(s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region")
-          .withHttpHeaders("Fastly-Key" -> fastly.key)
-          .withRequestTimeout(20.seconds)
+    val futureResponses: Future[List[JsValue]] = Future
+      .sequence {
+        regions map { region =>
+          val request = wsClient
+            .url(
+              s"https://api.fastly.com/stats/service/${fastly.serviceId}?by=minute&from=45+minutes+ago&to=15+minutes+ago&region=$region",
+            )
+            .withHttpHeaders("Fastly-Key" -> fastly.key)
+            .withRequestTimeout(20.seconds)
 
-        val response: Future[Option[JsValue]] = request.get().map { resp => Some(resp.json) }.recover {
-          case e: Throwable =>
-            log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
-            None
+          val response: Future[Option[JsValue]] = request.get().map { resp => Some(resp.json) }.recover {
+            case e: Throwable =>
+              log.error(s"Error with request to api.fastly.com: ${e.getMessage}")
+              None
+          }
+          response
         }
-        response
-      }
 
-    }.map(_.flatten)
+      }
+      .map(_.flatten)
 
     futureResponses map { responses =>
-
       responses flatMap { json =>
         val samples: List[FastlyApiStat] = (json \ "data").validate[List[FastlyApiStat]].getOrElse(Nil)
         val region: String = (json \ "meta" \ "region").as[String]
@@ -67,7 +73,7 @@ class FastlyStatisticService(wsClient: WSClient) extends Logging {
           val statistics: List[(String, String)] = List(
             ("hits", sample.hits.toString),
             ("miss", sample.miss.toString),
-            ("errors", sample.errors.toString)
+            ("errors", sample.errors.toString),
           )
 
           statistics map {

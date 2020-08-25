@@ -7,54 +7,61 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import contentapi.ContentApiClient
 
 class MostViewedVideoController(
-  contentApiClient: ContentApiClient,
-  mostViewedVideoAgent: MostViewedVideoAgent,
-  val controllerComponents: ControllerComponents
-) extends BaseController with Logging with ImplicitControllerExecutionContext {
+    contentApiClient: ContentApiClient,
+    mostViewedVideoAgent: MostViewedVideoAgent,
+    val controllerComponents: ControllerComponents,
+) extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   // Move this out of here if the test is successful
-  def renderInSeries(series: String): Action[AnyContent] = Action.async { implicit request =>
-    val page = (request.getQueryString("page") getOrElse "1").toInt
-    val edition = Edition(request)
+  def renderInSeries(series: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val page = (request.getQueryString("page") getOrElse "1").toInt
+      val edition = Edition(request)
 
-    contentApiClient.getResponse(contentApiClient.search(edition)
-      .tag(series)
-      .contentType("video")
-      .showTags("series")
-      .showFields("headline")
-      .page(page)
-      .pageSize(6)
-    ).map { response =>
-      val videos = response.results.toList.map(apiContent => {
-        val content = Content.make(apiContent)
-        Video.make(content)
-      })
+      contentApiClient
+        .getResponse(
+          contentApiClient
+            .search(edition)
+            .tag(series)
+            .contentType("video")
+            .showTags("series")
+            .showFields("headline")
+            .page(page)
+            .pageSize(6),
+        )
+        .map { response =>
+          val videos = response.results.toList.map(apiContent => {
+            val content = Content.make(apiContent)
+            Video.make(content)
+          })
 
-      val seriesTitle = response.results.toList.lift(1).flatMap { result =>
-        result.tags.find(tag => tag.id == series).map(tag => tag.webTitle)
-      }
+          val seriesTitle = response.results.toList.lift(1).flatMap { result =>
+            result.tags.find(tag => tag.id == series).map(tag => tag.webTitle)
+          }
 
-      val pagination = Pagination(page, response.pages, response.total)
+          val pagination = Pagination(page, response.pages, response.total)
 
-      Cached(900) {
-        JsonComponent(views.html.fragments.videosInSeries(videos, seriesTitle, series, pagination))
+          Cached(900) {
+            JsonComponent(views.html.fragments.videosInSeries(videos, seriesTitle, series, pagination))
+          }
+        }
+    }
+
+  def renderMostViewed(): Action[AnyContent] =
+    Action { implicit request =>
+      val size = request.getQueryString("size").getOrElse("6").toInt
+      val videos = mostViewedVideoAgent.mostViewedVideo().take(size)
+
+      if (videos.nonEmpty) {
+        Cached(900) {
+          JsonComponent(views.html.fragments.mostViewedVideo(videos))
+        }
+      } else {
+        Cached(60) {
+          JsonComponent("html" -> "{}")
+        }
       }
     }
-  }
-
-  def renderMostViewed(): Action[AnyContent] = Action { implicit request =>
-
-    val size = request.getQueryString("size").getOrElse("6").toInt
-    val videos = mostViewedVideoAgent.mostViewedVideo().take(size)
-
-    if (videos.nonEmpty) {
-      Cached(900) {
-        JsonComponent(views.html.fragments.mostViewedVideo(videos))
-      }
-    } else {
-      Cached(60) {
-        JsonComponent("html" -> "{}")
-      }
-    }
-  }
 }

@@ -6,23 +6,23 @@ import layout.PaidCard
 import model.facia.PressedCollection
 
 case class ContainerModel(
-  id: String,
-  layoutName: String,
-  content: ContainerContent,
-  branding: Option[ContainerBranding]
+    id: String,
+    layoutName: String,
+    content: ContainerContent,
+    branding: Option[ContainerBranding],
 ) {
   val isSingleSponsorContainer: Boolean = branding exists {
     case PaidMultiSponsorBranding => false
-    case _: Branding => true
+    case _: Branding              => true
   }
 }
 
 case class ContainerContent(
-  title: String,
-  description: Option[String],
-  targetUrl: Option[String],
-  initialCards: Seq[PaidCard],
-  showMoreCards: Seq[PaidCard]
+    title: String,
+    description: Option[String],
+    targetUrl: Option[String],
+    initialCards: Seq[PaidCard],
+    showMoreCards: Seq[PaidCard],
 )
 
 object ContainerModel {
@@ -39,18 +39,18 @@ object ContainerModel {
       val targetUrl = collection.href
 
       val maxInitialSize = layoutName match {
-        case "fixed/large/slow-XIV" => 6
-        case "fixed/medium/fast-XI" => 3
-        case "fixed/medium/fast-XII" => 4
-        case "fixed/medium/slow-VI" => 6
-        case "fixed/medium/slow-VII" => 7
-        case "fixed/small/fast-VIII" => 8
-        case "fixed/small/slow-I" => 1
-        case "fixed/small/slow-III" => 3
-        case "fixed/small/slow-IV" => 4
-        case "fixed/small/slow-V-half" => 5
+        case "fixed/large/slow-XIV"     => 6
+        case "fixed/medium/fast-XI"     => 3
+        case "fixed/medium/fast-XII"    => 4
+        case "fixed/medium/slow-VI"     => 6
+        case "fixed/medium/slow-VII"    => 7
+        case "fixed/small/fast-VIII"    => 8
+        case "fixed/small/slow-I"       => 1
+        case "fixed/small/slow-III"     => 3
+        case "fixed/small/slow-IV"      => 4
+        case "fixed/small/slow-V-half"  => 5
         case "fixed/small/slow-V-third" => 5
-        case _ => cards.size
+        case _                          => cards.size
       }
 
       ContainerContent(
@@ -61,7 +61,7 @@ object ContainerModel {
         showMoreCards = {
           if (collection.config.hideShowMore) Nil
           else cards.drop(maxInitialSize)
-        }
+        },
       )
     }
 
@@ -69,7 +69,7 @@ object ContainerModel {
       id = collection.id,
       layoutName,
       content,
-      branding = collection.branding(edition)
+      branding = collection.branding(edition),
     )
   }
 }

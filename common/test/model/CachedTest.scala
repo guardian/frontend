@@ -17,7 +17,6 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   "Cached" should "cache live content for 5 seconds" in {
     LongCacheSwitch.switchOff()
 
-
     val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
     val liveContent = content(lastModified = modified, live = true)
 
@@ -60,10 +59,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "cache other things for 1 minute" in {
     LongCacheSwitch.switchOff()
 
-    val page = SimplePage(MetaData.make(
-      id = "",
-      section = None,
-      webTitle = ""))
+    val page = SimplePage(MetaData.make(id = "", section = None, webTitle = ""))
 
     page.metadata.cacheTime.cacheSeconds should be(60)
 
@@ -89,7 +85,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
-    headers("Cache-Control") should equal (headers("Surrogate-Control"))
+    headers("Cache-Control") should equal(headers("Surrogate-Control"))
   }
 
   "Longer cache control" should "be applied to SurrogateControl if enabled" in {
@@ -157,18 +153,20 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val offsetWebDate = jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC)
     val offsetLastModified = jodaToJavaInstant(lastModified).atOffset(ZoneOffset.UTC)
 
-    val content = Content(ApiContent(id = "foo/2012/jan/07/bar",
-      sectionId = None,
-      sectionName = None,
-      webPublicationDate = Some(offsetWebDate.toCapiDateTime),
-      webTitle = "Some article",
-      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      elements = None,
-      fields = Some(ContentFields(
-        lastModified = Some(offsetLastModified.toCapiDateTime),
-        liveBloggingNow = Some(live)))
-    ))
+    val content = Content(
+      ApiContent(
+        id = "foo/2012/jan/07/bar",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDate = Some(offsetWebDate.toCapiDateTime),
+        webTitle = "Some article",
+        webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+        apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+        elements = None,
+        fields =
+          Some(ContentFields(lastModified = Some(offsetLastModified.toCapiDateTime), liveBloggingNow = Some(live))),
+      ),
+    )
     model.SimpleContentPage(content)
   }
 }

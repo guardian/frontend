@@ -7,9 +7,11 @@ import slices.{MobileShowMore, RestrictTo}
 import scala.annotation.tailrec
 
 case class ItemClasses(mobile: CardType, tablet: CardType, desktop: Option[CardType] = None) {
+
   /** Template helper */
-  def classes: String = s"fc-item--${mobile.cssClassName}-mobile fc-item--${tablet.cssClassName}-tablet" +
-    desktop.map(d => s" fc-item--${d.cssClassName}-desktop").getOrElse("")
+  def classes: String =
+    s"fc-item--${mobile.cssClassName}-mobile fc-item--${tablet.cssClassName}-tablet" +
+      desktop.map(d => s" fc-item--${d.cssClassName}-desktop").getOrElse("")
 
   def allTypes: Set[CardType] = Set(mobile, tablet) ++ desktop.toSet
 

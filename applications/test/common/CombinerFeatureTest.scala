@@ -28,7 +28,7 @@ import collection.JavaConverters._
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
-        $("[data-test-id=header-title]").text.toLowerCase should be ("science + apple")
+        $("[data-test-id=header-title]").text.toLowerCase should be("science + apple")
         trails.asScala.length should be > 10
       }
     }
@@ -49,7 +49,9 @@ import collection.JavaConverters._
 
       Given("I visit a combiner page with a series tag in the same seciton")
 
-      goTo("/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches") { browser =>
+      goTo(
+        "/lifeandstyle/series/quick-and-healthy-recipes+series/hugh-fearnley-whittingstall-quick-and-healthy-lunches",
+      ) { browser =>
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both tags")
@@ -58,5 +60,3 @@ import collection.JavaConverters._
     }
   }
 }
-
-

@@ -11,15 +11,14 @@ import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
 import play.api.libs.json.Json
 
-
 object StatusNotificationMessage {
   implicit val jsonFormat = Json.format[StatusNotificationMessage]
 }
 case class StatusNotificationMessage(
-  status: String,
-  front: String,
-  isLive: Boolean,
-  message: Option[String]
+    status: String,
+    front: String,
+    isLive: Boolean,
+    message: Option[String],
 )
 
 object StatusNotification {
@@ -27,9 +26,11 @@ object StatusNotification {
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {
     def onError(exception: Exception) {
-      Logger.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")}
+      Logger.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
+    }
     def onSuccess(request: PutRecordRequest, result: PutRecordResult) {
-      Logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")}
+      Logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
+    }
   }
 
   lazy val client: AmazonKinesisAsync = {
@@ -40,22 +41,27 @@ object StatusNotification {
       .build()
   }
 
-
   def notifyFailedJob(front: String, isLive: Boolean, reason: ApiError): Unit = {
-    putMessage(StatusNotificationMessage(
-      status = "error",
-      front = front,
-      isLive = isLive,
-      message = Some(s"${reason.cause} ${reason.message}")
-    ))}
+    putMessage(
+      StatusNotificationMessage(
+        status = "error",
+        front = front,
+        isLive = isLive,
+        message = Some(s"${reason.cause} ${reason.message}"),
+      ),
+    )
+  }
 
   def notifyCompleteJob(front: String, isLive: Boolean): Unit = {
-    putMessage(StatusNotificationMessage(
-      status = "ok",
-      front = front,
-      isLive = isLive,
-      message = None
-    ))}
+    putMessage(
+      StatusNotificationMessage(
+        status = "ok",
+        front = front,
+        isLive = isLive,
+        message = None,
+      ),
+    )
+  }
 
   def putMessage(message: StatusNotificationMessage): Unit = {
     if (FaciaPressStatusNotifications.isSwitchedOn) {
@@ -66,7 +72,8 @@ object StatusNotification {
               .withStreamName(streamName)
               .withPartitionKey(partitionKey)
               .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
-            KinesisLoggingAsyncHandler)
+            KinesisLoggingAsyncHandler,
+          )
         case None => Logger.info("Kinesis status notification not configured.")
       }
     }

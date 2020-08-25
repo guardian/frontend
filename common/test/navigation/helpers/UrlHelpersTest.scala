@@ -23,7 +23,9 @@ class UrlHelpersTest extends WordSpec with Matchers {
       }
 
       "return amp_footer_support_contribute when called with SupportContribute, AmpFooter" in {
-        UrlHelpers.getComponentId(SupportContribute, AmpFooter)(TestRequest()) should be(Some("amp_footer_support_contribute"))
+        UrlHelpers.getComponentId(SupportContribute, AmpFooter)(TestRequest()) should be(
+          Some("amp_footer_support_contribute"),
+        )
       }
 
       "return footer_support_subscribe when called with SupportSubscribe, Footer" in {
@@ -31,7 +33,9 @@ class UrlHelpersTest extends WordSpec with Matchers {
       }
 
       "return amp_footer_support_subscribe when called with SupportSubscribe, AmpFooter" in {
-        UrlHelpers.getComponentId(SupportSubscribe, AmpFooter)(TestRequest()) should be(Some("amp_footer_support_subscribe"))
+        UrlHelpers.getComponentId(SupportSubscribe, AmpFooter)(TestRequest()) should be(
+          Some("amp_footer_support_subscribe"),
+        )
       }
     }
 

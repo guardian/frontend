@@ -34,106 +34,114 @@ trait AtomPage extends Page {
 }
 
 case class ChartAtomPage(
-  override val atom: ChartAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
+    override val atom: ChartAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader, context: ApplicationContext)
+    extends AtomPage {
   override val atomType = "chart"
   override val body = views.html.fragments.atoms.chart(atom, shouldFence = false)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
-    section = None
+    section = None,
   )
 }
 
 case class GuideAtomPage(
-  override val atom: GuideAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
+    override val atom: GuideAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader)
+    extends AtomPage {
   override val atomType = "guide"
   override val body = views.html.fragments.atoms.snippets.guide(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Guide"),
-    section = None
+    section = None,
   )
 }
 
 case class InteractiveAtomPage(
-  override val atom: InteractiveAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
+    override val atom: InteractiveAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader, context: ApplicationContext)
+    extends AtomPage {
   override val atomType = "interactive"
   override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
-    section = None
+    section = None,
   )
 }
 
 case class MediaAtomPage(
-  override val atom: MediaAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
+    override val atom: MediaAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader)
+    extends AtomPage {
   override val atomType = "media"
-  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
+  override val body = views.html.fragments.atoms
+    .media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
   override val javascriptModule = "youtube-embed"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.title,
-    section = None
+    section = None,
   )
 }
 
 case class ProfileAtomPage(
-  override val atom: ProfileAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
+    override val atom: ProfileAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader)
+    extends AtomPage {
   override val atomType = "profile"
   override val body = views.html.fragments.atoms.snippets.profile(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Profile"),
-    section = None
+    section = None,
   )
 }
 
 case class QandaAtomPage(
-override val atom: QandaAtom,
-override val withJavaScript: Boolean,
-override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
+    override val atom: QandaAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader)
+    extends AtomPage {
   override val atomType = "qanda"
   override val body = views.html.fragments.atoms.snippets.qanda(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Q&A"),
-    section = None
+    section = None,
   )
 }
 
 case class TimelineAtomPage(
-override val atom: TimelineAtom,
-override val withJavaScript: Boolean,
-override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
+    override val atom: TimelineAtom,
+    override val withJavaScript: Boolean,
+    override val withVerticalScrollbar: Boolean,
+)(implicit request: RequestHeader)
+    extends AtomPage {
   override val atomType = "timeline"
   override val body = views.html.fragments.atoms.snippets.timeline(atom)
   override val javascriptModule = "snippet"
   override val metadata = MetaData.make(
     id = atom.id,
     webTitle = atom.atom.title.getOrElse("Timeline"),
-    section = None
+    section = None,
   )
 }

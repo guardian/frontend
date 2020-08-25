@@ -5,7 +5,11 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 import ArbitraryStories._
 import test.ConfiguredTestSuite
 
-@DoNotDiscover class StoryTest extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks with ConfiguredTestSuite {
+@DoNotDiscover class StoryTest
+    extends FlatSpec
+    with Matchers
+    with GeneratorDrivenPropertyChecks
+    with ConfiguredTestSuite {
   "segmentByGroup" should "preserve order" in {
     forAll { stories: Seq[Story] =>
       val segmented = Story.segmentByGroup(stories)

@@ -14,17 +14,17 @@ object ElementProperties {
       isMain = capiElement.relation == "main",
       isBody = capiElement.relation == "body",
       isGallery = capiElement.relation == "gallery",
-      isThumbnail = capiElement.relation == "thumbnail"
+      isThumbnail = capiElement.relation == "thumbnail",
     )
   }
 }
-final case class ElementProperties (
-  index: Int,
-  id: String,
-  isMain: Boolean,
-  isBody: Boolean,
-  isGallery: Boolean,
-  isThumbnail: Boolean
+final case class ElementProperties(
+    index: Int,
+    id: String,
+    isMain: Boolean,
+    isBody: Boolean,
+    isGallery: Boolean,
+    isThumbnail: Boolean,
 )
 
 object Element {
@@ -37,7 +37,7 @@ object Element {
       case ElementType.Video => VideoElement(properties, images, VideoMedia.make(capiElement))
       case ElementType.Audio => AudioElement(properties, images, AudioMedia.make(capiElement))
       case ElementType.Embed => EmbedElement(properties, images, EmbedMedia.make(capiElement))
-      case _ => DefaultElement(properties, images)
+      case _                 => DefaultElement(properties, images)
     }
   }
 }
@@ -48,12 +48,17 @@ sealed trait Element {
 }
 
 object ImageMedia {
-  def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia = ImageMedia(
-    allImages = capiElement.assets.filter(_.`type` == AssetType.Image).map(ImageAsset.make(_,properties.index)).sortBy(-_.width)
-  )
-  def make(crops: Seq[ImageAsset]): ImageMedia = ImageMedia(
-    allImages = crops
-  )
+  def make(capiElement: ApiElement, properties: ElementProperties): ImageMedia =
+    ImageMedia(
+      allImages = capiElement.assets
+        .filter(_.`type` == AssetType.Image)
+        .map(ImageAsset.make(_, properties.index))
+        .sortBy(-_.width),
+    )
+  def make(crops: Seq[ImageAsset]): ImageMedia =
+    ImageMedia(
+      allImages = crops,
+    )
   implicit val imageMediaWrites: Writes[ImageMedia] = Json.writes[ImageMedia]
 }
 final case class ImageMedia(allImages: Seq[ImageAsset]) {
@@ -73,7 +78,9 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
     // if all crops are 4:3 then we can assume the original was 4:3 as we only generate 4:3 auto-crops
     // otherwise the original must have been a different aspect ratio
     if (imageCrops.exists(img => new Fraction(img.width, img.height) != autoCropRatio)) {
-      imageCrops.find { img => !(new Fraction(img.width, img.height) == autoCropRatio && (img.width == 1024 || img.width == 2048)) }
+      imageCrops.find { img =>
+        !(new Fraction(img.width, img.height) == autoCropRatio && (img.width == 1024 || img.width == 2048))
+      }
     } else {
       largestImage
     }
@@ -81,9 +88,10 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
 }
 
 object VideoMedia {
-  def make(capiElement: ApiElement): VideoMedia = VideoMedia(
-    videoAssets = capiElement.assets.filter(_.`type` == AssetType.Video).map(VideoAsset.make).sortBy(-_.width).toList
-  )
+  def make(capiElement: ApiElement): VideoMedia =
+    VideoMedia(
+      videoAssets = capiElement.assets.filter(_.`type` == AssetType.Video).map(VideoAsset.make).sortBy(-_.width).toList,
+    )
 }
 final case class VideoMedia(videoAssets: List[VideoAsset]) {
   private implicit val ordering = EncodingOrdering
@@ -91,17 +99,22 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
   val blockVideoAds = videoAssets.exists(_.blockVideoAds)
 
   val encodings: Seq[Encoding] = {
-    videoAssets.collect {
-      case video: VideoAsset => video.encoding
-    }.flatten.sorted
+    videoAssets
+      .collect {
+        case video: VideoAsset => video.encoding
+      }
+      .flatten
+      .sorted
   }
   val duration: Int = videoAssets.headOption.map(_.duration).getOrElse(0)
   val formattedDuration: String = {
-    videoAssets.headOption.map(_.durationMinutes).getOrElse(0).toString() + ":" + "%02d".format(videoAssets.headOption.map(_.durationSeconds).getOrElse(0))
+    videoAssets.headOption.map(_.durationMinutes).getOrElse(0).toString() + ":" + "%02d".format(
+      videoAssets.headOption.map(_.durationSeconds).getOrElse(0),
+    )
   }
   val durationMinutes: Int = videoAssets.headOption.map(_.durationMinutes).getOrElse(0)
   val durationSeconds: Int = videoAssets.headOption.map(_.durationSeconds).getOrElse(0)
-  val ISOduration: String = new Duration(duration*1000.toLong).toString()
+  val ISOduration: String = new Duration(duration * 1000.toLong).toString()
   val height: String = videoAssets.headOption.map(_.height).getOrElse(0).toString
   val width: String = videoAssets.headOption.map(_.width).getOrElse(0).toString
 
@@ -113,9 +126,10 @@ final case class VideoMedia(videoAssets: List[VideoAsset]) {
 }
 
 object AudioMedia {
-  def make(capiElement: ApiElement): AudioMedia = AudioMedia(
-    audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(AudioAsset.make).toList
-  )
+  def make(capiElement: ApiElement): AudioMedia =
+    AudioMedia(
+      audioAssets = capiElement.assets.filter(_.`type`.name == "Audio").map(AudioAsset.make).toList,
+    )
 }
 final case class AudioMedia(audioAssets: List[AudioAsset]) {
   private implicit val ordering = EncodingOrdering
@@ -133,31 +147,32 @@ object EmbedMedia {
     EmbedMedia(
       embedAssets = capiElement.assets
         .filter(_.`type` == AssetType.Embed)
-        .map(EmbedAsset.make)
+        .map(EmbedAsset.make),
     )
   }
 }
 final case class EmbedMedia(embedAssets: Seq[EmbedAsset])
 
-final case class ImageElement(
-  override val properties: ElementProperties,
-  override val images: ImageMedia) extends Element
+final case class ImageElement(override val properties: ElementProperties, override val images: ImageMedia)
+    extends Element
 
 final case class VideoElement(
-  override val properties: ElementProperties,
-  override val images: ImageMedia,
-  videos: VideoMedia) extends Element
+    override val properties: ElementProperties,
+    override val images: ImageMedia,
+    videos: VideoMedia,
+) extends Element
 
 final case class AudioElement(
-  override val properties: ElementProperties,
-  override val images: ImageMedia,
-  audio: AudioMedia) extends Element
+    override val properties: ElementProperties,
+    override val images: ImageMedia,
+    audio: AudioMedia,
+) extends Element
 
 final case class EmbedElement(
-  override val properties: ElementProperties,
-  override val images: ImageMedia,
-  embeds: EmbedMedia) extends Element
+    override val properties: ElementProperties,
+    override val images: ImageMedia,
+    embeds: EmbedMedia,
+) extends Element
 
-final case class DefaultElement(
-  override val properties: ElementProperties,
-  override val images: ImageMedia) extends Element
+final case class DefaultElement(override val properties: ElementProperties, override val images: ImageMedia)
+    extends Element

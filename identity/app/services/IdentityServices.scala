@@ -39,10 +39,11 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
     IdentityPlayAuthService.unsafeInit(
       Uri.unsafeFromString(identityConfiguration.apiRoot),
       identityConfiguration.apiClientToken,
-      None
+      None,
     )(ec)
   }
-  lazy val identityCookieService: IdentityCookieService =  IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
+  lazy val identityCookieService: IdentityCookieService =
+    IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
   lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]

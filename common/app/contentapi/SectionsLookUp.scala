@@ -14,9 +14,13 @@ class SectionsLookUp(contentApiClient: ContentApiClient) extends Logging {
     contentApiClient.getResponse(contentApiClient.sections) onComplete {
       case Success(response) =>
         log.info("Refreshed sections from Content API")
-        sections send Some(response.results.flatMap({ section =>
-          section.editions.map(_.id -> section)
-        }).toMap)
+        sections send Some(
+          response.results
+            .flatMap({ section =>
+              section.editions.map(_.id -> section)
+            })
+            .toMap,
+        )
       case Failure(error) =>
         log.error("Could not refresh sections from Content API", error)
     }

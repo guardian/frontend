@@ -19,25 +19,24 @@ trait CommentPage extends StandalonePage {
   lazy val isLargeDiscussion = commentCount > 1000
 }
 
-case class ThreadedCommentPage(val discussionComments: DiscussionComments)
-  extends StandalonePage with CommentPage {
+case class ThreadedCommentPage(val discussionComments: DiscussionComments) extends StandalonePage with CommentPage {
 
-    override val metadata = MetaData.make(
-      id = id,
-      section = Some(SectionId.fromId("Global")),
-      webTitle = discussionComments.discussion.title,
-      url = Some(s"/discussion$id"),
-      pagination = Some(discussionComments.pagination))
+  override val metadata = MetaData.make(
+    id = id,
+    section = Some(SectionId.fromId("Global")),
+    webTitle = discussionComments.discussion.title,
+    url = Some(s"/discussion$id"),
+    pagination = Some(discussionComments.pagination),
+  )
 }
 
-case class UnthreadedCommentPage(val discussionComments: DiscussionComments)
-  extends StandalonePage with CommentPage {
+case class UnthreadedCommentPage(val discussionComments: DiscussionComments) extends StandalonePage with CommentPage {
 
-    override val metadata = MetaData.make(
-      id = id,
-      section = Some(SectionId.fromId("Discussion")),
-      webTitle = discussionComments.discussion.title,
-      url = Some(s"/discussion$id"),
-      pagination = Some(discussionComments.pagination))
+  override val metadata = MetaData.make(
+    id = id,
+    section = Some(SectionId.fromId("Discussion")),
+    webTitle = discussionComments.discussion.title,
+    url = Some(s"/discussion$id"),
+    pagination = Some(discussionComments.pagination),
+  )
 }
-

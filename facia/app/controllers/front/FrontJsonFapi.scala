@@ -18,35 +18,46 @@ trait FrontJsonFapi extends Logging {
 
   def blockingOperations: BlockingOperations
 
-  private def getAddressForPath(path: String, prefix: String): String = s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
+  private def getAddressForPath(path: String, prefix: String): String =
+    s"$bucketLocation/${path.replaceAll("""\+""", "%2B")}/fapi/pressed.v2$prefix.json"
 
-  def get(path: String, pageType: PressedPageType)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.get $path") {
-    pressedPageFromS3(getAddressForPath(path, pageType.suffix))
-  }
+  def get(path: String, pageType: PressedPageType)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Option[PressedPage]] =
+    errorLoggingF(s"FrontJsonFapi.get $path") {
+      pressedPageFromS3(getAddressForPath(path, pageType.suffix))
+    }
 
-  private def parsePressedPage(jsonStringOpt: Option[String])(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = futureSemaphore.execute {
-    blockingOperations.executeBlocking {
-      jsonStringOpt.map { jsonString =>
-        DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
-          // This operation is run in the thread pool since it is very CPU intensive
-          Json.parse(jsonString).as[PressedPage]
+  private def parsePressedPage(
+      jsonStringOpt: Option[String],
+  )(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
+    futureSemaphore.execute {
+      blockingOperations.executeBlocking {
+        jsonStringOpt.map { jsonString =>
+          DurationMetric.withMetrics(FaciaPressMetrics.FrontDecodingLatency) {
+            // This operation is run in the thread pool since it is very CPU intensive
+            Json.parse(jsonString).as[PressedPage]
+          }
         }
       }
     }
-  }
 
-  private def loadPressedPageFromS3(path: String) = blockingOperations.executeBlocking {
-    DurationMetric.withMetrics(FaciaPressMetrics.FrontDownloadLatency) {
-      S3.getGzipped(path)
+  private def loadPressedPageFromS3(path: String) =
+    blockingOperations.executeBlocking {
+      DurationMetric.withMetrics(FaciaPressMetrics.FrontDownloadLatency) {
+        S3.getGzipped(path)
+      }
     }
-  }
 
-  private def pressedPageFromS3(path: String)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
-    for {
-      s3FrontData <- loadPressedPageFromS3(path)
-      pressedPage <- parsePressedPage(s3FrontData)
-    } yield pressedPage
-  }
+  private def pressedPageFromS3(
+      path: String,
+  )(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] =
+    errorLoggingF(s"FrontJsonFapi.pressedPageFromS3 $path") {
+      for {
+        s3FrontData <- loadPressedPageFromS3(path)
+        pressedPage <- parsePressedPage(s3FrontData)
+      } yield pressedPage
+    }
 
 }
 

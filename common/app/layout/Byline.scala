@@ -1,17 +1,19 @@
 package layout
 
 case class Byline(
-  get: String,
-  contributorTags: Seq[model.Tag]
+    get: String,
+    contributorTags: Seq[model.Tag],
 ) {
   private def primaryContributor = {
     if (contributorTags.length > 2) {
-      contributorTags.sortBy({ tag =>
-        get.indexOf(tag.metadata.webTitle) match {
-          case -1 => Int.MaxValue
-          case n => n
-        }
-      }).headOption
+      contributorTags
+        .sortBy({ tag =>
+          get.indexOf(tag.metadata.webTitle) match {
+            case -1 => Int.MaxValue
+            case n  => n
+          }
+        })
+        .headOption
     } else {
       None
     }

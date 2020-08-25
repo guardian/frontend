@@ -7,10 +7,10 @@ case class Encoding(format: String, url: String, rawFormat: String)
 object Encoding extends HttpsUrl {
 
   val typeMapping = Map(
-    "mp4" -> "video/mp4"
+    "mp4" -> "video/mp4",
   )
 
-  def apply(url: String, rawFormat:String): Encoding = {
+  def apply(url: String, rawFormat: String): Encoding = {
     val format = typeMapping.getOrElse(rawFormat, rawFormat)
     Encoding(format, ensureHttps(url), rawFormat)
   }
@@ -28,7 +28,7 @@ object EncodingOrdering extends Ordering[Encoding] {
     "video/webm",
     "video/3gpp:small",
     "video/3gpp:large",
-    "video/mp4:720"
+    "video/mp4:720",
   )
 
   private def precedenceOf(s: Encoding) = {

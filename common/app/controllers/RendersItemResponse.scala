@@ -1,6 +1,5 @@
 package controllers
 
-
 import com.gu.contentapi.client.model.v1.ItemResponse
 import common.{Edition, ImplicitControllerExecutionContext}
 import contentapi.ContentApiClient
@@ -20,17 +19,24 @@ trait RendersItemResponse {
 
 }
 
-class ItemResponseController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents, val controllers: RendersItemResponse*) extends BaseController with ImplicitControllerExecutionContext {
+class ItemResponseController(
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    val controllers: RendersItemResponse*,
+) extends BaseController
+    with ImplicitControllerExecutionContext {
 
-  def render(path: String): Action[AnyContent] = Action.async{ implicit request =>
-    val itemRequest = contentApiClient.item(path, Edition(request))
+  def render(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val itemRequest = contentApiClient.item(path, Edition(request))
 
-    controllers.find(_.canRender(path)).map(_.renderItem(path)).getOrElse {
-      contentApiClient.getResponse(itemRequest).flatMap { response =>
-        controllers.find(_.canRender(response))
-          .map(_.renderItem(path))
-          .getOrElse(successful(NoCache(NotFound)))
+      controllers.find(_.canRender(path)).map(_.renderItem(path)).getOrElse {
+        contentApiClient.getResponse(itemRequest).flatMap { response =>
+          controllers
+            .find(_.canRender(response))
+            .map(_.renderItem(path))
+            .getOrElse(successful(NoCache(NotFound)))
+        }
       }
     }
-  }
 }

@@ -16,16 +16,20 @@ import services.breakingnews._
 import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
-class NewsAlertController(breakingNewsApi: BreakingNewsApi)
-  (actorSystem: ActorSystem, val controllerComponents: ControllerComponents)
-  extends BaseController
+class NewsAlertController(breakingNewsApi: BreakingNewsApi)(
+    actorSystem: ActorSystem,
+    val controllerComponents: ControllerComponents,
+) extends BaseController
     with AuthenticationSupport {
 
-  private val authenticatedAction = new AuthenticatedAction(controllerComponents.parsers.json[NewsAlertNotification], controllerComponents.executionContext)
+  private val authenticatedAction = new AuthenticatedAction(
+    controllerComponents.parsers.json[NewsAlertNotification],
+    controllerComponents.executionContext,
+  )
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
   lazy val apiKey: String = Configuration.NewsAlert.apiKey.getOrElse(
-    throw new RuntimeException("News Alert API Key not set")
+    throw new RuntimeException("News Alert API Key not set"),
   )
 
   override def validApiKey(key: String): Boolean = {
@@ -41,22 +45,30 @@ class NewsAlertController(breakingNewsApi: BreakingNewsApi)
   case class NewsAlertError(error: String)
   implicit private val ew = Json.writes[NewsAlertError]
 
-  def alerts(): Action[AnyContent] = Action.async { implicit request =>
-    (breakingNewsUpdater ? GetAlertsRequest).mapTo[Option[JsValue]].map {
-      case Some(json) => Cors(Cached(30)(RevalidatableResult.Ok(json)))
-      case None => NoContent
-    }.recover{
-      case _ => InternalServerError(Json.toJson(NewsAlertError("Error while accessing alerts")))
+  def alerts(): Action[AnyContent] =
+    Action.async { implicit request =>
+      (breakingNewsUpdater ? GetAlertsRequest)
+        .mapTo[Option[JsValue]]
+        .map {
+          case Some(json) => Cors(Cached(30)(RevalidatableResult.Ok(json)))
+          case None       => NoContent
+        }
+        .recover {
+          case _ => InternalServerError(Json.toJson(NewsAlertError("Error while accessing alerts")))
+        }
     }
-  }
 
-  def create() : Action[NewsAlertNotification] = authenticatedAction.async { request =>
-    val receivedNotification : NewsAlertNotification = request.body
-    val result = breakingNewsUpdater ? NewNotificationRequest(receivedNotification)
-    result.mapTo[NewsAlertNotification].map {
-      case createdNotification => Created(Json.toJson(createdNotification))
-    }.recover{
-      case _ => InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
+  def create(): Action[NewsAlertNotification] =
+    authenticatedAction.async { request =>
+      val receivedNotification: NewsAlertNotification = request.body
+      val result = breakingNewsUpdater ? NewNotificationRequest(receivedNotification)
+      result
+        .mapTo[NewsAlertNotification]
+        .map {
+          case createdNotification => Created(Json.toJson(createdNotification))
+        }
+        .recover {
+          case _ => InternalServerError(Json.toJson(NewsAlertError("Error while creating new notification")))
+        }
     }
-  }
 }

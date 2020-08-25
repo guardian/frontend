@@ -10,10 +10,10 @@ import scala.concurrent.ExecutionContext
 import scala.io.Codec.UTF8
 
 object DfpAgent
-  extends PageskinAdAgent
-  with InlineMerchandiseComponentAgent
-  with HighMerchandiseComponentAgent
-  with AdSlotAgent {
+    extends PageskinAdAgent
+    with InlineMerchandiseComponentAgent
+    with HighMerchandiseComponentAgent
+    with AdSlotAgent {
 
   override protected val environmentIsProd: Boolean = environment.isProd
 
@@ -24,14 +24,15 @@ object DfpAgent
   private lazy val takeoverWithEmptyMPUsAgent = Box[Seq[TakeoverWithEmptyMPUs]](Nil)
   private lazy val nonRefreshableLineItemsAgent = Box[Seq[Long]](Nil)
 
-  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get()
-  protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] = targetedHighMerchandisingLineItemsAgent get()
-  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get()
-  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get()
+  protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = inlineMerchandisingTagsAgent get ()
+  protected def targetedHighMerchandisingLineItems: Seq[HighMerchandisingLineItem] =
+    targetedHighMerchandisingLineItemsAgent get ()
+  protected def pageSkinSponsorships: Seq[PageSkinSponsorship] = pageskinnedAdUnitAgent get ()
+  protected def lineItemsBySlot: Map[AdSlot, Seq[GuLineItem]] = lineItemAgent get ()
   protected def takeoversWithEmptyMPUs: Seq[TakeoverWithEmptyMPUs] =
-    takeoverWithEmptyMPUsAgent get()
+    takeoverWithEmptyMPUsAgent get ()
 
-  def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent get()
+  def nonRefreshableLineItemIds(): Seq[Long] = nonRefreshableLineItemsAgent get ()
 
   private def stringFromS3(key: String): Option[String] = S3.get(key)(UTF8)
 
@@ -67,7 +68,7 @@ object DfpAgent
       } yield lineItemIds) getOrElse Nil
     }
 
-    def grabTargetedHighMerchandisingLineItemFromStore(): Seq[HighMerchandisingLineItem] ={
+    def grabTargetedHighMerchandisingLineItemFromStore(): Seq[HighMerchandisingLineItem] = {
       for {
         jsonString <- stringFromS3(dfpHighMerchandisingTagsDataKey).toSeq
         report <- HighMerchandisingTargetedTagsReportParser(jsonString).toSeq
@@ -81,9 +82,9 @@ object DfpAgent
       }
     }
 
-    def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit ={
+    def updateTargetedHighMerchandisingLineItems(freshData: Seq[HighMerchandisingLineItem]): Unit = {
       targetedHighMerchandisingLineItemsAgent send { oldData =>
-        if(freshData.nonEmpty) freshData else oldData
+        if (freshData.nonEmpty) freshData else oldData
       }
     }
 
@@ -99,7 +100,7 @@ object DfpAgent
 
   def refreshFaciaSpecificData()(implicit executionContext: ExecutionContext): Unit = {
 
-    def updateLineItems(slot:AdSlot,key: String): Unit = {
+    def updateLineItems(slot: AdSlot, key: String): Unit = {
 
       def grabCurrentLineItemsFromStore(key: String): Seq[GuLineItem] = {
         val maybeLineItems = for (jsonString <- stringFromS3(key)) yield {

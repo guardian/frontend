@@ -9,4 +9,3 @@ object DisplayHints {
     DisplayHints(displayHints.maxItemsToDisplay)
   }
 }
-

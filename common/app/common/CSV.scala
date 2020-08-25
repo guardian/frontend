@@ -14,7 +14,7 @@ object CSV extends implicits.Strings {
 
   def write(fields: Product): String = {
     val reshaped = fields.productIterator.toSeq map { nullsafeString }
-    write(reshaped:_*)
+    write(reshaped: _*)
   }
 
   def parse(fields: String): List[String] = Parser(fields)
@@ -34,14 +34,15 @@ object CSV extends implicits.Strings {
     def field: Parser[String] = escaped | nonescaped
 
     def escaped: Parser[String] = {
-      ((SPACES?) ~> DQUOTE ~> ((TXT | COMMA | CRLF | DQUOTE2)*) <~ DQUOTE <~ (SPACES?)) ^^ (ls => ls.mkString(""))
+      ((SPACES ?) ~> DQUOTE ~> ((TXT | COMMA | CRLF | DQUOTE2) *) <~ DQUOTE <~ (SPACES ?)) ^^ (ls => ls.mkString(""))
     }
 
-    def nonescaped: Parser[String] = (TXT*) ^^ (ls => ls.mkString(""))
+    def nonescaped: Parser[String] = (TXT *) ^^ (ls => ls.mkString(""))
 
-    def apply(s: String): List[String] = parseAll(record, s) match {
-      case Success(res, _) => res
-      case e => throw new Exception(e.toString)
-    }
+    def apply(s: String): List[String] =
+      parseAll(record, s) match {
+        case Success(res, _) => res
+        case e               => throw new Exception(e.toString)
+      }
   }
 }

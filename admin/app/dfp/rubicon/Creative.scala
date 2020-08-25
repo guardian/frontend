@@ -9,10 +9,10 @@ import dfp.SessionWrapper
 object Creative extends Logging {
 
   def replaceTagCreatives(
-    networkId: Long,
-    advertiserId: Long,
-    orderId: Long,
-    templateId: Long
+      networkId: Long,
+      advertiserId: Long,
+      orderId: Long,
+      templateId: Long,
   ): Seq[(ThirdPartyCreative, Option[TemplateCreative])] = {
 
     log.info("Reading third-party creatives ...")
@@ -22,15 +22,15 @@ object Creative extends Logging {
     withDfpSession(networkId.toString) { session =>
       originCreatives zip (
         originCreatives map (replaceTagCreative(session, advertiserId, templateId, _))
-        )
+      )
     }
   }
 
   private def replaceTagCreative(
-    session: SessionWrapper,
-    advertiserId: Long,
-    templateId: Long,
-    origin: ThirdPartyCreative
+      session: SessionWrapper,
+      advertiserId: Long,
+      templateId: Long,
+      origin: ThirdPartyCreative,
   ): Option[TemplateCreative] = {
 
     log.info(s"Replacing creative ${origin.getId}")
@@ -54,8 +54,8 @@ object Creative extends Logging {
           Array(
             new StringCreativeTemplateVariableValue("rp_site", siteVal.toString),
             new StringCreativeTemplateVariableValue("rp_zone", zoneVal.toString),
-            new StringCreativeTemplateVariableValue("rp_size", sizeVal.toString)
-          )
+            new StringCreativeTemplateVariableValue("rp_size", sizeVal.toString),
+          ),
         )
 
         templateCreative
@@ -65,11 +65,10 @@ object Creative extends Logging {
     if (templateCreative.isEmpty) log.warn(s"Not replacing creative ${origin.getId} because of lack of data")
 
     val replacement = templateCreative flatMap { creative =>
-
       session.creatives.get(
         new StatementBuilder()
-        .where(s"name = :name")
-        .withBindVariableValue("name", creative.getName)
+          .where(s"name = :name")
+          .withBindVariableValue("name", creative.getName),
       ) find {
         _.isInstanceOf[TemplateCreative]
       } match {
@@ -79,7 +78,6 @@ object Creative extends Logging {
           None
 
         case None =>
-
           val maybeCreated = session.creatives.create(Seq(creative)).headOption
 
           if (maybeCreated.isEmpty) {
@@ -88,7 +86,6 @@ object Creative extends Logging {
           }
 
           maybeCreated map { created =>
-
             val params = for {
               param <- created.asInstanceOf[TemplateCreative].getCreativeTemplateVariableValues
             } yield {
@@ -99,13 +96,17 @@ object Creative extends Logging {
 
             val existingUnarchivedLicas = {
               val allExistingLicas = session.lineItemCreativeAssociations.get(
-                new StatementBuilder().where("status = :status AND creativeId = :creativeId")
-                .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
-                .withBindVariableValue("creativeId", origin.getId)
+                new StatementBuilder()
+                  .where("status = :status AND creativeId = :creativeId")
+                  .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+                  .withBindVariableValue("creativeId", origin.getId),
               )
-              val archivedLineItemIds = session.lineItems(
-                new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})")
-              ).filter(_.getIsArchived).map(_.getId)
+              val archivedLineItemIds = session
+                .lineItems(
+                  new StatementBuilder().where(s"lineItemId IN (${mkString(allExistingLicas)})"),
+                )
+                .filter(_.getIsArchived)
+                .map(_.getId)
               allExistingLicas filterNot { lica =>
                 archivedLineItemIds.contains(lica.getLineItemId)
               }
@@ -115,7 +116,7 @@ object Creative extends Logging {
             } else {
               log.info(
                 s"Origin creative ${origin.getId} is associated with " +
-                s"unarchived line items ${mkString(existingUnarchivedLicas)}"
+                  s"unarchived line items ${mkString(existingUnarchivedLicas)}",
               )
             }
 
@@ -140,9 +141,9 @@ object Creative extends Logging {
 
               val numDeactivated = session.lineItemCreativeAssociations.deactivate(
                 new StatementBuilder()
-                .where("creativeId = :creativeId")
-                .withBindVariableValue("creativeId", origin.getId)
-                .toStatement
+                  .where("creativeId = :creativeId")
+                  .withBindVariableValue("creativeId", origin.getId)
+                  .toStatement,
               )
               if (numDeactivated == lineItemIds.size && lineItemIds.nonEmpty) {
                 val lineItems = lineItemIds.mkString(", ")

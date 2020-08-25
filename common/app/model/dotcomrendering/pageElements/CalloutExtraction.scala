@@ -6,10 +6,45 @@ import play.api.libs.json._
 import scala.collection.JavaConverters._
 
 sealed trait CalloutFormField
-case class CalloutFormFieldBase(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String) extends CalloutFormField
-case class CalloutFormFieldRadio(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
-case class CalloutFormFieldCheckbox(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
-case class CalloutFormFieldSelect(id: String, `type`: String, name: String, description: Option[String], required: Boolean, hideLabel: Boolean, label: String, options:JsArray) extends CalloutFormField
+case class CalloutFormFieldBase(
+    id: String,
+    `type`: String,
+    name: String,
+    description: Option[String],
+    required: Boolean,
+    hideLabel: Boolean,
+    label: String,
+) extends CalloutFormField
+case class CalloutFormFieldRadio(
+    id: String,
+    `type`: String,
+    name: String,
+    description: Option[String],
+    required: Boolean,
+    hideLabel: Boolean,
+    label: String,
+    options: JsArray,
+) extends CalloutFormField
+case class CalloutFormFieldCheckbox(
+    id: String,
+    `type`: String,
+    name: String,
+    description: Option[String],
+    required: Boolean,
+    hideLabel: Boolean,
+    label: String,
+    options: JsArray,
+) extends CalloutFormField
+case class CalloutFormFieldSelect(
+    id: String,
+    `type`: String,
+    name: String,
+    description: Option[String],
+    required: Boolean,
+    hideLabel: Boolean,
+    label: String,
+    options: JsArray,
+) extends CalloutFormField
 
 object CalloutFormField {
   implicit val CalloutFormFieldBaseWrites: Writes[CalloutFormFieldBase] = Json.writes[CalloutFormFieldBase]
@@ -24,104 +59,122 @@ object CalloutExtraction {
   private def extractCampaignPerTagName(campaigns: JsValue, tagName: String): Option[JsObject] = {
     val campaigns2 = campaigns.asInstanceOf[JsArray].value
     campaigns2
-      .filter(c => ( c \ "fields" \ "tagName" ).asOpt[String].getOrElse("") == tagName)
-      .map(_.asInstanceOf[JsObject]).headOption
+      .filter(c => (c \ "fields" \ "tagName").asOpt[String].getOrElse("") == tagName)
+      .map(_.asInstanceOf[JsObject])
+      .headOption
   }
 
-  private def formFieldItemToCalloutFormFieldBase(item: JsValue) : Option[CalloutFormFieldBase] = {
+  private def formFieldItemToCalloutFormFieldBase(item: JsValue): Option[CalloutFormFieldBase] = {
     val description = (item \ "description").asOpt[String]
     for {
-      id          <- (item \ "id").asOpt[String]
-      type_       <- (item \ "type").asOpt[String]
-      name        <- (item \ "name").asOpt[String]
-      required    <- (item \ "required").asOpt[String]
-      hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "label").asOpt[String]
+      id <- (item \ "id").asOpt[String]
+      type_ <- (item \ "type").asOpt[String]
+      name <- (item \ "name").asOpt[String]
+      required <- (item \ "required").asOpt[String]
+      hideLabel <- (item \ "hide_label").asOpt[String]
+      label <- (item \ "label").asOpt[String]
     } yield {
       CalloutFormFieldBase(id, type_, name, description, required == "1", hideLabel == "1", label)
     }
   }
 
-  private def formFieldItemToCalloutFormFieldRadio(item: JsValue) : Option[CalloutFormFieldRadio] = {
+  private def formFieldItemToCalloutFormFieldRadio(item: JsValue): Option[CalloutFormFieldRadio] = {
     val description = (item \ "description").asOpt[String]
     for {
-      id          <- (item \ "id").asOpt[String]
-      type_       <- (item \ "type").asOpt[String]
-      name        <- (item \ "name").asOpt[String]
-      required    <- (item \ "required").asOpt[String]
-      hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "label").asOpt[String]
-      options     <- (item \ "options").asOpt[JsArray]
+      id <- (item \ "id").asOpt[String]
+      type_ <- (item \ "type").asOpt[String]
+      name <- (item \ "name").asOpt[String]
+      required <- (item \ "required").asOpt[String]
+      hideLabel <- (item \ "hide_label").asOpt[String]
+      label <- (item \ "label").asOpt[String]
+      options <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldRadio(id, type_, name, description, required == "1", hideLabel == "1", label, options)
     }
   }
 
-  private def formFieldItemToCalloutFormFieldCheckbox(item: JsValue) : Option[CalloutFormFieldCheckbox] = {
+  private def formFieldItemToCalloutFormFieldCheckbox(item: JsValue): Option[CalloutFormFieldCheckbox] = {
     val description = (item \ "description").asOpt[String]
     for {
-      id          <- (item \ "id").asOpt[String]
-      type_       <- (item \ "type").asOpt[String]
-      name        <- (item \ "name").asOpt[String]
-      required    <- (item \ "required").asOpt[String]
-      hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "label").asOpt[String]
-      options     <- (item \ "options").asOpt[JsArray]
+      id <- (item \ "id").asOpt[String]
+      type_ <- (item \ "type").asOpt[String]
+      name <- (item \ "name").asOpt[String]
+      required <- (item \ "required").asOpt[String]
+      hideLabel <- (item \ "hide_label").asOpt[String]
+      label <- (item \ "label").asOpt[String]
+      options <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldCheckbox(id, type_, name, description, required == "1", hideLabel == "1", label, options)
     }
   }
 
-  private def formFieldItemToCalloutFormFieldSelect(item: JsValue) : Option[CalloutFormFieldSelect] = {
+  private def formFieldItemToCalloutFormFieldSelect(item: JsValue): Option[CalloutFormFieldSelect] = {
     val description = (item \ "description").asOpt[String]
     for {
-      id          <- (item \ "id").asOpt[String]
-      type_       <- (item \ "type").asOpt[String]
-      name        <- (item \ "name").asOpt[String]
-      required    <- (item \ "required").asOpt[String]
-      hideLabel   <- (item \ "hide_label").asOpt[String]
-      label       <- (item \ "label").asOpt[String]
-      options     <- (item \ "options").asOpt[JsArray]
+      id <- (item \ "id").asOpt[String]
+      type_ <- (item \ "type").asOpt[String]
+      name <- (item \ "name").asOpt[String]
+      required <- (item \ "required").asOpt[String]
+      hideLabel <- (item \ "hide_label").asOpt[String]
+      label <- (item \ "label").asOpt[String]
+      options <- (item \ "options").asOpt[JsArray]
     } yield {
       CalloutFormFieldSelect(id, type_, name, description, required == "1", hideLabel == "1", label, options)
     }
   }
 
-  private def formFieldItemToCalloutFormField(item: JsValue) : Option[CalloutFormField] = {
+  private def formFieldItemToCalloutFormField(item: JsValue): Option[CalloutFormField] = {
     (item \ "type").asOpt[String] match {
-      case None => None
+      case None             => None
       case Some("textarea") => formFieldItemToCalloutFormFieldBase(item)
-      case Some("text") => formFieldItemToCalloutFormFieldBase(item)
-      case Some("file") => formFieldItemToCalloutFormFieldBase(item)
-      case Some("radio") => formFieldItemToCalloutFormFieldRadio(item: JsValue)
+      case Some("text")     => formFieldItemToCalloutFormFieldBase(item)
+      case Some("file")     => formFieldItemToCalloutFormFieldBase(item)
+      case Some("radio")    => formFieldItemToCalloutFormFieldRadio(item: JsValue)
       case Some("checkbox") => formFieldItemToCalloutFormFieldCheckbox(item: JsValue)
-      case Some("select") => formFieldItemToCalloutFormFieldSelect(item: JsValue)
-      case _ => None
+      case Some("select")   => formFieldItemToCalloutFormFieldSelect(item: JsValue)
+      case _                => None
     }
   }
 
-  private def campaignJsObjectToCalloutBlockElement(campaign: JsObject, calloutsUrl: Option[String]): Option[CalloutBlockElement] = {
+  private def campaignJsObjectToCalloutBlockElement(
+      campaign: JsObject,
+      calloutsUrl: Option[String],
+  ): Option[CalloutBlockElement] = {
     for {
-      id                 <- (campaign \ "id").asOpt[String]
-      activeFrom         <- (campaign \ "activeFrom").asOpt[Long]
+      id <- (campaign \ "id").asOpt[String]
+      activeFrom <- (campaign \ "activeFrom").asOpt[Long]
       displayOnSensitive <- (campaign \ "displayOnSensitive").asOpt[Boolean]
-      formId             <- (campaign \ "fields" \ "formId").asOpt[Int]
-      title              <- (campaign \ "fields" \ "callout").asOpt[String]
-      description        <- (campaign \ "fields" \ "description").asOpt[String]
-      tagName            <- (campaign \ "fields" \ "tagName").asOpt[String]
-      formFields1        <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
+      formId <- (campaign \ "fields" \ "formId").asOpt[Int]
+      title <- (campaign \ "fields" \ "callout").asOpt[String]
+      description <- (campaign \ "fields" \ "description").asOpt[String]
+      tagName <- (campaign \ "fields" \ "tagName").asOpt[String]
+      formFields1 <- (campaign \ "fields" \ "formFields").asOpt[JsArray]
     } yield {
-      val formFields2 = formFields1
-        .value
+      val formFields2 = formFields1.value
         .flatMap(formFieldItemToCalloutFormField(_))
         .toList
-      CalloutBlockElement(id, calloutsUrl, activeFrom, displayOnSensitive, formId, title, description, tagName, formFields2)
+      CalloutBlockElement(
+        id,
+        calloutsUrl,
+        activeFrom,
+        displayOnSensitive,
+        formId,
+        title,
+        description,
+        tagName,
+        formFields2,
+      )
     }
   }
 
-  def extractCallout(html: String, campaigns: Option[JsValue], calloutsUrl: Option[String]): Option[CalloutBlockElement] = {
+  def extractCallout(
+      html: String,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+  ): Option[CalloutBlockElement] = {
 
-    val campaignsX1: JsValue = Json.parse("""
+    val campaignsX1: JsValue = Json.parse(
+      """
   [
     {
       "id": "b06a08e0-ca5f-410c-a28b-95e7d7ca37b7",
@@ -226,15 +279,16 @@ object CalloutExtraction {
       }
     }
   ]
-       """)
+       """,
+    )
 
     val doc = Jsoup.parseBodyFragment(html)
     val tagName = doc.getElementsByTag("div").asScala.headOption.map(_.attr("data-callout-tagname"))
     for {
-      name     <- tagName
-      cpgs     <- campaigns
+      name <- tagName
+      cpgs <- campaigns
       campaign <- extractCampaignPerTagName(cpgs, name)
-      element  <- campaignJsObjectToCalloutBlockElement(campaign, calloutsUrl)
+      element <- campaignJsObjectToCalloutBlockElement(campaign, calloutsUrl)
     } yield {
       element
     }

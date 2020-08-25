@@ -6,7 +6,7 @@ import discussion.model.Profile
 
 @DoNotDiscover class ProfileTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
-  "Profile" should "parse JSON Profile with no optional fields" in{
+  "Profile" should "parse JSON Profile with no optional fields" in {
     val jsonStr = """{"userProfile": {
       |  "userId": "Bob1",
       |  "secureAvatarUrl": "http://foo.com/pic",
@@ -23,7 +23,7 @@ import discussion.model.Profile
     profile.privateFields should be(None)
   }
 
-  it should "parse JSON Profile with optional fields" in{
+  it should "parse JSON Profile with optional fields" in {
     val jsonStr = """{"userProfile": {
                     |  "userId": "Bob1",
                     |  "avatar": "http://foo.com/pic",

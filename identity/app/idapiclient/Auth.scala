@@ -7,12 +7,12 @@ trait Auth {
 
 object Anonymous extends Auth
 
-
 case class EmailPassword(email: String, password: String, ipOpt: Option[String]) extends Auth {
-  override def parameters: Parameters = List(
-    "email" -> email,
-    "password" -> password
-  ) ++ (ipOpt map { "ip" -> _ })
+  override def parameters: Parameters =
+    List(
+      "email" -> email,
+      "password" -> password,
+    ) ++ (ipOpt map { "ip" -> _ })
 }
 
 case class UserCookie(cookieValue: String) extends Auth {
@@ -32,14 +32,21 @@ case class ScGuRp(scGuRpValue: String) extends Auth {
   override def headers: Parameters = Iterable("X-GU-ID-FOWARDED-SC-GU-RP" -> scGuRpValue)
 }
 
-case class TrackingData(returnUrl:Option[String], registrationType: Option[String], omnitureSVi: Option[String],
-                            ipAddress: Option[String], referrer: Option[String], userAgent: Option[String]) {
-  def parameters: Parameters = List(
-    returnUrl.map("trackingReturnUrl" -> _),
-    registrationType.map("trackingRegistrationType" -> _),
-    omnitureSVi.map("trackingOmnitureSVI" -> _),
-    ipAddress.map("trackingIpAddress" -> _),
-    referrer.map("trackingReferer" -> _),
-    userAgent.map("trackingUserAgent" -> _)
-  ).flatten
+case class TrackingData(
+    returnUrl: Option[String],
+    registrationType: Option[String],
+    omnitureSVi: Option[String],
+    ipAddress: Option[String],
+    referrer: Option[String],
+    userAgent: Option[String],
+) {
+  def parameters: Parameters =
+    List(
+      returnUrl.map("trackingReturnUrl" -> _),
+      registrationType.map("trackingRegistrationType" -> _),
+      omnitureSVi.map("trackingOmnitureSVI" -> _),
+      ipAddress.map("trackingIpAddress" -> _),
+      referrer.map("trackingReferer" -> _),
+      userAgent.map("trackingUserAgent" -> _),
+    ).flatten
 }

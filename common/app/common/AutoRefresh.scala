@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 import com.gu.Box
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration)  extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends Logging {
 
   private lazy val agent = Box[Option[A]](None)
 
@@ -18,10 +18,11 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
 
   def get: Option[A] = agent.get()
 
-  def getOrRefresh()(implicit executionContext: ExecutionContext): Future[A] = (for {
-    _ <- subscription
-    a <- get
-  } yield Future.successful(a)).getOrElse(refresh())
+  def getOrRefresh()(implicit executionContext: ExecutionContext): Future[A] =
+    (for {
+      _ <- subscription
+      a <- get
+    } yield Future.successful(a)).getOrElse(refresh())
 
   final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")

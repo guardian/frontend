@@ -10,13 +10,16 @@ import services._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[PressJob] with Logging {
+class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFrontPress: DraftFapiFrontPress)(implicit
+    executionContext: ExecutionContext,
+) extends JsonQueueWorker[PressJob]
+    with Logging {
   override lazy val queue: JsonMessageQueue[PressJob] = (Configuration.faciatool.frontPressToolQueue map { queueUrl =>
     val credentials = Configuration.aws.mandatoryCredentials
 
     JsonMessageQueue[PressJob](
       AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
-      queueUrl
+      queueUrl,
     )
   }) getOrElse {
     throw new RuntimeException("Required property 'frontpress.sqs.tool_queue_url' not set")
@@ -25,7 +28,13 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
   override def shouldRetryPress(message: Message[PressJob]): Boolean = false
 
   // log a warning if facia press is taking too long to pick up messages
-  private def checkAndLogLatency(frontPath: String, processTime: Long, messageId: String, creationTime: DateTime, startTime: DateTime): Unit = {
+  private def checkAndLogLatency(
+      frontPath: String,
+      processTime: Long,
+      messageId: String,
+      creationTime: DateTime,
+      startTime: DateTime,
+  ): Unit = {
     val messageLatency = startTime.getMillis - creationTime.getMillis
     if (messageLatency > 4000 || processTime > 3500) {
       logWarningWithCustomFields(
@@ -36,7 +45,9 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
           LogFieldLong("pressProcessDelay", processTime),
           LogFieldString("messageId", messageId),
           LogFieldString("pressPath", frontPath),
-          LogFieldString("pressStartTime", startTime.toString)))
+          LogFieldString("pressStartTime", startTime.toString),
+        ),
+      )
     }
   }
 
@@ -52,12 +63,13 @@ class ToolPressQueueWorker(liveFapiFrontPress: LiveFapiFrontPress, draftFapiFron
 
     lazy val pressFuture: Future[Unit] = pressType match {
       case Draft => draftFapiFrontPress.pressByPathId(path, messageId)
-      case Live => liveFapiFrontPress.pressByPathId(path, messageId)}
+      case Live  => liveFapiFrontPress.pressByPathId(path, messageId)
+    }
 
     lazy val forceConfigUpdateFuture: Future[_] =
       if (forceConfigUpdate.exists(identity)) {
-        ConfigAgent.refreshAndReturn}
-      else
+        ConfigAgent.refreshAndReturn
+      } else
         Future.successful(Unit)
 
     for {

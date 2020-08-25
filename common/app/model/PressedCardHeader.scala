@@ -6,15 +6,15 @@ import com.gu.facia.api.{models => fapi, utils => fapiutils}
 import model.{SupportedUrl}
 
 final case class PressedCardHeader(
-  isVideo: Boolean,
-  isComment: Boolean,
-  isGallery: Boolean,
-  isAudio: Boolean,
-  kicker: Option[ItemKicker],
-  seriesOrBlogKicker: Option[TagKicker],
-  headline: String,
-  url: String,
-  hasMainVideoElement: Option[Boolean]
+    isVideo: Boolean,
+    isComment: Boolean,
+    isGallery: Boolean,
+    isAudio: Boolean,
+    kicker: Option[ItemKicker],
+    seriesOrBlogKicker: Option[TagKicker],
+    headline: String,
+    url: String,
+    hasMainVideoElement: Option[Boolean],
 )
 
 object PressedCardHeader {
@@ -27,10 +27,12 @@ object PressedCardHeader {
       isComment = FaciaContentUtils.isComment(content),
       isAudio = FaciaContentUtils.isAudio(content),
       isGallery = FaciaContentUtils.isGallery(content),
-      seriesOrBlogKicker = capiContent.flatMap(item =>
-        fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
+      seriesOrBlogKicker =
+        capiContent.flatMap(item => fapiutils.ItemKicker.seriesOrBlogKicker(item).map(ItemKicker.makeTagKicker)),
       url = capiContent.map(SupportedUrl(_)).getOrElse(FaciaContentUtils.id(content)),
-      hasMainVideoElement = Some(capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main")))
+      hasMainVideoElement = Some(
+        capiContent.flatMap(_.elements).exists(_.exists(e => e.`type` == ElementType.Video && e.relation == "main")),
+      ),
     )
   }
 }

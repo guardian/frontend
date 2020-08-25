@@ -9,7 +9,6 @@ import utils.Logging
 import scala.concurrent.{ExecutionContext, Future}
 import navigation.AuthenticationComponentEvent._
 
-
 object AuthenticatedActions {
   type AuthRequest[A] = AuthenticatedRequest[A, AuthenticatedUser]
 }
@@ -21,7 +20,8 @@ class AuthenticatedActions(
     controllerComponents: ControllerComponents,
     newsletterService: NewsletterService,
     idRequestParser: IdRequestParser,
-) extends Logging with Results {
+) extends Logging
+    with Results {
 
   private lazy val anyContentParser: BodyParser[AnyContent] = controllerComponents.parsers.anyContent
   private implicit lazy val ec: ExecutionContext = controllerComponents.executionContext
@@ -30,8 +30,22 @@ class AuthenticatedActions(
     val returnUrl = identityUrlBuilder.buildUrl(request.uri)
 
     val params = List("returnUrl" -> returnUrl) ++
-      List("INTCMP", "email", "CMP", "utm_source", "utm_medium", "utm_campaign", "utm_term", "utm_content","clientId","encryptedEmail","autoSignInToken") //only forward these if they exist in original query string
-        .flatMap(name => request.getQueryString(name).map(value => name -> value)) :+ createAuthenticationComponentEventTuple(SigninRedirect)
+      List(
+        "INTCMP",
+        "email",
+        "CMP",
+        "utm_source",
+        "utm_medium",
+        "utm_campaign",
+        "utm_term",
+        "utm_content",
+        "clientId",
+        "encryptedEmail",
+        "autoSignInToken",
+      ) //only forward these if they exist in original query string
+        .flatMap(name =>
+          request.getQueryString(name).map(value => name -> value),
+        ) :+ createAuthenticationComponentEventTuple(SigninRedirect)
 
     val redirectUrlWithParams = identityUrlBuilder.appendQueryParams(path, params)
 
@@ -58,7 +72,7 @@ class AuthenticatedActions(
       case Some(email) =>
         identityApiClient.userFromQueryParam(email, "emailAddress").map {
           case Right(_) => Left(sendUserToSignin(request)) // user exists
-          case Left(_) => Left(sendUserToRegister(request))
+          case Left(_)  => Left(sendUserToRegister(request))
         }
     }
   }
@@ -117,7 +131,7 @@ class AuthenticatedActions(
             userDO => {
               logger.trace("user is logged in")
               Right(new AuthRequest(request.user.copy(user = userDO), request))
-            }
+            },
           )
         }
     }
@@ -133,12 +147,13 @@ class AuthenticatedActions(
     new ActionFilter[AuthRequest] {
       override val executionContext = ec
 
-      def filter[A](request: AuthRequest[A]): Future[Option[Result]] = Future.successful {
-        if (request.user.statusFields.isUserEmailValidated)
-          None
-        else
-          Some(sendUserToValidateEmail(request))
-      }
+      def filter[A](request: AuthRequest[A]): Future[Option[Result]] =
+        Future.successful {
+          if (request.user.statusFields.isUserEmailValidated)
+            None
+          else
+            Some(sendUserToValidateEmail(request))
+        }
     }
 
   // Play will not let you set up an ActionBuilder with a Refiner hence this empty actionBuilder to set up Auth

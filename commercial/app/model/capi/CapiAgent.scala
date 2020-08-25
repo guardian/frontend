@@ -18,8 +18,7 @@ class CapiAgent(contentApiClient: ContentApiClient) extends Logging {
   private[commercial] def idsFromShortUrls(shortUrls: Seq[String]): Seq[String] =
     shortUrls map (_.trim.stripPrefix("/").stripSuffix("/stw"))
 
-  def contentByShortUrls(shortUrls: Seq[String])
-                        (implicit ec: ExecutionContext): Future[Seq[ContentType]] = {
+  def contentByShortUrls(shortUrls: Seq[String])(implicit ec: ExecutionContext): Future[Seq[ContentType]] = {
 
     val shortUrlIds = idsFromShortUrls(shortUrls)
     val urlsNotInCache = shortUrlIds filterNot cache.contains
