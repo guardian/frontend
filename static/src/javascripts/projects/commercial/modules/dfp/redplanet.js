@@ -1,8 +1,7 @@
 // @flow strict
 
 import config from 'lib/config';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
@@ -30,15 +29,12 @@ const initialise = (): void => {
 };
 
 const setupRedplanet: () => Promise<void> = () => {
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         // CCPA only runs in the US and Redplanet only runs in Australia
         // so this should never happen
         if (state.ccpa) {
             throw new Error(
-                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`
+                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
             );
         }
         let canRun: boolean;

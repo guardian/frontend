@@ -18,7 +18,6 @@ import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import { onConsentChange } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -27,16 +26,12 @@ const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
-const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 const getPrivacyFramework: any = getPrivacyFramework_;
 
 jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
-}));
-jest.mock('commercial/modules/cmp/sourcepoint', () => ({
-    shouldUseSourcepointCmp: jest.fn(),
 }));
 jest.mock('lib/detect', () => ({
     getViewport: jest.fn(),
@@ -64,9 +59,6 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onIabConsentNotification: jest.fn(),
-    },
     onConsentChange: jest.fn(),
 }));
 
@@ -146,7 +138,6 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
@@ -274,7 +265,6 @@ describe('Build Page Targeting', () => {
 
         _.resetPageTargeting();
         getPrivacyFramework.mockReturnValue({ tcfv1: true });
-        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfWithConsentMock);
 
         expect(getPageTargeting().consent_tcfv2).toBe('na');

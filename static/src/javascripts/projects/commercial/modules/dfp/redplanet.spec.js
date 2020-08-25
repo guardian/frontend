@@ -1,22 +1,12 @@
 // @flow
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {
-    oldCmp as oldCmp_,
-    onConsentChange as onConsentChange_,
-} from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
-import { shouldUseSourcepointCmp as shouldUseSourcepointCmp_ } from 'commercial/modules/cmp/sourcepoint';
 import { init, resetModule } from './redplanet';
 
-const oldCmp: any = oldCmp_;
 const isInAuOrNz: any = isInAuOrNz_;
-const trueConsentMock = (callback): void =>
-    callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-
-const falseConsentMock = (callback): void =>
-    callback({ '1': true, '2': true, '3': true, '4': true, '5': false });
 
 const tcfv2WithConsentMock = (callback): void =>
     callback({
@@ -28,15 +18,10 @@ const tcfv2WithoutConsentMock = (callback): void =>
         tcfv2: { vendorConsents: { '5f199c302425a33f3f090f51': false } },
     });
 
-const shouldUseSourcepointCmp: any = shouldUseSourcepointCmp_;
 const onConsentChange: any = onConsentChange_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
-}));
-
-jest.mock('commercial/modules/cmp/sourcepoint', () => ({
-    shouldUseSourcepointCmp: jest.fn(),
 }));
 
 jest.mock('commercial/modules/dfp/Advert', () =>
@@ -64,9 +49,6 @@ jest.mock('lib/load-script', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onIabConsentNotification: jest.fn(),
-    },
     onConsentChange: jest.fn(),
 }));
 
@@ -96,7 +78,7 @@ describe('init', () => {
         config.set('page.section', 'uk');
         config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
-        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
 
         await init();
 
@@ -128,18 +110,9 @@ describe('init', () => {
         ]);
     });
 
-    it('should not initialise redplanet when user TCF consent has not been given', async () => {
+    it('should initialise redplanet when TCFv2 consent has been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        oldCmp.onIabConsentNotification.mockImplementation(falseConsentMock);
-        await init();
-        expect(window.launchpad).not.toBeCalled();
-    });
-
-    it('should initialise redplanet  when TCFv2 consent has been given', async () => {
-        commercialFeatures.launchpad = true;
-        isInAuOrNz.mockReturnValue(true);
-        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
         await init();
         expect(window.launchpad).toBeCalled();
@@ -148,7 +121,6 @@ describe('init', () => {
     it('should not initialise redplanet when TCFv2 consent has not been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
@@ -157,17 +129,16 @@ describe('init', () => {
     it('should throw an error when on CCPA mode', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        shouldUseSourcepointCmp.mockImplementation(() => true);
         onConsentChange.mockImplementation(CcpaWithConsentMock);
         expect(await init).toThrow(
-            `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCF mode`
+            `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
         );
     });
 
     it('should not initialise redplanet when launchpad conditions are false', async () => {
         commercialFeatures.launchpad = false;
         isInAuOrNz.mockReturnValue(true);
-        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
@@ -175,7 +146,7 @@ describe('init', () => {
     it('should not initialise redplanet when user not in AUS regions', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(false);
-        oldCmp.onIabConsentNotification.mockImplementation(trueConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });

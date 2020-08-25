@@ -24,13 +24,9 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
-    },
-}));
-
-jest.mock('commercial/modules/cmp/sourcepoint', () => ({
-    shouldUseSourcepointCmp: jest.fn().mockReturnValue(false),
+    onConsentChange: jest.fn(callback =>
+        callback({ tcfv2: { consents: { '1': true } } })
+    ),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
