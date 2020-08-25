@@ -2,6 +2,7 @@
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 export const addPrivacySettingsLink = (): void => {
     if (!config.get('switches.cmpUi', true)) {
@@ -42,7 +43,7 @@ export const addPrivacySettingsLink = (): void => {
     }
 };
 
-export const consentManagementPlatformUi = {
+export const consentManagementPlatformUi: Banner = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
