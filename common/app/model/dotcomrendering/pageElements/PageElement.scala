@@ -261,7 +261,7 @@ object PageElement {
             The function returns either:
             - SoundcloudBlockElement
             - AudioBlockElement
-            - InteractiveBlockElement
+            - EmbedBlockElement (introduced to handle legacy Spotify BlockElements pointing to charts)
             - AudioBlockElement (currently not supported in DCR)
            */
 
@@ -489,8 +489,8 @@ object PageElement {
     }
   }
 
-  private def extractChartInteractiveBlockElement(html: String): Option[InteractiveBlockElement] = {
-    Some(InteractiveBlockElement("http://charts-datawrapper.s3.amazonaws.com/pKbAT/index.html"))
+  private def extractChartEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+    Some(EmbedBlockElement(html, None, None, false))
   }
 
   private def extractSpotifyBlockElement(element: ApiBlockElement): Option[SpotifyBlockElement] = {
@@ -537,7 +537,7 @@ object PageElement {
     } yield {
         extractSoundcloudBlockElement(html, mandatory).getOrElse {
           extractSpotifyBlockElement(element).getOrElse {
-            extractChartInteractiveBlockElement("").getOrElse {
+            extractChartEmbedBlockElement(html).getOrElse {
               AudioBlockElement(element.assets.map(AudioAsset.make))
             }
           }
