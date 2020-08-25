@@ -252,9 +252,19 @@ object PageElement {
         ))
 
       case Audio => audioToPageElement(element).toList
-                    // This process returns either:
-                    // 1. SoundcloudBlockElement
-                    // 2. AudioBlockElement
+          /*
+            The AudioBlockElement is a versatile carrier. It carries both audio and non audio (in legacy content)
+
+            The audioToPageElement function performs the transformation of an AudioBlockElement to the appropriate
+            PageElement
+
+            The function returns either:
+            - SoundcloudBlockElement
+            - AudioBlockElement
+            - InteractiveBlockElement
+            - AudioBlockElement (currently not supported in DCR)
+           */
+
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -479,6 +489,10 @@ object PageElement {
     }
   }
 
+  private def extractChartInteractiveBlockElement(html: String): Option[InteractiveBlockElement] = {
+    Some(InteractiveBlockElement("http://charts-datawrapper.s3.amazonaws.com/pKbAT/index.html"))
+  }
+
   private def extractSpotifyBlockElement(element: ApiBlockElement): Option[SpotifyBlockElement] = {
     for {
       d <- element.audioTypeData
@@ -502,9 +516,9 @@ object PageElement {
 
       See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
      */
-    // println("->")
-    // println(element)
-    // println(audioToPageElement(element: ApiBlockElement))
+    println("->")
+    println(element)
+    println(audioToPageElement(element: ApiBlockElement))
 
     audioToPageElement(element: ApiBlockElement) match {
       case Some(_: SoundcloudBlockElement) => true
@@ -519,11 +533,13 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-          extractSoundcloudBlockElement(html, mandatory)            getOrElse
-          (
-            extractSpotifyBlockElement(element)                     getOrElse
-            AudioBlockElement(element.assets.map(AudioAsset.make))
-          )
+        extractSoundcloudBlockElement(html, mandatory).getOrElse {
+          extractSpotifyBlockElement(element).getOrElse {
+            extractChartInteractiveBlockElement("").getOrElse {
+              AudioBlockElement(element.assets.map(AudioAsset.make))
+            }
+          }
+        }
     }
   }
 
@@ -533,9 +549,11 @@ object PageElement {
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloudBlockElement(html, mandatory)
-        .getOrElse(CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl)
-          .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)))
+      extractSoundcloudBlockElement(html, mandatory).getOrElse {
+        CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
+          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+        }
+      }
     }
   }
 
