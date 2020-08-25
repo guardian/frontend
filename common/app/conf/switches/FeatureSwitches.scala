@@ -460,7 +460,7 @@ trait FeatureSwitches {
     "This toggles the contribution reminder",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 8, 25), //Cut off 1 week before September
+    sellByDate = new LocalDate(2020, 9, 15),
     exposeClientSide = true
   )
 
