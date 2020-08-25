@@ -57,8 +57,6 @@ import {
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
 
-const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
-
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
@@ -346,7 +344,7 @@ const ozoneClientSideBidder: PrebidBidder = {
                 customData: [
                     {
                         settings: {},
-                        targeting: PAGE_TARGETING,
+                        targeting: buildAppNexusTargetingObject(getPageTargeting()),
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
