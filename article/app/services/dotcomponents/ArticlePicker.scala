@@ -52,11 +52,8 @@ object ArticlePageChecks {
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
         case _: AudioBlockElement => {
-          //println("(+)")
-          //println(blockElement)
           val e = blockElement.asInstanceOf[AudioBlockElement].element
           val resolve = model.dotcomrendering.pageElements.PageElement.audioIsDCRSupported(e)
-          //println(resolve)
           !resolve
         }
         case _: DocumentBlockElement  => false
