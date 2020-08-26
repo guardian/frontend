@@ -64,7 +64,7 @@ const canShow = (): Promise<boolean> => {
             appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
 
             appboy.initialize(apiKey, {
-                enableLogging: true,
+                enableLogging: false,
                 noCookies: true,
                 baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
                 sessionTimeoutInSeconds: 1,
