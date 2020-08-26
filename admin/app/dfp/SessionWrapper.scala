@@ -202,29 +202,31 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
 object SessionWrapper extends Logging {
 
   def apply(networkId: Option[String] = None): Option[SessionWrapper] = {
-    val dfpSession = try {
-      for {
-        clientId <- AdminConfiguration.dfpApi.clientId
-        clientSecret <- AdminConfiguration.dfpApi.clientSecret
-        refreshToken <- AdminConfiguration.dfpApi.refreshToken
-        appName <- AdminConfiguration.dfpApi.appName
-      } yield {
-        val credential = new OfflineCredentials.Builder()
-                         .forApi(Api.AD_MANAGER)
-                         .withClientSecrets(clientId, clientSecret)
-                         .withRefreshToken(refreshToken)
-                         .build().generateCredential()
-        new AdManagerSession.Builder()
-        .withOAuth2Credential(credential)
-        .withApplicationName(appName)
-        .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
-        .build()
+    val dfpSession =
+      try {
+        for {
+          clientId <- AdminConfiguration.dfpApi.clientId
+          clientSecret <- AdminConfiguration.dfpApi.clientSecret
+          refreshToken <- AdminConfiguration.dfpApi.refreshToken
+          appName <- AdminConfiguration.dfpApi.appName
+        } yield {
+          val credential = new OfflineCredentials.Builder()
+            .forApi(Api.AD_MANAGER)
+            .withClientSecrets(clientId, clientSecret)
+            .withRefreshToken(refreshToken)
+            .build()
+            .generateCredential()
+          new AdManagerSession.Builder()
+            .withOAuth2Credential(credential)
+            .withApplicationName(appName)
+            .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
+            .build()
+        }
+      } catch {
+        case NonFatal(e) =>
+          log.error(s"Building DFP session failed.", e)
+          None
       }
-    } catch {
-      case NonFatal(e) =>
-        log.error(s"Building DFP session failed.", e)
-        None
-    }
 
     dfpSession map (new SessionWrapper(_))
   }

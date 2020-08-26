@@ -7,5 +7,5 @@ object KickerProperties {
 }
 
 final case class KickerProperties(
-  kickerText: Option[String]
+    kickerText: Option[String],
 )

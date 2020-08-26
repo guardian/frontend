@@ -4,11 +4,11 @@ import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi}
 
 final case class PressedDisplaySettings(
-  isBoosted: Boolean,
-  showBoostedHeadline: Boolean,
-  showQuotedHeadline: Boolean,
-  imageHide: Boolean,
-  showLivePlayable: Boolean
+    isBoosted: Boolean,
+    showBoostedHeadline: Boolean,
+    showQuotedHeadline: Boolean,
+    imageHide: Boolean,
+    showLivePlayable: Boolean,
 )
 
 object PressedDisplaySettings {
@@ -19,7 +19,7 @@ object PressedDisplaySettings {
       isBoosted = FaciaContentUtils.isBoosted(content),
       showBoostedHeadline = FaciaContentUtils.showBoostedHeadline(content),
       showQuotedHeadline = FaciaContentUtils.showQuotedHeadline(content),
-      showLivePlayable = FaciaContentUtils.showLivePlayable(content)
+      showLivePlayable = FaciaContentUtils.showLivePlayable(content),
     )
   }
 }

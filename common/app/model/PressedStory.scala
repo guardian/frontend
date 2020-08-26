@@ -7,11 +7,11 @@ import model.content.{Atoms, MediaAtom}
 import model.{Commercial, Elements, Fields, MetaData, Pillar, SectionId, Tags, Trail}
 
 final case class PressedStory(
-  trail: PressedTrail,
-  metadata: PressedMetadata,
-  fields: PressedFields,
-  elements: PressedElements,
-  tags: Tags
+    trail: PressedTrail,
+    metadata: PressedMetadata,
+    fields: PressedFields,
+    elements: PressedElements,
+    tags: Tags,
 )
 
 object PressedStory {
@@ -32,7 +32,7 @@ object PressedStory {
         trail.trailPicture,
         trail.byline,
         trail.thumbnailPath,
-        trail.webPublicationDate
+        trail.webPublicationDate,
       ),
       PressedMetadata(
         metadata.id,
@@ -41,18 +41,18 @@ object PressedStory {
         metadata.contentType,
         Pillar(apiContent),
         sectionId,
-        apiContent.designType
+        apiContent.designType,
       ),
       PressedFields(
         fields.main,
         HTML.takeFirstNElements(fields.body, 2),
-        fields.standfirst
+        fields.standfirst,
       ),
       PressedElements(
         elements.mainVideo,
-        atoms.fold(Seq.empty[MediaAtom])(_.media)
+        atoms.fold(Seq.empty[MediaAtom])(_.media),
       ),
-      tags
+      tags,
     )
   }
 

@@ -3,7 +3,6 @@ package football.model
 import pa.{Team, Season}
 import implicits.Collections
 
-
 object PA extends Collections {
 
   val competitionNames = Map[String, String](
@@ -28,21 +27,42 @@ object PA extends Collections {
     ("700", "World Cup"),
     ("721", "International friendlies"),
     ("870", "Women's World Cup"),
-    ("961", "Women's Super League")
+    ("961", "Women's Super League"),
   )
   def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
   val approvedCompetitions = List(
-    "100", "500", "510", "300", "301", "101", "102",
-    "103", "400", "120", "121", "122", "123", "320",
-    "321", "700", "721", "750", "650", "620", "625",
-    "635", "870", "961"
+    "100",
+    "500",
+    "510",
+    "300",
+    "301",
+    "101",
+    "102",
+    "103",
+    "400",
+    "120",
+    "121",
+    "122",
+    "123",
+    "320",
+    "321",
+    "700",
+    "721",
+    "750",
+    "650",
+    "620",
+    "625",
+    "635",
+    "870",
+    "961",
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {
     competitions
       .filter(comp => approvedCompetitions.contains(comp.competitionId))
-      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
+      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis)
+      .reverse
       .distinctBy(_.competitionId)
       .sortBy(_.competitionId)
   }
@@ -715,7 +735,7 @@ object PA extends Collections {
       Team("33035", "Zeljeznicar Sarajevo"),
       Team("38276", "Zenit St Petersburg"),
       Team("38228", "Zrinjski Mostar"),
-      Team("32471", "Zulte-Waregem")
+      Team("32471", "Zulte-Waregem"),
     )
   }
 }

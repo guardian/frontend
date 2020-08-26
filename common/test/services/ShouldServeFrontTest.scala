@@ -10,11 +10,11 @@ import scala.concurrent.duration._
 import scala.concurrent.Await
 
 class ShouldServeFrontTest
-  extends FlatSpec
-  with Matchers
-  with WithTestApplicationContext
-  with ScalaFutures
-  with BeforeAndAfterAll {
+    extends FlatSpec
+    with Matchers
+    with WithTestApplicationContext
+    with ScalaFutures
+    with BeforeAndAfterAll {
 
   val fronts = ConfigJson(
     Map(
@@ -32,7 +32,7 @@ class ShouldServeFrontTest
         priority = Some("editorial"),
         isHidden = None,
         canonical = Some("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        group = Some("US professional")
+        group = Some("US professional"),
       ),
       "hidden-editorial-front" -> FrontJson(
         collections = List("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
@@ -48,8 +48,8 @@ class ShouldServeFrontTest
         priority = Some("editorial"),
         isHidden = Some(true),
         canonical = Some("e59785e9-ba82-48d8-b79a-0a80b2f9f808"),
-        group = Some("US professional")
-      )
+        group = Some("US professional"),
+      ),
     ),
     Map(
       "e59785e9-ba82-48d8-b79a-0a80b2f9f808" -> CollectionConfigJson(
@@ -73,9 +73,9 @@ class ShouldServeFrontTest
         platform = None,
         frontsToolSettings = None,
         userVisibility = None,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   override def beforeAll(): Unit = {

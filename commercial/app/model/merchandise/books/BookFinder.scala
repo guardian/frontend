@@ -19,7 +19,8 @@ import scala.util.{Failure, Success}
 
 class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
 
-  private implicit val bookActorExecutionContext: ExecutionContext = actorSystem.dispatchers.lookup("akka.actor.book-lookup")
+  private implicit val bookActorExecutionContext: ExecutionContext =
+    actorSystem.dispatchers.lookup("akka.actor.book-lookup")
   private implicit val bookActorTimeout: Timeout = 0.2.seconds
   private implicit val magentoServiceImplicit = magentoService
 
@@ -30,14 +31,16 @@ object BookAgent extends Logging {
 
   private lazy val cache = Box(Map.empty[String, JsValue])
 
-  def get(isbn: String)(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] = {
+  def get(
+      isbn: String,
+  )(implicit magentoService: MagentoService, executionContext: ExecutionContext): Option[JsValue] = {
 
     val bookJson: Option[JsValue] = cache.get.get(isbn)
 
     if (bookJson.isEmpty) {
       magentoService.findByIsbn(isbn) onComplete {
-        case Failure(e) => log.error("Magento lookup failed.", e)
-        case Success(None) => log.warn(s"Magento unable to find book for $isbn.")
+        case Failure(e)                   => log.error("Magento lookup failed.", e)
+        case Success(None)                => log.warn(s"Magento unable to find book for $isbn.")
         case Success(Some(json: JsValue)) => cache alter { _ + (isbn -> json) }
       }
     }
@@ -64,9 +67,9 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
     } yield MagentoProperties(
       oauth = OAuthCalculator(
         consumerKey = ConsumerKey(consumerKey, consumerSecret),
-        token = RequestToken(token, tokenSecret)
+        token = RequestToken(token, tokenSecret),
       ),
-      urlPrefix = s"https://$domain/$path"
+      urlPrefix = s"https://$domain/$path",
     )
   }
 
@@ -77,19 +80,19 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
     scheduler = actorSystem.scheduler,
     maxFailures = 5,
     callTimeout = 3.seconds,
-    resetTimeout = 5.minutes
+    resetTimeout = 5.minutes,
   )
 
   circuitBreaker.onOpen(
-    log.error("Book lookup circuit breaker tripped: Open")
+    log.error("Book lookup circuit breaker tripped: Open"),
   )
 
   circuitBreaker.onHalfOpen(
-    log.info("Book lookup circuit breaker tentatively trying again: Half Open")
+    log.info("Book lookup circuit breaker tentatively trying again: Half Open"),
   )
 
   circuitBreaker.onClose(
-    log.info("Book lookup circuit breaker safe: Closed.")
+    log.info("Book lookup circuit breaker safe: Closed."),
   )
 
   def findByIsbn(isbn: String): Future[Option[JsValue]] = {
@@ -97,19 +100,17 @@ class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Loggi
     def lookup(isbn: String): Future[Option[JsValue]] = {
 
       val result = magentoProperties map { props =>
-
         val request = FeedRequest(
           feedName = "Book Lookup",
           url = s"${props.urlPrefix}/$isbn",
           switch = BookLookupSwitch,
           responseEncoding = "utf-8",
-          timeout = 4.seconds)
+          timeout = 4.seconds,
+        )
 
         log.info(s"Looking up book with ISBN $isbn ...")
 
-        feedReader.read(request,
-          signature = Some(props.oauth),
-          validResponseStatuses = Seq(200, 404)) { responseBody =>
+        feedReader.read(request, signature = Some(props.oauth), validResponseStatuses = Seq(200, 404)) { responseBody =>
           val bookJson = Json.parse(responseBody)
           bookJson.validate[Book] match {
             case JsError(e) =>

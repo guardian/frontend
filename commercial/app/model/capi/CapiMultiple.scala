@@ -12,12 +12,12 @@ object CapiMultiple {
   def fromContent(articles: Seq[ContentType], edition: Edition): CapiMultiple = {
 
     CapiMultiple(articles.map(article => {
-    	CapiSingle.fromContent(article, edition, articles.length)
+      CapiSingle.fromContent(article, edition, articles.length)
     }))
 
   }
 
   implicit val writesCapiMultiple: Writes[CapiMultiple] =
-      Json.writes[CapiMultiple]
+    Json.writes[CapiMultiple]
 
 }

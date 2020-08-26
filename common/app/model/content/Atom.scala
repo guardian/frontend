@@ -2,7 +2,13 @@ package model.content
 
 import com.gu.contentatom.thrift.atom.media.{Asset => AtomApiMediaAsset, MediaAtom => AtomApiMediaAtom}
 import com.gu.contentatom.thrift.atom.timeline.{TimelineItem => TimelineApiItem}
-import com.gu.contentatom.thrift.{AtomData, Atom => AtomApiAtom, Image => AtomApiImage, ImageAsset => AtomApiImageAsset, atom => atomapi}
+import com.gu.contentatom.thrift.{
+  AtomData,
+  Atom => AtomApiAtom,
+  Image => AtomApiImage,
+  ImageAsset => AtomApiImageAsset,
+  atom => atomapi,
+}
 import enumeratum._
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 import org.apache.commons.lang3.time.DurationFormatUtils
@@ -21,9 +27,9 @@ sealed trait Atom {
 // ----------------------------------------
 
 final case class AudioAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.audio.AudioAtom
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.audio.AudioAtom,
 ) extends Atom
 
 object AudioAtom {
@@ -38,12 +44,12 @@ object AudioAtom {
 // ----------------------------------------
 
 final case class ChartAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  title: String,
-  css: String,
-  html: String,
-  mainJS: Option[String]
+    override val id: String,
+    atom: AtomApiAtom,
+    title: String,
+    css: String,
+    html: String,
+    mainJS: Option[String],
 ) extends Atom
 
 object ChartAtom {
@@ -57,9 +63,9 @@ object ChartAtom {
 // ----------------------------------------
 
 final case class CommonsDivisionAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.commonsdivision.CommonsDivision
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.commonsdivision.CommonsDivision,
 ) extends Atom
 
 object CommonsDivisionAtom {
@@ -74,11 +80,11 @@ object CommonsDivisionAtom {
 // ----------------------------------------
 
 final case class ExplainerAtom(
-  override val id: String,
-  labels: Seq[String],
-  title: String,
-  body: String,
-  atom: AtomApiAtom
+    override val id: String,
+    labels: Seq[String],
+    title: String,
+    body: String,
+    atom: AtomApiAtom,
 ) extends Atom
 
 object ExplainerAtom {
@@ -93,13 +99,13 @@ object ExplainerAtom {
 // ----------------------------------------
 
 final case class InteractiveAtom(
-  override val id: String,
-  `type`: String,
-  title: String,
-  css: String,
-  html: String,
-  mainJS: Option[String],
-  docData: Option[String]
+    override val id: String,
+    `type`: String,
+    title: String,
+    css: String,
+    html: String,
+    mainJS: Option[String],
+    docData: Option[String],
 ) extends Atom
 
 object InteractiveAtom {
@@ -112,7 +118,7 @@ object InteractiveAtom {
       css = interactive.css,
       html = interactive.html,
       mainJS = interactive.mainJS,
-      docData = interactive.docData
+      docData = interactive.docData,
     )
   }
 }
@@ -122,16 +128,17 @@ object InteractiveAtom {
 // ----------------------------------------
 
 final case class GuideAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.guide.GuideAtom,
-  image: Option[ImageMedia]
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.guide.GuideAtom,
+    image: Option[ImageMedia],
 ) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
+  def credit: Option[String] =
+    for {
+      img <- image
+      asset <- img.allImages.headOption
+      credit <- asset.credit
+    } yield credit
 }
 
 object GuideAtom {
@@ -146,21 +153,22 @@ object GuideAtom {
 // ----------------------------------------
 
 final case class MediaAtom(
-  override val id: String,
-  defaultHtml: String,
-  assets: Seq[MediaAsset],
-  title: String,
-  duration: Option[Long],
-  source: Option[String],
-  posterImage: Option[ImageMedia],
-  expired: Option[Boolean],
-  activeVersion: Option[Long],
-  channelId: Option[String]
+    override val id: String,
+    defaultHtml: String,
+    assets: Seq[MediaAsset],
+    title: String,
+    duration: Option[Long],
+    source: Option[String],
+    posterImage: Option[ImageMedia],
+    expired: Option[Boolean],
+    activeVersion: Option[Long],
+    channelId: Option[String],
 ) extends Atom {
 
-  def activeAssets: Seq[MediaAsset] = activeVersion
-    .map { version => assets.filter(_.version == version) }
-    .getOrElse(assets)
+  def activeAssets: Seq[MediaAsset] =
+    activeVersion
+      .map { version => assets.filter(_.version == version) }
+      .getOrElse(assets)
 
   def isoDuration: Option[String] = {
     duration.map(d => new Duration(Duration.standardSeconds(d)).toString)
@@ -170,7 +178,7 @@ final case class MediaAtom(
     duration.map { d =>
       val jodaDuration = new Duration(Duration.standardSeconds(d))
       val oneHour = new Duration(Duration.standardHours(1))
-      val durationPattern = if(jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
+      val durationPattern = if (jodaDuration.isShorterThan(oneHour)) "mm:ss" else "HH:mm:ss"
       val formattedDuration = DurationFormatUtils.formatDuration(jodaDuration.getMillis, durationPattern, true)
       "^0".r.replaceFirstIn(formattedDuration, "") //strip leading zero
     }
@@ -178,10 +186,10 @@ final case class MediaAtom(
 }
 
 final case class MediaAsset(
-  id: String,
-  version: Long,
-  platform: MediaAssetPlatform,
-  mimeType: Option[String]
+    id: String,
+    version: Long,
+    platform: MediaAssetPlatform,
+    mimeType: Option[String],
 )
 
 sealed trait MediaAssetPlatform extends EnumEntry
@@ -211,7 +219,7 @@ object MediaAtom extends common.Logging {
       posterImage = mediaAtom.posterImage.map(imageMediaMake(_, mediaAtom.title)),
       expired = expired,
       activeVersion = mediaAtom.activeVersion,
-      channelId = mediaAtom.metadata.flatMap(_.channelId)
+      channelId = mediaAtom.metadata.flatMap(_.channelId),
     )
   }
 
@@ -224,7 +232,8 @@ object MediaAtom extends common.Logging {
       id = mediaAsset.id,
       version = mediaAsset.version,
       platform = MediaAssetPlatform.withName(mediaAsset.platform.name),
-      mimeType = mediaAsset.mimeType)
+      mimeType = mediaAsset.mimeType,
+    )
   }
 
   def mediaImageAssetMake(mediaImage: AtomApiImageAsset, caption: String): ImageAsset = {
@@ -236,8 +245,8 @@ object MediaAtom extends common.Logging {
         "height" -> mediaImage.dimensions.map(_.height).map(_.toString),
         "width" -> mediaImage.dimensions.map(_.width).map(_.toString),
         "caption" -> Some(caption),
-        "altText" -> Some(caption)
-      ).collect{ case(k, Some(v)) => (k,v) }
+        "altText" -> Some(caption),
+      ).collect { case (k, Some(v)) => (k, v) },
     )
   }
 }
@@ -258,16 +267,17 @@ object MediaAssetPlatform extends Enum[MediaAssetPlatform] with PlayJsonEnum[Med
 // ----------------------------------------
 
 final case class ProfileAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.profile.ProfileAtom,
-  image: Option[ImageMedia]
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.profile.ProfileAtom,
+    image: Option[ImageMedia],
 ) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
+  def credit: Option[String] =
+    for {
+      img <- image
+      asset <- img.allImages.headOption
+      credit <- asset.credit
+    } yield credit
 }
 
 object ProfileAtom {
@@ -282,16 +292,17 @@ object ProfileAtom {
 // ----------------------------------------
 
 final case class QandaAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.qanda.QAndAAtom,
-  image: Option[ImageMedia]
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.qanda.QAndAAtom,
+    image: Option[ImageMedia],
 ) extends Atom {
-  def credit: Option[String] = for {
-    img <- image
-    asset <- img.allImages.headOption
-    credit <- asset.credit
-  } yield credit
+  def credit: Option[String] =
+    for {
+      img <- image
+      asset <- img.allImages.headOption
+      credit <- asset.credit
+    } yield credit
 }
 
 object QandaAtom {
@@ -306,13 +317,13 @@ object QandaAtom {
 // ----------------------------------------
 
 final case class QuizAtom(
-  override val id: String,
-  title: String,
-  path: String,
-  quizType: String,
-  content: QuizContent,
-  revealAtEnd: Boolean,
-  shareLinks: ShareLinkMeta
+    override val id: String,
+    title: String,
+    path: String,
+    quizType: String,
+    content: QuizContent,
+    revealAtEnd: Boolean,
+    shareLinks: ShareLinkMeta,
 ) extends Atom
 
 object QuizAtom extends common.Logging {
@@ -320,28 +331,30 @@ object QuizAtom extends common.Logging {
   implicit val assetFormat = Json.format[Asset]
   implicit val imageFormat = Json.format[Image]
 
-  private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[QuizImageMedia] = quizAsset.flatMap { asset =>
-    val parseResult = Json.parse(asset.data).validate[Image]
-    parseResult match {
-      case parsed: JsSuccess[Image] =>
-        val image = parsed.get
-        val typeData = image.fields.mapValues(value => value.toString) - "caption"
+  private def transformAssets(quizAsset: Option[atomapi.quiz.Asset]): Option[QuizImageMedia] =
+    quizAsset.flatMap { asset =>
+      val parseResult = Json.parse(asset.data).validate[Image]
+      parseResult match {
+        case parsed: JsSuccess[Image] =>
+          val image = parsed.get
+          val typeData = image.fields.mapValues(value => value.toString) - "caption"
 
-        val assets = for {
-          plainAsset <- image.assets
-        } yield {
-         ImageAsset(
-          fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
-          mediaType = plainAsset.assetType,
-          mimeType = plainAsset.mimeType,
-          url = plainAsset.secureUrl.orElse(plainAsset.url))
-        }
-        if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia(allImages = assets))) else None
-      case error: JsError =>
-        log.warn("Quiz atoms: asset json read errors: " + JsError.toFlatForm(error).toString())
-        None
+          val assets = for {
+            plainAsset <- image.assets
+          } yield {
+            ImageAsset(
+              fields = typeData ++ plainAsset.fields.mapValues(value => value.toString),
+              mediaType = plainAsset.assetType,
+              mimeType = plainAsset.mimeType,
+              url = plainAsset.secureUrl.orElse(plainAsset.url),
+            )
+          }
+          if (assets.nonEmpty) Some(QuizImageMedia(ImageMedia(allImages = assets))) else None
+        case error: JsError =>
+          log.warn("Quiz atoms: asset json read errors: " + JsError.toFlatForm(error).toString())
+          None
+      }
     }
-  }
 
   def extractQuestions(quiz: atomapi.quiz.QuizAtom): Seq[Question] =
     quiz.content.questions.map { question =>
@@ -352,41 +365,46 @@ object QuizAtom extends common.Logging {
           revealText = answer.revealText.flatMap(revealText => if (revealText != "") Some(revealText) else None),
           weight = answer.weight.toInt,
           buckets = answer.bucket.getOrElse(Nil),
-          imageMedia = transformAssets(answer.assets.headOption))
+          imageMedia = transformAssets(answer.assets.headOption),
+        )
       }
 
       Question(
         id = question.id,
         text = question.questionText,
         answers = answers,
-        imageMedia = transformAssets(question.assets.headOption))
+        imageMedia = transformAssets(question.assets.headOption),
+      )
     }
 
   def extractResultGroups(resultGroups: Option[com.gu.contentatom.thrift.atom.quiz.ResultGroups]): Seq[ResultGroup] =
-    resultGroups.map(_.groups.map { resultGroup =>
+    resultGroups
+      .map(_.groups.map { resultGroup =>
         ResultGroup(
           id = resultGroup.id,
           title = resultGroup.title,
           shareText = resultGroup.share,
-          minScore = resultGroup.minScore
+          minScore = resultGroup.minScore,
         )
-      }
-    ).getOrElse(Nil)
+      })
+      .getOrElse(Nil)
 
   def extractContent(questions: Seq[Question], quiz: atomapi.quiz.QuizAtom): QuizContent =
     QuizContent(
       questions = questions,
       resultGroups = extractResultGroups(quiz.content.resultGroups),
-      resultBuckets = quiz.content.resultBuckets.map(resultBuckets =>{
-        resultBuckets.buckets.map(resultBucket => {
-          ResultBucket(
-            id = resultBucket.id,
-            title = resultBucket.title,
-            shareText = resultBucket.share,
-            description = resultBucket.description
-          )
+      resultBuckets = quiz.content.resultBuckets
+        .map(resultBuckets => {
+          resultBuckets.buckets.map(resultBucket => {
+            ResultBucket(
+              id = resultBucket.id,
+              title = resultBucket.title,
+              shareText = resultBucket.share,
+              description = resultBucket.description,
+            )
+          })
         })
-      }).getOrElse(Nil)
+        .getOrElse(Nil),
     )
 
   def make(path: String, atom: AtomApiAtom, shareLinks: ShareLinkMeta): QuizAtom = {
@@ -402,7 +420,7 @@ object QuizAtom extends common.Logging {
       quizType = quiz.quizType,
       content = content,
       revealAtEnd = quiz.revealAtEnd,
-      shareLinks = shareLinks
+      shareLinks = shareLinks,
     )
   }
 }
@@ -412,16 +430,16 @@ object QuizAtom extends common.Logging {
 // ----------------------------------------
 
 final case class RecipeAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.recipe.RecipeAtom
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.recipe.RecipeAtom,
 ) extends Atom
 
 object RecipeAtom {
   def make(atom: AtomApiAtom): RecipeAtom = RecipeAtom(atom.id, atom, atom.data.asInstanceOf[AtomData.Recipe].recipe)
 
   def picture(r: RecipeAtom): Option[model.ImageMedia] = {
-    r.data.images.headOption.map{ img => MediaAtom.imageMediaMake(img, "")}
+    r.data.images.headOption.map { img => MediaAtom.imageMediaMake(img, "") }
   }
 
   def totalTime(recipe: RecipeAtom): Option[Int] = {
@@ -430,8 +448,8 @@ object RecipeAtom {
 
   def yieldServingType(serves: com.gu.contentatom.thrift.atom.recipe.Serves): String = {
     serves.`type` match {
-      case "serves" => "servings"
-      case "makes" => s"${serves.unit.getOrElse("")}"
+      case "serves"   => "servings"
+      case "makes"    => s"${serves.unit.getOrElse("")}"
       case "quantity" => "portions"
     }
   }
@@ -448,7 +466,7 @@ object RecipeAtom {
   def formatIngredientValue(ingredient: com.gu.contentatom.thrift.atom.recipe.Ingredient): String = {
     val q = ingredient.quantity
       .map(formatQuantity)
-      .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}" ))
+      .orElse(ingredient.quantityRange.map(range => s"${formatQuantity(range.from)}-${formatQuantity(range.to)}"))
       .getOrElse("")
     val comment = ingredient.comment.fold("")(c => s", $c")
     s"""${q} ${formatUnit(ingredient.unit.getOrElse(""))} ${ingredient.item}${comment}"""
@@ -456,21 +474,21 @@ object RecipeAtom {
 
   private def formatUnit(unit: String): String = {
     unit match {
-      case "dsp" => "dessert spoon"
-      case "tsp" => "teaspoon"
+      case "dsp"  => "dessert spoon"
+      case "tsp"  => "teaspoon"
       case "tbsp" => "tablespoon"
-      case _ => unit
+      case _      => unit
     }
   }
 
   private def formatQuantity(q: Double): String = {
     q match {
       case qty if qty == qty.toInt => qty.toInt.toString
-      case 0.75 => "¾"
-      case 0.5 => "½"
-      case 0.25 => "¼"
-      case 0.125 => "⅛"
-      case _ => q.toString
+      case 0.75                    => "¾"
+      case 0.5                     => "½"
+      case 0.25                    => "¼"
+      case 0.125                   => "⅛"
+      case _                       => q.toString
     }
   }
 }
@@ -480,9 +498,9 @@ object RecipeAtom {
 // ----------------------------------------
 
 final case class ReviewAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.review.ReviewAtom
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.review.ReviewAtom,
 ) extends Atom
 
 object ReviewAtom {
@@ -502,41 +520,43 @@ object ReviewAtom {
 // ----------------------------------------
 
 final case class TimelineAtom(
-  override val id: String,
-  atom: AtomApiAtom,
-  data: atomapi.timeline.TimelineAtom,
-  events: Seq[TimelineItem]
+    override val id: String,
+    atom: AtomApiAtom,
+    data: atomapi.timeline.TimelineAtom,
+    events: Seq[TimelineItem],
 ) extends Atom
 
 final case class TimelineItem(
-  title: String,
-  date: DateTime,
-  body: Option[String],
-  toDate: Option[Long]
+    title: String,
+    date: DateTime,
+    body: Option[String],
+    toDate: Option[Long],
 )
 
 object TimelineAtom {
-  def make(atom: AtomApiAtom): TimelineAtom = TimelineAtom(
-    atom.id,
-    atom,
-    atom.data.asInstanceOf[AtomData.Timeline].timeline,
-    events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _
-  )
+  def make(atom: AtomApiAtom): TimelineAtom =
+    TimelineAtom(
+      atom.id,
+      atom,
+      atom.data.asInstanceOf[AtomData.Timeline].timeline,
+      events = atom.data.asInstanceOf[AtomData.Timeline].timeline.events map TimelineItem.make _,
+    )
 
   def renderFormattedDate(date: Long, format: Option[String]): String = {
     format match {
       case Some("month-year") => DateTimeFormat.forPattern("MMMM yyyy").print(date)
-      case Some("year") =>  DateTimeFormat.forPattern("yyyy").print(date)
-      case _ =>  DateTimeFormat.forPattern("d MMMM yyyy").print(date)
+      case Some("year")       => DateTimeFormat.forPattern("yyyy").print(date)
+      case _                  => DateTimeFormat.forPattern("d MMMM yyyy").print(date)
     }
   }
 }
 
 object TimelineItem {
-  def make(item: TimelineApiItem): TimelineItem = TimelineItem(
-    item.title,
-    new DateTime(item.date),
-    item.body,
-    item.toDate
-  )
+  def make(item: TimelineApiItem): TimelineItem =
+    TimelineItem(
+      item.title,
+      new DateTime(item.date),
+      item.body,
+      item.toDate,
+    )
 }

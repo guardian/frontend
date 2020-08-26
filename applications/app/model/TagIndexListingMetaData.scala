@@ -5,7 +5,8 @@ case class SubjectsListing(listings: TagIndexListings) extends StandalonePage {
     id = "index/subjects",
     section = Some(SectionId.fromId("Index")),
     webTitle = "subjects",
-    customSignPosting = Some(IndexNav.keywordsAlpha))
+    customSignPosting = Some(IndexNav.keywordsAlpha),
+  )
 }
 
 case class ContributorsListing(listings: TagIndexListings) extends StandalonePage {
@@ -13,5 +14,6 @@ case class ContributorsListing(listings: TagIndexListings) extends StandalonePag
     id = "index/contributors",
     section = Some(SectionId.fromId("Index")),
     webTitle = "contributors",
-    customSignPosting = Some(IndexNav.contributorsAlpha))
+    customSignPosting = Some(IndexNav.contributorsAlpha),
+  )
 }

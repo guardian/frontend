@@ -15,21 +15,23 @@ class PassbackController(val controllerComponents: ControllerComponents) extends
    * To be called as src of an iframe where a passback will be served
    * when the original ad has been blocked for brand safety.
    */
-  def renderIasPassback(size: String): Action[AnyContent] = Action { implicit request =>
-    Cached(CacheTime(anHour))(WithoutRevalidationResult {
-      size match {
-        case SizePattern(width, height) =>
-          Ok(
-            views.html.passback(
-              dfpNetworkId = dfpAccountId,
-              adUnitName = s"$dfpAdUnitGuRoot/x-passback/ias",
-              passbackTarget = "ias",
-              width.toInt,
-              height.toInt
-            ))
-        case _ =>
-          NotFound
-      }
-    })
-  }
+  def renderIasPassback(size: String): Action[AnyContent] =
+    Action { implicit request =>
+      Cached(CacheTime(anHour))(WithoutRevalidationResult {
+        size match {
+          case SizePattern(width, height) =>
+            Ok(
+              views.html.passback(
+                dfpNetworkId = dfpAccountId,
+                adUnitName = s"$dfpAdUnitGuRoot/x-passback/ias",
+                passbackTarget = "ias",
+                width.toInt,
+                height.toInt,
+              ),
+            )
+          case _ =>
+            NotFound
+        }
+      })
+    }
 }

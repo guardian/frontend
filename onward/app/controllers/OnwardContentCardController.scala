@@ -10,7 +10,15 @@ import play.twirl.api.HtmlFormat
 
 import scala.concurrent.Future
 
-abstract class OnwardContentCardController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with Paging with Logging with ImplicitControllerExecutionContext with Requests {
+abstract class OnwardContentCardController(
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+)(implicit context: ApplicationContext)
+    extends BaseController
+    with Paging
+    with Logging
+    with ImplicitControllerExecutionContext
+    with Requests {
 
   def render(path: String): Action[AnyContent]
 
@@ -21,19 +29,22 @@ abstract class OnwardContentCardController(contentApiClient: ContentApiClient, v
     log.info(s"Fetching article: $path for edition: ${edition.id}:")
 
     contentApiClient.getResponse(
-      contentApiClient.item(path, edition)
+      contentApiClient
+        .item(path, edition)
         .showFields(fields)
         .showTags("all")
-        .showElements("all")
+        .showElements("all"),
     )
   }
 
-  protected def renderContent(html: HtmlFormat.Appendable, wrapInJson: HtmlFormat.Appendable)(implicit request: RequestHeader): Result = {
+  protected def renderContent(html: HtmlFormat.Appendable, wrapInJson: HtmlFormat.Appendable)(implicit
+      request: RequestHeader,
+  ): Result = {
     if (!request.isJson) NoCache(Ok(html))
-    else Cached(900) {
-      JsonComponent(wrapInJson)
-    }
+    else
+      Cached(900) {
+        JsonComponent(wrapInJson)
+      }
   }
-
 
 }

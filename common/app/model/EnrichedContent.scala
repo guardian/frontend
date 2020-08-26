@@ -4,9 +4,9 @@ package model.pressed
 // It contains additional content that has been pre-fetched by facia-press, to
 // enable facia-server-side rendering of FAPI content, such as embeds.
 final case class EnrichedContent(
-  embedHtml: Option[String],
-  embedCss: Option[String],
-  embedJs: Option[String]
+    embedHtml: Option[String],
+    embedCss: Option[String],
+    embedJs: Option[String],
 )
 
 object EnrichedContent {

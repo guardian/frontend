@@ -14,7 +14,7 @@ trait ServerSideExperimentSwitches {
       owners = Seq(Owner.withGithub("johnduffell")),
       safeState = Off,
       sellByDate = never,
-      exposeClientSide = false
+      exposeClientSide = false,
     )
   }
 

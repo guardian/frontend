@@ -5,7 +5,8 @@ import java.time.format.DateTimeFormatter
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 class FlagshipFrontContainerSpec extends FlatSpec with Matchers with BeforeAndAfterAll {
-  private val formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm").withZone(FlagshipFrontContainer.londonTimezone)
+  private val formatter =
+    DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm").withZone(FlagshipFrontContainer.londonTimezone)
 
   override def beforeAll {
     FlagshipFrontContainerSwitch.switchOn()

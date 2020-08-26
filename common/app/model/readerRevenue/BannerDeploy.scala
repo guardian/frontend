@@ -15,11 +15,11 @@ sealed trait ReaderRevenueRegion {
   override def toString: String = s"ReaderRevenueRegion: $name"
 }
 
-case object UK extends ReaderRevenueRegion { val name = "united-kingdom"}
-case object US extends ReaderRevenueRegion { val name = "united-states"}
-case object AU extends ReaderRevenueRegion { val name = "australia"}
-case object ROW extends ReaderRevenueRegion { val name = "rest-of-world"}
-case object EU extends ReaderRevenueRegion { val name = "european-union"}
+case object UK extends ReaderRevenueRegion { val name = "united-kingdom" }
+case object US extends ReaderRevenueRegion { val name = "united-states" }
+case object AU extends ReaderRevenueRegion { val name = "australia" }
+case object ROW extends ReaderRevenueRegion { val name = "rest-of-world" }
+case object EU extends ReaderRevenueRegion { val name = "european-union" }
 
 object ReaderRevenueRegion {
 

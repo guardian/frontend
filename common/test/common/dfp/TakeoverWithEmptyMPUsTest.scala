@@ -14,26 +14,38 @@ class TakeoverWithEmptyMPUsTest extends FlatSpec with Matchers {
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that have no path" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com") should equal(Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com") should equal(
+      Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"),
+    )
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that have a naked slash path" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com/") should equal(Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com/") should equal(
+      Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"),
+    )
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that are invalid" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("123") should equal(Invalid("Must be a valid URL. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("123") should equal(
+      Invalid("Must be a valid URL. eg: http://www.theguardian.com/us"),
+    )
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that are empty" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("") should equal(Invalid("Must be a valid URL. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("") should equal(
+      Invalid("Must be a valid URL. eg: http://www.theguardian.com/us"),
+    )
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that are empty beyond the naked slash" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com/ ") should equal(Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com/ ") should equal(
+      Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"),
+    )
   }
 
   "TakeoverWithEmptyMPUs" should "recognise as invalid urls that are empty beyond the root" in {
-    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com ") should equal(Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"))
+    TakeoverWithEmptyMPUs.mustBeAtLeastOneDirectoryDeep("http://www.theguardian.com ") should equal(
+      Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us"),
+    )
   }
 }

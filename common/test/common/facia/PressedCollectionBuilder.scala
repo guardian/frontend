@@ -8,10 +8,12 @@ object PressedCollectionBuilder {
   private val defaultCurated = List(mkPressedContent(1), mkPressedContent(2), mkPressedContent(3))
   private val defaultBackfill = List(mkPressedContent(4), mkPressedContent(5))
 
-  def mkPressedCollection(collectionType: String = "collectionType",
-                                  curated: List[PressedContent] = defaultCurated,
-                                  backfill: List[PressedContent] = defaultBackfill,
-                                  hideShowMore: Boolean = false): PressedCollection = {
+  def mkPressedCollection(
+      collectionType: String = "collectionType",
+      curated: List[PressedContent] = defaultCurated,
+      backfill: List[PressedContent] = defaultBackfill,
+      hideShowMore: Boolean = false,
+  ): PressedCollection = {
 
     val config: CollectionConfig = CollectionConfig(
       displayName = None,
@@ -30,7 +32,7 @@ object PressedCollectionBuilder {
       excludeFromRss = false,
       showTimestamps = false,
       hideShowMore,
-      displayHints = None
+      displayHints = None,
     )
 
     PressedCollection(
@@ -41,7 +43,7 @@ object PressedCollectionBuilder {
       treats = Nil,
       lastUpdated = None,
       href = Some(
-        "/am-resorts-partner-zone/2016/jan/20/be-a-hero-on-the-half-shell-release-baby-turtles-on-your-next-vacation"
+        "/am-resorts-partner-zone/2016/jan/20/be-a-hero-on-the-half-shell-release-baby-turtles-on-your-next-vacation",
       ),
       description = Some("desc"),
       collectionType,
@@ -54,7 +56,7 @@ object PressedCollectionBuilder {
       showLatestUpdate = false,
       config,
       hasMore = false,
-      targetedTerritory = None
+      targetedTerritory = None,
     )
   }
 }

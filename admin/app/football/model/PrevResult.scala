@@ -12,7 +12,7 @@ case class PrevResult(date: DateTime, self: MatchDayTeam, foe: MatchDayTeam, was
   }
   val hasResult = scores.isDefined
 
-  val won = scores.exists {  case (selfScore, foeScore) => selfScore > foeScore }
+  val won = scores.exists { case (selfScore, foeScore) => selfScore > foeScore }
   val drew = scores.exists { case (selfScore, foeScore) => selfScore == foeScore }
   val lost = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
 }

@@ -14,7 +14,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val CmpUi = Switch(
@@ -24,7 +24,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val CcpaCmpUi = Switch(
@@ -34,7 +34,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val TCFv2DCR = Switch(
@@ -44,7 +44,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val TCFv2Frontend = Switch(
@@ -54,7 +54,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val CarrotTrafficDriverSwitch = Switch(
@@ -64,7 +64,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val IasTargetingSwitch = Switch(
@@ -74,7 +74,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val OutbrainNewIdsSwitch = Switch(
@@ -84,9 +84,8 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
-
 
   val SurveySwitch = Switch(
     Commercial,
@@ -95,7 +94,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("JonNorman")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val HostedVideoAutoplay = Switch(
@@ -105,7 +104,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val AdFreeStrictExpiryEnforcement = Switch(
@@ -115,7 +114,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ImrWorldwideSwitch = Switch(
@@ -125,7 +124,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val InizioSwitch = Switch(
@@ -135,7 +134,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val TwitterUwtSwitch = Switch(
@@ -145,7 +144,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val AdomikSwitch = Switch(
@@ -155,7 +154,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val PermutiveSwitch = Switch(
@@ -165,7 +164,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val RemarketingSwitch = Switch(
@@ -175,7 +174,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val SimpleReachSwitch = Switch(
@@ -185,7 +184,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val TravelFeedFetchSwitch = Switch(
@@ -195,7 +194,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val TravelFeedParseSwitch = Switch(
@@ -205,7 +204,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val JobsFeedFetchSwitch = Switch(
@@ -215,7 +214,7 @@ trait CommercialSwitches {
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val JobsFeedParseSwitch = Switch(
@@ -225,7 +224,7 @@ trait CommercialSwitches {
     owners = Owner.group(SwitchGroup.Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val EventsFeedSwitch = Switch(
@@ -235,7 +234,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val GuBookshopFeedsSwitch = Switch(
@@ -245,7 +244,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val BookLookupSwitch = Switch(
@@ -255,7 +254,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val MembershipEngagementBanner = Switch(
@@ -265,7 +264,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val UseConfiguredEpicTests = Switch(
@@ -275,7 +274,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val EngagementBannerTestsFromGoogleDocs = Switch(
@@ -285,7 +284,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val SubscriptionBanner = Switch(
@@ -295,7 +294,7 @@ trait CommercialSwitches {
     owners = group(Membership),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val MembershipEngagementBannerBlockUK = Switch(
@@ -305,7 +304,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val MembershipEngagementBannerBlockUS = Switch(
@@ -315,7 +314,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val MembershipEngagementBannerBlockAU = Switch(
@@ -325,7 +324,7 @@ trait CommercialSwitches {
     owners = Seq(Owner.withGithub("desbo")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val AdblockAsk = Switch(
@@ -335,37 +334,39 @@ trait CommercialSwitches {
     owners = group(Membership),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
-   val LotameSwitch: Switch = Switch(
-     group = Commercial,
-     name = "lotame",
-     description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
-     owners = group(Commercial),
-     safeState = Off,
-     sellByDate = never,
-     exposeClientSide = true
-   )
+  val LotameSwitch: Switch = Switch(
+    group = Commercial,
+    name = "lotame",
+    description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
     name = "affiliate-links",
-    description = "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
+    description =
+      "Enable affiliate links. If off, affiliate links will never be added to content by frontend apps. If on, affiliate links may be added based off other settings",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AffiliateLinkSections: Switch = Switch(
     group = Commercial,
     name = "affiliate-links-sections",
-    description = "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
+    description =
+      "Add affiliate links to all content in sections in affiliateLinkSections config property when no override exists in capi (showAffiliateLinks field).",
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val enableConsentManagementService: Switch = Switch(
@@ -375,7 +376,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val facebookTrackingPixel: Switch = Switch(
@@ -385,7 +386,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val confiantAdVerification: Switch = Switch(
@@ -395,7 +396,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val a9Switch: Switch = Switch(
@@ -405,7 +406,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val redplanetForAUSSwitch: Switch = Switch(
@@ -415,7 +416,7 @@ trait CommercialSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }
 
@@ -428,7 +429,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val prebidAnalytics: Switch = Switch(
@@ -438,7 +439,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ampPrebid: Switch = Switch(
@@ -448,7 +449,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true // Has to be true so that switch is exposed to dotcom-rendering
+    exposeClientSide = true, // Has to be true so that switch is exposed to dotcom-rendering
   )
 
   val prebidUserSync: Switch = Switch(
@@ -458,7 +459,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidSonobi: Switch = Switch(
@@ -468,7 +469,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidAppNexus: Switch = Switch(
@@ -478,7 +479,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidAppNexusInvcode: Switch = Switch(
@@ -488,7 +489,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidIndexExchange: Switch = Switch(
@@ -498,7 +499,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidOpenx: Switch = Switch(
@@ -508,7 +509,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidOzone: Switch = Switch(
@@ -518,7 +519,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidPangaea: Switch = Switch(
@@ -528,7 +529,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidPubmatic: Switch = Switch(
@@ -538,7 +539,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidTrustx: Switch = Switch(
@@ -548,7 +549,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidTripleLift: Switch = Switch(
@@ -558,7 +559,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidImproveDigital: Switch = Switch(
@@ -568,7 +569,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidXaxis: Switch = Switch(
@@ -578,7 +579,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val prebidAdYouLike: Switch = Switch(
@@ -588,7 +589,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val mobileStickyLeaderboard: Switch = Switch(
@@ -598,7 +599,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val mobileStickyPrebid: Switch = Switch(
@@ -608,7 +609,7 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val pangaeaUsAuBidder: Switch = Switch(
@@ -618,6 +619,6 @@ trait PrebidSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }

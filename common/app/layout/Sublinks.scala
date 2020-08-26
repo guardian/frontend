@@ -10,14 +10,15 @@ object Sublinks {
 
   val Default = unit(0)
 
-  def fromItemClasses(itemClasses: ItemClasses): InclusiveRange = itemClasses.tablet match {
-    case FullMedia50 | FullMedia75 => fromZero(4)
-    case Half => fromZero(3)
-    case ListItem | MediaList | Fluid => unit(0)
-    case FullMedia100 => InclusiveRange(2, 4)
-    case Standard | Third => fromZero(2)
-    case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
-  }
+  def fromItemClasses(itemClasses: ItemClasses): InclusiveRange =
+    itemClasses.tablet match {
+      case FullMedia50 | FullMedia75                              => fromZero(4)
+      case Half                                                   => fromZero(3)
+      case ListItem | MediaList | Fluid                           => unit(0)
+      case FullMedia100                                           => InclusiveRange(2, 4)
+      case Standard | Third                                       => fromZero(2)
+      case ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall => fromZero(3)
+    }
 
   def takeSublinks(supporting: Seq[PressedContent], itemClasses: ItemClasses): Seq[PressedContent] = {
     val InclusiveRange(min, max) = fromItemClasses(itemClasses)

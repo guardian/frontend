@@ -17,27 +17,35 @@ case class MediaPage(media: ContentType, related: RelatedContent) extends Conten
   override lazy val item = media
 }
 
-class MediaController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class MediaController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit
+    context: ApplicationContext,
+) extends BaseController
+    with RendersItemResponse
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)
   def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
 
-  def renderInfoJson(path: String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(path) map {
-      case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
-      case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
-    } map { mediaInfo =>
-      Cached(60)(JsonComponent(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
+  def renderInfoJson(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookup(path) map {
+        case Left(model)  => MediaInfo(expired = false, shouldHideAdverts = model.media.content.shouldHideAdverts)
+        case Right(other) => MediaInfo(expired = other.header.status == GONE, shouldHideAdverts = true)
+      } map { mediaInfo =>
+        Cached(60)(JsonComponent(withRefreshStatus(Json.toJson(mediaInfo).as[JsObject])))
+      }
     }
-  }
 
   private def lookup(path: String)(implicit request: RequestHeader) = {
     val edition = Edition(request)
 
     log.info(s"Fetching media: $path for edition $edition")
     val response: Future[ItemResponse] = contentApiClient.getResponse(
-      contentApiClient.item(path, edition)
-        .showFields("all").showAtoms("media")
+      contentApiClient
+        .item(path, edition)
+        .showFields("all")
+        .showAtoms("media"),
     )
 
     val result = response map { response =>
@@ -55,15 +63,16 @@ class MediaController(contentApiClient: ContentApiClient, val controllerComponen
     // The jsonResponse allows for a json version of each page to be accessed by users eg: https://www.theguardian.com/world/2018/jun/13/kim-jong-un-north-korea-summit-trump-visit-kcna.json
     val jsonResponse = model.media match {
       case audio: Audio => () => views.html.fragments.audioBody(model, audio)
-      case _ => () => views.html.fragments.mediaBody(model, displayCaption = false)
+      case _            => () => views.html.fragments.mediaBody(model, displayCaption = false)
     }
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = lookup(path) map {
-    case Left(model) => renderMedia(model)
-    case Right(other) => RenderOtherStatus(other)
-  }
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
+    lookup(path) map {
+      case Left(model)  => renderMedia(model)
+      case Right(other) => RenderOtherStatus(other)
+    }
 
   private def isSupported(c: ApiContent) = c.isVideo || c.isAudio
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)

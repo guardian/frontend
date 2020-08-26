@@ -43,11 +43,15 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
     val series = contentApiTagsEnumerator.enumerateTagTypeFiltered("series")
 
     /** Subjects are indexed both alphabetically and by their parent section */
-    (keywords andThen series).run(Enumeratee.zip(tagPages.bySection, tagPages.byWebTitle)) map { case (sectionMap, alphaMap) =>
-      blocking {
-        saveToS3("keywords", tagPages.toPages(alphaMap)(alphaTitle, tagPages.asciiLowerWebTitle))
-        saveToS3("keywords_by_section", tagPages.toPages(sectionMap)(TagPages.validSections(_), tagPages.asciiLowerWebTitle))
-      }
+    (keywords andThen series).run(Enumeratee.zip(tagPages.bySection, tagPages.byWebTitle)) map {
+      case (sectionMap, alphaMap) =>
+        blocking {
+          saveToS3("keywords", tagPages.toPages(alphaMap)(alphaTitle, tagPages.asciiLowerWebTitle))
+          saveToS3(
+            "keywords_by_section",
+            tagPages.toPages(sectionMap)(TagPages.validSections(_), tagPages.asciiLowerWebTitle),
+          )
+        }
     }
   }
 
@@ -60,25 +64,27 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
   }
 
   def rebuildNewspaperBookSections(): Future[Unit] = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(tagPages.byPublication) map { bookSectionMap =>
-      blocking {
-        saveToS3("newspaper_book_sections", tagPages.toPages(bookSectionMap)(alphaTitle, tagPages.asciiLowerWebTitle))
-      }
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("newspaper-book-section").run(tagPages.byPublication) map {
+      bookSectionMap =>
+        blocking {
+          saveToS3("newspaper_book_sections", tagPages.toPages(bookSectionMap)(alphaTitle, tagPages.asciiLowerWebTitle))
+        }
     }
   }
 
   def rebuildContributorIndex(): Future[Unit] = {
-    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(tagPages.byContributorNameOrder) map { alphaMap =>
-      blocking {
-        saveToS3("contributors", tagPages.toPages(alphaMap)(alphaTitle, tagPages.nameOrder))
-      }
+    contentApiTagsEnumerator.enumerateTagTypeFiltered("contributor").run(tagPages.byContributorNameOrder) map {
+      alphaMap =>
+        blocking {
+          saveToS3("contributors", tagPages.toPages(alphaMap)(alphaTitle, tagPages.nameOrder))
+        }
     }
   }
 
   implicit class RichFuture[A](future: Future[A]) {
     def withErrorLogging: Future[A] = {
-      future.failed.foreach {
-        throwable: Throwable => log.error("Error rebuilding index", throwable)
+      future.failed.foreach { throwable: Throwable =>
+        log.error("Error rebuilding index", throwable)
       }
 
       future
@@ -87,11 +93,13 @@ class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionCont
 
   def run() {
     rebuildKeywordIndexes().withErrorLogging andThen {
-      case _ => rebuildContributorIndex().withErrorLogging andThen {
-        case _ => rebuildNewspaperBooks().withErrorLogging andThen {
-          case _ => rebuildNewspaperBookSections().withErrorLogging
+      case _ =>
+        rebuildContributorIndex().withErrorLogging andThen {
+          case _ =>
+            rebuildNewspaperBooks().withErrorLogging andThen {
+              case _ => rebuildNewspaperBookSections().withErrorLogging
+            }
         }
-      }
     }
   }
 

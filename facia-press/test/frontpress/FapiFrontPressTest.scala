@@ -15,10 +15,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 import scala.concurrent.Future
 
-class FapiFrontPressTest extends AsyncFlatSpec
-  with Matchers
-  with MockitoSugar
-  with Logging {
+class FapiFrontPressTest extends AsyncFlatSpec with Matchers with MockitoSugar with Logging {
   "EnrichedContent.enrichSnap" should "enrich with snap HTML" in {
     val embedUri = "http://www.example.com/snap"
     val beforeEnrichment = EnrichedContent.empty

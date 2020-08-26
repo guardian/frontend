@@ -3,17 +3,16 @@ package views.support
 import conf.Configuration
 import play.twirl.api.Html
 
-
 object DropdownMenus {
 
-  case class DropdownMenuItem (
-    href: Option[String]  = None,
-    linkName: Option[String]  = None,
-    label: String,
-    classList: List[String] = List(),
-    parentClassList: List[String] = List(),
-    icon: Option[String] = None,
-    divider: Boolean = false,
+  case class DropdownMenuItem(
+      href: Option[String] = None,
+      linkName: Option[String] = None,
+      label: String,
+      classList: List[String] = List(),
+      parentClassList: List[String] = List(),
+      icon: Option[String] = None,
+      divider: Boolean = false,
   )
 
   val accountDropdownMenu: List[DropdownMenuItem] = List(
@@ -30,7 +29,7 @@ object DropdownMenus {
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/email-prefs"),
       linkName = Some("email prefs"),
-      label = "Emails & marketing"
+      label = "Emails & marketing",
     ),
     DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/account-settings"),
@@ -46,7 +45,7 @@ object DropdownMenus {
       linkName = Some("comment activity"),
       label = "Comments & replies",
       classList = List("js-add-comment-activity-link"),
-      parentClassList = List("u-h","js-show-comment-activity"),
+      parentClassList = List("u-h", "js-show-comment-activity"),
       divider = true,
     ),
     DropdownMenuItem(
@@ -55,7 +54,7 @@ object DropdownMenus {
       label = "Sign out",
       icon = Some("log-off"),
       divider = true,
-    )
+    ),
   )
 
 }

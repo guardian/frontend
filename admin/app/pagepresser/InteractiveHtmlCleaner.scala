@@ -10,7 +10,7 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
 
   override def canClean(document: Document): Boolean = {
     document.getElementById("interactive-content") != null &&
-      !document.getElementsByAttributeValue("rel","canonical").attr("href").toLowerCase.contains("/ng-interactive/")
+    !document.getElementsByAttributeValue("rel", "canonical").attr("href").toLowerCase.contains("/ng-interactive/")
   }
 
   override def clean(document: Document, convertToHttps: Boolean): Document = {
@@ -56,14 +56,18 @@ object InteractiveHtmlCleaner extends HtmlCleaner with implicits.WSRequests {
   }
 
   private def addSwfObjectScript(document: Document): Document = {
-    val swfScriptOpt = try {
-      val source = Source.fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8").getLines().mkString
-      Some(source)
-    } catch {
-      case ex: Exception =>
-        log.error(ex.getMessage)
-        None
-    }
+    val swfScriptOpt =
+      try {
+        val source = Source
+          .fromInputStream(getClass.getClassLoader.getResourceAsStream("resources/r2/interactiveSwfScript.js"), "UTF-8")
+          .getLines()
+          .mkString
+        Some(source)
+      } catch {
+        case ex: Exception =>
+          log.error(ex.getMessage)
+          None
+      }
     swfScriptOpt.foreach { script =>
       val html = "<script type=\"text/javascript\">" + script + "</script>"
       document.head().append(html)

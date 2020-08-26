@@ -12,7 +12,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("janua")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   // Performance
@@ -23,7 +23,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val LongCacheSwitch = Switch(
@@ -33,7 +33,7 @@ trait PerformanceSwitches {
     owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val PanicShedding = Switch(
@@ -43,7 +43,7 @@ trait PerformanceSwitches {
     owners = Owner.group(SwitchGroup.Performance),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val interactivePressing = Switch(
@@ -53,7 +53,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("sammorrisdesign")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val CircuitBreakerSwitch = Switch(
@@ -63,7 +63,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AutoRefreshSwitch = Switch(
@@ -73,7 +73,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val RelatedContentSwitch = Switch(
@@ -83,7 +83,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val RichLinkSwitch = Switch(
@@ -93,7 +93,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val InlineCriticalCss = Switch(
@@ -103,7 +103,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AsyncCss = Switch(
@@ -114,7 +114,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val PolyfillIO = Switch(
@@ -124,7 +124,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val PolyfillIOFallbackMin = Switch(
@@ -134,7 +134,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val ShowAllArticleEmbedsSwitch = Switch(
@@ -144,7 +144,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val ExternalVideoEmbeds = Switch(
@@ -154,7 +154,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val DiscussionPageSizeSwitch = Switch(
@@ -164,7 +164,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ImageServerSwitch = Switch(
@@ -174,7 +174,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val ServiceWorkerEnabled = Switch(
@@ -184,7 +184,7 @@ trait PerformanceSwitches {
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val LazyLoadImages = Switch(

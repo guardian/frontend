@@ -12,4 +12,3 @@ object MediaWrapper extends Enum[MediaWrapper] with PlayJsonEnum[MediaWrapper] {
   case object EmbedPage extends MediaWrapper
   case object VideoContainer extends MediaWrapper
 }
-

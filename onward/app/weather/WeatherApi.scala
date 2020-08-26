@@ -21,11 +21,14 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 import akka.pattern.after
 
-class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit ec: ExecutionContext) extends ResourcesHelper with Logging {
+class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit
+    ec: ExecutionContext,
+) extends ResourcesHelper
+    with Logging {
 
   // NOTE: If you change the API Key, you must also update the weatherapi fastly configuration, as it is enforced there
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
-    throw new RuntimeException("Weather API Key not set")
+    throw new RuntimeException("Weather API Key not set"),
   )
 
   val requestTimeout: FiniteDuration = 300.milliseconds
@@ -57,12 +60,19 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
 
   private def getJsonWithRetry(url: String): Future[JsValue] = {
     val weatherLogsMarkerContext: MarkerContext = MarkerContext(append("weatherRequestPath", url))
-    val weatherApiResponse: Future[JsValue] = WeatherApi.retryWeatherRequest(() => getJsonRequest(url), requestRetryDelay, actorSystem.scheduler, requestRetryMax)
+    val weatherApiResponse: Future[JsValue] = WeatherApi.retryWeatherRequest(
+      () => getJsonRequest(url),
+      requestRetryDelay,
+      actorSystem.scheduler,
+      requestRetryMax,
+    )
     weatherApiResponse.failed.foreach {
       case error: TimeoutException =>
         log.warn(
           s"Request to weather api ($url) timed out (this is expected, especially at 0 and 30 mins past the hour due to" +
-          s" a problem with accuweather).", error)(weatherLogsMarkerContext)
+            s" a problem with accuweather).",
+          error,
+        )(weatherLogsMarkerContext)
       case error: Throwable =>
         log.error("Weather API request failed", error)(weatherLogsMarkerContext)
     }
@@ -75,7 +85,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
       .withRequestTimeout(requestTimeout)
       .get()
       .map { response =>
-        if(response.status == 200) response.json else throw new RuntimeException(s"Weather API response: $response")
+        if (response.status == 200) response.json else throw new RuntimeException(s"Weather API response: $response")
       }
   }
 
@@ -104,11 +114,17 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
 
 object WeatherApi extends Logging {
 
-  def retryWeatherRequest(request: () => Future[JsValue], retryDelay: FiniteDuration, scheduler: Scheduler, attempts: Int)(implicit ec: ExecutionContext): Future[JsValue] = {
+  def retryWeatherRequest(
+      request: () => Future[JsValue],
+      retryDelay: FiniteDuration,
+      scheduler: Scheduler,
+      attempts: Int,
+  )(implicit ec: ExecutionContext): Future[JsValue] = {
     def loop(attemptsRemaining: Int): Future[JsValue] = {
       request().recoverWith {
         case NonFatal(error) =>
-          if (attemptsRemaining <= 1) Future.failed(error) else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
+          if (attemptsRemaining <= 1) Future.failed(error)
+          else after(retryDelay, scheduler)(loop(attemptsRemaining - 1))
       }
     }
     loop(attempts)

@@ -19,9 +19,11 @@ class PAMatchParserTest extends FlatSpec with Matchers {
   }
 
   def checkJsonResult[A](res: Try[A]): Unit = {
-    val clue = res.failed.toOption.collect {
-      case JsonParseException(msg) => msg
-    }.getOrElse("")
+    val clue = res.failed.toOption
+      .collect {
+        case JsonParseException(msg) => msg
+      }
+      .getOrElse("")
 
     withClue(clue) {
       res.isSuccess shouldBe true

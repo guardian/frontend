@@ -30,7 +30,7 @@ trait Dates {
   def jodaToJavaInstant(date: DateTime): Instant = Instant.ofEpochMilli(date.getMillis())
 
   implicit class DateTime2SameDay(date: DateTime) {
-    def sameDay(other: DateTime): Boolean =  {
+    def sameDay(other: DateTime): Boolean = {
       val dateUtc = date.withZone(DateTimeZone.UTC)
       val otherUtc = other.withZone(DateTimeZone.UTC)
       dateUtc.getYear == otherUtc.getYear && dateUtc.getDayOfYear == otherUtc.getDayOfYear
@@ -61,7 +61,8 @@ trait Dates {
 
   implicit class ISODateTimeStringNoMillis2DateTime(s: String) {
     lazy val parseISODateTime = s match {
-      case DateTimeWithMillis(_) => ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
+      case DateTimeWithMillis(_) =>
+        ISODateTimeFormat.dateTime.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
       case _ => ISODateTimeFormat.dateTimeNoMillis.withZone(Edition.defaultEdition.timezone).parseDateTime(s)
     }
   }

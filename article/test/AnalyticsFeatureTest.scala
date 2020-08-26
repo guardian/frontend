@@ -5,11 +5,14 @@ import collection.JavaConverters._
 import org.fluentlenium.core.domain.FluentWebElement
 import conf.Configuration
 
-@DoNotDiscover class AnalyticsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class AnalyticsFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
   implicit val config = Configuration
 
   feature("Analytics") {
-
 
     conf.switches.Switches.EnableDiscussionSwitch.switchOff()
     // Feature

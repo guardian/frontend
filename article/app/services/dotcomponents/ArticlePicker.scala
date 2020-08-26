@@ -4,7 +4,21 @@ import controllers.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
-import model.liveblog.{AudioBlockElement, BlockElement, ContentAtomBlockElement, DocumentBlockElement, GuVideoBlockElement, ImageBlockElement, InstagramBlockElement, PullquoteBlockElement, RichLinkBlockElement, TableBlockElement, TextBlockElement, TweetBlockElement, VideoBlockElement}
+import model.liveblog.{
+  AudioBlockElement,
+  BlockElement,
+  ContentAtomBlockElement,
+  DocumentBlockElement,
+  GuVideoBlockElement,
+  ImageBlockElement,
+  InstagramBlockElement,
+  PullquoteBlockElement,
+  RichLinkBlockElement,
+  TableBlockElement,
+  TextBlockElement,
+  TweetBlockElement,
+  VideoBlockElement,
+}
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
@@ -15,60 +29,62 @@ object ArticlePageChecks {
   }
 
   def isDiscussionDisabled(page: PageWithStoryPackage): Boolean = {
-    (! page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
+    (!page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
   }
 
   def hasBlocks(page: PageWithStoryPackage): Boolean = {
     page.article.blocks match {
       case Some(b) => b.body.nonEmpty
-      case None => false
+      case None    => false
     }
   }
 
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
       case a: ArticlePage => true
-      case _ => false
+      case _              => false
     }
   }
 
   def hasOnlySupportedElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
 
-    def unsupportedElement(blockElement: BlockElement) = blockElement match {
-      case _: AudioBlockElement => {
-        val e = blockElement.asInstanceOf[AudioBlockElement].element
-        val resolve = model.dotcomrendering.pageElements.PageElement.audioIsDCRSupported(e)
-        !resolve
+    def unsupportedElement(blockElement: BlockElement) =
+      blockElement match {
+        case _: AudioBlockElement => {
+          val e = blockElement.asInstanceOf[AudioBlockElement].element
+          val resolve = model.dotcomrendering.pageElements.PageElement.audioIsDCRSupported(e)
+          !resolve
+        }
+        case _: DocumentBlockElement  => false
+        case _: ImageBlockElement     => false
+        case _: InstagramBlockElement => false
+        case _: PullquoteBlockElement => false
+        case _: RichLinkBlockElement  => false
+        case _: TableBlockElement     => false
+        case _: TextBlockElement      => false
+        case _: TweetBlockElement     => false
+        case _: VideoBlockElement     => false
+        case ContentAtomBlockElement(_, atomtype) => {
+          // ContentAtomBlockElement was expanded to include atomtype.
+          // To support an atom type, just add it to supportedAtomTypes
+          val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide", "timeline", "profile")
+          !supportedAtomTypes.contains(atomtype)
+        }
+        case _ => true
       }
-      case _: DocumentBlockElement => false
-      case _: ImageBlockElement => false
-      case _: InstagramBlockElement => false
-      case _: PullquoteBlockElement => false
-      case _: RichLinkBlockElement => false
-      case _: TableBlockElement => false
-      case _: TextBlockElement => false
-      case _: TweetBlockElement => false
-      case _: VideoBlockElement => false
-      case ContentAtomBlockElement(_, atomtype) => {
-        // ContentAtomBlockElement was expanded to include atomtype.
-        // To support an atom type, just add it to supportedAtomTypes
-        val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide", "timeline", "profile")
-        !supportedAtomTypes.contains(atomtype)
-      }
-      case _ => true
-    }
 
     !page.article.blocks.exists(_.body.exists(_.elements.exists(unsupportedElement)))
   }
 
   def hasOnlySupportedMainElements(page: PageWithStoryPackage): Boolean = {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
-    def unsupportedElement(blockElement: BlockElement) = blockElement match {
-      case _: TextBlockElement => false
-      case _: ImageBlockElement => false
-      case _ => true
-    }
+    def unsupportedElement(blockElement: BlockElement) =
+      blockElement match {
+        case _: TextBlockElement  => false
+        case _: ImageBlockElement => false
+        case _                    => true
+      }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
   }
@@ -89,22 +105,22 @@ object ArticlePageChecks {
     "us-news/series/counted-us-police-killings",
     "australia-news/series/healthcare-in-detention",
     "society/series/this-is-the-nhs",
-    "artanddesign/series/guardian-print-shop"
+    "artanddesign/series/guardian-print-shop",
   )
 
-  def isNotNumberedList(page: PageWithStoryPackage): Boolean = ! page.item.isNumberedList
+  def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
 
-  def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = ! page.item.isPhotoEssay
+  def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = !page.item.isPhotoEssay
 
-  def isNotLiveBlog(page:PageWithStoryPackage): Boolean = ! page.item.isLiveBlog
+  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.isLiveBlog
 
-  def isNotAGallery(page:PageWithStoryPackage): Boolean = ! page.item.tags.isGallery
+  def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
-  def isNotAMP(request: RequestHeader): Boolean = ! request.isAmp
+  def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
 
-  def isNotOpinion(page:PageWithStoryPackage): Boolean = ! page.item.tags.isComment
+  def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
 
-  def isNotPaidContent(page: PageWithStoryPackage): Boolean = ! page.article.tags.isPaidContent
+  def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
 
   def isSupportedTone(page: PageWithStoryPackage): Boolean = {
     Set(
@@ -122,6 +138,7 @@ object ArticlePageChecks {
       "tone/interview",
       "tone/letters",
       "tone/livereview",
+      "tone/matchreports",
       "tone/news",
       "tone/obituaries",
       "tone/performances",
@@ -129,12 +146,12 @@ object ArticlePageChecks {
       "tone/profiles",
       "tone/recipes",
       "tone/reviews",
-      "tone/timelines"
+      "tone/timelines",
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
 
   def isNotInBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s=>tagsBlockList(s.id))
+    !page.item.tags.tags.exists(s => tagsBlockList(s.id))
   }
 
 }
@@ -143,7 +160,9 @@ object ArticlePicker {
 
   val logger = DotcomponentsLogger()
 
-  private[this] def logRequest(msg:String, results: Map[String, String], page: PageWithStoryPackage)(implicit request: RequestHeader): Unit = {
+  private[this] def logRequest(msg: String, results: Map[String, String], page: PageWithStoryPackage)(implicit
+      request: RequestHeader,
+  ): Unit = {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
@@ -160,7 +179,7 @@ object ArticlePicker {
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
       ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
-      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page))
+      ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
 
@@ -169,8 +188,8 @@ object ArticlePicker {
     path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
   }
 
-  def forall(features:  Map[String, Boolean]): Boolean = {
-    features.forall({ case (_, isMet) => isMet})
+  def forall(features: Map[String, Boolean]): Boolean = {
+    features.forall({ case (_, isMet) => isMet })
   }
 
   def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
@@ -182,10 +201,10 @@ object ArticlePicker {
         "isNotAGallery",
         "isNotAMP",
         "isNotInBlockList",
-        "isNotPaidContent"
-      )
+        "isNotPaidContent",
+      ),
     )
-    val isArticle100PercentPage = article100PercentPageFeatures.forall({ case (test, isMet) => isMet})
+    val isArticle100PercentPage = article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
     isArticle100PercentPage
   }
 
@@ -207,9 +226,9 @@ object ArticlePicker {
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
-      if (dcrForced(request)) RemoteRender              // dcrForced doesn't check the switch. This means that RemoteRender
-                                                        // is always going to be selected if `?dcr=true`, regardless of
-                                                        // the switch.
+      if (dcrForced(request)) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
+      // is always going to be selected if `?dcr=true`, regardless of
+      // the switch.
       else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
       else if (userInDCRBubble) RemoteRender
       else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
@@ -219,11 +238,12 @@ object ArticlePicker {
     val isAddFree = ArticlePageChecks.isAdFree(page, request);
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
-    def testGroup(experiment: Experiment): String = ActiveExperiments.groupFor(experiment) match {
-      case Participant => "participant"
-      case Control => "control"
-      case Excluded => "excluded"
-    }
+    def testGroup(experiment: Experiment): String =
+      ActiveExperiments.groupFor(experiment) match {
+        case Participant => "participant"
+        case Control     => "control"
+        case Excluded    => "excluded"
+      }
 
     // include features that we wish to log but not allow-list against
     val features = primaryChecks.mapValues(_.toString) +

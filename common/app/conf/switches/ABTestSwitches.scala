@@ -13,7 +13,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2025, 1, 27),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -23,7 +23,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -33,7 +33,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("michaelbjacobson")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -43,7 +43,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -53,7 +53,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2025, 1, 27),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -63,7 +63,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 1, 20),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -73,7 +73,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -83,7 +83,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -93,7 +93,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -103,17 +103,17 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 3),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
     "ab-sign-in-gate-patientia",
     "Marathon sign in gate test on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("vlbee")),
+    owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -123,7 +123,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -133,7 +133,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -143,7 +143,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(

@@ -69,7 +69,8 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
     }
 
     "should add params to url that already has a querystring" in {
-      val appended = idUrlBuilder.appendQueryParams("http://example.com?existing=true", List("test" -> "foo", "test2" -> "bar"))
+      val appended =
+        idUrlBuilder.appendQueryParams("http://example.com?existing=true", List("test" -> "foo", "test2" -> "bar"))
       appended should equal("http://example.com?existing=true&test=foo&test2=bar")
     }
 
@@ -84,12 +85,16 @@ class IdentityUrlBuilderTest extends path.FreeSpec with Matchers with MockitoSug
     when(omnitureTracking.registrationType) thenReturn Some("bar")
 
     "should add path and params to configured root" - {
-      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(testIdConfig.url + "/test/path?returnUrl=foo&type=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest) should equal(
+        testIdConfig.url + "/test/path?returnUrl=foo&type=bar",
+      )
     }
 
     "should override idRequest params if necessary" - {
       when(omnitureTracking.registrationType) thenReturn None
-      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(testIdConfig.url + "/test/path?returnUrl=bar")
+      idUrlBuilder.buildUrl("/test/path", idRequest, ("returnUrl", "bar")) should equal(
+        testIdConfig.url + "/test/path?returnUrl=bar",
+      )
     }
   }
 }

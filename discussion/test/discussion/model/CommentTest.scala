@@ -6,7 +6,6 @@ import test.ConfiguredTestSuite
 
 @DoNotDiscover class CommentTest extends FreeSpec with Matchers with ConfiguredTestSuite {
 
-
   "A comment with Json" in {
     val json: JsValue = Json.parse(aCommentJson)
     val aComment = Comment.apply(json, None, Some(Discussion.empty))
@@ -84,6 +83,5 @@ import test.ConfiguredTestSuite
       |}
       |
     """.stripMargin
-
 
 }

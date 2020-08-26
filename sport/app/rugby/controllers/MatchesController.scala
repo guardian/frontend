@@ -10,39 +10,47 @@ import rugby.model.Match
 
 case class MatchPage(liveScore: Match) extends StandalonePage {
   override val metadata = MetaData.make(
-    id = s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
+    id =
+      s"/sport/rugby/api/score/${liveScore.date.toString("yyyy/MMM/dd")}/${liveScore.homeTeam.id}/${liveScore.awayTeam.id}",
     section = Some(SectionId.fromId("rugby")),
-    webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}")
+    webTitle = s"${liveScore.homeTeam.name} v ${liveScore.awayTeam.name}",
+  )
 }
 
 class MatchesController(
-  rugbyStatsJob: RugbyStatsJob,
-  val controllerComponents: ControllerComponents
+    rugbyStatsJob: RugbyStatsJob,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ImplicitControllerExecutionContext {
+    extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext {
 
-  def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Action[AnyContent] = score(year, month, day, homeTeamId, awayTeamId)
+  def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Action[AnyContent] =
+    score(year, month, day, homeTeamId, awayTeamId)
 
-  def score(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] = Action { implicit request =>
+  def score(year: String, month: String, day: String, team1: String, team2: String): Action[AnyContent] =
+    Action { implicit request =>
+      val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
+      val currentPage = request.getParameter("page")
 
-    val matchOpt = rugbyStatsJob.getFixturesAndResultScore(year, month, day, team1, team2)
-    val currentPage = request.getParameter("page")
+      matchOpt
+        .map { aMatch =>
+          val matchNav =
+            rugbyStatsJob.getMatchNavContent(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
 
-    matchOpt.map { aMatch =>
-      val matchNav = rugbyStatsJob.getMatchNavContent(aMatch).map(rugby.views.html.fragments.matchNav(_, currentPage).toString)
+          val page = MatchPage(aMatch)
+          Cached(60) {
+            if (request.isJson)
+              JsonComponent(
+                "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
+                "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
+                "nav" -> matchNav.getOrElse(""),
+              )
+            else
+              RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch))
+          }
 
-      val page = MatchPage(aMatch)
-      Cached(60){
-        if (request.isJson)
-          JsonComponent(
-            "matchSummary" -> rugby.views.html.fragments.matchSummary(page, aMatch).toString,
-            "dropdown" -> views.html.fragments.dropdown("", isClientSideTemplate = true)(Html("")),
-            "nav" -> matchNav.getOrElse("")
-          )
-        else
-          RevalidatableResult.Ok(rugby.views.html.matchSummary(page, aMatch))
-      }
-
-    }.getOrElse(NotFound)
-  }
+        }
+        .getOrElse(NotFound)
+    }
 }

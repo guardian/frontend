@@ -1,6 +1,5 @@
 package controllers.admin
 
-
 import controllers.Helpers.DeploysTestHttpRecorder
 import model.deploys._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
@@ -15,7 +14,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 @DoNotDiscover class DeploysControllerTest
-  extends WordSpec
+    extends WordSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
@@ -26,11 +25,22 @@ import scala.concurrent.duration._
   val existingBuild = "3123"
 
   class TestHttpClient(wsClient: WSClient) extends HttpLike {
-    override def GET(url: String, queryString: Map[String, String] = Map.empty, headers: Map[String, String] = Map.empty): Future[WSResponse] = {
+    override def GET(
+        url: String,
+        queryString: Map[String, String] = Map.empty,
+        headers: Map[String, String] = Map.empty,
+    ): Future[WSResponse] = {
       import implicits.Strings.string2encodings
-      val urlWithParams = url + "?" + queryString.updated("key", "").toList.sortBy(_._1).map(kv=> kv._1 + "=" + kv._2).mkString("&").encodeURIComponent
+      val urlWithParams = url + "?" + queryString
+        .updated("key", "")
+        .toList
+        .sortBy(_._1)
+        .map(kv => kv._1 + "=" + kv._2)
+        .mkString("&")
+        .encodeURIComponent
       DeploysTestHttpRecorder.load(urlWithParams, headers) {
-        wsClient.url(url)
+        wsClient
+          .url(url)
           .withQueryStringParameters(queryString.toSeq: _*)
           .withHttpHeaders(headers.toSeq: _*)
           .withRequestTimeout(10.seconds)
@@ -65,4 +75,3 @@ import scala.concurrent.duration._
     }
   }
 }
-

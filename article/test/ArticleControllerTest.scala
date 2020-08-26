@@ -22,23 +22,28 @@ import scala.concurrent.{ExecutionContext, Future}
 // these
 
 class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
-  override def getArticle(ws:WSClient, path: String, article: PageWithStoryPackage, blocks: Blocks, pageType: PageType)(implicit request: RequestHeader): Future[Result] = {
+  override def getArticle(
+      ws: WSClient,
+      path: String,
+      article: PageWithStoryPackage,
+      blocks: Blocks,
+      pageType: PageType,
+  )(implicit request: RequestHeader): Future[Result] = {
     implicit val ec = ExecutionContext.global
     Future(Cached(article)(RevalidatableResult.Ok(Html("OK"))))
   }
 }
 
 @DoNotDiscover class ArticleControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with MockitoSugar
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient
- {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with MockitoSugar
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val guuiArticle = "world/2018/sep/13/give-pizza-a-chance-south-koreans-pa-weight-to-thwart-conscription"
@@ -48,14 +53,14 @@ class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.R
   lazy val articleController = new ArticleController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
-    wsClient
+    wsClient,
   )
 
   lazy val guuiController = new ArticleController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
     wsClient,
-    new FakeRemoteRender()
+    new FakeRemoteRender(),
   )
 
   "Article Controller" should "200 when content type is article" in {
@@ -94,13 +99,13 @@ class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.R
   it should "not cache 404s" in {
     val result = articleController.renderArticle("oops")(TestRequest())
     status(result) should be(404)
-    header("Cache-Control", result).head should be ("private, no-store, no-cache")
+    header("Cache-Control", result).head should be("private, no-store, no-cache")
   }
 
   it should "redirect for short urls" in {
     val result = articleController.renderArticle("p/39heg")(TestRequest("/p/39heg"))
-    status(result) should be (302)
-    header("Location", result).head should be ("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
+    status(result) should be(302)
+    header("Location", result).head should be("/uk/2012/aug/07/woman-torture-burglary-waterboard-surrey")
   }
 
   it should "return JSON when .json format is supplied" in {
@@ -114,17 +119,24 @@ class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.R
   }
 
   it should "internal redirect unsupported content to classic" in {
-    val result = articleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"))
+    val result = articleController.renderArticle("world/video/2012/feb/10/inside-tibet-heart-protest-video")(
+      TestRequest("world/video/2012/feb/10/inside-tibet-heart-protest-video"),
+    )
     status(result) should be(200)
-    header("X-Accel-Redirect", result).get should be("/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video")
+    header("X-Accel-Redirect", result).get should be(
+      "/applications/world/video/2012/feb/10/inside-tibet-heart-protest-video",
+    )
   }
 
   val expiredArticle = "football/2012/sep/14/zlatan-ibrahimovic-paris-st-germain-toulouse"
 
   it should "know which backend served the request" in {
-    val result = route(app, TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")).head
-    status(result) should be (200)
-    header("X-Gu-Backend-App", result).head should be ("article")
+    val result = route(
+      app,
+      TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning"),
+    ).head
+    status(result) should be(200)
+    header("X-Gu-Backend-App", result).head should be("article")
   }
 
   it should "infer a Surrogate-Key based on the path" in {
@@ -132,21 +144,23 @@ class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.R
     val expectedSurrogateKey = DigestUtils.md5Hex("/stage/2015/jul/15/alex-edelman-steve-martin-edinburgh-fringe")
 
     val result = route(app, TestRequest("/stage/2015/jul/15/alex-edelman-steve-martin-edinburgh-fringe?index=7")).head
-    header("Surrogate-Key", result).head should be (expectedSurrogateKey)
+    header("Surrogate-Key", result).head should be(expectedSurrogateKey)
   }
 
   "International users" should "be in the International edition" in {
     val request = TestRequest("/world/2014/sep/24/radical-cleric-islamic-state-release-british-hostage-alan-henning")
       .withHeaders(
-        "X-GU-Edition" -> "int"
+        "X-GU-Edition" -> "int",
       )
     val result = route(app, request).head
-    contentAsString(result) should include ("\"edition\":\"INT\"")
+    contentAsString(result) should include("\"edition\":\"INT\"")
   }
 
-  "Interactive articles" should "provide a boot.js script element as a main embed" in goTo("/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open") { browser =>
+  "Interactive articles" should "provide a boot.js script element as a main embed" in goTo(
+    "/sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open",
+  ) { browser =>
     import browser._
-    $(".media-primary > .element-interactive").attributes("data-interactive").asScala.head should endWith ("boot.js")
+    $(".media-primary > .element-interactive").attributes("data-interactive").asScala.head should endWith("boot.js")
   }
 
 }

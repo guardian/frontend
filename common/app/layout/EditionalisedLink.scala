@@ -6,7 +6,7 @@ import model.pressed._
 import play.api.mvc.RequestHeader
 
 case class EditionalisedLink(
-  baseUrl: String
+    baseUrl: String,
 ) {
   import common.LinkTo._
 
@@ -15,7 +15,7 @@ case class EditionalisedLink(
 
   def hrefWithRel(implicit requestHeader: RequestHeader): String =
     processUrl(baseUrl, Edition(requestHeader)) match {
-      case ProcessedUrl(url, true) => s"""href="$url" rel="nofollow""""
+      case ProcessedUrl(url, true)  => s"""href="$url" rel="nofollow""""
       case ProcessedUrl(url, false) => s"""href="$url""""
     }
 }
@@ -24,4 +24,3 @@ object EditionalisedLink {
   def fromFaciaContent(faciaContent: PressedContent): EditionalisedLink =
     EditionalisedLink(SupportedUrl.fromFaciaContent(faciaContent))
 }
-

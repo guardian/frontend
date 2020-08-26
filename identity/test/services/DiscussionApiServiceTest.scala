@@ -9,14 +9,15 @@ import org.scalatest.mockito.MockitoSugar
 import scala.concurrent.Future
 
 class DiscussionApiServiceTest extends AsyncFlatSpec with MockitoSugar {
-  private def buildFixtures() = new {
-    val discussionClient = mock[DiscussionClient]
-    val userId = "123"
-    val displayName = "displayName"
-    val discussionProfile = DiscussionProfile(userId, displayName)
-    val discussionProfileResponse = DiscussionProfileResponse("ok", discussionProfile)
-    val profileStats = DiscussionProfileStats("ok", 5, 0)
-  }
+  private def buildFixtures() =
+    new {
+      val discussionClient = mock[DiscussionClient]
+      val userId = "123"
+      val displayName = "displayName"
+      val discussionProfile = DiscussionProfile(userId, displayName)
+      val discussionProfileResponse = DiscussionProfileResponse("ok", discussionProfile)
+      val profileStats = DiscussionProfileStats("ok", 5, 0)
+    }
 
   "findDiscussionUserFilterCommented" should "retrieve a DiscussionProfile if the user exists with comments" in {
     val fixtures = buildFixtures()

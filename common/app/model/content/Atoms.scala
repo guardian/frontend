@@ -7,32 +7,34 @@ import conf.Configuration
 import model.{ImageAsset, ImageMedia, ShareLinkMeta}
 
 final case class Atoms(
-  quizzes: Seq[QuizAtom],
-  media: Seq[MediaAtom],
-  interactives: Seq[InteractiveAtom],
-  recipes: Seq[RecipeAtom],
-  reviews: Seq[ReviewAtom],
-  explainers: Seq[ExplainerAtom],
-  qandas: Seq[QandaAtom],
-  guides: Seq[GuideAtom],
-  profiles: Seq[ProfileAtom],
-  timelines: Seq[TimelineAtom],
-  commonsdivisions: Seq[CommonsDivisionAtom],
-  audios: Seq[AudioAtom],
-  charts: Seq[ChartAtom]
+    quizzes: Seq[QuizAtom],
+    media: Seq[MediaAtom],
+    interactives: Seq[InteractiveAtom],
+    recipes: Seq[RecipeAtom],
+    reviews: Seq[ReviewAtom],
+    explainers: Seq[ExplainerAtom],
+    qandas: Seq[QandaAtom],
+    guides: Seq[GuideAtom],
+    profiles: Seq[ProfileAtom],
+    timelines: Seq[TimelineAtom],
+    commonsdivisions: Seq[CommonsDivisionAtom],
+    audios: Seq[AudioAtom],
+    charts: Seq[ChartAtom],
 ) {
-  val all: Seq[Atom] = quizzes ++ media ++ interactives ++ recipes ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
+  val all: Seq[Atom] =
+    quizzes ++ media ++ interactives ++ recipes ++ reviews ++ explainers ++ qandas ++ guides ++ profiles ++ timelines ++ commonsdivisions ++ audios ++ charts
 
-  def atomTypes: Map[String, Boolean] = Map(
-    "guide" -> !guides.isEmpty,
-    "qanda" -> !qandas.isEmpty,
-    "profile" -> !profiles.isEmpty,
-    "timeline" -> !timelines.isEmpty,
-    "explainer" -> !explainers.isEmpty,
-    "commonsdivision" -> !commonsdivisions.isEmpty,
-    "audio" -> !audios.isEmpty,
-    "chart" -> !charts.isEmpty
-  )
+  def atomTypes: Map[String, Boolean] =
+    Map(
+      "guide" -> !guides.isEmpty,
+      "qanda" -> !qandas.isEmpty,
+      "profile" -> !profiles.isEmpty,
+      "timeline" -> !timelines.isEmpty,
+      "explainer" -> !explainers.isEmpty,
+      "commonsdivision" -> !commonsdivisions.isEmpty,
+      "audio" -> !audios.isEmpty,
+      "chart" -> !charts.isEmpty,
+    )
 }
 
 object Atoms extends common.Logging {
@@ -42,14 +44,14 @@ object Atoms extends common.Logging {
     val artConf = ArticleConfiguration(
       ajaxUrl = Configuration.ajax.url,
       audioSettings = audioSettings,
-      commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true)
+      commonsdivisionConfiguration = ArticleConfiguration.CommonsdivisionConfiguration(showMps = true),
     )
     artConf
   }
 
   def extract[T](
-    atoms: Option[Seq[AtomApiAtom]],
-    extractFn: AtomApiAtom => T
+      atoms: Option[Seq[AtomApiAtom]],
+      extractFn: AtomApiAtom => T,
   ): Seq[T] = {
     try {
       atoms.getOrElse(Nil).map(extractFn)
@@ -64,9 +66,12 @@ object Atoms extends common.Logging {
     content.atoms.map { atoms =>
       val quizzes = extract(atoms.quizzes, atom => { QuizAtom.make(content.id, atom, pageShares) })
 
-      val media = extract(atoms.media, atom => {
-        MediaAtom.make(atom)
-      })
+      val media = extract(
+        atoms.media,
+        atom => {
+          MediaAtom.make(atom)
+        },
+      )
 
       val interactives = extract(atoms.interactives, atom => { InteractiveAtom.make(atom) })
 
@@ -76,17 +81,17 @@ object Atoms extends common.Logging {
 
       val explainers = extract(atoms.explainers, atom => { ExplainerAtom.make(atom) })
 
-      val qandas = extract(atoms.qandas, atom => {QandaAtom.make(atom)})
+      val qandas = extract(atoms.qandas, atom => { QandaAtom.make(atom) })
 
-      val guides = extract(atoms.guides, atom => {GuideAtom.make(atom)})
+      val guides = extract(atoms.guides, atom => { GuideAtom.make(atom) })
 
-      val profiles = extract(atoms.profiles, atom => {ProfileAtom.make(atom)})
+      val profiles = extract(atoms.profiles, atom => { ProfileAtom.make(atom) })
 
-      val timelines = extract(atoms.timelines, atom => {TimelineAtom.make(atom)})
+      val timelines = extract(atoms.timelines, atom => { TimelineAtom.make(atom) })
 
-      val commonsdivisions = extract(atoms.commonsdivisions, atom => {CommonsDivisionAtom.make(atom)})
+      val commonsdivisions = extract(atoms.commonsdivisions, atom => { CommonsDivisionAtom.make(atom) })
 
-      val audios = extract(atoms.audios, atom => {AudioAtom.make(atom)})
+      val audios = extract(atoms.audios, atom => { AudioAtom.make(atom) })
 
       val charts = extract(atoms.charts, ChartAtom.make)
 
@@ -103,7 +108,7 @@ object Atoms extends common.Logging {
         timelines = timelines,
         commonsdivisions = commonsdivisions,
         audios = audios,
-        charts = charts
+        charts = charts,
       )
     }
   }
@@ -114,11 +119,11 @@ object Atoms extends common.Logging {
         ImageAsset(
           fields = Map(
             "width" -> dims.width.toString,
-            "height" -> dims.height.toString
+            "height" -> dims.height.toString,
           ) ++ asset.credit.map("credit" -> _),
           mediaType = "image",
           mimeType = asset.mimeType,
-          url = Some(asset.file)
+          url = Some(asset.file),
         )
       }
     }
@@ -126,5 +131,3 @@ object Atoms extends common.Logging {
     ImageMedia(imageAssets)
   }
 }
-
-

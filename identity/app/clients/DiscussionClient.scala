@@ -37,7 +37,9 @@ object DiscussionApiServiceException {
   def apply(message: String): DiscussionApiServiceException = DiscussionApiServiceException(message, null)
 }
 
-class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit executionContext: ExecutionContext) extends SafeLogging {
+class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(implicit
+    executionContext: ExecutionContext,
+) extends SafeLogging {
 
   private def GET(urlPath: String): Future[WSResponse] = {
     wsClient
@@ -50,7 +52,7 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
     response.status match {
       case 200 => Success(Some(response.json))
       case 404 => Success(None)
-      case _ => Failure(DiscussionApiServiceException(s"${response.status}: ${response.statusText}"))
+      case _   => Failure(DiscussionApiServiceException(s"${response.status}: ${response.statusText}"))
     }
   }
 
@@ -81,4 +83,3 @@ class DiscussionClient(wsClient: WSClient, config: conf.IdentityConfiguration)(i
     }
   }
 }
-

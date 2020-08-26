@@ -19,14 +19,17 @@ trait Containers {
       case 1 => FixedContainers.fixedSmallSlowI
       case 2 => FixedContainers.fixedSmallSlowII
       case 3 => ContainerDefinition.ofSlices(TTT)
-      case _ => FixedContainers.fixedMediumFastXII }
+      case _ => FixedContainers.fixedMediumFastXII
+    }
 
-    FaciaContainer.fromConfigWithId(
-      1,
-      Fixed(containerDefinition),
-      CollectionConfigWithId(dataId, CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(config))),
-      CollectionEssentials(trails, Nil, displayName, None, None, None),
-      hasMore = false
-    ).withTimeStamps
+    FaciaContainer
+      .fromConfigWithId(
+        1,
+        Fixed(containerDefinition),
+        CollectionConfigWithId(dataId, CollectionConfig.make(fapi.CollectionConfig.fromCollectionJson(config))),
+        CollectionEssentials(trails, Nil, displayName, None, None, None),
+        hasMore = false,
+      )
+      .withTimeStamps
   }
 }
