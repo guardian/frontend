@@ -59,7 +59,8 @@ import {
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
 
-const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
+// The below line is needed for page skins to show
+getPageTargeting();
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
@@ -303,7 +304,7 @@ const getOzoneTargeting = (): { } => {
             'lotamePid': lotameData.ozoneLotameProfileId,
         }
     }
-    return PAGE_TARGETING;
+    return appNexusTargetingObject;
 };
 
 // Is pbtest being used?
