@@ -138,6 +138,7 @@ object ArticlePageChecks {
       "tone/interview",
       "tone/letters",
       "tone/livereview",
+      "tone/matchreports",
       "tone/news",
       "tone/obituaries",
       "tone/performances",
