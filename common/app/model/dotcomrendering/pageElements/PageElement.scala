@@ -334,11 +334,10 @@ object PageElement {
           element <- Cleaner.split(text)
         } yield {
           element match {
-            case ("h2", heading)            => SubheadingBlockElement(heading)
-            case ("blockquote", blockquote) => BlockquoteBlockElement(blockquote)
-            case (_, para) if (addAffiliateLinks) =>
-              AffiliateLinksCleaner.replaceLinksInElement(para, pageUrl = pageUrl, contentType = "article")
-            case (_, para) => TextBlockElement(para)
+            case ("h2", heading)                  => SubheadingBlockElement(heading)
+            case ("blockquote", blockquote)       => BlockquoteBlockElement(blockquote)
+            case (_, para) if (addAffiliateLinks) => Cleaners.affiliateLinks(pageUrl)(TextBlockElement(para))
+            case (_, para)                        => TextBlockElement(para)
           }
         }
 
