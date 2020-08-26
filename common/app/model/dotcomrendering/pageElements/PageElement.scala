@@ -412,9 +412,18 @@ object PageElement {
         )
 
       case Audio => audioToPageElement(element).toList
-      // This process returns either:
-      // 1. SoundcloudBlockElement
-      // 2. AudioBlockElement
+      /*
+        The AudioBlockElement is a versatile carrier. It carries both audio and non audio (in legacy content)
+
+        The audioToPageElement function performs the transformation of an AudioBlockElement to the appropriate
+        PageElement
+
+        The function returns either:
+        - SoundcloudBlockElement
+        - SpotifyBlockElement
+        - EmbedBlockElement (introduced to handle legacy Spotify BlockElements pointing to charts)
+        - AudioBlockElement (currently not supported in DCR)
+       */
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -685,6 +694,19 @@ object PageElement {
     }
   }
 
+  private def extractChartEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+    // comment id: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
+    // This only returns an EmbedBlockELement if referring to a charts-datawrapper
+    // This is to solve a data integrity problem we observed with Audio elements.
+    // If the problem turns out to be deeper we could abstract it idea further.
+    for {
+      src <- getIframeSrc(html)
+      if src.contains("charts-datawrapper")
+    } yield {
+      EmbedBlockElement(html, None, None, false)
+    }
+  }
+
   private def extractSpotifyBlockElement(element: ApiBlockElement): Option[SpotifyBlockElement] = {
     for {
       d <- element.audioTypeData
@@ -711,13 +733,10 @@ object PageElement {
 
       See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
      */
-    // println("->")
-    // println(element)
-    // println(audioToPageElement(element: ApiBlockElement))
-
     audioToPageElement(element: ApiBlockElement) match {
       case Some(_: SoundcloudBlockElement) => true
       case Some(_: SpotifyBlockElement)    => true
+      case Some(_: EmbedBlockElement)      => true
       case _                               => false
     }
   }
@@ -728,11 +747,15 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
-      extractSoundcloudBlockElement(html, mandatory) getOrElse
-        (
-          extractSpotifyBlockElement(element) getOrElse
+      // Note that extractChartEmbedBlockElement only returns an EmbedBlockElement in the case of an audio incorrectly
+      // carrying a chart iframe. See comment: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
+      extractSoundcloudBlockElement(html, mandatory).getOrElse {
+        extractSpotifyBlockElement(element).getOrElse {
+          extractChartEmbedBlockElement(html).getOrElse {
             AudioBlockElement(element.assets.map(AudioAsset.make))
-        )
+          }
+        }
+      }
     }
   }
 
@@ -746,12 +769,11 @@ object PageElement {
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
     } yield {
-      extractSoundcloudBlockElement(html, mandatory)
-        .getOrElse(
-          CalloutExtraction
-            .extractCallout(html: String, campaigns, calloutsUrl)
-            .getOrElse(EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)),
-        )
+      extractSoundcloudBlockElement(html, mandatory).getOrElse {
+        CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
+          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+        }
+      }
     }
   }
 
