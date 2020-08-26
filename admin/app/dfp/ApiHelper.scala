@@ -17,8 +17,8 @@ private[dfp] object ApiHelper extends Logging {
       }
     }
 
-    ( dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET ) &&
-      hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
+    (dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET) &&
+    hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
   def toJodaTime(time: DateTime): JodaDateTime = {
@@ -30,7 +30,7 @@ private[dfp] object ApiHelper extends Logging {
       time.getHour,
       time.getMinute,
       time.getSecond,
-      DateTimeZone.forID(time.getTimeZoneId)
+      DateTimeZone.forID(time.getTimeZoneId),
     )
   }
 

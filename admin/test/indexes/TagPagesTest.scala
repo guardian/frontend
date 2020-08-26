@@ -22,7 +22,7 @@ import scala.concurrent.duration._
       "cool" -> "c",
       "So" -> "s",
       "Is" -> "i",
-      "Rob" -> "r"
+      "Rob" -> "r",
     )
 
     for ((word, char) <- words) {
@@ -38,7 +38,7 @@ import scala.concurrent.duration._
       "ý" -> "y",
       "Á" -> "a",
       "Ò" -> "o",
-      "Ù" -> "u"
+      "Ù" -> "u",
     )
 
     for ((unicode, ascii) <- words) {
@@ -50,7 +50,7 @@ import scala.concurrent.duration._
     val fixtures = Seq(
       "100 Years of Solitude",
       "1984",
-      "20,000 Leagues Under the Sea"
+      "20,000 Leagues Under the Sea",
     )
 
     for (fixture <- fixtures) {
@@ -67,7 +67,7 @@ import scala.concurrent.duration._
         None,
         webTitle,
         "",
-        ""
+        "",
       )
 
     val activateTag = tagFixture("Activate")
@@ -76,36 +76,38 @@ import scala.concurrent.duration._
     val advertisingTag = tagFixture("Advertising")
     val otherDigitalSolutionsTag = tagFixture("Other digital solutions")
 
-    tagPages.toPages(Enumerator(
-      activateTag,
-      archivedSpeakersTag,
-      blogTag,
-      advertisingTag,
-      otherDigitalSolutionsTag
-    ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)))(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
+    tagPages.toPages(
+      Enumerator(
+        activateTag,
+        archivedSpeakersTag,
+        blogTag,
+        advertisingTag,
+        otherDigitalSolutionsTag,
+      ).run(tagPages.byWebTitle).futureValue(Timeout(1 second)),
+    )(_.toUpperCase, tagPages.asciiLowerWebTitle) shouldEqual Seq(
       TagIndex(
         "a",
         "A",
         List(
           activateTag,
           advertisingTag,
-          archivedSpeakersTag
-        ).map(TagDefinition.fromContentApiTag)
+          archivedSpeakersTag,
+        ).map(TagDefinition.fromContentApiTag),
       ),
       TagIndex(
         "b",
         "B",
         List(
-          TagDefinition.fromContentApiTag(blogTag)
-        )
+          TagDefinition.fromContentApiTag(blogTag),
+        ),
       ),
       TagIndex(
         "o",
         "O",
         List(
-          TagDefinition.fromContentApiTag(otherDigitalSolutionsTag)
-        )
-      )
+          TagDefinition.fromContentApiTag(otherDigitalSolutionsTag),
+        ),
+      ),
     )
   }
 }

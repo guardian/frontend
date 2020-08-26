@@ -1,4 +1,3 @@
-
 import app.FrontendComponents
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
@@ -11,5 +10,6 @@ trait TestComponents extends FootballTestData with WithTestFootballClient with W
 }
 
 class TestAppLoader extends AppLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents with TestComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents with TestComponents
 }

@@ -20,18 +20,19 @@ case object ExternalLink extends CardStyle { val toneString = fapiutils.CardStyl
 case object DefaultCardstyle extends CardStyle { val toneString = fapiutils.CardStyle.news }
 
 object CardStyle {
-  def make(cardStyle: fapiutils.CardStyle): CardStyle = cardStyle match {
-    case fapiutils.SpecialReport => SpecialReport
-    case fapiutils.LiveBlog => LiveBlog
-    case fapiutils.DeadBlog => DeadBlog
-    case fapiutils.Feature => Feature
-    case fapiutils.Editorial => Editorial
-    case fapiutils.Comment => Comment
-    case fapiutils.Media => Media
-    case fapiutils.Analysis => Analysis
-    case fapiutils.Review => Review
-    case fapiutils.Letters => Letters
-    case fapiutils.ExternalLink => ExternalLink
-    case fapiutils.DefaultCardstyle  => DefaultCardstyle
-  }
+  def make(cardStyle: fapiutils.CardStyle): CardStyle =
+    cardStyle match {
+      case fapiutils.SpecialReport    => SpecialReport
+      case fapiutils.LiveBlog         => LiveBlog
+      case fapiutils.DeadBlog         => DeadBlog
+      case fapiutils.Feature          => Feature
+      case fapiutils.Editorial        => Editorial
+      case fapiutils.Comment          => Comment
+      case fapiutils.Media            => Media
+      case fapiutils.Analysis         => Analysis
+      case fapiutils.Review           => Review
+      case fapiutils.Letters          => Letters
+      case fapiutils.ExternalLink     => ExternalLink
+      case fapiutils.DefaultCardstyle => DefaultCardstyle
+    }
 }

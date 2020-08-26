@@ -11,17 +11,16 @@ import services._
 import scala.concurrent.Future
 
 class PublicationController(
-  bookAgent: NewspaperBookTagAgent,
-  bookSectionAgent: NewspaperBookSectionTagAgent,
-  articleController: ArticleController,
-  val controllerComponents: ControllerComponents
+    bookAgent: NewspaperBookTagAgent,
+    bookSectionAgent: NewspaperBookSectionTagAgent,
+    articleController: ArticleController,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController
-  with ImplicitControllerExecutionContext
-  with ItemResponses
-  with Dates
-  with Logging {
-
+    extends BaseController
+    with ImplicitControllerExecutionContext
+    with ItemResponses
+    with Dates
+    with Logging {
 
   private val dateFormatUTC = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)
 
@@ -32,31 +31,27 @@ class PublicationController(
       .toDateTime
   }
 
-  def publishedOn(publication: String,
-                  year: String,
-                  month: String,
-                  day: String,
-                  tail: String): Action[AnyContent] = Action.async { implicit request =>
+  def publishedOn(publication: String, year: String, month: String, day: String, tail: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val reqDate = requestedDate(s"$year/$month/$day")
 
-    val reqDate = requestedDate(s"$year/$month/$day")
-
-    val tag = if (tail.nonEmpty) {
-      publication + "/" + tail
-    } else {
-      publication
-    }
-
-    if (bookSectionTagExists(publication, tag)) {
-      Future(MovedPermanently(s"/$tag/${urlFormat(reqDate)}/all"))
-    } else {
-      val newPath = if (tail.nonEmpty) {
-        s"$publication/${urlFormat(reqDate)}/$tail"
+      val tag = if (tail.nonEmpty) {
+        publication + "/" + tail
       } else {
-        s"$publication/${urlFormat(reqDate)}"
+        publication
       }
-      articleController.renderItem(newPath)
+
+      if (bookSectionTagExists(publication, tag)) {
+        Future(MovedPermanently(s"/$tag/${urlFormat(reqDate)}/all"))
+      } else {
+        val newPath = if (tail.nonEmpty) {
+          s"$publication/${urlFormat(reqDate)}/$tail"
+        } else {
+          s"$publication/${urlFormat(reqDate)}"
+        }
+        articleController.renderItem(newPath)
+      }
     }
-  }
 
   private def bookSectionTagExists(publication: String, tag: String) = {
     try {

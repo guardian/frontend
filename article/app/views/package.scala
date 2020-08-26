@@ -16,8 +16,10 @@ object MainMediaWidths {
     if (article.elements.hasShowcaseMainElement && article.tags.isFeature) {
       MainMedia.featureShowcase
     } else {
-      val hinting = if (article.elements.hasShowcaseMainElement) { Showcase } else { Inline }
-      val relation = if (article.isLiveBlog) { LiveBlogMedia } else { MainMedia }
+      val hinting = if (article.elements.hasShowcaseMainElement) { Showcase }
+      else { Inline }
+      val relation = if (article.isLiveBlog) { LiveBlogMedia }
+      else { MainMedia }
       ContentWidths.getWidthsFromContentElement(hinting, relation)
     }
   }
@@ -25,18 +27,18 @@ object MainMediaWidths {
 }
 
 object MainCleaner {
- def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-      implicit val edition: Edition = Edition(request)
-      withJsoup(BulletCleaner(article.fields.main))(
-        VideoEmbedCleaner(article),
-        PictureCleaner(article),
-        MainFigCaptionCleaner,
-        AtomsCleaner(
-          atoms = article.content.atoms,
-          mediaWrapper = Some(MediaWrapper.MainMedia),
-          posterImageOverride = article.elements.thumbnail.map(_.images)
-        )
-      )
+  def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+    implicit val edition: Edition = Edition(request)
+    withJsoup(BulletCleaner(article.fields.main))(
+      VideoEmbedCleaner(article),
+      PictureCleaner(article),
+      MainFigCaptionCleaner,
+      AtomsCleaner(
+        atoms = article.content.atoms,
+        mediaWrapper = Some(MediaWrapper.MainMedia),
+        posterImageOverride = article.elements.thumbnail.map(_.images),
+      ),
+    )
   }
 }
 
@@ -45,7 +47,7 @@ object BodyProcessor {
   def cleaners(article: Article)(implicit request: RequestHeader, context: ApplicationContext): List[HtmlCleaner] = {
     implicit val edition: Edition = Edition(request)
 
-    def ListIf[T](condition: Boolean)(value: => T): List[T] = if(condition) List(value) else Nil
+    def ListIf[T](condition: Boolean)(value: => T): List[T] = if (condition) List(value) else Nil
 
     List(
       InBodyElementCleaner,
@@ -82,16 +84,17 @@ object BodyProcessor {
         showAffiliateLinks = article.content.fields.showAffiliateLinks,
         contentType = "article",
         tags = article.content.tags.tags.map(_.id),
-        publishedDate = article.content.fields.firstPublicationDate)
+        publishedDate = article.content.fields.firstPublicationDate,
+      ),
     ) ++
       ListIf(true)(VideoEmbedCleaner(article))
   }
 
   def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    withJsoup(BulletCleaner(article.fields.body))(cleaners(article) :_*)
+    withJsoup(BulletCleaner(article.fields.body))(cleaners(article): _*)
   }
 
   def apply(article: Article, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
-    withJsoup(BulletCleaner(html))(cleaners(article) :_*)
+    withJsoup(BulletCleaner(html))(cleaners(article): _*)
   }
 }

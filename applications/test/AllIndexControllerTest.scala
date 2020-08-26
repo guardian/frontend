@@ -7,14 +7,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 
 @DoNotDiscover class AllIndexControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient
-  with WithTestApplicationContext {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient
+    with WithTestApplicationContext {
 
   private val PermanentRedirect = 301
   private val TemporaryRedirect = 302
@@ -55,46 +55,50 @@ import play.api.test.Helpers._
   }
 
   lazy val sectionsLookUp = new SectionsLookUp(testContentApiClient)
-  lazy val allIndexController = new AllIndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
+  lazy val allIndexController =
+    new AllIndexController(testContentApiClient, sectionsLookUp, play.api.test.Helpers.stubControllerComponents())
 
   it should "redirect dated tag pages to the equivalent /all page" in {
     val result = allIndexController.on("football/series/thefiver/2014/jan/23")(TestRequest())
     status(result) should be(PermanentRedirect)
-    header("Location", result).head should endWith ("/football/series/thefiver/2014/jan/23/all")
+    header("Location", result).head should endWith("/football/series/thefiver/2014/jan/23/all")
   }
 
   it should "redirect dated section pages to the equivalent /all page" in {
     val result = allIndexController.on("football/2014/jan/23")(TestRequest())
     status(result) should be(PermanentRedirect)
-    header("Location", result).head should endWith ("/football/2014/jan/23/all")
+    header("Location", result).head should endWith("/football/2014/jan/23/all")
   }
 
   it should "redirect to the first earlier page for the given date" in {
     val result = allIndexController.altDate("sport/cycling", "25", "dec", "2013")(TestRequest())
     status(result) should be(TemporaryRedirect)
-    header("Location", result).head should endWith ("/sport/cycling/2013/dec/26/all")
+    header("Location", result).head should endWith("/sport/cycling/2013/dec/26/all")
   }
 
   it should "redirect to the first older page for the date" in {
     val result = allIndexController.allOn("sport/cycling", "25", "dec", "2013")(TestRequest())
     status(result) should be(TemporaryRedirect)
-    header("Location", result).head should endWith ("/sport/cycling/2013/dec/23/all")
+    header("Location", result).head should endWith("/sport/cycling/2013/dec/23/all")
   }
 
   it should "redirect without getting into a redirect loop for the US edition" in {
     val oldTimezone = DateTimeZone.getDefault
     DateTimeZone.setDefault(DateTimeZone.UTC)
     try {
-      val result = allIndexController.allOn("sport/surfing", "16", "aug", "2014")(TestRequest().withHeaders("X-Gu-Edition" -> "US"))
+      val result = allIndexController.allOn("sport/surfing", "16", "aug", "2014")(
+        TestRequest().withHeaders("X-Gu-Edition" -> "US"),
+      )
       status(result) should be(TemporaryRedirect)
-      header("Location", result).head should endWith ("/sport/surfing/2014/aug/14/all")
+      header("Location", result).head should endWith("/sport/surfing/2014/aug/14/all")
     } finally {
       DateTimeZone.setDefault(oldTimezone)
     }
   }
 
   it should "correctly serve all pages for `default editionalised sections` in the International edition" in {
-    val result = allIndexController.all("commentisfree")(TestRequest("/commentisfree/all").withHeaders("X-Gu-Edition" -> "INT"))
+    val result =
+      allIndexController.all("commentisfree")(TestRequest("/commentisfree/all").withHeaders("X-Gu-Edition" -> "INT"))
     status(result) should be(OK)
   }
 

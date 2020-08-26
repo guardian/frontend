@@ -13,7 +13,17 @@ import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
-import model.{Article, ArticleDateTimes, Badges, Canonical, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
+import model.{
+  Article,
+  ArticleDateTimes,
+  Badges,
+  Canonical,
+  DisplayedDateTimesDCR,
+  GUDateTimeFormatNew,
+  LiveBlogPage,
+  PageWithStoryPackage,
+  Pillar,
+}
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
 import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
@@ -36,11 +46,11 @@ import views.support.JavaScriptPage
 // exceptions: we do resuse the existing Nav & BlockElement classes right now
 
 case class Tag(
-  id: String,
-  `type`: String,
-  title: String,
-  twitterHandle: Option[String],
-  bylineImageUrl: Option[String]
+    id: String,
+    `type`: String,
+    title: String,
+    twitterHandle: Option[String],
+    bylineImageUrl: Option[String],
 )
 
 case class Block(
@@ -54,37 +64,37 @@ case class Block(
     firstPublishedDisplay: Option[String],
     title: Option[String],
     primaryDateLine: String,
-    secondaryDateLine: String
+    secondaryDateLine: String,
 )
 
 case class Pagination(
-  currentPage: Int,
-  totalPages: Int,
-  newest: Option[String],
-  newer: Option[String],
-  oldest: Option[String],
-  older: Option[String],
+    currentPage: Int,
+    totalPages: Int,
+    newest: Option[String],
+    newer: Option[String],
+    oldest: Option[String],
+    older: Option[String],
 )
 
 case class ReaderRevenueLink(
-  contribute: String,
-  subscribe: String,
-  support: String
+    contribute: String,
+    subscribe: String,
+    support: String,
 )
 
 case class ReaderRevenueLinks(
-  header: ReaderRevenueLink,
-  footer: ReaderRevenueLink,
-  sideMenu: ReaderRevenueLink,
-  ampHeader: ReaderRevenueLink,
-  ampFooter: ReaderRevenueLink
+    header: ReaderRevenueLink,
+    footer: ReaderRevenueLink,
+    sideMenu: ReaderRevenueLink,
+    ampHeader: ReaderRevenueLink,
+    ampFooter: ReaderRevenueLink,
 )
 
 case class Commercial(
-  editionCommercialProperties: Map[String, EditionCommercialProperties],
-  prebidIndexSites: List[PrebidIndexSite],
-  commercialProperties: Option[CommercialProperties],
-  pageType: PageType
+    editionCommercialProperties: Map[String, EditionCommercialProperties],
+    prebidIndexSites: List[PrebidIndexSite],
+    commercialProperties: Option[CommercialProperties],
+    pageType: PageType,
 )
 
 object Block {
@@ -113,13 +123,13 @@ object Pagination {
 }
 
 case class Config(
-  switches: Map[String, Boolean],
-  abTests: Map[String, String],
-  commercialBundleUrl: String,
-  googletagUrl: String,
-  stage: String,
-  frontendAssetsFullURL: String,
-  ampIframeUrl: String,
+    switches: Map[String, Boolean],
+    abTests: Map[String, String],
+    commercialBundleUrl: String,
+    googletagUrl: String,
+    stage: String,
+    frontendAssetsFullURL: String,
+    ampIframeUrl: String,
 )
 
 object Config {
@@ -127,8 +137,8 @@ object Config {
 }
 
 case class SubMetaLink(
-  url: String,
-  title: String,
+    url: String,
+    title: String,
 )
 
 object SubMetaLink {
@@ -143,8 +153,8 @@ object SubMetaLink {
 }
 
 case class Author(
-  byline: Option[String],
-  twitterHandle: Option[String],
+    byline: Option[String],
+    twitterHandle: Option[String],
 )
 
 object Author {
@@ -158,30 +168,30 @@ object DCRBadge {
 }
 
 case class Nav(
-  currentUrl: String,
-  pillars: Seq[NavLink],
-  otherLinks: Seq[NavLink],
-  brandExtensions: Seq[NavLink],
-  currentNavLink: Option[NavLink],
-  currentParent: Option[NavLink],
-  currentPillar: Option[NavLink],
-  subNavSections: Option[Subnav],
-  readerRevenueLinks: ReaderRevenueLinks,
+    currentUrl: String,
+    pillars: Seq[NavLink],
+    otherLinks: Seq[NavLink],
+    brandExtensions: Seq[NavLink],
+    currentNavLink: Option[NavLink],
+    currentParent: Option[NavLink],
+    currentPillar: Option[NavLink],
+    subNavSections: Option[Subnav],
+    readerRevenueLinks: ReaderRevenueLinks,
 )
 
 object Nav {
   implicit val navlinkWrites = Json.writes[NavLink]
   implicit val flatSubnavWrites = Json.writes[FlatSubnav]
   implicit val parentSubnavWrites = Json.writes[ParentSubnav]
-  implicit val subnavWrites = Writes[Subnav]{
-    case nav: FlatSubnav => flatSubnavWrites.writes(nav)
+  implicit val subnavWrites = Writes[Subnav] {
+    case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
     case nav: ParentSubnav => parentSubnavWrites.writes(nav)
   }
   implicit val writes = Json.writes[Nav]
 }
 
 case class PageFooter(
-  footerLinks: Seq[Seq[FooterLink]]
+    footerLinks: Seq[Seq[FooterLink]],
 )
 
 object PageFooter {
@@ -194,60 +204,58 @@ object PageFooter {
 // -----------------------------------------------------------------
 
 case class DCRDataModel(
-  version: Int,
-  headline: String,
-  standfirst: String,
-  webTitle: String,
-  mainMediaElements: List[PageElement],
-  main: String,
-  keyEvents: List[Block],
-  blocks: List[Block],
-  pagination: Option[Pagination],
-  author: Author,
-  webPublicationDate: String,
-  webPublicationDateDisplay: String, // TODO remove
-  editionLongForm: String,
-  editionId: String,
-  pageId: String,
-  tags: List[Tag],
-  pillar: String,
-  isImmersive: Boolean,
-  sectionLabel: String,
-  sectionUrl: String,
-  sectionName: Option[String],
-  subMetaSectionLinks: List[SubMetaLink],
-  subMetaKeywordLinks: List[SubMetaLink],
-  shouldHideAds: Boolean,
-  isAdFreeUser: Boolean,
-  webURL: String,
-  linkedData: List[LinkedData],
-  openGraphData: Map[String, String],
-  twitterData: Map[String, String],
-  config: JsObject,
-  guardianBaseURL: String,
-  contentType: String,
-  hasRelated: Boolean,
-  hasStoryPackage: Boolean,
-  beaconURL: String,
-  isCommentable: Boolean,
-  commercialProperties: Map[String, EditionCommercialProperties],
-  pageType: PageType,
-  starRating: Option[Int],
-  trailText: String,
-  nav: Nav,
-  designType: String,
-  showBottomSocialButtons: Boolean,
-  pageFooter: PageFooter,
-  publication: String,
-  shouldHideReaderRevenue: Boolean,
-
-  // slot machine (temporary for contributions development)
-  slotMachineFlags: String,
-  contributionsServiceUrl: String,
-  badge: Option[DCRBadge],
-
-  // Match Data
-  matchUrl: Option[String], // Optional url used for match data
+    version: Int,
+    headline: String,
+    standfirst: String,
+    webTitle: String,
+    mainMediaElements: List[PageElement],
+    main: String,
+    keyEvents: List[Block],
+    blocks: List[Block],
+    pagination: Option[Pagination],
+    author: Author,
+    webPublicationDate: String,
+    webPublicationDateDisplay: String, // TODO remove
+    editionLongForm: String,
+    editionId: String,
+    pageId: String,
+    tags: List[Tag],
+    pillar: String,
+    isImmersive: Boolean,
+    sectionLabel: String,
+    sectionUrl: String,
+    sectionName: Option[String],
+    subMetaSectionLinks: List[SubMetaLink],
+    subMetaKeywordLinks: List[SubMetaLink],
+    shouldHideAds: Boolean,
+    isAdFreeUser: Boolean,
+    webURL: String,
+    linkedData: List[LinkedData],
+    openGraphData: Map[String, String],
+    twitterData: Map[String, String],
+    config: JsObject,
+    guardianBaseURL: String,
+    contentType: String,
+    hasRelated: Boolean,
+    hasStoryPackage: Boolean,
+    beaconURL: String,
+    isCommentable: Boolean,
+    commercialProperties: Map[String, EditionCommercialProperties],
+    pageType: PageType,
+    starRating: Option[Int],
+    trailText: String,
+    nav: Nav,
+    designType: String,
+    showBottomSocialButtons: Boolean,
+    pageFooter: PageFooter,
+    publication: String,
+    shouldHideReaderRevenue: Boolean,
+    // slot machine (temporary for contributions development)
+    slotMachineFlags: String,
+    contributionsServiceUrl: String,
+    badge: Option[DCRBadge],
+    // Match Data
+    matchUrl: Option[String], // Optional url used for match data
 )
 
 object DCRDataModel {
@@ -255,65 +263,67 @@ object DCRDataModel {
   implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 
   implicit val writes = new Writes[DCRDataModel] {
-    def writes(model: DCRDataModel) = Json.obj(
-      "version" -> model.version,
-      "headline" -> model.headline,
-      "standfirst" -> model.standfirst,
-      "webTitle" -> model.webTitle,
-      "mainMediaElements" -> Json.toJson(model.mainMediaElements),
-      "main" -> model.main,
-      "keyEvents" -> model.keyEvents,
-      "blocks" -> model.blocks,
-      "pagination" -> model.pagination,
-      "author" -> model.author,
-      "webPublicationDate" -> model.webPublicationDate,
-      "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
-      "editionLongForm" -> model.editionLongForm,
-      "editionId" -> model.editionId,
-      "pageId" -> model.pageId,
-      "tags" -> model.tags,
-      "pillar" -> model.pillar,
-      "isImmersive" -> model.isImmersive,
-      "sectionLabel" -> model.sectionLabel,
-      "sectionUrl" -> model.sectionUrl,
-      "sectionName" -> model.sectionName,
-      "subMetaSectionLinks" -> model.subMetaSectionLinks,
-      "subMetaKeywordLinks" -> model.subMetaKeywordLinks,
-      "shouldHideAds" -> model.shouldHideAds,
-      "isAdFreeUser" -> model.isAdFreeUser,
-      "webURL" -> model.webURL,
-      "linkedData" -> model.linkedData,
-      "openGraphData" -> model.openGraphData,
-      "twitterData" -> model.twitterData,
-      "config" -> model.config,
-      "guardianBaseURL" -> model.guardianBaseURL,
-      "contentType" -> model.contentType,
-      "hasRelated" -> model.hasRelated,
-      "hasStoryPackage" -> model.hasStoryPackage,
-      "beaconURL" -> model.beaconURL,
-      "isCommentable" -> model.isCommentable,
-      "commercialProperties" -> model.commercialProperties,
-      "pageType" -> model.pageType,
-      "starRating" -> model.starRating,
-      "trailText" -> model.trailText,
-      "nav" -> model.nav,
-      "designType" -> model.designType,
-      "showBottomSocialButtons" -> model.showBottomSocialButtons,
-      "pageFooter" -> model.pageFooter,
-      "publication" -> model.publication,
-      "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
-      "slotMachineFlags" -> model.slotMachineFlags,
-      "contributionsServiceUrl" -> model.contributionsServiceUrl,
-      "badge" -> model.badge,
-      "matchUrl" -> model.matchUrl
-    )
+    def writes(model: DCRDataModel) =
+      Json.obj(
+        "version" -> model.version,
+        "headline" -> model.headline,
+        "standfirst" -> model.standfirst,
+        "webTitle" -> model.webTitle,
+        "mainMediaElements" -> Json.toJson(model.mainMediaElements),
+        "main" -> model.main,
+        "keyEvents" -> model.keyEvents,
+        "blocks" -> model.blocks,
+        "pagination" -> model.pagination,
+        "author" -> model.author,
+        "webPublicationDate" -> model.webPublicationDate,
+        "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
+        "editionLongForm" -> model.editionLongForm,
+        "editionId" -> model.editionId,
+        "pageId" -> model.pageId,
+        "tags" -> model.tags,
+        "pillar" -> model.pillar,
+        "isImmersive" -> model.isImmersive,
+        "sectionLabel" -> model.sectionLabel,
+        "sectionUrl" -> model.sectionUrl,
+        "sectionName" -> model.sectionName,
+        "subMetaSectionLinks" -> model.subMetaSectionLinks,
+        "subMetaKeywordLinks" -> model.subMetaKeywordLinks,
+        "shouldHideAds" -> model.shouldHideAds,
+        "isAdFreeUser" -> model.isAdFreeUser,
+        "webURL" -> model.webURL,
+        "linkedData" -> model.linkedData,
+        "openGraphData" -> model.openGraphData,
+        "twitterData" -> model.twitterData,
+        "config" -> model.config,
+        "guardianBaseURL" -> model.guardianBaseURL,
+        "contentType" -> model.contentType,
+        "hasRelated" -> model.hasRelated,
+        "hasStoryPackage" -> model.hasStoryPackage,
+        "beaconURL" -> model.beaconURL,
+        "isCommentable" -> model.isCommentable,
+        "commercialProperties" -> model.commercialProperties,
+        "pageType" -> model.pageType,
+        "starRating" -> model.starRating,
+        "trailText" -> model.trailText,
+        "nav" -> model.nav,
+        "designType" -> model.designType,
+        "showBottomSocialButtons" -> model.showBottomSocialButtons,
+        "pageFooter" -> model.pageFooter,
+        "publication" -> model.publication,
+        "shouldHideReaderRevenue" -> model.shouldHideReaderRevenue,
+        "slotMachineFlags" -> model.slotMachineFlags,
+        "contributionsServiceUrl" -> model.contributionsServiceUrl,
+        "badge" -> model.badge,
+        "matchUrl" -> model.matchUrl,
+      )
   }
 
   def toJson(model: DCRDataModel): String = {
-    def withoutNull(json: JsValue): JsValue = json match {
-      case JsObject(fields) => JsObject(fields.filterNot{ case (_, value) => value == JsNull })
-      case other => other
-    }
+    def withoutNull(json: JsValue): JsValue =
+      json match {
+        case JsObject(fields) => JsObject(fields.filterNot { case (_, value) => value == JsNull })
+        case other            => other
+      }
     val jsValue = Json.toJson(model)
     Json.stringify(withoutNull(jsValue))
   }
@@ -326,7 +336,7 @@ object DotcomponentsDataModel {
     def extraction1(references: JsValue): Option[IndexedSeq[JsValue]] = {
       val sequence = references match {
         case JsArray(elements) => Some(elements)
-        case _ => None
+        case _                 => None
       }
       sequence
     }
@@ -351,11 +361,12 @@ object DotcomponentsDataModel {
     val optionalUrl: Option[String] = for {
       references <- articlePage.getJavascriptConfig.get("references")
       entries1 <- extraction1(references)
-      entries2 = entries1
-        .map(entryToDataPair(_))
-        .filter( _.isDefined )
-        .map( _.get ) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
-        .filter( _._1 == "pa-football-team" )
+      entries2 =
+        entries1
+          .map(entryToDataPair(_))
+          .filter(_.isDefined)
+          .map(_.get) // .get is fundamentally dangerous but fine in this case because we filtered the Nones out.
+          .filter(_._1 == "pa-football-team")
     } yield {
       val pageId = URLEncoder.encode(articlePage.article.metadata.id, "UTF-8")
       entries2.toList match {
@@ -371,7 +382,7 @@ object DotcomponentsDataModel {
 
     // We need one more transformation because we could have a Some(""), which we don't want
 
-    if (optionalUrl.getOrElse("").size>0) {
+    if (optionalUrl.getOrElse("").size > 0) {
       optionalUrl
     } else {
       None
@@ -384,7 +395,7 @@ object DotcomponentsDataModel {
 
   private def buildFullCommercialUrl(bundlePath: String): String = {
     // This function exists because for some reasons `Static` behaves differently in { PROD and CODE } versus LOCAL
-    if(Configuration.environment.isProd || Configuration.environment.isCode){
+    if (Configuration.environment.isProd || Configuration.environment.isCode) {
       Static(bundlePath)
     } else {
       s"${Configuration.site.host}${Static(bundlePath)}"
@@ -393,11 +404,13 @@ object DotcomponentsDataModel {
 
   // note: this is duplicated in the onward service (DotcomponentsOnwardsModels - if duplicating again consider moving to common! :()
   private def findPillar(pillar: Option[Pillar], designType: Option[DesignType]): String = {
-    pillar.map { pillar =>
-      if (designType == AdvertisementFeature) "labs"
-      else if (pillar.toString.toLowerCase == "arts") "culture"
-      else pillar.toString.toLowerCase()
-    }.getOrElse("news")
+    pillar
+      .map { pillar =>
+        if (designType == AdvertisementFeature) "labs"
+        else if (pillar.toString.toLowerCase == "arts") "culture"
+        else pillar.toString.toLowerCase()
+      }
+      .getOrElse("news")
   }
 
   private def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
@@ -415,15 +428,21 @@ object DotcomponentsDataModel {
     relevantBlocks.filter(block => ids(block.id))
   }
 
-  private def addDisclaimer(elems: List[PageElement], capiElems: Seq[ClientBlockElement], affiliateLinks: Boolean): List[PageElement] = {
+  private def addDisclaimer(
+      elems: List[PageElement],
+      capiElems: Seq[ClientBlockElement],
+      affiliateLinks: Boolean,
+  ): List[PageElement] = {
     if (affiliateLinks) {
-      val hasLinks = capiElems.exists(elem => elem.`type` match {
-        case Text => {
-          val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
-          AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
-        }
-        case _ => false
-      })
+      val hasLinks = capiElems.exists(elem =>
+        elem.`type` match {
+          case Text => {
+            val textString = elem.textTypeData.toList.mkString("\n") // just concat all the elems here for this test
+            AffiliateLinksCleaner.stringContainsAffiliateableLinks(textString)
+          }
+          case _ => false
+        },
+      )
 
       if (hasLinks) {
         elems :+ DisclaimerBlockElement(affiliateLinksDisclaimer("article").body)
@@ -433,22 +452,44 @@ object DotcomponentsDataModel {
     } else elems
   }
 
-  private def blockElementsToPageElements(capiElems: Seq[ClientBlockElement], request: RequestHeader, article: Article, affiliateLinks: Boolean, isMainBlock: Boolean, isImmersive: Boolean, campaigns: Option[JsValue], calloutsUrl: Option[String]): List[PageElement] = {
+  private def blockElementsToPageElements(
+      capiElems: Seq[ClientBlockElement],
+      request: RequestHeader,
+      article: Article,
+      affiliateLinks: Boolean,
+      isMainBlock: Boolean,
+      isImmersive: Boolean,
+      campaigns: Option[JsValue],
+      calloutsUrl: Option[String],
+  ): List[PageElement] = {
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
-    val elems = capiElems.toList.flatMap(el => PageElement.make(
-      element = el,
-      addAffiliateLinks = affiliateLinks,
-      pageUrl = request.uri,
-      atoms = atoms,
-      isMainBlock,
-      isImmersive,
-      campaigns,
-      calloutsUrl
-    )).filter(PageElement.isSupported)
+    val elems = capiElems.toList
+      .flatMap(el =>
+        PageElement.make(
+          element = el,
+          addAffiliateLinks = affiliateLinks,
+          pageUrl = request.uri,
+          atoms = atoms,
+          isMainBlock,
+          isImmersive,
+          campaigns,
+          calloutsUrl,
+        ),
+      )
+      .filter(PageElement.isSupported)
     addDisclaimer(elems, capiElems, affiliateLinks)
   }
 
-  private def toBlock(block: APIBlock, page: PageWithStoryPackage, shouldAddAffiliateLinks: Boolean, request: RequestHeader, isMainBlock: Boolean, isImmersive: Boolean, articleDateTimes: ArticleDateTimes, calloutsUrl: Option[String]): Block = {
+  private def toBlock(
+      block: APIBlock,
+      page: PageWithStoryPackage,
+      shouldAddAffiliateLinks: Boolean,
+      request: RequestHeader,
+      isMainBlock: Boolean,
+      isImmersive: Boolean,
+      articleDateTimes: ArticleDateTimes,
+      calloutsUrl: Option[String],
+  ): Block = {
 
     val article = page.article
 
@@ -462,12 +503,22 @@ object DotcomponentsDataModel {
     // be computed from the article metadata.
     // For this we introduced ArticleDateTimes in DatesAndTimes.
     // This is meant to ensure that DCP and DCR use the same dates.
-    val displayedDateTimes: DisplayedDateTimesDCR = ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
+    val displayedDateTimes: DisplayedDateTimesDCR =
+      ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
     val campaigns = page.getJavascriptConfig.get("campaigns")
 
     Block(
       id = block.id,
-      elements = blockElementsToPageElements(block.elements, request, article, shouldAddAffiliateLinks, isMainBlock, isImmersive, campaigns, calloutsUrl),
+      elements = blockElementsToPageElements(
+        block.elements,
+        request,
+        article,
+        shouldAddAffiliateLinks,
+        isMainBlock,
+        isImmersive,
+        campaigns,
+        calloutsUrl,
+      ),
       createdOn = createdOn,
       createdOnDisplay = createdOnDisplay,
       lastUpdated = Some(displayedDateTimes.lastUpdated),
@@ -476,19 +527,26 @@ object DotcomponentsDataModel {
       firstPublished = Some(displayedDateTimes.firstPublished),
       firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
       primaryDateLine = displayedDateTimes.primaryDateLine,
-      secondaryDateLine = displayedDateTimes.secondaryDateLine
+      secondaryDateLine = displayedDateTimes.secondaryDateLine,
     )
   }
 
   // -----------------------------------------------------------------------
 
-  def fromArticle(page: PageWithStoryPackage, request: RequestHeader, blocks: APIBlocks, pageType: PageType): DCRDataModel = {
+  def fromArticle(
+      page: PageWithStoryPackage,
+      request: RequestHeader,
+      blocks: APIBlocks,
+      pageType: PageType,
+  ): DCRDataModel = {
 
     val article = page.article
 
-    val switches = conf.switches.Switches.all.filter(_.exposeClientSide).foldLeft(Map.empty[String,Boolean])( (acc, switch) => {
-      acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-    })
+    val switches = conf.switches.Switches.all
+      .filter(_.exposeClientSide)
+      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+      })
 
     val config = Config(
       switches = switches,
@@ -497,64 +555,93 @@ object DotcomponentsDataModel {
       ampIframeUrl = buildFullCommercialUrl("data/vendor/amp-iframe.html"),
       googletagUrl = Configuration.googletag.jsLocation,
       stage = common.Environment.stage,
-      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage)
+      frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
     )
 
     val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
-    val calloutsUrl = combinedConfig.fields.toList.filter(entry => entry._1 == "calloutsUrl").headOption.flatMap( entry => entry._2.asOpt[String] )
+    val calloutsUrl = combinedConfig.fields.toList
+      .filter(entry => entry._1 == "calloutsUrl")
+      .headOption
+      .flatMap(entry => entry._2.asOpt[String])
 
     // TODO this logic is duplicated from the cleaners, can we consolidate?
     val shouldAddAffiliateLinks = AffiliateLinksCleaner.shouldAddAffiliateLinks(
       switchedOn = Switches.AffiliateLinks.isSwitchedOn,
       section = article.metadata.sectionId,
-      showAffiliateLinks =  article.content.fields.showAffiliateLinks,
+      showAffiliateLinks = article.content.fields.showAffiliateLinks,
       supportedSections = affiliateLinks.affiliateLinkSections,
       defaultOffTags = affiliateLinks.defaultOffTags,
       alwaysOffTags = affiliateLinks.alwaysOffTags,
       tagPaths = article.content.tags.tags.map(_.id),
-      firstPublishedDate = article.content.fields.firstPublicationDate
+      firstPublishedDate = article.content.fields.firstPublicationDate,
     )
 
     val bodyBlocksRaw = page match {
       case lb: LiveBlogPage => blocksForLiveblogPage(lb, blocks)
-      case article => blocks.body.getOrElse(Nil)
+      case article          => blocks.body.getOrElse(Nil)
     }
 
     val articleDateTimes = ArticleDateTimes(
       webPublicationDate = article.trail.webPublicationDate,
       firstPublicationDate = article.fields.firstPublicationDate,
       hasBeenModified = article.content.hasBeenModified,
-      lastModificationDate = article.fields.lastModified
+      lastModificationDate = article.fields.lastModified,
     )
 
     val bodyBlocks = bodyBlocksRaw
       .filter(_.published)
-      .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes, calloutsUrl)).toList
+      .map(block =>
+        toBlock(
+          block,
+          page,
+          shouldAddAffiliateLinks,
+          request,
+          false,
+          article.isImmersive,
+          articleDateTimes,
+          calloutsUrl,
+        ),
+      )
+      .toList
 
     val pagination = page match {
-      case liveblog: LiveBlogPage => liveblog.currentPage.pagination.map(paginationInfo => {
-        Pagination(
-          currentPage = liveblog.currentPage.currentPage.pageNumber,
-          totalPages = paginationInfo.numberOfPages,
-          newest = paginationInfo.newest.map(_.suffix),
-          newer = paginationInfo.newer.map(_.suffix),
-          oldest = paginationInfo.oldest.map(_.suffix),
-          older = paginationInfo.older.map(_.suffix),
-        )
-      })
+      case liveblog: LiveBlogPage =>
+        liveblog.currentPage.pagination.map(paginationInfo => {
+          Pagination(
+            currentPage = liveblog.currentPage.currentPage.pageNumber,
+            totalPages = paginationInfo.numberOfPages,
+            newest = paginationInfo.newest.map(_.suffix),
+            newer = paginationInfo.newer.map(_.suffix),
+            oldest = paginationInfo.oldest.map(_.suffix),
+            older = paginationInfo.older.map(_.suffix),
+          )
+        })
       case _ => None
     }
 
     val mainBlock: Option[Block] = {
-      blocks.main.map(block => toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes, calloutsUrl))
+      blocks.main.map(block =>
+        toBlock(block, page, shouldAddAffiliateLinks, request, true, article.isImmersive, articleDateTimes, calloutsUrl),
+      )
     }
 
     val keyEvents: Seq[Block] = {
       blocks.requestedBodyBlocks
         .getOrElse(Map.empty[String, Seq[APIBlock]])
         .getOrElse("body:key-events", Seq.empty[APIBlock])
-        .map(block => toBlock(block, page, shouldAddAffiliateLinks, request, false, article.isImmersive, articleDateTimes, calloutsUrl))
+        .map(block =>
+          toBlock(
+            block,
+            page,
+            shouldAddAffiliateLinks,
+            request,
+            false,
+            article.isImmersive,
+            articleDateTimes,
+            calloutsUrl,
+          ),
+        )
     }
 
     val jsConfig = (k: String) => page.getJavascriptConfig.get(k).map(_.as[String])
@@ -563,61 +650,63 @@ object DotcomponentsDataModel {
     // For example, we need to provide an image of at least 1200px width to be valid here
     val linkedData: List[LinkedData] = {
       page match {
-        case liveblog: LiveBlogPage => LinkedData.forLiveblog(
-          liveblog = liveblog,
-          blocks = bodyBlocksRaw,
-          baseURL = Configuration.amp.baseUrl,
-          fallbackLogo = Configuration.images.fallbackLogo
-        )
-        case regular: ArticlePage => LinkedData.forArticle(
-          article = regular.article,
-          baseURL = Configuration.amp.baseUrl,
-          fallbackLogo = Configuration.images.fallbackLogo
-        )
+        case liveblog: LiveBlogPage =>
+          LinkedData.forLiveblog(
+            liveblog = liveblog,
+            blocks = bodyBlocksRaw,
+            baseURL = Configuration.amp.baseUrl,
+            fallbackLogo = Configuration.images.fallbackLogo,
+          )
+        case regular: ArticlePage =>
+          LinkedData.forArticle(
+            article = regular.article,
+            baseURL = Configuration.amp.baseUrl,
+            fallbackLogo = Configuration.images.fallbackLogo,
+          )
       }
     }
 
     val openGraphData: Map[String, String] = page.getOpenGraphProperties;
     val twitterData: Map[String, String] = page.getTwitterProperties
 
-    val allTags = article.tags.tags.map(
-      t => Tag(
+    val allTags = article.tags.tags.map(t =>
+      Tag(
         t.id,
         t.properties.tagType,
         t.properties.webTitle,
         t.properties.twitterHandle,
-        t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300))
-      )
+        t.properties.contributorLargeImagePath.map(src => ImgSrc(src, Item300)),
+      ),
     )
 
     val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, Header)(request),
       getReaderRevenueUrl(SupportSubscribe, Header)(request),
-      getReaderRevenueUrl(Support, Header)(request)
+      getReaderRevenueUrl(Support, Header)(request),
     )
 
     val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, Footer)(request),
       getReaderRevenueUrl(SupportSubscribe, Footer)(request),
-      getReaderRevenueUrl(Support, Footer)(request)
+      getReaderRevenueUrl(Support, Footer)(request),
     )
 
     val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, SideMenu)(request),
       getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
-      getReaderRevenueUrl(Support, SideMenu)(request)
+      getReaderRevenueUrl(Support, SideMenu)(request),
     )
 
     val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
-      getReaderRevenueUrl(Support, AmpHeader)(request)
+      getReaderRevenueUrl(Support, AmpHeader)(request),
     )
 
     val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
-      getReaderRevenueUrl(Support, AmpFooter)(request)
+      getReaderRevenueUrl(Support, AmpFooter)(request),
     )
 
     val readerRevenueLinks = ReaderRevenueLinks(
@@ -625,7 +714,7 @@ object DotcomponentsDataModel {
       footerReaderRevenueLink,
       sideMenuReaderRevenueLink,
       ampHeaderReaderRevenueLink,
-      ampFooterReaderRevenueLink
+      ampFooterReaderRevenueLink,
     )
 
     val nav = {
@@ -644,33 +733,35 @@ object DotcomponentsDataModel {
     }
 
     val commercial = Commercial(
-      editionCommercialProperties =
-        article.metadata.commercial.map{_.perEdition.mapKeys(_.id)}
-          .getOrElse(Map.empty[String,EditionCommercialProperties]),
+      editionCommercialProperties = article.metadata.commercial
+        .map { _.perEdition.mapKeys(_.id) }
+        .getOrElse(Map.empty[String, EditionCommercialProperties]),
       prebidIndexSites = (for {
         commercial <- article.metadata.commercial
         sites <- commercial.prebidIndexSites
       } yield sites.toList).getOrElse(List()),
       article.metadata.commercial,
-      pageType
+      pageType,
     )
 
     val byline = article.trail.byline
 
     val author = Author(
       byline = byline,
-      twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle)
+      twitterHandle = article.tags.contributors.headOption.flatMap(_.properties.twitterHandle),
     )
 
-    val badge = Badges.badgeFor(article).map(badge =>
-      DCRBadge(
-        badge.seriesTag,
-        badge.imageUrl
+    val badge = Badges
+      .badgeFor(article)
+      .map(badge =>
+        DCRBadge(
+          badge.seriesTag,
+          badge.imageUrl,
+        ),
       )
-    )
 
     val pageFooter = PageFooter(
-      FooterLinks.getFooterByEdition(Edition(request))
+      FooterLinks.getFooterByEdition(Edition(request)),
     )
 
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
@@ -687,7 +778,8 @@ object DotcomponentsDataModel {
       pagination = pagination,
       author = author,
       webPublicationDate = article.trail.webPublicationDate.toString, // TODO check format
-      webPublicationDateDisplay = GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      webPublicationDateDisplay =
+        GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = Edition(request).id,
       pageId = article.metadata.id,
@@ -721,17 +813,14 @@ object DotcomponentsDataModel {
       designType = designTypeAsString(article.metadata.designType),
       pageFooter = pageFooter,
       publication = article.content.publication,
-
       // See pageShouldHideReaderRevenue in contributions-utilities.js
       shouldHideReaderRevenue = article.fields.shouldHideReaderRevenue
         .getOrElse(isPaidContent),
-
       slotMachineFlags = request.slotMachineFlags,
       contributionsServiceUrl = Configuration.contributionsService.url,
       badge = badge,
-
       // Match Data
-      matchUrl = makeMatchUrl(page)
+      matchUrl = makeMatchUrl(page),
     )
   }
 }

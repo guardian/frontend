@@ -21,7 +21,7 @@ class CorsTest extends FlatSpec with Matchers {
   it should "provide the appropriate standard Cors response headers with an accepted Origin" in {
     val fakeHeaders = FakeHeaders(List("Origin" -> "http://www.random.com"))
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Origin" -> "http://www.random.com")
+    Cors(NoContent)(fakeRequest).header.headers should contain("Access-Control-Allow-Origin" -> "http://www.random.com")
   }
 
   it should "not provide Cors response headers if the request has no Origin" in {
@@ -35,14 +35,18 @@ class CorsTest extends FlatSpec with Matchers {
   it should "provide Cors response with allowed methods" in {
     val fakeHeaders = FakeHeaders(List("Origin" -> "http://www.random.com"))
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent,Some("OPTIONS, POST, GET"))(fakeRequest).header.headers should contain("Access-Control-Allow-Methods" -> "OPTIONS, POST, GET")
+    Cors(NoContent, Some("OPTIONS, POST, GET"))(fakeRequest).header.headers should contain(
+      "Access-Control-Allow-Methods" -> "OPTIONS, POST, GET",
+    )
   }
 
   it should "provide Cors response with allowed headers" in {
-    val fakeHeaders = FakeHeaders(List("Origin" -> "http://www.random.com",
-                                       "Access-Control-Request-Headers" -> "X-GU-test"))
+    val fakeHeaders =
+      FakeHeaders(List("Origin" -> "http://www.random.com", "Access-Control-Request-Headers" -> "X-GU-test"))
     val fakeRequest = FakeRequest(POST, "/css", fakeHeaders, AnyContentAsEmpty)
-    Cors(NoContent)(fakeRequest).header.headers should contain ("Access-Control-Allow-Headers" -> "X-Requested-With,Origin,Accept,Content-Type,X-GU-test")
+    Cors(NoContent)(fakeRequest).header.headers should contain(
+      "Access-Control-Allow-Headers" -> "X-Requested-With,Origin,Accept,Content-Type,X-GU-test",
+    )
   }
 
   val validDomain = "theguardian.com"

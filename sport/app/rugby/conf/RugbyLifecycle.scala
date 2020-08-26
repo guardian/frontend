@@ -10,12 +10,13 @@ import scala.concurrent.duration.FiniteDuration
 import scala.concurrent.duration._
 
 class RugbyLifecycle(
-  appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  rugbyStatsJob: RugbyStatsJob,
-  capiFeed: CapiFeed
-)(implicit ec: ExecutionContext) extends LifecycleComponent {
+    appLifeCycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    rugbyStatsJob: RugbyStatsJob,
+    capiFeed: CapiFeed,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
   protected val initializationTimeout: FiniteDuration = 10.seconds
 

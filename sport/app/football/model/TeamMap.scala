@@ -100,30 +100,34 @@ object TeamMap extends Logging {
     ("7520", "Helsingborg"),
     ("26322", "Twente"),
     ("26398", "Basel"),
-    ("7012", "Dynamo Kyiv")
+    ("7012", "Dynamo Kyiv"),
   )
 
   def apply(team: FootballTeam): Team = Team(team, teamAgent().get(team.id), shortNames.get(team.id))
 
   def findTeamIdByUrlName(name: String): Option[String] = teamAgent().find(_._2.id == s"football/$name").map(_._1)
 
-  def findUrlNameFor(teamId: String): Option[String] = teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
+  def findUrlNameFor(teamId: String): Option[String] =
+    teamAgent().get(teamId).map(_.metadata.url.replace("/football/", ""))
 
   def refresh(page: Int = 1)(implicit contentApiClient: ContentApiClient, executionContext: ExecutionContext): Unit = { //pages are 1 based
     log.info(s"Refreshing team tag mappings - page $page")
-    contentApiClient.getResponse(contentApiClient.tags
-      .page(page)
-      .pageSize(50)
-      .referenceType("pa-football-team")
-      .showReferences("pa-football-team")
-    ).foreach{ response =>
-      if (response.pages > page) {
-        refresh(page + 1)
-      }
+    contentApiClient
+      .getResponse(
+        contentApiClient.tags
+          .page(page)
+          .pageSize(50)
+          .referenceType("pa-football-team")
+          .showReferences("pa-football-team"),
+      )
+      .foreach { response =>
+        if (response.pages > page) {
+          refresh(page + 1)
+        }
 
-      val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag.make(tag)) }.toMap
-      teamAgent.send(old => old ++ tagReferences)
-    }
+        val tagReferences = response.results.map { tag => (tag.references.head.id.split("/")(1), Tag.make(tag)) }.toMap
+        teamAgent.send(old => old ++ tagReferences)
+      }
   }
 }
 
@@ -145,7 +149,8 @@ object MatchUrl {
       awayTeam: String <- TeamMap(theMatch.awayTeam).tag.flatMap(_.metadata.url)
       if homeTeam.startsWith("/football/") && awayTeam.startsWith("/football/")
     } yield {
-      s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam.replace("/football/", "")}"
+      s"/football/match/${theMatch.date.toString("yyyy/MMM/dd").toLowerCase}/${homeTeam.replace("/football/", "")}-v-${awayTeam
+        .replace("/football/", "")}"
     }).getOrElse(s"/football/match/${theMatch.id}")
   }
 

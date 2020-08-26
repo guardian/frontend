@@ -12,16 +12,15 @@ class DataValidation(adUnitService: AdUnitService) {
     val guAdUnits = guLineItem.targeting.adUnitsIncluded
 
     val dfpAdUnitIds = Option(dfpLineItem.getTargeting.getInventoryTargeting)
-      .map( inventoryTargeting =>
-        toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId()
-      )).getOrElse(Nil)
+      .map(inventoryTargeting => toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId()))
+      .getOrElse(Nil)
 
     // The validation should not account for inactive or archived ad units.
     val activeDfpAdUnitIds = dfpAdUnitIds.filterNot { adUnitId =>
       adUnitService.isArchivedAdUnit(adUnitId) || adUnitService.isInactiveAdUnit(adUnitId)
     }
 
-    activeDfpAdUnitIds.forall( adUnitId => {
+    activeDfpAdUnitIds.forall(adUnitId => {
       guAdUnits.exists(_.id == adUnitId)
     })
   }

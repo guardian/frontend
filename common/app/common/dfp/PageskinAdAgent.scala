@@ -15,16 +15,17 @@ trait PageskinAdAgent {
   // - pageskins that target through ad unit (for pressed fronts)
   // - pageskins that target through a keyword (for index page fronts)
   private[dfp] def findSponsorships(
-    adUnitPath: String,
-    metaData: MetaData,
-    edition: Edition
+      adUnitPath: String,
+      metaData: MetaData,
+      edition: Edition,
   ): Seq[PageSkinSponsorship] = {
 
     val nextGenSuffix = "/ng"
 
     def containsAdUnit(adUnits: Seq[String], adUnit: String): Boolean =
-      adUnits.map { _.stripSuffix(nextGenSuffix) }
-      .exists { adUnitPath.stripSuffix(nextGenSuffix).endsWith }
+      adUnits
+        .map { _.stripSuffix(nextGenSuffix) }
+        .exists { adUnitPath.stripSuffix(nextGenSuffix).endsWith }
 
     def hasMatchingAdUnit(sponsorship: PageSkinSponsorship): Boolean =
       containsAdUnit(sponsorship.adUnits, adUnitPath)
@@ -42,10 +43,10 @@ trait PageskinAdAgent {
         map.get(key) match {
           case Some(values: MultipleValues) => values.values.toSeq
           case _                            => Seq.empty
-      }
+        }
 
       val keywordTargeting = targetingMapValues(targetingMap, "k")
-      val seriesTargeting  = targetingMapValues(targetingMap, "se")
+      val seriesTargeting = targetingMapValues(targetingMap, "se")
 
       candidates filter { sponsorship =>
         sponsorship.keywords.intersect(keywordTargeting).nonEmpty ||

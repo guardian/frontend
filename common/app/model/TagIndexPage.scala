@@ -10,45 +10,47 @@ object SectionDefinition {
 }
 
 case class SectionDefinition(
-  name: String,
-  id: String
+    name: String,
+    id: String,
 )
 
 object TagDefinition {
   implicit val jsonFormat = Json.format[TagDefinition]
 
-  def fromContentApiTag(apiTag: ApiTag): TagDefinition = TagDefinition(
-    apiTag.webTitle,
-    apiTag.id,
-    for {
-      name <- apiTag.sectionName
-      id <- apiTag.sectionId
-    } yield SectionDefinition(name, id),
-    Tag.make(apiTag).isSectionTag
-  )
+  def fromContentApiTag(apiTag: ApiTag): TagDefinition =
+    TagDefinition(
+      apiTag.webTitle,
+      apiTag.id,
+      for {
+        name <- apiTag.sectionName
+        id <- apiTag.sectionId
+      } yield SectionDefinition(name, id),
+      Tag.make(apiTag).isSectionTag,
+    )
 }
 
 /** Minimal amount of information we need to serialize about tags */
 case class TagDefinition(
-  webTitle: String,
-  id: String,
-  sectionDefinition: Option[SectionDefinition],
-  isSectionTag: Boolean
+    webTitle: String,
+    id: String,
+    sectionDefinition: Option[SectionDefinition],
+    isSectionTag: Boolean,
 ) {
   def tagTypeName: Option[String] = {
     sectionDefinition.map(section => HTML.noHtml(section.name)) orElse ({
-      case "profile" / _ => "Contributor"
-      case "type" / _ => "Content type"
-      case "tone" / _ => "Tone"
-      case "global/series/getting-onto-graduate-schemes" => "Careers"
+      case "profile" / _                                                    => "Contributor"
+      case "type" / _                                                       => "Content type"
+      case "tone" / _                                                       => "Tone"
+      case "global/series/getting-onto-graduate-schemes"                    => "Careers"
       case "global/series/gw-good-to-meet-you" | "global/series/gw-letters" => "Guardian Weekly"
-      case "publication/guardianweekly" => "Publication"
+      case "publication/guardianweekly"                                     => "Publication"
     }: PartialFunction[String, String]).lift(id)
   }
 
-  def indexPath: String = "/" + ((for {
-    s <- sectionDefinition if isSectionTag
-  } yield s.id) getOrElse id)
+  def indexPath: String =
+    "/" + ((for {
+      s <- sectionDefinition if isSectionTag
+    } yield s.id) getOrElse id)
 }
 
 object TagIndexListing {
@@ -59,8 +61,8 @@ object TagIndexListing {
 }
 
 case class TagIndexListing(
-  id: String,
-  title: String
+    id: String,
+    title: String,
 )
 
 object TagIndexListings {
@@ -77,9 +79,9 @@ object TagIndex {
 }
 
 case class TagIndex(
-  id: String,
-  title: String,
-  tags: Seq[TagDefinition]
+    id: String,
+    title: String,
+    tags: Seq[TagDefinition],
 ) {
   lazy val countsByWebTitle = tags.foldLeft(Map.empty[String, Int]) { (acc, tag) =>
     Maps.insertWith(acc, tag.webTitle, 1) { _ + _ }
@@ -90,12 +92,12 @@ case class TagIndex(
 
   def indexTitle(tagDefinition: TagDefinition): String =
     tagDefinition.webTitle + (if (hasDuplicateWebTitle(tagDefinition))
-      tagDefinition.tagTypeName.map(", " + _).getOrElse("")
-    else "")
+                                tagDefinition.tagTypeName.map(", " + _).getOrElse("")
+                              else "")
 }
 
 case class TagIndexPage(
-  tagIndex: TagIndex,
-  metadata: MetaData,
-  title: String
+    tagIndex: TagIndex,
+    metadata: MetaData,
+    title: String,
 ) extends StandalonePage

@@ -31,7 +31,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 
     //TODO: improvement: cache BreakingNews content to avoid calling S3 every single time
     def fetch = breakingNewsApi.getBreakingNews
-    def parse(json : JsValue) = Some(json.as[BreakingNews])
+    def parse(json: JsValue) = Some(json.as[BreakingNews])
     def save(b: BreakingNews) = Some(breakingNewsApi.putBreakingNews(Json.toJson(b)))
 
     try {
@@ -43,7 +43,7 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
 
       result match {
         case Some(true) => origin ! notification //mirroring back the received notification
-        case _ => throw new Exception("Error while saving Breaking News content")
+        case _          => throw new Exception("Error while saving Breaking News content")
       }
 
     } catch {
@@ -55,9 +55,9 @@ class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with L
   }
 
   override def receive: PartialFunction[Any, Unit] = {
-    case GetAlertsRequest => getAlerts()
+    case GetAlertsRequest          => getAlerts()
     case r: NewNotificationRequest => addNotification(r.notification)
-    case _ @ unknown => log.error(s"Message unsupported (${unknown})")
+    case _ @unknown                => log.error(s"Message unsupported (${unknown})")
   }
 }
 

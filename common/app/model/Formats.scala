@@ -9,13 +9,13 @@ import play.api.libs.json._
 import play.api.libs.json.JodaReads._
 
 object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
- def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
- def writes(atom: com.gu.contentatom.thrift.Atom): JsObject = JsObject(Seq.empty)
+  def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
+  def writes(atom: com.gu.contentatom.thrift.Atom): JsObject = JsObject(Seq.empty)
 }
 
 object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
- def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
- def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom): JsObject = JsObject(Seq.empty)
+  def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
+  def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom): JsObject = JsObject(Seq.empty)
 }
 
 object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
@@ -51,53 +51,55 @@ object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.t
 object CardStyleFormat extends Format[CardStyle] {
   def reads(json: JsValue): JsResult[CardStyle] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("SpecialReport"), _) => JsSuccess(SpecialReport)
-      case JsSuccess(JsString("LiveBlog"), _) => JsSuccess(LiveBlog)
-      case JsSuccess(JsString("DeadBlog"), _) => JsSuccess(DeadBlog)
-      case JsSuccess(JsString("Feature"), _) => JsSuccess(Feature)
-      case JsSuccess(JsString("Editorial"), _) => JsSuccess(Editorial)
-      case JsSuccess(JsString("Comment"), _) =>  JsSuccess(Comment)
-      case JsSuccess(JsString("Media"), _) => JsSuccess(Media)
-      case JsSuccess(JsString("Analysis"), _) => JsSuccess(Analysis)
-      case JsSuccess(JsString("Review"), _) => JsSuccess(Review)
-      case JsSuccess(JsString("Letters"), _) => JsSuccess(Letters)
-      case JsSuccess(JsString("ExternalLink"), _) => JsSuccess(ExternalLink)
+      case JsSuccess(JsString("SpecialReport"), _)    => JsSuccess(SpecialReport)
+      case JsSuccess(JsString("LiveBlog"), _)         => JsSuccess(LiveBlog)
+      case JsSuccess(JsString("DeadBlog"), _)         => JsSuccess(DeadBlog)
+      case JsSuccess(JsString("Feature"), _)          => JsSuccess(Feature)
+      case JsSuccess(JsString("Editorial"), _)        => JsSuccess(Editorial)
+      case JsSuccess(JsString("Comment"), _)          => JsSuccess(Comment)
+      case JsSuccess(JsString("Media"), _)            => JsSuccess(Media)
+      case JsSuccess(JsString("Analysis"), _)         => JsSuccess(Analysis)
+      case JsSuccess(JsString("Review"), _)           => JsSuccess(Review)
+      case JsSuccess(JsString("Letters"), _)          => JsSuccess(Letters)
+      case JsSuccess(JsString("ExternalLink"), _)     => JsSuccess(ExternalLink)
       case JsSuccess(JsString("DefaultCardstyle"), _) => JsSuccess(DefaultCardstyle)
-      case _ => JsError("Could not convert CardStyle")
+      case _                                          => JsError("Could not convert CardStyle")
     }
   }
 
-  def writes(cardStyle: CardStyle): JsObject = cardStyle match {
-    case SpecialReport => JsObject(Seq("type" -> JsString("SpecialReport")))
-    case LiveBlog => JsObject(Seq("type" -> JsString("LiveBlog")))
-    case DeadBlog => JsObject(Seq("type" -> JsString("DeadBlog")))
-    case Feature => JsObject(Seq("type" -> JsString("Feature")))
-    case Editorial => JsObject(Seq("type" -> JsString("Editorial")))
-    case Comment => JsObject(Seq("type" -> JsString("Comment")))
-    case Media => JsObject(Seq("type" -> JsString("Media")))
-    case Analysis => JsObject(Seq("type" -> JsString("Analysis")))
-    case Review => JsObject(Seq("type" -> JsString("Review")))
-    case Letters => JsObject(Seq("type" -> JsString("Letters")))
-    case ExternalLink => JsObject(Seq("type" -> JsString("ExternalLink")))
-    case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
-  }
+  def writes(cardStyle: CardStyle): JsObject =
+    cardStyle match {
+      case SpecialReport    => JsObject(Seq("type" -> JsString("SpecialReport")))
+      case LiveBlog         => JsObject(Seq("type" -> JsString("LiveBlog")))
+      case DeadBlog         => JsObject(Seq("type" -> JsString("DeadBlog")))
+      case Feature          => JsObject(Seq("type" -> JsString("Feature")))
+      case Editorial        => JsObject(Seq("type" -> JsString("Editorial")))
+      case Comment          => JsObject(Seq("type" -> JsString("Comment")))
+      case Media            => JsObject(Seq("type" -> JsString("Media")))
+      case Analysis         => JsObject(Seq("type" -> JsString("Analysis")))
+      case Review           => JsObject(Seq("type" -> JsString("Review")))
+      case Letters          => JsObject(Seq("type" -> JsString("Letters")))
+      case ExternalLink     => JsObject(Seq("type" -> JsString("ExternalLink")))
+      case DefaultCardstyle => JsObject(Seq("type" -> JsString("DefaultCardstyle")))
+    }
 }
 
 object MediaTypeFormat extends Format[MediaType] {
   def reads(json: JsValue): JsResult[MediaType] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("Video"), _) => JsSuccess(pressed.Video)
+      case JsSuccess(JsString("Video"), _)   => JsSuccess(pressed.Video)
       case JsSuccess(JsString("Gallery"), _) => JsSuccess(pressed.Gallery)
-      case JsSuccess(JsString("Audio"), _) => JsSuccess(pressed.Audio)
-      case _ => JsError("Could not convert MediaType")
+      case JsSuccess(JsString("Audio"), _)   => JsSuccess(pressed.Audio)
+      case _                                 => JsError("Could not convert MediaType")
     }
   }
 
-  def writes(mediaType: MediaType): JsObject = mediaType match {
-    case pressed.Video => JsObject(Seq("type" -> JsString("Video")))
-    case pressed.Gallery => JsObject(Seq("type" -> JsString("Gallery")))
-    case pressed.Audio => JsObject(Seq("type" -> JsString("Audio")))
-  }
+  def writes(mediaType: MediaType): JsObject =
+    mediaType match {
+      case pressed.Video   => JsObject(Seq("type" -> JsString("Video")))
+      case pressed.Gallery => JsObject(Seq("type" -> JsString("Gallery")))
+      case pressed.Audio   => JsObject(Seq("type" -> JsString("Audio")))
+    }
 }
 
 object PressedContentFormat {
@@ -105,81 +107,94 @@ object PressedContentFormat {
   // This format is implicit because CuratedContent is recursively defined, so it needs a format object in scope.
   implicit object format extends Format[PressedContent] {
 
-    def reads(json: JsValue): JsResult[PressedContent] = (json \ "type").transform[JsString](Reads.JsStringReads) match {
-      case JsSuccess(JsString("LinkSnap"), _) => JsSuccess(json.as[LinkSnap](linkSnapFormat))
-      case JsSuccess(JsString("LatestSnap"), _) => JsSuccess(json.as[LatestSnap](latestSnapFormat))
-      case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
-      case JsSuccess(JsString("SupportingCuratedContent"), _) => JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
-      case _ => JsError("Could not convert PressedContent")
-    }
+    def reads(json: JsValue): JsResult[PressedContent] =
+      (json \ "type").transform[JsString](Reads.JsStringReads) match {
+        case JsSuccess(JsString("LinkSnap"), _)       => JsSuccess(json.as[LinkSnap](linkSnapFormat))
+        case JsSuccess(JsString("LatestSnap"), _)     => JsSuccess(json.as[LatestSnap](latestSnapFormat))
+        case JsSuccess(JsString("CuratedContent"), _) => JsSuccess(json.as[CuratedContent](curatedContentFormat))
+        case JsSuccess(JsString("SupportingCuratedContent"), _) =>
+          JsSuccess(json.as[SupportingCuratedContent](supportingCuratedContentFormat))
+        case _ => JsError("Could not convert PressedContent")
+      }
 
-    def writes(faciaContent: PressedContent): JsValue = faciaContent match {
-      case linkSnap: LinkSnap => Json.toJson(linkSnap)(linkSnapFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "LinkSnap")
-        case JsError(_) => JsNull
+    def writes(faciaContent: PressedContent): JsValue =
+      faciaContent match {
+        case linkSnap: LinkSnap =>
+          Json
+            .toJson(linkSnap)(linkSnapFormat)
+            .transform[JsObject](Reads.JsObjectReads) match {
+            case JsSuccess(l, _) =>
+              l ++ Json.obj("type" -> "LinkSnap")
+            case JsError(_) => JsNull
+          }
+        case latestSnap: LatestSnap =>
+          Json
+            .toJson(latestSnap)(latestSnapFormat)
+            .transform[JsObject](Reads.JsObjectReads) match {
+            case JsSuccess(l, _) =>
+              l ++ Json.obj("type" -> "LatestSnap")
+            case JsError(_) => JsNull
+          }
+        case content: CuratedContent =>
+          Json
+            .toJson(content)(curatedContentFormat)
+            .transform[JsObject](Reads.JsObjectReads) match {
+            case JsSuccess(l, _) =>
+              l ++ Json.obj("type" -> "CuratedContent")
+            case JsError(_) => JsNull
+          }
+        case supporting: SupportingCuratedContent =>
+          Json
+            .toJson(supporting)(supportingCuratedContentFormat)
+            .transform[JsObject](Reads.JsObjectReads) match {
+            case JsSuccess(l, _) =>
+              l ++ Json.obj("type" -> "SupportingCuratedContent")
+            case JsError(_) => JsNull
+          }
+        case _ => JsNull
       }
-      case latestSnap: LatestSnap => Json.toJson(latestSnap)(latestSnapFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "LatestSnap")
-        case JsError(_) => JsNull
-      }
-      case content: CuratedContent => Json.toJson(content)(curatedContentFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "CuratedContent")
-        case JsError(_) => JsNull
-      }
-      case supporting: SupportingCuratedContent => Json.toJson(supporting)(supportingCuratedContentFormat)
-        .transform[JsObject](Reads.JsObjectReads) match {
-        case JsSuccess(l, _) =>
-          l ++ Json.obj("type" -> "SupportingCuratedContent")
-        case JsError(_) => JsNull
-      }
-      case _ => JsNull
-    }
   }
 
   implicit val designTypeFormat: Format[DesignType] = new Format[DesignType] {
-    override def reads(json: JsValue): JsResult[DesignType] = json match {
-      case JsString("Article") => JsSuccess(com.gu.contentapi.client.utils.Article)
-      case JsString("Immersive") => JsSuccess(com.gu.contentapi.client.utils.Immersive)
-      case JsString("Media") => JsSuccess(com.gu.contentapi.client.utils.Media)
-      case JsString("Review") => JsSuccess(com.gu.contentapi.client.utils.Review)
-      case JsString("Analysis") => JsSuccess(com.gu.contentapi.client.utils.Analysis)
-      case JsString("Comment") => JsSuccess(com.gu.contentapi.client.utils.Comment)
-      case JsString("Feature") => JsSuccess(com.gu.contentapi.client.utils.Feature)
-      case JsString("Live") => JsSuccess(com.gu.contentapi.client.utils.Live)
-      case JsString("SpecialReport") => JsSuccess(com.gu.contentapi.client.utils.SpecialReport)
-      case JsString("Recipe") => JsSuccess(com.gu.contentapi.client.utils.Recipe)
-      case JsString("MatchReport") => JsSuccess(com.gu.contentapi.client.utils.MatchReport)
-      case JsString("Interview") => JsSuccess(com.gu.contentapi.client.utils.Interview)
-      case JsString("GuardianView") => JsSuccess(com.gu.contentapi.client.utils.GuardianView)
-      case JsString("Quiz") => JsSuccess(com.gu.contentapi.client.utils.Quiz)
-      case JsString("GuardianLabs") => JsSuccess(com.gu.contentapi.client.utils.GuardianLabs)
-      case JsString("AdvertisementFeature") => JsSuccess(com.gu.contentapi.client.utils.AdvertisementFeature)
-      case _ => JsError(s"Unknown design type: '$json'")
-    }
-    override def writes(dt: DesignType): JsValue = dt match {
-      case com.gu.contentapi.client.utils.Article => JsString("Article")
-      case com.gu.contentapi.client.utils.Immersive => JsString("Immersive")
-      case com.gu.contentapi.client.utils.Media => JsString("Media")
-      case com.gu.contentapi.client.utils.Review => JsString("Review")
-      case com.gu.contentapi.client.utils.Analysis => JsString("Analysis")
-      case com.gu.contentapi.client.utils.Comment => JsString("Comment")
-      case com.gu.contentapi.client.utils.Feature => JsString("Feature")
-      case com.gu.contentapi.client.utils.Live => JsString("Live")
-      case com.gu.contentapi.client.utils.SpecialReport => JsString("SpecialReport")
-      case com.gu.contentapi.client.utils.Recipe => JsString("Recipe")
-      case com.gu.contentapi.client.utils.MatchReport => JsString("MatchReport")
-      case com.gu.contentapi.client.utils.Interview => JsString("Interview")
-      case com.gu.contentapi.client.utils.GuardianView => JsString("GuardianView")
-      case com.gu.contentapi.client.utils.Quiz => JsString("Quiz")
-      case com.gu.contentapi.client.utils.GuardianLabs => JsString("GuardianLabs")
-      case com.gu.contentapi.client.utils.AdvertisementFeature => JsString("AdvertisementFeature")
-    }
+    override def reads(json: JsValue): JsResult[DesignType] =
+      json match {
+        case JsString("Article")              => JsSuccess(com.gu.contentapi.client.utils.Article)
+        case JsString("Immersive")            => JsSuccess(com.gu.contentapi.client.utils.Immersive)
+        case JsString("Media")                => JsSuccess(com.gu.contentapi.client.utils.Media)
+        case JsString("Review")               => JsSuccess(com.gu.contentapi.client.utils.Review)
+        case JsString("Analysis")             => JsSuccess(com.gu.contentapi.client.utils.Analysis)
+        case JsString("Comment")              => JsSuccess(com.gu.contentapi.client.utils.Comment)
+        case JsString("Feature")              => JsSuccess(com.gu.contentapi.client.utils.Feature)
+        case JsString("Live")                 => JsSuccess(com.gu.contentapi.client.utils.Live)
+        case JsString("SpecialReport")        => JsSuccess(com.gu.contentapi.client.utils.SpecialReport)
+        case JsString("Recipe")               => JsSuccess(com.gu.contentapi.client.utils.Recipe)
+        case JsString("MatchReport")          => JsSuccess(com.gu.contentapi.client.utils.MatchReport)
+        case JsString("Interview")            => JsSuccess(com.gu.contentapi.client.utils.Interview)
+        case JsString("GuardianView")         => JsSuccess(com.gu.contentapi.client.utils.GuardianView)
+        case JsString("Quiz")                 => JsSuccess(com.gu.contentapi.client.utils.Quiz)
+        case JsString("GuardianLabs")         => JsSuccess(com.gu.contentapi.client.utils.GuardianLabs)
+        case JsString("AdvertisementFeature") => JsSuccess(com.gu.contentapi.client.utils.AdvertisementFeature)
+        case _                                => JsError(s"Unknown design type: '$json'")
+      }
+    override def writes(dt: DesignType): JsValue =
+      dt match {
+        case com.gu.contentapi.client.utils.Article              => JsString("Article")
+        case com.gu.contentapi.client.utils.Immersive            => JsString("Immersive")
+        case com.gu.contentapi.client.utils.Media                => JsString("Media")
+        case com.gu.contentapi.client.utils.Review               => JsString("Review")
+        case com.gu.contentapi.client.utils.Analysis             => JsString("Analysis")
+        case com.gu.contentapi.client.utils.Comment              => JsString("Comment")
+        case com.gu.contentapi.client.utils.Feature              => JsString("Feature")
+        case com.gu.contentapi.client.utils.Live                 => JsString("Live")
+        case com.gu.contentapi.client.utils.SpecialReport        => JsString("SpecialReport")
+        case com.gu.contentapi.client.utils.Recipe               => JsString("Recipe")
+        case com.gu.contentapi.client.utils.MatchReport          => JsString("MatchReport")
+        case com.gu.contentapi.client.utils.Interview            => JsString("Interview")
+        case com.gu.contentapi.client.utils.GuardianView         => JsString("GuardianView")
+        case com.gu.contentapi.client.utils.Quiz                 => JsString("Quiz")
+        case com.gu.contentapi.client.utils.GuardianLabs         => JsString("GuardianLabs")
+        case com.gu.contentapi.client.utils.AdvertisementFeature => JsString("AdvertisementFeature")
+      }
   }
 
   implicit val pillarFormat = Json.format[Pillar]
@@ -235,31 +250,47 @@ object ItemKickerFormat {
     def reads(json: JsValue): JsResult[ItemKicker] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
-        case JsSuccess(JsString("LiveKicker"), _) => JsSuccess(LiveKicker)
-        case JsSuccess(JsString("AnalysisKicker"), _) => JsSuccess(AnalysisKicker)
-        case JsSuccess(JsString("ReviewKicker"), _) => JsSuccess(ReviewKicker)
-        case JsSuccess(JsString("CartoonKicker"), _) => JsSuccess(CartoonKicker)
-        case JsSuccess(JsString("PodcastKicker"), _) => (json \ "series").validate[PodcastKicker](podcastKickerFormat)
-        case JsSuccess(JsString("TagKicker"), _) => (json \ "item").validate[TagKicker](tagKickerFormat)
-        case JsSuccess(JsString("SectionKicker"), _) => (json \ "item").validate[SectionKicker](sectionKickerFormat)
-        case JsSuccess(JsString("FreeHtmlKicker"), _) => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
-        case JsSuccess(JsString("FreeHtmlKickerWithLink"), _) => (json \ "item").validate[FreeHtmlKickerWithLink](freeHtmlKickerWithLinkFormat)
+        case JsSuccess(JsString("LiveKicker"), _)         => JsSuccess(LiveKicker)
+        case JsSuccess(JsString("AnalysisKicker"), _)     => JsSuccess(AnalysisKicker)
+        case JsSuccess(JsString("ReviewKicker"), _)       => JsSuccess(ReviewKicker)
+        case JsSuccess(JsString("CartoonKicker"), _)      => JsSuccess(CartoonKicker)
+        case JsSuccess(JsString("PodcastKicker"), _)      => (json \ "series").validate[PodcastKicker](podcastKickerFormat)
+        case JsSuccess(JsString("TagKicker"), _)          => (json \ "item").validate[TagKicker](tagKickerFormat)
+        case JsSuccess(JsString("SectionKicker"), _)      => (json \ "item").validate[SectionKicker](sectionKickerFormat)
+        case JsSuccess(JsString("FreeHtmlKicker"), _)     => (json \ "item").validate[FreeHtmlKicker](freeHtmlKickerFormat)
+        case JsSuccess(JsString("FreeHtmlKickerWithLink"), _) =>
+          (json \ "item").validate[FreeHtmlKickerWithLink](freeHtmlKickerWithLinkFormat)
         case _ => JsError("Could not convert ItemKicker")
       }
     }
 
-    def writes(itemKicker: ItemKicker): JsObject = itemKicker match {
-      case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
-      case LiveKicker => JsObject(Seq("type" -> JsString("LiveKicker")))
-      case AnalysisKicker => JsObject(Seq("type" -> JsString("AnalysisKicker")))
-      case ReviewKicker => JsObject(Seq("type" -> JsString("ReviewKicker")))
-      case CartoonKicker => JsObject(Seq("type" -> JsString("CartoonKicker")))
-      case podcastKicker: PodcastKicker => JsObject(Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)))
-      case tagKicker: TagKicker => JsObject(Seq("type" -> JsString("TagKicker"), "item" -> Json.toJson(tagKicker)(tagKickerFormat)))
-      case sectionKicker: SectionKicker => JsObject(Seq("type" -> JsString("SectionKicker"), "item" -> Json.toJson(sectionKicker)(sectionKickerFormat)))
-      case freeHtmlKicker: FreeHtmlKicker => JsObject(Seq("type" -> JsString("FreeHtmlKicker"), "item" -> Json.toJson(freeHtmlKicker)(freeHtmlKickerFormat)))
-      case freeHtmlKickerWithLink: FreeHtmlKickerWithLink => JsObject(Seq("type" -> JsString("FreeHtmlKickerWithLink"), "item" -> Json.toJson(freeHtmlKickerWithLink)(freeHtmlKickerWithLinkFormat)))
-    }
+    def writes(itemKicker: ItemKicker): JsObject =
+      itemKicker match {
+        case BreakingNewsKicker => JsObject(Seq("type" -> JsString("BreakingNewsKicker")))
+        case LiveKicker         => JsObject(Seq("type" -> JsString("LiveKicker")))
+        case AnalysisKicker     => JsObject(Seq("type" -> JsString("AnalysisKicker")))
+        case ReviewKicker       => JsObject(Seq("type" -> JsString("ReviewKicker")))
+        case CartoonKicker      => JsObject(Seq("type" -> JsString("CartoonKicker")))
+        case podcastKicker: PodcastKicker =>
+          JsObject(
+            Seq("type" -> JsString("PodcastKicker"), "series" -> Json.toJson(podcastKicker)(podcastKickerFormat)),
+          )
+        case tagKicker: TagKicker =>
+          JsObject(Seq("type" -> JsString("TagKicker"), "item" -> Json.toJson(tagKicker)(tagKickerFormat)))
+        case sectionKicker: SectionKicker =>
+          JsObject(Seq("type" -> JsString("SectionKicker"), "item" -> Json.toJson(sectionKicker)(sectionKickerFormat)))
+        case freeHtmlKicker: FreeHtmlKicker =>
+          JsObject(
+            Seq("type" -> JsString("FreeHtmlKicker"), "item" -> Json.toJson(freeHtmlKicker)(freeHtmlKickerFormat)),
+          )
+        case freeHtmlKickerWithLink: FreeHtmlKickerWithLink =>
+          JsObject(
+            Seq(
+              "type" -> JsString("FreeHtmlKickerWithLink"),
+              "item" -> Json.toJson(freeHtmlKickerWithLink)(freeHtmlKickerWithLinkFormat),
+            ),
+          )
+      }
   }
 }
 
@@ -271,18 +302,21 @@ object FaciaImageFormat {
   object format extends Format[Image] {
     def reads(json: JsValue): JsResult[Image] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
-        case JsSuccess(JsString("Cutout"), _) => (json \ "item").validate[Cutout](cutoutFormat)
-        case JsSuccess(JsString("Replace"), _) => (json \ "item").validate[Replace](replaceFormat)
+        case JsSuccess(JsString("Cutout"), _)         => (json \ "item").validate[Cutout](cutoutFormat)
+        case JsSuccess(JsString("Replace"), _)        => (json \ "item").validate[Replace](replaceFormat)
         case JsSuccess(JsString("ImageSlideshow"), _) => (json \ "item").validate[ImageSlideshow](slideshowFormat)
-        case _ => JsError("Could not convert ItemKicker")
+        case _                                        => JsError("Could not convert ItemKicker")
       }
     }
 
-    def writes(faciaImage: Image): JsObject = faciaImage match {
-      case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
-      case replace: Replace => JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
-      case imageSlideshow: ImageSlideshow => JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
-    }
+    def writes(faciaImage: Image): JsObject =
+      faciaImage match {
+        case cutout: Cutout => JsObject(Seq("type" -> JsString("Cutout"), "item" -> Json.toJson(cutout)(cutoutFormat)))
+        case replace: Replace =>
+          JsObject(Seq("type" -> JsString("Replace"), "item" -> Json.toJson(replace)(replaceFormat)))
+        case imageSlideshow: ImageSlideshow =>
+          JsObject(Seq("type" -> JsString("ImageSlideshow"), "item" -> Json.toJson(imageSlideshow)(slideshowFormat)))
+      }
   }
 }
 
@@ -291,7 +325,7 @@ object PressedCollectionFormat {
   implicit val displayHintsFormat = Json.format[DisplayHints]
   implicit val collectionConfigFormat = Json.format[CollectionConfig]
   implicit val pressedContentFormat = PressedContentFormat.format
-  val format  = Json.format[PressedCollection]
+  val format = Json.format[PressedCollection]
 }
 
 object PressedPageFormat {

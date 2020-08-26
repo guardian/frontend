@@ -1,6 +1,12 @@
 package views.support
 
-import com.gu.contentapi.client.model.v1.{Asset => ApiAsset, Content => ApiContent, Element => ApiElement, Tag => ApiTag, _}
+import com.gu.contentapi.client.model.v1.{
+  Asset => ApiAsset,
+  Content => ApiContent,
+  Element => ApiElement,
+  Tag => ApiTag,
+  _,
+}
 import common.Edition
 import common.editions.Uk
 import conf.Configuration
@@ -26,20 +32,24 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   "typeOrTone" should "ignore Article and find Video" in {
-    val tags = Tags(tags = List(
+    val tags = Tags(tags =
+      List(
         Tag.make(tag(id = "type/article", tagType = TagType.Type)),
         Tag.make(tag(id = "tone/foo", tagType = TagType.Tone)),
-        Tag.make(tag(id = "type/video", tagType = TagType.Type))
-      ))
+        Tag.make(tag(id = "type/video", tagType = TagType.Type)),
+      ),
+    )
 
     tags.typeOrTone.get.id should be("type/video")
   }
 
   it should "find tone when only content type is Article" in {
-    val tags = Tags(tags = List(
+    val tags = Tags(tags =
+      List(
         Tag.make(tag(id = "type/article", tagType = TagType.Type)),
-        Tag.make(tag(id = "tone/foo", tagType = TagType.Tone))
-      ))
+        Tag.make(tag(id = "tone/foo", tagType = TagType.Tone)),
+      ),
+    )
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
@@ -50,27 +60,27 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     val figures = body.getElementsByTag("figure")
 
     val inlineImg = figures.get(0)
-    inlineImg.hasClass("img--inline") should be (true)
-    inlineImg.getElementsByTag("img").hasClass("gu-image") should be (true)
-    inlineImg.attr("data-media-id") should be ("gu-image-1")
-    inlineImg.previousElementSibling.hasClass("previous-element") should be (true)
+    inlineImg.hasClass("img--inline") should be(true)
+    inlineImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    inlineImg.attr("data-media-id") should be("gu-image-1")
+    inlineImg.previousElementSibling.hasClass("previous-element") should be(true)
 
     val landscapeImg = figures.get(3)
-    landscapeImg.hasClass("img--landscape") should be (true)
-    landscapeImg.getElementsByTag("img").hasClass("gu-image") should be (true)
-    landscapeImg.attr("data-media-id") should be ("gu-image-4")
+    landscapeImg.hasClass("img--landscape") should be(true)
+    landscapeImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    landscapeImg.attr("data-media-id") should be("gu-image-4")
 
     val portraitImg = figures.get(4)
-    portraitImg.hasClass("img--portrait") should be (true)
-    portraitImg.getElementsByTag("img").hasClass("gu-image") should be (true)
-    portraitImg.getElementsByTag("img").hasAttr("height") should be (false) // we remove the height attribute
-    portraitImg.attr("data-media-id") should be ("gu-image-5")
-    portraitImg.nextElementSibling.hasClass("following-element") should be (true)
+    portraitImg.hasClass("img--portrait") should be(true)
+    portraitImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    portraitImg.getElementsByTag("img").hasAttr("height") should be(false) // we remove the height attribute
+    portraitImg.attr("data-media-id") should be("gu-image-5")
+    portraitImg.nextElementSibling.hasClass("following-element") should be(true)
 
-    for {fig <- figures.asScala} {
-      fig.attr("itemprop") should be ("associatedMedia image")
-      fig.attr("itemscope") should be ("")
-      fig.attr("itemtype") should be ("http://schema.org/ImageObject")
+    for { fig <- figures.asScala } {
+      fig.attr("itemprop") should be("associatedMedia image")
+      fig.attr("itemscope") should be("")
+      fig.attr("itemtype") should be("http://schema.org/ImageObject")
     }
 
     for { caption <- body.getElementsByTag("figcaption").asScala } {
@@ -87,7 +97,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
     val link = (body \\ "a").head
 
-    (link \ "@href").text should be (s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
+    (link \ "@href").text should be(s"${Configuration.site.host}/section/2011/jan/01/words-for-url")
 
   }
 
@@ -105,7 +115,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "DropCap" should "add the dropcap span to the first letter of the first paragraph" in {
     val body = withJsoup(bodyWithoutInlines)(DropCaps(true, false)).body.trim
-    body should include ("""<span class="drop-cap__inner">""")
+    body should include("""<span class="drop-cap__inner">""")
   }
 
   it should "not add the dropcap span when the paragraph does not begin with a letter" in {
@@ -125,16 +135,21 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   it should "add the dropcap span when the paragraph begins with a double quote mark" in {
     val body = withJsoup(bodyStartsWithDoubleQuote)(DropCaps(true, false)).body.trim
-    body should include ("""<span class="drop-cap__inner">“S</span>""")
+    body should include("""<span class="drop-cap__inner">“S</span>""")
   }
 
   "RowInfo" should "add row info to a sequence" in {
 
     val items = Seq("a", "b", "c", "d")
 
-    items.zipWithRowInfo should be(Seq(
-      ("a", RowInfo(1)), ("b", RowInfo(2)), ("c", RowInfo(3)), ("d", RowInfo(4, true))
-    ))
+    items.zipWithRowInfo should be(
+      Seq(
+        ("a", RowInfo(1)),
+        ("b", RowInfo(2)),
+        ("c", RowInfo(3)),
+        ("d", RowInfo(4, true)),
+      ),
+    )
 
   }
 
@@ -170,11 +185,20 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   }
 
   private def tag(name: String = "name", tagType: TagType = TagType.Keyword, id: String = "/id") = {
-    ApiTag(id = id, `type` = tagType, webTitle = name,
-      sectionId = None, sectionName = None, webUrl = "weburl", apiUrl = "apiurl", references = Nil)
+    ApiTag(
+      id = id,
+      `type` = tagType,
+      webTitle = name,
+      sectionId = None,
+      sectionName = None,
+      webUrl = "weburl",
+      apiUrl = "apiurl",
+      references = Nil,
+    )
   }
 
-  val bodyTextWithInlineElements = """
+  val bodyTextWithInlineElements =
+    """
   <span>
     <p class='previous-element'>more than hearty breakfast we asked if the hotel could find out if nearby Fraserburgh was open. "Yes, but bring your own snorkel," was the response. How could we resist?</p>
 
@@ -210,12 +234,19 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
                                    """
 
   private def asset(caption: String, width: Int, height: Int, mediaId: String): ApiAsset = {
-    ApiAsset(AssetType.Image, Some("image/jpeg"), Some("http://www.foo.com/bar"), Some(AssetFields(
-      caption = Some(caption),
-      width = Some(width),
-      height = Some(height),
-      mediaId = Some(mediaId)
-    )))
+    ApiAsset(
+      AssetType.Image,
+      Some("image/jpeg"),
+      Some("http://www.foo.com/bar"),
+      Some(
+        AssetFields(
+          caption = Some(caption),
+          width = Some(width),
+          height = Some(height),
+          mediaId = Some(mediaId),
+        ),
+      ),
+    )
   }
 
   val testImages: List[ApiElement] = List(
@@ -223,21 +254,23 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     ApiElement("gu-image-2", "body", ElementType.Image, Some(0), List(asset("test caption", 250, 100, "gu-image-2"))),
     ApiElement("gu-image-3", "body", ElementType.Image, Some(0), List(asset("test caption", 600, 100, "gu-image-3"))),
     ApiElement("gu-image-4", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 100, "gu-image-4"))),
-    ApiElement("gu-image-5", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 700, "gu-image-5")))
+    ApiElement("gu-image-5", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 700, "gu-image-5"))),
   )
 
   val testContent = {
-    val content = Content.make(ApiContent(
-      id = "foo/2012/jan/07/bar",
-      sectionId = None,
-      sectionName = None,
-      webPublicationDate = None,
-      webTitle = "Some article",
-      webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
-      apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-      fields = Some(ContentFields(shortUrl = Some("http://gu.com/p/439az"))),
-      elements = Some(testImages)
-    ))
+    val content = Content.make(
+      ApiContent(
+        id = "foo/2012/jan/07/bar",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDate = None,
+        webTitle = "Some article",
+        webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+        apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+        fields = Some(ContentFields(shortUrl = Some("http://gu.com/p/439az"))),
+        elements = Some(testImages),
+      ),
+    )
     Article.make(content)
   }
 

@@ -17,9 +17,10 @@ sealed trait DateHeadline {
 
   def dateTimeString: String = day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(dateTimeFormatString))
 
-  def urlFragment: Option[String] = urlFragmentFormatString map { format =>
-    day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(format)).toLowerCase
-  }
+  def urlFragment: Option[String] =
+    urlFragmentFormatString map { format =>
+      day.toDateTimeAtStartOfDay.toString(DateTimeFormat.forPattern(format)).toLowerCase
+    }
 }
 
 case class DayHeadline(day: LocalDate) extends DateHeadline {
@@ -35,8 +36,9 @@ case class MonthHeadline(day: LocalDate) extends DateHeadline {
 }
 
 object DateHeadline {
-  def cardTimestampDisplay(dateHeadline: DateHeadline): FaciaCardTimestamp = dateHeadline match {
-    case _: DayHeadline => TimeTimestamp
-    case _: MonthHeadline => DateTimestamp
-  }
+  def cardTimestampDisplay(dateHeadline: DateHeadline): FaciaCardTimestamp =
+    dateHeadline match {
+      case _: DayHeadline   => TimeTimestamp
+      case _: MonthHeadline => DateTimestamp
+    }
 }

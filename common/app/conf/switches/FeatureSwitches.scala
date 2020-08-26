@@ -14,7 +14,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("MatthewJWalls")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val ShareCounts = Switch(
@@ -24,7 +24,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("jfsoul")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val FixturesAndResultsContainerSwitch = Switch(
@@ -34,7 +34,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FacebookShareImageLogoOverlay = Switch(
@@ -44,7 +44,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("dominickendrick")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val TwitterShareImageLogoOverlay = Switch(
@@ -54,7 +54,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("katebee")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val PlistaForAU = Switch(
@@ -64,7 +64,7 @@ trait FeatureSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val GeoMostPopular = Switch(
@@ -74,7 +74,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ExtendedMostPopular = Switch(
@@ -84,7 +84,7 @@ trait FeatureSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ExtendedMostPopularFronts = Switch(
@@ -94,7 +94,7 @@ trait FeatureSwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val MostViewedFronts = Switch(
@@ -104,7 +104,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("dotcom platform")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val FontSwitch = Switch(
@@ -114,7 +114,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val FontKerningSwitch = Switch(
@@ -124,7 +124,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val SearchSwitch = Switch(
@@ -134,7 +134,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val IdentityProfileNavigationSwitch = Switch(
@@ -144,7 +144,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val FacebookShareUseTrailPicFirstSwitch = Switch(
@@ -155,7 +155,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val IdentityFormstackSwitch = Switch(
@@ -165,7 +165,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val IdentityAvatarUploadSwitch = Switch(
@@ -175,7 +175,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val EnhanceTweetsSwitch = Switch(
@@ -185,7 +185,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val BreakingNewsSwitch = Switch(
@@ -195,7 +195,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val WeatherSwitch = Switch(
@@ -205,7 +205,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val HistoryTags = Switch(
@@ -215,7 +215,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val IdentityBlockSpamEmails = Switch(
@@ -225,7 +225,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val IdentityLogRegistrationsFromTor = Switch(
@@ -235,7 +235,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val CrosswordSvgThumbnailsSwitch = Switch(
@@ -245,7 +245,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val SudokuSwitch = Switch(
@@ -255,7 +255,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val CricketScoresSwitch = Switch(
@@ -265,7 +265,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val RugbyScoresSwitch = Switch(
@@ -275,7 +275,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("health team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   // Decommissioned, see marker: 7dde429f00b1
@@ -286,7 +286,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val MissingVideoEndcodingsJobSwitch = Switch(
@@ -296,7 +296,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val EmailInlineInFooterSwitch = Switch(
@@ -306,7 +306,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val UseAtomsSwitch = Switch(
@@ -316,7 +316,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AmpArticleSwitch = Switch(
@@ -326,7 +326,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("NataliaLKB")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AmpLiveBlogSwitch = Switch(
@@ -336,7 +336,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("NataliaLKB")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val R2PagePressServiceSwitch = Switch(
@@ -346,7 +346,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("JustinPinner")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   // Owner: Maria Livia Chiorean
@@ -357,7 +357,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("marialivia16")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   // Owner: Maria Livia Chiorean
@@ -368,7 +368,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("marialivia16")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   // Owner: Sam Cutler / Editorial Tools
@@ -376,10 +376,10 @@ trait FeatureSwitches {
     SwitchGroup.Feature,
     "targeting",
     "When ON will the targeting system will poll for updates and merge targeted campaigns into content",
-    owners= Seq(Owner.withGithub("currysoup")),
+    owners = Seq(Owner.withGithub("currysoup")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val InlineEmailStyles = Switch(
@@ -389,7 +389,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("joelochlann")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val WeAreHiring = Switch(
@@ -399,7 +399,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val Acast = Switch(
@@ -409,7 +409,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   // Simple & Coherent
@@ -420,10 +420,10 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("simple.and.coherent")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
-    // Election interactive header switch
+  // Election interactive header switch
   val InteractiveHeaderSwitch = Switch(
     SwitchGroup.Feature,
     "interactive-full-header-switch",
@@ -431,7 +431,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val UsHeaderAndFooterSubscribeLinkSwitch = Switch(
@@ -441,7 +441,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("dotcom.platform")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val slotBodyEnd = Switch(
@@ -461,7 +461,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 15),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val discountCodeLinks = Switch(
@@ -471,7 +471,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withEmail("dotcom.platform@guardian.co.uk")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 8),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val remoteBanner = Switch(
@@ -481,7 +481,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 8, 3),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val remoteSubscriptionsBanner = Switch(
@@ -491,6 +491,6 @@ trait FeatureSwitches {
     owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 8, 3),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }

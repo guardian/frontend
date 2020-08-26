@@ -14,7 +14,8 @@ import model.{Article, Content}
 
 @DoNotDiscover class MainMediaWidthsTest extends FreeSpec with Matchers with Eventually with ConfiguredTestSuite {
   "should return correct widths" in {
-    val item = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(
+      id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
@@ -22,7 +23,7 @@ import model.{Article, Content}
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(),
-      elements = None
+      elements = None,
     )
 
     val content = Content.make(item)
@@ -37,13 +38,18 @@ import model.{Article, Content}
       "main",
       ElementType.Image,
       Some(0),
-      List(Asset(
-        AssetType.Image,
-        Some("image/jpeg"),
-        Some("http://www.foo.com/bar"),
-        Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))))))
+      List(
+        Asset(
+          AssetType.Image,
+          Some("image/jpeg"),
+          Some("http://www.foo.com/bar"),
+          Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))),
+        ),
+      ),
+    )
 
-    val item = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(
+      id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
@@ -51,7 +57,7 @@ import model.{Article, Content}
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(),
-      elements = Some(List(imageElement))
+      elements = Some(List(imageElement)),
     )
 
     val content = Content.make(item)
@@ -61,7 +67,8 @@ import model.{Article, Content}
   }
 
   "should return correct widths for a liveblog" in {
-    val item = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(
+      id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
@@ -70,7 +77,12 @@ import model.{Article, Content}
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("tone/minutebyminute", TagType.Tone)),
       elements = None,
-      blocks = Some(Blocks.apply(None, Some(Seq(Block("","","",None, BlockAttributes(), false, None, None, None,None,Nil,None,None, Nil)))))
+      blocks = Some(
+        Blocks.apply(
+          None,
+          Some(Seq(Block("", "", "", None, BlockAttributes(), false, None, None, None, None, Nil, None, None, Nil))),
+        ),
+      ),
     )
 
     val content = Content.make(item)
@@ -85,13 +97,18 @@ import model.{Article, Content}
       "main",
       ElementType.Image,
       Some(0),
-      List(Asset(
-        AssetType.Image,
-        Some("image/jpeg"),
-        Some("http://www.foo.com/bar"),
-        Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))))))
+      List(
+        Asset(
+          AssetType.Image,
+          Some("image/jpeg"),
+          Some("http://www.foo.com/bar"),
+          Some(AssetFields(caption = Some("caption"), width = Some(55), role = Some("showcase"))),
+        ),
+      ),
+    )
 
-    val item = ApiContent(id = "foo/2012/jan/07/bar",
+    val item = ApiContent(
+      id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(jodaToJavaInstant(new DateTime()).atOffset(ZoneOffset.UTC).toCapiDateTime),
@@ -99,7 +116,7 @@ import model.{Article, Content}
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("tone/features", TagType.Tone)),
-      elements = Some(List(imageElement))
+      elements = Some(List(imageElement)),
     )
 
     val content = Content.make(item)
@@ -109,7 +126,15 @@ import model.{Article, Content}
   }
 
   private def tag(id: String = "/id", tagType: TagType = TagType.Keyword, name: String = "", url: String = "") = {
-    ApiTag(id = id, `type` = tagType, webTitle = name,
-      sectionId = None, sectionName = None, webUrl = url, apiUrl = "apiurl", references = Nil)
+    ApiTag(
+      id = id,
+      `type` = tagType,
+      webTitle = name,
+      sectionId = None,
+      sectionName = None,
+      webUrl = url,
+      apiUrl = "apiurl",
+      references = Nil,
+    )
   }
 }

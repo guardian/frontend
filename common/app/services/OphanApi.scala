@@ -19,7 +19,9 @@ object MostReadItem {
 
 case class MostReadItem(url: String, count: Int)
 
-class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends Logging with implicits.WSRequests {
+class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
+    extends Logging
+    with implicits.WSRequests {
   private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
@@ -27,13 +29,13 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
       host <- ophanApi.host
       key <- ophanApi.key
     } yield {
-        val queryString = params map {
-          case (k, v) => s"$k=${URLEncoder.encode(v, "utf-8")}"
-        } mkString "&"
-        val url = s"$host/$path?$queryString&api-key=$key"
-        log.info(s"Making request to Ophan API: $url")
-        wsClient.url(url).withRequestTimeout(10.seconds).getOKResponse().map(_.json)
-      }
+      val queryString = params map {
+        case (k, v) => s"$k=${URLEncoder.encode(v, "utf-8")}"
+      } mkString "&"
+      val url = s"$host/$path?$queryString&api-key=$key"
+      log.info(s"Making request to Ophan API: $url")
+      wsClient.url(url).withRequestTimeout(10.seconds).getOKResponse().map(_.json)
+    }
 
     maybeJson getOrElse {
       Future.failed(new BadConfigurationException("Ophan host or key not configured"))
@@ -72,14 +74,10 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
     getMostRead(Map("days" -> days.toString, "referrer" -> "social media"))
 
   def getMostViewedGalleries(hours: Int, count: Int): Future[Seq[MostReadItem]] =
-    getMostRead(Map("content-type" -> "gallery",
-      "hours" -> hours.toString,
-      "count" -> count.toString))
+    getMostRead(Map("content-type" -> "gallery", "hours" -> hours.toString, "count" -> count.toString))
 
   def getMostViewedAudio(hours: Int, count: Int): Future[Seq[MostReadItem]] =
-    getMostRead(Map("content-type" -> "audio",
-      "hours" -> hours.toString,
-      "count" -> count.toString))
+    getMostRead(Map("content-type" -> "audio", "hours" -> hours.toString, "count" -> count.toString))
 
   def getAdsRenderTime(params: Map[String, Seq[String]]): Future[JsValue] = {
     val validatedParams = for {
@@ -87,8 +85,8 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
       if Seq("platform", "hours", "ad-slot").contains(key)
       value <- values
     } yield {
-        key -> value
-      }
+      key -> value
+    }
 
     getBody("ads/render-time")(validatedParams)
   }
@@ -97,7 +95,8 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
-    getBody("video/mostviewed")(Map("hours" -> hours.toString, "count" -> count.toString, "publication-date-from" -> sixMonthsAgo))
+    getBody("video/mostviewed")(
+      Map("hours" -> hours.toString, "count" -> count.toString, "publication-date-from" -> sixMonthsAgo),
+    )
   }
 }
-

@@ -14,23 +14,26 @@ object IndexPageGrouping extends Collections {
   val MinimumPerDayPopOutFrequency = 2
 
   def fromContent(trails: Seq[Content], timezone: DateTimeZone): Seq[IndexPageGrouping] = {
-    val trailsAndDates = trails.map(content => TrailAndDate(content, content.trail.webPublicationDate.withZone(timezone).toLocalDate))
+    val trailsAndDates =
+      trails.map(content => TrailAndDate(content, content.trail.webPublicationDate.withZone(timezone).toLocalDate))
 
-    trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap { case (_, trailsThatYear) =>
-      val trailsByMonth = trailsThatYear.groupBy(_.date.withDayOfMonth(1))
+    trailsAndDates.groupBy(_.date.withDayOfYear(1)).toSeq.sortBy(_._1).reverse flatMap {
+      case (_, trailsThatYear) =>
+        val trailsByMonth = trailsThatYear.groupBy(_.date.withDayOfMonth(1))
 
-      trailsByMonth.toSeq.sortBy(_._1).reverse flatMap {
-        case (startOfMonth, trailsThatMonth) =>
-          val trailsByDay = trailsThatMonth.groupBy(_.date)
+        trailsByMonth.toSeq.sortBy(_._1).reverse flatMap {
+          case (startOfMonth, trailsThatMonth) =>
+            val trailsByDay = trailsThatMonth.groupBy(_.date)
 
-          if (trailsByDay.meanFrequency >= MinimumPerDayPopOutFrequency) {
-            trailsByDay.toSeq.sortBy(_._1).reverse map { case (day, trailsThatDay) =>
-              Day(day, trailsThatDay.map(_.trail).sortBy(_.trail.webPublicationDate).reverse)
+            if (trailsByDay.meanFrequency >= MinimumPerDayPopOutFrequency) {
+              trailsByDay.toSeq.sortBy(_._1).reverse map {
+                case (day, trailsThatDay) =>
+                  Day(day, trailsThatDay.map(_.trail).sortBy(_.trail.webPublicationDate).reverse)
+              }
+            } else {
+              Seq(Month(startOfMonth, trailsThatMonth.map(_.trail).sortBy(_.trail.webPublicationDate).reverse))
             }
-          } else {
-            Seq(Month(startOfMonth, trailsThatMonth.map(_.trail).sortBy(_.trail.webPublicationDate).reverse))
-          }
-      }
+        }
     }
   }
 

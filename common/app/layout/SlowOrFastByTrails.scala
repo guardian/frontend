@@ -8,7 +8,7 @@ object SlowOrFastByTrails {
     "type/gallery",
     "type/picture",
     "lifeandstyle/series/last-bites",
-    "artanddesign/photography"
+    "artanddesign/photography",
   )
 
   val FrequencyThreshold = 0.8

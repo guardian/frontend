@@ -35,7 +35,8 @@ class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       tags = Nil,
       elements = None,
       references = Nil,
-      isExpired = None)
+      isExpired = None,
+    )
 
     val fapiLatestSnap = fapi.LatestSnap(
       id = theUrl,
@@ -52,7 +53,7 @@ class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       properties = ContentProperties.fromResolvedMetaData(ResolvedMetaData.Default),
       byline = None,
       kicker = None,
-      brandingByEdition = Map.empty
+      brandingByEdition = Map.empty,
     )
 
     LatestSnap.make(fapiLatestSnap)
@@ -61,6 +62,7 @@ class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
   "itemsVisible" should "return a correct count of items visible (not behind 'show more')" in {
     Front.itemsVisible(FixedContainers.fixedMediumFastXI) shouldEqual 11
     Front.itemsVisible(FixedContainers.fixedMediumSlowVII) shouldEqual 7
+
     /** Don't know why this is called 12 when it contains 9 items ... */
     Front.itemsVisible(FixedContainers.fixedMediumSlowXIIMpu) shouldEqual 9
   }

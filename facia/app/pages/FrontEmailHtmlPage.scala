@@ -13,11 +13,11 @@ object FrontEmailHtmlPage extends HtmlPage[PressedPage] {
     implicit val p: PressedPage = page
     htmlTag(
       head(
-        Html(common.Assets.css.emailFront)
+        Html(common.Assets.css.emailFront),
       ),
       body(
-        emailFrontBody()
-      )
+        emailFrontBody(),
+      ),
     )
   }
 

@@ -1,8 +1,8 @@
 package common.commercial
 
 case class DiscountCodeMerchantLink(
-  title: String,
-  url: String,
+    title: String,
+    url: String,
 )
 
 object DiscountCodeLinks {
@@ -31,14 +31,14 @@ object DiscountCodeLinks {
     Argos,
     Amazon,
     Currys,
-    JdSports
+    JdSports,
   )
 
-  def shouldShowWidget(path:String): Boolean ={
+  def shouldShowWidget(path: String): Boolean = {
     widgetPaths.contains(path)
   }
 
- private val widgetPaths = Set(
+  private val widgetPaths = Set(
     "food/2018/oct/20/miguel-barclay-one-pound-meals-budget-friendly-lunch-dinner-recipes",
     "lifeandstyle/2017/nov/03/if-you-buy-a-ready-made-lunch-every-day-youre-throwing-away-1288-a-year",
     "money/2017/sep/29/how-to-save-money-on-going-out",
@@ -306,6 +306,6 @@ object DiscountCodeLinks {
     "travel/2007/feb/11/wildlifeholidays.budget.africa",
     "travel/2008/may/04/camping.hotels",
     "money/2012/apr/17/megabus-coach-tickets-europe",
-    "business/live/2019/nov/29/black-friday-2019-best-deals-bargains-latest-news-live"
+    "business/live/2019/nov/29/black-friday-2019-best-deals-bargains-latest-news-live",
   )
 }

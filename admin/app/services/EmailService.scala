@@ -22,17 +22,17 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
     .withRegion(conf.Configuration.aws.region)
     .build()
 
-  val sendAsync = client.sendAsyncEmail(akkaAsync)_
+  val sendAsync = client.sendAsyncEmail(akkaAsync) _
 
   def shutdown(): Unit = client.shutdown()
 
   def send(
-    from: String,
-    to: Seq[String],
-    cc: Seq[String] = Nil,
-    subject: String,
-    textBody: Option[String] = None,
-    htmlBody: Option[String] = None
+      from: String,
+      to: Seq[String],
+      cc: Seq[String] = Nil,
+      subject: String,
+      textBody: Option[String] = None,
+      htmlBody: Option[String] = None,
   )(implicit executionContext: ExecutionContext): Future[SendEmailResult] = {
 
     log.info(s"Sending email from $from to $to about $subject")
@@ -62,8 +62,8 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
     val futureResponse = sendAsync(request)
 
-    futureResponse.foreach {
-      response => log.info(s"Sent message ID ${response.getMessageId}")
+    futureResponse.foreach { response =>
+      log.info(s"Sent message ID ${response.getMessageId}")
     }
 
     futureResponse.failed.foreach {
@@ -72,7 +72,6 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
     futureResponse
   }
-
 
   private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsync) {
 

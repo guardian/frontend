@@ -10,7 +10,8 @@ import com.gu.contentapi.client.model.v1.{Tag, TagsResponse}
 import scala.concurrent.duration._
 import play.api.libs.iteratee.{Enumeratee, Enumerator}
 
-class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext) extends Logging {
+class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext)
+    extends Logging {
   val DelayBetweenRetries = 100.millis
   val MaxNumberRetries = 5
   val MaxPageSize = 1000
@@ -26,26 +27,31 @@ class ContentApiTagsEnumerator(contentApiClient: ContentApiClient)(implicit exec
             getPageWithRetries(page, retriesRemaining - 1)
         }
 
-    Enumerator.unfoldM(Option(1)) {
-      case Some(nextPage) => getPageWithRetries(nextPage) map { response =>
-        val next = if (response.pages == response.currentPage) None else Some(response.currentPage + 1)
+    Enumerator
+      .unfoldM(Option(1)) {
+        case Some(nextPage) =>
+          getPageWithRetries(nextPage) map { response =>
+            val next = if (response.pages == response.currentPage) None else Some(response.currentPage + 1)
 
-        Some(next, response.results)
+            Some(next, response.results)
+          }
+
+        case None => Future.successful(None)
       }
-
-      case None => Future.successful(None)
-    }.flatMap(Enumerator.apply(_: _*))
+      .flatMap(Enumerator.apply(_: _*))
   }
 
-  def enumerateTagType(tagType: String): Enumerator[Tag] = enumeratePages { page =>
-    contentApiClient.getResponse(contentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
-  }
+  def enumerateTagType(tagType: String): Enumerator[Tag] =
+    enumeratePages { page =>
+      contentApiClient.getResponse(contentApiClient.tags.tagType(tagType).pageSize(MaxPageSize).page(page))
+    }
 
   implicit class RichTag(tag: Tag) {
-    def isSectionTag: Boolean = tag.id.split("/").toList match {
-      case first :: second :: Nil => first == second
-      case _ => false
-    }
+    def isSectionTag: Boolean =
+      tag.id.split("/").toList match {
+        case first :: second :: Nil => first == second
+        case _                      => false
+      }
   }
 
   def enumerateTagTypeFiltered(tagType: String): Enumerator[Tag] =

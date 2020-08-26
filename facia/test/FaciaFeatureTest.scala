@@ -14,35 +14,39 @@ import org.fluentlenium.core.domain.FluentWebElement
         import browser._
 
         Then("the page should be styled differently")
-        $(s".facia-container--$sponsorshipType").size should be (1)
+        $(s".facia-container--$sponsorshipType").size should be(1)
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
         $(".js-sponsored-front") should have size 1
-        $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be (sponsorshipType)
+        $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be(sponsorshipType)
       }
 
-      def testContainerSponsorship(browser: TestBrowser, sponsorshipType: String, sponsoredContainerIndex: Int): Assertion = {
+      def testContainerSponsorship(
+          browser: TestBrowser,
+          sponsorshipType: String,
+          sponsoredContainerIndex: Int,
+      ): Assertion = {
         import browser._
 
         val sponsoredContainer = $(".container").get(sponsoredContainerIndex)
 
         Then("the container should be styled differently")
         // second container is sponsored
-        sponsoredContainer.attribute("class").split(" ") should contain (s"container--$sponsorshipType")
+        sponsoredContainer.attribute("class").split(" ") should contain(s"container--$sponsorshipType")
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
-        sponsoredContainer.attribute("class").split(" ") should contain ("js-sponsored-front")
-        sponsoredContainer.attribute("data-sponsorship") should be (sponsorshipType)
+        sponsoredContainer.attribute("class").split(" ") should contain("js-sponsored-front")
+        sponsoredContainer.attribute("data-sponsorship") should be(sponsorshipType)
       }
 
       /**
-       * NOTE - these tests run off real sponsored data which might not be reliable
-       *
+        * NOTE - these tests run off real sponsored data which might not be reliable
+        *
        * If a test fails, i.e. because a sponsorship expires, see
-       * https://frontend.gutools.co.uk/analytics/commercial/sponsorships for a different sponsorship to use
-       *
+        * https://frontend.gutools.co.uk/analytics/commercial/sponsorships for a different sponsorship to use
+        *
        * If they fail often, might need to look into setting up a reliable data source
-       */
+        */
       scenario("Advertisement Feature Front") {
 
         Given("I am on an advertisement feature front")

@@ -24,44 +24,50 @@ object UrlHelpers {
   case object ManageMyAccountUpsell extends Position
   case object ManageMyAccountCancel extends Position
 
-  def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): Option[String] = {
+  def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit
+      request: RequestHeader,
+  ): Option[String] = {
     condOpt((destination, position)) {
       case (Support, Header | SlimHeaderDropdown) => "header_support"
-      case (Support, AmpHeader) => "amp_header_support"
-      case (Support, SideMenu) => "side_menu_support"
-      case (Support, Footer | AmpFooter) => "footer_support"
+      case (Support, AmpHeader)                   => "amp_header_support"
+      case (Support, SideMenu)                    => "side_menu_support"
+      case (Support, Footer | AmpFooter)          => "footer_support"
 
       case (SupportContribute, Header | AmpHeader | SlimHeaderDropdown) => "header_support_contribute"
-      case (SupportContribute, SideMenu) => "side_menu_support_contribute"
-      case (SupportContribute, Footer) => "footer_support_contribute"
-      case (SupportContribute, AmpFooter) => "amp_footer_support_contribute"
+      case (SupportContribute, SideMenu)                                => "side_menu_support_contribute"
+      case (SupportContribute, Footer)                                  => "footer_support_contribute"
+      case (SupportContribute, AmpFooter)                               => "amp_footer_support_contribute"
 
       case (SupportSubscribe, Header | AmpHeader | SlimHeaderDropdown) => "header_support_subscribe"
-      case (SupportSubscribe, SideMenu) => "side_menu_support_subscribe"
-      case (SupportSubscribe, Footer) => "footer_support_subscribe"
-      case (SupportSubscribe, AmpFooter) => "amp_footer_support_subscribe"
+      case (SupportSubscribe, SideMenu)                                => "side_menu_support_subscribe"
+      case (SupportSubscribe, Footer)                                  => "footer_support_subscribe"
+      case (SupportSubscribe, AmpFooter)                               => "amp_footer_support_subscribe"
 
       case (_, ManageMyAccountUpsell) => "manage_my_account_upsell"
     }
   }
 
-  def getComponentType(position: Position): String = position match {
-    case Header | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
-    case ManageMyAccountUpsell | ManageMyAccountCancel => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
-    case Footer | AmpFooter => "ACQUISITIONS_FOOTER"
-  }
+  def getComponentType(position: Position): String =
+    position match {
+      case Header | AmpHeader | SideMenu | SlimHeaderDropdown => "ACQUISITIONS_HEADER"
+      case ManageMyAccountUpsell | ManageMyAccountCancel      => "ACQUISITIONS_MANAGE_MY_ACCOUNT"
+      case Footer | AmpFooter                                 => "ACQUISITIONS_FOOTER"
+    }
 
-  def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] = List(
-    NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
-    NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe"))
-  )
+  def readerRevenueLinks(implicit request: RequestHeader): List[NavLink] =
+    List(
+      NavLink("Make a contribution", getReaderRevenueUrl(SupportContribute, SideMenu)),
+      NavLink("Subscribe", getReaderRevenueUrl(SupportSubscribe, SideMenu), classList = Seq("js-subscribe")),
+    )
 
   private val uriEncoder = UriConfig.default.copy(
     // The default encoder does not encode double quotes in the querystring
-    queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"')
+    queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"'),
   )
 
-  def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit request: RequestHeader): String = {
+  def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit
+      request: RequestHeader,
+  ): String = {
     val componentId = getComponentId(destination, position)
     val componentType = getComponentType(position)
 
@@ -71,10 +77,12 @@ object UrlHelpers {
       // ACQUISITIONS_HEADER and ACQUISITIONS_FOOTER correspond to values in the Thrift enum
       // https://dashboard.ophan.co.uk/docs/thrift/componentevent.html#Enum_ComponentType
       "source" -> "GUARDIAN_WEB",
-      "componentType" -> componentType
-    ) ++ componentId.fold(Json.obj())(c => Json.obj(
-      "componentId" -> c
-    ))
+      "componentType" -> componentType,
+    ) ++ componentId.fold(Json.obj())(c =>
+      Json.obj(
+        "componentId" -> c,
+      ),
+    )
 
     import com.netaporter.uri.dsl._
 

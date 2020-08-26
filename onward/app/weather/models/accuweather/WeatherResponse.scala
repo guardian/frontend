@@ -11,12 +11,13 @@ object WeatherResponse {
 }
 
 case class WeatherResponse(
-  WeatherText: String,
-  WeatherIcon: Int,
-  Temperature: Map[String, Temperature]
+    WeatherText: String,
+    WeatherIcon: Int,
+    Temperature: Map[String, Temperature],
 ) {
-  def temperatureForEdition(edition: Edition): Temperature = edition match {
-    case Us => Temperature("Imperial")
-    case _ => Temperature("Metric")
-  }
+  def temperatureForEdition(edition: Edition): Temperature =
+    edition match {
+      case Us => Temperature("Imperial")
+      case _  => Temperature("Metric")
+    }
 }

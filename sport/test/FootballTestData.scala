@@ -42,19 +42,54 @@ object FootballTestData {
 
   private val team = MatchDayTeam("1", "Team name", None, None, None, None)
 
-  private val matchDay = MatchDay("1234", today.toDateTime, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, team, team, None, None, None)
+  private val matchDay = MatchDay(
+    "1234",
+    today.toDateTime,
+    None,
+    Stage("1"),
+    Round("1", None),
+    "1",
+    true,
+    false,
+    true,
+    false,
+    true,
+    "KO",
+    None,
+    team,
+    team,
+    None,
+    None,
+    None,
+  )
 
-  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", team, team,None, None)
+  private val _fixture = Fixture("1234", today.toDateTime, Stage("1"), Round("1", None), "1", team, team, None, None)
 
-  private val _result = Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, team, team,None, None, None)
+  private val _result =
+    Result("1234", today.toDateTime, Stage("1"), Round("1", None), "1", false, None, team, team, None, None, None)
 
-  private val matchWithReport = Result("1010", new org.joda.time.DateTime(2012, 12, 1, 15, 0, zone), Stage("1"), Round("1", None), "", false, None,
+  private val matchWithReport = Result(
+    "1010",
+    new org.joda.time.DateTime(2012, 12, 1, 15, 0, zone),
+    Stage("1"),
+    Round("1", None),
+    "",
+    false,
+    None,
     MatchDayTeam("1006", "", None, None, None, None),
     MatchDayTeam("65", "", None, None, None, None),
-    None, None, None)
+    None,
+    None,
+    None,
+  )
 
   val competitions = Seq(
-    Competition("100", "/football/premierleague", "Premier League", "Premier League", "English",
+    Competition(
+      "100",
+      "/football/premierleague",
+      "Premier League",
+      "Premier League",
+      "English",
       showInTeamsList = true,
       startDate = Some((today - 2.months).toLocalDate),
       matches = Seq(
@@ -70,7 +105,7 @@ object FootballTestData {
         fixture("Wigan", "Fulham", today + 2.days),
         fixture("Stoke", "Everton", today + 3.days),
         fixture("Reading", "QPR", today + 4.days),
-        fixture("Swansea", "Reading", today + 5.days)
+        fixture("Swansea", "Reading", today + 5.days),
       ),
       leagueTable = Seq(
         leagueEntry("Arsenal", 1),
@@ -79,22 +114,26 @@ object FootballTestData {
         leagueEntry("Chelsea", 4),
         leagueEntry("Wigan", 5),
         leagueEntry("Everton", 6),
-        leagueEntry("Liverpool", 7)
-      )
-
+        leagueEntry("Liverpool", 7),
+      ),
     ),
-    Competition("500", "/football/championsleague", "Champions League", "Champions League", "European",
+    Competition(
+      "500",
+      "/football/championsleague",
+      "Champions League",
+      "Champions League",
+      "European",
       startDate = Some((today - 2.months).toLocalDate),
       matches = Seq(
         result("Bolton", "Derby", 1, 1, today - 1.day, Some("Bolton win 4-2 on penalties.")),
         liveMatch("Cardiff", "Brighton", 2, 0, today.withTime(15, 0, 0, 0)),
-        fixture("Wolves", "Burnley", today + 2.days)
+        fixture("Wolves", "Burnley", today + 2.days),
       ),
       leagueTable = Seq(
         leagueEntry("Bolton", 1),
-        leagueEntry("Cardiff", 2)
-      )
-    )
+        leagueEntry("Cardiff", 2),
+      ),
+    ),
   )
 
   val teamTags: Map[String, Tag] = Map(
@@ -107,37 +146,68 @@ object FootballTestData {
         "Football",
         "Liverpool",
         "https://www.theguardian.com/football/liverpool",
-        None, None, None, None, None, None, None, Seq(), None, None
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        None,
+        Seq(),
+        None,
+        None,
       ),
       None,
-      None)
+      None,
+    ),
   )
 
+  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) =
+    matchDay.copy(
+      id = s"liveMatch $homeName $awayName $date",
+      date = date,
+      homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
+      awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
+    )
 
-  private def liveMatch(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime) = matchDay.copy(
-    id = s"liveMatch $homeName $awayName $date",
-    date = date,
-    homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
-    awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore))
-  )
+  private def fixture(homeName: String, awayName: String, date: DateTime) =
+    _fixture.copy(
+      id = s"fixture $homeName $awayName $date",
+      date = date,
+      homeTeam = team.copy(id = homeName, name = homeName, score = None),
+      awayTeam = team.copy(id = awayName, name = awayName, score = None),
+    )
 
-  private def fixture(homeName: String, awayName: String, date: DateTime) = _fixture.copy(
-    id = s"fixture $homeName $awayName $date",
-    date = date,
-    homeTeam = team.copy(id = homeName, name = homeName, score = None),
-    awayTeam = team.copy(id = awayName, name = awayName, score = None)
-  )
+  private def result(
+      homeName: String,
+      awayName: String,
+      homeScore: Int,
+      awayScore: Int,
+      date: DateTime,
+      comments: Option[String] = None,
+  ) =
+    _result.copy(
+      id = s"result $homeName $awayName $date",
+      date = date,
+      homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
+      awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
+      comments = comments,
+    )
 
-  private def result(homeName: String, awayName: String, homeScore: Int, awayScore: Int, date: DateTime, comments: Option[String] = None) = _result.copy(
-    id = s"result $homeName $awayName $date",
-    date = date,
-    homeTeam = team.copy(id = homeName, name = homeName, score = Some(homeScore)),
-    awayTeam = team.copy(id = awayName, name = awayName, score = Some(awayScore)),
-    comments = comments
-  )
-
-  private def leagueEntry(team: String, rank: Int) = LeagueTableEntry("1", Round("1", None),
-    LeagueTeam(team, team, rank, LeagueStats(10, 5, 5, 0, 3, 2),
-      LeagueStats(10, 5, 5, 0, 3, 2), LeagueStats(10, 5, 5, 0, 3, 2), 3, 30))
+  private def leagueEntry(team: String, rank: Int) =
+    LeagueTableEntry(
+      "1",
+      Round("1", None),
+      LeagueTeam(
+        team,
+        team,
+        rank,
+        LeagueStats(10, 5, 5, 0, 3, 2),
+        LeagueStats(10, 5, 5, 0, 3, 2),
+        LeagueStats(10, 5, 5, 0, 3, 2),
+        3,
+        30,
+      ),
+    )
 
 }

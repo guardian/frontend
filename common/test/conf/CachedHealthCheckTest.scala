@@ -1,6 +1,5 @@
 package conf
 
-
 import org.joda.time.DateTime
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, Matchers, WordSpec}
 import play.api.mvc.{ControllerComponents, Result}
@@ -14,7 +13,7 @@ import scala.concurrent.duration._
 import scala.util.Random
 
 @DoNotDiscover class CachedHealthCheckTest
-  extends WordSpec
+    extends WordSpec
     with Matchers
     with ConfiguredTestSuite
     with ScalaFutures
@@ -23,27 +22,36 @@ import scala.util.Random
     with WithTestWsClient {
 
   //Helper method to construct mock Results
-  def mockResult(statusCode: Int, date: DateTime = DateTime.now, expiration: Option[Duration] = Some(10.seconds)): HealthCheckResult = {
+  def mockResult(
+      statusCode: Int,
+      date: DateTime = DateTime.now,
+      expiration: Option[Duration] = Some(10.seconds),
+  ): HealthCheckResult = {
     val path = s"/path/${Random.alphanumeric.take(12).mkString}"
     statusCode match {
       case 200 => HealthCheckResult(path, HealthCheckResultTypes.Success(statusCode), date, expiration)
-      case _ => HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
+      case _ =>
+        HealthCheckResult(path, HealthCheckResultTypes.Failure(statusCode, "Something went bad"), date, expiration)
     }
   }
 
   // Test helper method
-  def getHealthCheck(mockResults: List[HealthCheckResult],
-                     policy: HealthCheckPolicy,
-                     precondition: Option[HealthCheckPrecondition] = None)
-                    (testBlock: Future[Result] => Unit): Unit = {
+  def getHealthCheck(
+      mockResults: List[HealthCheckResult],
+      policy: HealthCheckPolicy,
+      precondition: Option[HealthCheckPrecondition] = None,
+  )(testBlock: Future[Result] => Unit): Unit = {
 
     // Create a CachedHealthCheck controller with mock results
     val mockHealthChecks: Seq[SingleHealthCheck] = mockResults.map(result => ExpiringSingleHealthCheck(result.url))
 
-    class MockController(val controllerComponents: ControllerComponents) extends CachedHealthCheck(policy, precondition)(mockHealthChecks:_*)(wsClient) {
+    class MockController(val controllerComponents: ControllerComponents)
+        extends CachedHealthCheck(policy, precondition)(mockHealthChecks: _*)(wsClient) {
       override val cache = new HealthCheckCache(precondition)(wsClient) {
         var remainingMockResults = mockResults
-        override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck)(implicit executionContext: ExecutionContext): Future[HealthCheckResult] = {
+        override def fetchResult(baseUrl: String, healthCheck: SingleHealthCheck)(implicit
+            executionContext: ExecutionContext,
+        ): Future[HealthCheckResult] = {
           val result = remainingMockResults.head
           remainingMockResults = remainingMockResults.tail
           Future.successful(result)
@@ -51,7 +59,7 @@ import scala.util.Random
       }
     }
 
-    val controller =  new MockController(Helpers.stubControllerComponents())
+    val controller = new MockController(Helpers.stubControllerComponents())
 
     // Populate the cache and wait for it to finish
     whenReady(controller.runChecks) { _ =>
@@ -78,7 +86,7 @@ import scala.util.Random
           val resultDate = DateTime.now.minus(expiration.toMillis + 1)
           val mockResults = List(mockResult(200, resultDate, Some(expiration)))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
-            status(response) should be (503)
+            status(response) should be(503)
           }
         }
       }
@@ -94,7 +102,7 @@ import scala.util.Random
         "200" in {
           val mockResults = List(mockResult(200), mockResult(200))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
-            status(response) should be (200)
+            status(response) should be(200)
           }
         }
       }
@@ -103,7 +111,7 @@ import scala.util.Random
           val resultDate = DateTime.now.minus(scala.util.Random.nextLong) // random date in the past
           val mockResults = List(mockResult(200, resultDate, None))
           getHealthCheck(mockResults, HealthCheckPolicy.All) { response =>
-            status(response) should be (200)
+            status(response) should be(200)
           }
         }
       }
@@ -147,7 +155,11 @@ import scala.util.Random
       "precondition is NOT fulfilled" should {
         "503" in {
           val alwaysFailingPrecondition = HealthCheckPrecondition(() => false, "does not matter")
-          getHealthCheck(List(mockResult(200), mockResult(200)), HealthCheckPolicy.All, Some(alwaysFailingPrecondition)) { response =>
+          getHealthCheck(
+            List(mockResult(200), mockResult(200)),
+            HealthCheckPolicy.All,
+            Some(alwaysFailingPrecondition),
+          ) { response =>
             status(response) should be(503)
           }
         }

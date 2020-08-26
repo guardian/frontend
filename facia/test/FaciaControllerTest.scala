@@ -18,16 +18,18 @@ import org.scalatest.mockito.MockitoSugar
 import scala.concurrent.duration._
 import scala.concurrent.Await
 
-@DoNotDiscover class FaciaControllerTest extends FlatSpec with FaciaTestData
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with FakeRequests
-  with BeforeAndAfterEach
-  with WithMaterializer
-  with WithTestApplicationContext
-  with WithTestWsClient
-  with MockitoSugar {
+@DoNotDiscover class FaciaControllerTest
+    extends FlatSpec
+    with FaciaTestData
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with FakeRequests
+    with BeforeAndAfterEach
+    with WithMaterializer
+    with WithTestApplicationContext
+    with WithTestWsClient
+    with MockitoSugar {
 
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
@@ -43,8 +45,15 @@ import scala.concurrent.Await
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> frontJson, "inline-embeds" -> frontJson, "uk" -> frontJson, "au/media" -> frontJson, "email/uk/daily" -> frontJson),
-        collections = Map.empty)
+        fronts = Map(
+          "music" -> frontJson,
+          "inline-embeds" -> frontJson,
+          "uk" -> frontJson,
+          "au/media" -> frontJson,
+          "email/uk/daily" -> frontJson,
+        ),
+        collections = Map.empty,
+      ),
     )
     conf.switches.Switches.FaciaInlineEmbeds.switchOn()
     Await.result(refresh, 3.seconds)
@@ -53,7 +62,7 @@ import scala.concurrent.Await
   it should "serve an X-Accel-Redirect for something it doesn't know about" in {
     val result = faciaController.renderFront("does-not-exist")(TestRequest()) //Film is actually a facia front ON PROD
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist"))
+    header("X-Accel-Redirect", result) should be(Some("/applications/does-not-exist"))
   }
 
   it should "serve an X-Accel-Redirect for /rss that it doesn't know about" in {
@@ -61,7 +70,7 @@ import scala.concurrent.Await
 
     val result = faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss"))
+    header("X-Accel-Redirect", result) should be(Some("/rss_server/does-not-exist/rss"))
   }
 
   it should "keep query params for X-Accel-Redirect" in {
@@ -69,7 +78,7 @@ import scala.concurrent.Await
 
     val result = faciaController.renderFront("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/does-not-exist?page=77"))
+    header("X-Accel-Redirect", result) should be(Some("/applications/does-not-exist?page=77"))
   }
 
   it should "keep query params for X-Accel-Redirect with RSS" in {
@@ -77,14 +86,14 @@ import scala.concurrent.Await
 
     val result = faciaController.renderFrontRss("does-not-exist")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/rss_server/does-not-exist/rss?page=77"))
+    header("X-Accel-Redirect", result) should be(Some("/rss_server/does-not-exist/rss?page=77"))
   }
 
   it should "not serve X-Accel for a path facia serves" in {
     val fakeRequest = FakeRequest("GET", "/music")
 
     val result = faciaController.renderFront("music")(fakeRequest)
-    header("X-Accel-Redirect", result) should be (None)
+    header("X-Accel-Redirect", result) should be(None)
   }
 
   it should "redirect to applications when 'page' query param" in {
@@ -92,64 +101,64 @@ import scala.concurrent.Await
 
     val result = faciaController.renderFront("music")(fakeRequest)
     status(result) should be(200)
-    header("X-Accel-Redirect", result) should be (Some("/applications/music?page=77"))
+    header("X-Accel-Redirect", result) should be(Some("/applications/music?page=77"))
   }
 
   it should "not redirect to applications when any other query param" in {
     val fakeRequest = FakeRequest("GET", "/music?id=77")
 
     val result = faciaController.renderFront("music")(fakeRequest)
-    header("X-Accel-Redirect", result) should be (None)
+    header("X-Accel-Redirect", result) should be(None)
   }
 
   it should "redirect to editionalised fronts" in {
     val ukRequest = FakeRequest("GET", "/").from(Uk)
     val ukResult = faciaController.renderFront("")(ukRequest)
-    header("Location", ukResult).head should endWith ("/uk")
+    header("Location", ukResult).head should endWith("/uk")
 
     val usRequest = FakeRequest("GET", "/").from(Us)
     val usResult = faciaController.renderFront("")(usRequest)
-    header("Location", usResult).head should endWith ("/us")
+    header("Location", usResult).head should endWith("/us")
   }
 
   it should "redirect to editionalised pages" in {
     val ukRequest = FakeRequest("GET", "/technology").from(Uk)
     val ukResult = faciaController.renderFront("technology")(ukRequest)
-    header("Location", ukResult).head should endWith ("/uk/technology")
+    header("Location", ukResult).head should endWith("/uk/technology")
 
     val usRequest = FakeRequest("GET", "/technology").from(Us)
     val usResult = faciaController.renderFront("technology")(usRequest)
-    header("Location", usResult).head should endWith ("/us/technology")
+    header("Location", usResult).head should endWith("/us/technology")
   }
 
   it should "understand the international edition" in {
 
-
     val international = FakeRequest("GET", "/").withHeaders("X-GU-Edition" -> "INT")
     val redirectToInternational = faciaController.renderFront("")(international)
-    header("Location", redirectToInternational).head should endWith ("/international")
+    header("Location", redirectToInternational).head should endWith("/international")
   }
 
   it should "obey when the international edition is set by cookie" in {
 
     val control = FakeRequest("GET", "/").withHeaders(
       "X-GU-Edition" -> "INT",
-      "X-GU-Edition-From-Cookie" -> "true"
+      "X-GU-Edition-From-Cookie" -> "true",
     )
     val redirectToUk = faciaController.renderFront("")(control)
-    header("Location", redirectToUk).head should endWith ("/international")
+    header("Location", redirectToUk).head should endWith("/international")
   }
 
   it should "send international traffic ot the UK version of editionalised sections" in {
-    val international = FakeRequest("GET", "/commentisfree").withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
+    val international = FakeRequest("GET", "/commentisfree")
+      .withHeaders("X-GU-Edition" -> "INTL", "X-GU-International" -> "international")
     val redirectToInternational = faciaController.renderFront("commentisfree")(international)
-    header("Location", redirectToInternational).head should endWith ("/uk/commentisfree")
+    header("Location", redirectToInternational).head should endWith("/uk/commentisfree")
   }
 
   it should "list the alterative options for a path by section and edition" in {
-    faciaController.alternativeEndpoints("uk/lifeandstyle") should be (List("lifeandstyle", "uk"))
-    faciaController.alternativeEndpoints("uk") should be (List("uk"))
-    faciaController.alternativeEndpoints("uk/business/stock-markets") should be (List("business", "uk"))
+    faciaController.alternativeEndpoints("uk/lifeandstyle") should be(List("lifeandstyle", "uk"))
+    faciaController.alternativeEndpoints("uk") should be(List("uk"))
+    faciaController.alternativeEndpoints("uk/business/stock-markets") should be(List("business", "uk"))
   }
 
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
@@ -193,9 +202,9 @@ import scala.concurrent.Await
     val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
     status(emailJsonResponse) shouldBe 200
     val jsonResponse = contentAsJson(emailJsonResponse)
-    val (key, html) = jsonResponse.as[Map[String,String]].head
+    val (key, html) = jsonResponse.as[Map[String, String]].head
     key shouldBe "body"
-    html should include ("<!DOCTYPE html")
+    html should include("<!DOCTYPE html")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=60")
   }
@@ -205,10 +214,10 @@ import scala.concurrent.Await
     val emailJsonResponse = faciaController.renderFront("email/uk/daily")(emailRequest)
     status(emailJsonResponse) shouldBe 200
     val jsonResponse = contentAsJson(emailJsonResponse)
-    val (key, text) = jsonResponse.as[Map[String,String]].head
+    val (key, text) = jsonResponse.as[Map[String, String]].head
     key shouldBe "body"
     text should not include "<!DOCTYPE html"
-    text should include ("The Guardian Today | The Guardian")
+    text should include("The Guardian Today | The Guardian")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=60")
   }
@@ -219,7 +228,7 @@ import scala.concurrent.Await
     status(emailJsonResponse) shouldBe 200
     assertThrows[JsonParseException](contentAsJson(emailJsonResponse))
     contentAsString(emailJsonResponse)
-    contentAsString(emailJsonResponse) should include ("<!DOCTYPE html")
+    contentAsString(emailJsonResponse) should include("<!DOCTYPE html")
     val responseHeaders = headers(emailJsonResponse)
     responseHeaders("Surrogate-Control") should include("max-age=900")
   }

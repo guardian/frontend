@@ -42,6 +42,10 @@ jest.mock('common/modules/ui/cmp-ui', () => ({
     get: jest.fn(() => undefined),
 }));
 
+jest.mock('@guardian/consent-management-platform', () => ({
+    get: jest.fn(() => undefined),
+}));
+
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => ''),
 }));

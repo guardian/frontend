@@ -16,25 +16,36 @@ trait HtmlPage[P <: model.Page] {
 object HtmlPageHelpers {
 
   implicit class WhenOps(private val html: Html) extends AnyVal {
-    def when(condition: => Boolean): Html = if(condition) html else Html("")
+    def when(condition: => Boolean): Html = if (condition) html else Html("")
   }
 
-  def guardianHeaderHtml()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def guardianHeaderHtml()(implicit
+      page: model.Page,
+      request: RequestHeader,
+      applicationContext: ApplicationContext,
+  ): Html = {
     val showTop = !page.metadata.shouldHideHeaderAndTopAds
-    val showAds = Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial.isAdFree(request)
+    val showAds =
+      Commercial.shouldShowAds(page) && !model.Page.getContent(page).exists(_.tags.isTheMinuteArticle) && !Commercial
+        .isAdFree(request)
     val headerContent: Html = stacked(
       commercial.topBanner() when showTop && showAds,
-      header() when showTop
+      header() when showTop,
     )
     bannerAndHeaderDiv(headerContent)
   }
 
-  def defaultBodyClasses()(implicit page: model.Page, request: RequestHeader, applicationContext: ApplicationContext): Map[String, Boolean] = {
+  def defaultBodyClasses()(implicit
+      page: model.Page,
+      request: RequestHeader,
+      applicationContext: ApplicationContext,
+  ): Map[String, Boolean] = {
     val edition = Edition(request)
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
-      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"))
+      ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
+    )
   }
 
   def FaciaCSSFile(implicit request: RequestHeader): String = "facia.garnett"

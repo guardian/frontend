@@ -20,15 +20,16 @@ import views.html.stacked
 
 object NewsletterHtmlPage extends HtmlPage[SimplePage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(SignUpCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("signup"))))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink(SignUpCSSFile)
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("signup"))))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def html(page: SimplePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: SimplePage = page
@@ -41,7 +42,7 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         styles(allStyles),
         fixIEReferenceErrors(),
         checkModuleSupport(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -53,9 +54,9 @@ object NewsletterHtmlPage extends HtmlPage[SimplePage] {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 

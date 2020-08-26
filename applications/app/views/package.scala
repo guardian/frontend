@@ -12,7 +12,7 @@ object InteractiveBodyCleaner {
   def apply(interactive: Interactive)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val html = interactive.fields.body
     val cleaners = List(
-      AtomsCleaner(interactive.content.atoms, shouldFence = false)
+      AtomsCleaner(interactive.content.atoms, shouldFence = false),
     ) ++ (if (interactive.content.isImmersive) List(InteractiveSrcdocCleaner) else Nil)
 
     withJsoup(html)(cleaners: _*)
@@ -20,17 +20,24 @@ object InteractiveBodyCleaner {
 }
 
 object IndexCleaner {
- def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(page: IndexPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(isPaidContent = false, isNetworkFront = false, hasPageSkin = page.page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts()
+      CommercialComponentHigh(
+        isPaidContent = false,
+        isNetworkFront = false,
+        hasPageSkin = page.page.metadata.hasPageSkin(edition),
+      ),
+      CommercialMPUForFronts(),
     )
   }
 }
 
 object GalleryCaptionCleaners {
-  def apply(page: GalleryPage, caption: String, isFirstRow: Boolean)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(page: GalleryPage, caption: String, isFirstRow: Boolean)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Html = {
     val cleaners = List(
       GalleryCaptionCleaner,
       AffiliateLinksCleaner(
@@ -40,9 +47,13 @@ object GalleryCaptionCleaners {
         "gallery",
         appendDisclaimer = Some(isFirstRow && page.item.lightbox.containsAffiliateableLinks),
         tags = page.gallery.content.tags.tags.map(_.id),
-        page.gallery.content.fields.firstPublicationDate))
+        page.gallery.content.fields.firstPublicationDate,
+      ),
+    )
 
-    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) { case (html, cleaner) => cleaner.clean(html) }
+    val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(caption)) {
+      case (html, cleaner) => cleaner.clean(html)
+    }
     cleanedHtml.outputSettings().prettyPrint(false)
     Html(cleanedHtml.body.html)
   }

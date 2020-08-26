@@ -4,8 +4,8 @@ import views.support.CutOut
 import scala.Function._
 
 case class ContainerLayoutContext(
-  cutOutsSeen: Set[CutOut],
-  hideCutOuts: Boolean
+    cutOutsSeen: Set[CutOut],
+    hideCutOuts: Boolean,
 ) {
   def addCutOuts(cutOut: Set[CutOut]): ContainerLayoutContext = copy(cutOutsSeen = cutOutsSeen ++ cutOut)
 
@@ -28,7 +28,7 @@ case class ContainerLayoutContext(
   }
 
   private val transforms = Seq(
-    dedupCutOut _
+    dedupCutOut _,
   ).reduce(_ compose _)
 
   def transform(card: FaciaCardAndIndex): (FaciaCardAndIndex, ContainerLayoutContext) = {

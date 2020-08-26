@@ -22,8 +22,8 @@ import layout.slices.ContainerDefinition
 import scala.collection.JavaConverters._
 
 /**
- * Encapsulates previous and next urls
- */
+  * Encapsulates previous and next urls
+  */
 case class PreviousAndNext(prev: Option[String], next: Option[String]) {
   val isDefined: Boolean = prev.isDefined || next.isDefined
 }
@@ -54,9 +54,9 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
   lazy val isEven = rowNum % 2 == 0
   lazy val isOdd = !isEven
   lazy val rowClass = rowNum match {
-    case 1 => s"first ${_rowClass}"
+    case 1           => s"first ${_rowClass}"
     case _ if isLast => s"last ${_rowClass}"
-    case _ => _rowClass
+    case _           => _rowClass
   }
   private lazy val _rowClass = if (isEven) "even" else "odd"
 
@@ -71,23 +71,24 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
 // (results in spaces after author names before commas)
 // so don't add any, fool.
 object ContributorLinks {
-  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html = Html {
-    tags.foldLeft(text) {
-      case (t, tag) =>
-        t.replaceFirst(tag.name,
-        s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html =
+    Html {
+      tags.foldLeft(text) {
+        case (t, tag) =>
+          t.replaceFirst(
+            tag.name,
+            s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
            |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
-           |    href="${LinkTo("/"+tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin)
+           |    href="${LinkTo("/" + tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin,
+          )
+      }
     }
-  }
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
 object `package` {
 
-  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body) {
-    cleaners: _*
-  }
+  def withJsoup(html: Html)(cleaners: HtmlCleaner*): Html = withJsoup(html.body)(cleaners: _*)
 
   def withJsoup(html: String)(cleaners: HtmlCleaner*): Html = {
     val cleanedHtml = cleaners.foldLeft(Jsoup.parseBodyFragment(html)) { case (html, cleaner) => cleaner.clean(html) }
@@ -109,26 +110,30 @@ object `package` {
   }
 
   implicit class Seq2zipWithRowInfo[A](seq: Seq[A]) {
-    def zipWithRowInfo: Seq[(A, RowInfo)] = seq.zipWithIndex.map {
-      case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
-    }
+    def zipWithRowInfo: Seq[(A, RowInfo)] =
+      seq.zipWithIndex.map {
+        case (item, index) => (item, RowInfo(index + 1, seq.length == index + 1))
+      }
   }
 }
 
 object GuDateFormatLegacy {
-  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
+  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
+      request: RequestHeader,
+  ): String = {
     apply(date, Edition(request), pattern, tzOverride)
   }
 
   def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
     val timeZone = tzOverride match {
       case Some(tz) => tz
-      case _ => edition.timezone
+      case _        => edition.timezone
     }
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
   }
 
-  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)
+  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String =
+    this(date.toDateTimeAtStartOfDay, pattern)(request)
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
@@ -143,12 +148,12 @@ object StripHtmlTags {
   def apply(html: String): String = Jsoup.clean(html, "", Whitelist.none())
 }
 
-object StripHtmlTagsAndUnescapeEntities{
-  def apply(html: String) : String = {
+object StripHtmlTagsAndUnescapeEntities {
+  def apply(html: String): String = {
     val doc = new Cleaner(Whitelist.none()).clean(Jsoup.parse(html))
     val stripped = doc.body.html
     val unescaped = StringEscapeUtils.unescapeHtml(stripped)
-    unescaped.replace("\"","&#34;")   //double quotes will break HTML attributes
+    unescaped.replace("\"", "&#34;") //double quotes will break HTML attributes
   }
 }
 
@@ -166,29 +171,40 @@ object TableEmbedComplimentaryToP extends HtmlCleaner {
 object RenderOtherStatus {
   def gonePage(implicit request: RequestHeader): SimplePage = {
     val canonicalUrl: Option[String] = Some(s"/${request.path.drop(1).split("/").head}")
-    SimplePage(MetaData.make(
-      id = request.path,
-      section = Some(SectionId.fromId("news")),
-      webTitle = "This page has been removed",
-      canonicalUrl,
-      contentType = Some(model.DotcomContentType.Unknown)
-    ))
+    SimplePage(
+      MetaData.make(
+        id = request.path,
+        section = Some(SectionId.fromId("news")),
+        webTitle = "This page has been removed",
+        canonicalUrl,
+        contentType = Some(model.DotcomContentType.Unknown),
+      ),
+    )
   }
 
-  def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext): Result = result.header.status match {
-    case 404 => NoCache(NotFound)
-    case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
-    case 410 => Cached(60)(WithoutRevalidationResult(Gone(views.html.gone(
-      gonePage,
-      "Sorry - this page has been removed.",
-      "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content."))))
-    case _ => result
-  }
+  def apply(result: Result)(implicit request: RequestHeader, context: ApplicationContext): Result =
+    result.header.status match {
+      case 404                   => NoCache(NotFound)
+      case 410 if request.isJson => Cached(60)(JsonComponent(gonePage, "status" -> "GONE"))
+      case 410 =>
+        Cached(60)(
+          WithoutRevalidationResult(
+            Gone(
+              views.html.gone(
+                gonePage,
+                "Sorry - this page has been removed.",
+                "This could be, for example, because content associated with it is not yet published, or due to legal reasons such as the expiry of our rights to publish the content.",
+              ),
+            ),
+          ),
+        )
+      case _ => result
+    }
 }
 
 object RenderClasses {
   def apply(classes: Map[String, Boolean], extraClasses: String*): String =
-    apply((classes.filter(_._2).keys ++ extraClasses).toSeq:_*)
+    apply((classes.filter(_._2).keys ++ extraClasses).toSeq: _*)
 
   def apply(classes: String*): String = classes.filter(_.nonEmpty).sorted.distinct.mkString(" ")
 }
@@ -198,5 +214,5 @@ object SnapData {
 
   private def generateDataAttributes(faciaContent: PressedContent): Iterable[String] =
     faciaContent.properties.embedType.filter(_.nonEmpty).map(t => s"data-snap-type=$t") ++
-    faciaContent.properties.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
+      faciaContent.properties.embedUri.filter(_.nonEmpty).map(t => s"data-snap-uri=$t")
 }

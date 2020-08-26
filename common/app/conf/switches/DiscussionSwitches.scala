@@ -10,7 +10,7 @@ trait DiscussionSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val DiscussionAllowAnonymousRecommendsSwitch = Switch(
@@ -20,7 +20,7 @@ trait DiscussionSwitches {
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val DiscussionFetchExternalAssets = Switch(
@@ -30,7 +30,7 @@ trait DiscussionSwitches {
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val RegisterWithPhoneNumber = Switch(
@@ -40,7 +40,7 @@ trait DiscussionSwitches {
     owners = Seq(Owner.withGithub("NathanielBennett")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val EnableDiscussionSwitch = Switch(
@@ -50,7 +50,7 @@ trait DiscussionSwitches {
     owners = Seq(Owner.withGithub("Calum-Campbell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
 }

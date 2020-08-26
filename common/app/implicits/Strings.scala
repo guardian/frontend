@@ -10,8 +10,12 @@ trait Strings {
   def nullsafeString[A](a: A): String = Option(a) map { _.toString } getOrElse ""
 
   implicit class String2ToOptions(s: String) {
-    lazy val toIntOption: Option[Int] = try { Some(s.toInt) } catch { case _: Throwable => None }
-    lazy val toBooleanOption: Option[Boolean] = try { Some(s.toBoolean) } catch { case _: Throwable => None }
+    lazy val toIntOption: Option[Int] =
+      try { Some(s.toInt) }
+      catch { case _: Throwable => None }
+    lazy val toBooleanOption: Option[Boolean] =
+      try { Some(s.toBoolean) }
+      catch { case _: Throwable => None }
   }
 
   implicit class String2Dequote(s: String) {
@@ -30,7 +34,8 @@ trait Strings {
       // This can be used to encode parts of a URI, eg. "example-component/uk?parameter=unsafe-chars-such-as ://+ must-be-encoded#fragment"
       // The fragment part is optional.
       // Use encodeURI below for full URI strings like "http://theguardian.com/path with spaces".
-      URLEncoder.encode(s, "UTF-8")
+      URLEncoder
+        .encode(s, "UTF-8")
         .replaceAll("\\+", "%20")
         .replaceAll("\\%21", "!")
         .replaceAll("\\%27", "'")
@@ -58,7 +63,8 @@ trait Strings {
   implicit class String2Uri(uri: String) {
     def appendQueryParams(queryParams: Map[String, String]): String = {
       queryParams.foldLeft(uri)((currentUri, queryParam) => {
-        javax.ws.rs.core.UriBuilder.fromUri(currentUri)
+        javax.ws.rs.core.UriBuilder
+          .fromUri(currentUri)
           .queryParam(queryParam._1, queryParam._2.urlEncoded)
           .build()
           .toString()
@@ -66,7 +72,8 @@ trait Strings {
     }
 
     def addFragment(fragment: String): String = {
-      javax.ws.rs.core.UriBuilder.fromUri(uri)
+      javax.ws.rs.core.UriBuilder
+        .fromUri(uri)
         .fragment(fragment)
         .build()
         .toString()

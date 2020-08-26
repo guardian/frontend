@@ -13,18 +13,17 @@ import play.api._
 import play.api.http.HttpConfiguration
 import play.api.test.Helpers._
 
-
 /**
- * Executes a block of code in a FakeApplication.
- */
+  * Executes a block of code in a FakeApplication.
+  */
 trait FakeApp {
   def app: Application = {
     val environment = Environment(new File("."), this.getClass.getClassLoader, Mode.Test)
     val context = ApplicationLoader.createContext(
       environment = environment,
       initialSettings = Map(
-        "application.secret" -> "this_is_not_a_real_secret_just_for_tests"
-      )
+        "application.secret" -> "this_is_not_a_real_secret_just_for_tests",
+      ),
     )
     ApplicationLoader.apply(context).load(context)
   }
@@ -34,11 +33,13 @@ trait FakeApp {
 
 object Fake extends FakeApp
 
-class IdentityTestSuite extends Suites(
-  new EditProfileControllerTest,
-  new StrictTransportSecurityHeaderFilterTest,
-  new ConsentsJourneyControllerTest
-) with SingleServerSuite {
+class IdentityTestSuite
+    extends Suites(
+      new EditProfileControllerTest,
+      new StrictTransportSecurityHeaderFilterTest,
+      new ConsentsJourneyControllerTest,
+    )
+    with SingleServerSuite {
   override lazy val port: Int = 19010
 }
 

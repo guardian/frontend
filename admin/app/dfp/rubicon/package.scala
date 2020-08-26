@@ -22,8 +22,8 @@ package object rubicon extends Logging {
     def licaStmtBuilder(lineItemIds: Seq[Long]) = {
       val lineItems = lineItemIds.mkString(",")
       new StatementBuilder()
-      .where(s"status = :status AND lineItemId IN ($lineItems)")
-      .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+        .where(s"status = :status AND lineItemId IN ($lineItems)")
+        .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
     }
 
     def creativeStmtBuilder(creativeIds: Seq[Long]) =

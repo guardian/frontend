@@ -9,7 +9,6 @@ import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-import { init as initCmpService } from 'commercial/modules/cmp/cmp';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
@@ -30,7 +29,6 @@ import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-prepare-cmp', initCmpService],
     ['cm-comscore', initComscore],
 ];
 

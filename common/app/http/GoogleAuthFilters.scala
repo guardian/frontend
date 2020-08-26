@@ -14,23 +14,29 @@ import scala.concurrent.Future
 object GoogleAuthFilters {
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
 
-  class AuthFilterWithExemptions(loginUrl: FilterExemption, exemptions: Seq[FilterExemption])
-                                (implicit val mat: Materializer, context: ApplicationContext, httpConfiguration: HttpConfiguration) extends Filter {
+  class AuthFilterWithExemptions(loginUrl: FilterExemption, exemptions: Seq[FilterExemption])(implicit
+      val mat: Materializer,
+      context: ApplicationContext,
+      httpConfiguration: HttpConfiguration,
+  ) extends Filter {
 
     val authCookie = new AuthCookie(httpConfiguration)
-    private def doNotAuthenticate(request: RequestHeader) = context.environment.mode == Mode.Test ||
-      request.path.startsWith(loginUrl.path) ||
-      exemptions.exists(exemption => request.path.startsWith(exemption.path))
+    private def doNotAuthenticate(request: RequestHeader) =
+      context.environment.mode == Mode.Test ||
+        request.path.startsWith(loginUrl.path) ||
+        exemptions.exists(exemption => request.path.startsWith(exemption.path))
 
-    def apply(nextFilter: (RequestHeader) => Future[Result]) (request: RequestHeader): Future[Result] = {
+    def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
       if (doNotAuthenticate(request)) {
         nextFilter(request)
       } else {
         authCookie.toUserIdentity(request).filter(_.isValid).orElse(UserIdentity.fromRequest(request)) match {
           case Some(identity) if identity.isValid => nextFilter(request)
           case _ =>
-            Future.successful(Redirect(loginUrl.path)
-              .addingToSession((LOGIN_ORIGIN_KEY, request.uri))(request))
+            Future.successful(
+              Redirect(loginUrl.path)
+                .addingToSession((LOGIN_ORIGIN_KEY, request.uri))(request),
+            )
         }
       }
     }

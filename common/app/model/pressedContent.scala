@@ -10,7 +10,21 @@ import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, Col
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
-import model.{CardStylePicker, Commercial, DotcomContentType, Elements, Fields, ImageMedia, MetaData, Pillar, SectionId, SupportedUrl, Tags, Trail, VideoElement}
+import model.{
+  CardStylePicker,
+  Commercial,
+  DotcomContentType,
+  Elements,
+  Fields,
+  ImageMedia,
+  MetaData,
+  Pillar,
+  SectionId,
+  SupportedUrl,
+  Tags,
+  Trail,
+  VideoElement,
+}
 import org.joda.time.DateTime
 
 sealed trait PressedContent {
@@ -35,23 +49,28 @@ sealed trait PressedContent {
 }
 
 object PressedContent {
-  def make(content: fapi.FaciaContent): PressedContent = content match {
-    case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
-    case supportingCuratedContent: fapi.SupportingCuratedContent => SupportingCuratedContent.make(supportingCuratedContent)
-    case linkSnap: fapi.LinkSnap => LinkSnap.make(linkSnap)
-    case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
-  }
+  def make(content: fapi.FaciaContent): PressedContent =
+    content match {
+      case curatedContent: fapi.CuratedContent => CuratedContent.make(curatedContent)
+      case supportingCuratedContent: fapi.SupportingCuratedContent =>
+        SupportingCuratedContent.make(supportingCuratedContent)
+      case linkSnap: fapi.LinkSnap     => LinkSnap.make(linkSnap)
+      case latestSnap: fapi.LatestSnap => LatestSnap.make(latestSnap)
+    }
 }
 
 final case class CuratedContent(
-  override val properties: PressedProperties,
-  override val header: PressedCardHeader,
-  override val card: PressedCard,
-  override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  enriched: Option[EnrichedContent], // This is currently an option, as we introduce the new field. It can then become a value type.
-  supportingContent: List[PressedContent],
-  cardStyle: CardStyle ) extends PressedContent {
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+    enriched: Option[
+      EnrichedContent,
+    ], // This is currently an option, as we introduce the new field. It can then become a value type.
+    supportingContent: List[PressedContent],
+    cardStyle: CardStyle,
+) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 }
@@ -66,18 +85,19 @@ object CuratedContent {
       display = PressedDisplaySettings.make(content),
       supportingContent = content.supportingContent.map(PressedContent.make),
       cardStyle = CardStyle.make(content.cardStyle),
-      enriched = Some(EnrichedContent.empty)
+      enriched = Some(EnrichedContent.empty),
     )
   }
 }
 
 final case class SupportingCuratedContent(
-  override val properties: PressedProperties,
-  override val header: PressedCardHeader,
-  override val card: PressedCard,
-  override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  cardStyle: CardStyle) extends PressedContent {
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+    cardStyle: CardStyle,
+) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 }
 
@@ -89,18 +109,20 @@ object SupportingCuratedContent {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      cardStyle = CardStyle.make(content.cardStyle)
+      cardStyle = CardStyle.make(content.cardStyle),
     )
   }
 }
 
 final case class LinkSnap(
-  override val properties: PressedProperties,
-  override val header: PressedCardHeader,
-  override val card: PressedCard,
-  override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings,
-  enriched: Option[EnrichedContent] // This is currently an option, as we introduce the new field. It can then become a value type.
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+    enriched: Option[
+      EnrichedContent,
+    ], // This is currently an option, as we introduce the new field. It can then become a value type.
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 }
@@ -113,17 +135,18 @@ object LinkSnap {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
-      enriched = Some(EnrichedContent.empty)
+      enriched = Some(EnrichedContent.empty),
     )
   }
 }
 
 final case class LatestSnap(
-  override val properties: PressedProperties,
-  override val header: PressedCardHeader,
-  override val card: PressedCard,
-  override val discussion: PressedDiscussionSettings,
-  override val display: PressedDisplaySettings) extends PressedContent {
+    override val properties: PressedProperties,
+    override val header: PressedCardHeader,
+    override val card: PressedCard,
+    override val discussion: PressedDiscussionSettings,
+    override val display: PressedDisplaySettings,
+) extends PressedContent {
 
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
 }
@@ -135,7 +158,7 @@ object LatestSnap {
       header = PressedCardHeader.make(content),
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
-      display = PressedDisplaySettings.make(content)
+      display = PressedDisplaySettings.make(content),
     )
   }
 }

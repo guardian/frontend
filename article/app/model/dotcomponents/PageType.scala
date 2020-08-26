@@ -6,14 +6,14 @@ import play.api.libs.json.{JsBoolean, Json}
 import play.api.mvc.RequestHeader
 import views.support.JavaScriptPage.getMap
 
-case class PageType (
-  hasShowcaseMainElement: Boolean,
-  isFront: Boolean,
-  isLiveblog: Boolean,
-  isMinuteArticle: Boolean,
-  isPaidContent: Boolean,
-  isPreview: Boolean,
-  isSensitive: Boolean
+case class PageType(
+    hasShowcaseMainElement: Boolean,
+    isFront: Boolean,
+    isLiveblog: Boolean,
+    isMinuteArticle: Boolean,
+    isPaidContent: Boolean,
+    isPreview: Boolean,
+    isSensitive: Boolean,
 )
 
 object PageType {
@@ -27,8 +27,7 @@ object PageType {
       getMap(articlePage, Edition(request), false).getOrElse("isMinuteArticle", JsBoolean(false)).as[Boolean],
       getMap(articlePage, Edition(request), false).getOrElse("isPaidContent", JsBoolean(false)).as[Boolean],
       context.isPreview,
-      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean]
+      getMap(articlePage, Edition(request), false).getOrElse("isSensitive", JsBoolean(false)).as[Boolean],
     )
   }
 }
-

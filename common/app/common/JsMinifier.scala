@@ -116,6 +116,8 @@ object InlineJs {
     }
   }
 
-  def apply(codeToCompile: String, fileName: String = "input.js")(implicit context: model.ApplicationContext): Html = withFileNameHint(codeToCompile, fileName)
-  def apply(codeToCompile: Javascript, fileName: String)(implicit context: model.ApplicationContext): Html = this(codeToCompile.body, fileName)
+  def apply(codeToCompile: String, fileName: String = "input.js")(implicit context: model.ApplicationContext): Html =
+    withFileNameHint(codeToCompile, fileName)
+  def apply(codeToCompile: Javascript, fileName: String)(implicit context: model.ApplicationContext): Html =
+    this(codeToCompile.body, fileName)
 }

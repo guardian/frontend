@@ -13,8 +13,8 @@ object LineItemSupport {
       placeholder <- lineItem.creativePlaceholders
       targeting <- placeholder.targeting
     } yield {
-        for (adUnit <- targeting.adUnitsIncluded) yield mkString(adUnit)
-      }
+      for (adUnit <- targeting.adUnitsIncluded) yield mkString(adUnit)
+    }
     (lineItemAdUnits ++ creativeAdUnits.flatten).sorted.distinct
   }
 }

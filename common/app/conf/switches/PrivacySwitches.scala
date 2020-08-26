@@ -2,7 +2,7 @@ package conf.switches
 
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
-import conf.switches.SwitchGroup.{Privacy,Commercial}
+import conf.switches.SwitchGroup.{Privacy, Commercial}
 
 trait PrivacySwitches {
 
@@ -13,7 +13,7 @@ trait PrivacySwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val TCFv2 = Switch(
@@ -23,7 +23,7 @@ trait PrivacySwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val CCPA = Switch(
@@ -33,6 +33,6 @@ trait PrivacySwitches {
     owners = group(Commercial),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }

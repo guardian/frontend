@@ -21,15 +21,19 @@ object CloudWatchStats extends Logging {
       .build()
   }
 
-  private def sanityData(metric: String)(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
-    val ftr = cloudwatch.getMetricStatisticsFuture(new GetMetricStatisticsRequest()
-      .withStartTime(new DateTime().minusMinutes(15).toDate)
-      .withEndTime(new DateTime().toDate)
-      .withPeriod(900)
-      .withStatistics("Sum")
-      .withNamespace("Diagnostics")
-      .withMetricName(metric)
-      .withDimensions(stage))
+  private def sanityData(
+      metric: String,
+  )(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = {
+    val ftr = cloudwatch.getMetricStatisticsFuture(
+      new GetMetricStatisticsRequest()
+        .withStartTime(new DateTime().minusMinutes(15).toDate)
+        .withEndTime(new DateTime().toDate)
+        .withPeriod(900)
+        .withStatistics("Sum")
+        .withNamespace("Diagnostics")
+        .withMetricName(metric)
+        .withDimensions(stage),
+    )
 
     ftr.failed.foreach { exception: Throwable =>
       log.error(s"CloudWatch GetMetricStatisticsRequest error: ${exception.getMessage}", exception)
@@ -38,7 +42,9 @@ object CloudWatchStats extends Logging {
     ftr
   }
 
-  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-page-views")
+  def rawPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+    sanityData("kpis-page-views")
 
-  def googleAnalyticsPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] = sanityData("kpis-analytics-page-views-google")
+  def googleAnalyticsPageViews()(implicit executionContext: ExecutionContext): Future[GetMetricStatisticsResult] =
+    sanityData("kpis-analytics-page-views-google")
 }

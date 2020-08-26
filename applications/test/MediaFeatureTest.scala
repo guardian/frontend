@@ -25,20 +25,20 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       Given("I am on a video page")
       goTo("/world/video/2008/dec/11/guantanamo-bay") { browser =>
         import browser._
-        el("link[rel='canonical']").attribute("href") should endWith ("/world")
+        el("link[rel='canonical']").attribute("href") should endWith("/world")
       }
     }
 
     scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
-        el(".byline").text should be ("Ben Child and Henry Barnes, theguardian.com")
+        el(".byline").text should be("Ben Child and Henry Barnes, theguardian.com")
       }
     }
 
     scenario("Include non Guardian byline") {
       goTo("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
-        browser.$(".byline").text should be ("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
+        browser.$(".byline").text should be("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
       }
     }
 
@@ -53,7 +53,9 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         media.el("[itemprop=duration]").attribute("content") should be("PT66S")
         media.el("[itemprop=width]").attribute("content") should be("480")
         media.el("[itemprop=height]").attribute("content") should be("360")
-        media.el("[itemprop=headline]").text should be("Qatar Airways flight escorted by RAF jet after bomb hoax - video")
+        media.el("[itemprop=headline]").text should be(
+          "Qatar Airways flight escorted by RAF jet after bomb hoax - video",
+        )
       }
     }
 
@@ -61,7 +63,9 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video") { browser =>
         import browser._
         el("meta[name='twitter:site']").attribute("content") should be("@guardian")
-        el("meta[name='twitter:app:url:googleplay']").attribute("content") should be("guardian://www.theguardian.com/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video")
+        el("meta[name='twitter:app:url:googleplay']").attribute("content") should be(
+          "guardian://www.theguardian.com/world/video/2014/nov/05/easyjet-flight-aborts-landing-last-minute-video",
+        )
         el("meta[name='twitter:card']").attribute("content") should be("summary_large_image")
       }
     }

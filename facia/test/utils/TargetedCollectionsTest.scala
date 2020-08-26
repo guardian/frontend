@@ -12,7 +12,7 @@ class TargetedCollectionsTest extends FlatSpec with FaciaTestData {
   it should "filterCollections" in {
     val pressedPage = internationalFaciaPageWithTargetedTerritories
     val filteredPage = TargetedCollections.filterCollections(pressedPage, List(NZTerritory))
-    filteredPage.collections.length should be (2)
+    filteredPage.collections.length should be(2)
     filteredPage.collections.map(c => c.id) should contain inOrderOnly ("international/nz", "international/normal")
     filteredPage.collections.map(c => c.id) should not contain ("international/eu")
   }
@@ -20,8 +20,10 @@ class TargetedCollectionsTest extends FlatSpec with FaciaTestData {
   it should "correctly mark collections" in {
     val pressedPage = internationalFaciaPageWithTargetedTerritories
     val filteredPage = TargetedCollections.markCollections(pressedPage)
-    filteredPage.collections.length should be (3)
-    filteredPage.collections.map(_.displayName) should contain inOrderOnly ("One (New Zealand only)", "Two (EU-27 Countries only)", "Three")
+    filteredPage.collections.length should be(3)
+    filteredPage.collections.map(
+      _.displayName,
+    ) should contain inOrderOnly ("One (New Zealand only)", "Two (EU-27 Countries only)", "Three")
   }
 
 }

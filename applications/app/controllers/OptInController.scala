@@ -18,32 +18,35 @@ class OptInController(val controllerComponents: ControllerComponents) extends Ba
 
   private val lifetime: Int = 90.days.toSeconds.toInt
 
-  private def opt(feature: String, choice: String): Result = choice match {
-    case "in" => optIn(feature)
-    case "out" => optOut(feature)
-    case "delete" => optDelete(feature)
-  }
+  private def opt(feature: String, choice: String): Result =
+    choice match {
+      case "in"     => optIn(feature)
+      case "out"    => optOut(feature)
+      case "delete" => optDelete(feature)
+    }
   def optIn(cookieName: String): Result = SeeOther("/").withCookies(Cookie(cookieName, "true", maxAge = Some(lifetime)))
   def optOut(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
   def optDelete(cookieName: String): Result = SeeOther("/").discardingCookies(DiscardingCookie(cookieName))
 
-  def reset(): Action[AnyContent] = Action { implicit request =>
-    val discardingCookies = ParticipationGroups.values.map(group => DiscardingCookie(group.headerName))
-    Cached(60)(
-      WithoutRevalidationResult(
-        SeeOther("/").discardingCookies(discardingCookies:_*)
+  def reset(): Action[AnyContent] =
+    Action { implicit request =>
+      val discardingCookies = ParticipationGroups.values.map(group => DiscardingCookie(group.headerName))
+      Cached(60)(
+        WithoutRevalidationResult(
+          SeeOther("/").discardingCookies(discardingCookies: _*),
+        ),
       )
-    )
-  }
+    }
 
-  def handle(feature: String, choice: String): Action[AnyContent] = Action { implicit request =>
-    Cached(60)(
-      WithoutRevalidationResult(
-        experiments.ActiveExperiments.allExperiments
-          .find(_.name == feature)
-          .map(test => opt(test.participationGroup.headerName, choice))
-          .getOrElse(NotFound)
+  def handle(feature: String, choice: String): Action[AnyContent] =
+    Action { implicit request =>
+      Cached(60)(
+        WithoutRevalidationResult(
+          experiments.ActiveExperiments.allExperiments
+            .find(_.name == feature)
+            .map(test => opt(test.participationGroup.headerName, choice))
+            .getOrElse(NotFound),
+        ),
       )
-    )
-  }
+    }
 }

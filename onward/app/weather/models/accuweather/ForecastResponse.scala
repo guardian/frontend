@@ -9,17 +9,17 @@ object Temperature {
 }
 
 case class Temperature(
-                        Value: Double,
-                        Unit: String
-                      )
+    Value: Double,
+    Unit: String,
+)
 
 object ForecastResponse {
   implicit val jsonFormat = Json.format[ForecastResponse]
 }
 
 case class ForecastResponse(
-                             DateTime: String,
-                             WeatherIcon: Int,
-                             IconPhrase: String,
-                             Temperature: Temperature
-                           )
+    DateTime: String,
+    WeatherIcon: Int,
+    IconPhrase: String,
+    Temperature: Temperature,
+)

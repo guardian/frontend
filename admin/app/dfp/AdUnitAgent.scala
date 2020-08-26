@@ -10,43 +10,44 @@ import scala.util.Try
 
 class AdUnitAgent(val blockingOperations: BlockingOperations) extends DataAgent[String, GuAdUnit] {
 
-  override def loadFreshData(): Try[Map[String, GuAdUnit]] = Try {
-    val maybeData = for (session <- SessionWrapper()) yield {
+  override def loadFreshData(): Try[Map[String, GuAdUnit]] =
+    Try {
+      val maybeData = for (session <- SessionWrapper()) yield {
 
-      val statementBuilder = new StatementBuilder()
+        val statementBuilder = new StatementBuilder()
 
-      val dfpAdUnits = session.adUnits(statementBuilder)
+        val dfpAdUnits = session.adUnits(statementBuilder)
 
-      val networkRootId = session.getRootAdUnitId
-      lazy val guardianRootName = Configuration.commercial.dfpAdUnitGuRoot
+        val networkRootId = session.getRootAdUnitId
+        lazy val guardianRootName = Configuration.commercial.dfpAdUnitGuRoot
 
-      val runOfNetwork = dfpAdUnits.find(_.getId == networkRootId).map( networkAdUnit => {
-        val id = networkAdUnit.getId
-        id -> GuAdUnit(
-          id = id,
-          path = Nil,
-          status = networkAdUnit.getStatus.getValue)
-      }).toSeq
+        val runOfNetwork = dfpAdUnits
+          .find(_.getId == networkRootId)
+          .map(networkAdUnit => {
+            val id = networkAdUnit.getId
+            id -> GuAdUnit(id = id, path = Nil, status = networkAdUnit.getStatus.getValue)
+          })
+          .toSeq
 
-      val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
-        Option(adUnit.getParentPath) exists { path =>
-          val isGuRoot = path.length == 1 && adUnit.getName == guardianRootName
-          val isDescendantOfRoot = path.length > 1 && path(1).getName == guardianRootName
-          isGuRoot || isDescendantOfRoot
+        val rootAndDescendantAdUnits = dfpAdUnits filter { adUnit =>
+          Option(adUnit.getParentPath) exists { path =>
+            val isGuRoot = path.length == 1 && adUnit.getName == guardianRootName
+            val isDescendantOfRoot = path.length > 1 && path(1).getName == guardianRootName
+            isGuRoot || isDescendantOfRoot
+          }
         }
+
+        val adUnits = rootAndDescendantAdUnits.map { adUnit =>
+          val id = adUnit.getId
+          val path = toSeq(adUnit.getParentPath).tail.map(_.getName) :+ adUnit.getName
+          id -> GuAdUnit(id, path, adUnit.getStatus.getValue)
+        }
+
+        (adUnits ++ runOfNetwork).toMap
       }
 
-      val adUnits = rootAndDescendantAdUnits.map { adUnit =>
-        val id = adUnit.getId
-        val path = toSeq(adUnit.getParentPath).tail.map(_.getName) :+ adUnit.getName
-        id -> GuAdUnit(id, path, adUnit.getStatus.getValue)
-      }
-
-      (adUnits ++ runOfNetwork).toMap
+      maybeData getOrElse Map.empty
     }
-
-    maybeData getOrElse Map.empty
-  }
 
 }
 

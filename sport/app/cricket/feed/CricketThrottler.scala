@@ -20,17 +20,17 @@ class CricketThrottlerActor()(implicit materializer: Materializer) extends Actor
 
   private case class TaskWithSender[+T](sender: ActorRef, task: () => Future[T])
 
-  val throttler: ActorRef = Source.actorRef[CricketThrottledTask[Nothing]](bufferSize = 1024, OverflowStrategy.dropNew)
+  val throttler: ActorRef = Source
+    .actorRef[CricketThrottledTask[Nothing]](bufferSize = 1024, OverflowStrategy.dropNew)
     .throttle(1, 500.millisecond, 1, ThrottleMode.Shaping)
     .to(Sink.actorRef(self, NotUsed))
     .run()
 
   override def receive: PartialFunction[Any, Unit] = {
     case toBeThrottled: CricketThrottledTask[Any] => throttler ! TaskWithSender(sender, toBeThrottled.task)
-    case throttled: TaskWithSender[Any] => throttled.task() pipeTo throttled.sender
+    case throttled: TaskWithSender[Any]           => throttled.task() pipeTo throttled.sender
   }
 }
-
 
 class CricketThrottler(actorSystem: ActorSystem, materializer: Materializer) {
   private val cricketThrottlerActor: ActorRef = actorSystem.actorOf(Props(new CricketThrottlerActor()(materializer)))
