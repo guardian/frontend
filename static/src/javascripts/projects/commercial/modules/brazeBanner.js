@@ -24,7 +24,7 @@ const getBrazeUuid = (): Promise<?string> =>
         })
     });
 
-const hasRequiredConsents = (): Promise<void> =>
+const hasRequiredConsents = (): Promise<boolean> =>
     new Promise((resolve) => {
         onConsentChange(({ tcfv2, ccpa }) => {
             const consentGivenUnderCcpa = ccpa && !ccpa.doNotSell;
