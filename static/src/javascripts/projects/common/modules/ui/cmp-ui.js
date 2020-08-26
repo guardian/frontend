@@ -43,7 +43,7 @@ export const addPrivacySettingsLink = (): void => {
     }
 };
 
-export const consentManagementPlatformUi: Banner = {
+export const cmpBannerCandidate: Banner = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);

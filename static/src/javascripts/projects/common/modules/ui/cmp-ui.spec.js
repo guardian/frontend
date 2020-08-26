@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
-import { consentManagementPlatformUi } from './cmp-ui';
+import { cmpBannerCandidate as consentManagementPlatformUi } from './cmp-ui';
 
 jest.mock('lib/raven');
 
