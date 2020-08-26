@@ -12,7 +12,7 @@ import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
-import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement}
+import model.dotcomrendering.pageElements.{Cleaners, DisclaimerBlockElement, PageElement}
 import model.{
   Article,
   ArticleDateTimes,
@@ -462,7 +462,10 @@ object DotcomponentsDataModel {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
   ): List[PageElement] = {
+
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
+    val edition = Edition.apply(request)
+
     val elems = capiElems.toList
       .flatMap(el =>
         PageElement.make(
@@ -477,7 +480,9 @@ object DotcomponentsDataModel {
         ),
       )
       .filter(PageElement.isSupported)
-    addDisclaimer(elems, capiElems, affiliateLinks)
+
+    val withTagLinks = Cleaners.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
+    addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 
   private def toBlock(
