@@ -695,6 +695,10 @@ object PageElement {
   }
 
   private def extractChartEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+    // comment id: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
+    // This only returns an EmbedBlockELement if referring to a charts-datawrapper
+    // This is to solve a data integrity problem we observed with Audio elements.
+    // If the problem turns out to be deeper we could abstract it idea further.
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper")
@@ -732,6 +736,7 @@ object PageElement {
     audioToPageElement(element: ApiBlockElement) match {
       case Some(_: SoundcloudBlockElement) => true
       case Some(_: SpotifyBlockElement)    => true
+      case Some(_: EmbedBlockElement)      => true
       case _                               => false
     }
   }
@@ -742,6 +747,8 @@ object PageElement {
       html <- d.html
       mandatory = true
     } yield {
+      // Note that extractChartEmbedBlockElement only returns an EmbedBlockElement in the case of an audio incorrectly
+      // carrying a chart iframe. See comment: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         extractSpotifyBlockElement(element).getOrElse {
           extractChartEmbedBlockElement(html).getOrElse {
