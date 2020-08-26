@@ -48,8 +48,6 @@ export const consentManagementPlatformUi = {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
         return Promise.resolve(cmp.willShowPrivacyMessage());
     },
-    show: (): Promise<boolean> => {
-        cmp.showPrivacyManager();
-        return Promise.resolve(true);
-    },
+    // Remote banner is injected first: show() always resolves to `true`
+    show: (): Promise<boolean> => Promise.resolve(true),
 };
