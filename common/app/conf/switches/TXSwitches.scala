@@ -10,6 +10,6 @@ trait TXSwitches {
     owners = Owner.group(SwitchGroup.TX),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 }
