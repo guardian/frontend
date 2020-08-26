@@ -81,7 +81,15 @@ case class CalloutBlockElement(
     tagName: String,
     formFields: List[CalloutFormField],
 ) extends PageElement
-case class ChartAtomBlockElement(id: String, url: String) extends PageElement
+
+// The extension of the ChartAtomBlockElement, is experimental. Three fields have been added,
+// html: String, css: Option[String], js: Option[String], but it looks like, the html string we get from CAPI,
+// contains all the css and js required to display the atom.
+// Note tha The CAPI answer also gives structured data, so maybe one day we could try and use that instead of
+// precompiled html.
+case class ChartAtomBlockElement(id: String, url: String, html: String, css: Option[String], js: Option[String]) extends PageElement
+
+
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
 case class CommentBlockElement(
     body: String,
@@ -504,6 +512,9 @@ object PageElement {
               ChartAtomBlockElement(
                 id = chart.id,
                 url = s"${Configuration.ajax.url}/embed/atom/chart/$encodedId",
+                html = chart.html, // This is atom.defaultHtml
+                css = None, // hardcoded to None during experimental period
+                js = None   // hardcoded to None during experimental period
               ),
             )
           }
