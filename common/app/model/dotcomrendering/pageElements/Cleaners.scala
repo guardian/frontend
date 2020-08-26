@@ -64,7 +64,7 @@ object TagLinker {
 
     if (showInRelated && !containsLink) {
       val keywords =
-        tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).filterNot(tag => terms.contains(tag.name))
+        tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.filterNot(tag => terms.contains(tag.name))
       val keyword = keywords.find(tag => el.html.contains(tag.name))
 
       keyword.map(tag => {
