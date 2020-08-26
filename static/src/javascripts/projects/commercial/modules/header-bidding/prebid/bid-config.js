@@ -59,7 +59,7 @@ import {
 } from '../utils';
 import { getAppNexusDirectBidParams } from './appnexus';
 
-//The below line is needed for page skins to show
+// The below line is needed for page skins to show
 getPageTargeting();
 
 const isInSafeframeTestVariant = (): boolean =>
