@@ -26,12 +26,12 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 }
 
 trait FrontendComponents
-  extends LifecycleComponents
-  with HttpFiltersComponent
-  with BuiltInComponents
-  with AhcWSComponents
-  with CSRFComponents
-  with AssetsComponents {
+    extends LifecycleComponents
+    with HttpFiltersComponent
+    with BuiltInComponents
+    with AhcWSComponents
+    with CSRFComponents
+    with AssetsComponents {
   self: BuiltInComponents =>
 
   lazy val prefix = "/"

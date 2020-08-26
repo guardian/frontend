@@ -2,7 +2,8 @@ package commercial.model.merchandise.events
 
 object Fixtures {
 
-  val json = """{ "background_color" : "FFFFFF",
+  val json =
+    """{ "background_color" : "FFFFFF",
                |  "box_background_color" : "FFFFFF",
                |  "box_border_color" : "D5D5D3",
                |  "box_header_background_color" : "EFEFEF",
@@ -73,8 +74,8 @@ object Fixtures {
                |  }
                |}""".stripMargin('|')
 
-
-  val jsonWith2Tickets = """{ "background_color" : "FFFFFF",
+  val jsonWith2Tickets =
+    """{ "background_color" : "FFFFFF",
                            |  "box_background_color" : "FFFFFF",
                            |  "box_border_color" : "D5D5D3",
                            |  "box_header_background_color" : "EFEFEF",
@@ -157,7 +158,8 @@ object Fixtures {
                            |    }
                            |}""".stripMargin('|')
 
-  val jsonWithNoLink = """{ "background_color" : "FFFFFF",
+  val jsonWithNoLink =
+    """{ "background_color" : "FFFFFF",
                          |  "box_background_color" : "FFFFFF",
                          |  "box_border_color" : "D5D5D3",
                          |  "box_header_background_color" : "EFEFEF",
@@ -234,7 +236,8 @@ object Fixtures {
                          |    }
                          |}""".stripMargin('|')
 
-  val jsonWithInvisiblePrice = """{ "background_color" : "FFFFFF",
+  val jsonWithInvisiblePrice =
+    """{ "background_color" : "FFFFFF",
                                  |  "box_background_color" : "FFFFFF",
                                  |  "box_border_color" : "D5D5D3",
                                  |  "box_header_background_color" : "EFEFEF",
@@ -317,6 +320,6 @@ object Fixtures {
                                  |    }
                                  |}""".stripMargin
 
-
-  lazy val rawEventBriteFeed =   scala.io.Source.fromFile("commercial/test/model/events/masterclasses_full_page.json").getLines.mkString
-  }
+  lazy val rawEventBriteFeed =
+    scala.io.Source.fromFile("commercial/test/model/events/masterclasses_full_page.json").getLines.mkString
+}

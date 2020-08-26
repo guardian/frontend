@@ -8,19 +8,19 @@ import org.joda.time.format.DateTimeFormat
 import play.api.mvc.RequestHeader
 
 case class ArticleDateTimes(
-  webPublicationDate: DateTime,
-  firstPublicationDate: Option[DateTime],
-  hasBeenModified: Boolean,
-  lastModificationDate: DateTime
+    webPublicationDate: DateTime,
+    firstPublicationDate: Option[DateTime],
+    hasBeenModified: Boolean,
+    lastModificationDate: DateTime,
 )
 
 case class DisplayedDateTimesDCR(
-  firstPublished: Long,
-  firstPublishedDisplay: String,
-  lastUpdated: Long,
-  lastUpdatedDisplay: String,
-  primaryDateLine: String,
-  secondaryDateLine: String
+    firstPublished: Long,
+    firstPublishedDisplay: String,
+    lastUpdated: Long,
+    lastUpdatedDisplay: String,
+    primaryDateLine: String,
+    secondaryDateLine: String,
 )
 
 object ArticleDateTimes {
@@ -37,10 +37,19 @@ object ArticleDateTimes {
     val primaryDateLine = GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.webPublicationDate, request)
 
     val secondaryDateLine =
-      if (articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate.getOrElse("")) ) {
-        "First published on " + GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate), request)
+      if (
+        articleDateTimes.hasBeenModified && (articleDateTimes.webPublicationDate != articleDateTimes.firstPublicationDate
+          .getOrElse(""))
+      ) {
+        "First published on " + GUDateTimeFormatNew.formatDateTimeForDisplay(
+          articleDateTimes.firstPublicationDate.getOrElse(articleDateTimes.webPublicationDate),
+          request,
+        )
       } else {
-        "Last modified on " + GUDateTimeFormatNew.formatDateTimeForDisplay(articleDateTimes.lastModificationDate, request)
+        "Last modified on " + GUDateTimeFormatNew.formatDateTimeForDisplay(
+          articleDateTimes.lastModificationDate,
+          request,
+        )
       }
 
     DisplayedDateTimesDCR(
@@ -49,7 +58,7 @@ object ArticleDateTimes {
       lastUpdatedLong,
       lastUpdatedDisplay,
       primaryDateLine,
-      secondaryDateLine
+      secondaryDateLine,
     )
   }
 }
@@ -61,19 +70,22 @@ object ArticleDateTimes {
  */
 
 object GuDateTimeFormatOld {
-  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit request: RequestHeader): String = {
+  def apply(date: DateTime, pattern: String, tzOverride: Option[DateTimeZone] = None)(implicit
+      request: RequestHeader,
+  ): String = {
     apply(date, Edition(request), pattern, tzOverride)
   }
 
   def apply(date: DateTime, edition: Edition, pattern: String, tzOverride: Option[DateTimeZone]): String = {
     val timeZone = tzOverride match {
       case Some(tz) => tz
-      case _ => edition.timezone
+      case _        => edition.timezone
     }
     date.toString(DateTimeFormat.forPattern(pattern).withZone(timeZone))
   }
 
-  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String = this(date.toDateTimeAtStartOfDay, pattern)(request)
+  def apply(date: LocalDate, pattern: String)(implicit request: RequestHeader): String =
+    this(date.toDateTimeAtStartOfDay, pattern)(request)
 
   def apply(a: Int): String = new DecimalFormat("#,###").format(a)
 }
@@ -85,7 +97,9 @@ object GUDateTimeFormatNew {
   }
   def formatDateTimeForDisplayGivenEdition(date: DateTime, edition: Edition): String = {
     val timezone = edition.timezone
-    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
+    date.toString(DateTimeFormat.forPattern("E d MMM yyyy HH.mm").withZone(timezone)) + " " + timezone.getShortName(
+      date.getMillis,
+    )
   }
   def formatDateForDisplay(date: DateTime, request: RequestHeader): String = {
     date.toString("E d MMM yyyy")
@@ -94,7 +108,10 @@ object GUDateTimeFormatNew {
     val edition = Edition(request)
     val timezone = edition.timezone
     edition.id match {
-      case "AU" => date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(date.getMillis)
+      case "AU" =>
+        date.toString(DateTimeFormat.forPattern("HH.mm").withZone(timezone)) + " " + timezone.getShortName(
+          date.getMillis,
+        )
       case _ => date.toString(DateTimeFormat.forPattern("HH.mm z").withZone(timezone))
     }
   }
@@ -102,4 +119,3 @@ object GUDateTimeFormatNew {
     dateTime.toString(DateTimeFormat.forPattern("HH:mm z").withZone(timezone))
   }
 }
-

@@ -6,18 +6,19 @@ import play.api.test.Helpers.{contentAsString, contentType, _}
 import play.api.test._
 
 @DoNotDiscover class OnwardContentCardControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
 
-  lazy val richLinkController = new RichLinkController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val richLinkController =
+    new RichLinkController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "An OnwardContentController" should "return JSON when .json format is supplied" in {
     val fakeRequest = FakeRequest(GET, s"/embed/card/$article.json")

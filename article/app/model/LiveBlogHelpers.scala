@@ -19,12 +19,12 @@ object LiveBlogHelpers {
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
-      case _ => modelWithRange(Canonical)
+      case _                       => modelWithRange(Canonical)
     }
 
     lbcp match {
       case Some(blog) => blog.currentPage.blocks
-      case None => Seq()
+      case None       => Seq()
     }
 
   }
@@ -39,14 +39,19 @@ object LiveBlogHelpers {
       LiveBlogCurrentPage(
         pageSize = pageSize,
         _,
-        range
-      ))
+        range,
+      ),
+    )
 
     page getOrElse None
 
   }
 
-  def createLiveBlogModel(liveBlog: Article, response: ItemResponse, range: BlockRange): Either[LiveBlogPage, Status] = {
+  def createLiveBlogModel(
+      liveBlog: Article,
+      response: ItemResponse,
+      range: BlockRange,
+  ): Either[LiveBlogPage, Status] = {
 
     val pageSize = if (liveBlog.content.tags.tags.map(_.id).contains("sport/sport")) 30 else 10
 
@@ -55,42 +60,43 @@ object LiveBlogHelpers {
         LiveBlogCurrentPage(
           pageSize = pageSize,
           blocks,
-          range
+          range,
         )
       } getOrElse None
 
-    liveBlogPageModel.map { pageModel =>
+    liveBlogPageModel
+      .map { pageModel =>
+        val isTransient = range match {
+          case SinceBlockId(_) =>
+            pageModel.currentPage.blocks.isEmpty
+          case _ =>
+            !pageModel.currentPage.isArchivePage
+        }
 
-      val isTransient = range match {
-        case SinceBlockId(_) =>
-          pageModel.currentPage.blocks.isEmpty
-        case _ =>
-          !pageModel.currentPage.isArchivePage
+        val cacheTime =
+          if (isTransient && liveBlog.fields.isLive)
+            liveBlog.metadata.cacheTime
+          else
+            CacheTime.NotRecentlyUpdated
+
+        val liveBlogCache = liveBlog.copy(
+          content = liveBlog.content.copy(metadata = liveBlog.content.metadata.copy(cacheTime = cacheTime)),
+        )
+        Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
+
       }
-
-      val cacheTime = if (isTransient && liveBlog.fields.isLive)
-        liveBlog.metadata.cacheTime
-      else
-        CacheTime.NotRecentlyUpdated
-
-      val liveBlogCache = liveBlog.copy(
-        content = liveBlog.content.copy(
-          metadata = liveBlog.content.metadata.copy(
-            cacheTime = cacheTime)))
-      Left(LiveBlogPage(liveBlogCache, pageModel, StoryPackages(liveBlog.metadata.id, response)))
-
-    }.getOrElse(Right(NotFound))
+      .getOrElse(Right(NotFound))
 
   }
 
   def blockTextJson(page: LiveBlogPage, number: Int): JsValue = {
 
     case class TextBlock(
-      id: String,
-      title: Option[String],
-      publishedDateTime: Option[DateTime],
-      lastUpdatedDateTime: Option[DateTime],
-      body: String
+        id: String,
+        title: Option[String],
+        publishedDateTime: Option[DateTime],
+        lastUpdatedDateTime: Option[DateTime],
+        body: String,
     )
 
     implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
@@ -101,7 +107,7 @@ object LiveBlogHelpers {
         (__ \ "publishedDateTime").write[Option[DateTime]] ~
         (__ \ "lastUpdatedDateTime").write[Option[DateTime]] ~
         (__ \ "body").write[String]
-      )(unlift(TextBlock.unapply))
+    )(unlift(TextBlock.unapply))
 
     val firstPageBlocks = for {
       blocks <- page.article.blocks.toSeq

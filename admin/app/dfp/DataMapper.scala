@@ -5,10 +5,12 @@ import common.dfp._
 import dfp.ApiHelper.{isPageSkin, optJavaInt, toJodaTime, toSeq}
 
 // These mapping functions use libraries that are only available in admin to create common DFP data models.
-class DataMapper(adUnitService: AdUnitService,
-                 placementService: PlacementService,
-                 customTargetingService: CustomTargetingService,
-                 customFieldService: CustomFieldService) {
+class DataMapper(
+    adUnitService: AdUnitService,
+    placementService: PlacementService,
+    customTargetingService: CustomTargetingService,
+    customFieldService: CustomFieldService,
+) {
 
   def toGuAdUnit(dfpAdUnit: AdUnit): GuAdUnit = {
     val ancestors = toSeq(dfpAdUnit.getParentPath)
@@ -21,9 +23,8 @@ class DataMapper(adUnitService: AdUnitService,
     def toIncludedGuAdUnits(inventoryTargeting: InventoryTargeting): Seq[GuAdUnit] = {
 
       //noinspection MapFlatten
-      val directAdUnits = toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
-
-
+      val directAdUnits =
+        toSeq(inventoryTargeting.getTargetedAdUnits).map(_.getAdUnitId).map(adUnitService.activeAdUnit).flatten
 
       //noinspection MapFlatten
       val adUnitsDerivedFromPlacements = {
@@ -41,11 +42,14 @@ class DataMapper(adUnitService: AdUnitService,
 
       def toCustomTargetSet(criteria: CustomCriteriaSet): CustomTargetSet = {
 
-        def toCustomTarget(criterion: CustomCriteria) = CustomTarget(
-          customTargetingService.targetingKey(session)(criterion.getKeyId),
-          criterion.getOperator.getValue,
-          criterion.getValueIds map (valueId => customTargetingService.targetingValue(session)(criterion.getKeyId, valueId))
-        )
+        def toCustomTarget(criterion: CustomCriteria) =
+          CustomTarget(
+            customTargetingService.targetingKey(session)(criterion.getKeyId),
+            criterion.getOperator.getValue,
+            criterion.getValueIds map (valueId =>
+              customTargetingService.targetingValue(session)(criterion.getKeyId, valueId),
+            ),
+          )
 
         val targets = criteria.getChildren collect {
           case criterion: CustomCriteria => criterion
@@ -53,19 +57,23 @@ class DataMapper(adUnitService: AdUnitService,
         CustomTargetSet(criteria.getLogicalOperator.getValue, targets)
       }
 
-      criteriaSets.getChildren.collect {
-        case criteria: CustomCriteriaSet => criteria
-      }.map(toCustomTargetSet).toSeq
+      criteriaSets.getChildren
+        .collect {
+          case criteria: CustomCriteriaSet => criteria
+        }
+        .map(toCustomTargetSet)
+        .toSeq
     }
 
     def geoTargets(locations: GeoTargeting => Array[Location]): Seq[GeoTarget] = {
 
-      def toGeoTarget(dfpLocation: Location) = GeoTarget(
-        dfpLocation.getId,
-        optJavaInt(dfpLocation.getCanonicalParentId),
-        dfpLocation.getType,
-        dfpLocation.getDisplayName
-      )
+      def toGeoTarget(dfpLocation: Location) =
+        GeoTarget(
+          dfpLocation.getId,
+          optJavaInt(dfpLocation.getCanonicalParentId),
+          dfpLocation.getType,
+          dfpLocation.getDisplayName,
+        )
 
       Option(dfpTargeting.getGeoTargeting) flatMap { geoTargeting =>
         Option(locations(geoTargeting)) map (_.map(toGeoTarget).toSeq)
@@ -79,7 +87,7 @@ class DataMapper(adUnitService: AdUnitService,
       adUnitsExcluded = Option(dfpTargeting.getInventoryTargeting) map toExcludedGuAdUnits getOrElse Nil,
       geoTargetsIncluded,
       geoTargetsExcluded,
-      customTargetSets = Option(dfpTargeting.getCustomTargeting) map toCustomTargetSets getOrElse Nil
+      customTargetSets = Option(dfpTargeting.getCustomTargeting) map toCustomTargetSets getOrElse Nil,
     )
   }
 
@@ -103,46 +111,50 @@ class DataMapper(adUnitService: AdUnitService,
     }
   }
 
-  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem): GuLineItem = GuLineItem(
-    id = dfpLineItem.getId,
-    orderId = dfpLineItem.getOrderId,
-    name = dfpLineItem.getName,
-    lineItemType = GuLineItemType.fromDFPLineItemType(dfpLineItem.getLineItemType.getValue),
-    startTime = toJodaTime(dfpLineItem.getStartDateTime),
-    endTime = {
-      if (dfpLineItem.getUnlimitedEndDateTime) None
-      else Some(toJodaTime(dfpLineItem.getEndDateTime))
-    },
-    isPageSkin = isPageSkin(dfpLineItem),
-    sponsor = customFieldService.sponsor(dfpLineItem),
-    creativePlaceholders = toGuCreativePlaceholders(session)(
-      dfpLineItem
-    ),
-    targeting = toGuTargeting(session)(dfpLineItem.getTargeting),
-    status = dfpLineItem.getStatus.toString,
-    costType = dfpLineItem.getCostType.toString,
-    lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime)
-  )
+  def toGuLineItem(session: SessionWrapper)(dfpLineItem: LineItem): GuLineItem =
+    GuLineItem(
+      id = dfpLineItem.getId,
+      orderId = dfpLineItem.getOrderId,
+      name = dfpLineItem.getName,
+      lineItemType = GuLineItemType.fromDFPLineItemType(dfpLineItem.getLineItemType.getValue),
+      startTime = toJodaTime(dfpLineItem.getStartDateTime),
+      endTime = {
+        if (dfpLineItem.getUnlimitedEndDateTime) None
+        else Some(toJodaTime(dfpLineItem.getEndDateTime))
+      },
+      isPageSkin = isPageSkin(dfpLineItem),
+      sponsor = customFieldService.sponsor(dfpLineItem),
+      creativePlaceholders = toGuCreativePlaceholders(session)(
+        dfpLineItem,
+      ),
+      targeting = toGuTargeting(session)(dfpLineItem.getTargeting),
+      status = dfpLineItem.getStatus.toString,
+      costType = dfpLineItem.getCostType.toString,
+      lastModified = toJodaTime(dfpLineItem.getLastModifiedDateTime),
+    )
 
   def toGuCreativeTemplate(dfpCreativeTemplate: CreativeTemplate): GuCreativeTemplate = {
 
-    def toParameter(param: CreativeTemplateVariable) = GuCreativeTemplateParameter(
-      parameterType = param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
-      label = param.getLabel,
-      isRequired = param.getIsRequired,
-      description = Option(param.getDescription)
-    )
+    def toParameter(param: CreativeTemplateVariable) =
+      GuCreativeTemplateParameter(
+        parameterType = param.getClass.getSimpleName.stripSuffix("CreativeTemplateVariable"),
+        label = param.getLabel,
+        isRequired = param.getIsRequired,
+        description = Option(param.getDescription),
+      )
 
     GuCreativeTemplate(
       id = dfpCreativeTemplate.getId,
       name = dfpCreativeTemplate.getName,
       description = dfpCreativeTemplate.getDescription,
-      parameters = Option(dfpCreativeTemplate.getVariables).map { params =>
-        (params map toParameter).toSeq
-      }.getOrElse(Nil),
+      parameters = Option(dfpCreativeTemplate.getVariables)
+        .map { params =>
+          (params map toParameter).toSeq
+        }
+        .getOrElse(Nil),
       snippet = dfpCreativeTemplate.getSnippet,
       creatives = Nil,
-      isNative = dfpCreativeTemplate.getIsNativeEligible
+      isNative = dfpCreativeTemplate.getIsNativeEligible,
     )
   }
 
@@ -170,7 +182,7 @@ class DataMapper(adUnitService: AdUnitService,
       args = Option(dfpCreative.getCreativeTemplateVariableValues).map(_.map(arg)).map(_.toMap).getOrElse(Map.empty),
       templateId = Some(dfpCreative.getCreativeTemplateId),
       snippet = None,
-      previewUrl = Some(dfpCreative.getPreviewUrl)
+      previewUrl = Some(dfpCreative.getPreviewUrl),
     )
   }
 
@@ -178,14 +190,14 @@ class DataMapper(adUnitService: AdUnitService,
     GuOrder(
       id = dfpOrder.getId,
       name = dfpOrder.getName,
-      advertiserId = dfpOrder.getAdvertiserId
+      advertiserId = dfpOrder.getAdvertiserId,
     )
   }
   def toGuAdvertiser(dfpCompany: Company): GuAdvertiser = {
 
     GuAdvertiser(
       id = dfpCompany.getId,
-      name = dfpCompany.getName
+      name = dfpCompany.getName,
     )
   }
 }
@@ -198,12 +210,19 @@ object DataMapper {
     val options: List[GuCustomFieldOption] = {
       dfpCustomField match {
         case dropdown: DropDownCustomField => dropdown.getOptions.toList
-        case _ => Nil
+        case _                             => Nil
       }
     } map toGuCustomFieldOption
 
-    GuCustomField(dfpCustomField.getId, dfpCustomField.getName, dfpCustomField.getDescription,
-      dfpCustomField.getIsActive, dfpCustomField.getEntityType.getValue, dfpCustomField.getDataType.getValue,
-      dfpCustomField.getVisibility.getValue, options)
+    GuCustomField(
+      dfpCustomField.getId,
+      dfpCustomField.getName,
+      dfpCustomField.getDescription,
+      dfpCustomField.getIsActive,
+      dfpCustomField.getEntityType.getValue,
+      dfpCustomField.getDataType.getValue,
+      dfpCustomField.getVisibility.getValue,
+      options,
+    )
   }
 }

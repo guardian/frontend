@@ -22,19 +22,20 @@ import views.html.stacked
 
 object IndexHtml {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink(FaciaCSSFile)
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("facia"))))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$FaciaCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$FaciaCSSFile.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def html(page: IndexPage)(
-    headContent: Html = Html(""),
-    bodyContent: Html = Html("")
+      headContent: Html = Html(""),
+      bodyContent: Html = Html(""),
   )(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: IndexPage = page
     htmlTag(
@@ -46,7 +47,7 @@ object IndexHtml {
         styles(allStyles),
         fixIEReferenceErrors(),
         checkModuleSupport(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -59,9 +60,9 @@ object IndexHtml {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 
@@ -71,13 +72,13 @@ object IndexHtmlPage extends HtmlPage[IndexPage] {
   def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
     IndexHtml.html(page)(
       headContent = indexHead(page),
-      bodyContent = IndexCleaner(page, indexBody(page))
+      bodyContent = IndexCleaner(page, indexBody(page)),
     )
 }
 
 object AllIndexHtmlPage extends HtmlPage[IndexPage] {
   def html(page: IndexPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html =
     IndexHtml.html(page)(
-      bodyContent = all(page)
+      bodyContent = all(page),
     )
 }

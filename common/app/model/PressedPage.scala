@@ -16,23 +16,28 @@ object PressedPage {
 
   implicit val pressedPageFormat = PressedPageFormat.format
 
-  def makeMetadata(id: String, seoData: SeoData, frontProperties: FrontProperties, collections: List[PressedCollection]): MetaData = {
-    def optionalMapEntry(key:String, o: Option[String]): Map[String, String] =
+  def makeMetadata(
+      id: String,
+      seoData: SeoData,
+      frontProperties: FrontProperties,
+      collections: List[PressedCollection],
+  ): MetaData = {
+    def optionalMapEntry(key: String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
     val isNetworkFront: Boolean = Edition.all.exists(_.networkFrontId == id)
     val keywordIds: Seq[String] = frontKeywordIds(id)
-    val contentType: DotcomContentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
+    val contentType: DotcomContentType =
+      if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
 
     val faciaPageMetaData: Map[String, JsValue] = Map(
       "keywords" -> JsString(seoData.webTitle.capitalize),
       "keywordIds" -> JsString(keywordIds.mkString(",")),
-      "isPaidContent" -> JsBoolean(frontProperties.isPaidContent)
+      "isPaidContent" -> JsBoolean(frontProperties.isPaidContent),
     )
 
-    val openGraph: Map[String, String] = Map(
-      "og:image" -> Configuration.images.fallbackLogo) ++
-      optionalMapEntry("og:description", seoData.description)  ++
+    val openGraph: Map[String, String] = Map("og:image" -> Configuration.images.fallbackLogo) ++
+      optionalMapEntry("og:description", seoData.description) ++
       optionalMapEntry("og:image", frontProperties.imageUrl)
 
     val twitterProperties: Map[String, String] = Map("twitter:card" -> "summary")
@@ -55,7 +60,7 @@ object PressedPage {
       opengraphPropertiesOverrides = openGraph,
       twitterPropertiesOverrides = twitterProperties,
       commercial = frontProperties.commercial,
-      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id)
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(id),
     )
   }
 }
@@ -80,32 +85,37 @@ case object LiteAdFreeType extends PressedPageType {
   override def suffix = ".lite.adfree"
 }
 
-case class PressedCollectionVersions(lite: PressedCollection,
-                                     full: PressedCollection,
-                                     liteAdFree: PressedCollection,
-                                     fullAdFree: PressedCollection)
+case class PressedCollectionVersions(
+    lite: PressedCollection,
+    full: PressedCollection,
+    liteAdFree: PressedCollection,
+    fullAdFree: PressedCollection,
+)
 
 case class PressedPageVersions(lite: PressedPage, full: PressedPage, liteAdFree: PressedPage, fullAdFree: PressedPage)
 
 object PressedPageVersions {
-  def fromPressedCollections(id: String,
-                             seoData: SeoData,
-                             frontProperties: FrontProperties,
-                             pressedCollections: List[PressedCollectionVersions]): PressedPageVersions = {
+  def fromPressedCollections(
+      id: String,
+      seoData: SeoData,
+      frontProperties: FrontProperties,
+      pressedCollections: List[PressedCollectionVersions],
+  ): PressedPageVersions = {
     PressedPageVersions(
       PressedPage(id, seoData, frontProperties, pressedCollections.map(_.lite)).filterEmpty,
       PressedPage(id, seoData, frontProperties, pressedCollections.map(_.full)).filterEmpty,
       PressedPage(id, seoData, frontProperties, pressedCollections.map(_.liteAdFree)).filterEmpty,
-      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullAdFree)).filterEmpty
+      PressedPage(id, seoData, frontProperties, pressedCollections.map(_.fullAdFree)).filterEmpty,
     )
   }
 }
 
-case class PressedPage (
-  id: String,
-  seoData: SeoData,
-  frontProperties: FrontProperties,
-  collections: List[PressedCollection]) extends StandalonePage {
+case class PressedPage(
+    id: String,
+    seoData: SeoData,
+    frontProperties: FrontProperties,
+    collections: List[PressedCollection],
+) extends StandalonePage {
 
   lazy val filterEmpty: PressedPage = copy(collections = collections.filterNot(_.isEmpty))
 
@@ -122,28 +132,34 @@ case class PressedPage (
     val tagAndSectionIds = for {
       pressedCollection <- collections
       item <- pressedCollection.curatedPlusBackfillDeduplicated
-      id <- {item match {
-              case curatedContent: CuratedContent =>
-                curatedContent.content.sectionId ++ curatedContent.content.tags.map(_.id)
-              case _ => Nil
-            }}
+      id <- {
+        item match {
+          case curatedContent: CuratedContent =>
+            curatedContent.content.sectionId ++ curatedContent.content.tags.map(_.id)
+          case _ => Nil
+        }
+      }
     } yield id
 
     val validIds = Set(
       Some(id),
-      Paths.withoutEdition(id)
+      Paths.withoutEdition(id),
     ).flatten
 
-    tagAndSectionIds.find(validIds contains).map { id =>
-      s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
-    }.orElse(allPathFromTreats)
+    tagAndSectionIds
+      .find(validIds contains)
+      .map { id =>
+        s"/${Paths.withoutEdition(id).getOrElse(id)}/all"
+      }
+      .orElse(allPathFromTreats)
   }
 
   private def allPathFromTreats: Option[String] = {
-    collections.flatMap(_.treats.collect {
+    collections
+      .flatMap(_.treats.collect {
         case treat if SupportedUrl.fromFaciaContent(treat).endsWith("/all") => SupportedUrl.fromFaciaContent(treat)
-      }
-    ).headOption
+      })
+      .headOption
   }
 
   private def branding(edition: Edition): Option[Branding] = metadata.commercial.flatMap(_.branding(edition))

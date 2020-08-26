@@ -21,7 +21,8 @@ import router.Routes
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait DiscussionServices {
@@ -40,7 +41,7 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
     wire[LogstashLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]

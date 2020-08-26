@@ -14,11 +14,11 @@ import scala.xml.{Elem, XML}
 
 class FeedReader(wsClient: WSClient) extends Logging {
 
-  def read[T](request: FeedRequest,
-              signature: Option[WSSignatureCalculator] = None,
-              validResponseStatuses: Seq[Int] = Seq(200))
-             (parse: String => T)
-             (implicit ec: ExecutionContext): Future[T] = {
+  def read[T](
+      request: FeedRequest,
+      signature: Option[WSSignatureCalculator] = None,
+      validResponseStatuses: Seq[Int] = Seq(200),
+  )(parse: String => T)(implicit ec: ExecutionContext): Future[T] = {
 
     def readUrl(): Future[T] = {
 
@@ -31,7 +31,8 @@ class FeedReader(wsClient: WSClient) extends Logging {
       val start: Long = System.currentTimeMillis
 
       val requestHolder: WSRequest = {
-        val unsignedRequestHolder: WSRequest = wsClient.url(request.url)
+        val unsignedRequestHolder: WSRequest = wsClient
+          .url(request.url)
           .withQueryStringParameters(request.parameters.toSeq: _*)
           .withRequestTimeout(request.timeout)
         signature.foldLeft(unsignedRequestHolder) { (soFar, calc) =>
@@ -71,7 +72,8 @@ class FeedReader(wsClient: WSClient) extends Logging {
     val initializedSwitch: Future[Switch] = request.switch.onInitialized
 
     initializedSwitch.onComplete {
-      case Success(switch) => log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
+      case Success(switch) =>
+        log.info(s"Successfully initialized ${switch.name} (isSwitchedOn: ${switch.isSwitchedOn})")
       case Failure(throwable) => log.info(s"Failed to initialize switch.", throwable)
     }
 
@@ -81,55 +83,50 @@ class FeedReader(wsClient: WSClient) extends Logging {
     }
   }
 
-  def readSeq[T](request: FeedRequest)
-                (parse: String => Seq[T])
-                (implicit ec: ExecutionContext): Future[Seq[T]] = {
+  def readSeq[T](request: FeedRequest)(parse: String => Seq[T])(implicit ec: ExecutionContext): Future[Seq[T]] = {
     val contents = read(request)(parse)
 
-    contents foreach {
-      items => log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url}")
+    contents foreach { items =>
+      log.info(s"Loaded ${items.size} ${request.feedName} from ${request.url}")
     }
 
     contents.failed.foreach {
       case e: FeedSwitchOffException => log.warn(e.getMessage)
-      case NonFatal(e) => log.error(s"Failed to read feed ${request.feedName} with URL ${request.url}", e)
+      case NonFatal(e)               => log.error(s"Failed to read feed ${request.feedName} with URL ${request.url}", e)
     }
 
     contents
   }
 
-  def readSeqFromXml[T](request: FeedRequest)
-                       (parse: Elem => Seq[T])
-                       (implicit ec: ExecutionContext): Future[Seq[T]] = {
+  def readSeqFromXml[T](request: FeedRequest)(parse: Elem => Seq[T])(implicit ec: ExecutionContext): Future[Seq[T]] = {
     readSeq(request) { body =>
       parse(XML.loadString(body))
     }
   }
 
-  def readSeqFromJson[T](request: FeedRequest)
-                        (parse: JsValue => Seq[T])
-                        (implicit ec: ExecutionContext): Future[Seq[T]] = {
+  def readSeqFromJson[T](
+      request: FeedRequest,
+  )(parse: JsValue => Seq[T])(implicit ec: ExecutionContext): Future[Seq[T]] = {
     readSeq(request) { body =>
       parse(Json.parse(body))
     }
   }
 }
 
-case class FeedRequest(feedName: String,
-                       switch: conf.switches.Switch,
-                       url: String,
-                       parameters: Map[String, String] = Map.empty,
-                       responseEncoding: String,
-                       timeout: Duration)
-
+case class FeedRequest(
+    feedName: String,
+    switch: conf.switches.Switch,
+    url: String,
+    parameters: Map[String, String] = Map.empty,
+    responseEncoding: String,
+    timeout: Duration,
+)
 
 case class FeedSwitchOffException(feedName: String) extends Exception {
   override val getMessage: String = s"Reading $feedName feed failed: Switch is off"
 }
 
-case class FeedReadException(request: FeedRequest,
-                             statusCode: Int,
-                             statusText: String) extends Exception {
+case class FeedReadException(request: FeedRequest, statusCode: Int, statusText: String) extends Exception {
   override val getMessage: String =
     s"Reading ${request.feedName} feed from ${request.url} failed: $statusCode: $statusText"
 }

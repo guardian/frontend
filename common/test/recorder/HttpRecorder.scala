@@ -23,16 +23,15 @@ trait HttpRecorder[A] {
 
   def baseDir: File
 
-  final def load(url: String, headers: Map[String, String] = Map.empty )
-    (fetch: => Future[A])
-    (implicit executionContext: ExecutionContext): Future[A] =
+  final def load(url: String, headers: Map[String, String] = Map.empty)(
+      fetch: => Future[A],
+  )(implicit executionContext: ExecutionContext): Future[A] =
     loadFile(url, headers)(fetch).map(file => toResponse(contentFromFile(file)))
 
-
   // loads api call from disk. if it cannot be found on disk go get it and save to disk
-  final def loadFile(url: String, headers: Map[String, String] = Map.empty)
-    (fetch: => Future[A])
-    (implicit executionContext: ExecutionContext): Future[File] = {
+  final def loadFile(url: String, headers: Map[String, String] = Map.empty)(
+      fetch: => Future[A],
+  )(implicit executionContext: ExecutionContext): Future[File] = {
 
     val (fileName, components) = name(url, headers)
 
@@ -40,7 +39,9 @@ trait HttpRecorder[A] {
       if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")) {
         // integration test environment
         // make sure people have checked in test files
-        throw new IllegalStateException(s"Data file has not been checked in for: $url - $components, file: $fileName, headers: ${headersFormat(headers)}")
+        throw new IllegalStateException(
+          s"Data file has not been checked in for: $url - $components, file: $fileName, headers: ${headersFormat(headers)}",
+        )
       } else {
         // always get the new files, this means we'll find out fast when we've broken stuff
         // otherwise it's impossible to regenerate things because everything's been running off the checked in file
@@ -80,10 +81,10 @@ trait HttpRecorder[A] {
   def fromResponse(response: A): Array[Byte]
 
   private def headersFormat(headers: Map[String, String]): String = {
-    headers.toList.sortBy(_._1).map{ case (key, value) => key + value }.mkString
+    headers.toList.sortBy(_._1).map { case (key, value) => key + value }.mkString
   }
 
-  private [recorder] def name(url: String, headers: Map[String, String]): (String, String) = {
+  private[recorder] def name(url: String, headers: Map[String, String]): (String, String) = {
     val uri = URI.create(url)
     // remove the host because it's probably a config value that won't be there in automation
     val key = uri.getPath + uri.getQuery + headersFormat(headers)

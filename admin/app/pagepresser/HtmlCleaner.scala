@@ -31,26 +31,28 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def repairStaticLinks(document: Document): Document = {
-    document.getAllElements.asScala.filter { el =>
-      el.hasAttr("href") && el.attr("href").contains("/static/")
-    }.foreach { el =>
-      val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
-      staticLink.foreach { link =>
-        val cacheBustId = link.group("cacheBustId")
-        val extension = link.group("extension")
-        val paths = link.group("paths").split('+')
-        paths.map { path =>
-          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
-            s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
-          } else {
-            s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
-          }
-          val newEl = el.clone.attr("href", newPath)
-          el.after(newEl)
-        }
+    document.getAllElements.asScala
+      .filter { el =>
+        el.hasAttr("href") && el.attr("href").contains("/static/")
       }
-      el.remove()
-    }
+      .foreach { el =>
+        val staticLink = staticRegEx.findFirstMatchIn(el.attr("href"))
+        staticLink.foreach { link =>
+          val cacheBustId = link.group("cacheBustId")
+          val extension = link.group("extension")
+          val paths = link.group("paths").split('+')
+          paths.map { path =>
+            val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+              s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
+            } else {
+              s"//static.guim.co.uk/static/$cacheBustId/$path$extension"
+            }
+            val newEl = el.clone.attr("href", newPath)
+            el.after(newEl)
+          }
+        }
+        el.remove()
+      }
     document
   }
 
@@ -81,19 +83,20 @@ abstract class HtmlCleaner extends Logging {
 
   def replaceLinks(document: Document): Document = {
     try {
-      document.getAllElements.asScala.filter{ el =>
-        (el.hasAttr("href") && el.attr("href").contains("http://")) || (el.hasAttr("src") && el.attr("src").contains("http://"))
-      }.foreach{ el =>
-
-        if (el.hasAttr("href")) {
-          el.attr("href", el.attr("href").replace("http://", "//"))
-        } else {
-          el.attr("src", el.attr("src").replace("http://", "//"))
+      document.getAllElements.asScala
+        .filter { el =>
+          (el.hasAttr("href") && el.attr("href").contains("http://")) || (el
+            .hasAttr("src") && el.attr("src").contains("http://"))
         }
-      }
+        .foreach { el =>
+          if (el.hasAttr("href")) {
+            el.attr("href", el.attr("href").replace("http://", "//"))
+          } else {
+            el.attr("src", el.attr("src").replace("http://", "//"))
+          }
+        }
       document
-    }
-    catch {
+    } catch {
       case e: Exception =>
         log.warn("Unable to convert links for document from http to protocol relative url.")
         document
@@ -109,14 +112,18 @@ abstract class HtmlCleaner extends Logging {
     val element = document.getElementById("sub-header")
 
     if (element != null) {
-      val ads = element.children().asScala.toList.filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
+      val ads = element
+        .children()
+        .asScala
+        .toList
+        .filterNot(e => e.attr("class") == "top-navigation twelve-col top-navigation-js")
       ads.foreach(_.remove())
 
       val htmlComments = element.childNodes().asScala.filter(node => node.nodeName().equals("#comment"))
       htmlComments.foreach(_.remove())
 
       val promo = document.getElementById("promo")
-      if(promo != null) promo.remove()
+      if (promo != null) promo.remove()
     }
 
     document
@@ -124,7 +131,7 @@ abstract class HtmlCleaner extends Logging {
 
   def removeRelatedComponent(document: Document): Document = {
     val element = document.getElementById("related")
-    if(element != null) element.remove()
+    if (element != null) element.remove()
     document
   }
 
@@ -151,8 +158,7 @@ abstract class HtmlCleaner extends Logging {
   }
 
   def deComboLinks(document: Document): Document = {
-    document.getAllElements.asScala.filter( elementContainsCombo ) .foreach { el =>
-
+    document.getAllElements.asScala.filter(elementContainsCombo).foreach { el =>
       val combinerRegex = """//combo.guim.co.uk/(\w+)/(.+)(\.\w+)$""".r("cacheBustId", "paths", "extension")
       val microAppRegex = """^m-(\d+)~(.+)""".r
       val href = if (el.hasAttr("href")) {
@@ -167,7 +173,7 @@ abstract class HtmlCleaner extends Logging {
         val extension = combiner.group("extension")
         val paths = combiner.group("paths").split('+')
         paths.map { path =>
-          val newPath = if(nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
+          val newPath = if (nonDigitRegEx.findFirstMatchIn(cacheBustId).isEmpty) {
             s"//static.guim.co.uk/static/$fallbackCacheBustId/$path$extension"
           } else {
             s"//static.guim.co.uk/static/$cacheBustId/$path$extension"

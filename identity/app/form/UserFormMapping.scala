@@ -54,9 +54,10 @@ trait UserFormData {
     */
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO
 
-  protected def toUpdate[T](newValue: T, current: Option[T]): Option[T] = (newValue, current) match {
-    case ("", None) => None
-    case (nv, Some(curr)) if(nv == curr) => None
-    case (nv, _) => Some(nv)
-  }
+  protected def toUpdate[T](newValue: T, current: Option[T]): Option[T] =
+    (newValue, current) match {
+      case ("", None)                       => None
+      case (nv, Some(curr)) if (nv == curr) => None
+      case (nv, _)                          => Some(nv)
+    }
 }

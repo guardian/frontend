@@ -12,16 +12,12 @@ import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}
 
-
 /**
   * This is the old EmailController converted *as is* to a service to be consumed by EditProfileController
   */
-class NewsletterService(
-  api: IdApiClient,
-  idRequestParser: IdRequestParser,
-  idUrlBuilder: IdentityUrlBuilder)
-  (implicit executionContext: ExecutionContext)
-  extends SafeLogging {
+class NewsletterService(api: IdApiClient, idRequestParser: IdRequestParser, idUrlBuilder: IdentityUrlBuilder)(implicit
+    executionContext: ExecutionContext,
+) extends SafeLogging {
 
   import EmailPrefsData._
 
@@ -31,30 +27,32 @@ class NewsletterService(
         emailPrefsForm.fill(EmailPrefsData(subscriber.subscriptions.map(_.listId)))
 
       case Left(idapiErrors) =>
-        idapiErrors.foldLeft(emailPrefsForm) {
-          (formWithErrors, idapiError) => formWithErrors.withGlobalError(idapiError.description)
+        idapiErrors.foldLeft(emailPrefsForm) { (formWithErrors, idapiError) =>
+          formWithErrors.withGlobalError(idapiError.description)
         }
     }
 
   def getEmailSubscriptions(
-     form: Form[EmailPrefsData],
-     add: List[String] = List(),
-     remove: List[String] = List()): List[String] = {
+      form: Form[EmailPrefsData],
+      add: List[String] = List(),
+      remove: List[String] = List(),
+  ): List[String] = {
     (form.data.filter(_._1.startsWith("currentEmailSubscriptions")).map(_._2).filterNot(remove.toSet) ++ add).toList
   }
 
   def getV1EmailSubscriptions(
       form: Form[EmailPrefsData],
       add: List[String] = List(),
-      remove: List[String] = List()): List[String] = {
+      remove: List[String] = List(),
+  ): List[String] = {
     getEmailSubscriptions(form, add, remove).filter(EmailNewsletters.v1ListIds.contains)
   }
 }
 
 case class EmailPrefsData(
-  currentEmailSubscriptions: List[String],
-  addEmailSubscriptions: List[String] = List(),
-  removeEmailSubscriptions: List[String] = List()
+    currentEmailSubscriptions: List[String],
+    addEmailSubscriptions: List[String] = List(),
+    removeEmailSubscriptions: List[String] = List(),
 )
 
 object EmailPrefsData {
@@ -62,7 +60,7 @@ object EmailPrefsData {
     Forms.mapping(
       "currentEmailSubscriptions" -> Forms.list(Forms.text),
       "addEmailSubscriptions" -> Forms.list(Forms.text),
-      "removeEmailSubscriptions" -> Forms.list(Forms.text)
-    )(EmailPrefsData.apply)(EmailPrefsData.unapply)
+      "removeEmailSubscriptions" -> Forms.list(Forms.text),
+    )(EmailPrefsData.apply)(EmailPrefsData.unapply),
   )
 }

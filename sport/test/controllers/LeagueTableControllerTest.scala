@@ -6,18 +6,19 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class LeagueTableControllerTest
-  extends FlatSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestApplicationContext
-  with WithTestExecutionContext
-  with WithTestWsClient {
+    extends FlatSpec
+    with ConfiguredTestSuite
+    with Matchers
+    with FootballTestData
+    with WithTestFootballClient
+    with WithMaterializer
+    with BeforeAndAfterAll
+    with WithTestApplicationContext
+    with WithTestExecutionContext
+    with WithTestWsClient {
 
-  lazy val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+  lazy val leagueTableController =
+    new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "League Table Controller" should "200 when content type is table" in {
     val result = leagueTableController.renderLeagueTables()(TestRequest())

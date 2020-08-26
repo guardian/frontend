@@ -10,12 +10,13 @@ import services.ConfigAgent
 import scala.concurrent.Future
 
 class FaciaDraftController(
-  val frontJsonFapi: FrontJsonFapiDraft,
-  contentApiClient: ContentApiClient,
-  sectionsLookUp: SectionsLookUp,
-  val controllerComponents: ControllerComponents
+    val frontJsonFapi: FrontJsonFapiDraft,
+    contentApiClient: ContentApiClient,
+    sectionsLookUp: SectionsLookUp,
+    val controllerComponents: ControllerComponents,
 )(implicit val context: ApplicationContext)
-  extends FaciaController with RendersItemResponse {
+    extends FaciaController
+    with RendersItemResponse {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
 

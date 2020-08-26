@@ -7,12 +7,15 @@ import play.twirl.api.Html
 import views.support.{AtomsCleaner, withJsoup}
 
 object CommercialBodyCleaner {
-  def apply(article: HostedArticlePage, html: String)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(article: HostedArticlePage, html: String)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Html = {
 
     val cleaners = List(
-      AtomsCleaner(atoms = article.content.atoms)
+      AtomsCleaner(atoms = article.content.atoms),
     )
 
-    withJsoup(html)(cleaners :_*)
+    withJsoup(html)(cleaners: _*)
   }
 }

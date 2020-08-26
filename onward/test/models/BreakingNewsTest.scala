@@ -10,28 +10,29 @@ import play.api.libs.json.Json
 
 class BreakingNewsTest extends WordSpec with Matchers {
 
-    val randomUid = UUID.randomUUID()
-    val id = "/category/2016/01/30/slug"
-    val title = "This is a breaking news title"
-    val message = "This is a breaking news message"
-    val thumbnailUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
-    val link = "http://gu.com/p/4fgcd"
-    val publicationDate = DateTime.now
-    val topics = Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport)
-    val n = NewsAlertNotification(
-      randomUid,
-      URI.create(id),
-      title,
-      message,
-      Some(URI.create(thumbnailUrl)),
-      URI.create(link),
-      None,
-      publicationDate,
-      topics.map(_.toString))
-    val expectedBreakingNews = BreakingNews(Set(n))
+  val randomUid = UUID.randomUUID()
+  val id = "/category/2016/01/30/slug"
+  val title = "This is a breaking news title"
+  val message = "This is a breaking news message"
+  val thumbnailUrl =
+    "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+  val link = "http://gu.com/p/4fgcd"
+  val publicationDate = DateTime.now
+  val topics = Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport)
+  val n = NewsAlertNotification(
+    randomUid,
+    URI.create(id),
+    title,
+    message,
+    Some(URI.create(thumbnailUrl)),
+    URI.create(link),
+    None,
+    publicationDate,
+    topics.map(_.toString),
+  )
+  val expectedBreakingNews = BreakingNews(Set(n))
 
-    val json = Json.parse(
-      s"""{
+  val json = Json.parse(s"""{
           |"collections": [
           |{
           |"displayName": "UK alerts",
@@ -108,7 +109,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       DateTime.now,
-      commonTopics ++ Set(NewsAlertTypes.Sport.toString))
+      commonTopics ++ Set(NewsAlertTypes.Sport.toString),
+    )
     val notifB = NewsAlertNotification(
       UUID.randomUUID(),
       URI.create(id),
@@ -118,7 +120,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       notifA.publicationDate.plus(1),
-      Set.empty[String] ++ commonTopics)
+      Set.empty[String] ++ commonTopics,
+    )
     val breakingNews = BreakingNews(Set(notifA, notifB))
     "contain no more than one notifications" in {
       breakingNews.collections.foreach {
@@ -126,7 +129,7 @@ class BreakingNewsTest extends WordSpec with Matchers {
       }
     }
     "contain the most recent notification" in {
-      val mostRecent = if(notifA.publicationDate isAfter notifB.publicationDate) notifA else notifB
+      val mostRecent = if (notifA.publicationDate isAfter notifB.publicationDate) notifA else notifB
       val collection = breakingNews.collections.filter(_.href == commonTopicShortString).head
       collection.content should contain(mostRecent)
     }
@@ -142,7 +145,8 @@ class BreakingNewsTest extends WordSpec with Matchers {
       URI.create(link),
       None,
       DateTime.now,
-      Set("non breaking news topic", "doesn't exist"))
+      Set("non breaking news topic", "doesn't exist"),
+    )
     val breakingNews = BreakingNews(Set(notif))
     "result in empty collections" in {
       breakingNews.collections.foreach {

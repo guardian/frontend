@@ -22,8 +22,9 @@ object Seqs {
       }
     }
 
-    def filterByIndex(f: Int => Boolean): Seq[A] = as.zipWithIndex collect {
-      case (a, index) if f(index) => a
-    }
+    def filterByIndex(f: Int => Boolean): Seq[A] =
+      as.zipWithIndex collect {
+        case (a, index) if f(index) => a
+      }
   }
 }

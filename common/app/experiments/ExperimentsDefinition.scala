@@ -18,7 +18,8 @@ trait ExperimentsDefinition {
   def getJsMap(implicit request: RequestHeader): Map[String, String] = {
     allExperiments
       .filter(e => isParticipating(e) || isControl(e))
-      .toSeq.sortBy(_.name)
+      .toSeq
+      .sortBy(_.name)
       .map { e =>
         val value = e.value
         val nameWithValue = s"${e.name}-${value}" // Each experiment variant needs to have a unique name for Ophan
@@ -27,16 +28,14 @@ trait ExperimentsDefinition {
       .toMap
   }
 
-
   def getJavascriptConfig(implicit request: RequestHeader): String = {
-    getJsMap
-      .toList
-      .map({case (key, value) => s""""${CamelCase.fromHyphenated(key)}":"${value}""""})
+    getJsMap.toList
+      .map({ case (key, value) => s""""${CamelCase.fromHyphenated(key)}":"${value}"""" })
       .mkString(",")
   }
 
   private def isIn(experiment: Experiment)(p: Experiment => Boolean)(implicit request: RequestHeader): Boolean = {
-    if(experiment.canRun) LookedAtExperiments.addExperiment(experiment) // Side effect!
+    if (experiment.canRun) LookedAtExperiments.addExperiment(experiment) // Side effect!
     p(experiment)
   }
 
@@ -47,9 +46,9 @@ trait ExperimentsDefinition {
     isIn(experiment)(_.isControl)
 
   def groupFor(experiment: Experiment)(implicit request: RequestHeader): Participation = {
-    if(isParticipating(experiment)){
+    if (isParticipating(experiment)) {
       Participant
-    } else if(isControl(experiment)){
+    } else if (isControl(experiment)) {
       Control
     } else {
       Excluded

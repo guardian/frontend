@@ -15,23 +15,28 @@ object LiveBlogHtmlPage extends HtmlPage[LiveBlogPage] {
     implicit val p: LiveBlogPage = page
 
     val headContent = liveBlogHead(
-      next = page.currentPage.pagination.flatMap(_.older).map(_.suffix).map(suffix => s"${page.article.content.metadata}$suffix"),
-      prev = page.currentPage.pagination.flatMap(_.newer).map(_.suffix).map(suffix => s"${page.article.content.metadata}$suffix"),
+      next = page.currentPage.pagination
+        .flatMap(_.older)
+        .map(_.suffix)
+        .map(suffix => s"${page.article.content.metadata}$suffix"),
+      prev = page.currentPage.pagination
+        .flatMap(_.newer)
+        .map(_.suffix)
+        .map(suffix => s"${page.article.content.metadata}$suffix"),
       organisation = Html(Organisation().toString()),
       posting = Html(
         LiveBlogPosting(
           page.article,
-          LiveBlogHelpers.blocksForLiveBlogRequest(page.article, request.getQueryString("page"))
-        ).toString()
-      )
+          LiveBlogHelpers.blocksForLiveBlogRequest(page.article, request.getQueryString("page")),
+        ).toString(),
+      ),
     )
 
     StoryHtmlPage.html(
       maybeHeadContent = Some(headContent),
       header = guardianHeaderHtml(),
-      content = liveBlogBody(page)
+      content = liveBlogBody(page),
     )
   }
 
 }
-

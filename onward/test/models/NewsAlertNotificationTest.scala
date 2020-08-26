@@ -12,17 +12,18 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
   private val uid = UUID.randomUUID()
   private val title = "This is a breaking news title"
   private val message = "This is a breaking news message"
-  private val thumbnailUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+  private val thumbnailUrl =
+    "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val link = "http://gu.com/p/4fgcd"
-  private val imageUrl = "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
+  private val imageUrl =
+    "http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"
   private val publicationDate = "2016-01-18T12:21:01.000Z"
   private val urlId = "/category/2016/01/30/slug"
   private val topics = Set("breaking/sport", "breaking/uk")
   private val topicsString = Json.toJson(topics).toString()
 
   "Creating NewsAlertNotification" should "succeed when json contains all fields" in {
-    val json = Json.parse(
-      s"""{"uid":"$uid",
+    val json = Json.parse(s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"thumbnailUrl":"$thumbnailUrl",
@@ -31,46 +32,46 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
           |"publicationDate":"$publicationDate",
           |"urlId":"$urlId",
           |"topics":$topicsString}""".stripMargin)
-    json.validate[NewsAlertNotification].asOpt shouldBe Some(NewsAlertNotification(
-      uid,
-      URI.create(urlId),
-      title,
-      message,
-      Some(URI.create(thumbnailUrl)),
-      URI.create(link),
-      Some(URI.create(imageUrl)),
-      DateTime.parse(publicationDate),
-      topics
-    ))
+    json.validate[NewsAlertNotification].asOpt shouldBe Some(
+      NewsAlertNotification(
+        uid,
+        URI.create(urlId),
+        title,
+        message,
+        Some(URI.create(thumbnailUrl)),
+        URI.create(link),
+        Some(URI.create(imageUrl)),
+        DateTime.parse(publicationDate),
+        topics,
+      ),
+    )
   }
 
-
-   it should "succeed when json contains no optional field" in {
-     val jsonWithoutOptionalFields = Json.parse(
-       s"""{"uid":"$uid",
+  it should "succeed when json contains no optional field" in {
+    val jsonWithoutOptionalFields = Json.parse(s"""{"uid":"$uid",
            |"title":"$title",
            |"message":"$message",
            |"link":"$link",
            |"publicationDate":"$publicationDate",
            |"urlId":"$urlId",
            |"topics":$topicsString}""".stripMargin)
-    jsonWithoutOptionalFields.validate[NewsAlertNotification].asOpt shouldBe Some(NewsAlertNotification(
-      uid,
-      URI.create(urlId),
-      title,
-      message,
-      None,
-      URI.create(link),
-      None,
-      DateTime.parse(publicationDate),
-      topics
-    ))
+    jsonWithoutOptionalFields.validate[NewsAlertNotification].asOpt shouldBe Some(
+      NewsAlertNotification(
+        uid,
+        URI.create(urlId),
+        title,
+        message,
+        None,
+        URI.create(link),
+        None,
+        DateTime.parse(publicationDate),
+        topics,
+      ),
+    )
   }
 
-
   it should "fail when json contains invalid url" in {
-    val jsonWithInvalidUrl = Json.parse(
-      s"""{"uid":"$uid",
+    val jsonWithInvalidUrl = Json.parse(s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"link":"this is not a valid link",
@@ -80,10 +81,8 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
     jsonWithInvalidUrl.validate[NewsAlertNotification].asOpt shouldBe None
   }
 
-
   it should "fail when json contains invalid publication date" in {
-    val jsonWithInvalidDate = Json.parse(
-      s"""{"uid":"$uid",
+    val jsonWithInvalidDate = Json.parse(s"""{"uid":"$uid",
           |"title":"$title",
           |"message":"$message",
           |"link":"$link",
@@ -103,7 +102,8 @@ class NewsAlertNotificationTest extends FlatSpec with Matchers {
       URI.create(link),
       None,
       DateTime.now,
-      Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport).map(_.toString))
+      Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport).map(_.toString),
+    )
     n.isOfType(NewsAlertTypes.Uk) shouldBe true
     n.isOfType(NewsAlertTypes.Sport) shouldBe true
   }

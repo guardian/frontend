@@ -12,25 +12,25 @@ import scala.concurrent.duration.DurationInt
 import scala.util.control.NonFatal
 
 class TrafficDriverController(
-  contentApiClient: ContentApiClient,
-  capiAgent: CapiAgent,
-  val controllerComponents: ControllerComponents
+    contentApiClient: ContentApiClient,
+    capiAgent: CapiAgent,
+    val controllerComponents: ControllerComponents,
 ) extends BaseController
-  with ImplicitControllerExecutionContext
-  with implicits.Requests
-  with Logging {
+    with ImplicitControllerExecutionContext
+    with implicits.Requests
+    with Logging {
 
   // Request information about the article from cAPI.
-  private def retrieveContent()(
-    implicit request: Request[AnyContent]): Future[Option[ContentType]] = {
+  private def retrieveContent()(implicit request: Request[AnyContent]): Future[Option[ContentType]] = {
 
     val content: Future[Option[model.ContentType]] =
       capiAgent.contentByShortUrls(specificIds).map(_.headOption)
 
     content.failed.foreach {
-      case NonFatal(e) => log.error(
-        s"Looking up content by short URL failed: ${e.getMessage}"
-      )
+      case NonFatal(e) =>
+        log.error(
+          s"Looking up content by short URL failed: ${e.getMessage}",
+        )
     }
 
     content
@@ -38,15 +38,16 @@ class TrafficDriverController(
   }
 
   // Build model from cAPI data and return as JSON, or empty if nothing found.
-  def renderJson(): Action[AnyContent] = Action.async { implicit request =>
-
-    retrieveContent().map {
-      case None => Cached(componentNilMaxAge){ jsonFormat.nilResult }
-      case Some(content) => Cached(60.seconds) {
-        JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
+  def renderJson(): Action[AnyContent] =
+    Action.async { implicit request =>
+      retrieveContent().map {
+        case None => Cached(componentNilMaxAge) { jsonFormat.nilResult }
+        case Some(content) =>
+          Cached(60.seconds) {
+            JsonComponent(TrafficDriver.fromContent(content, Edition(request)))
+          }
       }
-    }
 
-  }
+    }
 
 }

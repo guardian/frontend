@@ -1,6 +1,6 @@
 package test
 
-import java.util.{ List => JList }
+import java.util.{List => JList}
 import org.scalatest.Suites
 
 import collection.JavaConverters._
@@ -12,8 +12,10 @@ object `package` {
   }
 }
 
-class ArchiveTestSuite extends Suites (
-  new ArchiveControllerTest
-) with SingleServerSuite {
+class ArchiveTestSuite
+    extends Suites(
+      new ArchiveControllerTest,
+    )
+    with SingleServerSuite {
   override lazy val port: Int = 19004
 }

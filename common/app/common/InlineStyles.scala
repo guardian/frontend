@@ -44,17 +44,21 @@ object CSSRule {
   }
 
   def styleMapFromString(styles: String): ListMap[String, String] = {
-    styles.split(";(?!base)").flatMap { style =>
-      val split = style.split(":(?!(\\w)|(//))")
+    styles
+      .split(";(?!base)")
+      .flatMap { style =>
+        val split = style.split(":(?!(\\w)|(//))")
 
-      for {
-        property <- split.headOption
-        value <- split.lift(1)
-      } yield property.trim -> value.trim
-    }.foldLeft(ListMap.empty[String, String])(_ + _)
+        for {
+          property <- split.headOption
+          value <- split.lift(1)
+        } yield property.trim -> value.trim
+      }
+      .foldLeft(ListMap.empty[String, String])(_ + _)
   }
 
-  def styleStringFromMap(styles: ListMap[String, String]): String = styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
+  def styleStringFromMap(styles: ListMap[String, String]): String =
+    styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
 }
 
 object InlineStyles {
@@ -97,19 +101,20 @@ object InlineStyles {
     * The first item is the styles that should stay in the head, the second is everything that should be inlined.
     */
   def styles(document: Document): (Seq[CSSRule], Seq[String]) = {
-    document.getElementsByTag("style").asScala.foldLeft((Seq.empty[CSSRule], Seq.empty[String])) { case ((inline, head), element) =>
-      val source = new InputSource(new StringReader(element.html))
-      val cssParser = new CSSOMParser(new SACParserCSS3())
-      Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
-        Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
-      } match {
-        case Failure(_) => (inline, head :+ element.html)
-        case Success(sheet) =>
-          val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
-          val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
-          val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
-          (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
-      }
+    document.getElementsByTag("style").asScala.foldLeft((Seq.empty[CSSRule], Seq.empty[String])) {
+      case ((inline, head), element) =>
+        val source = new InputSource(new StringReader(element.html))
+        val cssParser = new CSSOMParser(new SACParserCSS3())
+        Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
+          Logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
+        } match {
+          case Failure(_) => (inline, head :+ element.html)
+          case Success(sheet) =>
+            val (styles, others) = seq(sheet.getCssRules).partition(isStyleRule)
+            val (inlineStyles, headStyles) = styles.flatMap(CSSRule.fromW3).flatten.partition(_.canInline)
+            val newHead = (headStyles.map(_.toString) ++ others.map(_.getCssText)).mkString("\n")
+            (inline ++ inlineStyles, (head :+ newHead).filter(_.nonEmpty))
+        }
     }
   }
 
@@ -125,9 +130,10 @@ object InlineStyles {
     *      -         |      -       | new
     */
   def mergeStyles(rule: CSSRule, existing: String): String = {
-    CSSRule.styleStringFromMap(rule.styles.foldLeft(CSSRule.styleMapFromString(existing)) { case (style, (property, value)) =>
-      if (style.get(property).exists(_.contains("!important")) && !value.contains("!important")) style
-      else style + (property -> value)
+    CSSRule.styleStringFromMap(rule.styles.foldLeft(CSSRule.styleMapFromString(existing)) {
+      case (style, (property, value)) =>
+        if (style.get(property).exists(_.contains("!important")) && !value.contains("!important")) style
+        else style + (property -> value)
     })
   }
 
@@ -136,10 +142,11 @@ object InlineStyles {
     */
   def sortStyles(styles: String): String = {
     val stylesMap = CSSRule.styleMapFromString(styles)
-    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith { case((_, v1), (_, v2)) =>
-      if (v1.contains("!important") || !v2.contains("!important")) false
-      else true
-    }:_*)
+    val importantStylesLast = ListMap(stylesMap.toSeq.sortWith {
+      case ((_, v1), (_, v2)) =>
+        if (v1.contains("!important") || !v2.contains("!important")) false
+        else true
+    }: _*)
 
     CSSRule.styleStringFromMap(importantStylesLast)
   }

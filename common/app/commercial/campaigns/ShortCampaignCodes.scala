@@ -2,7 +2,7 @@ package commercial.campaigns
 
 object ShortCampaignCodes {
 
-  private val campaigns = Map (
+  private val campaigns = Map(
     "iw" -> "twt_ipd",
     "wc" -> "twt_wc",
     "tf" -> "twt_fd",
@@ -12,14 +12,14 @@ object ShortCampaignCodes {
     "au" -> "soc_567",
     "tw" -> "twt_gu",
     "at" -> "twt_atn",
-    "sfb"-> "share_btn_fb",
+    "sfb" -> "share_btn_fb",
     "ip" -> "twt_iph",
     "stw" -> "share_btn_tw",
     "swa" -> "share_btn_wa",
-    "em"  -> "email",
+    "em" -> "email",
     "sgp" -> "share_btn_gp",
     "sbl" -> "share_btn_link",
-    "sme" -> "share_btn_me"
+    "sme" -> "share_btn_me",
   )
 
   // Resolves "stw" to query param: CMP->share_btn_tw

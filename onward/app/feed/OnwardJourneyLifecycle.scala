@@ -7,22 +7,25 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
 
 class OnwardJourneyLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  mostReadAgent: MostReadAgent,
-  geoMostPopularAgent: GeoMostPopularAgent,
-  dayMostPopularAgent: DayMostPopularAgent,
-  mostPopularAgent: MostPopularAgent,
-  mostViewedAudioAgent: MostViewedAudioAgent,
-  mostViewedGalleryAgent: MostViewedGalleryAgent,
-  mostViewedVideoAgent: MostViewedVideoAgent) extends LifecycleComponent {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    mostReadAgent: MostReadAgent,
+    geoMostPopularAgent: GeoMostPopularAgent,
+    dayMostPopularAgent: DayMostPopularAgent,
+    mostPopularAgent: MostPopularAgent,
+    mostViewedAudioAgent: MostViewedAudioAgent,
+    mostViewedGalleryAgent: MostViewedGalleryAgent,
+    mostViewedVideoAgent: MostViewedVideoAgent,
+) extends LifecycleComponent {
 
   implicit val capiClientExecutionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
-  appLifecycle.addStopHook { () => Future {
-    descheduleAll()
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      descheduleAll()
+    }
+  }
 
   private def descheduleAll(): Unit = {
     jobs.deschedule("OnwardJourneyAgentsHighFrequencyRefreshJob")

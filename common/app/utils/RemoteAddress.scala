@@ -7,7 +7,7 @@ trait RemoteAddress extends common.Logging {
 
   def clientIp(request: RequestHeader): Option[String] = {
     request.headers.get("X-Forwarded-For").flatMap { xForwardedFor =>
-      xForwardedFor.split(", ").find {  // leftmost non-private IP from header is client
+      xForwardedFor.split(", ").find { // leftmost non-private IP from header is client
         case Ip(a, b, c, d) => {
           if ("10" == a) false
           else if ("192" == a && "168" == b) false

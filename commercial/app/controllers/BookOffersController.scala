@@ -10,41 +10,47 @@ import play.api.mvc._
 
 import scala.concurrent.duration._
 
-class BookOffersController(bookFinder: BookFinder, bestsellersAgent: BestsellersAgent, val controllerComponents: ControllerComponents)
-  extends BaseController
-  with ImplicitControllerExecutionContext
-  with Logging
-  with implicits.Collections
-  with implicits.Requests {
+class BookOffersController(
+    bookFinder: BookFinder,
+    bestsellersAgent: BestsellersAgent,
+    val controllerComponents: ControllerComponents,
+) extends BaseController
+    with ImplicitControllerExecutionContext
+    with Logging
+    with implicits.Collections
+    with implicits.Requests {
 
   private def booksSample(isbns: Seq[String], segment: Segment): Seq[Book] =
-    (bestsellersAgent.getSpecificBooks(isbns) ++ bestsellersAgent.bestsellersTargetedAt(segment)).distinctBy(_.isbn).take(4)
+    (bestsellersAgent.getSpecificBooks(isbns) ++ bestsellersAgent.bestsellersTargetedAt(segment))
+      .distinctBy(_.isbn)
+      .take(4)
 
   private def isValidIsbn(isbn: String): Boolean = (isbn forall (_.isDigit)) && (isbn.length == 10 || isbn.length == 13)
 
-  def getBook: Action[AnyContent] = Action { implicit request =>
+  def getBook: Action[AnyContent] =
+    Action { implicit request =>
+      lazy val failedLookupResult: Result = Cached(30.seconds)(JsonNotFound())(request)
+      lazy val badRequestResponse: Result = Cached(1.day)(JsonComponent(JsNull))(request)
 
-    lazy val failedLookupResult: Result = Cached(30.seconds)(JsonNotFound())(request)
-    lazy val badRequestResponse: Result = Cached(1.day)(JsonComponent(JsNull))(request)
-
-    specificId match {
-      case Some(isbn) if isValidIsbn(isbn) =>
-        bookFinder.findByIsbn(isbn) map { book: Book =>
+      specificId match {
+        case Some(isbn) if isValidIsbn(isbn) =>
+          bookFinder.findByIsbn(isbn) map { book: Book =>
             Cached(1.hour)(JsonComponent(Json.toJson(book)))
-        } getOrElse failedLookupResult
-      case Some(invalidIsbn) =>
-        log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response.")
-        badRequestResponse
-      case None =>
-        log.error(s"Book lookup called with no ISBN. Returning empty response.")
-        badRequestResponse
+          } getOrElse failedLookupResult
+        case Some(invalidIsbn) =>
+          log.error(s"Book lookup called with invalid ISBN '$invalidIsbn'. Returning empty response.")
+          badRequestResponse
+        case None =>
+          log.error(s"Book lookup called with no ISBN. Returning empty response.")
+          badRequestResponse
 
+      }
     }
-  }
 
-  def getBooks: Action[AnyContent] = Action { implicit request =>
+  def getBooks: Action[AnyContent] =
+    Action { implicit request =>
       val json: JsValue = Json.toJson(booksSample(specificIds, segment))
-      Cached(60.seconds){
+      Cached(60.seconds) {
         JsonComponent(json)
       }
     }

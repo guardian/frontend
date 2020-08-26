@@ -14,7 +14,7 @@ trait CloudWatch extends Logging {
 
   lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
-  lazy val cloudwatch: Option[AmazonCloudWatchAsync] = Configuration.aws.credentials.map{ credentials =>
+  lazy val cloudwatch: Option[AmazonCloudWatchAsync] = Configuration.aws.credentials.map { credentials =>
     AmazonCloudWatchAsyncClient
       .asyncBuilder()
       .withCredentials(credentials)
@@ -22,14 +22,11 @@ trait CloudWatch extends Logging {
       .build()
   }
 
-  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with Logging
-  {
-    def onError(exception: Exception)
-    {
+  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with Logging {
+    def onError(exception: Exception) {
       log.info(s"CloudWatch PutMetricDataRequest error: ${exception.getMessage}}")
     }
-    def onSuccess(request: PutMetricDataRequest, result: PutMetricDataResult )
-    {
+    def onSuccess(request: PutMetricDataRequest, result: PutMetricDataResult) {
       log.info("CloudWatch PutMetricDataRequest - success")
     }
   }
@@ -52,20 +49,21 @@ trait CloudWatch extends Logging {
     }
   }
 
-  private def putMetricsWithStage(metricNamespace: String, metrics: List[FrontendMetric], dimensions: List[Dimension]): Unit = {
+  private def putMetricsWithStage(
+      metricNamespace: String,
+      metrics: List[FrontendMetric],
+      dimensions: List[Dimension],
+  ): Unit = {
     for {
       metricGroup <- metrics.filterNot(_.isEmpty).grouped(20)
     } {
       val metricsAsStatistics: List[FrontendStatisticSet] =
-        metricGroup.map( metric => FrontendStatisticSet(
-          metric.getAndResetDataPoints,
-          metric.name,
-          metric.metricUnit))
+        metricGroup.map(metric => FrontendStatisticSet(metric.getAndResetDataPoints, metric.name, metric.metricUnit))
 
       val request = new PutMetricDataRequest()
         .withNamespace(metricNamespace)
         .withMetricData {
-          val metricDatum = for(metricStatistic <- metricsAsStatistics) yield {
+          val metricDatum = for (metricStatistic <- metricsAsStatistics) yield {
             new MetricDatum()
               .withStatisticValues(frontendMetricToStatisticSet(metricStatistic))
               .withUnit(metricStatistic.unit)

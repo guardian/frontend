@@ -13,21 +13,21 @@ import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 import org.joda.time.DateTimeZone
 
 case class OnwardItem(
-  url: String,
-  linkText: String,
-  showByline: Boolean,
-  byline: Option[String],
-  image: Option[String],
-  ageWarning: Option[String],
-  isLiveBlog: Boolean,
-  pillar: String,
-  designType: String,
-  webPublicationDate: String,
-  headline: String,
-  mediaType: Option[String],
-  shortUrl: String,
-  kickerText: Option[String],
-  starRating: Option[Int],
+    url: String,
+    linkText: String,
+    showByline: Boolean,
+    byline: Option[String],
+    image: Option[String],
+    ageWarning: Option[String],
+    isLiveBlog: Boolean,
+    pillar: String,
+    designType: String,
+    webPublicationDate: String,
+    headline: String,
+    mediaType: Option[String],
+    shortUrl: String,
+    kickerText: Option[String],
+    starRating: Option[Int],
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -35,21 +35,21 @@ case class OnwardItem(
 // is that the image is optional in OnwardItem but not in OnwardItemMost
 
 case class OnwardItemMost(
-  designType: String,
-  pillar: String,
-  url: String,
-  headline: String,
-  isLiveBlog: Boolean,
-  linkText: String,
-  showByline: Boolean,
-  byline: Option[String],
-  image: String,
-  webPublicationDate: String,
-  ageWarning: Option[String],
-  mediaType: Option[String],
-  avatarUrl: Option[String],
-  kickerText: Option[String],
-  starRating: Option[Int],
+    designType: String,
+    pillar: String,
+    url: String,
+    headline: String,
+    isLiveBlog: Boolean,
+    linkText: String,
+    showByline: Boolean,
+    byline: Option[String],
+    image: String,
+    webPublicationDate: String,
+    ageWarning: Option[String],
+    mediaType: Option[String],
+    avatarUrl: Option[String],
+    kickerText: Option[String],
+    starRating: Option[Int],
 )
 
 object OnwardItemMost {
@@ -57,19 +57,21 @@ object OnwardItemMost {
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
     val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
-      contentCard.cutOut.map { cutOut =>  cutOut.imageUrl}
+      contentCard.cutOut.map { cutOut => cutOut.imageUrl }
     } else {
       None
     }
 
-    val maybeUrl2 = contentCard.displayElement.flatMap{ faciaDisplayElement => faciaDisplayElement match {
+    val maybeUrl2 = contentCard.displayElement.flatMap { faciaDisplayElement =>
+      faciaDisplayElement match {
         case InlineImage(imageMedia) => ImgSrc.getFallbackUrl(imageMedia)
-        case _ => None
-    }}
+        case _                       => None
+      }
+    }
 
     maybeUrl1 match {
       case Some(_) => maybeUrl1
-      case None => maybeUrl2
+      case None    => maybeUrl2
     }
 
   }
@@ -84,7 +86,7 @@ object OnwardItemMost {
       isLiveBlog = properties.isLiveBlog
       showByline = properties.showByline
       image <- maybeContent.trail.thumbnailPath
-      webPublicationDate <- contentCard.webPublicationDate.map( x => x.toDateTime().toString() )
+      webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
     } yield OnwardItemMost(
       designType = metadata.designType.toString,
       pillar = correctPillar(pillar.toString.toLowerCase),
@@ -93,33 +95,33 @@ object OnwardItemMost {
       isLiveBlog = isLiveBlog,
       linkText = "",
       showByline = showByline,
-      byline = contentCard.byline.map( x => x.get ),
+      byline = contentCard.byline.map(x => x.get),
       image = image,
       webPublicationDate = webPublicationDate,
       ageWarning = None,
-      mediaType = contentCard.mediaType.map( x => x.toString ),
+      mediaType = contentCard.mediaType.map(x => x.toString),
       avatarUrl = contentCardToAvatarUrl(contentCard),
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
-      starRating = contentCard.starRating
+      starRating = contentCard.starRating,
     )
   }
 }
 
 case class MostPopularGeoResponse(
-  country: Option[String],
-  heading: String,
-  trails: Seq[OnwardItem]
+    country: Option[String],
+    heading: String,
+    trails: Seq[OnwardItem],
 )
 
 case class OnwardCollectionResponse(
-  heading: String,
-  trails: Seq[OnwardItem]
+    heading: String,
+    trails: Seq[OnwardItem],
 )
 
 case class OnwardCollectionForDCRv2(
-  tabs: Seq[OnwardCollectionResponse],
-  mostCommented: Option[OnwardItemMost],
-  mostShared: Option[OnwardItemMost]
+    tabs: Seq[OnwardCollectionResponse],
+    mostCommented: Option[OnwardItemMost],
+    mostShared: Option[OnwardItemMost],
 )
 
 object OnwardCollection {
@@ -137,24 +139,26 @@ object OnwardCollection {
         .map(ContentOldAgeDescriber.apply)
         .filterNot(_ == "")
     }
-    trails.take(10).map(content =>
-      OnwardItem(
-        url = LinkTo(content.header.url),
-        linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
-        showByline = content.properties.showByline,
-        byline = content.properties.byline,
-        image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-        ageWarning = ageWarning(content),
-        isLiveBlog = content.properties.isLiveBlog,
-        pillar = determinePillar(content.maybePillar),
-        designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
-        webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
-        headline = content.header.headline,
-        mediaType = content.card.mediaType.map(_.toString()),
-        shortUrl = content.card.shortUrl,
-        kickerText = content.header.kicker.flatMap(_.properties.kickerText),
-        starRating = content.card.starRating
+    trails
+      .take(10)
+      .map(content =>
+        OnwardItem(
+          url = LinkTo(content.header.url),
+          linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
+          showByline = content.properties.showByline,
+          byline = content.properties.byline,
+          image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+          ageWarning = ageWarning(content),
+          isLiveBlog = content.properties.isLiveBlog,
+          pillar = determinePillar(content.maybePillar),
+          designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+          webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
+          headline = content.header.headline,
+          mediaType = content.card.mediaType.map(_.toString()),
+          shortUrl = content.card.shortUrl,
+          kickerText = content.header.kicker.flatMap(_.properties.kickerText),
+          starRating = content.card.starRating,
+        ),
       )
-    )
   }
 }

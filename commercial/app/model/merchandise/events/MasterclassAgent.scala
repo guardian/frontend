@@ -13,9 +13,11 @@ class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAg
 
   private val lookup = new Lookup(contentApiClient)
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Masterclass]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[Masterclass]] = {
 
-    def fetchKeywords(name: String): Future[Seq[String]] = for(tags <- lookup.keyword(name)) yield tags.map(_.id)
+    def fetchKeywords(name: String): Future[Seq[String]] = for (tags <- lookup.keyword(name)) yield tags.map(_.id)
 
     def addKeywordsFromContentApi(masterclasses: Seq[Masterclass]): Future[Seq[Masterclass]] = {
       Future.traverse(masterclasses) { masterclass =>
@@ -44,7 +46,6 @@ class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAg
 
     val futureParsedFeed = Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
     futureParsedFeed flatMap { feed =>
-
       val masterclasses: Seq[Masterclass] = feed.contents flatMap { event => Masterclass.fromEvent(event) }
       updateAvailableMerchandise(masterclasses)
 

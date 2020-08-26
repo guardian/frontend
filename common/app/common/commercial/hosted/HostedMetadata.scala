@@ -38,15 +38,15 @@ object HostedMetadata {
         "productionOffice" -> JsString(productionOffice),
         "toneIds" -> JsString(toneIds),
         "tones" -> JsString(toneNames),
-        "shortUrl" -> JsString(item.fields.flatMap(_.shortUrl).getOrElse(""))
+        "shortUrl" -> JsString(item.fields.flatMap(_.shortUrl).getOrElse("")),
       ),
       opengraphPropertiesOverrides = Map(
         "og:url" -> s"${site.host}/${item.id}",
         "og:title" -> item.webTitle,
         "og:type" -> "article",
         "og:description" -> s"ADVERTISER CONTENT FROM ${owner.toUpperCase} HOSTED BY THE GUARDIAN | $description",
-        "fb:app_id" -> "180444840287"
-      )
+        "fb:app_id" -> "180444840287",
+      ),
     )
   }
 }

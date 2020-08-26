@@ -17,7 +17,7 @@ object URIFormats {
         case JsString(s) =>
           Try(URI.create(s)) match {
             case Success(uri) => JsSuccess(uri)
-            case Failure(_) => error
+            case Failure(_)   => error
           }
         case _ => error
       }

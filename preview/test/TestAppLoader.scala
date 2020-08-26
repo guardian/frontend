@@ -8,5 +8,6 @@ trait TestComponents extends AppComponents with WithTestContentApiClient {
 }
 
 class TestAppLoader extends AppLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with TestComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with TestComponents
 }

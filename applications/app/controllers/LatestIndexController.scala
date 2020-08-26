@@ -11,40 +11,49 @@ import services.{IndexPage, IndexPageItem}
 
 import scala.concurrent.Future
 
-class LatestIndexController(
-  contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents)
-  extends BaseController with ImplicitControllerExecutionContext with implicits.ItemResponses with Logging {
+class LatestIndexController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)
+    extends BaseController
+    with ImplicitControllerExecutionContext
+    with implicits.ItemResponses
+    with Logging {
 
-  def latest(path: String): Action[AnyContent] = Action.async { implicit request =>
-    loadLatest(path).map { _.map { index =>
-      index.page match {
-        case tag: Tag if tag.isSeries || tag.isBlog => handleSeriesBlogs(index)
-        case tag: Tag => MovedPermanently(s"${tag.metadata.url}/all")
-        case section: Section =>
-          val url = if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url) else section.metadata.url
-          MovedPermanently(s"$url/all")
-        case _ => NotFound
-      }
-    }.getOrElse(NotFound)}.map(r => Cached(300)(WithoutRevalidationResult(r)))
-  }
+  def latest(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      loadLatest(path)
+        .map {
+          _.map { index =>
+            index.page match {
+              case tag: Tag if tag.isSeries || tag.isBlog => handleSeriesBlogs(index)
+              case tag: Tag                               => MovedPermanently(s"${tag.metadata.url}/all")
+              case section: Section =>
+                val url =
+                  if (section.isEditionalised) Paths.stripEditionIfPresent(section.metadata.url)
+                  else section.metadata.url
+                MovedPermanently(s"$url/all")
+              case _ => NotFound
+            }
+          }.getOrElse(NotFound)
+        }
+        .map(r => Cached(300)(WithoutRevalidationResult(r)))
+    }
 
-  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) = index.trails.headOption match {
-    case Some(latest) if request.isEmailJson || request.isEmailTxt || request.isHeadlineText =>
-      // We perform an internal redirect for Braze. It cannot handle 30Xs
-      emailInternalRedirect(latest)
+  private def handleSeriesBlogs(index: IndexPage)(implicit request: RequestHeader) =
+    index.trails.headOption match {
+      case Some(latest) if request.isEmailJson || request.isEmailTxt || request.isHeadlineText =>
+        // We perform an internal redirect for Braze. It cannot handle 30Xs
+        emailInternalRedirect(latest)
 
-    case Some(latest) if request.isEmail =>
-      val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
-      val url = s"${latest.metadata.url}/email"
-      Redirect(url, queryString)
+      case Some(latest) if request.isEmail =>
+        val queryString = request.campaignCode.fold(Map.empty[String, Seq[String]])(c => Map("CMP" -> Seq(c)))
+        val url = s"${latest.metadata.url}/email"
+        Redirect(url, queryString)
 
-    case Some(latest) =>
-      Found(latest.metadata.url)
+      case Some(latest) =>
+        Found(latest.metadata.url)
 
-    case None =>
-      NotFound
-  }
+      case None =>
+        NotFound
+    }
 
   private def emailInternalRedirect(latest: Content)(implicit request: RequestHeader) = {
     val emailJsonSuffix = if (request.isEmailJson) EMAIL_JSON_SUFFIX else ""
@@ -59,33 +68,41 @@ class LatestIndexController(
 
   // this is simply the latest by date. No lead content, editors picks, or anything else
   private def loadLatest(path: String)(implicit request: RequestHeader): Future[Option[IndexPage]] = {
-    val result = contentApiClient.getResponse(
-      contentApiClient.item(s"/$path", Edition(request))
-        .pageSize(1)
-        .orderBy("newest")
-    ).map{ item =>
-      item.section.map( section =>
-        IndexPage(
-          page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
-          tags = Tags(Nil),
-          date = DateTime.now,
-          tzOverride = None
-        )
-      ).orElse(item.tag.map( tag =>
-        IndexPage(
-          page = Tag.make(tag),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
-          tags = Tags(Nil),
-          date = DateTime.now,
-          tzOverride = None
-        )
-      ))
-    }
+    val result = contentApiClient
+      .getResponse(
+        contentApiClient
+          .item(s"/$path", Edition(request))
+          .pageSize(1)
+          .orderBy("newest"),
+      )
+      .map { item =>
+        item.section
+          .map(section =>
+            IndexPage(
+              page = Section.make(section),
+              contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+              tags = Tags(Nil),
+              date = DateTime.now,
+              tzOverride = None,
+            ),
+          )
+          .orElse(
+            item.tag.map(tag =>
+              IndexPage(
+                page = Tag.make(tag),
+                contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+                tags = Tags(Nil),
+                date = DateTime.now,
+                tzOverride = None,
+              ),
+            ),
+          )
+      }
 
-    result recover { case e: Exception =>
-      log.error(e.getMessage, e)
-      None
+    result recover {
+      case e: Exception =>
+        log.error(e.getMessage, e)
+        None
     }
   }
 }

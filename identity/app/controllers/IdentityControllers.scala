@@ -12,10 +12,7 @@ import play.api.mvc.ControllerComponents
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.IdentityServices
 
-trait IdentityControllers extends IdApiComponents
-  with IdentityServices
-  with FormStackComponents
-  with FormComponents {
+trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext

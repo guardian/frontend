@@ -14,7 +14,7 @@ trait WSRequests {
       wsRequest.get() flatMap { response =>
         response.status match {
           case 200 => Future.successful(response)
-          case _ => Future.failed(HttpStatusException(response.status, response.statusText))
+          case _   => Future.failed(HttpStatusException(response.status, response.statusText))
         }
       }
     }

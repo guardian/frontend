@@ -15,30 +15,33 @@ import scala.xml.{Elem, XML}
 object MagentoBestsellersFeed extends Logging {
 
   def parse(xml: Elem): Seq[Book] = {
-    xml \ "Entry" map {
-      entry =>
-        val book = entry \ "book"
+    xml \ "Entry" map { entry =>
+      val book = entry \ "book"
 
-        def getPrice(eltName: String): Option[Double] = Some((book \ eltName).text).map(_.stripPrefix("£").toDouble)
+      def getPrice(eltName: String): Option[Double] = Some((book \ eltName).text).map(_.stripPrefix("£").toDouble)
 
-        Book(
-          title = (book \ "title").text,
-          author = OptString((book \ "author").text),
-          isbn = (book \ "isbn").text,
-          price = getPrice("price"),
-          offerPrice = getPrice("offerprice"),
-          description = OptString((book \ "description").text),
-          jacketUrl = (book \ "jacketurl").headOption.map(node => s"http:${node.text}".
-            replace("http://images.bertrams.com/ProductImages/services/GetImage", "http://c.guim.co.uk/books")),
-          buyUrl = Some((book \ "bookurl").text),
-          position = Some((entry \ "Position").text).map(_.toInt),
-          Some("General"),
-          Nil
-        )
+      Book(
+        title = (book \ "title").text,
+        author = OptString((book \ "author").text),
+        isbn = (book \ "isbn").text,
+        price = getPrice("price"),
+        offerPrice = getPrice("offerprice"),
+        description = OptString((book \ "description").text),
+        jacketUrl = (book \ "jacketurl").headOption.map(node =>
+          s"http:${node.text}"
+            .replace("http://images.bertrams.com/ProductImages/services/GetImage", "http://c.guim.co.uk/books"),
+        ),
+        buyUrl = Some((book \ "bookurl").text),
+        position = Some((entry \ "Position").text).map(_.toInt),
+        Some("General"),
+        Nil,
+      )
     }
   }
 
-  def loadBestsellers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Book]] = {
+  def loadBestsellers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[Book]] = {
 
     val feedName = feedMetaData.name
 

@@ -5,14 +5,14 @@ import model._
 import model.pressed._
 
 case class Sublink(
-  kicker: Option[ItemKicker],
-  headline: String,
-  url: EditionalisedLink,
-  cardStyle: CardStyle,
-  mediaType: Option[MediaType],
-  pillar: Option[Pillar],
-  contentType: DotcomContentType,
-  designType: Option[DesignType],
+    kicker: Option[ItemKicker],
+    headline: String,
+    url: EditionalisedLink,
+    cardStyle: CardStyle,
+    mediaType: Option[MediaType],
+    pillar: Option[Pillar],
+    contentType: DotcomContentType,
+    designType: Option[DesignType],
 )
 
 object Sublink {

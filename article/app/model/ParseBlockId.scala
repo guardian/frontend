@@ -23,7 +23,7 @@ object ParseBlockId extends RegexParsers {
 
     parse(expr, input) match {
       case Success(matched, _) => ParsedBlockId(matched)
-      case _ => InvalidFormat
+      case _                   => InvalidFormat
     }
   }
 
@@ -32,7 +32,7 @@ object ParseBlockId extends RegexParsers {
   def fromBlockId(input: String): ParseResult = {
     parse(blockId, input) match {
       case Success(matched, _) => ParsedBlockId(matched)
-      case _ => InvalidFormat
+      case _                   => InvalidFormat
     }
   }
 

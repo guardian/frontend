@@ -7,13 +7,13 @@ import scala.concurrent.Await
 import scala.concurrent.duration._
 
 @DoNotDiscover class LookupTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient {
 
   lazy val lookup = new Lookup(testContentApiClient)
 
@@ -31,18 +31,21 @@ import scala.concurrent.duration._
 
   "contentByShortUrls" should "find content for genuine URLs" in {
     val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "https://gu.com/p/4vf6t")
-    contents.map(_.metadata.webTitle) should be(Seq(
-      "Wikipedia: meet the man who has edited 3m articles",
-      "A book for the beach: In the Woods by Tana French",
-      "Norway minister threatens to deport Eritrean migrants"
-    ))
+    contents.map(_.metadata.webTitle) should be(
+      Seq(
+        "Wikipedia: meet the man who has edited 3m articles",
+        "A book for the beach: In the Woods by Tana French",
+        "Norway minister threatens to deport Eritrean migrants",
+      ),
+    )
   }
 
   it should "find content for short URL ids with campaign suffixes" in {
     contentsOf("p/4z2fv/stw", "p/4nx5n/stw").map(_.metadata.webTitle) should be(
       Seq(
-        "Papua New Guinea unveiled: exclusive photos of the nation’s tribal culture", "Defining Moment: a photographer's snap decision in the face of danger (part 1)"
-      )
+        "Papua New Guinea unveiled: exclusive photos of the nation’s tribal culture",
+        "Defining Moment: a photographer's snap decision in the face of danger (part 1)",
+      ),
     )
   }
 

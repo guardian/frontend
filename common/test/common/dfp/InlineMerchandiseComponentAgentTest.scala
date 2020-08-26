@@ -7,19 +7,14 @@ import org.scalatest.{FlatSpec, Matchers}
 class InlineMerchandiseComponentAgentTest extends FlatSpec with Matchers {
 
   private def toTag(tagType: ApiTagType, tagId: String, sectionId: Option[String] = None): Tag = {
-    Tag.make(ApiTag(id = tagId,
-      `type` = tagType,
-      sectionId = sectionId,
-      webTitle = "title",
-      webUrl = "url",
-      apiUrl = "url"))
+    Tag.make(
+      ApiTag(id = tagId, `type` = tagType, sectionId = sectionId, webTitle = "title", webUrl = "url", apiUrl = "url"),
+    )
   }
-  private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag = toTag(ApiTagType.Keyword,
-    tagId,
-    sectionId)
-  private def toSeries(tagId: String, sectionId: Option[String] = None): Tag = toTag(ApiTagType.Series,
-    tagId,
-    sectionId)
+  private def toKeyword(tagId: String, sectionId: Option[String] = None): Tag =
+    toTag(ApiTagType.Keyword, tagId, sectionId)
+  private def toSeries(tagId: String, sectionId: Option[String] = None): Tag =
+    toTag(ApiTagType.Series, tagId, sectionId)
 
   private object TestAgent extends InlineMerchandiseComponentAgent {
     override protected def inlineMerchandisingTargetedTags: InlineMerchandisingTagSet =
@@ -33,7 +28,7 @@ class InlineMerchandiseComponentAgentTest extends FlatSpec with Matchers {
   it should "be true if keyword tag exists" in {
     val tags = Seq(
       toKeyword("culture/article"),
-      toKeyword("advert/ad-feature")
+      toKeyword("advert/ad-feature"),
     )
     TestAgent.hasInlineMerchandise(tags) should be(true)
   }

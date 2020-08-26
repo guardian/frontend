@@ -2,7 +2,6 @@ package navigation
 
 import java.net.URLEncoder
 
-
 object AuthenticationComponentEvent {
   sealed abstract class ComponentEventId(val id: String)
   case object SigninHeaderId extends ComponentEventId("guardian_signin_header")
@@ -13,9 +12,10 @@ object AuthenticationComponentEvent {
   case object SigninFromFormStack extends ComponentEventId("signin_from_formstack")
   case object SigninFromPasswordResetConfirmation extends ComponentEventId("signin_from_password_reset_confirmation")
 
-  def createAuthenticationComponentEventParams(componentEventId: ComponentEventId): String = createAuthenticationComponentEventTuple(componentEventId) match {
-    case (key, value) => s"$key=${URLEncoder.encode(value, "UTF-8")}"
-  }
+  def createAuthenticationComponentEventParams(componentEventId: ComponentEventId): String =
+    createAuthenticationComponentEventTuple(componentEventId) match {
+      case (key, value) => s"$key=${URLEncoder.encode(value, "UTF-8")}"
+    }
 
   def createAuthenticationComponentEventTuple(componentEventId: ComponentEventId): (String, String) = {
     val eventParams = s"componentType=identityauthentication&componentId=${componentEventId.id}"

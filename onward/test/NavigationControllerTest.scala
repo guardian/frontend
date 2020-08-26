@@ -6,7 +6,7 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class NavigationControllerTest
-  extends FlatSpec
+    extends FlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

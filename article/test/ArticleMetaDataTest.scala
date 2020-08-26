@@ -6,14 +6,14 @@ import metadata.MetaDataMatcher
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class ArticleMetaDataTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val articleUrl = "environment/2012/feb/22/capitalise-low-carbon-future"
   val oldSportUrl = "sport/2015/sep/11/how-women-in-tennis-achieved-equal-pay-us-open"
@@ -21,7 +21,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
   lazy val articleController = new ArticleController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
-    wsClient
+    wsClient,
   )
 
   it should "Include organisation metadata" in {

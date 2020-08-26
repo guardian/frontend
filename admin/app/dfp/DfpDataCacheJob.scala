@@ -8,31 +8,32 @@ import tools.Store
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
-                      customFieldAgent: CustomFieldAgent,
-                      customTargetingAgent: CustomTargetingAgent,
-                      placementAgent: PlacementAgent,
-                      dfpApi: DfpApi) extends Logging {
+class DfpDataCacheJob(
+    adUnitAgent: AdUnitAgent,
+    customFieldAgent: CustomFieldAgent,
+    customTargetingAgent: CustomTargetingAgent,
+    placementAgent: PlacementAgent,
+    dfpApi: DfpApi,
+) extends Logging {
 
-  case class LineItemLoadSummary(
-    validLineItems: Seq[GuLineItem],
-    invalidLineItems: Seq[GuLineItem])
+  case class LineItemLoadSummary(validLineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem])
 
-  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
-    log.info("Refreshing data cache")
-    val start = System.currentTimeMillis
-    val data = loadLineItems()
-    val sponsorshipLineItemIds = dfpApi.readSponsorshipLineItemIds()
-    val duration = System.currentTimeMillis - start
-    log.info(s"Loading DFP data took $duration ms")
-    write(data)
-    Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
-  }
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] =
+    Future {
+      log.info("Refreshing data cache")
+      val start = System.currentTimeMillis
+      val data = loadLineItems()
+      val sponsorshipLineItemIds = dfpApi.readSponsorshipLineItemIds()
+      val duration = System.currentTimeMillis - start
+      log.info(s"Loading DFP data took $duration ms")
+      write(data)
+      Store.putNonRefreshableLineItemIds(sponsorshipLineItemIds)
+    }
 
   /*
   for initialization and total refresh of data,
   so would be used for first read and for emergency data update.
-  */
+   */
   def refreshAllDfpData()(implicit executionContext: ExecutionContext): Unit = {
 
     for {
@@ -50,9 +51,7 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
     def fetchCachedLineItems(): DfpLineItems = {
       val lineItemReport = Store.getDfpLineItemsReport()
 
-      DfpLineItems(
-        validItems = lineItemReport.lineItems,
-        invalidItems = lineItemReport.invalidLineItems)
+      DfpLineItems(validItems = lineItemReport.lineItems, invalidItems = lineItemReport.invalidLineItems)
     }
 
     val start = System.currentTimeMillis
@@ -60,7 +59,7 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
     val loadSummary = loadLineItems(
       fetchCachedLineItems(),
       dfpApi.readLineItemsModifiedSince,
-      dfpApi.readCurrentLineItems
+      dfpApi.readCurrentLineItems,
     )
 
     val loadDuration = System.currentTimeMillis - start
@@ -71,16 +70,18 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
 
   def report(ids: Iterable[Long]): String = if (ids.isEmpty) "None" else ids.mkString(", ")
 
-  def loadLineItems(cachedLineItems: => DfpLineItems,
-                    lineItemsModifiedSince: DateTime => DfpLineItems,
-                    allActiveLineItems: => DfpLineItems): LineItemLoadSummary = {
+  def loadLineItems(
+      cachedLineItems: => DfpLineItems,
+      lineItemsModifiedSince: DateTime => DfpLineItems,
+      allActiveLineItems: => DfpLineItems,
+  ): LineItemLoadSummary = {
 
     // If the cache is empty, run a full query to generate a complete LineItemLoadSummary, using allActiveLineItems.
     if (cachedLineItems.validItems.isEmpty) {
       // Create a full summary object from scratch, using a query that collects all line items from dfp.
       LineItemLoadSummary(
         validLineItems = allActiveLineItems.validItems,
-        invalidLineItems = allActiveLineItems.invalidItems
+        invalidLineItems = allActiveLineItems.invalidItems,
       )
     } else {
 
@@ -122,7 +123,7 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
 
       LineItemLoadSummary(
         validLineItems = updateCachedContent(cachedLineItems.validItems, recentlyModified.validItems),
-        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems)
+        invalidLineItems = updateCachedContent(cachedLineItems.invalidItems, recentlyModified.invalidItems),
       )
     }
   }
@@ -133,21 +134,23 @@ class DfpDataCacheJob(adUnitAgent: AdUnitAgent,
       val now = printLondonTime(DateTime.now())
 
       val inlineMerchandisingTargetedTags = data.inlineMerchandisingTargetedTags
-      Store.putInlineMerchandisingSponsorships(stringify(toJson(
-        InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))))
+      Store.putInlineMerchandisingSponsorships(
+        stringify(toJson(InlineMerchandisingTargetedTagsReport(now, inlineMerchandisingTargetedTags))),
+      )
 
       val targetedHighMerchandisingLineItems = data.targetedHighMerchandisingLineItems
-      Store.putHighMerchandisingSponsorships(stringify(toJson(
-        HighMerchandisingTargetedTagsReport(now, targetedHighMerchandisingLineItems))))
+      Store.putHighMerchandisingSponsorships(
+        stringify(toJson(HighMerchandisingTargetedTagsReport(now, targetedHighMerchandisingLineItems))),
+      )
 
       val pageSkinSponsorships = data.pageSkinSponsorships
-      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now,
-        pageSkinSponsorships))))
+      Store.putDfpPageSkinAdUnits(stringify(toJson(PageSkinSponsorshipReport(now, pageSkinSponsorships))))
 
       Store.putDfpLineItemsReport(stringify(toJson(LineItemReport(now, data.lineItems, data.invalidLineItems))))
 
-      Store.putTopAboveNavSlotTakeovers(stringify(toJson(LineItemReport(now,
-        data.topAboveNavSlotTakeovers, Seq.empty))))
+      Store.putTopAboveNavSlotTakeovers(
+        stringify(toJson(LineItemReport(now, data.topAboveNavSlotTakeovers, Seq.empty))),
+      )
     }
   }
 }

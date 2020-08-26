@@ -20,85 +20,85 @@ import scala.Function.const
 sealed trait FaciaCard
 
 object FaciaCard {
-  private def getByline(faciaContent: PressedContent) = faciaContent.properties.byline.filter(const(faciaContent.properties.showByline)) map { byline =>
-    Byline(byline, faciaContent.contributors)
-  }
+  private def getByline(faciaContent: PressedContent) =
+    faciaContent.properties.byline.filter(const(faciaContent.properties.showByline)) map { byline =>
+      Byline(byline, faciaContent.contributors)
+    }
 
   def fromTrail(
-    faciaContent: PressedContent,
-    config: CollectionConfig,
-    cardTypes: ItemClasses,
-    showSeriesAndBlogKickers: Boolean
-
+      faciaContent: PressedContent,
+      config: CollectionConfig,
+      cardTypes: ItemClasses,
+      showSeriesAndBlogKickers: Boolean,
   ): FaciaCard = {
-      val maybeKicker = faciaContent.header.kicker orElse {
-        if (showSeriesAndBlogKickers) {
-          faciaContent.header.seriesOrBlogKicker
-        } else {
-          None
-        }
+    val maybeKicker = faciaContent.header.kicker orElse {
+      if (showSeriesAndBlogKickers) {
+        faciaContent.header.seriesOrBlogKicker
+      } else {
+        None
       }
+    }
 
-      /** If the kicker contains the byline, don't display it */
-      val suppressByline = (
-                             for {
-                               kicker <- maybeKicker
-                               kickerText <- kicker.properties.kickerText
-                               byline <- faciaContent.properties.byline
-                             } yield kickerText contains byline
-                             ) getOrElse false
+    /** If the kicker contains the byline, don't display it */
+    val suppressByline = (
+      for {
+        kicker <- maybeKicker
+        kickerText <- kicker.properties.kickerText
+        byline <- faciaContent.properties.byline
+      } yield kickerText contains byline
+    ) getOrElse false
 
-        ContentCard(
-        faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
-        FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
-        getByline(faciaContent).filterNot(Function.const(suppressByline)),
-        FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
-        CutOut.fromTrail(faciaContent),
-        faciaContent.card.cardStyle,
-        cardTypes,
-        Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
-        faciaContent.card.starRating,
-        DiscussionSettings.fromTrail(faciaContent),
-        SnapStuff.fromTrail(faciaContent),
-        faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
-        faciaContent.card.trailText,
-        faciaContent.card.mediaType,
-        DisplaySettings.fromTrail(faciaContent),
-        faciaContent.card.isLive,
-        if (config.showTimestamps) Option(DateTimestamp) else None,
-        faciaContent.card.shortUrlPath,
-        useShortByline = false,
-        faciaContent.card.group,
-        branding = faciaContent.branding(defaultEdition),
-        properties = Some(faciaContent.properties)
-      )
+    ContentCard(
+      faciaContent.properties.maybeContentId.orElse(Option(faciaContent.card.id)),
+      FaciaCardHeader.fromTrailAndKicker(faciaContent, maybeKicker, Some(config)),
+      getByline(faciaContent).filterNot(Function.const(suppressByline)),
+      FaciaDisplayElement.fromFaciaContentAndCardType(faciaContent, cardTypes),
+      CutOut.fromTrail(faciaContent),
+      faciaContent.card.cardStyle,
+      cardTypes,
+      Sublinks.takeSublinks(faciaContent.supporting, cardTypes).map(Sublink.fromFaciaContent),
+      faciaContent.card.starRating,
+      DiscussionSettings.fromTrail(faciaContent),
+      SnapStuff.fromTrail(faciaContent),
+      faciaContent.card.webPublicationDateOption.filterNot(const(faciaContent.shouldHidePublicationDate)),
+      faciaContent.card.trailText,
+      faciaContent.card.mediaType,
+      DisplaySettings.fromTrail(faciaContent),
+      faciaContent.card.isLive,
+      if (config.showTimestamps) Option(DateTimestamp) else None,
+      faciaContent.card.shortUrlPath,
+      useShortByline = false,
+      faciaContent.card.group,
+      branding = faciaContent.branding(defaultEdition),
+      properties = Some(faciaContent.properties),
+    )
   }
 }
 
 case class ContentCard(
-  id: Option[String],
-  header: FaciaCardHeader,
-  byline: Option[Byline],
-  displayElement: Option[FaciaDisplayElement],
-  cutOut: Option[CutOut],
-  cardStyle: CardStyle,
-  cardTypes: ItemClasses,
-  sublinks: Seq[Sublink],
-  starRating: Option[Int],
-  discussionSettings: DiscussionSettings,
-  snapStuff: Option[SnapStuff],
-  webPublicationDate: Option[DateTime],
-  trailText: Option[String],
-  mediaType: Option[MediaType],
-  displaySettings: DisplaySettings,
-  isLive: Boolean,
-  timeStampDisplay: Option[FaciaCardTimestamp],
-  shortUrl: Option[String],
-  useShortByline: Boolean,
-  group: String,
-  branding: Option[Branding],
-  properties: Option[PressedProperties],
-  fromShowMore: Boolean = false
+    id: Option[String],
+    header: FaciaCardHeader,
+    byline: Option[Byline],
+    displayElement: Option[FaciaDisplayElement],
+    cutOut: Option[CutOut],
+    cardStyle: CardStyle,
+    cardTypes: ItemClasses,
+    sublinks: Seq[Sublink],
+    starRating: Option[Int],
+    discussionSettings: DiscussionSettings,
+    snapStuff: Option[SnapStuff],
+    webPublicationDate: Option[DateTime],
+    trailText: Option[String],
+    mediaType: Option[MediaType],
+    displaySettings: DisplaySettings,
+    isLive: Boolean,
+    timeStampDisplay: Option[FaciaCardTimestamp],
+    shortUrl: Option[String],
+    useShortByline: Boolean,
+    group: String,
+    branding: Option[Branding],
+    properties: Option[PressedProperties],
+    fromShowMore: Boolean = false,
 ) extends FaciaCard {
 
   private lazy val storyContent: Option[PressedStory] = properties.flatMap(_.maybeContent)
@@ -121,26 +121,28 @@ case class ContentCard(
     if (header.isGallery) Some("gallery")
     else if (header.isAudio) Some("podcast")
     else if (header.isVideo) Some("video")
-    else  None
+    else None
   }
 
   def bylineText: Option[String] = if (useShortByline) byline.map(_.shortByline) else byline.map(_.get)
 
   def setKicker(kicker: Option[ItemKicker]): ContentCard = copy(header = header.copy(kicker = kicker))
 
-  def isVideo: Boolean = displayElement match {
-    case Some(InlineVideo(_, _, _)) => true
-    case _ => false
-  }
+  def isVideo: Boolean =
+    displayElement match {
+      case Some(InlineVideo(_, _, _)) => true
+      case _                          => false
+    }
 
-  def hasImage: Boolean = displayElement match {
-    case Some(InlineVideo(_, _, Some(_))) => true
-    case Some(InlineYouTubeMediaAtom(_, _)) => true
-    case Some(InlineImage(_)) => true
-    case Some(InlineSlideshow(_)) => true
-    case Some(CrosswordSvg(_)) => true
-    case _ => false
-  }
+  def hasImage: Boolean =
+    displayElement match {
+      case Some(InlineVideo(_, _, Some(_)))   => true
+      case Some(InlineYouTubeMediaAtom(_, _)) => true
+      case Some(InlineImage(_))               => true
+      case Some(InlineSlideshow(_))           => true
+      case Some(CrosswordSvg(_))              => true
+      case _                                  => false
+    }
 
   def dataLinkName(index: Int): String = {
     val name = s"$analyticsPrefix | card-@${index + 1}"
@@ -153,38 +155,39 @@ case class ContentCard(
   def showDisplayElement: Boolean =
     cardTypes.allTypes.exists(_.canShowMedia) && !displaySettings.imageHide && cutOut.isEmpty
 
-  def showReviewStars: Boolean = starRating.isDefined && (displayElement match {
-    case Some(InlineImage(_)) if showDisplayElement => false
-    case _ => true
-  })
+  def showReviewStars: Boolean =
+    starRating.isDefined && (displayElement match {
+      case Some(InlineImage(_)) if showDisplayElement => false
+      case _                                          => true
+    })
 
   def showStandfirst: Boolean = cardTypes.allTypes.exists(_.showStandfirst)
 
-  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint =
-      FaciaWidths.mediaFromItemClasses(cardTypes)
+  def mediaWidthsByBreakpoint(implicit requestHeader: RequestHeader): WidthsByBreakpoint =
+    FaciaWidths.mediaFromItemClasses(cardTypes)
 
-  def squareImageWidthsByBreakpoint(implicit requestHeader: RequestHeader) : WidthsByBreakpoint =
-      FaciaWidths.squareFront()
+  def squareImageWidthsByBreakpoint(implicit requestHeader: RequestHeader): WidthsByBreakpoint =
+    FaciaWidths.squareFront()
 
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
-  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if(displaySettings.isBoosted) "+" else ""}"
+  val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if (displaySettings.isBoosted) "+" else ""}"
 
   val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
 
   val isMediaLink = mediaType.nonEmpty
 
   val hasVideoMainMedia = displayElement match {
-    case Some(_: InlineVideo) if !isMediaLink => true
+    case Some(_: InlineVideo) if !isMediaLink            => true
     case Some(_: InlineYouTubeMediaAtom) if !isMediaLink => true
-    case _ => false
+    case _                                               => false
   }
 
   val designType: Option[DesignType] = storyContent.map(_.metadata.designType)
   val pillar: Option[Pillar] = Pillar(storyContent)
   val contentType: DotcomContentType = DotcomContentType(storyContent)
 
-  val isAdvertisementFeature : Boolean = designType.contains(AdvertisementFeature)
+  val isAdvertisementFeature: Boolean = designType.contains(AdvertisementFeature)
 }
 
 object ContentCard {
@@ -193,12 +196,14 @@ object ContentCard {
 
     val cardTypesForRecommendations = ItemClasses(mobile = MediaList, tablet = Standard)
 
-    PartialFunction.condOpt(FaciaCard.fromTrail(
-      faciaContent = FaciaContentConvert.contentToFaciaContent(apiContent),
-      config = CollectionConfig.empty,
-      cardTypes = cardTypesForRecommendations,
-      showSeriesAndBlogKickers = false
-    )) {
+    PartialFunction.condOpt(
+      FaciaCard.fromTrail(
+        faciaContent = FaciaContentConvert.contentToFaciaContent(apiContent),
+        config = CollectionConfig.empty,
+        cardTypes = cardTypesForRecommendations,
+        showSeriesAndBlogKickers = false,
+      ),
+    ) {
       case content: ContentCard => content
     }
 
@@ -208,15 +213,15 @@ object ContentCard {
 case class HtmlBlob(html: Html, customCssClasses: Seq[String], cardTypes: ItemClasses) extends FaciaCard
 
 case class PaidCard(
-  icon: Option[String],
-  headline: String,
-  kicker: Option[String],
-  description: Option[String],
-  image: Option[ImageMedia],
-  fallbackImageUrl: Option[String],
-  targetUrl: String,
-  cardTypes: Option[ItemClasses] = None,
-  branding: Option[Branding]
+    icon: Option[String],
+    headline: String,
+    kicker: Option[String],
+    description: Option[String],
+    image: Option[ImageMedia],
+    fallbackImageUrl: Option[String],
+    targetUrl: String,
+    cardTypes: Option[ItemClasses] = None,
+    branding: Option[Branding],
 ) extends FaciaCard
 
 object PaidCard {
@@ -250,10 +255,10 @@ object PaidCard {
       fallbackImageUrl,
       targetUrl = content match {
         case snap: LinkSnap => snap.properties.href getOrElse ""
-        case _ => header.url
+        case _              => header.url
       },
       cardTypes = cardTypes,
-      branding = content.branding(defaultEdition)
+      branding = content.branding(defaultEdition),
     )
   }
 }

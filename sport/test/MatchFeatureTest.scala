@@ -4,11 +4,7 @@ import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 
 import scala.collection.JavaConverters._
 
-@DoNotDiscover class MatchFeatureTest
-  extends FeatureSpec
-  with GivenWhenThen
-  with Matchers
-  with ConfiguredTestSuite {
+@DoNotDiscover class MatchFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
   feature("MatchPage") {
 

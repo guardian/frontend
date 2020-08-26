@@ -8,28 +8,28 @@ import model.MetaData
 import views.support.{ImgSrc, Item1200, Item700}
 
 case class HostedGalleryPage(
-  override val id: String,
-  override val campaign: Option[HostedCampaign],
-  override val title: String,
-  override val standfirst: String,
-  override val cta: HostedCallToAction,
-  ctaIndex: Option[Integer] = None,
-  override val socialShareText: Option[String] = None,
-  override val shortSocialShareText: Option[String] = None,
-  images: List[HostedGalleryImage],
-  override val thumbnailUrl: String,
-  override val metadata: MetaData
+    override val id: String,
+    override val campaign: Option[HostedCampaign],
+    override val title: String,
+    override val standfirst: String,
+    override val cta: HostedCallToAction,
+    ctaIndex: Option[Integer] = None,
+    override val socialShareText: Option[String] = None,
+    override val shortSocialShareText: Option[String] = None,
+    images: List[HostedGalleryImage],
+    override val thumbnailUrl: String,
+    override val metadata: MetaData,
 ) extends HostedPage {
   override val mainImageUrl = images.headOption.map(_.url).getOrElse("")
 }
 
 case class HostedGalleryImage(
-  url: String,
-  width: Option[Int] = None,
-  height: Option[Int] = None,
-  title: String,
-  caption: String = "",
-  credit: String = ""
+    url: String,
+    width: Option[Int] = None,
+    height: Option[Int] = None,
+    title: String,
+    caption: String = "",
+    credit: String = "",
 )
 
 object HostedGalleryPage extends Logging {
@@ -38,9 +38,9 @@ object HostedGalleryPage extends Logging {
     log.info(s"Building hosted gallery ${content.id} ...")
 
     val page = for {
-      atoms    <- getAndLog(content, content.atoms, "the atoms are missing")
+      atoms <- getAndLog(content, content.atoms, "the atoms are missing")
       ctaAtoms <- getAndLog(content, atoms.cta, "the CTA atoms are missing")
-      ctaAtom  <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
+      ctaAtom <- getAndLog(content, ctaAtoms.headOption, "the CTA atom is missing")
     } yield {
 
       val galleryImages = {
@@ -52,7 +52,7 @@ object HostedGalleryPage extends Logging {
             height = asset.typeData.flatMap(_.height),
             title = asset.typeData.flatMap(_.altText).getOrElse(""),
             caption = asset.typeData.flatMap(_.caption).getOrElse(""),
-            credit = asset.typeData.flatMap(_.credit).getOrElse("")
+            credit = asset.typeData.flatMap(_.credit).getOrElse(""),
           )
         }
       }
@@ -74,14 +74,15 @@ object HostedGalleryPage extends Logging {
         socialShareText = content.fields.flatMap(_.socialShareText),
         shortSocialShareText = content.fields.flatMap(_.shortSocialShareText),
         thumbnailUrl = thumbnailUrl(content),
-        metadata = HostedMetadata.fromContent(content)
+        metadata = HostedMetadata
+          .fromContent(content)
           .copy(
             schemaType = Some("https://schema.org/ImageGallery"),
             openGraphImages = openGraphImages,
             twitterPropertiesOverrides = Map(
-              "twitter:image" -> twitterImage
-            )
-        )
+              "twitter:image" -> twitterImage,
+            ),
+          ),
       )
     }
 

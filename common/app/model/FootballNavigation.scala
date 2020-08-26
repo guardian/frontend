@@ -14,7 +14,7 @@ object FootballNavigation {
     "/football/laligafootball",
     "/football/ligue1football",
     "/football/bundesligafootball",
-    "/football/serieafootball"
+    "/football/serieafootball",
   )
 
   val defaultNav = Seq(
@@ -23,28 +23,33 @@ object FootballNavigation {
     Link("/football/fixtures", "fixtures", "Fixtures"),
     Link("/football/results", "results", "Results"),
     Link("/football/teams", "teams", "Teams"),
-    Link("/football/competitions", "leagues and competitions", "Leagues & competitions")
+    Link("/football/competitions", "leagues and competitions", "Leagues & competitions"),
   )
 
   def navFor(tag: Tag): Seq[Link] = if (tag.isFootballCompetition) navFor(tag.metadata.url) else defaultNav
 
-  def navFor(competition: String): Seq[Link] = if (competitionsWithTeams.contains(competition)) {
-    val competitionAnchor = competition.split("/").last
-    Seq(
-      Link(s"$competition/table", "tables", "Tables"),
-      Link(s"$competition/live", "livescores", "Live scores"),
-      Link(s"$competition/fixtures", "fixtures", "Fixtures"),
-      Link(s"$competition/results", "results", "Results"),
-      Link(s"/football/teams#$competitionAnchor", "teams", "Teams"),
-      Link(s"/football/competitions", "leagues and competitions", "Leagues & competitions")
-    )
-  } else {
-    Seq(
-      Link(s"$competition/table", "tables", "Tables"), // note if there is no table for this comp it will redirect to /football/tables
-      Link(s"$competition/live", "livescores", "Live scores"),
-      Link(s"$competition/fixtures", "fixtures", "Fixtures"),
-      Link(s"$competition/results", "results", "Results"),
-      Link(s"/football/competitions", "leagues and competitions", "Leagues & competitions")
-    )
-  }
+  def navFor(competition: String): Seq[Link] =
+    if (competitionsWithTeams.contains(competition)) {
+      val competitionAnchor = competition.split("/").last
+      Seq(
+        Link(s"$competition/table", "tables", "Tables"),
+        Link(s"$competition/live", "livescores", "Live scores"),
+        Link(s"$competition/fixtures", "fixtures", "Fixtures"),
+        Link(s"$competition/results", "results", "Results"),
+        Link(s"/football/teams#$competitionAnchor", "teams", "Teams"),
+        Link(s"/football/competitions", "leagues and competitions", "Leagues & competitions"),
+      )
+    } else {
+      Seq(
+        Link(
+          s"$competition/table",
+          "tables",
+          "Tables",
+        ), // note if there is no table for this comp it will redirect to /football/tables
+        Link(s"$competition/live", "livescores", "Live scores"),
+        Link(s"$competition/fixtures", "fixtures", "Fixtures"),
+        Link(s"$competition/results", "results", "Results"),
+        Link(s"/football/competitions", "leagues and competitions", "Leagues & competitions"),
+      )
+    }
 }

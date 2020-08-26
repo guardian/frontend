@@ -24,7 +24,7 @@ trait Index extends ConciergeRepository with Collections {
     val conversions: Map[String, String] =
       Map("content" -> "type")
 
-    val convertedTag = conversions.foldLeft(tag){
+    val convertedTag = conversions.foldLeft(tag) {
       case (newTag, (from, to)) =>
         if (newTag.startsWith(s"$from/"))
           newTag.replace(from, to)
@@ -36,13 +36,14 @@ trait Index extends ConciergeRepository with Collections {
       // under the hoods some uk-news/... tags are actually uk/... Fixes loads of Googlebot 404s
       // this just is an or statement e.g. uk-news/foo OR uk/foo
       case UkNewsSection(lastPart) => s"($convertedTag|uk/$lastPart)"
-      case other => other
+      case other                   => other
     }
 
   }
 
-  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)
-           (implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+  def index(edition: Edition, leftSide: String, rightSide: String, page: Int, isRss: Boolean)(implicit
+      request: RequestHeader,
+  ): Future[Either[IndexPage, PlayResult]] = {
 
     val section = leftSide.split('/').head
 
@@ -50,66 +51,80 @@ trait Index extends ConciergeRepository with Collections {
     val firstTag = normaliseTag(
       leftSide match {
         case SinglePart(wordsForUrl) => s"$wordsForUrl/$wordsForUrl"
-        case other => other
-      }
+        case other                   => other
+      },
     )
 
     // if the second tag is just one part then it is in the same section as the first tag...
     val secondTag = normaliseTag(
       rightSide match {
-        case SinglePart(wordsForUrl) => s"$section/$wordsForUrl"
+        case SinglePart(wordsForUrl)     => s"$section/$wordsForUrl"
         case SeriesInSameSection(series) => s"$section/$series"
-        case other => other
-      }
+        case other                       => other
+      },
     )
 
-    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.search(edition)
-      .tag(s"$firstTag,$secondTag")
-      .page(page)
-      .pageSize(IndexPagePagination.pageSize)
-      .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain)
-    ).map {response =>
-      val trails = response.results.map(IndexPageItem(_)).toList
-      trails match {
-        case Nil => Right(NotFound)
-        case head :: _ =>
-          val tag1 = findTag(head.item, firstTag)
-          val tag2 = findTag(head.item, secondTag)
-          if (tag1.isDefined && tag2.isDefined) {
-            val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
-            Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
-          } else {
-            Right(NotFound)
-          }
+    val promiseOfResponse = contentApiClient
+      .getResponse(
+        contentApiClient
+          .search(edition)
+          .tag(s"$firstTag,$secondTag")
+          .page(page)
+          .pageSize(IndexPagePagination.pageSize)
+          .showFields(if (isRss) rssFields else QueryDefaults.trailFieldsWithMain),
+      )
+      .map { response =>
+        val trails = response.results.map(IndexPageItem(_)).toList
+        trails match {
+          case Nil => Right(NotFound)
+          case head :: _ =>
+            val tag1 = findTag(head.item, firstTag)
+            val tag2 = findTag(head.item, secondTag)
+            if (tag1.isDefined && tag2.isDefined) {
+              val page = TagCombiner(s"$leftSide+$rightSide", tag1.get, tag2.get, pagination(response))
+              Left(IndexPage(page, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None))
+            } else {
+              Right(NotFound)
+            }
+        }
       }
-    }
 
-    promiseOfResponse.recover({
-      //this is the best handle we have on a wrong 'page' number
-      case ContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
-    }).recover(convertApiExceptions)
+    promiseOfResponse
+      .recover({
+        //this is the best handle we have on a wrong 'page' number
+        case ContentApiError(400, _, _) => Right(Found(s"/$leftSide+$rightSide"))
+      })
+      .recover(convertApiExceptions)
 
   }
 
-  private def findTag(trail: ContentType, tagId: String) = trail.content.tags.tags.filter(tag =>
-    tagId.contains(tag.id))
-    .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
-    .headOption
+  private def findTag(trail: ContentType, tagId: String) =
+    trail.content.tags.tags
+      .filter(tag => tagId.contains(tag.id))
+      .sortBy(tag => tagId.replace(tag.id, "")) //effectively sorts by best match
+      .headOption
 
+  private def pagination(response: ItemResponse) =
+    Some(
+      Pagination(
+        response.currentPage.getOrElse(1),
+        response.pages.getOrElse(1),
+        response.total.getOrElse(0),
+      ),
+    )
 
-  private def pagination(response: ItemResponse) = Some(Pagination(
-    response.currentPage.getOrElse(1),
-    response.pages.getOrElse(1),
-    response.total.getOrElse(0)
-  ))
+  private def pagination(response: SearchResponse) =
+    Some(
+      Pagination(
+        response.currentPage,
+        response.pages,
+        response.total,
+      ),
+    )
 
-  private def pagination(response: SearchResponse) = Some(Pagination(
-    response.currentPage,
-    response.pages,
-    response.total
-  ))
-
-  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit request: RequestHeader): Future[Either[IndexPage, PlayResult]] = {
+  def index(edition: Edition, path: String, pageNum: Int, isRss: Boolean)(implicit
+      request: RequestHeader,
+  ): Future[Either[IndexPage, PlayResult]] = {
 
     val fields = if (isRss) rssFields else QueryDefaults.trailFieldsWithMain
 
@@ -139,15 +154,18 @@ trait Index extends ConciergeRepository with Collections {
        If another profiles causes problem then just add it to the list.
        This solution is efficient and avoid the arguably un-necessary pain of refactoring RSS.
        This solution can be re-evaluated later
-    */
+     */
     val exceptionalProfilePathsForRss = List("profile/helenasmith")
     val isExceptionalProfileForRss = exceptionalProfilePathsForRss.contains(path)
     val reducedPageSize = 5 // Determined through trial and error.
     val pageSize = if (isRss && isExceptionalProfileForRss) reducedPageSize else IndexPagePagination.pageSize
 
-    val promiseOfResponse = contentApiClient.getResponse(contentApiClient.item(queryPath, edition).page(pageNum)
-      .pageSize(pageSize)
-      .showFields(fields)
+    val promiseOfResponse = contentApiClient.getResponse(
+      contentApiClient
+        .item(queryPath, edition)
+        .page(pageNum)
+        .pageSize(pageSize)
+        .showFields(fields),
     ) map { response =>
       val page = maybeSection.map(s => section(s, response)) orElse
         response.tag.flatMap(_ => tag(response, pageNum)) orElse
@@ -156,10 +174,12 @@ trait Index extends ConciergeRepository with Collections {
       ModelOrResult(page, response, maybeSection)
     }
 
-    promiseOfResponse.recover({
-      //this is the best handle we have on a wrong 'page' number
-      case ContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
-    }).recover(convertApiExceptions)
+    promiseOfResponse
+      .recover({
+        //this is the best handle we have on a wrong 'page' number
+        case ContentApiError(400, _, _) if pageNum != 1 => Right(Found(s"/$path"))
+      })
+      .recover(convertApiExceptions)
   }
 
   private def section(apiSection: ApiSection, response: ItemResponse) = {
@@ -169,20 +189,33 @@ trait Index extends ConciergeRepository with Collections {
     val latestContent = response.results.getOrElse(Nil).filterNot(c => editorsPicksIds contains c.id)
     val trails = (editorsPicks ++ latestContent).map(IndexPageItem(_))
     val commercial = Commercial.empty
-    IndexPage(page = section, contents = trails, tags = Tags(Nil), date = DateTime.now, tzOverride = None, commercial = commercial)
+    IndexPage(
+      page = section,
+      contents = trails,
+      tags = Tags(Nil),
+      date = DateTime.now,
+      tzOverride = None,
+      commercial = commercial,
+    )
   }
 
   private def tag(response: ItemResponse, page: Int): Option[IndexPage] = {
     val tag = response.tag map { Tag.make(_, pagination(response)) }
     val leadContentCutOff = DateTime.now - QueryDefaults.leadContentMaxAge
     val editorsPicks = response.editorsPicks.getOrElse(Nil).map(IndexPageItem(_))
-    val leadContent = if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
-      response.leadContent.getOrElse(Nil).take(1).map(IndexPageItem(_)).filter(_.item.trail.webPublicationDate > leadContentCutOff)
-    else
-      Nil
+    val leadContent =
+      if (editorsPicks.isEmpty && page == 1) //only promote lead content on first page
+        response.leadContent
+          .getOrElse(Nil)
+          .take(1)
+          .map(IndexPageItem(_))
+          .filter(_.item.trail.webPublicationDate > leadContentCutOff)
+      else
+        Nil
     val leadContentIds = leadContent.map(_.item.metadata.id)
 
-    val latest: Seq[IndexPageItem] = response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
+    val latest: Seq[IndexPageItem] =
+      response.results.getOrElse(Nil).map(IndexPageItem(_)).filterNot(c => leadContentIds.contains(c.item.metadata.id))
     val allTrails = (leadContent ++ editorsPicks ++ latest).distinctBy(_.item.metadata.id)
 
     tag map { tag =>
@@ -196,5 +229,3 @@ trait Index extends ConciergeRepository with Collections {
   val SeriesInSameSection = """(series/[\w\d\.-]+)""".r
   val UkNewsSection = """^uk-news/(.+)$""".r
 }
-
-

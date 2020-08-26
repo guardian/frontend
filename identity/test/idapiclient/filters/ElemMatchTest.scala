@@ -12,7 +12,8 @@ class ElemMatchTest extends FunSuite with Matchers {
   }
 
   test("should add elemMatch with multiple filters") {
-    val elemMatch = ElemMatch("arrayPath", List(ElemMatchFilter("fieldPath", "value"), ElemMatchFilter("field2Path", "value2")))
+    val elemMatch =
+      ElemMatch("arrayPath", List(ElemMatchFilter("fieldPath", "value"), ElemMatchFilter("field2Path", "value2")))
     elemMatch.parameters should contain(("elemMatch", "arrayPath"))
     elemMatch.parameters should contain(("elemMatchFilter", "fieldPath:value"))
     elemMatch.parameters should contain(("elemMatchFilter", "field2Path:value2"))
@@ -20,7 +21,7 @@ class ElemMatchTest extends FunSuite with Matchers {
   }
 
   test("should fail to craete ElemMatch with no filters") {
-    an [IllegalArgumentException] should be thrownBy {
+    an[IllegalArgumentException] should be thrownBy {
       ElemMatch("arrayPath", Nil)
     }
   }

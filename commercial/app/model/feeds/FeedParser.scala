@@ -16,11 +16,13 @@ sealed trait FeedParser[+T] {
   def parse(feedContent: => Option[String]): Future[ParsedFeed[T]]
 }
 
-class FeedsParser(bestsellersAgent: BestsellersAgent,
-                  liveEventAgent: LiveEventAgent,
-                  masterclassAgent: MasterclassAgent,
-                  travelOffersAgent: TravelOffersAgent,
-                  jobsAgent: JobsAgent)(implicit executionContext: ExecutionContext) {
+class FeedsParser(
+    bestsellersAgent: BestsellersAgent,
+    liveEventAgent: LiveEventAgent,
+    masterclassAgent: MasterclassAgent,
+    travelOffersAgent: TravelOffersAgent,
+    jobsAgent: JobsAgent,
+)(implicit executionContext: ExecutionContext) {
 
   private val jobs: Option[FeedParser[Job]] = {
     Configuration.commercial.jobsUrl map { url =>

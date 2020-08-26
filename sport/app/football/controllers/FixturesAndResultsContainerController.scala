@@ -9,22 +9,23 @@ import play.twirl.api.Html
 import views.html.fragments.containers.facia_cards.{container => containerHtml}
 
 class FixturesAndResultsContainerController(
-  competitionsService: CompetitionsService,
-  val controllerComponents: ControllerComponents
+    competitionsService: CompetitionsService,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController {
+    extends BaseController {
 
   val fixturesAndResults = new FixturesAndResults(competitionsService)
 
-  def renderContainer(teamId: String): Action[AnyContent] = Action { implicit request =>
-    Cached(60) {
-      fixturesAndResults.makeContainer(teamId) match {
-        case Some(container) =>
-          JsonComponent(containerHtml(container))
+  def renderContainer(teamId: String): Action[AnyContent] =
+    Action { implicit request =>
+      Cached(60) {
+        fixturesAndResults.makeContainer(teamId) match {
+          case Some(container) =>
+            JsonComponent(containerHtml(container))
 
-        case None =>
-          JsonComponent(Html(""))
+          case None =>
+            JsonComponent(Html(""))
+        }
       }
     }
-  }
 }
