@@ -260,7 +260,7 @@ object PageElement {
 
             The function returns either:
             - SoundcloudBlockElement
-            - AudioBlockElement
+            - SpotifyBlockElement
             - EmbedBlockElement (introduced to handle legacy Spotify BlockElements pointing to charts)
             - AudioBlockElement (currently not supported in DCR)
            */
