@@ -188,6 +188,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
         'membership',
         'help',
         'guardian-live-australia',
+        'gnm-archive',
     ];
 
     return invalidSections
