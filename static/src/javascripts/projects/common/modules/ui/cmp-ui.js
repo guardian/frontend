@@ -47,7 +47,7 @@ export const cmpBannerCandidate: Banner = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
-        return Promise.resolve(cmp.willShowPrivacyMessage());
+        return cmp.willShowPrivacyMessage();
     },
     // Remote banner is injected first: show() always resolves to `true`
     show: (): Promise<boolean> => Promise.resolve(true),
