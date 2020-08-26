@@ -679,9 +679,10 @@ object PageElement {
       d <- element.audioTypeData
       html <- d.html
       src <- getIframeSrc(html)
-      if src.contains("spotify.com") // Deciding if the source is Spotify
-                                     // Note that we cannot rely on d.source due to lack of data integrity
-                                     // Some self described Spotify elements are actually charts-datawrapper.s3.amazonaws.com
+
+      // Deciding if the source is Spotify. Note that we cannot rely on d.source due to lack of data integrity. Some
+      // self described Spotify elements are actually charts-datawrapper.s3.amazonaws.com
+      if src.contains("spotify.com")
     } yield {
       SpotifyBlockElement(getEmbedUrl(d.html), getIframeHeight(html), getIframeWidth(html), d.title, d.caption)
     }
