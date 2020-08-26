@@ -695,7 +695,12 @@ object PageElement {
   }
 
   private def extractChartEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
-    Some(EmbedBlockElement(html, None, None, false))
+    for {
+      src <- getIframeSrc(html)
+      if src.contains("charts-datawrapper")
+    } yield {
+      EmbedBlockElement(html, None, None, false)
+    }
   }
 
   private def extractSpotifyBlockElement(element: ApiBlockElement): Option[SpotifyBlockElement] = {
