@@ -416,12 +416,8 @@ object PageElement {
           ),
         )
 
-      case Audio => {
-        println("")
-        println(element)
-        println(audioToPageElement(element).toList)
-        audioToPageElement(element).toList
-      }
+      case Audio => audioToPageElement(element).toList
+
       case Video =>
         if (element.assets.nonEmpty) {
           List(
