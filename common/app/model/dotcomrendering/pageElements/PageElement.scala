@@ -738,7 +738,7 @@ object PageElement {
            1. SoundcloudBlockElement
            2. SpotifyBlockElement
            3. EmbedBlockElement
-           4. AudioBlockErrorElement
+           4. AudioBlockElement (currently: an error message)
 
         Note: EmbedBlockElement is returned by both extractChartDatawrapperEmbedBlockElement and extractGenericEmbedBlockElement
         The former catches charts from charts-datawrapper.s3.amazonaws.com while the latter captures any iframe.
