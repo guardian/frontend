@@ -169,7 +169,7 @@ class GalleryLightbox {
     }
 
     generateImgHTML(img: Object, i: number): string {
-        const blockShortUrl = config.get('page.shortUrl');
+        const blockShortUrl = config.get('page.host') + config.get('page.shortUrlId');
         const urlPrefix = img.src.startsWith('//') ? 'http:' : '';
         const shareItems: Array<{
             text: string,
@@ -211,7 +211,6 @@ class GalleryLightbox {
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
-            blockShortUrl,
             shareButtons: shareItems
                 .map(s => template(shareButtonTpl)(s))
                 .join(''),
