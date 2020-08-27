@@ -67,7 +67,12 @@ case class AudioAtomBlockElement(
     duration: Int,
     contentId: String,
 ) extends PageElement
-case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+
+// We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
+// See comment: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
+// case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
+case class AudioBlockElement(message: String) extends PageElement
+
 case class BlockquoteBlockElement(html: String) extends PageElement
 case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
 case class CalloutBlockElement(
@@ -411,18 +416,6 @@ object PageElement {
         )
 
       case Audio => audioToPageElement(element).toList
-      /*
-        The AudioBlockElement is a versatile carrier. It carries both audio and non audio (in legacy content)
-
-        The audioToPageElement function performs the transformation of an AudioBlockElement to the appropriate
-        PageElement
-
-        The function returns either:
-        - SoundcloudBlockElement
-        - SpotifyBlockElement
-        - EmbedBlockElement (introduced to handle legacy Spotify BlockElements pointing to charts)
-        - AudioBlockElement (currently not supported in DCR)
-       */
 
       case Video =>
         if (element.assets.nonEmpty) {
@@ -693,14 +686,20 @@ object PageElement {
     }
   }
 
-  private def extractChartEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
-    // comment id: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
-    // This only returns an EmbedBlockELement if referring to a charts-datawrapper
-    // This is to solve a data integrity problem we observed with Audio elements.
-    // If the problem turns out to be deeper we could abstract it idea further.
+  private def extractChartDatawrapperEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+    // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
-      if src.contains("charts-datawrapper")
+      if src.contains("charts-datawrapper.s3.amazonaws.com")
+    } yield {
+      EmbedBlockElement(html, None, None, false)
+    }
+  }
+
+  private def extractGenericEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+    // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
+    for {
+      src <- getIframeSrc(html)
     } yield {
       EmbedBlockElement(html, None, None, false)
     }
@@ -720,38 +719,44 @@ object PageElement {
     }
   }
 
-  def audioIsDCRSupported(element: ApiBlockElement): Boolean = {
-    /*
-      date: July 21th 2020 (updated 03rd August 2020)
-      author: Pascal
-
-      This function was introduced to be able to know from the article picker whether or not
-      an AudioBlockElement given to the article picker's function "hasOnlySupportedElements" would
-      resolve to a SoundcloudBlockElement or a SpotifyBlockElement (which we currently support in DCR)
-      or an AudioBlockElement (which DCR doesn't yet support).
-
-      See: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
-     */
-    audioToPageElement(element: ApiBlockElement) match {
-      case Some(_: SoundcloudBlockElement) => true
-      case Some(_: SpotifyBlockElement)    => true
-      case Some(_: EmbedBlockElement)      => true
-      case _                               => false
-    }
-  }
-
   private def audioToPageElement(element: ApiBlockElement) = {
     for {
       d <- element.audioTypeData
       html <- d.html
       mandatory = true
     } yield {
-      // Note that extractChartEmbedBlockElement only returns an EmbedBlockElement in the case of an audio incorrectly
-      // carrying a chart iframe. See comment: 90941ef4-a3e9-468d-8dc8-6f7be06fdc22
+      /*
+        comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
+
+        Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
+
+        The audioToPageElement function performs the transformation of an Audio element to the appropriate
+        PageElement
+
+        The function returns either:
+           1. SoundcloudBlockElement
+           2. SpotifyBlockElement
+           3. EmbedBlockElement
+           4. AudioBlockElement (currently: an error message)
+
+        Note: EmbedBlockElement is returned by both extractChartDatawrapperEmbedBlockElement and extractGenericEmbedBlockElement
+        The former catches charts from charts-datawrapper.s3.amazonaws.com while the latter captures any iframe.
+
+        Note: AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an incorrect
+        payload. It was decided that handling those as they come up will be an ongoing health task of the dotcom team,
+        and not part of the original DCR migration.
+       */
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         extractSpotifyBlockElement(element).getOrElse {
-          extractChartEmbedBlockElement(html).getOrElse {
-            AudioBlockElement(element.assets.map(AudioAsset.make))
+          extractChartDatawrapperEmbedBlockElement(html).getOrElse {
+            extractGenericEmbedBlockElement(html).getOrElse {
+              // This version of AudioBlockElement is not currently supported in DCR
+              // AudioBlockElement(element.assets.map(AudioAsset.make))
+
+              // AudioBlockElement is currently a catch all element which helps identify when Audio is carrying an
+              // incorrect payload.
+              AudioBlockElement("This audio element cannot be displayed at this time")
+            }
           }
         }
       }
