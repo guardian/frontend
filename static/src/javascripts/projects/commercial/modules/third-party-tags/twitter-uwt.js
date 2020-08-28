@@ -2,7 +2,8 @@
 import config from 'lib/config';
 
 const insertSnippet = () => {
-    // Twitter universal website tag code -->
+    // Twitter universal website tag code
+    // How to set up conversion tracking: https://business.twitter.com/en/help/campaign-measurement-and-analytics/conversion-tracking-for-websites.html
     /*eslint-disable */
     // $FlowFixMe
         !function(e,t,n,s,u,a){e.twq||(s=e.twq=function(){s.exe?s.exe(...arguments):s.queue.push(arguments);
