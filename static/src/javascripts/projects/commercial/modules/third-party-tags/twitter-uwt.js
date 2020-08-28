@@ -1,7 +1,7 @@
 // @flow strict
 import config from 'lib/config';
 
-const insertBody = () => {
+const insertSnippet = () => {
     // Twitter universal website tag code -->
     /*eslint-disable */
     // $FlowFixMe
@@ -19,5 +19,5 @@ const insertBody = () => {
 export const twitterUwt: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.twitterUwt', false),
     sourcepointId: '5e71760b69966540e4554f01',
-    insertBody,
+    insertSnippet,
 });

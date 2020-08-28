@@ -36,7 +36,7 @@ declare type ThirdPartyTag = {
     attrs?: Array<TagAtrribute>,
     async?: boolean,
     loaded?: boolean,
-    insertBody?: any,
+    insertSnippet?: any,
 };
 
 declare var jsdom: {

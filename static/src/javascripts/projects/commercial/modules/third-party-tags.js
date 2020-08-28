@@ -31,8 +31,8 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
         if (tag.useImage === true && typeof tag.url !== "undefined") {
             new Image().src = tag.url;
         }
-        if (tag.insertBody) {
-            tag.insertBody();
+        if (tag.insertSnippet) {
+            tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');

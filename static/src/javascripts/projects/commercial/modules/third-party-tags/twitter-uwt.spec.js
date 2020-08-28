@@ -22,8 +22,8 @@ describe('twitterUwt', () => {
 
     it('should have insert body function', () => {
         config.set('switches.twitterUwt', true);
-        const { insertBody  } = twitterUwt();
+        const { insertSnippet  } = twitterUwt();
 
-        expect(insertBody).toBeDefined();
+        expect(insertSnippet).toBeDefined();
     });
 });
