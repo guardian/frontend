@@ -22,23 +22,19 @@ type EnableAnalyticsConfig = {
     },
 };
 
-type ConsentManagement = {
+type GDPRConfig = {
     cmpApi: string,
     timeout: number,
     allowAuctionWithoutConsent: boolean,
 };
 
-type S2SConfig = {
-    accountId: string,
-    enabled: boolean,
-    bidders: Array<string>,
+type USPConfig = {
     timeout: number,
-    adapter: string,
-    is_debug: 'true' | 'false',
-    endpoint: string,
-    syncEndpoint: string,
-    cookieSet: boolean,
-    cookiesetUrl: string,
+};
+
+type ConsentManagement = {
+    gdpr: GDPRConfig,
+    usp: USPConfig,
 };
 
 type UserSync =
@@ -58,7 +54,6 @@ type PbjsConfig = {
     priceGranularity: PrebidPriceGranularity,
     userSync: UserSync,
     consentManagement: ConsentManagement | false,
-    s2sConfig: S2SConfig,
 };
 
 type XasisBuyerTargetting = {
@@ -91,22 +86,14 @@ type PbjsEventHandler = PbjsEventData => void;
 const bidderTimeout: number = 1500;
 
 const consentManagement: ConsentManagement = {
-    cmpApi: 'iab',
-    timeout: 200,
-    allowAuctionWithoutConsent: true,
-};
-
-const s2sConfig: S2SConfig = {
-    accountId: '1',
-    enabled: true,
-    bidders: ['appnexus', 'openx', 'pangaea'],
-    timeout: bidderTimeout,
-    adapter: 'prebidServer',
-    is_debug: 'false',
-    endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-    syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
-    cookieSet: true,
-    cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
+    gdpr: {
+        cmpApi: 'iab',
+        timeout: 200,
+        allowAuctionWithoutConsent: true,
+    },
+    usp: {
+        timeout: 1500,
+    }
 };
 
 class PrebidAdUnit {
@@ -140,8 +127,7 @@ const initialise = (window: {
 
     const userSync = config.get('switches.prebidUserSync', false)
         ? {
-              // syncsPerBidder: 0, // allow all syncs - bug https://github.com/prebid/Prebid.js/issues/2781
-              syncsPerBidder: 999, // temporarily until above bug fixed
+              syncsPerBidder: 0, // allow all syncs
               filterSettings: {
                   all: {
                       bidders: '*', // allow all bidders to sync by iframe or image beacons
@@ -160,8 +146,7 @@ const initialise = (window: {
         },
         config.get('switches.enableConsentManagementService', false)
             ? { consentManagement }
-            : {},
-        config.get('switches.prebidS2sozone', false) ? { s2sConfig } : {}
+            : {}
     );
 
     window.pbjs.setConfig(pbjsConfig);

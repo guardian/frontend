@@ -2,41 +2,50 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
-import { krux } from 'common/modules/commercial/krux';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { permutive } from 'commercial/modules/third-party-tags/permutive';
-import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
+import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import {
-    onIabConsentNotification,
-    onGuConsentNotification,
-} from '@guardian/consent-management-platform';
+import { connatix } from 'commercial/modules/third-party-tags/connatix';
+import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
-let advertisingScriptsInserted: boolean = false;
-let performanceScriptsInserted: boolean = false;
-
-const addScripts = (services: Array<ThirdPartyTag>): void => {
+const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
-    services.forEach(service => {
-        if (service.useImage === true) {
-            new Image().src = service.url;
+    tags.forEach(tag => {
+        if (tag.loaded === true) {
+            return;
+        }
+        if (tag.beforeLoad) {
+            tag.beforeLoad();
+        }
+        if (tag.useImage === true) {
+            new Image().src = tag.url;
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
+            script.src = tag.url;
+            script.onload = tag.onLoad;
+            if (tag.async === true) {
+                script.setAttribute('async', '');
+            }
+            if (tag.attrs) {
+                tag.attrs.forEach(attr => {
+                    script.setAttribute(attr.name, attr.value);
+                });
+            }
             frag.appendChild(script);
         }
+        tag.loaded = true;
     });
 
     if (hasScriptsToInsert) {
@@ -50,22 +59,39 @@ const addScripts = (services: Array<ThirdPartyTag>): void => {
 
 const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag>
+    performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    onGuConsentNotification('performance', state => {
-        if (!performanceScriptsInserted && state) {
-            addScripts(performanceServices);
-            performanceScriptsInserted = true;
+    addScripts(performanceServices);
+
+    onConsentChange(state => {
+        let consentedAdvertisingServices = [];
+        if (state.ccpa) {
+            // CCPA mode
+            if (!state.ccpa.doNotSell)
+                consentedAdvertisingServices = [...advertisingServices];
+        } else if (state.tcfv2) {
+            // TCFv2 mode,
+            consentedAdvertisingServices = advertisingServices.filter(
+                script => {
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
+                    ) {
+                        return state.tcfv2.vendorConsents[script.sourcepointId];
+                    }
+                    return Object.values(state.tcfv2.consents).every(Boolean);
+                }
+            );
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
+            // TCFv1 mode
+            consentedAdvertisingServices = [...advertisingServices];
         }
-    });
 
-    onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
-
-        if (!advertisingScriptsInserted && consentState) {
-            addScripts(advertisingServices);
-            advertisingScriptsInserted = true;
+        if (consentedAdvertisingServices.length > 0) {
+            addScripts(consentedAdvertisingServices);
         }
     });
 };
@@ -73,18 +99,18 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        simpleReach,
-        krux,
         permutive,
         ias,
         inizio,
         fbPixel(),
         twitterUwt(),
+        lotame(),
+        connatix,
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+        imrWorldwide, // only in AU & NZ
+        imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
 
     insertScripts(advertisingServices, performanceServices);
@@ -102,7 +128,7 @@ const init = (): Promise<boolean> => {
     // check above is now sensitive to ad-free, it could be changed independently
     // in the future - even by accident.  Justin.
     if (!commercialFeatures.adFree) {
-        initPlistaOutbrainRenderer();
+        initPlistaRenderer();
     }
 
     loadOther();
@@ -114,8 +140,4 @@ export { init };
 export const _ = {
     insertScripts,
     loadOther,
-    reset: () => {
-        advertisingScriptsInserted = false;
-        performanceScriptsInserted = false;
-    },
 };

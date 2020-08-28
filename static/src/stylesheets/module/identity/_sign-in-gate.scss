@@ -1,25 +1,37 @@
+
 .signin-gate {
     clear: left;
     margin-bottom: $gs-baseline * 2;
-    padding: ($gs-baseline * 3) ($gs-baseline * 2);
+    @include mq(tablet) {
+        padding: ($gs-baseline * 2) 0;
+    }
     @include mq(desktop) {
         min-height: 600px;
     }
 }
 
+.signin-gate__content {
+    padding-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        padding-top: $gs-baseline * 2;
+    }
+}
+
 .signin-gate__header {
     @include fs-header(3);
-    border-top: 1px solid $brightness-46;
-    margin-bottom: $gs-baseline * 2;
+    padding-bottom: $gs-baseline;
+    @include mq(tablet) {
+        padding-bottom: $gs-baseline * 2;
+    }
 }
 
 .signin-gate__buttons {
-    border-top: 1px solid $brightness-46;
+    @include fs-textSans(5);
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex-wrap: wrap;
-    padding-top: 4px;
-
+    padding-top: 6px;
+    padding-bottom: 6px;
     // Horizontal alignment
     align-items: flex-start;
 
@@ -28,33 +40,59 @@
 
         // Now vertical alignment, because the flex-direction is row
         align-items: center;
+
+        padding-top: 8px;
+        padding-bottom: 8px;
     }
 }
 
-.signin-gate__why {
+.signin-gate__padding-left {
+    padding-left: $gs-baseline * 1.5;
+}
+
+.signin-gate__padding-bottom {
+    padding-bottom: $gs-baseline * 1.5;
+}
+
+.signin-gate__padding-right {
+    padding-right: $gs-baseline * 1.5;
+}
+
+.signin-gate__link {
     @include fs-textSans(5);
     color: $brightness-7 !important;
     text-decoration: underline;
     font-weight: 700;
     font-size: 17px;
-    padding-left: $gs-baseline * 1.5;
     padding-top: 20px;
+    &-no-ptm {
+        padding-top: 0px;
+    }
     @include mq(424px) {
         padding-top: 0px;
     }
+}
 
+.signin-gate__center-424 {
+    align-self: center;
+    @include mq(424px) {
+        align-self: auto;
+    }
 }
 
 .signin-gate__dismiss {
     @include fs-textSans(5);
+    background: 0;
+    border: 0;
     color: $brightness-7 !important;
     text-decoration: underline;
     font-weight: 700;
     font-size: 17px;
-    padding-left: $gs-baseline * 1.5;
-    padding-top: 20px;
+    align-self: center;
+    margin-left: $gs-baseline * 1.5;
     @include mq(424px) {
-        padding-top: 0px;
+        align-self: auto;
+        margin-left: $gs-baseline * 2
     }
 }
 
@@ -86,7 +124,7 @@
     font-size: 17px;
     height: 42px;
     min-height: 42px;
-    padding: 20px 42px;
+    padding: $gs-baseline;
     border: 0;
     border-radius: 21px;
     box-sizing: border-box;
@@ -97,7 +135,7 @@
     position: relative;
     white-space: nowrap;
 
-    &:hover, &:focus {
+    &:hover {
         outline: 0;
     }
 
@@ -108,6 +146,12 @@
     &:hover,
     &:focus {
         text-decoration: none;
+    }
+
+    align-self: center;
+    @include mq(424px) {
+        align-self: auto;
+        padding: $gs-baseline $gs-baseline * 2;
     }
 }
 
@@ -121,23 +165,36 @@
 
 .signin-gate__header--text {
     font-weight: normal;
-    margin-bottom: $gs-baseline;
     line-height: 1.25em;
     font-size: 24px;
     @include mq(tablet) {
-        font-size: 34px;
+        font-size: 32px;
+    }
+}
+
+.signin-gate__paragraph {
+    border-top: 1px solid $brightness-46;
+    margin-bottom: $gs-baseline * 2;
+    padding-top: $gs-baseline;
+}
+
+.signin-gate__paragraph--text {
+    font-size: 16px;
+    @include mq(tablet) {
+        font-size: 18px;
     }
 }
 
 .signin-gate__benefits {
     border-top: 1px solid $brightness-46;
-    margin-bottom: $gs-baseline * 2;
+    padding-bottom: $gs-baseline;
+    @include mq(tablet) {
+        padding-top: $gs-baseline;
+    }
 }
 
 .signin-gate__benefits--text {
-    @include mq(tablet) {
-        padding-right: $gs-baseline * 12;
-    }
+    padding-top: $gs-baseline / 3;
     font-weight: bold;
     color: $sport-main;
     font-size: 17px;
@@ -160,3 +217,168 @@
         color: $lifestyle-main
     }
 }
+
+// VARIANT DESIGN - vii-variant //
+
+.signin-gate__header--var {
+    @include fs-header(3);
+    border-top: 1px solid $brightness-7;
+    @include mq(tablet) {
+        border-top: 2px solid $brightness-7;
+    }
+}
+
+.signin-gate__benefits--var {
+    border-top: 1px solid $brightness-86;
+    padding-bottom: $gs-baseline;
+}
+
+.signin-gate__benefits--text--var {
+    font-family: $f-sans-serif-text;
+    font-size: 20px;
+    font-weight: bold;
+    color: $brightness-7;
+    padding-top: $gs-baseline / 3;
+    @include mq(tablet) {
+        font-size: 20px;
+    }
+}
+
+.signin-gate__margin-top--var {
+    margin-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        margin-top: $gs-baseline * 3;
+    }
+}
+
+.signin-gate__link--var {
+    @include fs-textSans(5);
+    color: $brightness-7 !important;
+    text-decoration: underline;
+    font-size: 17px;
+    padding-top: 10px;
+    &-no-ptm {
+        padding-top: 0px;
+    }
+    @include mq(424px) {
+        padding-top: 0px;
+    }
+}
+
+.signin-gate__dismiss--var {
+    @include fs-textSans(5);
+    color: $brand-main !important;
+    background: 0;
+    border: 0;
+    font-weight: 700;
+    font-size: 17px;
+    align-self: center;
+    margin-left: $gs-baseline * 1.5;
+    @include mq(424px) {
+        align-self: auto;
+        margin-left: $gs-baseline * 2
+    }
+}
+
+.signin-gate__signin--var {
+    color: $sport-main !important;
+}
+
+.signin-gate__paragraph--text--var {
+    font-family: $f-sans-serif-text;
+    font-size: 17px;
+    margin-bottom: $gs-baseline * 2;
+    @include mq(tablet) {
+        font-size: 1h7px;
+    }
+}
+
+.signin-gate__header--text--var {
+    font-weight: bold;
+    line-height: 1.25em;
+    font-size: 28px;
+    @include mq(tablet) {
+        font-size: 32px;
+    }
+}
+
+.signin-gate__button--primary--var {
+    background-color: $brand-main;
+    color: $brightness-100 !important;
+    padding: 0 20px;
+    &:hover, &:focus {
+        background-color: $brand-dark;
+    }
+}
+
+.signin-gate__paragraph--var {
+    margin-bottom: $gs-baseline * 2;
+}
+
+.signin-gate__faqlinks--var {
+    background-color: $brightness-97;
+    padding-bottom: $gs-baseline * 3;
+    padding-top: $gs-baseline * 1;
+    position: relative;
+}
+.signin-gate__faqlinks--var--comment {
+    background-color: $brightness-100;
+    padding-bottom: $gs-baseline * 3;
+    padding-top: $gs-baseline * 1;
+    position: relative;
+}
+
+.signin-gate__faqlinks--fullwidth--var {
+    background-color: $brightness-97;
+}
+
+.signin-gate__faqlinks--fullwidth--var:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -9999px;
+    right: 0;
+    border-left: 9999px solid $brightness-97;
+    box-shadow: 9999px 0 0 $brightness-97;
+}
+
+.signin-gate__faqlinks--fullwidth--var--comment {
+    background-color: $brightness-100;
+}
+
+.signin-gate__faqlinks--fullwidth--var--comment:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -9999px;
+    right: 0;
+    border-left: 9999px solid $brightness-100;
+    box-shadow: 9999px 0 0 $brightness-100;
+}
+
+.signin-gate__content-main-column__border-fix:before {
+    z-index: 1;
+}
+
+// VARIANT DESIGN - article gradient overlay changes // vii-variant
+
+.signin-gate__content--var {
+    padding-top: $gs-baseline * 3;
+    @include mq(tablet) {
+        padding-top: $gs-baseline * 3;
+    }
+}
+
+.overlay--var {
+    height: 70% !important;
+    background-image: linear-gradient(to top, $brightness-100, $brightness-100 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+.overlay--comment--var {
+    height: 70% !important;;
+    background-image: linear-gradient(to top, $opinion-faded , $opinion-faded 40%, rgba(255, 255, 255, 0)) !important;
+}
+
+

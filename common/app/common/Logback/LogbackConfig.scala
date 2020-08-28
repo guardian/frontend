@@ -12,19 +12,22 @@ class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
 
   lazy val loggingContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
-  case class KinesisAppenderConfig(stream: String,
-                                   region: String,
-                                   awsCredentialsProvider: AWSCredentialsProvider,
-                                   bufferSize: Int)
+  case class KinesisAppenderConfig(
+      stream: String,
+      region: String,
+      awsCredentialsProvider: AWSCredentialsProvider,
+      bufferSize: Int,
+  )
 
   def makeCustomFields(customFields: Map[String, String]): String = {
-    "{" + (for((k, v) <- customFields) yield s""""${k}":"${v}"""").mkString(",") + "}"
+    "{" + (for ((k, v) <- customFields) yield s""""${k}":"${v}"""").mkString(",") + "}"
   }
 
-  def asLogBack(l: SLFLogger): Option[LogbackLogger] = l match {
-    case l: LogbackLogger => Some(l)
-    case _ => None
-  }
+  def asLogBack(l: SLFLogger): Option[LogbackLogger] =
+    l match {
+      case l: LogbackLogger => Some(l)
+      case _                => None
+    }
 
   def makeLayout(customFields: String): LogstashLayout = {
     val l = new LogstashLayout()
@@ -32,7 +35,11 @@ class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
     l
   }
 
-  def makeKinesisAppender(layout: LogstashLayout, context: LoggerContext, appenderConfig: KinesisAppenderConfig): KinesisAppender[ILoggingEvent] = {
+  def makeKinesisAppender(
+      layout: LogstashLayout,
+      context: LoggerContext,
+      appenderConfig: KinesisAppenderConfig,
+  ): KinesisAppender[ILoggingEvent] = {
     val a = new SafeBlockingKinesisAppender(logbackOperationsPool)
     a.setName("LoggingKinesisAppender")
     a.setStreamName(appenderConfig.stream)
@@ -57,15 +64,15 @@ class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
           val context = lb.getLoggerContext
           val layout = makeLayout(makeCustomFields(config.customFields))
           val bufferSize = 1000
-          val appender  = makeKinesisAppender(
+          val appender = makeKinesisAppender(
             layout,
             context,
             KinesisAppenderConfig(
               config.stream,
               config.region,
               config.awsCredentialsProvider,
-              bufferSize
-            )
+              bufferSize,
+            ),
           )
           lb.addAppender(appender)
           lb.info("Configured Logback")

@@ -12,6 +12,17 @@ const getAdSize = (width: number, height: number): GuAdSize => {
     });
 };
 
+/*
+
+    mark: 1b109a4a-791c-4214-acd2-2720d7d9f96f
+
+    The ad sizes which are hardcoded here are also hardcoded in the source code of 
+    dotcom-rendering. 
+
+    If/when this file is modified, please make sure that updates, if any, are reported to DCR.
+
+ */
+
 const adSizes: Object = {
     // standard ad sizes
     billboard: getAdSize(970, 250),

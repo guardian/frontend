@@ -18,7 +18,9 @@ object TravelOffersApi extends Logging {
 
   def parse(xml: Elem): Seq[TravelOffer] = (xml \\ "product") map TravelOffer.fromXml
 
-  def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[TravelOffer]] = {
+  def parseOffers(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[TravelOffer]] = {
     feedMetaData.parseSwitch.isGuaranteedSwitchedOn flatMap { switchedOn =>
       if (switchedOn) {
         val start = System.currentTimeMillis

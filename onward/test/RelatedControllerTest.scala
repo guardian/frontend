@@ -8,14 +8,14 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import services.OphanApi
 
 @DoNotDiscover class RelatedControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient
-  with WithTestApplicationContext {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient
+    with WithTestApplicationContext {
 
   val article = "uk/2012/aug/07/woman-torture-burglary-waterboard-surrey"
   val badArticle = "i/am/not/here"
@@ -24,7 +24,7 @@ import services.OphanApi
   lazy val relatedController = new RelatedController(
     testContentApiClient,
     new MostReadAgent(new OphanApi(wsClient)),
-    play.api.test.Helpers.stubControllerComponents()
+    play.api.test.Helpers.stubControllerComponents(),
   )
 
   it should "serve JSON when .json format is supplied" in {

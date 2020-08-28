@@ -1,23 +1,10 @@
 // @flow
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
-
-const getAdConsentState: any = _getAdConsentState;
-
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
-
-jest.mock('lib/config', () => ({ get: () => true }));
+import config from 'lib/config';
 
 describe('twitterUwt', () => {
-    afterEach(() => {
-        getAdConsentState.mockReset();
-    });
-
-    it('shouldRun to be true if ad consent granted', () => {
-        getAdConsentState.mockReturnValueOnce(true);
-
+    it('shouldRun to be true if ad the switch is on', () => {
+        config.set('switches.twitterUwt', true);
         const { shouldRun, url, onLoad } = twitterUwt();
 
         expect(shouldRun).toEqual(true);
@@ -25,23 +12,13 @@ describe('twitterUwt', () => {
         expect(onLoad).toBeDefined();
     });
 
-    it('shouldRun to be false if ad consent not granted or denied', () => {
-        getAdConsentState.mockReturnValueOnce(null);
-
-        const { shouldRun, url, onLoad } = twitterUwt();
-
-        expect(shouldRun).toEqual(false);
-        expect(url).toEqual('//static.ads-twitter.com/uwt.js');
-        expect(onLoad).toBeDefined();
-    });
-
-    it('shouldRun to be false if ad consent denied', () => {
-        getAdConsentState.mockReturnValueOnce(false);
-
-        const { shouldRun, url, onLoad } = twitterUwt();
+    it('shouldRun to be false if the switch is off', () => {
+        config.set('switches.twitterUwt', false);
+        const { shouldRun, url, onLoad, sourcepointId } = twitterUwt();
 
         expect(shouldRun).toEqual(false);
         expect(url).toEqual('//static.ads-twitter.com/uwt.js');
         expect(onLoad).toBeDefined();
+        expect(sourcepointId).toBe('5e71760b69966540e4554f01');
     });
 });

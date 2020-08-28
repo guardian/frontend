@@ -1,44 +1,41 @@
 // @flow
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
-import { commercialCmpUiBannerModal } from 'common/modules/experiments/tests/commercial-cmp-ui-banner-modal';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
-import { articlesViewed } from 'common/modules/experiments/tests/contributions-epic-articles-viewed';
-import { countryName } from 'common/modules/experiments/tests/contributions-epic-country-name';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import { adblockTest } from 'common/modules/experiments/tests/adblock-ask';
 import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
+import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-opt-out';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
 import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
-import { signInGateSecundus } from 'common/modules/experiments/tests/sign-in-gate-first-test';
-import { contributionsBannerUsEoyOneDayCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-casuals';
-import { contributionsBannerUsEoyOneDayRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-one-day-regulars';
-import { contributionsBannerUsEoyNewYearCasuals } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-casuals';
-import { contributionsBannerUsEoyNewYearRegulars } from 'common/modules/experiments/tests/contribs-banner-us-eoy/contribs-banner-us-eoy-new-year-regulars';
-import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
+import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
+import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
+import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
+import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
+import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
+import { signInGateDismissWindow } from 'common/modules/experiments/tests/sign-in-gate-dismiss-window';
+import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
-    commercialCmpUiBannerModal,
-    adblockTest,
-    amazonA9Test,
+    connatixTest,
     xaxisAdapterTest,
     appnexusUSAdapter,
     pangaeaAdapterTest,
-    signInGateSecundus,
+    signInGatePatientia,
+    signInGateMainVariant,
+    signInGateMainControl,
+    signInGateDismissWindow,
 ];
 
+export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;
+
 export const epicTests: $ReadOnlyArray<EpicABTest> = [
-    articlesViewed,
-    countryName,
     askFourEarning,
     acquisitionsEpicAlwaysAskIfTagged,
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsBannerUsEoyNewYearRegulars,
-    contributionsBannerUsEoyNewYearCasuals,
-    contributionsBannerUsEoyOneDayRegulars,
-    contributionsBannerUsEoyOneDayCasuals,
+    contributionsCovidBannerRoundTwo,
     articlesViewedBanner,
+    contributionsBannerArticlesViewedOptOut,
 ];

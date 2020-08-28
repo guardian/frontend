@@ -4,7 +4,12 @@ import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConverters._
 import tools.MatchListFeatureTools
 
-@DoNotDiscover class ResultsFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
+@DoNotDiscover class ResultsFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with MatchListFeatureTools
+    with ConfiguredTestSuite {
 
   feature("Football Results") {
 
@@ -35,7 +40,9 @@ import tools.MatchListFeatureTools
         $(".football-team__form").size() should be(0)
 
         Then("I should see match comments")
-        $(".football-match__comments").texts.asScala.exists(_.contains("Bolton win 4-2 on penalties")) should equal(true)
+        $(".football-match__comments").texts.asScala.exists(_.contains("Bolton win 4-2 on penalties")) should equal(
+          true,
+        )
       }
     }
 

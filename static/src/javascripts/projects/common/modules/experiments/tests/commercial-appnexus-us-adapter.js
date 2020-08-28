@@ -7,7 +7,7 @@ const currentGeoLocation = once((): string => geolocationGetSync());
 export const appnexusUSAdapter: ABTest = {
     id: 'CommercialAppnexusUsAdapter',
     start: '2019-10-7',
-    expiry: '2020-07-30',
+    expiry: '2020-09-30',
     author: 'Ioanna Kyprianou',
     description: 'Test new us placement id for appnexus in US',
     audience: 0.0,

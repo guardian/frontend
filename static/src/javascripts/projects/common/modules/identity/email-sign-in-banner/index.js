@@ -6,6 +6,7 @@ import ophan from 'ophan/ng';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
 import type { Banner } from 'common/modules/ui/bannerPicker';
+import {createAuthenticationComponentEventParams} from "common/modules/identity/auth-component-event-params";
 import { make as makeTemplate, messageCode } from './template';
 import { getEmailCampaignFromUrl, getEmailCampaignFromUtm } from './campaigns';
 
@@ -14,9 +15,7 @@ const userPrefsStoreKey = 'emailbanner.referrerEmail';
 
 const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;
 
-const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(
-    emailPrefsLink
-)}`;
+const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(emailPrefsLink)}&${createAuthenticationComponentEventParams('email_sign_in_banner')}`;
 
 const isSecondEmailPageview = (): boolean => {
     const prefs = userPrefs.get(userPrefsStoreKey) || {};
@@ -28,7 +27,7 @@ const isInExperiment = (): boolean =>
 
 const trackInteraction = (interaction: string): void => {
     ophan.record({
-        component: 'first-pv-consent',
+        component: `${messageCode}`,
         value: interaction,
     });
     trackNonClickInteraction(interaction);

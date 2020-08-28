@@ -1,6 +1,6 @@
 package dfp.rubicon
 
-import com.google.api.ads.admanager.axis.v201902._
+import com.google.api.ads.admanager.axis.v201911._
 import common.Logging
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
@@ -16,18 +16,20 @@ object CreativeTemplate extends Logging with implicits.Collections {
     val params = findParameters()
     Json.parse(
       Skeleton()
-      .replace("{rp_site_choices}", Json.stringify(params("rp_site")))
-      .replace("{rp_zone_choices}", Json.stringify(params("rp_zone")))
-      .replace("{rp_size_choices}", Json.stringify(params("rp_size")))
+        .replace("{rp_site_choices}", Json.stringify(params("rp_site")))
+        .replace("{rp_zone_choices}", Json.stringify(params("rp_zone")))
+        .replace("{rp_size_choices}", Json.stringify(params("rp_size"))),
     )
   }
 
   private[rubicon] def relabel(params: Seq[(String, String)]): Seq[(String, String)] = {
-    val (unique, duplicate) = params.groupBy {
-      case (label, _) => label
-    }.partition {
-      case (_, labelParams) => labelParams.size == 1
-    }
+    val (unique, duplicate) = params
+      .groupBy {
+        case (label, _) => label
+      }
+      .partition {
+        case (_, labelParams) => labelParams.size == 1
+      }
 
     val relabelledDuplicates = duplicate.flatMap {
       case (label, labelParams) =>
@@ -45,9 +47,9 @@ object CreativeTemplate extends Logging with implicits.Collections {
   private def findParameters(): Map[String, JsValue] = {
 
     def findParameters(
-      creatives: Seq[ThirdPartyCreative],
-      getLabel: ThirdPartyCreative => Option[String],
-      getValue: ThirdPartyCreative => Option[String]
+        creatives: Seq[ThirdPartyCreative],
+        getLabel: ThirdPartyCreative => Option[String],
+        getValue: ThirdPartyCreative => Option[String],
     ): JsValue = {
 
       val labelValuePairs = for {
@@ -61,7 +63,7 @@ object CreativeTemplate extends Logging with implicits.Collections {
       Json.toJson(
         relabel(dedupedLabels).map {
           case (label, value) => Map("label" -> label, "value" -> value)
-        }
+        },
       )
     }
 
@@ -81,7 +83,7 @@ object CreativeTemplate extends Logging with implicits.Collections {
     Map(
       "rp_site" -> findParameters(creatives, siteLabel, siteValue),
       "rp_zone" -> findParameters(creatives, zoneLabel, zoneValue),
-      "rp_size" -> findParameters(creatives, sizeLabel, sizeValue)
+      "rp_size" -> findParameters(creatives, sizeLabel, sizeValue),
     )
   }
 
@@ -91,7 +93,6 @@ object CreativeTemplate extends Logging with implicits.Collections {
     }
   }
 }
-
 
 object Skeleton {
 

@@ -18,7 +18,7 @@
   "homepage": "https://github.com/guardian/frontend#readme",
   "dependencies": {
     "amphtml-validator": "^1.0.10",
-    "lodash": "^4.16.6",
+    "lodash": "^4.17.13",
     "promise-retry": "^1.1.1",
     "request": "^2.78.0"
   },

@@ -56,7 +56,7 @@ jest.mock(
         getControlEngagementBannerParams: jest.fn(() =>
             Promise.resolve({
                 products: ['CONTRIBUTION'],
-                linkUrl: 'fake-link-url',
+                linkUrl: 'https://support.theguardian.com/contribute',
             })
         ),
     })
@@ -200,7 +200,7 @@ describe('Membership engagement banner', () => {
                 Promise.resolve({
                     products: ['CONTRIBUTION'],
                     campaignCode: 'fake-campaign-code',
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                 })
             );
             emitSpy = jest.spyOn(fakeMediator, 'emit');
@@ -252,7 +252,7 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             getControlEngagementBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                 })
             );
         });
@@ -281,7 +281,7 @@ describe('Membership engagement banner', () => {
             getControlEngagementBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
                     messageText: 'fake-message-text',
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                     buttonCaption: 'fake-button-caption',
                 })
             );
@@ -314,7 +314,7 @@ describe('Membership engagement banner', () => {
                 .show()
                 .then(() =>
                     expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                        /fake-link-url\?fake-query-parameters/
+                        /https:\/\/support\.theguardian\.com\/contribute\?fake-query-parameters/
                     )
                 ));
 

@@ -27,7 +27,8 @@ import _root_.commercial.targeting.TargetingLifecycle
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait OnwardServices {
@@ -68,7 +69,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[TargetingLifecycle]
+    wire[TargetingLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -78,7 +79,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
-    ContentApiMetrics.ContentApiRequestsMetric
+    ContentApiMetrics.ContentApiRequestsMetric,
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters

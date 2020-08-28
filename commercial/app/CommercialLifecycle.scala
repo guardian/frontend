@@ -1,5 +1,7 @@
 package commercial
 
+import java.util.concurrent.Executors
+
 import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
@@ -16,41 +18,52 @@ object CommercialMetrics {
 }
 
 class CommercialLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  feedsFetcher: FeedsFetcher,
-  feedsParser: FeedsParser,
-  industries: Industries)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    feedsFetcher: FeedsFetcher,
+    feedsParser: FeedsParser,
+    industries: Industries,
+) extends LifecycleComponent
+    with Logging {
 
-  appLifecycle.addStopHook { () => Future {
-    stop()
-  }}
+  // This class does work that should be kept separate from the EC used to serve requests
+  implicit private val ec = ExecutionContext.fromExecutorService(
+    Executors.newFixedThreadPool(10),
+  )
 
-  private def toLogFields(feed: String,
-                          action: String,
-                          success: Boolean,
-                          maybeDuration: Option[Long] = None,
-                          maybeSize: Option[Int] = None) = {
+  appLifecycle.addStopHook { () =>
+    Future {
+      stop()
+    }
+  }
+
+  private def toLogFields(
+      feed: String,
+      action: String,
+      success: Boolean,
+      maybeDuration: Option[Long] = None,
+      maybeSize: Option[Int] = None,
+  ) = {
 
     val prefix = "commercial-feed"
 
     val defaultFields: List[LogField] = List(
       prefix -> feed,
       s"$prefix-action" -> action,
-      s"$prefix-result" -> (if (success) "success" else "failure")
+      s"$prefix-result" -> (if (success) "success" else "failure"),
     )
 
     val optionalFields: List[Option[LogField]] = List(
       maybeDuration map (LogFieldLong(s"$prefix-duration", _)),
-      maybeSize map (LogFieldLong(s"$prefix-size", _))
+      maybeSize map (LogFieldLong(s"$prefix-size", _)),
     )
 
     defaultFields ::: optionalFields.flatten
   }
 
   private val refreshJobs: List[RefreshJob] = List(
-    new IndustriesRefresh(industries, jobs)
+    new IndustriesRefresh(industries, jobs),
   )
 
   override def start(): Unit = {
@@ -68,15 +81,14 @@ class CommercialLifecycle(
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
-                                   e,
-                                   toLogFields(feedName, "fetch", false))
+          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}", e, toLogFields(feedName, "fetch", false))
       }
-      eventualResponse.foreach {
-        response =>
-          S3FeedStore.put(feedName, response.feed)
-          logInfoWithCustomFields(s"$msgPrefix succeeded in ${response.duration}",
-                                  toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)))
+      eventualResponse.foreach { response =>
+        S3FeedStore.put(feedName, response.feed)
+        logInfoWithCustomFields(
+          s"$msgPrefix succeeded in ${response.duration}",
+          toLogFields(feedName, "fetch", true, Some(response.duration.toSeconds)),
+        )
       }
       eventualResponse.map(_ => ())
     }
@@ -92,14 +104,13 @@ class CommercialLifecycle(
         case e: SwitchOffException =>
           log.warn(s"$msgPrefix failed: ${e.getMessage}")
         case NonFatal(e) =>
-          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}",
-                                   e,
-                                   toLogFields(feedName, "parse", false))
+          logErrorWithCustomFields(s"$msgPrefix failed: ${e.getMessage}", e, toLogFields(feedName, "parse", false))
       }
-      parsedFeed.foreach {
-        feed =>
-          logInfoWithCustomFields(s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}",
-                                  toLogFields(feedName, "parse", true, Some(feed.parseDuration.toSeconds), Some(feed.contents.size)))
+      parsedFeed.foreach { feed =>
+        logInfoWithCustomFields(
+          s"$msgPrefix succeeded: parsed ${feed.contents.size} $feedName in ${feed.parseDuration}",
+          toLogFields(feedName, "parse", true, Some(feed.parseDuration.toSeconds), Some(feed.contents.size)),
+        )
       }
       parsedFeed.map(_ => ())
     }

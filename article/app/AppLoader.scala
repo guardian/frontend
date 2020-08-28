@@ -24,7 +24,8 @@ import services.{NewspaperBooksAndSectionsAutoRefresh, OphanApi, SkimLinksCacheL
 import jobs.StoreNavigationLifecycleComponent
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait AppComponents extends FrontendComponents with ArticleControllers {
@@ -50,7 +51,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
-    wire[StoreNavigationLifecycleComponent]
+    wire[StoreNavigationLifecycleComponent],
   )
 
   lazy val router: Router = wire[Routes]
@@ -63,7 +64,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     ContentApiMetrics.ContentApiErrorMetric,
     ContentApiMetrics.ContentApiRequestsMetric,
     ArticleRenderingMetrics.RemoteRenderingMetric,
-    ArticleRenderingMetrics.LocalRenderingMetric
+    ArticleRenderingMetrics.LocalRenderingMetric,
   )
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]

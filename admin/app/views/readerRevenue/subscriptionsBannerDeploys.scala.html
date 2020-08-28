@@ -11,9 +11,11 @@
     </form>
 }
 
-@admin_main("Redeploy Contributions Banner", isAuthed = true) {
+@admin_main("Redeploy Subscriptions Banner", isAuthed = true) {
 
     <h1>Subscriptions Banner Redeploy</h1>
+
+    <h4 class="reader-revenue-warning">Warning - if you have just switched on a new banner, wait 30 mins before redeploying to avoid showing old banners (due to caching).</h4>
 
     <p>Click buttons to redeploy subscriptions banner</p>
 
@@ -28,4 +30,6 @@
 
     <h1>@flash.get("success")</h1>
     <h1 style="color:#bd362f">@flash.get("error")</h1>
+
+    <link href="@controllers.admin.routes.UncachedAssets.at("css/reader-revenue.css")" rel="stylesheet">
 }

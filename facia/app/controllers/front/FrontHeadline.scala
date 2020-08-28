@@ -7,7 +7,9 @@ import play.api.mvc.Results
 
 object FrontHeadline extends Results with Logging {
 
-  val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(NotFound("Could not extract headline from front"))
+  val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(
+    NotFound("Could not extract headline from front"),
+  )
 
   def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
     val webTitle = for {

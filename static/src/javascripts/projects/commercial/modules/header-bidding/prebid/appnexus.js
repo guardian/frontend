@@ -7,14 +7,16 @@ import {
 } from 'common/modules/commercial/build-page-targeting';
 
 import {
+    isInUsOrCa,
+    isInAuOrNz } from 'common/modules/commercial/geo-utils';
+
+import {
     getLargestSize,
     containsLeaderboard,
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
-    getBreakpointKey,
-    isInAuRegion,
-    isInUsRegion,
+    getBreakpointKey
 } from '../utils';
 
 import type { PrebidAppNexusParams, HeaderBiddingSize } from '../types';
@@ -34,7 +36,7 @@ const getAppNexusInvCode = (sizes: Array<HeaderBiddingSize>): ?string => {
 
 export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
     const defaultPlacementId: string = '13915593';
-    if (isInUsRegion() || isInAuRegion()) {
+    if (isInUsOrCa() || isInAuOrNz()) {
         return defaultPlacementId;
     }
     switch (getBreakpointKey()) {
@@ -67,11 +69,11 @@ export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
 export const getAppNexusDirectPlacementId = (
     sizes: HeaderBiddingSize[]
 ): string => {
-    if (isInAuRegion()) {
+    if (isInAuOrNz()) {
         return '11016434';
     }
 
-    if (isInUsRegion()) {
+    if (isInUsOrCa()) {
         return '4848330';
     }
 
@@ -106,7 +108,7 @@ export const getAppNexusDirectPlacementId = (
 export const getAppNexusDirectBidParams = (
     sizes: HeaderBiddingSize[]
 ): PrebidAppNexusParams => {
-    if (isInAuRegion() && config.get('switches.prebidAppnexusInvcode')) {
+    if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
         if (invCode) {
@@ -126,6 +128,7 @@ export const getAppNexusDirectBidParams = (
     };
 };
 
+// TODO are we using getAppNexusServerSideBidParams anywhere?
 export const getAppNexusServerSideBidParams = (
     sizes: HeaderBiddingSize[]
 ): PrebidAppNexusParams =>

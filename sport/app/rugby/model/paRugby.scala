@@ -10,9 +10,9 @@ import PAReads._
 import scala.util.{Failure, Success, Try}
 
 case class PAResult(
-  code: String,
-  name: String,
-  value: String,
+    code: String,
+    name: String,
+    value: String,
 )
 
 object PAReads {
@@ -30,43 +30,42 @@ object PAReads {
 }
 
 case class PAPlayer(
-  id: Int,
-  name: String,
+    id: Int,
+    name: String,
 )
 
 case class NestedParticipant(
-  id: Int,
-  name: String,
-  participants: Option[Seq[PAPlayer]]
+    id: Int,
+    name: String,
+    participants: Option[Seq[PAPlayer]],
 )
 
 case class Participant(
-  id: Int,
-  name: String,
+    id: Int,
+    name: String,
 )
 
 case class PATeam(
-  id: Int,
-  participant: Participant,
-  results: Map[String, PAResult]
+    id: Int,
+    participant: Participant,
+    results: Map[String, PAResult],
 )
 
 case class Venue(
-  name: String,
+    name: String,
 )
 
 case class Tournament(
-  name: String,
+    name: String,
 )
 
-
 case class PAMatch(
-  id: Int,
-  date: DateTime,
-  entrants: Seq[PATeam],
-  venue: Option[Venue],
-  tournament: Tournament,
-  status: String,
+    id: Int,
+    date: DateTime,
+    entrants: Seq[PATeam],
+    venue: Option[Venue],
+    tournament: Tournament,
+    status: String,
 )
 
 object PAMatch {
@@ -77,18 +76,18 @@ object PAMatch {
   // See https://sport.pressassociation.io/docs/status
   def getStatus(item: PAMatch): Status = {
     item.status match {
-      case "Not started" => Status.Fixture
+      case "Not started"      => Status.Fixture
       case "Kick Off Delayed" => Status.Postponed
-      case "1st half" => Status.FirstHalf
-      case "Halftime" => Status.HalfTime
-      case "2nd half" => Status.SecondHalf
-      case "Finished" => Status.Result
-      case "Extra time" => Status.ExtraTimeFirstHalf // TODO not equivalent
-      case "Finished AET" => Status.Result
-      case "Interrupted" => Status.Postponed
-      case "Abandoned" => Status.Abandoned
-      case "Postponed" => Status.Postponed
-      case _ => Status.Fixture
+      case "1st half"         => Status.FirstHalf
+      case "Halftime"         => Status.HalfTime
+      case "2nd half"         => Status.SecondHalf
+      case "Finished"         => Status.Result
+      case "Extra time"       => Status.ExtraTimeFirstHalf // TODO not equivalent
+      case "Finished AET"     => Status.Result
+      case "Interrupted"      => Status.Postponed
+      case "Abandoned"        => Status.Abandoned
+      case "Postponed"        => Status.Postponed
+      case _                  => Status.Fixture
     }
   }
 
@@ -103,12 +102,12 @@ object PAMatch {
       homeTeam = rugby.model.Team(
         id = homeTeam.participant.id.toString,
         name = homeTeam.participant.name,
-        score = homeTeam.results.get("running-score").map(_.value.toInt)
+        score = homeTeam.results.get("running-score").map(_.value.toInt),
       ),
       awayTeam = rugby.model.Team(
         id = awayTeam.participant.id.toString,
         name = awayTeam.participant.name,
-        score = awayTeam.results.get("running-score").map(_.value.toInt)
+        score = awayTeam.results.get("running-score").map(_.value.toInt),
       ),
       venue = item.venue.map(_.name),
       competitionName = item.tournament.name,
@@ -120,8 +119,8 @@ object PAMatch {
 }
 
 case class PAMatchesResponse(
-  hasNext: Boolean,
-  items: List[PAMatch]
+    hasNext: Boolean,
+    items: List[PAMatch],
 )
 
 object PAMatchesResponse extends Logging {
@@ -134,8 +133,9 @@ object PAMatchesResponse extends Logging {
 }
 
 object PAUtils {
-  def asTry[A](jsres: JsResult[A]): Try[A] = jsres match {
-    case JsSuccess(events, _) => Success(events)
-    case JsError(errors) => Failure(JsonParseException(errors.toString))
-  }
+  def asTry[A](jsres: JsResult[A]): Try[A] =
+    jsres match {
+      case JsSuccess(events, _) => Success(events)
+      case JsError(errors)      => Failure(JsonParseException(errors.toString))
+    }
 }

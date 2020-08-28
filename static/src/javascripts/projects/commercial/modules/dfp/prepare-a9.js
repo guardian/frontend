@@ -1,4 +1,4 @@
-// @flow
+// @flow strict
 
 import config from 'lib/config';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -7,31 +7,35 @@ import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
-import { amazonA9Test } from 'common/modules/experiments/tests/amazon-a9';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 
-let moduleLoadResult = Promise.resolve();
-if (!isGoogleProxy()) {
-    moduleLoadResult = import('lib/a9-apstag.js');
-}
-
-const setupA9: () => Promise<void> = () =>
-    moduleLoadResult.then(() => {
-        if (
-            shouldIncludeOnlyA9 ||
-            (dfpEnv.hbImpl.a9 &&
-                isInVariantSynchronous(amazonA9Test, 'variant') &&
-                commercialFeatures.dfpAdvertising &&
-                !commercialFeatures.adFree &&
-                !config.get('page.hasPageSkin') &&
-                !isGoogleProxy())
-        ) {
-            a9.initialise();
-        }
+const setupA9: () => Promise<void> = () => {
+    // There are two articles that InfoSec would like to avoid loading scripts on
+    if (commercialFeatures.isSecureContact) {
         return Promise.resolve();
-    });
+    }
 
-export const setupA9Once: () => Promise<void> = once(setupA9);
+    let moduleLoadResult = Promise.resolve();
+    if (
+        shouldIncludeOnlyA9 ||
+        (dfpEnv.hbImpl.a9 &&
+            isInUsa() &&
+            commercialFeatures.dfpAdvertising &&
+            !commercialFeatures.adFree &&
+            !config.get('page.hasPageSkin') &&
+            !isGoogleProxy())
+    ) {
+        moduleLoadResult = import('lib/a9-apstag.js').then(() => {
+            a9.initialise();
+
+            return Promise.resolve();
+        });
+    }
+
+    return moduleLoadResult;
+};
+
+const setupA9Once: () => Promise<void> = once(setupA9);
 
 export const init = (): Promise<void> => {
     setupA9Once();

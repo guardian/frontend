@@ -11,6 +11,12 @@ import {
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
+import { isInUk,
+    isInUsOrCa,
+    isInAuOrNz,
+    isInRow } from 'common/modules/commercial/geo-utils';
+import { getLotameData } from 'commercial/modules/third-party-tags/lotame';
+import type { LotameData } from 'commercial/modules/third-party-tags/lotame';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -37,15 +43,10 @@ import {
     containsMobileSticky,
     containsWS,
     getBreakpointKey,
-    isInAuRegion,
-    isInRowRegion,
-    isInUkRegion,
-    isInUsRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
-    shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeTripleLift,
@@ -56,9 +57,10 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
 } from '../utils';
-import { getAppNexusDirectBidParams, getAppNexusPlacementId } from './appnexus';
+import { getAppNexusDirectBidParams } from './appnexus';
 
-const PAGE_TARGETING: {} = buildAppNexusTargetingObject(getPageTargeting());
+// The below line is needed for page skins to show
+getPageTargeting();
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
@@ -173,7 +175,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
                 return -1;
         }
     }
-    if (isInUkRegion()) {
+    if (isInUk()) {
         switch (getBreakpointKey()) {
             case 'D':
                 if (containsMpuOrDmpu(sizes)) {
@@ -200,7 +202,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
                 return -1;
         }
     }
-    if (isInRowRegion()) {
+    if (isInRow()) {
         switch (getBreakpointKey()) {
             case 'D':
                 if (containsMpuOrDmpu(sizes)) {
@@ -251,8 +253,8 @@ const getXhbPlacementId = (sizes: HeaderBiddingSize[]): number => {
 };
 
 const getPangaeaPlacementIdForUsAndAu = (): string => {
-    if (isInUsRegion()) return '13892369';
-    if (isInAuRegion()) return '13892409';
+    if (isInUsOrCa()) return '13892369';
+    if (isInAuOrNz()) return '13892409';
     return '';
 };
 
@@ -274,91 +276,6 @@ const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
     }
 };
 
-const getPangaeaPlacementId = (sizes: HeaderBiddingSize[]): number => {
-    type PangaeaSection = {
-        sections: Array<string>,
-        lb: number,
-        mmpu: number,
-        dmpu: number,
-    };
-    const pangaeaList: Array<PangaeaSection> = [
-        {
-            sections: ['business'],
-            lb: 13892359,
-            mmpu: 13892404,
-            dmpu: 13892360,
-        },
-        {
-            sections: ['culture'],
-            lb: 13892361,
-            mmpu: 13892405,
-            dmpu: 13892362,
-        },
-        {
-            sections: ['uk', 'us', 'au'],
-            lb: 13892363,
-            mmpu: 13892406,
-            dmpu: 13892364,
-        },
-        {
-            sections: ['news'],
-            lb: 13892365,
-            mmpu: 13892407,
-            dmpu: 13892366,
-        },
-        {
-            sections: ['money'],
-            lb: 13892367,
-            mmpu: 13892408,
-            dmpu: 13892368,
-        },
-        {
-            sections: ['sport'],
-            lb: 13892372,
-            mmpu: 13892410,
-            dmpu: 13892373,
-        },
-        {
-            sections: ['lifeandstyle', 'fashion'],
-            lb: 13892411,
-            mmpu: 13892436,
-            dmpu: 13892437,
-        },
-        {
-            sections: ['technology', 'environment'],
-            lb: 13892376,
-            mmpu: 13892414,
-            dmpu: 13892377,
-        },
-        {
-            sections: ['travel'],
-            lb: 13892378,
-            mmpu: 13892415,
-            dmpu: 13892379,
-        },
-    ];
-
-    const section: string = config.get('page.section', '').toLowerCase();
-    const placementIdsForSection: PangaeaSection = pangaeaList.find(
-        ({ sections }) => sections.includes(section)
-    ) || {
-        sections: ['other'],
-        lb: 13892369,
-        mmpu: 13892409,
-        dmpu: 13892370,
-    };
-
-    const breakpointKey: string = getBreakpointKey();
-    // Mobile MPU
-    if (containsMpu(sizes) && breakpointKey === 'M')
-        return placementIdsForSection.mmpu;
-    // Double/Single MPU
-    if (containsMpuOrDmpu(sizes)) return placementIdsForSection.dmpu;
-    // Leaderboard/Billboard
-    if (containsLeaderboardOrBillboard(sizes)) return placementIdsForSection.lb;
-    return 13892409; // Other Section MPU as fallback
-};
-
 const getTripleLiftInventoryCode = (
     slotId: string,
     sizes: HeaderBiddingSize[]
@@ -375,6 +292,19 @@ const getTripleLiftInventoryCode = (
 
     console.log(`PREBID: Failed to get TripleLift ad unit for slot ${slotId}.`);
     return '';
+};
+
+const getOzoneTargeting = (): { } => {
+    const lotameData: LotameData = getLotameData();
+    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
+    if (typeof lotameData !== 'undefined') {
+        return {
+            ...appNexusTargetingObject,
+            'lotameSegs': lotameData.ozoneLotameData,
+            'lotamePid': lotameData.ozoneLotameProfileId,
+        }
+    }
+    return appNexusTargetingObject;
 };
 
 // Is pbtest being used?
@@ -396,14 +326,14 @@ const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
     bidParams: (): PrebidOpenXParams => {
-        if (isInUsRegion()) {
+        if (isInUsOrCa()) {
             return {
                 delDomain: 'guardian-us-d.openx.net',
                 unit: '540279544',
                 customParams: buildAppNexusTargetingObject(getPageTargeting()),
             };
         }
-        if (isInAuRegion()) {
+        if (isInAuOrNz()) {
             return {
                 delDomain: 'guardian-aus-d.openx.net',
                 unit: '540279542',
@@ -432,12 +362,11 @@ const ozoneClientSideBidder: PrebidBidder = {
                 customData: [
                     {
                         settings: {},
-                        targeting: PAGE_TARGETING,
+                        targeting: getOzoneTargeting(),
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
             }))(),
-            window.OzoneLotameData ? { lotameData: window.OzoneLotameData } : {}
         ),
 };
 
@@ -458,10 +387,10 @@ const sonobiBidder: PrebidBidder = {
 };
 
 const getPubmaticPublisherId = (): string => {
-    if (isInUsRegion()) {
+    if (isInUsOrCa()) {
         return '157206';
     }
-    if (isInAuRegion()) {
+    if (isInAuOrNz()) {
         return '157203';
     }
     return '157207';
@@ -536,17 +465,17 @@ const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
     bidParams: (): PrebidAdYouLikeParams => {
-        if (isInUkRegion()) {
+        if (isInUk()) {
             return {
                 placement: '2b4d757e0ec349583ce704699f1467dd',
             };
         }
-        if (isInUsRegion()) {
+        if (isInUsOrCa()) {
             return {
                 placement: '7fdf0cd05e1d4bf39a2d3df9c61b3495',
             };
         }
-        if (isInAuRegion()) {
+        if (isInAuOrNz()) {
             return {
                 placement: '5cf05e1705a2d57ba5d51e03f2af9208',
             };
@@ -569,76 +498,6 @@ const pangaeaBidder: PrebidBidder = {
                 keywords: buildAppNexusTargetingObject(getPageTargeting()),
             }
         ),
-};
-
-// Dummy bidders for the whitehorse project (https://trello.com/c/KbeBLyYZ)
-const getDummyServerSideBidders = (): Array<PrebidBidder> => {
-    const dummyServerSideBidders: Array<PrebidBidder> = [];
-
-    const appnexusServerSideBidder: PrebidBidder = {
-        name: 'appnexus',
-        switchName: 'prebidS2sozone',
-        bidParams: (
-            slotId: string,
-            sizes: HeaderBiddingSize[]
-        ): PrebidAppNexusParams =>
-            Object.assign(
-                {},
-                {
-                    placementId: getAppNexusPlacementId(sizes),
-                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-                },
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    const openxServerSideBidder: PrebidBidder = {
-        name: 'openx',
-        switchName: 'prebidS2sozone',
-        bidParams: (): PrebidOpenXParams =>
-            Object.assign(
-                {},
-                (() => ({
-                    delDomain: 'guardian-d.openx.net',
-                    unit: '539997090',
-                    customParams: buildAppNexusTargetingObject(
-                        getPageTargeting()
-                    ),
-                }))(),
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    const pangaeaServerSideBidder: PrebidBidder = {
-        name: 'pangaea',
-        switchName: 'prebidS2sozone',
-        bidParams: (
-            slotId: string,
-            sizes: HeaderBiddingSize[]
-        ): PrebidAppNexusParams =>
-            Object.assign(
-                {},
-                {
-                    placementId: getPangaeaPlacementId(sizes).toString(),
-                    keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-                },
-                window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
-            ),
-    };
-
-    if (
-        inPbTestOr(
-            config.get('switches.prebidS2sozone') && shouldIncludeOzone()
-        )
-    ) {
-        dummyServerSideBidders.push(openxServerSideBidder);
-        dummyServerSideBidders.push(appnexusServerSideBidder);
-        if (config.get('switches.prebidPangaea', false)) {
-            dummyServerSideBidders.push(pangaeaServerSideBidder);
-        }
-    }
-
-    return dummyServerSideBidders;
 };
 
 // There's an IX bidder for every size that the slot can take
@@ -693,8 +552,7 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
 
     const allBidders = indexExchangeBidders(slotSizes)
         .concat(xhbBidders)
-        .concat(otherBidders)
-        .concat(getDummyServerSideBidders());
+        .concat(otherBidders);
     return isPbTestOn()
         ? biddersBeingTested(allBidders)
         : biddersSwitchedOn(allBidders);
@@ -710,7 +568,6 @@ export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
     }));
 
 export const _ = {
-    getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,

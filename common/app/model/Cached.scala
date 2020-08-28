@@ -50,7 +50,7 @@ object Cached extends implicits.Dates {
   object RevalidatableResult {
     def apply[C](result: Result, content: C)(implicit writeable: Writeable[C]): RevalidatableResult = {
       // hashing function from Arrays.java
-      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L){
+      val hashLong: Long = writeable.transform(content).foldLeft(z = 1L) {
         case (accu, nextByte) => 31 * accu + nextByte
       }
       new RevalidatableResult(result, Hash(hashLong.toString))
@@ -62,9 +62,8 @@ object Cached extends implicits.Dates {
 
   }
 
-
   def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(seconds, result, request.headers.get("If-None-Match"))//FIXME could be comma separated
+    apply(seconds, result, request.headers.get("If-None-Match")) //FIXME could be comma separated
   }
 
   def apply(cacheTime: CacheTime)(result: CacheableResult)(implicit request: RequestHeader): Result = {
@@ -109,11 +108,12 @@ object Cached extends implicits.Dates {
     This explains Surrogate-Control vs Cache-Control
     TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
     https://docs.fastly.com/guides/tutorials/cache-control-tutorial
-  */
+   */
   private def cacheHeaders(maxAge: Int, result: Result, maybeEtag: Option[String]): Result = {
     val now = DateTime.now
     val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
-    val surrogateCacheControl = s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
+    val surrogateCacheControl =
+      s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
 
     val cacheControl = if (LongCacheSwitch.isSwitchedOn) {
       val browserMaxAge = min(maxAge, 60)
@@ -124,18 +124,17 @@ object Cached extends implicits.Dates {
     }
 
     val etagHeaderString: String = maybeEtag.getOrElse(
-      s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""" // setting a random tag still helps
+      s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", // setting a random tag still helps
     )
 
     result.withHeaders(
-
       // the cache headers used by the CDN
       "Surrogate-Control" -> surrogateCacheControl,
       // the cache headers that make their way through to the browser
       "Cache-Control" -> cacheControl,
-
       "Date" -> now.toHttpDateTimeString,
-      "ETag" -> etagHeaderString)
+      "ETag" -> etagHeaderString,
+    )
   }
 }
 
@@ -146,8 +145,9 @@ object NoCache {
 case class NoCache[A](action: Action[A])(implicit val executionContext: ExecutionContext) extends Action[A] {
 
   override def apply(request: Request[A]): Future[Result] = {
-    action(request) map { response => response.withHeaders(
-        ("Cache-Control", "private, no-store, no-cache")
+    action(request) map { response =>
+      response.withHeaders(
+        ("Cache-Control", "private, no-store, no-cache"),
       )
     }
   }

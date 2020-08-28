@@ -20,10 +20,13 @@ object HostedAmp {
     }
 
     def transformVideos(): Unit = {
-      def transformVideo(video: Element): Element = video.tagName("amp-video").attr("layout", "responsive").attr("width", "16").attr("height", "9")
+      def transformVideo(video: Element): Element =
+        video.tagName("amp-video").attr("layout", "responsive").attr("width", "16").attr("height", "9")
       val figures = doc.select("figure:has(gu-atom)")
-      for (figure <- figures.asScala;
-           video <- figure.select("video").asScala) {
+      for (
+        figure <- figures.asScala;
+        video <- figure.select("video").asScala
+      ) {
 
         figure.appendChild(transformVideo(video))
         figure.select("gu-atom").remove()

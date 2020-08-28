@@ -82,6 +82,7 @@ class GalleryLightbox {
     endslateEl: bonzo;
     endslate: Object;
     startIndex: number;
+    handleKeyEvents: (KeyboardEvent) => void;
 
     constructor(): void {
         // CONFIG
@@ -91,6 +92,7 @@ class GalleryLightbox {
             config.get('page.contentType') === 'Gallery';
         this.useSwipe = hasTouchScreen();
         this.swipeThreshold = 0.05;
+        this.handleKeyEvents = this.unboundHandleKeyEvents.bind(this);
 
         // TEMPLATE
         const generateButtonHTML = (label: string): string => {
@@ -167,7 +169,7 @@ class GalleryLightbox {
     }
 
     generateImgHTML(img: Object, i: number): string {
-        const blockShortUrl = config.get('page.shortUrl');
+        const blockShortUrl = config.get('page.host') + config.get('page.shortUrlId');
         const urlPrefix = img.src.startsWith('//') ? 'http:' : '';
         const shareItems: Array<{
             text: string,
@@ -209,7 +211,6 @@ class GalleryLightbox {
             index: i,
             caption: img.caption,
             credit: img.displayCredit ? img.credit : '',
-            blockShortUrl,
             shareButtons: shareItems
                 .map(s => template(shareButtonTpl)(s))
                 .join(''),
@@ -421,10 +422,8 @@ class GalleryLightbox {
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
         this.$lightboxEl.addClass('gallery-lightbox--open');
-        bean.off(document.body, 'keydown', event =>
-            this.handleKeyEvents(event)
-        ); // prevent double binding
-        bean.on(document.body, 'keydown', event => this.handleKeyEvents(event));
+        bean.off(document.body, 'keydown', this.handleKeyEvents); // prevent double binding
+        bean.on(document.body, 'keydown', this.handleKeyEvents);
     }
 
     close(): void {
@@ -451,7 +450,7 @@ class GalleryLightbox {
         }, 1);
     }
 
-    handleKeyEvents(e: KeyboardEvent): void {
+    unboundHandleKeyEvents(e: KeyboardEvent): void {
         if (e.keyCode === 37) {
             // left
             this.trigger('prev');

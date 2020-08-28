@@ -1,6 +1,8 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange } from '@guardian/consent-management-platform';
+
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -26,17 +28,42 @@ class A9AdUnit {
     }
 }
 
-let requestQueue: Promise<void> = Promise.resolve();
 let initialised: boolean = false;
+let requestQueue: Promise<void> = Promise.resolve();
+
 const bidderTimeout: number = 1500;
+const SOURCEPOINT_ID: string = '5edf9a821dc4e95986b66df4';
 
 const initialise = (): void => {
-    initialised = true;
+    onConsentChange(state => {
+        let canRun: boolean;
+        if (state.ccpa) {
+            // CCPA mode
+            canRun = !state.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
+            if (
+                typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                typeof state.tcfv2.vendorConsents[SOURCEPOINT_ID] !==
+                    'undefined'
+            ) {
+                canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+            } else {
+                canRun = Object.values(state.tcfv2.consents).every(Boolean);
+            }
+        } else {
+            // TCFv1 mode
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+        }
 
-    window.apstag.init({
-        pubID: config.get('libs.a9PublisherId'),
-        adServer: 'googletag',
-        bidTimeout: bidderTimeout,
+        if (!initialised && canRun) {
+            initialised = true;
+            window.apstag.init({
+                pubID: config.get('page.a9PublisherId'),
+                adServer: 'googletag',
+                bidTimeout: bidderTimeout,
+            });
+        }
     });
 };
 
@@ -85,4 +112,11 @@ const requestBids = (
 export default {
     initialise,
     requestBids,
+};
+
+export const _ = {
+    resetModule: () => {
+        initialised = false;
+        requestQueue = Promise.resolve();
+    },
 };

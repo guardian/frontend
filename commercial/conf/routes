@@ -13,9 +13,6 @@ GET         /commercial/travel/api/offers.json                              comm
 # Job merchandising components
 GET         /commercial/jobs/api/jobs.json                                  commercial.controllers.JobsController.getJobs
 
-# Soulmates merchandising components
-GET        /commercial/api/soulmates.json                                   commercial.controllers.SoulmatesController.getSoulmates
-
 # Book merchandising components
 GET         /commercial/books/api/book.json                                 commercial.controllers.BookOffersController.getBook
 GET         /commercial/books/api/books.json                                commercial.controllers.BookOffersController.getBooks
@@ -48,7 +45,9 @@ GET         /app-ads.txt                                                    comm
 
 # Analytics
 POST        /commercial/api/hb                                              commercial.controllers.PrebidAnalyticsController.insert()
-POST        /commercial/api/pv                                              commercial.controllers.PageViewAnalyticsController.insert()
 
 # Passbacks
 GET         /commercial/ias-passback/:size                                  commercial.controllers.PassbackController.renderIasPassback(size)
+
+# AMP iframe HTML, needed for AMP (DCR repo)
+GET         /commercial/amp-iframe.html                                     commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()

@@ -31,7 +31,7 @@ Follow [this link](https://www.google.co.uk) and enter the relevant search strin
 
 # Local dev server setup
 
-**Hello there!** 👋 After completing this setup guide, we would greatly appreciate it if you could complete our [Frontend Setup 
+**Hello there!** 👋 After completing this setup guide, we would greatly appreciate it if you could complete our [Frontend Setup
 Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
 It should only take 3 minutes and will help us improve this documentation and the setup process in the future. Thank you! 🙏
 
@@ -99,9 +99,9 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 ### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 8.x as a requirement. If you use 
-[NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can 
-just `nvm use` (or `nvm install` if you don't have 8 installed yet).
+The frontend uses an `.nvmrc` which specifies Node 10.16 as a requirement. If you use
+[NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can
+just `nvm use` (or `nvm install` if you don't have 10.16 installed yet).
 
 To install nvm:
 
@@ -109,23 +109,23 @@ To install nvm:
 $ curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.34.0/install.sh | bash
 ```
 
-You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your 
-`.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc` 
+You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9e8a3f506b287233ed65365befb) to your
+`.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc`
 is present.
 
-If you just want to use your system Node, you'll need to install v8:
+If you just want to use your system Node, you'll need to install v10.16:
 
 Ubuntu:
 
 ```bash
-$ curl -sL https://deb.nodesource.com/setup_8.x | sudo bash -
+$ curl -sL https://deb.nodesource.com/setup_10.x | sudo bash -
 $ sudo apt-get install -y nodejs
 ```
 
 Mac:
 
 ```bash
-$ brew install node@8
+$ brew install node@10.16
 ```
 
 
@@ -141,13 +141,13 @@ The frontend application should now be ready to run.
 
 Running the app
 ===============
-Compile the client side assets: 
+Compile the client side assets:
 
 ```bash
 $ make watch
 ```
 
-As a convenience, this command will also watch for changes to client side code and 
+As a convenience, this command will also watch for changes to client side code and
 automatically inject changes into the browser without requiring a browser refresh.
 
 In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
@@ -183,9 +183,9 @@ Now check that you are up and running by hitting the following URLs:
 * [http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson](http://localhost:3000/media/2012/dec/05/newspaper-editors-sign-up-leveson)
 * [http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery](http://localhost:3000/news/gallery/2012/dec/04/24-hours-in-pictures-gallery)
 
-Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well. 
+Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well.
 
-If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting 
+If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting
 [https://m.thegulocal.com](https://m.thegulocal.com)
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
@@ -196,9 +196,25 @@ Congratulations, you have a local instance running!  Now continue on to set up y
 
 Install to your IDE from http://editorconfig.org/#download
 
-## IntelliJ metadata
-To create project files for use in IntelliJ, you need to make sure you install the Scala plugin from Preferences->Plugins. It supports SBT and Play.
-Then load IntelliJ, then click Import project and import the directory as an SBT project. Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom) otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your terminal.
+## Scala Editor setup
+
+Any Scala editor can be used for the project, but we recommend either Intellij or VS Code.
+
+For Intellij:
+
+* install the Scala plugin
+* import the project.  Default settings are fine, except you need to make sure you choose JDK 1.8 (under JVM - Custom)
+  otherwise it won't import correctly - You can find the location by pasting `/usr/libexec/java_home` into your
+  terminal.
+
+For VS Code:
+
+* add the [Metals](https://scalameta.org/metals/docs/editors/vscode.html) extension. Then simply open the project and
+  follow the instructions in your editor.
+
+Code formatting is provided by scalafmt. See their [installation](https://scalameta.org/scalafmt/docs/installation.html)
+docs for integration with your preferred editor. *You should configure this to format on save as unformatted code will
+fail a build in our CI.*
 
 Congratulations, you are now set up to edit frontend code!  See the [Optional steps](#optional-steps) below for other things to do.
 
@@ -221,7 +237,7 @@ Recommended VSCode extensions are listed in `.vscode/extensions.json` and VSCode
 
 # Optional steps
 
-**Before you go:** We would greatly appreciate it if you could complete our [Frontend Setup 
+**Before you go:** We would greatly appreciate it if you could complete our [Frontend Setup
 Questionnaire](https://docs.google.com/forms/d/e/1FAIpQLSc6CVY0z-cGm2_Jm7gKkWbZ3yIlK0FaKPJZO3jAjxsZNSc5oQ/viewform?c=0&w=1).
 It should only take 3 minutes and will help us improve this documentation and the setup process in the future. Thank you! 🙏
 

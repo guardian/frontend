@@ -23,18 +23,6 @@
     @InlineJs(showUserName().body, "showUserName.js")
 }
 
-// ************* COMMERCIAL *************
-
-@if(enableConsentManagementService.isSwitchedOn) {
-    @InlineJs(prepareCmp().body, "prepareCmp.js")
-}
-
-@if(LotameSwitch.isSwitchedOn
-    && !page.metadata.contentType.contains(DotcomContentType.Identity)
-    && !page.metadata.shouldBlockAnalytics) {
-    @InlineJs(prepareLotame().body, "prepareLotame.js")
-}
-
 // ************* ANALYTICS *************
 
 // Ophan pageview ID and browser ID are needed by Google Analytics, which runs just after this script tag

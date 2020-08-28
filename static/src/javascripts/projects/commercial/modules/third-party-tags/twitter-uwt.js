@@ -1,9 +1,5 @@
 // @flow strict
 import config from 'lib/config';
-import {
-    getAdConsentState,
-    thirdPartyTrackingAdConsent,
-} from 'common/modules/commercial/ad-prefs.lib';
 
 const onLoad = () => {
     // Insert Twitter Pixel ID and Standard Event data below
@@ -15,9 +11,8 @@ const onLoad = () => {
 
 // Twitter universal website tag code
 export const twitterUwt: () => ThirdPartyTag = () => ({
-    shouldRun:
-        config.get('switches.twitterUwt', false) &&
-        !!getAdConsentState(thirdPartyTrackingAdConsent),
+    shouldRun: config.get('switches.twitterUwt', false),
     url: '//static.ads-twitter.com/uwt.js',
+    sourcepointId: '5e71760b69966540e4554f01',
     onLoad,
 });

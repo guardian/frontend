@@ -2,8 +2,8 @@ package dfp
 
 // StatementBuilder query language is PQL defined here:
 // https://developers.google.com/ad-manager/api/pqlreference
-import com.google.api.ads.admanager.axis.utils.v201902.StatementBuilder
-import com.google.api.ads.admanager.axis.v201902._
+import com.google.api.ads.admanager.axis.utils.v201911.StatementBuilder
+import com.google.api.ads.admanager.axis.v201911._
 import common.Logging
 import common.dfp._
 import org.joda.time.DateTime
@@ -13,15 +13,19 @@ case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineIte
 class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Logging {
   import dfp.DfpApi._
 
-  private def readLineItems(stmtBuilder: StatementBuilder,
-                            postFilter: LineItem => Boolean = _ => true ): DfpLineItems = {
+  private def readLineItems(
+      stmtBuilder: StatementBuilder,
+      postFilter: LineItem => Boolean = _ => true,
+  ): DfpLineItems = {
 
-    val lineItems = withDfpSession( session => {
-      session.lineItems(stmtBuilder).filter(postFilter).map( dfpLineItem => {
+    val lineItems = withDfpSession(session => {
+      session
+        .lineItems(stmtBuilder)
+        .filter(postFilter)
+        .map(dfpLineItem => {
           (dataMapper.toGuLineItem(session)(dfpLineItem), dfpLineItem)
         })
     })
-
 
     // Note that this will call getTargeting on each
     // item, potentially making one API call per lineitem.
@@ -31,7 +35,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
 
     DfpLineItems(
       validItems = validatedLineItems.getOrElse(true, Nil),
-      invalidItems = validatedLineItems.getOrElse(false, Nil))
+      invalidItems = validatedLineItems.getOrElse(false, Nil),
+    )
   }
 
   def getAllOrders: Seq[GuOrder] = {
@@ -41,9 +46,9 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
 
   def getAllAdvertisers: Seq[GuAdvertiser] = {
     val stmtBuilder = new StatementBuilder()
-                      .where("type = :type")
-                      .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
-                      .orderBy("id ASC")
+      .where("type = :type")
+      .withBindVariableValue("type", CompanyType.ADVERTISER.toString)
+      .orderBy("id ASC")
 
     withDfpSession(_.companies(stmtBuilder).map(dataMapper.toGuAdvertiser))
   }
@@ -51,10 +56,10 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def readCurrentLineItems: DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
-                      .where("status = :readyStatus OR status = :deliveringStatus")
-                      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
-                      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
-                      .orderBy("id ASC")
+      .where("status = :readyStatus OR status = :deliveringStatus")
+      .withBindVariableValue("readyStatus", ComputedStatus.READY.toString)
+      .withBindVariableValue("deliveringStatus", ComputedStatus.DELIVERING.toString)
+      .orderBy("id ASC")
 
     readLineItems(stmtBuilder)
   }
@@ -62,8 +67,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def readLineItemsModifiedSince(threshold: DateTime): DfpLineItems = {
 
     val stmtBuilder = new StatementBuilder()
-                      .where("lastModifiedDateTime > :threshold")
-                      .withBindVariableValue("threshold", threshold.getMillis)
+      .where("lastModifiedDateTime > :threshold")
+      .withBindVariableValue("threshold", threshold.getMillis)
 
     readLineItems(stmtBuilder)
   }
@@ -80,23 +85,24 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
     // Lets avoid Prebid lineitems
     val IsPrebid = "(?i).*?prebid.*".r
 
-    val lineItems = readLineItems(stmtBuilder,
-                                  lineItem => {
-                                      lineItem.getName match{
-                                        case IsPrebid() => false
-                                        case _ => true
-                                      }
-                                    }
-                                  )
+    val lineItems = readLineItems(
+      stmtBuilder,
+      lineItem => {
+        lineItem.getName match {
+          case IsPrebid() => false
+          case _          => true
+        }
+      },
+    )
     (lineItems.validItems.map(_.id) ++ lineItems.invalidItems.map(_.id)).sorted
   }
 
   def readActiveCreativeTemplates(): Seq[GuCreativeTemplate] = {
 
     val stmtBuilder = new StatementBuilder()
-                      .where("status = :active and type = :userDefined")
-                      .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
-                      .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
+      .where("status = :active and type = :userDefined")
+      .withBindVariableValue("active", CreativeTemplateStatus._ACTIVE)
+      .withBindVariableValue("userDefined", CreativeTemplateType._USER_DEFINED)
 
     withDfpSession {
       _.creativeTemplates(stmtBuilder) map dataMapper.toGuCreativeTemplate filterNot (_.isForApps)
@@ -106,18 +112,19 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def readTemplateCreativesModifiedSince(threshold: DateTime): Seq[GuCreative] = {
 
     val stmtBuilder = new StatementBuilder()
-                      .where("lastModifiedDateTime > :threshold")
-                      .withBindVariableValue("threshold", threshold.getMillis)
+      .where("lastModifiedDateTime > :threshold")
+      .withBindVariableValue("threshold", threshold.getMillis)
 
     withDfpSession {
-      _.creatives.get(stmtBuilder) collect { case creative: TemplateCreative => creative } map dataMapper.toGuTemplateCreative
+      _.creatives.get(stmtBuilder) collect {
+        case creative: TemplateCreative => creative
+      } map dataMapper.toGuTemplateCreative
     }
   }
 
   private def readDescendantAdUnits(rootName: String, stmtBuilder: StatementBuilder): Seq[GuAdUnit] = {
     withDfpSession { session =>
       session.adUnits(stmtBuilder) filter { adUnit =>
-
         def isRoot(path: Array[AdUnitParent]) = path.length == 1 && adUnit.getName == rootName
         def isDescendant(path: Array[AdUnitParent]) = path.length > 1 && path(1).getName == rootName
 
@@ -129,8 +136,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def readActiveAdUnits(rootName: String): Seq[GuAdUnit] = {
 
     val stmtBuilder = new StatementBuilder()
-                      .where("status = :status")
-                      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+      .where("status = :status")
+      .withBindVariableValue("status", InventoryStatus._ACTIVE)
 
     readDescendantAdUnits(rootName, stmtBuilder)
   }
@@ -138,10 +145,10 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   def readSpecialAdUnits(rootName: String): Seq[(String, String)] = {
 
     val statementBuilder = new StatementBuilder()
-                           .where("status = :status")
-                           .where("explicitlyTargeted = :targeting")
-                           .withBindVariableValue("status", InventoryStatus._ACTIVE)
-                           .withBindVariableValue("targeting", true)
+      .where("status = :status")
+      .where("explicitlyTargeted = :targeting")
+      .withBindVariableValue("status", InventoryStatus._ACTIVE)
+      .withBindVariableValue("targeting", true)
 
     readDescendantAdUnits(rootName, statementBuilder) map { adUnit =>
       (adUnit.id, adUnit.path.mkString("/"))
@@ -149,7 +156,8 @@ class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Log
   }
 
   def getCreativeIds(lineItemId: Long): Seq[Long] = {
-    val stmtBuilder = new StatementBuilder().where("status = :status AND lineItemId = :lineItemId")
+    val stmtBuilder = new StatementBuilder()
+      .where("status = :status AND lineItemId = :lineItemId")
       .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
       .withBindVariableValue("lineItemId", lineItemId)
 

@@ -7,15 +7,19 @@ import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{Future, ExecutionContext}
 
 class SectionsLookUpLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  sectionsLookUp: SectionsLookUp
-)(implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    sectionsLookUp: SectionsLookUp,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent
+    with Logging {
 
-  appLifecycle.addStopHook { () => Future {
-    descheduleJobs()
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      descheduleJobs()
+    }
+  }
 
   private def scheduleJobs() {
     jobs.schedule("SectionsLookUpJob", "0 * * * * ?") {

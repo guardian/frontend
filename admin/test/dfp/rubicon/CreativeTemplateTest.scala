@@ -10,6 +10,6 @@ class CreativeTemplateTest extends FlatSpec with Matchers {
 
   it should "relabel duplicate parameters" in {
     CreativeTemplate.relabel(Seq("a" -> "1", "a" -> "2", "a" -> "3", "b" -> "4")) shouldBe
-    Seq("a" -> "1", "a.1" -> "2", "a.2" -> "3", "b" -> "4")
+      Seq("a" -> "1", "a.1" -> "2", "a.2" -> "3", "b" -> "4")
   }
 }

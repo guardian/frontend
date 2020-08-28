@@ -5,11 +5,13 @@ object SubjectIndexPageMetaData {
   private val indexFolder: String = "subjects"
   private val signPosting = Some(IndexNav.keywordsAlpha)
 
-  def make(page: String): MetaData = MetaData.make(
-    id = s"index/$indexFolder/$page",
-    section = Some(SectionId.fromId(tagType)),
-    webTitle = page.capitalize,
-    customSignPosting = signPosting)
+  def make(page: String): MetaData =
+    MetaData.make(
+      id = s"index/$indexFolder/$page",
+      section = Some(SectionId.fromId(tagType)),
+      webTitle = page.capitalize,
+      customSignPosting = signPosting,
+    )
 }
 
 object ContributorsIndexPageMetaData {
@@ -17,9 +19,11 @@ object ContributorsIndexPageMetaData {
   private val indexFolder: String = "contributors"
   private val signPosting = Some(IndexNav.contributorsAlpha)
 
-  def make(page: String): MetaData = MetaData.make(
-    id = s"index/$indexFolder/$page",
-    section = Some(SectionId.fromId(tagType)),
-    webTitle = page.capitalize,
-    customSignPosting = signPosting)
+  def make(page: String): MetaData =
+    MetaData.make(
+      id = s"index/$indexFolder/$page",
+      section = Some(SectionId.fromId(tagType)),
+      webTitle = page.capitalize,
+      customSignPosting = signPosting,
+    )
 }

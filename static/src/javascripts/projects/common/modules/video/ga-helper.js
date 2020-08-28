@@ -43,5 +43,36 @@ const getGoogleAnalyticsEventAction = (mediaEvent: MediaEvent) => {
     return action;
 };
 
+type PfpEventType = 'adStart' | 'adEnd';
+
+type PfpEventParams = {
+    eventCategory: string,
+    eventAction: string,
+    eventLabel: string,
+    dimension19: string,
+    dimension20: string,
+    metric17?: number,
+    metric18?: number,
+};
+
+const buildPfpEvent = (
+    pfpEventType: PfpEventType,
+    videoId: string
+): PfpEventParams => {
+    const pfpEventMetric = pfpEventType === 'adStart' ? 24 : 25;
+    return {
+        eventCategory: 'media',
+        eventAction: 'video preroll',
+        eventLabel: videoId,
+        dimension19: videoId,
+        dimension20: 'gu-video-youtube',
+        [`metric${pfpEventMetric}`]: 1,
+    };
+};
+
 export type { MediaEvent };
-export { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction };
+export {
+    buildGoogleAnalyticsEvent,
+    getGoogleAnalyticsEventAction,
+    buildPfpEvent,
+};

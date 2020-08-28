@@ -2,6 +2,7 @@ package services
 
 import java.util.concurrent.{Executors, ThreadPoolExecutor}
 
+import clients.DiscussionClient
 import com.gu.identity.cookie.IdentityCookieService
 import com.gu.identity.play.IdentityPlayAuthService
 import com.softwaremill.macwire._
@@ -38,12 +39,15 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
     IdentityPlayAuthService.unsafeInit(
       Uri.unsafeFromString(identityConfiguration.apiRoot),
       identityConfiguration.apiClientToken,
-      None
+      None,
     )(ec)
   }
-  lazy val identityCookieService: IdentityCookieService =  IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
+  lazy val identityCookieService: IdentityCookieService =
+    IdentityCookieService.fromKeyPair(identityKeys.publicDsaKey, None)
   lazy val authenticationService = wire[AuthenticationService]
   lazy val torNodeLoggingIdRequestParser = wire[TorNodeLoggingIdRequestParser]
   lazy val emailService = wire[NewsletterService]
   lazy val mdapiService = wire[MembersDataApiService]
+  lazy val discussionApiService = wire[DiscussionApiService]
+  lazy val discussionClient = wire[DiscussionClient]
 }

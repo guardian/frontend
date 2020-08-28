@@ -6,22 +6,23 @@ import play.api.test.Helpers._
 import org.scalatest._
 
 @DoNotDiscover class FixturesControllerTest
-  extends FreeSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestExecutionContext
-  with WithTestFootballClient
-  with WithMaterializer
-  with BeforeAndAfterAll
-  with WithTestApplicationContext
-  with WithTestWsClient {
+    extends FreeSpec
+    with ConfiguredTestSuite
+    with Matchers
+    with FootballTestData
+    with WithTestExecutionContext
+    with WithTestFootballClient
+    with WithMaterializer
+    with BeforeAndAfterAll
+    with WithTestApplicationContext
+    with WithTestWsClient {
 
   val fixturesUrl = "/football/fixtures"
   val fixtureForUrl = "/football/fixtures/2012/oct/20"
   val tag = "premierleague"
 
-  lazy val fixturesController = new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+  lazy val fixturesController =
+    new FixturesController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "can load the all fixtures page" in {
     val result = fixturesController.allFixtures()(TestRequest())

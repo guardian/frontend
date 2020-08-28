@@ -8,7 +8,6 @@ import fastdom from 'lib/fastdom-promise';
 import { local } from 'lib/storage';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { signInWithSavedCredentials } from 'common/modules/identity/credentials-api-sign-in';
 import { showMyAccountIfNecessary } from './user-account';
 
 type MenuAndTriggerEls = {
@@ -569,40 +568,11 @@ const addEventHandler = (): void => {
     }
 };
 
-const bindCredentialsApiSignIn = (): void => {
-    fastdom
-        .read(() => ({
-            signInLinks: Array.from(
-                document.querySelectorAll('.js-navigation-sign-in')
-            ),
-        }))
-        .then(({ signInLinks }) => {
-            signInLinks.forEach(signInLink => {
-                signInLink.addEventListener(
-                    'click',
-                    e => {
-                        e.preventDefault();
-                        signInWithSavedCredentials().then(wasSignedIn => {
-                            if (!wasSignedIn) {
-                                window.location =
-                                    signInLink.getAttribute('href') ||
-                                    '/signin';
-                            }
-                            return showMyAccountIfNecessary();
-                        });
-                    },
-                    false
-                );
-            });
-        });
-};
-
 export const newHeaderInit = (): void => {
     enhanceMenuToggles();
     showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
-    bindCredentialsApiSignIn();
     closeAllMenuSections();
     trackRecentSearch();
 };

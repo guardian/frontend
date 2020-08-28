@@ -8,42 +8,12 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-cmp-ui-banner-modal",
-    "Test whether our new banner/modal CMP UI obtains target consent rates",
-    owners = Seq(Owner.withGithub("ghaberis")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 28),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-epic-ask-four-earning",
     "This places the epic on all articles for all users, with a limit of 4 impressions in any given 30 days",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-articles-viewed-round-3",
-    "Tests adding a count of articles viewed in the epic",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-epic-country-name",
-    "Displays country name in the epic",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2025, 1, 27),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -53,47 +23,27 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-new-year-regulars",
-    "US End of year banner - one day count with articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
+    "ab-contributions-banner-articles-viewed-opt-out",
+    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
+    owners = Seq(Owner.withGithub("michaelbjacobson")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 11, 27),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-contributions-banner-us-eoy-new-year-casuals",
-    "US End of year banner - one day count without articles viewed",
+    "ab-contributions-covid-banner-round-two",
+    "Covid crisis",
     owners = Seq(Owner.withGithub("jlieb10")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-one-day-regulars",
-    "US End of year banner - one day count with articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-banner-us-eoy-one-day-casuals",
-    "US End of year banner - one day count without articles viewed",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -102,8 +52,8 @@ trait ABTestSwitches {
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 1, 27),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2025, 1, 27),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -112,18 +62,8 @@ trait ABTestSwitches {
     "Test the impact of serving prebid ads in safeframes",
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 20),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-outbrain-testing",
-    "Test the outbrain widget",
-    owners = Seq(Owner.withGithub("frankie297")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 4, 22),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2021, 1, 20),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -132,8 +72,8 @@ trait ABTestSwitches {
     "Test new implementation of xaxis adapter with multiple placement ids",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -142,8 +82,8 @@ trait ABTestSwitches {
     "Test adding pangaea in prebid in US & AU regions",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -152,27 +92,67 @@ trait ABTestSwitches {
     "Test new us placement id for appnexus in US",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 9, 30),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-secundus",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 31),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-a9",
-    "Test Amazon A9 header bidding",
+    "ab-commercial-connatix",
+    "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 4),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 12, 3),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-patientia",
+    "Marathon sign in gate test on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-dismiss-window",
+    "Show sign in gate to users on 3rd article view, then don't reshow (control), reshow next article (variant 1), reshow next day (variant 2)",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-main-control",
+    "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
+    owners = Seq(Owner.withGithub("coldlink")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-sign-in-gate-main-variant",
+    "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
+    owners = Seq(Owner.withGithub("coldlink")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-remote-epic-variants",
+    "Serve epics from remote service for subset of audience",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 9, 8),
+    exposeClientSide = true,
   )
 }

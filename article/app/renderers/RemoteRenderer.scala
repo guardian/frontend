@@ -7,7 +7,7 @@ import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
-import model.dotcomponents.{DataModelV3, DotcomponentsDataModel}
+import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel}
 import model.{Cached, PageWithStoryPackage, NoCache}
 import play.api.libs.ws.WSClient
 import play.api.mvc.{RequestHeader, Result}
@@ -29,10 +29,10 @@ class RemoteRenderer extends Logging {
   )
 
   private[this] def get(
-    ws: WSClient,
-    payload: String,
-    article: PageWithStoryPackage,
-    endpoint: String
+      ws: WSClient,
+      payload: String,
+      article: PageWithStoryPackage,
+      endpoint: String,
   )(implicit request: RequestHeader): Future[Result] = {
 
     def get(): Future[Result] = {
@@ -57,7 +57,6 @@ class RemoteRenderer extends Logging {
         })
     }
 
-
     if (CircuitBreakerSwitch.isSwitchedOn) {
       circuitBreaker.withCircuitBreaker(get())
     } else {
@@ -66,26 +65,26 @@ class RemoteRenderer extends Logging {
   }
 
   def getAMPArticle(
-    ws: WSClient,
-    payload: String,
-    page: PageWithStoryPackage,
-    blocks: Blocks,
-    pageType: PageType
+      ws: WSClient,
+      payload: String,
+      page: PageWithStoryPackage,
+      blocks: Blocks,
+      pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
-    val json = DataModelV3.toJson(dataModel)
+    val json = DCRDataModel.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.AMPArticleEndpoint)
   }
 
   def getArticle(
-    ws: WSClient,
-    path: String,
-    page: PageWithStoryPackage,
-    blocks: Blocks,
-    pageType: PageType
+      ws: WSClient,
+      path: String,
+      page: PageWithStoryPackage,
+      blocks: Blocks,
+      pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
     val dataModel = DotcomponentsDataModel.fromArticle(page, request, blocks, pageType)
-    val json = DataModelV3.toJson(dataModel)
+    val json = DCRDataModel.toJson(dataModel)
     get(ws, json, page, Configuration.rendering.renderingEndpoint)
   }
 }

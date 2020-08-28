@@ -1,4 +1,5 @@
 // @flow
+import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
 
 const inlineDefinition = {
@@ -33,6 +34,17 @@ const inlineDefinition = {
         ],
     },
 };
+
+/*
+
+    mark: 432b3a46-90c1-4573-90d3-2400b51af8d0
+
+    The ad sizes which are hardcoded here are also hardcoded in the source code of
+    dotcom-rendering.
+
+    If/when this file is modified, please make sure that updates, if any, are reported to DCR.
+
+ */
 
 const adSlotDefinitions = {
     im: {
@@ -132,6 +144,7 @@ const adSlotDefinitions = {
   Note that for the DFP slot to be filled by GTP, you'll have to
   use addSlot from add-slot.js
 */
+
 const createAdSlotElements = (
     name: string,
     attrs: Object,
@@ -139,9 +152,24 @@ const createAdSlotElements = (
 ) => {
     const adSlots = [];
 
+    const id = `dfp-ad--${name}`;
+
+    // 3562dc07-78e9-4507-b922-78b979d4c5cb
+    if (config.get('isDotcomRendering', false) && name === 'top-above-nav') {
+        // This is to prevent a problem that appeared with DCR.
+        // We are simply making sure that if we are about to
+        // introduce dfp-ad--top-above-nav then there isn't already one.
+        const node = document.getElementById(id);
+        if (node && node.parentNode) {
+            const pnode = node.parentNode;
+            console.log(`warning: cleaning up dom node id: dfp-ad--${name}`);
+            pnode.removeChild(node);
+        }
+    }
+
     // The 'main' adSlot
     const adSlot: HTMLDivElement = document.createElement('div');
-    adSlot.id = `dfp-ad--${name}`;
+    adSlot.id = id;
     adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
     adSlot.setAttribute('data-link-name', `ad slot ${name}`);
     adSlot.setAttribute('data-name', name);

@@ -23,6 +23,8 @@ const popularInTagOverride = (): ?string | false => {
         return false;
     }
 
+    // This list also exists in DCR https://github.com/guardian/dotcom-rendering/blob/88a9693e7ee23e3e7e140ba680b12a19288e96f6/src/web/components/Onwards/Onwards.tsx
+    // If you change this list then you should also update ^
     // order matters here (first match wins)
     const whitelistedTags = [
         // sport tags

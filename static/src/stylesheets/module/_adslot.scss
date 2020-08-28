@@ -272,7 +272,7 @@
         }
     }
 }
-.ad-slot--liveblog-inline {
+.ad-slot--liveblog-inline:not(.ad-slot--outstream) {
     @include mq(tablet) {
         padding-bottom: $gs-baseline*2;
 
@@ -309,17 +309,16 @@
 .ad-slot--outstream {
 
     background: transparent;
+    height: auto;
 
     @include mq(mobile) {
         width: 300px;
-        height: auto;
         min-height: auto;
     }
 
     @include mq($from: phablet) {
         float: none;
         width: 620px;
-        height: $mpu-ad-label-height + 350px;
         margin: 4px 0 0;
 
         & > div.ad-slot__label {
@@ -403,6 +402,7 @@
 
 /**
  * Fluid ad slots don't have widths
+ * mark: 9473ae05-a901-4a8d-a51d-1b9c894d6e1f
  */
 .ad-slot--fluid {
     min-height: 250px;

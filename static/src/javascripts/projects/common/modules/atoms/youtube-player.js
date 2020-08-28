@@ -4,10 +4,13 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
+import { buildPfpEvent } from 'common/modules/video/ga-helper';
+
+import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
 const promise = new Promise(resolve => {
@@ -33,9 +36,26 @@ type Handlers = {
     onPlayerStateChange: (event: Object) => void,
 };
 
-let consentState;
-onIabConsentNotification(state => {
-    consentState = state[1] && state[2] && state[3] && state[4] && state[5];
+interface AdsConfig {
+    adTagParameters?: {
+        iu: any,
+        cust_params: string,
+    };
+    disableAds?: boolean;
+    nonPersonalizedAd?: boolean;
+    restrictedDataProcessor?: boolean;
+}
+
+let tcfState = null;
+let ccpaState = null;
+onConsentChange(state => {
+    if (state.ccpa) {
+        ccpaState = state.doNotSell;
+    } else {
+        tcfState = state.tcfv2
+            ? Object.values(state.tcfv2.consents).every(Boolean)
+            : state[1] && state[2] && state[3] && state[4] && state[5];
+    }
 });
 
 const onPlayerStateChangeEvent = (
@@ -100,23 +120,30 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
-    wantPersonalisedAds: boolean,
-    isPfpAdTargetingSwitchedOn: boolean
-): Object => {
+    tcfStateFlag: boolean | null,
+    ccpaStateFlag: boolean | null
+): AdsConfig => {
     if (adFree) {
         return { disableAds: true };
-    } else if (isPfpAdTargetingSwitchedOn) {
-        return {
-            nonPersonalizedAd: !wantPersonalisedAds,
-            adTagParameters: {
-                iu: config.get('page.adUnit'),
-                cust_params: encodeURIComponent(
-                    constructQuery(getPageTargeting())
-                ),
-            },
-        };
     }
-    return { nonPersonalizedAd: !wantPersonalisedAds };
+
+    const custParams = getPageTargeting();
+    custParams.permutive = getPermutivePFPSegments();
+
+    const adsConfig: AdsConfig = {
+        adTagParameters: {
+            iu: config.get('page.adUnit'),
+            cust_params: encodeURIComponent(constructQuery(custParams)),
+        },
+    };
+
+    if (ccpaStateFlag === null) {
+        adsConfig.nonPersonalizedAd = !tcfStateFlag;
+    } else {
+        adsConfig.restrictedDataProcessor = ccpaStateFlag;
+    }
+
+    return adsConfig;
 };
 
 const setupPlayer = (
@@ -125,13 +152,10 @@ const setupPlayer = (
     channelId?: string,
     onReady,
     onStateChange,
-    onError
+    onError,
+    onAdStart,
+    onAdEnd
 ) => {
-    const isPfpAdTargetingSwitchedOn: boolean = config.get(
-        'switches.commercialYoutubePfpAdTargeting',
-        false
-    );
-    const disableRelatedVideos = !config.get('switches.youtubeRelatedVideos');
     // relatedChannels needs to be an array, as per YouTube's IFrame Embed Config API
     const relatedChannels = [];
     /**
@@ -140,12 +164,11 @@ const setupPlayer = (
      * shown. Therefore for the time being we will pass an
      * empty array.
      */
-    // const relatedChannels = !disableRelatedVideos && channelId ? [channelId] : [];
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        !!consentState,
-        isPfpAdTargetingSwitchedOn
+        tcfState,
+        ccpaState
     );
 
     return new window.YT.Player(elt.id, {
@@ -161,10 +184,11 @@ const setupPlayer = (
             onReady,
             onStateChange,
             onError,
+            onAdStart,
+            onAdEnd,
         },
         embedConfig: {
             relatedChannels,
-            disableRelatedVideos,
             adsConfig,
         },
     });
@@ -200,13 +224,33 @@ export const initYoutubePlayer = (
             console.dir(event);
         };
 
+        const gaTracker = config.get('googleAnalytics.trackers.editorial');
+
+        const onAdStart = (): void => {
+            window.ga(
+                `${gaTracker}.send`,
+                'event',
+                buildPfpEvent('adStart', videoId)
+            );
+        };
+
+        const onAdEnd = (): void => {
+            window.ga(
+                `${gaTracker}.send`,
+                'event',
+                buildPfpEvent('adEnd', videoId)
+            );
+        };
+
         return setupPlayer(
             el,
             videoId,
             channelId,
             onPlayerReady,
             onPlayerStateChange,
-            onPlayerError
+            onPlayerError,
+            onAdStart,
+            onAdEnd
         );
     });
 };

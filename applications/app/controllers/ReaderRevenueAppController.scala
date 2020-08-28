@@ -10,12 +10,13 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.readerRevenue.ReaderRevenueRegion
 import model.readerRevenue._
 
-
 class ReaderRevenueAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with Logging {
+    extends BaseController
+    with ImplicitControllerExecutionContext
+    with Logging {
 
   private[this] def getBannerDeployLog(strRegion: String, bannerType: BannerType): Option[String] = {
-    ReaderRevenueRegion.fromString(strRegion).fold(Option.empty[String]){ region: ReaderRevenueRegion =>
+    ReaderRevenueRegion.fromName(strRegion).fold(Option.empty[String]) { region: ReaderRevenueRegion =>
       S3.get(ReaderRevenueRegion.getBucketKey(region, bannerType))
     }
   }
@@ -25,16 +26,19 @@ class ReaderRevenueAppController(val controllerComponents: ControllerComponents)
     Cached(300)(WithoutRevalidationResult(NotFound))
   }
 
-  private[this] def bannerDeployLogUtil(region: String, bannerType: BannerType): Action[AnyContent] = Action { implicit request =>
-    getBannerDeployLog(region, bannerType).fold(bannerDeployLogUnavailable(bannerType)) { bannerDeployLog =>
-      Cached(7.days) {
-        RevalidatableResult.Ok(bannerDeployLog)
+  private[this] def bannerDeployLogUtil(region: String, bannerType: BannerType): Action[AnyContent] =
+    Action { implicit request =>
+      getBannerDeployLog(region, bannerType).fold(bannerDeployLogUnavailable(bannerType)) { bannerDeployLog =>
+        Cached(7.days) {
+          RevalidatableResult.Ok(bannerDeployLog)
+        }
       }
     }
-  }
 
-  def contributionsBannerDeployLog(region: String): Action[AnyContent] = bannerDeployLogUtil(region, ContributionsBanner)
+  def contributionsBannerDeployLog(region: String): Action[AnyContent] =
+    bannerDeployLogUtil(region, ContributionsBanner)
 
-  def subscriptionsBannerDeployLog(region: String): Action[AnyContent] = bannerDeployLogUtil(region, SubscriptionsBanner)
+  def subscriptionsBannerDeployLog(region: String): Action[AnyContent] =
+    bannerDeployLogUtil(region, SubscriptionsBanner)
 
 }

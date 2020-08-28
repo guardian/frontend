@@ -22,11 +22,15 @@ case class ImageContentPage(image: ImageContent, related: RelatedContent) extend
 }
 
 class ImageContentController(
-  val contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents,
-  wsClient: WSClient
+    val contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
+    wsClient: WSClient,
 )(implicit context: ApplicationContext)
-  extends BaseController with RendersItemResponse with ImageQuery with Logging with ImplicitControllerExecutionContext {
+    extends BaseController
+    with RendersItemResponse
+    with ImageQuery
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)
 
@@ -38,32 +42,37 @@ class ImageContentController(
     renderFormat(htmlResponse, jsonResponse, page, Switches.all)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = image(Edition(request), path).map {
-    case Left(content) => renderImageContent(content)
-    case Right(result) => RenderOtherStatus(result)
-  }
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
+    image(Edition(request), path).map {
+      case Left(content) => renderImageContent(content)
+      case Right(result) => RenderOtherStatus(result)
+    }
 
   private def isSupported(c: ApiContent) = c.isImageContent
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
 
-  def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] = Action.async { implicit request =>
+  def getNextLightboxJson(path: String, tag: String, direction: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val capiQuery: ContentApiNavQuery = ContentApiNavQuery(currentId = path, direction = direction)
+        .tag(tag)
+        .showTags("all")
+        .showElements("image")
+        .pageSize(contentApi.nextPreviousPageSize)
 
-    val capiQuery: ContentApiNavQuery = ContentApiNavQuery(currentId = path, direction=direction)
-      .tag(tag).showTags("all").showElements("image").pageSize(contentApi.nextPreviousPageSize)
-
-    contentApiClient.thriftClient.getResponse(capiQuery).map {
-      response =>
-        val lightboxJson = response.results.flatMap(result => Content(result) match {
-          case content: ImageContent => Some(content.lightBox.javascriptConfig)
-          case _ => None
-        })
+      contentApiClient.thriftClient.getResponse(capiQuery).map { response =>
+        val lightboxJson = response.results.flatMap(result =>
+          Content(result) match {
+            case content: ImageContent => Some(content.lightBox.javascriptConfig)
+            case _                     => None
+          },
+        )
         Cached(CacheTime.Default)(JsonComponent(JsArray(lightboxJson)))
+      }
     }
-  }
 }
 
 case class ContentApiNavQuery(parameterHolder: Map[String, Parameter] = Map.empty, currentId: String, direction: String)
-  extends SearchQueryBase[ContentApiNavQuery] {
+    extends SearchQueryBase[ContentApiNavQuery] {
   def withParameters(parameterMap: Map[String, Parameter]): ContentApiNavQuery = copy(parameterMap)
 
   override def pathSegment: String = s"content/$currentId/$direction"

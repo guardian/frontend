@@ -8,20 +8,22 @@ import userPrefs from 'common/modules/user-prefs';
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
     dfpAdvertising: boolean;
-    shouldBlockAnalytics: boolean;
+    isSecureContact: boolean;
     stickyTopBannerAd: boolean;
     articleBodyAdverts: boolean;
     articleAsideAdverts: boolean;
     carrotTrafficDriver: boolean;
-    videoPreRolls: boolean;
     highMerch: boolean;
     thirdPartyTags: boolean;
-    outbrain: boolean;
+    relatedWidgetEnabled: boolean;
+    plista: boolean;
     commentAdverts: boolean;
     liveblogAdverts: boolean;
     paidforBand: boolean;
     asynchronous: boolean;
     adFree: boolean;
+    comscore: boolean;
+    launchpad: boolean;
 
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
@@ -53,7 +55,7 @@ class CommercialFeatures {
             config.get('page.showNewRecipeDesign') &&
             config.get('tests.abNewRecipeDesign');
 
-        const isSecureContact = [
+        this.isSecureContact = [
             'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
             'help/2016/sep/19/how-to-contact-the-guardian-securely',
         ].includes(config.get('page.pageId', ''));
@@ -68,8 +70,6 @@ class CommercialFeatures {
                 !sensitiveContent &&
                 !isIdentityPage &&
                 !this.adFree);
-
-        this.shouldBlockAnalytics = isSecureContact;
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -91,8 +91,6 @@ class CommercialFeatures {
             config.get('switches.carrotTrafficDriver', false) &&
             !config.get('page.isPaidContent');
 
-        this.videoPreRolls = this.dfpAdvertising && !this.adFree;
-
         this.highMerch =
             this.dfpAdvertising &&
             !this.adFree &&
@@ -106,18 +104,28 @@ class CommercialFeatures {
             !this.adFree &&
             externalAdvertising &&
             !isIdentityPage &&
-            !isSecureContact;
+            !this.isSecureContact;
 
-        this.outbrain =
+        this.launchpad =
+            !this.adFree &&
+            externalAdvertising &&
+            !isIdentityPage &&
+            !this.isSecureContact &&
+            config.get('switches.redplanetForAus', false);
+
+        this.relatedWidgetEnabled =
             this.dfpAdvertising &&
             !this.adFree &&
-            switches.outbrain &&
             !noadsUrl &&
             !sensitiveContent &&
             isArticle &&
             !config.get('page.isPreview') &&
             config.get('page.showRelatedContent') &&
             !(isUserLoggedIn() && config.get('page.commentable'));
+
+        this.plista =
+            this.relatedWidgetEnabled &&
+            switches.plistaForAu;
 
         this.commentAdverts =
             this.dfpAdvertising &&
@@ -131,6 +139,11 @@ class CommercialFeatures {
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand = config.get('page.isPaidContent') && !supportsSticky;
+
+        this.comscore =
+            config.get('switches.comscore', false) &&
+            !isIdentityPage &&
+            !this.isSecureContact;
     }
 }
 

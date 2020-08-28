@@ -15,15 +15,21 @@ case object Off extends SwitchState
 
 case class SwitchGroup(name: String, description: Option[String] = None)
 object SwitchGroup {
-  val ABTests = SwitchGroup("A/B Tests",
-                            Some("The expiry date of these switches does NOT affect the expiry of the AB tests; " +
-                                 "these switches serve only to quickly enable/disable said tests."))
+  val ABTests = SwitchGroup(
+    "A/B Tests",
+    Some(
+      "The expiry date of these switches does NOT affect the expiry of the AB tests; " +
+        "these switches serve only to quickly enable/disable said tests.",
+    ),
+  )
   val Commercial = SwitchGroup("Commercial")
-  val CommercialFeeds = SwitchGroup("Commercial: Feeds",
-                            Some("These switches enable the fetching and parsing of the commercial merchandising components."))
+  val CommercialFeeds = SwitchGroup(
+    "Commercial: Feeds",
+    Some("These switches enable the fetching and parsing of the commercial merchandising components."),
+  )
   val CommercialPrebid = SwitchGroup(
     name = "Commercial: Header Bidding",
-    description = Some("Features of our Prebid & A9 auction configuration.")
+    description = Some("Features of our Prebid & A9 auction configuration."),
   )
   val Discussion = SwitchGroup("Discussion")
   val Facia = SwitchGroup("Facia")
@@ -34,8 +40,8 @@ object SwitchGroup {
   val ServerSideExperiments = SwitchGroup("Server-side Experiments")
   val Membership = SwitchGroup("Membership")
   val Journalism = SwitchGroup("Journalism")
+  val Privacy = SwitchGroup("Privacy")
 }
-
 
 trait Initializable[T] extends Logging {
 
@@ -62,14 +68,15 @@ object Owner {
 }
 
 case class Switch(
-  group: SwitchGroup,
-  name: String,
-  description: String,
-  owners: Seq[Owner],
-  safeState: SwitchState,
-  sellByDate: Option[LocalDate],
-  exposeClientSide: Boolean
-) extends Switchable with Initializable[Switch] {
+    group: SwitchGroup,
+    name: String,
+    description: String,
+    owners: Seq[Owner],
+    safeState: SwitchState,
+    sellByDate: Option[LocalDate],
+    exposeClientSide: Boolean,
+) extends Switchable
+    with Initializable[Switch] {
 
   val delegate = DefaultSwitch(name, description, initiallyOn = safeState == On)
 
@@ -79,7 +86,8 @@ case class Switch(
    * If the switchboard hasn't been read yet, the "safe state" is returned instead of the real switch value.
    * This makes sure the switchboard has been read before returning the switch state.
    */
-  def isGuaranteedSwitchedOn(implicit executionContext: ExecutionContext): Future[Boolean] = onInitialized map { _ => isSwitchedOn }
+  def isGuaranteedSwitchedOn(implicit executionContext: ExecutionContext): Future[Boolean] =
+    onInitialized map { _ => isSwitchedOn }
 
   def switchOn(): Unit = {
     if (isSwitchedOff) {
@@ -108,29 +116,33 @@ case class Switch(
 object Switch {
 
   def apply(
-    group: SwitchGroup,
-    name: String,
-    description: String,
-    owners: Seq[Owner],
-    safeState: SwitchState,
-    sellByDate: LocalDate,
-    exposeClientSide: Boolean
-  ): Switch = Switch(
-    group,
-    name,
-    description,
-    owners,
-    safeState,
-    Some(sellByDate),
-    exposeClientSide
-  )
+      group: SwitchGroup,
+      name: String,
+      description: String,
+      owners: Seq[Owner],
+      safeState: SwitchState,
+      sellByDate: LocalDate,
+      exposeClientSide: Boolean,
+  ): Switch =
+    Switch(
+      group,
+      name,
+      description,
+      owners,
+      safeState,
+      Some(sellByDate),
+      exposeClientSide,
+    )
 
   val switches = Box[List[Switch]](Nil)
   def allSwitches: Seq[Switch] = switches.get()
 
   case class Expiry(daysToExpiry: Option[Int], expiresSoon: Boolean, hasExpired: Boolean)
 
-  def expiry(switch: Switch, today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate): Expiry = { // We assume expiration datetime is set to London time
+  def expiry(
+      switch: Switch,
+      today: LocalDate = new DateTime(DateTimeZone.forID("Europe/London")).toLocalDate,
+  ): Expiry = { // We assume expiration datetime is set to London time
     val daysToExpiry = switch.sellByDate.map {
       Days.daysBetween(today, _).getDays
     }
@@ -151,17 +163,19 @@ object Expiry {
 }
 
 // Switch names can be letters numbers and hyphens only
-object Switches extends FeatureSwitches
-with ServerSideExperimentSwitches
-with FaciaSwitches
-with ABTestSwitches
-with CommercialSwitches
-with PrebidSwitches
-with DiscussionSwitches
-with PerformanceSwitches
-with MonitoringSwitches
-with IdentitySwitches
-with JournalismSwitches {
+object Switches
+    extends FeatureSwitches
+    with ServerSideExperimentSwitches
+    with FaciaSwitches
+    with ABTestSwitches
+    with CommercialSwitches
+    with PrivacySwitches
+    with PrebidSwitches
+    with DiscussionSwitches
+    with PerformanceSwitches
+    with MonitoringSwitches
+    with IdentitySwitches
+    with JournalismSwitches {
 
   def all: Seq[Switch] = Switch.allSwitches
 

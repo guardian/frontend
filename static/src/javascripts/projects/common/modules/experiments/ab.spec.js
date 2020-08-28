@@ -14,6 +14,7 @@ import {
 import {
     concurrentTests,
     epicTests,
+    priorityEpicTest,
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
@@ -21,6 +22,14 @@ import { runnableTestsToParticipations } from 'common/modules/experiments/ab-uti
 import { getConfiguredEpicTests as getConfiguredEpicTests_ } from 'common/modules/commercial/contributions-utilities';
 
 const getConfiguredEpicTests: any = getConfiguredEpicTests_;
+
+// This is required as loading these seems to cause an error locally (and in CI)
+// because of some implicit dependency evil that I haven't been able to figure out.
+jest.mock('common/modules/commercial/user-features', () => ({
+    getLastOneOffContributionDate: () => null,
+    isRecurringContributor: () => false,
+    shouldNotBeShownSupportMessaging: () => false,
+}));
 
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('common/modules/experiments/ab-tests');
@@ -70,16 +79,19 @@ describe('A/B', () => {
                 abBannerTest: true,
                 abBannerTest2: true,
             };
+
             const shouldRun = [
                 jest.spyOn(concurrentTests[0].variants[0], 'test'),
                 jest.spyOn(concurrentTests[1].variants[0], 'test'),
                 jest.spyOn(epicTests[0].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[0].variants[0], 'test'),
             ];
+
             const shouldNotRun = [
                 jest.spyOn(concurrentTests[2].variants[0], 'test'),
                 jest.spyOn(epicTests[1].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
+                jest.spyOn(priorityEpicTest.variants[0], 'test'),
             ];
 
             runAndTrackAbTests().then(() => {

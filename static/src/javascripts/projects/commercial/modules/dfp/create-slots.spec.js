@@ -26,8 +26,6 @@ const inline1Html = `
 </div>
 `;
 
-jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));
-
 describe('Create Ad Slot', () => {
     it('should exist', () => {
         expect(createSlots).toBeDefined();

@@ -24,7 +24,7 @@ trait LinkTo extends Logging {
   def apply(html: Html)(implicit request: RequestHeader): String = this(html.toString(), Edition(request))
   def apply(link: String)(implicit request: RequestHeader): String = this(link, Edition(request))
 
-  def apply(url: String, edition: Edition)(implicit request: RequestHeader): String =
+  def apply(url: String, edition: Edition): String =
     processUrl(url.trim, edition).url
 
   def apply(trail: Trail)(implicit request: RequestHeader): Option[String] = Option(apply(trail.metadata.url))
@@ -34,12 +34,13 @@ trait LinkTo extends Logging {
 
   case class ProcessedUrl(url: String, shouldNoFollow: Boolean = false)
 
-  def processUrl(url: String, edition: Edition): ProcessedUrl = url match {
-    case `url` if url.startsWith("//") => ProcessedUrl(url)
-    case RssPath(path, format) => ProcessedUrl(urlFor(path, edition) + format)
-    case GuardianUrl(_, path) => ProcessedUrl(urlFor(path, edition))
-    case otherUrl => ProcessedUrl(otherUrl, shouldNoFollow = true)
-  }
+  def processUrl(url: String, edition: Edition): ProcessedUrl =
+    url match {
+      case `url` if url.startsWith("//") => ProcessedUrl(url)
+      case RssPath(path, format)         => ProcessedUrl(urlFor(path, edition) + format)
+      case GuardianUrl(_, path)          => ProcessedUrl(urlFor(path, edition))
+      case otherUrl                      => ProcessedUrl(otherUrl, shouldNoFollow = true)
+    }
 
   private def urlFor(path: String, edition: Edition): String = {
     val pathString = Option(path).getOrElse("")
@@ -49,10 +50,11 @@ trait LinkTo extends Logging {
     s"$host/$editionalisedPath"
   }
 
-  private def clean(path: String) = path match {
-    case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
-    case _ => path
-  }
+  private def clean(path: String) =
+    path match {
+      case TagPattern(left, right) if left == right => left //clean section tags e.g. /books/books
+      case _                                        => path
+    }
 
   def redirectWithParameters(request: Request[AnyContent], realPath: String): Result = {
     val params = if (request.hasParameters) s"?${request.rawQueryString}" else ""
@@ -65,7 +67,7 @@ trait LinkTo extends Logging {
 }
 
 case class LinkCounts(internal: Int, external: Int) {
-  def + (that: LinkCounts): LinkCounts = LinkCounts(this.internal + that.internal, this.external + that.external)
+  def +(that: LinkCounts): LinkCounts = LinkCounts(this.internal + that.internal, this.external + that.external)
   lazy val noLinks = internal == 0 && external == 0
 }
 
@@ -81,26 +83,28 @@ object LinkTo extends LinkTo {
     val guardianLinksCount = links.count(_ contains "www.theguardian.com")
     LinkCounts(
       internal = guardianLinksCount,
-      external = links.length - guardianLinksCount
+      external = links.length - guardianLinksCount,
     )
   }
 
 }
 
 /**
- * represents the link rel=canonical for any page on the site
- */
+  * represents the link rel=canonical for any page on the site
+  */
 class CanonicalLink {
 
   val significantParams: Seq[String] = Seq(
     "index",
-    "page"
+    "page",
   )
 
   def apply(implicit request: RequestHeader, webUrl: String): String = {
     val queryString = {
-      val q = significantParams.flatMap(key => request.getQueryString(key).map(value => s"$key=${value.urlEncoded}"))
-        .sorted.mkString("&")
+      val q = significantParams
+        .flatMap(key => request.getQueryString(key).map(value => s"$key=${value.urlEncoded}"))
+        .sorted
+        .mkString("&")
       if (q.isEmpty) "" else s"?$q"
     }
     s"$webUrl$queryString"

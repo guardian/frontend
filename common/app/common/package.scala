@@ -25,16 +25,20 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
     error.message == "The requested resource has expired for commercial reason."
   }
 
-  def convertApiExceptions[T](implicit request: RequestHeader,
-                              context: ApplicationContext,
-                              log: Logger): PartialFunction[Throwable, Either[T, Result]] = {
+  def convertApiExceptions[T](implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+      log: Logger,
+  ): PartialFunction[Throwable, Either[T, Result]] = {
 
     convertApiExceptionsWithoutEither.andThen(Right(_))
   }
 
-  def convertApiExceptionsWithoutEither[T](implicit request: RequestHeader,
-                                           context: ApplicationContext,
-                                           log: Logger): PartialFunction[Throwable, Result] = {
+  def convertApiExceptionsWithoutEither[T](implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+      log: Logger,
+  ): PartialFunction[Throwable, Result] = {
     case _: CircuitBreakerOpenException =>
       log.error(s"Got a circuit breaker open error while calling content api, path: ${request.path}")
       NoCache(ServiceUnavailable)
@@ -66,7 +70,9 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
           Only the one you actually render is used
    */
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit request: RequestHeader): Result =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page)(implicit
+      request: RequestHeader,
+  ): Result =
     Cached(page) {
       if (request.isJson)
         JsonComponent(jsonResponse())
@@ -76,7 +82,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit request: RequestHeader, context: ApplicationContext): Result =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, page: model.Page, switches: Seq[Switch])(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result =
     Cached(page) {
       if (request.isJson)
         JsonComponent(page, jsonResponse())
@@ -86,7 +95,10 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext): Result =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => Html, cacheTime: Integer)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result =
     Cached(cacheTime) {
       if (request.isJson)
         JsonComponent(jsonResponse())
@@ -96,14 +108,20 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
         RevalidatableResult.Ok(htmlResponse())
     }
 
-  def renderFormat(html: () => Html, cacheTime: Integer)(implicit request: RequestHeader, context: ApplicationContext): Result = {
+  def renderFormat(html: () => Html, cacheTime: Integer)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result = {
     renderFormat(html, html, cacheTime)
   }
 
-  def renderFormat(htmlResponse: () => Html, jsonResponse: () => List[(String, Any)], page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result =
+  def renderFormat(htmlResponse: () => Html, jsonResponse: () => List[(String, Any)], page: model.Page)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result =
     Cached(page) {
       if (request.isJson)
-        JsonComponent(page, jsonResponse():_*)
+        JsonComponent(page, jsonResponse(): _*)
       else if (request.isEmail)
         RevalidatableResult.Ok(if (InlineEmailStyles.isSwitchedOn) InlineStyles(htmlResponse()) else htmlResponse())
       else
@@ -112,35 +130,44 @@ object `package` extends implicits.Strings with implicits.Requests with play.api
 
   def renderHtml(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
     Cached(page)(RevalidatableResult.Ok(html)).withPreload(
-      Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty)
+      Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
     )(context, request)
   }
 
-  def renderJson(json: List[(String, Any)], page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page){
-    JsonComponent(page, json:_*)
-  }
+  def renderJson(json: List[(String, Any)], page: model.Page)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result =
+    Cached(page) {
+      JsonComponent(page, json: _*)
+    }
 
-  def renderJson(json: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
-    JsonComponent(page, json)
-  }
+  def renderJson(json: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result =
+    Cached(page) {
+      JsonComponent(page, json)
+    }
 
-  def renderJson(json: String, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = Cached(page) {
-    RevalidatableResult.Ok(json)
-  }
+  def renderJson(json: String, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result =
+    Cached(page) {
+      RevalidatableResult.Ok(json)
+    }
 
-  def renderEmail(html: Html, page: model.Page)(implicit request: RequestHeader, context: ApplicationContext): Result = {
+  def renderEmail(html: Html, page: model.Page)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result = {
     val htmlWithInlineStyles = if (InlineEmailStyles.isSwitchedOn) InlineStyles(html) else html
     if (request.isEmailJson) {
       val htmlWithUtmLinks = BrazeEmailFormatter(htmlWithInlineStyles)
       Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(htmlWithUtmLinks.toString)))))
     } else if (request.isEmailTxt) {
       val htmlWithUtmLinks = BrazeEmailFormatter(htmlWithInlineStyles)
-      Cached(RecentlyUpdated)(RevalidatableResult.Ok(JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithUtmLinks))))))
+      Cached(RecentlyUpdated)(
+        RevalidatableResult.Ok(JsObject(Map("body" -> JsString(HtmlTextExtractor(htmlWithUtmLinks))))),
+      )
     } else {
       Cached(page)(RevalidatableResult.Ok(htmlWithInlineStyles))
     }
   }
 
 }
-
-

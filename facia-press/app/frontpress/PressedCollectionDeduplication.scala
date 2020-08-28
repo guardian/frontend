@@ -45,17 +45,26 @@ object PressedCollectionDeduplication {
   }
 
   def getHeaderURLsFromCuratedAndBackfilledAtDepth(pCVs: Seq[PressedCollectionVisibility], depth: Int): Seq[String] = {
-    pCVs.flatMap{ collection => (collection.pressedCollection.curated ++ collection.pressedCollection.backfill).take(depth).map ( pressedContent => pressedContent.header.url ) }
+    pCVs.flatMap { collection =>
+      (collection.pressedCollection.curated ++ collection.pressedCollection.backfill)
+        .take(depth)
+        .map(pressedContent => pressedContent.header.url)
+    }
   }
 
-  def deduplicateCollectionAgainstAccumulator(accum: Seq[PressedCollectionVisibility], collectionV: PressedCollectionVisibility): PressedCollectionVisibility = {
+  def deduplicateCollectionAgainstAccumulator(
+      accum: Seq[PressedCollectionVisibility],
+      collectionV: PressedCollectionVisibility,
+  ): PressedCollectionVisibility = {
     // Essentially deduplicate the backfill of collectionV using header values values from accum's elements curated and backfill
     val accumulatedHeaderURLsForDeduplication: Seq[String] = getHeaderURLsFromCuratedAndBackfilledAtDepth(accum, 10)
-    val newBackfill = collectionV.pressedCollection.backfill.filter( pressedContent => !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url) )
+    val newBackfill = collectionV.pressedCollection.backfill.filter(pressedContent =>
+      !accumulatedHeaderURLsForDeduplication.contains(pressedContent.header.url),
+    )
     collectionV.copy(
-      pressedCollection = collectionV.pressedCollection.copy (
-        backfill = newBackfill
-      )
+      pressedCollection = collectionV.pressedCollection.copy(
+        backfill = newBackfill,
+      ),
     )
   }
 

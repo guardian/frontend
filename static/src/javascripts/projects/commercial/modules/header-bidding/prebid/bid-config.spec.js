@@ -3,8 +3,13 @@
 
 import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import {isInUk as isInUk_,
+    isInUsOrCa as isInUsOrCa_,
+    isInAuOrNz as isInAuOrNz_,
+    isInRow as isInRow_} from "common/modules/commercial/geo-utils";
 import { _, bids } from './bid-config';
 import type { PrebidBidder, HeaderBiddingSize } from '../types';
+
 import {
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
@@ -14,15 +19,10 @@ import {
     containsMpu as containsMpu_,
     containsMpuOrDmpu as containsMpuOrDmpu_,
     getBreakpointKey as getBreakpointKey_,
-    isInAuRegion as isInAuRegion_,
-    isInRowRegion as isInRowRegion_,
-    isInUkRegion as isInUkRegion_,
-    isInUsRegion as isInUsRegion_,
     shouldIncludeAdYouLike as shouldIncludeAdYouLike_,
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
-    shouldIncludeOzone as shouldIncludeOzone_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
     shouldIncludeSonobi as shouldIncludeSonobi_,
@@ -42,7 +42,6 @@ const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
 const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
 const shouldIncludeImproveDigital: any = shouldIncludeImproveDigital_;
 const shouldIncludeOpenx: any = shouldIncludeOpenx_;
-const shouldIncludeOzone: any = shouldIncludeOzone_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
@@ -50,17 +49,16 @@ const shouldIncludePangaea: any = shouldIncludePangaea_;
 const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
-const isInAuRegion: any = isInAuRegion_;
-const isInRowRegion: any = isInRowRegion_;
-const isInUkRegion: any = isInUkRegion_;
-const isInUsRegion: any = isInUsRegion_;
+const isInAuOrNz: any = isInAuOrNz_;
+const isInRow: any = isInRow_;
+const isInUk: any = isInUk_;
+const isInUsOrCa: any = isInUsOrCa_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 const getBidders = () =>
     bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
 
 const {
-    getDummyServerSideBidders,
     getIndexSiteId,
     getImprovePlacementId,
     getTrustXAdUnitId,
@@ -73,11 +71,9 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: () => 'bla',
 }));
 
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
-
 jest.mock('../utils');
+
+jest.mock('common/modules/commercial/geo-utils');
 
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
@@ -98,7 +94,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('switches.prebidPangaea', true);
     config.set('switches.prebidTriplelift', true);
     config.set('ophan', { pageViewId: 'pvid' });
@@ -106,53 +101,6 @@ const resetConfig = () => {
     config.set('page.section', 'Magic');
     config.set('page.isDev', false);
 };
-
-describe('getDummyServerSideBidders', () => {
-    beforeEach(() => {
-        resetConfig();
-        window.OzoneLotameData = { some: 'lotamedata' };
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        window.OzoneLotameData = undefined;
-    });
-
-    test('should return an empty array if the switch is off', () => {
-        config.set('switches.prebidS2sozone', false);
-        expect(getDummyServerSideBidders()).toEqual([]);
-    });
-
-    test('should return an empty array if outside the test sample', () => {
-        expect(getDummyServerSideBidders()).toEqual([]);
-    });
-
-    test('should otherwise return the expected array of bidders', () => {
-        shouldIncludeOzone.mockReturnValueOnce(true);
-        const bidderNames = getDummyServerSideBidders().map(
-            bidder => bidder.name
-        );
-        expect(bidderNames).toEqual(['openx', 'appnexus', 'pangaea']);
-    });
-
-    test('should include methods in the response that generate the correct bid params', () => {
-        shouldIncludeOzone.mockReturnValueOnce(true);
-        const bidders: Array<PrebidBidder> = getDummyServerSideBidders();
-        const openxParams = bidders[0].bidParams('type', [[1, 2]]);
-        const appNexusParams = bidders[1].bidParams('type', [[1, 2]]);
-        expect(openxParams).toEqual({
-            delDomain: 'guardian-d.openx.net',
-            unit: '539997090',
-            lotame: { some: 'lotamedata' },
-            customParams: 'someAppNexusTargetingObject',
-        });
-        expect(appNexusParams).toEqual({
-            placementId: '13915593',
-            keywords: 'someAppNexusTargetingObject',
-            lotame: { some: 'lotamedata' },
-        });
-    });
-});
 
 describe('getImprovePlacementId', () => {
     beforeEach(() => {
@@ -180,7 +128,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when geolocated in UK and on desktop device', () => {
-        isInUkRegion.mockReturnValue(true);
+        isInUk.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -198,7 +146,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when geolocated in UK and on tablet device', () => {
-        isInUkRegion.mockReturnValue(true);
+        isInUk.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -216,7 +164,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when geolocated in UK and on mobile device', () => {
-        isInUkRegion.mockReturnValue(true);
+        isInUk.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -228,7 +176,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when geolocated in ROW region and on desktop device', () => {
-        isInRowRegion.mockReturnValue(true);
+        isInRow.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('D');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -246,7 +194,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when not geolocated in ROW region and on tablet device', () => {
-        isInRowRegion.mockReturnValue(true);
+        isInRow.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('T');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -264,7 +212,7 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return the expected values when geolocated in ROW region and on mobile device', () => {
-        isInRowRegion.mockReturnValue(true);
+        isInRow.mockReturnValue(true);
         getBreakpointKey.mockReturnValue('M');
         containsMpuOrDmpu.mockReturnValueOnce(true);
         containsMpuOrDmpu.mockReturnValueOnce(true);
@@ -273,9 +221,9 @@ describe('getImprovePlacementId', () => {
     });
 
     test('should return -1 if geolocated in US or AU regions', () => {
-        isInUsRegion.mockReturnValue(true);
+        isInUsOrCa.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
     });
 
@@ -500,16 +448,8 @@ describe('bids', () => {
 
     test('should only include bidders that are switched on if no bidders being tested', () => {
         config.set('switches.prebidXaxis', false);
-        shouldIncludeOzone.mockReturnValueOnce(true);
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
-        expect(getBidders()).toEqual([
-            'ix',
-            'improvedigital',
-            'adyoulike',
-            'openx',
-            'appnexus',
-            'pangaea',
-        ]);
+        expect(getBidders()).toEqual(['ix', 'improvedigital', 'adyoulike']);
     });
 
     test('should not include ix bidders when switched off', () => {
@@ -577,7 +517,7 @@ describe('bids', () => {
 
     test('should use correct parameters in OpenX bids geolocated in UK', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        isInUkRegion.mockReturnValue(true);
+        isInUk.mockReturnValue(true);
         const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
@@ -588,7 +528,7 @@ describe('bids', () => {
 
     test('should use correct parameters in OpenX bids geolocated in US', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        isInUsRegion.mockReturnValue(true);
+        isInUsOrCa.mockReturnValue(true);
         const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
@@ -599,7 +539,7 @@ describe('bids', () => {
 
     test('should use correct parameters in OpenX bids geolocated in AU', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        isInAuRegion.mockReturnValue(true);
+        isInAuOrNz.mockReturnValue(true);
         const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
@@ -610,7 +550,7 @@ describe('bids', () => {
 
     test('should use correct parameters in OpenX bids geolocated in FR', () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        isInRowRegion.mockReturnValue(true);
+        isInRow.mockReturnValue(true);
         const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
@@ -621,8 +561,7 @@ describe('bids', () => {
 
     test('should not include Pangaea when switched off', () => {
         config.set('switches.prebidPangaea', false);
-        shouldIncludeOzone.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'adyoulike', 'openx', 'appnexus']);
+        expect(getBidders()).toEqual(['ix', 'adyoulike']);
     });
 });
 
@@ -763,19 +702,19 @@ describe('pangaea adapter', () => {
         {
             name: 'US',
             expectedPlacementId: '13892369',
-            mockFn: isInUsRegion,
+            mockFn: isInUsOrCa,
             mockReturn: true,
         },
         {
             name: 'AU',
             expectedPlacementId: '13892409',
-            mockFn: isInAuRegion,
+            mockFn: isInAuOrNz,
             mockReturn: true,
         },
         {
             name: 'GB',
             expectedPlacementId: '',
-            mockFn: isInUsRegion,
+            mockFn: isInUsOrCa,
             mockReturn: false,
         },
     ];

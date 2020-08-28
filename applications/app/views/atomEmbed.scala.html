@@ -1,18 +1,31 @@
 @import model.AtomPage
-@import conf.Configuration
 
 @(page: AtomPage)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <!DOCTYPE html>
 <html lang="en-GB" class="gu-atom-embed-html">
-<head>
-    <meta charset="utf-8">
-    <title>@page.metadata.webTitle</title>
-    <base target="_top">
-    @fragments.atomPageHead(page)
-</head>
-<body>
-    @page.body
-    @fragments.atomPageFoot(page)
-</body>
+    <head>
+        <meta charset="utf-8">
+        <title>@page.metadata.webTitle</title>
+        <base target="_top">
+        @fragments.atomPageHead(page)
+        <script>
+            // Interactive Atoms expect window.resize to exist. In the context of Amp we want to let the parent know that
+            // the iframe should be resized. See https://amp.dev/documentation/components/amp-iframe/.
+            window.resize = function() {
+                window.parent.postMessage(
+                    {
+                        sentinel: 'amp',
+                        type: 'embed-size',
+                        height: document.body.scrollHeight,
+                    },
+                    '*'
+                );
+            }
+        </script>
+    </head>
+    <body>
+        @page.body
+        @fragments.atomPageFoot(page)
+    </body>
 </html>

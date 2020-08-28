@@ -30,8 +30,7 @@ trait HttpClient {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
 }
 
-class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-  extends HttpClient with Logging {
+class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends HttpClient with Logging {
 
   import java.lang.System.currentTimeMillis
 
@@ -56,12 +55,12 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
     // record metrics
 
-    response.foreach((f)=>{ ContentApiRequestsMetric.increment() })
+    response.foreach((f) => { ContentApiRequestsMetric.increment() })
 
     response.foreach {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => ContentApiMetrics.HttpLatencyTimingMetric.recordDuration(currentTimeMillis - start)
-      case _ =>
+      case _                    =>
     }
 
     response.failed.foreach {
@@ -89,13 +88,14 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 private object RequestDebugInfo {
   import java.net.URLEncoder.encode
 
-  private lazy val host: String = Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
+  private lazy val host: String =
+    Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
   private lazy val stage: String = Configuration.environment.stage
   private lazy val project: String = Configuration.environment.app
 
   lazy val debugParams = Seq(
     s"ngw-host=${encode(host, "UTF-8")}",
     s"ngw-stage=${encode(stage, "UTF-8")}",
-    s"ngw-project=${encode(project, "UTF-8")}"
+    s"ngw-project=${encode(project, "UTF-8")}",
   ).mkString("&")
 }

@@ -10,12 +10,12 @@ trait Paging extends implicits.Numbers {
   private val pagingParams: Map[String, Int] = Map(
     "offset" -> 0,
     "page" -> 1,
-    "page-size" -> 5
+    "page-size" -> 5,
   )
 
   /**
-   * Pull out 'paging' query string params
-   */
+    * Pull out 'paging' query string params
+    */
   protected def extractPaging(request: RequestHeader): Map[String, Int] = {
     val paging = pagingParams.map {
       case (name, default) =>
@@ -30,7 +30,11 @@ trait Paging extends implicits.Numbers {
     paging + ("actual-offset" -> actualOffset)
   }
 
-  protected def inferPage(request: RequestHeader): Int = request.getQueryString("page")
-    .filter(_.isInt).map(_.toInt).getOrElse(1)
+  protected def inferPage(request: RequestHeader): Int =
+    request
+      .getQueryString("page")
+      .filter(_.isInt)
+      .map(_.toInt)
+      .getOrElse(1)
 
 }

@@ -19,8 +19,8 @@ package object controllers {
   def segment(implicit request: RequestHeader): Segment = {
     val params = request.queryString
     val section = params.get("s") map (_.head)
-    val keywords = params getOrElse("k", Nil)
-    val userSegments = params getOrElse("seg", Nil)
+    val keywords = params getOrElse ("k", Nil)
+    val userSegments = params getOrElse ("seg", Nil)
     Segment(Context(section, keywords), userSegments)
   }
 
@@ -37,7 +37,8 @@ package object controllers {
   }
 
   object htmlFormat extends Format {
-    override def nilResult(implicit request: RequestHeader): RevalidatableResult = RevalidatableResult(Results.NotFound, "")
+    override def nilResult(implicit request: RequestHeader): RevalidatableResult =
+      RevalidatableResult(Results.NotFound, "")
     override def result(view: Html)(implicit request: RequestHeader): RevalidatableResult = RevalidatableResult.Ok(view)
   }
 

@@ -2,9 +2,14 @@
 
 import bean from 'bean';
 import bonzo from 'bonzo';
+import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';
-import { postComment, previewComment } from 'common/modules/discussion/api';
+import {
+    getUser,
+    postComment,
+    previewComment,
+} from 'common/modules/discussion/api';
 import {
     getUserFromCookie,
     reset,
@@ -22,6 +27,33 @@ type commentType = {
 };
 
 class CommentBox extends Component {
+    static async refreshUsernameHtml(): Promise<void> {
+        reset();
+
+        const discussionUserResponse = await getUser();
+
+        if (!discussionUserResponse || !discussionUserResponse.userProfile) {
+            return;
+        }
+
+        const discussionUser: DiscussionProfile =
+            discussionUserResponse.userProfile;
+
+        const displayName = discussionUser.displayName;
+        const menuHeaderUsername = document.querySelector('.js-profile-info');
+        const discussionHeaderUsername = document.querySelector(
+            '._author_tywwu_16'
+        );
+
+        if (menuHeaderUsername && displayName) {
+            menuHeaderUsername.innerHTML = displayName;
+        }
+
+        if (discussionHeaderUsername && displayName) {
+            discussionHeaderUsername.innerHTML = displayName;
+        }
+    }
+
     constructor(options: Object): void {
         super();
 
@@ -62,6 +94,9 @@ class CommentBox extends Component {
                 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
             'READ-ONLY-MODE':
                 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
+            USERNAME_MISSING: `You must <a href="${config.get(
+                'page.mmaUrl'
+            )}/public-settings">set a username</a> before commenting. (<a href="/help/2020/feb/10/why-am-i-unable-to-post-a-comment">Learn more</a>).`,
 
             /* Custom error codes */
             /* CORS blocked by HTTP/1.0 proxy */
@@ -153,24 +188,6 @@ class CommentBox extends Component {
         this.removeState('invalid');
     }
 
-    refreshUsernameHtml(): void {
-        reset();
-
-        const displayName = this.getUserData().displayName;
-        const menuHeaderUsername = document.querySelector('.js-profile-info');
-        const discussionHeaderUsername = document.querySelector(
-            '._author_tywwu_16'
-        );
-
-        if (menuHeaderUsername && displayName) {
-            menuHeaderUsername.innerHTML = displayName;
-        }
-
-        if (discussionHeaderUsername && displayName) {
-            discussionHeaderUsername.innerHTML = displayName;
-        }
-    }
-
     previewCommentSuccess(comment: commentType, resp: Object): void {
         const previewBody = this.getElem('preview-body');
 
@@ -208,7 +225,7 @@ class CommentBox extends Component {
     }
 
     postCommentSuccess(comment: commentType, resp: Object): commentType {
-        this.refreshUsernameHtml();
+        CommentBox.refreshUsernameHtml();
 
         if (this.options.newCommenter) {
             this.options.newCommenter = false;
@@ -492,11 +509,6 @@ class CommentBox extends Component {
         }
 
         const userData = this.getUserData();
-        const authorEl = this.getElem('author');
-
-        if (authorEl) {
-            authorEl.innerHTML = userData.displayName;
-        }
 
         if (this.options.state === 'response') {
             const submit = this.getElem('submit');

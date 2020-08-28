@@ -21,7 +21,9 @@ class JobsAgent(allIndustries: Industries) extends MerchandiseAgent[Job] {
     available filter (job => jobIds contains job.id)
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Job]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[Job]] = {
 
     def withKeywords(parsedFeed: Future[ParsedFeed[Job]]): Future[ParsedFeed[Job]] = {
       parsedFeed map { feed =>

@@ -1,7 +1,6 @@
 package views.support
 
 import com.gu.contentapi.client.model.v1.{ContentFields, TagType}
-import conf.switches.Switches.OutbrainSwitch
 import contentapi.FixtureTemplates.{emptyApiContent, emptyTag}
 import model.{RelatedContent, RelatedContentItem}
 import org.scalatest.{FlatSpec, Matchers}
@@ -9,33 +8,41 @@ import play.twirl.api.Html
 
 class ContentFooterContainersLayoutTest extends FlatSpec with Matchers {
 
-  private def contentItem(showInRelatedContent: Boolean = true,
-                          shouldHideAdverts: Boolean = false,
-                          commentable: Boolean = true,
-                          seriesId: Option[String] = None,
-                          blogId: Option[String] = None): RelatedContentItem = {
+  private def contentItem(
+      showInRelatedContent: Boolean = true,
+      shouldHideAdverts: Boolean = false,
+      commentable: Boolean = true,
+      seriesId: Option[String] = None,
+      blogId: Option[String] = None,
+  ): RelatedContentItem = {
     val seriesTag = for (id <- seriesId) yield emptyTag.copy(id = s"$id/$id", `type` = TagType.Series)
     val blogTag = for (id <- blogId) yield emptyTag.copy(id = s"$id/$id", `type` = TagType.Blog)
     val articleType = Some(emptyTag.copy(id = "type/article", `type` = TagType.Type))
 
     val tags = List(seriesTag, blogTag, articleType).flatten
-    RelatedContentItem(emptyApiContent.copy(
-      fields = Some(ContentFields(
-        showInRelatedContent = Some(showInRelatedContent),
-        shouldHideAdverts = Some(shouldHideAdverts),
-        commentable = Some(commentable)
-      )),
-      tags = tags
-    ))
+    RelatedContentItem(
+      emptyApiContent.copy(
+        fields = Some(
+          ContentFields(
+            showInRelatedContent = Some(showInRelatedContent),
+            shouldHideAdverts = Some(shouldHideAdverts),
+            commentable = Some(commentable),
+          ),
+        ),
+        tags = tags,
+      ),
+    )
   }
 
   private val relatedContent: RelatedContent = RelatedContent(Seq(contentItem()))
 
   private val emptyRelatedContent: RelatedContent = RelatedContent(Nil)
 
-  private def buildHtml(item: RelatedContentItem,
-                        related: RelatedContent = relatedContent,
-                        isPaidContent: Boolean = false): Html = {
+  private def buildHtml(
+      item: RelatedContentItem,
+      related: RelatedContent = relatedContent,
+      isPaidContent: Boolean = false,
+  ): Html = {
     ContentFooterContainersLayout(item.content.content, isPaidContent) {
       Html("storyPackageHtml ")
     } {

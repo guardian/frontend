@@ -11,7 +11,8 @@
     footer: Option[Html] = None,
     highlighted: Boolean = false,
     skin: Option[String] = None,
-    boldTitle: Boolean = true
+    boldTitle: Boolean = true,
+    newsletterIdentityName: Option[String] = None
 )(implicit handler: views.html.helper.FieldConstructor, messages: play.api.i18n.Messages)
 
 
@@ -23,8 +24,9 @@
         (s"manage-account__switch--${skin.getOrElse("")}", skin.isDefined)
     )
 }
+@linkName = @{newsletterIdentityName.getOrElse(title)}
 
-<label class="@views.support.RenderClasses(classes)" data-originally-checked="@field.value" data-link-name-template="mma switch : @title : [action]">
+<label class="@views.support.RenderClasses(classes)" data-originally-checked="@field.value" data-link-name-template="mma switch : @linkName : [action]">
     <div class="manage-account__switch-content">
         @fragments.form.checkbox(field, Checkbox(field).args:_*)
         <div class="manage-account__switch-checkbox"></div>

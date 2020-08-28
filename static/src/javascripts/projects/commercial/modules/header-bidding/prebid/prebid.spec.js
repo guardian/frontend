@@ -32,11 +32,9 @@ describe('initialise', () => {
         config.set('switches.enableConsentManagementService', true);
         config.set('switches.prebidUserSync', true);
         config.set('switches.prebidAppNexus', true);
-        config.set('switches.prebidS2sozone', true);
         config.set('switches.prebidSonobi', true);
         config.set('switches.prebidXaxis', true);
         window.pbjs.setConfig({ consentManagement: {} });
-        window.pbjs.setConfig({ s2sConfig: {} });
         getAdvertById.mockReset();
     });
 
@@ -50,72 +48,68 @@ describe('initialise', () => {
                     {
                         increment: 0.01,
                         max: 100,
-                        min: 0,
                     },
                     {
                         increment: 1,
                         max: 500,
-                        min: 100,
                     },
                 ],
             },
             _debug: false,
+            _deviceAccess: true,
             _disableAjaxTimeout: false,
             _mediaTypePriceGranularity: {},
             _priceGranularity: 'custom',
-            _publisherDomain: 'http://localhost',
+            _publisherDomain: 'http://testurl.theguardian.com',
             _sendAllBids: true,
             _timeoutBuffer: 400,
             _useBidCache: false,
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
-                allowAuctionWithoutConsent: true,
-                cmpApi: 'iab',
-                timeout: 200,
+                gdpr: {
+                    allowAuctionWithoutConsent: true,
+                    cmpApi: 'iab',
+                    timeout: 200,
+                },
+                usp: {
+                    timeout: 1500
+                }
+
             },
             customPriceBucket: {
                 buckets: [
                     {
                         increment: 0.01,
                         max: 100,
-                        min: 0,
                     },
                     {
                         increment: 1,
                         max: 500,
-                        min: 100,
                     },
                 ],
             },
             debug: false,
+            deviceAccess: true,
             disableAjaxTimeout: false,
             enableSendAllBids: true,
             mediaTypePriceGranularity: {},
             priceGranularity: 'custom',
-            publisherDomain: 'http://localhost',
+            publisherDomain: 'http://testurl.theguardian.com',
             s2sConfig: {
-                accountId: '1',
                 adapter: 'prebidServer',
                 adapterOptions: {},
-                bidders: ['appnexus', 'openx', 'pangaea'],
-                cookieSet: true,
-                cookiesetUrl: 'https://acdn.adnxs.com/cookieset/cs.js',
-                enabled: true,
-                endpoint: 'https://elb.the-ozone-project.com/openrtb2/auction',
-                is_debug: 'false',
+                enabled: false,
                 maxBids: 1,
-                syncEndpoint: 'https://elb.the-ozone-project.com/cookie_sync',
                 syncUrlModifier: {},
-                timeout: 1500,
+                timeout: 1000,
             },
             timeoutBuffer: 400,
             useBidCache: false,
             userSync: {
-                pixelEnabled: true,
                 syncDelay: 3000,
                 syncEnabled: true,
-                syncsPerBidder: 999,
+                syncsPerBidder: 0,
                 auctionDelay: 0,
                 filterSettings: {
                     all: {
@@ -131,18 +125,6 @@ describe('initialise', () => {
         config.set('switches.enableConsentManagementService', false);
         prebid.initialise(window);
         expect(window.pbjs.getConfig().consentManagement).toEqual({});
-    });
-    test('should generate correct Prebid config when Ozone off', () => {
-        config.set('switches.prebidS2sozone', false);
-        prebid.initialise(window);
-        expect(window.pbjs.getConfig().s2sConfig).toEqual({
-            adapter: 'prebidServer',
-            adapterOptions: {},
-            enabled: false,
-            maxBids: 1,
-            syncUrlModifier: {},
-            timeout: 1000,
-        });
     });
 
     test('should generate correct bidder settings', () => {

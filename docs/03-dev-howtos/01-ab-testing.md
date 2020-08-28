@@ -63,6 +63,7 @@ const geoMostPopular = () => {
         description: 'Choose popular trails based on request location.',
         audience: 0.1,
         audienceOffset: 0.4,
+        showForSensitive: false,
         successMeasure: 'Click-through for the right most popular, and page views per visit.',
         audienceCriteria: 'Users who are not on mobile, viewing an article.',
         dataLinkNames: 'right hand most popular geo. Specific countries appear as: right hand most popular geo GB',
@@ -126,6 +127,7 @@ The module must return an object with the following properties,
 - `author`: The author of the test. They have responsibility for fixing and removing the test.
 - `description`: A plain English summary of the test.
 - `audience`: The ratio of people who you want in the test (Eg, 0.2 = 20%), who will then be split equally between the variants defined in the test.
+- `showForSensitive`: This flag determines if the test should be active on articles marked as sensitive (`isSensitive` flag is true in the page config object). Note: If you had to force yourself into a test (see the [Forcing yourself into a test](#forcing-yourself-into-a-test) section), navigating to a sensitive article will permanently remove you from the test instead of merely deactivating it on that article and you'll have to force yourself into it again.
 - `audienceOffset`: All users are given a permanent, unique hash that is a number between 0 and 1. `audienceOffset` allows you to specify the range of
   users you want to test. For example, an `audienceOffset` value of `0.5` and an `audience` of `0.1` means user with a hash between 0.5 and 0.6 will
   be opted in to the test. This helps to avoid overlapping tests.
@@ -289,24 +291,24 @@ Optimizely is a client-side framework, which is limited for some types of testin
 
 It adds a rather large overhead to the cookie (mine is 2.5kb).
 
-# Write a Server-Side Test 
+# Write a Server-Side Test
 
-If you want to set up your AB test with scala instead of javascript, almost all the steps are different. 
+If you want to set up your AB test with scala instead of javascript, almost all the steps are different.
 
-*Advantages:* 
+*Advantages:*
 - Allows you to run tests that just won't work in javascript ie if you want to render a whole different page
 - Avoid javascript rendering problems (eg a jump if a DOM element is rendered and then hidden)
 
-*Disadvantages:* 
+*Disadvantages:*
 - Can only do AB tests, not multivariant ABC test
-- Only one test can use a given bucket at a time eg. if someone is running a 50:50 test, you can't run a 50:50 until they finish (current setup) 
-- Slightly harder to set up, preview and read test results 
+- Only one test can use a given bucket at a time eg. if someone is running a 50:50 test, you can't run a 50:50 until they finish (current setup)
+- Slightly harder to set up, preview and read test results
 
 ## Configure the test
 
-1. In `Experiments.scala`, create a new object for your test filling in author, and end date as per the other tests. 
+1. In `Experiments.scala`, create a new object for your test filling in author, and end date as per the other tests.
 
-2. Ensure that the object name and the name property are the same - but formatted correctly.  
+2. Ensure that the object name and the name property are the same - but formatted correctly.
 eg: object `AudioChangeImagePosition` has the name property `audio-change-image-position`.
 
     ```
@@ -319,7 +321,7 @@ eg: object `AudioChangeImagePosition` has the name property `audio-change-image-
     )
 
     ```
-3. Add the experiment to the object property `ActiveExperiments.allExperiments` at the top of the file 
+3. Add the experiment to the object property `ActiveExperiments.allExperiments` at the top of the file
 
 4. Switch the test on for your local environment: http://localhost:9000/dev/switchboard You should be able to find it under `Serverside Tests`
 NB: You should be running in `project dev-build` because you will need it to access the `/switchboard` screen
@@ -329,21 +331,21 @@ NB: You should be running in `project dev-build` because you will need it to acc
     ```
     @import experiments.{ActiveExperiments, AudioChangeImagePosition}
 
-    if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) { 
-        //do variant thing 
+    if(ActiveExperiments.isParticipating(AudioChangeImagePosition)) {
+        //do variant thing
      }
 
     ```
 
-NB: If your test suddenly stops working in local, check the switchboard again and make sure your test is still switched on. 
+NB: If your test suddenly stops working in local, check the switchboard again and make sure your test is still switched on.
 
 Alternatively you can create your own switchboard to avoid your switch states being overridden by other developers.
 Create a file `~/.gu/frontend.conf` and adding an entry to it like:
-                                                  
+
         devOverrides {
           switches.key=DEV/config/switches-<name>.properties
       }
-  
+
 
 ## Checking the test
 
@@ -354,50 +356,50 @@ Create a file `~/.gu/frontend.conf` and adding an entry to it like:
 
 ### Forcing yourself into the test
 
-Severside AB tests use your session ID run through Fastly's Varnish configuration language (VCL) to assign you to a bucket. 
-Requests are bucketed in fixed groups in the [Guardian's VCL files](https://github.com/guardian/fastly-edge-cache/blob/0c366d7f8ef16a5b664fe7205cdd4bae57e07f56/theguardiancom/src/main/resources/varnish21/ab-tests.vcl), and frontend apps use the Vary response header to signify 
-multiple variants exist for the same request. [More information on how VCL enables AB tests here](https://github.com/guardian/frontend/pull/18320). 
- 
- 
+Severside AB tests use your session ID run through Fastly's Varnish configuration language (VCL) to assign you to a bucket.
+Requests are bucketed in fixed groups in the [Guardian's VCL files](https://github.com/guardian/fastly-edge-cache/blob/0c366d7f8ef16a5b664fe7205cdd4bae57e07f56/theguardiancom/src/main/resources/varnish21/ab-tests.vcl), and frontend apps use the Vary response header to signify
+multiple variants exist for the same request. [More information on how VCL enables AB tests here](https://github.com/guardian/frontend/pull/18320).
+
+
 There are two ways to put yourself into a test:
 
-*1. Use the opt/in link:*
+*1. Use the opt/in link (can't be used on localhost):*
 
-Copy the name of your test and visit this url: `https://www.theguardian.com/opt/in/your-test-name` 
+Copy the name of your test and visit this url: `https://www.theguardian.com/opt/in/your-test-name`
 eg: `https://www.theguardian.com/opt/in/audio-page-change` this will redirect to the home page, but sets a cookie in your browser
 that should tell the website to opt you into the test, for PROD. If `audio-page-change` is a 50% test, the resulting cookie
-would be: `X-GU-Experiment-50perc : true`. For CODE or DEV environments, adapt the url accordingly. 
+would be: `X-GU-Experiment-50perc : true`. For CODE or DEV environments, adapt the url accordingly.
 
 Then navigate to the page where you should see the test and you should be opted into the variant.
 
-To opt out you can use the url: `https://www.theguardian.com/opt/out/your-test-name`. `/opt` routes are defined [here](https://github.com/guardian/frontend/blob/master/applications/app/controllers/OptInController.scala#L42). 
+To opt out you can use the url: `https://www.theguardian.com/opt/out/your-test-name`. `/opt` routes are defined [here](https://github.com/guardian/frontend/blob/master/applications/app/controllers/OptInController.scala#L42).
 
-*2. Use a header hacker extension:*  
+*2. Use a header hacker extension:*
 
-Add the header `relevant-header-name: variant` to your request for a given page. eg: `X-GU-Experiment-50perc: variant` 
+Add the header `relevant-header-name: variant` to your request for a given page. eg: `X-GU-Experiment-50perc: variant`
 
-A tool like the Chrome extension Header Hacker can help you to do this. You'll need to do this for the different urls you see the Guardian on: eg `localhost`, `https://code.dev-theguardian.com`. Ask for help configuring this if you need it. 
+A tool like the Chrome extension Header Hacker can help you to do this. You'll need to do this for the different urls you see the Guardian on: eg `localhost`, `https://code.dev-theguardian.com`. Ask for help configuring this if you need it.
 
-Example Header Hacker configuration for putting yourself into a 50% test on CODE. 
+Example Header Hacker configuration for putting yourself into a 50% test on CODE.
 
 	```
-    Custom Request Headers 
+    Custom Request Headers
 	ServerTest3	X-GU-Experiment-50perc	Replace With	variant
-    
-    Permanent Header Switches 
+
+    Permanent Header Switches
     https://code.dev-theguardian.com/	ServerTest3 (Replace X-GU-Experiment-50perc)
-    
+
     ```
-    
- ## Getting the results 
- 
-Because it is a server-side test, different html will be rendered. 
 
-Give each component a different `data-component` attribute to distinguish them. This will show up in the `rendered components` list on the page view table. 
+ ## Getting the results
 
-You can check this in the Network tab of the page, by filtering for requests sent off to `ophan` and checking what's in the `renderedComponents` property. 
+Because it is a server-side test, different html will be rendered.
+
+Give each component a different `data-component` attribute to distinguish them. This will show up in the `rendered components` list on the page view table.
+
+You can check this in the Network tab of the page, by filtering for requests sent off to `ophan` and checking what's in the `renderedComponents` property.
 
 In the data lake search for the presence of that rendered component. [Find out about querying the data lake here](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/19-tracking-components-in-the-data-lake.md#rendered-components).
- 
-Correlate the presence of the element with the event you want to measure eg page ready, clicked play. Ophan events such as these can be added as per the clientside tests above.  
- 
+
+Correlate the presence of the element with the event you want to measure eg page ready, clicked play. Ophan events such as these can be added as per the clientside tests above.
+

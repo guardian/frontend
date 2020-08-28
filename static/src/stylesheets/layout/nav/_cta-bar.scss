@@ -1,12 +1,23 @@
 .new-header__cta-bar {
-    position: absolute;
-    top: 30px;
-    left: $gs-gutter / 2;
-
     .hide-support-messaging &,
     .is-recent-contributor & {
         display: none;
     }
+}
+
+.new-header__cta-bar-aus-moment {
+    display: none;
+
+    .hide-support-messaging &,
+    .is-recent-contributor & {
+        display: block;
+    }
+}
+
+.new-header__cta-bar, .new-header__cta-bar-aus-moment {
+    position: absolute;
+    top: 30px;
+    left: $gs-gutter / 2;
 
     @include mq(mobileMedium) {
         top: 37px;
@@ -39,7 +50,19 @@
     }
 }
 
-.cta-bar__text {
+.new-header__cta-bar-aus-moment .cta-bar__aus-map-cta {
+    color: $brightness-100;
+    background-color: #55698e;
+    margin-top: 5px;
+
+    &:hover,
+    &:focus {
+        color: $brightness-100;
+        background-color: #2c4c86;
+    }
+}
+
+.cta-bar__text, .cta-bar__text-aus-supporter {
     display: block;
     margin: ($gs-baseline / 4) 0 9px;
 

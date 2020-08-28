@@ -18,10 +18,10 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
   import authenticatedActions._
 
   def displayForm(
-    page: IdentityPage,
-    consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None,
-    emailValidationRequired: Boolean = false
+      page: IdentityPage,
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None,
+      emailValidationRequired: Boolean = false,
   ): Action[AnyContent] = {
 
     def authAction =
@@ -29,7 +29,6 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
         recentFullAuthWithIdapiUserAction andThen emailValidationFilter
       else
         recentFullAuthWithIdapiUserAction
-
 
     csrfAddToken {
       authAction.async { implicit request =>
@@ -49,7 +48,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           } yield c.name) orElse originalPrivateFields.billingCountry
 
           val privateFields = originalPrivateFields.copy(
-            country = country, billingCountry = billingCountry
+            country = country,
+            billingCountry = billingCountry,
           )
 
           val userUser = originalUserUser.copy(privateFields = privateFields)
@@ -62,7 +62,7 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
           forms = ProfileForms(userWithOrderedConsents(user, consentHint), PublicEditProfilePage),
           user,
           consentsUpdated,
-          consentHint
+          consentHint,
         )
       }
     }
@@ -74,7 +74,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
       fullAuthWithIdapiUserAction.async { implicit request =>
         val userDO = request.user
         val boundProfileForms =
-          ProfileForms(userDO, activePage = page).bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
+          ProfileForms(userDO, activePage = page)
+            .bindFromRequestWithAddressErrorHack(request) // NOTE: only active form is bound to request data
 
         boundProfileForms.activeForm.fold(
           formWithErrors => profileFormsView(page, boundProfileForms, userDO),
@@ -86,7 +87,8 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
                 case Right(_) => {
                   val boundForms =
                     boundProfileForms.bindForms(
-                      userDO.user.copy(privateFields = userDO.user.privateFields.copy(telephoneNumber = None)))
+                      userDO.user.copy(privateFields = userDO.user.privateFields.copy(telephoneNumber = None)),
+                    )
 
                   profileFormsView(page, boundForms, userDO)
                 }
@@ -100,43 +102,50 @@ trait EditProfileFormHandling extends EditProfileControllerComponents {
 
                 case Right(updatedUser) =>
                   val userChangedEmail: Option[String] = formData.toUserUpdateDTO(userDO).primaryEmailAddress
-                  profileFormsView(page, boundProfileForms.bindForms(updatedUser), updatedUser, changedEmail = userChangedEmail)
+                  profileFormsView(
+                    page,
+                    boundProfileForms.bindForms(updatedUser),
+                    updatedUser,
+                    changedEmail = userChangedEmail,
+                  )
               }
-          } // end of success
+          }, // end of success
         ) // end fold
       } // end authActionWithUser.async
     } // end csrfCheck
 
   private def profileFormsView(
-    page: IdentityPage,
-    forms: ProfileForms,
-    user: User,
-    consentsUpdated: Boolean = false,
-    consentHint: Option[String] = None,
-    changedEmail: Option[String] = None)
-    (implicit request: AuthRequest[AnyContent]): Future[Result] = {
+      page: IdentityPage,
+      forms: ProfileForms,
+      user: User,
+      consentsUpdated: Boolean = false,
+      consentHint: Option[String] = None,
+      changedEmail: Option[String] = None,
+  )(implicit request: AuthRequest[AnyContent]): Future[Result] = {
 
     val emailFilledForm: Future[Form[EmailPrefsData]] =
       newsletterService.subscriptions(request.user.id, idRequestParser(request).trackingData)
 
     emailFilledForm.map { emailFilledForm =>
-      NoCache(Ok(
-        IdentityHtmlPage.html(
-          content = views.html.profileForms(
-            page.metadata.id,
-            user,
-            forms,
-            idRequestParser(request),
-            idUrlBuilder,
-            emailFilledForm,
-            newsletterService.getEmailSubscriptions(emailFilledForm),
-            EmailNewsletters.all,
-            consentsUpdated,
-            consentHint,
-            changedEmail
-          )
-        )(page, request, context)
-      ))
+      NoCache(
+        Ok(
+          IdentityHtmlPage.html(
+            content = views.html.profileForms(
+              page.metadata.id,
+              user,
+              forms,
+              idRequestParser(request),
+              idUrlBuilder,
+              emailFilledForm,
+              newsletterService.getEmailSubscriptions(emailFilledForm),
+              EmailNewsletters.publicNewsletters,
+              consentsUpdated,
+              consentHint,
+              changedEmail,
+            ),
+          )(page, request, context),
+        ),
+      )
     }
   }
 

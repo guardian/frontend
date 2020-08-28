@@ -10,7 +10,8 @@ class RemoteAddressTest extends FunSuite with Matchers {
   object TestRemoteAddress extends RemoteAddress
 
   val xFor = "X-Forwarded-For"
-  def fakeRequest(xForHeader: String): FakeRequest[AnyContentAsEmpty.type] = FakeRequest(GET, "uri").withHeaders(xFor -> xForHeader)
+  def fakeRequest(xForHeader: String): FakeRequest[AnyContentAsEmpty.type] =
+    FakeRequest(GET, "uri").withHeaders(xFor -> xForHeader)
 
   test("extract a simple IP address") {
     TestRemoteAddress.clientIp(fakeRequest("123.456.789.012")) should equal(Some("123.456.789.012"))
@@ -19,7 +20,9 @@ class RemoteAddressTest extends FunSuite with Matchers {
 
   test("extract leftmost IP from X-Forwarded-For list") {
     TestRemoteAddress.clientIp(fakeRequest("123.456.789.012, 987.654.321.098")) should equal(Some("123.456.789.012"))
-    TestRemoteAddress.clientIp(fakeRequest("123.456.789.012, 987.654.321.098, 1.2.3.4")) should equal(Some("123.456.789.012"))
+    TestRemoteAddress.clientIp(fakeRequest("123.456.789.012, 987.654.321.098, 1.2.3.4")) should equal(
+      Some("123.456.789.012"),
+    )
   }
 
   test("skips internal IPs at left of list") {

@@ -3,17 +3,17 @@ package dfp
 import common.Edition
 import common.dfp._
 
-case class DfpDataExtractor(
-  lineItems: Seq[GuLineItem],
-  invalidLineItems: Seq[GuLineItem]) {
+case class DfpDataExtractor(lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
   val hasValidLineItems: Boolean = lineItems.nonEmpty
 
   val inlineMerchandisingTargetedTags: InlineMerchandisingTagSet = {
     lineItems.foldLeft(InlineMerchandisingTagSet()) { (soFar, lineItem) =>
-      soFar.copy(keywords = soFar.keywords ++ lineItem.inlineMerchandisingTargetedKeywords,
+      soFar.copy(
+        keywords = soFar.keywords ++ lineItem.inlineMerchandisingTargetedKeywords,
         series = soFar.series ++ lineItem.inlineMerchandisingTargetedSeries,
-        contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors)
+        contributors = soFar.contributors ++ lineItem.inlineMerchandisingTargetedContributors,
+      )
     }
   }
 
@@ -27,7 +27,7 @@ case class DfpDataExtractor(
           tags = lineItem.highMerchandisingTargets,
           adUnitsIncluded = lineItem.targeting.adUnitsIncluded,
           adUnitsExcluded = lineItem.targeting.adUnitsExcluded,
-          customTargetSet = lineItem.targeting.customTargetSets
+          customTargetSet = lineItem.targeting.customTargetSets,
         )
       }
 
@@ -47,14 +47,15 @@ case class DfpDataExtractor(
         targetsAdTest = lineItem.targeting.hasAdTestTargetting,
         adTestValue = lineItem.targeting.adTestValue,
         keywords = lineItem.targeting.keywordValues,
-        series = lineItem.targeting.serieValues
+        series = lineItem.targeting.serieValues,
       )
     }
   }
 
-  def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] = lineItems sortBy { lineItem =>
-    (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
-  }
+  def dateSort(lineItems: => Seq[GuLineItem]): Seq[GuLineItem] =
+    lineItems sortBy { lineItem =>
+      (lineItem.startTime.getMillis, lineItem.endTime.map(_.getMillis).getOrElse(0L))
+    }
 
   val topAboveNavSlotTakeovers: Seq[GuLineItem] = dateSort {
     lineItems filter (_.isSuitableForTopAboveNavSlot)
@@ -81,7 +82,9 @@ case class DfpDataExtractor(
     }
 
     val targeting = lineItem.targeting
-    descriptions(targeting.geoTargetsIncluded)(_.name) ++ descriptions(targeting.geoTargetsExcluded)(target => s"excluding ${target.name}")
+    descriptions(targeting.geoTargetsIncluded)(_.name) ++ descriptions(targeting.geoTargetsExcluded)(target =>
+      s"excluding ${target.name}",
+    )
   }
 
 }

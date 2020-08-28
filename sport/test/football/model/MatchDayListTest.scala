@@ -4,8 +4,13 @@ import org.scalatest._
 import implicits.Football
 import test.ConfiguredTestSuite
 
-
-@DoNotDiscover class MatchDayListTest extends FreeSpec with Matchers with MatchTestData with Football with OptionValues with ConfiguredTestSuite {
+@DoNotDiscover class MatchDayListTest
+    extends FreeSpec
+    with Matchers
+    with MatchTestData
+    with Football
+    with OptionValues
+    with ConfiguredTestSuite {
   "the live matches list" - {
     "for today" - {
       val matches = MatchDayList(competitions.competitions, today)
@@ -25,8 +30,9 @@ import test.ConfiguredTestSuite
       }
 
       "should show all matches happening today" in {
-        matches.relevantMatches.foreach { case (fMatch, _) =>
-          fMatch.date.toLocalDate should equal(today)
+        matches.relevantMatches.foreach {
+          case (fMatch, _) =>
+            fMatch.date.toLocalDate should equal(today)
         }
       }
 
@@ -39,9 +45,10 @@ import test.ConfiguredTestSuite
       }
 
       "matches should have the correct, populated, competition alongside" in {
-        matches.relevantMatches.foreach { case (fMatch, comp) =>
-          if (fMatch.id.toInt < 30) comp.id should equal("500")
-          else comp.id should equal("100")
+        matches.relevantMatches.foreach {
+          case (fMatch, comp) =>
+            if (fMatch.id.toInt < 30) comp.id should equal("500")
+            else comp.id should equal("100")
         }
       }
     }

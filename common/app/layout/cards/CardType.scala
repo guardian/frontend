@@ -5,54 +5,62 @@ sealed trait CardType {
 
   case class VideoPlayerMode(show: Boolean, showEndSlate: Boolean)
 
-  def videoPlayer: VideoPlayerMode = this match {
-    case FullMedia50 | FullMedia75 | FullMedia100 =>
-      VideoPlayerMode(show = true, showEndSlate = true)
-    case ThreeQuarters | ThreeQuartersRight | Half | Third =>
-      VideoPlayerMode(show = true, showEndSlate = false)
-    case _ =>
-      VideoPlayerMode(show = false, showEndSlate = false)
-  }
+  def videoPlayer: VideoPlayerMode =
+    this match {
+      case FullMedia50 | FullMedia75 | FullMedia100 =>
+        VideoPlayerMode(show = true, showEndSlate = true)
+      case ThreeQuarters | ThreeQuartersRight | Half | Third =>
+        VideoPlayerMode(show = true, showEndSlate = false)
+      case _ =>
+        VideoPlayerMode(show = false, showEndSlate = false)
+    }
 
-  def youTubeMediaAtomPlayer: VideoPlayerMode = this match {
-    case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight =>
-      VideoPlayerMode(show = true, showEndSlate = true)
-    case Half | Third =>
-      VideoPlayerMode(show = true, showEndSlate = false)
-    case _ =>
-      VideoPlayerMode(show = false, showEndSlate = false)
-  }
+  def youTubeMediaAtomPlayer: VideoPlayerMode =
+    this match {
+      case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight =>
+        VideoPlayerMode(show = true, showEndSlate = true)
+      case Half | Third =>
+        VideoPlayerMode(show = true, showEndSlate = false)
+      case _ =>
+        VideoPlayerMode(show = false, showEndSlate = false)
+    }
 
-  def showCutOut: Boolean = this match {
-    case ListItem => false
-    case _ => true
-  }
+  def showCutOut: Boolean =
+    this match {
+      case ListItem => false
+      case _        => true
+    }
 
   /** To actually find out if media is shown you would also need to check whether there is an image (or video) and
     * whether image hide setting is on.
     *
     * But some card sizes can never show media, regardless of those options, and this is what this represents.
     */
-  def canShowMedia: Boolean = this match {
-    case ListItem => false
-    case _ => true
-  }
+  def canShowMedia: Boolean =
+    this match {
+      case ListItem => false
+      case _        => true
+    }
 
-  def showStandfirst: Boolean = this match {
-    case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard => true
-    case _ => false
-  }
+  def showStandfirst: Boolean =
+    this match {
+      case Fluid | FullMedia100 | FullMedia75 | FullMedia50 | Half | ThreeQuarters | ThreeQuartersRight | Standard =>
+        true
+      case _ => false
+    }
 
-  def canShowSlideshow: Boolean = this match {
-    case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 => true
-    case _ => false
-  }
+  def canShowSlideshow: Boolean =
+    this match {
+      case Half | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall | FullMedia50 | FullMedia75 | FullMedia100 =>
+        true
+      case _ => false
+    }
 
-  /** This is only currently used in the dynamoContentCard.scala.html **/
-  def canBeDynamicLayout: Boolean = this match {
-    case FullMedia100 | FullMedia75 | ThreeQuarters | ThreeQuartersTall => true
-    case _ => false
-  }
+  def canBeDynamicLayout: Boolean =
+    this match {
+      case FullMedia100 | FullMedia75 | ThreeQuarters | ThreeQuartersTall => true
+      case _                                                              => false
+    }
 }
 
 /** This is called ListItem because List is already taken */

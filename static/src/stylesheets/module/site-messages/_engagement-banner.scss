@@ -219,3 +219,12 @@
         display: inline;
     }
 }
+
+// Override the css that is added to the container when an ad takeover happens
+.site-message--banner.remote-banner {
+    width: 100% !important;
+    z-index: 1090 !important;
+    background: none !important;
+    top: auto !important;
+    position: sticky !important;
+}

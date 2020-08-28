@@ -15,7 +15,6 @@
     bestOfOpinionUS.identityName -> "comment",
     bookmarks.identityName -> "review",
     theFiver.identityName -> "feature",
-    mediaBriefing.identityName -> "media",
     theLongRead.identityName -> "feature",
     documentaries.identityName -> "plaindark",
     theFlyer.identityName -> "feature",
@@ -54,7 +53,7 @@
                 <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 
             </div>
-            <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
+            <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
         </div>
     </form>
 }
@@ -73,4 +72,8 @@
 
     @form
 </div>
+
+<script>
+    trackClickEvent(document.getElementById("email-embed-signup-button"))
+</script>
 

@@ -7,17 +7,19 @@ import org.joda.time.format.ISODateTimeFormat
 import play.api.libs.json._
 import scala.util.{Failure, Success, Try}
 
-case class NewsAlertNotification(uid: UUID,
-                                 urlId: URI, //ex: technology/2016/feb/01/uninstalling-facebook-app-saves-up-to-20-of-android-battery-life
-                                 title: String,
-                                 message: String,
-                                 thumbnailUrl: Option[URI] = None,
-                                 link: URI,
-                                 imageUrl: Option[URI] = None,
-                                 publicationDate: DateTime,
-                                 topics: Set[String] = Set.empty[String]) {
+case class NewsAlertNotification(
+    uid: UUID,
+    urlId: URI, //ex: technology/2016/feb/01/uninstalling-facebook-app-saves-up-to-20-of-android-battery-life
+    title: String,
+    message: String,
+    thumbnailUrl: Option[URI] = None,
+    link: URI,
+    imageUrl: Option[URI] = None,
+    publicationDate: DateTime,
+    topics: Set[String] = Set.empty[String],
+) {
 
-  def isOfType(alertType: NewsAlertType) : Boolean = topics.contains(alertType.toString)
+  def isOfType(alertType: NewsAlertType): Boolean = topics.contains(alertType.toString)
 
 }
 
@@ -33,7 +35,7 @@ object NewsAlertNotification {
         case JsString(s) =>
           Try(timeJsonFormatter.parseDateTime(s)) match {
             case Success(dt) => JsSuccess(dt)
-            case Failure(_) => error
+            case Failure(_)  => error
           }
         case _ => error
       }

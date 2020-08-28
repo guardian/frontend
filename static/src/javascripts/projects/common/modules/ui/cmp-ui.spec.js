@@ -1,18 +1,15 @@
 // @flow
-import { shouldShow } from '@guardian/consent-management-platform';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import config from 'lib/config';
+import { cmp } from '@guardian/consent-management-platform';
 import { consentManagementPlatformUi } from './cmp-ui';
-
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    shouldShow: jest.fn(),
-}));
-
-jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(),
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
 }));
 
 jest.mock('lib/report-error', () => jest.fn());
@@ -24,31 +21,28 @@ describe('cmp-ui', () => {
 
     describe('consentManagementPlatformUi', () => {
         describe('canShow', () => {
-            it('returns true if shouldShow true and in CommercialCmpUiBannerModal test variant', () => {
-                shouldShow.mockReturnValue(true);
-                isInVariantSynchronous.mockImplementation(
-                    (test, variant) =>
-                        test.id === 'CommercialCmpUiBannerModal' &&
-                        variant === 'variant'
-                );
+            it('return true if cmp.willShowPrivacyMessage() returns true', () => {
+                cmp.willShowPrivacyMessage.mockImplementation(() => true);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(true);
                 });
             });
-
-            it('returns false if not in CommercialCmpUiBannerModal test', () => {
-                shouldShow.mockReturnValue(true);
-                isInVariantSynchronous.mockReturnValue(false);
+            it('return false if cmp.willShowPrivacyMessage() returns false', () => {
+                cmp.willShowPrivacyMessage.mockImplementation(() => false);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });
 
-            it('returns false if shouldShow false', () => {
-                shouldShow.mockReturnValue(false);
-                isInVariantSynchronous.mockReturnValue(true);
+            it('returns willShowPrivacyMessage if using Sourcepoint CMP', () =>
+                consentManagementPlatformUi.canShow().then(() => {
+                    expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
+                }));
+
+            it('return false if CMP switch is off', () => {
+                config.set('switches.cmp', false);
 
                 return consentManagementPlatformUi.canShow().then(show => {
                     expect(show).toBe(false);

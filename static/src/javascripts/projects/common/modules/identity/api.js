@@ -11,6 +11,8 @@ import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
 import qs from 'qs';
 import reqwest from 'reqwest';
+import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
+import type { AuthenticationComponentId } from "common/modules/identity/auth-component-event-params";
 
 let userFromCookieCache = null;
 
@@ -165,7 +167,7 @@ export const redirectTo = (url: string): void => {
     window.location.assign(url);
 };
 
-export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
+export const getUserOrSignIn = (componentId: AuthenticationComponentId, paramUrl: ?string): ?Object => {
     let returnUrl = paramUrl;
 
     if (isUserLoggedIn()) {
@@ -173,7 +175,12 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     }
 
     returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    const url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+    let url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+
+    if (componentId) {
+        url += `&${createAuthenticationComponentEventParams(componentId)}`
+    }
+
     redirectTo(url);
 };
 
@@ -310,14 +317,24 @@ export const setConsent = (consents: SettableConsent[]): Promise<void> =>
     });
 export const ajaxSignIn = (credentials: PasswordCredential) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
+    const body: Object = {
+        email: credentials.id,
+        password: credentials.password,
+    };
+
+    if (
+        window.guardian &&
+        window.guardian.ophan &&
+        window.guardian.ophan.viewId
+    ) {
+        body.componentEventParams = createAuthenticationComponentEvent('guardian_smartlock', window.guardian.ophan.viewId);
+    }
+
     return fetch(url, {
         mode: 'cors',
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: qs.stringify({
-            email: credentials.id,
-            password: credentials.password,
-        }),
+        body: qs.stringify(body),
         credentials: 'include',
     });
 };

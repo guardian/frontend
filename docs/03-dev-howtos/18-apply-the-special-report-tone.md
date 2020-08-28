@@ -1,5 +1,11 @@
 # Apply the special report tone
 
+The Special Report tone can be added by central production by adding the required tag to the Special Tag Test Campaign in the Targeting Tool.
+
+## DEPRECATED 
+
+*The following method is deprecated and replaced with the targeting tool method, but kept here for prosperity as existing tags still use the method.*
+
 Sometimes CP or someone from Editorial will ask us to apply the special report treatment to a tag.
 The following doc explains how to make that happen.
 

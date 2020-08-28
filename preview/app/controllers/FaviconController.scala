@@ -11,5 +11,5 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
  * - unreachable code due to variable pattern 'file'
  */
 class FaviconController(assets: Assets, val controllerComponents: ControllerComponents) extends BaseController {
-  def favicon: Action[AnyContent] = assets.at(path="/public", file="favicon.ico")
+  def favicon: Action[AnyContent] = assets.at(path = "/public", file = "favicon.ico")
 }

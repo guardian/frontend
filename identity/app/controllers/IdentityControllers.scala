@@ -12,10 +12,7 @@ import play.api.mvc.ControllerComponents
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import services.IdentityServices
 
-trait IdentityControllers extends IdApiComponents
-  with IdentityServices
-  with FormStackComponents
-  with FormComponents {
+trait IdentityControllers extends IdApiComponents with IdentityServices with FormStackComponents with FormComponents {
   def wsClient: WSClient
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
@@ -26,7 +23,6 @@ trait IdentityControllers extends IdApiComponents
   lazy val authenticatedActions = wire[AuthenticatedActions]
   lazy val advertsManager = wire[AdvertsManager]
   lazy val changePasswordController = wire[ChangePasswordController]
-  lazy val reauthenticationController = wire[ReauthenticationController]
   lazy val resetPasswordController = wire[ResetPasswordController]
   lazy val publicProfileController = wire[PublicProfileController]
   lazy val editProfileController = wire[EditProfileController]
@@ -34,6 +30,5 @@ trait IdentityControllers extends IdApiComponents
   lazy val formstackController = wire[FormstackController]
   lazy val emailSignupController = wire[EmailSignupController]
   lazy val accountDeletionController = wire[AccountDeletionController]
-  lazy val authenticationController = wire[AuthenticationController]
   lazy val upsellController = wire[UpsellController]
 }

@@ -5,13 +5,14 @@ import implicits.Football._
 import pa.{MatchDay, FootballMatch}
 
 case class FootballMatchTrail(
-  isLive: Boolean,
-  url: String
+    isLive: Boolean,
+    url: String,
 )
 
 object FootballMatchTrail {
 
-  private def matchText(m: FootballMatch) = if (m.isFixture) {
+  private def matchText(m: FootballMatch) =
+    if (m.isFixture) {
       s"${m.homeTeam.name} v ${m.awayTeam.name}"
     } else {
       val homeScore = m.homeTeam.score.getOrElse(0)
@@ -25,16 +26,16 @@ object FootballMatchTrail {
     FootballMatchTrail(
       isLive = m match {
         case matchDay: MatchDay => matchDay.liveMatch
-        case _ => false
+        case _                  => false
       },
-      url = MatchUrl(m)
+      url = MatchUrl(m),
     )
   }
 
   def toTrail(c: ContentType): FootballMatchTrail = {
     FootballMatchTrail(
       isLive = c.fields.isLive,
-      url = c.metadata.url
+      url = c.metadata.url,
     )
   }
 }

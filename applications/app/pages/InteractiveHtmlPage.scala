@@ -20,28 +20,34 @@ import html.HtmlPageHelpers.{ContentCSSFile}
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = stacked(
-      criticalStyleLink(ContentCSSFile),
-      criticalStyleLink("interactive")
-    )
-    override def criticalCssInline: Html = criticalStyleInline(
-      Html(common.Assets.css.head(None)),
-      Html(common.Assets.css.interactive)
-    )
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html =
+        stacked(
+          criticalStyleLink(ContentCSSFile),
+          criticalStyleLink("interactive"),
+        )
+      override def criticalCssInline: Html =
+        criticalStyleInline(
+          Html(common.Assets.css.head(None)),
+          Html(common.Assets.css.interactive),
+        )
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def html(page: InteractivePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: InteractivePage = page
 
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive)),
-      ("is-immersive-interactive", Page.getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive))
+      (
+        "is-immersive-interactive",
+        Page.getContent(page).exists(content => content.tags.isInteractive && content.content.isImmersive),
+      ),
     )
 
     htmlTag(
@@ -51,7 +57,8 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
-        inlineJSBlocking()
+        checkModuleSupport(),
+        inlineJSBlocking(),
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -64,9 +71,9 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 

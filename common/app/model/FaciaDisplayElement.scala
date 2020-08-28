@@ -8,19 +8,24 @@ import model.pressed.PressedContent
 import model.content.MediaAtom
 
 object FaciaDisplayElement {
-  def fromFaciaContentAndCardType(faciaContent: PressedContent, itemClasses: ItemClasses): Option[FaciaDisplayElement] = {
+  def fromFaciaContentAndCardType(
+      faciaContent: PressedContent,
+      itemClasses: ItemClasses,
+  ): Option[FaciaDisplayElement] = {
     faciaContent.mainVideo match {
       case Some(videoElement) if faciaContent.properties.showMainVideo =>
-        Some(InlineVideo(
-          videoElement,
-          faciaContent.properties.webTitle,
-          InlineImage.fromFaciaContent(faciaContent)
-        ))
+        Some(
+          InlineVideo(
+            videoElement,
+            faciaContent.properties.webTitle,
+            InlineImage.fromFaciaContent(faciaContent),
+          ),
+        )
       case _ if faciaContent.properties.isCrossword && Switches.CrosswordSvgThumbnailsSwitch.isSwitchedOn =>
         faciaContent.properties.maybeContentId map CrosswordSvg
       case _ if faciaContent.properties.imageSlideshowReplace && itemClasses.canShowSlideshow =>
         InlineSlideshow.fromFaciaContent(faciaContent)
-      case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined  =>
+      case _ if faciaContent.properties.showMainVideo && faciaContent.mainYouTubeMediaAtom.isDefined =>
         Some(InlineYouTubeMediaAtom(faciaContent.mainYouTubeMediaAtom.get, faciaContent.trailPicture))
       case _ => InlineImage.fromFaciaContent(faciaContent)
     }
@@ -30,12 +35,13 @@ object FaciaDisplayElement {
 sealed trait FaciaDisplayElement
 
 case class InlineVideo(
-  videoElement: VideoElement,
-  title: String,
-  fallBack: Option[InlineImage]
+    videoElement: VideoElement,
+    title: String,
+    fallBack: Option[InlineImage],
 ) extends FaciaDisplayElement
 
-case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom, posterImageOverride: Option[ImageMedia]) extends FaciaDisplayElement
+case class InlineYouTubeMediaAtom(youTubeAtom: MediaAtom, posterImageOverride: Option[ImageMedia])
+    extends FaciaDisplayElement
 
 object InlineImage {
   def fromFaciaContent(faciaContent: PressedContent): Option[InlineImage] =

@@ -12,7 +12,12 @@ import views.support.RenderOtherStatus
 
 import scala.concurrent.Future
 
-class GalleryController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController with RendersItemResponse with Logging with ImplicitControllerExecutionContext {
+class GalleryController(contentApiClient: ContentApiClient, val controllerComponents: ControllerComponents)(implicit
+    context: ApplicationContext,
+) extends BaseController
+    with RendersItemResponse
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)
   def render(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -22,40 +27,46 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     val isTrail = request.getBooleanParameter("trail") getOrElse false
 
     lookup(path, index, isTrail) map {
-      case Left(model) if model.gallery.content.isExpired => RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
-      case Left(model) => renderGallery(model)
+      case Left(model) if model.gallery.content.isExpired =>
+        RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
+      case Left(model)  => renderGallery(model)
       case Right(other) => RenderOtherStatus(other)
     }
   }
 
-  def lightboxJson(path: String): Action[AnyContent] = Action.async { implicit request =>
-    val index = request.getIntParameter("index") getOrElse 1
-    lookup(path, index, isTrail=false) map {
-      case Right(other) => RenderOtherStatus(other)
-      case Left(model) => Cached(model) { JsonComponent(model.gallery.lightbox.javascriptConfig) }
+  def lightboxJson(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val index = request.getIntParameter("index") getOrElse 1
+      lookup(path, index, isTrail = false) map {
+        case Right(other) => RenderOtherStatus(other)
+        case Left(model)  => Cached(model) { JsonComponent(model.gallery.lightbox.javascriptConfig) }
+      }
     }
-  }
 
-  private def lookup(path: String, index: Int, isTrail: Boolean)
-                    (implicit request: RequestHeader) = {
+  private def lookup(path: String, index: Int, isTrail: Boolean)(implicit request: RequestHeader) = {
     val edition = Edition(request)
     log.info(s"Fetching gallery: $path for edition $edition")
-    contentApiClient.getResponse(contentApiClient.item(path, edition)
-      .showFields("all")
-    ).map { response =>
-      val gallery = response.content.map(Content(_))
-      val model: Option[GalleryPage] = gallery collect { case g: Gallery => GalleryPage(g, StoryPackages(g.metadata.id, response), index, isTrail) }
+    contentApiClient
+      .getResponse(
+        contentApiClient
+          .item(path, edition)
+          .showFields("all"),
+      )
+      .map { response =>
+        val gallery = response.content.map(Content(_))
+        val model: Option[GalleryPage] = gallery collect {
+          case g: Gallery => GalleryPage(g, StoryPackages(g.metadata.id, response), index, isTrail)
+        }
 
-      ModelOrResult(model, response)
+        ModelOrResult(model, response)
 
-    }.recover {convertApiExceptions}
+      }
+      .recover { convertApiExceptions }
   }
 
   private def renderGallery(model: GalleryPage)(implicit request: RequestHeader) = {
-    val htmlResponse: (() => Html) = () =>
-      GalleryHtmlPage.html(model)
-    val jsonResponse = () =>
-      views.html.fragments.galleryBody(model)
+    val htmlResponse: (() => Html) = () => GalleryHtmlPage.html(model)
+    val jsonResponse = () => views.html.fragments.galleryBody(model)
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 

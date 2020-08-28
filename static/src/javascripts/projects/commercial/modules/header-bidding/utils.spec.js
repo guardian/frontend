@@ -6,16 +6,14 @@ import {
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
 import config from 'lib/config';
+import { _} from "common/modules/commercial/geo-utils";
 import {
     getLargestSize,
     getBreakpointKey,
-    isInRowRegion,
-    isInUkRegion,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
-    shouldIncludeOzone,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
@@ -62,7 +60,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidS2sozone', true);
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
     config.set('page.edition', 'UK');
@@ -72,6 +69,7 @@ const resetConfig = () => {
 describe('Utils', () => {
     beforeEach(() => {
         jest.resetAllMocks();
+        _.resetModule();
         resetConfig();
     });
 
@@ -185,22 +183,6 @@ describe('Utils', () => {
         }
     });
 
-    test('shouldIncludeOzone should return false for excluded geolocations', () => {
-        const excludedGeos = ['US', 'CA', 'NZ', 'AU'];
-        for (let i = 0; i < excludedGeos.length; i += 1) {
-            getSync.mockReturnValue(excludedGeos[i]);
-            expect(shouldIncludeOzone()).toBe(false);
-        }
-    });
-
-    test('shouldIncludeOzone should return true for GB and ROW', () => {
-        const includedGeos = ['GB', 'FR', 'SA'];
-        for (let i = 0; i < includedGeos.length; i += 1) {
-            getSync.mockReturnValueOnce(includedGeos[i]);
-            expect(shouldIncludeOzone()).toBe(true);
-        }
-    });
-
     test('shouldIncludeImproveDigital should return true if geolocation is GB', () => {
         getSync.mockReturnValue('GB');
         expect(shouldIncludeImproveDigital()).toBe(true);
@@ -296,35 +278,6 @@ describe('Utils', () => {
         });
     });
 
-    test('isInUkRegion should return true if geolocation is GB', () => {
-        getSync.mockReturnValue('GB');
-        expect(isInUkRegion()).toBe(true);
-    });
-
-    test('isInUkRegion should return false if geolocation is not GB', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH', 'AU'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInUkRegion()).toBe(false);
-        }
-    });
-
-    test('isInRowRegion should return false if geolocation is GB, US, CA, AU or NZ', () => {
-        const testGeos = ['GB', 'US', 'CA', 'AU', 'NZ'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInRowRegion()).toBe(false);
-        }
-    });
-
-    test('isInRowRegion should return true if geolocation is not GB, US, CA, AU or NZ', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(isInRowRegion()).toBe(true);
-        }
-    });
-
     ['US', 'CA', 'AU', 'NZ'].forEach(region => {
         test(`should include mobile sticky if geolocation is ${region}, switch is ON and content is Article on mobiles`, () => {
             config.set('page.contentType', 'Article');
@@ -347,6 +300,15 @@ describe('Utils', () => {
         config.set('page.contentType', 'Article');
         isBreakpoint.mockReturnValue(true);
         config.set('switches.mobileStickyLeaderboard', false);
+        getSync.mockReturnValue('US');
+        expect(shouldIncludeMobileSticky()).toBe(false);
+    });
+
+    test('shouldIncludeMobileSticky should be false if all conditions true except isHosted condition', () => {
+        config.set('page.contentType', 'Article');
+        isBreakpoint.mockReturnValue(true);
+        config.set('switches.mobileStickyLeaderboard', true);
+        config.set('page.isHosted', true);
         getSync.mockReturnValue('US');
         expect(shouldIncludeMobileSticky()).toBe(false);
     });

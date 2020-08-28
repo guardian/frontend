@@ -11,7 +11,7 @@ import conf.Configuration
 import conf.switches.Switches._
 import conf.cricketPa.CricketTeams
 import layout.ContentWidths.GalleryMedia
-import model.content.{Atoms, MediaAssetPlatform, MediaAtom, Quiz}
+import model.content.{Atoms, MediaAssetPlatform, MediaAtom, QuizAtom}
 import model.pressed._
 import org.jsoup.{Jsoup, nodes}
 import org.jsoup.safety.Whitelist
@@ -40,35 +40,34 @@ sealed trait ContentType {
 final case class GenericContent(override val content: Content) extends ContentType
 
 final case class Content(
-  trail: Trail,
-  metadata: MetaData,
-  tags: Tags,
-  commercial: Commercial,
-  elements: Elements,
-  fields: Fields,
-  sharelinks: ShareLinks,
-  atoms: Option[Atoms],
-  publication: String,
-  internalPageCode: String,
-  contributorBio: Option[String],
-  starRating: Option[Int],
-  allowUserGeneratedContent: Boolean,
-  isExpired: Boolean,
-  productionOffice: Option[String],
-  tweets: Seq[Tweet],
-  showInRelated: Boolean,
-  cardStyle: CardStyle,
-  shouldHideAdverts: Boolean,
-  witnessAssignment: Option[String],
-  isbn: Option[String],
-  imdb: Option[String],
-  paFootballTeams: Seq[String],
-  javascriptReferences: Seq[JsObject],
-  wordCount: Int,
-  showByline: Boolean,
-  rawOpenGraphImage: Option[ImageAsset]
+    trail: Trail,
+    metadata: MetaData,
+    tags: Tags,
+    commercial: Commercial,
+    elements: Elements,
+    fields: Fields,
+    sharelinks: ShareLinks,
+    atoms: Option[Atoms],
+    publication: String,
+    internalPageCode: String,
+    contributorBio: Option[String],
+    starRating: Option[Int],
+    allowUserGeneratedContent: Boolean,
+    isExpired: Boolean,
+    productionOffice: Option[String],
+    tweets: Seq[Tweet],
+    showInRelated: Boolean,
+    cardStyle: CardStyle,
+    shouldHideAdverts: Boolean,
+    witnessAssignment: Option[String],
+    isbn: Option[String],
+    imdb: Option[String],
+    paFootballTeams: Seq[String],
+    javascriptReferences: Seq[JsObject],
+    wordCount: Int,
+    showByline: Boolean,
+    rawOpenGraphImage: Option[ImageAsset],
 ) {
-
 
   lazy val isBlog: Boolean = tags.blogs.nonEmpty
   lazy val isSeries: Boolean = tags.series.nonEmpty
@@ -83,9 +82,11 @@ final case class Content(
   lazy val isColumn = fields.displayHint.contains("column")
   lazy val isNumberedList = fields.displayHint.contains("numberedList")
   lazy val isSplash = fields.displayHint.contains("column") || fields.displayHint.contains("numberedList")
-  lazy val isImmersive = fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
-  lazy val isPaidContent: Boolean = tags.tags.exists{ tag => tag.id == "tone/advertisement-features" }
-  lazy val campaigns: List[Campaign] = _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
+  lazy val isImmersive =
+    fields.displayHint.contains("immersive") || isGallery || tags.isTheMinuteArticle || isPhotoEssay
+  lazy val isPaidContent: Boolean = tags.tags.exists { tag => tag.id == "tone/advertisement-features" }
+  lazy val campaigns: List[Campaign] =
+    _root_.commercial.targeting.CampaignAgent.getCampaignsForTags(tags.tags.map(_.id))
 
   lazy val isAmpSupportedArticleType: Boolean = (tags.isArticle && !tags.isLiveBlog) && !isImmersive && !tags.isQuiz
 
@@ -101,18 +102,19 @@ final case class Content(
   lazy val hasSingleContributor: Boolean = {
     (tags.contributors.headOption, trail.byline) match {
       case (Some(t), Some(b)) => tags.contributors.length == 1 && t.name == b
-      case _ => false
+      case _                  => false
     }
   }
 
   lazy val hasTonalHeaderByline: Boolean = {
     (cardStyle == Comment || cardStyle == Editorial || (cardStyle == SpecialReport && tags.isComment)) &&
-      hasSingleContributor &&
-      !metadata.contentType.contains(DotcomContentType.ImageContent)
+    hasSingleContributor &&
+    !metadata.contentType.contains(DotcomContentType.ImageContent)
   }
 
   lazy val hasBeenModified: Boolean =
-    new Duration(fields.firstPublicationDate.getOrElse(trail.webPublicationDate), fields.lastModified).isLongerThan(Duration.standardSeconds(60))
+    new Duration(fields.firstPublicationDate.getOrElse(trail.webPublicationDate), fields.lastModified)
+      .isLongerThan(Duration.standardSeconds(60))
 
   lazy val hasTonalHeaderIllustration: Boolean = tags.isLetters
 
@@ -129,24 +131,34 @@ final case class Content(
     val isOldNews = tags.tags.exists(_.id == "tone/news") &&
       trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
 
+    val isOldOpinion = tags.tags.exists(_.id == "tone/comment") &&
+      trail.webPublicationDate.isBefore(DateTime.now().minusYears(1))
+
     () match {
       case paid if isPaidContent => Paid
-      case commentObserver if tags.isComment && isFromTheObserver => ObserverOpinion
-      case comment if tags.isComment => GuardianOpinion
-      case live if tags.isLiveBlog => Live
-      case oldObserver if isOldNews && isFromTheObserver => ObserverOldContent(trail.webPublicationDate.getYear)
-      case old if isOldNews => GuardianOldContent(trail.webPublicationDate.getYear)
+      case oldcommentObserver if isOldOpinion && isFromTheObserver =>
+        CommentObserverOldContent(trail.webPublicationDate.getYear)
+      case oldComment if isOldOpinion                                  => CommentGuardianOldContent(trail.webPublicationDate.getYear)
+      case commentObserver if tags.isComment && isFromTheObserver      => ObserverOpinion
+      case comment if tags.isComment                                   => GuardianOpinion
+      case live if tags.isLiveBlog                                     => Live
+      case oldObserver if isOldNews && isFromTheObserver               => ObserverOldContent(trail.webPublicationDate.getYear)
+      case old if isOldNews                                            => GuardianOldContent(trail.webPublicationDate.getYear)
       case ratingObserver if starRating.isDefined && isFromTheObserver => ObserverStarRating(starRating.get)
-      case rating if starRating.isDefined => GuardianStarRating(starRating.get)
-      case observerDefault if isFromTheObserver => ObserverDefault
-      case default => GuardianDefault
+      case rating if starRating.isDefined                              => GuardianStarRating(starRating.get)
+      case observerDefault if isFromTheObserver                        => ObserverDefault
+      case default                                                     => GuardianDefault
     }
   }
 
   // read this before modifying: https://developers.facebook.com/docs/opengraph/howtos/maximizing-distribution-media-content#images
   lazy val openGraphImageProfile: ElementProfile = {
     val category = shareImageCategory
-    OpenGraphImage.forCategory(category, shouldIncludeOverlay = FacebookShareImageLogoOverlay.isSwitchedOn, shouldUpscale = true)
+    OpenGraphImage.forCategory(
+      category,
+      shouldIncludeOverlay = FacebookShareImageLogoOverlay.isSwitchedOn,
+      shouldUpscale = true,
+    )
   }
 
   lazy val openGraphImage: String = ImgSrc(openGraphImageOrFallbackUrl, openGraphImageProfile)
@@ -156,7 +168,9 @@ final case class Content(
     for {
       img <- rawOpenGraphImage
       width <- openGraphImageWidth
-    } yield Math.round(width / img.ratioDouble).toInt // Assume image resizing maintains aspect ratio to calculate height
+    } yield Math
+      .round(width / img.ratioDouble)
+      .toInt // Assume image resizing maintains aspect ratio to calculate height
 
   // URL of image to use in the twitter card. Image must be less than 1MB in size: https://dev.twitter.com/cards/overview
   lazy val twitterCardImage = {
@@ -165,15 +179,15 @@ final case class Content(
   }
 
   lazy val syndicationType: String = {
-    if(isBlog){
+    if (isBlog) {
       "blog"
-    } else if (tags.isGallery){
+    } else if (tags.isGallery) {
       "gallery"
-    } else if(tags.isPodcast){
+    } else if (tags.isPodcast) {
       "podcast"
-    } else if (tags.isAudio){
+    } else if (tags.isAudio) {
       "audio"
-    } else if(tags.isVideo){
+    } else if (tags.isVideo) {
       "video"
     } else {
       "article"
@@ -193,69 +207,79 @@ final case class Content(
     isChildrensBookBlog || isPaidContent
   }
 
-  lazy val sectionLabelLink : String = {
+  lazy val sectionLabelLink: String = {
     if (showSectionNotTag) {
       metadata.sectionId
-    } else tags.tags.find(_.isKeyword) match {
-      case Some(tag) => tag.id
-      case _ => ""
-    }
+    } else
+      tags.tags.find(_.isKeyword) match {
+        case Some(tag) => tag.id
+        case _         => ""
+      }
   }
 
-  lazy val sectionLabelName : String = {
-    if(this.showSectionNotTag) trail.sectionName else tags.tags.find(_.isKeyword) match {
-      case Some(tag) => tag.metadata.webTitle
-      case _ => ""
-    }
+  lazy val sectionLabelName: String = {
+    if (this.showSectionNotTag) trail.sectionName
+    else
+      tags.tags.find(_.isKeyword) match {
+        case Some(tag) => tag.metadata.webTitle
+        case _         => ""
+      }
   }
 
   lazy val blogOrSeriesTag: Option[Tag] = tags.blogOrSeriesTag
 
   lazy val seriesTag: Option[Tag] = {
-    tags.blogs.find{tag => tag.id != "commentisfree/commentisfree"}.orElse(tags.series.headOption)
+    tags.blogs.find { tag => tag.id != "commentisfree/commentisfree" }.orElse(tags.series.headOption)
   }
 
   val seriesName: Option[String] = tags.series.filterNot(_.id == "commentisfree/commentisfree").headOption.map(_.name)
 
-  lazy val linkCounts: LinkCounts = LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
+  lazy val linkCounts: LinkCounts =
+    LinkTo.countLinks(fields.body) + fields.standfirst.map(LinkTo.countLinks).getOrElse(LinkCounts.None)
 
-  lazy val mainMediaVideo: Option[nodes.Element] = Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").asScala.headOption
+  lazy val mainMediaVideo: Option[nodes.Element] =
+    Jsoup.parseBodyFragment(fields.main).body.getElementsByClass("element-video").asScala.headOption
 
   lazy val mainVideoCanonicalPath: Option[String] = mainMediaVideo.flatMap(video => {
     video.attr("data-canonical-url") match {
       case url if !url.isEmpty => Some(new URL(url).getPath.stripPrefix("/"))
-      case _ => None
+      case _                   => None
     }
   })
 
   lazy val hasMultipleVideosInPage: Boolean = mainMediaVideo match {
     case Some(_) => numberOfVideosInTheBody > 0
-    case None => numberOfVideosInTheBody > 1
+    case None    => numberOfVideosInTheBody > 1
   }
 
-  lazy val numberOfVideosInTheBody: Int = Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
+  lazy val numberOfVideosInTheBody: Int =
+    Jsoup.parseBodyFragment(fields.body).body().children().select("video[class=gu-video]").size()
 
   val legallySensitive: Boolean = fields.legallySensitive.getOrElse(false)
 
-  def javascriptConfig: Map[String, JsValue] = Map(
-    ("contentId", JsString(metadata.id)),
-    ("publication", JsString(publication)),
-    ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
-    ("pageCode", JsString(internalPageCode)),
-    ("isContent", JsBoolean(true)),
-    ("wordCount", JsNumber(wordCount)),
-    ("references", JsArray(javascriptReferences)),
-    ("showRelatedContent", JsBoolean(if (tags.isTheMinuteArticle) { false } else showInRelated && !legallySensitive)),
-    ("productionOffice", JsString(productionOffice.getOrElse(""))),
-    ("isImmersive", JsBoolean(isImmersive)),
-    ("isColumn", JsBoolean(isColumn)),
-    ("isNumberedList", JsBoolean(isNumberedList)),
-    ("isSplash", JsBoolean(isSplash)),
-    ("isPaidContent", JsBoolean(isPaidContent)),
-    ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
-    ("contributorBio", JsString(contributorBio.getOrElse("")))
-
-  )
+  def javascriptConfig: Map[String, JsValue] =
+    Map(
+      ("contentId", JsString(metadata.id)),
+      ("publication", JsString(publication)),
+      ("hasShowcaseMainElement", JsBoolean(elements.hasShowcaseMainElement)),
+      ("pageCode", JsString(internalPageCode)),
+      ("isContent", JsBoolean(true)),
+      ("wordCount", JsNumber(wordCount)),
+      ("references", JsArray(javascriptReferences)),
+      (
+        "showRelatedContent",
+        JsBoolean(if (tags.isTheMinuteArticle) { false }
+        else showInRelated && !legallySensitive),
+      ),
+      ("productionOffice", JsString(productionOffice.getOrElse(""))),
+      ("isImmersive", JsBoolean(isImmersive)),
+      ("isColumn", JsBoolean(isColumn)),
+      ("isNumberedList", JsBoolean(isNumberedList)),
+      ("isSplash", JsBoolean(isSplash)),
+      ("isPaidContent", JsBoolean(isPaidContent)),
+      ("campaigns", JsArray(campaigns.map(Campaign.toJson))),
+      ("contributorBio", JsString(contributorBio.getOrElse(""))),
+    )
 
   // Dynamic Meta Data may appear on the page for some content. This should be used for conditional metadata.
   def conditionalConfig: Map[String, JsValue] = {
@@ -269,22 +293,23 @@ final case class Content(
     val cricketMeta = if (tags.isCricketLiveBlog && conf.switches.Switches.CricketScoresSwitch.isSwitchedOn) {
       List(
         CricketTeams.teamFor(this).map(_.wordsForUrl).map(wordsForUrl => "cricketTeam" -> JsString(wordsForUrl)),
-        Some(("cricketMatchDate", JsString(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd"))))
+        Some(("cricketMatchDate", JsString(trail.webPublicationDate.withZone(DateTimeZone.UTC).toString("yyyy-MM-dd")))),
       )
     } else Nil
 
-    val seriesMeta = tags.series.filterNot{ _.id == "commentisfree/commentisfree"} match {
+    val seriesMeta = tags.series.filterNot { _.id == "commentisfree/commentisfree" } match {
       case Nil => Nil
-      case allTags@(mainSeries :: _) => List(
-        Some("series", JsString(mainSeries.name)),
-        Some("seriesId", JsString(mainSeries.id)),
-        Some("seriesTags", JsString(allTags.map(_.name).mkString(",")))
-      )
+      case allTags @ (mainSeries :: _) =>
+        List(
+          Some("series", JsString(mainSeries.name)),
+          Some("seriesId", JsString(mainSeries.id)),
+          Some("seriesTags", JsString(allTags.map(_.name).mkString(","))),
+        )
     }
 
     // Tracking tags are used for things like commissioning desks.
     val trackingMeta = tags.tracking match {
-      case Nil => None
+      case Nil          => None
       case trackingTags => Some("trackingNames", JsString(trackingTags.map(_.name).mkString(",")))
     }
 
@@ -305,18 +330,18 @@ final case class Content(
     // But if we are in the super sticky banner campaign, we must ignore them!
     val canDisableStickyTopBanner =
       metadata.shouldHideHeaderAndTopAds ||
-      isPaidContent ||
-      metadata.contentType.exists(c => c == DotcomContentType.Interactive || c == DotcomContentType.Crossword)
+        isPaidContent ||
+        metadata.contentType.exists(c => c == DotcomContentType.Interactive || c == DotcomContentType.Crossword)
 
     // These conditions must always disable sticky banner.
     val alwaysDisableStickyTopBanner =
       shouldHideAdverts ||
-      metadata.sectionId == "childrens-books-site"
+        metadata.sectionId == "childrens-books-site"
 
     val maybeDisableSticky = canDisableStickyTopBanner match {
-      case true => Some("disableStickyTopBanner", JsBoolean(true))
-      case _ if alwaysDisableStickyTopBanner  => Some("disableStickyTopBanner", JsBoolean(true))
-      case _ => None
+      case true                              => Some("disableStickyTopBanner", JsBoolean(true))
+      case _ if alwaysDisableStickyTopBanner => Some("disableStickyTopBanner", JsBoolean(true))
+      case _                                 => None
     }
 
     val meta: List[Option[(String, JsValue)]] = List(
@@ -325,7 +350,7 @@ final case class Content(
       trackingMeta,
       atomsMeta,
       atomTypesMeta,
-      maybeDisableSticky
+      maybeDisableSticky,
     ) ++ cricketMeta ++ seriesMeta
     meta.flatten.toMap
   }
@@ -333,17 +358,18 @@ final case class Content(
   val opengraphProperties: Map[String, String] = Map(
     "og:title" -> StripHtmlTagsAndUnescapeEntities(metadata.webTitle),
     "og:description" -> fields.trailText.map(StripHtmlTagsAndUnescapeEntities(_)).getOrElse(""),
-    "og:image" -> openGraphImage
+    "og:image" -> openGraphImage,
   ) ++ openGraphImageWidth.map("og:image:width" -> _.toString).toMap ++
     openGraphImageHeight.map("og:image:height" -> _.toString).toMap
 
   val twitterProperties: Map[String, String] = Map(
-    "twitter:app:url:googleplay" -> metadata.webUrl.replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
+    "twitter:app:url:googleplay" -> metadata.webUrl
+      .replaceFirst("^[a-zA-Z]*://", "guardian://"), //replace current scheme with guardian mobile app scheme
     "twitter:image" -> twitterCardImage,
-    "twitter:card" -> "summary_large_image"
+    "twitter:card" -> "summary_large_image",
   ) ++ contributorTwitterHandle.map(handle => "twitter:creator" -> s"@$handle").toList
 
-  val quizzes: Seq[Quiz] = atoms.map(_.quizzes).getOrElse(Nil)
+  val quizzes: Seq[QuizAtom] = atoms.map(_.quizzes).getOrElse(Nil)
   val media: Seq[MediaAtom] = atoms.map(_.media).getOrElse(Nil)
 
   lazy val submetaLinks: SubMetaLinks =
@@ -357,11 +383,11 @@ object Content {
 
     apiContent match {
       case _ if apiContent.isLiveBlog || apiContent.isArticle || apiContent.isSudoku => Article.make(content)
-      case _ if apiContent.isGallery => Gallery.make(content)
-      case _ if apiContent.isVideo => Video.make(content)
-      case _ if apiContent.isAudio => Audio.make(content)
-      case _ if apiContent.isImageContent => ImageContent.make(content)
-      case _ => GenericContent(content)
+      case _ if apiContent.isGallery                                                 => Gallery.make(content)
+      case _ if apiContent.isVideo                                                   => Video.make(content)
+      case _ if apiContent.isAudio                                                   => Audio.make(content)
+      case _ if apiContent.isImageContent                                            => ImageContent.make(content)
+      case _                                                                         => GenericContent(content)
     }
   }
 
@@ -375,7 +401,8 @@ object Content {
     val sharelinks = ShareLinks(tags, fields, metadata)
     val atoms = Atoms.make(apiContent, sharelinks.pageShares)
     val apifields = apiContent.fields
-    val references: Map[String,String] = apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
+    val references: Map[String, String] =
+      apiContent.references.map(ref => (ref.`type`, Reference.split(ref.id)._2)).toMap
     val cardStyle: fapiutils.CardStyle = CardStylePicker(apiContent, TrailMetaData.empty)
 
     Content(
@@ -394,8 +421,10 @@ object Content {
       allowUserGeneratedContent = apifields.flatMap(_.allowUgc).getOrElse(false),
       isExpired = apiContent.isExpired.getOrElse(false),
       productionOffice = apifields.flatMap(_.productionOffice.map(_.name)),
-      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map{ tweet =>
-        val images = tweet.assets.filter(_.`type`.name == "Image").flatMap(asset => asset.typeData.flatMap(_.secureFile).orElse(asset.file))
+      tweets = apiContent.elements.getOrElse(Nil).filter(_.`type`.name == "Tweet").map { tweet =>
+        val images = tweet.assets
+          .filter(_.`type`.name == "Image")
+          .flatMap(asset => asset.typeData.flatMap(_.secureFile).orElse(asset.file))
         Tweet(tweet.id, images)
       },
       showInRelated = apifields.flatMap(_.showInRelatedContent).getOrElse(false),
@@ -404,16 +433,19 @@ object Content {
       witnessAssignment = references.get("witness-assignment"),
       isbn = references.get("isbn"),
       imdb = references.get("imdb"),
-      paFootballTeams = apiContent.references.filter(ref => ref.id.contains("pa-football-team")).map(ref => ref.id.split("/").last).distinct,
+      paFootballTeams = apiContent.references
+        .filter(ref => ref.id.contains("pa-football-team"))
+        .map(ref => ref.id.split("/").last)
+        .distinct,
       javascriptReferences = apiContent.references.map(ref => Reference.toJavaScript(ref.id)),
       wordCount = Jsoup.clean(fields.body, Whitelist.none()).split("\\s+").length,
-      showByline = fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
-      rawOpenGraphImage =
-        FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
-          .toOption(trail.trailPicture.flatMap(_.largestImage))
-          .flatten
-          .orElse(elements.mainPicture.flatMap(_.images.largestImage))
-          .orElse(trail.trailPicture.flatMap(_.largestImage))
+      showByline =
+        fapiutils.ResolvedMetaData.fromContentAndTrailMetaData(apiContent, TrailMetaData.empty, cardStyle).showByline,
+      rawOpenGraphImage = FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
+        .toOption(trail.trailPicture.flatMap(_.largestImage))
+        .flatten
+        .orElse(elements.mainPicture.flatMap(_.images.largestImage))
+        .orElse(trail.trailPicture.flatMap(_.largestImage)),
     )
   }
 }
@@ -436,20 +468,27 @@ object ArticleSchemas {
 object Article {
 
   private def copyCommercial(content: Content) = {
-    content.commercial.copy(
-      hasInlineMerchandise = content.isbn.isDefined || content.commercial.hasInlineMerchandise)
+    content.commercial.copy(hasInlineMerchandise = content.isbn.isDefined || content.commercial.hasInlineMerchandise)
   }
 
-  private def copyMetaData(content: Content, commercial: Commercial, lightbox: GenericLightbox, trail: Trail, tags: Tags) = {
+  private def copyMetaData(
+      content: Content,
+      commercial: Commercial,
+      lightbox: GenericLightbox,
+      trail: Trail,
+      tags: Tags,
+  ) = {
 
-    val contentType: DotcomContentType = if (content.tags.isLiveBlog) DotcomContentType.LiveBlog else DotcomContentType.Article
+    val contentType: DotcomContentType =
+      if (content.tags.isLiveBlog) DotcomContentType.LiveBlog else DotcomContentType.Article
     val section = content.metadata.sectionId
     val fields = content.fields
     val bookReviewIsbn = content.isbn.map { i: String => Map("isbn" -> JsString(i)) }.getOrElse(Map())
 
     // we don't serve pre-roll if there are multiple videos in an article
     // `headOption` as the video could be main media or a regular embed, so just get the first video
-    val videoDuration = content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNull)
+    val videoDuration =
+      content.elements.videos.headOption.map { v => JsNumber(v.videos.duration) }.getOrElse(JsNumber(0))
 
     val javascriptConfig: Map[String, JsValue] = Map(
       ("isLiveBlog", JsBoolean(content.tags.isLiveBlog)),
@@ -466,7 +505,7 @@ object Article {
       ("isNumberedList", JsBoolean(content.isNumberedList)),
       ("isSplash", JsBoolean(content.isSplash)),
       ("isSensitive", JsBoolean(fields.sensitive.getOrElse(false))),
-      "videoDuration" -> videoDuration
+      "videoDuration" -> videoDuration,
     ) ++ bookReviewIsbn ++ AtomProperties(content.atoms)
 
     val author = if (tags.contributors.nonEmpty) {
@@ -482,7 +521,7 @@ object Article {
       ("article:tag", tags.keywords.map(_.name).mkString(",")),
       ("article:section", trail.sectionName),
       ("article:publisher", "https://www.facebook.com/theguardian"),
-      ("article:author", authorOrPA(author))
+      ("article:author", authorOrPA(author)),
     )
 
     content.metadata.copy(
@@ -492,8 +531,9 @@ object Article {
       iosType = Some("Article"),
       javascriptConfigOverrides = javascriptConfig,
       opengraphPropertiesOverrides = opengraphProperties,
-      shouldHideHeaderAndTopAds = (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
-      contentWithSlimHeader = content.isImmersive && content.tags.isArticle
+      shouldHideHeaderAndTopAds =
+        (content.tags.isTheMinuteArticle || (content.isImmersive && (content.elements.hasMainMedia || content.fields.main.nonEmpty))) && content.tags.isArticle,
+      contentWithSlimHeader = content.isImmersive && content.tags.isArticle,
     )
   }
 
@@ -511,7 +551,8 @@ object Article {
       id = content.metadata.id,
       headline = trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
-      standfirst = fields.standfirst)
+      standfirst = fields.standfirst,
+    )
     val lightbox = GenericLightbox(elements, fields, trail, lightboxProperties)
     val metadata = copyMetaData(content, commercial, lightbox, trail, tags)
     val sharelinks = content.sharelinks
@@ -520,7 +561,7 @@ object Article {
       trail = trail,
       commercial = commercial,
       metadata = metadata,
-      sharelinks = sharelinks
+      sharelinks = sharelinks,
     )
 
     Article(contentOverrides, lightboxProperties)
@@ -528,13 +569,12 @@ object Article {
 
   private def authorOrPA: String => String = {
     case "Press Association" => "https://www.facebook.com/PAMediaGroupUK/"
-    case otherwise => otherwise
+    case otherwise           => otherwise
   }
 }
 
-final case class Article (
-  override val content: Content,
-  lightboxProperties: GenericLightboxProperties) extends ContentType {
+final case class Article(override val content: Content, lightboxProperties: GenericLightboxProperties)
+    extends ContentType {
 
   val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
   val isLiveBlog: Boolean = content.tags.isLiveBlog && content.fields.blocks.nonEmpty
@@ -544,12 +584,17 @@ final case class Article (
   val isColumn: Boolean = content.isColumn
   val isNumberedList: Boolean = content.isNumberedList
   val isSplash: Boolean = content.isSplash
-  lazy val hasVideoAtTop: Boolean = soupedBody.body().children().asScala.headOption
+  lazy val hasVideoAtTop: Boolean = soupedBody
+    .body()
+    .children()
+    .asScala
+    .headOption
     .exists(e => e.hasClass("gu-video") && e.tagName() == "video")
 
   lazy val hasSupporting: Boolean = {
     val supportingClasses = Set("element--showcase", "element--supporting", "element--thumbnail")
-    val leftColElements = soupedBody.body().select("body > *").asScala.find(_.classNames.asScala.intersect(supportingClasses).nonEmpty)
+    val leftColElements =
+      soupedBody.body().select("body > *").asScala.find(_.classNames.asScala.intersect(supportingClasses).nonEmpty)
     leftColElements.isDefined
   }
 
@@ -565,8 +610,7 @@ object Audio {
 
     val contentType = DotcomContentType.Audio
     val section = content.metadata.sectionId
-    val javascriptConfig: Map[String, JsValue] = Map(
-      "isPodcast" -> JsBoolean(content.tags.isPodcast))
+    val javascriptConfig: Map[String, JsValue] = Map("isPodcast" -> JsBoolean(content.tags.isPodcast))
 
     val opengraphProperties = Map(
       // Not using the og:video properties here because we want end-users to visit the guardian website
@@ -575,7 +619,7 @@ object Audio {
       "article:published_time" -> content.trail.webPublicationDate.toString,
       "article:modified_time" -> content.fields.lastModified.toString,
       "article:section" -> content.trail.sectionName,
-      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(","),
     )
 
     val metadata = content.metadata.copy(
@@ -583,21 +627,24 @@ object Audio {
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("https://schema.org/AudioObject"),
       javascriptConfigOverrides = javascriptConfig,
-      opengraphPropertiesOverrides = opengraphProperties
+      opengraphPropertiesOverrides = opengraphProperties,
     )
 
     val contentOverrides = content.copy(
-      metadata = metadata
+      metadata = metadata,
     )
 
     Audio(contentOverrides)
   }
 
-  def acastUrl(player: AudioPlayer, url: String, isAdFree: Boolean): String = if (player.audio.tags.isPodcast) acastUrl(url, isAdFree) else url
-  def acastUrl(url: String, isAdFree: Boolean): String = if (!isAdFree && conf.switches.Switches.Acast.isSwitchedOn) "https://flex.acast.com/" + url.replace("https://", "") else url
+  def acastUrl(player: AudioPlayer, url: String, isAdFree: Boolean): String =
+    if (player.audio.tags.isPodcast) acastUrl(url, isAdFree) else url
+  def acastUrl(url: String, isAdFree: Boolean): String =
+    if (!isAdFree && conf.switches.Switches.Acast.isSwitchedOn) "https://flex.acast.com/" + url.replace("https://", "")
+    else url
 }
 
-final case class Audio (override val content: Content) extends ContentType {
+final case class Audio(override val content: Content) extends ContentType {
 
   lazy val downloadUrl: Option[String] = elements.mainAudio
     .flatMap(_.audio.encodings.find(_.format == "audio/mpeg").map(_.url))
@@ -614,7 +661,8 @@ final case class Audio (override val content: Content) extends ContentType {
 object AtomProperties {
 
   def hasYouTubeAtom(atoms: Option[Atoms]): Boolean = {
-    val hasYouTubeAtom: Option[Boolean] = atoms.map(_.media.exists(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))
+    val hasYouTubeAtom: Option[Boolean] =
+      atoms.map(_.media.exists(_.assets.exists(_.platform == MediaAssetPlatform.Youtube)))
     hasYouTubeAtom.getOrElse(false)
   }
 
@@ -635,14 +683,17 @@ object Video {
       "isPodcast" -> JsBoolean(content.tags.isPodcast),
       "source" -> JsString(source.getOrElse("")),
       "embeddable" -> JsBoolean(elements.videos.find(_.properties.isMain).exists(_.videos.embeddable)),
-      "videoDuration" -> elements.videos.find(_.properties.isMain).map{ v => JsNumber(v.videos.duration)}.getOrElse(JsNull)) ++ AtomProperties(content.atoms)
-
+      "videoDuration" -> elements.videos
+        .find(_.properties.isMain)
+        .map { v => JsNumber(v.videos.duration) }
+        .getOrElse(JsNull),
+    ) ++ AtomProperties(content.atoms)
 
     val optionalOpengraphProperties =
-      if(content.metadata.webUrl.startsWith("https://"))
+      if (content.metadata.webUrl.startsWith("https://"))
         Map(
           "og:video:url" -> content.metadata.webUrl,
-          "og:video:secure_url" -> content.metadata.webUrl
+          "og:video:secure_url" -> content.metadata.webUrl,
         )
       else Map.empty
     val opengraphProperties = Map(
@@ -652,7 +703,7 @@ object Video {
       "article:published_time" -> content.trail.webPublicationDate.toString,
       "article:modified_time" -> content.fields.lastModified.toString,
       "article:section" -> content.trail.sectionName,
-      "article:tag" -> content.tags.keywords.map(_.name).mkString(",")
+      "article:tag" -> content.tags.keywords.map(_.name).mkString(","),
     ) ++ optionalOpengraphProperties
 
     val metadata = content.metadata.copy(
@@ -660,51 +711,54 @@ object Video {
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
       schemaType = Some("http://schema.org/VideoObject"),
       javascriptConfigOverrides = javascriptConfig,
-      opengraphPropertiesOverrides = opengraphProperties
+      opengraphPropertiesOverrides = opengraphProperties,
     )
 
     val contentOverrides = content.copy(
-      metadata = metadata
+      metadata = metadata,
     )
 
     Video(contentOverrides, source, content.media.headOption)
   }
 }
 
-final case class Video (
-  override val content: Content,
-  source: Option[String],
-  mediaAtom: Option[MediaAtom] ) extends ContentType {
-
+final case class Video(override val content: Content, source: Option[String], mediaAtom: Option[MediaAtom])
+    extends ContentType {
 
   lazy val bylineWithSource: Option[String] = {
     val videoSource: Option[String] = source.orElse(mediaAtom.flatMap(_.source))
 
-    def prettySource(source: String): String = source match {
-      case "guardian.co.uk" => "theguardian.com"
-      case other if other.nonEmpty => s"Source: $other"
-    }
+    def prettySource(source: String): String =
+      source match {
+        case "guardian.co.uk"        => "theguardian.com"
+        case other if other.nonEmpty => s"Source: $other"
+      }
 
     (trail.byline, videoSource) match {
       case (Some(b), Some(s)) if b.nonEmpty && s.nonEmpty => Some(s"$b, ${prettySource(s)}")
-      case (Some(b), _) if b.nonEmpty => Some(b)
-      case (_, Some(s)) if s.nonEmpty => Some(prettySource(s))
-      case _ => None
+      case (Some(b), _) if b.nonEmpty                     => Some(b)
+      case (_, Some(s)) if s.nonEmpty                     => Some(prettySource(s))
+      case _                                              => None
     }
   }
 
   lazy val videoLinkText: String = {
     val suffixVariations = List(
-        " - video", " – video",
-        " - video interview", " – video interview",
-        " - video interviews"," – video interviews" )
+      " - video",
+      " – video",
+      " - video interview",
+      " – video interview",
+      " - video interviews",
+      " – video interviews",
+    )
     suffixVariations.fold(trail.headline.trim) { (str, suffix) => str.stripSuffix(suffix) }
   }
 
-  def sixteenByNineMetaImage: Option[String] = for {
-    imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
-    videoProfile <- Video1280.bestSrcFor(imageMedia)
-  } yield videoProfile
+  def sixteenByNineMetaImage: Option[String] =
+    for {
+      imageMedia <- mediaAtom.flatMap(_.posterImage) orElse content.elements.thumbnail.map(_.images)
+      videoProfile <- Video1280.bestSrcFor(imageMedia)
+    } yield videoProfile
 }
 
 object Gallery {
@@ -720,14 +774,14 @@ object Gallery {
       id = id,
       headline = content.trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
-      standfirst = fields.standfirst)
+      standfirst = fields.standfirst,
+    )
     val lightbox = GalleryLightbox(elements, tags, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
       "gallerySize" -> JsNumber(lightbox.size),
-      "lightboxImages" -> lightbox.javascriptConfig
+      "lightboxImages" -> lightbox.javascriptConfig,
     )
-    val trail = content.trail.copy(
-      trailPicture = elements.thumbnail.map(_.images))
+    val trail = content.trail.copy(trailPicture = elements.thumbnail.map(_.images))
 
     val openGraph: Map[String, String] = Map(
       "og:type" -> "article",
@@ -735,7 +789,7 @@ object Gallery {
       "article:modified_time" -> content.fields.lastModified.toString,
       "article:section" -> trail.sectionName,
       "article:tag" -> tags.keywords.map(_.name).mkString(","),
-      "article:author" -> tags.contributors.map(_.metadata.webUrl).mkString(",")
+      "article:author" -> tags.contributors.map(_.metadata.webUrl).mkString(","),
     )
 
     val metadata = content.metadata.copy(
@@ -746,26 +800,24 @@ object Gallery {
       javascriptConfigOverrides = javascriptConfig,
       twitterPropertiesOverrides = Map("twitter:title" -> fields.linkText),
       opengraphPropertiesOverrides = openGraph,
-      contentWithSlimHeader = true
+      contentWithSlimHeader = true,
     )
 
     val contentOverrides = content.copy(
       metadata = metadata,
       trail = trail,
-      rawOpenGraphImage =
-        FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
-          .toOption(trail.trailPicture.flatMap(_.largestImage))
-          .flatten
-          .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage))
+      rawOpenGraphImage = FacebookShareUseTrailPicFirstSwitch.isSwitchedOn
+        .toOption(trail.trailPicture.flatMap(_.largestImage))
+        .flatten
+        .orElse(lightbox.galleryImages.headOption.flatMap(_.images.largestImage)),
     )
 
     Gallery(contentOverrides, lightboxProperties)
   }
 }
 
-final case class Gallery(
-  override val content: Content,
-  lightboxProperties: GalleryLightboxProperties) extends ContentType {
+final case class Gallery(override val content: Content, lightboxProperties: GalleryLightboxProperties)
+    extends ContentType {
 
   val lightbox = GalleryLightbox(content.elements, content.tags, lightboxProperties)
 
@@ -773,16 +825,17 @@ final case class Gallery(
 }
 
 case class GalleryLightboxProperties(
-  id: String,
-  headline: String,
-  shouldHideAdverts: Boolean,
-  standfirst: Option[String])
+    id: String,
+    headline: String,
+    shouldHideAdverts: Boolean,
+    standfirst: Option[String],
+)
 
 case class GalleryLightbox(
-  elements: Elements,
-  tags: Tags,
-  properties: GalleryLightboxProperties
-){
+    elements: Elements,
+    tags: Tags,
+    properties: GalleryLightboxProperties,
+) {
   def imageContainer(index: Int): ImageElement = galleryImages(index)
 
   private val facebookImage: ElementProfile = {
@@ -801,51 +854,60 @@ case class GalleryLightbox(
   val landscapes = largestCrops.filter(i => i.width > i.height).sortBy(_.index)
   val portraits = largestCrops.filter(i => i.width < i.height).sortBy(_.index)
   val isInPicturesSeries = tags.tags.exists(_.id == "lifeandstyle/series/in-pictures")
-  lazy val containsAffiliateableLinks: Boolean = largestCrops.flatMap(_.caption.map(AffiliateLinksCleaner.stringContainsAffiliateableLinks)).contains(true)
+  lazy val containsAffiliateableLinks: Boolean =
+    largestCrops.flatMap(_.caption.map(AffiliateLinksCleaner.stringContainsAffiliateableLinks)).contains(true)
 
   val javascriptConfig: JsObject = {
     val imageJson = for {
       container <- galleryImages
       img <- container.images.largestEditorialCrop
     } yield {
-      JsObject(Seq(
-        "caption" -> JsString(img.caption.getOrElse("")),
-        "credit" -> JsString(img.credit.getOrElse("")),
-        "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
-        "sizes" -> JsString(GalleryMedia.lightbox.sizes),
-        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-        "role" -> JsString(img.role.toString)
-      ))
+      JsObject(
+        Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
+          "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
+          "sizes" -> JsString(GalleryMedia.lightbox.sizes),
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+          "role" -> JsString(img.role.toString),
+        ),
+      )
     }
-    JsObject(Seq(
-      "id" -> JsString(properties.id),
-      "headline" -> JsString(properties.headline),
-      "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
-      "standfirst" -> JsString(properties.standfirst.getOrElse("")),
-      "images" -> JsArray(imageJson)
-    ))
+    JsObject(
+      Seq(
+        "id" -> JsString(properties.id),
+        "headline" -> JsString(properties.headline),
+        "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
+        "standfirst" -> JsString(properties.standfirst.getOrElse("")),
+        "images" -> JsArray(imageJson),
+      ),
+    )
   }
 }
 
 case class GenericLightboxProperties(
-  id: String,
-  headline: String,
-  shouldHideAdverts: Boolean,
-  standfirst: Option[String],
-  lightboxableCutoffWidth: Int,
-  includeBodyImages: Boolean)
+    id: String,
+    headline: String,
+    shouldHideAdverts: Boolean,
+    standfirst: Option[String],
+    lightboxableCutoffWidth: Int,
+    includeBodyImages: Boolean,
+)
 
 case class GenericLightbox(
-  elements: Elements,
-  fields: Fields,
-  trail: Trail,
-  properties: GenericLightboxProperties
+    elements: Elements,
+    fields: Fields,
+    trail: Trail,
+    properties: GenericLightboxProperties,
 ) {
   lazy val mainFiltered = elements.mainPicture
-    .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth).toSeq
-  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth)
+    .filter(_.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth)
+    .toSeq
+  lazy val bodyFiltered: Seq[ImageElement] = elements.bodyImages.filter(
+    _.images.largestEditorialCrop.map(_.width).getOrElse(1) > properties.lightboxableCutoffWidth,
+  )
 
   val lightboxImages = if (properties.includeBodyImages) mainFiltered ++ bodyFiltered else mainFiltered
 
@@ -856,32 +918,34 @@ case class GenericLightbox(
       container <- lightboxImages
       img <- container.images.largestEditorialCrop
     } yield {
-      JsObject(Seq(
-        "caption" -> JsString(img.caption.getOrElse("")),
-        "credit" -> JsString(img.credit.getOrElse("")),
-        "displayCredit" -> JsBoolean(img.displayCredit),
-        "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
-        "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
-        "sizes" -> JsString(GalleryMedia.lightbox.sizes),
-        "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
-        "role" -> JsString(img.role.toString),
-        "parentContentId" -> JsString(properties.id),
-        "id" ->JsString(properties.id) //duplicated to simplify lightbox logic
-      ))
+      JsObject(
+        Seq(
+          "caption" -> JsString(img.caption.getOrElse("")),
+          "credit" -> JsString(img.credit.getOrElse("")),
+          "displayCredit" -> JsBoolean(img.displayCredit),
+          "src" -> JsString(Item700.bestSrcFor(container.images).getOrElse("")),
+          "srcsets" -> JsString(ImgSrc.srcset(container.images, GalleryMedia.lightbox)),
+          "sizes" -> JsString(GalleryMedia.lightbox.sizes),
+          "ratio" -> Try(JsNumber(img.width.toDouble / img.height.toDouble)).getOrElse(JsNumber(1)),
+          "role" -> JsString(img.role.toString),
+          "parentContentId" -> JsString(properties.id),
+          "id" -> JsString(properties.id), //duplicated to simplify lightbox logic
+        ),
+      )
     }
-    JsObject(Seq(
-      "id" -> JsString(properties.id),
-      "headline" -> JsString(properties.headline),
-      "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
-      "standfirst" -> JsString(properties.standfirst.getOrElse("")),
-      "images" -> JsArray(imageJson)
-    ))
+    JsObject(
+      Seq(
+        "id" -> JsString(properties.id),
+        "headline" -> JsString(properties.headline),
+        "shouldHideAdverts" -> JsBoolean(properties.shouldHideAdverts),
+        "standfirst" -> JsString(properties.standfirst.getOrElse("")),
+        "images" -> JsArray(imageJson),
+      ),
+    )
   }
 }
 
-final case class Interactive(
-  override val content: Content,
-  maybeBody: Option[String]) extends ContentType {
+final case class Interactive(override val content: Content, maybeBody: Option[String]) extends ContentType {
 
   lazy val fallbackEl = {
     val noscriptEls = Jsoup.parseBodyFragment(fields.body).getElementsByTag("noscript")
@@ -906,15 +970,13 @@ object Interactive {
     val metadata = content.metadata.copy(
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
-      twitterPropertiesOverrides = Map( "twitter:title" -> fields.linkText ),
-      contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff
+      twitterPropertiesOverrides = Map("twitter:title" -> fields.linkText),
+      contentWithSlimHeader = InteractiveHeaderSwitch.isSwitchedOff,
     )
     val contentOverrides = content.copy(
-      metadata = metadata
+      metadata = metadata,
     )
-    Interactive(
-      contentOverrides,
-      maybeBody = apiContent.fields.flatMap(_.body))
+    Interactive(contentOverrides, maybeBody = apiContent.fields.flatMap(_.body))
   }
 }
 
@@ -930,27 +992,27 @@ object ImageContent {
       id = id,
       headline = content.trail.headline,
       shouldHideAdverts = content.shouldHideAdverts,
-      standfirst = fields.standfirst)
+      standfirst = fields.standfirst,
+    )
     val lightbox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
     val javascriptConfig: Map[String, JsValue] = Map(
-      "lightboxImages" -> lightbox.javascriptConfig
+      "lightboxImages" -> lightbox.javascriptConfig,
     )
     val metadata = content.metadata.copy(
       contentType = Some(contentType),
       adUnitSuffix = section + "/" + contentType.name.toLowerCase,
-      javascriptConfigOverrides = javascriptConfig
+      javascriptConfigOverrides = javascriptConfig,
     )
 
     val contentOverrides = content.copy(
-      metadata = metadata
+      metadata = metadata,
     )
     ImageContent(contentOverrides, lightboxProperties)
   }
 }
 
-final case class ImageContent(
-  override val content: Content,
-  lightboxProperties: GenericLightboxProperties ) extends ContentType {
+final case class ImageContent(override val content: Content, lightboxProperties: GenericLightboxProperties)
+    extends ContentType {
 
   val lightBox = GenericLightbox(content.elements, content.fields, content.trail, lightboxProperties)
 }
@@ -959,14 +1021,14 @@ object CrosswordContent {
   def make(crossword: CrosswordData, apicontent: contentapi.Content): CrosswordContent = {
 
     val content = Content(apicontent)
-    val contentType= DotcomContentType.Crossword
+    val contentType = DotcomContentType.Crossword
 
     val metadata = content.metadata.copy(
       id = crossword.id,
       section = Some(SectionId.fromId("crosswords")),
       webTitle = crossword.name,
       contentType = Some(contentType),
-      iosType = None
+      iosType = None,
     )
 
     val contentOverrides = content.content.copy(metadata = metadata)
@@ -975,9 +1037,7 @@ object CrosswordContent {
   }
 }
 
-final case class CrosswordContent(
-  override val content: Content,
-  crossword: CrosswordData ) extends ContentType
+final case class CrosswordContent(override val content: Content, crossword: CrosswordData) extends ContentType
 
 case class Tweet(id: String, images: Seq[String]) {
   val firstImage: Option[String] = images.headOption

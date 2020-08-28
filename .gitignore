@@ -33,6 +33,8 @@ target
 /*/bin/
 dist
 
+nginx/Brewfile.lock.json
+
 RUNNING_PID
 
 *.sublime-*

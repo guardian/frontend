@@ -16,25 +16,28 @@ object DiscussionApiHttpRecorder extends DefaultHttpRecorder {
 }
 
 class DiscussionApiStub(val wsClient: WSClient) extends DiscussionApiLike {
-  protected val clientHeaderValue: String =""
+  protected val clientHeaderValue: String = ""
 
   protected val apiRoot = Configuration.discussion.apiRoot
 
   protected val apiTimeout = conf.Configuration.discussion.apiTimeout
 
   override protected def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext) =
-    DiscussionApiHttpRecorder.load(url, Map.empty)(wsClient.url(url).withRequestTimeout(2.seconds).get())(executionContext)
+    DiscussionApiHttpRecorder
+      .load(url, Map.empty)(wsClient.url(url).withRequestTimeout(2.seconds).get())(executionContext)
 }
 
-class DiscussionTestSuite extends Suites (
-  new CommentPageControllerTest,
-  new controllers.DiscussionApiPluginIntegrationTest,
-  new controllers.ProfileActivityControllerTest,
-  new discussion.model.CommentTest,
-  new discussion.model.DiscussionKeyTest,
-  new discussion.DiscussionApiTest,
-  new CommentCountControllerTest,
-  new ProfileTest
-) with SingleServerSuite {
+class DiscussionTestSuite
+    extends Suites(
+      new CommentPageControllerTest,
+      new controllers.DiscussionApiPluginIntegrationTest,
+      new controllers.ProfileActivityControllerTest,
+      new discussion.model.CommentTest,
+      new discussion.model.DiscussionKeyTest,
+      new discussion.DiscussionApiTest,
+      new CommentCountControllerTest,
+      new ProfileTest,
+    )
+    with SingleServerSuite {
   override lazy val port: Int = 19008
 }

@@ -1,14 +1,7 @@
 // @flow
-import { getAdConsentState as _getAdConsentState } from 'common/modules/commercial/ad-prefs.lib';
 import config from 'lib/config';
 
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-
-const getAdConsentState: any = _getAdConsentState;
-
-jest.mock('common/modules/commercial/ad-prefs.lib', () => ({
-    getAdConsentState: jest.fn(),
-}));
 
 type SetupParams = {
     consent: boolean | null,
@@ -22,7 +15,6 @@ describe('Facebook tracking pixel', () => {
     });
 
     const setup = (params: SetupParams) => {
-        getAdConsentState.mockReturnValueOnce(params.consent);
         config.set('switches.facebookTrackingPixel', params.switchedOn);
     };
 
@@ -38,11 +30,14 @@ describe('Facebook tracking pixel', () => {
         expect(result.shouldRun).toBe(true);
     });
 
-    it('should send correct "netid" param', () => {
+    it('should send correct "netid" param and sourcepointId', () => {
         setup({ consent: true, switchedOn: true });
         const result = fbPixel();
         expect(result.url).toBe(
             'https://www.facebook.com/tr?id=test-account-id&ev=PageView&noscript=1'
+        );
+        expect(result.sourcepointId).toBe(
+            '5e7e1298b8e05c54a85c52d2'
         );
     });
 

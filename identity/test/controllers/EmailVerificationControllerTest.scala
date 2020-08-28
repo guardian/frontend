@@ -1,29 +1,30 @@
 package controllers
 
 import actions.AuthenticatedActions
-import com.gu.identity.cookie.GuUCookieData
 import com.gu.identity.model.{StatusFields, User}
-import idapiclient.responses.Error
+import idapiclient.responses.{CookieResponse, CookiesResponse, Error}
 import idapiclient.{Auth, IdApiClient, ScGuU, TrackingData}
 import model.PhoneNumbers
+import org.joda.time.DateTime
 import org.mockito.AdditionalAnswers.returnsFirstArg
 import org.mockito.Matchers.{any, anyString, anyVararg, eq => eql}
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
 import org.scalatest.{Matchers, path}
-import play.api.mvc.{ControllerComponents, Request, RequestHeader}
+import play.api.mvc.{ControllerComponents, Cookie, Request, RequestHeader}
 import play.api.test.Helpers._
 import services._
 import test._
 
 import scala.concurrent.Future
 
-class EmailVerificationControllerTest extends path.FreeSpec
-  with Matchers
-  with WithTestExecutionContext
-  with WithTestApplicationContext
-  with MockitoSugar
-  with WithTestIdConfig {
+class EmailVerificationControllerTest
+    extends path.FreeSpec
+    with Matchers
+    with WithTestExecutionContext
+    with WithTestApplicationContext
+    with MockitoSugar
+    with WithTestIdConfig {
 
   val controllerComponent: ControllerComponents = play.api.test.Helpers.stubControllerComponents()
   val api = mock[IdApiClient]
@@ -36,9 +37,12 @@ class EmailVerificationControllerTest extends path.FreeSpec
   val trackingData = mock[TrackingData]
   val idRequest = mock[IdentityRequest]
   val returnUrlVerifier = mock[ReturnUrlVerifier]
+  val signinService = mock[PlaySigninService]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
-  when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(Right({}))
+  when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(
+    Right({}),
+  )
 
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
@@ -49,7 +53,14 @@ class EmailVerificationControllerTest extends path.FreeSpec
   when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)
   when(api.me(testAuth)) thenReturn Future.successful(Right(user))
 
-  val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
+  val authenticatedActions = new AuthenticatedActions(
+    authService,
+    api,
+    mock[IdentityUrlBuilder],
+    controllerComponent,
+    newsletterService,
+    idRequestParser,
+  )
 
   val EmailValidatedMessage = "Your email address has been validated."
   when(identityUrlBuilder.buildUrl(anyString(), anyVararg[(String, String)]())) thenAnswer returnsFirstArg()
@@ -64,7 +75,8 @@ class EmailVerificationControllerTest extends path.FreeSpec
     idRequestParser,
     identityUrlBuilder,
     returnUrlVerifier,
-    play.api.test.Helpers.stubControllerComponents()
+    signinService,
+    play.api.test.Helpers.stubControllerComponents(),
   )(testApplicationContext)
 
   "Given resendEmailValidationEmail is called" - Fake {
@@ -88,7 +100,8 @@ class EmailVerificationControllerTest extends path.FreeSpec
     }
 
     "should link to the return url" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
+      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]]))
+        .thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("test-string-test")
       contentAsString(result) should include("Exit and continue")
@@ -99,19 +112,29 @@ class EmailVerificationControllerTest extends path.FreeSpec
     val token = "myToken"
 
     "when the api call succeeds" - {
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(())))
+      val expiry = new DateTime(1595243635000L)
+      val cookieResponse = CookiesResponse(expiry, List(CookieResponse("key", "value")))
+      val playCookie = Cookie("key", "value")
+      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(cookieResponse)))
 
       "should redirect to default consent journey" in {
+        reset(signinService)
+        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
         redirectLocation(result).get should include("/consents?")
+        cookies(result).get("key").get.value shouldBe "value"
       }
 
       "should redirect to original returnUrl if it was already a consent journey" in {
-        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(Some("https://profile.theguardian.com/consents"))
+        reset(signinService)
+        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
+        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]]))
+          .thenReturn(Some("https://profile.theguardian.com/consents"))
         val result = controller.verify(token)(testRequest)
         status(result) should be(SEE_OTHER)
         redirectLocation(result).get should include("/consents")
+        cookies(result).get("key").get.value shouldBe "value"
       }
     }
 
@@ -135,8 +158,8 @@ class EmailVerificationControllerTest extends path.FreeSpec
         status(result) should be(OK)
         contentAsString(result) should include("Your email confirmation link has expired")
         contentAsString(result) should include("Resend my verification email")
-        contentAsString(result) should not include(EmailValidatedMessage)
-        contentAsString(result) should not include("Sorry, this email confirmation link is not recognised.")
+        contentAsString(result) should not include (EmailValidatedMessage)
+        contentAsString(result) should not include ("Sorry, this email confirmation link is not recognised.")
       }
     }
 
@@ -149,8 +172,8 @@ class EmailVerificationControllerTest extends path.FreeSpec
         status(result) should be(OK)
         contentAsString(result) should include("Sorry, this email confirmation link is not recognised.")
         contentAsString(result) should include("Resend my verification email")
-        contentAsString(result) should not include(EmailValidatedMessage)
-        contentAsString(result) should not include("Your email confirmation link has expired")
+        contentAsString(result) should not include (EmailValidatedMessage)
+        contentAsString(result) should not include ("Your email confirmation link has expired")
       }
     }
 

@@ -27,15 +27,17 @@ import test.ConfiguredTestSuite
 
   it should
     "be same as section keyword ID for content pages in a commercial hub" in {
-    toPressedPage("sustainable-business").keywordIds should be(Seq(
-      "sustainable-business/sustainable-business"))
+    toPressedPage("sustainable-business").keywordIds should be(Seq("sustainable-business/sustainable-business"))
   }
 
   it should
     "reflect that front could be either a section front or a tag page in a partner zone" in {
-    toPressedPage("sustainable-business/grundfos-partner-zone").keywordIds should be(Seq(
-      "sustainable-business/grundfos-partner-zone",
-      "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone"))
+    toPressedPage("sustainable-business/grundfos-partner-zone").keywordIds should be(
+      Seq(
+        "sustainable-business/grundfos-partner-zone",
+        "sustainable-business-grundfos-partner-zone/sustainable-business-grundfos-partner-zone",
+      ),
+    )
   }
 
 }

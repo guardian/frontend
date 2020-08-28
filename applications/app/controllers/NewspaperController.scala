@@ -10,76 +10,83 @@ import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.NewspaperQuery
 
 class NewspaperController(
-  contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with ImplicitControllerExecutionContext {
+    extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   private val newspaperQuery = new NewspaperQuery(contentApiClient)
 
-  def latestGuardianNewspaper(): Action[AnyContent] = Action.async { implicit request =>
-
-    val metadata = MetaData.make(
-      "theguardian",
-      Some(SectionId.fromId("todayspaper")),
-      "Main section | News | The Guardian"
-    )
-    val todaysPaper = newspaperQuery
-      .fetchLatestGuardianNewspaper()
-      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
-
-    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
-
-  }
-
-  def latestObserverNewspaper(): Action[AnyContent] = Action.async { implicit request =>
-    val metadata = MetaData.make(
-      "theobserver",
-      Some(SectionId.fromId("theobserver")),
-      "Main section | From the Observer | The Guardian"
-    )
-
-    val todaysPaper = newspaperQuery
-      .fetchLatestObserverNewspaper()
-      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
-
-    for( tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
-
-  }
-
-  def newspaperForDate(path: String, day: String, month: String, year: String): Action[AnyContent] = Action.async { implicit request =>
-
-    val metadata = path match {
-      case "theguardian" => MetaData.make(
+  def latestGuardianNewspaper(): Action[AnyContent] =
+    Action.async { implicit request =>
+      val metadata = MetaData.make(
         "theguardian",
         Some(SectionId.fromId("todayspaper")),
-        "Top Stories | From the Guardian | The Guardian"
+        "Main section | News | The Guardian",
       )
-      case "theobserver" => MetaData.make(
+      val todaysPaper = newspaperQuery
+        .fetchLatestGuardianNewspaper()
+        .map(frontContainers => TodayNewspaper(metadata, frontContainers))
+
+      for (tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
+
+    }
+
+  def latestObserverNewspaper(): Action[AnyContent] =
+    Action.async { implicit request =>
+      val metadata = MetaData.make(
         "theobserver",
         Some(SectionId.fromId("theobserver")),
-        "News | From the Observer | The Guardian"
+        "Main section | From the Observer | The Guardian",
       )
+
+      val todaysPaper = newspaperQuery
+        .fetchLatestObserverNewspaper()
+        .map(frontContainers => TodayNewspaper(metadata, frontContainers))
+
+      for (tp <- todaysPaper) yield Cached(300)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
+
     }
 
-    val paper = newspaperQuery
-      .fetchNewspaperForDate(path, day, month, year)
-      .map(frontContainers => TodayNewspaper(metadata, frontContainers))
+  def newspaperForDate(path: String, day: String, month: String, year: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val metadata = path match {
+        case "theguardian" =>
+          MetaData.make(
+            "theguardian",
+            Some(SectionId.fromId("todayspaper")),
+            "Top Stories | From the Guardian | The Guardian",
+          )
+        case "theobserver" =>
+          MetaData.make(
+            "theobserver",
+            Some(SectionId.fromId("theobserver")),
+            "News | From the Observer | The Guardian",
+          )
+      }
 
-    for( tp <- paper) yield {
-      if(noContentForListExists(tp.bookSections)) Found(s"/$path")
-      else Cached(900)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
+      val paper = newspaperQuery
+        .fetchNewspaperForDate(path, day, month, year)
+        .map(frontContainers => TodayNewspaper(metadata, frontContainers))
+
+      for (tp <- paper) yield {
+        if (noContentForListExists(tp.bookSections)) Found(s"/$path")
+        else Cached(900)(RevalidatableResult.Ok(ContentHtmlPage.html(tp)))
+      }
     }
-  }
 
   def noContentForListExists(booksections: Seq[FaciaContainer]): Boolean = {
-    val (frontContainer, otherContainer) = booksections.partition(b => b.displayName.contains(newspaperQuery.FRONT_PAGE_DISPLAY_NAME))
+    val (frontContainer, otherContainer) =
+      booksections.partition(b => b.displayName.contains(newspaperQuery.FRONT_PAGE_DISPLAY_NAME))
     frontContainer.flatMap(_.items).isEmpty && otherContainer.flatMap(_.items).isEmpty
   }
 
-  def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] = Action { implicit request =>
-    Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
-  }
+  def allOn(path: String, day: String, month: String, year: String): Action[AnyContent] =
+    Action { implicit request =>
+      Cached(300)(WithoutRevalidationResult(MovedPermanently(s"/$path/$year/$month/$day")))
+    }
 }
 
 case class TodayNewspaper(metadata: MetaData, bookSections: Seq[FaciaContainer]) extends StandalonePage

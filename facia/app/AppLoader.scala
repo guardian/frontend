@@ -23,7 +23,8 @@ import services._
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait FapiServices {
@@ -58,7 +59,7 @@ trait AppComponents extends FrontendComponents with FaciaControllers with FapiSe
 
   override lazy val appMetrics = ApplicationMetrics(
     FaciaPressMetrics.FrontDecodingLatency,
-    FaciaPressMetrics.FrontDownloadLatency
+    FaciaPressMetrics.FrontDownloadLatency,
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters ++ wire[PreloadFilters].filters

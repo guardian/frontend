@@ -4,25 +4,28 @@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
 
 <script type="text/javascript">
-    var data = new google.visualization.DataTable(@{Html(chart.asJson.toString)})
+    function drawChart() {
+        var data = new google.visualization.DataTable(@{Html(chart.asJson.toString)})
 
-    var chart = new google.visualization.LineChart(document.getElementById('@chart.id'));
+        var chart = new google.visualization.LineChart(document.getElementById('@chart.id'));
 
-    var options = {
-        title: '@chart.name',
-        colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
-        @if(chart.labels.size == 2){
-            legend: "none",
-            vAxis: {title: '@chart.labels(1)'},
-        } else {
-            legend: { position: "in" },
-        }
-        chartArea: { width: "90%" },
-        titleTextStyle: {color: '#999'},
-        axisTitlesPosition: 'in',
-        fontName : 'Arial',
-        smoothLine: true
-    };
+        var options = {
+            title: '@chart.name',
+            colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
+            @if(chart.labels.size == 2){
+                legend: "none",
+                vAxis: {title: '@chart.labels(1)'},
+            } else {
+                legend: { position: "in" },
+            }
+            chartArea: { width: "90%" },
+            titleTextStyle: {color: '#999'},
+            axisTitlesPosition: 'in',
+            fontName : 'Arial',
+            smoothLine: true
+        };
 
-    chart.draw(data, options);
+    }
+    google.charts.setOnLoadCallback(drawChart);
+
 </script>

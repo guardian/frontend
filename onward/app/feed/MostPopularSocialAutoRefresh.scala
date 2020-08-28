@@ -21,13 +21,17 @@ class MostPopularSocialAutoRefresh(ophanApi: OphanApi) extends AutoRefresh[MostR
   }
 }
 
-class MostPopularFacebookAutoRefreshLifecycle(appLifeCycle: ApplicationLifecycle,
-                                              mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh)
-                                             (implicit ec: ExecutionContext, actorSystem: ActorSystem) extends LifecycleComponent {
+class MostPopularFacebookAutoRefreshLifecycle(
+    appLifeCycle: ApplicationLifecycle,
+    mostPopularSocialAutoRefresh: MostPopularSocialAutoRefresh,
+)(implicit ec: ExecutionContext, actorSystem: ActorSystem)
+    extends LifecycleComponent {
 
-  appLifeCycle.addStopHook { () => Future {
-    mostPopularSocialAutoRefresh.stop()
-  }}
+  appLifeCycle.addStopHook { () =>
+    Future {
+      mostPopularSocialAutoRefresh.stop()
+    }
+  }
 
   override def start(): Unit = {
     mostPopularSocialAutoRefresh.start()

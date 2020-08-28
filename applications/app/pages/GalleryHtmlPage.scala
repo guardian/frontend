@@ -19,21 +19,22 @@ import views.html.stacked
 
 object GalleryHtmlPage extends HtmlPage[GalleryPage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def html(page: GalleryPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: GalleryPage = page
 
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
-      ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
+      ("is-immersive", Page.getContent(page).exists(_.content.isImmersive)),
     )
 
     htmlTag(
@@ -43,7 +44,8 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
-        inlineJSBlocking()
+        checkModuleSupport(),
+        inlineJSBlocking(),
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -55,9 +57,9 @@ object GalleryHtmlPage extends HtmlPage[GalleryPage] {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 

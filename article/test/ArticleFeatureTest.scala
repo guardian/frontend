@@ -52,14 +52,18 @@ import collection.JavaConverters._
 
         Then("I should see a short description of the article")
         el("[itemprop=description]").attribute("content") should
-          be("George Monbiot: Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure")
+          be(
+            "George Monbiot: Payments for 'ecosystem services' look like the prelude to the greatest privatisation since enclosure",
+          )
       }
     }
 
     scenario("Have a meta description") {
       goTo("/sport/2012/jun/12/london-2012-olympic-opening-ceremony") { browser: TestBrowser =>
         import browser._
-        el("meta[name=description]").attribute("content") should be("Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain")
+        el("meta[name=description]").attribute("content") should be(
+          "Director Danny Boyle reveals plans for London 2012 Olympic opening ceremony, including village cricket, maypoles and rain",
+        )
       }
     }
 
@@ -96,10 +100,14 @@ import collection.JavaConverters._
         import browser._
 
         Then("Keywords should be exposed")
-        el("meta[name=keywords]").attribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+        el("meta[name=keywords]").attribute("content") should be(
+          "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
+        )
 
         And("News Keywords should be exposed")
-        el("meta[name=news_keywords]").attribute("content") should be("Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music")
+        el("meta[name=news_keywords]").attribute("content") should be(
+          "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
+        )
       }
     }
 
@@ -137,7 +145,9 @@ import collection.JavaConverters._
 
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
-          include("/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?width=700&quality=85&auto=format&fit=max&s=")
+          include(
+            "/img/static/sys-images/Guardian/Pix/pictures/2012/8/6/1344274684805/Gunnerside-village-Swaled-009.jpg?width=700&quality=85&auto=format&fit=max&s=",
+          )
 
         And("I should see the image width")
         el("[itemprop='associatedMedia image'] [itemprop=width]").attribute("content") should be("460")
@@ -224,8 +234,8 @@ import collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-          adSlotRight.id should be("dfp-ad--right")
-          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid")
+        adSlotRight.id should be("dfp-ad--right")
+        adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid")
       }
 
       Given("I am on an article entitled '10 of the best things to do in Tallinn'")
@@ -236,19 +246,21 @@ import collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-          adSlotRight.id should be("dfp-ad--right")
-          adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
+        adSlotRight.id should be("dfp-ad--right")
+        adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
       }
 
-      Given("I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'")
+      Given(
+        "I am on an immersive article, entitled 'Health insurance woes helped elect Trump, but his cure may be more painful'",
+      )
       goTo("/us-news/2017/mar/21/pennsylvania-healthcare-donald-trump-supporters") { browser =>
         import browser._
 
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should not be sticky")
-          adSlotRight.id should be("dfp-ad--right")
-          adSlotRight.attribute("class") should not include("js-sticky-mpu")
+        adSlotRight.id should be("dfp-ad--right")
+        adSlotRight.attribute("class") should not include ("js-sticky-mpu")
       }
     }
 
@@ -270,7 +282,7 @@ import collection.JavaConverters._
 
         And("I should see the image caption")
         inBodyImage.$("[itemprop=description]").text should
-          be( """Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
+          be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
 
@@ -353,8 +365,6 @@ import collection.JavaConverters._
       }
     }
 
-
-
 //    scenario("Review body", ArticleComponents) {
 //
 //      // Nb, The schema.org markup for a review body is different to an article body
@@ -386,7 +396,9 @@ import collection.JavaConverters._
         adPlaceholder.attribute("data-desktop") should be("1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid")
 
         And("the placeholder has the correct class name")
-        adPlaceholder.attribute("class") should include("js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop")
+        adPlaceholder.attribute("class") should include(
+          "js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop",
+        )
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.attribute("data-link-name") should be("ad slot top-above-nav")
@@ -401,14 +413,20 @@ import collection.JavaConverters._
         $(".media-primary video") should have size 1
 
         And("video meta name should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=name]").attribute("content") should be("Nigel Farage's LBC interview – the key moments")
+        $("[itemprop='associatedMedia video'] [itemprop=name]").attribute("content") should be(
+          "Nigel Farage's LBC interview – the key moments",
+        )
 
         And("video meta thumbnailUrl should be set")
         $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
-          include("img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&quality=85&auto=format&fit=max&s=")
+          include(
+            "img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&quality=85&auto=format&fit=max&s=",
+          )
 
         And("video meta uploadDate should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be("2014-05-16T16:09:34.000+01:00")
+        $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be(
+          "2014-05-16T16:09:34.000+01:00",
+        )
       }
     }
 
@@ -418,7 +436,9 @@ import collection.JavaConverters._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        $("meta[name=thumbnail]").attribute("content") should include("sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg")
+        $("meta[name=thumbnail]").attribute("content") should include(
+          "sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg",
+        )
       }
     }
 
@@ -447,7 +467,7 @@ import collection.JavaConverters._
         import browser._
 
         Then("I should see the first image of the tweet")
-        el(".tweet").$("img").attribute("src") should include ("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
+        el(".tweet").$("img").attribute("src") should include("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
       }
     }
 
@@ -467,9 +487,12 @@ import collection.JavaConverters._
       goTo("/film/2012/nov/11/margin-call-cosmopolis-friends-with-kids-dvd-review") { browser =>
         import browser._
 
-        val mailShareUrl = "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_link"
-        val fbShareUrl = "https://www.facebook.com/dialog/share?app_id=202314643182694&href=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_fb"
-        val twitterShareUrl = "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_tw"
+        val mailShareUrl =
+          "mailto:?subject=Mark%20Kermode's%20DVD%20round-up&body=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_link"
+        val fbShareUrl =
+          "https://www.facebook.com/dialog/share?app_id=202314643182694&href=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_fb"
+        val twitterShareUrl =
+          "https://twitter.com/intent/tweet?text=Mark%20Kermode's%20DVD%20round-up&url=https%3A%2F%2Fwww.theguardian.com%2Ffilm%2F2012%2Fnov%2F11%2Fmargin-call-cosmopolis-friends-with-kids-dvd-review%3FCMP%3Dshare_btn_tw"
 
         Then("I should see buttons for my favourite social network")
 
@@ -506,7 +529,7 @@ import collection.JavaConverters._
 
         Then("There should be a placeholder for related content")
         val relatedLink = el("[data-test-id=related-content]")
-        relatedLink.text should be (empty)
+        relatedLink.text should be(empty)
       }
     }
 
@@ -561,8 +584,12 @@ import collection.JavaConverters._
         Then("I should see twitter cards")
         $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
         $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith("guardian://www.theguardian.com/world")
-        $("meta[name='twitter:image']").attributes("content").asScala.head should include("2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
+          "guardian://www.theguardian.com/world",
+        )
+        $("meta[name='twitter:image']").attributes("content").asScala.head should include(
+          "2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg",
+        )
       }
     }
 
@@ -573,7 +600,9 @@ import collection.JavaConverters._
         Then("I should still see a large image twitter card")
         $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
         $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith("guardian://www.theguardian.com/us-news")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
+          "guardian://www.theguardian.com/us-news",
+        )
       }
     }
 
@@ -582,7 +611,9 @@ import collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        $("link[rel='canonical']").attribute("href") should endWith("/world/2013/sep/15/obama-rouhani-united-nations-meeting")
+        $("link[rel='canonical']").attribute("href") should endWith(
+          "/world/2013/sep/15/obama-rouhani-united-nations-meeting",
+        )
       }
     }
 

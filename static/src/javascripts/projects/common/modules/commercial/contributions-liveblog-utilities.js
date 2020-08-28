@@ -4,6 +4,8 @@ import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
+import {submitInsertEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
+import type {ComponentEventWithoutAction} from "common/modules/commercial/acquisitions-ophan";
 
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
@@ -15,6 +17,18 @@ type TimeData = {
     date: string,
     time: string,
 };
+
+const buildComponentEventWithoutAction = (variant: EpicVariant, parentTest: EpicABTest): ComponentEventWithoutAction => ({
+    component: {
+        componentType: parentTest.componentType,
+        campaignCode: variant.campaignCode,
+        id: variant.campaignCode,
+    },
+    abTest: {
+        name: parentTest.id,
+        variant: variant.id,
+    },
+});
 
 const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
     const timeEl = el.querySelector('time');
@@ -91,10 +105,7 @@ const setupViewTracking = (
 
     inView.on('firstview', () => {
         logView(variant.id);
-        mediator.emit(parentTest.viewEvent, {
-            componentType: parentTest.componentType,
-            campaignCode: variant.campaignCode,
-        });
+        submitViewEvent(buildComponentEventWithoutAction(variant, parentTest));
     });
 };
 
@@ -116,7 +127,9 @@ const addEpicToBlocks = (
 
             const $epic = $.create(epicHtml);
             $epic.insertAfter(el);
-            mediator.emit(parentTest.insertEvent);
+
+            submitInsertEvent(buildComponentEventWithoutAction(variant, parentTest));
+
             $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
             setEpicLiveblogEntryTimeData($epic[0], timeData);
             setupViewTracking(el, variant, parentTest);

@@ -22,10 +22,7 @@ sealed trait FrontendMetric {
   def isEmpty: Boolean
 }
 
-case class FrontendStatisticSet(
-  datapoints: List[DataPoint],
-  name: String,
-  unit: StandardUnit) {
+case class FrontendStatisticSet(datapoints: List[DataPoint], name: String, unit: StandardUnit) {
 
   lazy val sampleCount: Double = datapoints.size
   lazy val maximum: Double = Try(datapoints.maxBy(_.value).value).getOrElse(0.0d)
@@ -34,7 +31,6 @@ case class FrontendStatisticSet(
   lazy val average: Double =
     Try(sum / sampleCount).toOption.getOrElse(0L)
 }
-
 
 case class SimpleDataPoint(value: Double, sampleTime: DateTime) extends DataPoint {
   override val time = Some(sampleTime)
@@ -54,13 +50,14 @@ final case class MetricUploader(namespace: String) {
   private val datapoints: Box[List[SimpleMetric]] = Box(List.empty)
 
   def put(metrics: Map[String, Double]): Unit = {
-    val timedMetrics = metrics.map { case (key, value) =>
-      SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
+    val timedMetrics = metrics.map {
+      case (key, value) =>
+        SimpleMetric(name = key, SimpleDataPoint(value, DateTime.now))
     }
     datapoints.send(_ ++ timedMetrics)
   }
 
-  def upload():Unit = {
+  def upload(): Unit = {
     val points = datapoints.get()
     datapoints.alter(_.diff(points))
     CloudWatch.putMetrics(namespace, points, List.empty)
@@ -81,21 +78,23 @@ final case class TimingMetric(override val name: String, description: String) ex
     currentCount.incrementAndGet()
   }
 
-  override def getAndResetDataPoints: List[DataPoint] = List(
-    TimingDataPoint(Try {
-      timeInMillis.getAndSet(0L).toDouble / currentCount.getAndSet(0L).toDouble
-    }.getOrElse(0.0d))
-  )
+  override def getAndResetDataPoints: List[DataPoint] =
+    List(
+      TimingDataPoint(Try {
+        timeInMillis.getAndSet(0L).toDouble / currentCount.getAndSet(0L).toDouble
+      }.getOrElse(0.0d)),
+    )
   override def isEmpty: Boolean = currentCount.get() == 0L
 }
 
 case class GaugeDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
 final case class GaugeMetric(
-  override val name: String,
-  description: String,
-  override val metricUnit: StandardUnit = StandardUnit.Megabytes,
-  get: () => Double) extends FrontendMetric {
+    override val name: String,
+    description: String,
+    override val metricUnit: StandardUnit = StandardUnit.Megabytes,
+    get: () => Double,
+) extends FrontendMetric {
 
   override def getAndResetDataPoints: List[DataPoint] = List(GaugeDataPoint(get()))
   override def isEmpty: Boolean = false
@@ -112,12 +111,13 @@ final case class CountMetric(override val name: String, description: String) ext
   override def isEmpty: Boolean = count.get() == 0L
 
   def increment(): Unit = count.incrementAndGet()
-  def add(value: Long): Unit =  count.addAndGet(value)
+  def add(value: Long): Unit = count.addAndGet(value)
 }
 
 case class DurationDataPoint(value: Double, time: Option[DateTime] = None) extends DataPoint
 
-final case class DurationMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
+final case class DurationMetric(override val name: String, override val metricUnit: StandardUnit)
+    extends FrontendMetric {
 
   private val dataPoints: Box[List[DataPoint]] = Box(List[DurationDataPoint]())
 
@@ -148,7 +148,8 @@ case class SampledDataPoint(value: Double, sampleTime: DateTime) extends DataPoi
   override val time = Some(sampleTime)
 }
 
-final case class SamplerMetric(override val name: String, override val metricUnit: StandardUnit) extends FrontendMetric {
+final case class SamplerMetric(override val name: String, override val metricUnit: StandardUnit)
+    extends FrontendMetric {
 
   private val dataPoints: Box[List[SampledDataPoint]] = Box(List[SampledDataPoint]())
 
@@ -158,7 +159,8 @@ final case class SamplerMetric(override val name: String, override val metricUni
     points
   }
 
-  def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] = dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
+  def recordSample(sampleValue: Double, sampleTime: DateTime): Future[List[SampledDataPoint]] =
+    dataPoints.alter(SampledDataPoint(sampleValue, sampleTime) :: _)
 
   override def isEmpty: Boolean = dataPoints.get().isEmpty
 }
