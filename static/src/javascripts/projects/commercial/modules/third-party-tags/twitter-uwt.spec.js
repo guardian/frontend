@@ -20,7 +20,7 @@ describe('twitterUwt', () => {
         expect(sourcepointId).toBe('5e71760b69966540e4554f01');
     });
 
-    it('should have insert body function', () => {
+    it('should have insertSnippet function', () => {
         config.set('switches.twitterUwt', true);
         const { insertSnippet  } = twitterUwt();
 
