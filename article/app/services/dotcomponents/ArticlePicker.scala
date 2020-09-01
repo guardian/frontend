@@ -53,6 +53,7 @@ object ArticlePageChecks {
       blockElement match {
         case _: AudioBlockElement     => false
         case _: DocumentBlockElement  => false
+        case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
         case _: PullquoteBlockElement => false
