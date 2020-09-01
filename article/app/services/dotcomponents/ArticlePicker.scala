@@ -119,17 +119,30 @@ object ArticlePageChecks {
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
 
   def isSupportedTone(page: PageWithStoryPackage): Boolean = {
+    /*
+     What's missing here still?
+      - tone/advertisement-features
+      - tone/cartoons
+      - tone/minute
+      - tone/minute-by-minute
+     */
     Set(
       "tone/albumreview",
       "tone/analysis",
       "tone/blog",
+      "tone/callout",
+      "tone/childrens-user-reviews",
       "tone/comment",
       "tone/competitions",
       "tone/documentaries",
       "tone/editorials",
+      "tone/event-descriptions",
       "tone/explainers",
+      "tone/extracompetitions",
+      "tone/extraoffers",
       "tone/extract",
       "tone/features",
+      "tone/graphics",
       "tone/help",
       "tone/interview",
       "tone/letters",
@@ -140,8 +153,13 @@ object ArticlePageChecks {
       "tone/performances",
       "tone/polls",
       "tone/profiles",
+      "tone/q-and-as",
+      "tone/quizzes",
       "tone/recipes",
+      "tone/resource",
       "tone/reviews",
+      "tone/sponsoredfeatures",
+      "tone/thirdpartyventures",
       "tone/timelines",
     ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
   }
