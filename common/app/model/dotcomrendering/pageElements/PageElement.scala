@@ -149,6 +149,8 @@ case class GuVideoBlockElement(
     caption: String,
     url: String,
     originalUrl: String,
+    html: String,
+    source: String,
     role: Role,
 ) extends PageElement
 case class ImageBlockElement(
@@ -428,6 +430,8 @@ object PageElement {
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
+              element.videoTypeData.flatMap(_.html).getOrElse(""),
+              element.videoTypeData.flatMap(_.source).getOrElse(""),
               Role(element.videoTypeData.flatMap(_.role)),
             ),
           )
