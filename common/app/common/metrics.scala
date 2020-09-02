@@ -35,72 +35,77 @@ object SystemMetrics extends implicits.Numbers {
     }
   }
 
-  lazy val garbageCollectors: Seq[GcRateMetric] = ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_))
+  lazy val garbageCollectors: Seq[GcRateMetric] =
+    ManagementFactory.getGarbageCollectorMXBeans.asScala.map(new GcRateMetric(_))
 
   val MaxHeapMemoryMetric = GaugeMetric(
     name = "max-heap-memory",
     description = "Max heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getMax),
   )
 
   val UsedHeapMemoryMetric = GaugeMetric(
-    name ="used-heap-memory",
+    name = "used-heap-memory",
     description = "Used heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getHeapMemoryUsage.getUsed),
   )
 
   val MaxNonHeapMemoryMetric = GaugeMetric(
     name = "max-non-heap-memory",
     description = "Max non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getMax),
   )
 
   val UsedNonHeapMemoryMetric = GaugeMetric(
     name = "used-non-heap-memory",
     description = "Used non heap memory (MB)",
-    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed)
+    get = () => bytesAsMb(ManagementFactory.getMemoryMXBean.getNonHeapMemoryUsage.getUsed),
   )
 
   val FreeDiskSpaceMetric = GaugeMetric(
     name = "free-disk-space",
     description = "Free disk space (MB)",
-    get = () => bytesAsMb(new File("/").getUsableSpace)
+    get = () => bytesAsMb(new File("/").getUsableSpace),
   )
 
   val ThreadCountMetric = GaugeMetric(
     name = "thread-count",
     description = "Thread Count",
     get = () => ManagementFactory.getThreadMXBean.getThreadCount,
-    metricUnit = StandardUnit.Count
+    metricUnit = StandardUnit.Count,
   )
 
   // yeah, casting to com.sun.. ain't too pretty
   val TotalPhysicalMemoryMetric = GaugeMetric(
-    name = "total-physical-memory", description = "Total physical memory",
-    get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize)
-      case _ => -1
-    }
+    name = "total-physical-memory",
+    description = "Total physical memory",
+    get = () =>
+      ManagementFactory.getOperatingSystemMXBean match {
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getTotalPhysicalMemorySize)
+        case _                                           => -1
+      },
   )
 
   val FreePhysicalMemoryMetric = GaugeMetric(
-    name = "free-physical-memory", description = "Free physical memory",
-    get = () => ManagementFactory.getOperatingSystemMXBean match {
-      case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize)
-      case _ => -1
-    }
+    name = "free-physical-memory",
+    description = "Free physical memory",
+    get = () =>
+      ManagementFactory.getOperatingSystemMXBean match {
+        case b: com.sun.management.OperatingSystemMXBean => bytesAsMb(b.getFreePhysicalMemorySize)
+        case _                                           => -1
+      },
   )
 
   private lazy val buildNumber = ManifestData.build match {
     case string if string.isInt => string.toInt
-    case _ => -1 // dev machines do not have a build number
+    case _                      => -1 // dev machines do not have a build number
   }
 
   val BuildNumberMetric = GaugeMetric(
     name = "build-number",
     description = "Build number",
     get = () => buildNumber,
-    metricUnit = StandardUnit.None
+    metricUnit = StandardUnit.None,
   )
 
 }
@@ -108,27 +113,27 @@ object SystemMetrics extends implicits.Numbers {
 object ContentApiMetrics {
   val HttpLatencyTimingMetric = TimingMetric(
     "content-api-call-latency",
-    "Content api call latency"
+    "Content api call latency",
   )
 
   val HttpTimeoutCountMetric = CountMetric(
     "content-api-timeouts",
-    "Content api calls that timeout"
+    "Content api calls that timeout",
   )
 
   val ContentApiErrorMetric = CountMetric(
     "content-api-errors",
-    "Number of times the Content API returns errors (not counting when circuit breaker is on)"
+    "Number of times the Content API returns errors (not counting when circuit breaker is on)",
   )
 
   val ContentApi404Metric = CountMetric(
     "content-api-404",
-    "Number of times the Content API has responded with a 404"
+    "Number of times the Content API has responded with a 404",
   )
 
   val ContentApiRequestsMetric = CountMetric(
     "content-api-requests",
-    "Number of times the Content API has been called"
+    "Number of times the Content API has been called",
   )
 
 }
@@ -136,7 +141,7 @@ object ContentApiMetrics {
 object FaciaPressMetrics {
   val FrontPressCronSuccess = CountMetric(
     "front-press-cron-success",
-    "Number of times facia-tool cron job has successfully pressed"
+    "Number of times facia-tool cron job has successfully pressed",
   )
 
   val UkPressLatencyMetric = DurationMetric("uk-press-latency", StandardUnit.Milliseconds)
@@ -168,48 +173,54 @@ object ApplicationMetrics {
 object ArticleRenderingMetrics {
   val RemoteRenderingMetric = TimingMetric(
     "remote-rendering-time-article",
-    "Remote rendering time for articles"
+    "Remote rendering time for articles",
   )
   val LocalRenderingMetric = TimingMetric(
     "local-rendering-time-article",
-    "Local rendering time for articles"
+    "Local rendering time for articles",
   )
 }
 
 class CloudWatchMetricsLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  appIdentity: ApplicationIdentity,
-  appMetrics: ApplicationMetrics = ApplicationMetrics(Nil),
-  jobs: JobScheduler)
-  (implicit ec: ExecutionContext) extends LifecycleComponent with Logging {
+    appLifecycle: ApplicationLifecycle,
+    appIdentity: ApplicationIdentity,
+    appMetrics: ApplicationMetrics = ApplicationMetrics(Nil),
+    jobs: JobScheduler,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent
+    with Logging {
   val applicationMetricsNamespace: String = "Application"
   val applicationDimension = List(new Dimension().withName("ApplicationName").withValue(appIdentity.name))
 
-  appLifecycle.addStopHook { () => Future {
-    jobs.deschedule("ApplicationSystemMetricsJob")
-    if (Configuration.environment.isProd) {
-      jobs.deschedule("LogMetricsJob")
+  appLifecycle.addStopHook { () =>
+    Future {
+      jobs.deschedule("ApplicationSystemMetricsJob")
+      if (Configuration.environment.isProd) {
+        jobs.deschedule("LogMetricsJob")
+      }
     }
-  }}
+  }
 
-  def systemMetrics: List[FrontendMetric] = List(
-    SystemMetrics.MaxHeapMemoryMetric,
-    SystemMetrics.UsedHeapMemoryMetric,
-    SystemMetrics.TotalPhysicalMemoryMetric,
-    SystemMetrics.FreePhysicalMemoryMetric,
-    SystemMetrics.BuildNumberMetric,
-    SystemMetrics.FreeDiskSpaceMetric,
-    SystemMetrics.ThreadCountMetric
-  ) ++ SystemMetrics.garbageCollectors.flatMap{ gc => List(
-      GaugeMetric(s"${gc.name}-gc-count-per-min" , "Used heap memory (MB)",
-        StandardUnit.Count,
-        () => gc.gcCount.toLong
-      ),
-      GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)",
-        StandardUnit.Count,
-        () => gc.gcTime.toLong
+  def systemMetrics: List[FrontendMetric] =
+    List(
+      SystemMetrics.MaxHeapMemoryMetric,
+      SystemMetrics.UsedHeapMemoryMetric,
+      SystemMetrics.TotalPhysicalMemoryMetric,
+      SystemMetrics.FreePhysicalMemoryMetric,
+      SystemMetrics.BuildNumberMetric,
+      SystemMetrics.FreeDiskSpaceMetric,
+      SystemMetrics.ThreadCountMetric,
+    ) ++ SystemMetrics.garbageCollectors.flatMap { gc =>
+      List(
+        GaugeMetric(
+          s"${gc.name}-gc-count-per-min",
+          "Used heap memory (MB)",
+          StandardUnit.Count,
+          () => gc.gcCount.toLong,
+        ),
+        GaugeMetric(s"${gc.name}-gc-time-per-min", "Used heap memory (MB)", StandardUnit.Count, () => gc.gcTime.toLong),
       )
-    )}
+    }
 
   private def report() {
     val allMetrics: List[FrontendMetric] = this.systemMetrics ::: this.appMetrics.metrics

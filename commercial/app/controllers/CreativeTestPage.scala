@@ -5,7 +5,7 @@ import model.{ApplicationContext, DotcomContentType, MetaData, SectionId}
 import play.api.libs.json.{JsString, JsValue}
 import play.api.mvc._
 
-case class TestPage(specifiedKeywords : List[String] = Nil) extends model.StandalonePage {
+case class TestPage(specifiedKeywords: List[String] = Nil) extends model.StandalonePage {
 
   val isNetworkFront: Boolean = false
   val contentType = if (isNetworkFront) DotcomContentType.NetworkFront else DotcomContentType.Section
@@ -17,7 +17,7 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
 
   val newMetaData: Map[String, JsValue] = Map(
     "keywords" -> JsString(capitalisedKeywords),
-    "keywordIds" -> JsString(lowerCaseKeywords)
+    "keywordIds" -> JsString(lowerCaseKeywords),
   )
 
   override val metadata = MetaData.make(
@@ -27,18 +27,22 @@ case class TestPage(specifiedKeywords : List[String] = Nil) extends model.Standa
     webTitle = webTitle,
     isFront = true,
     contentType = Some(contentType),
-    javascriptConfigOverrides = newMetaData)
+    javascriptConfigOverrides = newMetaData,
+  )
 
   val navSection: String = "Commercial"
 }
 
-class CreativeTestPage(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext) extends BaseController {
-  def allComponents(keyword : List[String]): Action[AnyContent] = Action{ implicit request =>
-    if(Configuration.environment.stage.toLowerCase == "dev" || Configuration.environment.stage.toLowerCase == "code") {
-      Ok(views.html.debugger.allcreatives(TestPage(keyword)))
-    } else {
-      NotFound
+class CreativeTestPage(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
+    extends BaseController {
+  def allComponents(keyword: List[String]): Action[AnyContent] =
+    Action { implicit request =>
+      if (
+        Configuration.environment.stage.toLowerCase == "dev" || Configuration.environment.stage.toLowerCase == "code"
+      ) {
+        Ok(views.html.debugger.allcreatives(TestPage(keyword)))
+      } else {
+        NotFound
+      }
     }
-  }
 }
-

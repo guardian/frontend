@@ -12,32 +12,36 @@ import views.support.{FourByThree, ImgSrc, Item1200, OneByOne}
 object LinkedData {
 
   implicit val formats: OFormat[LinkedData] = new OFormat[LinkedData] {
-    override def writes(ld: LinkedData): JsObject = ld match {
-      case guardian: Guardian =>  Json.toJsObject(guardian)(Guardian.formats)
-      case wp: WebPage => Json.toJsObject(wp)(WebPage.formats)
-      case il: ItemList => Json.toJsObject(il)(ItemList.formats)
-      case na: NewsArticle => Json.toJsObject(na)(NewsArticle.formats)
-      case re: Review => Json.toJsObject(re)(Review.formats)
-      case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
-      case po: BlogPosting => Json.toJsObject(po)(BlogPosting.formats)
-    }
+    override def writes(ld: LinkedData): JsObject =
+      ld match {
+        case guardian: Guardian  => Json.toJsObject(guardian)(Guardian.formats)
+        case wp: WebPage         => Json.toJsObject(wp)(WebPage.formats)
+        case il: ItemList        => Json.toJsObject(il)(ItemList.formats)
+        case na: NewsArticle     => Json.toJsObject(na)(NewsArticle.formats)
+        case re: Review          => Json.toJsObject(re)(Review.formats)
+        case lb: LiveBlogPosting => Json.toJsObject(lb)(LiveBlogPosting.formats)
+        case po: BlogPosting     => Json.toJsObject(po)(BlogPosting.formats)
+      }
 
-    override def reads(json: JsValue): JsResult[LinkedData] = json match {
-      case _ => JsError(s"Unexpected attempt to read LinkedData for JSON value $json")
-    }
+    override def reads(json: JsValue): JsResult[LinkedData] =
+      json match {
+        case _ => JsError(s"Unexpected attempt to read LinkedData for JSON value $json")
+      }
   }
 
   def forLiveblog(
-    liveblog: LiveBlogPage,
-    blocks: Seq[CAPIBlock],
-    baseURL: String,
-    fallbackLogo: String
+      liveblog: LiveBlogPage,
+      blocks: Seq[CAPIBlock],
+      baseURL: String,
+      fallbackLogo: String,
   ): List[LinkedData] = {
 
-    def dtFmt(date: DateTime): String = date.toString(
-      DateTimeFormat.forPattern("yyyy-MM-dd'T'HH:mm:ssZ")
-        .withZoneUTC()
-    )
+    def dtFmt(date: DateTime): String =
+      date.toString(
+        DateTimeFormat
+          .forPattern("yyyy-MM-dd'T'HH:mm:ssZ")
+          .withZoneUTC(),
+      )
 
     val article = liveblog.article
     val authors = getAuthors(article)
@@ -64,19 +68,20 @@ object LinkedData {
             mainEntityOfPage = article.metadata.webUrl,
             articleBody = BlogPosting.summary(block),
           )
-        })
+        }),
       ),
       WebPage(
         `@id` = article.metadata.webUrl,
-        potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
-      )
+        potentialAction =
+          PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+      ),
     )
   }
 
   def forArticle(
-    article: Article,
-    baseURL: String,
-    fallbackLogo: String
+      article: Article,
+      baseURL: String,
+      fallbackLogo: String,
   ): List[LinkedData] = {
 
     val authors = getAuthors(article)
@@ -87,10 +92,8 @@ object LinkedData {
           Review(
             author = authors,
             itemReviewed = SameAs(sameAs = "http://www.imdb.com/title/" + ref),
-            reviewRating = article.content.starRating.map(rating =>
-              Rating(ratingValue = rating)
-            )
-          )
+            reviewRating = article.content.starRating.map(rating => Rating(ratingValue = rating)),
+          ),
         )
       }
       case newsArticle => {
@@ -106,14 +109,15 @@ object LinkedData {
           ),
           WebPage(
             `@id` = article.metadata.webUrl,
-            potentialAction = PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/"))
-          )
+            potentialAction =
+              PotentialAction(target = "android-app://com.guardian/" + article.metadata.webUrl.replace("://", "/")),
+          ),
         )
       }
     }
   }
 
- private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
+  private[this] def getImages(article: Article, fallbackLogo: String): List[String] = {
     val mainImageURL = {
       val main = for {
         elem <- article.trail.trailPicture
@@ -124,15 +128,15 @@ object LinkedData {
       main.getOrElse(fallbackLogo)
     }
 
-   // If gif, use fallback. This is because Fastly does not support upscaling on
-   // gif images so we can't guarantee they will be large enough to pass Google
-   // structured data requirements (1200px). This should affect very few
-   // articles in practice.
-   val openGraphImage = {
-     val preferred = article.content.openGraphImage
-     if (preferred.endsWith(".gif")) ImgSrc(fallbackLogo, Item1200)
-     else preferred
-   }
+    // If gif, use fallback. This is because Fastly does not support upscaling on
+    // gif images so we can't guarantee they will be large enough to pass Google
+    // structured data requirements (1200px). This should affect very few
+    // articles in practice.
+    val openGraphImage = {
+      val preferred = article.content.openGraphImage
+      if (preferred.endsWith(".gif")) ImgSrc(fallbackLogo, Item1200)
+      else preferred
+    }
 
     List(
       openGraphImage,
@@ -152,7 +156,7 @@ object LinkedData {
 
     authors match {
       case Nil => List(Person(name = "Guardian staff reporter", sameAs = None))
-      case _ => authors
+      case _   => authors
     }
   }
 }
@@ -163,10 +167,10 @@ sealed trait LinkedData {
 }
 
 case class Logo(
-  `@type`: String = "ImageObject",
-  url: String = "https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png",
-  width: Int = 190,
-  height: Int = 60,
+    `@type`: String = "ImageObject",
+    url: String = "https://uploads.guim.co.uk/2018/01/31/TheGuardian_AMP.png",
+    width: Int = 190,
+    height: Int = 60,
 )
 
 object Logo {
@@ -174,17 +178,17 @@ object Logo {
 }
 
 case class Guardian(
-  `@type`: String = "Organization",
-  `@context`: String = "https://schema.org",
-  `@id`: String = "https://www.theguardian.com#publisher",
-  name: String = "The Guardian",
-  url: String = "https://www.theguardian.com/",
-  logo: Logo = Logo(),
-  sameAs: List[String] = List(
-    "https://www.facebook.com/theguardian",
-    "https://twitter.com/guardian",
-    "https://www.youtube.com/user/TheGuardian"
-  )
+    `@type`: String = "Organization",
+    `@context`: String = "https://schema.org",
+    `@id`: String = "https://www.theguardian.com#publisher",
+    name: String = "The Guardian",
+    url: String = "https://www.theguardian.com/",
+    logo: Logo = Logo(),
+    sameAs: List[String] = List(
+      "https://www.facebook.com/theguardian",
+      "https://twitter.com/guardian",
+      "https://www.youtube.com/user/TheGuardian",
+    ),
 ) extends LinkedData
 
 object Guardian {
@@ -193,11 +197,10 @@ object Guardian {
 
 // https://developers.google.com/app-indexing/webmasters/server#schemaorg-markup-for-viewaction
 case class WebPage(
-  `@type`: String = "WebPage",
-  `@context`: String = "https://schema.org",
-
-  `@id`: String,
-  potentialAction: PotentialAction
+    `@type`: String = "WebPage",
+    `@context`: String = "https://schema.org",
+    `@id`: String,
+    potentialAction: PotentialAction,
 ) extends LinkedData
 
 object WebPage {
@@ -205,8 +208,8 @@ object WebPage {
 }
 
 case class PotentialAction(
-  `@type`: String = "ViewAction",
-  target: String
+    `@type`: String = "ViewAction",
+    target: String,
 )
 
 object PotentialAction {
@@ -214,10 +217,10 @@ object PotentialAction {
 }
 
 case class ItemList(
-  `@context`: String = "https://schema.org",
-  `@type`: String = "ItemList",
-  url: String,
-  itemListElement: Seq[ListItem]
+    `@context`: String = "https://schema.org",
+    `@type`: String = "ItemList",
+    url: String,
+    itemListElement: Seq[ListItem],
 ) extends LinkedData
 
 object ItemList {
@@ -225,10 +228,10 @@ object ItemList {
 }
 
 case class ListItem(
-  `@type`: String = "ListItem",
-  position: Int,
-  url: Option[String] = None,// either/or url and item, but needs some care serialising
-  item: Option[ItemList] = None
+    `@type`: String = "ListItem",
+    position: Int,
+    url: Option[String] = None, // either/or url and item, but needs some care serialising
+    item: Option[ItemList] = None,
 )
 
 object ListItem {
@@ -240,13 +243,13 @@ object ListItem {
       (__ \ "position").format[Int] and
       (__ \ "url").format(Format.optionWithNull[String]) and
       (__ \ "item").lazyFormat(Format.optionWithNull[ItemList])
-    )(ListItem.apply, unlift(ListItem.unapply))
+  )(ListItem.apply, unlift(ListItem.unapply))
 }
 
 case class Person(
-  `@type`: String = "Person",
-  name: String,
-  sameAs: Option[String],
+    `@type`: String = "Person",
+    name: String,
+    sameAs: Option[String],
 )
 
 object Person {
@@ -254,9 +257,9 @@ object Person {
 }
 
 case class IsPartOf(
-  `@type`: List[String] = List("CreativeWork", "Product"),
-  name: String = "The Guardian",
-  productID: String = "theguardian.com:basic"
+    `@type`: List[String] = List("CreativeWork", "Product"),
+    name: String = "The Guardian",
+    productID: String = "theguardian.com:basic",
 )
 
 object IsPartOf {
@@ -274,30 +277,31 @@ trait ArticleMeta {
 }
 
 case class NewsArticle(
-  `@type`: String = "NewsArticle",
-  `@context`: String = "https://schema.org",
-  `@id`: String,
-  publisher: Guardian = Guardian(),
-  isAccessibleForFree: Boolean = true,
-  isPartOf: IsPartOf = IsPartOf(),
-  image: Seq[String],
-  author: List[Person],
-  datePublished: String,
-  headline: String,
-  dateModified: String,
-  mainEntityOfPage: String,
-) extends LinkedData with ArticleMeta
+    `@type`: String = "NewsArticle",
+    `@context`: String = "https://schema.org",
+    `@id`: String,
+    publisher: Guardian = Guardian(),
+    isAccessibleForFree: Boolean = true,
+    isPartOf: IsPartOf = IsPartOf(),
+    image: Seq[String],
+    author: List[Person],
+    datePublished: String,
+    headline: String,
+    dateModified: String,
+    mainEntityOfPage: String,
+) extends LinkedData
+    with ArticleMeta
 
 object NewsArticle {
   implicit val formats: OFormat[NewsArticle] = Json.format[NewsArticle]
 }
 
 case class Rating(
-  `@type`: String = "Rating",
-  `@context`: String = "http://schema.org",
-  ratingValue: Int,
-  bestRating: Int = 5,
-  worstRating: Int = 1,
+    `@type`: String = "Rating",
+    `@context`: String = "http://schema.org",
+    ratingValue: Int,
+    bestRating: Int = 5,
+    worstRating: Int = 1,
 )
 
 object Rating {
@@ -305,7 +309,7 @@ object Rating {
 }
 
 case class SameAs(
-  sameAs: String,
+    sameAs: String,
 )
 
 object SameAs {
@@ -313,12 +317,12 @@ object SameAs {
 }
 
 case class Review(
-  `@type`: String = "Review",
-  `@context`: String = "http://schema.org",
-  publisher: Guardian = Guardian(),
-  author: List[Person],
-  itemReviewed: SameAs,
-  reviewRating: Option[Rating],
+    `@type`: String = "Review",
+    `@context`: String = "http://schema.org",
+    publisher: Guardian = Guardian(),
+    author: List[Person],
+    itemReviewed: SameAs,
+    reviewRating: Option[Rating],
 ) extends LinkedData
 
 object Review {
@@ -326,25 +330,26 @@ object Review {
 }
 
 case class BlogPosting(
-  `@type`: String = "BlogPosting",
-  `@context`: String = "http://schema.org",
-  `@id`: String,
-  publisher: Guardian = Guardian(),
-  isAccessibleForFree: Boolean = true,
-  image: Seq[String],
-  author: List[Person],
-  datePublished: String,
-  headline: String,
-  dateModified: String,
-  mainEntityOfPage: String,
-  articleBody: String,
-) extends LinkedData with ArticleMeta
+    `@type`: String = "BlogPosting",
+    `@context`: String = "http://schema.org",
+    `@id`: String,
+    publisher: Guardian = Guardian(),
+    isAccessibleForFree: Boolean = true,
+    image: Seq[String],
+    author: List[Person],
+    datePublished: String,
+    headline: String,
+    dateModified: String,
+    mainEntityOfPage: String,
+    articleBody: String,
+) extends LinkedData
+    with ArticleMeta
 
 object BlogPosting {
   implicit val formats: OFormat[BlogPosting] = Json.format[BlogPosting]
 
   def summary(block: CAPIBlock): String = {
-    if(block.bodyTextSummary.length < 1000){
+    if (block.bodyTextSummary.length < 1000) {
       block.bodyTextSummary
     } else {
       block.bodyTextSummary.substring(0, 1000)
@@ -353,21 +358,22 @@ object BlogPosting {
 }
 
 case class LiveBlogPosting(
-  `@type`: String = "LiveBlogPosting",
-  `@context`: String = "http://schema.org",
-  `@id`: String,
-  publisher: Guardian = Guardian(),
-  isAccessibleForFree: Boolean = true,
-  image: Seq[String],
-  author: List[Person],
-  datePublished: String,
-  headline: String,
-  dateModified: String,
-  mainEntityOfPage: String,
-  coverageStartTime: String,
-  coverageEndTime: String,
-  liveBlogUpdate: Seq[BlogPosting]
-) extends LinkedData with ArticleMeta
+    `@type`: String = "LiveBlogPosting",
+    `@context`: String = "http://schema.org",
+    `@id`: String,
+    publisher: Guardian = Guardian(),
+    isAccessibleForFree: Boolean = true,
+    image: Seq[String],
+    author: List[Person],
+    datePublished: String,
+    headline: String,
+    dateModified: String,
+    mainEntityOfPage: String,
+    coverageStartTime: String,
+    coverageEndTime: String,
+    liveBlogUpdate: Seq[BlogPosting],
+) extends LinkedData
+    with ArticleMeta
 
 object LiveBlogPosting {
   implicit val formats: OFormat[LiveBlogPosting] = Json.format[LiveBlogPosting]

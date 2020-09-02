@@ -9,9 +9,10 @@ case object Video extends MediaType
 case object Audio extends MediaType
 
 object MediaType {
-  def make(mediaType: fapiutils.MediaType): MediaType = mediaType match {
-    case fapiutils.Video => Video
-    case fapiutils.Gallery => Gallery
-    case fapiutils.Audio => Audio
-  }
+  def make(mediaType: fapiutils.MediaType): MediaType =
+    mediaType match {
+      case fapiutils.Video   => Video
+      case fapiutils.Gallery => Gallery
+      case fapiutils.Audio   => Audio
+    }
 }

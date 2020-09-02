@@ -15,15 +15,15 @@ object Commercial {
   def isAdFree(request: RequestHeader): Boolean = {
     try {
       request.headers.get("X-GU-Commercial-Ad-Free").exists(_.toLowerCase == "true") ||
-        request.cookies.get("GU_AF1").exists(_.value.toLong > 0)
+      request.cookies.get("GU_AF1").exists(_.value.toLong > 0)
     } catch {
-       case e: Exception => false   // in case the cookie value can't be converted toInt
+      case e: Exception => false // in case the cookie value can't be converted toInt
     }
   }
 
   def isOnDarkBackground(content: ContentType, isPaidContent: Boolean): Boolean = {
     content.tags.isGallery ||
-      (!isPaidContent && (content.tags.isAudio || content.tags.isVideo))
+    (!isPaidContent && (content.tags.isAudio || content.tags.isVideo))
   }
 
   def shouldShowAds(page: Page)(implicit request: RequestHeader): Boolean = {
@@ -31,29 +31,29 @@ object Commercial {
       true
     } else {
       page match {
-        case c: model.ContentPage if c.item.content.shouldHideAdverts => false
-        case p: model.Page if p.metadata.sectionId == "identity" => false
-        case s: model.SimplePage if s.metadata.contentType.contains(Signup) => false
+        case c: model.ContentPage if c.item.content.shouldHideAdverts                          => false
+        case p: model.Page if p.metadata.sectionId == "identity"                               => false
+        case s: model.SimplePage if s.metadata.contentType.contains(Signup)                    => false
         case e: model.ContentPage if e.item.content.seriesName.contains("Newsletter sign-ups") => false
-        case _: model.CommercialExpiryPage => false
-        case _ => true
+        case _: model.CommercialExpiryPage                                                     => false
+        case _                                                                                 => true
       }
     }
   }
 
   def articleAsideOptionalSizes(isShowcase: Boolean)(implicit request: RequestHeader): Seq[String] = {
     (isShowcase, Edition(request).id) match {
-      case (true, _) => Seq.empty
+      case (true, _)     => Seq.empty
       case (false, "US") => Seq("300,600", "fluid", "300,1050")
-      case (false, _)   => Seq("300,600", "fluid")
+      case (false, _)    => Seq("300,600", "fluid")
     }
   }
 
-  def glabsLink (request: RequestHeader): String = {
+  def glabsLink(request: RequestHeader): String = {
     val glabsUrlSuffix = Edition(request).id match {
       case "AU" => "-australia"
       case "US" => "-us"
-      case _ => ""
+      case _    => ""
     }
 
     s"/guardian-labs$glabsUrlSuffix"
@@ -79,11 +79,10 @@ object Commercial {
 
     val allSponsors = page match {
       case front: PressedPage =>
-
         val containerSponsors = front.collections.flatMap { container =>
           container.branding(edition) flatMap {
             case b: Branding => Some(b.sponsorName.toLowerCase)
-            case _ => None
+            case _           => None
           }
         }
 
@@ -104,26 +103,29 @@ object Commercial {
     allSponsors map (_ map escapeJavaScript)
   }
 
-  def getSponsorForGA(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
-    if (isBrandedContent(page)) {
-      listSponsorLogosOnPage(page) match {
-        case Some(logos) => s"&$key=${logos.mkString("|")}"
-        case _ => ""
-      }
-    } else { "" }
-  }
-
-  def getBrandingTypeForGA(page: Page, key: String)(implicit request: RequestHeader): Html = Html {
-    brandingType(page) match {
-      case Some(branding) => s"&$key=${branding.name}"
-      case _ => ""
+  def getSponsorForGA(page: Page, key: String)(implicit request: RequestHeader): Html =
+    Html {
+      if (isBrandedContent(page)) {
+        listSponsorLogosOnPage(page) match {
+          case Some(logos) => s"&$key=${logos.mkString("|")}"
+          case _           => ""
+        }
+      } else { "" }
     }
-  }
 
-  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] = for {
-    commercial <- page.metadata.commercial
-    branding <- commercial.branding(Edition(request))
-  } yield branding.brandingType
+  def getBrandingTypeForGA(page: Page, key: String)(implicit request: RequestHeader): Html =
+    Html {
+      brandingType(page) match {
+        case Some(branding) => s"&$key=${branding.name}"
+        case _              => ""
+      }
+    }
+
+  def brandingType(page: Page)(implicit request: RequestHeader): Option[BrandingType] =
+    for {
+      commercial <- page.metadata.commercial
+      branding <- commercial.branding(Edition(request))
+    } yield branding.brandingType
 
   object topAboveNavSlot {
 
@@ -133,7 +135,14 @@ object Commercial {
       val fluidAdvertsTop = Seq("fluid")
       Map(
         "tablet" -> (Seq("1,1", "2,2", "728,90") ++ fabricAdvertsTop ++ fluidAdvertsTop),
-        "desktop" -> (Seq("1,1", "2,2", "728,90", "940,230", "900,250", "970,250") ++ fabricAdvertsTop ++ fluidAdvertsTop)
+        "desktop" -> (Seq(
+          "1,1",
+          "2,2",
+          "728,90",
+          "940,230",
+          "900,250",
+          "970,250",
+        ) ++ fabricAdvertsTop ++ fluidAdvertsTop),
       )
     }
 
@@ -145,7 +154,7 @@ object Commercial {
       }
       val classes = Seq(
         "top-banner-ad-container",
-        "js-top-banner"
+        "js-top-banner",
       ) ++ topBannerDisableSticky
 
       classes mkString " "
@@ -158,26 +167,31 @@ object Commercial {
 
     def shouldRenderAsPaidContainer(isPaidFront: Boolean, optContainerModel: Option[ContainerModel]): Boolean = {
 
-      def isPaid(containerModel: ContainerModel): Boolean = containerModel.branding exists {
-        case PaidMultiSponsorBranding => true
-        case b: Branding => b.isPaid
-      }
+      def isPaid(containerModel: ContainerModel): Boolean =
+        containerModel.branding exists {
+          case PaidMultiSponsorBranding => true
+          case b: Branding              => b.isPaid
+        }
 
       !isPaidFront && optContainerModel.exists(isPaid)
     }
 
-    def numberOfItems(container: FaciaContainer): Int = container.containerLayout.map {
-      _.slices.flatMap {
-        _.columns.flatMap { case ColumnAndCards(_, cards) =>
-          cards.flatMap {
-            _.item match {
-                case card: ContentCard => Some(card)
-                case _ => None
+    def numberOfItems(container: FaciaContainer): Int =
+      container.containerLayout
+        .map {
+          _.slices.flatMap {
+            _.columns.flatMap {
+              case ColumnAndCards(_, cards) =>
+                cards.flatMap {
+                  _.item match {
+                    case card: ContentCard => Some(card)
+                    case _                 => None
+                  }
+                }
             }
-          }
+          }.length
         }
-      }.length
-    }.getOrElse(0)
+        .getOrElse(0)
 
     def isFirstNonThrasherContainer(containerIndex: Int, containers: Seq[FaciaContainer]): Boolean =
       (containers filterNot (_.isThrasher) map (_.index)).min == containerIndex
@@ -186,10 +200,10 @@ object Commercial {
   object CssClassBuilder {
 
     private def cardLink(
-      cardContent: PaidCard,
-      adClasses: Option[Seq[String]],
-      sizeClass: Option[String],
-      useCardBranding: Boolean
+        cardContent: PaidCard,
+        adClasses: Option[Seq[String]],
+        sizeClass: Option[String],
+        useCardBranding: Boolean,
     ): String = {
       val classes: Seq[String] = Seq(
         "vergadain",
@@ -197,31 +211,31 @@ object Commercial {
         "vergadain--capi",
         cardContent.icon map (_ => "vergadain--media") getOrElse "vergadain--text",
         adClasses.map(_.map(c => s"vergadain--$c").mkString(" ")).getOrElse(""),
-        if (useCardBranding) "vergadain--branded" else ""
+        if (useCardBranding) "vergadain--branded" else "",
       )
       classes mkString " "
     }
 
     def linkFromStandardCard(
-      cardContent: PaidCard,
-      adClasses: Option[Seq[String]],
-      useCardBranding: Boolean
+        cardContent: PaidCard,
+        adClasses: Option[Seq[String]],
+        useCardBranding: Boolean,
     ): String = {
       cardLink(cardContent, adClasses, sizeClass = None, useCardBranding)
     }
 
     def linkFromSmallCard(
-      cardContent: PaidCard,
-      adClasses: Option[Seq[String]],
-      useCardBranding: Boolean
+        cardContent: PaidCard,
+        adClasses: Option[Seq[String]],
+        useCardBranding: Boolean,
     ): String = {
       cardLink(cardContent, adClasses, sizeClass = Some("vergadain--small"), useCardBranding)
     }
 
     def linkFromLargeCard(
-      cardContent: PaidCard,
-      adClasses: Option[Seq[String]],
-      useCardBranding: Boolean
+        cardContent: PaidCard,
+        adClasses: Option[Seq[String]],
+        useCardBranding: Boolean,
     ): String = {
       cardLink(cardContent, adClasses, sizeClass = Some("vergadain--large"), useCardBranding)
     }
@@ -233,14 +247,14 @@ object Commercial {
   object TrackingCodeBuilder extends implicits.Requests {
 
     private def mkString(
-      containerType: String,
-      editionId: String,
-      frontId: String,
-      containerIndex: Int,
-      containerTitle: String,
-      sponsorName: String,
-      cardIndex: Int,
-      cardTitle: String
+        containerType: String,
+        editionId: String,
+        frontId: String,
+        containerIndex: Int,
+        containerTitle: String,
+        sponsorName: String,
+        cardIndex: Int,
+        cardTitle: String,
     ) =
       Seq(
         containerType,
@@ -250,32 +264,33 @@ object Commercial {
         containerTitle,
         sponsorName,
         s"card-${cardIndex + 1}",
-        cardTitle
+        cardTitle,
       ) mkString " | "
 
     def mkInteractionTrackingCode(
-      frontId: String,
-      containerIndex: Int,
-      container: ContainerModel
-    )(implicit request: RequestHeader): String = mkString(
-      containerType = "Labs front container",
-      editionId = Edition(request).id,
-      frontId = frontId,
-      containerIndex = containerIndex,
-      containerTitle = container.content.title,
-      sponsorName = {
-        val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
-        containerSponsorName getOrElse ""
-      },
-      cardIndex = -1,
-      cardTitle = container.content.title
-    )
+        frontId: String,
+        containerIndex: Int,
+        container: ContainerModel,
+    )(implicit request: RequestHeader): String =
+      mkString(
+        containerType = "Labs front container",
+        editionId = Edition(request).id,
+        frontId = frontId,
+        containerIndex = containerIndex,
+        containerTitle = container.content.title,
+        sponsorName = {
+          val containerSponsorName = container.branding collect { case b: Branding => b.sponsorName }
+          containerSponsorName getOrElse ""
+        },
+        cardIndex = -1,
+        cardTitle = container.content.title,
+      )
 
     def mkInteractionTrackingCode(
-      frontId: String,
-      containerIndex: Int,
-      container: ContainerModel,
-      card: PaidCard
+        frontId: String,
+        containerIndex: Int,
+        container: ContainerModel,
+        card: PaidCard,
     )(implicit request: RequestHeader): String =
       mkString(
         containerType = "Labs front container",
@@ -289,15 +304,15 @@ object Commercial {
         },
         cardIndex = (container.content.initialCards ++ container.content.showMoreCards)
           .indexWhere(_.headline == card.headline),
-        cardTitle = card.headline
+        cardTitle = card.headline,
       )
 
     def mkInteractionTrackingCode(
-      containerIndex: Int,
-      cardIndex: Int,
-      card: ContentCard,
-      containerDisplayName: Option[String],
-      frontId: Option[String]
+        containerIndex: Int,
+        cardIndex: Int,
+        card: ContentCard,
+        containerDisplayName: Option[String],
+        frontId: Option[String],
     )(implicit request: RequestHeader): String = {
 
       val isContentPage =
@@ -314,16 +329,16 @@ object Commercial {
         containerTitle = containerDisplayName.getOrElse("unknown container"),
         sponsorName = card.branding.map(_.sponsorName) getOrElse "unknown",
         cardIndex = cardIndex,
-        cardTitle = card.header.headline
+        cardTitle = card.header.headline,
       )
     }
 
     def mkCapiCardTrackingCode(
-      multiplicity: String,
-      optSection: Option[String],
-      optContainerTitle: Option[String],
-      omnitureId: String,
-      card: PaidCard
+        multiplicity: String,
+        optSection: Option[String],
+        optContainerTitle: Option[String],
+        omnitureId: String,
+        card: PaidCard,
     )(implicit request: RequestHeader): String = {
       Seq(
         "merchandising",
@@ -333,7 +348,7 @@ object Commercial {
         optContainerTitle.getOrElse(""),
         omnitureId,
         card.branding.map(_.sponsorName).getOrElse(""),
-        card.headline
+        card.headline,
       ) mkString " | "
     }
 

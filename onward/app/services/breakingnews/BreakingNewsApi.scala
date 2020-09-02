@@ -8,7 +8,7 @@ import services.S3
 
 class S3BreakingNews(environment: Environment) extends S3 {
   override lazy val bucket = Configuration.aws.frontendStoreBucket
-  lazy val stage = if(environment.mode == Mode.Test) "TEST" else Configuration.environment.stage.toUpperCase
+  lazy val stage = if (environment.mode == Mode.Test) "TEST" else Configuration.environment.stage.toUpperCase
   val namespace = "notifications"
   lazy val location = s"$stage/$namespace"
   def getKeyForPath(path: String): String = s"$location/$path.json"

@@ -20,7 +20,9 @@ class LiveEventAgent(wsClient: WSClient) extends Logging {
 
   def specificLiveEvent(eventBriteId: String): Option[LiveEvent] = liveEventAgent.get.find(_.eventId == eventBriteId)
 
-  private def updateAvailableMerchandise(freshMerchandise: Seq[LiveEvent])(implicit executionContext: ExecutionContext): Future[Seq[LiveEvent]] = {
+  private def updateAvailableMerchandise(
+      freshMerchandise: Seq[LiveEvent],
+  )(implicit executionContext: ExecutionContext): Future[Seq[LiveEvent]] = {
     liveEventAgent.alter { oldMerchandise =>
       if (freshMerchandise.nonEmpty) {
         freshMerchandise
@@ -31,12 +33,15 @@ class LiveEventAgent(wsClient: WSClient) extends Logging {
     }
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[LiveEvent]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[LiveEvent]] = {
 
     def fetchAndParseLiveEventsMembershipInfo: Future[Seq[LiveEventMembershipInfo]] = {
 
       def requestLiveEventsMembershipInfo: Future[WSResponse] =
-        wsClient.url(Configuration.commercial.liveEventsMembershipUrl)
+        wsClient
+          .url(Configuration.commercial.liveEventsMembershipUrl)
           .withRequestTimeout(feedMetaData.timeout)
           .get()
 
@@ -56,15 +61,15 @@ class LiveEventAgent(wsClient: WSClient) extends Logging {
     val start = currentTimeMillis()
 
     val liveEvents =
-      for{
+      for {
         eventMembershipInfo <- fetchAndParseLiveEventsMembershipInfo
         ParsedFeed(events, _) <- Eventbrite.parsePagesOfEvents(feedMetaData, feedContent)
       } yield events flatMap { event =>
         val matchingMembershipInfo = eventMembershipInfo find (_.id == event.id)
-        matchingMembershipInfo map (LiveEvent.fromEvent(event, _) )
+        matchingMembershipInfo map (LiveEvent.fromEvent(event, _))
       }
 
     liveEvents map updateAvailableMerchandise
-    liveEvents map { ParsedFeed(_, Duration(currentTimeMillis- start, MILLISECONDS)) }
+    liveEvents map { ParsedFeed(_, Duration(currentTimeMillis - start, MILLISECONDS)) }
   }
 }

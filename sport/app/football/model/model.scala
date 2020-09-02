@@ -16,8 +16,9 @@ case class Competition(
     matches: Seq[FootballMatch] = Nil,
     leagueTable: Seq[LeagueTableEntry] = Nil,
     showInTeamsList: Boolean = false,
-    tableDividers: List[Int] = Nil
-) extends implicits.Collections with implicits.Football {
+    tableDividers: List[Int] = Nil,
+) extends implicits.Collections
+    with implicits.Football {
 
   lazy val hasMatches = matches.nonEmpty
   lazy val hasLiveMatches = matches.exists(_.isLive)
@@ -58,9 +59,7 @@ case class Table(competition: Competition, groups: Seq[Group], hasGroups: Boolea
       val teamIndex: Int = g.entries.indexWhere(_.team.id == teamId)
 
       if (teamIndex < 3) g.copy(entries = g.entries.take(5))
-
       else if (teamIndex > (length - 3)) g.copy(entries = g.entries.takeRight(5))
-
       else g.copy(entries = g.entries.slice(teamIndex - 2, teamIndex + 3))
     }
 
@@ -76,9 +75,10 @@ object Table {
     val groups = competition.leagueTable
       .groupBy(_.round)
       .map { case (round, table) => Group(round, table) }
-      .toSeq.sortBy(_.round.roundNumber match {
+      .toSeq
+      .sortBy(_.round.roundNumber match {
         case IsNumber(num) => num.toInt
-        case other => 0
+        case other         => 0
       })
     Table(competition, groups)
   }
@@ -92,8 +92,10 @@ case class LeagueTableEntryWithForm(stageNumber: String, round: Round, team: Lea
 object LeagueTableEntryWithForm {
   def apply(competition: Competition, leagueTableEntry: LeagueTableEntry): LeagueTableEntryWithForm = {
     LeagueTableEntryWithForm(
-      leagueTableEntry.stageNumber, leagueTableEntry.round, leagueTableEntry.team,
-      competition.teamResults(leagueTableEntry.team.id)
+      leagueTableEntry.stageNumber,
+      leagueTableEntry.round,
+      leagueTableEntry.team,
+      competition.teamResults(leagueTableEntry.team.id),
     )
   }
 }
@@ -105,7 +107,7 @@ case class PrevResult(date: LocalDate, self: MatchDayTeam, foe: MatchDayTeam, wa
     }
   }
   val hasResult = scores.isDefined
-  val won = scores.exists {  case (selfScore, foeScore) => selfScore > foeScore }
+  val won = scores.exists { case (selfScore, foeScore) => selfScore > foeScore }
   val drew = scores.exists { case (selfScore, foeScore) => selfScore == foeScore }
   val lost = scores.exists { case (selfScore, foeScore) => selfScore < foeScore }
 }
@@ -135,7 +137,7 @@ case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
 
   private def isLight(colourHex: String): Boolean = {
     val colour = Color.decode(colourHex)
-    val yiq = ((colour.getRed*299) + (colour.getGreen*587) + (colour.getBlue*114)) / 1000
+    val yiq = ((colour.getRed * 299) + (colour.getGreen * 587) + (colour.getBlue * 114)) / 1000
     yiq > 128
   }
 
@@ -144,7 +146,7 @@ case class TeamColours(homeTeam: LineUpTeam, awayTeam: LineUpTeam) {
     val darker = new Color(
       Math.max(original.getRed * (1 - darkenFactor), 0).round.toInt,
       Math.max(original.getGreen * (1 - darkenFactor), 0).round.toInt,
-      Math.max(original.getBlue * (1 - darkenFactor), 0).round.toInt
+      Math.max(original.getBlue * (1 - darkenFactor), 0).round.toInt,
     )
     "#%02x%02x%02x".format(darker.getRed, darker.getGreen, darker.getBlue)
   }

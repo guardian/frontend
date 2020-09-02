@@ -5,11 +5,13 @@ import utils.SafeLogging
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DiscussionApiService(discussionClient: DiscussionClient)(implicit executionContext: ExecutionContext) extends SafeLogging {
+class DiscussionApiService(discussionClient: DiscussionClient)(implicit executionContext: ExecutionContext)
+    extends SafeLogging {
 
   def findDiscussionUserFilterCommented(userId: String): Future[Option[DiscussionProfile]] = {
 
-    val discussionProfileResponseF: Future[Option[DiscussionProfileResponse]] = discussionClient.findDiscussionUser(userId)
+    val discussionProfileResponseF: Future[Option[DiscussionProfileResponse]] =
+      discussionClient.findDiscussionUser(userId)
     val discussionStatsF: Future[Option[DiscussionProfileStats]] = discussionClient.findProfileStats(userId)
 
     for {

@@ -16,9 +16,11 @@ object CutOut extends Logging {
           case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))
           case Failure(t) =>
             log.warn(s"Could not convert width and height to INT: $t")
-            None}
+            None
+        }
       case Some(Cutout(src, _, _)) => Option(CutOut(src, Landscape))
-      case _ => None}
+      case _                       => None
+    }
   }
 }
 
@@ -32,8 +34,9 @@ case object Landscape extends Orientation
 case object Portrait extends Orientation
 
 case class CutOut(imageUrl: String, orientation: Orientation) {
-  def cssClass: String = orientation match {
-    case Landscape => "image--landscape"
-    case Portrait => "image--portrait"
-  }
+  def cssClass: String =
+    orientation match {
+      case Landscape => "image--landscape"
+      case Portrait  => "image--portrait"
+    }
 }

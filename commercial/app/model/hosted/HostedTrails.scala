@@ -20,7 +20,6 @@ object HostedTrails extends Logging {
     val (givenItemIfExists, otherItems) = results partition (_.id == itemId)
 
     val trails = givenItemIfExists.headOption map { givenItem =>
-
       val pubDateTime = publishedDateTime(givenItem)
 
       val (publishedBefore, publishedAfter) = otherItems.partition { item =>
@@ -45,7 +44,7 @@ object HostedTrails extends Logging {
       def mkString(ss: Seq[AnyRef]) = ss.mkString("'", "', '", "'")
       val content = mkString(results.map(item => (item.id, item.webPublicationDate.map(_.iso8601).getOrElse(""))))
       s"Tried to make $trailCount trails for item '$itemId' from content: $content.  " +
-      s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
+        s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
     }
 
     trails

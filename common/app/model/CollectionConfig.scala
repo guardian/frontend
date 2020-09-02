@@ -4,24 +4,24 @@ import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform}
 
 final case class CollectionConfig(
-  displayName: Option[String],
-  backfill: Option[Backfill],
-  metadata: Option[Seq[Metadata]],
-  collectionType: String,
-  href: Option[String],
-  description: Option[String],
-  groups: Option[List[String]],
-  uneditable: Boolean,
-  showTags: Boolean,
-  showSections: Boolean,
-  hideKickers: Boolean,
-  showDateHeader: Boolean,
-  showLatestUpdate: Boolean,
-  excludeFromRss: Boolean,
-  showTimestamps: Boolean,
-  hideShowMore: Boolean,
-  displayHints: Option[DisplayHints],
-  platform: Option[CollectionPlatform] = None
+    displayName: Option[String],
+    backfill: Option[Backfill],
+    metadata: Option[Seq[Metadata]],
+    collectionType: String,
+    href: Option[String],
+    description: Option[String],
+    groups: Option[List[String]],
+    uneditable: Boolean,
+    showTags: Boolean,
+    showSections: Boolean,
+    hideKickers: Boolean,
+    showDateHeader: Boolean,
+    showLatestUpdate: Boolean,
+    excludeFromRss: Boolean,
+    showTimestamps: Boolean,
+    hideShowMore: Boolean,
+    displayHints: Option[DisplayHints],
+    platform: Option[CollectionPlatform] = None,
 )
 
 object CollectionConfig {
@@ -44,7 +44,7 @@ object CollectionConfig {
       showTimestamps = config.showTimestamps,
       hideShowMore = config.hideShowMore,
       displayHints = config.displayHints.map(DisplayHints.make),
-      platform = Some(config.platform)
+      platform = Some(config.platform),
     )
   }
 

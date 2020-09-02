@@ -31,7 +31,7 @@ trait Store extends Logging with Dates {
     S3.putPublic(dfpHighMerchandisingTagsDataKey, keywordsJson, defaultJsonEncoding)
   }
   def putDfpPageSkinAdUnits(adUnitJson: String): Unit = {
-    S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding )
+    S3.putPublic(dfpPageSkinnedAdUnitsKey, adUnitJson, defaultJsonEncoding)
   }
   def putDfpLineItemsReport(everything: String): Unit = {
     S3.putPublic(dfpLineItemsKey, everything, defaultJsonEncoding)
@@ -45,8 +45,8 @@ trait Store extends Logging with Dates {
   def putDfpTemplateCreatives(creatives: String): Unit = {
     S3.putPublic(dfpTemplateCreativesKey, creatives, defaultJsonEncoding)
   }
-  def putDfpCustomTargetingKeyValues(keyValues: String): Unit ={
-    S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding )
+  def putDfpCustomTargetingKeyValues(keyValues: String): Unit = {
+    S3.putPublic(dfpCustomTargetingKey, keyValues, defaultJsonEncoding)
   }
   def putNonRefreshableLineItemIds(lineItemIds: Seq[Long]): Unit = {
     S3.putPublic(dfpNonRefreshableLineItemIdsKey, Json.stringify(toJson(lineItemIds)), defaultJsonEncoding)
@@ -55,7 +55,10 @@ trait Store extends Logging with Dates {
   val now: String = DateTime.now().toHttpDateTimeString
 
   def getDfpPageSkinnedAdUnits(): PageSkinSponsorshipReport =
-    S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(now, Nil)
+    S3.get(dfpPageSkinnedAdUnitsKey).flatMap(PageSkinSponsorshipReportParser(_)) getOrElse PageSkinSponsorshipReport(
+      now,
+      Nil,
+    )
 
   def getDfpInlineMerchandisingTargetedTagsReport(): InlineMerchandisingTargetedTagsReport = {
     S3.get(dfpInlineMerchandisingTagsDataKey) flatMap (InlineMerchandisingTargetedTagsReportParser(_))
@@ -74,10 +77,11 @@ trait Store extends Logging with Dates {
     maybeLineItems getOrElse LineItemReport("Empty Report", Nil, Nil)
   }
 
-  def getSlotTakeoversReport(slotName: String): Option[String] = slotName match {
-    case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
-    case _ => None
-  }
+  def getSlotTakeoversReport(slotName: String): Option[String] =
+    slotName match {
+      case "top-above-nav" => S3.get(topAboveNavSlotTakeoversKey)
+      case _               => None
+    }
 
   def getDfpTemplateCreatives: Seq[GuCreative] = {
     val creatives = for (doc <- S3.get(dfpTemplateCreativesKey)) yield {
@@ -91,7 +95,7 @@ trait Store extends Logging with Dates {
       val json = Json.parse(doc)
       json.validate[Seq[GuCustomTargeting]] match {
         case s: JsSuccess[Seq[GuCustomTargeting]] => s.get.sortBy(_.name)
-        case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); Nil
+        case e: JsError                           => log.error("Errors: " + JsError.toJson(e).toString()); Nil
       }
     }
     targeting getOrElse Nil

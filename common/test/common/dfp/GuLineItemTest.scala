@@ -13,8 +13,8 @@ class GuLineItemTest extends FlatSpec with Matchers {
   private val defaultTargeting = targeting(
     Seq(
       GuAdUnit("id", Seq("theguardian.com"), GuAdUnit.ACTIVE),
-      GuAdUnit("id", Seq("theguardian.com", "business", "front"), GuAdUnit.ACTIVE)
-    )
+      GuAdUnit("id", Seq("theguardian.com", "business", "front"), GuAdUnit.ACTIVE),
+    ),
   )
 
   private def targeting(adUnits: Seq[GuAdUnit]): GuTargeting = {
@@ -23,15 +23,15 @@ class GuLineItemTest extends FlatSpec with Matchers {
       adUnitsExcluded = Nil,
       geoTargetsIncluded = Seq(GeoTarget(1, None, "COUNTRY", "Australia")),
       geoTargetsExcluded = Nil,
-      customTargetSets = Nil
+      customTargetSets = Nil,
     )
   }
 
   private def lineItem(
-    endTime: Option[DateTime] = None,
-    costType: String = "CPD",
-    creativePlaceholders: Seq[GuCreativePlaceholder] = defaultCreativePlaceholders,
-    targeting: GuTargeting = defaultTargeting
+      endTime: Option[DateTime] = None,
+      costType: String = "CPD",
+      creativePlaceholders: Seq[GuCreativePlaceholder] = defaultCreativePlaceholders,
+      targeting: GuTargeting = defaultTargeting,
   ): GuLineItem = {
     GuLineItem(
       id = 0L,
@@ -46,17 +46,17 @@ class GuLineItemTest extends FlatSpec with Matchers {
       costType,
       creativePlaceholders,
       targeting,
-      lastModified = now
+      lastModified = now,
     )
   }
 
   "isSuitableForTopAboveNavSlot" should
-  "be true for a line item that meets all the rules" in {
+    "be true for a line item that meets all the rules" in {
     lineItem() shouldBe 'suitableForTopAboveNavSlot
   }
 
   it should
-  "be true for a line item that has relevant creative targeting" in {
+    "be true for a line item that has relevant creative targeting" in {
     val creativePlaceholders =
       Seq(GuCreativePlaceholder(leaderboardSize, targeting = Some(defaultTargeting)))
     lineItem(creativePlaceholders = creativePlaceholders) shouldBe 'suitableForTopAboveNavSlot

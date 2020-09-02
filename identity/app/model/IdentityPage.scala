@@ -3,16 +3,17 @@ package model
 import play.api.libs.json.JsString
 
 case class IdentityPage(
-  id: String,
-  webTitle: String,
-  returnUrl: Option[String] = None,
-  registrationType: Option[String] = None,
-  isFlow: Boolean = false,
-  usesGuardianHeader: Boolean = false ) extends StandalonePage {
+    id: String,
+    webTitle: String,
+    returnUrl: Option[String] = None,
+    registrationType: Option[String] = None,
+    isFlow: Boolean = false,
+    usesGuardianHeader: Boolean = false,
+) extends StandalonePage {
 
   private val javascriptConfig = Seq(
     returnUrl.map("returnUrl" -> JsString(_)),
-    registrationType.map("registrationType" -> JsString(_))
+    registrationType.map("registrationType" -> JsString(_)),
   ).flatten.toMap
 
   override val metadata = MetaData.make(
@@ -20,5 +21,6 @@ case class IdentityPage(
     section = Some(SectionId.fromId("identity")),
     webTitle = webTitle,
     contentType = Some(DotcomContentType.Identity),
-    javascriptConfigOverrides = javascriptConfig)
+    javascriptConfigOverrides = javascriptConfig,
+  )
 }

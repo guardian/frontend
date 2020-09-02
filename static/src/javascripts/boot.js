@@ -11,9 +11,7 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp } from '@guardian/consent-management-platform';
 import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
 import { getCookie } from 'lib/cookies';
-import 'projects/commercial/modules/cmp/stub';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -34,16 +32,12 @@ const go = () => {
         bootStandard();
 
         // Start CMP
-        if (shouldUseSourcepointCmp()) {
-            // CCPA and TCFv2
-            const browserId: ?string = getCookie('bwid');
-            const pubData: { browserId?: string } | void = browserId
-                ? { browserId }
-                : undefined;
-            cmp.init({ pubData, isInUsa: isInUsa() });
-        } else {
-            // do nothing, TCFv1 CMP auto initialises
-        }
+        // CCPA and TCFv2
+        const browserId: ?string = getCookie('bwid');
+        const pubData: { browserId?: string } | void = browserId
+            ? { browserId }
+            : undefined;
+        cmp.init({ pubData, isInUsa: isInUsa() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {

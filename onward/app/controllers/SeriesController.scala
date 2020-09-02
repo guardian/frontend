@@ -19,40 +19,53 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 
 class SeriesController(
-  contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController with Logging with Paging with ImplicitControllerExecutionContext with Requests {
+    extends BaseController
+    with Logging
+    with Paging
+    with ImplicitControllerExecutionContext
+    with Requests {
 
-  def renderSeriesStories(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
-    if(request.forceDCR){
-      lookup(Edition(request), seriesId).map{ mseries =>
-          mseries.map{ series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+  def renderSeriesStories(seriesId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      if (request.forceDCR) {
+        lookup(Edition(request), seriesId).map { mseries =>
+          mseries.map { series => JsonComponent(SeriesStoriesDCR.fromSeries(series)).result }.getOrElse(NotFound)
+        }
+      } else {
+        lookup(Edition(request), seriesId) map { series =>
+          series.map(renderSeriesTrails).getOrElse(NotFound)
+        }
       }
-    }else {
-      lookup(Edition(request), seriesId) map { series =>
-        series.map(renderSeriesTrails).getOrElse(NotFound)
+    }
+
+  def renderMf2SeriesStories(seriesId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookup(Edition(request), seriesId) map {
+        _.map(series =>
+          Cached(15.minutes)(
+            rendermf2Series(series),
+          ),
+        ).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
       }
     }
-  }
 
-  def renderMf2SeriesStories(seriesId:String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(Edition(request), seriesId) map {
-      _.map(series => Cached(15.minutes)(
-        rendermf2Series(series)
-      )).getOrElse(Cached(15.minutes)(WithoutRevalidationResult(NotFound)))
+  def renderPodcastEpisodes(seriesId: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      lookup(Edition(request), seriesId, _.contentType("audio")) map {
+        _.map(series =>
+          Cached(900) {
+            JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
+          },
+        ).getOrElse(NotFound)
+      }
     }
-  }
 
-  def renderPodcastEpisodes(seriesId: String): Action[AnyContent] = Action.async { implicit request =>
-    lookup(Edition(request), seriesId, _.contentType("audio")) map {
-      _.map(series => Cached(900) {
-        JsonComponent(views.html.fragments.podcastEpisodes(series.trails.items.take(4).map(_.content)))
-      }).getOrElse(NotFound)
-    }
-  }
-
-  private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit request: RequestHeader): Future[Option[Series]] = {
+  private def lookup(edition: Edition, seriesId: String, queryModifier: ItemQuery => ItemQuery = identity)(implicit
+      request: RequestHeader,
+  ): Future[Option[Series]] = {
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
 
     def isCurrentStory(content: ApiContent) =
@@ -66,13 +79,14 @@ class SeriesController(
       response.tag.flatMap { tag =>
         val trails = response.results.getOrElse(Nil) filterNot isCurrentStory map (RelatedContentItem(_))
         if (trails.nonEmpty) {
-          Some(Series(seriesId, Tag.make(tag,None), RelatedContent(trails)))
+          Some(Series(seriesId, Tag.make(tag, None), RelatedContent(trails)))
         } else { None }
       }
     }
-    seriesResponse.recover{ case ContentApiError(404, message, _) =>
-      log.info(s"Got a 404 calling content api: $message" )
-      None
+    seriesResponse.recover {
+      case ContentApiError(404, message, _) =>
+        log.info(s"Got a 404 calling content api: $message")
+        None
     }
   }
 
@@ -82,25 +96,28 @@ class SeriesController(
     val description = series.tag.metadata.description.getOrElse("").replaceAll("<.*?>", "")
 
     JsonComponent(
-      "items" -> JsArray(Seq(
-        Json.obj(
-          "displayName" -> displayName,
-          "description" -> description,
-          "showContent" -> seriesStories.nonEmpty,
-          "content" -> seriesStories.map( collection => isCuratedContent(collection.faciaContent))
-        )
-      ))
+      "items" -> JsArray(
+        Seq(
+          Json.obj(
+            "displayName" -> displayName,
+            "description" -> description,
+            "showContent" -> seriesStories.nonEmpty,
+            "content" -> seriesStories.map(collection => isCuratedContent(collection.faciaContent)),
+          ),
+        ),
+      ),
     )
   }
 
   private def renderSeriesTrails(series: Series)(implicit request: RequestHeader): Result = {
-    val (containerDefinition: FaciaContainer, frontProperties: FrontProperties) = SeriesHelper.dataForContainerRendering(series)
+    val (containerDefinition: FaciaContainer, frontProperties: FrontProperties) =
+      SeriesHelper.dataForContainerRendering(series)
     val frontId = request.referrer.map(new URI(_).getPath.stripPrefix("/"))
     val response = () =>
       views.html.fragments.containers.facia_cards.container(
         containerDefinition = containerDefinition,
         frontProperties = frontProperties,
-        frontId = frontId
+        frontId = frontId,
       )
     renderFormat(response, response, 900)
   }

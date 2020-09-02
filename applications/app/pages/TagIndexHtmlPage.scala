@@ -5,7 +5,14 @@ import conf.switches.Switches.WeAreHiring
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
-import model.{ApplicationContext, ContributorsListing, PreferencesMetaData, StandalonePage, SubjectsListing, TagIndexPage}
+import model.{
+  ApplicationContext,
+  ContributorsListing,
+  PreferencesMetaData,
+  StandalonePage,
+  SubjectsListing,
+  TagIndexPage,
+}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.fragments._
@@ -20,26 +27,30 @@ import views.html.stacked
 
 object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink("index")
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.index.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink("index")
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(Some("index"))))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink("stylesheets/old-ie.head.index.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.index.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def html(page: StandalonePage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: StandalonePage = page
 
     val content: Html = page match {
-      case p: TagIndexPage => tagIndexBody(p)
+      case p: TagIndexPage        => tagIndexBody(p)
       case p: PreferencesMetaData => index(p)
       case p: ContributorsListing => tagIndexListingBody("contributors", p.metadata.webTitle, p.listings)
-      case p: SubjectsListing => tagIndexListingBody("subjects", p.metadata.webTitle, p.listings)
+      case p: SubjectsListing     => tagIndexListingBody("subjects", p.metadata.webTitle, p.listings)
 
-      case unsupported => throw new RuntimeException(s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}")
+      case unsupported =>
+        throw new RuntimeException(
+          s"Type of content '${unsupported.getClass.getName}' is not supported by ${this.getClass.getName}",
+        )
     }
 
     htmlTag(
@@ -50,7 +61,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         styles(allStyles),
         fixIEReferenceErrors(),
         checkModuleSupport(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -63,11 +74,10 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 
 }
-

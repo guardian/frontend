@@ -6,6 +6,8 @@ case class ElemMatch(arrayPath: String, filters: Iterable[ElemMatchFilter]) exte
   require(filters.size > 0, "You must provide at least one ElemMatchFilter to an ElemMatch instance")
 
   override def parameters: Iterable[(String, String)] = {
-    Iterable(("elemMatch", arrayPath)) ++ filters.map(filter => ("elemMatchFilter", "%s:%s".format(filter.path, filter.value)))
+    Iterable(("elemMatch", arrayPath)) ++ filters.map(filter =>
+      ("elemMatchFilter", "%s:%s".format(filter.path, filter.value)),
+    )
   }
 }

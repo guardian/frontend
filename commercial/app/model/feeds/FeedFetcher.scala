@@ -25,7 +25,8 @@ trait FeedFetcher {
 
     val start = currentTimeMillis()
 
-    val futureResponse = wsClient.url(feedMetaData.url)
+    val futureResponse = wsClient
+      .url(feedMetaData.url)
       .withQueryStringParameters(feedMetaData.parameters.toSeq: _*)
       .withRequestTimeout(feedMetaData.timeout)
       .get()
@@ -34,7 +35,7 @@ trait FeedFetcher {
       if (response.status == 200) {
         FetchResponse(
           Feed(body(response), contentType(response)),
-          Duration(currentTimeMillis() - start, MILLISECONDS)
+          Duration(currentTimeMillis() - start, MILLISECONDS),
         )
       } else {
         throw FetchException(response.status, response.statusText)
@@ -56,27 +57,29 @@ class SingleFeedFetcher(val wsClient: WSClient)(val feedMetaData: FeedMetaData) 
   }
 }
 
-class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMetaData: EventsFeedMetaData) extends FeedFetcher {
+class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMetaData: EventsFeedMetaData)
+    extends FeedFetcher {
 
   def fetchPage(index: Int)(implicit executionContext: ExecutionContext): Future[FetchResponse] = {
     fetch(feedMetaData.copy(additionalParameters = Map("page" -> index.toString)))
   }
 
-  def combineFetchResponses(responses: Seq[FetchResponse]): FetchResponse ={
+  def combineFetchResponses(responses: Seq[FetchResponse]): FetchResponse = {
 
-    val duration = responses.foldLeft(0 milliseconds)(
-      (result, current: FetchResponse) => result + Duration(current.duration.toMillis, MILLISECONDS))
+    val duration = responses.foldLeft(0 milliseconds)((result, current: FetchResponse) =>
+      result + Duration(current.duration.toMillis, MILLISECONDS),
+    )
 
-    val contents = responses.foldLeft(JsArray())(
-      (result: JsArray, current: FetchResponse) => result :+ Json.parse(current.feed.content)
+    val contents = responses.foldLeft(JsArray())((result: JsArray, current: FetchResponse) =>
+      result :+ Json.parse(current.feed.content),
     )
 
     FetchResponse(
       Feed(
         contents.toString(),
-        responses.head.feed.contentType
+        responses.head.feed.contentType,
       ),
-      duration
+      duration,
     )
   }
 
@@ -100,11 +103,10 @@ class EventbriteMultiPageFeedFetcher(val wsClient: WSClient)(override val feedMe
 
 class FeedsFetcher(wsClient: WSClient) {
 
-
   private val jobs: Option[FeedFetcher] = {
-      Configuration.commercial.jobsUrl map { url =>
-        new SingleFeedFetcher(wsClient)(JobsFeedMetaData(url))
-      }
+    Configuration.commercial.jobsUrl map { url =>
+      new SingleFeedFetcher(wsClient)(JobsFeedMetaData(url))
+    }
   }
 
   private val bestsellers: Option[FeedFetcher] = {
@@ -115,13 +117,13 @@ class FeedsFetcher(wsClient: WSClient) {
 
   private val masterclasses: Option[FeedFetcher] =
     Configuration.commercial.masterclassesToken map (token =>
-      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("masterclasses", token))
-      )
+      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("masterclasses", token)),
+    )
 
   private val liveEvents: Option[FeedFetcher] =
     Configuration.commercial.liveEventsToken map (token =>
-      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("live-events", token))
-      )
+      new EventbriteMultiPageFeedFetcher(wsClient)(EventsFeedMetaData("live-events", token)),
+    )
 
   private val travelOffers: Option[FeedFetcher] =
     Configuration.commercial.travelFeedUrl map { url =>

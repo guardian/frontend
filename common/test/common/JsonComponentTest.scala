@@ -45,12 +45,16 @@ class JsonComponentTest extends FlatSpec with Matchers with WithTestExecutionCon
 
     val result = Future {
       val request = FakeRequest("GET", "http://foo.bar.com/data.json")
-      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(request).result
+      JsonComponent("text" -> Html("hello world"), "url" -> Html("http://foo.bar.com"), "refresh" -> false)(
+        request,
+      ).result
     }
 
     contentType(result) should be(Some("application/json"))
     status(result) should be(200)
-    contentAsString(result) should be("""{"text":"hello world","url":"http://foo.bar.com","refresh":false,"refreshStatus":true}""")
+    contentAsString(result) should be(
+      """{"text":"hello world","url":"http://foo.bar.com","refresh":false,"refreshStatus":true}""",
+    )
   }
 
   it should "render a json object properly" in {
@@ -63,7 +67,7 @@ class JsonComponentTest extends FlatSpec with Matchers with WithTestExecutionCon
 
     contentType(result) should be(Some("application/json"))
     status(result) should be(200)
-    contentAsString(result) should be( """{"name":"foo","refreshStatus":true}""")
+    contentAsString(result) should be("""{"name":"foo","refreshStatus":true}""")
   }
 
   it should "disable refreshing if auto refresh switch is off" in {

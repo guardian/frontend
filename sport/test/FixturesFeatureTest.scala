@@ -4,7 +4,12 @@ import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import collection.JavaConverters._
 import tools.MatchListFeatureTools
 
-@DoNotDiscover class FixturesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite  {
+@DoNotDiscover class FixturesFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with MatchListFeatureTools
+    with ConfiguredTestSuite {
 
   feature("Football Fixtures") {
 

@@ -11,7 +11,7 @@ import test._
 import scala.concurrent.Future
 
 @DoNotDiscover class ResultsControllerTest
-  extends WordSpec
+    extends WordSpec
     with ConfiguredTestSuite
     with Matchers
     with FootballTestData
@@ -22,7 +22,8 @@ import scala.concurrent.Future
     with WithTestExecutionContext
     with WithTestWsClient {
 
-  val resultsController = new ResultsController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+  val resultsController =
+    new ResultsController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   implicit lazy val mat: Materializer = app.materializer
 

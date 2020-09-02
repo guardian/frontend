@@ -16,16 +16,16 @@ object RichLinkTag {
 }
 
 case class RichLink(
-  tags: List[RichLinkTag],
-  cardStyle: String,
-  thumbnailUrl: Option[String],
-  headline: String,
-  contentType: Option[DotcomContentType],
-  starRating: Option[Int],
-  sponsorName: Option[String],
-  contributorImage: Option[String],
-  url: String,
-  pillar: String
+    tags: List[RichLinkTag],
+    cardStyle: String,
+    thumbnailUrl: Option[String],
+    headline: String,
+    contentType: Option[DotcomContentType],
+    starRating: Option[Int],
+    sponsorName: Option[String],
+    contributorImage: Option[String],
+    url: String,
+    pillar: String,
 )
 
 object RichLink {

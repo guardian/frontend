@@ -6,7 +6,11 @@ import org.fluentlenium.core.filter.FilterConstructor._
 
 import conf.Configuration
 
-@DoNotDiscover class SectionsNavigationFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class SectionsNavigationFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
 
   implicit val config = Configuration
 
@@ -15,7 +19,6 @@ import conf.Configuration
     scenario("Link to US edition", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       goTo("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-
         Then("I should see a link to the US edition")
 
         val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: US']")
@@ -27,7 +30,6 @@ import conf.Configuration
     scenario("Link to UK edition", ArticleComponents) {
       Given("I am on any guardiannews.com page")
       US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-
         Then("I should see a link to the UK edition")
 
         val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: UK']")
@@ -39,7 +41,6 @@ import conf.Configuration
     scenario("Links to company information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-
         Then("I should see a link to the contributors section!!")
         val contributors = browser.find("[data-link-name='us : footer : all contributors']")
         contributors.asScala.length should be > 0
@@ -61,7 +62,6 @@ import conf.Configuration
     scenario("Links to legal information", ArticleComponents) {
       Given("I am on any guardian.co.uk page")
       US("/world/2012/aug/23/australia-mining-boom-end") { browser =>
-
         Then("I should see a link to the terms & Conditions in the page footer")
 
         val terms = browser.find("[data-link-name='terms']")
@@ -69,7 +69,8 @@ import conf.Configuration
 
         And("a link to the privacy policy page")
         val privacy = browser.find("[data-link-name='privacy']")
-        privacy.asScala.length should be > 0}
+        privacy.asScala.length should be > 0
       }
     }
+  }
 }

@@ -43,11 +43,11 @@ object ConfigAgent extends Logging {
 
   def refreshAndReturn(implicit ec: ExecutionContext): Future[Option[ConfigJson]] =
     getClient.config
-      .flatMap(config => configAgent.alter{_ => Option(config)})
-      .fallbackTo{
-      log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
-      Future.successful(configAgent.get())
-    }
+      .flatMap(config => configAgent.alter { _ => Option(config) })
+      .fallbackTo {
+        log.warn("Falling back to current ConfigAgent contents on refreshAndReturn")
+        Future.successful(configAgent.get())
+      }
 
   def getPathIds: List[String] = {
     val config = configAgent.get()
@@ -67,18 +67,25 @@ object ConfigAgent extends Logging {
 
   def getCanonicalIdForFront(frontId: String): Option[String] = {
     val config = configAgent.get()
-    val canonicalCollectionMap = config.map (_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
+    val canonicalCollectionMap =
+      config.map(_.fronts.mapValues(front => front.canonical.orElse(front.collections.headOption))).getOrElse(Map.empty)
 
     canonicalCollectionMap.get(frontId).flatten
   }
 
   def getConfigForId(id: String): Option[List[CollectionConfigWithId]] = {
     val config = configAgent.get()
-    config.flatMap(_.fronts.get(id).map(_.collections))
-      .map(_.flatMap(collectionId => getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig))))
+    config
+      .flatMap(_.fronts.get(id).map(_.collections))
+      .map(
+        _.flatMap(collectionId =>
+          getConfig(collectionId).map(collectionConfig => CollectionConfigWithId(collectionId, collectionConfig)),
+        ),
+      )
   }
 
-  def getConfig(id: String): Option[CollectionConfig] = configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
+  def getConfig(id: String): Option[CollectionConfig] =
+    configAgent.get().flatMap(_.collections.get(id).map(CollectionConfig.make))
 
   def getAllCollectionIds: List[String] = {
     val config = configAgent.get()
@@ -93,10 +100,10 @@ object ConfigAgent extends Logging {
     val frontOption = config.flatMap(_.fronts.get(path))
     SeoDataJson(
       path,
-      navSection   = frontOption.flatMap(_.navSection).filter(_.nonEmpty),
-      webTitle  = frontOption.flatMap(_.webTitle).filter(_.nonEmpty),
-      title  = frontOption.flatMap(_.title).filter(_.nonEmpty),
-      description  = frontOption.flatMap(_.description).filter(_.nonEmpty)
+      navSection = frontOption.flatMap(_.navSection).filter(_.nonEmpty),
+      webTitle = frontOption.flatMap(_.webTitle).filter(_.nonEmpty),
+      title = frontOption.flatMap(_.title).filter(_.nonEmpty),
+      description = frontOption.flatMap(_.description).filter(_.nonEmpty),
     )
   }
 
@@ -118,7 +125,7 @@ object ConfigAgent extends Logging {
       imageHeight = frontOption.flatMap(_.imageHeight).map(_.toString),
       isImageDisplayed = frontOption.flatMap(_.isImageDisplayed).getOrElse(false),
       editorialType = None, // value found in Content API
-      commercial = None // value found in Content API
+      commercial = None, // value found in Content API
     )
   }
 
@@ -137,21 +144,26 @@ object ConfigAgent extends Logging {
   }
 
   def editorsPicksForCollection(collectionId: String): Option[Seq[String]] =
-    configAgent.get()
-      .map(_.fronts
-        .filter{ case (_, front) => front.collections.headOption == Option(collectionId)}
-        .keys.toSeq).filter(_.nonEmpty)
+    configAgent
+      .get()
+      .map(
+        _.fronts
+          .filter { case (_, front) => front.collections.headOption == Option(collectionId) }
+          .keys
+          .toSeq,
+      )
+      .filter(_.nonEmpty)
 }
 
-class ConfigAgentLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync)
-  (implicit ec: ExecutionContext) extends LifecycleComponent {
+class ConfigAgentLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+    ec: ExecutionContext,
+) extends LifecycleComponent {
 
-  appLifecycle.addStopHook { () => Future {
-    jobs.deschedule("ConfigAgentJob")
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      jobs.deschedule("ConfigAgentJob")
+    }
+  }
 
   override def start(): Unit = {
     jobs.deschedule("ConfigAgentJob")
@@ -164,4 +176,3 @@ class ConfigAgentLifecycle(
     }
   }
 }
-

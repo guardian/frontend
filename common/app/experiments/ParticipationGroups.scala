@@ -33,4 +33,3 @@ object ParticipationGroups extends enumeratum.Enum[ParticipationGroup] {
   override val values: immutable.IndexedSeq[ParticipationGroup] = findValues
 
 }
-

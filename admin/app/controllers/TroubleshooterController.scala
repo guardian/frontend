@@ -17,17 +17,20 @@ import play.api.Mode
 
 import scala.util.Random
 
-
 case class EndpointStatus(name: String, isOk: Boolean, messages: String*)
 
-object TestPassed{
+object TestPassed {
   def apply(name: String): EndpointStatus = EndpointStatus(name, true)
 }
-object TestFailed{
-  def apply(name: String, messages: String*): EndpointStatus = EndpointStatus(name, false, messages:_*)
+object TestFailed {
+  def apply(name: String, messages: String*): EndpointStatus = EndpointStatus(name, false, messages: _*)
 }
 
-class TroubleshooterController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit appContext: ApplicationContext) extends BaseController with Logging with ImplicitControllerExecutionContext {
+class TroubleshooterController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+    appContext: ApplicationContext,
+) extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext {
 
   private val capiLiveHttpClient = new CapiHttpClient(wsClient)
   private val capiPreviewHttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
@@ -42,59 +45,64 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
       .build()
   }
 
-
-  def index(): Action[AnyContent] = Action { implicit request =>
-    NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
-  }
-
-  def test(id: String, testPath: String): Action[AnyContent] = Action.async{ implicit request =>
-
-    val pathToTest = if(testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
-
-    val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
-
-    val thisLoadBalancer = loadBalancers.find(_.project == id)
-
-    val directToLoadBalancer = thisLoadBalancer.map(testOnLoadBalancer(_, pathToTest, id))
-      .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
-    val viaWebsite = testOnGuardianSite(pathToTest, id)
-    val directToContentApi = testOnContentApi(pathToTest, id)
-    val directToRouter = testOnRouter(pathToTest, id)
-    val directToPreviewContentApi = testOnPreviewContentApi(pathToTest, id)
-    val viaPreviewWebsite = testOnPreviewSite(pathToTest, id)
-
-    // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
-    // in the stack
-    Future.sequence(
-      Seq(
-        directToContentApi,
-        directToLoadBalancer,
-        directToRouter,
-        viaWebsite,
-        directToPreviewContentApi,
-        viaPreviewWebsite
-      )
-    ).map { results =>
-      NoCache(Ok(views.html.troubleshooterResults(thisLoadBalancer, results)))
+  def index(): Action[AnyContent] =
+    Action { implicit request =>
+      NoCache(Ok(views.html.troubleshooter(LoadBalancer.all.filter(_.testPath.isDefined))))
     }
-  }
 
+  def test(id: String, testPath: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val pathToTest =
+        if (testPath.startsWith("/")) testPath else s"/$testPath" // appending leading '/' if user forgot to include it
+
+      val loadBalancers = LoadBalancer.all.filter(_.testPath.isDefined)
+
+      val thisLoadBalancer = loadBalancers.find(_.project == id)
+
+      val directToLoadBalancer = thisLoadBalancer
+        .map(testOnLoadBalancer(_, pathToTest, id))
+        .getOrElse(Future.successful(TestFailed("Can find the appropriate loadbalancer")))
+      val viaWebsite = testOnGuardianSite(pathToTest, id)
+      val directToContentApi = testOnContentApi(pathToTest, id)
+      val directToRouter = testOnRouter(pathToTest, id)
+      val directToPreviewContentApi = testOnPreviewContentApi(pathToTest, id)
+      val viaPreviewWebsite = testOnPreviewSite(pathToTest, id)
+
+      // NOTE - the order of these is important, they are ordered so that the first failure is furthest 'back'
+      // in the stack
+      Future
+        .sequence(
+          Seq(
+            directToContentApi,
+            directToLoadBalancer,
+            directToRouter,
+            viaWebsite,
+            directToPreviewContentApi,
+            viaPreviewWebsite,
+          ),
+        )
+        .map { results =>
+          NoCache(Ok(views.html.troubleshooterResults(thisLoadBalancer, results)))
+        }
+    }
 
   private def testOnRouter(testPath: String, id: String): Future[EndpointStatus] = {
 
     def fetchWithRouterUrl(url: String) = {
       val result = httpGet("Can fetch directly from Router load balancer", s"http://$url$testPath")
-      result.map{ result =>
+      result.map { result =>
         if (result.isOk)
           result
         else
-          TestFailed(result.name, result.messages :+
-            "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'":_*)
+          TestFailed(
+            result.name,
+            result.messages :+
+              "NOTE: if hitting the Router you MUST set Host header to 'www.theguardian.com' or else you will get '403 Forbidden'": _*,
+          )
       }
     }
 
-
-    val routerUrl = if(appContext.environment.mode == Mode.Prod) {
+    val routerUrl = if (appContext.environment.mode == Mode.Prod) {
       // Workaround in PROD:
       // Getting the private dns of one of the router instances because
       // the Router ELB can only be accessed via its public IP/DNS from Fastly or Guardian VPN/office, not from an Admin instance
@@ -104,16 +112,18 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
       val tagsAsFilters = Map(
         "Stack" -> "frontend",
         "App" -> "router",
-        "Stage" -> "PROD"
+        "Stage" -> "PROD",
       ).map {
-        case(name, value) => new Filter("tag:" + name).withValues(value)
+        case (name, value) => new Filter("tag:" + name).withValues(value)
       }.asJavaCollection
-      val instancesDnsName: Seq[String] = awsEc2Client.map(
-        _.describeInstances(new DescribeInstancesRequest().withFilters(tagsAsFilters))
-          .getReservations.asScala
-          .flatMap(_.getInstances.asScala)
-          .map(_.getPrivateDnsName)
-      ).toSeq.flatten
+      val instancesDnsName: Seq[String] = awsEc2Client
+        .map(
+          _.describeInstances(new DescribeInstancesRequest().withFilters(tagsAsFilters)).getReservations.asScala
+            .flatMap(_.getInstances.asScala)
+            .map(_.getPrivateDnsName),
+        )
+        .toSeq
+        .flatten
       Random.shuffle(instancesDnsName).headOption
     } else {
       LoadBalancer("frontend-router").flatMap(_.url)
@@ -125,40 +135,51 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
 
   }
 
-  private def testOnLoadBalancer(thisLoadBalancer: LoadBalancer, testPath: String, id: String): Future[EndpointStatus] = {
-    thisLoadBalancer.url.map { url =>
-      httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://$url$testPath")
-    }.getOrElse(Future(TestFailed(s"Can get ${thisLoadBalancer.name}'s loadbalancer url")))
+  private def testOnLoadBalancer(
+      thisLoadBalancer: LoadBalancer,
+      testPath: String,
+      id: String,
+  ): Future[EndpointStatus] = {
+    thisLoadBalancer.url
+      .map { url =>
+        httpGet(s"Can fetch directly from ${thisLoadBalancer.name} load balancer", s"http://$url$testPath")
+      }
+      .getOrElse(Future(TestFailed(s"Can get ${thisLoadBalancer.name}'s loadbalancer url")))
   }
 
   private def testOnContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Content API"
     val request = contentApi.item(testPath, "UK").showFields("all")
-    contentApi.getResponse(request).map {
-      response =>
+    contentApi
+      .getResponse(request)
+      .map { response =>
         if (response.status == "ok") {
           TestPassed(testName)
         } else {
           TestFailed(testName, request.toString)
         }
-    }.recoverWith {
-      case t: Throwable => Future.successful(TestFailed("Direct to content api", t.getMessage, request.toString))
-    }
+      }
+      .recoverWith {
+        case t: Throwable => Future.successful(TestFailed("Direct to content api", t.getMessage, request.toString))
+      }
   }
 
   private def testOnPreviewContentApi(testPath: String, id: String): Future[EndpointStatus] = {
     val testName = "Can fetch directly from Preview Content API"
     val request = previewContentApi.item(testPath, "UK").showFields("all")
-    previewContentApi.getResponse(request).map {
-      response =>
+    previewContentApi
+      .getResponse(request)
+      .map { response =>
         if (response.status == "ok") {
           TestPassed(testName)
         } else {
           TestFailed(testName, request.toString)
         }
-    }.recoverWith {
-      case t: Throwable => Future.successful(TestFailed("Direct to Preview Content API", t.getMessage, request.toString))
-    }
+      }
+      .recoverWith {
+        case t: Throwable =>
+          Future.successful(TestFailed("Direct to Preview Content API", t.getMessage, request.toString))
+      }
   }
 
   private def testOnGuardianSite(testPath: String, id: String): Future[EndpointStatus] = {
@@ -166,10 +187,14 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
   }
 
   private def testOnPreviewSite(testPath: String, id: String): Future[EndpointStatus] = {
-    httpGet("Can fetch from preview.gutools.co.uk", s"https://preview.gutools.co.uk$testPath", Some("preview.gutools.co.uk"))
+    httpGet(
+      "Can fetch from preview.gutools.co.uk",
+      s"https://preview.gutools.co.uk$testPath",
+      Some("preview.gutools.co.uk"),
+    )
   }
 
-  private def httpGet(testName: String, url: String, virtualHost: Option[String] = Some("www.theguardian.com")) =  {
+  private def httpGet(testName: String, url: String, virtualHost: Option[String] = Some("www.theguardian.com")) = {
     wsClient
       .url(url)
       .withVirtualHost(virtualHost.getOrElse(""))
@@ -187,4 +212,3 @@ class TroubleshooterController(wsClient: WSClient, val controllerComponents: Con
       }
   }
 }
-

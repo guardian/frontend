@@ -6,6 +6,8 @@ import play.api.mvc.ControllerComponents
 
 import scala.concurrent.ExecutionContext
 
-class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit executionContext: ExecutionContext) extends AllGoodCachedHealthCheck(
-  NeverExpiresSingleHealthCheck("/login")
-)(wsClient, executionContext)
+class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+    executionContext: ExecutionContext,
+) extends AllGoodCachedHealthCheck(
+      NeverExpiresSingleHealthCheck("/login"),
+    )(wsClient, executionContext)

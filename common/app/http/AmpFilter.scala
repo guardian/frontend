@@ -6,7 +6,9 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class AmpFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter with implicits.Requests {
+class AmpFilter(implicit val mat: Materializer, executionContext: ExecutionContext)
+    extends Filter
+    with implicits.Requests {
   override def apply(nextFilter: (RequestHeader) => Future[Result])(request: RequestHeader): Future[Result] = {
     if (request.isAmp) {
       val exposeAmpHeader = "Access-Control-Expose-Headers" -> "AMP-Access-Control-Allow-Source-Origin"

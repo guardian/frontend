@@ -7,17 +7,17 @@ import views.support.ImageProfile
 object FaciaWidths {
   private val MediaMobile = Map[CardType, BrowserWidth](
     (MediaList, 127.px),
-    (Standard, 95.vw)
+    (Standard, 95.vw),
   )
 
   val ExtraPixelWidthsForMediaMobile: Seq[PixelWidth] = List(
     445.px, // largest width for mobile breakpoint
-    605.px  // largest width for mobile landscape breakpoint
+    605.px, // largest width for mobile landscape breakpoint
   )
 
   private val CutOutMobile = Map[CardType, BrowserWidth](
     (MediaList, 115.px),
-    (Standard, 130.px)
+    (Standard, 130.px),
   )
 
   private val MediaTablet = Map[CardType, BrowserWidth](
@@ -31,7 +31,7 @@ object FaciaWidths {
     (ThreeQuartersTall, 520.px),
     (FullMedia50, 350.px),
     (FullMedia75, 520.px),
-    (FullMedia100, 700.px)
+    (FullMedia100, 700.px),
   )
 
   private val CutOutTablet = Map[CardType, BrowserWidth](
@@ -44,7 +44,7 @@ object FaciaWidths {
     (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
-    (FullMedia100, 331.px)
+    (FullMedia100, 331.px),
   )
 
   private val MediaDesktop = Map[CardType, BrowserWidth](
@@ -58,7 +58,7 @@ object FaciaWidths {
     (ThreeQuartersTall, 700.px),
     (FullMedia50, 470.px),
     (FullMedia75, 700.px),
-    (FullMedia100, 940.px)
+    (FullMedia100, 940.px),
   )
 
   private val CutOutDesktop = Map[CardType, BrowserWidth](
@@ -71,7 +71,7 @@ object FaciaWidths {
     (ThreeQuartersTall, 331.px),
     (FullMedia50, 331.px),
     (FullMedia75, 331.px),
-    (FullMedia100, 331.px)
+    (FullMedia100, 331.px),
   )
 
   private val SquareImageFronts = Map[CardType, BrowserWidth](
@@ -82,17 +82,17 @@ object FaciaWidths {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
-      mobile          = MediaMobile.get(itemClasses.mobile),
-      tablet          = MediaTablet.get(itemClasses.tablet),
-      desktop         = MediaDesktop.get(desktopClass)
+      mobile = MediaMobile.get(itemClasses.mobile),
+      tablet = MediaTablet.get(itemClasses.tablet),
+      desktop = MediaDesktop.get(desktopClass),
     )
   }
 
   def squareFront(): WidthsByBreakpoint = {
     WidthsByBreakpoint(
-      mobile          = SquareImageFronts.get(Standard),
-      tablet          = SquareImageFronts.get(Standard),
-      desktop         = SquareImageFronts.get(Standard)
+      mobile = SquareImageFronts.get(Standard),
+      tablet = SquareImageFronts.get(Standard),
+      desktop = SquareImageFronts.get(Standard),
     )
   }
 
@@ -100,9 +100,9 @@ object FaciaWidths {
     val desktopClass = itemClasses.desktop.getOrElse(itemClasses.tablet)
 
     WidthsByBreakpoint(
-      mobile  = CutOutMobile.get(itemClasses.mobile),
-      tablet  = CutOutTablet.get(itemClasses.tablet),
-      desktop = CutOutDesktop.get(desktopClass)
+      mobile = CutOutMobile.get(itemClasses.mobile),
+      tablet = CutOutTablet.get(itemClasses.tablet),
+      desktop = CutOutDesktop.get(desktopClass),
     )
   }
 }

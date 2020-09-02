@@ -8,11 +8,15 @@ import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFr
 import views.support.`package`.withJsoup
 
 object FrontsCleaner {
- def apply(page: PressedPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
+  def apply(page: PressedPage, html: Html)(implicit request: RequestHeader, context: ApplicationContext): Html = {
     val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
-      CommercialComponentHigh(page.frontProperties.isPaidContent, page.isNetworkFront, page.metadata.hasPageSkin(edition)),
-      CommercialMPUForFronts()
+      CommercialComponentHigh(
+        page.frontProperties.isPaidContent,
+        page.isNetworkFront,
+        page.metadata.hasPageSkin(edition),
+      ),
+      CommercialMPUForFronts(),
     )
   }
 }

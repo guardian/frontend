@@ -3,11 +3,11 @@ package common.commercial.hosted
 import com.gu.contentatom.thrift.{Atom, AtomData}
 
 case class HostedCallToAction(
-  url: String,
-  image: Option[String],
-  label: Option[String],
-  trackingCode: Option[String],
-  btnText: Option[String]
+    url: String,
+    image: Option[String],
+    label: Option[String],
+    trackingCode: Option[String],
+    btnText: Option[String],
 )
 
 object HostedCallToAction {
@@ -19,7 +19,7 @@ object HostedCallToAction {
       image = cta.backgroundImage,
       label = cta.label,
       trackingCode = cta.trackingCode,
-      btnText = cta.btnText
+      btnText = cta.btnText,
     )
   }
 }

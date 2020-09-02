@@ -8,9 +8,9 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
-import { show as showCMPModule } from 'common/modules/ui/cmp-ui';
+import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
-import type { CurrentABTest, GateStatus } from './types';
+import type { CurrentABTest, GateStatus, DismissalWindow } from './types';
 
 // Helper for setGatePageTargeting function
 const setGoogleTargeting = (canShow: GateStatus): void => {
@@ -49,6 +49,26 @@ export const getVariant: ABTest => string = test => {
     return currentTest ? currentTest.variantToRun.id : '';
 };
 
+// set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
+// name is optional, but can be used to differentiate between multiple sign in gate tests
+export const setUserDismissedGate: ({
+    name?: string,
+    variant: string,
+    componentName: string,
+}) => void = ({ name = '', variant, componentName }) => {
+    const prefs = userPrefs.get(componentName) || {};
+    prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
+    userPrefs.set(componentName, prefs);
+};
+
+// delete from user preferences that the user has previously dismissed the gate
+// name is optional, but can be used to differentiate between multiple sign in gate tests
+export const unsetUserDismissedGate: ({
+    componentName: string,
+}) => void = ({ componentName }) => {
+    userPrefs.remove(componentName);
+};
+
 // check if the user has dismissed the gate by checking the user preferences,
 // name is optional, but can be used to differentiate between multiple sign in gate tests
 export const hasUserDismissedGate: ({
@@ -59,6 +79,36 @@ export const hasUserDismissedGate: ({
     const prefs = userPrefs.get(componentName) || {};
 
     return !!prefs[`${name ? `${name}-` : ''}${variant}`];
+};
+
+// check if the user has dismissed the gate within a given timeframe
+export const hasUserDismissedGateInWindow: ({
+    window: DismissalWindow,
+    name?: string,
+    variant: string,
+    componentName: string,
+}) => boolean = ({ window, name = '', componentName, variant }) => {
+    const prefs = userPrefs.get(componentName) || {};
+    if (!prefs[`${name ? `${name}-` : ''}${variant}`]) {
+        return false;
+    }
+
+    const dismissalTZ = Date.parse(
+        prefs[`${name ? `${name}-` : ''}${variant}`]
+    );
+
+    const dismissalWindows = {
+        day: 24,
+        dev: 0.05, // 3 min for testing
+    };
+    const hours = (Date.now() - dismissalTZ) / 36e5; //  36e5 is the scientific notation for 60*60*1000, which converts the milliseconds difference into hours.
+
+    if (hours >= dismissalWindows[window]) {
+        unsetUserDismissedGate({ componentName }); // clears the dismissal
+        return false;
+    }
+
+    return true;
 };
 
 // Dynamically sets the gate custom parameter for Google ad request page targeting
@@ -73,18 +123,6 @@ export const setGatePageTargeting = (
     } else {
         setGoogleTargeting(canShowCheck);
     }
-};
-
-// set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
-// name is optional, but can be used to differentiate between multiple sign in gate tests
-export const setUserDismissedGate: ({
-    name?: string,
-    variant: string,
-    componentName: string,
-}) => void = ({ name = '', variant, componentName }) => {
-    const prefs = userPrefs.get(componentName) || {};
-    prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
-    userPrefs.set(componentName, prefs);
 };
 
 // use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day
@@ -150,6 +188,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
         'membership',
         'help',
         'guardian-live-australia',
+        'gnm-archive',
     ];
 
     return invalidSections
@@ -207,7 +246,7 @@ export const addClickHandler: ({
 // shows the CMP (consent management platform) module
 export const showPrivacySettingsCMPModule: () => void = () => {
     if (config.get('switches.cmpUi', true)) {
-        showCMPModule(true);
+        cmp.showPrivacyManager();
     }
 };
 
@@ -215,7 +254,7 @@ export const showPrivacySettingsCMPModule: () => void = () => {
 export const addCSSOnOpinion: ({
     element: HTMLElement,
     selector: string,
-    css: string
+    css: string,
 }) => void = ({ element, selector, css }) => {
     if (config.get(`page.tones`) === 'Comment') {
         const selection = element.querySelector(selector);
@@ -223,7 +262,7 @@ export const addCSSOnOpinion: ({
             selection.classList.add(css);
         }
     }
-}
+};
 
 // add the background color if the page the user is on is the opinion section
 export const addOpinionBgColour: ({
@@ -311,9 +350,11 @@ export const gateBorderFix = () => {
     const contentMainColumn = document.querySelector('.js-content-main-column');
 
     if (contentMainColumn) {
-        contentMainColumn.classList.add('signin-gate__content-main-column__border-fix');
+        contentMainColumn.classList.add(
+            'signin-gate__content-main-column__border-fix'
+        );
     }
-}
+};
 
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function

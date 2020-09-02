@@ -27,8 +27,8 @@ object Helpers {
       "scriptUrl" -> asset.typeData.flatMap(_.scriptUrl),
       "scriptName" -> asset.typeData.flatMap(_.scriptName),
       "html" -> asset.typeData.flatMap(_.html),
-      "embedType" -> asset.typeData.flatMap(_.embedType)
-    ).collect{ case(k, Some(v)) => (k,v) }
+      "embedType" -> asset.typeData.flatMap(_.embedType),
+    ).collect { case (k, Some(v)) => (k, v) }
 }
 
 object ImageAsset {
@@ -38,17 +38,19 @@ object ImageAsset {
       fields = Helpers.assetFieldsToMap(asset),
       mediaType = asset.`type`.name,
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
+    )
   }
   implicit val imageAssetWrites: Writes[ImageAsset] = Json.writes[ImageAsset]
 }
 
 case class ImageAsset(
-  index: Int = 0,
-  fields: Map[String, String],
-  mediaType: String,
-  mimeType: Option[String],
-  url: Option[String]) {
+    index: Int = 0,
+    fields: Map[String, String],
+    mediaType: String,
+    mimeType: Option[String],
+    url: Option[String],
+) {
 
   lazy val path: Option[String] = url.map(ImgSrc(_, Naked))
 
@@ -57,8 +59,8 @@ case class ImageAsset(
 
   val width: Int = fields.get("width").map(_.toInt).getOrElse(1)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(1)
-  lazy val ratioWholeNumber: Int = width/height
-  lazy val ratioDouble: Double = width.toDouble/height
+  lazy val ratioWholeNumber: Int = width / height
+  lazy val ratioDouble: Double = width.toDouble / height
   val role: Option[String] = fields.get("role")
   val orientation: Orientation = Orientation.fromDimensions(width, height)
 
@@ -85,26 +87,27 @@ object VideoAsset {
     VideoAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap {
-        // FIXME: Remove this once the multimedia.guardianapis are available over https
-        case asset if !asset.secureFile.exists(s => s.startsWith("https://multimedia.guardianapis.com")) => asset.secureFile
-        case _ => None
-      }.orElse(asset.file) )
+      url = asset.typeData
+        .flatMap {
+          // FIXME: Remove this once the multimedia.guardianapis are available over https
+          case asset if !asset.secureFile.exists(s => s.startsWith("https://multimedia.guardianapis.com")) =>
+            asset.secureFile
+          case _ => None
+        }
+        .orElse(asset.file),
+    )
   }
   implicit val videoAssetWrites: Writes[VideoAsset] = Json.writes[VideoAsset]
 }
 
-case class VideoAsset(
-  fields: Map[String,String],
-  url: Option[String],
-  mimeType: Option[String]) {
+case class VideoAsset(fields: Map[String, String], url: Option[String], mimeType: Option[String]) {
 
   val width: Int = fields.get("width").map(_.toInt).getOrElse(0)
   val height: Int = fields.get("height").map(_.toInt).getOrElse(0)
   val encoding: Option[Encoding] = {
     (url, mimeType) match {
       case (Some(url), Some(mimeType)) => Some(Encoding(url, mimeType))
-      case _ => None
+      case _                           => None
     }
   }
 
@@ -123,15 +126,13 @@ object AudioAsset {
     AudioAsset(
       fields = Helpers.assetFieldsToMap(asset),
       mimeType = asset.mimeType,
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file),
+    )
   }
   implicit val audioAssetWrites: Writes[AudioAsset] = Json.writes[AudioAsset]
 }
 
-case class AudioAsset(
-  fields: Map[String,String],
-  url: Option[String],
-  mimeType: Option[String]) {
+case class AudioAsset(fields: Map[String, String], url: Option[String], mimeType: Option[String]) {
 
   // The audio duration in seconds
   val duration: Int = fields.getOrElse("durationSeconds", "0").toInt +
@@ -140,15 +141,11 @@ case class AudioAsset(
 
 object EmbedAsset {
   def make(asset: Asset): EmbedAsset = {
-    EmbedAsset(
-      fields = Helpers.assetFieldsToMap(asset),
-      url = asset.typeData.flatMap(_.secureFile).orElse(asset.file) )
+    EmbedAsset(fields = Helpers.assetFieldsToMap(asset), url = asset.typeData.flatMap(_.secureFile).orElse(asset.file))
   }
 }
 
-case class EmbedAsset(
-  fields: Map[String,String],
-  url: Option[String]) {
+case class EmbedAsset(fields: Map[String, String], url: Option[String]) {
 
   val iframeUrl: Option[String] = fields.get("iframeUrl")
   val scriptName: Option[String] = fields.get("scriptName")

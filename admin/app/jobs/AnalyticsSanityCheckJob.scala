@@ -24,7 +24,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
     metricUnit = StandardUnit.Percent,
     get = () => {
       ophanPageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
-    }
+    },
   )
 
   val googleConversionRate = GaugeMetric(
@@ -33,7 +33,7 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
     metricUnit = StandardUnit.Percent,
     get = () => {
       googlePageViews.get.toDouble / rawPageViews.get.toDouble * 100.0d
-    }
+    },
   )
 
   def run()(implicit executionContext: ExecutionContext) {
@@ -47,7 +47,8 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
       ophanViewsCount <- fOphanViews
     } yield {
 
-      def metricLastSum(stats: GetMetricStatisticsResult): Long = stats.getDatapoints.asScala.headOption.map(_.getSum.longValue).getOrElse(0L)
+      def metricLastSum(stats: GetMetricStatisticsResult): Long =
+        stats.getDatapoints.asScala.headOption.map(_.getSum.longValue).getOrElse(0L)
 
       rawPageViews.set(metricLastSum(rawPageViewsStats))
       googlePageViews.set(metricLastSum(googlePageViewsStats))
@@ -61,13 +62,11 @@ class AnalyticsSanityCheckJob(ophanApi: OphanApi) extends Logging {
   private def ophanViews()(implicit executionContext: ExecutionContext): Future[Long] = {
     val now = new DateTime().minusMinutes(15).getMillis
     ophanApi.getBreakdown("next-gen", hours = 1).map { json =>
-      (json \\ "data").flatMap {
-        line =>
-          val recent = line.asInstanceOf[play.api.libs.json.JsArray].value.filter {
-            entry =>
-              (entry \ "dateTime").as[Long] > now
-          }
-          recent.map(r => (r \ "count").as[Long])
+      (json \\ "data").flatMap { line =>
+        val recent = line.asInstanceOf[play.api.libs.json.JsArray].value.filter { entry =>
+          (entry \ "dateTime").as[Long] > now
+        }
+        recent.map(r => (r \ "count").as[Long])
       }.sum
     }
   }

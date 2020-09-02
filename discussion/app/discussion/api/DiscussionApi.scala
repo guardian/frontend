@@ -19,7 +19,9 @@ import scala.concurrent.{ExecutionContext, Future}
 
 trait DiscussionApiLike extends Http with Logging {
 
-  protected def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse]
+  protected def GET(url: String, headers: (String, String)*)(implicit
+      executionContext: ExecutionContext,
+  ): Future[WSResponse]
 
   protected val apiRoot: String
   protected val clientHeaderValue: String
@@ -35,40 +37,45 @@ trait DiscussionApiLike extends Http with Logging {
       s"Discussion API: Error loading comment count ids: $ids status: ${response.status} message: ${response.statusText}"
     val apiUrl = endpointUrl("/getCommentCounts", List(("short-urls", ids)))
 
-    getJsonOrError(apiUrl, onError) map {
-      json =>
-        json.asInstanceOf[JsObject].fieldSet.toSeq map {
-          case (id, JsNumber(i)) => CommentCount(id, i.toInt)
-          case bad => throw new RuntimeException(s"never understood $bad")
-        }
+    getJsonOrError(apiUrl, onError) map { json =>
+      json.asInstanceOf[JsObject].fieldSet.toSeq map {
+        case (id, JsNumber(i)) => CommentCount(id, i.toInt)
+        case bad               => throw new RuntimeException(s"never understood $bad")
+      }
     }
   }
 
-  def commentFor(id: Int, displayThreaded: Option[String]  = None)(implicit executionContext: ExecutionContext): Future[Comment] = {
-    val parameters = List(
-      "displayResponses" -> "true",
-      "displayThreaded" -> displayThreaded)
+  def commentFor(id: Int, displayThreaded: Option[String] = None)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Comment] = {
+    val parameters = List("displayResponses" -> "true", "displayThreaded" -> displayThreaded)
     val url = endpointUrl(s"/comment/$id", parameters)
     getCommentJsonForId(id, url)
   }
 
-  def commentsFor(key: DiscussionKey, params: DiscussionParams)(implicit executionContext: ExecutionContext): Future[DiscussionComments] = {
+  def commentsFor(key: DiscussionKey, params: DiscussionParams)(implicit
+      executionContext: ExecutionContext,
+  ): Future[DiscussionComments] = {
     val parameters = List(
       "pageSize" -> params.pageSize,
       "page" -> params.page,
       "orderBy" -> params.orderBy,
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
-        case _ => None}),
+        case _     => None
+      }),
       "showSwitches" -> "true",
-      "maxResponses" -> params.maxResponses)
-    val path = s"/discussion/$key" + (if(params.topComments) "/topcomments" else "")
+      "maxResponses" -> params.maxResponses,
+    )
+    val path = s"/discussion/$key" + (if (params.topComments) "/topcomments" else "")
     val url = endpointUrl(path, parameters)
 
     getJsonForUri(key, url)
   }
 
-  def commentContext(id: Int, params: DiscussionParams)(implicit executionContext: ExecutionContext): Future[(DiscussionKey, String)] = {
+  def commentContext(id: Int, params: DiscussionParams)(implicit
+      executionContext: ExecutionContext,
+  ): Future[(DiscussionKey, String)] = {
     def onError(r: WSResponse) =
       s"Discussion API: Cannot load comment context, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
 
@@ -77,13 +84,14 @@ trait DiscussionApiLike extends Http with Logging {
       "orderBy" -> params.orderBy,
       "displayThreaded" -> (params.displayThreaded match {
         case false => "false"
-        case _ => None})
+        case _     => None
+      }),
     )
     val path = s"/comment/$id/context"
     val apiUrl = endpointUrl(path, parameters)
 
     getJsonOrError(apiUrl, onError) map { json =>
-        (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
+      (DiscussionKey((json \ "discussionKey").as[String]), (json \ "page").as[Int].toString)
     }
   }
 
@@ -93,13 +101,14 @@ trait DiscussionApiLike extends Http with Logging {
     val apiUrl = endpointUrl("/profile/me")
     val authHeader = AuthHeaders.filterHeaders(headers).toSeq
 
-    getJsonOrError(apiUrl, onError, authHeader: _*) map {
-      json =>
-        Profile(json)
+    getJsonOrError(apiUrl, onError, authHeader: _*) map { json =>
+      Profile(json)
     }
   }
 
-  def profileComments(userId: String, page: String, orderBy: String = "newest", picks: Boolean = false)(implicit executionContext: ExecutionContext): Future[ProfileComments] = {
+  def profileComments(userId: String, page: String, orderBy: String = "newest", picks: Boolean = false)(implicit
+      executionContext: ExecutionContext,
+  ): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading comments for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
     val parameters = List(
@@ -108,72 +117,74 @@ trait DiscussionApiLike extends Http with Logging {
       "orderBy" -> orderBy,
       "showSwitches" -> "true",
       "displayHighlighted" -> (picks match {
-        case true => "true"
+        case true  => "true"
         case false => None
-      }))
+      }),
+    )
     val path = s"/profile/$userId/comments"
     val apiUrl = endpointUrl(path, parameters)
 
-    getJsonOrError(apiUrl, onError) map {
-      json => ProfileComments(json)
+    getJsonOrError(apiUrl, onError) map { json =>
+      ProfileComments(json)
     }
   }
 
-  def profileReplies(userId: String, page: String)(implicit executionContext: ExecutionContext): Future[ProfileComments] = {
+  def profileReplies(userId: String, page: String)(implicit
+      executionContext: ExecutionContext,
+  ): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading replies for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List(
-      "pageSize" -> pageSize,
-      "page" -> page,
-      "orderBy" -> "newest",
-      "showSwitches" -> "true")
+    val parameters = List("pageSize" -> pageSize, "page" -> page, "orderBy" -> "newest", "showSwitches" -> "true")
     val path = s"/profile/$userId/replies"
     val apiUrl = endpointUrl(path, parameters)
 
-    getJsonOrError(apiUrl, onError) map {
-      json => ProfileReplies(json)
+    getJsonOrError(apiUrl, onError) map { json =>
+      ProfileReplies(json)
     }
   }
 
-  def profileSearch(userId: String, q: String, page: String)(implicit executionContext: ExecutionContext): Future[ProfileComments] = {
+  def profileSearch(userId: String, q: String, page: String)(implicit
+      executionContext: ExecutionContext,
+  ): Future[ProfileComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading search User $userId, Query: $q. status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List(
-      "q" -> URLEncoder.encode(q, "UTF-8"),
-      "page" -> page)
+    val parameters = List("q" -> URLEncoder.encode(q, "UTF-8"), "page" -> page)
     val path = s"/search/profile/$userId"
     val apiUrl = endpointUrl(path, parameters)
 
-    getJsonOrError(apiUrl, onError) map {
-      json => ProfileComments(json)
+    getJsonOrError(apiUrl, onError) map { json =>
+      ProfileComments(json)
     }
   }
 
-  def profileDiscussions(userId: String, page: String)(implicit executionContext: ExecutionContext): Future[ProfileDiscussions] = {
+  def profileDiscussions(userId: String, page: String)(implicit
+      executionContext: ExecutionContext,
+  ): Future[ProfileDiscussions] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading discussions for User $userId, status: ${r.status}, message: ${r.statusText}, response: ${r.body}"
-    val parameters = List(
-      "pageSize" -> pageSize,
-      "page" -> page,
-      "orderBy" -> "newest",
-      "showSwitches" -> "true")
+    val parameters = List("pageSize" -> pageSize, "page" -> page, "orderBy" -> "newest", "showSwitches" -> "true")
     val path = s"/profile/$userId/discussions"
     val apiUrl = endpointUrl(path, parameters)
 
-    getJsonOrError(apiUrl, onError) map {
-      json => ProfileDiscussions(json)
+    getJsonOrError(apiUrl, onError) map { json =>
+      ProfileDiscussions(json)
     }
   }
 
-  private def getJsonForUri(key: DiscussionKey, apiUrl: String)(implicit executionContext: ExecutionContext): Future[DiscussionComments] = {
+  private def getJsonForUri(key: DiscussionKey, apiUrl: String)(implicit
+      executionContext: ExecutionContext,
+  ): Future[DiscussionComments] = {
     def onError(r: WSResponse) =
       s"Discussion API: Error loading comments id: $key status: ${r.status} message: ${r.statusText} url: $apiUrl"
 
-    getJsonOrError(apiUrl, onError) map {
-      json => DiscussionComments(json)}
+    getJsonOrError(apiUrl, onError) map { json =>
+      DiscussionComments(json)
+    }
   }
 
-  private def getCommentJsonForId(id: Int, apiUrl: String)(implicit executionContext: ExecutionContext): Future[Comment] = {
+  private def getCommentJsonForId(id: Int, apiUrl: String)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Comment] = {
     def onError(r: WSResponse) =
       s"Error loading comment id: $id status: ${r.status} message: ${r.statusText}"
 
@@ -183,28 +194,36 @@ trait DiscussionApiLike extends Http with Logging {
     }
   }
 
-  override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*)(implicit executionContext: ExecutionContext) = {
+  override protected def getJsonOrError(url: String, onError: (WSResponse) => String, headers: (String, String)*)(
+      implicit executionContext: ExecutionContext,
+  ) = {
     failIfDisabled().flatMap(_ => super.getJsonOrError(url, onError, headers :+ guClientHeader: _*))
   }
 
   private def guClientHeader = ("GU-Client", clientHeaderValue)
 
   def abuseReportToMap(abuseReport: DiscussionAbuseReport): Map[String, Seq[String]] = {
-    Map("categoryId" -> Seq(abuseReport.categoryId.toString),
+    Map(
+      "categoryId" -> Seq(abuseReport.categoryId.toString),
       "commentId" -> Seq(abuseReport.commentId.toString),
       "reason" -> abuseReport.reason.toSeq,
-      "email" -> abuseReport.email.toSeq)
+      "email" -> abuseReport.email.toSeq,
+    )
   }
 
-  def postAbuseReport(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie])(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+  def postAbuseReport(abuseReport: DiscussionAbuseReport, cookie: Option[Cookie])(implicit
+      executionContext: ExecutionContext,
+  ): Future[WSResponse] = {
     val url = s"${apiRoot}/comment/${abuseReport.commentId}/reportAbuse"
     val headers = Seq("D2-X-UID" -> conf.Configuration.discussion.d2Uid, guClientHeader)
-    if (cookie.isDefined) { headers :+  ("Cookie"->s"SC_GU_U=${cookie.get}") }
-    failIfDisabled().flatMap(_ => wsClient.url(url).withHttpHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)))
+    if (cookie.isDefined) { headers :+ ("Cookie" -> s"SC_GU_U=${cookie.get}") }
+    failIfDisabled().flatMap(_ =>
+      wsClient.url(url).withHttpHeaders(headers: _*).withRequestTimeout(2.seconds).post(abuseReportToMap(abuseReport)),
+    )
   }
 
   private def failIfDisabled()(implicit executionContext: ExecutionContext): Future[Unit] = {
-    if(EnableDiscussionSwitch.isSwitchedOn)
+    if (EnableDiscussionSwitch.isSwitchedOn)
       Future.successful(())
     else
       Future.failed(ServiceUnavailableException("DAPI is currently unavailable from Frontend"))
@@ -217,24 +236,25 @@ class DiscussionApi(val wsClient: WSClient) extends DiscussionApiLike {
   override protected lazy val clientHeaderValue: String = Configuration.discussion.apiClientHeader
 }
 
-
 object AuthHeaders {
   val guIdToken = "GU-IdentityToken"
   val cookie = "Cookie"
   val all = Set(guIdToken, cookie)
 
-  def filterHeaders(headers: Headers): Map[String, String] = headers.toSimpleMap filterKeys {
-    all.contains
-  }
+  def filterHeaders(headers: Headers): Map[String, String] =
+    headers.toSimpleMap filterKeys {
+      all.contains
+    }
 }
 
 case class DiscussionParams(
-  orderBy: String = "newest",
-  page: String = "1",
-  pageSize: String = "50",
-  topComments: Boolean = false,
-  maxResponses: Option[String] = None,
-  displayThreaded: Boolean = false)
+    orderBy: String = "newest",
+    page: String = "1",
+    pageSize: String = "50",
+    topComments: Boolean = false,
+    maxResponses: Option[String] = None,
+    displayThreaded: Boolean = false,
+)
 
 object DiscussionParams extends {
   def apply(request: RequestHeader): DiscussionParams = {
@@ -243,7 +263,7 @@ object DiscussionParams extends {
       page = request.getQueryString("page").getOrElse("1"),
       pageSize = request.getQueryString("pageSize").getOrElse("50"),
       maxResponses = request.getQueryString("maxResponses"),
-      displayThreaded = request.getQueryString("displayThreaded").exists(_ == "true")
+      displayThreaded = request.getQueryString("displayThreaded").exists(_ == "true"),
     )
   }
 }

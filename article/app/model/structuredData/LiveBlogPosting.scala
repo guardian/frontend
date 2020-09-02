@@ -29,11 +29,8 @@ object LiveBlogPosting {
       "coverageEndTime" -> zulu(blog.fields.lastModified),
       "dateModified" -> zulu(blog.fields.lastModified),
       "publisher" -> Organisation(),
-      "liveBlogUpdate" -> Json.arr(blocks.map(
-       block => BlogPosting(blog, block)
-      ))
+      "liveBlogUpdate" -> Json.arr(blocks.map(block => BlogPosting(blog, block))),
     ) ++ MainMedia(blog).getOrElse(Json.obj())
-
 
   }
 

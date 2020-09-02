@@ -1,19 +1,43 @@
 // @flow
 import { loadScript } from 'lib/load-script';
+import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { oldCmp } from '@guardian/consent-management-platform';
 import { init, _ } from './comscore';
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    oldCmp: {
-        onGuConsentNotification: jest.fn(),
-        onIabConsentNotification: jest.fn(),
-    },
     onConsentChange: jest.fn(),
 }));
 
-// Force TCFv1
-const onGuConsentNotification = oldCmp.onGuConsentNotification;
+const onConsentChange: any = onConsentChange_;
+
+const tcfv2WithConsentMock = (callback): void =>
+    callback({
+        tcfv2: {
+            vendorConsents: {
+                [_.SOURCEPOINT_ID]: true,
+            },
+        },
+    });
+const tcfv2WithoutConsentMock = (callback): void =>
+    callback({
+        tcfv2: {
+            vendorConsents: {
+                [_.SOURCEPOINT_ID]: false,
+            },
+        },
+    });
+const ccpaWithConsentMock = (callback): void =>
+    callback({
+        ccpa: {
+            doNotSell: false,
+        },
+    });
+const ccpaWithoutConsentMock = (callback): void =>
+    callback({
+        ccpa: {
+            doNotSell: true,
+        },
+    });
 
 jest.mock('lib/load-script', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
@@ -30,17 +54,44 @@ describe('comscore init', () => {
         commercialFeatures.comscore = false;
         init();
 
-        expect(onGuConsentNotification).not.toBeCalled();
+        expect(onConsentChange).not.toBeCalled();
     });
 
-    it('should register a callback with onGuConsentNotification if enabled in commercial features', () => {
+    it('should register a callback with onConsentChange if enabled in commercial features', () => {
         commercialFeatures.comscore = true;
         init();
 
-        expect(onGuConsentNotification).toBeCalledWith(
-            'performance',
-            _.initOnConsent
-        );
+        expect(onConsentChange).toBeCalled();
+    });
+
+    describe('Framework consent: running on consent', () => {
+        beforeEach(() => {
+            jest.resetAllMocks();
+            _.resetInit();
+        });
+
+        it('TCFv2 with consent: runs', () => {
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
+
+        it('TCFv2 without consent: does not run', () => {
+            onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            init();
+            expect(loadScript).not.toBeCalled();
+        });
+        it('CCPA with consent: runs', () => {
+            onConsentChange.mockImplementation(ccpaWithConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
+
+        it('CCPA without consent: runs', () => {
+            onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
     });
 });
 

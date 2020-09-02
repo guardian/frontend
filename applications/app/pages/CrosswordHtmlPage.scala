@@ -7,7 +7,13 @@ import html.{HtmlPage, Styles}
 import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import crosswords.{AccessibleCrosswordPage, CrosswordPage, CrosswordPageWithSvg, CrosswordSearchPageNoResult, CrosswordSearchPageWithResults}
+import crosswords.{
+  AccessibleCrosswordPage,
+  CrosswordPage,
+  CrosswordPageWithSvg,
+  CrosswordSearchPageNoResult,
+  CrosswordSearchPageWithResults,
+}
 import views.html.fragments._
 import crosswords._
 import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
@@ -21,24 +27,25 @@ import views.html.stacked
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css", true)
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css", true)
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", true)
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", true)
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css", true)
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css", true)
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css", true)
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css", true)
+    }
 
   def html(page: CrosswordPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: CrosswordPage = page
 
     val content: Html = page match {
-      case p: CrosswordPageWithSvg => crosswordContent(p)
-      case p: AccessibleCrosswordPage => accessibleCrosswordContent(p)
+      case p: CrosswordPageWithSvg           => crosswordContent(p)
+      case p: AccessibleCrosswordPage        => accessibleCrosswordContent(p)
       case p: CrosswordSearchPageWithResults => crosswordSearch(p)
-      case _: CrosswordSearchPageNoResult => crosswordNoResult()
+      case _: CrosswordSearchPageNoResult    => crosswordNoResult()
     }
 
     htmlTag(
@@ -49,7 +56,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         styles(allStyles),
         fixIEReferenceErrors(),
         checkModuleSupport(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -62,16 +69,18 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 }
 
 object PrintableCrosswordHtmlPage extends HtmlPage[CrosswordPageWithSvg] {
 
-  def html(page: CrosswordPageWithSvg)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
+  def html(
+      page: CrosswordPageWithSvg,
+  )(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: CrosswordPageWithSvg = page
 
     htmlTag(
@@ -82,9 +91,9 @@ object PrintableCrosswordHtmlPage extends HtmlPage[CrosswordPageWithSvg] {
         styles(CrosswordHtmlPage.allStyles),
         fixIEReferenceErrors(),
         checkModuleSupport(),
-        inlineJSBlocking()
+        inlineJSBlocking(),
       ),
-      printableCrosswordBody()
+      printableCrosswordBody(),
     )
   }
 }

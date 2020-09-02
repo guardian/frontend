@@ -2,8 +2,7 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -25,6 +24,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     tags.forEach(tag => {
         if (tag.loaded === true) {
             return;
+        }
+        if (tag.beforeLoad) {
+            tag.beforeLoad();
         }
         if (tag.useImage === true) {
             new Image().src = tag.url;
@@ -57,19 +59,11 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 
 const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag>
+    performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    oldCmp.onGuConsentNotification('performance', state => {
-        if (state) {
-            addScripts(performanceServices);
-        }
-    });
+    addScripts(performanceServices);
 
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
-
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         let consentedAdvertisingServices = [];
         if (state.ccpa) {
             // CCPA mode
@@ -96,9 +90,7 @@ const insertScripts = (
             consentedAdvertisingServices = [...advertisingServices];
         }
 
-        if (
-            consentedAdvertisingServices.length > 0
-        ) {
+        if (consentedAdvertisingServices.length > 0) {
             addScripts(consentedAdvertisingServices);
         }
     });
@@ -117,8 +109,8 @@ const loadOther = (): void => {
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+        imrWorldwide, // only in AU & NZ
+        imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
 
     insertScripts(advertisingServices, performanceServices);

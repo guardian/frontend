@@ -12,26 +12,31 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class FootballLifecycle(
-  appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  competitionsService: CompetitionsService,
-  contentApiClient: ContentApiClient)(implicit ec: ExecutionContext) extends LifecycleComponent {
+    appLifeCycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    competitionsService: CompetitionsService,
+    contentApiClient: ContentApiClient,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
-  appLifeCycle.addStopHook { () => Future {
-    descheduleJobs()
-  }}
+  appLifeCycle.addStopHook { () =>
+    Future {
+      descheduleJobs()
+    }
+  }
 
   private def scheduleJobs() {
-    competitionsService.competitionIds.zipWithIndex foreach { case (id, index) =>
-      //stagger fixtures and results refreshes to avoid timeouts
-      val seconds = index * 5 % 60
-      val minutes = index * 5 / 60 % 5
-      val cron = s"$seconds $minutes/5 * * * ?"
+    competitionsService.competitionIds.zipWithIndex foreach {
+      case (id, index) =>
+        //stagger fixtures and results refreshes to avoid timeouts
+        val seconds = index * 5 % 60
+        val minutes = index * 5 / 60 % 5
+        val cron = s"$seconds $minutes/5 * * * ?"
 
-      jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
-        competitionsService.refreshCompetitionAgent(id)
-      }
+        jobs.schedule(s"CompetitionAgentRefreshJob_$id", cron) {
+          competitionsService.refreshCompetitionAgent(id)
+        }
     }
 
     jobs.schedule("MatchDayAgentRefreshJob", "0 0/5 * * * ?") {
@@ -63,14 +68,19 @@ class FootballLifecycle(
 
     akkaAsync.after1s {
       val competitionUpdate = competitionsService.refreshCompetitionData()
-      competitionUpdate.foreach { _ => competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent) }
+      competitionUpdate.foreach { _ =>
+        competitionsService.competitionIds.foreach(competitionsService.refreshCompetitionAgent)
+      }
       competitionsService.refreshMatchDay()
       TeamMap.refresh()(contentApiClient, ec)
     }
   }
 }
 
-class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends PaClient with Http with Logging {
+class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
+    extends PaClient
+    with Http
+    with Logging {
 
   // Runs the API calls via a CDN
   override lazy val base: String = "https://football-api.guardianapis.com/v1.5"
@@ -80,7 +90,6 @@ class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
     val promiseOfResponse = wsClient.url(urlString).withRequestTimeout(2.second).get()
 
     promiseOfResponse.map { r =>
-
       //this feed has a funny character at the start of it http://en.wikipedia.org/wiki/Zero-width_non-breaking_space
       //I have reported to PA, but just trimming here so we can carry on development
       pa.Response(r.status, r.body.dropWhile(_ != '<'), r.statusText)
@@ -96,6 +105,3 @@ class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
   }
 
 }
-
-
-

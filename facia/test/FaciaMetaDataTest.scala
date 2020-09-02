@@ -14,14 +14,15 @@ import scala.concurrent.duration._
 import scala.concurrent.Await
 import test._
 
-@DoNotDiscover class FaciaMetaDataTest extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithTestApplicationContext
-  with WithMaterializer
-  with WithTestWsClient
-  with MockitoSugar {
+@DoNotDiscover class FaciaMetaDataTest
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithTestApplicationContext
+    with WithMaterializer
+    with WithTestWsClient
+    with MockitoSugar {
 
   lazy val actorSystem = ActorSystem()
   lazy val blockingOperations = new BlockingOperations(actorSystem)
@@ -30,8 +31,10 @@ import test._
   override def beforeAll() {
     val refresh = ConfigAgent.refreshWith(
       ConfigJson(
-        fronts = Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)),
-        collections = Map.empty)
+        fronts =
+          Map("music" -> FrontJson(Nil, None, None, None, None, None, None, None, None, None, None, None, None, None)),
+        collections = Map.empty,
+      ),
     )
     Await.result(refresh, 3.seconds)
   }
@@ -64,9 +67,11 @@ import test._
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     println(topContainer)
-    topContainer.size should be (15)
+    topContainer.size should be(15)
 
-    (topContainer(0) \ "url").as[JsString].value should be ("/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia")
+    (topContainer(0) \ "url").as[JsString].value should be(
+      "/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia",
+    )
 
   }
 

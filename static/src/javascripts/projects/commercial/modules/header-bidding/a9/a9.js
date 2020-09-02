@@ -1,8 +1,7 @@
 // @flow strict
 
 import config from 'lib/config';
-import { onConsentChange, oldCmp } from '@guardian/consent-management-platform';
-import { shouldUseSourcepointCmp } from 'commercial/modules/cmp/sourcepoint';
+import { onConsentChange } from '@guardian/consent-management-platform';
 
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
@@ -36,11 +35,7 @@ const bidderTimeout: number = 1500;
 const SOURCEPOINT_ID: string = '5edf9a821dc4e95986b66df4';
 
 const initialise = (): void => {
-    const onCMPConsentNotification = shouldUseSourcepointCmp()
-        ? onConsentChange
-        : oldCmp.onIabConsentNotification;
-
-    onCMPConsentNotification(state => {
+    onConsentChange(state => {
         let canRun: boolean;
         if (state.ccpa) {
             // CCPA mode

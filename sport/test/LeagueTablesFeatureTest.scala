@@ -6,17 +6,17 @@ import play.api.test.Helpers._
 import org.scalatest._
 
 @DoNotDiscover class LeagueTablesFeatureTest
-  extends FeatureSpec
-  with GivenWhenThen
-  with Matchers
-  with ConfiguredTestSuite
-  with FootballTestData
-  with WithTestExecutionContext
-  with WithTestFootballClient
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestApplicationContext
-  with WithTestWsClient {
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite
+    with FootballTestData
+    with WithTestExecutionContext
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestApplicationContext
+    with WithTestWsClient {
 
   feature("League Tables") {
 
@@ -55,7 +55,7 @@ import org.scalatest._
         Then("I should see all the teams in this league")
         val teams = $(".team-name__long").texts
         teams should contain("Arsenal")
-        teams should contain ("Wigan") // I can now see all items
+        teams should contain("Wigan") // I can now see all items
 
         And("I should see a nice SEO h1 el on the page, describing the current competition")
         $("h1").texts should contain("Premier League")
@@ -64,7 +64,8 @@ import org.scalatest._
     }
 
     scenario("Should redirect when no competition table data found") {
-      val leagueTableController = new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+      val leagueTableController =
+        new LeagueTableController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
       val result = leagueTableController.renderCompetition("sfgsfgsfg")(FakeRequest())
       status(result) should be(303)
     }

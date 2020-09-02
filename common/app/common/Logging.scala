@@ -33,15 +33,15 @@ trait Logging {
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
   def errorLoggingF[A](context: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     Try(task) match {
-      case Success(f) => f.failed.foreach(Logger.error(context, _)) ; f
-      case Failure(e) => Logger.error(context, e) ; throw e
+      case Success(f) => f.failed.foreach(Logger.error(context, _)); f
+      case Failure(e) => Logger.error(context, e); throw e
     }
   }
 
   def errorLogging[A](message: String)(block: => A): A = {
     Try(block) match {
       case Success(result) => result
-      case Failure(e) => Logger.error(message, e) ; throw e
+      case Failure(e)      => Logger.error(message, e); throw e
     }
   }
 }
@@ -62,21 +62,21 @@ object LoggingField {
   case class LogFieldLong(name: String, value: Long) extends LogField
   case class LogFieldBoolean(name: String, value: Boolean) extends LogField
 
-
   implicit def tupleToLogFieldInt(t: (String, Int)): LogFieldInt = LogFieldInt(t._1, t._2)
   implicit def tupleToLogFieldString(t: (String, String)): LogFieldString = LogFieldString(t._1, t._2)
   implicit def tupleToLogFieldDouble(t: (String, Double)): LogFieldDouble = LogFieldDouble(t._1, t._2)
   implicit def tupleToLogFieldLong(t: (String, Long)): LogFieldLong = LogFieldLong(t._1, t._2)
   implicit def tupleToLogFieldBoolean(t: (String, Boolean)): LogFieldBoolean = LogFieldBoolean(t._1, t._2)
 
-  def customFieldMarkers(fields: List[LogField]) : LogstashMarker = {
-    val fieldsMap = fields.map {
-      case LogFieldInt(n, v) => (n, v)
-      case LogFieldString(n, v) => (n, v)
-      case LogFieldDouble(n, v) => (n, v)
-      case LogFieldLong(n, v) => (n, v)
-      case LogFieldBoolean(n, v) => (n, v)
-    }
+  def customFieldMarkers(fields: List[LogField]): LogstashMarker = {
+    val fieldsMap = fields
+      .map {
+        case LogFieldInt(n, v)     => (n, v)
+        case LogFieldString(n, v)  => (n, v)
+        case LogFieldDouble(n, v)  => (n, v)
+        case LogFieldLong(n, v)    => (n, v)
+        case LogFieldBoolean(n, v) => (n, v)
+      }
       .toMap
       .asJava
     appendEntries(fieldsMap)

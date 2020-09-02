@@ -9,20 +9,21 @@ import play.api.mvc._
 
 object DashboardRenderer extends Results {
 
-  def renderDashboard(testName: String, dashboardTitle: String, controlColour: String, variantColour: String)(
-    implicit request: RequestHeader,
-    context: ApplicationContext): Result = {
+  def renderDashboard(testName: String, dashboardTitle: String, controlColour: String, variantColour: String)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Result = {
     val maybeData = for {
-      reportId                  <- CommercialDfpReporting.reportMappings.get(CommercialDfpReporting.teamKPIReport)
+      reportId <- CommercialDfpReporting.reportMappings.get(CommercialDfpReporting.teamKPIReport)
       report: Seq[DfpReportRow] <- CommercialDfpReporting.getReport(reportId)
     } yield {
       val keyValueRows: Seq[KeyValueRevenueRow] = report.flatMap { row =>
         val fields = row.fields
         for {
-          customCriteria: String    <- fields.lift(0)
+          customCriteria: String <- fields.lift(0)
           customTargetingId: String <- fields.lift(1)
-          totalImpressions: Int     <- fields.lift(2).map(_.toInt)
-          totalAverageECPM: Double  <- fields.lift(3).map(_.toDouble / 1000000.0d) // convert DFP micropounds to pounds
+          totalImpressions: Int <- fields.lift(2).map(_.toInt)
+          totalAverageECPM: Double <- fields.lift(3).map(_.toDouble / 1000000.0d) // convert DFP micropounds to pounds
         } yield KeyValueRevenueRow(customCriteria, customTargetingId, totalImpressions, totalAverageECPM)
       }
 
@@ -34,7 +35,7 @@ object DashboardRenderer extends Results {
     val controlDataRow = abTestRows.find(_.customCriteria.startsWith(s"ab=${testName}Control"))
     val variantDataRow = abTestRows.find(_.customCriteria.startsWith(s"ab=${testName}Variant"))
 
-    val integerFormatter  = java.text.NumberFormat.getIntegerInstance
+    val integerFormatter = java.text.NumberFormat.getIntegerInstance
     val currencyFormatter = java.text.NumberFormat.getCurrencyInstance(Locale.UK)
 
     NoCache(
@@ -46,7 +47,9 @@ object DashboardRenderer extends Results {
           currencyFormatter,
           dashboardTitle,
           controlColour,
-          variantColour
-        )))
+          variantColour,
+        ),
+      ),
+    )
   }
 }

@@ -33,7 +33,6 @@ case class SurgingContent(surges: Map[String, Int] = Map.empty, lastUpdated: Dat
   lazy val sortedSurges: Seq[(String, Int)] = surges.toSeq.sortBy(_._2).reverse
 }
 
-
 object SurgeUtils {
   def parse(json: JsValue): Seq[(String, Int)] = {
     for {
@@ -47,14 +46,18 @@ object SurgeUtils {
 }
 
 class SurgingContentAgentLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  ophanApi: OphanApi)(implicit ec: ExecutionContext) extends LifecycleComponent {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    ophanApi: OphanApi,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
-  appLifecycle.addStopHook { () => Future {
-    jobs.deschedule("SurgingContentAgentRefreshJob")
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      jobs.deschedule("SurgingContentAgentRefreshJob")
+    }
+  }
 
   override def start(): Unit = {
     jobs.deschedule("SurgingContentAgentRefreshJob")

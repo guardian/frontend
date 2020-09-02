@@ -16,7 +16,8 @@ import play.api.libs.ws.WSClient
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait Controllers extends DiagnosticsControllers {
@@ -35,7 +36,7 @@ trait AppLifecycleComponents {
     wire[DiagnosticsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
   )
 
   def actorSystem: ActorSystem
