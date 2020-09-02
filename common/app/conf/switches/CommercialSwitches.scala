@@ -260,7 +260,7 @@ trait CommercialSwitches {
   val MembershipEngagementBanner = Switch(
     Commercial,
     "membership-engagement-banner",
-    "Master switch for the membership engagement banner.",
+    "Main switch for the membership engagement banner.",
     owners = Seq(Owner.withGithub("justinpinner")),
     safeState = On,
     sellByDate = never,
