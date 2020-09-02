@@ -8,6 +8,7 @@ import { overwriteMvtCookie } from 'common/modules/analytics/mvt-cookie';
 import {
     getAsyncTestsToRun,
     getSynchronousTestsToRun,
+    initAB,
     isInVariantSynchronous,
     runAndTrackAbTests,
 } from 'common/modules/experiments/ab';
@@ -270,6 +271,8 @@ describe('A/B', () => {
     describe('isInVariantSynchronous', () => {
         test('should respect the URL hash', () => {
             window.location.hash = '#ab-DummyTest=variant';
+            initAB();
+
             expect(
                 isInVariantSynchronous(concurrentTests[0], 'variant')
             ).toEqual(true);
@@ -283,6 +286,8 @@ describe('A/B', () => {
             setParticipationsInLocalStorage({
                 DummyTest: { variant: 'variant' },
             });
+
+            initAB();
 
             expect(
                 isInVariantSynchronous(concurrentTests[0], 'variant')

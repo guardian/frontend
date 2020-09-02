@@ -2,10 +2,10 @@
 
 import config from 'lib/config';
 import memoize from 'lodash/memoize';
-import {
-    allRunnableTests,
-    firstRunnableTest,
-} from 'common/modules/experiments/ab-core';
+// import {
+//     allRunnableTests,
+//     firstRunnableTest,
+// } from 'common/modules/experiments/ab-core';
 import {
     runnableTestsToParticipations,
     testExclusionsWhoseSwitchExists,
@@ -46,6 +46,8 @@ import {
     automatLog,
     logAutomatEvent,
 } from 'common/modules/experiments/automatLog';
+import {  AB, testConfig } from './ab-gareth';
+import type { ABType } from './ab-gareth';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
@@ -57,6 +59,8 @@ const buildKeywordTags = page => {
         title: keywords[idx],
     }));
 };
+
+let ABLib: ABType;
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<ABTest>> => {
@@ -87,7 +91,7 @@ export const getEpicTestToRun = memoize(
                     test => !test.highPriority
                 );
 
-                const result = firstRunnableTest<AcquisitionsABTest>([
+                const result = ABLib.firstRunnableTest<AcquisitionsABTest>([
                     hardCodedPriorityEpicTest,
                     ...highPriorityConfiguredTests,
                     ...highPriorityHardCodedTests,
@@ -151,7 +155,7 @@ export const getEpicTestToRun = memoize(
         }
 
         return Promise.resolve(
-            firstRunnableTest<ABTest>([
+            ABLib.firstRunnableTest<ABTest>([
                 hardCodedPriorityEpicTest,
                 ...highPriorityHardCodedTests,
                 ...lowPriorityHardCodedTests,
@@ -168,7 +172,7 @@ export const getEngagementBannerTestToRun = memoize(
                     asyncEngagementBannerTests.forEach(test =>
                         config.set(`switches.ab${test.id}`, true)
                     );
-                    return firstRunnableTest<AcquisitionsABTest>([
+                    return ABLib.firstRunnableTest<AcquisitionsABTest>([
                         ...engagementBannerTests,
                         ...asyncEngagementBannerTests,
                     ]);
@@ -176,7 +180,7 @@ export const getEngagementBannerTestToRun = memoize(
             );
         }
         return Promise.resolve(
-            firstRunnableTest<AcquisitionsABTest>(engagementBannerTests)
+            ABLib.firstRunnableTest<AcquisitionsABTest>(engagementBannerTests)
         );
     }
 );
@@ -187,7 +191,7 @@ export const getEngagementBannerTestToRun = memoize(
 // We memoize this because it can't change for a given pageview, and because getParticipations()
 // and isInVariantSynchronous() depend on it and these are called in many places.
 export const getSynchronousTestsToRun = memoize(() =>
-    allRunnableTests<ABTest>(concurrentTests)
+    ABLib.allRunnableTests<ABTest>(concurrentTests)
 );
 
 export const getAsyncTestsToRun = (): Promise<
@@ -201,14 +205,13 @@ export const getAsyncTestsToRun = (): Promise<
 export const getSynchronousParticipations = (): Participations =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
+export const initAB = () => { ABLib = AB(testConfig(concurrentTests)); }
+
 // This excludes epic & banner tests
 export const isInVariantSynchronous = (
     test: ABTest,
     variantId: string
-): boolean =>
-    getSynchronousTestsToRun().some(
-        t => t.id === test.id && t.variantToRun.id === variantId
-    );
+): boolean => ABLib.isUserInVariant(test.id, variantId);
 
 // This excludes epic & banner tests
 // checks if the user in in a given test with any variant
