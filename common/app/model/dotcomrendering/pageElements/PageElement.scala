@@ -286,7 +286,7 @@ object PageElement {
       case _: ExplainerAtomBlockElement   => true
       case _: GenericAtomBlockElement     => true
       case _: GuideAtomBlockElement       => true
-      case _: GuVideoBlockElement         => true
+      case _: GuVideoBlockElement         => false
       case _: ImageBlockElement           => true
       case _: InstagramBlockElement       => true
       case _: InteractiveAtomBlockElement => true
