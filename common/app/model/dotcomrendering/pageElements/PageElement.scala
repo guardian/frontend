@@ -421,6 +421,8 @@ object PageElement {
 
       case Video =>
         if (element.assets.nonEmpty) {
+          println(element.videoTypeData.flatMap(_.html).getOrElse(""))
+          val html = ensureSecureLinkInHTMLFragment(element.videoTypeData.flatMap(_.html).getOrElse(""))
           List(
             GuVideoBlockElement(
               element.assets.map(VideoAsset.make),
@@ -430,7 +432,7 @@ object PageElement {
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
-              element.videoTypeData.flatMap(_.html).getOrElse(""),
+              html,
               element.videoTypeData.flatMap(_.source).getOrElse(""),
               Role(element.videoTypeData.flatMap(_.role)),
             ),
@@ -662,6 +664,10 @@ object PageElement {
       case Form                      => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
     }
+  }
+
+  private[this] def ensureSecureLinkInHTMLFragment(html: String): String = {
+    html.replaceAll("http:", "https:")
   }
 
   private[this] def getIframeSrc(html: String): Option[String] = {
