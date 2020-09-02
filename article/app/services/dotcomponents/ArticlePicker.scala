@@ -105,8 +105,6 @@ object ArticlePageChecks {
     "artanddesign/series/guardian-print-shop",
     "tone/advertisement-features",
     "tone/cartoons",
-    "tone/minute",
-    "tone/minute-by-minute",
   )
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
