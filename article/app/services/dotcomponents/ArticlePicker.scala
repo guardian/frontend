@@ -110,14 +110,7 @@ object ArticlePageChecks {
   )
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s => tagsBlockList(s.id))
-  }
-
-  def hasNoUnsupportedToneTag(page: PageWithStoryPackage): Boolean = {
-    page.article.tags.tones.headOption match {
-      case None      => true
-      case Some(tag) => !tagsBlockList.contains(tag.id)
-    }
+    !page.item.tags.tags.exists(t => tagsBlockList(t.id))
   }
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
@@ -158,7 +151,6 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
-      ("hasNoUnSupportedToneTag", ArticlePageChecks.hasNoUnsupportedToneTag(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
