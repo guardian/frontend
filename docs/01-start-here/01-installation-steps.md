@@ -185,7 +185,7 @@ Now check that you are up and running by hitting the following URLs:
 
 Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well.
 
-If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting
+If you have [setup local Nginx](https://github.com/guardian/frontend/blob/main/nginx/README.md) then try hitting
 [https://m.thegulocal.com](https://m.thegulocal.com)
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
@@ -245,5 +245,5 @@ It should only take 3 minutes and will help us improve this documentation and th
 
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
-[`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
+[`/nginx/README.md`](https://github.com/guardian/frontend/blob/main/nginx/README.md) in this project.
 This will allow you to access frontend via `https://m.thegulocal.com`
