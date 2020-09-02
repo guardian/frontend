@@ -28,7 +28,7 @@ declare type TagAtrribute = {
 
 declare type ThirdPartyTag = {
     shouldRun: boolean,
-    url: string,
+    url?: string,
     sourcepointId?: string,
     onLoad?: () => any,
     beforeLoad?: () => any,
@@ -36,6 +36,7 @@ declare type ThirdPartyTag = {
     attrs?: Array<TagAtrribute>,
     async?: boolean,
     loaded?: boolean,
+    insertSnippet?: () => any,
 };
 
 declare var jsdom: {

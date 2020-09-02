@@ -28,12 +28,17 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
         if (tag.beforeLoad) {
             tag.beforeLoad();
         }
-        if (tag.useImage === true) {
+        if (tag.useImage === true && typeof tag.url !== "undefined") {
             new Image().src = tag.url;
+        }
+        if (tag.insertSnippet) {
+            tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            script.src = tag.url;
+            if (typeof tag.url !== "undefined") {
+                script.src = tag.url;
+            }
             script.onload = tag.onLoad;
             if (tag.async === true) {
                 script.setAttribute('async', '');

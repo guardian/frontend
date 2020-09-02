@@ -171,7 +171,7 @@ There are times when you are testing something locally that you just can’t fin
 	- Testing hard to find embed types - ie a Guardian Witness embed.
 	- Testing Triggered events - such as a liveblog update.
 To test these type of changes you can use a frontend.conf file to override the default build and tailor it to your needs.
-See [here](https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/15-override-default-configuration.md) for details.
+See [here](https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/14-override-default-configuration.md) for details.
 
 Some points about CODE. The CODE composer does not actually produce content for the m.code website.
  Instead, content produced by the code composer can be found at https://viewer.code.dev-gutools.co.uk/proxy/preview/<path to your content>
