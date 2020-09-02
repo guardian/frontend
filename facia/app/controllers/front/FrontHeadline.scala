@@ -12,22 +12,25 @@ object FrontHeadline extends Results with Logging {
     NotFound("Could not extract headline from front"),
   )
 
-  def collectionIsSuitableForHeadlineExtraction(collection: PressedCollection): Boolean = {
-    collection.curatedPlusBackfillDeduplicated.headOption match {
-      case None                 => false
-      case Some(pressedContent) => pressedContent.properties.webTitle.size > 0
-    }
+  private[this] def headline(collection: PressedCollection): Option[String] = {
+    for {
+      content <- collection.curatedPlusBackfillDeduplicated.headOption
+      if content.properties.webTitle != ""
+    } yield content.properties.webTitle
   }
 
   def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
-    val webTitle = for {
-      topCollection <- faciaPage.collections.filter(collectionIsSuitableForHeadlineExtraction).headOption
-      topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-    } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
-    webTitle.getOrElse {
-      log.warn(s"headline not found for ${faciaPage.id}")
-      headlineNotFound
+    val headlineOpt = faciaPage.collections.view
+      .map(headline)
+      .find(_.isDefined)
+      .flatten
+
+    headlineOpt match {
+      case Some(headlinestr) => RevalidatableResult.Ok(headlinestr)
+      case None => {
+        log.warn(s"headline not found for ${faciaPage.id}")
+        headlineNotFound
+      }
     }
   }
-
 }
