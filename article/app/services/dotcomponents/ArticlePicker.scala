@@ -117,8 +117,6 @@ object ArticlePageChecks {
 
   def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = !page.item.isPhotoEssay
 
-  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.isLiveBlog
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
@@ -146,7 +144,6 @@ object ArticlePicker {
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
-      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
@@ -169,7 +166,6 @@ object ArticlePicker {
     val article100PercentPageFeatures = allowListFeatures.filterKeys(
       Set(
         "isSupportedType",
-        "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
         "isNotInTagBlockList",
