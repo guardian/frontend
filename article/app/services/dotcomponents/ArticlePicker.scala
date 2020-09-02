@@ -103,7 +103,22 @@ object ArticlePageChecks {
     "australia-news/series/healthcare-in-detention",
     "society/series/this-is-the-nhs",
     "artanddesign/series/guardian-print-shop",
+    "tone/advertisement-features",
+    "tone/cartoons",
+    "tone/minute",
+    "tone/minute-by-minute",
   )
+
+  def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(s => tagsBlockList(s.id))
+  }
+
+  def hasNoUnsupportedToneTag(page: PageWithStoryPackage): Boolean = {
+    page.article.tags.tones.headOption match {
+      case None      => true
+      case Some(tag) => !tagsBlockList.contains(tag.id)
+    }
+  }
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
 
@@ -118,56 +133,6 @@ object ArticlePageChecks {
   def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
-
-  def isSupportedTone(page: PageWithStoryPackage): Boolean = {
-    /*
-     What's missing here still?
-      - tone/advertisement-features
-      - tone/cartoons
-      - tone/minute
-      - tone/minute-by-minute
-     */
-    Set(
-      "tone/albumreview",
-      "tone/analysis",
-      "tone/blog",
-      "tone/callout",
-      "tone/childrens-user-reviews",
-      "tone/comment",
-      "tone/competitions",
-      "tone/documentaries",
-      "tone/editorials",
-      "tone/event-descriptions",
-      "tone/explainers",
-      "tone/extracompetitions",
-      "tone/extraoffers",
-      "tone/extract",
-      "tone/features",
-      "tone/graphics",
-      "tone/help",
-      "tone/interview",
-      "tone/letters",
-      "tone/livereview",
-      "tone/matchreports",
-      "tone/news",
-      "tone/obituaries",
-      "tone/performances",
-      "tone/polls",
-      "tone/profiles",
-      "tone/q-and-as",
-      "tone/quizzes",
-      "tone/recipes",
-      "tone/resource",
-      "tone/reviews",
-      "tone/sponsoredfeatures",
-      "tone/thirdpartyventures",
-      "tone/timelines",
-    ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
-  }
-
-  def isNotInBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s => tagsBlockList(s.id))
-  }
 
 }
 
@@ -192,8 +157,8 @@ object ArticlePicker {
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
+      ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
+      ("hasNoUnSupportedToneTag", ArticlePageChecks.hasNoUnsupportedToneTag(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
@@ -215,7 +180,7 @@ object ArticlePicker {
         "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
-        "isNotInBlockList",
+        "isNotInTagBlockList",
         "isNotPaidContent",
       ),
     )
