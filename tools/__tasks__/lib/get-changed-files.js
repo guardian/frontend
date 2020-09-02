@@ -17,15 +17,15 @@ const diffAgainstRemote = branch =>
             '--name-only',
             'HEAD',
             `origin/${branch}`,
-            '^origin/master', // excluding changes already in origin/master
+            '^origin/main', // excluding changes already in origin/main
         ])
         .then(diffs => diffs.split('\n'));
 
 // return files that have changed
-// compared to local master branch
-const diffAgainstMaster = () =>
+// compared to local main branch
+const diffAgainstMain = () =>
     execa
-        .stdout('git', ['diff', '--name-only', 'HEAD', 'origin/master'])
+        .stdout('git', ['diff', '--name-only', 'HEAD', 'origin/main'])
         .then(diffs => diffs.split('\n'));
 
 const getChangedFiles = () =>
@@ -35,7 +35,7 @@ const getChangedFiles = () =>
                 return diffAgainstRemote(localBranch);
             }
 
-            return diffAgainstMaster();
+            return diffAgainstMain();
         })
     );
 
