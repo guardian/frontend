@@ -72,41 +72,41 @@ const computeVariantFromMvtCookie = (test: ABTest): ?Variant => {
 //
 // This function can be called at any time, before or after participations are
 // persisted to localStorage. It should always give the same result for a given pageview.
-export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
-    const fromUrl = getVariantFromUrl(test);
-    const fromLocalStorage = getVariantFromLocalStorage(test);
-    const fromCookie = computeVariantFromMvtCookie(test);
-    const variantToRun = fromUrl || fromLocalStorage || fromCookie;
-    const ignoreCanRun = fromUrl && getIgnoreCanRunFromUrl(); // check fromUrl to only ignore can run for forced tests
+// export const runnableTest = <T: ABTest>(test: T): ?Runnable<T> => {
+//     const fromUrl = getVariantFromUrl(test);
+//     const fromLocalStorage = getVariantFromLocalStorage(test);
+//     const fromCookie = computeVariantFromMvtCookie(test);
+//     const variantToRun = fromUrl || fromLocalStorage || fromCookie;
+//     const ignoreCanRun = fromUrl && getIgnoreCanRunFromUrl(); // check fromUrl to only ignore can run for forced tests
+//
+//     if (variantToRun && ignoreCanRun) {
+//         return {
+//             ...test,
+//             variantToRun,
+//         };
+//     }
+//
+//     if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
+//         return {
+//             ...test,
+//             variantToRun,
+//         };
+//     }
+//
+//     return null;
+// };
 
-    if (variantToRun && ignoreCanRun) {
-        return {
-            ...test,
-            variantToRun,
-        };
-    }
-
-    if (testCanBeRun(test) && variantToRun && variantCanBeRun(variantToRun)) {
-        return {
-            ...test,
-            variantToRun,
-        };
-    }
-
-    return null;
-};
-
-export const allRunnableTests = <T: ABTest>(
-    tests: $ReadOnlyArray<T>
-): $ReadOnlyArray<Runnable<T>> =>
-    tests.reduce((accumulator, currentValue) => {
-        const rt = runnableTest(currentValue);
-        return rt ? [...accumulator, rt] : accumulator;
-    }, []);
-
-export const firstRunnableTest = <T: ABTest>(
-    tests: $ReadOnlyArray<T>
-): ?Runnable<T> =>
-    tests
-        .map((test: T) => runnableTest(test))
-        .find((rt: ?Runnable<T>) => rt !== null);
+// export const allRunnableTests = <T: ABTest>(
+//     tests: $ReadOnlyArray<T>
+// ): $ReadOnlyArray<Runnable<T>> =>
+//     tests.reduce((accumulator, currentValue) => {
+//         const rt = runnableTest(currentValue);
+//         return rt ? [...accumulator, rt] : accumulator;
+//     }, []);
+//
+// export const firstRunnableTest = <T: ABTest>(
+//     tests: $ReadOnlyArray<T>
+// ): ?Runnable<T> =>
+//     tests
+//         .map((test: T) => runnableTest(test))
+//         .find((rt: ?Runnable<T>) => rt !== null);

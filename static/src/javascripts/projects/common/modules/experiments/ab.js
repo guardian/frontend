@@ -60,7 +60,7 @@ const buildKeywordTags = page => {
     }));
 };
 
-let ABLib: ABType;
+export let ABLib: ABType = AB(testConfig(concurrentTests));
 
 export const getEpicTestToRun = memoize(
     (): Promise<?Runnable<ABTest>> => {
@@ -205,7 +205,7 @@ export const getAsyncTestsToRun = (): Promise<
 export const getSynchronousParticipations = (): Participations =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
-export const initAB = () => { ABLib = AB(testConfig(concurrentTests)); }
+export const refreshAB = (): void => { ABLib = AB(testConfig(concurrentTests)); }
 
 // This excludes epic & banner tests
 export const isInVariantSynchronous = (
