@@ -34,8 +34,8 @@ import {
     automatLog,
     logAutomatEvent,
 } from 'common/modules/experiments/automatLog';
-import { AB, testConfig } from './ab-gareth';
-import type { ABType } from './ab-gareth';
+import { AB, testConfig } from './ab-core';
+import type { ABType } from './ab-core';
 
 // Tmp for Slot Machine work - can remove shortly
 const buildKeywordTags = page => {
