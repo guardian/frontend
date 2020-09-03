@@ -24,7 +24,7 @@ export const remoteEpicVariants: Runnable<AcquisitionsABTest> = {
     successMeasure: 'Revenue/impressions equivalent to local variants',
     audienceCriteria: 'All',
     variants: [remoteVariant],
-    canRun: () => true, // Math.random() < 0.2, // set test % here
+    canRun: () => Math.random() < 0.2, // set test % here
     variantToRun: remoteVariant,
     showForSensitive: true, // there is special targeting logic around this so we don't set to false here
 

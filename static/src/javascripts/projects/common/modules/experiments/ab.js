@@ -2,24 +2,12 @@
 
 import config from 'lib/config';
 import memoize from 'lodash/memoize';
-// import {
-//     allRunnableTests,
-//     firstRunnableTest,
-// } from 'common/modules/experiments/ab-core';
-import {
-    runnableTestsToParticipations,
-    // testExclusionsWhoseSwitchExists,
-} from 'common/modules/experiments/ab-utils';
+import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 import {
     registerCompleteEvents,
     registerImpressionEvents,
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
-// import {
-//     getParticipationsFromLocalStorage,
-//     setParticipationsInLocalStorage,
-// } from 'common/modules/experiments/ab-local-storage';
-// import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
 import {
     concurrentTests,
     engagementBannerTests,
@@ -230,32 +218,11 @@ export const runAndTrackAbTests = (): Promise<void> => {
     registerCompleteEvents(testsToRun);
     trackABTests(testsToRun);
 
-    // If a test has a 'notintest' variant specified in localStorage,
-    // it will prevent them from participating in the test.
-    // This is typically set by the URL hash, but we want it to persist for
-    // subsequent pageviews so we save it to localStorage.
-    // We don't persist those whose switch is gone from the backend,
-    // to ensure that old tests get cleaned out and localStorage doesn't keep growing.
-    // const testExclusions: Participations = testExclusionsWhoseSwitchExists({
-    //     //...getParticipationsFromLocalStorage(),
-    //     ...getForcedParticipationsFromUrl(),
-    // });
-
-    // setParticipationsInLocalStorage({
-    //     ...runnableTestsToParticipations(testsToRun),
-    //     ...testExclusions,
-    // });
-
     return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
         registerImpressionEvents(tests);
         registerCompleteEvents(tests);
         trackABTests(tests);
-
-        // setParticipationsInLocalStorage({
-        //     ...getParticipationsFromLocalStorage(),
-        //     ...runnableTestsToParticipations(tests),
-        // });
     });
 };

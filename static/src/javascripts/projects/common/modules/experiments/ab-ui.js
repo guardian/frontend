@@ -22,6 +22,8 @@ import {
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
+// TODO 'fix' behaviuor without re-introducing local storage
+
 const selectRadios = () => {
     // const participations = getParticipationsFromLocalStorage();
     //
