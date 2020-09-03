@@ -1,4 +1,5 @@
 // @flow
+
 import template from 'lodash/template';
 import { local as storage } from 'lib/storage';
 import $ from 'lib/$';
@@ -12,39 +13,39 @@ import {
     epicTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
-import {
-    getParticipationsFromLocalStorage,
-    setParticipationsInLocalStorage,
-} from 'common/modules/experiments/ab-local-storage';
+// import {
+//     getParticipationsFromLocalStorage,
+//     setParticipationsInLocalStorage,
+// } from 'common/modules/experiments/ab-local-storage';
 import {
     getEngagementBannerTestsFromGoogleDoc,
     getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
-    const participations = getParticipationsFromLocalStorage();
-
-    $('.js-experiments-radio').each(radio => {
-        $(radio).attr('checked', false);
-    });
-
-    Object.keys(participations).forEach(testId => {
-        $(`#${testId}-${participations[testId].variant}`).attr('checked', true);
-    });
+    // const participations = getParticipationsFromLocalStorage();
+    //
+    // $('.js-experiments-radio').each(radio => {
+    //     $(radio).attr('checked', false);
+    // });
+    //
+    // Object.keys(participations).forEach(testId => {
+    //     $(`#${testId}-${participations[testId].variant}`).attr('checked', true);
+    // });
 };
 
 const bindEvents = () => {
     $('.js-experiments-force-ab').each(label => {
         bean.on(label, 'click', () => {
-            const testId = label.getAttribute('data-ab-test');
-            const variantId = label.getAttribute('data-ab-variant');
-            const participations = getParticipationsFromLocalStorage();
-
-            participations[testId] = {
-                variant: variantId,
-            };
-
-            setParticipationsInLocalStorage(participations);
+            // const testId = label.getAttribute('data-ab-test');
+            // const variantId = label.getAttribute('data-ab-variant');
+            // const participations = getParticipationsFromLocalStorage();
+            //
+            // participations[testId] = {
+            //     variant: variantId,
+            // };
+            //
+            // setParticipationsInLocalStorage(participations);
         });
     });
 

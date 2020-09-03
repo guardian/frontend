@@ -8,18 +8,18 @@ import memoize from 'lodash/memoize';
 // } from 'common/modules/experiments/ab-core';
 import {
     runnableTestsToParticipations,
-    testExclusionsWhoseSwitchExists,
+    // testExclusionsWhoseSwitchExists,
 } from 'common/modules/experiments/ab-utils';
 import {
     registerCompleteEvents,
     registerImpressionEvents,
     trackABTests,
 } from 'common/modules/experiments/ab-ophan';
-import {
-    getParticipationsFromLocalStorage,
-    setParticipationsInLocalStorage,
-} from 'common/modules/experiments/ab-local-storage';
-import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
+// import {
+//     getParticipationsFromLocalStorage,
+//     setParticipationsInLocalStorage,
+// } from 'common/modules/experiments/ab-local-storage';
+// import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
 import {
     concurrentTests,
     engagementBannerTests,
@@ -46,7 +46,7 @@ import {
     automatLog,
     logAutomatEvent,
 } from 'common/modules/experiments/automatLog';
-import {  AB, testConfig } from './ab-gareth';
+import { AB, testConfig } from './ab-gareth';
 import type { ABType } from './ab-gareth';
 
 // Tmp for Slot Machine work - can remove shortly
@@ -60,6 +60,7 @@ const buildKeywordTags = page => {
     }));
 };
 
+/* eslint-disable import/no-mutable-exports */
 export let ABLib: ABType = AB(testConfig(concurrentTests));
 
 export const getEpicTestToRun = memoize(
@@ -141,7 +142,7 @@ export const getEpicTestToRun = memoize(
                             expectedVariant: result
                                 ? result.variantToRun.id
                                 : '',
-                            expectedCampaignId: result ? result.campaignId  : '',
+                            expectedCampaignId: result ? result.campaignId : '',
                             expectedCampaignCode: result
                                 ? result.variantToRun.campaignCode
                                 : '',
@@ -205,7 +206,9 @@ export const getAsyncTestsToRun = (): Promise<
 export const getSynchronousParticipations = (): Participations =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
-export const refreshAB = (): void => { ABLib = AB(testConfig(concurrentTests)); }
+export const refreshAB = (): void => {
+    ABLib = AB(testConfig(concurrentTests));
+};
 
 // This excludes epic & banner tests
 export const isInVariantSynchronous = (
@@ -233,15 +236,15 @@ export const runAndTrackAbTests = (): Promise<void> => {
     // subsequent pageviews so we save it to localStorage.
     // We don't persist those whose switch is gone from the backend,
     // to ensure that old tests get cleaned out and localStorage doesn't keep growing.
-    const testExclusions: Participations = testExclusionsWhoseSwitchExists({
-        ...getParticipationsFromLocalStorage(),
-        ...getForcedParticipationsFromUrl(),
-    });
+    // const testExclusions: Participations = testExclusionsWhoseSwitchExists({
+    //     //...getParticipationsFromLocalStorage(),
+    //     ...getForcedParticipationsFromUrl(),
+    // });
 
-    setParticipationsInLocalStorage({
-        ...runnableTestsToParticipations(testsToRun),
-        ...testExclusions,
-    });
+    // setParticipationsInLocalStorage({
+    //     ...runnableTestsToParticipations(testsToRun),
+    //     ...testExclusions,
+    // });
 
     return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
@@ -250,9 +253,9 @@ export const runAndTrackAbTests = (): Promise<void> => {
         registerCompleteEvents(tests);
         trackABTests(tests);
 
-        setParticipationsInLocalStorage({
-            ...getParticipationsFromLocalStorage(),
-            ...runnableTestsToParticipations(tests),
-        });
+        // setParticipationsInLocalStorage({
+        //     ...getParticipationsFromLocalStorage(),
+        //     ...runnableTestsToParticipations(tests),
+        // });
     });
 };

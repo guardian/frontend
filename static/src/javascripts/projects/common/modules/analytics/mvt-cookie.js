@@ -10,7 +10,7 @@ export const overwriteMvtCookie = (testId: number): void =>
     addCookie(MULTIVARIATE_ID_COOKIE, String(testId), 365);
 
 export const getMvtValue = (): number =>
-    Number(getCookie(MULTIVARIATE_ID_COOKIE));
+    Number(getCookie(MULTIVARIATE_ID_COOKIE)) || 1;
 
 // For test purposes only.
 // Since it's set by Fastly, sometimes it's not set in dev,

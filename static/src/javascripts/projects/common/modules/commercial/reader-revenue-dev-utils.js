@@ -19,7 +19,7 @@ import {
 } from 'common/modules/analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
-import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
+// import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 import { COOKIE_NAME as CONSENT_COOKIE_NAME } from 'commercial/modules/cmp/cmp-env';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
@@ -37,7 +37,7 @@ const clearCommonReaderRevenueStateAndReload = (
     readerRevenueRelevantCookies.forEach(cookie => removeCookie(cookie));
 
     initMvtCookie();
-    clearParticipations();
+    // clearParticipations();
 
     // Most versions of the epic only display for a certain number of pageviews in
     // a given time window (typically, 4 per 30 days).

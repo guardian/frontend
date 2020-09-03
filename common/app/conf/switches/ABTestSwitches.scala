@@ -101,7 +101,7 @@ trait ABTestSwitches {
     "ab-remote-epic-variants",
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
-    safeState = Off,
+    safeState = On,
     sellByDate = new LocalDate(2020, 9, 8),
     exposeClientSide = true,
   )
