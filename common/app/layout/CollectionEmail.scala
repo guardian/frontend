@@ -34,8 +34,7 @@ object EmailContentContainer {
   }
 
   private def pressedCollectionToContentContainer(pressedCollection: PressedCollection): EmailContentContainer = {
-    val cards =
-      pressedCollection.curatedPlusBackfillDeduplicated.flatMap(contentCard(_, pressedCollection.config))
+    val cards = pressedCollection.curatedPlusBackfillDeduplicated.flatMap(contentCard(_, pressedCollection.config))
 
     /*
         date: 03rd September 2020
