@@ -357,7 +357,7 @@ const bootEnhanced = (): void => {
                     require => {
                         bootstrapContext(
                             'experiments',
-                            require('common/modules/experiments')
+                            require('common/modules/experiments/ab-ui')
                                 .showExperiments
                         );
                     },
