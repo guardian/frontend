@@ -10,8 +10,8 @@ import {
     runnableTestsToParticipations,
     testAndParticipationsToVariant,
     testExclusionsWhoseSwitchExists,
+    NOT_IN_TEST,
 } from './ab-utils';
-import { NOT_IN_TEST } from './ab-constants';
 
 describe('A/B utils', () => {
     describe('runnableTestsToParticipations', () => {

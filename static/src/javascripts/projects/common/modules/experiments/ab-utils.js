@@ -3,7 +3,13 @@
 import config from 'lib/config';
 import toPairs from 'lodash/toPairs';
 import fromPairs from 'lodash/fromPairs';
-import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
+
+export const NOT_IN_TEST = 'notintest';
+
+export const notInTestVariant = {
+    id: NOT_IN_TEST,
+    test: () => {},
+};
 
 export const testSwitchExists = (testId: string): boolean =>
     config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
