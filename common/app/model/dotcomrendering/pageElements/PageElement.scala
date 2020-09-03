@@ -170,8 +170,15 @@ case class InteractiveAtomBlockElement(
 ) extends PageElement
 case class InteractiveBlockElement(url: String) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
-case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String)
-    extends PageElement
+case class MapBlockElement(
+    embedUrl: String,
+    originalUrl: String,
+    source: String,
+    caption: String,
+    title: String,
+    width: Int,
+    height: Int,
+) extends PageElement
 case class MembershipBlockElement(
     originalUrl: Option[String],
     linkText: Option[String],
@@ -637,11 +644,12 @@ object PageElement {
             originalUrl <- mapElem.originalUrl
             source <- mapElem.source
             html <- mapElem.html
-            src <- getIframeSrc(html)
-
+            embedUrl <- getIframeSrc(html)
+            width <- getIframeWidth(html)
+            height <- getIframeHeight(html)
             caption = mapElem.caption.getOrElse("")
             title = mapElem.title.getOrElse("")
-          } yield MapBlockElement(src, originalUrl, source, caption, title)
+          } yield MapBlockElement(embedUrl, originalUrl, source, caption, title, width, height)
         }.toList
 
       case Pullquote =>
