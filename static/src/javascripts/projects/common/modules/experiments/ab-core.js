@@ -45,7 +45,7 @@ export type Config = {
     // abTestSwitches start with ab with test ID: abTestIAmRunning
     abTestSwitches: { [string]: boolean },
     forcedTestVariants?: Participations,
-    forcedTestException?: string, // ABTest['id'];
+    forcedTestException?: string,
     arrayOfTestObjects: $ReadOnlyArray<ABTest>,
 };
 
