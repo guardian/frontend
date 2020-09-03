@@ -17,46 +17,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val CmpUi = Switch(
-    SwitchGroup.Feature,
-    "cmp-ui",
-    "If this switch is off, the CMP UI will be completely unavailable to users.",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val CcpaCmpUi = Switch(
-    SwitchGroup.Feature,
-    "ccpa-cmp-ui",
-    "If this switch is on, the CCPA CMP UI will be available to users in the USA.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val TCFv2DCR = Switch(
-    SwitchGroup.Feature,
-    "tcfv2-dcr",
-    "If this switch is on, the TCF v2 CMP UI will be shown to users outside the USA on DCR.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val TCFv2Frontend = Switch(
-    SwitchGroup.Feature,
-    "tcfv2-frontend",
-    "If this switch is on, the TCF v2 CMP UI will be available to users outside the USA on frontend.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val CarrotTrafficDriverSwitch = Switch(
     Commercial,
     "carrot-traffic-driver",
@@ -367,16 +327,6 @@ trait CommercialSwitches {
     safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
-  )
-
-  val enableConsentManagementService: Switch = Switch(
-    group = Commercial,
-    name = "enable-consent-management-service",
-    description = "Enable our CMP service to run on each page, so that vendors can query the consent status.",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
   )
 
   val facebookTrackingPixel: Switch = Switch(
