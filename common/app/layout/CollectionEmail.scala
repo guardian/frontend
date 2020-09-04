@@ -40,9 +40,10 @@ object EmailContentContainer {
         date: 03rd September 2020
         author: Pascal
         message: emailcards was introduced, as a subset of cards, to avoid interactive snaps in
-        emails (original request from Celine). `c.snapStuff.isDefined` seems to be the right way to do it.
+        emails (original request from Celine)
      */
-    val emailcards = cards.filterNot(c => c.snapStuff.isDefined)
+    val emailcards =
+      cards.filterNot(c => c.properties.fold(false)(p => p.embedType.fold(false)(_ == "interactive")))
 
     fromCollectionAndCards(pressedCollection, emailcards)
   }
