@@ -467,14 +467,11 @@ object PageElement {
 
            */
 
-          var enhanceHTML = html
           element.assets.toList
-            .filter(x => x.mimeType.fold(false)(s => s.startsWith("video")))
-            .foreach { asset =>
+            .foldLeft(html) { (h, asset) =>
               val link = asset.file.getOrElse("")
-              enhanceHTML = enhanceHTML.replaceAll(link, link.replace("http:", "https:"))
+              h.replaceAll(link, link.replace("http:", "https:"))
             }
-          enhanceHTML
         }
         if (element.assets.nonEmpty) {
           List(
