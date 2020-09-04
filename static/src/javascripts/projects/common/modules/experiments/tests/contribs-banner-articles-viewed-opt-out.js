@@ -10,14 +10,14 @@ import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import { articlesReadTooltipMarkup } from "common/modules/commercial/articles-read-tooltip-markup";
 import { acquisitionsBannerControlTemplate } from "common/modules/commercial/templates/acquisitions-banner-control";
 
-// User must have read at least 5 articles in last 6 months (as 26 weeks)
+// User must have read at least 5 articles in last year (52 weeks)
 const minArticleViews = 5;
-const articleCountWeeks = 26;
+const articleCountWeeks = 52;
 const articleViewCount = getArticleViewCountForWeeks(articleCountWeeks);
 const geolocation = geolocationGetSync();
 const leadSentence = 'We chose a different approach. Will you support it?'
 const articlesRead = articlesReadTooltipMarkup(articleViewCount)
-const variantMessageText = `With news under threat, just when we need it most, the Guardian’s quality, fact-checked news and measured explanation has never mattered more. Our editorial independence is vital. We believe every one of us deserves to read honest reporting – that’s why we remain with you, open to all. And you’re visiting in your millions. You’ve read more than ${articlesRead} in the last six months. But at this crucial moment, advertising revenue is plummeting. We need you to help fill the gap. Every contribution, however big or small, is valuable – in times of crisis and beyond.`
+const variantMessageText = `We believe every one of us deserves to read quality, independent, fact-checked news and measured explanation – that’s why we keep Guardian journalism open to all. Our editorial independence has never been so vital. No one sets our agenda, or edits our editor, so we can keep providing independent reporting each and every day. You’ve read more than ${articlesRead} articles in the last year. No matter how unpredictable the future feels, we will remain with you. Every contribution, however big or small, makes our work possible – in times of crisis and beyond.`
 const ctaText = `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol(geolocation)}1.</span>`;
 
 export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
@@ -25,7 +25,7 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
     campaignId: 'contributions_banner_articles_viewed_opt_out',
     start: '2020-05-28',
     expiry: '2020-11-28',
-    author: 'Michael Jacobson',
+    author: 'Paul Brown',
     description: 'show number of articles viewed in contributions banner, along with tooltip allowing opting out',
     audience: 1,
     audienceOffset: 0,
@@ -43,7 +43,7 @@ export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
     geolocation,
     variants: [
         {
-            id: 'variant',
+            id: 'placeholder',
             test: (): void => {},
             engagementBannerParams: {
                 leadSentence,
