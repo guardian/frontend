@@ -18,7 +18,7 @@ const geolocation = geolocationGetSync();
 const leadSentence = 'We chose a different approach. Will you support it?'
 const articlesRead = articlesReadTooltipMarkup(articleViewCount)
 const variantMessageText = `We believe every one of us deserves to read quality, independent, fact-checked news and measured explanation – that’s why we keep Guardian journalism open to all. Our editorial independence has never been so vital. No one sets our agenda, or edits our editor, so we can keep providing independent reporting each and every day. You’ve read more than ${articlesRead} articles in the last year. No matter how unpredictable the future feels, we will remain with you. Every contribution, however big or small, makes our work possible – in times of crisis and beyond.`
-const ctaText = `<span class="engagement-banner__highlight"> Support The Guardian from as little as ${getLocalCurrencySymbol(geolocation)}1.</span>`;
+const ctaText = `<span class="engagement-banner__highlight"> Support the Guardian today from as little as ${getLocalCurrencySymbol(geolocation)}1.</span>`;
 
 export const contributionsBannerArticlesViewedOptOut: AcquisitionsABTest = {
     id: 'ContributionsBannerArticlesViewedOptOut',
