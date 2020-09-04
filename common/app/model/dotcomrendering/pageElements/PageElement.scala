@@ -432,7 +432,7 @@ object PageElement {
             Date: 04th September 2020
             author: Pascal
 
-            Enhance HTML process cases such as
+            Enhance HTML to process cases such as
 
             <video data-media-id=\"gu-video-457132757\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2015/6/11/1434025823959/KP_270483_crop_640x360.jpg\">
               <source src=\"http://cdn.theguardian.tv/mainwebsite/2015/06/11/150611spacediary_desk.mp4\"/>
