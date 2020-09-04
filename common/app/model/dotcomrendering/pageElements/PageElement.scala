@@ -469,8 +469,8 @@ object PageElement {
 
           element.assets.toList
             .foldLeft(html) { (h, asset) =>
-              val link = asset.file.getOrElse("")
-              h.replaceAll(link, link.replace("http:", "https:"))
+              val url = asset.file.getOrElse("")
+              h.replaceAll(url, url.replace("http:", "https:"))
             }
         }
         if (element.assets.nonEmpty) {
