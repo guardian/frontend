@@ -426,7 +426,29 @@ object PageElement {
 
       case Audio => audioToPageElement(element).toList
 
-      case Video =>
+      case Video => {
+        def enhanceHTML(html: String): String = {
+          /*
+            Date: 04th September 2020
+            author: Pascal
+
+            Enhance HTML process cases such as
+
+            <video data-media-id=\"gu-video-457132757\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2015/6/11/1434025823959/KP_270483_crop_640x360.jpg\">
+              <source src=\"http://cdn.theguardian.tv/mainwebsite/2015/06/11/150611spacediary_desk.mp4\"/>
+              <source src=\"http://cdn.theguardian.tv/3gp/small/2015/06/11/150611spacediary_small.3gp\"/>
+              <source src=\"http://cdn.theguardian.tv/HLS/2015/06/11/150611spacediary.m3u8\"/>
+              <source src=\"http://cdn.theguardian.tv/3gp/large/2015/06/11/150611spacediary_large.3gp\"/>
+              <source src=\"http://cdn.theguardian.tv/webM/2015/06/11/150611spacediary_synd_768k_vp8.webm\"/>
+            </video>
+
+            Originally found at https://www.theguardian.com/books/2020/sep/02/top-10-books-about-space-travel-samantha-cristoforetti?dcr=false
+
+            by replacing http://cdn.theguardian.tv by https://cdn.theguardian.tv
+           */
+
+          html.replaceAll("http://cdn.theguardian.tv", "https://cdn.theguardian.tv")
+        }
         if (element.assets.nonEmpty) {
           List(
             GuVideoBlockElement(
@@ -437,12 +459,13 @@ object PageElement {
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
-              element.videoTypeData.flatMap(_.html).getOrElse(""),
+              enhanceHTML(element.videoTypeData.flatMap(_.html).getOrElse("")),
               element.videoTypeData.flatMap(_.source).getOrElse(""),
               Role(element.videoTypeData.flatMap(_.role)),
             ),
           )
         } else videoToPageElement(element).toList
+      }
 
       case Membership =>
         element.membershipTypeData
