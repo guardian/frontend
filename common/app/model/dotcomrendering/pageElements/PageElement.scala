@@ -427,7 +427,7 @@ object PageElement {
       case Audio => audioToPageElement(element).toList
 
       case Video => {
-        def enhanceHTML(html: String): String = {
+        def secureVideoHtmlUrls(html: String, element: ApiBlockElement): String = {
           /*
             Date: 04th September 2020
             author: Pascal
@@ -444,10 +444,37 @@ object PageElement {
 
             Originally found at https://www.theguardian.com/books/2020/sep/02/top-10-books-about-space-travel-samantha-cristoforetti?dcr=false
 
-            by replacing http://cdn.theguardian.tv by https://cdn.theguardian.tv
+            We need to replace the links by secure links.
+
+            There are three ways to do this
+
+              1. Replace "http:" by "https:" in the HTML string; but that's a bit dangerous.
+
+              2. Replace "http://cdn.theguardian.tv" by "https://cdn.theguardian.tv"; but that's limiting
+
+              3. Replace all the unsecured links by the secure ones. This is perfect but the problem is to list the (unsecured) links
+                 To achieve that we capitalise on the fact that the links are listed in element.assets
+
+            The outcome is
+
+            <video data-media-id=\"gu-video-457132757\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2015/6/11/1434025823959/KP_270483_crop_640x360.jpg\">
+              <source src=\"https://cdn.theguardian.tv/mainwebsite/2015/06/11/150611spacediary_desk.mp4\"/>
+              <source src=\"https://cdn.theguardian.tv/3gp/small/2015/06/11/150611spacediary_small.3gp\"/>
+              <source src=\"https://cdn.theguardian.tv/HLS/2015/06/11/150611spacediary.m3u8\"/>
+              <source src=\"https://cdn.theguardian.tv/3gp/large/2015/06/11/150611spacediary_large.3gp\"/>
+              <source src=\"https://cdn.theguardian.tv/webM/2015/06/11/150611spacediary_synd_768k_vp8.webm\"/>
+            </video>
+
            */
 
-          html.replaceAll("http://cdn.theguardian.tv", "https://cdn.theguardian.tv")
+          var enhanceHTML = html
+          element.assets.toList
+            .filter(x => x.mimeType.fold(false)(s => s.startsWith("video")))
+            .foreach { asset =>
+              val link = asset.file.getOrElse("")
+              enhanceHTML = enhanceHTML.replaceAll(link, link.replace("http:", "https:"))
+            }
+          enhanceHTML
         }
         if (element.assets.nonEmpty) {
           List(
@@ -459,7 +486,7 @@ object PageElement {
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
-              enhanceHTML(element.videoTypeData.flatMap(_.html).getOrElse("")),
+              secureVideoHtmlUrls(element.videoTypeData.flatMap(_.html).getOrElse(""), element),
               element.videoTypeData.flatMap(_.source).getOrElse(""),
               Role(element.videoTypeData.flatMap(_.role)),
             ),
