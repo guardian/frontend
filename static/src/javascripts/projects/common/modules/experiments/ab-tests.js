@@ -12,7 +12,6 @@ import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
-import { signInGateDismissWindow } from 'common/modules/experiments/tests/sign-in-gate-dismiss-window';
 import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -24,7 +23,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGatePatientia,
     signInGateMainVariant,
     signInGateMainControl,
-    signInGateDismissWindow,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;

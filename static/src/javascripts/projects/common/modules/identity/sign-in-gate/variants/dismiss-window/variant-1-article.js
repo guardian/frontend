@@ -11,6 +11,10 @@ import {
     unsetUserDismissedGate,
 } from '../../helper';
 
+/**
+ * INACTIVE: retaining test variant file in case we choose to roll this out. 04/09/2020
+ */
+
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
 import { designShow } from '../design/main-variant';
 

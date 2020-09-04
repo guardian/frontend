@@ -6,7 +6,6 @@ import type { Banner } from 'common/modules/ui/bannerPicker';
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
-import { signInGateDismissWindow } from 'common/modules/experiments/tests/sign-in-gate-dismiss-window';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { withComponentId, componentName } from './component';
@@ -22,7 +21,6 @@ const tests = [
     signInGatePatientia,
     signInGateMainVariant,
     signInGateMainControl,
-    signInGateDismissWindow,
 ];
 
 const canShow: () => Promise<boolean> = () =>
