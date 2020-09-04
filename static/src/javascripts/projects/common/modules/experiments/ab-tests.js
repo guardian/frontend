@@ -2,7 +2,6 @@
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe.js';
 import { askFourEarning } from 'common/modules/experiments/tests/contributions-epic-ask-four-earning';
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
-import { articlesViewedBanner } from 'common/modules/experiments/tests/contribs-banner-articles-viewed';
 import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-opt-out';
 import { xaxisAdapterTest } from 'common/modules/experiments/tests/commercial-xaxis-adapter';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
@@ -12,7 +11,6 @@ import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
-import { contributionsCovidBannerRoundTwo } from 'common/modules/experiments/tests/contribs-banner-covid-round-two';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -33,7 +31,5 @@ export const epicTests: $ReadOnlyArray<EpicABTest> = [
 ];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
-    contributionsCovidBannerRoundTwo,
-    articlesViewedBanner,
     contributionsBannerArticlesViewedOptOut,
 ];

@@ -18,31 +18,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed",
-    "show number of articles viewed in contributions banner",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-banner-articles-viewed-opt-out",
     "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
-    owners = Seq(Owner.withGithub("michaelbjacobson")),
+    owners = Seq(Owner.withGithub("paulbrown1982")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-covid-banner-round-two",
-    "Covid crisis",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true,
   )
 
