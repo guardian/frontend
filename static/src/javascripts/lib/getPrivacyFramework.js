@@ -1,8 +1,5 @@
 // @flow strict
-import config from 'lib/config';
 import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
-
-const switches = config.get('switches');
 
 let frameworks: { [key: string]: boolean };
 
@@ -11,9 +8,8 @@ export const getPrivacyFramework = () => {
         const isInUS = isInUsa();
 
         frameworks = {
-            ccpa: isInUS && switches.ccpaCmpUi,
-            tcfv1: !isInUS && !switches.tcfv2Dcr,
-            tcfv2: !isInUS && switches.tcfv2Dcr,
+            ccpa: isInUS,
+            tcfv2: !isInUS,
         };
     }
     return frameworks;

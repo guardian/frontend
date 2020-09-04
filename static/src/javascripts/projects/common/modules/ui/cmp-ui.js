@@ -5,7 +5,7 @@ import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
 export const addPrivacySettingsLink = (): void => {
-    if (!config.get('switches.cmpUi', true)) {
+    if (!config.get('switches.consentManagement', true)) {
         return;
     }
 
