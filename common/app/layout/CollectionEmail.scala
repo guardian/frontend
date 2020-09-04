@@ -43,7 +43,7 @@ object EmailContentContainer {
         emails (original request from Celine)
      */
     val emailcards =
-      cards.filterNot(c => c.properties.fold(false)(p => p.embedType.fold(false)(_ == "interactive")))
+      cards.filterNot(_.properties.fold(false)(_.embedType.fold(false)(_ == "interactive")))
 
     fromCollectionAndCards(pressedCollection, emailcards)
   }
