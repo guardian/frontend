@@ -507,7 +507,7 @@ describe('bids', () => {
         );
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
-        expect(getBidders()).toEqual(['xhb', 'sonobi']);
+        expect(getBidders()).toEqual(['sonobi', 'xhb']);
     });
 
     test('should ignore bidder that does not exist', () => {
@@ -615,65 +615,6 @@ describe('triplelift adapter', () => {
             .params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
-        });
-    });
-});
-
-describe('xaxis adapter', () => {
-    beforeEach(() => {
-        resetConfig();
-        config.set('page.contentType', 'Article');
-        shouldIncludeXaxis.mockReturnValue(true);
-        isInVariantSynchronous.mockImplementation(
-            (testId, variantId) => variantId === 'variant'
-        );
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    test('should include xaxis adapter if condition is true ', () => {
-        config.set('switches.prebidXaxis', true);
-        expect(getBidders()).toEqual(['ix', 'xhb']);
-    });
-
-    test('should not include xaxis adapter if condition is false ', () => {
-        config.set('switches.prebidXaxis', false);
-        expect(getBidders()).toEqual(['ix']);
-    });
-
-    test('should return correct xaxis adapter params for top-above-nav', () => {
-        config.set('switches.prebidXaxis', true);
-        containsLeaderboard.mockReturnValueOnce(true);
-        containsMpu.mockReturnValueOnce(false);
-        containsDmpu.mockReturnValueOnce(false);
-        containsMobileSticky.mockReturnValueOnce(false);
-        getBreakpointKey.mockReturnValue('D');
-
-        const xaxisBids = bids('dfp-ad--top-above-nav', [
-            [728, 90],
-            [970, 250],
-        ]);
-        expect(xaxisBids[2].params).toEqual({
-            placementId: 15900187,
-        });
-        expect(xaxisBids[3].params).toEqual({
-            placementId: 15900184,
-        });
-    });
-
-    test('should return not match param if size not matching', () => {
-        config.set('switches.prebidXaxis', true);
-        containsLeaderboard.mockReturnValueOnce(true);
-        containsMpu.mockReturnValueOnce(false);
-        containsDmpu.mockReturnValueOnce(false);
-        containsMobileSticky.mockReturnValueOnce(false);
-
-        const xaxisBids = bids('dfp-ad--top-above-nav', [[123, 123]]);
-
-        expect(xaxisBids[1].params).toEqual({
-            placementId: 15900184,
         });
     });
 });
