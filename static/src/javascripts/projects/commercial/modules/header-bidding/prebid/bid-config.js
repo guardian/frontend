@@ -50,7 +50,6 @@ import {
     shouldIncludeTripleLift,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
-    shouldIncludePangaea,
     stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
@@ -245,12 +244,6 @@ const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
     if (containsMpu(sizes)) return 13663304;
     if (containsBillboard(sizes)) return 13663284;
     return 13663304;
-};
-
-const getPangaeaPlacementIdForUsAndAu = (): string => {
-    if (isInUsOrCa()) return '13892369';
-    if (isInAuOrNz()) return '13892409';
-    return '';
 };
 
 const getTripleLiftInventoryCode = (
@@ -454,19 +447,6 @@ const adYouLikeBidder: PrebidBidder = {
     },
 };
 
-const pangaeaBidder: PrebidBidder = {
-    name: 'pangaea',
-    switchName: 'prebidPangaeaUsAu',
-    bidParams: (): PrebidAppNexusParams =>
-        Object.assign(
-            {},
-            {
-                placementId: getPangaeaPlacementIdForUsAndAu(),
-                keywords: buildAppNexusTargetingObject(getPageTargeting()),
-            }
-        ),
-};
-
 // There's an IX bidder for every size that the slot can take
 const indexExchangeBidders: (
     HeaderBiddingSize[]
@@ -495,7 +475,6 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
-        ...(inPbTestOr(shouldIncludePangaea()) ? [pangaeaBidder] : []),
         ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
         ...(inPbTestOr(shouldIncludeAppNexus()) ? [appNexusBidder] : []),
         ...(inPbTestOr(shouldIncludeImproveDigital())
