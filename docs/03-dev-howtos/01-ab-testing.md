@@ -209,7 +209,7 @@ if (isInVariant(FaciaSlideshowTest, 'variant')) {
 ## Running the test
 
 Release the test in to the wild just means deploying the frontend software, so you
-can follow our standard [contributing guidelines](https://github.com/guardian/frontend/blob/master/CONTRIBUTING.md).
+can follow our standard [contributing guidelines](https://github.com/guardian/frontend/blob/main/CONTRIBUTING.md).
 
 You can stop and start the test using our [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
 

@@ -1,6 +1,6 @@
 # SteadyPage JS utility
 
-[Steadypage](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/utils/steady-page.js) is a utility designed to improve the user experience when inserting lazy loaded elements into the page. It will measure the height (including margins, padding etc) of a container immediately after insertion and then add that height to the original scroll position to move the page back to where the user was.
+[Steadypage](https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/utils/steady-page.js) is a utility designed to improve the user experience when inserting lazy loaded elements into the page. It will measure the height (including margins, padding etc) of a container immediately after insertion and then add that height to the original scroll position to move the page back to where the user was.
 
 Before             |  After
 :-------------------------:|:-------------------------:
@@ -10,11 +10,11 @@ Before             |  After
 
 **Do not use fastdom** when inserting elements with steady page. The utility uses fastdom under the hood to read and write where required. It batches the insertion of elements, so that if multiple elements are queued in the same animation frame they will be inserted in the same fastdom.write and the position scrolled once to prevent excessive page jumping.
 
-It is not a direct replacement for fastdom as it requires the context of the element being passed in, in the form of its measurable container - the height of which must be the change of scroll position. 
+It is not a direct replacement for fastdom as it requires the context of the element being passed in, in the form of its measurable container - the height of which must be the change of scroll position.
 
 ## Spacef(iller|inder)
 
-When using spacefiller, you'll need to provide an empty writer in place of fastdom as we want to override the default usage of fastdom. 
+When using spacefiller, you'll need to provide an empty writer in place of fastdom as we want to override the default usage of fastdom.
 
 ```
 spaceFiller.fillSpace(rules, insertElement, {
@@ -30,15 +30,15 @@ We use steady page at the point of element insertion - e.g when appending to a p
 
 ```
 function insertElement(para) {
-	var elementContainer = createElement();	
-	
+	var elementContainer = createElement();
+
 	// Pass the container created in memort, with the element inside
 	// and the callback needed to insert it into the page at the right
 	// location
 	steadyPage.insert(element, function() {
 		para.parentNode.insertBefore(element, para)
 	});
-}		      
+}
 ```
 
 ## Limitations

@@ -5,9 +5,9 @@ Congratulations, you can deploy your code to production. Here are the steps to d
 
 ## Deploying
 
-_The Guardian frontend uses Continuous Deployment, any code pushed to the master branch would be automatically deployed to production_
+_The Guardian frontend uses Continuous Deployment, any code pushed to the `main` branch would be automatically deployed to production_
 
-1. Merge your pull request to master
+1. Merge your pull request to `main`
 1a. Wait for the tests and build to finish (Teamcity)
 2. Once the build step is completed, it will be automatically deployed to PROD.
 2a. Prout will send a notification when the deployment has completed

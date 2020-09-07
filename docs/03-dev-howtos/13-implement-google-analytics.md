@@ -16,7 +16,7 @@ Talk to the mobile apps team early, things can be a slightly different once you 
 ## Page View tracking
 
 The main entry point for google pageview tracking is in
-[`analytics/base.scala.html`](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/analytics/base.scala.html#L12)
+[`analytics/base.scala.html`](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/analytics/base.scala.html#L12)
 
 We are careful about how many tracking events we push to the GA test so only send 5% of traffic to the test account. In your local environment we are sending 100% to make development easier.
 
@@ -40,7 +40,7 @@ We maintain documentation that describes all the custom `dimensions`, `events` a
 ### Media Events
 
 The main entry point for Media (Video and Audio) tracking is
-[`video/events.js`](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/video/events.js)
+[`video/events.js`](https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/video/events.js)
 
 This is an example of the media event using the following custom `dimensions`
 
@@ -78,7 +78,7 @@ Incrementing metrics in this way is done to give a truer account of the actions 
 
 ### Click Events
 
-The main entry point for click tracking is [analytics/interaction-tracking.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/interaction-tracking.js)
+The main entry point for click tracking is [analytics/interaction-tracking.js](https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/analytics/interaction-tracking.js)
 
 The click actions currently being tracked are:
 
@@ -88,7 +88,7 @@ The click actions currently being tracked are:
 - Clicks on sponsors' logos (regardless of destination)
 - Clicks on native ads
 
-interaction-tracking.js is an abstraction over the top of [clickstream.js](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/ui/clickstream.js) that sends the events to both Omniture and Google.
+interaction-tracking.js is an abstraction over the top of [clickstream.js](https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/ui/clickstream.js) that sends the events to both Omniture and Google.
 
 TODO:
 
@@ -98,7 +98,7 @@ TODO:
 
 ### Discussion Events
 
-The comments event is a custom event defined in [analytics/discussion](https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/analytics/discussion.js)
+The comments event is a custom event defined in [analytics/discussion](https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/analytics/discussion.js)
 
 Most discussion events can be tracked with click events so the only GA custom event for discussion is for 'scroll'.
 
@@ -111,6 +111,6 @@ Check [chris's PR](https://github.com/guardian/frontend/pull/14114) for implemen
 ### AMP
 
 Main entry point for AMP analytics is
-[amp/googleAnalytics.scala.html](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/amp/googleAnalytics.scala.html)
+[amp/googleAnalytics.scala.html](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/amp/googleAnalytics.scala.html)
 
 

@@ -22,7 +22,7 @@ N.B. For email sign ups to work, the listID must be set up in ExactTarget by Edi
 
 ## The email preferences centre and the newsletters page
 
-The [email preferences centre](https://profile.theguardian.com/email-prefs) and the [email newsletters page](https://www.theguardian.com/email-newsletters) both pull data from [**EmailSubscriptions.scala**](https://github.com/guardian/frontend/blob/master/common/app/model/EmailSubscriptions.scala)
+The [email preferences centre](https://profile.theguardian.com/email-prefs) and the [email newsletters page](https://www.theguardian.com/email-newsletters) both pull data from [**EmailSubscriptions.scala**](https://github.com/guardian/frontend/blob/main/common/app/model/EmailSubscriptions.scala)
 
 The email newsletters page does not use iframed forms
 
@@ -40,9 +40,9 @@ When adding a new `EmailSubscription`:
 
 ## Adding colour and tones to the email sign up forms
 
-1) In the [**EmailSignupController.scala**](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/email/EmailSignupController.scala) add an email name to `ListIds`, and assign it the value of the listID.
+1) In the [**EmailSignupController.scala**](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/email/EmailSignupController.scala) add an email name to `ListIds`, and assign it the value of the listID.
 
-2) Within  [**emailSignUp.scala.html**](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/email/signup/emailSignUp.scala.html) map the email name to a tone in `listIdTones`
+2) Within  [**emailSignUp.scala.html**](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/email/signup/emailSignUp.scala.html) map the email name to a tone in `listIdTones`
 
 ## Email sign up atoms
 
@@ -53,7 +53,7 @@ These interactives have their [own repo](https://github.com/guardian/interactive
 
 If you are adding a custom email sign up form somewhere, you will want to POST an email address and listID to https://www.theguardian.com/email.
 
-An example implementation of this can be found in  [**newsletters.scala.html**](https://github.com/guardian/frontend/blob/master/applications/app/views/signup/newsletters.scala.html#L74).
+An example implementation of this can be found in  [**newsletters.scala.html**](https://github.com/guardian/frontend/blob/main/applications/app/views/signup/newsletters.scala.html#L74).
 
 ### How to do email address validation
 

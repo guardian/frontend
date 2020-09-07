@@ -42,7 +42,7 @@
 <!-- Please see the notes linked below if you need further info. -->
 
 - [ ] No, all the existing database files are just fine
-- [ ] Yes, and I have [re-run all the tests locally and checked in all the updated data/database/xyz files](https://github.com/guardian/frontend/blob/master/docs/03-dev-howtos/15-updating-test-database.md)
+- [ ] Yes, and I have [re-run all the tests locally and checked in all the updated data/database/xyz files](https://github.com/guardian/frontend/blob/main/docs/03-dev-howtos/15-updating-test-database.md)
 
 ### Accessibility test checklist
 
