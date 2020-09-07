@@ -216,16 +216,6 @@ private object NavLinks {
   val auEvents = NavLink("Events", "/guardian-live-australia")
   val holidays = NavLink("Holidays", "https://holidays.theguardian.com")
   val ukPatrons = NavLink("Patrons", "https://patrons.theguardian.com/?INTCMP=header_patrons")
-  val discountCodes = NavLink(
-    "Discount Codes",
-    s"https://discountcode.theguardian.com",
-    classList = Seq("js-discount-code-link"),
-  ) // this gets manipulated client side in navigation.js
-  val discountCoupons = NavLink(
-    "Coupons",
-    s"https://discountcode.theguardian.com",
-    classList = Seq("js-discount-code-link"),
-  ) // this gets manipulated client side in navigation.js
   val guardianLive = NavLink("Live events", "https://membership.theguardian.com/events?INTCMP=live_uk_header_dropdown")
   val guardianPuzzlesApp = NavLink("Guardian Puzzles app", s"https://puzzles.theguardian.com/download")
   val jobsRecruiter = NavLink(
@@ -582,26 +572,22 @@ private object NavLinks {
     digitalNewspaperArchive,
     printShop,
     ukPatrons,
-    discountCodes,
     guardianPuzzlesApp,
   )
   val auBrandExtensions = List(
     auEvents,
     digitalNewspaperArchive,
-    discountCodes,
     guardianPuzzlesApp,
   )
   val usBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_us_web_newheader_dropdown"),
     digitalNewspaperArchive,
-    discountCoupons,
     guardianPuzzlesApp,
   )
   val intBrandExtensions = List(
     jobs.copy(url = jobs.url + "?INTCMP=jobs_int_web_newheader_dropdown"),
     holidays.copy(url = holidays.url + "?INTCMP=holidays_int_web_newheader"),
     digitalNewspaperArchive,
-    discountCodes,
     guardianPuzzlesApp,
   )
 
