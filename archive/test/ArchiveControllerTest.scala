@@ -1,11 +1,13 @@
 package test
 
+import conf.Configuration
 import controllers.ArchiveController
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.mvc.Result
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.Environment
+
 import scala.concurrent.Future
 import services.RedirectService
 import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
@@ -73,13 +75,13 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   it should "decode encoded spaces as + for tag combiners" in {
     val result = archiveController.lookup("/foo%20foo")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/foo+foo")
+    location(result) should be(s"${Configuration.site.host}/foo+foo")
   }
 
   it should "redirect old style galleries" in {
     val result = archiveController.lookup("/arts/gallery/0,")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/arts/pictures/0,")
+    location(result) should be(s"${Configuration.site.host}/arts/pictures/0,")
   }
 
   it should "test a redirect doesn't link to itself" in {
@@ -91,25 +93,29 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   it should "lowercase the section of the url" in {
     val result = archiveController.lookup("/Football/News_Story/0,1563,1655638,00.html")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/football/News_Story/0,1563,1655638,00.html")
+    location(result) should be(s"${Configuration.site.host}/football/News_Story/0,1563,1655638,00.html")
   }
 
   it should "redirect century urls correctly" in {
     val result = archiveController.lookup("/century")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
+    location(result) should be(
+      s"${Configuration.site.host}/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century",
+    )
   }
 
   it should "redirect century decade urls correctly" in {
     val result = archiveController.lookup("/1899-1909")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century")
+    location(result) should be(
+      s"${Configuration.site.host}/world/2014/jul/31/-sp-how-the-guardian-covered-the-20th-century",
+    )
   }
 
   it should "redirect an R1 century article to a corrected decade story endpoint" in {
     val result = archiveController.lookup("/1899-1909/Story/0,,126404,00.html")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/century/1899-1909/Story/0,,126404,00.html")
+    location(result) should be(s"${Configuration.site.host}/century/1899-1909/Story/0,,126404,00.html")
   }
 
   it should "not redirect a random URL that contains the word century" in {
@@ -121,53 +127,53 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
   it should "redirect combiners to the the redirect location of individual tags" in {
     val result = archiveController.lookup("/lifeandstyle/restaurants+media/chris-evans")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/food/cookityourselflazy+media/chris-evans")
+    location(result) should be(s"${Configuration.site.host}/food/cookityourselflazy+media/chris-evans")
 
     val result2 = archiveController.lookup("/lifeandstyle/restaurants+books/politics")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/food/cookityourselflazy+books/nopasaran")
+    location(result2) should be(s"${Configuration.site.host}/food/cookityourselflazy+books/nopasaran")
   }
 
   it should "redirect rss requests to redirect location of associated tag " in {
     val result = archiveController.lookup("/lifeandstyle/restaurants/rss")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/food/cookityourselflazy/rss")
+    location(result) should be(s"${Configuration.site.host}/food/cookityourselflazy/rss")
   }
 
   it should "redirect rss combiners to the the redirect location of individual tags" in {
     val result = archiveController.lookup("/lifeandstyle/restaurants+media/chris-evans/rss")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/food/cookityourselflazy+media/chris-evans/rss")
+    location(result) should be(s"${Configuration.site.host}/food/cookityourselflazy+media/chris-evans/rss")
 
     val result2 = archiveController.lookup("/lifeandstyle/restaurants+books/politics/rss")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/food/cookityourselflazy+books/nopasaran/rss")
+    location(result2) should be(s"${Configuration.site.host}/food/cookityourselflazy+books/nopasaran/rss")
   }
 
   it should "redirect failed combiners to the (non-editionalised) section" in {
     val result = archiveController.lookup("/opinion/tvandradioblog+media/chris-evans")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/opinion")
+    location(result) should be(s"${Configuration.site.host}/opinion")
 
     val result2 = archiveController.lookup("/opinion+media/chris-evans")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/opinion")
+    location(result2) should be(s"${Configuration.site.host}/opinion")
   }
 
   it should "redirect paths that start with /Guardian/" in {
     val result = archiveController.lookup("/Guardian/world/2005/jun/21/hearafrica05.development3")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/world/2005/jun/21/hearafrica05.development3")
+    location(result) should be(s"${Configuration.site.host}/world/2005/jun/21/hearafrica05.development3")
   }
 
   it should "redirect failed combiners RSS to the (non-editionalised) section RSS" in {
     val result = archiveController.lookup("/opinion/tvandradioblog+media/chris-evans/rss")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/opinion/rss")
+    location(result) should be(s"${Configuration.site.host}/opinion/rss")
 
     val result2 = archiveController.lookup("/opinion+media/chris-evans/rss")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/opinion/rss")
+    location(result2) should be(s"${Configuration.site.host}/opinion/rss")
   }
 
   it should "redirect /week pages" in {
@@ -175,23 +181,23 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
     val result = archiveController.lookup("/news/datablog/2013/jun/19/week")(TestRequest())
     status(result) should be(301)
 
-    location(result) should be("/news/datablog/2013/jun/19/all")
+    location(result) should be(s"${Configuration.site.host}/news/datablog/2013/jun/19/all")
 
     val result2 = archiveController.lookup("/news/2013/jun/19/week")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/news/2013/jun/19/all")
+    location(result2) should be(s"${Configuration.site.host}/news/2013/jun/19/all")
   }
 
   it should "handle /week pages for editionalised sections" in {
 
     val ukResult = archiveController.lookup("/sport/2015/jun/01/week")(TestRequest())
     status(ukResult) should be(301)
-    location(ukResult) should be("/uk/sport/2015/jun/01/all")
+    location(ukResult) should be(s"${Configuration.site.host}/uk/sport/2015/jun/01/all")
 
     val australiaRequest = TestRequest().withHeaders("X-GU-Edition" -> "AU")
     val auResult = archiveController.lookup("/sport/2015/jun/01/week")(australiaRequest)
     status(auResult) should be(301)
-    location(auResult) should be("/au/sport/2015/jun/01/all")
+    location(auResult) should be(s"${Configuration.site.host}/au/sport/2015/jun/01/all")
 
   }
 
@@ -199,42 +205,42 @@ import services.RedirectService.{ArchiveRedirect, PermanentRedirect}
 
     val result = archiveController.lookup("/news/datablog/2013/jun/19/lead")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/news/datablog/2013/jun/19/all")
+    location(result) should be(s"${Configuration.site.host}/news/datablog/2013/jun/19/all")
 
     val result2 = archiveController.lookup("/news/2013/jun/19/lead")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/news/2013/jun/19/all")
+    location(result2) should be(s"${Configuration.site.host}/news/2013/jun/19/all")
 
     val result3 = archiveController.lookup("/commentisfree/lead")(TestRequest())
     status(result3) should be(301)
-    location(result3) should be("/uk/commentisfree/all")
+    location(result3) should be(s"${Configuration.site.host}/uk/commentisfree/all")
   }
 
   it should "handle /lead pages for editionalised sections" in {
 
     val ukResult = archiveController.lookup("/sport/2015/jun/01/lead")(TestRequest())
     status(ukResult) should be(301)
-    location(ukResult) should be("/uk/sport/2015/jun/01/all")
+    location(ukResult) should be(s"${Configuration.site.host}/uk/sport/2015/jun/01/all")
 
     val australiaRequest = TestRequest().withHeaders("X-GU-Edition" -> "AU")
     val auResult = archiveController.lookup("/sport/2015/jun/01/lead")(australiaRequest)
     status(auResult) should be(301)
-    location(auResult) should be("/au/sport/2015/jun/01/all")
+    location(auResult) should be(s"${Configuration.site.host}/au/sport/2015/jun/01/all")
 
   }
 
   it should "handle dated newspaper pages" in {
     val result = archiveController.lookup("/theguardian/2015/jun/18/sport/news")(TestRequest())
     status(result) should be(301)
-    location(result) should be("/theguardian/sport/news/2015/jun/18/all")
+    location(result) should be(s"${Configuration.site.host}/theguardian/sport/news/2015/jun/18/all")
 
     val result2 = archiveController.lookup("/theobserver/2015/jun/14/sport/news")(TestRequest())
     status(result2) should be(301)
-    location(result2) should be("/theobserver/sport/news/2015/jun/14/all")
+    location(result2) should be(s"${Configuration.site.host}/theobserver/sport/news/2015/jun/14/all")
 
     val result3 = archiveController.lookup("/theobserver/2015/jun/14/news")(TestRequest())
     status(result3) should be(301)
-    location(result3) should be("/theobserver/news/2015/jun/14/all")
+    location(result3) should be(s"${Configuration.site.host}/theobserver/news/2015/jun/14/all")
   }
 
   it should "redirect short urls with campaign codes" in {

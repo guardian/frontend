@@ -3,6 +3,7 @@ package metadata
 import akka.actor.ActorSystem
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
 import concurrent.BlockingOperations
+import conf.Configuration
 import controllers.FaciaControllerImpl
 import org.jsoup.Jsoup
 import org.scalatest.mockito.MockitoSugar
@@ -10,6 +11,7 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json._
 import play.api.test.Helpers._
 import services.ConfigAgent
+
 import scala.concurrent.duration._
 import scala.concurrent.Await
 import test._
@@ -70,7 +72,7 @@ import test._
     topContainer.size should be(15)
 
     (topContainer(0) \ "url").as[JsString].value should be(
-      "/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia",
+      s"${Configuration.site.host}/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia",
     )
 
   }

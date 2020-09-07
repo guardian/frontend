@@ -1,4 +1,5 @@
 package views.support.cleaner
+import conf.Configuration
 import org.joda.time.DateTime
 import org.scalatest.{FlatSpec, Matchers}
 import views.support.AffiliateLinksCleaner._
@@ -9,7 +10,7 @@ class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
     val link = "https://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
     linkToSkimLink(link, pageUrl, "123") should equal(
-      s"http://go.theguardian.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=/guardian-pirates/soulmates",
+      s"http://go.theguardian.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
     )
   }
 
