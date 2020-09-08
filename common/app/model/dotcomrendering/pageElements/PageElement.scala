@@ -62,6 +62,7 @@ sealed trait PageElement
 case class AudioAtomBlockElement(
     id: String,
     kicker: String,
+    title: Option[String],
     coverUrl: String,
     trackUrl: String,
     duration: Int,
@@ -554,12 +555,13 @@ object PageElement {
             // Using the AudioAtomBlockElement:
             Some(
               AudioAtomBlockElement(
-                audio.id,
-                audio.data.kicker,
-                audio.data.coverUrl,
-                audio.data.trackUrl,
-                audio.data.duration,
-                audio.data.contentId,
+                id = audio.id,
+                kicker = audio.data.kicker,
+                title = audio.atom.title,
+                coverUrl = audio.data.coverUrl,
+                trackUrl = audio.data.trackUrl,
+                duration = audio.data.duration,
+                contentId = audio.data.contentId,
               ),
             )
           }
