@@ -4,11 +4,6 @@ import config from 'lib/config';
 import memoize from 'lodash/memoize';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 import {
-    registerCompleteEvents,
-    registerImpressionEvents,
-    trackABTests,
-} from 'common/modules/experiments/ab-ophan';
-import {
     concurrentTests,
     engagementBannerTests,
     epicTests as hardCodedEpicTests,
@@ -210,15 +205,15 @@ export const runAndTrackAbTests = (): Promise<void> => {
 
     testsToRun.forEach(test => test.variantToRun.test(test));
 
-    registerImpressionEvents(testsToRun);
-    registerCompleteEvents(testsToRun);
-    trackABTests(testsToRun);
+    ABLib.registerImpressionEvents(testsToRun);
+    ABLib.registerCompleteEvents(testsToRun);
+    ABLib.trackABTests(testsToRun);
 
     return getAsyncTestsToRun().then(tests => {
         tests.forEach(test => test.variantToRun.test(test));
 
-        registerImpressionEvents(tests);
-        registerCompleteEvents(tests);
-        trackABTests(tests);
+        ABLib.registerImpressionEvents(tests);
+        ABLib.registerCompleteEvents(tests);
+        ABLib.trackABTests(tests);
     });
 };

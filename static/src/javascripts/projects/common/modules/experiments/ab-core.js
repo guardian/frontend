@@ -35,7 +35,9 @@ export type ABType = {
     ) => $ReadOnlyArray<Runnable<T>>,
     firstRunnableTest: <T: ABTest>($ReadOnlyArray<T>) => ?Runnable<T>,
     isUserInVariant: (string, string) => boolean,
-    // TODO add OphanAPI too (https://github.com/guardian/ab-testing/blob/main/packages/ab-core/src/types.ts#L36)
+    registerCompleteEvents: (tests: $ReadOnlyArray<Runnable<ABTest>>) => void,
+    registerImpressionEvents: (tests: $ReadOnlyArray<Runnable<ABTest>>) => void,
+    trackABTests: (tests: $ReadOnlyArray<Runnable<ABTest>>) => void
 };
 
 export type Config = {
@@ -47,6 +49,11 @@ export type Config = {
     forcedTestVariants?: Participations,
     forcedTestException?: string,
     arrayOfTestObjects: $ReadOnlyArray<ABTest>,
+    serverSideTests?: { [string]: boolean },
+    errorReporter?: (...args: mixed[]) => void,
+    ophanRecord?: (send: {
+        [key: string]: OphanABPayload;
+    }) => void;
 };
 
 export const AB = (c: Config): ABType => new _AB(c);
@@ -57,6 +64,9 @@ export const testConfig = (tests: $ReadOnlyArray<ABTest>): Config => {
         ...getForcedParticipationsFromUrl(window.location.hash),
     };
 
+    const ophanRecord = window && window.guardian && window.guardian.ophan && window.guardian.ophan.record || undefined;
+    const errorReporter = window && window.guardian && window.guardian.modules && window.guardian.modules.sentry && window.guardian.modules.sentry.reportError || undefined;
+
     return {
         mvtMaxValue: getMvtNumValues(),
         mvtId: getMvtValue(),
@@ -65,5 +75,8 @@ export const testConfig = (tests: $ReadOnlyArray<ABTest>): Config => {
         forcedTestVariants: forced,
         forcedTestException: undefined, // unsupported for now
         arrayOfTestObjects: tests,
+        serverSideTests: {},
+        errorReporter,
+        ophanRecord
     };
 };
