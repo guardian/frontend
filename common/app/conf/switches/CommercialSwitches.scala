@@ -437,7 +437,7 @@ trait PrebidSwitches {
     name = "prebid-appnexus-uk-row",
     description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
     owners = group(Commercial),
-    safeState = Off,
+    safeState = On,
     sellByDate = never,
     exposeClientSide = true,
   )
