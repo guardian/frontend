@@ -48,16 +48,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-appnexus-us-adapter",
-    "Test new us placement id for appnexus in US",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-connatix",
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
