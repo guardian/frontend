@@ -2,12 +2,10 @@ package test
 
 import conf.Configuration
 import conf.switches.Switches._
-import org.openqa.selenium.By
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
-import org.fluentlenium.core.filter.FilterConstructor._
 import play.api.test.TestBrowser
 
-import collection.JavaConverters._
+import scala.collection.JavaConverters._
 
 @DoNotDiscover class ArticleFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
 
@@ -78,8 +76,11 @@ import collection.JavaConverters._
         $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
-        el("[itemprop=author] a[itemprop='sameAs']").attribute("href") should be(withHost("/profile/ben-arnold"))
-        $("[itemprop=author] a[itemprop='sameAs']").last.attribute("href") should be(withHost("/profile/phelimoneill"))
+        val profileUrl = el("[itemprop=author] a[itemprop='sameAs']").attribute("href")
+        ignoringHost(profileUrl) should be("/profile/ben-arnold")
+
+        val profileUrl2 = $("[itemprop=author] a[itemprop='sameAs']").last.attribute("href")
+        ignoringHost(profileUrl2) should be("/profile/phelimoneill")
       }
     }
 
