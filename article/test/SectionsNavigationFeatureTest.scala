@@ -23,7 +23,7 @@ import conf.Configuration
 
         val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: US']")
 
-        editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/us")
+        ignoringHost(editionLink.attribute("href")) should be("/preference/edition/us")
       }
     }
 
@@ -34,7 +34,7 @@ import conf.Configuration
 
         val editionLink = browser.el("[data-link-name='nav2 : topbar : edition-picker: UK']")
 
-        editionLink.attribute("href") should be(s"http://localhost:${port}/preference/edition/uk")
+        ignoringHost(editionLink.attribute("href")) should be("/preference/edition/uk")
       }
     }
 

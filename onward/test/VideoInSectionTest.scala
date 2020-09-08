@@ -1,5 +1,6 @@
 package test
 
+import conf.Configuration
 import controllers.MediaInSectionController
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
@@ -20,7 +21,7 @@ import play.api.test.Helpers._
   "Video In Section controller" should "provide a tag combiner link" in {
     val result = mediaInSectionController.renderSectionMedia("video", "football")(TestRequest())
     status(result) should be(200)
-    contentAsString(result) should include("href=\"/football/football+content/video\"")
+    contentAsString(result) should include(s"""href="${Configuration.site.host}/football/football+content/video"""")
     contentAsString(result) should include("more football videos")
   }
 
