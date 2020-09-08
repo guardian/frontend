@@ -620,10 +620,10 @@ object PageElement {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
                   YoutubeBlockElement(
-                    mediaAtom.id, //CAPI ID
-                    asset.id, // Youtube ID
-                    mediaAtom.channelId, //Channel ID
-                    mediaAtom.title, //Caption
+                    id = mediaAtom.id, // CAPI ID
+                    assetId = asset.id, // Youtube ID
+                    channelId = mediaAtom.channelId, // Channel ID
+                    mediaTitle = mediaAtom.title, // Caption
                   )
                 })
               }
