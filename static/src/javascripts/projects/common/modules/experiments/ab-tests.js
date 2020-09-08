@@ -4,7 +4,6 @@ import { askFourEarning } from 'common/modules/experiments/tests/contributions-e
 import { acquisitionsEpicAlwaysAskIfTagged } from 'common/modules/experiments/tests/acquisitions-epic-always-ask-if-tagged';
 import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experiments/tests/contribs-banner-articles-viewed-opt-out';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
-import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { connatixTest } from 'common/modules/experiments/tests/connatix-ab-test';
 import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic-variants';
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
@@ -15,7 +14,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     connatixTest,
     appnexusUSAdapter,
-    pangaeaAdapterTest,
     signInGatePatientia,
     signInGateMainVariant,
     signInGateMainControl,

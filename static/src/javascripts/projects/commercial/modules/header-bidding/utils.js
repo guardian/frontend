@@ -5,7 +5,6 @@ import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
-import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
 import type { HeaderBiddingSize } from './types';
 
@@ -115,9 +114,6 @@ export const shouldIncludeSonobi = (): boolean => isInUsOrCa();
 export const shouldIncludeOpenx = (): boolean => !isInUsOrCa();
 
 export const shouldIncludeTrustX = (): boolean => isInUsOrCa();
-
-export const shouldIncludePangaea = (): boolean =>
-    isInVariantSynchronous(pangaeaAdapterTest, 'variant');
 
 export const shouldIncludeTripleLift = (): boolean => isInUsOrCa();
 
