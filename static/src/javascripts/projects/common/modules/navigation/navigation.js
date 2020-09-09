@@ -79,8 +79,33 @@ const enableMegaNavToggle = (): void => {
     });
 };
 
+const getDiscountCodePath = (path: string): string => {
+    const firstPart = path.split('/')[1];
+    if (firstPart === 'us' || firstPart === 'us-news') {
+        return 'uk'; // Send US -> UK for now as requested. All these sites should be decommissioned soon anyway.
+    } else if (firstPart === 'uk' || firstPart === 'uk-news') {
+        return 'uk';
+    } else if (firstPart === 'au' || firstPart === 'australia-news') {
+        return 'au';
+    }
+    return '';
+};
+
+const localiseDiscountCodeLinks = (): void => {
+    const path = window.location.pathname;
+    const discountCodeLinks = Array.from(
+        document.getElementsByClassName('js-discount-code-link')
+    );
+    console.log(discountCodeLinks);
+    discountCodeLinks.map((link: any) => {
+        link.href += getDiscountCodePath(path);
+        return true;
+    });
+};
+
 const initNavigation = (): Promise<any> => {
     enableMegaNavToggle();
+    localiseDiscountCodeLinks();
 
     const modifications = [
         jsEnableFooterNav(),
@@ -100,4 +125,4 @@ const initNavigation = (): Promise<any> => {
     return Promise.all(modifications);
 };
 
-export { initNavigation };
+export { initNavigation, getDiscountCodePath };
