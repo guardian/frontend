@@ -1,6 +1,7 @@
 // @flow
 import {
     initNavigation,
+    getDiscountCodePath,
 } from 'common/modules/navigation/navigation';
 
 jest.mock('lib/fastdom-promise');
@@ -84,5 +85,24 @@ describe('Navigation', () => {
                 );
             }
         });
+    });
+
+    it('should return correct discount code path', () => {
+        const paths = [
+            '/us',
+            '/politics',
+            '/uk/jeremy-corbyn',
+            '/australia-news/',
+            '/au/being-upside-down',
+            '',
+        ];
+        expect(paths.map(getDiscountCodePath)).toEqual([
+            'uk',
+            '',
+            'uk',
+            'au',
+            'au',
+            '',
+        ]);
     });
 });

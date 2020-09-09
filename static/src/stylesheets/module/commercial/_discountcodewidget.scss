@@ -1,0 +1,74 @@
+.fc-discount-merchants {
+    position: relative;
+    background-color: #052962;
+    padding-top: .5rem;
+    padding-bottom: 1rem;
+    box-sizing: border-box
+}
+
+.fc-discount-merchants__inner {
+    display: flex;
+    flex-direction: column
+}
+
+.fc-discount-merchants__content {
+    font-family: 'Guardian Text Sans Web', 'Helvetica Neue', Helvetica, Arial, 'Lucida Grande', sans-serif;
+    margin-bottom: .25rem
+}
+
+.fc-discount-merchants__text {
+    color: #ffffff;
+    line-height: 1.3;
+    margin-bottom: 1rem;
+    max-width: 30rem
+}
+
+.fc-discount-merchants__text a {
+    color: #ffffff;
+}
+
+.fc-discount-merchants__list {
+    font-size: 0;
+}
+
+.fc-discount-merchants__item {
+    display: inline-block;
+    margin: 0 .6rem .6rem 0;
+    border: .0625rem solid rgba(105, 209, 202, .3);
+    border-radius: 2rem
+}
+
+.fc-discount-merchants__item a {
+    display: block;
+    color: #69d1ca;
+    padding: .3125rem .875rem;
+    font-size: .875rem
+}
+
+.fc-discount-merchants__button {
+    background-color: #69d1ca;
+    width: 10rem;
+    float: none;
+    margin: 0;
+    white-space: nowrap
+}
+
+@media (min-width: 61.25em) {
+    .fc-discount-merchants__inner {
+        flex-direction: row
+    }
+    .fc-discount-merchants__title {
+        margin: 0 6.5rem 0 0
+    }
+    .fc-discount-merchants__content {
+        flex: 1
+    }
+    .fc-discount-merchants__text {
+        font-size: 1.2rem;
+        margin-bottom: 1.75rem
+    }
+    .fc-discount-merchants__button {
+        position: absolute;
+        bottom: 1.75rem
+    }
+}
