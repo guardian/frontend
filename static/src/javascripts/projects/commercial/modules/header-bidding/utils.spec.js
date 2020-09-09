@@ -101,55 +101,31 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    ['AU', 'NZ', 'GB'].forEach(region => {
-        test(`shouldIncludeAppNexus should return true if geolocation is ${region}`, () => {
-            config.switches.prebidAppnexusUkRow = true;
-            getSync.mockReturnValue(region);
-            expect(shouldIncludeAppNexus()).toBe(true);
-        });
-    });
-
-    ['US', 'CA'].forEach(region => {
-        test(`shouldIncludeAppNexus should return false if geolocation is ${region} and`, () => {
-            getSync.mockReturnValue(region);
-            expect(shouldIncludeAppNexus()).toBe(false);
-        });
-    });
-
-    test('shouldIncludeAppNexus should otherwise return false', () => {
-        config.switches.prebidAppnexusUkRow = true;
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(shouldIncludeAppNexus()).toBe(true);
-        }
-    });
-
-    test('shouldIncludeAppNexus should return false for UK region if UK switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('GB');
-        expect(shouldIncludeAppNexus()).toBe(false);
-    });
-
-    test('shouldIncludeAppNexus should return false for UK region if UK switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(shouldIncludeAppNexus()).toBe(false);
-        }
-    });
-
-    test('shouldIncludeAppNexus should return true for AU region if UK region is switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('AU');
-        expect(shouldIncludeAppNexus()).toBe(true);
-    });
-
-    test('shouldIncludeAppNexus should return true for NZ region if UK region is switched off', () => {
-        config.switches.prebidAppnexusUkRow = false;
-        getSync.mockReturnValue('NZ');
-        expect(shouldIncludeAppNexus()).toBe(true);
+    test.each([
+        ['AU','on', true],
+        ['AU','off', true],
+            ['NZ','on', true],
+            ['NZ','off', true],
+            ['GB','on', true],
+            ['GB','off', false],
+            ['US','on', false],
+            ['CA','on', false],
+            ['FK','on', true],
+            ['GI','on', true],
+            ['GG','on', true],
+            ['IM','on', true],
+            ['JE','on', true],
+            ['SH','on', true],
+            ['FK','off', false],
+            ['GI','off', false],
+            ['GG','off', false],
+            ['IM','off', false],
+            ['JE','off', false],
+            ['SH','off', false]
+    ])(`In %s, if switch is %s, shouldIncludeAppNexus should return %s`, (region, switchState, expected) => {
+        config.switches.prebidAppnexusUkRow = (switchState === 'on');
+        getSync.mockReturnValue(region);
+        expect(shouldIncludeAppNexus()).toBe(expected);
     });
 
     test('shouldIncludeOpenx should return true if geolocation is GB', () => {
