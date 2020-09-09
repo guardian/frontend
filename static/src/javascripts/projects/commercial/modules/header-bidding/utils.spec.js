@@ -101,6 +101,7 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
+    // $FlowFixMe
     test.each([
         ['AU','on', true],
         ['AU','off', true],
