@@ -43,7 +43,7 @@ type InAppMessage = {
     },
 };
 
-type InAppMessageButton = [null, null, null, null, null, null, string]
+type InAppMessageButton = (null, null, null, null, null, null, string);
 type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
