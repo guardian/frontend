@@ -56,7 +56,7 @@ import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 import {
-    consentManagementPlatformUi,
+    cmpBannerCandidate,
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
@@ -306,8 +306,8 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
-        consentManagementPlatformUi,
         brazeBanner,
+        cmpBannerCandidate,
         breakingNews,
         signInGate,
         membershipBanner,

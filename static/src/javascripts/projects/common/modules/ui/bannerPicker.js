@@ -36,7 +36,7 @@ const init = (banners: Array<Banner>): Promise<void> => {
     };
 
     return new Promise(resolve => {
-        const TIME_LIMIT = 2000;
+        const TIME_LIMIT = 20000;
         let bannerPicked = false;
 
         banners.forEach((banner, index) => {

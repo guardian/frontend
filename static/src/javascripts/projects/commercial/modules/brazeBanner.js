@@ -8,6 +8,7 @@ import {mountDynamic} from "@guardian/automat-modules";
 
 import {getUserFromApi} from '../../common/modules/identity/api';
 import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
+import {InAppMessageButton, InAppMessage} from "@braze/web-sdk-core";
 
 const brazeSwitch = config.get('switches.brazeSwitch');
 const apiKey = config.get('page.brazeApiKey');
@@ -49,22 +50,20 @@ const canShow = (): Promise<boolean> => {
                 throw new Error("Braze not enabled or API key not available");
             }
 
-            if (!isDigitalSubscriber()) {
-                resolve(false);
-                return;
-            }
+            // if (!isDigitalSubscriber()) {
+
+            //     resolve(false);
+            //     return;
+            // }
 
             const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
-
             if (!(brazeUuid && hasGivenConsent)) {
                 resolve(false);
                 return;
             }
-
             appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
-
             appboy.initialize(apiKey, {
-                enableLogging: false,
+                enableLogging: true,
                 noCookies: true,
                 baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
                 sessionTimeoutInSeconds: 1,
@@ -75,10 +74,10 @@ const canShow = (): Promise<boolean> => {
                 messageConfig = configuration;
                 resolve(true);
             });
-
             appboy.changeUser(brazeUuid);
             appboy.openSession();
         } catch (e) {
+            console.log(e)
             resolve(false);
         }
     });
@@ -97,17 +96,23 @@ const show = (): Promise<boolean> => import(
         if (document.body) {
             document.body.appendChild(container);
         }
-
+        console.log("Pre mount dynamic",container)
         mountDynamic(
             container,
-            module.ExampleComponent,
+            module.DigitalSubscriberAppBanner,
             {
                 message: messageConfig.extras["test-key"],
-                onButtonClick: () => {
+                onButtonClick: (buttonId) => {
                     if (appboy) {
-                        appboy.logInAppMessageClick(messageConfig);
+                        const thisButton = new InAppMessageButton(messageConfig.extras["test-key"],null,null,null,null,null,parseInt(buttonId))
+                        console.log(messageConfig)
+                        console.log(thisButton)
+                        appboy.logInAppMessageButtonClick(
+                            thisButton, messageConfig
+                        );
                     }
                 },
+                firstName: "Placeholder"
             },
             true,
         );
