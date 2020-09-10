@@ -43,6 +43,7 @@ type InAppMessage = {
     },
 };
 
+type InAppMessageButton = [null, null, null, null, null, null, string]
 type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
@@ -52,6 +53,7 @@ type AppBoy = {
     openSession: () => void,
     logInAppMessageClick: (InAppMessage) => void;
     logInAppMessageImpression: (InAppMessage) => void;
+    InAppMessageButton: InAppMessageButton
 };
 
 let messageConfig: InAppMessage;
