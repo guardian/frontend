@@ -43,7 +43,7 @@ type InAppMessage = {
     },
 };
 
-type InAppMessageButton = (null, null, null, null, null, null, string);
+type InAppMessageButton = any;
 type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
@@ -51,9 +51,9 @@ type AppBoy = {
     subscribeToInAppMessage: (InAppMessageCallback) => {},
     changeUser: (string) => void,
     openSession: () => void,
-    logInAppMessageClick: (InAppMessage) => void;
-    logInAppMessageImpression: (InAppMessage) => void;
-    InAppMessageButton: InAppMessageButton
+    logInAppMessageClick: (InAppMessage) => void,
+    logInAppMessageButtonClick: (InAppMessageButton, InAppMessage) => void,
+    InAppMessageButton: InAppMessageButton,
 };
 
 let messageConfig: InAppMessage;
@@ -116,9 +116,9 @@ const show = (): Promise<boolean> => import(
             container,
             module.DigitalSubscriberAppBanner,
             {
-                onButtonClick: () => {
+                onButtonClick: (buttonId: number) => {
                     if (appboy) {
-                        const thisButton = new appboy.InAppMessageButton(null,null,null,null,null,null,parseInt(buttonId))
+                        const thisButton = new appboy.InAppMessageButton(null,null,null,null,null,null,buttonId)
                         appboy.logInAppMessageButtonClick(
                             thisButton, messageConfig
                         );
