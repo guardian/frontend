@@ -13,7 +13,6 @@ import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { connatix } from 'commercial/modules/third-party-tags/connatix';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
@@ -110,7 +109,6 @@ const loadOther = (): void => {
         fbPixel(),
         twitterUwt(),
         lotame(),
-        connatix,
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
