@@ -51,7 +51,7 @@ if (!commercialFeatures.adFree) {
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
         ['cm-commentAdverts', initCommentAdverts],
-        ['rr-adblock-ask', initAdblockAsk]
+        ['rr-adblock-ask', initAdblockAsk],
     );
 }
 

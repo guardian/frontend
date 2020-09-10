@@ -1024,6 +1024,11 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
+"@braze/web-sdk-core@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@braze/web-sdk-core/-/web-sdk-core-3.0.0.tgz#32fd4a045e143dc28bb0a623ebea4abd01068042"
+  integrity sha512-hRiHFG3a1V9dj47K0quiU+2TnYabdexpwuqb4yqWYn5s1eiUA3S+XFs0YvKM0jmpSnW9ok5uiLJnddvlrGsR8g==
+
 "@emotion/cache@^10.0.27":
   version "10.0.29"
   resolved "https://registry.yarnpkg.com/@emotion/cache/-/cache-10.0.29.tgz#87e7e64f412c060102d589fe7c6dc042e6f9d1e0"
@@ -1163,6 +1168,14 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
+"@guardian/braze-components@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.5.tgz#abd9eaaf17feb59dc749b4b616cac80325115df0"
+  integrity sha512-jVO/TAmCKBtxb9yvAVguJ2edE+OLdcUPlk+VN2TsoVR6HqOqzlt1Mmo1WSautU1mO3km4LfIba9mUV49t9eBHw==
+  dependencies:
+    "@guardian/src-button" "^2.1.0"
+    "@guardian/src-foundations" "^2.1.0"
+
 "@guardian/consent-management-platform@4.3.0":
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.3.0.tgz#2a9f548db78a7c9017708ec6ba79ba258ae9adc1"
@@ -1206,6 +1219,13 @@
     "@guardian/src-helpers" "^0.16.1"
     "@guardian/src-svgs" "^0.16.1"
 
+"@guardian/src-button@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-button/-/src-button-2.1.0.tgz#59e4bec31dce699debcb2c49c128251e00e96ecc"
+  integrity sha512-9k/HudQOVePp4kjBd/NgZTR46X+VRQ2flWkaewxu1v8wcnBMC4Sm4wYgqsj6Jo7qAf1q3r4kLV/nG8rnd7BETQ==
+  dependencies:
+    "@guardian/src-helpers" "^2.1.0"
+
 "@guardian/src-foundations@^0.16.1":
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-0.16.1.tgz#d5e52a57012c588d146b05ded7f9fbc4a9af40d5"
@@ -1216,12 +1236,24 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-1.9.0.tgz#288e9c338db891ec67f4669bf2e2a30a12e513e4"
   integrity sha512-1JGr4szmYZGhUtvWPKkO8l//5JHlocY7UXnEFszkJOsrbHECJcR3BmqX8KB3Yl+Gu4G1+r0lZ1+QIrgi02xVZw==
 
+"@guardian/src-foundations@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-foundations/-/src-foundations-2.1.0.tgz#7d4abd30c7cca6df02cd61b125e43f18ac9b801f"
+  integrity sha512-1ELb3CtDEhkhUWcv2zVwFqonokYg7pbizQqYMmRfNnHIzNp3+aJl48BHMRTd9Nqqcx+As9syUXPs09CeaAOMfg==
+
 "@guardian/src-helpers@^0.16.1":
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-0.16.1.tgz#cf1e5e6a2c36bb1d91c9785cbfe7f48b735644aa"
   integrity sha512-SYWrWK5tm+axqRFRY9QjfFt/CS8v1ROh6o1/oy8hQxgiJExXsgLkbv0R8lgKkZaC8luO1dEgQYYXgQiqM+dsIA==
   dependencies:
     "@guardian/src-foundations" "^0.16.1"
+
+"@guardian/src-helpers@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/src-helpers/-/src-helpers-2.1.0.tgz#1b2f5d243a8794105b887a1ae46fdf5ce23355f3"
+  integrity sha512-M3ShTyoYHcH6tyGsGEp7KgXaJbIpvzmFB9AVvzjs/Ozn9a1ii1F4/FBEBJAlDwijgrnUtASeSZ73ncSkvofdiw==
+  dependencies:
+    "@guardian/src-foundations" "^2.1.0"
 
 "@guardian/src-svgs@^0.16.1":
   version "0.16.1"
