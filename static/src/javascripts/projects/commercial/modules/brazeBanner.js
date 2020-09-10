@@ -124,8 +124,8 @@ const show = (): Promise<boolean> => import(
                         );
                     }
                 },
-                header: messageConfig.extras["header"],
-                body: messageConfig.extras["body"],
+                header: messageConfig.extras.header,
+                body: messageConfig.extras.body,
             },
             true,
         );
