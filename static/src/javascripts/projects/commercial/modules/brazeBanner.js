@@ -51,8 +51,8 @@ type AppBoy = {
     subscribeToInAppMessage: (InAppMessageCallback) => {},
     changeUser: (string) => void,
     openSession: () => void,
-    logInAppMessageClick: (InAppMessage) => void,
     logInAppMessageButtonClick: (InAppMessageButton, InAppMessage) => void,
+    logInAppMessageImpression: (InAppMessage) => void,
     InAppMessageButton: InAppMessageButton,
 };
 
