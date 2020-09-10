@@ -432,6 +432,16 @@ trait PrebidSwitches {
     exposeClientSide = true,
   )
 
+  val prebidAppNexusUKROW: Switch = Switch(
+    group = CommercialPrebid,
+    name = "prebid-appnexus-uk-row",
+    description = "Include AppNexus adapter in Prebid auctions in UK/ROW",
+    owners = group(Commercial),
+    safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
   val prebidAppNexusInvcode: Switch = Switch(
     group = CommercialPrebid,
     name = "prebid-appnexus-invcode",
