@@ -112,14 +112,18 @@ const show = (): Promise<boolean> => import(
 
         mountDynamic(
             container,
-            module.ExampleComponent,
+            module.DigitalSubscriberAppBanner,
             {
-                message: messageConfig.extras["test-key"],
                 onButtonClick: () => {
                     if (appboy) {
-                        appboy.logInAppMessageClick(messageConfig);
+                        const thisButton = new appboy.InAppMessageButton(null,null,null,null,null,null,parseInt(buttonId))
+                        appboy.logInAppMessageButtonClick(
+                            thisButton, messageConfig
+                        );
                     }
                 },
+                header: messageConfig.extras["header"],
+                body: messageConfig.extras["body"],
             },
             true,
         );
