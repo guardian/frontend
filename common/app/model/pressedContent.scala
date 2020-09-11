@@ -6,7 +6,7 @@ import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
 import com.gu.facia.api.utils.FaciaContentUtils
 import com.gu.facia.api.{models => fapi, utils => fapiutils}
-import com.gu.facia.client.models.{Backfill, CollectionConfigJson, Metadata, CollectionPlatform}
+import com.gu.facia.client.models.{Backfill, CollectionConfigJson, CollectionPlatform, Metadata}
 import common.{Edition, HTML}
 import common.commercial.EditionBranding
 import model.content.{Atoms, MediaAtom}
@@ -26,6 +26,7 @@ import model.{
   VideoElement,
 }
 import org.joda.time.DateTime
+import views.support.ContentOldAgeDescriber
 
 sealed trait PressedContent {
   def properties: PressedProperties
@@ -46,6 +47,14 @@ sealed trait PressedContent {
       editionBranding <- brandings find (_.edition == edition)
       branding <- editionBranding.branding
     } yield branding
+
+  // For DCR
+  def ageWarning: Option[String] = {
+    properties.maybeContent
+      .filter(c => c.tags.tags.exists(_.id == "tone/news"))
+      .map(ContentOldAgeDescriber.apply)
+      .filterNot(_ == "")
+  }
 }
 
 object PressedContent {

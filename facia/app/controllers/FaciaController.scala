@@ -66,6 +66,22 @@ trait FaciaController
 
   def renderContainerJson(id: String): Action[AnyContent] = renderContainer(id, false)
 
+  def renderContainerDataJson(id: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      getPressedCollection(id).map {
+        case Some(collection) =>
+          val onwardItems = OnwardCollection.fromCollection(collection)
+
+          Cached(CacheTime.Facia) {
+            JsonComponent(onwardItems)
+          }
+        case None =>
+          Cached(CacheTime.NotFound)(
+            WithoutRevalidationResult(NotFound(s"collection id $id does not exist")),
+          )
+      }
+    }
+
   def renderSomeFrontContainersMf2(
       count: Int,
       offset: Int,
