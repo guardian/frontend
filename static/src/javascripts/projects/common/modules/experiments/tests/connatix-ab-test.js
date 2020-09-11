@@ -1,4 +1,5 @@
 // @flow strict
+import { isInUsa } from "common/modules/commercial/geo-utils";
 
 export const connatixTest: ABTest = {
     id: 'CommercialConnatix',
@@ -13,7 +14,7 @@ export const connatixTest: ABTest = {
     dataLinkNames: 'n/a',
     idealOutcome: 'Connatix integration works smoothly behind AB test',
     showForSensitive: false,
-    canRun: () => true,
+    canRun: () => isInUsa(),
     variants: [
         {
             id: 'control',
