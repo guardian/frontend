@@ -1,19 +1,20 @@
 // @flow strict
+import { isInUsa } from "common/modules/commercial/geo-utils";
 
 export const connatixTest: ABTest = {
     id: 'CommercialConnatix',
     start: '2020-12-03',
-    expiry: '2020-12-04',
+    expiry: '2020-09-21',
     author: 'Ioanna Kyprianou',
-    description: 'This is to test connatix integration',
-    audience: 0.0,
+    description: 'This is to test connatix integration via GAM',
+    audience: 0.1,
     audienceOffset: 0.0,
-    successMeasure: 'We can test connatix integration ',
+    successMeasure: 'We can test connatix integration via GAM',
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
-    idealOutcome: 'Conantix integration',
+    idealOutcome: 'Connatix integration works smoothly behind AB test',
     showForSensitive: false,
-    canRun: () => true,
+    canRun: () => isInUsa(),
     variants: [
         {
             id: 'control',
