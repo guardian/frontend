@@ -43,7 +43,17 @@ type InAppMessage = {
     },
 };
 
-type InAppMessageButton = any;
+type ClickAction = "NEWS_FEED" | "URI" | "NONE"
+
+type InAppMessageButton = (
+    text?: string | null,
+    backgroundColor?: number| null,
+    textColor?: number | null,
+    borderColor?: number | null,
+    clickAction?: ClickAction | null,
+    uri?: string | null,
+    id: number) => void;
+
 type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
@@ -53,7 +63,7 @@ type AppBoy = {
     openSession: () => void,
     logInAppMessageButtonClick: (InAppMessageButton, InAppMessage) => void,
     logInAppMessageImpression: (InAppMessage) => void,
-    InAppMessageButton: InAppMessageButton,
+    InAppMessageButton: (null, null, null, null, null, null, number) => any,
 };
 
 let messageConfig: InAppMessage;
