@@ -46,12 +46,12 @@ type InAppMessage = {
 type ClickAction = "NEWS_FEED" | "URI" | "NONE"
 
 type InAppMessageButtonObject = (
-    text?: string | null,
-    backgroundColor?: number| null,
-    textColor?: number | null,
-    borderColor?: number | null,
-    clickAction?: ClickAction | null,
-    uri?: string | null,
+    text?: string,
+    backgroundColor?: number,
+    textColor?: number,
+    borderColor?: number,
+    clickAction?: ClickAction,
+    uri?: string,
     id: number) => void;
 
 type InAppMessageCallback = (InAppMessage) => void;
