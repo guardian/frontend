@@ -45,14 +45,15 @@ type InAppMessage = {
 
 type ClickAction = "NEWS_FEED" | "URI" | "NONE"
 
-type InAppMessageButtonObject = (
-    text?: string,
+type InAppMessageButtonInstance = {
+    text: string,
     backgroundColor?: number,
     textColor?: number,
     borderColor?: number,
     clickAction?: ClickAction,
     uri?: string,
-    id: number) => void;
+    id?: number
+}
 
 type InAppMessageCallback = (InAppMessage) => void;
 
@@ -61,9 +62,9 @@ type AppBoy = {
     subscribeToInAppMessage: (InAppMessageCallback) => {},
     changeUser: (string) => void,
     openSession: () => void,
-    logInAppMessageButtonClick: (InAppMessageButtonObject, InAppMessage) => void,
+    logInAppMessageButtonClick: (InAppMessageButtonInstance, InAppMessage) => void,
     logInAppMessageImpression: (InAppMessage) => void,
-    InAppMessageButton: (null, null, null, null, null, null, number) => InAppMessageButtonObject,
+    InAppMessageButton: (string, ?number, ?number, ?number, ?ClickAction, ?string, ?number) => InAppMessageButtonInstance,
 };
 
 let messageConfig: InAppMessage;
@@ -128,7 +129,7 @@ const show = (): Promise<boolean> => import(
             {
                 onButtonClick: (buttonId: number) => {
                     if (appboy) {
-                        const thisButton = new appboy.InAppMessageButton(null,null,null,null,null,null,buttonId)
+                        const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
                         appboy.logInAppMessageButtonClick(
                             thisButton, messageConfig
                         );
