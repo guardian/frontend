@@ -454,16 +454,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val contributionReminder = Switch(
-    SwitchGroup.Feature,
-    "show-contribution-reminder",
-    "This toggles the contribution reminder",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 15),
-    exposeClientSide = true,
-  )
-
   val remoteBanner = Switch(
     SwitchGroup.Feature,
     "remote-banner",
