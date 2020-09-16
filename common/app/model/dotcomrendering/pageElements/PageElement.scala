@@ -269,8 +269,13 @@ case class VideoYoutubeBlockElement(
 ) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String)
-    extends PageElement
+case class YoutubeBlockElement(
+    id: String,
+    assetId: String,
+    channelId: Option[String],
+    mediaTitle: String,
+    expired: Boolean,
+) extends PageElement
 
 // Intended for unstructured html that we can't model, typically rejected by consumers
 case class HTMLFallbackBlockElement(html: String) extends PageElement
@@ -605,6 +610,7 @@ object PageElement {
                     assetId = asset.id, // Youtube ID
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
+                    expired = mediaAtom.expired.getOrElse(false),
                   )
                 })
               }
