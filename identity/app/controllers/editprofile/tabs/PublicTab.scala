@@ -1,10 +1,10 @@
 package controllers.editprofile.tabs
 
 import conf.Configuration
-import controllers.editprofile.{EditProfileControllerComponents, EditProfileFormHandling, PublicEditProfilePage}
+import controllers.editprofile.{EditProfileControllerComponents}
 import play.api.mvc.{Action, AnyContent}
 
-trait PublicTab extends EditProfileControllerComponents with EditProfileFormHandling {
+trait PublicTab extends EditProfileControllerComponents {
 
   private def redirectToManage(path: String): Action[AnyContent] =
     Action { implicit request =>

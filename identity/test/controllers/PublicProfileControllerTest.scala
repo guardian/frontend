@@ -36,9 +36,6 @@ class PublicProfileControllerTest
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      aboutMe = Some("I read the Guardian"),
-      location = Some("London"),
-      interests = Some("I like stuff"),
       vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(
@@ -53,9 +50,6 @@ class PublicProfileControllerTest
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      aboutMe = Some("I read the Guardian"),
-      location = Some("London"),
-      interests = Some("I like stuff"),
       vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(

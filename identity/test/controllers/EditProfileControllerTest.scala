@@ -69,7 +69,6 @@ import scala.concurrent.Future
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
-      new ProfileMapping,
     )
 
     when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)

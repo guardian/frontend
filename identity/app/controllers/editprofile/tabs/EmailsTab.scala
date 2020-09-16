@@ -4,7 +4,7 @@ import conf.Configuration
 import controllers.editprofile._
 import play.api.mvc.{Action, AnyContent}
 
-trait EmailsTab extends EditProfileControllerComponents with EditProfileFormHandling {
+trait EmailsTab extends EditProfileControllerComponents {
 
   import authenticatedActions._
 
