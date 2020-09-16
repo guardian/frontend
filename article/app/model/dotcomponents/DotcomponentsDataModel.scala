@@ -477,6 +477,7 @@ object DotcomponentsDataModel {
           isImmersive,
           campaigns,
           calloutsUrl,
+          article.elements.thumbnail,
         ),
       )
       .filter(PageElement.isSupported)

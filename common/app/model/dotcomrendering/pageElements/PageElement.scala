@@ -1,22 +1,17 @@
 package model.dotcomrendering.pageElements
 
-import java.net.{URLEncoder}
+import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{
-  ElementType,
-  SponsorshipType,
-  BlockElement => ApiBlockElement,
-  Sponsorship => ApiSponsorship,
-}
+import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
 import conf.Configuration
-import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
+import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
+import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
@@ -269,7 +264,7 @@ case class VideoYoutubeBlockElement(
 ) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String)
+case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String, overrideImage: Option[String])
     extends PageElement
 
 // Intended for unstructured html that we can't model, typically rejected by consumers
@@ -333,6 +328,7 @@ object PageElement {
       isImmersive: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
+      overrideImage: Option[ImageElement]
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
@@ -616,6 +612,7 @@ object PageElement {
           }
 
           case Some(mediaAtom: MediaAtom) => {
+            val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -624,6 +621,7 @@ object PageElement {
                     assetId = asset.id, // Youtube ID
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
+                    overrideImage = if(isMainBlock)imageOverride else None,
                   )
                 })
               }
