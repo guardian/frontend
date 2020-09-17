@@ -7,7 +7,7 @@ import play.api.mvc.{Action, AnyContent}
 /**
   * DigiPack, Mebership, Contributions tabs
   */
-trait SupporterTabs extends EditProfileControllerComponents with EditProfileFormHandling {
+trait SupporterTabs extends EditProfileControllerComponents {
 
   private def redirectToManage(path: String): Action[AnyContent] =
     Action { implicit request =>

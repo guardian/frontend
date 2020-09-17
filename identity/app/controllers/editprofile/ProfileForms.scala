@@ -18,21 +18,18 @@ import play.api.mvc.Request
   * @param profileFormsMapping Case class with mappings for all the forms
   */
 case class ProfileForms(
-    publicForm: Form[ProfileFormData],
     accountForm: Form[AccountFormData],
     privacyForm: Form[PrivacyFormData],
     activePage: IdentityPage,
 )(implicit profileFormsMapping: ProfileFormsMapping) {
 
   lazy val activeForm = activePage match {
-    case PublicEditProfilePage  => publicForm
     case AccountEditProfilePage => accountForm
     case EmailPrefsProfilePage  => privacyForm
     case page                   => throw new RuntimeException(s"Unexpected page $page")
   }
 
   private lazy val activeMapping = activePage match {
-    case PublicEditProfilePage  => profileFormsMapping.profileMapping
     case AccountEditProfilePage => profileFormsMapping.accountDetailsMapping
     case EmailPrefsProfilePage  => profileFormsMapping.privacyMapping
     case page                   => throw new RuntimeException(s"Unexpected page $page")
@@ -41,7 +38,6 @@ case class ProfileForms(
   /** Fills all Edit Profile forms (Public, Account, Privacy) with the provided User value */
   def bindForms(user: User)(implicit messagesProvider: MessagesProvider): ProfileForms = {
     copy(
-      publicForm = profileFormsMapping.profileMapping.fillForm(user),
       accountForm = profileFormsMapping.accountDetailsMapping.fillForm(user),
       privacyForm = profileFormsMapping.privacyMapping.fillForm(user),
     )
@@ -79,7 +75,6 @@ case class ProfileForms(
     */
   private def transform(changeFunc: (Form[_ <: UserFormData]) => Form[_ <: UserFormData]): ProfileForms = {
     activePage match {
-      case PublicEditProfilePage  => copy(publicForm = changeFunc(publicForm).asInstanceOf[Form[ProfileFormData]])
       case AccountEditProfilePage => copy(accountForm = changeFunc(accountForm).asInstanceOf[Form[AccountFormData]])
       case EmailPrefsProfilePage  => copy(privacyForm = changeFunc(privacyForm).asInstanceOf[Form[PrivacyFormData]])
       case page                   => throw new RuntimeException(s"Unexpected page $page")
@@ -104,7 +99,6 @@ object ProfileForms {
   ): ProfileForms = {
 
     ProfileForms(
-      publicForm = profileFormsMapping.profileMapping.fillForm(userDO),
       accountForm = profileFormsMapping.accountDetailsMapping.fillForm(userDO),
       privacyForm = profileFormsMapping.privacyMapping.fillForm(userDO),
       activePage = activePage,
