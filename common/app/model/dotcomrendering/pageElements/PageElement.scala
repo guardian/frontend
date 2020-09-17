@@ -3,7 +3,12 @@ package model.dotcomrendering.pageElements
 import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import com.gu.contentapi.client.model.v1.{
+  ElementType,
+  SponsorshipType,
+  BlockElement => ApiBlockElement,
+  Sponsorship => ApiSponsorship,
+}
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
@@ -264,8 +269,13 @@ case class VideoYoutubeBlockElement(
 ) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String, overrideImage: Option[String])
-    extends PageElement
+case class YoutubeBlockElement(
+    id: String,
+    assetId: String,
+    channelId: Option[String],
+    mediaTitle: String,
+    overrideImage: Option[String],
+) extends PageElement
 
 // Intended for unstructured html that we can't model, typically rejected by consumers
 case class HTMLFallbackBlockElement(html: String) extends PageElement
@@ -328,7 +338,7 @@ object PageElement {
       isImmersive: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
-      overrideImage: Option[ImageElement]
+      overrideImage: Option[ImageElement],
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
@@ -621,7 +631,7 @@ object PageElement {
                     assetId = asset.id, // Youtube ID
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
-                    overrideImage = if(isMainBlock)imageOverride else None,
+                    overrideImage = if (isMainBlock) imageOverride else None,
                   )
                 })
               }
