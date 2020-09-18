@@ -9,8 +9,6 @@ import {mountDynamic} from "@guardian/automat-modules";
 import {getUserFromApi} from '../../common/modules/identity/api';
 import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
 
-const brazeSwitch = config.get('switches.brazeSwitch');
-const apiKey = config.get('page.brazeApiKey');
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
 const getBrazeUuid = (): Promise<?string> =>
@@ -70,46 +68,58 @@ type AppBoy = {
 let messageConfig: InAppMessage;
 let appboy: ?AppBoy;
 
-const canShow = (): Promise<boolean> =>
-    new Promise(async resolve => {
-        try {
-            if (!(brazeSwitch && apiKey)) {
-                throw new Error("Braze not enabled or API key not available");
-            }
+const canShow = async (): Promise<boolean> => {
+    const brazeSwitch = config.get('switches.brazeSwitch');
+    const apiKey = config.get('page.brazeApiKey');
 
-            if (!isDigitalSubscriber()) {
+    if (!(brazeSwitch && apiKey)) {
+        return false;
+    }
+
+    if (!isDigitalSubscriber()) {
+        return false;
+    }
+
+    const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
+
+    if (!(brazeUuid && hasGivenConsent)) {
+        return false;
+    }
+
+    try {
+        appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+        appboy.initialize(apiKey, {
+            enableLogging: false,
+            noCookies: true,
+            baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
+            sessionTimeoutInSeconds: 1,
+            minimumIntervalBetweenTriggerActionsInSeconds: 0,
+        });
+
+        return new Promise(resolve => {
+            // Needed to keep Flow happy
+            if (!appboy) {
                 resolve(false);
                 return;
             }
-
-            const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
-
-            if (!(brazeUuid && hasGivenConsent)) {
-                resolve(false);
-                return;
-            }
-
-            appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
-
-            appboy.initialize(apiKey, {
-                enableLogging: false,
-                noCookies: true,
-                baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
-                sessionTimeoutInSeconds: 1,
-                minimumIntervalBetweenTriggerActionsInSeconds: 0,
-            });
 
             appboy.subscribeToInAppMessage((message: InAppMessage) => {
-                messageConfig = message;
-                resolve(true);
+                if (message.extras) {
+                    messageConfig = message;
+                    resolve(true);
+                } else {
+                    resolve(false);
+                }
             });
 
             appboy.changeUser(brazeUuid);
             appboy.openSession();
-        } catch (e) {
-            resolve(false);
-        }
-    });
+        });
+    } catch (e) {
+        return false;
+    }
+};
 
 const show = (): Promise<boolean> => import(
     /* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components'
