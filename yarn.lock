@@ -1178,12 +1178,10 @@
     "@guardian/src-grid" "^2.2.0"
     "@guardian/src-icons" "^2.2.0"
 
-"@guardian/consent-management-platform@4.3.0":
-  version "4.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-4.3.0.tgz#2a9f548db78a7c9017708ec6ba79ba258ae9adc1"
-  integrity sha512-hF8urPA3stLh5gT1Htq6eqvIWoBtikjoI4dXp9MpZ9iKwD2GQKOEFeQeOpmTUrnY0sA860ReLdiWyMUs627oJA==
-  dependencies:
-    "@guardian/old-cmp" "npm:@guardian/consent-management-platform@^3.4.10"
+"@guardian/consent-management-platform@5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-5.0.0.tgz#1a0c1de69f2c0d6cafa51a224beaa2839b402bc4"
+  integrity sha512-UaWjeZQQktI/rOIoeQyQTkbyjiMPCeNVvCWKdYMiJpDcISxjRwi/rLWYQ7C9bsX7RzimbA6WgIBePBn0B1YfjQ==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -1196,15 +1194,6 @@
     filesizegzip "^2.0.0"
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
-
-"@guardian/old-cmp@npm:@guardian/consent-management-platform@^3.4.10":
-  version "3.4.10"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-3.4.10.tgz#604e71d27c6bfa4664c83c55578a8aa73ff09d82"
-  integrity sha512-P3dTf9EqYhpH7JQ+Bg9MNoIQ08U4yD5j+s5epO9mNTaIBiX1BeOF3RcI3KNj/dBxSggaut0rBdQ82GN54Bg4jA==
-  dependencies:
-    consent-string "1.5.2"
-    js-cookie "2.2.1"
-    whatwg-fetch "3.0.0"
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"
@@ -2294,11 +2283,6 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
-base-64@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/base-64/-/base-64-0.1.0.tgz#780a99c84e7d600260361511c4877613bf24f6bb"
-  integrity sha1-eAqZyE59YAJgNhURxId2E78k9rs=
-
 base62@^1.1.0:
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/base62/-/base62-1.1.2.tgz#22ced6a49913565bc0b8d9a11563a465c084124c"
@@ -3259,13 +3243,6 @@ connect@3.6.6:
     finalhandler "1.1.0"
     parseurl "~1.3.2"
     utils-merge "1.0.1"
-
-consent-string@1.5.2:
-  version "1.5.2"
-  resolved "https://registry.yarnpkg.com/consent-string/-/consent-string-1.5.2.tgz#cd3615f406a1d7649ebc9722960b5e451cf6a685"
-  integrity sha512-xzfHnFzHQSupiamNY93UGn8FggPajHYExI45pzadhVpXVaj3ztnhnA7lYjKXl09pKRQKCT4hvjytt+2eoH7Jaw==
-  dependencies:
-    base-64 "^0.1.0"
 
 console-browserify@^1.1.0:
   version "1.1.0"
@@ -6889,11 +6866,6 @@ jmespath@0.15.0:
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.1.9"
   resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-2.1.9.tgz#f0e80ae039a4bd654b5f281fc93f04a914a7fcce"
-
-js-cookie@2.2.1:
-  version "2.2.1"
-  resolved "https://registry.yarnpkg.com/js-cookie/-/js-cookie-2.2.1.tgz#69e106dc5d5806894562902aa5baec3744e9b2b8"
-  integrity sha512-HvdH2LzI/EAZcUwA8+0nKNtWHqS+ZmijLA30RwZA0bo7ToCckjK5MkGhjED9KoRcXO6BaGI3I9UIzSA1FKFPOQ==
 
 js-levenshtein@^1.1.3:
   version "1.1.4"
@@ -11498,11 +11470,6 @@ whatwg-encoding@^1.0.1, whatwg-encoding@^1.0.3:
   resolved "https://registry.yarnpkg.com/whatwg-encoding/-/whatwg-encoding-1.0.5.tgz#5abacf777c32166a51d085d6b4f3e7d27113ddb0"
   dependencies:
     iconv-lite "0.4.24"
-
-whatwg-fetch@3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/whatwg-fetch/-/whatwg-fetch-3.0.0.tgz#fc804e458cc460009b1a2b966bc8817d2578aefb"
-  integrity sha512-9GSJUgz1D4MfyKU7KRqwOjXCXTqWdFNvEr7eUBYchQiVc744mqK/MzXPNR2WsPkmkOa4ywfg8C2n8h+13Bey1Q==
 
 whatwg-fetch@>=0.10.0:
   version "2.0.3"
