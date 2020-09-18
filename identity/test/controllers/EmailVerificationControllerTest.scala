@@ -96,7 +96,6 @@ class EmailVerificationControllerTest
       when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("Please check your inbox")
-      contentAsString(result) should include("Exit and go to The Guardian home page")
     }
 
     "should link to the return url" in {
@@ -104,7 +103,6 @@ class EmailVerificationControllerTest
         .thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
       val result = controller.completeRegistration()(testRequest)
       contentAsString(result) should include("test-string-test")
-      contentAsString(result) should include("Exit and continue")
     }
   }
 

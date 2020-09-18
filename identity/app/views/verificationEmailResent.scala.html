@@ -34,18 +34,8 @@
             }
         </div>
         <aside class="identity-forms-message__body">
-            <p class="identity-forms-message__explainer">Note that the link is only valid for 30 minutes, so be sure to open it soon!</p>
+            <p class="identity-forms-message__explainer">Note that the link is only valid for 30 minutes, so be sure to open it soon! If you can't find the email, it may be in your junk or spam folder</p>
             <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="mma : verify-email : resent">Resend confirmation email</a>
         </aside>
-        @if(isSignupFlow) {
-            <footer class="identity-forms-message__body">
-                <a class="u-underline" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
-                    @(verifiedReturnUrl match {
-                        case Some(_) => "Exit and continue"
-                        case None => "Exit and go to The Guardian home page"
-                    })
-                </a>
-            </footer>
-        }
     </section>
 </div>
