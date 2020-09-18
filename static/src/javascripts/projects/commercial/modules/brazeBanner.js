@@ -65,6 +65,20 @@ type AppBoy = {
     InAppMessageButton: (string, ?number, ?number, ?number, ?ClickAction, ?string, ?number) => InAppMessageButtonInstance,
 };
 
+type PreCheckArgs = {
+    brazeSwitch: boolean,
+    apiKey?: string,
+    isDigiSubscriber: boolean,
+    pageConfig: { [string]: any },
+};
+
+const canShowPreChecks = ({
+    brazeSwitch,
+    apiKey,
+    isDigiSubscriber,
+    pageConfig,
+}: PreCheckArgs) => Boolean(brazeSwitch && apiKey && isDigiSubscriber && !pageConfig.isPaidContent);
+
 let messageConfig: InAppMessage;
 let appboy: ?AppBoy;
 
@@ -72,11 +86,12 @@ const canShow = async (): Promise<boolean> => {
     const brazeSwitch = config.get('switches.brazeSwitch');
     const apiKey = config.get('page.brazeApiKey');
 
-    if (!(brazeSwitch && apiKey)) {
-        return false;
-    }
-
-    if (!isDigitalSubscriber()) {
+    if (!canShowPreChecks({
+        brazeSwitch,
+        apiKey,
+        isDigiSubscriber: isDigitalSubscriber(),
+        pageConfig: config.get('page'),
+    })) {
         return false;
     }
 
@@ -175,4 +190,5 @@ export {
     brazeBanner,
     brazeVendorId,
     hasRequiredConsents,
+    canShowPreChecks,
 }
