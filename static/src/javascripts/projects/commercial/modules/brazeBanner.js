@@ -43,6 +43,18 @@ type InAppMessage = {
     },
 };
 
+type ClickAction = "NEWS_FEED" | "URI" | "NONE"
+
+type InAppMessageButtonInstance = {
+    text: string,
+    backgroundColor?: number,
+    textColor?: number,
+    borderColor?: number,
+    clickAction?: ClickAction,
+    uri?: string,
+    id?: number
+}
+
 type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
@@ -50,8 +62,9 @@ type AppBoy = {
     subscribeToInAppMessage: (InAppMessageCallback) => {},
     changeUser: (string) => void,
     openSession: () => void,
-    logInAppMessageClick: (InAppMessage) => void;
-    logInAppMessageImpression: (InAppMessage) => void;
+    logInAppMessageButtonClick: (InAppMessageButtonInstance, InAppMessage) => void,
+    logInAppMessageImpression: (InAppMessage) => void,
+    InAppMessageButton: (string, ?number, ?number, ?number, ?ClickAction, ?string, ?number) => InAppMessageButtonInstance,
 };
 
 let messageConfig: InAppMessage;
@@ -112,14 +125,18 @@ const show = (): Promise<boolean> => import(
 
         mountDynamic(
             container,
-            module.ExampleComponent,
+            module.DigitalSubscriberAppBanner,
             {
-                message: messageConfig.extras["test-key"],
-                onButtonClick: () => {
+                onButtonClick: (buttonId: number) => {
                     if (appboy) {
-                        appboy.logInAppMessageClick(messageConfig);
+                        const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
+                        appboy.logInAppMessageButtonClick(
+                            thisButton, messageConfig
+                        );
                     }
                 },
+                header: messageConfig.extras.header,
+                body: messageConfig.extras.body,
             },
             true,
         );
