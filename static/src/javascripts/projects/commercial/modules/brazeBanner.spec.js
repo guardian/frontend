@@ -1,6 +1,6 @@
 // @flow
 
-import {brazeVendorId, hasRequiredConsents} from "./brazeBanner";
+import {brazeVendorId, canShowPreChecks, hasRequiredConsents} from "./brazeBanner";
 
 jest.mock('lib/raven');
 
@@ -13,6 +13,74 @@ jest.mock('@guardian/consent-management-platform', () => ({
 
 afterEach(() => {
     mockOnConsentChangeResult = undefined;
+});
+
+describe('canShowPreChecks', () => {
+    describe('when the switch is off', () => {
+        it('returns false', () => {
+            const result = canShowPreChecks({
+                brazeSwitch: false,
+                apiKey: 'abcde',
+                isDigiSubscriber: true,
+                pageConfig: {isPaidContent: false},
+            })
+
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('when the api key is empty', () => {
+        it('returns false', () => {
+            const result = canShowPreChecks({
+                brazeSwitch: true,
+                apiKey: '',
+                isDigiSubscriber: true,
+                pageConfig: {isPaidContent: false},
+            })
+
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('when not a digital subscriber', () => {
+        it('returns false', () => {
+            const result = canShowPreChecks({
+                brazeSwitch: true,
+                apiKey: 'abcde',
+                isDigiSubscriber: false,
+                pageConfig: {isPaidContent: false},
+            })
+
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('when viewing paid content', () => {
+        it('returns false', () => {
+            const result = canShowPreChecks({
+                brazeSwitch: true,
+                apiKey: 'abcde',
+                isDigiSubscriber: true,
+                pageConfig: {isPaidContent: true},
+            })
+
+            expect(result).toBe(false);
+        });
+    });
+
+    describe('when all checks pass', () => {
+        it('returns true', () => {
+            const result = canShowPreChecks({
+                brazeSwitch: true,
+                apiKey: 'abcde',
+                isDigiSubscriber: true,
+                pageConfig: {isPaidContent: false},
+            })
+
+            expect(result).toBe(true);
+
+        })
+    })
 });
 
 describe('hasRequiredConsents', () => {
