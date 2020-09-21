@@ -155,7 +155,6 @@
 .email-sub__message__headline,
 .email-sub__message__description {
     @include fs-textSans(3);
-    color: #000000;
 }
 
 .email-sub__message__headline {
@@ -196,7 +195,7 @@
 // FOOTER MODS
 .footer__email-container .email-sub__iframe {
     max-width: gs-span(4);
-    min-height: 90px;
+    min-height: 150px;
     margin: 0 0 $gs-baseline;
 }
 
