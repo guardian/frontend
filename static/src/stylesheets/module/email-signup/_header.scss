@@ -54,6 +54,10 @@
         color: $brightness-100;
         margin: ($gs-baseline / 2) 0;
     }
+
+    .email-sub__description {
+        @include fs-textSans(3);
+    }
 }
 
 // PLAIN MODS
