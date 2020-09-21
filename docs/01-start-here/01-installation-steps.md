@@ -150,10 +150,12 @@ $ make watch
 As a convenience, this command will also watch for changes to client side code and
 automatically inject changes into the browser without requiring a browser refresh.
 
-In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
+In another console, run the supplied bash script [sbt].
+You can use the following command to call the bash script. Alternatively, make
+sure you include dot and slash if executing the script directly.
 
 ```bash
-$ ./sbt
+$ make sbt
 ```
 
 Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
