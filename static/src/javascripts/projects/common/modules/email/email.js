@@ -37,13 +37,14 @@ const messages = {
 const classes = {
     wrapper: 'js-email-sub',
     form: 'js-email-sub__form',
+    signupHeader: 'js-email-sub__header',
     inlineLabel: 'js-email-sub__inline-label',
     textInput: 'js-email-sub__text-input',
     dummyInput: 'js-email-sub__text-name',
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
-const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
+const replaceContent = (isSuccess: boolean, $form: bonzo, $formHeader: ?bonzo): void => {
     const formData = $form.data('formData');
     const statusClass = isSuccess
         ? 'email-sub__message--success'
@@ -63,6 +64,9 @@ const replaceContent = (isSuccess: boolean, $form: bonzo): void => {
         </div>`;
 
     fastdom.write(() => {
+        if ($formHeader) {
+            $formHeader.addClass('email-sub__header--is-hidden')
+        }
         $form.addClass('email-sub__form--is-hidden');
         $form.after(submissionHtml);
     });
@@ -236,13 +240,14 @@ const setIframeHeight = (
         .then(callback());
 };
 
-const handleSubmit = (isSuccess: boolean, $form: bonzo): (() => void) => () => {
-    replaceContent(isSuccess, $form);
+const handleSubmit = (isSuccess: boolean, $form: bonzo, $formHeader: ?bonzo): (() => void) => () => {
+    replaceContent(isSuccess, $form, $formHeader);
     state.submitting = false;
 };
 
 const submitForm = (
     $form: bonzo,
+    $formHeader: ?bonzo,
     url: string,
     analytics: Analytics
 ): (Event => ?Promise<any>) => {
@@ -306,23 +311,23 @@ const submitForm = (
                             )
                         );
                     })
-                    .then(handleSubmit(true, $form))
+                    .then(handleSubmit(true, $form, $formHeader))
                     .catch(error => {
                         logError('c-email', error);
                         trackNonClickInteraction(
                             analyticsInfo.replace('%action%', 'error')
                         );
-                        handleSubmit(false, $form)();
+                        handleSubmit(false, $form, $formHeader)();
                     });
             });
         }
     };
 };
 
-const bindSubmit = ($form: bonzo, analytics: Analytics): void => {
+const bindSubmit = ($form: bonzo, $formHeader: ?bonzo, analytics: Analytics): void => {
     const url = '/email';
 
-    bean.on($form[0], 'submit', submitForm($form, url, analytics));
+    bean.on($form[0], 'submit', submitForm($form, $formHeader, url, analytics));
 };
 
 const setup = (
@@ -343,6 +348,7 @@ const setup = (
         const freezeHeight = heightSetter($el, false);
         const resetHeight = heightSetter($el, true);
         const $formEl = $(`.${classes.form}`, el);
+        const $formHeaderEl = $(`.${classes.signupHeader}`, el);
         const analytics = {
             formType: $formEl.data('email-form-type'),
             listName: $formEl.data('email-list-name'),
@@ -352,7 +358,7 @@ const setup = (
         };
         let onResize;
 
-        bindSubmit($formEl, analytics);
+        bindSubmit($formEl, $formHeaderEl, analytics);
 
         // If we're in an iframe, we should check whether we need to add a title and description
         // from the data attributes on the iframe (eg: allowing us to set them from composer).
