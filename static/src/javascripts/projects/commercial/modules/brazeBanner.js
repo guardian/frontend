@@ -150,8 +150,9 @@ const show = (): Promise<boolean> => import(
 
         mountDynamic(
             container,
-            module.DigitalSubscriberAppBanner,
+            module.BrazeMessage,
             {
+                componentName: messageConfig.extras.componentName,
                 onButtonClick: (buttonId: number) => {
                     if (appboy) {
                         const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
@@ -160,8 +161,7 @@ const show = (): Promise<boolean> => import(
                         );
                     }
                 },
-                header: messageConfig.extras.header,
-                body: messageConfig.extras.body,
+                brazeMessageProps: messageConfig.extras,
             },
             true,
         );
