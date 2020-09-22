@@ -295,6 +295,7 @@ private object NavLinks {
       usBusiness,
       tech,
       science,
+      newsletters.copy(url = s"${newsletters.url}?INTCMP=DOTCOM_NAV_NEWSLETTER_US"),
     ),
   )
   val intNewsPillar = ukNewsPillar.copy(
@@ -555,7 +556,6 @@ private object NavLinks {
     video,
     podcasts,
     pictures,
-    newsletters,
     insideTheGuardian,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_US"),
     crosswords,
