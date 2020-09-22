@@ -778,6 +778,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
     @include pillar-override(arts, $culture-bright, $culture-dark);
     @include pillar-override(sport, $sport-bright, $sport-bright);
     @include pillar-override(opinion, $opinion-bright, $opinion-bright);
-    @include pillar-override(news, $news-bright, $news-bright);
+    @include pillar-override(news, #f5998c, $news-bright);
+
     @include pillar-override(special-report, $highlight-main, $highlight-dark);
 }
