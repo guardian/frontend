@@ -402,16 +402,6 @@ trait FeatureSwitches {
     exposeClientSide = true,
   )
 
-  val Acast = Switch(
-    SwitchGroup.Feature,
-    "acast",
-    "When ON, requests to audio files will be routed to Acast if advertising is enabled",
-    owners = Seq(Owner.withName("journalism team")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = false,
-  )
-
   // Simple & Coherent
   val ScAdFreeBanner = Switch(
     SwitchGroup.Feature,

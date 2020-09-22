@@ -710,7 +710,7 @@ case class AtomsCleaner(
     if (UseAtomsSwitch.isSwitchedOn) {
 
       val articleConfig: ArticleConfiguration =
-        Atoms.articleConfig(isAdFree(request), Switches.Acast.isSwitchedOn)
+        Atoms.articleConfig(isAdFree(request))
 
       for {
         atomContainer <- document.getElementsByClass("element-atom").asScala

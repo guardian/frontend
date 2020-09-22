@@ -11,7 +11,7 @@
 
 @seriesId() = {@audio.tags.tags.find(_.properties.podcast.nonEmpty).map(s => s.id.substring(s.id.lastIndexOf("/") + 1))}
 
-@defining(isPaidContent(page), isAdFree(request)) { case (isPaidContent, isAdFree) =>
+@defining(isPaidContent(page)) { case isPaidContent =>
 
 <div class="@RenderClasses(Map(
     "l-side-margins--media" ->  !isPaidContent,
@@ -42,7 +42,7 @@
                 data-component="main audio"
                 id="audio-component-container"
                 data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
-                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, isAdFree))"
+                data-source="@audio.downloadUrl"
                 data-download-url="@audio.downloadUrl.getOrElse("#")"
                 data-duration="@audio.duration"
                 >
