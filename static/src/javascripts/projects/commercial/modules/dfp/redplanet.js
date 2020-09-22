@@ -1,12 +1,11 @@
 // @flow strict
 
 import config from 'lib/config';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 let initialised = false;
-const SOURCEPOINT_ID: string = '5f199c302425a33f3f090f51';
 
 const initialise = (): void => {
     // Initialise Launchpad Tracker
@@ -39,16 +38,7 @@ const setupRedplanet: () => Promise<void> = () => {
         }
         let canRun: boolean;
         if (state.tcfv2) {
-            // TCFv2 mode
-            if (
-                typeof state.tcfv2.vendorConsents !== 'undefined' &&
-                typeof state.tcfv2.vendorConsents[SOURCEPOINT_ID] !==
-                    'undefined'
-            ) {
-                canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-            } else {
-                canRun = Object.values(state.tcfv2.consents).every(Boolean);
-            }
+            canRun = getConsentFor('redplanet', state);
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];

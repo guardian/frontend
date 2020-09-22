@@ -7,7 +7,7 @@ import { loadScript } from 'lib/load-script';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -43,8 +43,6 @@ initMessenger(
     background,
     disableRefresh
 );
-
-const SOURCEPOINT_ID: string = '5f1aada6b8e05c306c0597d7';
 
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
@@ -120,7 +118,7 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
-                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+                    canRun = getConsentFor('googletag', state);
                 } else {
                     // TCFv1 mode
                     npaFlag = Object.values(state).includes(false);

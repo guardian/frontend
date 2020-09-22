@@ -2,7 +2,7 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -76,18 +76,7 @@ const insertScripts = (
         } else if (state.tcfv2) {
             // TCFv2 mode,
             consentedAdvertisingServices = advertisingServices.filter(
-                script => {
-                    if (
-                        typeof script.sourcepointId !== 'undefined' &&
-                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
-                        typeof state.tcfv2.vendorConsents[
-                            script.sourcepointId
-                        ] !== 'undefined'
-                    ) {
-                        return state.tcfv2.vendorConsents[script.sourcepointId];
-                    }
-                    return Object.values(state.tcfv2.consents).every(Boolean);
-                }
+                script => getConsentFor(script.name, state)
             );
         } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
             // TCFv1 mode

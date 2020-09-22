@@ -29,7 +29,7 @@ declare type TagAtrribute = {
 declare type ThirdPartyTag = {
     shouldRun: boolean,
     url?: string,
-    sourcepointId?: string,
+    name?: string,
     onLoad?: () => any,
     beforeLoad?: () => any,
     useImage?: boolean,
