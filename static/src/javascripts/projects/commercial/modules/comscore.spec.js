@@ -1,20 +1,23 @@
 // @flow
 import { loadScript } from 'lib/load-script';
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 const onConsentChange: any = onConsentChange_;
+const getConsentFor: any = getConsentFor_;
+const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
 
 const tcfv2WithConsentMock = (callback): void =>
     callback({
         tcfv2: {
             vendorConsents: {
-                [_.SOURCEPOINT_ID]: true,
+                [SOURCEPOINT_ID]: true,
             },
         },
     });
@@ -22,7 +25,7 @@ const tcfv2WithoutConsentMock = (callback): void =>
     callback({
         tcfv2: {
             vendorConsents: {
-                [_.SOURCEPOINT_ID]: false,
+                [SOURCEPOINT_ID]: false,
             },
         },
     });
@@ -72,12 +75,14 @@ describe('comscore init', () => {
 
         it('TCFv2 with consent: runs', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            getConsentFor.mockImplementation(true);
             init();
             expect(loadScript).toBeCalled();
         });
 
         it('TCFv2 without consent: does not run', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            getConsentFor.mockImplementation(false);
             init();
             expect(loadScript).not.toBeCalled();
         });
