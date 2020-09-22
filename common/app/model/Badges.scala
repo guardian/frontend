@@ -82,6 +82,7 @@ object Badges {
   val greenRecovery = Badge("environment/series/the-green-recovery", Static("images/badges/green-recovery.svg"))
   val culturePeril = Badge("culture/series/culture-in-peril", Static("images/badges/culture-badge.svg"))
   val oneHundredDays = Badge("us-news/series/climate-countdown", Static("images/badges/100days.svg"))
+  val futureofcities = Badge("society/futureofcities", Static("images/badges/futureofcities.svg"))
 
   val allBadges = Seq(
     newArrivals,
@@ -120,6 +121,7 @@ object Badges {
     greenRecovery,
     culturePeril,
     oneHundredDays,
+    futureofcities,
   )
 
   def badgeFor(c: ContentType): Option[Badge] = {
