@@ -5,6 +5,7 @@ import model.pressed.{CollectionConfig, PressedContent}
 import org.joda.time.DateTime
 import services.CollectionConfigWithId
 import slices.{MostPopular, _}
+import views.support.GetClasses.paletteClass
 
 case class FaciaContainer(
     index: Int,
@@ -165,7 +166,7 @@ object FaciaContainer {
         case _            => ContainerCommercialOptions(omitMPU = false, adFree = adFree)
       },
       config.config.description.map(DescriptionMetaHeader),
-      None,
+      customClasses = config.config.metadata.flatMap(paletteClass(container, _)).map(Seq(_)),
       hideToggle = false,
       showTimestamps = false,
       None,
