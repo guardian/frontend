@@ -93,7 +93,16 @@ module.exports = {
         rules: [
             {
                 test: /(\.js)|(\.mjs)$/,
-                exclude: /(node_modules\/(?!(@guardian\/)|(dynamic-import-polyfill))|vendor\/)/,
+                exclude: [
+                    {
+                        test: /node_modules/,
+                        exclude: [
+                            /@guardian\/(?!(automat-modules))/,
+                            /dynamic-import-polyfill/,
+                        ],
+                    },
+                    path.resolve(__dirname, 'static/vendor'),
+                ],
                 loader: 'babel-loader',
             },
             {
