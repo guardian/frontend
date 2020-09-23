@@ -36,13 +36,7 @@ const setupRedplanet: () => Promise<void> = () => {
                 `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
             );
         }
-        let canRun: boolean;
-        if (state.tcfv2) {
-            canRun = getConsentFor('redplanet', state);
-        } else {
-            // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
-        }
+        let canRun: boolean = getConsentFor('redplanet', state);
 
         if (!initialised && canRun) {
             initialised = true;

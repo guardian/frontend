@@ -65,23 +65,10 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    addScripts(performanceServices);
-
-    onConsentChange(state => {
-        let consentedAdvertisingServices = [];
-        if (state.ccpa) {
-            // CCPA mode
-            if (!state.ccpa.doNotSell)
-                consentedAdvertisingServices = [...advertisingServices];
-        } else if (state.tcfv2) {
-            // TCFv2 mode,
-            consentedAdvertisingServices = advertisingServices.filter(
-                script => getConsentFor(script.name, state)
-            );
-        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
-            // TCFv1 mode
-            consentedAdvertisingServices = [...advertisingServices];
-        }
+    addScripts(performanceServices);onConsentChange(state => {
+        const consentedAdvertisingServices = advertisingServices.filter(
+            script => getConsentFor(script.name, state)
+        );
 
         if (consentedAdvertisingServices.length > 0) {
             addScripts(consentedAdvertisingServices);

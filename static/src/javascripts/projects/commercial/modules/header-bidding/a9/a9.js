@@ -35,17 +35,7 @@ const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
     onConsentChange(state => {
-        let canRun: boolean;
-        if (state.ccpa) {
-            // CCPA mode
-            canRun = !state.doNotSell;
-        } else if (state.tcfv2) {
-            // TCFv2 mode
-            canRun = getConsentFor('a9', state);
-        } else {
-            // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
-        }
+        let canRun: boolean = getConsentFor('a9', state);
 
         if (!initialised && canRun) {
             initialised = true;

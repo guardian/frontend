@@ -75,14 +75,14 @@ describe('comscore init', () => {
 
         it('TCFv2 with consent: runs', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
-            getConsentFor.mockImplementation(true);
+            getConsentFor.mockReturnValue(true);
             init();
             expect(loadScript).toBeCalled();
         });
 
         it('TCFv2 without consent: does not run', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-            getConsentFor.mockImplementation(false);
+            getConsentFor.mockReturnValue(false);
             init();
             expect(loadScript).not.toBeCalled();
         });

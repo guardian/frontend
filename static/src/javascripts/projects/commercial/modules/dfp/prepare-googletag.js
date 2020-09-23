@@ -119,9 +119,6 @@ export const init = (): Promise<void> => {
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
                     canRun = getConsentFor('googletag', state);
-                } else {
-                    // TCFv1 mode
-                    npaFlag = Object.values(state).includes(false);
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag

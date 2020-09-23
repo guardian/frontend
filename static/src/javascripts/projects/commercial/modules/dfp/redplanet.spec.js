@@ -1,7 +1,10 @@
 // @flow
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_
+} from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 import { init, resetModule } from './redplanet';
@@ -50,6 +53,7 @@ jest.mock('lib/load-script', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -58,6 +62,8 @@ jest.mock('common/modules/experiments/ab', () => ({
 
 const CcpaWithConsentMock = (callback): void =>
     callback({ ccpa: { doNotSell: false } });
+
+const getConsentFor: any = getConsentFor_;
 
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 
@@ -79,6 +85,7 @@ describe('init', () => {
         config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
 
         await init();
 
@@ -114,6 +121,7 @@ describe('init', () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).toBeCalled();
     });
@@ -122,6 +130,7 @@ describe('init', () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        getConsentFor.mockReturnValue(false);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
@@ -130,6 +139,7 @@ describe('init', () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
         onConsentChange.mockImplementation(CcpaWithConsentMock);
+        getConsentFor.mockReturnValue(true);
         expect(await init).toThrow(
             `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
         );
@@ -139,6 +149,7 @@ describe('init', () => {
         commercialFeatures.launchpad = false;
         isInAuOrNz.mockReturnValue(true);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
@@ -147,6 +158,7 @@ describe('init', () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(false);
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).not.toBeCalled();
     });
