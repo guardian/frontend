@@ -93,9 +93,16 @@ module.exports = {
         rules: [
             {
                 test: /(\.js)|(\.mjs)$/,
-                // TODO: @guardian/dotcom-rendering is not properly published or pre-transpiled, so we have to
-                // transpile it as part of the frontend build step for now
-                exclude: /(node_modules\/(?!(@guardian\/dotcom-rendering)|(dynamic-import-polyfill))|vendor\/)/,
+                exclude: [
+                    {
+                        test: /node_modules/,
+                        exclude: [
+                            /@guardian\/(?!(automat-modules))/,
+                            /dynamic-import-polyfill/,
+                        ],
+                    },
+                    path.resolve(__dirname, 'static/vendor'),
+                ],
                 loader: 'babel-loader',
             },
             {
