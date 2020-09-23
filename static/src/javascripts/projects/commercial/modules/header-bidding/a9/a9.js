@@ -35,7 +35,7 @@ const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
     onConsentChange(state => {
-        let canRun: boolean = getConsentFor('a9', state);
+        const canRun: boolean = getConsentFor('a9', state);
 
         if (!initialised && canRun) {
             initialised = true;
