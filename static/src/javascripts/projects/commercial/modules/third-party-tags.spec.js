@@ -211,7 +211,8 @@ describe('third party tags', () => {
 
         it('should only add consented custom vendors to the document for TCFv2', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
-            getConsentFor.mockReturnValue(true);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []
@@ -221,7 +222,10 @@ describe('third party tags', () => {
 
         it('should not add already loaded tags ', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
-            getConsentFor.mockReturnValue(true);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []
