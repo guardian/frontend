@@ -39,8 +39,8 @@ final case class Atoms(
 
 object Atoms extends common.Logging {
 
-  def articleConfig(isAdFree: Boolean = false): ArticleConfiguration = {
-    val audioSettings = AudioSettings(externalAdvertising = false)
+  def articleConfig(isAdFree: Boolean = false, useAcast: Boolean = false): ArticleConfiguration = {
+    val audioSettings = AudioSettings(externalAdvertising = !isAdFree && useAcast)
     val artConf = ArticleConfiguration(
       ajaxUrl = Configuration.ajax.url,
       audioSettings = audioSettings,
