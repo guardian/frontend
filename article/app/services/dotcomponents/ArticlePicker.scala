@@ -12,6 +12,7 @@ import model.liveblog.{
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
+  MapBlockElement,
   PullquoteBlockElement,
   RichLinkBlockElement,
   TableBlockElement,
@@ -56,6 +57,7 @@ object ArticlePageChecks {
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
+        case _: MapBlockElement       => false
         case _: PullquoteBlockElement => false
         case _: RichLinkBlockElement  => false
         case _: TableBlockElement     => false
