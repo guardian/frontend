@@ -167,7 +167,7 @@ describe('third party tags', () => {
             fakeThirdPartyPerformanceTag.loaded = undefined;
         });
 
-        it.only('should add scripts to the document when TCFv2 consent has been given', () => {
+        it('should add scripts to the document when TCFv2 consent has been given', () => {
             onConsentChange.mockImplementation(tcfv2AllConsentMock);
             getConsentFor.mockReturnValue(true);
             insertScripts(
