@@ -130,7 +130,7 @@ do you have fonts in localStorage?
                     xhr.open("GET", url, true);
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
-                            const css = Json.parse(xhr.responseText);
+                            const css = JSON.parse(xhr.responseText).css;
                             useFont(el, css, fontName);
                             saveFont(fontName, fontHash, css);
                         }
