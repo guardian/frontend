@@ -166,7 +166,9 @@ object FaciaContainer {
         case _            => ContainerCommercialOptions(omitMPU = false, adFree = adFree)
       },
       config.config.description.map(DescriptionMetaHeader),
-      customClasses = config.config.metadata.flatMap(paletteClass(container, _)).map(Seq(_)),
+      customClasses = config.config.metadata
+        .flatMap(paletteClass(container, _))
+        .map(Seq(_, "fc-container--has-palette")),
       hideToggle = false,
       showTimestamps = false,
       None,
