@@ -7,7 +7,9 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class RequestLoggingFilter(implicit val mat: Materializer, executionContext: ExecutionContext) extends Filter with Logging {
+class RequestLoggingFilter(implicit val mat: Materializer, executionContext: ExecutionContext)
+    extends Filter
+    with Logging {
 
   override def apply(next: RequestHeader => Future[Result])(rh: RequestHeader): Future[Result] = {
 
@@ -19,11 +21,13 @@ class RequestLoggingFilter(implicit val mat: Materializer, executionContext: Exe
         val additionalInfo =
           response.header.headers.get("X-Accel-Redirect") match {
             case Some(internalRedirect) => s" - internal redirect to $internalRedirect"
-            case None => response.header.status match {
-              case 304 => " - 304 Not Modified"
-              case status if (status / 100) == 3 => s" - external redirect to ${response.header.headers.getOrElse("Location", "[location not found]")}"
-              case _ => ""
-            }
+            case None =>
+              response.header.status match {
+                case 304 => " - 304 Not Modified"
+                case status if (status / 100) == 3 =>
+                  s" - external redirect to ${response.header.headers.getOrElse("Location", "[location not found]")}"
+                case _ => ""
+              }
           }
         // don't log uncacheable /commercial/api/hb POST requests due to the volume of them
         if (rh.method != "POST" || rh.path != "/commercial/api/hb") {

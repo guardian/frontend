@@ -1,7 +1,9 @@
 // @flow
 
-import { React, styled } from '@guardian/dotcom-rendering/packages/guui';
+import React from 'react';
+import styled from '@emotion/styled';
 
+// $FlowFixMe
 const Scrubber = styled('div')(({ left }) => ({
     backgroundColor: '#ffe500',
     height: '50px',

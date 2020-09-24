@@ -209,7 +209,7 @@ if (isInVariant(FaciaSlideshowTest, 'variant')) {
 ## Running the test
 
 Release the test in to the wild just means deploying the frontend software, so you
-can follow our standard [contributing guidelines](https://github.com/guardian/frontend/blob/master/CONTRIBUTING.md).
+can follow our standard [contributing guidelines](https://github.com/guardian/frontend/blob/main/CONTRIBUTING.md).
 
 You can stop and start the test using our [switchboard](https://frontend.gutools.co.uk/dev/switchboard).
 
@@ -363,7 +363,7 @@ multiple variants exist for the same request. [More information on how VCL enabl
 
 There are two ways to put yourself into a test:
 
-*1. Use the opt/in link:*
+*1. Use the opt/in link (can't be used on localhost):*
 
 Copy the name of your test and visit this url: `https://www.theguardian.com/opt/in/your-test-name`
 eg: `https://www.theguardian.com/opt/in/audio-page-change` this will redirect to the home page, but sets a cookie in your browser

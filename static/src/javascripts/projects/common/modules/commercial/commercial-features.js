@@ -23,6 +23,7 @@ class CommercialFeatures {
     asynchronous: boolean;
     adFree: boolean;
     comscore: boolean;
+    launchpad: boolean;
 
     constructor(config: any = defaultConfig) {
         // this is used for SpeedCurve tests
@@ -105,6 +106,13 @@ class CommercialFeatures {
             !isIdentityPage &&
             !this.isSecureContact;
 
+        this.launchpad =
+            !this.adFree &&
+            externalAdvertising &&
+            !isIdentityPage &&
+            !this.isSecureContact &&
+            config.get('switches.redplanetForAus', false);
+
         this.relatedWidgetEnabled =
             this.dfpAdvertising &&
             !this.adFree &&
@@ -117,7 +125,7 @@ class CommercialFeatures {
 
         this.plista =
             this.relatedWidgetEnabled &&
-            switches.plistaForOutbrainAu;
+            switches.plistaForAu;
 
         this.commentAdverts =
             this.dfpAdvertising &&

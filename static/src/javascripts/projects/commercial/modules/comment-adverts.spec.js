@@ -8,6 +8,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
 import { refreshAdvert as refreshAdvert_ } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
+import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
@@ -31,6 +32,10 @@ jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
+jest.mock('lib/detect', () => ({
+    getBreakpoint: jest.fn(),
+}));
+
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         commentAdverts: true,
@@ -45,6 +50,7 @@ const { createCommentSlots, runSecondStage, maybeUpgradeSlot } = _;
 const commercialFeaturesMock: any = commercialFeatures;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getAdvertById: any = getAdvertById_;
+const getBreakpoint: any = getBreakpoint_;
 const refreshAdvert: any = refreshAdvert_;
 
 const mockHeight = (height: number) => {
@@ -236,6 +242,20 @@ describe('initCommentAdverts', () => {
             document.body.innerHTML = `<div class="js-comments">
                 <div class="content__main-column"></div></div>`;
         }
+        initCommentAdverts().then(result => {
+            expect(result).toBe(false);
+            done();
+        });
+    });
+
+    it('should return false if on mobile', done => {
+        if (document.body) {
+            document.body.innerHTML = `<div class="js-comments">
+                <div class="content__main-column"></div></div>`;
+        }
+
+        getBreakpoint.mockReturnValue('mobile')
+
         initCommentAdverts().then(result => {
             expect(result).toBe(false);
             done();

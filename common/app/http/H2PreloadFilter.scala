@@ -7,13 +7,13 @@ import play.api.mvc._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class H2PreloadFilter(
-  implicit val mat: Materializer,
-  applicationContext: ApplicationContext,
-  executionContext: ExecutionContext
+class H2PreloadFilter(implicit
+    val mat: Materializer,
+    applicationContext: ApplicationContext,
+    executionContext: ExecutionContext,
 ) extends Filter
-  with implicits.Requests
-  with ResultWithPreload {
+    with implicits.Requests
+    with ResultWithPreload {
 
   def apply(nextFilter: RequestHeader => Future[Result])(request: RequestHeader): Future[Result] = {
     nextFilter(request).map { result =>

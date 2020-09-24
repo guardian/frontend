@@ -7,18 +7,20 @@ import scala.util.Try
 
 object Trend {
   implicit val jsonWrites = new Writes[Trend] {
-    override def writes(o: Trend): JsValue = o match {
-      case Negative => JsString("negative")
-      case Positive => JsString("positive")
-      case Level => JsString("level")
-    }
+    override def writes(o: Trend): JsValue =
+      o match {
+        case Negative => JsString("negative")
+        case Positive => JsString("positive")
+        case Level    => JsString("level")
+      }
   }
 
-  def fromDouble(n: Double): Trend = n match {
-    case 0 => Level
-    case x if x > 0 => Positive
-    case _ => Negative
-  }
+  def fromDouble(n: Double): Trend =
+    n match {
+      case 0          => Level
+      case x if x > 0 => Positive
+      case _          => Negative
+    }
 }
 
 sealed trait Trend
@@ -32,11 +34,11 @@ object StockValue {
 }
 
 case class StockValue(
-  name: String,
-  price: Double,
-  change: Double,
-  trend: Trend,
-  closed: Boolean
+    name: String,
+    price: Double,
+    change: Double,
+    trend: Trend,
+    closed: Boolean,
 )
 
 object Stocks extends Logging {
@@ -62,10 +64,10 @@ object Stocks extends Logging {
       }
 
       val maybeTrend = index.value.change.trendday match {
-        case "up" => Some(Positive)
-        case "down" => Some(Negative)
+        case "up"        => Some(Positive)
+        case "down"      => Some(Negative)
         case "unchanged" => Some(Level)
-        case _ => None
+        case _           => None
       }
 
       if (maybeTrend.isEmpty) {
@@ -74,7 +76,7 @@ object Stocks extends Logging {
 
       val closed = index.marketclosed match {
         case "Closed" => true
-        case _ => false
+        case _        => false
       }
 
       for {

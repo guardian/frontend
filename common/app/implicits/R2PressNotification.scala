@@ -8,8 +8,8 @@ trait R2PressNotification {
   implicit val pressMessageFormatter: Format[R2PressMessage] = (
     (__ \ "url").format[String] and
       (__ \ "fromPreservedSrc").format[Boolean] and
-        (__ \ "convertToHttps").format[Boolean]
-    )(R2PressMessage.apply, unlift(R2PressMessage.unapply))
+      (__ \ "convertToHttps").format[Boolean]
+  )(R2PressMessage.apply, unlift(R2PressMessage.unapply))
 }
 
 object R2PressNotification extends R2PressNotification

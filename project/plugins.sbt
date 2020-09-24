@@ -11,9 +11,16 @@ resolvers ++= Seq(
   Classpaths.typesafeReleases,
   Resolver.sonatypeRepo("releases"),
   Resolver.typesafeRepo("releases"),
-  Resolver.url("guardian sbt-plugins", new URL("https://dl.bintray.com/guardian/sbt-plugins/"))(Resolver.ivyStylePatterns),
-  Resolver.url("sbt sbt-plugins", new URL("https://dl.bintray.com/sbt/sbt-plugin-releases/"))(Resolver.ivyStylePatterns),
-  Resolver.url("bintray-sbt-plugin-releases", url("https://dl.bintray.com/content/sbt/sbt-plugin-releases"))(Resolver.ivyStylePatterns)
+  Resolver.url("guardian sbt-plugins", new URL("https://dl.bintray.com/guardian/sbt-plugins/"))(
+    Resolver.ivyStylePatterns
+  ),
+  Resolver.url("sbt sbt-plugins", new URL("https://dl.bintray.com/sbt/sbt-plugin-releases/"))(
+    Resolver.ivyStylePatterns
+  ),
+  Resolver.url(
+    "bintray-sbt-plugin-releases",
+    url("https://dl.bintray.com/content/sbt/sbt-plugin-releases")
+  )(Resolver.ivyStylePatterns)
 )
 
 addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.7")
@@ -26,6 +33,6 @@ addSbtPlugin("com.gu" % "sbt-riffraff-artifact" % "1.0.0")
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-git" % "0.9.3")
 
-addSbtPlugin("org.scalastyle" %% "scalastyle-sbt-plugin" % "1.0.0")
+addSbtPlugin("org.scalameta" % "sbt-scalafmt" % "2.4.0")
 
 addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.9.0")

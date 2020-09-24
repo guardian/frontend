@@ -17,7 +17,7 @@ import scala.Function._
 import scala.annotation.tailrec
 
 case class Front(
-  containers: Seq[FaciaContainer]
+    containers: Seq[FaciaContainer],
 )
 
 object Front extends implicits.Collections {
@@ -33,15 +33,17 @@ object Front extends implicits.Collections {
   def participatesInDeduplication(faciaContent: PressedContent): Boolean = faciaContent.properties.embedType.isEmpty
 
   def fromConfigsAndContainers(
-    configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
-    initialContext: ContainerLayoutContext = ContainerLayoutContext.empty
+      configs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
+      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
   ): Front = {
 
     @tailrec
-    def faciaContainers(allConfigs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
-                        context: ContainerLayoutContext,
-                        index: Int = 0,
-                        accumulation: Vector[FaciaContainer] = Vector.empty): Seq[FaciaContainer] = {
+    def faciaContainers(
+        allConfigs: Seq[((ContainerDisplayConfig, CollectionEssentials), Container)],
+        context: ContainerLayoutContext,
+        index: Int = 0,
+        accumulation: Vector[FaciaContainer] = Vector.empty,
+    ): Seq[FaciaContainer] = {
       allConfigs.toList match {
         case Nil => accumulation
         case ((config, collection), container) :: remainingConfigs =>
@@ -54,28 +56,31 @@ object Front extends implicits.Collections {
             config.collectionConfigWithId,
             collection.copy(items = newItems),
             layoutMaybe.map(_._1),
-            None
+            None,
           )
           faciaContainers(remainingConfigs, newContext, index + 1, accumulation :+ faciaContainer)
       }
     }
 
     Front(
-      faciaContainers(configs, initialContext).filterNot(_.items.isEmpty)
+      faciaContainers(configs, initialContext).filterNot(_.items.isEmpty),
     )
   }
 
-  def fromPressedPageWithDeduped(pressedPage: PressedPage,
-                                 edition: Edition,
-                                 initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
-                                 adFree: Boolean): Seq[FaciaContainer] = {
+  def fromPressedPageWithDeduped(
+      pressedPage: PressedPage,
+      edition: Edition,
+      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
+      adFree: Boolean,
+  ): Seq[FaciaContainer] = {
 
     @tailrec
-    def faciaContainers(collections: List[PressedCollection],
-                        context: ContainerLayoutContext,
-                        index: Int = 0,
-                        accumulation: Seq[FaciaContainer] =  Vector.empty[FaciaContainer]
-                       ): Seq[FaciaContainer] = {
+    def faciaContainers(
+        collections: List[PressedCollection],
+        context: ContainerLayoutContext,
+        index: Int = 0,
+        accumulation: Seq[FaciaContainer] = Vector.empty[FaciaContainer],
+    ): Seq[FaciaContainer] = {
 
       collections match {
         case Nil => accumulation
@@ -87,7 +92,13 @@ object Front extends implicits.Collections {
           val collectionEssentials = CollectionEssentials.fromPressedCollection(pressedCollection)
           val containerDisplayConfig = ContainerDisplayConfig.withDefaults(pressedCollection.collectionConfigWithId)
 
-          val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(container, context, containerDisplayConfig, newItems, pressedCollection.hasMore)
+          val containerLayoutMaybe: Option[(ContainerLayout, ContainerLayoutContext)] = ContainerLayout.fromContainer(
+            container,
+            context,
+            containerDisplayConfig,
+            newItems,
+            pressedCollection.hasMore,
+          )
           val newContext: ContainerLayoutContext = containerLayoutMaybe.map(_._2).getOrElse(context)
           val faciaContainer = FaciaContainer.fromConfigAndAdSpecs(
             index,
@@ -97,28 +108,30 @@ object Front extends implicits.Collections {
             containerLayoutMaybe.map(_._1),
             None,
             omitMPU = if (containerLayoutMaybe.isDefined) false else omitMPU,
-            adFree = adFree
+            adFree = adFree,
           )
 
           faciaContainers(
             remainingPressedCollections,
             newContext,
             index + 1,
-            accumulation :+ faciaContainer
+            accumulation :+ faciaContainer,
           )
       }
     }
 
     faciaContainers(
       pressedPage.collections.filterNot(_.curatedPlusBackfillDeduplicated.isEmpty),
-      initialContext
+      initialContext,
     )
   }
 
-  def fromPressedPage(pressedPage: PressedPage,
-                      edition: Edition,
-                      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
-                      adFree: Boolean): Front =
+  def fromPressedPage(
+      pressedPage: PressedPage,
+      edition: Edition,
+      initialContext: ContainerLayoutContext = ContainerLayoutContext.empty,
+      adFree: Boolean,
+  ): Front =
     Front(fromPressedPageWithDeduped(pressedPage, edition, initialContext, adFree))
 
   def makeLinkedData(url: String, collections: Seq[FaciaContainer])(implicit request: RequestHeader): ItemList = {
@@ -126,16 +139,19 @@ object Front extends implicits.Collections {
       url = LinkTo(url),
       itemListElement = collections.zipWithIndex.map {
         case (collection, index) =>
-          ListItem(position = index, item = Some(
-            ItemList(
-              url = LinkTo(url), // don't have a uri for each container
-              itemListElement = collection.items.zipWithIndex.map {
-                case (item, i) =>
-                  ListItem(position = i, url = Some(LinkTo(item.header.url)))
-              }
-            )
-          ))
-      }
+          ListItem(
+            position = index,
+            item = Some(
+              ItemList(
+                url = LinkTo(url), // don't have a uri for each container
+                itemListElement = collection.items.zipWithIndex.map {
+                  case (item, i) =>
+                    ListItem(position = i, url = Some(LinkTo(item.header.url)))
+                },
+              ),
+            ),
+          )
+      },
     )
   }
 }

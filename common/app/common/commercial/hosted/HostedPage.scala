@@ -13,7 +13,7 @@ import model.StandalonePage
 
 trait HostedPage extends StandalonePage {
   def id: String
-  def url: String        = s"/$id"
+  def url: String = s"/$id"
   def encodedUrl: String = URLEncoder.encode(s"${site.host}/$id", "utf-8")
 
   def campaign: Option[HostedCampaign]
@@ -25,16 +25,16 @@ trait HostedPage extends StandalonePage {
   def socialShareText: Option[String]
   def shortSocialShareText: Option[String]
 
-  def twitterText: String      = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
-  def facebookText: String     = socialShareText.getOrElse(standfirst)
+  def twitterText: String = shortSocialShareText.getOrElse(if (standfirst.length < 136) standfirst else title) + " #ad"
+  def facebookText: String = socialShareText.getOrElse(standfirst)
   def emailSubjectText: String = title + " - Advertiser Content hosted by the Guardian"
-  def emailBodyText: String    = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
+  def emailBodyText: String = s"${socialShareText.getOrElse(standfirst)} $encodedUrl"
 
   def cta: HostedCallToAction
 
-  def name: String       = campaign.map(_.name).getOrElse("*** Not live yet: Campaign name will go here ***")
-  def owner: String      = campaign.map(_.owner).getOrElse("*** Not live yet: Campaign owner will go here ***")
-  def logo: HostedLogo   = campaign.map(_.logo).getOrElse(HostedLogo.placeholder)
+  def name: String = campaign.map(_.name).getOrElse("*** Not live yet: Campaign name will go here ***")
+  def owner: String = campaign.map(_.owner).getOrElse("*** Not live yet: Campaign owner will go here ***")
+  def logo: HostedLogo = campaign.map(_.logo).getOrElse(HostedLogo.placeholder)
   def fontColour: Colour = campaign.map(_.fontColour).getOrElse(Colour.black)
 }
 
@@ -58,11 +58,11 @@ object HostedPage extends Logging {
 }
 
 case class HostedCampaign(
-  id: String,
-  name: String,
-  owner: String,
-  logo: HostedLogo,
-  fontColour: Colour
+    id: String,
+    name: String,
+    owner: String,
+    logo: HostedLogo,
+    fontColour: Colour,
 )
 
 object HostedCampaign {
@@ -70,10 +70,10 @@ object HostedCampaign {
   def fromContent(item: Content): Option[HostedCampaign] = {
     log.info(s"Building hosted campaign for ${item.id} ...")
     val campaign = for {
-      section      <- getAndLog(item, item.section, "has no section")
-      hostedTag    <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
+      section <- getAndLog(item, item.section, "has no section")
+      hostedTag <- getAndLog(item, item.tags find (_.paidContentType.contains("HostedContent")), "has no hosted tag")
       sponsorships <- getAndLog(item, hostedTag.activeSponsorships, "has no sponsorships")
-      sponsorship  <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
+      sponsorship <- getAndLog(item, sponsorships.headOption, "has no sponsorship")
     } yield {
       val id = section.id.stripPrefix("advertiser-content/")
       HostedCampaign(
@@ -83,9 +83,9 @@ object HostedCampaign {
         logo = HostedLogo.make(
           src = sponsorship.sponsorLogo,
           dimensions = sponsorship.sponsorLogoDimensions,
-          link = sponsorship.sponsorLink
+          link = sponsorship.sponsorLink,
         ),
-        fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse "")
+        fontColour = Colour(hostedTag.paidContentCampaignColour getOrElse ""),
       )
     }
     if (campaign.isEmpty) log.error(s"Failed to build HostedCampaign from $item")
@@ -100,16 +100,17 @@ object HostedLogo {
   val placeholder = HostedLogo(
     src = "",
     dimensions = None,
-    link = ""
+    link = "",
   )
 
   def make(
-    src: String,
-    dimensions: Option[SponsorshipLogoDimensions],
-    link: String
-  ): HostedLogo = HostedLogo(
-    src,
-    dimensions map (d => Dimensions(d.width, d.height)),
-    link
-  )
+      src: String,
+      dimensions: Option[SponsorshipLogoDimensions],
+      link: String,
+  ): HostedLogo =
+    HostedLogo(
+      src,
+      dimensions map (d => Dimensions(d.width, d.height)),
+      link,
+    )
 }

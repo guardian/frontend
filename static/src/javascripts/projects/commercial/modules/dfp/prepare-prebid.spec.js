@@ -3,11 +3,13 @@
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
+import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
+const onConsentChange: any = onConsentChange_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -33,6 +35,20 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
     shouldIncludeOnlyA9: false,
 }));
 
+jest.mock('@guardian/consent-management-platform', () => ({
+    onConsentChange: jest.fn(),
+}));
+
+const tcfv2WithConsentMock = (callback): void =>
+    callback({
+        tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true } },
+    });
+
+const tcfv2WithoutConsentMock = (callback): void =>
+    callback({
+        tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false } },
+    });
+
 const fakeUserAgent = (userAgent: string): void => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
@@ -56,6 +72,7 @@ describe('init', () => {
         dfpEnv.hbImpl = { prebid: true, a9: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
@@ -109,6 +126,23 @@ describe('init', () => {
         config.set('page.hasPageSkin', false);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
+    });
+    it('should initialise Prebid if TCFv2 consent with correct Sourcepoint Id is true ', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        await setupPrebid();
+        expect(prebid.initialise).toBeCalled();
+    });
+
+    it('should not initialise Prebid if TCFv2 consent with correct Sourcepoint Id is false', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        await setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
     });
 
     it('isGoogleWebPreview should return false with no navigator or useragent', () => {

@@ -24,10 +24,14 @@ object CampaignAgent extends Logging {
     val tagLimit = 20
 
     if (Targeting.isSwitchedOn) {
-      Configuration.targeting.campaignsUrl.map(url => {
-        CampaignCache.fetch(url, campaignLimit, Some(ruleLimit), Some(tagLimit))
-          .flatMap(agent.alter).map(_ => ())
-      }).getOrElse(Future.failed(new BadConfigurationException("Campaigns URL not configured")))
+      Configuration.targeting.campaignsUrl
+        .map(url => {
+          CampaignCache
+            .fetch(url, campaignLimit, Some(ruleLimit), Some(tagLimit))
+            .flatMap(agent.alter)
+            .map(_ => ())
+        })
+        .getOrElse(Future.failed(new BadConfigurationException("Campaigns URL not configured")))
     } else {
       Future.successful(())
     }
@@ -35,7 +39,7 @@ object CampaignAgent extends Logging {
 
   def getCampaignsForTags(tags: Seq[String]): List[Campaign] = {
     if (Targeting.isSwitchedOn) {
-      agent().getCampaignsForTags(tags, stripRules=true)
+      agent().getCampaignsForTags(tags, stripRules = true)
     } else {
       Nil
     }

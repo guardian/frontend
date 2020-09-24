@@ -13,25 +13,27 @@ object ApiResults extends Results {
   }
 
   type ApiResponse[T] = Either[ApiErrors, T]
-  def apply[T](action: => ApiResponse[T])(implicit tjs: Writes[T]): Result ={
+  def apply[T](action: => ApiResponse[T])(implicit tjs: Writes[T]): Result = {
     action.fold(
       apiErrors =>
         Status(apiErrors.statusCode) {
-          JsObject(Seq(
-            "status" -> JsString("error"),
-            "statusCode" -> JsNumber(apiErrors.statusCode),
-            "errors" -> Json.toJson(apiErrors.errors)
-          ))
+          JsObject(
+            Seq(
+              "status" -> JsString("error"),
+              "statusCode" -> JsNumber(apiErrors.statusCode),
+              "errors" -> Json.toJson(apiErrors.errors),
+            ),
+          )
         },
       response =>
         Ok {
-          JsObject(Seq(
-            "status" -> JsString("ok"),
-            "response" -> Json.toJson(response)
-          ))
-        }
+          JsObject(
+            Seq(
+              "status" -> JsString("ok"),
+              "response" -> Json.toJson(response),
+            ),
+          )
+        },
     )
   }
 }
-
-

@@ -27,7 +27,8 @@ import router.Routes
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait ApplicationsServices {
@@ -82,9 +83,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     EmailSubsciptionMetrics.APIHTTPError,
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
-    EmailSubsciptionMetrics.AllEmailSubmission
+    EmailSubsciptionMetrics.AllEmailSubmission,
   )
-
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
@@ -92,4 +92,3 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   def actorSystem: ActorSystem
 }
-

@@ -7,21 +7,21 @@ import discussion.api.DiscussionApiException._
 import play.api.libs.json.{JsArray, JsObject}
 import play.api.mvc.{Action, AnyContent, ControllerComponents}
 
-class CommentCountController(val discussionApi: DiscussionApiLike, val controllerComponents: ControllerComponents) extends DiscussionController {
+class CommentCountController(val discussionApi: DiscussionApiLike, val controllerComponents: ControllerComponents)
+    extends DiscussionController {
 
   def commentCountJson(shortUrls: String): Action[AnyContent] = commentCount(shortUrls)
 
-  def commentCount(shortUrls: String): Action[AnyContent] = Action.async {
-    implicit request =>
+  def commentCount(shortUrls: String): Action[AnyContent] =
+    Action.async { implicit request =>
       val counts = discussionApi.commentCounts(shortUrls)
-      counts map {
-        counts =>
-          Cached(300) {
-            JsonComponent(
-              JsObject(Seq("counts" -> JsArray(counts.map(_.toJson))))
-            )
-          }
+      counts map { counts =>
+        Cached(300) {
+          JsonComponent(
+            JsObject(Seq("counts" -> JsArray(counts.map(_.toJson)))),
+          )
+        }
       } recover toResult
-  }
+    }
 
 }

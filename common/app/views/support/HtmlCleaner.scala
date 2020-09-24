@@ -15,6 +15,7 @@ import model._
 import model.content._
 import model.dotcomrendering.pageElements.{PageElement, TextBlockElement}
 import navigation.ReaderRevenueSite
+import org.joda.time.DateTime
 import org.jsoup.Jsoup
 import org.jsoup.nodes.{Document, Element, TextNode}
 import play.api.mvc.RequestHeader
@@ -90,9 +91,10 @@ case object R2VideoCleaner extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
-    val legacyVideos = document.getElementsByTag("video").asScala.filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
+    val legacyVideos =
+      document.getElementsByTag("video").asScala.filter(_.hasClass("gu-video")).filter(_.parent().tagName() != "figure")
 
-    legacyVideos.foreach( videoElement => {
+    legacyVideos.foreach(videoElement => {
       videoElement.wrap("<figure class=\"test element element-video\"></figure>")
     })
 
@@ -103,27 +105,29 @@ case object R2VideoCleaner extends HtmlCleaner {
 
 case class RecipeBodyImage(isRecipeArticle: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isRecipeArticle) {
-      document.getElementsByClass("element-image").asScala foreach(_.remove())
-      document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote")) foreach( _.remove())
-      document.getElementsByClass("element-rich-link").asScala.foreach( _.remove())
+    if (isRecipeArticle) {
+      document.getElementsByClass("element-image").asScala foreach (_.remove())
+      document.getElementsByTag("aside").asScala.filter(_.hasClass("element-pullquote")) foreach (_.remove())
+      document.getElementsByClass("element-rich-link").asScala.foreach(_.remove())
     }
     document
   }
 }
 
-case class PictureCleaner(article: Article)(implicit request: RequestHeader) extends HtmlCleaner with implicits.Numbers {
+case class PictureCleaner(article: Article)(implicit request: RequestHeader)
+    extends HtmlCleaner
+    with implicits.Numbers {
 
   def clean(body: Document): Document = {
     for {
       figure <- body.getElementsByTag("figure").asScala
       image <- figure.getElementsByTag("img").asScala.headOption
       if !(figure.hasClass("element-comment") ||
-           figure.hasClass("element-witness") ||
-           figure.hasClass("element-atom"))
+        figure.hasClass("element-witness") ||
+        figure.hasClass("element-atom"))
       container <- findContainerFromId(figure.attr("data-media-id"), image.attr("src"))
       image <- container.images.largestImage
-    }{
+    } {
       val hinting = findBreakpointWidths(figure)
 
       val relation = {
@@ -137,38 +141,44 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
 
       val orientationClass = image.orientation match {
         case Portrait => Some("img--portrait")
-        case _ => Some("img--landscape")
+        case _        => Some("img--landscape")
       }
 
       val smallImageClass = hinting match {
-        case Thumbnail => None
+        case Thumbnail               => None
         case _ if image.width <= 220 => Some("img--inline")
-        case _ => None
+        case _                       => None
       }
 
-      val inlineClass = if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
+      val inlineClass =
+        if (article.isTheMinute && !figure.hasClass("element--thumbnail")) Some("element--inline") else None
 
       val figureClasses = List(orientationClass, smallImageClass, hinting.className, inlineClass).flatten.mkString(" ")
 
       // lightbox uses the images in the order mentioned in the header array
       val lightboxInfo: Option[(Int, ImageAsset)] = for {
-        index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index => if (index == -1) None else Some(index + 1))
+        index <- Some(article.lightbox.lightboxImages.indexOf(container)).flatMap(index =>
+          if (index == -1) None else Some(index + 1),
+        )
         crop <- container.images.largestEditorialCrop
         if !article.isLiveBlog
       } yield (index, crop)
 
-      val html = views.html.fragments.imageFigure(
-        container.images,
-        lightboxIndex = lightboxInfo.map(_._1),
-        widthsByBreakpoint = widths,
-        image_figureClasses = Some(image, figureClasses),
-        shareInfo = lightboxInfo.map{ case (index, crop) =>
-          (
-            article.sharelinks.elementShares(s"img-$index", crop.url),
-            article.metadata.contentType.getOrElse(DotcomContentType.Unknown)
-          )
-        }
-      ).toString()
+      val html = views.html.fragments
+        .imageFigure(
+          container.images,
+          lightboxIndex = lightboxInfo.map(_._1),
+          widthsByBreakpoint = widths,
+          image_figureClasses = Some(image, figureClasses),
+          shareInfo = lightboxInfo.map {
+            case (index, crop) =>
+              (
+                article.sharelinks.elementShares(s"img-$index", crop.url),
+                article.metadata.contentType.getOrElse(DotcomContentType.Unknown),
+              )
+          },
+        )
+        .toString()
 
       figure.replaceWith(Jsoup.parseBodyFragment(html).body().child(0))
     }
@@ -183,10 +193,10 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
 
     // Try to match the container based on both URL and media ID.
     val fullyMatchedImage: Seq[ImageElement] = for {
-        container <- imageContainers
-        asset <- container.images.imageCrops
-        url <- asset.url if maybeSrcImagePath.exists(url.contains)
-      } yield container
+      container <- imageContainers
+      asset <- container.images.imageCrops
+      url <- asset.url if maybeSrcImagePath.exists(url.contains)
+    } yield container
 
     fullyMatchedImage.headOption orElse imageContainers.headOption
   }
@@ -195,11 +205,11 @@ case class PictureCleaner(article: Article)(implicit request: RequestHeader) ext
 
     figure.classNames().asScala.map(Some(_)) match {
       case classes if classes.asJava.contains(Supporting.className) => Supporting
-      case classes if classes.asJava.contains(Showcase.className) => Showcase
-      case classes if classes.asJava.contains(Thumbnail.className) => Thumbnail
-      case classes if classes.asJava.contains(Immersive.className) => Immersive
-      case classes if classes.asJava.contains(Halfwidth.className) => Halfwidth
-      case _ => Inline
+      case classes if classes.asJava.contains(Showcase.className)   => Showcase
+      case classes if classes.asJava.contains(Thumbnail.className)  => Thumbnail
+      case classes if classes.asJava.contains(Immersive.className)  => Immersive
+      case classes if classes.asJava.contains(Halfwidth.className)  => Halfwidth
+      case _                                                        => Inline
     }
   }
 }
@@ -224,7 +234,8 @@ object AmpSrcCleaner extends HttpsUrl {
   }
 }
 
-case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition, implicit val request: RequestHeader)
+    extends HtmlCleaner {
   def clean(body: Document): Document = {
     val links = body.getElementsByAttribute("href")
 
@@ -254,7 +265,8 @@ case class InBodyLinkCleaner(dataLinkName: String)(implicit val edition: Edition
   }
 }
 
-case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner {
+case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit val request: RequestHeader)
+    extends HtmlCleaner {
   def clean(body: Document): Document = {
 
     def truncateTextNode(charLimit: Int, textNode: TextNode): Int = {
@@ -266,13 +278,12 @@ case class TruncateCleaner(limit: Int)(implicit val edition: Edition, implicit v
     }
 
     def truncateElement(charLimit: Int, element: Element): Int = {
-      element.childNodes.asScala.foldLeft(charLimit) {
-        (t, node) =>
-          node match {
-            case tNode: TextNode => truncateTextNode(t, tNode)
-            case elem: Element => truncateElement(t, elem)
-            case _ => t
-          }
+      element.childNodes.asScala.foldLeft(charLimit) { (t, node) =>
+        node match {
+          case tNode: TextNode => truncateTextNode(t, tNode)
+          case elem: Element   => truncateElement(t, elem)
+          case _               => t
+        }
       }
     }
 
@@ -286,7 +297,6 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
   override def clean(document: Document): Document = {
 
     document.getElementsByClass("element-tweet").asScala.foreach { tweet =>
-
       val tweetData: Option[Tweet] = Option(tweet.attr("data-canonical-url")).flatMap { url =>
         url.split('/').lastOption.flatMap { id =>
           content.tweets.find(_.id == id)
@@ -296,13 +306,15 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
       val tweetImage = tweetData.flatMap(_.firstImage)
 
       tweet.getElementsByClass("twitter-tweet").asScala.foreach { element =>
-
         val el = element.clone()
 
         if (el.children.size > 1) {
           val body = el.child(0).attr("class", "tweet-body")
           val date = el.child(1).attr("class", "tweet-date")
-          val user = el.ownText().replaceFirst("— ", "").split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
+          val user =
+            el.ownText()
+              .replaceFirst("— ", "")
+              .split("""(?=\(@)""") // Remove the '-' and split at the '(@' username but keep delimiter
 
           val userName = user.headOption.getOrElse("")
           val userId = user.lift(1).getOrElse("")
@@ -330,7 +342,8 @@ class TweetCleaner(content: Content) extends HtmlCleaner {
   }
 }
 
-case class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader) extends HtmlCleaner{
+case class TagLinker(article: Article)(implicit val edition: Edition, implicit val request: RequestHeader)
+    extends HtmlCleaner {
 
   private val group1 = "$1"
   private val group2 = "$2"
@@ -350,18 +363,20 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
     if (article.content.showInRelated) {
 
       // Get all paragraphs which are not contained in a pullquote or in an instagram caption
-      val paragraphs = doc.getElementsByTag("p").asScala.filterNot( p =>
-        p.parents.asScala.exists { ancestor =>
-          val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
-          val inInstagramBlock = ancestor.hasClass("instagram-media")
-          inPullquote || inInstagramBlock
-        }
-      )
+      val paragraphs = doc
+        .getElementsByTag("p")
+        .asScala
+        .filterNot(p =>
+          p.parents.asScala.exists { ancestor =>
+            val inPullquote = ancestor.tagName() == "aside" && ancestor.hasClass("element-pullquote")
+            val inInstagramBlock = ancestor.hasClass("instagram-media")
+            inPullquote || inInstagramBlock
+          },
+        )
 
       // order by length of name so we do not make simple match errors
       // e.g 'Northern Ireland' & 'Ireland'
       article.tags.keywords.filterNot(_.isSectionTag).sortBy(_.name.length).reverse.foreach { keyword =>
-
         // don't link again in paragraphs that already have links
         val unlinkedParas = paragraphs.filterNot(_.html.contains("<a"))
 
@@ -370,18 +385,20 @@ case class TagLinker(article: Article)(implicit val edition: Edition, implicit v
 
         if (candidateParagraphs.nonEmpty) {
           val regex = keywordRegex(keyword)
-          val paragraphsWithMatchers = candidateParagraphs.map(p => (regex.pattern.matcher(p.html), p)).find(_._1.matches())
+          val paragraphsWithMatchers =
+            candidateParagraphs.map(p => (regex.pattern.matcher(p.html), p)).find(_._1.matches())
 
-          paragraphsWithMatchers.foreach { case (matcher, p) =>
-            val tagLink = doc.createElement("a")
-            tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
-            tagLink.text(keyword.name)
-            tagLink.attr("data-link-name", "auto-linked-tag")
-            tagLink.attr("data-component", "auto-linked-tag")
-            tagLink.addClass("u-underline")
-            val tagLinkHtml = tagLink.toString
-            val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
-            p.html(newHtml)
+          paragraphsWithMatchers.foreach {
+            case (matcher, p) =>
+              val tagLink = doc.createElement("a")
+              tagLink.attr("href", LinkTo(keyword.metadata.url, edition))
+              tagLink.text(keyword.name)
+              tagLink.attr("data-link-name", "auto-linked-tag")
+              tagLink.attr("data-component", "auto-linked-tag")
+              tagLink.addClass("u-underline")
+              val tagLinkHtml = tagLink.toString
+              val newHtml = matcher.replaceFirst(s"$group1$group2$tagLinkHtml$group4$group5")
+              p.html(newHtml)
           }
         }
       }
@@ -398,12 +415,12 @@ object InBodyElementCleaner extends HtmlCleaner {
     "element-image",
     "element-witness",
     "element-comment",
-    "element-interactive"
+    "element-interactive",
   )
 
   override def clean(document: Document): Document = {
     // this code REMOVES unsupported embeds
-    if(ShowAllArticleEmbedsSwitch.isSwitchedOff) {
+    if (ShowAllArticleEmbedsSwitch.isSwitchedOff) {
       val embeddedElements = document.getElementsByTag("figure").asScala.filter(_.hasClass("element"))
       val unsupportedElements = embeddedElements.filterNot(e => supportedElements.exists(e.hasClass))
       unsupportedElements.foreach(_.remove())
@@ -419,7 +436,7 @@ case class Summary(amount: Int) extends HtmlCleaner {
     // if there is are no p's, just take the first n things (could be a blog)
     para match {
       case Some(p) => children.drop(children.indexOf(p)).foreach(_.remove())
-      case _ => children.drop(amount).foreach(_.remove())
+      case _       => children.drop(amount).foreach(_.remove())
     }
     document
   }
@@ -427,11 +444,11 @@ case class Summary(amount: Int) extends HtmlCleaner {
 
 case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isPhotoEssay) {
-      document.getElementsByTag("figure").asScala.filter(_.hasClass("element-image"))foreach{ images =>
+    if (isPhotoEssay) {
+      document.getElementsByTag("figure").asScala.filter(_.hasClass("element-image")) foreach { images =>
         images.addClass("element-image--photo-essay")
       }
-      document.getElementsByClass("block-share--article").asScala.foreach{ shares =>
+      document.getElementsByClass("block-share--article").asScala.foreach { shares =>
         shares.remove()
       }
     }
@@ -441,8 +458,8 @@ case class PhotoEssayImages(isPhotoEssay: Boolean) extends HtmlCleaner {
 
 case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isPhotoEssay) {
-      document.getElementsByClass("element-pullquote").asScala.foreach{ quotes =>
+    if (isPhotoEssay) {
+      document.getElementsByClass("element-pullquote").asScala.foreach { quotes =>
         quotes.addClass("element-pullquote--photo-essay")
       }
     }
@@ -452,8 +469,8 @@ case class PhotoEssayQuotes(isPhotoEssay: Boolean) extends HtmlCleaner {
 
 case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isPhotoEssay) {
-      document.getElementsByClass("caption--img").asScala.foreach{ captions =>
+    if (isPhotoEssay) {
+      document.getElementsByClass("caption--img").asScala.foreach { captions =>
         captions.remove()
       }
     }
@@ -463,11 +480,12 @@ case class PhotoEssayCaptions(isPhotoEssay: Boolean) extends HtmlCleaner {
 
 case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isPhotoEssay) {
-      document.getElementsByTag("figure").asScala.filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach{ case(halfWidthImage, index) =>
-        if(index % 2 == 0) {
-          halfWidthImage.addClass("half-width-odd")
-        }
+    if (isPhotoEssay) {
+      document.getElementsByTag("figure").asScala.filter(_.hasClass("element--halfWidth")).zipWithIndex.foreach {
+        case (halfWidthImage, index) =>
+          if (index % 2 == 0) {
+            halfWidthImage.addClass("half-width-odd")
+          }
       }
     }
     document
@@ -476,9 +494,9 @@ case class PhotoEssayHalfWidth(isPhotoEssay: Boolean) extends HtmlCleaner {
 
 case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isPhotoEssay) {
-      document.getElementsByTag("blockquote").asScala.foreach{ blockquotes =>
-        if(!blockquotes.children().is(".pullquote-paragraph")){
+    if (isPhotoEssay) {
+      document.getElementsByTag("blockquote").asScala.foreach { blockquotes =>
+        if (!blockquotes.children().is(".pullquote-paragraph")) {
           blockquotes.addClass("photo-essay-block-quote")
         }
       }
@@ -489,8 +507,8 @@ case class PhotoEssayBlockQuote(isPhotoEssay: Boolean) extends HtmlCleaner {
 
 case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isImmersive) {
-      document.getElementsByTag("a").asScala.foreach{ a =>
+    if (isImmersive) {
+      document.getElementsByTag("a").asScala.foreach { a =>
         a.addClass("in-body-link--immersive")
       }
     }
@@ -500,11 +518,11 @@ case class ImmersiveLinks(isImmersive: Boolean) extends HtmlCleaner {
 
 case class ImmersiveHeaders(isImmersive: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isImmersive) {
-      document.getElementsByTag("h2").asScala.foreach{ h2 =>
+    if (isImmersive) {
+      document.getElementsByTag("h2").asScala.foreach { h2 =>
         val beforeH2 = h2.previousElementSibling()
         if (beforeH2 != null) {
-          if(beforeH2.hasClass("element--immersive") && beforeH2.hasClass("element-image")) {
+          if (beforeH2.hasClass("element--immersive") && beforeH2.hasClass("element-image")) {
             beforeH2.addClass("section-image")
             beforeH2.prepend("""<h2 class="section-title">""" + h2.text() + "</h2>")
             h2.remove()
@@ -521,13 +539,13 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
     if (p.text.length > 199) {
       p.html.replaceFirst(
         "^([\"'“‘]*[a-zA-Z])(.{199,})",
-        """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2"""
+        """<span class="drop-cap"><span class="drop-cap__inner">$1</span></span>$2""",
       )
     } else p.html
   }
 
   override def clean(document: Document): Document = {
-    if(isFeature && !isRecipeArticle) {
+    if (isFeature && !isRecipeArticle) {
       val children = document.body().children().asScala.toList
       children.headOption match {
         case Some(p) =>
@@ -536,19 +554,19 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
       }
     }
 
-    document.getElementsByTag("h2").asScala.foreach{ h2 =>
-        if (isImmersive && h2.text() == "* * *") {
-            h2.before("""<hr class="section-rule" />""")
+    document.getElementsByTag("h2").asScala.foreach { h2 =>
+      if (isImmersive && h2.text() == "* * *") {
+        h2.before("""<hr class="section-rule" />""")
 
-            val maybeNext = Option(h2.nextElementSibling())
-            maybeNext
-              .filter(_.nodeName() == "p")
-              .foreach { el =>
-                el.html(setDropCap(el))
-              }
+        val maybeNext = Option(h2.nextElementSibling())
+        maybeNext
+          .filter(_.nodeName() == "p")
+          .foreach { el =>
+            el.html(setDropCap(el))
+          }
 
-            h2.remove()
-        }
+        h2.remove()
+      }
     }
     document
   }
@@ -556,20 +574,20 @@ case class DropCaps(isFeature: Boolean, isImmersive: Boolean, isRecipeArticle: B
 
 case class NumberedListFurniture(isNumberedList: Boolean) extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    if(isNumberedList) {
+    if (isNumberedList) {
       // Adds yellow styling to star ratings mid article
       document.select("p:containsOwn(★)").asScala.foreach { star =>
         star.addClass("stars")
       }
 
       // Styled link/section end
-      document.select("ul > li:only-child").asScala.foreach{ li =>
+      document.select("ul > li:only-child").asScala.foreach { li =>
         val ul = li.parent();
-          ul.addClass("article-link")
+        ul.addClass("article-link")
       }
 
       // Faux h3 headings, for second level of heading hierarchy in numbered list articles
-      document.select("p > strong").asScala.foreach{ strong =>
+      document.select("p > strong").asScala.foreach { strong =>
         val p = strong.parent();
         if (p.is("p:matchesOwn(^$)") && !p.children().is("a")) {
           p.addClass("falseH3")
@@ -598,7 +616,7 @@ object GalleryCaptionCleaner extends HtmlCleaner {
     captionTitle.addClass("gallery__caption__title")
     captionTitle.html(captionTitleText)
 
-    galleryCaption.prependChild(captionTitle)
+    galleryCaption.body.prependChild(captionTitle)
 
     galleryCaption
   }
@@ -625,14 +643,14 @@ object InteractiveSrcdocCleaner extends HtmlCleaner {
 
 object FigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByTag("figcaption").asScala.foreach{ _.addClass("caption caption--img")}
+    document.getElementsByTag("figcaption").asScala.foreach { _.addClass("caption caption--img") }
     document
   }
 }
 
 object MainFigCaptionCleaner extends HtmlCleaner {
   override def clean(document: Document): Document = {
-    document.getElementsByTag("figcaption").asScala.foreach{ _.addClass("caption caption--img caption--main")}
+    document.getElementsByTag("figcaption").asScala.foreach { _.addClass("caption caption--img caption--main") }
     document
   }
 }
@@ -644,39 +662,46 @@ case class RichLinkCleaner()(implicit val request: RequestHeader) extends HtmlCl
 
     richLinks
       .addClass("element-rich-link--not-upgraded")
-      .attr("data-component", "rich-link").asScala
-      .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.asScala.length} | ${index+1}") }
+      .attr("data-component", "rich-link")
+      .asScala
+      .zipWithIndex
+      .map { case (el, index) => el.attr("data-link-name", s"rich-link-${richLinks.asScala.length} | ${index + 1}") }
 
     richLinks.asScala
-      .map( richLink => {
+      .map(richLink => {
         val link = richLink.getElementsByTag("a").first()
         val href = link.attr("href")
         val html = views.html.fragments.richLinkDefault(link.text(), href).toString()
         richLink.empty().prepend(html)
-      }
-      )
+      })
     document
   }
 }
 
 object MembershipEventCleaner extends HtmlCleaner {
-    override def clean(document: Document): Document = {
-      val membershipEvents = document.getElementsByClass("element-membership")
-      membershipEvents
-        .addClass("element-membership--not-upgraded")
-        .attr("data-component", "membership-events").asScala
-        .zipWithIndex.map{ case (el, index) => el.attr("data-link-name", s"membership-event-${membershipEvents.asScala.length} | ${index+1}") }
+  override def clean(document: Document): Document = {
+    val membershipEvents = document.getElementsByClass("element-membership")
+    membershipEvents
+      .addClass("element-membership--not-upgraded")
+      .attr("data-component", "membership-events")
+      .asScala
+      .zipWithIndex
+      .map {
+        case (el, index) =>
+          el.attr("data-link-name", s"membership-event-${membershipEvents.asScala.length} | ${index + 1}")
+      }
 
-      document
-    }
+    document
+  }
 }
 
 case class AtomsCleaner(
-  atoms: Option[Atoms],
-  shouldFence: Boolean = true,
-  mediaWrapper: Option[MediaWrapper] = None,
-  posterImageOverride: Option[ImageMedia] = None
-)(implicit val request: RequestHeader, context: ApplicationContext) extends HtmlCleaner {
+    atoms: Option[Atoms],
+    shouldFence: Boolean = true,
+    mediaWrapper: Option[MediaWrapper] = None,
+    posterImageOverride: Option[ImageMedia] = None,
+)(implicit val request: RequestHeader, context: ApplicationContext)
+    extends HtmlCleaner {
   private def findAtom(id: String): Option[Atom] = {
     atoms.flatMap(_.all.find(_.id == id))
   }
@@ -697,23 +722,25 @@ case class AtomsCleaner(
           findAtom(atomId).fold {
             atomContainer.remove()
           } { atomData =>
-            if(mediaWrapper.contains(MediaWrapper.MainMedia)){
+            if (mediaWrapper.contains(MediaWrapper.MainMedia)) {
               atomContainer.addClass("element-atom--main-media")
             }
-            if(atomData.isInstanceOf[MediaAtom]){
+            if (atomData.isInstanceOf[MediaAtom]) {
               atomContainer.addClass("element-atom--media")
             }
 
             atomContainer.attr("data-atom-id", atomId)
             atomContainer.attr("data-atom-type", atomType)
 
-            val html = views.html.fragments.atoms.atom(
-              atomData,
-              articleConfig,
-              shouldFence,
-              mediaWrapper,
-              posterImageOverride
-            ).toString()
+            val html = views.html.fragments.atoms
+              .atom(
+                atomData,
+                articleConfig,
+                shouldFence,
+                mediaWrapper,
+                posterImageOverride,
+              )
+              .toString()
 
             bodyElement.remove()
             atomContainer.append(html)
@@ -762,14 +789,25 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
     // and remove a container if it, or the next sibling, is a commercial container
     // we also exclude any containers that are directly before a thrasher
     // then we take every other container, up to a maximum of 10, for targeting MPU insertion
-    val containersForCommercialMPUs = containers.zipWithIndex.collect {
-      case (x, i) if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(x) && !isMostViewedContainer(x) => x
-    }.zipWithIndex.collect {
-      case (x, i) if i % 2 == 0 => x
-    }.take(10)
+    val containersForCommercialMPUs = containers.zipWithIndex
+      .collect {
+        case (x, i)
+            if !hasFirstContainerThrasher(x, i) && !hasAdjacentCommercialContainer(x) && !hasAdjacentThrasher(
+              x,
+            ) && !isMostViewedContainer(x) =>
+          x
+      }
+      .zipWithIndex
+      .collect {
+        case (x, i) if i % 2 == 0 => x
+      }
+      .take(10)
 
     for (container <- containersForCommercialMPUs) {
-      container.after(s"""<section class="fc-container__mpu--mobile">${sliceSlot(containersForCommercialMPUs.indexOf(container), isMobile = true)}</section>""")
+      container.after(s"""<section class="fc-container__mpu--mobile">${sliceSlot(
+        containersForCommercialMPUs.indexOf(container),
+        isMobile = true,
+      )}</section>""")
     }
 
     // On desktop, a MPU slot is simply inserted when there is a slice available
@@ -783,7 +821,9 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
   }
 }
 
-case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(implicit val request: RequestHeader) extends HtmlCleaner {
+case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boolean, hasPageSkin: Boolean)(implicit
+    val request: RequestHeader,
+) extends HtmlCleaner {
 
   override def clean(document: Document): Document = {
 
@@ -799,14 +839,15 @@ case class CommercialComponentHigh(isPaidContent: Boolean, isNetworkFront: Boole
 
       val adSlotHtml = views.html.fragments.commercial.commercialComponentHigh(isPaidContent, hasPageSkin)
 
-      val adSlot: Option[Element] = Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().asScala.toList.headOption
+      val adSlot: Option[Element] =
+        Jsoup.parseBodyFragment(adSlotHtml.toString).body().children().asScala.toList.headOption
 
       for {
         (container, _) <- containers.lift(containerIndex)
         slot <- adSlot
       } {
-          container.after(slot)
-          slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
+        container.after(slot)
+        slot.wrap("""<div class="fc-container fc-container--commercial"></div>""")
       }
 
     }
@@ -831,16 +872,29 @@ object GarnettQuoteCleaner extends HtmlCleaner {
 }
 
 case class AffiliateLinksCleaner(
-                                  pageUrl: String,
-                                  sectionId: String,
-                                  showAffiliateLinks: Option[Boolean],
-                                  contentType: String,
-                                  appendDisclaimer: Option[Boolean] = None,
-                                  tags: List[String]) extends HtmlCleaner with Logging {
+    pageUrl: String,
+    sectionId: String,
+    showAffiliateLinks: Option[Boolean],
+    contentType: String,
+    appendDisclaimer: Option[Boolean] = None,
+    tags: List[String],
+    publishedDate: Option[DateTime],
+) extends HtmlCleaner
+    with Logging {
 
   override def clean(document: Document): Document = {
-    if (AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(AffiliateLinks.isSwitchedOn,
-      sectionId, showAffiliateLinks, affiliateLinkSections, defaultOffTags, alwaysOffTags, tags)) {
+    if (
+      AffiliateLinks.isSwitchedOn && AffiliateLinksCleaner.shouldAddAffiliateLinks(
+        AffiliateLinks.isSwitchedOn,
+        sectionId,
+        showAffiliateLinks,
+        affiliateLinkSections,
+        defaultOffTags,
+        alwaysOffTags,
+        tags,
+        publishedDate,
+      )
+    ) {
       AffiliateLinksCleaner.replaceLinksInHtml(document, pageUrl, appendDisclaimer, contentType, skimlinksId)
     } else document
   }
@@ -848,13 +902,19 @@ case class AffiliateLinksCleaner(
 
 object AffiliateLinksCleaner {
 
-  def getAffiliateableLinks(html:Document): mutable.Seq[Element] =
+  def getAffiliateableLinks(html: Document): mutable.Seq[Element] =
     html.getElementsByAttribute("href").asScala.filter(isAffiliatable)
 
-  def replaceLinksInHtml(html: Document, pageUrl: String, appendDisclaimer: Option[Boolean], contentType: String, skimlinksId: String): Document = {
+  def replaceLinksInHtml(
+      html: Document,
+      pageUrl: String,
+      appendDisclaimer: Option[Boolean],
+      contentType: String,
+      skimlinksId: String,
+  ): Document = {
 
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(html)
-    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+    linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
 
     // respect appendDisclaimer, or if it's not set then always add the disclaimer if affilate links have been added
     val shouldAppendDisclaimer = appendDisclaimer.getOrElse(linksToReplace.nonEmpty)
@@ -862,16 +922,15 @@ object AffiliateLinksCleaner {
     else html
   }
 
-  def replaceLinksInElement(html: String, pageUrl: String, contentType: String): TextBlockElement
-  = {
+  def replaceLinksInElement(html: String, pageUrl: String, contentType: String): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(html)
     val linksToReplace: mutable.Seq[Element] = getAffiliateableLinks(doc)
-    linksToReplace.foreach{el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId))}
+    linksToReplace.foreach { el => el.attr("href", linkToSkimLink(el.attr("href"), pageUrl, skimlinksId)) }
 
     if (linksToReplace.nonEmpty) {
-        TextBlockElement(doc.outerHtml())
+      TextBlockElement(doc.body().html())
     } else {
-        TextBlockElement(html)
+      TextBlockElement(html)
     }
   }
 
@@ -893,15 +952,22 @@ object AffiliateLinksCleaner {
   }
 
   def shouldAddAffiliateLinks(
-    switchedOn: Boolean,
-    section: String,
-    showAffiliateLinks: Option[Boolean],
-    supportedSections: Set[String],
-    defaultOffTags: Set[String],
-    alwaysOffTags: Set[String],
-    tagPaths: List[String]
+      switchedOn: Boolean,
+      section: String,
+      showAffiliateLinks: Option[Boolean],
+      supportedSections: Set[String],
+      defaultOffTags: Set[String],
+      alwaysOffTags: Set[String],
+      tagPaths: List[String],
+      firstPublishedDate: Option[DateTime],
   ): Boolean = {
-    if (!contentHasAlwaysOffTag(tagPaths, alwaysOffTags)) {
+    val publishedCutOffDate = new DateTime(2020, 8, 14, 0, 0)
+
+    // Never include affiliate links if it is tagged with an always off tag, or if it was published before our cut off
+    // date. The cut off date is temporary while we are working on improving the compliance of affiliate links
+    if (
+      !contentHasAlwaysOffTag(tagPaths, alwaysOffTags) && firstPublishedDate.exists(_.isBefore(publishedCutOffDate))
+    ) {
       if (showAffiliateLinks.isDefined) {
         showAffiliateLinks.contains(true)
       } else {

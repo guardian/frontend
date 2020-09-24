@@ -1,5 +1,11 @@
 # Apply the special report tone
 
+The Special Report tone can be added by central production by adding the required tag to the Special Tag Test Campaign in the Targeting Tool.
+
+## DEPRECATED
+
+*The following method is deprecated and replaced with the targeting tool method, but kept here for prosperity as existing tags still use the method.*
+
 Sometimes CP or someone from Editorial will ask us to apply the special report treatment to a tag.
 The following doc explains how to make that happen.
 
@@ -12,7 +18,7 @@ m = hashlib.md5()
 m.update("a-public-salt3W#ywHav!p+?r+W2$E6="+tag)
 print m.hexdigest()
 ```
-3. Add the generated hash to the facia-scala-client on this file and raise a PR against master
+3. Add the generated hash to the facia-scala-client on this file and raise a PR against `main`
 https://github.com/guardian/facia-scala-client/blame/48f90b6173c6409507a58e8046868f0d9e93ca06/fapi-client/src/main/scala/com/gu/facia/api/utils/CardStyle.scala#L52
 
 5. Merge the PR and release the library to Maven using sbt.

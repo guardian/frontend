@@ -8,16 +8,15 @@ import org.scalatest.concurrent.ScalaFutures
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, WithTestWsClient}
 
-
 @DoNotDiscover class NavigationTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient
-  with ScalaFutures {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient
+    with ScalaFutures {
 
   private case class TestPage(content: ContentType) extends ContentPage {
     override lazy val item = content
@@ -27,7 +26,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     override val metadata = MetaData.make(
       id = "",
       section = None,
-      webTitle = ""
+      webTitle = "",
     )
   }
 
@@ -37,27 +36,27 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/index/contributors`, the parent" should "be Opinion" in {
     val edition = Us
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/index/contributors", edition, root.children, root.otherLinks)
-    val maybeParent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val maybeParent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
 
-    maybeParent.map( p => p should be(usOpinionPillar) )
+    maybeParent.map(p => p should be(usOpinionPillar))
   }
 
   "On `/football`, the parent" should "be Sport" in {
     val edition = Au
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/football", edition, root.children, root.otherLinks)
-    val maybeParent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val maybeParent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
 
-    maybeParent.map( p => p should be(auSportPillar) )
+    maybeParent.map(p => p should be(auSportPillar))
   }
 
   "On `/football/tables`, the parent" should "be football, but the pillar should be Sport" in {
     val edition = Au
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/football/tables", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     parent.map(_ should be(football))
@@ -66,9 +65,10 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/environment/climate-change`, the parent" should "be environment, but the pillar should be News" in {
     val edition = Uk
-    val root =  NavMenu.navRoot(edition)
-    val maybeNavLink = NavMenu.findDescendantByUrl("/environment/climate-change", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val root = NavMenu.navRoot(edition)
+    val maybeNavLink =
+      NavMenu.findDescendantByUrl("/environment/climate-change", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     parent.map(_ should be(ukEnvironment))
@@ -77,9 +77,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/uk/scotland`, the parent" should "be Uk News, but the pillar should be News" in {
     val edition = Uk
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/uk/scotland", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     parent.map(_ should be(ukNews))
@@ -88,9 +88,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/money/work-and-careers`, the parent" should "be Money, but the pillar should be LifeStyle" in {
     val edition = Uk
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/money/work-and-careers", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     parent.map(_ should be(money))
@@ -99,9 +99,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/uk-news`, the subnav" should "have a parent, and children in the subnav" in {
     val edition = Uk
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/uk-news", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
@@ -110,9 +110,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/money/work-and-careers`, the subnav" should "have a parent, and children in the subnav" in {
     val edition = Uk
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/money/work-and-careers", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
@@ -121,9 +121,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
 
   "On `/culture`, the subnav" should "only have children, which are not tertiary" in {
     val edition = Au
-    val root =  NavMenu.navRoot(edition)
+    val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/culture", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
@@ -133,10 +133,10 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   "The section `Indigenous Australians`" should "still be in the pillar News in the Uk edition" in {
     val edition = Uk
     val root = NavMenu.navRoot(edition)
-    val maybeNavLink = NavMenu.findDescendantByUrl("/australia-news/indigenous-australians", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val maybeNavLink =
+      NavMenu.findDescendantByUrl("/australia-news/indigenous-australians", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
-
 
     pillar.map(_ should be(auNewsPillar))
   }
@@ -145,7 +145,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val edition = Us
     val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/au/lifeandstyle/fashion", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     pillar.map(_ should be(auLifestylePillar))
@@ -155,7 +155,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val edition = Uk
     val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/guardian-professional", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
 
     pillar should be(None)
@@ -165,7 +165,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val edition = Uk
     val root = NavMenu.navRoot(edition)
     val maybeNavLink = NavMenu.findDescendantByUrl("/crosswords", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
@@ -177,8 +177,9 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
   "On cryptic crosswords the parent" should "be crosswords, and the pillar should be None" in {
     val edition = International
     val root = NavMenu.navRoot(edition)
-    val maybeNavLink = NavMenu.findDescendantByUrl("/crosswords/series/cryptic", edition, root.children, root.otherLinks)
-    val parent = maybeNavLink.flatMap( link => NavMenu.findParent(link, edition, root.children, root.otherLinks) )
+    val maybeNavLink =
+      NavMenu.findDescendantByUrl("/crosswords/series/cryptic", edition, root.children, root.otherLinks)
+    val parent = maybeNavLink.flatMap(link => NavMenu.findParent(link, edition, root.children, root.otherLinks))
     val pillar = NavMenu.getPillar(parent, edition, root.children, root.otherLinks)
     val subnav = NavMenu.getSubnav(fakePage().metadata.customSignPosting, maybeNavLink, parent, pillar)
 
@@ -191,7 +192,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val edition = Uk
     val url = "/lifeandstyle/2018/aug/01/can-you-learn-to-cook-like-a-chef-by-watching-youtube"
     val response = testContentApiClient.getResponse(
-      testContentApiClient.item(url, edition)
+      testContentApiClient.item(url, edition),
     )
 
     whenReady(response) { item: ItemResponse =>
@@ -211,7 +212,7 @@ import test.{ConfiguredTestSuite, WithMaterializer, WithTestContentApiClient, Wi
     val edition = Au
     val url = "world/2017/dec/04/this-is-hell-behrouz-boochani-diaries-expose-australia-refugee-shame"
     val response = testContentApiClient.getResponse(
-      testContentApiClient.item(url, edition)
+      testContentApiClient.item(url, edition),
     )
 
     whenReady(response) { item: ItemResponse =>

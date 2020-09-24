@@ -9,10 +9,11 @@ import {
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { local } from 'lib/storage';
 import { getUrlVars } from 'lib/url';
+import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
@@ -37,10 +38,11 @@ type PageTargeting = {
     tn: string,
     slot: string,
     permutive: string,
+    urlkw: string,
 };
 
 let myPageTargetting: {} = {};
-let latestConsentState;
+let latestConsentCanRun;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -161,6 +163,15 @@ const getWhitelistedQueryParams = (): {} => {
     return pick(getUrlVars(), whiteList);
 };
 
+const getUrlKeywords = (pageId: string): Array<string> => {
+    if (pageId) {
+        const segments = pageId.split('/');
+        const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
+        return lastPathname.split('-');
+    }
+    return [];
+};
+
 const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     flattenDeep(
         Object.keys(obj)
@@ -201,8 +212,24 @@ const buildAppNexusTargeting = once(
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
+const getRdpValue = (ccpaState: boolean | null): string => {
+    if (ccpaState === null) {
+        return 'na';
+    }
+    return ccpaState ? 't' : 'f';
+};
+
+const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
+    if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
+        return tcfv2State ? 't' : 'f';
+    }
+    return 'na';
+};
+
 const buildPageTargetting = (
-    adConsentState: boolean | null
+    adConsentState: boolean | null,
+    ccpaState: boolean | null,
+    tcfv2EventStatus: string | null
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
@@ -235,15 +262,15 @@ const buildPageTargetting = (
                 config.get('isDotcomRendering', false) ||
                 config.get('page.dcrCouldRender', false)
                     ? 't'
-                    : 'f', // Indicates whether the page is DCR eligible. This happens when the page
+                    : 'f',
+            // Indicates whether the page is DCR eligible. This happens when the page
             // was DCR eligible and was actually rendered by DCR or
-            // was DCR eligible but rendered by frontend for a user not in the
-            // DotcomRenderingAdvertisements experiment
-            //
-            // This is introduced (Nov 2019) to be used as part of correctly
-            // validating ad performance on DCR (against DCR eligible pages)
-            // and can be decomissioned after Pascal and D&I no longer need the flag.
+            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
+            urlkw: getUrlKeywords(page.pageId),
+            rdp: getRdpValue(ccpaState),
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            cmp_interaction: tcfv2EventStatus || 'na',
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -271,13 +298,31 @@ const buildPageTargetting = (
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
-    onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
+    onConsentChange(state => {
+        let canRun: boolean | null;
+        if (state.ccpa) {
+            // CCPA mode
+            canRun = !state.ccpa.doNotSell;
+        } else if (state.tcfv2) {
+            // TCFv2 mode
+            canRun = state.tcfv2.consents
+                ? Object.keys(state.tcfv2.consents).length > 0 &&
+                  Object.values(state.tcfv2.consents).every(Boolean)
+                : false;
+        } else {
+            // TCFv1 mode
+            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
+        }
 
-        if (consentState !== latestConsentState) {
-            myPageTargetting = buildPageTargetting(consentState);
-            latestConsentState = consentState;
+        if (canRun !== latestConsentCanRun) {
+            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+            myPageTargetting = buildPageTargetting(
+                canRun,
+                ccpaState,
+                eventStatus
+            );
+            latestConsentCanRun = canRun;
         }
     });
 
@@ -286,7 +331,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
 
 const resetPageTargeting = (): void => {
     myPageTargetting = {};
-    latestConsentState = undefined;
+    latestConsentCanRun = undefined;
 };
 
 export {

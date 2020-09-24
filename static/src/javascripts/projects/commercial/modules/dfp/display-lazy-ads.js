@@ -4,7 +4,7 @@ import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const advertsToInstantlyLoad = ['dfp-ad--merchandising-high', 'dfp-ad--im'];
+const advertsToInstantlyLoad = ['dfp-ad--im'];
 
 const instantLoad = (): void => {
     const instantLoadAdverts = dfpEnv.advertsToLoad.filter(

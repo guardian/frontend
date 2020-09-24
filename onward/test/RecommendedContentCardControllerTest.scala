@@ -4,26 +4,27 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 import play.api.test.Helpers._
 
 @DoNotDiscover class RecommendedContentCardControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val article = "/world/2014/nov/18/hereford-hospital-patient-tested-for-ebola"
   val badPath = "/goes/absolutely-nowhere"
 
-  lazy val contentCardController = new RecommendedContentCardController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val contentCardController =
+    new RecommendedContentCardController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Content Card Controller" should "200 when the content is found" in {
-      val result = contentCardController.renderHtml(article)(TestRequest())
-      status(result) should be(200)
-      contentType(result) should be ("text/html")
-      val stringResult = contentAsString(result).trim
-      stringResult.startsWith("<div class")
+    val result = contentCardController.renderHtml(article)(TestRequest())
+    status(result) should be(200)
+    contentType(result) should be("text/html")
+    val stringResult = contentAsString(result).trim
+    stringResult.startsWith("<div class")
   }
 
   it should "return 404 when content is not found" in {

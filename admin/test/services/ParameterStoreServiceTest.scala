@@ -17,7 +17,7 @@ class ParameterStoreServiceTest extends FlatSpec with ScalaFutures with Matchers
     when(parameterStore.getPath("/frontend", isRecursiveSearch = true)) thenReturn Map(
       "key" -> "value",
       "some_test_key" -> "test_value",
-      "test" -> "last_value"
+      "test" -> "last_value",
     )
 
     val parameterStoreProvider = mock[ParameterStoreProvider]

@@ -1,21 +1,74 @@
 // @flow
-import {
-    onIabConsentNotification as onIabConsentNotification_,
-    onGuConsentNotification as onGuConsentNotification_,
-} from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
-
-const onIabConsentNotification: any = onIabConsentNotification_;
-const onGuConsentNotification: any = onGuConsentNotification_;
 
 const { insertScripts, loadOther } = _;
 
 jest.mock('lib/raven');
+
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
-    onGuConsentNotification: jest.fn(),
+    onConsentChange: jest.fn(),
 }));
+
+const onConsentChange: any = onConsentChange_;
+
+const tcfv2AllConsentMock = (callback): void =>
+    callback({
+        tcfv2: {
+            consents: {
+                '1': true,
+                '2': true,
+                '3': true,
+                '4': true,
+                '5': true,
+                '6': true,
+                '7': true,
+                '8': true,
+                '9': true,
+                '10': true,
+            },
+            vendorConsents: { '100': true, '200': true, '300': true },
+        },
+    });
+
+const tcfv2WithConsentMock = (callback): void =>
+    callback({
+        tcfv2: {
+            consents: {
+                '1': true,
+                '2': false,
+                '3': false,
+                '4': false,
+                '5': false,
+                '6': false,
+                '7': true,
+                '8': true,
+                '9': false,
+                '10': false,
+            },
+            vendorConsents: { '100': true, '200': false, '300': false },
+        },
+    });
+
+const tcfv2WithoutConsentMock = (callback): void =>
+    callback({
+        tcfv2: {
+            consents: {
+                '1': false,
+                '2': false,
+                '3': false,
+                '4': false,
+                '5': false,
+                '6': false,
+                '7': false,
+                '8': false,
+                '9': false,
+                '10': false,
+            },
+            vendorConsents: { '100': false, '200': false, '300': false },
+        },
+    });
 
 beforeEach(() => {
     const firstScript = document.createElement('script');
@@ -88,25 +141,46 @@ describe('third party tags', () => {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
+            sourcepointId: '100',
+        };
+        const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
+            shouldRun: true,
+            url: '//fakeThirdPartyAdvertisingTag2.js',
+            onLoad: jest.fn(),
+            sourcepointId: '300',
         };
         const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),
+            sourcepointId: '200',
         };
-        it('should add scripts to the document', () => {
-            _.reset();
-            onIabConsentNotification.mockImplementation(callback =>
-                callback({
-                    '1': true,
-                    '2': true,
-                    '3': true,
-                    '4': true,
-                    '5': true,
-                })
+
+        beforeEach(() => {
+            fakeThirdPartyAdvertisingTag.loaded = undefined;
+            fakeThirdPartyAdvertisingTag2.loaded = undefined;
+            fakeThirdPartyPerformanceTag.loaded = undefined;
+        });
+
+        it('should add scripts to the document when TCFv2 consent has been given', () => {
+            onConsentChange.mockImplementation(tcfv2AllConsentMock);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag],
+                [fakeThirdPartyPerformanceTag]
             );
-            onGuConsentNotification.mockImplementation((state, callback) =>
-                callback(true)
+            expect(document.scripts.length).toBe(3);
+        });
+        it('should only add performance scripts to the document when TCFv2 consent has not been given', () => {
+            onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag],
+                [fakeThirdPartyPerformanceTag]
+            );
+            expect(document.scripts.length).toBe(2);
+        });
+        it('should add scripts to the document when CCPA consent has been given', () => {
+            onConsentChange.mockImplementation(callback =>
+                callback({ ccpa: { doNotSell: false } })
             );
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
@@ -114,23 +188,44 @@ describe('third party tags', () => {
             );
             expect(document.scripts.length).toBe(3);
         });
-        it('should not add scripts to the document', () => {
-            _.reset();
-            onIabConsentNotification.mockImplementation(callback =>
-                callback({
-                    '1': false,
-                    '2': false,
-                    '3': false,
-                    '4': false,
-                    '5': false,
-                })
-            );
-            onGuConsentNotification.mockImplementation((state, callback) =>
-                callback(false)
+        it('should only add performance scripts to the document when CCPA consent has not been given', () => {
+            onConsentChange.mockImplementation(callback =>
+                callback({ ccpa: { doNotSell: true } })
             );
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
+            );
+            expect(document.scripts.length).toBe(2);
+        });
+
+        it('should only add consented custom vendors to the document for TCFv2', () => {
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
+                []
+            );
+            expect(document.scripts.length).toBe(2);
+        });
+
+        it('should not add already loaded tags ', () => {
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
+                []
+            );
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
+                []
+            );
+            expect(document.scripts.length).toBe(2);
+        });
+
+        it('should not add scripts to the document when TCFv2 consent has not been given', () => {
+            onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            insertScripts(
+                [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
+                []
             );
             expect(document.scripts.length).toBe(1);
         });

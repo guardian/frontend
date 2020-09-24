@@ -14,7 +14,7 @@ package object layout {
     const(FullMedia75),
     const(FullMedia50),
     const(Third),
-    const(FullMedia100)
+    const(FullMedia100),
   )
 
   val itemLayoutGen = for {

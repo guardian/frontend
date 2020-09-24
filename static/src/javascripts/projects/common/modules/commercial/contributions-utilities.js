@@ -33,11 +33,11 @@ import { epicButtonsTemplate } from 'common/modules/commercial/templates/acquisi
 import { acquisitionsEpicControlTemplate } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { epicLiveBlogTemplate } from 'common/modules/commercial/templates/acquisitions-epic-liveblog';
 import { epicArticlesViewedOptOutTemplate } from 'common/modules/commercial/templates/epic-articles-viewed-opt-out-template';
-import { optOutEnabled, userIsInArticlesViewedOptOutTest, setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
+import { setupArticlesViewedOptOut, onEpicViewed } from 'common/modules/commercial/epic-articles-viewed-opt-out';
 import {
     shouldHideSupportMessaging,
     isPostAskPauseOneOffContributor,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
+    ARTICLES_VIEWED_OPT_OUT_COOKIE
 } from 'common/modules/commercial/user-features';
 import {
     supportContributeURL,
@@ -55,28 +55,31 @@ import {
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
 import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
-import { initTicker } from 'common/modules/commercial/ticker';
+import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
     epicReminderEmailSignup,
     getFields,
 } from 'common/modules/commercial/epic-reminder-email-signup';
-import {getCookie} from "lib/cookies";
+import {getCookie} from 'lib/cookies';
 
 export type ReaderRevenueRegion =
     | 'united-kingdom'
     | 'united-states'
     | 'australia'
+    | 'european-union'
     | 'rest-of-world';
 
 const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
-    switch (geolocation) {
-        case 'GB':
+    switch (true) {
+        case geolocation === 'GB':
             return 'united-kingdom';
-        case 'US':
+        case geolocation === 'US':
             return 'united-states';
-        case 'AU':
+        case geolocation === 'AU':
             return 'australia';
+        case  countryCodeToCountryGroupId(geolocation) === 'EURCountries':
+            return 'european-union';
         default:
             return 'rest-of-world';
     }
@@ -90,14 +93,9 @@ const replaceCountryName = (text: string, countryName: ?string): string =>
 const replaceArticlesViewed = (text: string, count: ?number): string => {
     if (count) {
         const countValue = count;   // Flow gets confused about the value in count if we don't reassign to another const
-        // A/B test the opt-out feature if the switch is enabled
-        if (optOutEnabled() && userIsInArticlesViewedOptOutTest()) {
-            return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
-                epicArticlesViewedOptOutTemplate(countValue, nextWord)
-            );
-        }
-
-        return text.replace(/%%ARTICLE_COUNT%%/g, `<span class="epic-article-count__normal">${count.toString()}<span>`)
+        return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
+            epicArticlesViewedOptOutTemplate(countValue, nextWord)
+        );
     }
     return text;
 };
@@ -128,7 +126,7 @@ const controlTemplate: EpicTemplate = (
               )
             : undefined,
         epicClassNames: variant.classNames,
-        showTicker: variant.showTicker,
+        showTicker: variant.showTicker || !!variant.tickerSettings,
         showReminderFields: variant.showReminderFields,
         backgroundImageUrl: variant.backgroundImageUrl,
     });
@@ -269,43 +267,64 @@ const emitBeginEvent = (trackingCampaignId: string) => {
     mediator.emit('register:begin', trackingCampaignId);
 };
 
-const emitInsertEvent = (
-    parentTest: EpicABTest,
+const submitOphanInsert = (
+    testId: string,
+    variantId: string,
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: ?string
+    campaignCode: string
 ) => {
-    mediator.emit(parentTest.insertEvent, {
-        componentType: parentTest.componentType,
-        products,
-        campaignCode: campaignCode || '',
+    submitInsertEvent({
+        component: {
+            componentType,
+            products,
+            campaignCode,
+            id: campaignCode,
+        },
+        abTest: {
+            name: testId,
+            variant: variantId,
+        },
     });
 };
 
-const setupOnView = (
+const setupOphanView = (
     element: HTMLElement,
-    parentTest: EpicABTest,
-    campaignCode: ?string,
+    viewEvent: string,
+    testId: string,
+    variantId: string,
+    campaignCode: string,
     trackingCampaignId: string,
+    componentType: OphanComponentType,
     products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false
+    showTicker: boolean = false,
+    tickerSettings: ?TickerSettings,
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
     });
 
     inView.on('firstview', () => {
-        logView(parentTest.id);
+        logView(testId);
 
-        mediator.emit(parentTest.viewEvent, {
-            componentType: parentTest.componentType,
-            products,
-            campaignCode,
-        });
+        submitViewEvent({
+                component: {
+                    componentType,
+                    products,
+                    campaignCode,
+                    id: campaignCode,
+                },
+                abTest: {
+                    name: testId,
+                    variant: variantId,
+                }
+            }
+        );
 
         mediator.emit('register:end', trackingCampaignId);
 
-        if (showTicker) {
-            initTicker('.js-epic-ticker');
+        if (showTicker || !!tickerSettings) {
+            initTicker('.js-epic-ticker', tickerSettings);
         }
 
         if (config.get('switches.showContributionReminder')) {
@@ -320,21 +339,22 @@ const setupOnView = (
 };
 
 const setupClickHandling = (
-    parentTest: EpicABTest,
+    testId: string,
+    variantId: string,
+    componentType: OphanComponentType,
     campaignCode: ?string,
     products: $ReadOnlyArray<OphanProduct>,
-    variantId: string
 ) => {
     awaitEpicButtonClicked().then(() =>
         submitClickEvent({
             component: {
-                componentType: parentTest.componentType,
+                componentType,
                 products,
                 campaignCode: campaignCode || '',
                 id: campaignCode || '',
             },
             abTest: {
-                name: parentTest.id,
+                name: testId,
                 variant: variantId,
             },
         })
@@ -358,6 +378,20 @@ const makeEpicABTestVariant = (
         initVariant.id
     );
 
+    const addTrackingAndCountryGroupToCta = (cta: EpicCta): EpicCta => ({
+        url: addTrackingCodesToUrl({
+            base: addCountryGroupToSupportLink(cta.url),
+            componentType: parentTest.componentType,
+            componentId,
+            campaignCode,
+            abTest: {
+                name: parentTest.id,
+                variant: initVariant.id,
+            },
+        }),
+        ctaText: cta.ctaText,
+    });
+
     return {
         id: initVariant.id,
         componentName: `mem_acquisition_${trackingCampaignId}_${
@@ -379,10 +413,11 @@ const makeEpicABTestVariant = (
         template: initVariant.template || parentTemplate,
         buttonTemplate: initVariant.buttonTemplate,
         ctaText: initVariant.ctaText,
-        secondaryCta: initVariant.secondaryCta,
+        secondaryCta: initVariant.secondaryCta && addTrackingAndCountryGroupToCta(initVariant.secondaryCta),
         copy: initVariant.copy,
         classNames: initVariant.classNames || [],
         showTicker: initVariant.showTicker || false,
+        tickerSettings: initVariant.tickerSettings,
         showReminderFields: initVariant.showReminderFields || false,
         backgroundImageUrl: initVariant.backgroundImageUrl,
 
@@ -473,31 +508,38 @@ const makeEpicABTestVariant = (
                             const targets = getTargets('.submeta');
 
                             setupClickHandling(
-                                parentTest,
+                                parentTest.id,
+                                initVariant.id,
+                                parentTest.componentType,
                                 campaignCode,
                                 initVariant.products,
-                                initVariant.id
                             );
 
                             if (targets.length > 0) {
                                 component.insertBefore(targets);
 
-                                emitInsertEvent(
-                                    parentTest,
+                                submitOphanInsert(
+                                    parentTest.id,
+                                    initVariant.id,
+                                    parentTest.componentType,
                                     initVariant.products,
-                                    campaignCode
+                                    campaignCode,
                                 );
 
                                 component.each(element => {
                                     setupArticlesViewedOptOut();
 
-                                    setupOnView(
+                                    setupOphanView(
                                         element,
-                                        parentTest,
+                                        parentTest.viewEvent,
+                                        parentTest.id,
+                                        initVariant.id,
                                         campaignCode,
                                         trackingCampaignId,
+                                        parentTest.componentType,
                                         initVariant.products,
-                                        initVariant.showTicker
+                                        initVariant.showTicker,
+                                        initVariant.tickerSettings,
                                     );
                                 });
                             }
@@ -507,39 +549,6 @@ const makeEpicABTestVariant = (
                     }
                 });
         },
-        impression: submitABTestImpression =>
-            mediator.once(parentTest.insertEvent, () => {
-                submitInsertEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products: initVariant.products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: initVariant.id,
-                    },
-                });
-
-                submitABTestImpression();
-            }),
-        success: submitABTestComplete =>
-            mediator.once(parentTest.viewEvent, () => {
-                submitViewEvent({
-                    component: {
-                        componentType: parentTest.componentType,
-                        products: initVariant.products,
-                        campaignCode,
-                        id: campaignCode,
-                    },
-                    abTest: {
-                        name: parentTest.id,
-                        variant: initVariant.id,
-                    },
-                });
-                submitABTestComplete();
-            }),
     };
 };
 
@@ -771,6 +780,7 @@ export const buildConfiguredEpicTestFromJson = (
                 `contributions__epic--${test.name}-${variant.name}`,
             ],
             showTicker: variant.showTicker,
+            tickerSettings: variant.tickerSettings ? parseTickerSettings(variant.tickerSettings) : null,
             showReminderFields: variant.showReminderFields,
             backgroundImageUrl: filterEmptyString(variant.backgroundImageUrl),
             // TODO - why are these fields at the variant level?
@@ -966,10 +976,11 @@ export {
     getVisitCount,
     buildEpicCopy,
     buildBannerCopy,
-    setupOnView,
     emitBeginEvent,
+    submitOphanInsert,
+    setupOphanView,
     setupClickHandling,
-    emitInsertEvent,
     isCompatibleWithLiveBlogEpic,
     replaceArticlesViewed,
+    makeEvent,
 };

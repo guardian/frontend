@@ -8,8 +8,20 @@ import {
     isInABTestSynchronous,
 } from 'common/modules/experiments/ab';
 import { isUserLoggedIn } from 'common/modules/identity/api';
+import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
-import type { CurrentABTest } from './types';
+import type { CurrentABTest, GateStatus, DismissalWindow } from './types';
+
+// Helper for setGatePageTargeting function
+const setGoogleTargeting = (canShow: GateStatus): void => {
+    if (window.googletag) {
+        window.googletag.cmd.push(() => {
+            window.googletag
+                .pubads()
+                .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice to "t"/"f"/"d"/"s"
+        });
+    }
+};
 
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;
@@ -37,6 +49,26 @@ export const getVariant: ABTest => string = test => {
     return currentTest ? currentTest.variantToRun.id : '';
 };
 
+// set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
+// name is optional, but can be used to differentiate between multiple sign in gate tests
+export const setUserDismissedGate: ({
+    name?: string,
+    variant: string,
+    componentName: string,
+}) => void = ({ name = '', variant, componentName }) => {
+    const prefs = userPrefs.get(componentName) || {};
+    prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
+    userPrefs.set(componentName, prefs);
+};
+
+// delete from user preferences that the user has previously dismissed the gate
+// name is optional, but can be used to differentiate between multiple sign in gate tests
+export const unsetUserDismissedGate: ({
+    componentName: string,
+}) => void = ({ componentName }) => {
+    userPrefs.remove(componentName);
+};
+
 // check if the user has dismissed the gate by checking the user preferences,
 // name is optional, but can be used to differentiate between multiple sign in gate tests
 export const hasUserDismissedGate: ({
@@ -49,16 +81,48 @@ export const hasUserDismissedGate: ({
     return !!prefs[`${name ? `${name}-` : ''}${variant}`];
 };
 
-// set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
-// name is optional, but can be used to differentiate between multiple sign in gate tests
-export const setUserDismissedGate: ({
+// check if the user has dismissed the gate within a given timeframe
+export const hasUserDismissedGateInWindow: ({
+    window: DismissalWindow,
     name?: string,
     variant: string,
     componentName: string,
-}) => void = ({ name = '', variant, componentName }) => {
+}) => boolean = ({ window, name = '', componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
-    prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
-    userPrefs.set(componentName, prefs);
+    if (!prefs[`${name ? `${name}-` : ''}${variant}`]) {
+        return false;
+    }
+
+    const dismissalTZ = Date.parse(
+        prefs[`${name ? `${name}-` : ''}${variant}`]
+    );
+
+    const dismissalWindows = {
+        day: 24,
+        dev: 0.05, // 3 min for testing
+    };
+    const hours = (Date.now() - dismissalTZ) / 36e5; //  36e5 is the scientific notation for 60*60*1000, which converts the milliseconds difference into hours.
+
+    if (hours >= dismissalWindows[window]) {
+        unsetUserDismissedGate({ componentName }); // clears the dismissal
+        return false;
+    }
+
+    return true;
+};
+
+// Dynamically sets the gate custom parameter for Google ad request page targeting
+export const setGatePageTargeting = (
+    isGateDismissed: boolean,
+    canShowCheck: boolean
+): void => {
+    if (isUserLoggedIn()) {
+        setGoogleTargeting('signed in');
+    } else if (isGateDismissed) {
+        setGoogleTargeting('dismissed');
+    } else {
+        setGoogleTargeting(canShowCheck);
+    }
 };
 
 // use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day
@@ -72,6 +136,19 @@ export const isNPageOrHigherPageView = (n: number = 2): boolean => {
 
     // check if count is greater or equal to 1 less than n since dailyArticleCount is incremented after this component is loaded
     return count >= n - 1;
+};
+
+// determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
+export const isIOS9 = (): boolean => {
+    // get the browser user agent
+    const ua = navigator.userAgent;
+    // check useragent if the device is an iOS device
+    const appleDevice = /(iPhone|iPod|iPad)/i.test(ua);
+    // check useragent if the os is version 9
+    const os = /(CPU OS 9_)/i.test(ua);
+
+    // if both true, then it's an apple ios 9 device
+    return appleDevice && os;
 };
 
 // hide the sign in gate on article types that are not supported
@@ -90,6 +167,7 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
         'isPhotoEssay',
         'isSensitive',
         'isSplash',
+        'isPodcast',
     ];
 
     return invalidTypes
@@ -104,13 +182,21 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
 // hide the sign in gate on certain sections of the site, e.g info, about, help etc.
 // add to the include parameter array if there are specific types that should be included/overridden
 export const isInvalidSection = (include: Array<string> = []): boolean => {
-    const invalidSections = ['about', 'info', 'membership', 'help'];
+    const invalidSections = [
+        'about',
+        'info',
+        'membership',
+        'help',
+        'guardian-live-australia',
+        'gnm-archive',
+    ];
 
     return invalidSections
         .filter(el => !include.includes(el))
         .reduce((isSectionInvalid, section) => {
             if (isSectionInvalid) return true;
 
+            // looks up window.guardian.config object in the browser console
             return config.get(`page.section`) === section;
         }, false);
 };
@@ -155,6 +241,27 @@ export const addClickHandler: ({
             return callback();
         },
     });
+};
+
+// shows the CMP (consent management platform) module
+export const showPrivacySettingsCMPModule: () => void = () => {
+    if (config.get('switches.consentManagement', true)) {
+        cmp.showPrivacyManager();
+    }
+};
+
+// add extra css on a given selector on an opinion page
+export const addCSSOnOpinion: ({
+    element: HTMLElement,
+    selector: string,
+    css: string,
+}) => void = ({ element, selector, css }) => {
+    if (config.get(`page.tones`) === 'Comment') {
+        const selection = element.querySelector(selector);
+        if (selection) {
+            selection.classList.add(css);
+        }
+    }
 };
 
 // add the background color if the page the user is on is the opinion section
@@ -223,6 +330,32 @@ export const setTemplate: ({
     ${template}
 `;
 
+// add opinion bg colour to gate fade
+export const addOverlayVariantCSS: ({
+    element: HTMLElement,
+    selector: string,
+}) => void = ({ element, selector }) => {
+    const overlay = element.querySelector(selector);
+    if (overlay) {
+        if (config.get(`page.tones`) === 'Comment') {
+            overlay.classList.add('overlay--comment--var');
+        } else {
+            overlay.classList.add('overlay--var');
+        }
+    }
+};
+
+// helper method to fix the border on the faqlinks bg colour
+export const gateBorderFix = () => {
+    const contentMainColumn = document.querySelector('.js-content-main-column');
+
+    if (contentMainColumn) {
+        contentMainColumn.classList.add(
+            'signin-gate__content-main-column__border-fix'
+        );
+    }
+};
+
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function
 export const showGate: ({
@@ -257,7 +390,9 @@ export const showGate: ({
                 articleBody.children.length > 1
             ) {
                 // find the indexes of the articles "p" tag, to include in the sign in gate fade
-                const pIndexes = Array.from(articleBody.children).map((elem, idx) => elem.tagName === "P" ? idx : '').filter(i => i !== '');
+                const pIndexes = Array.from(articleBody.children)
+                    .map((elem, idx) => (elem.tagName === 'P' ? idx : ''))
+                    .filter(i => i !== '');
 
                 // found some "p" tags, add the first "p" to the fade
                 if (pIndexes.length > 1) {

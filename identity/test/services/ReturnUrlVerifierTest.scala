@@ -41,18 +41,28 @@ class ReturnUrlVerifierTest extends FunSuite with Matchers with WithTestIdConfig
   }
 
   test("gets a valid returnUrl parameter from the request") {
-    val request = FakeRequest("GET", "http://example.com?returnUrl=http%3A%2F%2Fsub." + domain + "%2Ftest", FakeHeaders(), AnyContentAsEmpty)
+    val request = FakeRequest(
+      "GET",
+      "http://example.com?returnUrl=http%3A%2F%2Fsub." + domain + "%2Ftest",
+      FakeHeaders(),
+      AnyContentAsEmpty,
+    )
     validator.getVerifiedReturnUrl(request) should equal(Some("http://sub." + domain + "/test"))
   }
 
   test("rejects an invalid returnUrl parameter from the request") {
-    val request = FakeRequest("GET", "http://example.com?returnUrl=http%3A%2F%2Fsub.invalid.com%2Ftest", FakeHeaders(), AnyContentAsEmpty)
+    val request = FakeRequest(
+      "GET",
+      "http://example.com?returnUrl=http%3A%2F%2Fsub.invalid.com%2Ftest",
+      FakeHeaders(),
+      AnyContentAsEmpty,
+    )
     validator.getVerifiedReturnUrl(request) should equal(None)
   }
 
   test("does not allow script injection") {
     val returnUrl = "https://sub." + domain + "/dlfksa<script>"
     validator.hasVerifiedReturnUrl(returnUrl) should equal(false)
-    validator.getVerifiedReturnUrl(Some(returnUrl)) should be (None)
+    validator.getVerifiedReturnUrl(Some(returnUrl)) should be(None)
   }
 }

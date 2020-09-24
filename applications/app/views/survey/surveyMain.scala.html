@@ -15,6 +15,9 @@
         @* get the stylesheets downloading ASAP *@
         @fragments.stylesheets(projectName=Option("survey"))
 
+        @fragments.page.head.fixIEReferenceErrors()
+        @fragments.page.head.checkModuleSupport()
+
         @* polyfill, feature detect etc before we try and use the stylesheets *@
         @fragments.inlineJSBlocking()(surveyPage, request, context)
 

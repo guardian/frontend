@@ -11,20 +11,20 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 import scala.concurrent.Future
 
-class DiscussionClientTest extends AsyncFlatSpec
-                               with MockitoSugar {
+class DiscussionClientTest extends AsyncFlatSpec with MockitoSugar {
 
-  private def buildFixtures() = new {
-    val configMock = mock[IdentityConfiguration]
-    val wsClientMock = mock[WSClient]
-    val wsRequestMock = mock[WSRequest]
-    val wsResponseMock = mock[WSResponse]
+  private def buildFixtures() =
+    new {
+      val configMock = mock[IdentityConfiguration]
+      val wsClientMock = mock[WSClient]
+      val wsRequestMock = mock[WSRequest]
+      val wsResponseMock = mock[WSResponse]
 
-    val dapiApiUrl = "https://dapimock.com"
-    val testUserId = "10000001"
+      val dapiApiUrl = "https://dapimock.com"
+      val testUserId = "10000001"
 
-    val valid404Response =
-      """
+      val valid404Response =
+        """
         |{
         |  "status": "error",
         |  "statusCode": 404,
@@ -33,31 +33,30 @@ class DiscussionClientTest extends AsyncFlatSpec
         |}
     """.stripMargin
 
-    val profileStats =
-      """
+      val profileStats =
+        """
         |{
         |  "status": "ok",
         |  "comments": 10,
         |  "pickedComments": 1
         |}
       """.stripMargin
-    val expectedProfileStats = DiscussionProfileStats("ok", 10, 1)
+      val expectedProfileStats = DiscussionProfileStats("ok", 10, 1)
 
-    val userProfile =
-      """{
+      val userProfile =
+        """{
         |  "status": "ok",
         |  "userProfile": {
         |    "userId": "10000001",
         |    "displayName": "displayName"
         |  }
         |}""".stripMargin
-    val expectedProfile = DiscussionProfileResponse("ok", DiscussionProfile(testUserId, "displayName"))
+      val expectedProfile = DiscussionProfileResponse("ok", DiscussionProfile(testUserId, "displayName"))
 
-
-    when(configMock.discussionApiUrl).thenReturn(dapiApiUrl)
-    when(wsRequestMock.withRequestTimeout(any())).thenReturn(wsRequestMock)
-    when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
-  }
+      when(configMock.discussionApiUrl).thenReturn(dapiApiUrl)
+      when(wsRequestMock.withRequestTimeout(any())).thenReturn(wsRequestMock)
+      when(wsRequestMock.get()).thenReturn(Future.successful(wsResponseMock))
+    }
 
   "findProfileStats" should "return user profile stats" in {
     val fixtures = buildFixtures()

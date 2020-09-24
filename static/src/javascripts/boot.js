@@ -9,6 +9,9 @@ import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
+import { cmp } from '@guardian/consent-management-platform';
+import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
+import { getCookie } from 'lib/cookies';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -27,6 +30,14 @@ const go = () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
+
+        // Start CMP
+        // CCPA and TCFv2
+        const browserId: ?string = getCookie('bwid');
+        const pubData: { browserId?: string } | void = browserId
+            ? { browserId }
+            : undefined;
+        cmp.init({ pubData, isInUsa: isInUsa() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {

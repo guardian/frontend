@@ -23,14 +23,16 @@ import test._
 
 import scala.concurrent.Future
 
-@DoNotDiscover class ConsentsJourneyControllerTest extends WordSpec with WithTestExecutionContext
-  with Matchers
-  with MockitoSugar
-  with OptionValues
-  with ScalaFutures
-  with WithTestApplicationContext
-  with WithTestCSRF
-  with ConfiguredServer {
+@DoNotDiscover class ConsentsJourneyControllerTest
+    extends WordSpec
+    with WithTestExecutionContext
+    with Matchers
+    with MockitoSugar
+    with OptionValues
+    with ScalaFutures
+    with WithTestApplicationContext
+    with WithTestCSRF
+    with ConfiguredServer {
 
   trait ConsentsJourneyFixture {
 
@@ -51,13 +53,19 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
+    val authenticatedActions = new AuthenticatedActions(
+      authService,
+      api,
+      mock[IdentityUrlBuilder],
+      controllerComponent,
+      newsletterService,
+      idRequestParser,
+    )
 
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
-      new ProfileMapping
     )
 
     when(authService.fullyAuthenticatedUser(any[RequestHeader])) thenReturn Some(authenticatedUser)
@@ -69,7 +77,9 @@ import scala.concurrent.Future
 
     when(returnUrlVerifier.defaultReturnUrl) thenReturn "http://1234.67"
     when(returnUrlVerifier.getVerifiedReturnUrl(any[RequestHeader])) thenReturn None
-    when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")), "subscribed")))
+    when(api.userEmails(anyString(), any[TrackingData])) thenReturn Future.successful(
+      Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
+    )
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -84,7 +94,7 @@ import scala.concurrent.Future
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
-      controllerComponent
+      controllerComponent,
     )
   }
 
@@ -95,38 +105,42 @@ import scala.concurrent.Future
       "have a js fallback" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("consents : navigation : submit-force")
-        contentAsString(result) should include ("noscript")
-        contentAsString(result) should include ("identity-forms-loading--hide-text")
+        contentAsString(result) should include("consents : navigation : submit-force")
+        contentAsString(result) should include("noscript")
+        contentAsString(result) should include("identity-forms-loading--hide-text")
       }
 
       "send a csrf token and a return url" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("name=\"csrfToken\"")
-        contentAsString(result) should include ("name=\"returnUrl\"")
+        contentAsString(result) should include("name=\"csrfToken\"")
+        contentAsString(result) should include("name=\"returnUrl\"")
       }
 
       "have a normal submit button" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("consents : navigation : submit\"")
+        contentAsString(result) should include("consents : navigation : submit\"")
       }
 
       "contain the legal age disclaimer" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("older than 13 years")
+        contentAsString(result) should include("older than 13 years")
       }
 
       "show an alert modal for non rp'd users" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("identity-consent-journey--with-alert")
+        contentAsString(result) should include("identity-consent-journey--with-alert")
       }
 
       "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
-        override val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+        override val user = User(
+          "test@example.com",
+          userId,
+          statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
+        )
         override val testAuth = ScGuU("abc")
         override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
         when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
@@ -139,12 +153,12 @@ import scala.concurrent.Future
 
       "set a repermission flag on submit" in new ConsentsJourneyFixture {
         val updatedUser = user.copy(
-          statusFields = StatusFields(hasRepermissioned = Some(true))
+          statusFields = StatusFields(hasRepermissioned = Some(true)),
         )
 
         val fakeRequest = FakeCSRFRequest(csrfAddToken)
           .withFormUrlEncodedBody(
-            "returnUrl" -> returnUrlVerifier.defaultReturnUrl
+            "returnUrl" -> returnUrlVerifier.defaultReturnUrl,
           )
 
         when(api.saveUser(any[String], any[UserUpdateDTO], any[Auth]))
@@ -161,31 +175,29 @@ import scala.concurrent.Future
 
     }
 
-
     "using displayConsentsJourney" should {
 
       "have consent checkboxes" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
+        contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
       }
 
     }
-
 
     "using displayConsentsJourneyThankYou" should {
 
       "thank you" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include ("form__success")
-        contentAsString(result) should include ("Thank you")
+        contentAsString(result) should include("form__success")
+        contentAsString(result) should include("Thank you")
       }
 
       "have consent checkboxes" in new ConsentsJourneyFixture {
         val result = controller.displayConsentsJourneyThankYou().apply(FakeCSRFRequest(csrfAddToken))
         status(result) should be(200)
-        contentAsString(result) should include (xml.Utility.escape(Supporter.latestWording.wording))
+        contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
       }
 
     }

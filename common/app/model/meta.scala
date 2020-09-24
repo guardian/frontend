@@ -27,36 +27,35 @@ import scala.util.matching.Regex
 object Commercial {
 
   def make(tags: Tags, apiContent: CapiContent): model.Commercial = {
-    val isInappropriateForSponsorship: Boolean = apiContent.fields.exists(_.isInappropriateForSponsorship.contains(true))
+    val isInappropriateForSponsorship: Boolean =
+      apiContent.fields.exists(_.isInappropriateForSponsorship.contains(true))
 
     model.Commercial(
       isInappropriateForSponsorship,
-      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags)
+      hasInlineMerchandise = DfpAgent.hasInlineMerchandise(tags.tags),
     )
   }
 
   val empty: model.Commercial = {
     model.Commercial(
       isInappropriateForSponsorship = false,
-      hasInlineMerchandise = false
+      hasInlineMerchandise = false,
     )
   }
 }
 
-final case class Commercial(
-  isInappropriateForSponsorship: Boolean,
-  hasInlineMerchandise: Boolean)
+final case class Commercial(isInappropriateForSponsorship: Boolean, hasInlineMerchandise: Boolean)
 
 /**
- * MetaData represents a page on the site, whether facia or content
- */
+  * MetaData represents a page on the site, whether facia or content
+  */
 object Fields {
   // This is the time from which journalists start using the reader revenue flag in Composer.
   // For content published before then, we need handle it as we did before, taking
   // the sensitive flag to mean "don't display reader revenue asks"
   private val shouldHideReaderRevenueCutoffDate = new DateTime("2017-07-10T12:00:00.000Z")
   def make(apiContent: contentapi.Content): Fields = {
-    Fields (
+    Fields(
       trailText = apiContent.fields.flatMap(_.trailText),
       linkText = apiContent.webTitle,
       shortUrl = apiContent.fields.flatMap(_.shortUrl).getOrElse(""),
@@ -72,7 +71,7 @@ object Fields {
       legallySensitive = apiContent.fields.flatMap(_.legallySensitive),
       firstPublicationDate = apiContent.fields.flatMap(_.firstPublicationDate).map(_.toJoda),
       lang = apiContent.fields.flatMap(_.lang),
-      showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks)
+      showAffiliateLinks = apiContent.fields.flatMap(_.showAffiliateLinks),
     )
   }
 
@@ -83,44 +82,42 @@ object Fields {
     val shouldHideAdverts = apiContent.fields.flatMap(_.shouldHideAdverts).getOrElse(false)
 
     apiContent.fields.flatMap(_.shouldHideReaderRevenue) match {
-      case _ if isPaidContent => true
-      case Some(shouldHide) => shouldHide
+      case _ if isPaidContent            => true
+      case Some(shouldHide)              => shouldHide
       case None if publishedBeforeCutoff => isSensitive || shouldHideAdverts
-      case None => false
+      case None                          => false
     }
   }
 
-  implicit val fieldsWrites: Writes[Fields] =  Json.writes[Fields]
+  implicit val fieldsWrites: Writes[Fields] = Json.writes[Fields]
 }
 
 final case class Fields(
-  trailText: Option[String],
-  linkText: String,
-  shortUrl: String,
-  standfirst: Option[String],
-  main: String,
-  body: String,
-  blocks: Option[Blocks],
-  lastModified: DateTime,
-  displayHint: String,
-  isLive: Boolean,
-  sensitive: Option[Boolean],
-  shouldHideReaderRevenue: Option[Boolean],
-  legallySensitive: Option[Boolean],
-  firstPublicationDate: Option[DateTime],
-  lang: Option[String],
-  showAffiliateLinks: Option[Boolean]
-){
+    trailText: Option[String],
+    linkText: String,
+    shortUrl: String,
+    standfirst: Option[String],
+    main: String,
+    body: String,
+    blocks: Option[Blocks],
+    lastModified: DateTime,
+    displayHint: String,
+    isLive: Boolean,
+    sensitive: Option[Boolean],
+    shouldHideReaderRevenue: Option[Boolean],
+    legallySensitive: Option[Boolean],
+    firstPublicationDate: Option[DateTime],
+    lang: Option[String],
+    showAffiliateLinks: Option[Boolean],
+) {
   lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")
-
-
 
   def javascriptConfig: Map[String, JsValue] = {
     Map(
       "shortUrl" -> JsString(shortUrl),
       "shortUrlId" -> JsString(shortUrlId),
-      "shouldHideReaderRevenue" -> JsBoolean(shouldHideReaderRevenue.getOrElse(false))
+      "shouldHideReaderRevenue" -> JsBoolean(shouldHideReaderRevenue.getOrElse(false)),
     )
   }
 }
@@ -128,29 +125,29 @@ final case class Fields(
 object MetaData {
 
   def make(
-    id: String,
-    section: Option[SectionId],
-    webTitle: String,
-    url: Option[String] = None,
-    canonicalUrl: Option[String] = None,
-    pillar: Option[Pillar] = None,
-    designType: Option[DesignType] = None,
-    shouldGoogleIndex: Boolean = true,
-    pagination: Option[Pagination] = None,
-    description: Option[String] = None,
-    title: Option[String] = None,
-    isFront: Boolean = false,
-    isPressedPage: Boolean = false,
-    contentType: Option[DotcomContentType] = None,
-    adUnitSuffix: Option[String] = None,
-    customSignPosting: Option[NavItem] = None,
-    iosType: Option[String] = Some(DotcomContentType.Article.toString),
-    javascriptConfigOverrides: Map[String, JsValue] = Map(),
-    opengraphPropertiesOverrides: Map[String, String] = Map(),
-    isHosted: Boolean = false,
-    twitterPropertiesOverrides: Map[String, String] = Map(),
-    commercial: Option[CommercialProperties] = None,
-    isFoundation: Boolean = false
+      id: String,
+      section: Option[SectionId],
+      webTitle: String,
+      url: Option[String] = None,
+      canonicalUrl: Option[String] = None,
+      pillar: Option[Pillar] = None,
+      designType: Option[DesignType] = None,
+      shouldGoogleIndex: Boolean = true,
+      pagination: Option[Pagination] = None,
+      description: Option[String] = None,
+      title: Option[String] = None,
+      isFront: Boolean = false,
+      isPressedPage: Boolean = false,
+      contentType: Option[DotcomContentType] = None,
+      adUnitSuffix: Option[String] = None,
+      customSignPosting: Option[NavItem] = None,
+      iosType: Option[String] = Some(DotcomContentType.Article.toString),
+      javascriptConfigOverrides: Map[String, JsValue] = Map(),
+      opengraphPropertiesOverrides: Map[String, String] = Map(),
+      isHosted: Boolean = false,
+      twitterPropertiesOverrides: Map[String, String] = Map(),
+      commercial: Option[CommercialProperties] = None,
+      isFoundation: Boolean = false,
   ): MetaData = {
 
     val resolvedUrl = url.getOrElse(s"/$id")
@@ -177,7 +174,7 @@ object MetaData {
       opengraphPropertiesOverrides = opengraphPropertiesOverrides,
       isHosted = isHosted,
       twitterPropertiesOverrides = twitterPropertiesOverrides,
-      commercial = commercial
+      commercial = commercial,
     )
   }
 
@@ -207,68 +204,72 @@ object MetaData {
       isHosted = apiContent.isHosted,
       commercial = Some(CommercialProperties.fromContent(apiContent)),
       sensitive = fields.sensitive.getOrElse(false),
-      isFoundation = Tags.make(apiContent).isFoundation
+      isFoundation = Tags.make(apiContent).isFoundation,
     )
   }
 }
 
-final case class MetaData (
-  id: String,
-  url: String,
-  webUrl: String,
-  section: Option[SectionId],
-  pillar: Option[Pillar],
-  designType: Option[DesignType],
-  webTitle: String,
-  adUnitSuffix: String,
-  iosType: Option[String] = Some("Article"),
-  pagination: Option[Pagination] = None,
-  description: Option[String] = None,
-  rssPath: Option[String] = None,
-  contentType: Option[DotcomContentType] = None,
-  shouldHideHeaderAndTopAds: Boolean = false,
-  schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
-  cacheTime: CacheTime = CacheTime.Default,
-  openGraphImages: Seq[String] = Seq(),
-  membershipAccess: Option[String] = None,
-  isFront: Boolean = false,
-  isPressedPage: Boolean = false,
-  hideUi: Boolean = false,
-  canonicalUrl: Option[String] = None,
-  shouldGoogleIndex: Boolean = true,
-  title: Option[String] = None,
-  customSignPosting: Option[NavItem] = None,
-  javascriptConfigOverrides: Map[String, JsValue] = Map(),
-  opengraphPropertiesOverrides: Map[String, String] = Map(),
-  isHosted: Boolean = false,
-  twitterPropertiesOverrides: Map[String, String] = Map(),
-  contentWithSlimHeader: Boolean = false,
-  commercial: Option[CommercialProperties],
-  isNewRecipeDesign: Boolean = false,
-  sensitive: Boolean = false,
-  isFoundation: Boolean = false
-){
+final case class MetaData(
+    id: String,
+    url: String,
+    webUrl: String,
+    section: Option[SectionId],
+    pillar: Option[Pillar],
+    designType: Option[DesignType],
+    webTitle: String,
+    adUnitSuffix: String,
+    iosType: Option[String] = Some("Article"),
+    pagination: Option[Pagination] = None,
+    description: Option[String] = None,
+    rssPath: Option[String] = None,
+    contentType: Option[DotcomContentType] = None,
+    shouldHideHeaderAndTopAds: Boolean = false,
+    schemaType: Option[String] = None, // Must be one of... http://schema.org/docs/schemas.html
+    cacheTime: CacheTime = CacheTime.Default,
+    openGraphImages: Seq[String] = Seq(),
+    membershipAccess: Option[String] = None,
+    isFront: Boolean = false,
+    isPressedPage: Boolean = false,
+    hideUi: Boolean = false,
+    canonicalUrl: Option[String] = None,
+    shouldGoogleIndex: Boolean = true,
+    title: Option[String] = None,
+    customSignPosting: Option[NavItem] = None,
+    javascriptConfigOverrides: Map[String, JsValue] = Map(),
+    opengraphPropertiesOverrides: Map[String, String] = Map(),
+    isHosted: Boolean = false,
+    twitterPropertiesOverrides: Map[String, String] = Map(),
+    contentWithSlimHeader: Boolean = false,
+    commercial: Option[CommercialProperties],
+    isNewRecipeDesign: Boolean = false,
+    sensitive: Boolean = false,
+    isFoundation: Boolean = false,
+) {
   val sectionId = section map (_.value) getOrElse ""
   lazy val neilsenApid: String = Nielsen.apidFromString(sectionId)
 
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
   def hasPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkin(fullAdUnitPath, this, edition)
-  def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean = DfpAgent.hasPageSkinOrAdTestPageSkin(fullAdUnitPath, this, edition)
+  def hasPageSkinOrAdTestPageSkin(edition: Edition): Boolean =
+    DfpAgent.hasPageSkinOrAdTestPageSkin(fullAdUnitPath, this, edition)
 
-  def omitMPUsFromContainers(edition: Edition): Boolean = if (isPressedPage) {
-    DfpAgent.omitMPUsFromContainers(id, edition)
-  } else false
+  def omitMPUsFromContainers(edition: Edition): Boolean =
+    if (isPressedPage) {
+      DfpAgent.omitMPUsFromContainers(id, edition)
+    } else false
 
   val isSecureContact: Boolean = Set(
-      "help/ng-interactive/2017/mar/17/contact-the-guardian-securely",
-      "help/2016/sep/19/how-to-contact-the-guardian-securely"
-    ).contains(id)
+    "help/ng-interactive/2017/mar/17/contact-the-guardian-securely",
+    "help/2016/sep/19/how-to-contact-the-guardian-securely",
+  ).contains(id)
 
   val requiresMembershipAccess: Boolean = membershipAccess.nonEmpty
 
   val hasSlimHeader: Boolean =
-    contentWithSlimHeader || commercial.exists(_.isPaidContent) || contentType.exists(c => c == DotcomContentType.Survey || c == DotcomContentType.Signup)
+    contentWithSlimHeader || commercial.exists(_.isPaidContent) || contentType.exists(c =>
+      c == DotcomContentType.Survey || c == DotcomContentType.Signup,
+    )
 
   // this is here so it can be included in analytics.
   // Basically it helps us understand the impact of changes and needs
@@ -276,17 +277,18 @@ final case class MetaData (
   def buildNumber: String = ManifestData.build
   def revision: String = ManifestData.revision
 
-  def javascriptConfig: Map[String, JsValue] = Map(
-    ("pageId", JsString(id)),
-    ("section", JsString(sectionId)),
-    ("webTitle", JsString(webTitle)),
-    ("adUnit", JsString(fullAdUnitPath)),
-    ("buildNumber", JsString(buildNumber)),
-    ("revisionNumber", JsString(revision)),
-    ("isFront", JsBoolean(isFront)),
-    ("contentType", JsString(contentType.map(_.name).getOrElse(""))),
-    ("pillar", JsString(pillar.map(_.toString).getOrElse("")))
-  )
+  def javascriptConfig: Map[String, JsValue] =
+    Map(
+      ("pageId", JsString(id)),
+      ("section", JsString(sectionId)),
+      ("webTitle", JsString(webTitle)),
+      ("adUnit", JsString(fullAdUnitPath)),
+      ("buildNumber", JsString(buildNumber)),
+      ("revisionNumber", JsString(revision)),
+      ("isFront", JsBoolean(isFront)),
+      ("contentType", JsString(contentType.map(_.name).getOrElse(""))),
+      ("pillar", JsString(pillar.map(_.toString).getOrElse(""))),
+    )
 
   def opengraphProperties: Map[String, String] = {
     // keep the old og:url even once the migration happens, as facebook lose the share count otherwise
@@ -294,32 +296,43 @@ final case class MetaData (
 
     Map(
       "og:site_name" -> "the Guardian",
-      "fb:app_id"    -> Configuration.facebook.appId,
-      "og:type"      -> "website",
-      "og:url"       -> ogUrl
-    ) ++ (iosId("applinks") map (iosId => List(
-      "al:ios:url" -> s"gnmguardian://$iosId",
-      "al:ios:app_store_id" -> "409128287",
-      "al:ios:app_name" -> "The Guardian"
-    )) getOrElse Nil)
+      "fb:app_id" -> Configuration.facebook.appId,
+      "og:type" -> "website",
+      "og:url" -> ogUrl,
+    ) ++ (iosId("applinks") map (iosId =>
+      List(
+        "al:ios:url" -> s"gnmguardian://$iosId",
+        "al:ios:app_store_id" -> "409128287",
+        "al:ios:app_name" -> "The Guardian",
+      ),
+    ) getOrElse Nil)
   }
 
-  def twitterProperties: Map[String, String] = Map(
-    "twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId => List(
-    "twitter:app:name:iphone" -> "The Guardian",
-    "twitter:app:id:iphone" -> "409128287",
-    "twitter:app:url:iphone" -> s"gnmguardian://$iosId",
-    "twitter:app:name:ipad" -> "The Guardian",
-    "twitter:app:id:ipad" -> "409128287",
-    "twitter:app:url:ipad" -> s"gnmguardian://$iosId",
-    "twitter:app:name:googleplay" -> "The Guardian",
-    "twitter:app:id:googleplay" -> "com.guardian"
-  )) getOrElse Nil)
+  def twitterProperties: Map[String, String] =
+    Map("twitter:site" -> "@guardian") ++ (iosId("twitter") map (iosId =>
+      List(
+        "twitter:app:name:iphone" -> "The Guardian",
+        "twitter:app:id:iphone" -> "409128287",
+        "twitter:app:url:iphone" -> s"gnmguardian://$iosId",
+        "twitter:app:name:ipad" -> "The Guardian",
+        "twitter:app:id:ipad" -> "409128287",
+        "twitter:app:url:ipad" -> s"gnmguardian://$iosId",
+        "twitter:app:name:googleplay" -> "The Guardian",
+        "twitter:app:id:googleplay" -> "com.guardian",
+      ),
+    ) getOrElse Nil)
 
-  def linkedData: List[LinkedData] = List(
-    Guardian()) ++ iosType.map(_ => List(
-    WebPage(`@id` = webUrl, potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")))
-  )).getOrElse(Nil)
+  def linkedData: List[LinkedData] =
+    List(Guardian()) ++ iosType
+      .map(_ =>
+        List(
+          WebPage(
+            `@id` = webUrl,
+            potentialAction = PotentialAction(target = "android-app://com.guardian/" + webUrl.replace("://", "/")),
+          ),
+        ),
+      )
+      .getOrElse(Nil)
 
   def iosId(referrer: String): Option[String] = iosType.map(iosType => s"$id?contenttype=$iosType&source=$referrer")
 
@@ -332,15 +345,17 @@ final case class MetaData (
 
 object Page {
 
-  def getContentPage(page: Page): Option[ContentPage] = page match {
-    case c: ContentPage => Some(c)
-    case _ => None
-  }
+  def getContentPage(page: Page): Option[ContentPage] =
+    page match {
+      case c: ContentPage => Some(c)
+      case _              => None
+    }
 
-  def getStandalonePage(page: Page): Option[StandalonePage] = page match {
-    case s: StandalonePage => Some(s)
-    case _ => None
-  }
+  def getStandalonePage(page: Page): Option[StandalonePage] =
+    page match {
+      case s: StandalonePage => Some(s)
+      case _                 => None
+    }
 
   def getContent(page: Page): Option[ContentType] = {
     getContentPage(page).map(_.item)
@@ -360,22 +375,22 @@ trait ContentPage extends Page {
   // The order of construction is important, overrides must come last.
   def getJavascriptConfig: Map[String, JsValue] =
     item.fields.javascriptConfig ++
-    metadata.javascriptConfig ++
-    item.tags.javascriptConfig ++
-    item.trail.javascriptConfig ++
-    item.content.conditionalConfig ++
-    item.content.javascriptConfig ++
-    metadata.javascriptConfigOverrides
+      metadata.javascriptConfig ++
+      item.tags.javascriptConfig ++
+      item.trail.javascriptConfig ++
+      item.content.conditionalConfig ++
+      item.content.javascriptConfig ++
+      metadata.javascriptConfigOverrides
 
   def getOpenGraphProperties: Map[String, String] =
     metadata.opengraphProperties ++
-    item.content.opengraphProperties ++
-    metadata.opengraphPropertiesOverrides
+      item.content.opengraphProperties ++
+      metadata.opengraphPropertiesOverrides
 
   def getTwitterProperties: Map[String, String] =
     metadata.twitterProperties ++
-    item.content.twitterProperties ++
-    metadata.twitterPropertiesOverrides
+      item.content.twitterProperties ++
+      metadata.twitterPropertiesOverrides
 }
 
 case class SimpleContentPage(content: ContentType) extends ContentPage {
@@ -406,143 +421,27 @@ case class CommercialExpiryPage(id: String) extends StandalonePage {
     id,
     section = Some(SectionId.fromId("global")),
     webTitle = "This page has been removed",
-    shouldGoogleIndex = false
+    shouldGoogleIndex = false,
   )
 }
 
-case class GalleryPage(
-  gallery: Gallery,
-  related: RelatedContent,
-  index: Int,
-  trail: Boolean)(implicit request: RequestHeader) extends ContentPage {
+case class GalleryPage(gallery: Gallery, related: RelatedContent, index: Int, trail: Boolean)(implicit
+    request: RequestHeader,
+) extends ContentPage {
   override lazy val item = gallery
 }
 
 case class EmbedPage(item: Video, title: String, isExpired: Boolean = false) extends ContentPage
 
-trait AtomPage extends Page {
-  def atom: Atom
-  def atomType: String
-  def body: Html
-  def withJavaScript: Boolean
-  def withVerticalScrollbar: Boolean
-  def javascriptModule: String = atomType
-}
-
-case class MediaAtomPage(
-  override val atom: MediaAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "media"
-  override val body = views.html.fragments.atoms.media(atom, displayCaption = false, mediaWrapper = Some(MediaWrapper.EmbedPage), posterImageOverride = None)
-  override val javascriptModule = "youtube-embed"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.title,
-    section = None
-  )
-}
-
-case class InteractiveAtomPage(
-  override val atom: InteractiveAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
-  override val atomType = "interactive"
-  override val body = views.html.fragments.atoms.interactive(atom, shouldFence = false)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.title,
-    section = None
-  )
-}
-
-case class ChartAtomPage(
-  override val atom: ChartAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader, context: ApplicationContext) extends AtomPage {
-  override val atomType = "chart"
-  override val body = views.html.fragments.atoms.chart(atom, shouldFence = false)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.title,
-    section = None
-  )
-}
-
-case class GuideAtomPage(
-  override val atom: GuideAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "guide"
-  override val body = views.html.fragments.atoms.snippets.guide(atom)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Guide"),
-    section = None
-  )
-}
-
-case class ProfileAtomPage(
-  override val atom: ProfileAtom,
-  override val withJavaScript: Boolean,
-  override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "profile"
-  override val body = views.html.fragments.atoms.snippets.profile(atom)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Profile"),
-    section = None
-  )
-}
-
-case class QandaAtomPage(
-override val atom: QandaAtom,
-override val withJavaScript: Boolean,
-override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "qanda"
-  override val body = views.html.fragments.atoms.snippets.qanda(atom)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Q&A"),
-    section = None
-  )
-}
-
-case class TimelineAtomPage(
-override val atom: TimelineAtom,
-override val withJavaScript: Boolean,
-override val withVerticalScrollbar: Boolean
-)(implicit request: RequestHeader) extends AtomPage {
-  override val atomType = "timeline"
-  override val body = views.html.fragments.atoms.snippets.timeline(atom)
-  override val javascriptModule = "snippet"
-  override val metadata = MetaData.make(
-    id = atom.id,
-    webTitle = atom.atom.title.getOrElse("Timeline"),
-    section = None
-  )
-}
-
 case class TagCombiner(
-  id: String,
-  leftTag: Tag,
-  rightTag: Tag,
-  pagination: Option[Pagination] = None
+    id: String,
+    leftTag: Tag,
+    rightTag: Tag,
+    pagination: Option[Pagination] = None,
 ) extends StandalonePage {
 
   private val webTitleOverrides: Map[String, String] = Map(
-    "football/football+tone/minutebyminute" -> "Football live "
+    "football/football+tone/minutebyminute" -> "Football live ",
   )
 
   private val webTitle: String = webTitleOverrides.getOrElse(id, s"${leftTag.name} + ${rightTag.name}")
@@ -558,9 +457,9 @@ case class TagCombiner(
       CommercialProperties(
         editionBrandings = leftTag.properties.commercial.map(_.editionBrandings).getOrElse(Set.empty),
         editionAdTargetings = leftTag.properties.commercial.map(_.editionAdTargetings).getOrElse(Set.empty),
-        prebidIndexSites = leftTag.properties.commercial.flatMap(_.prebidIndexSites)
-      )
-    )
+        prebidIndexSites = leftTag.properties.commercial.flatMap(_.prebidIndexSites),
+      ),
+    ),
   )
 }
 
@@ -570,21 +469,23 @@ object IsRatio {
 
   def apply(aspectWidth: Int, aspectHeight: Int, width: Int, height: Int): Boolean = {
     aspectHeight.toDouble * width != 0 &&
-      Math.abs((aspectWidth.toDouble * height) / (aspectHeight.toDouble * width) - 1) <= AspectRatioThreshold
+    Math.abs((aspectWidth.toDouble * height) / (aspectHeight.toDouble * width) - 1) <= AspectRatioThreshold
   }
 
 }
 
 /**
- * ways to access/filter the elements that make up an entity on a facia page
- *
+  * ways to access/filter the elements that make up an entity on a facia page
+  *
  * designed to add some structure to the data that comes from CAPI
- */
+  */
 object Elements {
   def make(apiContent: contentapi.Content): Elements = {
-    Elements(apiContent.elements
-      .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
-      .getOrElse(Nil))
+    Elements(
+      apiContent.elements
+        .map(_.zipWithIndex.map { case (element, index) => Element(element, index) })
+        .getOrElse(Nil),
+    )
   }
 }
 final case class Elements(elements: Seq[Element]) {
@@ -598,7 +499,7 @@ final case class Elements(elements: Seq[Element]) {
   If you need to express a hack, express it somewhere where you are not pretending it is the Main Picture
 
   You probably want the TRAIL PICTURE
-*/
+   */
   // main picture is used on the content page (i.e. the article page or the video page)
 
   // if you change these rules make sure you update IMAGES.md (in this project)
@@ -609,9 +510,9 @@ final case class Elements(elements: Seq[Element]) {
   // Currently, only Picture and Embed elements can be given the showcase role.
   lazy val hasShowcaseMainElement = {
     val showcasePicture = for {
-      main  <- mainPicture
+      main <- mainPicture
       image <- main.images.largestImage
-      role  <- image.role
+      role <- image.role
     } yield role == "showcase"
 
     val showcaseEmbed = for {
@@ -640,39 +541,40 @@ final case class Elements(elements: Seq[Element]) {
   lazy val audioAssets: Seq[AudioAsset] = audios.flatMap(_.audio.audioAssets)
   lazy val thumbnail: Option[ImageElement] = images.find(_.properties.isThumbnail)
 
-  def elements(relation: String): Seq[Element] = relation match {
-    case "main" => elements.filter(_.properties.isMain)
-    case "body" => elements.filter(_.properties.isBody)
-    case "gallery" => elements.filter(_.properties.isGallery)
-    case "thumbnail" => elements.filter(_.properties.isThumbnail)
-    case _ => Nil
-  }
+  def elements(relation: String): Seq[Element] =
+    relation match {
+      case "main"      => elements.filter(_.properties.isMain)
+      case "body"      => elements.filter(_.properties.isBody)
+      case "gallery"   => elements.filter(_.properties.isGallery)
+      case "thumbnail" => elements.filter(_.properties.isThumbnail)
+      case _           => Nil
+    }
 
   lazy val images: Seq[ImageElement] = elements.flatMap {
-    case image :ImageElement => Some(image)
-    case _ => None
+    case image: ImageElement => Some(image)
+    case _                   => None
   }
 
   lazy val videos: Seq[VideoElement] = elements.flatMap {
     case video: VideoElement => Some(video)
-    case _ => None
+    case _                   => None
   }
 
   protected lazy val audios: Seq[AudioElement] = elements.flatMap {
     case audio: AudioElement => Some(audio)
-    case _ => None
+    case _                   => None
   }
 
   protected lazy val embeds: Seq[EmbedElement] = elements.flatMap {
     case embed: EmbedElement => Some(embed)
-    case _ => None
+    case _                   => None
   }
 }
 
 final case class SubMetaLink(
-  link: String,
-  text: String,
-  dataLinkName: Option[String] = None
+    link: String,
+    text: String,
+    dataLinkName: Option[String] = None,
 )
 
 object SubMetaLink {
@@ -680,8 +582,8 @@ object SubMetaLink {
 }
 
 final case class SubMetaLinks(
-  sectionLabels: List[SubMetaLink],
-  keywords: List[SubMetaLink]
+    sectionLabels: List[SubMetaLink],
+    keywords: List[SubMetaLink],
 )
 
 object SubMetaLinks {
@@ -689,15 +591,21 @@ object SubMetaLinks {
   implicit val formats: OFormat[SubMetaLinks] = Json.format[SubMetaLinks]
 
   def makeKeywordName(keywordTag: Tag, keywords: List[Tag]): String = {
-    if (keywords.count(_.name == keywordTag.name) > 1){
+    if (keywords.count(_.name == keywordTag.name) > 1) {
       s"${keywordTag.name} (${keywordTag.properties.sectionName})"
     } else {
       keywordTag.name
     }
   }
 
-  def make(isImmersive: Boolean, tags: Tags, blogOrSeriesTag: Option[Tag], isFromTheObserver: Boolean,
-    sectionLabelLink: String, sectionLabelName: String): SubMetaLinks = {
+  def make(
+      isImmersive: Boolean,
+      tags: Tags,
+      blogOrSeriesTag: Option[Tag],
+      isFromTheObserver: Boolean,
+      sectionLabelLink: String,
+      sectionLabelName: String,
+  ): SubMetaLinks = {
     val sectionLink = if (!(isImmersive && tags.isArticle)) {
       Some(SubMetaLink(s"/$sectionLabelLink", sectionLabelName, Some("article section")))
     } else None
@@ -718,12 +626,12 @@ object SubMetaLinks {
       .take(6)
       .map(tag => SubMetaLink(tag.metadata.url, makeKeywordName(tag, tags.keywords), Some(s"keyword: ${tag.id}")))
 
-
     val toneTag = if (tags.isArticle && !tags.isLiveBlog) {
-      List(tags.tones.headOption.map(tone => SubMetaLink(
-        tone.metadata.url,
-        tone.name.toLowerCase,
-        Some(s"tone: ${tone.name.toLowerCase}"))))
+      List(
+        tags.tones.headOption.map(tone =>
+          SubMetaLink(tone.metadata.url, tone.name.toLowerCase, Some(s"tone: ${tone.name.toLowerCase}")),
+        ),
+      )
     } else List()
 
     val subMetaLinks = keywordSubMetaLinks ++ toneTag.flatten
@@ -734,10 +642,9 @@ object SubMetaLinks {
 }
 
 /**
- * Tags lets you extract meaning from tags on a page.
- */
-final case class Tags(
-  tags: List[Tag]) {
+  * Tags lets you extract meaning from tags on a page.
+  */
+final case class Tags(tags: List[Tag]) {
 
   def contributorAvatar: Option[String] = tags.flatMap(_.contributorImagePath).headOption
 
@@ -775,7 +682,8 @@ final case class Tags(
   lazy val isReview: Boolean = tones.exists(t => Tags.reviewMappings.contains(t.id))
   lazy val isMedia: Boolean = types.exists(t => Tags.mediaTypes.contains(t.id))
   lazy val isAnalysis: Boolean = tones.exists(_.id == Tags.Analysis)
-  lazy val isPodcast: Boolean = isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.properties.podcast.isDefined))
+  lazy val isPodcast: Boolean =
+    isAudio && (types.exists(_.id == Tags.Podcast) || tags.exists(_.properties.podcast.isDefined))
   lazy val isAudio: Boolean = types.exists(_.id == Tags.Audio)
   lazy val isEditorial: Boolean = tones.exists(_.id == Tags.Editorial)
   lazy val isCartoon: Boolean = types.exists(_.id == Tags.Cartoon)
@@ -786,14 +694,18 @@ final case class Tags(
   lazy val isFoundation: Boolean = tags.exists(t => GuardianFoundationHelper.tagIdIsGuardianFoundation(t.id))
 
   lazy val isArticle: Boolean = tags.exists { _.id == Tags.Article }
-  lazy val isSudoku: Boolean = tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
+  lazy val isSudoku: Boolean =
+    tags.exists { _.id == Tags.Sudoku } || tags.exists(t => t.id == "lifeandstyle/series/sudoku")
   lazy val isGallery: Boolean = tags.exists { _.id == Tags.Gallery }
   lazy val isVideo: Boolean = tags.exists { _.id == Tags.Video }
   lazy val isPoll: Boolean = tags.exists { _.id == Tags.Poll }
-  lazy val isImageContent: Boolean = tags.exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
+  lazy val isImageContent: Boolean = tags.exists { tag =>
+    List("type/cartoon", "type/picture", "type/graphic").contains(tag.id)
+  }
   lazy val isInteractive: Boolean = tags.exists { _.id == Tags.Interactive }
 
-  lazy val hasLargeContributorImage: Boolean = tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
+  lazy val hasLargeContributorImage: Boolean =
+    tagsOfType("Contributor").exists(_.properties.contributorLargeImagePath.nonEmpty)
 
   lazy val isCricketLiveBlog: Boolean = isLiveBlog &&
     tags.map(_.id).exists(tagId => CricketTeams.teamTagIds.contains(tagId)) &&
@@ -802,35 +714,35 @@ final case class Tags(
   lazy val isRugbyMatch: Boolean = (isMatchReport || isLiveBlog) &&
     tags.exists(t => t.id == "sport/rugby-union")
 
-  lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id =="environment/series/keep-it-in-the-ground")
+  lazy val isClimateChangeSeries: Boolean = tags.exists(t => t.id == "environment/series/keep-it-in-the-ground")
   lazy val isPrintSalesSeries: Boolean = tags.exists(t => t.id == "artanddesign/series/guardian-print-shop")
   lazy val isTheMinuteArticle: Boolean = tags.exists(t => t.id == "tone/minute")
   //this is for the immersive header to access this info
-  lazy val isPaidContent: Boolean = tags.exists( t => t.id == "tone/advertisement-features" )
+  lazy val isPaidContent: Boolean = tags.exists(t => t.id == "tone/advertisement-features")
 
-
-  lazy val isPolitics: Boolean = tags.exists(t => t.id=="politics/politics")
+  lazy val isPolitics: Boolean = tags.exists(t => t.id == "politics/politics")
 
   lazy val keywordIds: List[String] = keywords.map { _.id }
 
   lazy val commissioningDesks: List[String] = tracking.map(_.id).collect { case Tags.CommissioningDesk(desk) => desk }
   lazy val blogOrSeriesTag: Option[Tag] = {
-    tags.find( tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries ))
+    tags.find(tag => tag.showSeriesInMeta && (tag.isBlog || tag.isSeries))
   }
 
-  def javascriptConfig: Map[String, JsValue] = Map(
-    ("keywords", JsString(keywords.map { _.name }.mkString(","))),
-    ("keywordIds", JsString(keywordIds.mkString(","))),
-    ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
-    ("richLink", JsString(richLink.getOrElse(""))),
-    ("author", JsString(contributors.map(_.name).mkString(","))),
-    ("authorIds", JsString(contributors.map(_.id).mkString(","))),
-    ("tones", JsString(tones.map(_.name).mkString(","))),
-    ("toneIds", JsString(tones.map(_.id).mkString(","))),
-    ("blogs", JsString(blogs.map { _.name }.mkString(","))),
-    ("blogIds", JsString(blogs.map(_.id).mkString(","))),
-    ("commissioningDesks", JsString(commissioningDesks.mkString(",")))
-  )
+  def javascriptConfig: Map[String, JsValue] =
+    Map(
+      ("keywords", JsString(keywords.map { _.name }.mkString(","))),
+      ("keywordIds", JsString(keywordIds.mkString(","))),
+      ("nonKeywordTagIds", JsString(nonKeywordTags.map { _.id }.mkString(","))),
+      ("richLink", JsString(richLink.getOrElse(""))),
+      ("author", JsString(contributors.map(_.name).mkString(","))),
+      ("authorIds", JsString(contributors.map(_.id).mkString(","))),
+      ("tones", JsString(tones.map(_.name).mkString(","))),
+      ("toneIds", JsString(tones.map(_.id).mkString(","))),
+      ("blogs", JsString(blogs.map { _.name }.mkString(","))),
+      ("blogIds", JsString(blogs.map(_.id).mkString(","))),
+      ("commissioningDesks", JsString(commissioningDesks.mkString(","))),
+    )
 }
 
 object Tags {
@@ -851,18 +763,18 @@ object Tags {
   val Sudoku = "type/sudoku"
 
   val liveMappings = Seq(
-    "tone/minutebyminute"
+    "tone/minutebyminute",
   )
 
-  val commentMappings = Seq (
-    "tone/comment"
+  val commentMappings = Seq(
+    "tone/comment",
   )
 
   val mediaTypes = Seq(
     "type/video",
     "type/audio",
     "type/gallery",
-    "type/picture"
+    "type/picture",
   )
 
   val featureMappings = Seq(
@@ -873,15 +785,15 @@ object Tags {
     "tone/reviews",
     "tone/albumreview",
     "tone/livereview",
-    "tone/childrens-user-reviews"
+    "tone/childrens-user-reviews",
   )
 
   val interviewMappings = Seq(
-    "tone/interview"
+    "tone/interview",
   )
 
   val reviewMappings = Seq(
-    "tone/reviews"
+    "tone/reviews",
   )
 
   val CommissioningDesk: Regex = """tracking/commissioningdesk/(.*)""".r

@@ -7,7 +7,7 @@ import commercial.model.hosted.HostedTrails
 import common.commercial.hosted._
 import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, JsonNotFound, Logging}
 import contentapi.ContentApiClient
-import model.Cached.RevalidatableResult
+import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.{ApplicationContext, Cached, NoCache}
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
@@ -19,15 +19,19 @@ import scala.concurrent.Future
 import scala.util.control.NonFatal
 
 class HostedContentController(
-  contentApiClient: ContentApiClient,
-  val controllerComponents: ControllerComponents
+    contentApiClient: ContentApiClient,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController with ImplicitControllerExecutionContext with Logging with implicits.Requests {
+    extends BaseController
+    with ImplicitControllerExecutionContext
+    with Logging
+    with implicits.Requests {
 
   private def cacheDuration: Int = 60
 
-  private def renderPage(hostedPage: Future[Option[HostedPage]])
-    (implicit request: Request[AnyContent]): Future[Result] = {
+  private def renderPage(
+      hostedPage: Future[Option[HostedPage]],
+  )(implicit request: Request[AnyContent]): Future[Result] = {
     def cached(html: Html) = Cached(cacheDuration)(RevalidatableResult.Ok(html))
     hostedPage map {
       case Some(page: HostedVideoPage) =>
@@ -49,51 +53,57 @@ class HostedContentController(
     } recover {
       case e: ContentApiError if e.httpStatus == 410 =>
         cached(commercialExpired(wasAHostedPage = true))
+      case e: ContentApiError if e.httpStatus == 404 =>
+        Cached(cacheDuration)(WithoutRevalidationResult(NotFound))
     }
   }
 
   private def baseQuery(itemId: String)(implicit request: Request[AnyContent]): ItemQuery =
-    contentApiClient.item(itemId, Edition(request))
-    .showSection(true)
-    .showElements("all")
-    .showFields("all")
-    .showTags("all")
-    .showAtoms("all")
+    contentApiClient
+      .item(itemId, Edition(request))
+      .showSection(true)
+      .showElements("all")
+      .showFields("all")
+      .showTags("all")
+      .showAtoms("all")
 
-
-  def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] = Action.async { implicit request =>
-
-    val capiResponse = {
-      val itemId = s"advertiser-content/$campaignName/$pageName"
-      val response = contentApiClient.getResponse(baseQuery(itemId))
-      response.failed.foreach {
-        case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
+  def renderHostedPage(campaignName: String, pageName: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val capiResponse = {
+        val itemId = s"advertiser-content/$campaignName/$pageName"
+        val response = contentApiClient.getResponse(baseQuery(itemId))
+        response.failed.foreach {
+          case NonFatal(e) => log.warn(s"Capi lookup of item '$itemId' failed: ${e.getMessage}", e)
+        }
+        response
       }
-      response
+
+      val page = capiResponse map {
+        _.content flatMap HostedPage.fromContent
+      }
+
+      renderPage(page)
     }
 
-    val page = capiResponse map {
-      _.content flatMap HostedPage.fromContent
-    }
-
-    renderPage(page)
-  }
-
-  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] = Action.async {
-    implicit request =>
-
+  def renderOnwardComponent(campaignName: String, pageName: String, contentType: String): Action[AnyContent] =
+    Action.async { implicit request =>
       def onwardView(trails: Seq[HostedPage], defaultRowCount: Int, maxRowCount: Int): RevalidatableResult = {
         if (request.isAmp) {
-          def toJson(trail: HostedPage) = Json.obj(
-            "title" -> trail.title,
-            "url" -> trail.url,
-            "imageUrl" -> trail.thumbnailUrl
-          )
+          def toJson(trail: HostedPage) =
+            Json.obj(
+              "title" -> trail.title,
+              "url" -> trail.url,
+              "imageUrl" -> trail.thumbnailUrl,
+            )
           JsonComponent {
-            "items" -> JsArray(Seq(Json.obj(
-              "owner" -> trails.headOption.map(_.owner),
-              "trails" -> JsArray(trails.take(defaultRowCount).map(toJson))
-            )))
+            "items" -> JsArray(
+              Seq(
+                Json.obj(
+                  "owner" -> trails.headOption.map(_.owner),
+                  "trails" -> JsArray(trails.take(defaultRowCount).map(toJson)),
+                ),
+              ),
+            )
           }
         } else {
           JsonComponent(hostedOnwardJourney(trails, maxRowCount))
@@ -102,18 +112,23 @@ class HostedContentController(
 
       def galleryOnwardView(trails: Seq[HostedPage]): RevalidatableResult = {
         if (request.isAmp) {
-          def toJson(trail: HostedPage) = Json.obj(
-            "url" -> trail.url,
-            "imageUrl" -> trail.thumbnailUrl
-          )
+          def toJson(trail: HostedPage) =
+            Json.obj(
+              "url" -> trail.url,
+              "imageUrl" -> trail.thumbnailUrl,
+            )
           JsonComponent {
             val cta = trails.headOption.map(_.cta)
-            "items" -> JsArray(Seq(Json.obj(
-              "ctaText" -> cta.map(_.label),
-              "ctaLink" -> cta.map(_.url),
-              "buttonText" -> cta.map(_.btnText),
-              "trails" -> JsArray(trails.map(toJson))
-            )))
+            "items" -> JsArray(
+              Seq(
+                Json.obj(
+                  "ctaText" -> cta.map(_.label),
+                  "ctaLink" -> cta.map(_.url),
+                  "buttonText" -> cta.map(_.btnText),
+                  "trails" -> JsArray(trails.map(toJson)),
+                ),
+              ),
+            )
           }
         } else {
           JsonComponent(hostedGalleryOnward(trails))
@@ -123,8 +138,8 @@ class HostedContentController(
       val capiResponse = {
         val sectionId = s"advertiser-content/$campaignName"
         val query = baseQuery(sectionId)
-                    .pageSize(100)
-                    .orderBy("oldest")
+          .pageSize(100)
+          .orderBy("oldest")
         val response = contentApiClient.getResponse(query)
         response.failed.foreach {
           case NonFatal(e) => log.warn(s"Capi lookup of item '$sectionId' failed: ${e.getMessage}", e)
@@ -152,11 +167,10 @@ class HostedContentController(
           Cached(0)(JsonNotFound())
         }
       }
-  }
+    }
 
-  def renderAutoplayComponent(campaignName: String, pageName: String): Action[AnyContent] = Action.async {
-    implicit request =>
-
+  def renderAutoplayComponent(campaignName: String, pageName: String): Action[AnyContent] =
+    Action.async { implicit request =>
       val capiResponse = {
         val sectionId = s"advertiser-content/$campaignName"
         val query = baseQuery(sectionId)
@@ -180,5 +194,5 @@ class HostedContentController(
           Cached(0)(JsonNotFound())
         }
       }
-  }
+    }
 }

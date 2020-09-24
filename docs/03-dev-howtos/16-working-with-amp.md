@@ -7,7 +7,7 @@ AMP (Accelerated Mobile Pages) in Google's own words:
 > AMP is a way to build web pages for static content that render fast. AMP in action consists of three different parts:
 >
 > **AMP HTML** is HTML with some restrictions for reliable performance and some extensions for building rich content beyond basic HTML.
-> The **AMP JS** library ensures the fast rendering of AMP HTML pages. 
+> The **AMP JS** library ensures the fast rendering of AMP HTML pages.
 > The **Google AMP Cache** can be used to serve cached AMP HTML pages.
 
 ## Why do I care?
@@ -32,7 +32,7 @@ In order for content to be discoverable (via search) and served in Google's cach
 
 * Validate in your browser - Add `#development=1` to your URL, and check the developer console for messages
 * [Google validation UI](https://validator.ampproject.org/)
-* [Guardian amp validation tool](https://github.com/guardian/frontend/tree/master/tools/amp-validation)
+* [Guardian amp validation tool](https://github.com/guardian/frontend/tree/main/tools/amp-validation)
     * 3 ways this tool can be used:
         1. Validate your local changes on a hardcoded set of endpoints - `make validate-amp` - **please see note below!**
         2. Validate `amp.theguardian.com` on the same endpoints - `node ./tools/amp-validation/index.js`
@@ -64,5 +64,5 @@ This change was made to improve the experience of developing and styling amp pag
 
 ## Ads in Amp
 
-* [Prebid](https://prebid.org/) in Amp uses a Prebid server and is documented in a separate repo [here](https://github.com/guardian/prebid-server/tree/master/amp).
+* [Prebid](https://prebid.org/) in Amp uses a Prebid server and is documented in a separate repo [here](https://github.com/guardian/prebid-server/tree/main/amp).
 * Ads are served in the `amp-ad` element, which is documented [here](https://www.ampproject.org/docs/ads/introduction_ads).

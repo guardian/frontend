@@ -7,6 +7,8 @@ import {
     isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
+    isIOS9,
+    setGatePageTargeting,
 } from '../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
@@ -16,16 +18,23 @@ import { designShow } from './design/example';
 const variant = 'example';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
-const canShow: (name?: string) => boolean = (name = '') =>
-    !hasUserDismissedGate({
-        componentName,
+const canShow: (name?: string) => boolean = (name = '') => {
+    const isGateDismissed = hasUserDismissedGate({
         name,
         variant,
-    }) &&
-    isNPageOrHigherPageView(2) &&
-    !isLoggedIn() &&
-    !isInvalidArticleType() &&
-    !isInvalidSection();
+        componentName,
+    });
+    const canShowCheck =
+        !isGateDismissed &&
+        isNPageOrHigherPageView(3) &&
+        !isLoggedIn() &&
+        !isInvalidArticleType() &&
+        !isInvalidSection() &&
+        !isIOS9();
+
+    setGatePageTargeting(isGateDismissed, canShowCheck);
+    return canShowCheck;
+};
 
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
@@ -34,8 +43,9 @@ const show: ({
     abTest: CurrentABTest,
     guUrl: string,
     signInUrl: string,
-}) => boolean = ({ abTest, guUrl, signInUrl }) =>
-    designShow({ abTest, guUrl, signInUrl });
+    ophanComponentId: string,
+}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+    designShow({ abTest, guUrl, signInUrl, ophanComponentId });
 
 // export the variant as a SignInGateVariant type
 export const signInGateVariant: SignInGateVariant = {

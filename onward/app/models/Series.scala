@@ -13,11 +13,17 @@ import services.CollectionConfigWithId
 case class Series(id: String, tag: Tag, trails: RelatedContent) {
   lazy val displayName = tag.id match {
     case "commentisfree/commentisfree" => "opinion"
-    case _ => tag.metadata.webTitle
- }
+    case _                             => tag.metadata.webTitle
+  }
 }
 
-case class SeriesStoriesDCR(id: String, displayname: String, description: Option[String], url: String, trails: Seq[OnwardItem])
+case class SeriesStoriesDCR(
+    id: String,
+    displayname: String,
+    description: Option[String],
+    url: String,
+    trails: Seq[OnwardItem],
+)
 
 object SeriesStoriesDCR {
   implicit val onwardItemWrites = Json.writes[OnwardItem]
@@ -29,7 +35,8 @@ object SeriesStoriesDCR {
       displayname = series.displayName,
       description = series.tag.properties.description,
       url = series.tag.properties.webUrl,
-      trails = trails)
+      trails = trails,
+    )
   }
 }
 
@@ -48,17 +55,19 @@ object SeriesHelper {
     val config = CollectionConfig.empty.copy(
       backfill = Some(Backfill(`type` = "capi", query = series.id)),
       displayName = displayName,
-      href = Some(series.id)
+      href = Some(series.id),
     )
 
-    val containerDefinition = FaciaContainer.fromConfigWithId(
-      index = 1,
-      container = Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
-      config = CollectionConfigWithId(dataId, config),
-      collectionEssentials = CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
-      hasMore = false,
-      componentId = componentId
-    )
+    val containerDefinition = FaciaContainer
+      .fromConfigWithId(
+        index = 1,
+        container = Fixed(visuallyPleasingContainerForStories(math.min(series.trails.faciaItems.length, 4))),
+        config = CollectionConfigWithId(dataId, config),
+        collectionEssentials =
+          CollectionEssentials(series.trails.faciaItems take 4, Nil, displayName, None, None, None),
+        hasMore = false,
+        componentId = componentId,
+      )
       .withTimeStamps
       .copy(customHeader = header)
 

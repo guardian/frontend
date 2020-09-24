@@ -15,20 +15,19 @@ sealed trait ReaderRevenueRegion {
   override def toString: String = s"ReaderRevenueRegion: $name"
 }
 
-case object UK extends ReaderRevenueRegion { val name = "united-kingdom"}
-case object US extends ReaderRevenueRegion { val name = "united-states"}
-case object AU extends ReaderRevenueRegion { val name = "australia"}
-case object ROW extends ReaderRevenueRegion { val name = "rest-of-world"}
+case object UK extends ReaderRevenueRegion { val name = "united-kingdom" }
+case object US extends ReaderRevenueRegion { val name = "united-states" }
+case object AU extends ReaderRevenueRegion { val name = "australia" }
+case object ROW extends ReaderRevenueRegion { val name = "rest-of-world" }
+case object EU extends ReaderRevenueRegion { val name = "european-union" }
 
 object ReaderRevenueRegion {
-  def fromString(region: String): Option[ReaderRevenueRegion] = {
-    region.toLowerCase() match {
-      case "united-kingdom" => Some(UK)
-      case "united-states" => Some(US)
-      case "australia" => Some(AU)
-      case "rest-of-world" => Some(ROW)
-      case _ => None
-    }
+
+  val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW, EU)
+
+  def fromName(region: String): Option[ReaderRevenueRegion] = {
+    val toFind = region.toLowerCase()
+    allRegions.find(_.name == toFind)
   }
 
   def getBucketKey(region: ReaderRevenueRegion, bannerType: BannerType): String = {
@@ -39,7 +38,6 @@ object ReaderRevenueRegion {
     bucketKey + "-" + region.name + ".json"
   }
 
-  val allRegions: List[ReaderRevenueRegion] = List(UK, US, AU, ROW)
 }
 
 sealed trait BannerType {

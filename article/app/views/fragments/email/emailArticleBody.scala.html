@@ -234,7 +234,7 @@
                         }
                     }
 
-                    case ContentAtomBlockElement(atomId) => {
+                    case ContentAtomBlockElement(atomId, atomtype) => {
                         @page.article.content.media.find(_.id == atomId).map { atom: MediaAtom =>
                             @atom.posterImage.flatMap(EmailVideoImage.bestSrcFor).map { imageUrl =>
                                 @atom.activeAssets.headOption.map { asset =>

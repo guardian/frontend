@@ -28,7 +28,7 @@ object TrailsToRss extends implicits.Collections {
     It ought to be changed to \\x{10000}-\\x{10FFFF} but that produces unexpected behaviour which I suspect
     is a bug (http://bugs.java.com/bugdatabase/view_bug.do?bug_id=JDK-8179668).  For now, leaving this
     unchanged as the end result gives valid XML, although it may exclude supplementary characters.
-  */
+   */
   val pattern = Pattern.compile("[^\\x09\\x0A\\x0D\\x20-\\uD7FF\\uE000-\\uFFFD\\u10000-\\u10FFFF]")
   private def stripInvalidXMLCharacters(s: String) = {
     pattern.matcher(s).replaceAll("")
@@ -48,25 +48,31 @@ object TrailsToRss extends implicits.Collections {
   def apply(metaData: MetaData, trails: Seq[Trail])(implicit request: RequestHeader): String =
     TrailsToRss(Some(metaData.webTitle), trails, Some(metaData.url), metaData.description)
 
-  def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(implicit request: RequestHeader): String = {
+  def apply(title: Option[String], trails: Seq[Trail], url: Option[String] = None, description: Option[String] = None)(
+      implicit request: RequestHeader,
+  ): String = {
     val feedTitle = title.map(t => s"$t | The Guardian").getOrElse("The Guardian")
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
     feed.setTitle(feedTitle)
-    feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
+    feed.setDescription(
+      description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"),
+    )
     feed.setLink("https://www.theguardian.com" + url.getOrElse(""))
     feed.setLanguage("en-gb")
-    feed.setCopyright(s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
+    feed.setCopyright(
+      s"Guardian News &amp; Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+    )
     feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
 
     // Feed: entries
-    val entries = trails.map{ trail =>
+    val entries = trails.map { trail =>
       // Entry: categories
-      val categories = trail.tags.keywords.map{ tag =>
+      val categories = trail.tags.keywords.map { tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
         category.setTaxonomyUri(tag.metadata.webUrl)
@@ -138,14 +144,15 @@ object TrailsToRss extends implicits.Collections {
       pressedPage.collections
         .filterNot(_.config.excludeFromRss)
         .flatMap(_.curatedPlusBackfillDeduplicated)
-        .filter{
+        .filter {
           case _: LinkSnap => false
-          case _ => true}
+          case _           => true
+        }
         .filter(_.properties.maybeContentId.isDefined)
         .distinctBy(faciaContent => faciaContent.properties.maybeContentId.getOrElse(faciaContent.card.id))
         .flatMap(_.properties.maybeContent)
 
-    val webTitle = if(pressedPage.metadata.contentType.contains(DotcomContentType.NetworkFront)) {
+    val webTitle = if (pressedPage.metadata.contentType.contains(DotcomContentType.NetworkFront)) {
       "The Guardian"
     } else {
       s"${pressedPage.metadata.webTitle} | The Guardian"
@@ -154,24 +161,33 @@ object TrailsToRss extends implicits.Collections {
     fromFaciaContent(webTitle, faciaContentList, pressedPage.metadata.url, pressedPage.metadata.description)
   }
 
-  def fromFaciaContent(webTitle: String, faciaContentList: Seq[PressedStory], url: String, description: Option[String] = None)(implicit request: RequestHeader): String = {
+  def fromFaciaContent(
+      webTitle: String,
+      faciaContentList: Seq[PressedStory],
+      url: String,
+      description: Option[String] = None,
+  )(implicit request: RequestHeader): String = {
 
     // Feed
     val feed = new SyndFeedImpl
     feed.setFeedType("rss_2.0")
     feed.setTitle(webTitle)
-    feed.setDescription(description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"))
+    feed.setDescription(
+      description.getOrElse("Latest news and features from theguardian.com, the world's leading liberal voice"),
+    )
     feed.setLink("https://www.theguardian.com" + url)
     feed.setLanguage("en-gb")
-    feed.setCopyright(s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}")
+    feed.setCopyright(
+      s"Guardian News and Media Limited or its affiliated companies. All rights reserved. ${DateTime.now.getYear}",
+    )
     feed.setImage(image)
     feed.setPublishedDate(DateTime.now.toDate)
     feed.setEncoding("utf-8")
 
     // Feed: entries
-    val entries = faciaContentList.map{ faciaContent =>
+    val entries = faciaContentList.map { faciaContent =>
       // Entry: categories
-      val categories = faciaContent.tags.keywords.map{ tag =>
+      val categories = faciaContent.tags.keywords.map { tag =>
         val category = new SyndCategoryImpl
         category.setName(tag.name)
         category.setTaxonomyUri(tag.metadata.webUrl)
@@ -181,7 +197,8 @@ object TrailsToRss extends implicits.Collections {
       // Entry: description
       val description = new SyndContentImpl
       val standfirst = faciaContent.fields.standfirst.getOrElse("")
-      val intro = Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
+      val intro =
+        Jsoup.parseBodyFragment(faciaContent.fields.body).select("p:lt(2)").toArray.map(_.toString).mkString("")
 
       val webUrl = faciaContent.metadata.webUrl
       val readMore = s""" <a href="$webUrl">Continue reading...</a>"""

@@ -24,7 +24,9 @@ jest.mock('lib/config', () => ({
 }));
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(callback => callback({ '1': true })),
+    onConsentChange: jest.fn(callback =>
+        callback({ tcfv2: { consents: { '1': true } } })
+    ),
 }));
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
@@ -39,46 +41,78 @@ describe('create ads config', () => {
     it('disables ads in ad-free', () => {
         const result = youtubePlayer.createAdsConfig(
             true, // ad-free
-            false
+            null,
+            null
         );
 
         expect(result.disableAds).toBeTruthy();
     });
 
     it('does not disable ads when we are not in ad-free', () => {
-        const result = youtubePlayer.createAdsConfig(false, false);
+        const result = youtubePlayer.createAdsConfig(false, null, null);
 
         expect(result.disableAds).toBeFalsy();
     });
 
-    it('in non ad-free, returns false nonPersonalizedAds without consent', () => {
-        const result = youtubePlayer.createAdsConfig(false, false);
+    it('in non ad-free, returns false nonPersonalizedAd without consent in TCF', () => {
+        const result = youtubePlayer.createAdsConfig(false, false, null);
 
         if (result.hasOwnProperty('nonPersonalizedAd')) {
             expect(result.nonPersonalizedAd).toBeTruthy();
         }
     });
 
-    it('in non ad-free, returns true nonPersonalizedAds with consent', () => {
-        const result = youtubePlayer.createAdsConfig(
-            false,
-            true // consent
-        );
+    it('in non ad-free, returns true nonPersonalizedAd with consent in TCF', () => {
+        const result = youtubePlayer.createAdsConfig(false, true, null);
 
         expect(result.nonPersonalizedAd).toBeFalsy();
     });
 
-    it('in non ad-free includes adUnit', () => {
-        const result = youtubePlayer.createAdsConfig(false, false);
+    it('in non ad-free, returns no restrictedDataProcessor param in TCF', () => {
+        const result = youtubePlayer.createAdsConfig(false, false, null);
 
-        expect(result.adTagParameters.iu).toEqual('adunit');
+        expect(result.restrictedDataProcessor).toBeUndefined();
+    });
+
+    it('in non ad-free, returns true restrictedDataProcessor without consent in CCPA', () => {
+        const result = youtubePlayer.createAdsConfig(false, null, true);
+
+        if (result.hasOwnProperty('restrictedDataProcessor')) {
+            expect(result.restrictedDataProcessor).toBeTruthy();
+        }
+    });
+
+    it('in non ad-free, returns false restrictedDataProcessor with consent in CCPA', () => {
+        const result = youtubePlayer.createAdsConfig(false, null, false);
+
+        if (result.hasOwnProperty('restrictedDataProcessor')) {
+            expect(result.restrictedDataProcessor).toBeFalsy();
+        }
+    });
+
+    it('in non ad-free, returns no nonPersonalizedAd param in CCPA', () => {
+        const result = youtubePlayer.createAdsConfig(false, null, false);
+
+        expect(result.nonPersonalizedAd).toBeUndefined();
+    });
+
+    it('in non ad-free includes adUnit', () => {
+        const result = youtubePlayer.createAdsConfig(false, null, null);
+
+        expect(result.adTagParameters).toBeDefined();
+        if (result.adTagParameters) {
+            expect(result.adTagParameters.iu).toEqual('adunit');
+        }
     });
 
     it('in non ad-free includes url-escaped targeting params', () => {
-        const result = youtubePlayer.createAdsConfig(false, false);
+        const result = youtubePlayer.createAdsConfig(false, null, null);
 
-        expect(result.adTagParameters.cust_params).toEqual(
-            'key%3Dvalue%26permutive%3D42'
-        );
+        expect(result.adTagParameters).toBeDefined();
+        if (result.adTagParameters) {
+            expect(result.adTagParameters.cust_params).toEqual(
+                'key%3Dvalue%26permutive%3D42'
+            );
+        }
     });
 });

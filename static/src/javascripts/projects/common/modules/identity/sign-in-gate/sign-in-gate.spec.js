@@ -10,10 +10,12 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGateQuartusVariant',
+            id: 'SignInGatePatientia', // Update for each new test
+            dataLinkNames: 'SignInGatePatientia', // Update for each new test
             variantToRun: {
-                id: 'variant',
+                id: 'patientia-variant-1', // Update for each new test
             },
+            ophanComponentId: 'patientia_test',
         },
     ]),
 }));
@@ -36,6 +38,14 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => undefined),
 }));
 
+jest.mock('common/modules/ui/cmp-ui', () => ({
+    get: jest.fn(() => undefined),
+}));
+
+jest.mock('@guardian/consent-management-platform', () => ({
+    get: jest.fn(() => undefined),
+}));
+
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => ''),
 }));
@@ -53,6 +63,21 @@ const fakeConfig: any = require('lib/config');
 const fakeUserPrefs: any = require('common/modules/user-prefs');
 
 describe('Sign in gate test', () => {
+    // making a backup of the navigator method
+    const { navigator } = window;
+
+    beforeEach(() => {
+        delete window.navigator;
+        window.navigator = {
+            userAgent:
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.129 Safari/537.36',
+        };
+    });
+
+    afterEach(() => {
+        window.navigator = navigator;
+    });
+
     describe('canShow returns true', () => {
         it('should return true using default mocks', () =>
             signInGate.canShow().then(show => {
@@ -69,8 +94,9 @@ describe('Sign in gate test', () => {
 
     describe('canShow returns false', () => {
         it('should return false if not in correct test', () => {
-            // mock twice as we have 2 tests
+            // mock for each sign in gate test we have in experiments/tests
             fakeIsInABTestSynchronous
+                .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false)
                 .mockReturnValueOnce(false);
@@ -95,7 +121,10 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGateQuartusVariant-variant': Date.now(),
+                'SignInGatePatientia-patientia-variant-1': Date.now(),
+            });
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
             });
         });
 
@@ -108,6 +137,14 @@ describe('Sign in gate test', () => {
 
         it('should return false if there is an invalid article type or section detected', () => {
             fakeConfig.get.mockReturnValueOnce(true);
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if its an ios 9 device', () => {
+            window.navigator.userAgent =
+                'Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/46.0.2490.73 Mobile/13C143 Safari/600.1.4 (000718)';
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });

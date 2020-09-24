@@ -10,11 +10,8 @@ import akka.actor.ActorSystem
 class DfpApiValidationTest extends FlatSpec with Matchers {
 
   private def lineItem(adUnitIds: Seq[String]): GuLineItem = {
-    val adUnits = adUnitIds.map( adUnitId => {
-      GuAdUnit(
-        id = adUnitId,
-        path = Nil,
-        status = GuAdUnit.ACTIVE)
+    val adUnits = adUnitIds.map(adUnitId => {
+      GuAdUnit(id = adUnitId, path = Nil, status = GuAdUnit.ACTIVE)
     })
 
     GuLineItem(
@@ -34,8 +31,10 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
         adUnitsExcluded = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
-        customTargetSets = Nil),
-      lastModified = DateTime.now.withTimeAtStartOfDay)
+        customTargetSets = Nil,
+      ),
+      lastModified = DateTime.now.withTimeAtStartOfDay,
+    )
   }
 
   private def makeDfpLineItem(adUnitIds: Seq[String]): LineItem = {
@@ -43,7 +42,7 @@ class DfpApiValidationTest extends FlatSpec with Matchers {
     val targeting = new Targeting()
     val inventoryTargeting = new InventoryTargeting()
 
-    val adUnitTargeting = adUnitIds.map( adUnit => {
+    val adUnitTargeting = adUnitIds.map(adUnit => {
       val adUnitTarget = new AdUnitTargeting()
       adUnitTarget.setAdUnitId(adUnit)
       adUnitTarget

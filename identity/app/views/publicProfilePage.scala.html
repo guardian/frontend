@@ -22,14 +22,6 @@
                     }
                 </div>
             </div>
-            @user.publicFields.aboutMe.map { aboutMe =>
-                <div class="user-profile__about">
-                    <p>@aboutMe</p>
-                    @user.publicFields.interests.filter(_!="").map { interests =>
-                        <p><b>Interests:</b> @interests</p>
-                    }
-                </div>
-            }
         </div>
 
 

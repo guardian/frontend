@@ -213,13 +213,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-item__headline {
                 color: #ffffff;
             }
-        }
 
-        &:hover {
-            background-color: darken($story-package-card-colour, 5%);
-
-            .fc-trail__count--commentcount {
+            &:hover {
                 background-color: darken($story-package-card-colour, 5%);
+
+                .fc-trail__count--commentcount {
+                    background-color: darken($story-package-card-colour, 5%);
+                }
             }
         }
 

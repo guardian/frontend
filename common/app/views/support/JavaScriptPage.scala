@@ -15,7 +15,7 @@ object JavaScriptPage {
 
   def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
 
-  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String,JsValue] = {
+  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String, JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -45,26 +45,28 @@ object JavaScriptPage {
       "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
-        case _: CommercialExpiryPage => true
-        case _ => false
+        case _: CommercialExpiryPage                            => true
+        case _                                                  => false
       }),
       "sharedAdTargeting" -> Json.toJson(toMap(metaData.commercial.map(_.adTargeting(edition)) getOrElse Set.empty)),
       "pbIndexSites" -> Json.toJson(metaData.commercial.flatMap(_.prebidIndexSites).getOrElse(Set.empty)),
-      "hbImpl" -> JsObject(Seq(
+      "hbImpl" -> JsObject(
+        Seq(
           "prebid" -> JsBoolean(prebidSwitch.isSwitchedOn),
           "a9" -> JsBoolean(a9Switch.isSwitchedOn),
-      )),
-      "isSensitive" -> JsBoolean(page.metadata.sensitive)
+        ),
+      ),
+      "isSensitive" -> JsBoolean(page.metadata.sensitive),
     ) ++ sponsorshipType
 
     val journalismMetaData = Map(
-      "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl)
+      "calloutsUrl" -> JsString(Configuration.journalism.calloutsUrl),
     )
 
     val javascriptConfig = page match {
-      case c: ContentPage => c.getJavascriptConfig
+      case c: ContentPage    => c.getJavascriptConfig
       case s: StandalonePage => s.getJavascriptConfig
-      case _ => Map()
+      case _                 => Map()
     }
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
@@ -82,7 +84,8 @@ object JavaScriptPage {
       ("membershipAccess", JsString(membershipAccess)),
       ("idWebAppUrl", JsString(Configuration.id.oauthUrl)),
       ("cardStyle", JsString(cardStyle)),
-      ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife")))
+      ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
+      ("brazeApiKey", JsString(Configuration.braze.apiKey)),
     )
   }
 }

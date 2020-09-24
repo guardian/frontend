@@ -20,15 +20,16 @@ import services.dotcomponents.ArticlePicker.{forall, primaryFeatures}
 
 object StoryHtmlPage {
 
-  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles = new Styles {
-    override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
-    override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
-    override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
-    override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
-    override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
-    override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
-    override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
-  }
+  def allStyles(implicit applicationContext: ApplicationContext, request: RequestHeader): Styles =
+    new Styles {
+      override def criticalCssLink: Html = criticalStyleLink(ContentCSSFile)
+      override def criticalCssInline: Html = criticalStyleInline(Html(common.Assets.css.head(None)))
+      override def linkCss: Html = stylesheetLink(s"stylesheets/$ContentCSSFile.css")
+      override def oldIECriticalCss: Html = stylesheetLink(s"stylesheets/old-ie.head.$ContentCSSFile.css")
+      override def oldIELinkCss: Html = stylesheetLink(s"stylesheets/old-ie.$ContentCSSFile.css")
+      override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$ContentCSSFile.css")
+      override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
+    }
 
   def htmlDcrCouldRender(implicit pageWithStoryPackage: PageWithStoryPackage, request: RequestHeader): Html = {
     val thisDcrCouldRender: Boolean = forall(primaryFeatures(pageWithStoryPackage, request))
@@ -36,14 +37,19 @@ object StoryHtmlPage {
   }
 
   def html(
-    header: Html,
-    content: Html,
-    maybeHeadContent: Option[Html] = None
-  )(implicit page: Page, request: RequestHeader, applicationContext: ApplicationContext, pageWithStoryPackage: PageWithStoryPackage): Html = {
+      header: Html,
+      content: Html,
+      maybeHeadContent: Option[Html] = None,
+  )(implicit
+      page: Page,
+      request: RequestHeader,
+      applicationContext: ApplicationContext,
+      pageWithStoryPackage: PageWithStoryPackage,
+  ): Html = {
 
     val head: Html = maybeHeadContent.getOrElse(Html(""))
     val bodyClasses: Map[String, Boolean] = defaultBodyClasses() ++ Map(
-      ("is-immersive", Page.getContent(page).exists(_.content.isImmersive))
+      ("is-immersive", Page.getContent(page).exists(_.content.isImmersive)),
     )
 
     htmlTag(
@@ -54,8 +60,9 @@ object StoryHtmlPage {
         head,
         styles(allStyles),
         fixIEReferenceErrors(),
+        checkModuleSupport(),
         inlineJSBlocking(),
-        htmlDcrCouldRender(pageWithStoryPackage, request)
+        htmlDcrCouldRender(pageWithStoryPackage, request),
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
@@ -70,11 +77,10 @@ object StoryHtmlPage {
         footer(),
         message(),
         inlineJSNonBlocking(),
-        analytics.base()
+        analytics.base(),
       ),
-      devTakeShot()
+      devTakeShot(),
     )
   }
 
 }
-

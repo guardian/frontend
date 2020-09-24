@@ -44,7 +44,7 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import readerRevenueBanners from 'common/modules/commercial/reader-revenue-banner-selector';
+import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
 import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
@@ -55,10 +55,12 @@ import ophan from 'ophan/ng';
 import { adFreeBanner } from 'common/modules/commercial/ad-free-banner';
 import { init as initReaderRevenueDevUtils } from 'common/modules/commercial/reader-revenue-dev-utils';
 import {
-    consentManagementPlatformUi,
+    cmpBannerCandidate,
     addPrivacySettingsLink,
 } from 'common/modules/ui/cmp-ui';
 import { signInGate } from 'common/modules/identity/sign-in-gate';
+import { brazeBanner } from 'commercial/modules/brazeBanner';
+import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -303,14 +305,16 @@ const initialiseEmail = (): void => {
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
-        consentManagementPlatformUi,
+        cmpBannerCandidate,
         breakingNews,
         signInGate,
         membershipBanner,
-        ...readerRevenueBanners,
+        readerRevenueBanner,
+        subscriptionBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
+        brazeBanner,
     ];
 
     initBannerPicker(bannerList);

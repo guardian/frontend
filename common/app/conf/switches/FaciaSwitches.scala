@@ -12,7 +12,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FrontPressJobSwitch = Switch(
@@ -22,7 +22,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FrontPressJobSwitchStandardFrequency = Switch(
@@ -32,7 +32,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FaciaPressOnDemand = Switch(
@@ -42,7 +42,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FaciaInlineEmbeds = Switch(
@@ -52,7 +52,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FaciaPressStatusNotifications = Switch(
@@ -62,7 +62,7 @@ trait FaciaSwitches {
     owners = Seq(Owner.withGithub("piuccio")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
 }

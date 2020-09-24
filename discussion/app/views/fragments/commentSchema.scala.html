@@ -5,7 +5,7 @@
 
 @import common.Edition
 @import discussion.model.Comment
-@import views.support.{BulletCleaner, InBodyLinkCleaner, Format}
+@import views.support.{BulletCleaner, InBodyLinkCleaner, GuDateFormatLegacy}
 
 <div class="comment comment--speechy" itemscope itemtype="http://schema.org/Comment">
     <h2 class="content__meta-heading">Featured comment</h2>
@@ -21,7 +21,7 @@
         <div class="comment__meta">
             @fragments.person(comment.profile)
             <time class="comment__datecreated" datetime="@comment.date.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@comment.date.getMillis">
-                @Format(comment.date, "d MMM y")
+                @GuDateFormatLegacy(comment.date, "d MMM y")
             </time>
         </div>
         @if(showMore){<a href="#comments" data-link-name="CTA Top comment bottom read more" class="comments-link tone-colour">See more comments<i class="i i-comment-light-grey"></i></a>}

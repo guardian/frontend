@@ -109,7 +109,9 @@ $teal-green: #006d67;
 }
 
 .site-message--subscription-banner__no-wrap {
-    white-space: nowrap;
+    @include mq($from: mobileLandscape) {
+        white-space: nowrap;
+    }
 }
 
 .site-message--subscription-banner__cta-container {
@@ -335,8 +337,6 @@ $teal-green: #006d67;
 
 /*********************** footer hacks *********************/
 
-
-
 .subscription-banner--holder
 .site-message__copy.js-site-message-copy.u-cf {
     margin: 0;
@@ -375,7 +375,7 @@ $gw-banner-background-color: #3e474a;
         background-color: $gw-banner-background-color;
 
         @include mq($from: tablet) {
-            padding: 20px 25px;
+            padding: 5px 25px 20px;
         }
 
         @include mq($from: wide) {
@@ -384,6 +384,7 @@ $gw-banner-background-color: #3e474a;
     }
 
     .site-message--subscription-banner__description {
+        margin-bottom: 25px;
 
         @include mq($from: tablet) {
             width: 298px;
@@ -395,23 +396,12 @@ $gw-banner-background-color: #3e474a;
         }
 
         @media (min-width: 890px) {
-            width: 515px;
-        }
-        @include mq($from: leftCol) {
-            width: 47%;
-        }
-
-        @media (min-width: 1177px) {
-            width: 46%;
+            width: 48%;
         }
 
         @include mq($from: wide) {
-            width: 43%;
+            width: 50%;
             margin-bottom: 39px;
-        }
-
-        @media (min-width: 1330px) {
-            width: 47%;
         }
 
         p {
@@ -472,56 +462,61 @@ $gw-banner-background-color: #3e474a;
 
     .site-message--packshot-container {
 
-        margin: 0 0 -9px;
-
         @include mq($from: tablet) {
-            width: 378px;
-            bottom: -10px;
+            width: 400px;
         }
 
         @include mq($from: desktop) {
-            margin-right: 90px;
+            margin-right: 70px;
         }
 
         @include mq($from: leftCol) {
             width: 555px;
+            margin-right: 100px;
         }
 
         @include mq($from: wide) {
-            bottom: -28px;
-            margin-right: 120px;
+            width: 545px;
+            margin-right: 100px;
         }
 
         img {
-            margin-top: 3px;
-            max-width: 293px;
+            display: block;
+            max-width: 340px;
+            margin-bottom: -70px;
+            margin-top: -35px;
 
-            @include mq($from: tablet) {
-                max-width: 378px;
-                margin-right: 0;
-                margin-left: auto;
+            @include mq($from: mobileMedium) {
+                max-width: 350px;
+                margin-bottom: -85px;
+                margin-top: -35px;
             }
 
-            @media (min-width: 790px) {
-                width: 350px;
+            @include mq($from: phablet) {
+                max-width: 450px;
+                margin-right: -20px;
+                margin-top: -150px;
+                margin-bottom: -110px;
             }
 
-            @media (min-width: 890px) {
-                width: 321px;
+            @media (min-width: 740px) {
+                max-width: 480px;
+                margin-bottom: -20px;
             }
 
             @include mq($from: desktop) {
-                width: 340px;
+                width: 420px;
             }
 
             @include mq($from: leftCol) {
-                width: 465px;
+                width: 425px;
                 max-width: 465px;
             }
 
             @include mq($from: wide) {
-                width: 555px;
-                max-width: 555px;
+                width: 545px;
+                max-width: 545px;
+                margin-bottom: -50px;
             }
         }
     }
@@ -570,6 +565,14 @@ $gw-banner-background-color: #3e474a;
         text-align: left;
         font-size: 15px;
         margin-bottom: 3px;
+
+        @include mq($from: phablet) {
+            max-width: 220px;
+        }
+
+        @include mq($from: tablet) {
+            max-width: 100%;
+        }
 
         @include mq($from: wide) {
             margin-top: 5px;

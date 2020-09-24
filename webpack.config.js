@@ -92,16 +92,29 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                // TODO: @guardian/dotcom-rendering is not properly published or pre-transpiled, so we have to
-                // transpile it as part of the frontend build step for now
-                exclude: /(node_modules(?!\/@guardian\/dotcom-rendering)|vendor\/)/,
+                test: /(\.js)|(\.mjs)$/,
+                exclude: [
+                    {
+                        test: /node_modules/,
+                        exclude: [
+                            /@guardian\/(?!(automat-modules))/,
+                            /dynamic-import-polyfill/,
+                        ],
+                    },
+                    path.resolve(__dirname, 'static/vendor'),
+                ],
                 loader: 'babel-loader',
             },
             {
                 test: /\.svg$/,
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
+            },
+            {
+                include: path.resolve(__dirname, "node_modules/preact-x"),
+                resolve: {
+                    alias: { 'preact': 'preact-x' },
+                }
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This

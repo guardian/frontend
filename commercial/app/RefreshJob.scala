@@ -26,7 +26,8 @@ trait RefreshJob extends Logging {
   }
 }
 
-class IndustriesRefresh(industries: Industries, val jobs: JobScheduler)(implicit executionContext: ExecutionContext) extends RefreshJob {
+class IndustriesRefresh(industries: Industries, val jobs: JobScheduler)(implicit executionContext: ExecutionContext)
+    extends RefreshJob {
 
   val name: String = "Industries"
 

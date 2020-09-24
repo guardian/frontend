@@ -11,6 +11,8 @@ help:
 list: # PRIVATE
 	@node tools/messages.js describeMakefile --all
 
+# Add phony targets
+.PHONY: sbt
 
 
 # *********************** SETUP ***********************
@@ -41,6 +43,9 @@ check-node-env: # PRIVATE
 # Uses port 3000 insead of 9000.
 watch: compile-watch
 	@./dev/watch.js
+
+sbt: # PRIVATE
+	./sbt
 
 # *********************** ASSETS ***********************
 

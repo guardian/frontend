@@ -3,6 +3,8 @@
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
 import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {addCookie} from "lib/cookies";
+import {CONTRIBUTIONS_REMINDER_SIGNED_UP} from "common/modules/commercial/user-features";
 
 type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
@@ -20,7 +22,7 @@ type Fields = {
 
 const isValidEmail = (email: string) => {
     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-    return re.test(email);
+    return (email.replace(/\s+/g, '') === email) ? re.test(email) : false
 };
 
 const getFields = (): ?Fields => {
@@ -106,6 +108,13 @@ const epicReminderEmailSignup = (fields: Fields) => {
                 fields.closeButton.style.display = 'none';
                 fields.titleField.innerHTML =
                     'Thank you! Your reminder is set.';
+
+                addCookie(
+                    CONTRIBUTIONS_REMINDER_SIGNED_UP.name,
+                    new Date().getTime().toString(),
+                    CONTRIBUTIONS_REMINDER_SIGNED_UP.daysToLive
+                );
+
                 break;
             case 'failure':
                 fields.submitButton.innerHTML = 'Something went wrong';
@@ -120,7 +129,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
     const sendReminderEvent = (): Promise<Response> => {
         const isProd = config.get('page.isProd');
 
-        const email = fields.emailInput.value || '';
+        const email = fields.emailInput.value.trim() || '';
 
         if (!isValidEmail(email)) {
             setState('invalid');
@@ -175,9 +184,8 @@ const epicReminderEmailSignup = (fields: Fields) => {
             ? ctaAttribute.toLowerCase().replace(/\s/g, '-')
             : '';
 
-        // For second round of testing, the events will be either (tested):
-        // precontribution-reminder-prompt-copy-remind-me-in-july or
-        // precontribution-reminder-prompt-copy-support-us-later
+        // For second round of testing, the events will be
+        // precontribution-reminder-prompt-copy-remind-me-in-september
         submitClickEvent({
             component: {
                 componentType: 'ACQUISITIONS_OTHER',

@@ -24,7 +24,8 @@ class EditionTest extends FlatSpec with Matchers {
 
   it should "resolve correct edition from cookie" in {
 
-    val request = FakeRequest().withCookies(Cookie("GU_EDITION", "uS"))
+    val request = FakeRequest()
+      .withCookies(Cookie("GU_EDITION", "uS"))
       .withHeaders("host" -> "m.guardian.co.uk")
 
     Edition(request) should be(Us)
@@ -43,6 +44,6 @@ class EditionTest extends FlatSpec with Matchers {
     val defaultSections = Edition.defaultEdition.editionalisedSections.sorted
     val allSections = Edition.all.flatMap(_.editionalisedSections).distinct.sorted
 
-    allSections should equal (defaultSections)
+    allSections should equal(defaultSections)
   }
 }

@@ -9,6 +9,7 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
 // types
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
+import {createAuthenticationComponentEventParams} from "common/modules/identity/auth-component-event-params";
 
 export type BannerTracking = {
     signInUrl: string,
@@ -28,7 +29,7 @@ const CLICK_EVENT_CLOSE_BUTTON = `${BANNER_KEY} close`;
 const CLICK_EVENT_SIGN_IN = `${BANNER_KEY} sign in`;
 const OPHAN_EVENT_ID = 'acquisitions-subscription-banner';
 const CAMPAIGN_CODE = 'gdnwb_copts_banner_subscribe_SubscriptionBanner_digital';
-const AUS_CAMPAIGN_CODE =
+const GUARDIAN_WEEKLY_CAMPAIGN_CODE =
     'gdnwb_copts_banner_subscribe_SubscriptionBanner_gWeekly';
 
 const subscriptionHostname: string = config.get('page.supportUrl');
@@ -38,26 +39,26 @@ const createTracking = (
     region: ReaderRevenueRegion,
     defaultTracking: BannerTracking
 ) => {
-    const isAustralianRegion = region === 'australia';
+    const isGuardianWeeklyRegion = (region === 'australia' || region === 'rest-of-world');
 
-    const australianTracking = {
-        signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_gWeekly&CMP_TU=mrtn&CMP_BUNIT=subs`,
+    const guardianWeeklyTracking = {
+        signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_gWeekly&CMP_TU=mrtn&CMP_BUNIT=subs&${createAuthenticationComponentEventParams('subscription_sign_in_banner')}`,
         subscriptionUrl: addTrackingCodesToUrl({
             base: `${subscriptionHostname}/subscribe/weekly`,
             componentType: COMPONENT_TYPE,
             componentId: OPHAN_EVENT_ID,
-            campaignCode: AUS_CAMPAIGN_CODE,
+            campaignCode: GUARDIAN_WEEKLY_CAMPAIGN_CODE,
         }),
     };
 
-    return isAustralianRegion
-        ? { ...defaultTracking, ...australianTracking }
+    return isGuardianWeeklyRegion
+        ? { ...defaultTracking, ...guardianWeeklyTracking }
         : defaultTracking;
 };
 
 export const bannerTracking = (region: ReaderRevenueRegion) => {
     const defaultTracking = {
-        signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Existing&CMP_TU=mrtn&CMP_BUNIT=subs`,
+        signInUrl: `${signinHostname}/signin?utm_source=gdnwb&utm_medium=banner&utm_campaign=SubsBanner_Existing&CMP_TU=mrtn&CMP_BUNIT=subs&${createAuthenticationComponentEventParams('subscription_sign_in_banner')}`,
         gaTracking: () => trackNonClickInteraction(DISPLAY_EVENT_KEY),
         subscriptionUrl: addTrackingCodesToUrl({
             base: `${subscriptionHostname}/subscribe/digital`,

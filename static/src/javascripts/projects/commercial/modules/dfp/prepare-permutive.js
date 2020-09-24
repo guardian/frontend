@@ -14,6 +14,7 @@ type PermutiveSchema = {
         keywords?: Array<string>,
         publishedAt?: string,
         series?: string,
+        tone?: Array<string>,
     },
     user: {
         edition?: string,
@@ -60,6 +61,7 @@ const generatePayload = (
         webPublicationDate,
         series,
         edition,
+        toneIds,
     } = page;
 
     const safeAuthors = (author && typeof author === 'string'
@@ -74,6 +76,10 @@ const generatePayload = (
         webPublicationDate && typeof webPublicationDate === 'number'
             ? new Date(webPublicationDate).toISOString()
             : '';
+    const safeToneIds = (toneIds && typeof toneIds === 'string'
+            ? toneIds.split(',')
+            : []
+    ).map(str => str.trim());
     const cleanPayload = removeEmpty({
         content: {
             premium: isPaidContent,
@@ -85,6 +91,7 @@ const generatePayload = (
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
             series,
+            tone: safeToneIds,
         },
         user: {
             edition,

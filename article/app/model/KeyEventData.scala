@@ -9,7 +9,8 @@ object KeyEventData {
   // just for convenience for use from the templates
   def apply(maybeBlocks: Option[Blocks], timezone: DateTimeZone): Seq[KeyEventData] = {
 
-    val blocks = maybeBlocks.toSeq.flatMap(blocks => blocks.requestedBodyBlocks.getOrElse(Canonical.timeline, blocks.body))
+    val blocks =
+      maybeBlocks.toSeq.flatMap(blocks => blocks.requestedBodyBlocks.getOrElse(Canonical.timeline, blocks.body))
 
     apply(blocks, timezone)
   }
@@ -19,7 +20,8 @@ object KeyEventData {
     val TimelineMaxEntries = 7
     val latestSummary = blocks.find(_.eventType == SummaryEvent)
     val keyEvents = blocks.filter(_.eventType == KeyEvent)
-    val bodyBlocks = (latestSummary.toSeq ++ keyEvents).sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
+    val bodyBlocks =
+      (latestSummary.toSeq ++ keyEvents).sortBy(_.publishedCreatedTimestamp).reverse.take(TimelineMaxEntries)
 
     bodyBlocks.map { bodyBlock =>
       KeyEventData(bodyBlock.id, bodyBlock.referenceDateForDisplay().map(LiveBlogDate(_, timezone)), bodyBlock.title)

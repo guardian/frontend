@@ -1,9 +1,9 @@
 // @flow
-import config from 'lib/config';
 import { appendToLastElement } from 'lib/array-utils';
 import { acquisitionsEpicTickerTemplate } from 'common/modules/commercial/templates/acquisitions-epic-ticker';
 import { acquisitionsEpicReminderTemplate } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
 const buildFooter = (footer: string[]): string =>
     `<div class="contributions__epic-footer">
@@ -15,10 +15,17 @@ const buildImage = (url: string): string =>
         <img src="${url}" alt="Image for Guardian contributions message"/>
     </div>`;
 
-export const defaultReminderFields: ReminderFields = {
-    reminderCTA: 'Remind me in July',
-    reminderDate: '2020-07-19 00:00:00',
-    reminderDateAsString: 'July 2020',
+// Temporarily hard-coded while we decide on requirement
+const defaultReminderFields: ReminderFields = {
+    reminderCTA: 'Remind me in October',
+    reminderDate: '2020-10-14 00:00:00',
+    reminderDateAsString: 'October 2020',
+};
+const defaultReminderCutoff = new Date('2020-09-14');
+
+export const getDefaultReminderFields = (): ReminderFields | null => {
+    const now = new Date();
+    return now <= defaultReminderCutoff ? defaultReminderFields : null;
 };
 
 export const acquisitionsEpicControlTemplate = ({
@@ -46,9 +53,7 @@ export const acquisitionsEpicControlTemplate = ({
     ).join(' ');
 
 
-    const reminderFields = showReminderFields || defaultReminderFields;
-
-    const showReminder = config.get('switches.showContributionReminder');
+    const reminderFields = showReminderFields || getDefaultReminderFields();
 
     return `<div class="contributions__epic ${extraClasses}" data-component="${componentName}" data-link-name="epic">
         <div class="${wrapperClass}">
@@ -76,7 +81,7 @@ export const acquisitionsEpicControlTemplate = ({
 
             ${footer ? buildFooter(footer) : ''}
 
-            ${showReminder ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
+            ${canShowContributionsReminderFeature() && reminderFields ? acquisitionsEpicReminderTemplate(reminderFields) : ''}
         </div>
     </div>`;
 };

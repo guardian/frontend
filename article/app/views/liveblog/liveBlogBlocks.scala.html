@@ -1,7 +1,7 @@
 @import org.joda.time.DateTimeZone
 @import model.Article
 @import model.liveblog.{LiveBlogDate,BodyBlock}
-@import views.BodyCleaner
+@import views.BodyProcessor
 @import model.DotcomContentType
 @(blocks: Seq[BodyBlock], article: Article, timezone: DateTimeZone)(implicit request: RequestHeader, context: model.ApplicationContext)
 
@@ -49,7 +49,7 @@
         }
 
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
-        @BodyCleaner(article, block.bodyHtml)
+        @BodyProcessor(article, block.bodyHtml)
         </div>
         @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
         <p class="block-time updated-time">Updated

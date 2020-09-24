@@ -29,13 +29,14 @@ sealed trait ElementProfile {
     maybeAsset.flatMap(_.url).map(ImgSrc(_, this))
 
   def bestFor(image: ImageMedia): Option[ImageAsset] = {
-    if(!ImageServerSwitch.isSwitchedOn) {
+    if (!ImageServerSwitch.isSwitchedOn) {
       val sortedCrops = image.imageCrops.sortBy(-_.width)
-      width.flatMap{ desiredWidth =>
-        sortedCrops.find(_.width >= desiredWidth)
-      }.orElse(image.largestImage)
-    }
-    else image.largestImage
+      width
+        .flatMap { desiredWidth =>
+          sortedCrops.find(_.width >= desiredWidth)
+        }
+        .orElse(image.largestImage)
+    } else image.largestImage
   }
   def bestSrcFor(image: ImageMedia): Option[String] = toSrc(bestFor(image))
 
@@ -46,7 +47,8 @@ sealed trait ElementProfile {
     bestFor(image).flatMap(_.altText)
 
   // NOTE - if you modify this in any way there is a decent chance that you decache all our images :(
-  val qualityparam: String = if (hidpi) {"quality=45"} else {"quality=85"}
+  val qualityparam: String = if (hidpi) { "quality=45" }
+  else { "quality=85" }
   val autoParam: String = if (autoFormat) "auto=format" else ""
   val fitParam = "fit=max"
   val dprParam: String = if (hidpi) {
@@ -55,38 +57,41 @@ sealed trait ElementProfile {
     } else {
       "dpr=2"
     }
-  } else {""}
+  } else { "" }
   val heightParam: String = height.map(pixels => s"height=$pixels").getOrElse("")
   val widthParam: String = width.map(pixels => s"width=$pixels").getOrElse("")
   val sharpenParam: String = ""
 
   def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, sharpenParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, sharpenParam)
+      .filter(_.nonEmpty)
+      .mkString("&")
     s"?$params"
   }
 
 }
 
 case class ImageProfile(
-  override val width: Option[Int] = None,
-  override val height: Option[Int] = None,
-  override val hidpi: Boolean = false,
-  override val compression: Int = 95,
-  override val isPng: Boolean = false,
-  override val autoFormat: Boolean = true) extends ElementProfile
+    override val width: Option[Int] = None,
+    override val height: Option[Int] = None,
+    override val hidpi: Boolean = false,
+    override val compression: Int = 95,
+    override val isPng: Boolean = false,
+    override val autoFormat: Boolean = true,
+) extends ElementProfile
 
 object VideoProfile {
-  lazy val ratioHD = new Fraction(16,9)
+  lazy val ratioHD = new Fraction(16, 9)
 }
 
 case class VideoProfile(
-  override val width: Some[Int],
-  override val height: Option[Int] = None,
-  override val hidpi: Boolean = false,
-  override val compression: Int = 95,
-  override val isPng: Boolean = false,
-  override val autoFormat: Boolean = true) extends ElementProfile {
-}
+    override val width: Some[Int],
+    override val height: Option[Int] = None,
+    override val hidpi: Boolean = false,
+    override val compression: Int = 95,
+    override val isPng: Boolean = false,
+    override val autoFormat: Boolean = true,
+) extends ElementProfile {}
 
 case class SrcSet(src: String, width: Int) {
   def asSrcSetString: String = {
@@ -129,9 +134,9 @@ object FourByThree extends ImageProfile(width = Some(1200), height = Some(900)) 
 }
 
 class ShareImage(
-  overlayUrlParam: String,
-  shouldIncludeOverlay: Boolean,
-  shouldUpscale: Boolean = false
+    overlayUrlParam: String,
+    shouldIncludeOverlay: Boolean,
+    shouldUpscale: Boolean = false,
 ) extends ImageProfile(width = Some(1200)) {
 
   override val heightParam = "height=630"
@@ -140,8 +145,18 @@ class ShareImage(
   val overlayWidthParam = "overlay-width=100p"
 
   override def resizeString: String = {
-    if(shouldIncludeOverlay) {
-      val params = Seq(widthParam, heightParam, qualityparam, autoParam, fitParam, dprParam, overlayAlignParam, overlayWidthParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
+    if (shouldIncludeOverlay) {
+      val params = Seq(
+        widthParam,
+        heightParam,
+        qualityparam,
+        autoParam,
+        fitParam,
+        dprParam,
+        overlayAlignParam,
+        overlayWidthParam,
+        overlayUrlParam,
+      ).filter(_.nonEmpty).mkString("&")
 
       if (shouldUpscale) s"?$params&enable=upscale" else s"?$params"
     } else {
@@ -170,35 +185,52 @@ trait OverlayBase64 {
 }
 
 object OpenGraphImage extends OverlayBase64 {
-  def forCategory(category: ShareImageCategory, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ElementProfile = {
+  def forCategory(
+      category: ShareImageCategory,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean = false,
+  ): ElementProfile = {
     category match {
-      case GuardianDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", shouldIncludeOverlay, shouldUpscale)
-      case ObserverDefault => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", shouldIncludeOverlay, shouldUpscale)
-      case ObserverOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
-      case GuardianOpinion => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
-      case Live => new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", shouldIncludeOverlay, shouldUpscale)
+      case GuardianDefault =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-default.png")}", shouldIncludeOverlay, shouldUpscale)
+      case ObserverDefault =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("to-default.png")}", shouldIncludeOverlay, shouldUpscale)
+      case ObserverOpinion =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("to-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
+      case GuardianOpinion =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-opinions.png")}", shouldIncludeOverlay, shouldUpscale)
+      case Live =>
+        new ShareImage(s"overlay-base64=${overlayUrlBase64("tg-live.png")}", shouldIncludeOverlay, shouldUpscale)
       case CommentObserverOldContent(year) => contentAgeNoticeCommentObserver(year, shouldIncludeOverlay, shouldUpscale)
       case CommentGuardianOldContent(year) => contentAgeNoticeComment(year, shouldIncludeOverlay, shouldUpscale)
-      case ObserverOldContent(year) => contentAgeNoticeObserver(year, shouldIncludeOverlay, shouldUpscale)
-      case GuardianOldContent(year) => contentAgeNotice(year, shouldIncludeOverlay, shouldUpscale)
-      case ObserverStarRating(rating) => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
-      case GuardianStarRating(rating) => starRating(rating, shouldIncludeOverlay, shouldUpscale)
-      case Paid => Item700
+      case ObserverOldContent(year)        => contentAgeNoticeObserver(year, shouldIncludeOverlay, shouldUpscale)
+      case GuardianOldContent(year)        => contentAgeNotice(year, shouldIncludeOverlay, shouldUpscale)
+      case ObserverStarRating(rating)      => starRatingObserver(rating, shouldIncludeOverlay, shouldUpscale)
+      case GuardianStarRating(rating)      => starRating(rating, shouldIncludeOverlay, shouldUpscale)
+      case Paid                            => Item700
     }
   }
 
-  private[this] def starRating(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
+  private[this] def starRating(
+      rating: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean = false,
+  ): ShareImage = {
     val image = rating match {
       case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"tg-review-$x.png")}"
-      case _ => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
+      case _                      => s"overlay-base64=${overlayUrlBase64("tg-default.png")}"
     }
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def starRatingObserver(rating: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
+  private[this] def starRatingObserver(
+      rating: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean = false,
+  ): ShareImage = {
     val image = rating match {
       case x if 0 to 5 contains x => s"overlay-base64=${overlayUrlBase64(s"tg-review-$x.png")}"
-      case _ => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
+      case _                      => s"overlay-base64=${overlayUrlBase64("to-default.png")}"
     }
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
@@ -212,22 +244,38 @@ object OpenGraphImage extends OverlayBase64 {
     }
   }
 
-  private[this] def contentAgeNotice(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
+  private[this] def contentAgeNotice(
+      publicationYear: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean = false,
+  ): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg", publicationYear))}"
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def contentAgeNoticeObserver(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean): ShareImage = {
+  private[this] def contentAgeNoticeObserver(
+      publicationYear: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean,
+  ): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to", publicationYear))}"
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def contentAgeNoticeComment(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean = false): ShareImage = {
+  private[this] def contentAgeNoticeComment(
+      publicationYear: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean = false,
+  ): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("tg-opinions", publicationYear))}"
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
 
-  private[this] def contentAgeNoticeCommentObserver(publicationYear: Int, shouldIncludeOverlay: Boolean, shouldUpscale: Boolean): ShareImage = {
+  private[this] def contentAgeNoticeCommentObserver(
+      publicationYear: Int,
+      shouldIncludeOverlay: Boolean,
+      shouldUpscale: Boolean,
+  ): ShareImage = {
     val image = s"overlay-base64=${overlayUrlBase64(getContentAgeFileName("to-opinions", publicationYear))}"
     new ShareImage(image, shouldIncludeOverlay, shouldUpscale)
   }
@@ -240,7 +288,9 @@ object EmailImage extends ImageProfile(width = Some(EmailImageParams.articleFull
   val knownWidth: Int = width.get
 }
 
-object EmailVideoImage extends ImageProfile(width = Some(EmailImageParams.videoFullWidth), autoFormat = false) with OverlayBase64 {
+object EmailVideoImage
+    extends ImageProfile(width = Some(EmailImageParams.videoFullWidth), autoFormat = false)
+    with OverlayBase64 {
   override val qualityparam: String = EmailImage.qualityparam
   override val dprParam: String = EmailImageParams.dprParam
   val overlayAlignParam = "overlay-align=bottom,left"
@@ -248,7 +298,9 @@ object EmailVideoImage extends ImageProfile(width = Some(EmailImageParams.videoF
   val knownWidth: Int = width.get
 
   override def resizeString: String = {
-    val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam).filter(_.nonEmpty).mkString("&")
+    val params = Seq(widthParam, heightParam, qualityparam, autoParam, dprParam, overlayAlignParam, overlayUrlParam)
+      .filter(_.nonEmpty)
+      .mkString("&")
     s"?$params"
   }
 }
@@ -285,26 +337,28 @@ object ImgSrc extends Logging with implicits.Strings {
     "static.guim.co.uk" -> "static",
     "static-secure.guim.co.uk" -> "static",
     "media.guim.co.uk" -> "media",
-    "uploads.guim.co.uk" -> "uploads"
+    "uploads.guim.co.uk" -> "uploads",
   )
 
   private val supportedImages = Set(".jpg", ".jpeg", ".png")
 
   def apply(
-    url: String,
-    imageType: ElementProfile
+      url: String,
+      imageType: ElementProfile,
   ): String = {
     try {
       val uri = new URI(url.trim.encodeURI)
       val isSupportedImage = supportedImages.exists(extension => uri.getPath.toLowerCase.endsWith(extension))
 
-      hostPrefixMapping.get(uri.getHost)
+      hostPrefixMapping
+        .get(uri.getHost)
         .filter(const(ImageServerSwitch.isSwitchedOn))
         .filter(const(isSupportedImage))
         .map { hostPrefix =>
           val signedPath = ImageUrlSigner.sign(s"${uri.getRawPath}${imageType.resizeString}")
           s"$imageServiceHost/img/$hostPrefix$signedPath"
-        }.getOrElse(url)
+        }
+        .getOrElse(url)
     } catch {
       case error: URISyntaxException =>
         log.error("Unable to decode image url", error)
@@ -313,30 +367,35 @@ object ImgSrc extends Logging with implicits.Strings {
   }
 
   def srcset(imageContainer: ImageMedia, widths: WidthsByBreakpoint): String = {
-    widths.profiles.map { profile => srcsetForProfile(profile, imageContainer, hidpi = false).asSrcSetString } mkString ", "
+    widths.profiles.map { profile =>
+      srcsetForProfile(profile, imageContainer, hidpi = false).asSrcSetString
+    } mkString ", "
   }
 
   def srcsetForBreakpoint(
-    breakpointWidth: BreakpointWidth,
-    breakpointWidths: Seq[BreakpointWidth],
-    maybePath: Option[String] = None,
-    maybeImageMedia: Option[ImageMedia] = None,
-    hidpi: Boolean = false
+      breakpointWidth: BreakpointWidth,
+      breakpointWidths: Seq[BreakpointWidth],
+      maybePath: Option[String] = None,
+      maybeImageMedia: Option[ImageMedia] = None,
+      hidpi: Boolean = false,
   ): Seq[SrcSet] = {
     val isPng = maybePath.exists(path => path.toLowerCase.endsWith("png"))
-    breakpointWidth.toPixels(breakpointWidths)
+    breakpointWidth
+      .toPixels(breakpointWidths)
       .map(browserWidth => ImageProfile(width = Some(browserWidth), hidpi = hidpi, isPng = isPng))
-      .flatMap { profile => {
-        maybePath
-          .map(url => srcsetForProfile(profile, url, hidpi))
-          .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
-      } }
+      .flatMap { profile =>
+        {
+          maybePath
+            .map(url => srcsetForProfile(profile, url, hidpi))
+            .orElse(maybeImageMedia.map(imageContainer => srcsetForProfile(profile, imageContainer, hidpi)))
+        }
+      }
   }
 
   def srcsetForProfile(
-    profile: ImageProfile,
-    imageContainer: ImageMedia,
-    hidpi: Boolean
+      profile: ImageProfile,
+      imageContainer: ImageMedia,
+      hidpi: Boolean,
   ): SrcSet =
     SrcSet(profile.bestSrcFor(imageContainer).getOrElse("unknown"), profile.width.get * (if (hidpi) 2 else 1))
 
@@ -355,8 +414,10 @@ object ImgSrc extends Logging with implicits.Strings {
 }
 
 object SeoThumbnail {
-  def apply(page: Page): Option[String] = page match {
-    case content: ContentPage => content.item.elements.thumbnail.flatMap(thumbnail => Item620.bestSrcFor(thumbnail.images))
-    case _ => None
-  }
+  def apply(page: Page): Option[String] =
+    page match {
+      case content: ContentPage =>
+        content.item.elements.thumbnail.flatMap(thumbnail => Item620.bestSrcFor(thumbnail.images))
+      case _ => None
+    }
 }

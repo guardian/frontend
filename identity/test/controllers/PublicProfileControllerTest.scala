@@ -16,10 +16,11 @@ import test.{Fake, TestRequest, WithTestApplicationContext}
 import scala.concurrent.Future
 import scala.util.Left
 
-class PublicProfileControllerTest extends path.FreeSpec
-                                  with Matchers
-                                  with WithTestApplicationContext
-                                  with MockitoSugar {
+class PublicProfileControllerTest
+    extends path.FreeSpec
+    with Matchers
+    with WithTestApplicationContext
+    with MockitoSugar {
   val idUrlBuilder = mock[IdentityUrlBuilder]
   val api = mock[IdApiClient]
   val discussionApi = mock[DiscussionApiService]
@@ -29,35 +30,32 @@ class PublicProfileControllerTest extends path.FreeSpec
   val userId: String = "123"
   val discussionProfile = DiscussionProfile(userId, "John Smith")
   val vanityUrl: String = "bobski"
-  val user = User("test@example.com", userId,
+  val user = User(
+    "test@example.com",
+    userId,
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      aboutMe = Some("I read the Guardian"),
-      location = Some("London"),
-      interests = Some("I like stuff"),
-      vanityUrl = Some(vanityUrl)
+      vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(
-      accountCreatedDate = Some(new DateTime().minusDays(7))
-    )
+      accountCreatedDate = Some(new DateTime().minusDays(7)),
+    ),
   )
 
   val userIdNotCommented: String = "789"
-  val userNotCommented = User("test@example.com", userIdNotCommented,
+  val userNotCommented = User(
+    "test@example.com",
+    userIdNotCommented,
     publicFields = PublicFields(
       displayName = Some("John Smith"),
       username = Some("John Smith"),
-      aboutMe = Some("I read the Guardian"),
-      location = Some("London"),
-      interests = Some("I like stuff"),
-      vanityUrl = Some(vanityUrl)
+      vanityUrl = Some(vanityUrl),
     ),
     dates = UserDates(
-      accountCreatedDate = Some(new DateTime().minusDays(7))
-    )
+      accountCreatedDate = Some(new DateTime().minusDays(7)),
+    ),
   )
-
 
   when(idRequestParser.apply(MockitoMatchers.any[RequestHeader])) thenReturn idRequest
 
@@ -66,7 +64,7 @@ class PublicProfileControllerTest extends path.FreeSpec
     api,
     idRequestParser,
     discussionApi,
-    play.api.test.Helpers.stubControllerComponents()
+    play.api.test.Helpers.stubControllerComponents(),
   )
   val request = TestRequest()
 
@@ -113,7 +111,9 @@ class PublicProfileControllerTest extends path.FreeSpec
   }
 
   "Given renderProfileFromVanityUrl is called" - Fake {
-    when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(Left(Nil))
+    when(api.userFromVanityUrl(MockitoMatchers.anyString, MockitoMatchers.any[Auth])) thenReturn Future.successful(
+      Left(Nil),
+    )
     when(api.userFromVanityUrl(vanityUrl)) thenReturn Future.successful(Right(user))
     when(discussionApi.findDiscussionUserFilterCommented(userId)) thenReturn Future.successful(Some(discussionProfile))
 

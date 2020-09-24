@@ -23,7 +23,7 @@ object Firehose {
   private val charset = Charset.forName("UTF-8")
 
   def stream(streamName: String)(data: String): Future[PutRecordResult] = {
-    val record  = new Record().withData(ByteBuffer.wrap(s"$data\n".getBytes(charset)))
+    val record = new Record().withData(ByteBuffer.wrap(s"$data\n".getBytes(charset)))
     val request = new PutRecordRequest().withDeliveryStreamName(streamName).withRecord(record)
     firehose.putRecordFuture(request)
   }

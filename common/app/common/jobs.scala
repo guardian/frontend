@@ -14,7 +14,7 @@ import scala.util.{Failure, Success}
 object JobsState {
   implicit val global = scala.concurrent.ExecutionContext.global
   val jobs = mutable.Map[String, () => Future[_]]()
-  val outstanding = Box(Map[String,Int]().withDefaultValue(0))
+  val outstanding = Box(Map[String, Int]().withDefaultValue(0))
 }
 
 class FunctionJob extends Job with Logging {
@@ -48,12 +48,16 @@ class JobScheduler(context: ApplicationContext) extends Logging {
 
   // TODO delete this function and make easy to understand function(s)
   def schedule(name: String, cron: String)(block: => Unit): Unit = {
-    schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(Future(block))// TODO make a version to take a future
+    schedule(name, CronScheduleBuilder.cronSchedule(new CronExpression(cron)))(
+      Future(block),
+    ) // TODO make a version to take a future
   }
 
   def scheduleWeekdayJob(name: String, minute: Int, hour: Int, timeZone: TimeZone)(block: => Future[Unit]): Unit = {
-    schedule(name,
-      CronScheduleBuilder.cronSchedule(new CronExpression(s"0 $minute $hour ? * MON-FRI")).inTimeZone(timeZone))(block)
+    schedule(
+      name,
+      CronScheduleBuilder.cronSchedule(new CronExpression(s"0 $minute $hour ? * MON-FRI")).inTimeZone(timeZone),
+    )(block)
   }
 
   private def schedule(name: String, schedule: => CronScheduleBuilder)(block: => Future[Unit]): Unit = {
@@ -66,33 +70,35 @@ class JobScheduler(context: ApplicationContext) extends Logging {
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
-        TriggerBuilder.newTrigger().withSchedule(schedule).build()
+        TriggerBuilder.newTrigger().withSchedule(schedule).build(),
       )
     }
   }
 
   def scheduleEveryNMinutes(name: String, intervalInMinutes: Int)(block: => Future[_]): Unit = {
     if (context.environment.mode != Test) {
-      val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
+      val schedule =
+        DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInMinutes(intervalInMinutes)
       log.info(s"Scheduling $name to run every $intervalInMinutes minutes")
       jobs.put(name, () => block)
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
-        TriggerBuilder.newTrigger().withSchedule(schedule).build()
+        TriggerBuilder.newTrigger().withSchedule(schedule).build(),
       )
     }
   }
 
   def scheduleEvery(name: String, interval: Duration)(block: => Future[Unit]): Unit = {
     if (context.environment.mode != Test) {
-      val schedule = DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(interval.toSeconds.toInt)
+      val schedule =
+        DailyTimeIntervalScheduleBuilder.dailyTimeIntervalSchedule().withIntervalInSeconds(interval.toSeconds.toInt)
       log.info(s"Scheduling $name to run every ${interval.toSeconds} seconds")
       jobs.put(name, () => block)
 
       scheduler.scheduleJob(
         JobBuilder.newJob(classOf[FunctionJob]).withIdentity(name).build(),
-        TriggerBuilder.newTrigger().withSchedule(schedule).build()
+        TriggerBuilder.newTrigger().withSchedule(schedule).build(),
       )
     }
   }

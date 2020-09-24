@@ -15,7 +15,15 @@ sealed trait EmailContainer
 case class LiveIntentMarquee(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentMPU(newsletterId: String, ids: (String, String, String, String, String)) extends EmailContainer
 case class LiveIntentSafeRTB(newsletterId: String, ids: List[String]) extends EmailContainer
-case class EmailContentContainer(displayName: String, href: Option[String], cards: List[ContentCard], config: CollectionConfig, collectionType: String, branding: Option[ContainerBranding], containerId: String) extends EmailContainer
+case class EmailContentContainer(
+    displayName: String,
+    href: Option[String],
+    cards: List[ContentCard],
+    config: CollectionConfig,
+    collectionType: String,
+    branding: Option[ContainerBranding],
+    containerId: String,
+) extends EmailContainer
 
 object EmailContentContainer {
 
@@ -27,10 +35,21 @@ object EmailContentContainer {
 
   private def pressedCollectionToContentContainer(pressedCollection: PressedCollection): EmailContentContainer = {
     val cards = pressedCollection.curatedPlusBackfillDeduplicated.flatMap(contentCard(_, pressedCollection.config))
-    fromCollectionAndCards(pressedCollection, cards)
+
+    /*
+        date: 03rd September 2020
+        author: Pascal
+        message: emailcards was introduced, as a subset of cards, to avoid interactive snaps in
+        emails (original request from Celine)
+     */
+    val emailcards =
+      cards.filterNot(_.properties.fold(false)(_.embedType.fold(false)(_ == "interactive")))
+
+    fromCollectionAndCards(pressedCollection, emailcards)
   }
 
-  def storiesCount(collectionConfig: CollectionConfig): Int = collectionConfig.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
+  def storiesCount(collectionConfig: CollectionConfig): Int =
+    collectionConfig.displayHints.flatMap(_.maxItemsToDisplay).getOrElse(6)
 
   private def fromCollectionAndCards(collection: PressedCollection, cards: List[ContentCard]) =
     EmailContentContainer(
@@ -40,7 +59,7 @@ object EmailContentContainer {
       config = collection.config,
       collectionType = collection.collectionType,
       branding = collection.branding(Edition.defaultEdition),
-      containerId = collection.id
+      containerId = collection.id,
     )
 
   private def contentCard(content: PressedContent, config: CollectionConfig): Option[ContentCard] = {
@@ -62,7 +81,7 @@ case class CollectionEmail(id: String, contentCollections: List[EmailContentCont
       start,
       mpu.get(id).toList,
       end,
-      safeRtb.get(id).toList
+      safeRtb.get(id).toList,
     ).flatten
   }
 }

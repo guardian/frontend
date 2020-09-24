@@ -3,12 +3,12 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { signInGate as signInGateTestControl } from 'common/modules/experiments/tests/sign-in-gate';
-import { signInGateVariant as signInGateTestVariant } from 'common/modules/experiments/tests/sign-in-gate-variant';
-import { signInGateScale as signInGateTestScale } from 'common/modules/experiments/tests/sign-in-gate-scale';
+import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
+import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
+import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
-import { component, componentName } from './component';
+import { withComponentId, componentName } from './component';
 import { variants } from './variants';
 import type {
     CurrentABTest,
@@ -16,10 +16,11 @@ import type {
     SignInGateVariant,
 } from './types';
 
+// if using multiple tests, then add them all in this array. (all the variant names in each test in the array must be unique)
 const tests = [
-    signInGateTestControl,
-    signInGateTestVariant,
-    signInGateTestScale,
+    signInGatePatientia,
+    signInGateMainVariant,
+    signInGateMainControl,
 ];
 
 const canShow: () => Promise<boolean> = () =>
@@ -42,7 +43,9 @@ const canShow: () => Promise<boolean> = () =>
 const show: () => Promise<boolean> = () =>
     new Promise(resolve => {
         // get the test the user is in
-        const test = getTestforMultiTest(tests);
+        const test: ABTest = getTestforMultiTest(tests);
+
+        if (!test) return resolve(false);
 
         // get the variant
         const variant: SignInGateVariant | void = variants.find(
@@ -61,12 +64,23 @@ const show: () => Promise<boolean> = () =>
             `${config.get('page.host')}/${config.get('page.pageId')}`
         );
 
+        // get the view id to attach to component event params
+        let viewId = '';
+        if (
+            window.guardian &&
+            window.guardian.ophan &&
+            window.guardian.ophan.viewId
+        ) {
+            viewId = window.guardian.ophan.viewId;
+        }
+
         // set the component event params to be included in the query
         const queryParams: ComponentEventParams = {
             componentType: 'signingate',
-            componentId: component.id,
+            componentId: test.ophanComponentId,
             abTestName: test.dataLinkNames || test.id,
             abTestVariant: variant.name,
+            viewId,
         };
 
         // attach the browser id to component event params
@@ -89,10 +103,15 @@ const show: () => Promise<boolean> = () =>
             constructQuery(queryParams)
         )}`;
 
+        const ophanComponentId: string = test.ophanComponentId
+            ? test.ophanComponentId
+            : '';
+        const ophanComponent = withComponentId(ophanComponentId);
+
         // in any variant
         // fire view tracking event
         submitViewEventTracking({
-            component,
+            component: ophanComponent,
             abTest,
         });
 
@@ -102,6 +121,7 @@ const show: () => Promise<boolean> = () =>
                 guUrl,
                 signInUrl,
                 abTest,
+                ophanComponentId,
             })
         );
     });

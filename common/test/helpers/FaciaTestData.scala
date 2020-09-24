@@ -25,7 +25,7 @@ object TestContent {
       webUrl = "",
       apiUrl = "",
       elements = None,
-      fields = Some(ContentFields(liveBloggingNow = Some(true)))
+      fields = Some(ContentFields(liveBloggingNow = Some(true))),
     )
     FaciaContentConvert.contentToFaciaContent(content)
   }
@@ -49,7 +49,7 @@ trait FaciaTestData extends ModelHelper {
       "/society/2013/oct/08/malaria-vaccine-trial-children-babies",
       "/world/2013/oct/08/brazil-accuses-canada-spying-nsa-leaks",
       "/film/2013/oct/08/gravity-science-astrophysicist",
-      "/money/work-blog/2013/oct/08/long-hours-culture-overworked"
+      "/money/work-blog/2013/oct/08/long-hours-culture-overworked",
     )
 
   val usFrontTrailIds: Seq[String] =
@@ -58,7 +58,7 @@ trait FaciaTestData extends ModelHelper {
       "/world/2013/oct/07/obama-john-boehner-clean-budget-bill",
       "/world/2013/oct/08/palestinian-territories-israel-control-hurting-economy",
       "/commentisfree/2013/oct/07/government-shutdown-how-it-ends",
-      "/commentisfree/2013/oct/07/miley-cyrus-music-business-women-sinead-oconnor"
+      "/commentisfree/2013/oct/07/miley-cyrus-music-business-women-sinead-oconnor",
     )
 
   val auFrontTrailIds: Seq[String] =
@@ -67,7 +67,7 @@ trait FaciaTestData extends ModelHelper {
       "/technology/2013/oct/07/australias-fastmail-secure-email-nsa",
       "/world/2013/oct/08/abbott-apologises-asylum-malaysia-solution",
       "/world/2013/oct/07/no-threats-west-papuans-consulate",
-      "/commentisfree/2013/oct/07/feminism-rebranding-man-hater"
+      "/commentisfree/2013/oct/07/feminism-rebranding-man-hater",
     )
 
   val cultureTrailIds: Seq[String] =
@@ -76,13 +76,12 @@ trait FaciaTestData extends ModelHelper {
       "/music/2013/oct/08/annie-lennox-pornographic-miley-cyrus",
       "/film/2013/oct/08/oscars-best-foreign-language-rules-revised",
       "/music/2013/oct/08/lady-gaga-artpop-album-cover",
-      "/technology/gamesblog/2013/oct/03/red-cross-players-accountable-war-crimes"
+      "/technology/gamesblog/2013/oct/03/red-cross-players-accountable-war-crimes",
     )
 
-
-  val ukFrontTrails: Seq[PressedContent]= ukFrontTrailIds map TestContent.newFaciaContent
-  val usFrontTrails: Seq[PressedContent]= usFrontTrailIds map TestContent.newFaciaContent
-  val auFrontTrails: Seq[PressedContent]= auFrontTrailIds map TestContent.newFaciaContent
+  val ukFrontTrails: Seq[PressedContent] = ukFrontTrailIds map TestContent.newFaciaContent
+  val usFrontTrails: Seq[PressedContent] = usFrontTrailIds map TestContent.newFaciaContent
+  val auFrontTrails: Seq[PressedContent] = auFrontTrailIds map TestContent.newFaciaContent
 
   val cultureFrontTrails: Seq[PressedContent] = cultureTrailIds map TestContent.newFaciaContent
 
@@ -110,9 +109,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val usFaciaPage: PressedPage = PressedPage(
@@ -139,9 +138,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val auFaciaPage: PressedPage = PressedPage(
@@ -168,9 +167,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val ukCultureFaciaPage: PressedPage = PressedPage(
@@ -197,9 +196,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val usCultureFaciaPage: PressedPage = PressedPage(
@@ -226,9 +225,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val auCultureFaciaPage: PressedPage = PressedPage(
@@ -255,9 +254,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val internationalFaciaPageWithTargetedTerritories: PressedPage = PressedPage(
@@ -284,7 +283,7 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = Some(NZTerritory)
+        targetedTerritory = Some(NZTerritory),
       ),
       PressedCollection(
         id = "international/eu",
@@ -305,7 +304,7 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = Some(EU27Territory)
+        targetedTerritory = Some(EU27Territory),
       ),
       PressedCollection(
         id = "international/normal",
@@ -326,9 +325,9 @@ trait FaciaTestData extends ModelHelper {
         showLatestUpdate = false,
         config = CollectionConfig.empty,
         hasMore = false,
-        targetedTerritory = None
-      )
-    )
+        targetedTerritory = None,
+      ),
+    ),
   )
 
   val defaultAgentContents: Map[String, TestPageFront] = Map(
@@ -337,8 +336,6 @@ trait FaciaTestData extends ModelHelper {
     ("au", new TestPageFront("au", Au, auFaciaPage)),
     ("uk/culture", new TestPageFront("uk/culture", Uk, ukCultureFaciaPage)),
     ("us/culture", new TestPageFront("us/culture", Us, usCultureFaciaPage)),
-    ("au/culture", new TestPageFront("au/culture", Au, auCultureFaciaPage))
+    ("au/culture", new TestPageFront("au/culture", Au, auCultureFaciaPage)),
   )
 }
-
-

@@ -29,10 +29,11 @@ import router.Routes
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
-trait AdminServices extends I18nComponents  {
+trait AdminServices extends I18nComponents {
   def wsClient: WSClient
   def akkaAsync: AkkaAsync
   def actorSystem: ActorSystem
@@ -88,7 +89,7 @@ trait AppComponents extends FrontendComponents with AdminControllers with AdminS
     wire[DfpAgentLifecycle],
     wire[DfpDataCacheLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[CommercialDfpReportingLifecycle]
+    wire[CommercialDfpReportingLifecycle],
   )
 
   lazy val router: Router = wire[Routes]

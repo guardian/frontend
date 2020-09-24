@@ -8,7 +8,7 @@ object RugbyContent {
     DateTimeFormat.forPattern("YYYY/MM/dd")
   }
 
-  val teamNameIds = Map (
+  val teamNameIds = Map(
     ("sport/japanrugby", "73710"),
     ("sport/russia-rugby-union-team", "204077"),
     ("sport/australia-rugby-union-team", "73752"),
@@ -29,6 +29,6 @@ object RugbyContent {
     ("sport/samoa-rugby-union-team", "73711"),
     ("sport/uruguay-rugby-union-team", "73737"),
     ("sport/canadarugby", "73753"),
-    ("sport/usarugby", "73733")
+    ("sport/usarugby", "73733"),
   )
 }

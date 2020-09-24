@@ -101,28 +101,35 @@ export const addReferrerData = (acquisitionData: {}): {} =>
         referrerUrl: window.location.href.split('?')[0],
     });
 
+// Adds acquisition tracking codes if it is a support url
 export const addTrackingCodesToUrl = ({
     base,
     componentType,
     componentId,
     campaignCode,
     abTest,
-}: AcquisitionLinkParams) => {
-    const acquisitionData = addReferrerData({
-        source: 'GUARDIAN_WEB',
-        componentId,
-        componentType,
-        campaignCode,
-        abTest,
-    });
+}: AcquisitionLinkParams): string => {
+    const isSupportUrl = base.search(/(support.theguardian.com)(\/[a-z]*)?\/(contribute|subscribe)/) >= 0;
 
-    const params = {
-        REFPVID: config.get('ophan.pageViewId') || 'not_found',
-        INTCMP: campaignCode,
-        acquisitionData: JSON.stringify(acquisitionData),
-    };
+    if (isSupportUrl) {
+        const acquisitionData = addReferrerData({
+            source: 'GUARDIAN_WEB',
+            componentId,
+            componentType,
+            campaignCode,
+            abTest,
+        });
 
-    return `${base}${base.includes('?') ? '&' : '?'}${constructURLQuery(
-        params
-    )}`;
+        const params = {
+            REFPVID: config.get('ophan.pageViewId') || 'not_found',
+            INTCMP: campaignCode,
+            acquisitionData: JSON.stringify(acquisitionData),
+        };
+
+        return `${base}${base.includes('?') ? '&' : '?'}${constructURLQuery(
+            params
+        )}`;
+    }
+
+    return base;
 };

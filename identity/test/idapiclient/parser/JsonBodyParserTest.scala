@@ -6,7 +6,6 @@ import idapiclient.responses.{Error, HttpResponse}
 import org.scalatest.Matchers
 import net.liftweb.json.DefaultFormats
 
-
 class JsonBodyParserTest extends path.FreeSpec with Matchers {
   case class TestType(test: String)
 
@@ -28,35 +27,36 @@ class JsonBodyParserTest extends path.FreeSpec with Matchers {
     "returns a parse error if the JSON is not valid" in {
       TestJsonBodyParser.extract[TestType]()(Right(invalidJSONResponse)) match {
         case Right(result) => fail("extractJsonOrError did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors(0) should have('message("JSON parsing exception"))
+        case Left(errors)  => errors(0) should have('message ("JSON parsing exception"))
       }
     }
 
     "if the response is an error, should extract the error response" in {
       TestJsonBodyParser.extract[TestType]()(Right(errorJSONResponse)) match {
         case Right(result) => fail("extractJsonOrError did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors should be(testErrors)
+        case Left(errors)  => errors should be(testErrors)
       }
     }
 
     "extracts the provided type from the JSON body of a successful response" in {
       TestJsonBodyParser.extract[TestType]()(Right(validJSONResponse)) match {
-        case Left(result) =>  fail("extract did not return a Right, got Left(%s)".format(result.toString()))
-        case Right(testObject: TestType) => testObject should have('test("value"))
-        case Right(result) => fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
+        case Left(result)                => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
+        case Right(testObject: TestType) => testObject should have('test ("value"))
+        case Right(result) =>
+          fail("extract did not return a Right of the required type, got a %s".format(result.getClass.getName))
       }
     }
 
     "if the response is an error, should extract the error response for a unit response" in {
       TestJsonBodyParser.extract[Unit]()(Right(errorJSONResponse)) match {
         case Right(result) => fail("extractJsonOrError did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors should be(testErrors)
+        case Left(errors)  => errors should be(testErrors)
       }
     }
 
     "extracts the provided type from the JSON body of a successful unit response" in {
       TestJsonBodyParser.extract[Unit]()(Right(emptyResponse)) match {
-        case Left(result) =>  fail("extract did not return a Right, got Left(%s)".format(result.toString()))
+        case Left(result)            => fail("extract did not return a Right, got Left(%s)".format(result.toString()))
         case Right(testObject: Unit) => //good
       }
     }
@@ -64,14 +64,14 @@ class JsonBodyParserTest extends path.FreeSpec with Matchers {
     "returns a mapping error if the provided type cannot be extracted from the response" in {
       TestJsonBodyParser.extract[TestType]()(Right(badTypeJSONResponse)) match {
         case Right(result) => fail("extract did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors(0).message should startWith("JSON mapping exception")
+        case Left(errors)  => errors(0).message should startWith("JSON mapping exception")
       }
     }
 
     "passes an existing Left seamlessly" in {
       TestJsonBodyParser.extract[TestType]()(Left(testErrors)) match {
         case Right(result) => fail("extract did not return a Left, got %s".format(result.toString))
-        case Left(errors) => errors should be(testErrors)
+        case Left(errors)  => errors should be(testErrors)
       }
     }
 

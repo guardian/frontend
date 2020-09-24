@@ -5,10 +5,10 @@ import common.{ImplicitControllerExecutionContext, Logging}
 import discussion.api.DiscussionApiLike
 
 trait DiscussionController
-  extends BaseController
-  with Logging
-  with ImplicitControllerExecutionContext
-  with implicits.Requests {
+    extends BaseController
+    with Logging
+    with ImplicitControllerExecutionContext
+    with implicits.Requests {
 
   val discussionApi: DiscussionApiLike
 }

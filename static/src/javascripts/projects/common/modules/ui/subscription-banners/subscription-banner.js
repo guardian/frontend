@@ -18,7 +18,7 @@ import reportError from 'lib/report-error';
 import type { ReaderRevenueRegion } from 'common/modules/commercial/contributions-utilities';
 import type { Banner } from 'common/modules/ui/bannerPicker';
 
-import { bannerTemplate as subscripionBannerTemplate } from './subscription-banner-template';
+import { bannerTemplate as subscriptionBannerTemplate } from './subscription-banner-template';
 import { bannerTemplate as gwBannerTemplate } from './guardian-weekly-banner-template';
 import { bannerTracking } from './subscription-banner-tracking';
 import type { BannerTracking } from './subscription-banner-tracking';
@@ -26,9 +26,12 @@ import type { BannerTracking } from './subscription-banner-tracking';
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';
 
+const remoteSubscriptionsBannerSwitchIsOn = config.get('switches.remoteBanner', false) && config.get('switches.remoteSubscriptionsBanner', false)
+
 const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
-);
+) && !remoteSubscriptionsBannerSwitchIsOn;
+
 const pageviews: number = local.get('gu.alreadyVisited');
 
 const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
@@ -56,8 +59,7 @@ const hasAcknowledged = bannerRedeploymentDate => {
 const selectorName = (bannerName: string) => (actionId: ?string) =>
     `#js-site-message--${bannerName}${actionId ? `__${actionId}` : ''}`;
 
-const hasAcknowledgedBanner = region =>
-    fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
+const hasAcknowledgedBanner = (region: ReaderRevenueRegion): Promise<boolean> => fetchJson(`/reader-revenue/subscriptions-banner-deploy-log/${region}`, {
         mode: 'cors',
     })
         .then(resp => hasAcknowledged(resp.time))
@@ -71,9 +73,6 @@ const hasAcknowledgedBanner = region =>
             );
             return true;
         });
-
-const twoOrMorePageViews = (currentPageViews: number) =>
-    currentPageViews >= 2;
 
 const pageIsIdentity = (): boolean =>
     config.get('page.contentType') === 'Identity' ||
@@ -181,7 +180,7 @@ const createBannerShow = (
 };
 
 const chooseBanner = (region: ReaderRevenueRegion) =>
-    region === 'australia' ? gwBannerTemplate : subscripionBannerTemplate;
+(region === 'australia' || region === 'rest-of-world') ? gwBannerTemplate : subscriptionBannerTemplate;
 
 const show = createBannerShow(
     bannerTracking(currentRegion),
@@ -195,11 +194,11 @@ const canShow: () => Promise<boolean> = async () => {
     );
 
     const can = Promise.resolve(
-        twoOrMorePageViews(pageviews) &&
+            subscriptionBannerSwitchIsOn &&
+            pageviews >= 4 &&
             !hasAcknowledgedSinceLastRedeploy &&
             !shouldHideSupportMessaging() &&
             !pageShouldHideReaderRevenue() &&
-            subscriptionBannerSwitchIsOn &&
             !pageIsIdentity()
     );
 

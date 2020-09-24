@@ -27,14 +27,16 @@ import test._
 import scala.concurrent.Future
 
 //TODO test form validation and population of form fields.
-@DoNotDiscover class EditProfileControllerTest extends WordSpec with WithTestExecutionContext
-  with Matchers
-  with MockitoSugar
-  with OptionValues
-  with ScalaFutures
-  with WithTestApplicationContext
-  with WithTestCSRF
-  with ConfiguredServer {
+@DoNotDiscover class EditProfileControllerTest
+    extends WordSpec
+    with WithTestExecutionContext
+    with Matchers
+    with MockitoSugar
+    with OptionValues
+    with ScalaFutures
+    with WithTestApplicationContext
+    with WithTestCSRF
+    with ConfiguredServer {
 
   trait EditProfileFixture {
 
@@ -55,12 +57,18 @@ import scala.concurrent.Future
     val authenticatedUser = AuthenticatedUser(user, testAuth, true)
     val phoneNumbers = PhoneNumbers
 
-    val authenticatedActions = new AuthenticatedActions(authService, api, mock[IdentityUrlBuilder], controllerComponent, newsletterService, idRequestParser)
+    val authenticatedActions = new AuthenticatedActions(
+      authService,
+      api,
+      mock[IdentityUrlBuilder],
+      controllerComponent,
+      newsletterService,
+      idRequestParser,
+    )
     val signinService = mock[PlaySigninService]
     val profileFormsMapping = ProfileFormsMapping(
       new AccountDetailsMapping,
       new PrivacyMapping,
-      new ProfileMapping
     )
 
     when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
@@ -70,7 +78,9 @@ import scala.concurrent.Future
     when(idRequest.trackingData) thenReturn trackingData
     when(idRequest.returnUrl) thenReturn None
 
-    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(Right(Subscriber("Text", List(EmailList("37")), "subscribed")))
+    when(api.userEmails(MockitoMatchers.anyString(), MockitoMatchers.any[TrackingData])) thenReturn Future.successful(
+      Right(Subscriber("Text", List(EmailList("37")), "subscribed")),
+    )
 
     lazy val controller = new EditProfileController(
       idUrlBuilder,
@@ -85,7 +95,7 @@ import scala.concurrent.Future
       profileFormsMapping,
       testApplicationContext,
       httpConfiguration,
-      controllerComponent
+      controllerComponent,
     )
   }
 }

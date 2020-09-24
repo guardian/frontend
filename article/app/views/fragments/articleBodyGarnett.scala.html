@@ -2,7 +2,7 @@
 
 @import views.html.fragments.langAttributes
 @import common.LinkTo
-@import views.BodyCleaner
+@import views.BodyProcessor
 @import views.support.Commercial.{isPaidContent, articleAsideOptionalSizes, shouldShowAds}
 @import views.support.RenderClasses
 @import views.support.TrailCssClasses.toneClass
@@ -93,7 +93,7 @@
                                 @fragments.contentMeta(article, model)
                             }
 
-                            @BodyCleaner(article)
+                            @BodyProcessor(article)
 
                             <div class="after-article js-after-article"></div>
 

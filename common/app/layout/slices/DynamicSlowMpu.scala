@@ -9,7 +9,10 @@ case class DynamicSlowMPU(omitMPU: Boolean, adFree: Boolean) extends DynamicCont
     if (bigs.length == 3) {
       Some((HalfQQ, stories.drop(3)))
     } else if (bigs.length == 2) {
-      Some(if (isFirstBoosted) ThreeQuarterQuarter else if (isSecondBoosted) QuarterThreeQuarter else HalfHalf, stories.drop(2))
+      Some(
+        if (isFirstBoosted) ThreeQuarterQuarter else if (isSecondBoosted) QuarterThreeQuarter else HalfHalf,
+        stories.drop(2),
+      )
     } else if (bigs.length == 1) {
       Some(if (isFirstBoosted) ThreeQuarterQuarter else HalfHalf, stories.drop(2))
     } else if (bigs.isEmpty) {

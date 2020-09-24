@@ -1,5 +1,5 @@
 @import common.InlineJs
-@import conf.switches.Switches.{IdentityProfileNavigationSwitch, enableConsentManagementService, LotameSwitch}
+@import conf.switches.Switches.{IdentityProfileNavigationSwitch, LotameSwitch}
 @import conf.Configuration
 @import model.Page
 @import templates.inlineJS.nonBlocking.js._
@@ -21,18 +21,6 @@
 @if(IdentityProfileNavigationSwitch.isSwitchedOn) {
     // Insert username in top bar on page load
     @InlineJs(showUserName().body, "showUserName.js")
-}
-
-// ************* COMMERCIAL *************
-
-@if(enableConsentManagementService.isSwitchedOn) {
-    @InlineJs(prepareCmp().body, "prepareCmp.js")
-}
-
-@if(LotameSwitch.isSwitchedOn
-    && !page.metadata.contentType.contains(DotcomContentType.Identity)
-    && !page.metadata.isSecureContact) {
-    @InlineJs(prepareLotame().body, "prepareLotame.js")
 }
 
 // ************* ANALYTICS *************

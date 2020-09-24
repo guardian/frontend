@@ -10,20 +10,20 @@ const getChangedFiles = require('../tools/__tasks__/lib/get-changed-files');
 
 const writeFile = promisify(fs.writeFile);
 
-const confirmIfMasterMessage = `${chalk.red(
+const confirmIfMainMessage = `${chalk.red(
     `${chalk.inverse(
-        'You are about to push master!'
+        'You are about to push main!'
     )}\nIs that what you intended?`
 )} [y/N]`;
-const confirmIfMaster = execa
+const confirmIfMain = execa
     .shell(
         `
-        protected_branch='master'
+        protected_branch='main'
         current_branch=$(git symbolic-ref HEAD | sed -e 's,.*/\\(.*\\),\\1,')
 
         if [ $protected_branch = $current_branch ]
         then
-            read -p "${confirmIfMasterMessage}" -n 1 -r < /dev/tty
+            read -p "${confirmIfMainMessage}" -n 1 -r < /dev/tty
             echo
             if echo $REPLY | grep -E '^[Yy]$' > /dev/null
             then
@@ -80,7 +80,7 @@ const updateTOC = changed => {
     }
     return changed;
 };
-confirmIfMaster
+confirmIfMain
     .then(validate)
     .then(getChangedFiles)
     .then(checkYarnLock)

@@ -4,11 +4,12 @@ import fastdom from 'fastdom';
 import config from 'lib/config';
 import { loadScript } from 'lib/load-script';
 import { constructQuery } from 'lib/url';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import $ from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
+
 import { getPermutivePFPSegments } from '../commercial/permutive';
 
 const scriptSrc = 'https://www.youtube.com/iframe_api';
@@ -35,9 +36,26 @@ type Handlers = {
     onPlayerStateChange: (event: Object) => void,
 };
 
-let consentState;
-onIabConsentNotification(state => {
-    consentState = state[1] && state[2] && state[3] && state[4] && state[5];
+interface AdsConfig {
+    adTagParameters?: {
+        iu: any,
+        cust_params: string,
+    };
+    disableAds?: boolean;
+    nonPersonalizedAd?: boolean;
+    restrictedDataProcessor?: boolean;
+}
+
+let tcfState = null;
+let ccpaState = null;
+onConsentChange(state => {
+    if (state.ccpa) {
+        ccpaState = state.doNotSell;
+    } else {
+        tcfState = state.tcfv2
+            ? Object.values(state.tcfv2.consents).every(Boolean)
+            : state[1] && state[2] && state[3] && state[4] && state[5];
+    }
 });
 
 const onPlayerStateChangeEvent = (
@@ -102,8 +120,9 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 
 const createAdsConfig = (
     adFree: boolean,
-    wantPersonalisedAds: boolean
-): Object => {
+    tcfStateFlag: boolean | null,
+    ccpaStateFlag: boolean | null
+): AdsConfig => {
     if (adFree) {
         return { disableAds: true };
     }
@@ -111,13 +130,20 @@ const createAdsConfig = (
     const custParams = getPageTargeting();
     custParams.permutive = getPermutivePFPSegments();
 
-    return {
-        nonPersonalizedAd: !wantPersonalisedAds,
+    const adsConfig: AdsConfig = {
         adTagParameters: {
             iu: config.get('page.adUnit'),
             cust_params: encodeURIComponent(constructQuery(custParams)),
         },
     };
+
+    if (ccpaStateFlag === null) {
+        adsConfig.nonPersonalizedAd = !tcfStateFlag;
+    } else {
+        adsConfig.restrictedDataProcessor = ccpaStateFlag;
+    }
+
+    return adsConfig;
 };
 
 const setupPlayer = (
@@ -141,7 +167,8 @@ const setupPlayer = (
 
     const adsConfig = createAdsConfig(
         commercialFeatures.adFree,
-        !!consentState
+        tcfState,
+        ccpaState
     );
 
     return new window.YT.Player(elt.id, {

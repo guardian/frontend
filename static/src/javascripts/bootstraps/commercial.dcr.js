@@ -11,9 +11,6 @@ import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-import { init as initCmpService } from 'commercial/modules/cmp/cmp';
-import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
-import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-extract';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
@@ -28,13 +25,11 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-prepare-cmp', initCmpService],
-    ['cm-lotame-cmp', initLotameCmp],
-    ['cm-lotame-data-extract', initLotameDataExtract],
     ['cm-comscore', initComscore],
 ];
 
@@ -46,6 +41,7 @@ if (!commercialFeatures.adFree) {
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async with the third party tags
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+        ['cm-redplanet', initRedplanet],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
@@ -176,4 +172,8 @@ const bootCommercial = (): Promise<void> => {
         });
 };
 
-bootCommercial();
+if (window.guardian.mustardCut || window.guardian.polyfilled) {
+    bootCommercial();
+} else {
+    window.guardian.queue.push(bootCommercial);
+}

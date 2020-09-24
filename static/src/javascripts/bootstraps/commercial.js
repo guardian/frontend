@@ -9,13 +9,11 @@ import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-import { init as initCmpService } from 'commercial/modules/cmp/cmp';
-import { init as initLotameCmp } from 'commercial/modules/cmp/lotame-cmp';
-import { init as initLotameDataExtract } from 'commercial/modules/lotame-data-extract';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { init as preparePrebid } from 'commercial/modules/dfp/prepare-prebid';
 import { initPermutive } from 'commercial/modules/dfp/prepare-permutive';
+import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initLiveblogAdverts } from 'commercial/modules/liveblog-adverts';
 import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banner';
@@ -31,9 +29,6 @@ import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
-    ['cm-prepare-cmp', initCmpService],
-    ['cm-lotame-cmp', initLotameCmp],
-    ['cm-lotame-data-extract', initLotameDataExtract],
     ['cm-comscore', initComscore],
 ];
 
@@ -45,6 +40,7 @@ if (!commercialFeatures.adFree) {
         // Permutive init code must run before google tag enableServices()
         // The permutive lib however is loaded async with the third party tags
         ['cm-prepare-googletag', () => initPermutive().then(prepareGoogletag)],
+        ['cm-redplanet', initRedplanet],
         ['cm-prepare-adverification', prepareAdVerification],
         ['cm-mobileSticky', initMobileSticky],
         ['cm-highMerch', initHighMerch],
@@ -55,7 +51,7 @@ if (!commercialFeatures.adFree) {
         ['cm-paidContainers', paidContainers],
         ['cm-paidforBand', initPaidForBand],
         ['cm-commentAdverts', initCommentAdverts],
-        ['rr-adblock-ask', initAdblockAsk]
+        ['rr-adblock-ask', initAdblockAsk],
     );
 }
 

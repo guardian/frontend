@@ -35,14 +35,14 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
     <svg viewBox={s"0, 0, $width, $viewBoxHeight"} class="crossword__grid" xmlns="http://www.w3.org/2000/svg">
       <rect x="0" y="0" width={width.toString} height={height.toString} class="crossword__grid-background" />
       {
-        for {
-          (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
-        } yield drawCell(
-          x * (CellSize + BorderSize) + BorderSize,
-          y * (CellSize + BorderSize) + BorderSize,
-          cell
-        )
-      }
+      for {
+        (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
+      } yield drawCell(
+        x * (CellSize + BorderSize) + BorderSize,
+        y * (CellSize + BorderSize) + BorderSize,
+        cell,
+      )
+    }
     </svg>
   }
 }

@@ -39,10 +39,10 @@ const inlineDefinition = {
 
     mark: 432b3a46-90c1-4573-90d3-2400b51af8d0
 
-    The ad sizes which are hardcoded here are also hardcoded in the source code of 
-    dotcom-rendering. 
+    The ad sizes which are hardcoded here are also hardcoded in the source code of
+    dotcom-rendering.
 
-    If/when this file is modified, please make sure that updates, if any, are reported to DCR.  
+    If/when this file is modified, please make sure that updates, if any, are reported to DCR.
 
  */
 
@@ -154,6 +154,7 @@ const createAdSlotElements = (
 
     const id = `dfp-ad--${name}`;
 
+    // 3562dc07-78e9-4507-b922-78b979d4c5cb
     if (config.get('isDotcomRendering', false) && name === 'top-above-nav') {
         // This is to prevent a problem that appeared with DCR.
         // We are simply making sure that if we are about to

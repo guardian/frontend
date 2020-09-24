@@ -1,11 +1,11 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.AdminConfiguration.pa
 @import org.joda.time.{DateTime, LocalDate}
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 @admin_main("Football Troubleshooter", isAuthed = true) {
 
-@defining((Format(DateTime.now(), "yyyyMMdd"), "Premier League", "100")){ case (today, competition, competitionId) =>
+@defining((GuDateFormatLegacy(DateTime.now(), "yyyyMMdd"), "Premier League", "100")){ case (today, competition, competitionId) =>
 
     <h1>Football Troubleshooter</h1>
 
@@ -55,7 +55,7 @@
     <p>Here is the API call for results in the <strong>@competition</strong> (id @competitionId). You can get other competition IDs
         from the Competitions feed above and the date format is <i>YYYYMMDD</i>.</p>
 
-    <a href="@pa.footballHost/competition/results/@pa.footballApiKey/@competitionId/@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.footballHost/competition/results/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@Format(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
+    <a href="@pa.footballHost/competition/results/@pa.footballApiKey/@competitionId/@GuDateFormatLegacy(new LocalDate(2014, 6, 12), "yyyyMMdd")">@pa.footballHost/competition/results/@pa.footballApiKey/<strong>@competitionId</strong>/<strong>@GuDateFormatLegacy(new LocalDate(2014, 6, 12), "yyyyMMdd")</strong></a>
 
     <h2>League table</h2>
 

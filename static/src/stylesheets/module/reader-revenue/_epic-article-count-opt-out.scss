@@ -72,7 +72,7 @@
 .epic-article-count .epic-article-count__prompt-label a {
     text-decoration: none;
     border-bottom: 1px solid $brightness-7;
-    color: $brightness-7;
+    color: $brightness-7 !important;
 }
 
 .epic-article-count__buttons {
@@ -84,12 +84,12 @@
 
 .epic-article-count a.epic-article-count__button-opt-out {
     background-color: $brightness-100;
-    color: $brand-main;
+    color: $brand-main !important;
 }
 
 .epic-article-count a.epic-article-count__button-opt-in {
-    background-color: $brand-main;
-    color: $brightness-100;
+    background-color: $brand-main !important;
+    color: $brightness-100 !important;
     border: solid 1px $brightness-100;
 }
 

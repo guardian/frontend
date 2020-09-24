@@ -6,17 +6,18 @@ import play.api.libs.json._
 /** A PageSkinSponsorship
   *   is a special decoration of a DFP LineItem that we need to scan for ourselves,
   *   because DFP doesn't have this concept.
- */
-case class PageSkinSponsorship(lineItemName: String,
-                               lineItemId: Long,
-                               adUnits: Seq[String],
-                              // Targeting properties
-                               editions: Seq[Edition],
-                               countries: Seq[String],
-                               targetsAdTest: Boolean,
-                               adTestValue: Option[String],
-                               keywords: Seq[String],
-                               series: Seq[String]
+  */
+case class PageSkinSponsorship(
+    lineItemName: String,
+    lineItemId: Long,
+    adUnits: Seq[String],
+    // Targeting properties
+    editions: Seq[Edition],
+    countries: Seq[String],
+    targetsAdTest: Boolean,
+    adTestValue: Option[String],
+    keywords: Seq[String],
+    series: Seq[String],
 )
 
 object PageSkinSponsorship {
@@ -28,7 +29,8 @@ case class PageSkinSponsorshipReport(updatedTimeStamp: String, sponsorships: Seq
 }
 
 object PageSkinSponsorshipReport {
-  implicit val pageSkinSponsorshipReportFormat: Format[PageSkinSponsorshipReport] = Json.format[PageSkinSponsorshipReport]
+  implicit val pageSkinSponsorshipReportFormat: Format[PageSkinSponsorshipReport] =
+    Json.format[PageSkinSponsorshipReport]
 }
 
 object PageSkin {
@@ -47,7 +49,7 @@ object PageSkinSponsorshipReportParser extends Logging {
     val result: JsResult[PageSkinSponsorshipReport] = Json.parse(jsonString).validate[PageSkinSponsorshipReport]
     result match {
       case s: JsSuccess[PageSkinSponsorshipReport] => Some(s.get)
-      case e: JsError => log.error("Errors: " + JsError.toJson(e).toString()); None
+      case e: JsError                              => log.error("Errors: " + JsError.toJson(e).toString()); None
     }
   }
 }

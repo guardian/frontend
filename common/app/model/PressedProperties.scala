@@ -6,29 +6,31 @@ import common.{Edition}
 import common.commercial.EditionBranding
 
 final case class PressedProperties(
-  isBreaking: Boolean,
-  showMainVideo: Boolean,
-  showKickerTag: Boolean,
-  showByline: Boolean,
-  imageSlideshowReplace: Boolean,
-  maybeContent: Option[PressedStory],
-  maybeContentId: Option[String],
-  isLiveBlog: Boolean,
-  isCrossword: Boolean,
-  byline: Option[String],
-  image: Option[Image],
-  webTitle: String,
-  linkText: Option[String],
-  embedType: Option[String],
-  embedCss: Option[String],
-  embedUri: Option[String],
-  maybeFrontPublicationDate: Option[Long],
-  href: Option[String],
-  webUrl: Option[String],
-  editionBrandings: Option[Seq[EditionBranding]],
-  atomId: Option[String]
+    isBreaking: Boolean,
+    showMainVideo: Boolean,
+    showKickerTag: Boolean,
+    showByline: Boolean,
+    imageSlideshowReplace: Boolean,
+    maybeContent: Option[PressedStory],
+    maybeContentId: Option[String],
+    isLiveBlog: Boolean,
+    isCrossword: Boolean,
+    byline: Option[String],
+    image: Option[Image],
+    webTitle: String,
+    linkText: Option[String],
+    embedType: Option[String],
+    embedCss: Option[String],
+    embedUri: Option[String],
+    maybeFrontPublicationDate: Option[Long],
+    href: Option[String],
+    webUrl: Option[String],
+    editionBrandings: Option[Seq[EditionBranding]],
+    atomId: Option[String],
 ) {
-  lazy val isPaidFor: Boolean = editionBrandings.exists(_.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition))
+  lazy val isPaidFor: Boolean = editionBrandings.exists(
+    _.exists(branding => branding.branding.exists(_.isPaid) && branding.edition == Edition.defaultEdition),
+  )
 }
 
 object PressedProperties {
@@ -65,10 +67,10 @@ object PressedProperties {
 
   def getProperties(content: fapi.FaciaContent): fapiutils.ContentProperties = {
     content match {
-      case curatedContent: fapi.CuratedContent => curatedContent.properties
+      case curatedContent: fapi.CuratedContent                     => curatedContent.properties
       case supportingCuratedContent: fapi.SupportingCuratedContent => supportingCuratedContent.properties
-      case linkSnap: fapi.LinkSnap => linkSnap.properties
-      case latestSnap: fapi.LatestSnap => latestSnap.properties
+      case linkSnap: fapi.LinkSnap                                 => linkSnap.properties
+      case latestSnap: fapi.LatestSnap                             => latestSnap.properties
     }
   }
 }

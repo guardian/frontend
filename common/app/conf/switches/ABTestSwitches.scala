@@ -13,27 +13,17 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = Off,
     sellByDate = new LocalDate(2025, 1, 27),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed",
-    "show number of articles viewed in contributions banner",
-    owners = Seq(Owner.withGithub("tomrf1")),
+    "ab-contributions-banner-articles-viewed-opt-out",
+    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
+    owners = Seq(Owner.withGithub("paulbrown1982")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-covid-banner-round-two",
-    "Covid crisis",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 11, 27),
+    exposeClientSide = true,
   )
 
   Switch(
@@ -43,7 +33,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jranks123")),
     safeState = On,
     sellByDate = new LocalDate(2025, 1, 27),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -53,47 +43,7 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("jeteve")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 1, 20),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-xaxis-adapter",
-    "Test new implementation of xaxis adapter with multiple placement ids",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-pangaea-adapter",
-    "Test adding pangaea in prebid in US & AU regions",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-appnexus-us-adapter",
-    "Test new us placement id for appnexus in US",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 7, 30),
-    exposeClientSide = true
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-a9",
-    "Test Amazon A9 header bidding",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 7, 1),
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   Switch(
@@ -102,47 +52,47 @@ trait ABTestSwitches {
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 3),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 9, 28),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-quartus-control",
-    "Test new sign in component on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    "ab-sign-in-gate-patientia",
+    "Marathon sign in gate test on 2nd article view",
+    owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-quartus-variant",
-    "Test new sign in component on 3nd article view",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    "ab-sign-in-gate-main-control",
+    "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
+    owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-quartus-scale",
-    "Test new sign in component on 3nd article view to a larger audience",
-    owners = Seq(Owner.withGithub("coldlink"),Owner.withGithub("dominickendrick")),
+    "ab-sign-in-gate-main-variant",
+    "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
+    owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 6, 1),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-frontend-dotcom-rendering-epic",
-    "A/B test Default Epic on Frontend vs DCR, both from a remote source, to compare Epic performance",
-    owners = Seq(Owner.withGithub("andre1050")),
+    "ab-remote-epic-variants",
+    "Serve epics from remote service for subset of audience",
+    owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 5, 13),
-    exposeClientSide = true
+    sellByDate = new LocalDate(2020, 10, 5),
+    exposeClientSide = true,
   )
 }

@@ -2,25 +2,18 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
 import { ias } from 'commercial/modules/third-party-tags/ias';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { connatix } from 'commercial/modules/third-party-tags/connatix';
-import {
-    onIabConsentNotification,
-    onGuConsentNotification,
-} from '@guardian/consent-management-platform';
-
-let advertisingScriptsInserted: boolean = false;
-let performanceScriptsInserted: boolean = false;
+import { lotame } from 'commercial/modules/third-party-tags/lotame';
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -28,12 +21,23 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     let hasScriptsToInsert = false;
 
     tags.forEach(tag => {
-        if (tag.useImage === true) {
+        if (tag.loaded === true) {
+            return;
+        }
+        if (tag.beforeLoad) {
+            tag.beforeLoad();
+        }
+        if (tag.useImage === true && typeof tag.url !== "undefined") {
             new Image().src = tag.url;
+        }
+        if (tag.insertSnippet) {
+            tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            script.src = tag.url;
+            if (typeof tag.url !== "undefined") {
+                script.src = tag.url;
+            }
             script.onload = tag.onLoad;
             if (tag.async === true) {
                 script.setAttribute('async', '');
@@ -45,6 +49,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
             }
             frag.appendChild(script);
         }
+        tag.loaded = true;
     });
 
     if (hasScriptsToInsert) {
@@ -58,22 +63,39 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 
 const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag>
+    performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    onGuConsentNotification('performance', state => {
-        if (!performanceScriptsInserted && state) {
-            addScripts(performanceServices);
-            performanceScriptsInserted = true;
+    addScripts(performanceServices);
+
+    onConsentChange(state => {
+        let consentedAdvertisingServices = [];
+        if (state.ccpa) {
+            // CCPA mode
+            if (!state.ccpa.doNotSell)
+                consentedAdvertisingServices = [...advertisingServices];
+        } else if (state.tcfv2) {
+            // TCFv2 mode,
+            consentedAdvertisingServices = advertisingServices.filter(
+                script => {
+                    if (
+                        typeof script.sourcepointId !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents !== 'undefined' &&
+                        typeof state.tcfv2.vendorConsents[
+                            script.sourcepointId
+                        ] !== 'undefined'
+                    ) {
+                        return state.tcfv2.vendorConsents[script.sourcepointId];
+                    }
+                    return Object.values(state.tcfv2.consents).every(Boolean);
+                }
+            );
+        } else if (state[1] && state[2] && state[3] && state[4] && state[5]) {
+            // TCFv1 mode
+            consentedAdvertisingServices = [...advertisingServices];
         }
-    });
 
-    onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
-
-        if (!advertisingScriptsInserted && consentState) {
-            addScripts(advertisingServices);
-            advertisingScriptsInserted = true;
+        if (consentedAdvertisingServices.length > 0) {
+            addScripts(consentedAdvertisingServices);
         }
     });
 };
@@ -81,18 +103,17 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        simpleReach,
         permutive,
         ias,
         inizio,
         fbPixel(),
         twitterUwt(),
-        connatix,
+        lotame(),
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+        imrWorldwide, // only in AU & NZ
+        imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
 
     insertScripts(advertisingServices, performanceServices);
@@ -122,8 +143,4 @@ export { init };
 export const _ = {
     insertScripts,
     loadOther,
-    reset: () => {
-        advertisingScriptsInserted = false;
-        performanceScriptsInserted = false;
-    },
 };

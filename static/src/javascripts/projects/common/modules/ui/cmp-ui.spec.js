@@ -1,12 +1,15 @@
 // @flow
-import { shouldShow } from '@guardian/consent-management-platform';
 import config from 'lib/config';
-import { consentManagementPlatformUi } from './cmp-ui';
+import { cmp } from '@guardian/consent-management-platform';
+import { cmpBannerCandidate } from './cmp-ui';
 
 jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
-    shouldShow: jest.fn(),
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
+    onConsentChange: jest.fn(),
 }));
 
 jest.mock('lib/report-error', () => jest.fn());
@@ -16,26 +19,27 @@ describe('cmp-ui', () => {
         jest.resetAllMocks();
     });
 
-    describe('consentManagementPlatformUi', () => {
+    describe('cmpBannerCandidate', () => {
         describe('canShow', () => {
-            it('return true if shouldShow returns true', () => {
-                shouldShow.mockReturnValue(true);
+            it('return true if cmp.willShowPrivacyMessage() resolves to true', () => {
+                cmp.willShowPrivacyMessage.mockResolvedValue(true);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
+                    expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
                     expect(show).toBe(true);
                 });
             });
-            it('return false if shouldShow returns false', () => {
-                shouldShow.mockReturnValue(false);
+            it('return false if cmp.willShowPrivacyMessage() resolves to false', () => {
+                cmp.willShowPrivacyMessage.mockResolvedValue(false);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });
-            it('return false if cmpUi switch is off', () => {
-                config.set('switches.cmpUi', false);
+            it('return false if CMP switch is off', () => {
+                config.set('switches.cmp', false);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });

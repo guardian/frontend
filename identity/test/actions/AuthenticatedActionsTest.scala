@@ -21,14 +21,27 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with ScalaFutures with Matchers with WithTestIdConfig with WithTestExecutionContext {
+class AuthenticatedActionsTest
+    extends WordSpecLike
+    with MockitoSugar
+    with ScalaFutures
+    with Matchers
+    with WithTestIdConfig
+    with WithTestExecutionContext {
 
   trait TestFixture {
+    val expectedEventParameters =
+      "componentEventParams=componentType%3Didentityauthentication%26componentId%3Dsignin_redirect_for_action"
+
     val authService = mock[AuthenticationService]
     val client: IdApiClient = mock[IdApiClient]
     val idRequestParser: IdRequestParser = mock[IdRequestParser]
     val controllerComponents: ControllerComponents = mock[ControllerComponents]
-    val user = User("", "test@example.com", statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)))
+    val user = User(
+      "",
+      "test@example.com",
+      statusFields = new StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
+    )
     val newsletterService: NewsletterService = mock[NewsletterService]
     val rpCookie = mock[ScGuRp]
     val guUCookie = mock[ScGuU]
@@ -36,7 +49,14 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
     val notRecentlyAuthedUser = AuthenticatedUser(user, guUCookie, false)
     val mockResponse = mock[Response[User]]
 
-    val actions = new AuthenticatedActions(authService, client, new IdentityUrlBuilder(testIdConfig), Helpers.stubControllerComponents(), mock[NewsletterService], mock[IdRequestParser])
+    val actions = new AuthenticatedActions(
+      authService,
+      client,
+      new IdentityUrlBuilder(testIdConfig),
+      Helpers.stubControllerComponents(),
+      mock[NewsletterService],
+      mock[IdRequestParser],
+    )
     val userWithRpCookie = AuthenticatedUser(user, rpCookie)
 
   }
@@ -51,7 +71,8 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.fullyAuthenticatedUser(any[RequestHeader])).thenReturn(Some(notRecentlyAuthedUser))
 
       val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val expectedLocation =
+        s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
       whenReady(result) { res =>
         res.header.status shouldBe 303
         res.header.headers should contain("Location" -> expectedLocation)
@@ -89,7 +110,7 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
       val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val expectedLocation = s"/signin?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
       whenReady(result) { res =>
         res.header.status shouldBe 303
         res.header.headers should contain("Location" -> expectedLocation)
@@ -140,7 +161,8 @@ class AuthenticatedActionsTest extends WordSpecLike with MockitoSugar with Scala
       when(authService.consentCookieAuthenticatedUser(any[RequestHeader])).thenReturn(None)
 
       val result = actions.consentAuthWithIdapiUserWithEmailValidation.apply(failTest)(request)
-      val expectedLocation = s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}"
+      val expectedLocation =
+        s"/reauthenticate?returnUrl=${URLEncoder.encode(originalUrl, "utf-8")}&$expectedEventParameters"
       whenReady(result) { res =>
         res.header.status shouldBe 303
         res.header.headers should contain("Location" -> expectedLocation)

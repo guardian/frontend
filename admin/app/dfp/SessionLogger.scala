@@ -24,28 +24,31 @@ private[dfp] object SessionLogger extends Logging {
     logAround(typesName, opName, Some(statement))(op)(identity) getOrElse 0
   }
 
-  private def logAroundSeq[T](typesName: String, opName: String, statement: Option[Statement] = None)
-    (op: => Seq[T]): Seq[T] = {
+  private def logAroundSeq[T](typesName: String, opName: String, statement: Option[Statement] = None)(
+      op: => Seq[T],
+  ): Seq[T] = {
     logAround(typesName, opName, statement)(op)(_.size) getOrElse Nil
   }
 
-  private def logAround[T](typesName: String, opName: String, statement: Option[Statement] = None)
-    (op: => T)(numAffected: T => Int): Option[T] = {
+  private def logAround[T](typesName: String, opName: String, statement: Option[Statement] = None)(
+      op: => T,
+  )(numAffected: T => Int): Option[T] = {
 
     def logApiException(e: ApiException, baseMessage: String): Unit = {
       e.getErrors foreach { err =>
         val reasonMsg = err match {
           case freqCapErr: FrequencyCapError => s", with the reason '${freqCapErr.getReason}'"
-          case notNullErr: NotNullError => s", with the reason '${notNullErr.getReason}'"
-          case _ => ""
+          case notNullErr: NotNullError      => s", with the reason '${notNullErr.getReason}'"
+          case _                             => ""
         }
         val path = err.getFieldPath
         val trigger = err.getTrigger
         val msg = s"'${err.getErrorString}'$reasonMsg"
         log.error(
           s"$baseMessage failed: API exception in field '$path', " +
-          s"caused by an invalid value '$trigger', " +
-          s"with the error message $msg", e
+            s"caused by an invalid value '$trigger', " +
+            s"with the error message $msg",
+          e,
         )
       }
     }
@@ -57,12 +60,12 @@ private[dfp] object SessionLogger extends Logging {
         val rawValue = param.getValue
         k -> (
           rawValue match {
-            case t: TextValue => s""""${t.getValue}""""
-            case n: NumberValue => n.getValue
+            case t: TextValue    => s""""${t.getValue}""""
+            case n: NumberValue  => n.getValue
             case b: BooleanValue => b.getValue
-            case other => other.toString
+            case other           => other.toString
           }
-          )
+        )
       }.toMap
       val paramStr = if (params.isEmpty) "" else s"and params ${params.toString}"
       s"""with statement "$qry" $paramStr"""

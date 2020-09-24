@@ -2,7 +2,11 @@ package test
 
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
-@DoNotDiscover class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MostPopularFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
 
   feature("Most popular") {
 

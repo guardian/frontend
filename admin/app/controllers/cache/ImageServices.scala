@@ -20,7 +20,7 @@ object ImageServices {
     "static.guim.co.uk" -> "5qHts5Ev0rFxzm1DhCkmyA",
     "media.guim.co.uk" -> "1NLDlK1ywahkZzRZrmWIYw",
     "uploads.guim.co.uk" -> "2TmfkSoyUoNo8aFNe6Htjs",
-    "sport.guim.co.uk" -> "1C2vPr3E26cRb4NXa0wMf3"
+    "sport.guim.co.uk" -> "1C2vPr3E26cRb4NXa0wMf3",
   )
 
   // clear both the origin CDN and Fastly IO service (either i.guim.co.uk or i.guimcode.co.uk)
@@ -30,7 +30,8 @@ object ImageServices {
     fastlyServiceIdsforOrigin(originUri.getHost).foreach { serviceId =>
       // This works because the "path" is set as a Surrogate Key for images in i.guim.co.uk
       // https://www.fastly.com/blog/surrogate-keys-part-1/
-      wsClient.url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
+      wsClient
+        .url(s"https://api.fastly.com/service/$serviceId/purge/${originUri.getPath}")
         .withHttpHeaders("Fastly-Key" -> fastly.key)
         .post("")
     }

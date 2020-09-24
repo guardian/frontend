@@ -3,8 +3,8 @@ package model
 import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(
-  currentPage: PageReference,
-  pagination: Option[Pagination]
+    currentPage: PageReference,
+    pagination: Option[Pagination],
 )
 
 // Extends normal Pages due to the need for pagination and since-last-seen logic on
@@ -13,10 +13,10 @@ object LiveBlogCurrentPage {
 
   def apply(pageSize: Int, blocks: Blocks, range: BlockRange): Option[LiveBlogCurrentPage] = {
     range match {
-      case Canonical => firstPage(pageSize, blocks)
+      case Canonical                       => firstPage(pageSize, blocks)
       case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
-      case SinceBlockId(blockId) => updates(blocks, SinceBlockId(blockId))
-      case ArticleBlocks => None
+      case SinceBlockId(blockId)           => updates(blocks, SinceBlockId(blockId))
+      case ArticleBlocks                   => None
     }
   }
 
@@ -25,7 +25,7 @@ object LiveBlogCurrentPage {
     val bodyBlocks = blocks.requestedBodyBlocks.get(sinceBlockId.around).toSeq.flatMap { bodyBlocks =>
       bodyBlocks.takeWhile(_.id != sinceBlockId.lastUpdate)
     }
-    Some(LiveBlogCurrentPage(FirstPage(bodyBlocks), None))// just pretend to be the first page, it'll be ignored
+    Some(LiveBlogCurrentPage(FirstPage(bodyBlocks), None)) // just pretend to be the first page, it'll be ignored
   }
 
   // turns the slimmed down (to save bandwidth) capi response into a first page model object
@@ -34,30 +34,43 @@ object LiveBlogCurrentPage {
     val numPages = blocks.totalBodyBlocks / pageSize
     blocks.requestedBodyBlocks.get(Canonical.firstPage).map { requestedBodyBlocks =>
       val (firstPageBlocks, startOfSecondPageBlocks) = requestedBodyBlocks.splitAt(remainder + pageSize)
-      val oldestPage = blocks.requestedBodyBlocks.get(Canonical.oldestPage).flatMap(_.headOption.map { block =>
-        BlockPage(blocks = Nil, blockId = block.id, pageNumber = numPages)
-      } )
-      val olderPage = startOfSecondPageBlocks.headOption.map { block => BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2) }
-      val pagination = if (blocks.totalBodyBlocks > firstPageBlocks.size) Some(Pagination(
-        newest = None,
-        newer = None,
-        oldest = oldestPage,
-        older = olderPage,
-        numberOfPages = numPages
-      )) else None
+      val oldestPage = blocks.requestedBodyBlocks
+        .get(Canonical.oldestPage)
+        .flatMap(_.headOption.map { block =>
+          BlockPage(blocks = Nil, blockId = block.id, pageNumber = numPages)
+        })
+      val olderPage = startOfSecondPageBlocks.headOption.map { block =>
+        BlockPage(blocks = Nil, blockId = block.id, pageNumber = 2)
+      }
+      val pagination =
+        if (blocks.totalBodyBlocks > firstPageBlocks.size)
+          Some(
+            Pagination(
+              newest = None,
+              newer = None,
+              oldest = oldestPage,
+              older = olderPage,
+              numberOfPages = numPages,
+            ),
+          )
+        else None
       LiveBlogCurrentPage(FirstPage(firstPageBlocks), pagination)
     }
   }
 
   // turns a full capi blocks list into a page model of the page with a specific block in it
-  def findPageWithBlock(pageSize: Int, blocks: Seq[BodyBlock], isRequestedBlock: String): Option[LiveBlogCurrentPage] = {
+  def findPageWithBlock(
+      pageSize: Int,
+      blocks: Seq[BodyBlock],
+      isRequestedBlock: String,
+  ): Option[LiveBlogCurrentPage] = {
     val (mainPageBlocks, restPagesBlocks) = getPages(pageSize, blocks)
     val newestPage = FirstPage(mainPageBlocks)
-    val pages = newestPage :: restPagesBlocks
-      .zipWithIndex
-      .map { case (page, index) =>
-        // page number is index + 2 to account for first page and 0 based index
-        BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2)
+    val pages = newestPage :: restPagesBlocks.zipWithIndex
+      .map {
+        case (page, index) =>
+          // page number is index + 2 to account for first page and 0 based index
+          BlockPage(blocks = page, blockId = page.head.id, pageNumber = index + 2)
       }
     val oldestPage = pages.lastOption.getOrElse(newestPage)
 
@@ -67,21 +80,30 @@ object LiveBlogCurrentPage {
       page.currentPage.blocks.exists(_.id == isRequestedBlock)
     }
 
-
-    endedPages.sliding(3).toList.zipWithIndex.map {
-      case (List(newerPage, Some(currentPage), olderPage), index) =>
-        val isNewestPage = newestPage.equals(currentPage)
-        LiveBlogCurrentPage(
-          currentPage = currentPage,
-          pagination = if (pages.length > 1) Some(Pagination(
-            newest = if (isNewestPage) None else Some(newestPage),
-            newer = newerPage,
-            oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
-            older = olderPage,
-            numberOfPages = pages.length
-          )) else None
-        )
-    }.find(hasRequestedBlock)
+    endedPages
+      .sliding(3)
+      .toList
+      .zipWithIndex
+      .map {
+        case (List(newerPage, Some(currentPage), olderPage), index) =>
+          val isNewestPage = newestPage.equals(currentPage)
+          LiveBlogCurrentPage(
+            currentPage = currentPage,
+            pagination =
+              if (pages.length > 1)
+                Some(
+                  Pagination(
+                    newest = if (isNewestPage) None else Some(newestPage),
+                    newer = newerPage,
+                    oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
+                    older = olderPage,
+                    numberOfPages = pages.length,
+                  ),
+                )
+              else None,
+          )
+      }
+      .find(hasRequestedBlock)
   }
 
   // returns the pages, newest at the end, newest at the start
@@ -94,7 +116,6 @@ object LiveBlogCurrentPage {
 
 }
 
-
 sealed trait PageReference {
   def blocks: Seq[BodyBlock]
   def suffix: String
@@ -103,14 +124,12 @@ sealed trait PageReference {
 }
 
 case class Pagination(
-                       newest: Option[PageReference],
-                       newer: Option[PageReference],
-                       oldest: Option[PageReference],
-                       older: Option[PageReference],
-                       numberOfPages: Int
-                     )
-
-
+    newest: Option[PageReference],
+    newer: Option[PageReference],
+    oldest: Option[PageReference],
+    older: Option[PageReference],
+    numberOfPages: Int,
+)
 
 case class FirstPage(blocks: Seq[BodyBlock]) extends PageReference {
   val suffix = ""

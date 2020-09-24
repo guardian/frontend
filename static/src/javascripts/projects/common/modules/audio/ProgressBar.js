@@ -1,13 +1,11 @@
 // @flow
-import {
-    React,
-    Component,
-    styled,
-} from '@guardian/dotcom-rendering/packages/guui';
+import React, { Component } from 'react';
+import styled from '@emotion/styled';
 
 import AuralAid from './AuralAid';
 import Slider from './Slider';
 
+// $FlowFixMe
 const Progress = styled('div')(
     ({ backgroundColor, height, highlightColor, barContext }) => ({
         alignItems: 'stretch',
@@ -121,7 +119,7 @@ export default class ProgressBar extends Component<Props, State> {
     render() {
         return (
             <Progress
-                innerRef={this.getElement}
+                ref={this.getElement}
                 backgroundColor={this.props.backgroundColor}
                 highlightColor={this.props.highlightColor}
                 barContext={this.props.barContext}

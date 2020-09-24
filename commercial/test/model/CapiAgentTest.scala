@@ -4,13 +4,13 @@ import org.scalatest.{BeforeAndAfterAll, FlatSpec, Matchers}
 import test._
 
 class CapiAgentTest
-  extends FlatSpec
-  with Matchers
-  with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with SingleServerSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient {
 
   lazy val capiAgent = new CapiAgent(testContentApiClient)
 

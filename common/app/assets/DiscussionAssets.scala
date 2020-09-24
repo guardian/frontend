@@ -24,38 +24,43 @@ import scala.util.{Failure, Success, Try}
   * The path in the object value is relative to the assets map
   */
 class DiscussionExternalAssetsLifecycle(
-  config: GuardianConfiguration,
-  wsClient: WSClient,
-  jobs: JobScheduler
+    config: GuardianConfiguration,
+    wsClient: WSClient,
+    jobs: JobScheduler,
 )(implicit executionContext: ExecutionContext)
-  extends LifecycleComponent with Logging {
+    extends LifecycleComponent
+    with Logging {
 
   def refresh(): Future[Map[String, String]] = {
     config.discussion.frontendAssetsMap match {
       case Some(url) if Switches.DiscussionFetchExternalAssets.isSwitchedOn =>
         val versionedUrl = url.replace("{VERSION}", config.discussion.frontendAssetsVersion)
-        fetchAssetsMap(versionedUrl, wsClient).map(
-          parseResponse(_, versionedUrl) match {
-            case Some(parsed) => DiscussionAssetsMap.alter(parsed, URI.create(versionedUrl))
-            case None =>
-              val errMsg = s"Impossible to parse discussion assets map from $versionedUrl"
-              log.warn(errMsg)
-              Future.failed(new RuntimeException(errMsg))
-          }
-        ).flatMap(identity)
+        fetchAssetsMap(versionedUrl, wsClient)
+          .map(
+            parseResponse(_, versionedUrl) match {
+              case Some(parsed) => DiscussionAssetsMap.alter(parsed, URI.create(versionedUrl))
+              case None =>
+                val errMsg = s"Impossible to parse discussion assets map from $versionedUrl"
+                log.warn(errMsg)
+                Future.failed(new RuntimeException(errMsg))
+            },
+          )
+          .flatMap(identity)
       case Some(_) =>
         val errMsg = "Fetching discussion external assets is switched off"
         log.info(errMsg)
         Future.failed(new RuntimeException(errMsg))
       case None =>
-        val errMsg = "External discussion frontend endpoint is not configured, you might want to update `discussion.frontend.assetsMap`"
+        val errMsg =
+          "External discussion frontend endpoint is not configured, you might want to update `discussion.frontend.assetsMap`"
         log.warn(errMsg)
         Future.failed(new RuntimeException(errMsg))
     }
   }
 
   private def fetchAssetsMap(url: String, wsClient: WSClient): Future[WSResponse] = {
-    wsClient.url(url)
+    wsClient
+      .url(url)
       .withHttpHeaders("User-Agent" -> "GU-ExternalAssets")
       .withRequestTimeout(4.seconds)
       .get()
@@ -79,7 +84,6 @@ class DiscussionExternalAssetsLifecycle(
     }
   }
 
-
   def start(): Unit = {
     descheduleJobs()
     scheduleJobs()
@@ -89,7 +93,7 @@ class DiscussionExternalAssetsLifecycle(
   private def scheduleJobs(): Unit = {
     jobs.scheduleEvery(
       "DiscussionRefreshAssetsMap",
-      config.discussion.frontendAssetsMapRefreshInterval
+      config.discussion.frontendAssetsMapRefreshInterval,
     ) {
       refresh().map(_ => ())
     }
@@ -103,11 +107,11 @@ class DiscussionExternalAssetsLifecycle(
 object DiscussionAssetsMap {
   private lazy val agent = Box[Map[String, String]](Map.empty)
 
-  def alter (map: Map[String, String], baseURI: URI): Future[Map[String, String]] = {
+  def alter(map: Map[String, String], baseURI: URI): Future[Map[String, String]] = {
     agent.alter(map.mapValues(value => baseURI.resolve(value).toString))
   }
 
-  def getURL (assetName: String): String = {
+  def getURL(assetName: String): String = {
     agent.get().getOrElse(assetName, "")
   }
 }

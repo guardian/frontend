@@ -24,20 +24,32 @@ import userPrefs from 'common/modules/user-prefs';
 import { initTicker } from 'common/modules/commercial/ticker';
 import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import memoize from 'lodash/memoize';
+import {bannerSetupArticlesViewedOptOut} from "common/modules/commercial/articles-read-tooltip";
 
 type BannerDeployLog = {
     time: string,
 };
 
 const messageCode = 'engagement-banner';
-const minArticlesBeforeShowingBanner = 3;
+
+/**
+ * minArticlesBeforeShowingBanner is used by the
+ * showMeTheBanner function in reader-rev-dev-utils,
+ * it is not used in Prod. In Prod minArticlesBeforeShowingBanner
+ * value comes from getControlEngagementBannerParams()
+ */
+const minArticlesBeforeShowingBanner = 2;
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 
+/**
+ * We're temporarily using the "/rest-of-world" route
+ * for users in the "european-union" region.
+ */
 const getTimestampOfLastBannerDeployForLocation = (
     region: ReaderRevenueRegion
 ): Promise<string> =>
-    fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region}`, {
+    fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region === 'european-union' ? 'rest-of-world' : region}`, {
         mode: 'cors',
     }).then((resp: BannerDeployLog) => resp && resp.time);
 
@@ -196,6 +208,7 @@ const showBanner = (params: EngagementBannerParams): boolean => {
             params.bannerShownCallback();
         }
 
+        bannerSetupArticlesViewedOptOut();
         trackBanner(params);
 
         if (params.hasTicker) {

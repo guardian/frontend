@@ -29,7 +29,7 @@ jest.mock('common/modules/experiments/ab', () => ({
 
 describe('initialise', () => {
     beforeEach(() => {
-        config.set('switches.enableConsentManagementService', true);
+        config.set('switches.consentManagement', true);
         config.set('switches.prebidUserSync', true);
         config.set('switches.prebidAppNexus', true);
         config.set('switches.prebidSonobi', true);
@@ -67,9 +67,14 @@ describe('initialise', () => {
             bidderSequence: 'random',
             bidderTimeout: 1500,
             consentManagement: {
-                allowAuctionWithoutConsent: true,
-                cmpApi: 'iab',
-                timeout: 200,
+                gdpr: {
+                    allowAuctionWithoutConsent: true,
+                    cmpApi: 'iab',
+                    timeout: 200,
+                },
+                usp: {
+                    timeout: 1500,
+                },
             },
             customPriceBucket: {
                 buckets: [
@@ -116,7 +121,7 @@ describe('initialise', () => {
     });
 
     test('should generate correct Prebid config when consent management off', () => {
-        config.set('switches.enableConsentManagementService', false);
+        config.set('switches.consentManagement', false);
         prebid.initialise(window);
         expect(window.pbjs.getConfig().consentManagement).toEqual({});
     });

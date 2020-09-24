@@ -1,11 +1,11 @@
 package test
 
 import java.io.File
+import java.net.URL
 
-import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
+import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient, WebResponse}
 import common.Lazy
 import contentapi._
 import model.{ApplicationContext, ApplicationIdentity}
@@ -38,8 +38,8 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
   def UK[T](path: String)(block: TestBrowser => T): T = goTo(path)(block)
 
   def US[T](path: String)(block: TestBrowser => T): T = {
-      val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
-      goTo(editionPath)(block)
+    val editionPath = if (path.contains("?")) s"$path&_edition=US" else s"$path?_edition=US"
+    goTo(editionPath)(block)
   }
 
   def AU[T](path: String)(block: TestBrowser => T): T = {
@@ -48,17 +48,17 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
   }
 
   protected def goTo[T](path: String)(block: TestBrowser => T): T = {
-      // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
-      htmlUnitDriver.setJavascriptEnabled(false)
-      testBrowser.goTo(host + path)
-      block(testBrowser)
+    // http://stackoverflow.com/questions/7628243/intrincate-sites-using-htmlunit
+    htmlUnitDriver.setJavascriptEnabled(false)
+    testBrowser.goTo(host + path)
+    block(testBrowser)
   }
 
   /**
-  * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
-  * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
-  * we can use [[WebResponse.getContentAsString]]
-   */
+    * `HTMLUnit` doesn't support [[org.fluentlenium.core.domain.FluentWebElement.html]]
+    * via TestBrowser, so use [[WebClient]] to retrieve a [[WebResponse]] instead, so
+    * we can use [[WebResponse.getContentAsString]]
+    */
   protected def getContentString[T](path: String)(block: String => T): T = {
     webClient.getOptions.setJavaScriptEnabled(false)
 
@@ -66,8 +66,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def withHost(path: String): String = s"http://localhost:$port$path"
-
+  def ignoringHost(path: String): String = new URL(path).getPath()
 }
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {
@@ -83,7 +82,8 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
     ("ws.compressionEnabled", Boolean.box(true)),
     ("ws.timeout.connection", "10000"), // when running healthchecks on a cold app it can time out
     ("ws.timeout.idle", "10000"),
-    ("ws.timeout.request", "10000"))
+    ("ws.timeout.request", "10000"),
+  )
 
   implicit override lazy val app: Application = {
     val environment = Environment.simple()
@@ -93,7 +93,7 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
     }
     val context = ApplicationLoader.createContext(
       environment = environment,
-      initialSettings = settings
+      initialSettings = settings,
     )
     ApplicationLoader.apply(context).load(context)
   }
@@ -126,7 +126,7 @@ trait WithTestWsClient {
   private val lazyWsClient = Lazy(AhcWSClient())
   lazy val wsClient: WSClient = lazyWsClient
 
-  override def afterAll(): Unit = if(lazyWsClient.isDefined) lazyWsClient.close
+  override def afterAll(): Unit = if (lazyWsClient.isDefined) lazyWsClient.close
 }
 
 trait WithTestContentApiClient extends WithTestExecutionContext {
@@ -146,8 +146,8 @@ trait WithTestContentApiClient extends WithTestExecutionContext {
 
   lazy val recorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient))
   lazy val previewRecorderHttpClient = new recorderHttpClient(new CapiHttpClient(wsClient) {
-    override val signer = Some(PreviewSigner()) }
-  )
+    override val signer = Some(PreviewSigner())
+  })
 
   lazy val testContentApiClient = new ContentApiClient(recorderHttpClient)
   lazy val testPreviewContentApiClient = new PreviewContentApi(previewRecorderHttpClient)
