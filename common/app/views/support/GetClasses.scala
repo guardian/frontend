@@ -168,11 +168,12 @@ object GetClasses {
       ) collect { case (kls, true) => kls }: _*,
     )
 
-  def paletteClass(container: Container, metadata: Seq[Metadata]): Option[String] =
+  def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Fixed(_) => primaryPaletteClass(metadata)
+      case Fixed(_) => primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
       case _        => None
     }
+  }
 
   private val paletteClassesByMetadataTag: Map[Metadata, String] = Map(
     LongRunningPalette -> "fc-container--long-running-palette",
@@ -183,12 +184,12 @@ object GetClasses {
     EventAltPalette -> "fc-container--event-alt-palette",
   )
 
-  private def primaryPaletteClass(metadata: Seq[Metadata]): Option[String] = {
-    primaryPaletteTag(metadata).map(tag => paletteClassesByMetadataTag(tag))
-  }
-
   private def primaryPaletteTag(metadata: Seq[Metadata]): Option[Metadata] = {
     val paletteMetadataTags = paletteClassesByMetadataTag.keySet
     metadata.find(tag => paletteMetadataTags.contains(tag))
+  }
+
+  private def primaryPaletteClass(metadata: Seq[Metadata]): Option[String] = {
+    primaryPaletteTag(metadata).map(tag => paletteClassesByMetadataTag(tag))
   }
 }
