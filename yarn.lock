@@ -1753,10 +1753,10 @@
     "@guardian/src-icons" "^2.2.0"
     emotion-theming "^10.0.19"
 
-"@guardian/consent-management-platform@6.2.0-0":
-  version "6.2.0-0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.2.0-0.tgz#3a7586c3270786b1e4517d843cd006cd7167146b"
-  integrity sha512-s1eepEwBS2ijPjxZc9SCXrTMT237aZe4v6UmV0LUuWIb2K/jXpAzpUu7lJG3UwP1U8O+kBIDIUSfj9f8M+AcZg==
+"@guardian/consent-management-platform@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.1.0.tgz#0de83ca15d37a60bd79f2e95046ca68d8cc5141d"
+  integrity sha512-EVRoGDSk78UK9+0ILHkkubWjLdBvNrvmObwNfbrYxXnfOtyszGuy+mfhtGtLAXUKf85w+7nXnY/hKRmz4MfyeQ==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
