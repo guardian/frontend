@@ -65,7 +65,8 @@ const insertScripts = (
     advertisingServices: Array<ThirdPartyTag>,
     performanceServices: Array<ThirdPartyTag> // performanceServices always run
 ): void => {
-    addScripts(performanceServices);onConsentChange(state => {
+    addScripts(performanceServices);
+    onConsentChange(state => {
         const consentedAdvertisingServices = advertisingServices.filter(
             script => getConsentFor(script.name, state)
         );
