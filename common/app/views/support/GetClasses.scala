@@ -1,12 +1,22 @@
 package views.support
 
 import layout._
-import model.pressed.{Audio, Gallery, Video, SpecialReport}
-import slices.{Dynamic, DynamicSlowMPU}
+import model.pressed.{Audio, Gallery, SpecialReport, Video}
+import slices.{Container, Dynamic, DynamicSlowMPU, Fixed}
 import play.api.mvc.RequestHeader
 import model.Pillar.RichPillar
 import model.ContentDesignType.RichContentDesignType
 import views.support.Commercial.isAdFree
+import com.gu.facia.client.models.{
+  BreakingPalette,
+  EventAltPalette,
+  EventPalette,
+  InvestigationPalette,
+  LongRunningPalette,
+  Metadata,
+  SombrePalette,
+}
+import views.support.GetClasses.primaryPaletteClass
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -157,4 +167,29 @@ object GetClasses {
         "fc-container--video-no-fill-sides" -> frontId.contains("video"),
       ) collect { case (kls, true) => kls }: _*,
     )
+
+  def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
+    container match {
+      case Fixed(_) => primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
+      case _        => None
+    }
+  }
+
+  private val paletteClassesByMetadataTag: Map[Metadata, String] = Map(
+    LongRunningPalette -> "fc-container--long-running-palette",
+    SombrePalette -> "fc-container--sombre-palette",
+    InvestigationPalette -> "fc-container--investigation-palette",
+    BreakingPalette -> "fc-container--breaking-palette",
+    EventPalette -> "fc-container--event-palette",
+    EventAltPalette -> "fc-container--event-alt-palette",
+  )
+
+  private def primaryPaletteTag(metadata: Seq[Metadata]): Option[Metadata] = {
+    val paletteMetadataTags = paletteClassesByMetadataTag.keySet
+    metadata.find(tag => paletteMetadataTags.contains(tag))
+  }
+
+  private def primaryPaletteClass(metadata: Seq[Metadata]): Option[String] = {
+    primaryPaletteTag(metadata).map(tag => paletteClassesByMetadataTag(tag))
+  }
 }
