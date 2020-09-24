@@ -106,12 +106,6 @@ case object TheWeekInPatriarchy extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "commentisfree/series/the-week-in-patriarchy")
 }
 
-case object DesignReview extends ArticleEmailMetadata {
-  val name = "Design Review"
-  override val banner = Some("design-review.png")
-  def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "email/design")
-}
-
 case object OutsideInAmerica extends ArticleEmailMetadata {
   val name = "Outside in America"
   override val banner = Some("outside-in-america.png")
@@ -416,6 +410,11 @@ case object TheGuideStayingIn extends FrontEmailMetadata {
   override val banner = Some("home-entertainment-banner3-small.png")
 }
 
+case object DesignReview extends FrontEmailMetadata {
+  val name = "Design review"
+  override val banner = Some("design-review.png")
+}
+
 case object Documentaries extends FrontEmailMetadata {
   val name = "Documentaries"
   override val banner = Some("documentaries-2.png")
@@ -437,7 +436,6 @@ object EmailAddons {
     TheUSMinute,
     EuReferendum,
     LabNotes,
-    DesignReview,
     HandwrittenMediaBriefing,
     TheWeekInPatriarchy,
     OutsideInAmerica,
@@ -501,6 +499,7 @@ object EmailAddons {
     WordOfMouth,
     SavedForLater,
     TheGuideStayingIn,
+    DesignReview,
     Documentaries,
   )
 
