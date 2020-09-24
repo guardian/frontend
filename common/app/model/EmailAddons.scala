@@ -112,7 +112,6 @@ case object DesignReview extends ArticleEmailMetadata {
   def test(c: ContentPage): Boolean = c.item.tags.series.exists(_.id == "email/design")
 }
 
-
 case object OutsideInAmerica extends ArticleEmailMetadata {
   val name = "Outside in America"
   override val banner = Some("outside-in-america.png")
