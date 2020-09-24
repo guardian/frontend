@@ -783,7 +783,7 @@ object PageElement {
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
 
         The audioToPageElement function performs the transformation of an Audio element to the appropriate
-        PageElement
+        PageElement.
 
         The function returns either:
            1. SoundcloudBlockElement
