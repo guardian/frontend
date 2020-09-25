@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 28),
+    sellByDate = new LocalDate(2020, 10, 2),
     exposeClientSide = true,
   )
 
