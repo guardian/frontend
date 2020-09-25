@@ -17,7 +17,7 @@
     "@guardian/atom-renderer": "1.1.6",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.7",
-    "@guardian/braze-components": "0.0.10",
+    "@guardian/braze-components": "0.0.11",
     "@guardian/consent-management-platform": "6.0.0",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "@guardian/shimport": "^1.0.2",
