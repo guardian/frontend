@@ -1,22 +1,13 @@
 package views.support
 
+import com.gu.facia.client.models.{BreakingPalette, EventAltPalette, EventPalette, InvestigationPalette, LongRunningPalette, Metadata, SombrePalette}
 import layout._
-import model.pressed.{Audio, Gallery, SpecialReport, Video}
-import slices.{Container, Dynamic, DynamicSlowMPU, Fixed}
-import play.api.mvc.RequestHeader
-import model.Pillar.RichPillar
+import layout.slices.{Container, Dynamic, DynamicPackage, DynamicSlowMPU}
 import model.ContentDesignType.RichContentDesignType
+import model.Pillar.RichPillar
+import model.pressed.{Audio, Gallery, SpecialReport, Video}
+import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
-import com.gu.facia.client.models.{
-  BreakingPalette,
-  EventAltPalette,
-  EventPalette,
-  InvestigationPalette,
-  LongRunningPalette,
-  Metadata,
-  SombrePalette,
-}
-import views.support.GetClasses.primaryPaletteClass
 
 object GetClasses {
   def forHtmlBlob(item: HtmlBlob): String = {
@@ -170,8 +161,8 @@ object GetClasses {
 
   def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Fixed(_) => primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
-      case _        => None
+      case Dynamic(DynamicPackage) => None
+      case _ => primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
     }
   }
 
