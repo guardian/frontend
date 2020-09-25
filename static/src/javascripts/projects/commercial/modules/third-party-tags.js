@@ -7,13 +7,13 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { ias } from 'commercial/modules/third-party-tags/ias';
+import { ias, permutive } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { permutive } from 'commercial/modules/third-party-tags/permutive';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
+import config from 'lib/config';
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -27,7 +27,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
         if (tag.beforeLoad) {
             tag.beforeLoad();
         }
-        if (tag.useImage === true && typeof tag.url !== "undefined") {
+        if (tag.useImage === true && typeof tag.url !== 'undefined') {
             new Image().src = tag.url;
         }
         if (tag.insertSnippet) {
@@ -35,7 +35,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            if (typeof tag.url !== "undefined") {
+            if (typeof tag.url !== 'undefined') {
                 script.src = tag.url;
             }
             script.onload = tag.onLoad;
@@ -103,8 +103,8 @@ const insertScripts = (
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
         remarketing(),
-        permutive,
-        ias,
+        permutive({ shouldRun: config.get('switches.permutive', false) }),
+        ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio,
         fbPixel(),
         twitterUwt(),
