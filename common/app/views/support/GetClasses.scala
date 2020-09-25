@@ -1,8 +1,16 @@
 package views.support
 
-import com.gu.facia.client.models.{BreakingPalette, EventAltPalette, EventPalette, InvestigationPalette, LongRunningPalette, Metadata, SombrePalette}
+import com.gu.facia.client.models.{
+  BreakingPalette,
+  EventAltPalette,
+  EventPalette,
+  InvestigationPalette,
+  LongRunningPalette,
+  Metadata,
+  SombrePalette,
+}
 import layout._
-import layout.slices.{Container, Dynamic, DynamicPackage, DynamicSlowMPU}
+import layout.slices._
 import model.ContentDesignType.RichContentDesignType
 import model.Pillar.RichPillar
 import model.pressed.{Audio, Gallery, SpecialReport, Video}
@@ -161,8 +169,9 @@ object GetClasses {
 
   def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Dynamic(DynamicPackage) => None
-      case _ => primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
+      case Fixed(_) | Dynamic(DynamicSlow) | Dynamic(DynamicFast) | Dynamic(DynamicSlowMPU(_, _)) =>
+        primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
+      case _ => None
     }
   }
 
