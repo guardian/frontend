@@ -93,7 +93,7 @@ const consentManagement: ConsentManagement = {
     },
     usp: {
         timeout: 1500,
-    }
+    },
 };
 
 class PrebidAdUnit {
@@ -144,7 +144,7 @@ const initialise = (window: {
             priceGranularity,
             userSync,
         },
-        config.get('switches.enableConsentManagementService', false)
+        config.get('switches.consentManagement', false)
             ? { consentManagement }
             : {}
     );

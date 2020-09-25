@@ -35,7 +35,17 @@ object EmailContentContainer {
 
   private def pressedCollectionToContentContainer(pressedCollection: PressedCollection): EmailContentContainer = {
     val cards = pressedCollection.curatedPlusBackfillDeduplicated.flatMap(contentCard(_, pressedCollection.config))
-    fromCollectionAndCards(pressedCollection, cards)
+
+    /*
+        date: 03rd September 2020
+        author: Pascal
+        message: emailcards was introduced, as a subset of cards, to avoid interactive snaps in
+        emails (original request from Celine)
+     */
+    val emailcards =
+      cards.filterNot(_.properties.fold(false)(_.embedType.fold(false)(_ == "interactive")))
+
+    fromCollectionAndCards(pressedCollection, emailcards)
   }
 
   def storiesCount(collectionConfig: CollectionConfig): Int =

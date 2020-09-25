@@ -3,14 +3,9 @@
 import once from 'lodash/once';
 import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { appnexusUSAdapter } from 'common/modules/experiments/tests/commercial-appnexus-us-adapter';
-import { pangaeaAdapterTest } from 'common/modules/experiments/tests/commercial-pangaea-adapter';
 import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
+import { pbTestNameMap } from 'lib/url';
 import type { HeaderBiddingSize } from './types';
-
-const isInAppnexusUSAdapterTestVariant = (): boolean =>
-    isInVariantSynchronous(appnexusUSAdapter, 'variant');
 
 const SUFFIX_REGEXPS = {};
 const stripSuffix = (s: string, suffix: string): string => {
@@ -116,9 +111,6 @@ export const shouldIncludeOpenx = (): boolean => !isInUsOrCa();
 
 export const shouldIncludeTrustX = (): boolean => isInUsOrCa();
 
-export const shouldIncludePangaea = (): boolean =>
-    isInVariantSynchronous(pangaeaAdapterTest, 'variant');
-
 export const shouldIncludeTripleLift = (): boolean => isInUsOrCa();
 
 export const shouldIncludeAdYouLike = (
@@ -130,7 +122,9 @@ export const shouldUseOzoneAdaptor = (): boolean =>
     !isInUsOrCa() && !isInAuOrNz() && config.get('switches.prebidOzone');
 
 export const shouldIncludeAppNexus = (): boolean =>
-    isInAppnexusUSAdapterTestVariant() || !isInUsOrCa();
+    isInAuOrNz() ||
+    ((config.get('switches.prebidAppnexusUkRow') && !isInUsOrCa()) ||
+        !!pbTestNameMap().and);
 
 export const shouldIncludeXaxis = (): boolean =>
     // 10% of UK page views

@@ -12,6 +12,7 @@ import model.liveblog.{
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
+  MapBlockElement,
   PullquoteBlockElement,
   RichLinkBlockElement,
   TableBlockElement,
@@ -53,8 +54,10 @@ object ArticlePageChecks {
       blockElement match {
         case _: AudioBlockElement     => false
         case _: DocumentBlockElement  => false
+        case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
+        case _: MapBlockElement       => false
         case _: PullquoteBlockElement => false
         case _: RichLinkBlockElement  => false
         case _: TableBlockElement     => false
@@ -64,7 +67,7 @@ object ArticlePageChecks {
         case ContentAtomBlockElement(_, atomtype) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
-          val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide", "timeline", "profile")
+          val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide", "timeline", "profile", "chart")
           !supportedAtomTypes.contains(atomtype)
         }
         case _ => true
@@ -104,11 +107,13 @@ object ArticlePageChecks {
     "artanddesign/series/guardian-print-shop",
   )
 
+  def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(t => tagsBlockList(t.id))
+  }
+
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
 
   def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = !page.item.isPhotoEssay
-
-  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.isLiveBlog
 
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
@@ -117,38 +122,6 @@ object ArticlePageChecks {
   def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
 
   def isNotPaidContent(page: PageWithStoryPackage): Boolean = !page.article.tags.isPaidContent
-
-  def isSupportedTone(page: PageWithStoryPackage): Boolean = {
-    Set(
-      "tone/albumreview",
-      "tone/analysis",
-      "tone/blog",
-      "tone/comment",
-      "tone/competitions",
-      "tone/documentaries",
-      "tone/editorials",
-      "tone/explainers",
-      "tone/extract",
-      "tone/features",
-      "tone/help",
-      "tone/interview",
-      "tone/letters",
-      "tone/livereview",
-      "tone/matchreports",
-      "tone/news",
-      "tone/obituaries",
-      "tone/performances",
-      "tone/polls",
-      "tone/profiles",
-      "tone/recipes",
-      "tone/reviews",
-      "tone/timelines",
-    ).contains(page.article.tags.tones.headOption.map(_.id).getOrElse("")) || page.article.tags.tones.isEmpty
-  }
-
-  def isNotInBlockList(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(s => tagsBlockList(s.id))
-  }
 
 }
 
@@ -169,12 +142,10 @@ object ArticlePicker {
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
-      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
-      ("isSupportedTone", ArticlePageChecks.isSupportedTone(page)),
-      ("isNotInBlockList", ArticlePageChecks.isNotInBlockList(page)),
+      ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
@@ -193,10 +164,9 @@ object ArticlePicker {
     val article100PercentPageFeatures = allowListFeatures.filterKeys(
       Set(
         "isSupportedType",
-        "isNotLiveBlog",
         "isNotAGallery",
         "isNotAMP",
-        "isNotInBlockList",
+        "isNotInTagBlockList",
         "isNotPaidContent",
       ),
     )

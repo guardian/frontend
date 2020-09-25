@@ -1,11 +1,11 @@
 package test
 
 import java.io.File
+import java.net.URL
 
-import akka.actor.ActorSystem
 import akka.stream.Materializer
 import com.gargoylesoftware.htmlunit.html.HtmlPage
-import com.gargoylesoftware.htmlunit.{BrowserVersion, Page, WebClient, WebResponse}
+import com.gargoylesoftware.htmlunit.{BrowserVersion, WebClient, WebResponse}
 import common.Lazy
 import contentapi._
 import model.{ApplicationContext, ApplicationIdentity}
@@ -66,8 +66,7 @@ trait ConfiguredTestSuite extends TestSuite with ConfiguredServer with Configure
     block(page.getWebResponse().getContentAsString)
   }
 
-  def withHost(path: String): String = s"http://localhost:$port$path"
-
+  def ignoringHost(path: String): String = new URL(path).getPath()
 }
 
 trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBrowserPerSuite with HtmlUnitFactory {

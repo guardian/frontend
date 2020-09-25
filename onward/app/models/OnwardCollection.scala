@@ -133,12 +133,6 @@ object OnwardCollection {
   implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
 
   def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
-    def ageWarning(content: PressedContent): Option[String] = {
-      content.properties.maybeContent
-        .filter(c => c.tags.tags.exists(_.id == "tone/news"))
-        .map(ContentOldAgeDescriber.apply)
-        .filterNot(_ == "")
-    }
     trails
       .take(10)
       .map(content =>
@@ -148,7 +142,7 @@ object OnwardCollection {
           showByline = content.properties.showByline,
           byline = content.properties.byline,
           image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-          ageWarning = ageWarning(content),
+          ageWarning = content.ageWarning,
           isLiveBlog = content.properties.isLiveBlog,
           pillar = determinePillar(content.maybePillar),
           designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,

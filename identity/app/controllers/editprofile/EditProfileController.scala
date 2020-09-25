@@ -25,7 +25,6 @@ class EditProfileController(
     val httpConfiguration: HttpConfiguration,
     val controllerComponents: ControllerComponents,
 ) extends EditProfileControllerComponents
-    with EditProfileFormHandling
     with EmailsTab
     with AccountTab
     with PublicTab

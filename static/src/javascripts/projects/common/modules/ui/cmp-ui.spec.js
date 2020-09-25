@@ -1,7 +1,7 @@
 // @flow
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
-import { consentManagementPlatformUi } from './cmp-ui';
+import { cmpBannerCandidate } from './cmp-ui';
 
 jest.mock('lib/raven');
 
@@ -19,32 +19,27 @@ describe('cmp-ui', () => {
         jest.resetAllMocks();
     });
 
-    describe('consentManagementPlatformUi', () => {
+    describe('cmpBannerCandidate', () => {
         describe('canShow', () => {
-            it('return true if cmp.willShowPrivacyMessage() returns true', () => {
-                cmp.willShowPrivacyMessage.mockImplementation(() => true);
+            it('return true if cmp.willShowPrivacyMessage() resolves to true', () => {
+                cmp.willShowPrivacyMessage.mockResolvedValue(true);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
+                    expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
                     expect(show).toBe(true);
                 });
             });
-            it('return false if cmp.willShowPrivacyMessage() returns false', () => {
-                cmp.willShowPrivacyMessage.mockImplementation(() => false);
+            it('return false if cmp.willShowPrivacyMessage() resolves to false', () => {
+                cmp.willShowPrivacyMessage.mockResolvedValue(false);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });
-
-            it('returns willShowPrivacyMessage if using Sourcepoint CMP', () =>
-                consentManagementPlatformUi.canShow().then(() => {
-                    expect(cmp.willShowPrivacyMessage).toHaveBeenCalledTimes(1);
-                }));
-
             it('return false if CMP switch is off', () => {
                 config.set('switches.cmp', false);
 
-                return consentManagementPlatformUi.canShow().then(show => {
+                return cmpBannerCandidate.canShow().then(show => {
                     expect(show).toBe(false);
                 });
             });

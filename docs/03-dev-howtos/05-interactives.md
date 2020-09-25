@@ -14,7 +14,7 @@ There are three strategies for creating interactive content:
 ## Interactive content atoms
 
 Interactive content atoms are the recommended way to create interactive content going forward. They are treated as first
-class citizens within the `frontend`. Their scripts are [inlined](https://github.com/guardian/frontend/blob/master/common/app/views/fragments/atoms/interactive.scala.html)
+class citizens within the `frontend`. Their scripts are [inlined](https://github.com/guardian/frontend/blob/main/common/app/views/fragments/atoms/interactive.scala.html)
 rather than loaded by an external request, therefore they contribute less to page yank.
 
 Content atoms provide the same functionality as interactive embeds and custom boot scripts

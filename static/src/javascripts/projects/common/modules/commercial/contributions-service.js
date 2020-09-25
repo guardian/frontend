@@ -143,7 +143,8 @@ const buildBannerPayload = () => {
         countryCode: geolocationGetSync(),
         switches: {
             remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
-        }
+        },
+        weeklyArticleHistory: getWeeklyArticleHistory(),
     };
 
     return {

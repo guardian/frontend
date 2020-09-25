@@ -2,9 +2,10 @@
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import type { Banner } from 'common/modules/ui/bannerPicker';
 
 export const addPrivacySettingsLink = (): void => {
-    if (!config.get('switches.cmpUi', true)) {
+    if (!config.get('switches.consentManagement', true)) {
         return;
     }
 
@@ -42,11 +43,11 @@ export const addPrivacySettingsLink = (): void => {
     }
 };
 
-export const consentManagementPlatformUi = {
+export const cmpBannerCandidate: Banner = {
     id: 'cmpUi',
     canShow: (): Promise<boolean> => {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
-        return Promise.resolve(cmp.willShowPrivacyMessage());
+        return cmp.willShowPrivacyMessage();
     },
     // Remote banner is injected first: show() always resolves to `true`
     show: (): Promise<boolean> => Promise.resolve(true),

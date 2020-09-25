@@ -18,31 +18,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed",
-    "show number of articles viewed in contributions banner",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-contributions-banner-articles-viewed-opt-out",
     "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
-    owners = Seq(Owner.withGithub("michaelbjacobson")),
+    owners = Seq(Owner.withGithub("paulbrown1982")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-contributions-covid-banner-round-two",
-    "Covid crisis",
-    owners = Seq(Owner.withGithub("jlieb10")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 30),
     exposeClientSide = true,
   )
 
@@ -68,41 +48,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-xaxis-adapter",
-    "Test new implementation of xaxis adapter with multiple placement ids",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-pangaea-adapter",
-    "Test adding pangaea in prebid in US & AU regions",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-commercial-appnexus-us-adapter",
-    "Test new us placement id for appnexus in US",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = On,
-    sellByDate = new LocalDate(2020, 9, 30),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-commercial-connatix",
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 3),
+    sellByDate = new LocalDate(2020, 9, 28),
     exposeClientSide = true,
   )
 
@@ -111,16 +61,6 @@ trait ABTestSwitches {
     "ab-sign-in-gate-patientia",
     "Marathon sign in gate test on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-dismiss-window",
-    "Show sign in gate to users on 3rd article view, then don't reshow (control), reshow next article (variant 1), reshow next day (variant 2)",
-    owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true,
@@ -152,7 +92,7 @@ trait ABTestSwitches {
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 8),
+    sellByDate = new LocalDate(2020, 10, 5),
     exposeClientSide = true,
   )
 }

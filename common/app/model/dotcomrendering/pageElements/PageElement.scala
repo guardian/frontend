@@ -1,6 +1,6 @@
 package model.dotcomrendering.pageElements
 
-import java.net.{URLEncoder}
+import java.net.URLEncoder
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{
@@ -10,13 +10,13 @@ import com.gu.contentapi.client.model.v1.{
   Sponsorship => ApiSponsorship,
 }
 import conf.Configuration
-import layout.ContentWidths.{DotcomRenderingImageRoleWidthByBreakpointMapping}
+import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
+import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet}
+import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
@@ -62,6 +62,7 @@ sealed trait PageElement
 case class AudioAtomBlockElement(
     id: String,
     kicker: String,
+    title: Option[String],
     coverUrl: String,
     trackUrl: String,
     duration: Int,
@@ -170,8 +171,15 @@ case class InteractiveAtomBlockElement(
 ) extends PageElement
 case class InteractiveBlockElement(url: String) extends PageElement
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
-case class MapBlockElement(url: String, originalUrl: String, source: String, caption: String, title: String)
-    extends PageElement
+case class MapBlockElement(
+    embedUrl: String,
+    originalUrl: String,
+    source: String,
+    caption: String,
+    title: String,
+    width: Int,
+    height: Int,
+) extends PageElement
 case class MembershipBlockElement(
     originalUrl: Option[String],
     linkText: Option[String],
@@ -261,8 +269,14 @@ case class VideoYoutubeBlockElement(
 ) extends PageElement
 case class VineBlockElement(html: Option[String]) extends PageElement
 case class WitnessBlockElement(html: Option[String]) extends PageElement
-case class YoutubeBlockElement(id: String, assetId: String, channelId: Option[String], mediaTitle: String)
-    extends PageElement
+case class YoutubeBlockElement(
+    id: String,
+    assetId: String,
+    channelId: Option[String],
+    mediaTitle: String,
+    overrideImage: Option[String],
+    expired: Boolean,
+) extends PageElement
 
 // Intended for unstructured html that we can't model, typically rejected by consumers
 case class HTMLFallbackBlockElement(html: String) extends PageElement
@@ -325,6 +339,7 @@ object PageElement {
       isImmersive: Boolean,
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
+      overrideImage: Option[ImageElement],
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
@@ -419,7 +434,53 @@ object PageElement {
 
       case Audio => audioToPageElement(element).toList
 
-      case Video =>
+      case Video => {
+        def secureVideoHtmlUrls(html: String, element: ApiBlockElement): String = {
+          /*
+            Date: 04th September 2020
+            author: Pascal
+
+            Enhance HTML to process cases such as
+
+            <video data-media-id=\"gu-video-457132757\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2015/6/11/1434025823959/KP_270483_crop_640x360.jpg\">
+              <source src=\"http://cdn.theguardian.tv/mainwebsite/2015/06/11/150611spacediary_desk.mp4\"/>
+              <source src=\"http://cdn.theguardian.tv/3gp/small/2015/06/11/150611spacediary_small.3gp\"/>
+              <source src=\"http://cdn.theguardian.tv/HLS/2015/06/11/150611spacediary.m3u8\"/>
+              <source src=\"http://cdn.theguardian.tv/3gp/large/2015/06/11/150611spacediary_large.3gp\"/>
+              <source src=\"http://cdn.theguardian.tv/webM/2015/06/11/150611spacediary_synd_768k_vp8.webm\"/>
+            </video>
+
+            Originally found at https://www.theguardian.com/books/2020/sep/02/top-10-books-about-space-travel-samantha-cristoforetti?dcr=false
+
+            We need to replace the links by secure links.
+
+            There are three ways to do this
+
+              1. Replace "http:" by "https:" in the HTML string; but that's a bit dangerous.
+
+              2. Replace "http://cdn.theguardian.tv" by "https://cdn.theguardian.tv"; but that's limiting
+
+              3. Replace all the unsecured links by the secure ones. This is perfect but the problem is to list the (unsecured) links
+                 To achieve that we capitalise on the fact that the links are listed in element.assets
+
+            The outcome is
+
+            <video data-media-id=\"gu-video-457132757\" class=\"gu-video\" controls=\"controls\" poster=\"http://static.guim.co.uk/sys-images/Guardian/Pix/audio/video/2015/6/11/1434025823959/KP_270483_crop_640x360.jpg\">
+              <source src=\"https://cdn.theguardian.tv/mainwebsite/2015/06/11/150611spacediary_desk.mp4\"/>
+              <source src=\"https://cdn.theguardian.tv/3gp/small/2015/06/11/150611spacediary_small.3gp\"/>
+              <source src=\"https://cdn.theguardian.tv/HLS/2015/06/11/150611spacediary.m3u8\"/>
+              <source src=\"https://cdn.theguardian.tv/3gp/large/2015/06/11/150611spacediary_large.3gp\"/>
+              <source src=\"https://cdn.theguardian.tv/webM/2015/06/11/150611spacediary_synd_768k_vp8.webm\"/>
+            </video>
+
+           */
+
+          element.assets.toList
+            .foldLeft(html) { (h, asset) =>
+              val url = asset.file.getOrElse("")
+              h.replaceAll(url, url.replace("http:", "https:"))
+            }
+        }
         if (element.assets.nonEmpty) {
           List(
             GuVideoBlockElement(
@@ -430,12 +491,13 @@ object PageElement {
               element.videoTypeData.flatMap(_.caption).getOrElse(""),
               element.videoTypeData.flatMap(_.url).getOrElse(""),
               element.videoTypeData.flatMap(_.originalUrl).getOrElse(""),
-              element.videoTypeData.flatMap(_.html).getOrElse(""),
+              secureVideoHtmlUrls(element.videoTypeData.flatMap(_.html).getOrElse(""), element),
               element.videoTypeData.flatMap(_.source).getOrElse(""),
               Role(element.videoTypeData.flatMap(_.role)),
             ),
           )
         } else videoToPageElement(element).toList
+      }
 
       case Membership =>
         element.membershipTypeData
@@ -479,33 +541,15 @@ object PageElement {
         (extractAtom match {
 
           case Some(audio: AudioAtom) => {
-
-            // Using the AudioAtomBlockElement:
-            // Some(AudioAtomBlockElement(audio.id, audio.data.kicker, audio.data.coverUrl, audio.data.trackUrl, audio.data.duration, audio.data.contentId))
-
-            // Using the GenericAtomBlockElement:
-            // This will be rendered like an InteractiveAtom on DCR
-            val encodedId = URLEncoder.encode(audio.id, "UTF-8") // chart.id is a uuid, so there is no real need
-            // to url-encode it but just to be safe
-            Some(
-              GenericAtomBlockElement(
-                id = audio.id,
-                url = s"${Configuration.ajax.url}/embed/atom/audio/$encodedId",
-                html = None,
-                css = None,
-                js = None,
-              ),
-            )
-
-            // Using the AudioAtomBlockElement:
             Some(
               AudioAtomBlockElement(
-                audio.id,
-                audio.data.kicker,
-                audio.data.coverUrl,
-                audio.data.trackUrl,
-                audio.data.duration,
-                audio.data.contentId,
+                id = audio.id,
+                kicker = audio.data.kicker,
+                title = audio.atom.title,
+                coverUrl = audio.data.coverUrl,
+                trackUrl = audio.data.trackUrl,
+                duration = audio.data.duration,
+                contentId = audio.data.contentId,
               ),
             )
           }
@@ -560,14 +604,17 @@ object PageElement {
           }
 
           case Some(mediaAtom: MediaAtom) => {
+            val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
                   YoutubeBlockElement(
-                    mediaAtom.id, //CAPI ID
-                    asset.id, // Youtube ID
-                    mediaAtom.channelId, //Channel ID
-                    mediaAtom.title, //Caption
+                    id = mediaAtom.id, // CAPI ID
+                    assetId = asset.id, // Youtube ID
+                    channelId = mediaAtom.channelId, // Channel ID
+                    mediaTitle = mediaAtom.title, // Caption
+                    overrideImage = if (isMainBlock) imageOverride else None,
+                    expired = mediaAtom.expired.getOrElse(false),
                   )
                 })
               }
@@ -637,11 +684,12 @@ object PageElement {
             originalUrl <- mapElem.originalUrl
             source <- mapElem.source
             html <- mapElem.html
-            src <- getIframeSrc(html)
-
+            embedUrl <- getIframeSrc(html)
+            width <- getIframeWidth(html)
+            height <- getIframeHeight(html)
             caption = mapElem.caption.getOrElse("")
             title = mapElem.title.getOrElse("")
-          } yield MapBlockElement(src, originalUrl, source, caption, title)
+          } yield MapBlockElement(embedUrl, originalUrl, source, caption, title, width, height)
         }.toList
 
       case Pullquote =>
@@ -735,7 +783,7 @@ object PageElement {
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
 
         The audioToPageElement function performs the transformation of an Audio element to the appropriate
-        PageElement
+        PageElement.
 
         The function returns either:
            1. SoundcloudBlockElement

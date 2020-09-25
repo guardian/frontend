@@ -6,7 +6,7 @@ To have the have it up and running however, you will need a few things setup for
 
 ## Nginx
 You will need to be running your stack on [Nginx](http://wiki.nginx.org/Main).
-[See our documentation for more information](https://github.com/guardian/frontend/blob/master/nginx/README.md).
+[See our documentation for more information](https://github.com/guardian/frontend/blob/main/nginx/README.md).
 
 If you are unsure if you are or aren't, just make sure you are viewing the site from [http://m.thegulocal.com].
 

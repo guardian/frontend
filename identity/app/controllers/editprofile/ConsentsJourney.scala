@@ -31,7 +31,7 @@ object GuestPasswordForm {
 }
 case class GuestPasswordFormData(password: String, token: String)
 
-trait ConsentsJourney extends EditProfileControllerComponents with EditProfileFormHandling {
+trait ConsentsJourney extends EditProfileControllerComponents {
 
   import authenticatedActions._
 

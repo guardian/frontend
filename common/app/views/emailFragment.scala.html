@@ -1,5 +1,10 @@
 @(page: model.Page, emailType: String, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@emailEmbed(page){
-    @fragments.email.signup.emailSignUp(emailType, listName, "Sign up to our daily email")
+@emailEmbed(page) {
+    @fragments.email.signup.emailSignUp(
+        emailType,
+        listName,
+        "Sign up for the Guardian Today email",
+        "All the day’s headlines and highlights from the Guardian, direct to you every morning"
+    )
 }

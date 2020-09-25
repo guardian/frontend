@@ -73,10 +73,6 @@ export const getAppNexusDirectPlacementId = (
         return '11016434';
     }
 
-    if (isInUsOrCa()) {
-        return '4848330';
-    }
-
     const defaultPlacementId: string = '9251752';
     switch (getBreakpointKey()) {
         case 'D':

@@ -1,6 +1,5 @@
 // @flow
 import { getSync as getSync_ } from 'lib/geolocation';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
@@ -27,7 +26,6 @@ import {
 const getSync: any = getSync_;
 const getBreakpoint: any = getBreakpoint_;
 const isBreakpoint: any = isBreakpoint_;
-const isInVariantSynchronous: any = isInVariantSynchronous_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -39,12 +37,6 @@ jest.mock('lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
     hasPushStateSupport: jest.fn(() => true),
     isBreakpoint: jest.fn(),
-}));
-
-jest.mock('common/modules/experiments/ab', () => ({
-    isInVariantSynchronous: jest.fn(
-        (testId, variantId) => variantId === 'variant'
-    ),
 }));
 
 jest.mock('common/modules/experiments/ab-tests');
@@ -109,36 +101,32 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    ['AU', 'NZ', 'GB'].forEach(region => {
-        test(`shouldIncludeAppNexus should return true if geolocation is ${region}`, () => {
-            getSync.mockReturnValue(region);
-            expect(shouldIncludeAppNexus()).toBe(true);
-        });
-    });
-
-    ['US', 'CA'].forEach(region => {
-        test(`shouldIncludeAppNexus should return false if geolocation is ${region} and not in variant`, () => {
-            getSync.mockReturnValue(region);
-            expect(shouldIncludeAppNexus()).toBe(false);
-        });
-    });
-
-    ['US', 'CA'].forEach(region => {
-        test(`shouldIncludeAppNexus should return true if geolocation is ${region} and in variant`, () => {
-            isInVariantSynchronous.mockImplementationOnce(
-                (testId, variantId) => variantId === 'variant'
-            );
-            getSync.mockReturnValue(region);
-            expect(shouldIncludeAppNexus()).toBe(true);
-        });
-    });
-
-    test('shouldIncludeAppNexus should otherwise return false', () => {
-        const testGeos = ['FK', 'GI', 'GG', 'IM', 'JE', 'SH'];
-        for (let i = 0; i < testGeos.length; i += 1) {
-            getSync.mockReturnValue(testGeos[i]);
-            expect(shouldIncludeAppNexus()).toBe(true);
-        }
+    // $FlowFixMe
+    test.each([
+        ['AU','on', true],
+        ['AU','off', true],
+            ['NZ','on', true],
+            ['NZ','off', true],
+            ['GB','on', true],
+            ['GB','off', false],
+            ['US','on', false],
+            ['CA','on', false],
+            ['FK','on', true],
+            ['GI','on', true],
+            ['GG','on', true],
+            ['IM','on', true],
+            ['JE','on', true],
+            ['SH','on', true],
+            ['FK','off', false],
+            ['GI','off', false],
+            ['GG','off', false],
+            ['IM','off', false],
+            ['JE','off', false],
+            ['SH','off', false]
+    ])(`In %s, if switch is %s, shouldIncludeAppNexus should return %s`, (region, switchState, expected) => {
+        config.switches.prebidAppnexusUkRow = (switchState === 'on');
+        getSync.mockReturnValue(region);
+        expect(shouldIncludeAppNexus()).toBe(expected);
     });
 
     test('shouldIncludeOpenx should return true if geolocation is GB', () => {

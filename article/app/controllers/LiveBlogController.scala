@@ -64,7 +64,7 @@ class LiveBlogController(
               case (blog: LiveBlogPage, HtmlFormat) =>
                 Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-                remoteRenderer.getAMPArticle(ws, path, page, blocks, pageType)
+                remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
               case (blog: LiveBlogPage, AmpFormat) =>
                 Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
               case _ => Future.successful(NotFound)

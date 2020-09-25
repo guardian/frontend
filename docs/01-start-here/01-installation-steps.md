@@ -99,9 +99,9 @@ Mac: Install from [Oracle web site](http://www.oracle.com/technetwork/java/javas
 
 ### [Node.js](https://github.com/joyent/node/wiki/Installing-Node.js-via-package-manager)
 
-The frontend uses an `.nvmrc` which specifies Node 10.16 as a requirement. If you use
+The frontend uses an `.nvmrc` which specifies Node 10.22 (LTS Dubnium) as a requirement. If you use
 [NVM](https://github.com/creationix/nvm#install-script) to manage multiple versions of Node on your machine, you can
-just `nvm use` (or `nvm install` if you don't have 10.16 installed yet).
+just `nvm use` (or `nvm install` if you don't have 10.22 installed yet).
 
 To install nvm:
 
@@ -113,7 +113,7 @@ You may find it useful to add [this script](https://gist.github.com/sndrs/5940e9
 `.bash_profile` – or wherever else is appropriate for your setup – to automatically switch Node versions if an `.nvmrc`
 is present.
 
-If you just want to use your system Node, you'll need to install v10.16:
+If you just want to use your system Node, you'll need to install v10.22:
 
 Ubuntu:
 
@@ -125,7 +125,7 @@ $ sudo apt-get install -y nodejs
 Mac:
 
 ```bash
-$ brew install node@10.16
+$ brew install node@10.22
 ```
 
 
@@ -150,10 +150,12 @@ $ make watch
 As a convenience, this command will also watch for changes to client side code and
 automatically inject changes into the browser without requiring a browser refresh.
 
-In another console, run the supplied bash script [sbt]. The dot and slash are important in this command.
+In another console, run the supplied bash script [sbt].
+You can use the following command to call the bash script. Alternatively, make
+sure you include dot and slash if executing the script directly.
 
 ```bash
-$ ./sbt
+$ make sbt
 ```
 
 Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
@@ -185,7 +187,7 @@ Now check that you are up and running by hitting the following URLs:
 
 Please note, `make watch` proxies port 3000 with the ability to live reload assets, you could access all links using port 9000 as well.
 
-If you have [setup local Nginx](https://github.com/guardian/frontend/blob/master/nginx/README.md) then try hitting
+If you have [setup local Nginx](https://github.com/guardian/frontend/blob/main/nginx/README.md) then try hitting
 [https://m.thegulocal.com](https://m.thegulocal.com)
 
 Congratulations, you have a local instance running!  Now continue on to set up your IDE.
@@ -245,5 +247,5 @@ It should only take 3 minutes and will help us improve this documentation and th
 
 If you are working on Identity or Discussion, Nginx must be installed and
 configured to correctly serve the application, please refer to
-[`/nginx/README.md`](https://github.com/guardian/frontend/blob/master/nginx/README.md) in this project.
+[`/nginx/README.md`](https://github.com/guardian/frontend/blob/main/nginx/README.md) in this project.
 This will allow you to access frontend via `https://m.thegulocal.com`

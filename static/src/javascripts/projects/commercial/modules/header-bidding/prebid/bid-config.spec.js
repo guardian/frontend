@@ -28,7 +28,6 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
-    shouldIncludePangaea as shouldIncludePangaea_,
 } from '../utils';
 
 const containsBillboard: any = containsBillboard_;
@@ -45,7 +44,6 @@ const shouldIncludeOpenx: any = shouldIncludeOpenx_;
 const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
-const shouldIncludePangaea: any = shouldIncludePangaea_;
 const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
@@ -94,7 +92,6 @@ const resetConfig = () => {
     config.set('switches.prebidTrustx', true);
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
-    config.set('switches.prebidPangaea', true);
     config.set('switches.prebidTriplelift', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
@@ -507,7 +504,7 @@ describe('bids', () => {
         );
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
-        expect(getBidders()).toEqual(['xhb', 'sonobi']);
+        expect(getBidders()).toEqual(['sonobi', 'xhb']);
     });
 
     test('should ignore bidder that does not exist', () => {
@@ -557,11 +554,6 @@ describe('bids', () => {
             delDomain: 'guardian-d.openx.net',
             unit: '540279541',
         });
-    });
-
-    test('should not include Pangaea when switched off', () => {
-        config.set('switches.prebidPangaea', false);
-        expect(getBidders()).toEqual(['ix', 'adyoulike']);
     });
 });
 
@@ -615,127 +607,6 @@ describe('triplelift adapter', () => {
             .params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
-        });
-    });
-});
-
-describe('xaxis adapter', () => {
-    beforeEach(() => {
-        resetConfig();
-        config.set('page.contentType', 'Article');
-        shouldIncludeXaxis.mockReturnValue(true);
-        isInVariantSynchronous.mockImplementation(
-            (testId, variantId) => variantId === 'variant'
-        );
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    test('should include xaxis adapter if condition is true ', () => {
-        config.set('switches.prebidXaxis', true);
-        expect(getBidders()).toEqual(['ix', 'xhb']);
-    });
-
-    test('should not include xaxis adapter if condition is false ', () => {
-        config.set('switches.prebidXaxis', false);
-        expect(getBidders()).toEqual(['ix']);
-    });
-
-    test('should return correct xaxis adapter params for top-above-nav', () => {
-        config.set('switches.prebidXaxis', true);
-        containsLeaderboard.mockReturnValueOnce(true);
-        containsMpu.mockReturnValueOnce(false);
-        containsDmpu.mockReturnValueOnce(false);
-        containsMobileSticky.mockReturnValueOnce(false);
-        getBreakpointKey.mockReturnValue('D');
-
-        const xaxisBids = bids('dfp-ad--top-above-nav', [
-            [728, 90],
-            [970, 250],
-        ]);
-        expect(xaxisBids[2].params).toEqual({
-            placementId: 15900187,
-        });
-        expect(xaxisBids[3].params).toEqual({
-            placementId: 15900184,
-        });
-    });
-
-    test('should return not match param if size not matching', () => {
-        config.set('switches.prebidXaxis', true);
-        containsLeaderboard.mockReturnValueOnce(true);
-        containsMpu.mockReturnValueOnce(false);
-        containsDmpu.mockReturnValueOnce(false);
-        containsMobileSticky.mockReturnValueOnce(false);
-
-        const xaxisBids = bids('dfp-ad--top-above-nav', [[123, 123]]);
-
-        expect(xaxisBids[1].params).toEqual({
-            placementId: 15900184,
-        });
-    });
-});
-
-describe('pangaea adapter', () => {
-    beforeEach(() => {
-        resetConfig();
-        shouldIncludePangaea.mockReturnValue(true);
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-    });
-
-    test('should include pangaea adapter if switch is true ', () => {
-        config.set('switches.prebidPangaeaUsAu', true);
-        expect(getBidders()).toEqual(['ix', 'pangaea']);
-    });
-
-    test('should not include pangaea adapter if switch is false ', () => {
-        config.set('switches.prebidPangaeaUsAu', false);
-        expect(getBidders()).toEqual(['ix']);
-    });
-
-    const regionalTests = [
-        {
-            name: 'US',
-            expectedPlacementId: '13892369',
-            mockFn: isInUsOrCa,
-            mockReturn: true,
-        },
-        {
-            name: 'AU',
-            expectedPlacementId: '13892409',
-            mockFn: isInAuOrNz,
-            mockReturn: true,
-        },
-        {
-            name: 'GB',
-            expectedPlacementId: '',
-            mockFn: isInUsOrCa,
-            mockReturn: false,
-        },
-    ];
-
-    regionalTests.forEach(regionalTest => {
-        test(`should return correct pangaea adapter params for ${
-            regionalTest.name
-        } regions`, () => {
-            config.set('switches.prebidPangaeaUsAu', true);
-
-            regionalTest.mockFn.mockReturnValue(regionalTest.mockReturn);
-
-            const pangaeaBids = bids('dfp-ad--top-above-nav', [
-                [728, 90],
-                [970, 250],
-            ]);
-
-            expect(pangaeaBids[2].params).toEqual({
-                keywords: 'someAppNexusTargetingObject',
-                placementId: regionalTest.expectedPlacementId,
-            });
         });
     });
 });
