@@ -5,6 +5,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
+import {submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
 
 import {getUserFromApi} from '../../common/modules/identity/api';
 import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
@@ -170,6 +171,14 @@ const show = (): Promise<boolean> => import(
             // Log the impression with Braze
             appboy.logInAppMessageImpression(messageConfig);
         }
+
+        // Log the impression with Ophan
+        submitViewEvent({
+            component: {
+                componentType: 'RETENTION_ENGAGEMENT_BANNER',
+                id: messageConfig.extras.componentName,
+            },
+        });
 
         return true;
     })

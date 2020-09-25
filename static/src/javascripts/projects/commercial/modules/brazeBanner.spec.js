@@ -3,6 +3,7 @@
 import {brazeVendorId, canShowPreChecks, hasRequiredConsents} from "./brazeBanner";
 
 jest.mock('lib/raven');
+jest.mock('ophan/ng', () => null);
 
 let mockOnConsentChangeResult;
 jest.mock('@guardian/consent-management-platform', () => ({
