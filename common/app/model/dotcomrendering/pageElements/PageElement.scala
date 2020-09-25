@@ -309,7 +309,6 @@ case class ProfileAtomBlockElement(
 object ProfileAtomBlockElement {
   implicit val ProfileAtomBlockElementWrites: Writes[ProfileAtomBlockElement] = Json.writes[ProfileAtomBlockElement]
 }
-
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
 object PullquoteBlockElement {
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
