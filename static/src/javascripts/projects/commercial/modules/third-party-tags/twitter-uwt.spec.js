@@ -13,11 +13,11 @@ describe('twitterUwt', () => {
 
     it('shouldRun to be false if the switch is off', () => {
         config.set('switches.twitterUwt', false);
-        const { shouldRun, url, sourcepointId } = twitterUwt();
+        const { shouldRun, url, name } = twitterUwt();
 
         expect(shouldRun).toEqual(false);
         expect(url).toBeUndefined();
-        expect(sourcepointId).toBe('5e71760b69966540e4554f01');
+        expect(name).toBe('twitter');
     });
 
     it('should have insertSnippet function', () => {
