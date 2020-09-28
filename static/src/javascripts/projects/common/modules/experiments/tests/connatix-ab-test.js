@@ -4,7 +4,7 @@ import { isInUsa } from "common/modules/commercial/geo-utils";
 export const connatixTest: ABTest = {
     id: 'CommercialConnatix',
     start: '2020-12-03',
-    expiry: '2020-10-05',
+    expiry: '2020-10-06',
     author: 'Ioanna Kyprianou',
     description: 'This is to test connatix integration via GAM',
     audience: 0.02,
