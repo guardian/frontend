@@ -575,7 +575,7 @@ object PageElement {
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
 
-        val signedAssets = element.assets.zipWithIndex
+        val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
         val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
@@ -585,12 +585,12 @@ object PageElement {
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(signedAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(signedAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets)),
                   hidpi = true,
                 ),
               )
@@ -611,7 +611,7 @@ object PageElement {
 
         List(
           ImageBlockElement(
-            ImageMedia(signedAssets),
+            ImageMedia(imageAssets),
             imageDataFor(element),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
