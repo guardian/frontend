@@ -6,6 +6,20 @@ if [ -f "~/.sbtconfig" ]; then
   . ~/.sbtconfig
 fi
 
+JAVA_VERSION=$(sbt 'eval sys.props("java.version")' \
+| egrep -o "(ans: String = )(.+)" \
+| egrep -o "\S+" \
+| tail -1 \
+| egrep -o ".{5}" \
+| head -1)
+
+echo "JAVA_VERSION=$JAVA_VERSION"
+
+if [ "$JAVA_VERSION" != "1.8.0" ]; then
+    echo "SBT is not using Java 8. Have you set JAVA_HOME in your profile?"
+    exit 1
+fi
+
 # Debug option
 DEBUG_PARAMS=""
 for arg in "$@"
