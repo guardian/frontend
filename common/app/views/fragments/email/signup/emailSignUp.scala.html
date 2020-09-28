@@ -39,7 +39,6 @@
 
 @form = {
     <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
-        @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
             <div class="email-sub__inline-label js-email-sub__inline-label">
                 @if(componentClass == "plaintone") {
