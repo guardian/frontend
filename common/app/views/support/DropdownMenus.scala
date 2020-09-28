@@ -22,6 +22,11 @@ object DropdownMenus {
       label = "Account overview",
     ),
     DropdownMenuItem(
+      href = Some(s"${Configuration.id.mmaUrl}/billing"),
+      linkName = Some("billing"),
+      label = "Billing",
+    ),
+    DropdownMenuItem(
       href = Some(s"${Configuration.id.mmaUrl}/public-settings"),
       linkName = Some("profile"),
       label = "Profile",
