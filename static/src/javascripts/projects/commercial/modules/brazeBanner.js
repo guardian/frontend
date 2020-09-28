@@ -5,7 +5,7 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
-import {submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {submitViewEvent, submitClickEvent} from 'common/modules/commercial/acquisitions-ophan';
 
 import {getUserFromApi} from '../../common/modules/identity/api';
 import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
@@ -160,6 +160,16 @@ const show = (): Promise<boolean> => import(
                         appboy.logInAppMessageButtonClick(
                             thisButton, messageConfig
                         );
+                        // Log the click with Ophan
+                        submitClickEvent({
+                            component: {
+                                componentType: 'BRAZE_BANNER',
+                                id: messageConfig.extras.componentName,
+                                // Braze displays button id from 1, but internal representation is numbered from 0
+                                // This means that the Button ID in Braze and Ophan will be the same
+                                value: (buttonId + 1).toString(10),
+                            },
+                        });
                     }
                 },
                 brazeMessageProps: messageConfig.extras,
