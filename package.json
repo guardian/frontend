@@ -92,7 +92,7 @@
     "eslint-import-resolver-webpack": "^0.10.0",
     "eslint-plugin-flow-header": "^0.2.0",
     "eslint-plugin-flowtype": "^2.49.0",
-    "eslint-plugin-guardian-frontend": "file:dev/eslint-plugin-guardian-frontend",
+    "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jasmine": "^2.10.1",
     "eslint-plugin-jsx-a11y": "^6.0.3",
