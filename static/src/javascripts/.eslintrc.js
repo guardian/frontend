@@ -2,22 +2,26 @@
 module.exports = {
     env: {
         browser: true,
+        es6: true,
         jest: true,
     },
-    parser: 'babel-eslint',
+    parser: '@typescript-eslint/parser',
     parserOptions: {
         sourceType: 'module',
         ecmaVersion: 6,
+        project: 'tsconfig.json',
     },
     settings: {
         'import/resolver': 'webpack',
     },
     extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
+        'plugin:@typescript-eslint/eslint-recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:@typescript-eslint/recommended-requiring-type-checking',
         'prettier/react',
+        'prettier/@typescript-eslint',
     ],
-    plugins: ['flowtype', 'flow-header'],
+    plugins: ['@typescript-eslint'],
     rules: {
         // require-specific overrides
         'import/extensions': 'off',
@@ -70,7 +74,6 @@ module.exports = {
             },
         ],
 
-        'flow-header/flow-header': 'error',
         'no-param-reassign': ['error', { props: false }],
         'no-prototype-builtins': 'off',
 
