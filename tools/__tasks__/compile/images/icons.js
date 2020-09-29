@@ -35,7 +35,7 @@ const sortSVGs = svgs =>
         const bInfo = b.data.info;
         if (aInfo.height !== bInfo.height) {
             return aInfo.height - bInfo.height;
-        } else if (aInfo.width !== bInfo.width) {
+        } if (aInfo.width !== bInfo.width) {
             return bInfo.width - aInfo.width;
         }
         return a.name.localeCompare(b.name);

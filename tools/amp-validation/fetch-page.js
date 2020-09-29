@@ -38,13 +38,11 @@ const fetch = options => {
 };
 
 exports.get = opts => {
-    const options = Object.assign(
-        {
-            endpoint: '',
+    const options = {
+        endpoint: '',
             host: exports.hosts.dev,
-        },
-        opts
-    );
+        ...opts
+    };
 
     return fetch(options);
 };

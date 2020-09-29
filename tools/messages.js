@@ -6,13 +6,11 @@ const notify = (message, userOptions = {}, type = 'log') => {
     // Set the default text colour for info to black as white was hard to see
     const options =
         type === 'info'
-            ? Object.assign(
-                  {
-                      colour: 'black',
+            ? ({
+                  colour: 'black',
                       codeColour: 'white',
-                  },
-                  userOptions
-              )
+                  ...userOptions
+              })
             : userOptions;
 
     try {

@@ -18,11 +18,11 @@ const tempFilenames = {
 
 const fetchValidator = devChannel => {
     const validatorRequest = (resolve, reject) => {
-        const options = Object.assign(
-            {},
-            defaultOptions,
-            devChannel ? devOptions : {}
-        );
+        const options = {
+            
+            ...defaultOptions,
+            ...(devChannel ? devOptions : {})
+        };
         const errorMessage = `Unable to retrieve ${
             options.path
         } with dev channel ${devChannel ? 'enabled' : 'disabled'}.`;

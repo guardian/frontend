@@ -91,10 +91,10 @@ module.exports = {
                         );
 
                         // create a new key for each one and add them them to asset map
-                        return Object.assign(
-                            {},
-                            assetMap,
-                            webpackEntryBundles.reduce(
+                        return {
+                            
+                            ...assetMap,
+                            ...webpackEntryBundles.reduce(
                                 (map, webpackEntryBundle) =>
                                     Object.assign(map, {
                                         [webpackEntryBundle.replace(
@@ -104,7 +104,7 @@ module.exports = {
                                     }),
                                 {}
                             )
-                        );
+                        };
                     })
                     .then((
                         normalisedAssetMap // save the asset map

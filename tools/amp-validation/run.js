@@ -107,13 +107,11 @@ const checkEndpoints = (endpoints, options) => validatorFilePath =>
     });
 
 module.exports = opts => endpoints => {
-    const options = Object.assign(
-        {
-            checkIfAmp: false,
+    const options = {
+        checkIfAmp: false,
             logErrors: true,
-        },
-        opts
-    );
+        ...opts
+    };
 
     // TODO: re-add pre-release when/if google provide us with one
     validatorJs
