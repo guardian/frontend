@@ -72,6 +72,7 @@
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
+    "@types/jest": "^26.0.14",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
     "amphtml-validator": "^1.0.21",
@@ -140,6 +141,7 @@
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",
+    "ts-jest": "^26.4.1",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.44.2",
@@ -176,7 +178,8 @@
       "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
     ],
     "testEnvironment": "jest-environment-jsdom-global",
-    "testURL": "http://testurl.theguardian.com"
+    "testURL": "http://testurl.theguardian.com",
+    "preset": "ts-jest"
   },
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",
