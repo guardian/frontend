@@ -54,7 +54,7 @@ afterEach(() => {
 });
 
 test('should properly save the initialized state', () => {
-  const nav: HTMLElement = (document.querySelector('.js-tabs') as any);
+  const nav: HTMLElement = (document.querySelector('.js-tabs'));
 
   expect(nav.getAttribute('data-tabs-initialized')).toBe(null);
 

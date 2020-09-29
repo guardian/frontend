@@ -1,8 +1,8 @@
 
 import bean from "bean";
 import mediator from "lib/mediator";
-import { initClickstream } from "common/modules/ui/clickstream";
-import { Spec } from "common/modules/ui/clickstream";
+import { initClickstream , Spec } from "common/modules/ui/clickstream";
+
 
 jest.mock('lib/mediator');
 

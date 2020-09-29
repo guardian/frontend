@@ -22,14 +22,14 @@ describe('Hosted About Popup', () => {
 
   it('should hide popup after initialization', done => {
     init().then(() => {
-      expect((document.querySelector('.js-survey-overlay') as any).classList.toString()).toEqual(expect.stringContaining('u-h'));
+      expect((document.querySelector('.js-survey-overlay')).classList.toString()).toEqual(expect.stringContaining('u-h'));
     }).then(done).catch(done.fail);
   });
 
   it('should show popup after clicking on the button', done => {
     init().then(() => {
-      (document.querySelector('.js-hosted-about') as any).click();
-      expect((document.querySelector('.js-survey-overlay') as any).classList.toString()).not.toEqual(expect.stringContaining('u-h'));
+      (document.querySelector('.js-hosted-about')).click();
+      expect((document.querySelector('.js-survey-overlay')).classList.toString()).not.toEqual(expect.stringContaining('u-h'));
     }).then(done).catch(done.fail);
   });
 });

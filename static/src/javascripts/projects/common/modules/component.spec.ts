@@ -43,8 +43,8 @@ describe('Component', () => {
     }
 
     // Apologies for the typecast, but it makes things just way easier ...
-    elem = ((document.querySelector('.component') as any) as HTMLElement);
-    subElem = ((document.querySelector('.component__element') as any) as HTMLElement);
+    elem = ((document.querySelector('.component')) as HTMLElement);
+    subElem = ((document.querySelector('.component__element')) as HTMLElement);
   });
 
   describe('fetch()', () => {

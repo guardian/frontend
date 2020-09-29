@@ -1,9 +1,9 @@
 
 import { spaceFiller } from "common/modules/article/space-filler";
-import { findSpace as findSpace_, SpaceError } from "common/modules/spacefinder";
+import { findSpace as findSpace_, SpaceError , SpacefinderRules } from "common/modules/spacefinder";
 import raven from "lib/raven";
 import { noop } from "lib/noop";
-import { SpacefinderRules } from "common/modules/spacefinder";
+
 
 jest.mock('lib/fastdom-promise');
 jest.mock('common/modules/spacefinder', () => ({

@@ -43,14 +43,14 @@ describe('Hosted onward journey carousel', () => {
   });
 
   const clickAndExpectNthPage = (clickOn: string, expectedPage: number): any => {
-    (document.querySelector(`.${clickOn}`) as any).click();
+    (document.querySelector(`.${clickOn}`)).click();
     return fastdom.read(() => {
       const transform = (1 - expectedPage) * 100;
 
-      expect((document.querySelector('.js-carousel-pages') as any).getAttribute('style')).toEqual(`-webkit-transform: translate(${transform || '-000'}%, 0);`);
+      expect((document.querySelector('.js-carousel-pages')).getAttribute('style')).toEqual(`-webkit-transform: translate(${transform || '-000'}%, 0);`);
 
       [1, 2, 3, 4].forEach(i => {
-        const cssClasses = (document.querySelector(`.js-carousel-dot:nth-child(${i})`) as any).classList.toString();
+        const cssClasses = (document.querySelector(`.js-carousel-dot:nth-child(${i})`)).classList.toString();
         if (i === expectedPage) {
           expect(cssClasses).toEqual(expect.stringContaining('highlighted'));
         } else {

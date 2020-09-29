@@ -17,14 +17,10 @@ describe('Cross-frame messenger: get stylesheets', () => {
 
     // Why are we having to mess about with the DOM? JSDOM does not recognise
     // `ownerNode`: https://github.com/tmpvar/jsdom/issues/992
-    styleSheets = Array.prototype.map.call(document.querySelectorAll('style'), style => Object.assign({
-      ownerNode: Object.assign({
-        matches: selector => {
+    styleSheets = Array.prototype.map.call(document.querySelectorAll('style'), style => ({ownerNode: {matches: selector => {
           const res = Array.prototype.slice.call(document.querySelectorAll(selector));
           return res.indexOf(style) > -1;
-        }
-      }, style)
-    }, style));
+        }, ...style}, ...style}));
 
     done();
   });

@@ -80,11 +80,11 @@ describe('history', () => {
     localStorageStub.get.mockImplementation(key => {
       if (key === 'gu.history') {
         return mockContains;
-      } else if (key === 'gu.history.summary') {
+      } if (key === 'gu.history.summary') {
         return mockSummary;
-      } else if (key === 'gu.history.dailyArticleCount') {
+      } if (key === 'gu.history.dailyArticleCount') {
         return mockDailyArticleCount;
-      } else if (key === 'gu.history.weeklyArticleCount') {
+      } if (key === 'gu.history.weeklyArticleCount') {
         return mockWeeklyArticleCount;
       }
     });

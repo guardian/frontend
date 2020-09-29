@@ -42,7 +42,7 @@ describe('Hosted Gallery', () => {
     done();
   });
 
-  const classListFor = (className: string): string => (document.querySelector(`.${className}`) as any).classList.toString();
+  const classListFor = (className: string): string => (document.querySelector(`.${className}`)).classList.toString();
 
   it('should open and close the caption on click', () => {
     const button: any = document.querySelector('.js-gallery-caption-button');
@@ -90,9 +90,9 @@ describe('Hosted Gallery', () => {
 
   it('should log navigation in GA when clicking through images', () => {
     gallery.initScroll.call(gallery);
-    (document.querySelector('.inline-arrow-down') as any).click();
+    (document.querySelector('.inline-arrow-down')).click();
     expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith('Click - image 2');
-    (document.querySelector('.inline-arrow-up') as any).click();
+    (document.querySelector('.inline-arrow-up')).click();
     expect(interactionTracking.trackNonClickInteraction).toHaveBeenCalledWith('Click - image 1');
   });
 

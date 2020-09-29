@@ -28,7 +28,7 @@ describe('Tech-feedback', () => {
 
   it('Should place the extra information into the form', () => {
     initTechFeedback().then(() => {
-      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]') as any);
+      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]'));
 
       expect(extra.value).toContain('browser');
     });
@@ -36,7 +36,7 @@ describe('Tech-feedback', () => {
 
   it('Should start off with the inputs disabled', () => {
     initTechFeedback().then(() => {
-      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]') as any);
+      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]'));
 
       expect(extra.disabled).toBeTruthy();
     });
@@ -44,7 +44,7 @@ describe('Tech-feedback', () => {
 
   it('Should enable inputs after we choose something from the category select', () => {
     initTechFeedback().then(() => {
-      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]') as any);
+      const extra: HTMLInputElement = (document.querySelector('#feedback__form input[name=extra]'));
       const feedback: HTMLInputElement = (document.getElementById('feedback-category') as any);
       const testoption: HTMLElement = (document.getElementById('testoption') as any);
 

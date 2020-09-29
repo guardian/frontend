@@ -52,11 +52,9 @@ describe('Scrollable MPU', () => {
   });
 
   it('should add tracking pixels', () => {
-    const theParams = Object.assign({}, testParams, {
-      trackingPixel: 'trackingPixel',
+    const theParams = { ...testParams, trackingPixel: 'trackingPixel',
       researchPixel: 'researchPixel',
-      cacheBuster: '+-+-+-+'
-    });
+      cacheBuster: '+-+-+-+'};
     new ScrollableMpu(adSlot, theParams).create();
     expect(addTrackingPixel).toHaveBeenCalledTimes(2);
     expect(addTrackingPixel).toHaveBeenCalledWith('researchPixel+-+-+-+');
@@ -64,20 +62,16 @@ describe('Scrollable MPU', () => {
   });
 
   it('should add viewability tracker', () => {
-    const theParams = Object.assign({}, testParams, {
-      id: 'id',
-      viewabilityTracker: 'viewabilityTracker'
-    });
+    const theParams = { ...testParams, id: 'id',
+      viewabilityTracker: 'viewabilityTracker'};
     new ScrollableMpu(adSlot, theParams).create();
     expect(addViewabilityTracker).toHaveBeenCalledTimes(1);
     expect(addViewabilityTracker).toHaveBeenCalledWith(adSlot, 'id', 'viewabilityTracker');
   });
 
   it('should set up background for fluid250', done => {
-    const theParams = Object.assign({}, testParams, {
-      backgroundImagePType: 'fixed matching fluid250',
-      backgroundImage: 'image'
-    });
+    const theParams = { ...testParams, backgroundImagePType: 'fixed matching fluid250',
+      backgroundImage: 'image'};
     new ScrollableMpu(adSlot, theParams).create();
     fastdom.read(() => {
       expect(document.querySelector('.creative--scrollable-mpu-image.creative--scrollable-mpu-image-fixed')).not.toBeNull();
@@ -86,10 +80,8 @@ describe('Scrollable MPU', () => {
   });
 
   it('should set up background for parallax', done => {
-    const theParams = Object.assign({}, testParams, {
-      backgroundImagePType: 'parallax',
-      backgroundImage: 'image'
-    });
+    const theParams = { ...testParams, backgroundImagePType: 'parallax',
+      backgroundImage: 'image'};
     new ScrollableMpu(adSlot, theParams).create();
     fastdom.read(() => {
       expect(document.querySelector('.creative--scrollable-mpu-image.creative--scrollable-mpu-image-parallax')).not.toBeNull();

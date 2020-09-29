@@ -7,7 +7,7 @@ const {
   resize
 } = _;
 
-const foolFlow = (mockFn: any) => ((mockFn as any) as JestMockT);
+const foolFlow = (mockFn: any) => ((mockFn) as JestMockT);
 
 describe('Cross-frame messenger: resize', () => {
   beforeEach(() => {

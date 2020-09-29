@@ -1,7 +1,7 @@
 
 import { getCookie as getCookie_, addCookie as addCookie_ } from "lib/cookies";
-import { setAdConsentState, getAdConsentState } from "./ad-prefs.lib";
-import { AdConsent } from "./ad-prefs.lib";
+import { setAdConsentState, getAdConsentState , AdConsent } from "./ad-prefs.lib";
+
 
 const getCookie: any = getCookie_;
 const addCookie: any = addCookie_;

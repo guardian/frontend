@@ -30,9 +30,7 @@ jest.mock('lib/config', () => {
     }
   };
 
-  return Object.assign({}, defaultConfig, {
-    get: (path: string = '', defaultValue: any) => path.replace(/\[(.+?)]/g, '.$1').split('.').reduce((o, key) => o[key], defaultConfig) || defaultValue
-  });
+  return { ...defaultConfig, get: (path = '', defaultValue: any) => path.replace(/\[(.+?)]/g, '.$1').split('.').reduce((o, key) => o[key], defaultConfig) || defaultValue};
 });
 
 jest.mock('common/modules/commercial/geo-utils', () => ({

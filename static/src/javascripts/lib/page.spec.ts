@@ -14,8 +14,7 @@ jest.mock('lib/config', () => {
     }
   };
 
-  return Object.assign({}, defaultConfig, {
-    get: (path: string = '', defaultValue: any) => path.replace(/\[(.+?)\]/g, '.$1').split('.').reduce((o, key) => o[key], defaultConfig) || defaultValue,
+  return { ...defaultConfig, get: (path = '', defaultValue: any) => path.replace(/\[(.+?)\]/g, '.$1').split('.').reduce((o, key) => o[key], defaultConfig) || defaultValue,
     hasSeries: jest.fn(() => true),
     hasTone: jest.fn(() => true),
     referencesOfType: jest.fn(() => [{
@@ -23,8 +22,7 @@ jest.mock('lib/config', () => {
     }, {
       name: 'test-2'
     }]),
-    webPublicationDateAsUrlPart: jest.fn(() => '2017/07/19')
-  });
+    webPublicationDateAsUrlPart: jest.fn(() => '2017/07/19')};
 });
 
 describe('isMatch', () => {

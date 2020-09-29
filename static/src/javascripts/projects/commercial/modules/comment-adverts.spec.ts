@@ -251,7 +251,7 @@ describe('initCommentAdverts', () => {
     initCommentAdverts().then(() => {
       fakeMediator.emit('modules:comments:renderComments:rendered');
       fakeMediator.once('page:commercial:comments', () => {
-        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot') as any);
+        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot'));
         expect(addSlot).toHaveBeenCalledTimes(1);
         expect(adSlot.getAttribute('data-desktop')).toBe('1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600');
         done();
@@ -265,7 +265,7 @@ describe('initCommentAdverts', () => {
     initCommentAdverts().then(() => {
       fakeMediator.emit('modules:comments:renderComments:rendered');
       fakeMediator.once('page:commercial:comments', () => {
-        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot') as any);
+        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot'));
         expect(addSlot).toHaveBeenCalledTimes(1);
         expect(adSlot.getAttribute('data-desktop')).toBe('1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid|300,600|160,600');
         done();
@@ -279,7 +279,7 @@ describe('initCommentAdverts', () => {
     initCommentAdverts().then(() => {
       fakeMediator.emit('modules:comments:renderComments:rendered');
       fakeMediator.once('page:commercial:comments', () => {
-        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot') as any);
+        const adSlot: HTMLElement = (document.querySelector('.js-ad-slot'));
         expect(addSlot).toHaveBeenCalledTimes(1);
         expect(adSlot.getAttribute('data-desktop')).toBe('1,1|2,2|300,250|300,274|620,1|620,350|550,310|fluid');
         done();

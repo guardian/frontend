@@ -49,7 +49,7 @@ describe('onward/related', () => {
   });
 
   it("should hide if there's no story package and related can't be fetched", () => {
-    const container: HTMLElement = (document.querySelector('.js-related') as any);
+    const container: HTMLElement = (document.querySelector('.js-related'));
 
     config.switches.relatedContent = false;
 
@@ -59,7 +59,7 @@ describe('onward/related', () => {
   });
 
   it('should hide if user has ad-free and the page is paid content', () => {
-    const container: HTMLElement = (document.querySelector('.js-related') as any);
+    const container: HTMLElement = (document.querySelector('.js-related'));
 
     config.page.isPaidContent = true;
     commercialFeatures.adFree = true;

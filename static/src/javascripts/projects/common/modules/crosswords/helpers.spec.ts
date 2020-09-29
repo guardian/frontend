@@ -11,8 +11,7 @@ const stubCellWithValue = (value: string): Cell => ({
   value
 });
 
-const stubClue = (options: Object): Clue => Object.assign({
-  id: '',
+const stubClue = (options: Object): Clue => ({id: '',
   number: '',
   humanNumber: '',
   group: [],
@@ -21,8 +20,7 @@ const stubClue = (options: Object): Clue => Object.assign({
   separatorLocations: {},
   direction: 'across',
   length: 0,
-  solution: ''
-}, options);
+  solution: '', ...options});
 
 const entryFixture = stubClue({
   id: '',

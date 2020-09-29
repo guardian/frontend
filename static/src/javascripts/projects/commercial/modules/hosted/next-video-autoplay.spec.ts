@@ -50,16 +50,16 @@ describe('Next video autoplay', () => {
   it('should show end slate information', done => {
     triggerEndSlate();
     fastdom.read(() => {
-      expect((document.querySelector('.js-hosted-next-autoplay') as any).classList.toString()).toEqual(expect.stringContaining('js-autoplay-start'));
+      expect((document.querySelector('.js-hosted-next-autoplay')).classList.toString()).toEqual(expect.stringContaining('js-autoplay-start'));
       done();
     });
   });
 
   it('should hide end slate information when cancel button is clicked', done => {
     addCancelListener();
-    (document.querySelector('.js-autoplay-cancel') as any).click();
+    (document.querySelector('.js-autoplay-cancel')).click();
     fastdom.read(() => {
-      expect((document.querySelector('.js-hosted-next-autoplay') as any).classList.toString()).toEqual(expect.stringContaining('hosted-slide-out'));
+      expect((document.querySelector('.js-hosted-next-autoplay')).classList.toString()).toEqual(expect.stringContaining('hosted-slide-out'));
       done();
     });
   });

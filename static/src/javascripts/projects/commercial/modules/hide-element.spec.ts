@@ -2,7 +2,7 @@
 import { JestMockT } from "jest";
 import { hideElement } from "./hide-element";
 
-const foolFlow = (mockFn: any) => ((mockFn as any) as JestMockT);
+const foolFlow = (mockFn: any) => ((mockFn) as JestMockT);
 
 describe('Cross-frame messenger: hide', () => {
   describe('hide function', () => {

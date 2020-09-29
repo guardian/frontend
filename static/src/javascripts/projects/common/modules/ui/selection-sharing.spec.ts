@@ -37,8 +37,11 @@ test('should be visible when text is selected in the article body', () => {
   class MockRange {
 
     startContainer: Text | null | undefined;
+
     endContainer: Text | null | undefined;
+
     startOffset: number;
+
     endOffset: number;
 
     constructor() {
@@ -70,6 +73,7 @@ test('should be visible when text is selected in the article body', () => {
   class MockSelection {
 
     ranges: Array<Range>;
+
     rangeCount: number;
 
     constructor(range: Range) {
