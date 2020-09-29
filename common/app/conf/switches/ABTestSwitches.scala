@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 10, 5),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-curated-container-test",
+    "Tests an additional 'curated' onwards container below the article body.",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 11, 2),
+    exposeClientSide = true,
+  )
 }
