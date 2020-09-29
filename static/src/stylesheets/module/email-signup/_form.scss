@@ -155,6 +155,7 @@
 .email-sub__message__headline,
 .email-sub__message__description {
     @include fs-textSans(3);
+    color: #000000;
 }
 
 .email-sub__message__headline {
@@ -197,6 +198,12 @@
     max-width: gs-span(4);
     min-height: 150px;
     margin: 0 0 $gs-baseline;
+}
+
+.email-sub__message__headline__footer,
+.email-sub__message__description__footer {
+    @include fs-textSans(3);
+    color: #ffffff;
 }
 
 .email-sub__form--footer {
