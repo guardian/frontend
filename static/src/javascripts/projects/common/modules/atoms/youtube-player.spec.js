@@ -25,7 +25,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(callback =>
-        callback({ tcfv2: { consents: { '1': true } } })
+        callback({ tcfv2: { consents: { '1': true }, gdprApplies: true, tcString: "testTcString", addtlConsent: "testaddtlConsent" } })
     ),
 }));
 
@@ -113,6 +113,10 @@ describe('create ads config', () => {
             expect(result.adTagParameters.cust_params).toEqual(
                 'key%3Dvalue%26permutive%3D42'
             );
+            expect(result.adTagParameters.cmpGdpr).toEqual(1);
+            expect(result.adTagParameters.cmpVcd).toEqual("testTcString");
+            expect(result.adTagParameters.cmpGvcd).toEqual("testaddtlConsent");
+
         }
     });
 });
