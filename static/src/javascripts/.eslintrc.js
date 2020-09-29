@@ -11,7 +11,7 @@ module.exports = {
         project: 'tsconfig.json',
     },
     settings: {
-        'import/resolver': 'webpack',
+        'import/resolver': {"typescript": {}},
     },
     extends: [
         'plugin:@typescript-eslint/eslint-recommended',
