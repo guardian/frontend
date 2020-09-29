@@ -39,12 +39,14 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
-# Email signup paths
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/$listId<[0-9]+>                                  controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/:listName                                        controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
-GET            /email/$result<success|invalid|error>                                                                             controllers.EmailSignupController.subscriptionResult(result: String)
-POST           /email                                                                                                            controllers.EmailSignupController.submit()
-OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
+# Email paths
+GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/footer/:listName                                         controllers.EmailSignupController.renderFooterForm(listName: String)
+GET        /email/$result<success|invalid|error>                                controllers.EmailSignupController.subscriptionResult(result: String)
+GET        /email/$result<success|invalid|error>/:listName                      controllers.EmailSignupController.subscriptionResultV2(result: String, listName: String)
+POST       /email/:listName                                                     controllers.EmailSignupController.submitV2(listName: String)
+OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks

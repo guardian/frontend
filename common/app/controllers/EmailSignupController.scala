@@ -5,7 +5,7 @@ import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.EmailNewsletter
+import com.gu.identity.model.{EmailEmbed, EmailNewsletter}
 import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
@@ -90,16 +90,32 @@ class EmailSignupController(
       Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
     }
 
+  def renderFooterForm(listName: String): Action[AnyContent] =
+    csrfAddToken {
+      Action { implicit request =>
+        val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
+        id match {
+          case Some(_) =>
+            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
+          case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
+        }
+      }
+    }
+
   def renderForm(emailType: String, listId: Int): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityName = EmailNewsletter(listId)
+        val identityNewsletter = EmailNewsletter(listId)
           .orElse(EmailNewsletter.fromV1ListId(listId))
-          .map(_.identityName)
 
-        identityName match {
-          case Some(listName) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+        identityNewsletter match {
+          case Some(newsletter) =>
+            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(
+              emailLandingPage,
+              emailType,
+              newsletter.identityName,
+              newsletter.emailEmbed
+            )))
           case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -108,10 +124,15 @@ class EmailSignupController(
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val id = EmailNewsletter.fromIdentityName(listName).map(_.listIdV1)
-        id match {
-          case Some(listId) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(emailLandingPage, emailType, listName)))
+        val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
+        identityNewsletter match {
+          case Some(newsletter) =>
+            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(
+              emailLandingPage,
+              emailType,
+              newsletter.identityName,
+              newsletter.emailEmbed
+            )))
           case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -125,7 +146,39 @@ class EmailSignupController(
         case "error"   => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
         case _         => WithoutRevalidationResult(NotFound)
       })
+    }
 
+  def subscriptionResultV2(result: String, listName: String): Action[AnyContent] =
+    Action { implicit request =>
+      listName match {
+        case "footer" => {
+          Cached(7.days)(result match {
+            case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, Subscribed))
+            case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, InvalidEmail))
+            case "error" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, OtherError))
+            case _ => WithoutRevalidationResult(NotFound)
+          })
+        }
+        case listName: String => {
+          val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
+          identityNewsletter match {
+            case Some(newsletter) =>
+              Cached (7.days) (result match {
+                case "success" => RevalidatableResult.Ok (
+                  views.html.emailSubscriptionResultV2(emailLandingPage, Subscribed, newsletter.emailEmbed)
+                )
+                case "invalid" => RevalidatableResult.Ok (
+                  views.html.emailSubscriptionResultV2(emailLandingPage, InvalidEmail, newsletter.emailEmbed)
+                )
+                case "error" => RevalidatableResult.Ok (
+                  views.html.emailSubscriptionResultV2(emailLandingPage, OtherError, newsletter.emailEmbed)
+                )
+                case _ => WithoutRevalidationResult(NotFound)
+              })
+            case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
+          }
+        }
+      }
     }
 
   def submit(): Action[AnyContent] =
@@ -162,6 +215,69 @@ class EmailSignupController(
         form => {
           log.info(
             "Post request received to /email/ - " +
+              s"email: ${form.email}, " +
+              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
+              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
+              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
+          )
+          emailFormService
+            .submit(form)
+            .map(_.status match {
+              case 200 | 201 =>
+                EmailSubmission.increment()
+                respond(Subscribed)
+
+              case status =>
+                log.error(s"Error posting to ExactTarget: HTTP $status")
+                APIHTTPError.increment()
+                respond(OtherError)
+
+            }) recover {
+            case _: IllegalAccessException =>
+              respond(Subscribed)
+            case e: Exception =>
+              log.error(s"Error posting to ExactTarget: ${e.getMessage}")
+              APINetworkError.increment()
+              respond(OtherError)
+          }
+        },
+      )
+    }
+
+  def submitV2(listName: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      AllEmailSubmission.increment()
+
+      def respond(result: SubscriptionResult): Result = {
+        render {
+          case Accepts.Html() =>
+            result match {
+              case Subscribed   => SeeOther(LinkTo(s"/email/success/$listName"))
+              case InvalidEmail => SeeOther(LinkTo(s"/email/invalid/$listName"))
+              case OtherError   => SeeOther(LinkTo(s"/email/error/$listName"))
+            }
+
+          case Accepts.Json() =>
+            Cors(NoCache(result match {
+              case Subscribed   => Created("Subscribed")
+              case InvalidEmail => BadRequest("Invalid email")
+              case OtherError   => InternalServerError("Internal error")
+            }))
+          case _ =>
+            NotAccepted.increment()
+            NotAcceptable
+        }
+      }
+
+      emailForm.bindFromRequest.fold(
+        formWithErrors => {
+          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
+          EmailFormError.increment()
+          Future.successful(respond(InvalidEmail))
+        },
+        form => {
+          log.info(
+            s"Post request received to /email/${listName} - " +
               s"email: ${form.email}, " +
               s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
               s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
