@@ -1,60 +1,69 @@
 {
-        "compilerOptions": {
-                "allowJs": true,
-                "baseUrl": "./static/src/javascripts",
-                "esModuleInterop": true,
-                "isolatedModules": true,
-                "lib": [
-                        "DOM",
-                        "ES2015",
-                        "ES2016",
-                        "ES2017",
-                        "ES2018",
-                        "ES2019",
-                        "ES2020",
-                        "ESNext"
-                ],
-                "module": "ES6",
-                "moduleResolution": "node",
-                "noEmit": true,
-                "paths": {
-                        "*": [
-                                "node_modules/@types/*",
-                                "*"
-                        ],
-                        "admin/*": [
-                                "projects/admin/*"
-                        ],
-                        "commercial/*": [
-                                "projects/commercial/*"
-                        ],
-                        "common/*": [
-                                "projects/common/*"
-                        ],
-                        "facia/*": [
-                                "projects/facia/*"
-                        ],
-                        "journalism/*": [
-                                "projects/journalis/*m"
-                        ],
-                        "membership/*": [
-                                "projects/membership/*"
-                        ],
-                        "svgs": [
-                                "<PROJECT_ROOT>/static/src/inline-svgs"
-                        ],"raven": ["raven-js"],
-                        "videojs": ["video.js"],
-                        "ophan/ng": ["ophan-tracker-js"],
-                        "ophan/embed": ["ophan-tracker-js/build/ophan.embed"],
-                },
-                "strict": true,
-                "target": "ES2020"
-        },
-        "exclude": [
-            "**/*.spec.*", "**/*.test.*"
+    "compilerOptions": {
+        "allowJs": true,
+        "baseUrl": "./static/src/javascripts",
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "lib": [
+            "DOM",
+            "ES2015",
+            "ES2016",
+            "ES2017",
+            "ES2018",
+            "ES2019",
+            "ES2020",
+            "ESNext"
         ],
-        "include": [
-                "static/src/javascripts"
-        ]
+        "module": "ES6",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "paths": {
+            "*": [
+                "node_modules/@types/*",
+                "*"
+            ],
+            "admin/*": [
+                "projects/admin/*"
+            ],
+            "commercial/*": [
+                "projects/commercial/*"
+            ],
+            "common/*": [
+                "projects/common/*"
+            ],
+            "facia/*": [
+                "projects/facia/*"
+            ],
+            "journalism/*": [
+                "projects/journalis/*m"
+            ],
+            "membership/*": [
+                "projects/membership/*"
+            ],
+            "svgs": [
+                "<PROJECT_ROOT>/static/src/inline-svgs"
+            ],
+            "raven": [
+                "raven-js"
+            ],
+            "videojs": [
+                "video.js"
+            ],
+            "ophan/ng": [
+                "ophan-tracker-js"
+            ],
+            "ophan/embed": [
+                "ophan-tracker-js/build/ophan.embed"
+            ],
+        },
+        "strict": true,
+        "target": "ES2020"
+    },
+    "exclude": [
+        "**/*.spec.*",
+        "**/*.test.*"
+    ],
+    "include": [
+        "static/src/javascripts"
+    ]
 }
-
