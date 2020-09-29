@@ -5,8 +5,8 @@ import once from "lodash/once";
 import { dfpEnv } from "commercial/modules/dfp/dfp-env";
 import { commercialFeatures } from "common/modules/commercial/commercial-features";
 
-const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
-const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
+const mpuCandidateClass = 'fc-slice__item--mpu-candidate';
+const mpuCandidateSelector = `.${mpuCandidateClass}`;
 
 const shouldRemoveMpuWhenAdFree = mpuCandidate => mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
 

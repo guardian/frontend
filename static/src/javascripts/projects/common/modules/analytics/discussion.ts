@@ -11,9 +11,8 @@ let seen = false;
 const sendToGA = (label: string, customDimensions: Object = {}): void => {
   const tracker = config.get('googleAnalytics.trackers.editorial');
 
-  window.ga(`${tracker}.send`, 'event', 'element view', 'onpage item', label, Object.assign({
-    nonInteraction: true // to avoid affecting bounce rate
-  }, customDimensions));
+  window.ga(`${tracker}.send`, 'event', 'element view', 'onpage item', label, {nonInteraction: true // to avoid affecting bounce rate
+  , ...customDimensions});
 };
 
 const jumpedToComments = (): void => {

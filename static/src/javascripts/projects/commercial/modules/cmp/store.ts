@@ -116,11 +116,17 @@ const getVendorConsentData = (cmpId: number, cmpVersion: number, cookieVersion: 
 export class CmpStore {
 
   shortVendorList: ShortVendorList;
+
   consentData: ConsentData;
+
   canPersonalise: boolean | null;
+
   allowedVendorIds: Array<number>;
+
   vendorConsentData: VendorConsentData | null | undefined;
+
   vendorConsentResponse: VendorConsentResponse | null | undefined;
+
   getVendorConsentsObject: () => VendorConsentResponse | null | undefined;
 
   constructor(cmpId: number, cmpVersion: number, cookieVersion: number, canPersonalise: boolean | null, shortVendorList: ShortVendorList) {

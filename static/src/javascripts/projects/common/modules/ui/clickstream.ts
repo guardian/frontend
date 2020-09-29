@@ -27,7 +27,7 @@ let filters;
 
 const filterSource = element => filters.filter(f => f === element);
 
-const compareHosts = (url: string = ''): boolean => {
+const compareHosts = (url = ''): boolean => {
   if (url.startsWith('mailto:')) {
     return false;
   }

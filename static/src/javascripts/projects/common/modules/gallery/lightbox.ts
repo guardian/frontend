@@ -58,32 +58,59 @@ class Endslate extends Component {
 class GalleryLightbox {
 
   showEndslate: boolean;
+
   useSwipe: boolean;
+
   swipeThreshold: number;
+
   lightboxEl: bonzo;
+
   $lightboxEl: bonzo;
+
   $indexEl: bonzo;
+
   $countEl: bonzo;
+
   $contentEl: bonzo;
+
   nextBtn: HTMLElement;
+
   prevBtn: HTMLElement;
+
   closeBtn: HTMLElement;
+
   infoBtn: HTMLElement;
+
   $swipeContainer: bonzo;
+
   resize: Function;
+
   toggleInfo: Function;
+
   fsm: FiniteStateMachine;
+
   states: Object;
+
   images: Array<ImageJson>;
+
   swipeContainerWidth: number;
+
   $slides: bonzo;
+
   index: number;
+
   $images: bonzo;
+
   galleryJson: GalleryJson;
+
   bodyScrollPosition: number;
+
   endslateEl: bonzo;
+
   endslate: Object;
+
   startIndex: number;
+
   handleKeyEvents: (arg0: KeyboardEvent) => void;
 
   constructor(): void {
@@ -101,7 +128,7 @@ class GalleryLightbox {
       });
     };
 
-    const galleryLightboxHtml: string = `<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">
+    const galleryLightboxHtml = `<div class="overlay gallery-lightbox gallery-lightbox--closed gallery-lightbox--hover">
                 <div class="gallery-lightbox__sidebar">
                     ${generateButtonHTML('close')}
                     <div class="gallery-lightbox__progress  gallery-lightbox__progress--sidebar">

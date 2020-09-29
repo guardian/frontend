@@ -53,12 +53,12 @@ const clearCommonReaderRevenueStateAndReload = (asExistingSupporter: boolean): v
   }
 };
 
-const showMeTheEpic = (asExistingSupporter: boolean = false): void => {
+const showMeTheEpic = (asExistingSupporter = false): void => {
   // Clearing out the epic view log happens before all reloads
   clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
+const showMeTheBanner = (asExistingSupporter = false): void => {
   if (!config.get('switches.membershipEngagementBanner')) {
     alert('Membership engagement banner switch is turned off on the dotcom switchboard');
     return;
@@ -76,7 +76,7 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
   clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
+const showMeTheDoubleBanner = (asExistingSupporter = false): void => {
   addCookie('GU_geo_continent', 'EU');
   removeCookie(CONSENT_COOKIE_NAME);
   showMeTheBanner(asExistingSupporter);
@@ -86,17 +86,17 @@ const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
 // they want to display. So we don't clear out the banner history since
 // we don't necessarily want the banner popping up if someone's working
 // with the epic.
-const showNextVariant = (asExistingSupporter: boolean = false): void => {
+const showNextVariant = (asExistingSupporter = false): void => {
   incrementMvtCookie();
   clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showPreviousVariant = (asExistingSupporter: boolean = false): void => {
+const showPreviousVariant = (asExistingSupporter = false): void => {
   decrementMvtCookie();
   clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const changeGeolocation = (asExistingSupporter: boolean = false): void => {
+const changeGeolocation = (asExistingSupporter = false): void => {
   const geo = window.prompt(`Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`);
   if (geo === 'UK') {
     alert(`'UK' is not a valid geolocation - please use 'GB' instead!`);

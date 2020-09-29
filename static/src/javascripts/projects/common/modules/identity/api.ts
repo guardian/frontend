@@ -11,8 +11,8 @@ import { getUrlVars } from "lib/url";
 import fetch from "lib/fetch-json";
 import qs from "qs";
 import reqwest from "reqwest";
-import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
-import { AuthenticationComponentId } from "common/modules/identity/auth-component-event-params";
+import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams , AuthenticationComponentId } from "common/modules/identity/auth-component-event-params";
+
 
 let userFromCookieCache = null;
 
@@ -88,7 +88,7 @@ export const updateNewsletter = (newsletter: Newsletter): Promise<void> => reqwe
   data: JSON.stringify(newsletter)
 });
 
-export const buildNewsletterUpdatePayload = (action: string = 'none', newsletterId: string): Newsletter => {
+export const buildNewsletterUpdatePayload = (action = 'none', newsletterId: string): Newsletter => {
   const newsletter = {};
   switch (action) {
     case 'add':

@@ -56,8 +56,11 @@ const sendHeight = (): void => {
 class FormstackEmbedIframe {
 
   el: HTMLElement;
+
   form: HTMLFormElement;
+
   formId: string;
+
   config: Object;
 
   constructor(el: HTMLElement, formstackId: string): void {
@@ -109,7 +112,7 @@ class FormstackEmbedIframe {
       }
     };
 
-    this.config = Object.assign({}, defaultConfig, config);
+    this.config = { ...defaultConfig, ...config};
   }
 
   init(): void {

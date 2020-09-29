@@ -3,7 +3,7 @@ import ophan from "ophan/ng";
 import userPrefs from "common/modules/user-prefs";
 import { AdConsent, AdConsentWithState } from "common/modules/commercial/ad-prefs.lib";
 
-const alertViewCount: string = 'first-pv-consent.lifetime-views';
+const alertViewCount = 'first-pv-consent.lifetime-views';
 
 const getAlertViewCount = (): number => parseInt(userPrefs.get(alertViewCount) || 0, 10);
 

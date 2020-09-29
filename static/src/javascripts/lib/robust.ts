@@ -27,7 +27,7 @@ const logError = (module: string, error: Error, tags: {
   }
 
   if (tags) {
-    reportError(error, Object.assign({ module }, tags), false);
+    reportError(error, {module, ...tags}, false);
   } else {
     reportError(error, { module }, false);
   }

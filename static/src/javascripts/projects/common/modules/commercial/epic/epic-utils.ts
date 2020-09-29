@@ -3,18 +3,18 @@
 import fastdom from "lib/fastdom-promise";
 import $ from "lib/$";
 import { elementInView } from "lib/element-inview";
-import reportError from "lib/report-error";
+import reportError, { ReportedError } from "lib/report-error";
 import mediator from "lib/mediator";
 
 import { epicButtonsTemplate } from "common/modules/commercial/templates/acquisitions-epic-buttons";
 import { supportContributeURL } from "common/modules/commercial/support-utilities";
 import { acquisitionsEpicControlTemplate } from "common/modules/commercial/templates/acquisitions-epic-control";
-import { addTrackingCodesToUrl, submitClickEvent, submitInsertEvent, submitViewEvent } from "common/modules/commercial/acquisitions-ophan";
+import { addTrackingCodesToUrl, submitClickEvent, submitInsertEvent, submitViewEvent , ABTestVariant, ComponentEventWithoutAction } from "common/modules/commercial/acquisitions-ophan";
 import { logView } from "common/modules/commercial/acquisitions-view-log";
 
-import { ReportedError } from "lib/report-error";
+
 import { Spec } from "common/modules/ui/clickstream";
-import { ABTestVariant, ComponentEventWithoutAction } from "common/modules/commercial/acquisitions-ophan";
+
 import { getControlEpicCopy } from "common/modules/commercial/acquisitions-copy";
 
 export type EpicComponent = {

@@ -4,7 +4,7 @@ import { isInAuOrNz } from "common/modules/commercial/geo-utils";
 
 // nol_t is a global function defined by the IMR worldwide library
 // eslint-disable-next-line camelcase
-declare var nol_t: (config: any) => any;
+declare let nol_t: (config: any) => any;
 
 const onLoad = () => {
   const pvar = {

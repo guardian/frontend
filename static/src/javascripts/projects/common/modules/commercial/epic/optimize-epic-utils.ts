@@ -3,9 +3,9 @@
 import config from "lib/config";
 
 import { reportEpicError } from "common/modules/commercial/epic/epic-utils";
-import { displayIframeEpic } from "common/modules/commercial/epic/iframe-epic-utils";
+import { displayIframeEpic , IframeEpicComponent } from "common/modules/commercial/epic/iframe-epic-utils";
 
-import { IframeEpicComponent } from "common/modules/commercial/epic/iframe-epic-utils";
+
 
 const displayOptimizeEpic = (): Promise<IframeEpicComponent> => {
   const url = config.get('page.optimizeEpicUrl');

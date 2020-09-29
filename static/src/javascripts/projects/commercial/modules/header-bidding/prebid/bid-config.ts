@@ -7,8 +7,8 @@ import { buildAppNexusTargeting, buildAppNexusTargetingObject, getPageTargeting 
 import { commercialPrebidSafeframe } from "common/modules/experiments/tests/commercial-prebid-safeframe";
 import { isInVariantSynchronous } from "common/modules/experiments/ab";
 import { isInUk, isInUsOrCa, isInAuOrNz, isInRow } from "common/modules/commercial/geo-utils";
-import { getLotameData } from "commercial/modules/third-party-tags/lotame";
-import { LotameData } from "commercial/modules/third-party-tags/lotame";
+import { getLotameData , LotameData } from "commercial/modules/third-party-tags/lotame";
+
 import { PrebidAdYouLikeParams, PrebidAppNexusParams, PrebidBid, PrebidBidder, PrebidImproveParams, PrebidIndexExchangeParams, PrebidOpenXParams, PrebidOzoneParams, PrebidPubmaticParams, HeaderBiddingSize, PrebidSonobiParams, PrebidTripleLiftParams, PrebidTrustXParams, PrebidXaxisParams } from "../types";
 import { containsBillboard, containsDmpu, containsLeaderboard, containsLeaderboardOrBillboard, containsMpu, containsMpuOrDmpu, containsMobileSticky, getBreakpointKey, shouldIncludeAdYouLike, shouldIncludeAppNexus, shouldIncludeImproveDigital, shouldIncludeOpenx, shouldIncludeSonobi, shouldIncludeTrustX, shouldIncludeTripleLift, shouldIncludeXaxis, shouldUseOzoneAdaptor, stripDfpAdPrefixFrom, stripMobileSuffix, stripTrailingNumbersAbove1 } from "../utils";
 import { getAppNexusDirectBidParams } from "./appnexus";
@@ -276,7 +276,7 @@ const openxClientSideBidder: PrebidBidder = {
 const ozoneClientSideBidder: PrebidBidder = {
   name: 'ozone',
   switchName: 'prebidOzone',
-  bidParams: (): PrebidOzoneParams => Object.assign({}, (() => ({
+  bidParams: (): PrebidOzoneParams => ({ ...(() => ({
     publisherId: 'OZONEGMG0001',
     siteId: '4204204209',
     placementId: '0420420500',
@@ -285,18 +285,16 @@ const ozoneClientSideBidder: PrebidBidder = {
       targeting: getOzoneTargeting()
     }],
     ozoneData: {} // TODO: confirm if we need to send any
-  }))())
+  }))()})
 };
 
 const sonobiBidder: PrebidBidder = {
   name: 'sonobi',
   switchName: 'prebidSonobi',
-  bidParams: (slotId: string): PrebidSonobiParams => Object.assign({}, {
-    ad_unit: config.get('page.adUnit'),
+  bidParams: (slotId: string): PrebidSonobiParams => ({ ad_unit: config.get('page.adUnit'),
     dom_id: slotId,
     appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
-    pageViewId: config.get('ophan.pageViewId')
-  }, isInSafeframeTestVariant() ? { render: 'safeframe' } : {})
+    pageViewId: config.get('ophan.pageViewId'), ...(isInSafeframeTestVariant() ? { render: 'safeframe' } : {})})
 };
 
 const getPubmaticPublisherId = (): string => {
@@ -312,10 +310,8 @@ const getPubmaticPublisherId = (): string => {
 const pubmaticBidder: PrebidBidder = {
   name: 'pubmatic',
   switchName: 'prebidPubmatic',
-  bidParams: (slotId: string): PrebidPubmaticParams => Object.assign({}, {
-    publisherId: getPubmaticPublisherId(),
-    adSlot: stripDfpAdPrefixFrom(slotId)
-  })
+  bidParams: (slotId: string): PrebidPubmaticParams => ({ publisherId: getPubmaticPublisherId(),
+    adSlot: stripDfpAdPrefixFrom(slotId)})
 };
 
 const trustXBidder: PrebidBidder = {

@@ -25,9 +25,9 @@ const accountDataUpdateLink = accountDataUpdateWarningLink => {
   }
 };
 
-const messageCode: string = 'membership-action-required';
+const messageCode = 'membership-action-required';
 
-const bannerCanBeLoadedAgainAfterKey: string = 'mmaActionRequiredBannerCanBeShownAgainAfter';
+const bannerCanBeLoadedAgainAfterKey = 'mmaActionRequiredBannerCanBeShownAgainAfter';
 
 const storeBannerCanBeLoadedAgainAfter = () => {
   const thisTimeTomorrow = new Date();

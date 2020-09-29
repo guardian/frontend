@@ -6,10 +6,15 @@ import $ from "lib/$";
 class HostedCarousel {
 
   $carousel: Object;
+
   $nextItem: Object;
+
   $prevItem: Object;
+
   $dots: Object;
+
   pageCount: number;
+
   index: number;
 
   moveCarouselBy(direction: number) {

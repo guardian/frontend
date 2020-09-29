@@ -2,8 +2,8 @@
 import mediator from "lib/mediator";
 import config from "lib/config";
 import ophan from "ophan/ng";
-import { buildGoogleAnalyticsEvent } from "common/modules/video/ga-helper";
-import { MediaEvent } from "common/modules/video/ga-helper";
+import { buildGoogleAnalyticsEvent , MediaEvent } from "common/modules/video/ga-helper";
+
 
 const buildEventId = (event: string, videoId: string): string => `${event}:${videoId}`;
 

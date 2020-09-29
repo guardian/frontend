@@ -66,7 +66,7 @@ const getIframe = (data: StandardMessage): HTMLElement | null | undefined => {
     const container = document.getElementById(`dfp-ad--${data.slotId}`);
     const iframes = container ? container.getElementsByTagName('iframe') : null;
     return iframes && iframes.length ? iframes[0] : null;
-  } else if (data.iframeId) {
+  } if (data.iframeId) {
     return document.getElementById(data.iframeId);
   }
 };
@@ -148,7 +148,7 @@ const onMessage = (event: Event): void => {
       });
       respond(formatError(error500, ex), null);
     });
-  } else if (typeof LISTENERS[data.type] === 'function') {
+  } if (typeof LISTENERS[data.type] === 'function') {
     // We found a persistent listener, to which we just delegate
     // responsibility to write something. Anything. Really.
     LISTENERS[data.type](respond, data.value, getIframe(data));

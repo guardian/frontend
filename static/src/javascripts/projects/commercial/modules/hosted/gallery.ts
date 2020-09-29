@@ -15,31 +15,57 @@ import { loadCssPromise } from "lib/load-css-promise";
 class HostedGallery {
 
   useSwipe: boolean;
+
   swipeThreshold: number;
+
   swipeContainerWidth: number;
+
   index: number;
+
   imageRatios: number[];
+
   $galleryEl: bonzo;
+
   $galleryFrame: bonzo;
+
   $header: bonzo;
+
   $imagesContainer: bonzo;
+
   $captionContainer: bonzo;
+
   $captions: bonzo;
+
   $scrollEl: bonzo;
+
   $images: bonzo;
+
   $progress: bonzo;
+
   $border: bonzo;
+
   prevBtn: HTMLElement;
+
   nextBtn: HTMLElement;
+
   infoBtn: HTMLElement;
+
   $counter: bonzo;
+
   $ctaFloat: bonzo;
+
   $ojFloat: bonzo;
+
   $meta: bonzo;
+
   ojClose: HTMLElement;
+
   resize: (data?: Object) => void;
+
   resizer: () => void;
+
   fsm: FiniteStateMachine;
+
   constructor() {
     // CONFIG
     const breakpoint = getBreakpoint();
@@ -396,7 +422,7 @@ class HostedGallery {
         nav: `KeyPress:${keyNames[e.keyCode]}`
       });
       return false;
-    } else if (e.keyCode === 39 || e.keyCode === 40) {
+    } if (e.keyCode === 39 || e.keyCode === 40) {
       // down/right
       e.preventDefault();
       this.scrollTo(this.index + 1);
@@ -404,7 +430,7 @@ class HostedGallery {
         nav: `KeyPress:${keyNames[e.keyCode]}`
       });
       return false;
-    } else if (e.keyCode === 73) {
+    } if (e.keyCode === 73) {
       // 'i'
       this.trigger('toggle-info');
     }

@@ -10,9 +10,9 @@ const pageSkin = (): void => {
   const hasPageSkin: boolean = config.get('page.hasPageSkin');
   const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
   const adLabelHeight = 24;
-  let topPosition: number = 0;
-  let truskinRendered: boolean = false;
-  let pageskinRendered: boolean = false;
+  let topPosition = 0;
+  let truskinRendered = false;
+  let pageskinRendered = false;
 
   const togglePageSkinActiveClass = (): void => {
     if (bodyEl) {

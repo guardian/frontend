@@ -1,30 +1,29 @@
-// @flow
-import React, { Component } from 'preact-compat';
+import React, {Component} from "preact-compat";
 
-type WordSeparator = ',' | '-';
+type WordSeparator = "," | "-";
 
 // Checks a object in the form{",":[4,7]}
 const checkIfLetterHasSeparator = (
-    locations: { [k: WordSeparator]: number[] },
-    letterIndex: number
+    locations: {[k in WordSeparator]?: number[]},
+    letterIndex: number,
 ): string => {
-    const spaces = locations[','];
+    const spaces = locations[","];
     const letterHasBoundary = (separators: number[]): boolean =>
         separators.includes(letterIndex);
 
     if (spaces && letterHasBoundary(spaces)) {
-        return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space';
+        return "crossword__anagram-helper__cell crossword__anagram-helper__cell--with-space";
     }
 
-    const dashes = locations['-'];
+    const dashes = locations["-"];
     if (dashes && letterHasBoundary(dashes)) {
-        return 'crossword__anagram-helper__cell crossword__anagram-helper__cell--with-hyphen';
+        return "crossword__anagram-helper__cell crossword__anagram-helper__cell--with-hyphen";
     }
 
-    return 'crossword__anagram-helper__cell';
+    return "crossword__anagram-helper__cell";
 };
 
-class CluePreview extends Component<*, *> {
+class CluePreview extends Component<any, any> {
     /**
      * Get the entries for the preview cells: first filter the user's input to
      * remove anything anything that's already been entered into the grid.
@@ -45,7 +44,7 @@ class CluePreview extends Component<*, *> {
                 ? (entry.value && entry) || unsolved.shift()
                 : entry;
 
-            return Object.assign({}, { key: entry.key }, returnVal);
+            return { key: entry.key, ...returnVal};
         });
     }
 
@@ -55,30 +54,32 @@ class CluePreview extends Component<*, *> {
         return (
             <div
                 className={`crossword__anagram-helper__clue-preview ${
-                    entries.length >= 9 ? 'long' : ''
-                }`}>
+                    entries.length >= 9 ? "long" : ""
+                }`}
+            >
                 <div>
                     <strong>
-                        {this.props.clue.number}{' '}
+                        {this.props.clue.number}{" "}
                         <span className="crossword__anagram-helper__direction">
                             {this.props.clue.direction}
                         </span>
-                    </strong>{' '}
+                    </strong>{" "}
                     {this.props.clue.clue}
                 </div>
                 {entries.map((entry: Object, i: number) => {
                     const classNames = checkIfLetterHasSeparator(
                         this.props.clue.separatorLocations,
-                        i + 1
+                        i + 1,
                     ); // Separators are one indexed in CAPI, annoyingly
 
                     return (
                         <span
                             className={
-                                classNames + (entry.solved ? ' has-value' : '')
+                                classNames + (entry.solved ? " has-value" : "")
                             }
-                            key={entry.key}>
-                            {entry.value || ''}
+                            key={entry.key}
+                        >
+                            {entry.value || ""}
                         </span>
                     );
                 })}
@@ -87,4 +88,4 @@ class CluePreview extends Component<*, *> {
     }
 }
 
-export { CluePreview };
+export {CluePreview};

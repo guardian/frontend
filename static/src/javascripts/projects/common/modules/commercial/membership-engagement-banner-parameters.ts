@@ -6,7 +6,7 @@ import reportError from "lib/report-error";
 import { getLocalCurrencySymbolSync } from "lib/geolocation";
 import { supportContributeURL, addCountryGroupToSupportLink } from "./support-utilities";
 
-const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
+const fallbackCopy = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
     No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from

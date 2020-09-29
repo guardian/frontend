@@ -4,9 +4,9 @@ import config from "lib/config";
 import { getLocalCurrencySymbolSync } from "lib/geolocation";
 import { constructQuery as constructURLQuery } from "lib/url";
 
-import { insertAtSubmeta, reportEpicError } from "common/modules/commercial/epic/epic-utils";
+import { insertAtSubmeta, reportEpicError , EpicComponent } from "common/modules/commercial/epic/epic-utils";
 
-import { EpicComponent } from "common/modules/commercial/epic/epic-utils";
+
 import { submitComponentEvent } from "common/modules/commercial/acquisitions-ophan";
 
 // origin field useful for determining that messages are being sent / received from the expected iframe.

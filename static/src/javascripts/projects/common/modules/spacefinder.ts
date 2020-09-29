@@ -208,6 +208,7 @@ const enforceRules = (measurements: Measurements, rules: SpacefinderRules, exclu
 class SpaceError extends Error {
 
   name: string;
+
   message: string;
 
   constructor(rules: SpacefinderRules) {

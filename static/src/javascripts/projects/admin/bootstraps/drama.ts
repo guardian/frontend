@@ -190,7 +190,7 @@ const start = ($switchboard: HTMLFormElement, $holder: Element) => {
 };
 
 const init = () => {
-  const $switchboard = ((document.querySelector('#switchboard') as any) as HTMLFormElement);
+  const $switchboard = ((document.querySelector('#switchboard')) as HTMLFormElement);
   if (!$switchboard || !$switchboard.submit) return;
   const $trigger = $switchboard.querySelector('.drama-trigger');
   if (!$trigger) return;

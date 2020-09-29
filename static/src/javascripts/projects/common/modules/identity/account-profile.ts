@@ -33,12 +33,12 @@ const messages = {
 };
 
 const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
-  const form = ((document.querySelector(`form${classes.avatarUploadForm}`) as any) as HTMLFormElement);
+  const form = ((document.querySelector(`form${classes.avatarUploadForm}`)) as HTMLFormElement);
   if (form) {
     const formData = new FormData(form);
 
     // disable form while submitting to prevent overlapping submissions
-    const avatarUploadButton = ((document.querySelector(classes.avatarUploadButton) as any) as HTMLButtonElement);
+    const avatarUploadButton = ((document.querySelector(classes.avatarUploadButton)) as HTMLButtonElement);
     avatarUploadButton.disabled = true;
 
     avatarApi.updateAvatar(formData).then(() => {
@@ -58,13 +58,15 @@ const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
 class AccountProfile {
 
   unsavedFields: Array<HTMLElement>;
+
   accountProfileForms: HTMLFormElement;
+
   unsavedChangesForm: HTMLFormElement | null | undefined;
 
   constructor() {
     this.unsavedFields = [];
 
-    this.accountProfileForms = ((document.querySelector(classes.forms) as any) as HTMLFormElement);
+    this.accountProfileForms = ((document.querySelector(classes.forms)) as HTMLFormElement);
 
     if (this.accountProfileForms) {
       this.bindAvatarUpload();
@@ -190,7 +192,7 @@ class AccountProfile {
    */
   bindInputs(form: HTMLElement | null | undefined) {
     if (form instanceof HTMLFormElement) {
-      const inputs: Array<HTMLInputElement> = (Array.from(form.querySelectorAll(classes.textInput)) as Array<any>);
+      const inputs: Array<HTMLInputElement> = (Array.from(form.querySelectorAll(classes.textInput)));
       inputs.concat(Array.from(form.querySelectorAll('select'))).forEach(input => {
         if (input.type === 'select-one') {
           input.addEventListener('change', event => this.onInputChange(event));

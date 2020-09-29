@@ -61,7 +61,7 @@ const readFile = (file, cForm) => new Promise(res => {
 const getValueFromInput = (element, data) => {
   if (isCheckbox(element)) {
     return (data[element.name] || '').concat(`\n${element.value}`);
-  } else if (isFile(element) && element.files[0]) {
+  } if (isFile(element) && element.files[0]) {
     const cForm = element.closest('form');
     return readFile(element.files[0], cForm);
   }

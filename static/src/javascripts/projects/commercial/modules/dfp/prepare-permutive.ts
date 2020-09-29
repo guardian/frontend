@@ -2,7 +2,7 @@
 import config, { Config } from "lib/config";
 import reportError, { ErrorLogger } from "lib/report-error";
 
-declare var permutive: any;
+declare let permutive: any;
 type PermutiveSchema = {
   content: {
     premium?: boolean;

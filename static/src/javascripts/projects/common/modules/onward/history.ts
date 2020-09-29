@@ -64,7 +64,7 @@ let historyCache: Array<Array<any>> | null | undefined;
 let summaryCache: Object | null | undefined;
 let popularFilteredCache: Array<Array<any>> | null | undefined;
 let topNavItemsCache: Array<string> | null | undefined;
-let inMegaNav: boolean = false;
+let inMegaNav = false;
 
 const saveHistory = (history: Array<Array<any>>): void => {
   historyCache = history;
@@ -171,7 +171,7 @@ const pruneSummary = (summary: Object, newToday: number = today) => {
   return summary;
 };
 
-const tally = (visits: Array<Array<number>>, weight: number = 1, minimum: number = 1): number => {
+const tally = (visits: Array<Array<number>>, weight = 1, minimum = 1): number => {
   let totalVisits = 0;
 
   const result = visits.reduce((t, day) => {
@@ -189,11 +189,9 @@ const getPopular = (opts: Object | null | undefined): Array<Array<string>> => {
   const tags = getSummary().tags;
   let tids = Object.keys(tags);
 
-  const op = Object.assign({}, {
-    number: 100,
+  const op = { number: 100,
     weights: {},
-    thresholds: {}
-  }, opts);
+    thresholds: {}, ...opts};
 
   if (op.whitelist) {
     tids = tids.filter(tid => op.whitelist.includes(tid));

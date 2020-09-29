@@ -16,7 +16,7 @@ export type ReportedError = Error & {
 
 export type ErrorLogger = (err: ReportedError, tags: Object, shouldThrow?: boolean) => void;
 
-const reportError: ErrorLogger = (err: ReportedError, tags: Object, shouldThrow: boolean = true): void => {
+const reportError: ErrorLogger = (err: ReportedError, tags: Object, shouldThrow = true): void => {
   raven.captureException(err, { tags });
   if (shouldThrow) {
     // Flag to ensure it is not reported to Sentry again via global handlers

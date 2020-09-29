@@ -21,7 +21,7 @@ const getAppNexusInvCode = (sizes: Array<HeaderBiddingSize>): string | null | un
 };
 
 export const getAppNexusPlacementId = (sizes: HeaderBiddingSize[]): string => {
-  const defaultPlacementId: string = '13915593';
+  const defaultPlacementId = '13915593';
   if (isInUsOrCa() || isInAuOrNz()) {
     return defaultPlacementId;
   }
@@ -63,7 +63,7 @@ export const getAppNexusDirectPlacementId = (sizes: HeaderBiddingSize[]): string
     return '11016434';
   }
 
-  const defaultPlacementId: string = '9251752';
+  const defaultPlacementId = '9251752';
   switch (getBreakpointKey()) {
     case 'D':
       if (containsMpuOrDmpu(sizes)) {
@@ -119,10 +119,9 @@ export const getAppNexusDirectBidParams = (sizes: HeaderBiddingSize[]): PrebidAp
 };
 
 // TODO are we using getAppNexusServerSideBidParams anywhere?
-export const getAppNexusServerSideBidParams = (sizes: HeaderBiddingSize[]): PrebidAppNexusParams => Object.assign({}, {
-  placementId: getAppNexusPlacementId(sizes),
+export const getAppNexusServerSideBidParams = (sizes: HeaderBiddingSize[]): PrebidAppNexusParams => ({ placementId: getAppNexusPlacementId(sizes),
   keywords: buildAppNexusTargetingObject(getPageTargeting()) // Ok to duplicate call. Lodash 'once' is used.
-}, window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {});
+, ...(window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {})});
 
 export const _ = {
   getAppNexusPlacementId,

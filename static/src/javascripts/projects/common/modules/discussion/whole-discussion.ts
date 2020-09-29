@@ -52,16 +52,22 @@ const runConcurrently = (workFunction: (num: number) => Promise<any>, items: Arr
 class WholeDiscussion {
 
   commentsThread: bonzo;
+
   discussion: Array<Object>;
+
   discussionContainer: bonzo;
+
   discussionId: number;
+
   lastPage: number;
+
   params: {
     commentsClosed: boolean;
     displayThreaded: boolean;
     maxResponses: number;
     orderBy: "newest" | "oldest";
   };
+
   postedCommentHtml: string;
 
   constructor(options: Object): void {

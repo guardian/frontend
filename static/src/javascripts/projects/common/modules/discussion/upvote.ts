@@ -15,9 +15,7 @@ const updateReturnUrl = (links: NodeList<HTMLElement>, returnLink: string | null
     if (url) {
       const baseUrl = url.split('?')[0];
       const query = getUrlVars(url.split('?')[1] || '&');
-      links[i].setAttribute('href', `${baseUrl}?${constructQuery(Object.assign({}, query, {
-        returnUrl: returnLink
-      }))}`);
+      links[i].setAttribute('href', `${baseUrl}?${constructQuery({ ...query, returnUrl: returnLink})}`);
     }
   }
 };
@@ -59,7 +57,7 @@ const handle = (target: Element, container: Element | null | undefined, user: Di
   if (!discussionAllowAnonymousRecommendsSwitch && !user) {
     target.setAttribute('data-link-name', 'Recommend comment anonymous');
     return showSignInTooltip(target);
-  } else if ((discussionAllowAnonymousRecommendsSwitch || user) && isOpenForRecommendations(container)) {
+  } if ((discussionAllowAnonymousRecommendsSwitch || user) && isOpenForRecommendations(container)) {
     const id = target.getAttribute('data-comment-id');
 
     if (!id) {

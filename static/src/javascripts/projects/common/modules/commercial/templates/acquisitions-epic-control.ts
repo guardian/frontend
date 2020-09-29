@@ -1,8 +1,8 @@
 
 import { appendToLastElement } from "lib/array-utils";
 import { acquisitionsEpicTickerTemplate } from "common/modules/commercial/templates/acquisitions-epic-ticker";
-import { acquisitionsEpicReminderTemplate } from "common/modules/commercial/templates/acquisitions-epic-reminder";
-import { ReminderFields } from "common/modules/commercial/templates/acquisitions-epic-reminder";
+import { acquisitionsEpicReminderTemplate , ReminderFields } from "common/modules/commercial/templates/acquisitions-epic-reminder";
+
 import { canShowContributionsReminderFeature } from "common/modules/commercial/user-features";
 
 const buildFooter = (footer: string[]): string => `<div class="contributions__epic-footer">

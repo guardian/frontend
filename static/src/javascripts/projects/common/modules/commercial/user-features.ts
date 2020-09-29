@@ -33,7 +33,7 @@ const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
   daysToLive: 90
 };
 
-const forcedAdFreeMode: boolean = !!window.location.hash.match(/[#&]noadsaf(&.*)?$/);
+const forcedAdFreeMode = !!window.location.hash.match(/[#&]noadsaf(&.*)?$/);
 
 const userHasData = (): boolean => {
   const cookie = getCookie(ACTION_REQUIRED_FOR_COOKIE) || getCookie(USER_FEATURES_EXPIRY_COOKIE) || getCookie(PAYING_MEMBER_COOKIE) || getCookie(RECURRING_CONTRIBUTOR_COOKIE) || getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE) || getCookie(AD_FREE_USER_COOKIE) || getCookie(DIGITAL_SUBSCRIBER_COOKIE) || getCookie(HIDE_SUPPORT_MESSAGING_COOKIE);
@@ -120,7 +120,7 @@ const userHasDataAfterSignout = (): boolean => !isUserLoggedIn() && userHasData(
 const refresh = (): Promise<void> => {
   if (isUserLoggedIn() && userNeedsNewFeatureData()) {
     return requestNewData();
-  } else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
+  } if (userHasDataAfterSignout() && !forcedAdFreeMode) {
     deleteOldData();
   }
   return Promise.resolve();
@@ -192,7 +192,7 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
 };
 
 // defaults to last three months
-const isRecentOneOffContributor = (askPauseDays: number = 90): boolean => {
+const isRecentOneOffContributor = (askPauseDays = 90): boolean => {
   const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
   if (daysSinceLastContribution === null) {
     return false;
@@ -201,7 +201,7 @@ const isRecentOneOffContributor = (askPauseDays: number = 90): boolean => {
 };
 
 // true if the user has completed their ask-free period
-const isPostAskPauseOneOffContributor = (askPauseDays: number = 90): boolean => {
+const isPostAskPauseOneOffContributor = (askPauseDays = 90): boolean => {
   const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
   if (daysSinceLastContribution === null) {
     return false;

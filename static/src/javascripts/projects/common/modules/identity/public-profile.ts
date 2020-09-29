@@ -48,7 +48,7 @@ const selectTab = (el: HTMLElement): void => {
 
 const setupActivityStreamChanger = (activityStream: ActivityStream): void => {
   bean.on(document.body, 'click', '.js-activity-stream-change', e => {
-    const el: HTMLElement = (e.currentTarget as any);
+    const el: HTMLElement = (e.currentTarget);
     const streamType = el.getAttribute('data-stream-type');
 
     e.preventDefault();

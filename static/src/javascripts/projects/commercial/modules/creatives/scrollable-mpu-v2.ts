@@ -45,8 +45,11 @@ const scrollableMpuTpl = (params: Object) => `
 class ScrollableMpu {
 
   adSlot: HTMLElement;
+
   params: ScrollableMpuParams;
+
   $scrollableImage: bonzo | null | undefined;
+
   $scrollableMpu: bonzo | null | undefined;
 
   constructor(adSlot: HTMLElement, params: Object) {

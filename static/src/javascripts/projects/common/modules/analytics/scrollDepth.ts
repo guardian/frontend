@@ -12,9 +12,9 @@ const getPercentageInViewPort = (el: HTMLElement): number | null | undefined => 
 
     if (rect.bottom < 0 || rect.bottom < height) {
       return 100;
-    } else if (rect.top > height) {
+    } if (rect.top > height) {
       return 0;
-    } else if (rect.top > 0) {
+    } if (rect.top > 0) {
       return 100 / (rect.height || 1) * (height - rect.top);
     }
 
@@ -25,15 +25,15 @@ const getPercentageInViewPort = (el: HTMLElement): number | null | undefined => 
 class ScrollDepth {
 
   opts: Object;
+
   data: Object;
+
   timeoutId: number;
 
   constructor(options: Object): void {
-    this.opts = Object.assign({}, {
-      changeThreshold: 10,
+    this.opts = { changeThreshold: 10,
       isContent: false,
-      pageEl: document.body
-    }, options);
+      pageEl: document.body, ...options};
 
     this.data = {
       page: {

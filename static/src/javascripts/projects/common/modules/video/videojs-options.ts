@@ -15,4 +15,4 @@ const defaults = {
   notSupportedMessage: 'This video is no longer available.'
 };
 
-export default ((overrides: Object = {}): Object => Object.assign({}, defaults, overrides));
+export default ((overrides: Object = {}): Object => ({ ...defaults, ...overrides}));

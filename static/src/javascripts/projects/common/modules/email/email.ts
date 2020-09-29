@@ -10,13 +10,13 @@ import mediator from "lib/mediator";
 import { logError } from "lib/robust";
 import { trackNonClickInteraction } from "common/modules/analytics/google";
 import { inlineSvg } from "common/views/svgs";
-import { getUserFromApi, isUserLoggedIn } from "common/modules/identity/api";
+import { getUserFromApi, isUserLoggedIn , IdentityUser } from "common/modules/identity/api";
 import userPrefs from "common/modules/user-prefs";
 import uniq from "lodash/uniq";
 import envelope from "svgs/icon/envelope.svg";
 import crossIcon from "svgs/icon/cross.svg";
 
-import { IdentityUser } from "common/modules/identity/api";
+
 import { bonzo } from "bonzo";
 
 type Analytics = {

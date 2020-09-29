@@ -12,7 +12,7 @@ let taskQueued = false;
 let iframes: {
   [iframeId: string]: any;
 } = {};
-let iframeCounter: number = 0;
+let iframeCounter = 0;
 let observer;
 let visibleIframeIds;
 

@@ -12,11 +12,17 @@ import objectFitVideos from "object-fit-videos";
 class FabricVideo {
 
   isUpdating: boolean;
+
   adSlot: HTMLElement;
+
   params: Object;
+
   layer2: Array<Element> | null | undefined;
+
   video: HTMLVideoElement | null | undefined;
+
   hasVideo: boolean;
+
   inView: boolean;
 
   constructor(adSlot: HTMLElement, params: Object) {

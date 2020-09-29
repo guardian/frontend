@@ -136,7 +136,7 @@ export const createSlots = (type: string, options: Object = {}) => {
   const slotName = options.name || definition.name || type;
   const classes = options.classes ? options.classes.split(' ').map(cn => `ad-slot--${cn}`) : [];
 
-  const sizes = Object.assign({}, definition.sizeMappings);
+  const sizes = { ...definition.sizeMappings};
 
   if (options.sizes) {
     Object.keys(options.sizes).forEach(size => {
@@ -164,5 +164,5 @@ export const createSlots = (type: string, options: Object = {}) => {
 
   classes.push(`ad-slot--${slotName}`);
 
-  return createAdSlotElements(slotName, Object.keys(attributes).reduce((result, key) => Object.assign({}, result, { [`data-${key}`]: attributes[key] }), {}), classes);
+  return createAdSlotElements(slotName, Object.keys(attributes).reduce((result, key) => ({ ...result, [`data-${key}`]: attributes[key]}), {}), classes);
 };

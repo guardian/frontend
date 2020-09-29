@@ -15,9 +15,7 @@ class Audience extends Component {
     this.templateName = 'audience-template';
     this.componentClass = 'audience-breakdown';
     this.useBem = true;
-    this.config = Object.assign({
-      tests: []
-    }, config);
+    this.config = {tests: [], ...config};
   }
 
   config: Object;

@@ -19,11 +19,9 @@ const translate = (v: Array<number>): string => `translate(${v.toString()})`;
  * @return {Bonzo} SVG Element
  */
 const Doughnut = (data: Object, o: Object): bonzo => {
-  const obj: Object = Object.assign({
-    percentCutout: 35,
+  const obj: Object = {percentCutout: 35,
     unit: '',
-    showValues: false
-  }, o || {});
+    showValues: false, ...o || {}};
 
   const w = obj.width;
   const h = obj.height || w;

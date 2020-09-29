@@ -8,18 +8,19 @@ import fastdom from "fastdom";
 class Sticky {
 
   element: HTMLElement;
+
   opts: Object;
+
   offsetFromParent: number;
+
   lastMessage: string;
 
   constructor(element: HTMLElement, options: Object = {}): void {
     this.element = element;
 
-    this.opts = Object.assign({}, {
-      top: 0,
+    this.opts = { top: 0,
       containInParent: true,
-      emitMessage: false
-    }, options);
+      emitMessage: false, ...options};
   }
 
   init(): void {

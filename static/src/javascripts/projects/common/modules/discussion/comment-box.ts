@@ -126,7 +126,7 @@ class CommentBox extends Component {
     return discussionId || discussionKey || '';
   }
 
-  setFormState(disabled?: boolean = false): void {
+  setFormState(disabled? = false): void {
     const commentBody = ((this.getElem('body') as any) as HTMLInputElement);
     const submitButton = this.getElem('submit');
 
@@ -149,6 +149,7 @@ class CommentBox extends Component {
   }
 
   errors: Array<string>;
+
   errorMessages: Object;
 
   clearErrors(): void {

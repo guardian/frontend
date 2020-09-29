@@ -8,8 +8,8 @@ import loadEnhancers from "./modules/loadEnhancers";
 import { push as pushError } from "./modules/show-errors";
 import { addSpinner, bindAnalyticsEventsOnce as bindCheckboxAnalyticsEventsOnce, flip as flipCheckbox, getInfo as getCheckboxInfo, removeSpinner } from "./modules/switch";
 import { prependSuccessMessage } from "./modules/prependMessage";
-import { buildNewsletterUpdatePayload, setConsent, updateNewsletter } from "./api";
-import { SettableConsent } from "./api";
+import { buildNewsletterUpdatePayload, setConsent, updateNewsletter , SettableConsent } from "./api";
+
 
 const consentCheckboxClassName = 'js-manage-account__consentCheckbox';
 const newsletterCheckboxClassName = 'js-manage-account__newsletterCheckbox';
@@ -104,7 +104,7 @@ const bindNewsletterSwitch = (labelEl: HTMLElement): void => {
     }
   });
 
-  labelEl.addEventListener('change', (ev: Event, isNotUserInitiated: boolean = false) => {
+  labelEl.addEventListener('change', (ev: Event, isNotUserInitiated = false) => {
     if (isNotUserInitiated) {
       return;
     }
@@ -126,7 +126,7 @@ const bindConsentSwitch = (labelEl: HTMLElement): void => {
     }
   });
 
-  labelEl.addEventListener('change', (ev: Event, isNotUserInitiated: boolean = false) => {
+  labelEl.addEventListener('change', (ev: Event, isNotUserInitiated = false) => {
     if (isNotUserInitiated) {
       return;
     }

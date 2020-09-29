@@ -81,7 +81,7 @@ const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
   });
 };
 
-const addCss = (el: HTMLElement, isResize: boolean = false): void => {
+const addCss = (el: HTMLElement, isResize = false): void => {
   setSnapPoint(el, isResize);
   if ($(el).hasClass('facia-snap--football')) {
     resizeForFootballSnaps(el);
@@ -106,7 +106,7 @@ const injectIframe = (el: HTMLElement): void => {
   });
 };
 
-const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
+const fetchFragment = (el: HTMLElement, asJson = false): void => {
   const url = el.getAttribute('data-snap-uri');
 
   if (!url) {

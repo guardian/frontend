@@ -98,7 +98,7 @@ const handleMembershipAccess = (): void => {
 };
 
 const addScrollHandler = (): void => {
-  let scrollRunning: boolean = false;
+  let scrollRunning = false;
 
   const onScroll = (): void => {
     if (!scrollRunning) {

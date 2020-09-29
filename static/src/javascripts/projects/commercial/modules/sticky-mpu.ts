@@ -5,7 +5,7 @@ import fastdom from "lib/fastdom-promise";
 import { Sticky } from "common/modules/ui/sticky";
 import { register, unregister } from "commercial/modules/messenger";
 
-const noSticky: boolean = !!(document.documentElement && document.documentElement.classList.contains('has-no-sticky'));
+const noSticky = !!(document.documentElement && document.documentElement.classList.contains('has-no-sticky'));
 let stickyElement: Sticky;
 let stickySlot: HTMLElement;
 
@@ -55,7 +55,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
 
   const referenceElement: HTMLElement | null | undefined = document.querySelector('.js-article__body,.js-liveblog-body-content');
 
-  const stickyPixelBoundary: number = 300;
+  const stickyPixelBoundary = 300;
 
   if (!referenceElement || !adSlot || config.get('page.hasShowcaseMainElement')) {
     return;

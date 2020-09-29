@@ -124,7 +124,7 @@ const isDynamic = (element: Element): boolean => element.classList.contains(dyna
 const calculateBlockCount = (hasNewBlock: boolean, isInDynamicContainer: boolean): number => {
   if (isInDynamicContainer) {
     return maxBlockCount;
-  } else if (hasNewBlock) {
+  } if (hasNewBlock) {
     return 2;
   }
   return 1;

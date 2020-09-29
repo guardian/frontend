@@ -34,10 +34,15 @@ export type CityPreference = {
 export class SearchTool {
 
   apiUrl: string;
+
   $list: bonzo;
+
   $input: bonzo;
+
   oldQuery: string;
+
   newQuery: string;
+
   inputTmp: string;
 
   constructor(options: WeatherSearchOptions) {

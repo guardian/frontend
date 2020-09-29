@@ -4,6 +4,7 @@ import mediator from "lib/mediator";
 class Toggles {
 
   component: HTMLElement | null | undefined;
+
   controls: Array<HTMLElement>;
 
   constructor(component: HTMLElement | null | undefined = document.body): void {

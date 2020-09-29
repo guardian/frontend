@@ -7,8 +7,11 @@ import { getUserOrSignIn } from "common/modules/identity/api";
 class Formstack {
 
   el: HTMLElement;
+
   form: HTMLFormElement;
+
   formId: string;
+
   config: Object;
 
   constructor(el: HTMLElement, formstackId: string): void {
@@ -60,7 +63,7 @@ class Formstack {
       }
     };
 
-    this.config = Object.assign({}, defaultConfig, config);
+    this.config = { ...defaultConfig, ...config};
   }
 
   postMessage(message: string): void {

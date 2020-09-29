@@ -45,7 +45,7 @@ export const flip = (labelEl: HTMLElement): Promise<any> => fastdom.read((): HTM
   });
 });
 
-export const addSpinner = (labelEl: HTMLElement, latencyTimeout: number = 500): Promise<any> => fastdom.write(() => {
+export const addSpinner = (labelEl: HTMLElement, latencyTimeout = 500): Promise<any> => fastdom.write(() => {
   labelEl.classList.add('is-updating');
   if (document.body) document.body.classList.add('is-updating-js');
 }).then(() => {

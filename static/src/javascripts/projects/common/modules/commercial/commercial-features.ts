@@ -9,21 +9,37 @@ import userPrefs from "common/modules/user-prefs";
 class CommercialFeatures {
 
   dfpAdvertising: boolean;
+
   isSecureContact: boolean;
+
   stickyTopBannerAd: boolean;
+
   articleBodyAdverts: boolean;
+
   articleAsideAdverts: boolean;
+
   carrotTrafficDriver: boolean;
+
   highMerch: boolean;
+
   thirdPartyTags: boolean;
+
   relatedWidgetEnabled: boolean;
+
   plista: boolean;
+
   commentAdverts: boolean;
+
   liveblogAdverts: boolean;
+
   paidforBand: boolean;
+
   asynchronous: boolean;
+
   adFree: boolean;
+
   comscore: boolean;
+
   launchpad: boolean;
 
   constructor(config: any = defaultConfig) {

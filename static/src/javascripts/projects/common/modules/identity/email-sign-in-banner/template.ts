@@ -7,7 +7,7 @@ export type Params = {
   campaign: Campaign;
 };
 
-export const messageCode: string = 'email-sign-in-banner';
+export const messageCode = 'email-sign-in-banner';
 
 export const make = (params: Params): string => `<div class="site-message--email-sign-in-banner-slide">
         <h3 class="site-message--email-sign-in-banner-title">

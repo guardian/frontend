@@ -1,7 +1,7 @@
 
 import $ from "lib/$";
 
-const addComponent = (content: Element, importance: number = 1): void => {
+const addComponent = (content: Element, importance = 1): void => {
   const container = $('.js-components-container');
   const classname = 'component--rhc';
 

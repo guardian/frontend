@@ -77,14 +77,23 @@ const dedupShowMore = ($container: bonzo, html: string): bonzo => {
 class Button {
 
   id: string;
+
   state: DisplayState;
+
   isLoaded: boolean;
+
   $el: bonzo;
+
   $container: bonzo;
+
   $iconEl: bonzo;
+
   $placeholder: bonzo;
+
   $textEl: bonzo;
+
   $errorMessage: bonzo | null | undefined;
+
   messages: Map<DisplayState, string>;
 
   constructor(el: bonzo, container: bonzo) {

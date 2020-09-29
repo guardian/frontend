@@ -20,22 +20,39 @@ type MessagePosition = "top" | "bottom";
 class Message {
 
   id: string;
+
   important: boolean;
+
   permanent: boolean;
+
   blocking: boolean;
+
   trackDisplay: boolean;
+
   type: string;
+
   position: MessagePosition;
+
   siteMessageComponentName: string;
+
   siteMessageLinkName: string;
+
   siteMessageCloseBtn: string;
+
   prefs: string;
+
   widthBasedMessage: boolean;
+
   cssModifierClass: string;
+
   customJs: (arg0: Object) => void;
+
   customOpts: Object;
+
   $siteMessage: Object;
+
   $siteMessageContainer: Object;
+
   $siteMessageOverlay: Object;
 
   constructor(id: string, options?: Object) {

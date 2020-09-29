@@ -15,9 +15,7 @@ class Participation extends Component {
     this.templateName = 'participation-template';
     this.componentClass = 'participation';
     this.useBem = true;
-    this.config = Object.assign({
-      test: ''
-    }, config);
+    this.config = {test: '', ...config};
   }
 
   config: Object;

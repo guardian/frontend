@@ -37,8 +37,11 @@ import { noop } from "lib/noop";
 class FiniteStateMachine {
 
   context: Object;
+
   states: Object;
+
   debug: boolean | null | undefined;
+
   onChangeState: (oldState: string, newState: string) => void;
 
   constructor(options: Object) {

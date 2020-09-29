@@ -18,13 +18,19 @@ import { addViewabilityTracker } from "commercial/modules/creatives/add-viewabil
 class FabricExpandingV1 {
 
   adSlot: any;
+
   params: any;
+
   isClosed: any;
+
   initialExpandCounter: any;
+
   closedHeight: any;
+
   openedHeight: any;
 
   $button: any;
+
   $ad: any;
 
   static hasScrollEnabled: boolean;
@@ -139,7 +145,7 @@ class FabricExpandingV1 {
     return template(fabricExpandingVideoHtml)(viewModel);
   }
 
-  stopVideo(delay: number = 0) {
+  stopVideo(delay = 0) {
     const videoSelector = isBreakpoint({
       min: 'tablet'
     }) ? '.js-fabric-video--desktop' : '.js-fabric-video--mobile';

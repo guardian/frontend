@@ -10,7 +10,7 @@ type offsetType = {
 };
 
 const elementIsInView = (el: HTMLElement, offsets_?: offsetType): boolean => {
-  const offsets = Object.assign({}, { left: 0, right: 0, top: 0, bottom: 0 }, offsets_);
+  const offsets = { left: 0, right: 0, top: 0, bottom: 0, ...offsets_};
 
   const rect = el.getBoundingClientRect();
   const viewportHeight = window.innerHeight;

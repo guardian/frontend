@@ -1,6 +1,6 @@
-declare var __webpack_public_path__: string;
+declare let __webpack_public_path__: string;
 
-declare var twttr: {
+declare let twttr: {
     widgets?: {
         load?: (arg0: Element | null | undefined) => void;
     };
@@ -9,7 +9,7 @@ declare var twttr: {
 // #? TODO: this type def conflates definitions for CommonJS require and Webpack's require
 // When we replace Webpack's require with dynamic imports, we can remove this type def
 // https://webpack.js.org/guides/code-splitting/#dynamic-imports
-declare var require: {
+declare let require: {
     ensure(ids: Array<string>, callback?: {}, chunkName?: string): void;
     resolve: (id: string) => string;
     cache: any;
@@ -34,6 +34,6 @@ declare type ThirdPartyTag = {
     insertSnippet?: () => any;
 };
 
-declare var jsdom: {
+declare let jsdom: {
     reconfigure: (settings: {}) => any;
 };

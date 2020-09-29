@@ -92,7 +92,7 @@ const renderTable = (competition: string, extras: Array<Extra | null | undefined
   });
 };
 
-const loading = (elem: HTMLElement, message: string = 'Loading…', link: {
+const loading = (elem: HTMLElement, message = 'Loading…', link: {
   text: string;
   href: string;
 }): void => {

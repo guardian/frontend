@@ -17,8 +17,8 @@ import { Banner } from "common/modules/ui/bannerPicker";
 
 import { bannerTemplate as subscriptionBannerTemplate } from "./subscription-banner-template";
 import { bannerTemplate as gwBannerTemplate } from "./guardian-weekly-banner-template";
-import { bannerTracking } from "./subscription-banner-tracking";
-import { BannerTracking } from "./subscription-banner-tracking";
+import { bannerTracking , BannerTracking } from "./subscription-banner-tracking";
+
 
 const MESSAGE_CODE = 'subscription-banner';
 const SUBSCRIPTION_BANNER_CLOSED_KEY = 'subscriptionBannerLastClosedAt';

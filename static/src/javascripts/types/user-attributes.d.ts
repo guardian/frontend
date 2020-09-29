@@ -1,4 +1,4 @@
-//the type of the response returned by https://members-data-api.theguardian.com/user-attributes/me/mma-monthlycontribution
+// the type of the response returned by https://members-data-api.theguardian.com/user-attributes/me/mma-monthlycontribution
 declare type ContributorDetails = {
     tier: string;
     isPaidTier: boolean;

@@ -45,13 +45,13 @@ const reducers = {
     const position = previousState.position >= previousState.length ? previousState.position : previousState.position + 1;
 
     updateYouTubeVideo(document.querySelector(`.js-video-playlist-item-${position - 1}`));
-    return Object.assign({}, previousState, getPositionState(position, previousState.length));
+    return { ...previousState, ...getPositionState(position, previousState.length)};
   },
 
   PREV: function prev(previousState: State): State {
     const position = previousState.position <= 0 ? 0 : previousState.position - 1;
     updateYouTubeVideo(document.querySelector(`.js-video-playlist-item-${position + 1}`));
-    return Object.assign({}, previousState, getPositionState(position, previousState.length));
+    return { ...previousState, ...getPositionState(position, previousState.length)};
   },
 
   INIT: function init(previousState: State): State {

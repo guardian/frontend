@@ -51,7 +51,7 @@ export const reset = (): void => {
   errors.length = 0;
 };
 
-export const push = (error: unknown, action: string = 'none'): Promise<void> => {
+export const push = (error: unknown, action = 'none'): Promise<void> => {
   const message = error instanceof Error && error.message ? error.message : genericErrorMessage;
 
   const isDupeIndex = errors.findIndex((_: IdentityRenderableError) => _.message === message);

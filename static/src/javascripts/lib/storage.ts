@@ -5,6 +5,7 @@
 class Storage {
 
   storage: any;
+
   available: boolean | null | undefined;
 
   constructor(type: string) {

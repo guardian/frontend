@@ -13,8 +13,11 @@ type Consent = {
 class ConsentWithState {
 
   consent: Consent;
+
   uniqueId: string;
+
   hasConsented: boolean;
+
   updateInApiFn: (cs: ConsentWithState[]) => Promise<void>;
 
   constructor(consent: Consent, hasConsented: boolean | null | undefined): void {
@@ -37,6 +40,7 @@ class UserConsentWithState extends ConsentWithState {
     super(...args);
     this.uniqueId = ['user', this.consent.id].join('-');
   }
+
   static updateInApiFn = (cs: ConsentWithState[]): Promise<void> => setConsent(cs.map(c => ({
     id: c.consent.id,
     consented: c.hasConsented || false
@@ -49,6 +53,7 @@ class EmailConsentWithState extends ConsentWithState {
     super(...args);
     this.uniqueId = ['email', this.consent.id].join('-');
   }
+
   static updateInApiFn = (cs: ConsentWithState[]): Promise<void> => Promise.all(cs.map(consent => {
     if (!consent.consent.exactTargetListId) return Promise.reject();
     return updateNewsletter(buildNewsletterUpdatePayload(consent.hasConsented ? 'add' : 'remove', consent.consent.exactTargetListId));

@@ -5,10 +5,10 @@ import { Advert } from "commercial/modules/dfp/Advert";
 import { dfpEnv } from "commercial/modules/dfp/dfp-env";
 import { bids } from "commercial/modules/header-bidding/prebid/bid-config";
 import { getHeaderBiddingAdSlots } from "commercial/modules/header-bidding/slot-config";
-import { priceGranularity } from "commercial/modules/header-bidding/prebid/price-config";
+import { priceGranularity , PrebidPriceGranularity } from "commercial/modules/header-bidding/prebid/price-config";
 import { getAdvertById } from "commercial/modules/dfp/get-advert-by-id";
 import { PrebidBid, PrebidMediaTypes, HeaderBiddingSlot } from "commercial/modules/header-bidding/types";
-import { PrebidPriceGranularity } from "commercial/modules/header-bidding/prebid/price-config";
+
 
 type EnableAnalyticsConfig = {
   provider: string;
@@ -77,7 +77,7 @@ type PbjsEventData = {
 
 type PbjsEventHandler = (arg0: PbjsEventData) => void;
 
-const bidderTimeout: number = 1500;
+const bidderTimeout = 1500;
 
 const consentManagement: ConsentManagement = {
   gdpr: {
@@ -93,7 +93,9 @@ const consentManagement: ConsentManagement = {
 class PrebidAdUnit {
 
   code: string | null | undefined;
+
   bids: PrebidBid[] | null | undefined;
+
   mediaTypes: PrebidMediaTypes | null | undefined;
 
   constructor(advert: Advert, slot: HeaderBiddingSlot) {
@@ -108,7 +110,7 @@ class PrebidAdUnit {
 }
 
 let requestQueue: Promise<void> = Promise.resolve();
-let initialised: boolean = false;
+let initialised = false;
 
 const initialise = (window: {
   pbjs: {
@@ -130,11 +132,9 @@ const initialise = (window: {
     }
   } : { syncEnabled: false };
 
-  const pbjsConfig: PbjsConfig = Object.assign({}, {
-    bidderTimeout,
+  const pbjsConfig: PbjsConfig = { bidderTimeout,
     priceGranularity,
-    userSync
-  }, config.get('switches.consentManagement', false) ? { consentManagement } : {});
+    userSync, ...(config.get('switches.consentManagement', false) ? { consentManagement } : {})};
 
   window.pbjs.setConfig(pbjsConfig);
 

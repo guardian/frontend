@@ -71,7 +71,7 @@ const abParam = (): Array<string> => {
 
   const pushAbParams = (testName: string, testValue: unknown): void => {
     if (typeof testValue === 'string' && testValue !== 'notintest') {
-      const testData: string = `${testName}-${testValue}`;
+      const testData = `${testName}-${testValue}`;
       // DFP key-value pairs accept value strings up to 40 characters long
       abParams.push(testData.substring(0, 40));
     }
@@ -98,15 +98,15 @@ const getVisitedValue = (): string => {
 
   if (visitCount <= 5) {
     return visitCount.toString();
-  } else if (visitCount >= 6 && visitCount <= 9) {
+  } if (visitCount >= 6 && visitCount <= 9) {
     return '6-9';
-  } else if (visitCount >= 10 && visitCount <= 15) {
+  } if (visitCount >= 10 && visitCount <= 15) {
     return '10-15';
-  } else if (visitCount >= 16 && visitCount <= 19) {
+  } if (visitCount >= 16 && visitCount <= 19) {
     return '16-19';
-  } else if (visitCount >= 20 && visitCount <= 29) {
+  } if (visitCount >= 20 && visitCount <= 29) {
     return '20-29';
-  } else if (visitCount >= 30) {
+  } if (visitCount >= 30) {
     return '30plus';
   }
 
@@ -194,8 +194,7 @@ const buildPageTargetting = (adConsentState: boolean | null, ccpaState: boolean 
   // flowlint-next-line sketchy-null-bool:off
   const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
   const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
-  const pageTargets: PageTargeting = Object.assign({
-    sens: page.isSensitive ? 't' : 'f',
+  const pageTargets: PageTargeting = {sens: page.isSensitive ? 't' : 'f',
     permutive: getPermutiveSegments(),
     pv: config.get('ophan.pageViewId'),
     bp: findBreakpoint(),
@@ -219,8 +218,7 @@ const buildPageTargetting = (adConsentState: boolean | null, ccpaState: boolean 
     urlkw: getUrlKeywords(page.pageId),
     rdp: getRdpValue(ccpaState),
     consent_tcfv2: getTcfv2ConsentValue(adConsentState),
-    cmp_interaction: tcfv2EventStatus || 'na'
-  }, page.sharedAdTargeting, paTargeting, adFreeTargeting, getWhitelistedQueryParams());
+    cmp_interaction: tcfv2EventStatus || 'na', ...page.sharedAdTargeting, ...paTargeting, ...adFreeTargeting, ...getWhitelistedQueryParams()};
 
   // filter out empty values
   const pageTargeting: {} = pickBy(pageTargets, target => {

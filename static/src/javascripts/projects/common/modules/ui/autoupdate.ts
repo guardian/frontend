@@ -24,12 +24,11 @@ type autoUpdateOptions = {
 };
 
 const autoUpdate = (opts?: autoUpdateOptions): void => {
-  const options = Object.assign({
-    toastOffsetTop: 12,
+  const options = {toastOffsetTop: 12,
     minUpdateDelay: (isBreakpoint({ min: 'desktop' }) ? 10 : 30) * 1000,
     maxUpdateDelay: 20 * 60 * 1000, // 20 mins
     backoffMultiplier: 0.75 // increase or decrease the back off rate by modifying this
-  }, opts);
+  , ...opts};
 
   // Cache selectors
   const $liveblogBody = $('.js-liveblog-body');

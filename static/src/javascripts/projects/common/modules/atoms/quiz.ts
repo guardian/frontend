@@ -29,7 +29,7 @@ const handleCompletion = (): void => {
 
     do {
       // try and find a .bucket__message for your total
-      const bucketMessage: HTMLElement | null | undefined = (quiz.querySelector(`.js-atom-quiz__bucket-message--${total}`) as any | null | undefined);
+      const bucketMessage: HTMLElement | null | undefined = (quiz.querySelector(`.js-atom-quiz__bucket-message--${total}`));
 
       // if we find a message for your total show it, and exit
       if (bucketMessage) {

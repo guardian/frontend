@@ -47,7 +47,9 @@ class ScoreBoard extends Component {
   }
 
   placeholder: HTMLElement;
+
   pageType: PageTypes;
+
   parent: bonzo;
 
   prerender(): void {

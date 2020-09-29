@@ -4,8 +4,8 @@ import $ from "lib/$";
 import mediator from "lib/mediator";
 import { elementInView } from "lib/element-inview";
 import fastdom from "lib/fastdom-promise";
-import { submitInsertEvent, submitViewEvent } from "common/modules/commercial/acquisitions-ophan";
-import { ComponentEventWithoutAction } from "common/modules/commercial/acquisitions-ophan";
+import { submitInsertEvent, submitViewEvent , ComponentEventWithoutAction } from "common/modules/commercial/acquisitions-ophan";
+
 
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';

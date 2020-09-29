@@ -207,7 +207,7 @@ const initOpenOverlayOnClick = (): void => {
   if (!body) return;
 
   bean.on(body, 'click', '[data-open-overlay-on-click]', e => {
-    const elId = (e.currentTarget as any).getAttribute('data-open-overlay-on-click');
+    const elId = (e.currentTarget).getAttribute('data-open-overlay-on-click');
     offset = body.scrollTop;
     body.classList.add('has-overlay');
     const el = document.getElementById(elId);
@@ -218,7 +218,7 @@ const initOpenOverlayOnClick = (): void => {
   });
 
   bean.on(body, 'click', '.js-overlay-close', e => {
-    const overlay = (e.target as any).closest('.overlay');
+    const overlay = (e.target).closest('.overlay');
     if (overlay) {
       overlay.classList.remove('overlay--open');
     }

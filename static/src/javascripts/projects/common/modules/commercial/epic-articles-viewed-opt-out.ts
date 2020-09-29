@@ -121,7 +121,7 @@ const onEpicViewed = () => {
   const getArticleCountViewEventId = (): string | null | undefined => {
     if (document.querySelector('.epic-article-count')) {
       return 'articles-viewed-opt-out_view-variant';
-    } else if (document.querySelector('.epic-article-count__normal')) {
+    } if (document.querySelector('.epic-article-count__normal')) {
       return 'articles-viewed-opt-out_view-control';
     }
     return null; // no articles-viewed count

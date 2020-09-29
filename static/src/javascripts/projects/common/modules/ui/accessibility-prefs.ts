@@ -10,7 +10,7 @@ const FILTERS = ['sepia', 'grayscale', 'invert', 'contrast', 'saturate', 'opacit
 
 const setFilter = (mode: string): void => {
   const body = document.body;
-  const value: string = `${mode}(100%)`;
+  const value = `${mode}(100%)`;
 
   if (body) {
     // $FlowFixMe -webkit-filter is not recognised

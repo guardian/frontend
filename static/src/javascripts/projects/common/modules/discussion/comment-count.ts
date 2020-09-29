@@ -7,8 +7,8 @@ import { inlineSvg } from "common/views/svgs";
 
 type IndexedElements = {string: Array<HTMLElement>;};
 
-const ATTRIBUTE_NAME: string = 'data-discussion-id';
-const COUNT_URL: string = '/discussion/comment-counts.json?shortUrls=';
+const ATTRIBUTE_NAME = 'data-discussion-id';
+const COUNT_URL = '/discussion/comment-counts.json?shortUrls=';
 
 const getTemplate = (vals: {url: string;icon: string;count: string;}, type: string): string => {
   const {

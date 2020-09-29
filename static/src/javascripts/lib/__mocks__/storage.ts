@@ -2,6 +2,7 @@
 class StorageMock {
 
   storage: any;
+
   available: boolean | null | undefined;
 
   constructor() {

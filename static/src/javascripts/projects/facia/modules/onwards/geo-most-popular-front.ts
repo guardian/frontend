@@ -30,8 +30,11 @@ export class GeoMostPopularFront extends Component {
   }
 
   isNetworkFront: boolean;
+
   isVideoFront: boolean;
+
   isInternational: boolean;
+
   parent: bonzo | null | undefined;
 
   prerender(): void {

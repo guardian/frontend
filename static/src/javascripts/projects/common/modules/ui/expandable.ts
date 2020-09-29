@@ -15,9 +15,13 @@ type Options = {
 class Expandable {
 
   opts: Options;
+
   dom: Element;
+
   cta: Element;
+
   expanded: boolean;
+
   showCount: boolean;
 
   constructor(options: Options) {

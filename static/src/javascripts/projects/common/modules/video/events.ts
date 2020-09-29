@@ -8,8 +8,8 @@ import { isBreakpoint } from "lib/detect";
 import { isRevisit } from "common/modules/onward/history";
 import throttle from "lodash/throttle";
 import forOwn from "lodash/forOwn";
-import { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction } from "common/modules/video/ga-helper";
-import { MediaEvent } from "common/modules/video/ga-helper";
+import { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction , MediaEvent } from "common/modules/video/ga-helper";
+
 import ophan from "ophan/ng";
 
 const isDesktop = isBreakpoint({

@@ -20,6 +20,7 @@ class Profile {
   dom: {
     [key: string]: HTMLElement | null | undefined;
   };
+
   opts: {
     url: string;
   };
@@ -29,7 +30,7 @@ class Profile {
       url: 'https://profile.theguardian.com'
     };
 
-    this.opts = Object.assign({}, opts, options);
+    this.opts = { ...opts, ...options};
 
     this.dom = {};
 

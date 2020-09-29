@@ -10,7 +10,7 @@ import { createAuthenticationComponentEventParams } from "common/modules/identit
 import { make as makeTemplate, messageCode } from "./template";
 import { getEmailCampaignFromUrl, getEmailCampaignFromUtm } from "./campaigns";
 
-const displayEventKey: string = `${messageCode} : display`;
+const displayEventKey = `${messageCode} : display`;
 const userPrefsStoreKey = 'emailbanner.referrerEmail';
 
 const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;

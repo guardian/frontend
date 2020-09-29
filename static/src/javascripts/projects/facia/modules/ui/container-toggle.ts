@@ -25,8 +25,11 @@ const btnTmpl = ({
 export class ContainerToggle {
 
   $container: bonzo;
+
   state: ToggleState;
+
   $button: bonzo;
+
   constructor(container: Element) {
     this.$container = bonzo(container);
     this.$button = bonzo(bonzo.create(btnTmpl({

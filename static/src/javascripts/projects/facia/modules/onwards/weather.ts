@@ -21,8 +21,8 @@ import config from "lib/config";
 import fetchJson from "lib/fetch-json";
 import mediator from "lib/mediator";
 import userPrefs from "common/modules/user-prefs";
-import { SearchTool } from "facia/modules/onwards/search-tool";
-import { CityPreference } from "facia/modules/onwards/search-tool";
+import { SearchTool , CityPreference } from "facia/modules/onwards/search-tool";
+
 
 let $holder = null;
 let searchTool = null;

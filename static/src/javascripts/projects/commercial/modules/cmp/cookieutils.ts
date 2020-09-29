@@ -16,7 +16,7 @@ type Field = {
   fields?: Array<Field>;
 };
 
-const repeat = (count: number, string: string = '0'): string => {
+const repeat = (count: number, string = '0'): string => {
   let padString = '';
   for (let i = 0; i < count; i += 1) {
     padString += string;
@@ -334,7 +334,7 @@ const decodeCookieBitValue = (bitString: string, definitionMap: DefinitionMap) =
   if (typeof cookieVersion !== 'number') {
     log.error('Could not find cookieVersion to decode');
     return {};
-  } else if (!definitionMap[cookieVersion]) {
+  } if (!definitionMap[cookieVersion]) {
     log.error(`Could not find definition to decode cookie version ${cookieVersion}`);
     return {};
   }

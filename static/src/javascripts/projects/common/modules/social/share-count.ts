@@ -12,11 +12,11 @@ import shareCountTemplate from "raw-loader!common/views/content/share-count.html
 import shareCountImmersiveTemplate from "raw-loader!common/views/content/share-count-immersive.html";
 
 const $shareCountEls = $('.js-sharecount');
-const tooltip: string = 'Facebook: <%=facebook%>';
+const tooltip = 'Facebook: <%=facebook%>';
 const counts: Object = {
   facebook: 'n/a'
 };
-let shareCount: number = 0;
+let shareCount = 0;
 let $fullValueEls;
 let $shortValueEls;
 

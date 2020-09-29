@@ -66,7 +66,7 @@ const getPath = (url: string): string => {
   return a.pathname;
 };
 
-const pushUrl = (state: Object, title: string, url: string, replace: boolean = false): void => {
+const pushUrl = (state: Object, title: string, url: string, replace = false): void => {
   if (supportsPushState) {
     window.history[replace ? 'replaceState' : 'pushState'](state, title, url);
   }

@@ -153,7 +153,7 @@ const articleViewCountIsOk = (articlesViewedSettings?: ArticlesViewedSettings): 
   if (articlesViewedSettings && getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
     // User has opted out of articles viewed counting
     return false;
-  } else if (articlesViewedSettings) {
+  } if (articlesViewedSettings) {
     const upperOk = articlesViewedSettings.maxViews ? articlesViewedSettings.count <= articlesViewedSettings.maxViews : true;
     const lowerOk = articlesViewedSettings.minViews ? articlesViewedSettings.count >= articlesViewedSettings.minViews : true;
     return upperOk && lowerOk;
@@ -180,7 +180,7 @@ const submitOphanInsert = (testId: string, variantId: string, componentType: Oph
   });
 };
 
-const setupOphanView = (element: HTMLElement, viewEvent: string, testId: string, variantId: string, campaignCode: string, trackingCampaignId: string, componentType: OphanComponentType, products: ReadonlyArray<OphanProduct>, showTicker: boolean = false, tickerSettings: TickerSettings | null | undefined) => {
+const setupOphanView = (element: HTMLElement, viewEvent: string, testId: string, variantId: string, campaignCode: string, trackingCampaignId: string, componentType: OphanComponentType, products: ReadonlyArray<OphanProduct>, showTicker = false, tickerSettings: TickerSettings | null | undefined) => {
   const inView = elementInView(element, window, {
     top: 18
   });
@@ -538,7 +538,7 @@ export const getConfiguredEpicTests = (): Promise<ReadonlyArray<EpicABTest>> => 
 
 // This is called by individual banner AbTests in their canRun functions
 // TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
-export const canShowBannerSync = (minArticlesBeforeShowingBanner: number = 3, userCohort: AcquisitionsComponentUserCohort = 'AllNonSupporters'): boolean => {
+export const canShowBannerSync = (minArticlesBeforeShowingBanner = 3, userCohort: AcquisitionsComponentUserCohort = 'AllNonSupporters'): boolean => {
   const userHasSeenEnoughArticles: boolean = getVisitCount() >= minArticlesBeforeShowingBanner;
   const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 

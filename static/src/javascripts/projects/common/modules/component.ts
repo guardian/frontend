@@ -17,22 +17,39 @@ class ComponentError {
 class Component {
 
   useBem: boolean;
+
   templateName: string | null | undefined;
+
   componentClass: string | null | undefined;
+
   endpoint: (string | null | undefined) | (() => string | null | undefined);
+
   classes: Object | null | undefined;
+
   elem: (HTMLElement | HTMLAnchorElement | HTMLInputElement) | null | undefined;
+
   template: string | null | undefined;
+
   rendered: boolean;
+
   destroyed: boolean;
+
   elems: Object | null | undefined;
+
   options: Object;
+
   defaultOptions: Object;
+
   responseDataKey: string;
+
   autoupdated: boolean;
+
   updateEvery: number;
+
   fetchData: string | null | undefined;
+
   manipulationType: string;
+
   t: TimeoutID | null | undefined;
 
   constructor(): void {
@@ -252,7 +269,7 @@ class Component {
     return elem;
   }
 
-  getClass(elemName: string, sansDot: boolean = false): string {
+  getClass(elemName: string, sansDot = false): string {
     let className;
 
     if (this.useBem && this.componentClass) {
@@ -303,7 +320,7 @@ class Component {
   }
 
   setOptions(options: Object): void {
-    this.options = Object.assign({}, this.defaultOptions, this.options, options);
+    this.options = { ...this.defaultOptions, ...this.options, ...options};
   }
 
   /**

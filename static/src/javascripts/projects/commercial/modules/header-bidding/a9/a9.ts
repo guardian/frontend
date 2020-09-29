@@ -12,7 +12,9 @@ import { HeaderBiddingSize, HeaderBiddingSlot } from "commercial/modules/header-
 class A9AdUnit {
 
   slotID: string | null | undefined;
+
   slotName: string | null | undefined;
+
   sizes: HeaderBiddingSize[];
 
   constructor(advert: Advert, slot: HeaderBiddingSlot) {
@@ -26,10 +28,10 @@ class A9AdUnit {
   }
 }
 
-let initialised: boolean = false;
+let initialised = false;
 let requestQueue: Promise<void> = Promise.resolve();
 
-const bidderTimeout: number = 1500;
+const bidderTimeout = 1500;
 
 const initialise = (): void => {
   onConsentChange(state => {

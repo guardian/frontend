@@ -11,7 +11,7 @@ const config: Config = window.guardian.config;
 
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
-const get = (path: string = '', defaultValue: any): any => {
+const get = (path = '', defaultValue: any): any => {
   const value = path.replace(/\[(.+?)\]/g, '.$1').split('.').reduce((o, key) => o && o[key], config);
 
   if (typeof value !== 'undefined') {
@@ -65,13 +65,11 @@ const dateFromSlug = (): string | null | undefined => {
   return s ? s[0] : null;
 };
 
-export default Object.assign({}, {
-  get,
+export default ({ get,
   set,
   hasTone,
   hasSeries,
   referencesOfType,
   referenceOfType,
   webPublicationDateAsUrlPart,
-  dateFromSlug
-}, config);
+  dateFromSlug, ...config});

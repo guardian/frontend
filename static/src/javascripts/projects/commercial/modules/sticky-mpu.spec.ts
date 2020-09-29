@@ -21,7 +21,7 @@ describe('Sticky MPU', () => {
         <div class="content__article-body js-article__body"><div>
     `;
 
-  const adSlotRight: string = '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
+  const adSlotRight = '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -44,12 +44,12 @@ describe('Sticky MPU', () => {
 
   it('should resize the parent container', done => {
     mockHeight(8000);
-    const targetSlot: HTMLElement = (document.querySelector('.js-ad-slot') as any);
+    const targetSlot: HTMLElement = (document.querySelector('.js-ad-slot'));
     targetSlot.dataset = {
       name: targetSlot.getAttribute('data-name') || ''
     };
     mediator.once('page:commercial:sticky-mpu', () => {
-      const container: HTMLElement = (document.querySelector('.aside-slot-container') as any);
+      const container: HTMLElement = (document.querySelector('.aside-slot-container'));
       expect(container.style.height).toBe('8000px');
       done();
     });
@@ -62,7 +62,7 @@ describe('Sticky Comments MPU', () => {
         <div class="js-comments"><div>
     `;
 
-  const adSlotComments: string = '<div id="dfp-ad--comments" class="js-ad-slot ad-slot ad-slot--comments" data-name="comments" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
+  const adSlotComments = '<div id="dfp-ad--comments" class="js-ad-slot ad-slot ad-slot--comments" data-name="comments" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -85,12 +85,12 @@ describe('Sticky Comments MPU', () => {
 
   it('should resize the parent container', done => {
     mockHeight(10000);
-    const targetSlot: HTMLElement = (document.querySelector('.js-ad-slot') as any);
+    const targetSlot: HTMLElement = (document.querySelector('.js-ad-slot'));
     targetSlot.dataset = {
       name: targetSlot.getAttribute('data-name') || ''
     };
     mediator.once('page:commercial:sticky-comments-mpu', () => {
-      const container: HTMLElement = (document.querySelector('.aside-slot-container') as any);
+      const container: HTMLElement = (document.querySelector('.aside-slot-container'));
       expect(container.style.height).toBe('10000px');
       done();
     });

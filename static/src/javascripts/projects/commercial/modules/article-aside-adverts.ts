@@ -5,15 +5,15 @@ import mediator from "lib/mediator";
 import fastdom from "lib/fastdom-promise";
 import { bonzo } from "bonzo";
 
-const minArticleHeight: number = 1300;
+const minArticleHeight = 1300;
 
 const getAllowedSizesForImmersive = (availableSpace: number): string => {
   // filter ad slot sizes based on the available height
   if (availableSpace > 600) {
     return '1,1|2,2|300,250|300,274|300,600|fluid';
-  } else if (availableSpace > 274) {
+  } if (availableSpace > 274) {
     return '1,1|2,2|300,250|300,274';
-  } else if (availableSpace > 250) {
+  } if (availableSpace > 250) {
     return '1,1|2,2|300,250';
   }
   return '1,1|2,2';

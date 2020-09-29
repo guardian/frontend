@@ -9,6 +9,7 @@ import config from "lib/config";
 class Search {
 
   gcsUrl: string;
+
   resultSetSize: number;
 
   constructor(): void {

@@ -17,10 +17,8 @@ class ABTestReportItem extends Component {
     this.templateName = 'abtest-item-template';
     this.componentClass = 'abtest-item';
     this.useBem = true;
-    this.config = Object.assign({
-      test: {},
-      active: true
-    }, config);
+    this.config = {test: {},
+      active: true, ...config};
 
     if (window.abCharts) {
       this.chart = window.abCharts[`ab${this.config.test.id}`];
@@ -28,6 +26,7 @@ class ABTestReportItem extends Component {
   }
 
   chart: Object;
+
   config: Object;
 
   ready(): void {

@@ -31,7 +31,7 @@ const getDomainAttribute = ({
   return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
 
-const removeCookie = (name: string, currentDomainOnly: boolean = false): void => {
+const removeCookie = (name: string, currentDomainOnly = false): void => {
   const expires = 'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
   const path = 'path=/;';
 
@@ -43,7 +43,7 @@ const removeCookie = (name: string, currentDomainOnly: boolean = false): void =>
   }
 };
 
-const addCookie = (name: string, value: string, daysToLive: number | null | undefined, isCrossSubdomain: boolean = false): void => {
+const addCookie = (name: string, value: string, daysToLive: number | null | undefined, isCrossSubdomain = false): void => {
   const expires = new Date();
 
   if (!isValidCookieValue(name) || !isValidCookieValue(value)) {

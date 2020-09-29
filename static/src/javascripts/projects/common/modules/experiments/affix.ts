@@ -9,10 +9,15 @@ const getPixels = (top: string): number => top !== 'auto' ? parseInt(top, 10) : 
 class Affix {
 
   affixed: boolean;
+
   $markerTop: bonzo;
+
   $markerBottom: bonzo;
+
   $container: bonzo;
+
   $element: bonzo;
+
   $window: bonzo;
 
   constructor(options: {

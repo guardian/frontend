@@ -27,23 +27,41 @@ const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes => breakpoints.r
 class Advert {
 
   id: string;
+
   node: HTMLElement;
+
   sizes: AdSizes;
+
   size: AdSize | null | undefined;
+
   slot: any;
+
   isEmpty: boolean | null | undefined;
+
   isLoading: boolean;
+
   isRendering: boolean;
+
   isLoaded: boolean;
+
   isRendered: boolean;
+
   shouldRefresh: boolean;
+
   maxViewPercentage: number;
+
   whenLoaded: Promise<boolean>;
+
   whenLoadedResolver: Resolver;
+
   whenRendered: Promise<boolean>;
+
   whenRenderedResolver: Resolver;
+
   whenSlotReady: Promise<void>;
+
   extraNodeClasses: Array<string>;
+
   timings: {
     createTime: number | null | undefined;
     startLoading: number | null | undefined;
@@ -53,6 +71,7 @@ class Advert {
     loadingMethod: number | null | undefined;
     lazyWaitComplete: number | null | undefined;
   };
+
   hasPrebidSize: boolean;
 
   constructor(adSlotNode: HTMLElement) {

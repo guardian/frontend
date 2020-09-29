@@ -19,9 +19,7 @@ const forcedSlotSize = (advert: Advert, hbSlot: HeaderBiddingSlot) => {
   }
 
   if (Array.isArray(advert.size)) {
-    return [Object.assign({}, hbSlot, {
-      sizes: [[advert.size[0], advert.size[1]]]
-    })];
+    return [{ ...hbSlot, sizes: [[advert.size[0], advert.size[1]]]}];
   }
   // No point having this hbSlot, as advert.size is not an array
   return [];

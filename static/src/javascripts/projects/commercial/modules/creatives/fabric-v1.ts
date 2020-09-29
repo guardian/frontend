@@ -21,10 +21,13 @@ let scrollBgTpl;
 class FabricV1 {
 
   adSlot: Element;
+
   params: Object;
 
   scrollingBg: HTMLElement | null | undefined;
+
   layer2: HTMLElement | null | undefined;
+
   scrollType: string;
 
   constructor(adSlot: Element, params: Object) {
@@ -46,7 +49,7 @@ class FabricV1 {
     const templateOptions = {
       id: `fabric-${Math.trunc(Math.random() * 10000).toString(16)}`,
       showLabel: this.params.showAdLabel !== 'hide',
-      video: this.params.videoURL ? iframeVideoTpl(Object.assign({}, this.params, videoPosition)) : '',
+      video: this.params.videoURL ? iframeVideoTpl({ ...this.params, ...videoPosition}) : '',
       hasContainer: 'layerTwoAnimation' in this.params,
       layerTwoBGPosition: this.params.layerTwoBGPosition && (!this.params.layerTwoAnimation || this.params.layerTwoAnimation === 'disabled' || (!isEnhanced() && this.params.layerTwoAnimation === 'enabled')) ? this.params.layerTwoBGPosition : '0% 0%',
       scrollbg: this.params.backgroundImagePType && this.params.backgroundImagePType !== 'none' ? scrollBgTpl(this.params) : false
@@ -70,7 +73,7 @@ class FabricV1 {
 
     return fastdom.write(() => {
       this.adSlot.insertAdjacentHTML('beforeend', fabricV1Tpl({
-        data: Object.assign({}, this.params, templateOptions)
+        data: { ...this.params, ...templateOptions}
       }));
       this.scrollingBg = this.adSlot.querySelector('.ad-scrolling-bg');
       this.layer2 = this.adSlot.querySelector('.hide-until-tablet .fabric-v1_layer2');

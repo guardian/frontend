@@ -15,11 +15,9 @@ class ParticipationItem extends Component {
     this.componentClass = 'participation-item';
     this.classes = {};
     this.useBem = true;
-    this.config = Object.assign({
-      test: '',
+    this.config = {test: '',
       examplePath: '',
-      variant: ''
-    }, config);
+      variant: '', ...config};
   }
 
   config: Object;

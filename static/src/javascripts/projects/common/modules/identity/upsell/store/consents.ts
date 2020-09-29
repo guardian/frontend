@@ -1,7 +1,7 @@
 
 import { fetchNewsletters, fetchUserConsents } from "./fetch";
-import { consentTypeList, UserConsentWithState } from "./types";
-import { ConsentWithState } from "./types";
+import { consentTypeList, UserConsentWithState , ConsentWithState } from "./types";
+
 
 const getAllUserConsents = (): Promise<UserConsentWithState[]> => fetchUserConsents;
 

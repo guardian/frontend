@@ -13,6 +13,7 @@ import arrow from "svgs/icon/arrow.svg";
 class Frame {
 
   adSlot: HTMLElement;
+
   params: Object;
 
   constructor(adSlot: HTMLElement, params: Object) {

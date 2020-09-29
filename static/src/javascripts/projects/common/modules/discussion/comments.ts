@@ -22,7 +22,7 @@ type CommentType = {
   body: string;
 };
 
-const PREF_RELATIVE_TIMESTAMPS: string = 'discussion.enableRelativeTimestamps';
+const PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
 
 const shouldMakeTimestampsRelative = (): boolean => userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS) : true;
 
@@ -101,9 +101,13 @@ class Comments extends Component {
   }
 
   comments: Comments | null | undefined;
+
   topLevelComments: qwery | null | undefined;
+
   user: DiscussionProfile | null | undefined;
+
   postedCommentEl: string | null | undefined;
+
   wholeDiscussionErrors: boolean | null | undefined;
 
   addMoreRepliesButtons(comms: Array<HTMLElement>): void {
@@ -401,8 +405,8 @@ class Comments extends Component {
 
       bean.one(form, 'submit', (submitEvent: Event) => {
         submitEvent.preventDefault();
-        const category: HTMLInputElement = (form.querySelector('[name="category"]') as any);
-        const comment: HTMLInputElement = (form.querySelector('[name="comment"]') as any);
+        const category: HTMLInputElement = (form.querySelector('[name="category"]'));
+        const comment: HTMLInputElement = (form.querySelector('[name="comment"]'));
         const reportCommentSuccess = (formEL: HTMLElement): void => {
           formEL.setAttribute('hidden', '');
         };
@@ -420,7 +424,7 @@ class Comments extends Component {
         };
 
         if (commentId && category.value !== '0') {
-          const email: HTMLInputElement = (form.querySelector('[name="email"]') as any);
+          const email: HTMLInputElement = (form.querySelector('[name="email"]'));
 
           reportComment(commentId, {
             emailAddress: email.value,

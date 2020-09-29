@@ -84,7 +84,7 @@ export const init = (): Promise<void> => {
     });
 
     onConsentChange(state => {
-      let canRun: boolean = true;
+      let canRun = true;
       if (state.ccpa) {
         // CCPA mode
         window.googletag.cmd.push(() => {

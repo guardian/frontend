@@ -15,15 +15,21 @@ import { getUrlVars } from "lib/url";
 
 declare class YoutubePlayer extends EventTarget {
   playVideo: () => void;
+
   getVideoUrl: () => string;
+
   pauseVideo: () => void;
+
   getCurrentTime: () => number;
+
   getDuration: () => number;
+
   getPlayerState: () => -1 | 0 | 1 | 2 | 3 | 4 | 5;
 }
 
 declare class YoutubePlayerEvent {
   data: -1 | 0 | 1 | 2 | 3 | 4 | 5;
+
   target: YoutubePlayer;
 }
 

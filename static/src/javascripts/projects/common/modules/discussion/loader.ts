@@ -80,9 +80,13 @@ class Loader extends Component {
   }
 
   $topCommentsContainer: bonzo;
+
   comments: Comments | null | undefined;
+
   topCommentCount: number;
+
   user: DiscussionProfile | null | undefined;
+
   username: string | null | undefined;
 
   commentPosted(comment: Object): void {
@@ -448,7 +452,7 @@ class Loader extends Component {
     shouldTruncate?: boolean;
     page?: number;
   } = {}): Promise<void> {
-    const opts = Object.assign({}, options);
+    const opts = { ...options};
 
     this.setState('loading');
 
