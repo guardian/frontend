@@ -71,18 +71,73 @@ case class RowInfo(rowNum: Int, isLast: Boolean = false) {
 // (results in spaces after author names before commas)
 // so don't add any, fool.
 object ContributorLinks {
-  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html =
+
+  /*
+    The removeDuplicateNames was introduced to correct a bug in the original workings of the apply's fold, by which
+    The presence of more than one tag with a given name ( `tag.name` ) would result in nested HTML markups.
+
+    This was never noticed before because the anchor at the most inner position of the nesting wold be displayed correctly.
+
+    Original output of the fold:
+
+      <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+          <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/scottbryan">
+              <span itemprop="name">
+                  <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+                      <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/scott-bryan">
+                          <span itemprop="name">
+                              <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+                                  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/scottbryan">
+                                      <span itemprop="name">Scott Bryan</span>
+                                  </a>
+                              </span>
+                          </span>
+                      </a>
+                  </span>
+              </span>
+           </a>
+       </span>
+
+       and
+
+       <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+           <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/michael-chakraverty">
+               <span itemprop="name">Michael Chakraverty</span>
+           </a>
+       </span>
+
+    Updated/Corrected output of the fold:
+
+       <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+           <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/scottbryan">
+               <span itemprop="name">Scott Bryan</span>
+           </a>
+       </span>
+
+       and
+
+       <span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
+          <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link" href="http://localhost:9000/profile/michael-chakraverty">
+              <span itemprop="name">Michael Chakraverty</span>
+          </a>
+       </span>
+   */
+  def removeDuplicateNames(tags: Seq[Tag]): Seq[Tag] = tags.groupBy(_.name).map(_._2.head).toSeq
+
+  def apply(text: String, tags: Seq[Tag])(implicit request: RequestHeader): Html = {
     Html {
-      tags.foldLeft(text) {
+      removeDuplicateNames(tags).foldLeft(text) {
         case (t, tag) =>
           t.replaceFirst(
             tag.name,
             s"""<span itemscope="" itemtype="http://schema.org/Person" itemprop="author">
-           |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
-           |    href="${LinkTo("/" + tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin,
+             |  <a rel="author" class="tone-colour" itemprop="sameAs" data-link-name="auto tag link"
+             |    href="${LinkTo("/" + tag.id)}"><span itemprop="name">${tag.name}</span></a></span>""".stripMargin,
           )
       }
     }
+  }
+
   def apply(html: Html, tags: Seq[Tag])(implicit request: RequestHeader): Html = apply(html.body, tags)
 }
 
