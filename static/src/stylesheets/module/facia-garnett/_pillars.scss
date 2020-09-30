@@ -276,7 +276,7 @@ $pillars: (
         background-color: map-get($palette, kicker);
     }
 
-    &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--dynamic-layout) {
+    &.fc-item--type-comment:not(.fc-item--pillar-special-report) {
 
         background-color: $opinion-faded;
 
