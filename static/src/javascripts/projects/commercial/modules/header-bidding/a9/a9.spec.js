@@ -1,7 +1,7 @@
 // @flow
 
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 
 const onConsentChange: any = onConsentChange_;
 
@@ -12,6 +12,8 @@ const tcfv2WithConsentMock = (callback): void =>
 
 const CcpaWithConsentMock = (callback): void =>
     callback({ ccpa: { doNotSell: false } });
+
+const getConsentFor: any = getConsentFor_;
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>
@@ -28,6 +30,7 @@ jest.mock('commercial/modules/header-bidding/slot-config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 beforeEach(async () => {
@@ -47,6 +50,7 @@ afterAll(() => {
 describe('initialise', () => {
     it('should generate initialise A9 library when TCFv2 consent has been given', () => {
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();
@@ -54,6 +58,7 @@ describe('initialise', () => {
 
     it('should generate initialise A9 library when CCPA consent has been given', () => {
         onConsentChange.mockImplementation(CcpaWithConsentMock);
+        getConsentFor.mockReturnValue(true);
         a9.initialise();
         expect(window.apstag).toBeDefined();
         expect(window.apstag.init).toHaveBeenCalled();

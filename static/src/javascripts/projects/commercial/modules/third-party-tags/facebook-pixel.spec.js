@@ -36,8 +36,8 @@ describe('Facebook tracking pixel', () => {
         expect(result.url).toBe(
             'https://www.facebook.com/tr?id=test-account-id&ev=PageView&noscript=1'
         );
-        expect(result.sourcepointId).toBe(
-            '5e7e1298b8e05c54a85c52d2'
+        expect(result.name).toBe(
+            'fb'
         );
     });
 

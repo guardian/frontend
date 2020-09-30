@@ -3,13 +3,14 @@
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
 const onConsentChange: any = onConsentChange_;
+const getConsentFor: any = getConsentFor_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -37,6 +38,7 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 const tcfv2WithConsentMock = (callback): void =>
@@ -73,6 +75,7 @@ describe('init', () => {
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
@@ -132,6 +135,7 @@ describe('init', () => {
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        getConsentFor.mockReturnValue(true);
         await setupPrebid();
         expect(prebid.initialise).toBeCalled();
     });
@@ -141,6 +145,7 @@ describe('init', () => {
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        getConsentFor.mockReturnValue(false);
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
     });

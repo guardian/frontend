@@ -1758,10 +1758,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.4.0.tgz#5fddd5133ac164a339caf8d75a8078f8952dde95"
   integrity sha512-JeuZy0sPiBB5M3TU0EWJeOFDpV/b5Mp4Fu/y2FPt5EZVJHnvvQ3aYgsNqTw4b55FylGDv8uWzCskB2F+bPyw3g==
 
-"@guardian/consent-management-platform@6.0.0":
-  version "6.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.0.0.tgz#81eea5a8a965f1d94b8271ba946a2e59697487ec"
-  integrity sha512-ruroeF+lEcNQlRwUljd/PgWXDjriqlPJp5V9C1511ss5ItawFIJANm5ubJKidlMMpANcalqPudQuDnpCweHd6w==
+"@guardian/consent-management-platform@6.1.0":
+  version "6.1.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.1.0.tgz#0de83ca15d37a60bd79f2e95046ca68d8cc5141d"
+  integrity sha512-EVRoGDSk78UK9+0ILHkkubWjLdBvNrvmObwNfbrYxXnfOtyszGuy+mfhtGtLAXUKf85w+7nXnY/hKRmz4MfyeQ==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -2502,14 +2502,6 @@ align-text@^0.1.1, align-text@^0.1.3:
 amdefine@>=0.0.4:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-1.0.1.tgz#4a5282ac164729e93619bcfd3ad151f817ce91f5"
-
-amphtml-validator@^1.0.10:
-  version "1.0.20"
-  resolved "https://registry.yarnpkg.com/amphtml-validator/-/amphtml-validator-1.0.20.tgz#5f6a75ca1917844526e5d87f74c1334c0eccb514"
-  dependencies:
-    colors "1.1.2"
-    commander "2.9.0"
-    promise "7.1.1"
 
 amphtml-validator@^1.0.21:
   version "1.0.21"
@@ -5020,10 +5012,6 @@ envify@^3.0.0:
     jstransform "^11.0.3"
     through "~2.3.4"
 
-err-code@^1.0.0:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/err-code/-/err-code-1.1.2.tgz#06e0116d3028f6aef4806849eb0ea6a748ae6960"
-
 errno@^0.1.2, errno@^0.1.3, errno@~0.1.7:
   version "0.1.7"
   resolved "https://registry.yarnpkg.com/errno/-/errno-0.1.7.tgz#4684d71779ad39af177e3f007996f7c67c852618"
@@ -5247,6 +5235,9 @@ eslint-plugin-flowtype@^2.49.0:
   resolved "https://registry.yarnpkg.com/eslint-plugin-flowtype/-/eslint-plugin-flowtype-2.49.0.tgz#eee3d3c1b1bcff3c508947d5a4cebed215c43f53"
   dependencies:
     lodash "^4.17.10"
+
+"eslint-plugin-guardian-frontend@file:tools/eslint-plugin-guardian-frontend":
+  version "5.0.0"
 
 eslint-plugin-import@^2.12.0:
   version "2.12.0"
@@ -10182,13 +10173,6 @@ promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
 
-promise-retry@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/promise-retry/-/promise-retry-1.1.1.tgz#6739e968e3051da20ce6497fb2b50f6911df3d6d"
-  dependencies:
-    err-code "^1.0.0"
-    retry "^0.10.0"
-
 promise@7.1.1, promise@^7.0.3:
   version "7.1.1"
   resolved "https://registry.yarnpkg.com/promise/-/promise-7.1.1.tgz#489654c692616b8aa55b0724fa809bb7db49c5bf"
@@ -10815,7 +10799,7 @@ request-promise-native@^1.0.5:
     stealthy-require "^1.1.1"
     tough-cookie "^2.3.3"
 
-request@^2.78.0, request@^2.81.0, request@^2.87.0, request@^2.88.0:
+request@^2.81.0, request@^2.87.0, request@^2.88.0:
   version "2.88.0"
   resolved "https://registry.yarnpkg.com/request/-/request-2.88.0.tgz#9c2fca4f7d35b592efe57c7f0a55e81052124fef"
   dependencies:
@@ -10958,10 +10942,6 @@ restore-cursor@^2.0.0:
 ret@~0.1.10:
   version "0.1.15"
   resolved "https://registry.yarnpkg.com/ret/-/ret-0.1.15.tgz#b8a4825d5bdb1fc3f6f53c2bc33f81388681c7bc"
-
-retry@^0.10.0:
-  version "0.10.1"
-  resolved "https://registry.yarnpkg.com/retry/-/retry-0.10.1.tgz#e76388d217992c252750241d3d3956fed98d8ff4"
 
 rgb-regex@^1.0.1:
   version "1.0.1"

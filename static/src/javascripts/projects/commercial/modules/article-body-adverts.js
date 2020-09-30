@@ -272,8 +272,8 @@ const doInit = (): Promise<boolean> => {
 export const init = (): Promise<boolean> => {
     // Also init when the main article is redisplayed
     // For instance by the signin gate.
-    mediator.on('page:article:redisplayed', () => {
-        doInit();
-    });
+    mediator.on('page:article:redisplayed', doInit);
+    // DCR doesn't have mediator, so listen for CustomEvent
+    document.addEventListener('dcr:page:article:redisplayed', doInit);
     return doInit();
 };
