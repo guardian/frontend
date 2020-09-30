@@ -2,7 +2,6 @@
 import type { CurrentABTest, SignInGateVariant } from '../../types';
 import { componentName } from '../../component';
 import {
-    hasUserDismissedGate,
     isNPageOrHigherPageView,
     isLoggedIn,
     isInvalidArticleType,
@@ -13,17 +12,19 @@ import {
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
 import { designShow } from '../design/main-variant';
+import { hasUserDismissedGateMoreThanCount } from "common/modules/identity/sign-in-gate/helper";
 
 // define the variant name here
-const variant = 'main-variant-1';
+const variant = 'main-variant-2';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {
-    const isGateDismissed = hasUserDismissedGate({
-        name,
+    const isGateDismissed = hasUserDismissedGateMoreThanCount(
         variant,
+        name,
         componentName,
-    });
+        5
+    );
     const canShowCheck =
         !isGateDismissed &&
         isNPageOrHigherPageView(3) &&
