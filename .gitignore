@@ -22,7 +22,8 @@ static/vendor/data/cmp_vendorlist.json
 .sbt.*
 .metals
 .bloop
-/project
+/project/metals.sbt
+/project/project
 
 log
 logs
