@@ -16,11 +16,11 @@ describe('Lotame', () => {
     });
 
     it('should exist', () => {
-        const { shouldRun, url, sourcepointId } = lotame();
+        const { shouldRun, url, name } = lotame();
 
         expect(shouldRun).toEqual(true);
         expect(url).toEqual(expect.stringContaining('crwdcntrl'));
-        expect(sourcepointId).toBe('5ed6aeb1b8e05c241a63c71f');
+        expect(name).toBe('lotame');
     });
 
     it('shouldRun to be true if ad the switch is on', () => {

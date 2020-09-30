@@ -19,6 +19,6 @@ const insertSnippet = () => {
 // Twitter universal website tag code
 export const twitterUwt: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.twitterUwt', false),
-    sourcepointId: '5e71760b69966540e4554f01',
+    name: 'twitter',
     insertSnippet,
 });

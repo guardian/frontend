@@ -75,7 +75,6 @@ object BodyBlock {
 
   implicit val dateWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val blockElementWrites = BlockElement.blockElementWrites
-  implicit val pageElementsWrites = PageElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 

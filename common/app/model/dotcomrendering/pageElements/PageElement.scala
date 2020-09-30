@@ -29,6 +29,9 @@ case class TimelineEvent(
     body: Option[String],
     toDate: Option[String],
 )
+object TimelineEvent {
+  implicit val TimelineEventWrites: Writes[TimelineEvent] = Json.writes[TimelineEvent]
+}
 
 case class Sponsorship(
     sponsorName: String,
@@ -36,7 +39,6 @@ case class Sponsorship(
     sponsorLink: String,
     sponsorshipType: SponsorshipType,
 )
-
 object Sponsorship {
   def apply(sponsorship: ApiSponsorship): Sponsorship = {
     Sponsorship(
@@ -45,6 +47,15 @@ object Sponsorship {
       sponsorship.sponsorLink,
       sponsorship.sponsorshipType,
     )
+  }
+  implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
+    def writes(sponsorship: Sponsorship): JsObject =
+      Json.obj(
+        "sponsorName" -> sponsorship.sponsorName,
+        "sponsorLogo" -> sponsorship.sponsorLogo,
+        "sponsorLink" -> sponsorship.sponsorLink,
+        "sponsorshipType" -> sponsorship.sponsorshipType.name,
+      )
   }
 }
 
@@ -68,14 +79,23 @@ case class AudioAtomBlockElement(
     duration: Int,
     contentId: String,
 ) extends PageElement
+object AudioAtomBlockElement {
+  implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
+}
 
 // We are currently using AudioBlockElement as a catch all for audio errors, skipping the first definition
 // See comment: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
 // case class AudioBlockElement(assets: Seq[AudioAsset]) extends PageElement
 case class AudioBlockElement(message: String) extends PageElement
+object AudioBlockElement {
+  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+}
 
 case class BlockquoteBlockElement(html: String) extends PageElement
-case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
+object BlockquoteBlockElement {
+  implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
+}
+
 case class CalloutBlockElement(
     id: String,
     calloutsUrl: Option[String],
@@ -87,6 +107,9 @@ case class CalloutBlockElement(
     tagName: String,
     formFields: List[CalloutFormField],
 ) extends PageElement
+object CalloutBlockElement {
+  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
+}
 
 // The extension of the ChartAtomBlockElement, is experimental. Three fields have been added,
 // html: String, css: Option[String], js: Option[String], but it looks like, the html string we get from CAPI,
@@ -95,8 +118,15 @@ case class CalloutBlockElement(
 // precompiled html.
 case class ChartAtomBlockElement(id: String, url: String, html: String, css: Option[String], js: Option[String])
     extends PageElement
+object ChartAtomBlockElement {
+  implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
+}
 
 case class CodeBlockElement(html: Option[String], isMandatory: Boolean) extends PageElement
+object CodeBlockElement {
+  implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
+}
+
 case class CommentBlockElement(
     body: String,
     avatarURL: String,
@@ -105,7 +135,20 @@ case class CommentBlockElement(
     permalink: String,
     dateTime: String,
 ) extends PageElement
+object CommentBlockElement {
+  implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
+}
+
 case class ContentAtomBlockElement(atomId: String) extends PageElement
+object ContentAtomBlockElement {
+  implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
+}
+
+case class DisclaimerBlockElement(html: String) extends PageElement
+object DisclaimerBlockElement {
+  implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
+}
+
 case class DocumentBlockElement(
     embedUrl: Option[String],
     height: Option[Int],
@@ -113,10 +156,28 @@ case class DocumentBlockElement(
     title: Option[String],
     isMandatory: Option[Boolean],
 ) extends PageElement
-case class DisclaimerBlockElement(html: String) extends PageElement
+object DocumentBlockElement {
+  implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
+}
+
 case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean)
     extends PageElement
+object EmbedBlockElement {
+  implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
+}
+
+case class ExplainerAtomBlockElement(id: String, title: String, body: String) extends PageElement
+object ExplainerAtomBlockElement {
+  implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] =
+    Json.writes[ExplainerAtomBlockElement]
+
+}
+
 case class FormBlockElement(html: Option[String]) extends PageElement
+object FormBlockElement {
+  implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
+}
+
 case class GenericAtomBlockElement(
     id: String,
     url: String,
@@ -128,6 +189,9 @@ case class GenericAtomBlockElement(
 // We use it to carry to DCR atoms that do not (yet) have their on dedicated BlockElement and are rendered in DCR as iframes.
 //     - {url} for src
 //     - {html, css, js} for srcdoc
+object GenericAtomBlockElement {
+  implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
+}
 
 case class GuideAtomBlockElementItem(title: Option[String], body: String)
 object GuideAtomBlockElementItem {
@@ -143,6 +207,9 @@ case class GuideAtomBlockElement(
     items: List[GuideAtomBlockElementItem],
     credit: String,
 ) extends PageElement
+object GuideAtomBlockElement {
+  implicit val GuideAtomBlockElementWrites: Writes[GuideAtomBlockElement] = Json.writes[GuideAtomBlockElement]
+}
 
 case class GuVideoBlockElement(
     assets: Seq[VideoAsset],
@@ -154,6 +221,15 @@ case class GuVideoBlockElement(
     source: String,
     role: Role,
 ) extends PageElement
+object GuVideoBlockElement {
+  implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
+}
+
+case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
+object ImageSource {
+  implicit val ImageSourceWrites: Writes[ImageSource] = Json.writes[ImageSource]
+}
+
 case class ImageBlockElement(
     media: ImageMedia,
     data: Map[String, String],
@@ -161,7 +237,10 @@ case class ImageBlockElement(
     role: Role,
     imageSources: Seq[ImageSource],
 ) extends PageElement
-case class ImageSource(weighting: String, srcSet: Seq[SrcSet])
+object ImageBlockElement {
+  implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
+}
+
 case class InteractiveAtomBlockElement(
     id: String,
     url: String,
@@ -169,8 +248,21 @@ case class InteractiveAtomBlockElement(
     css: Option[String],
     js: Option[String],
 ) extends PageElement
+object InteractiveAtomBlockElement {
+  implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
+    Json.writes[InteractiveAtomBlockElement]
+}
+
 case class InteractiveBlockElement(url: String) extends PageElement
+object InteractiveBlockElement {
+  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
+}
+
 case class InstagramBlockElement(url: String, html: Option[String], hasCaption: Boolean) extends PageElement
+object InstagramBlockElement {
+  implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
+}
+
 case class MapBlockElement(
     embedUrl: String,
     originalUrl: String,
@@ -180,6 +272,10 @@ case class MapBlockElement(
     width: Int,
     height: Int,
 ) extends PageElement
+object MapBlockElement {
+  implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
+}
+
 case class MembershipBlockElement(
     originalUrl: Option[String],
     linkText: Option[String],
@@ -191,12 +287,16 @@ case class MembershipBlockElement(
     image: Option[String],
     price: Option[String],
 ) extends PageElement
+object MembershipBlockElement {
+  implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
+}
 
 case class ProfileAtomBlockElementItem(title: Option[String], body: String)
 object ProfileAtomBlockElementItem {
   implicit val GuideAtomBlockElementItemWrites: Writes[ProfileAtomBlockElementItem] =
     Json.writes[ProfileAtomBlockElementItem]
 }
+
 case class ProfileAtomBlockElement(
     id: String,
     label: String,
@@ -206,10 +306,29 @@ case class ProfileAtomBlockElement(
     items: List[ProfileAtomBlockElementItem],
     credit: String,
 ) extends PageElement
-
+object ProfileAtomBlockElement {
+  implicit val ProfileAtomBlockElementWrites: Writes[ProfileAtomBlockElement] = Json.writes[ProfileAtomBlockElement]
+}
 case class PullquoteBlockElement(html: Option[String], role: Role, attribution: Option[String]) extends PageElement
+object PullquoteBlockElement {
+  implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
+}
+
 case class QABlockElement(id: String, title: String, img: Option[String], html: String, credit: String)
     extends PageElement
+object QABlockElement {
+  implicit val QABlockElementWrites: Writes[QABlockElement] = Json.writes[QABlockElement]
+}
+
+case class QuizAtomAnswer(id: String, text: String, revealText: Option[String], isCorrect: Boolean)
+case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
+case class QuizAtomBlockElement(id: String, questions: Seq[QuizAtomQuestion]) extends PageElement
+object QuizAtomBlockElement {
+  implicit val QuizAtomAnswerWrites: Writes[QuizAtomAnswer] = Json.writes[QuizAtomAnswer]
+  implicit val QuizAtomQuestionWrites: Writes[QuizAtomQuestion] = Json.writes[QuizAtomQuestion]
+  implicit val QuizAtomBlockElementWrites: Writes[QuizAtomBlockElement] = Json.writes[QuizAtomBlockElement]
+}
+
 case class RichLinkBlockElement(
     url: Option[String],
     text: Option[String],
@@ -217,7 +336,15 @@ case class RichLinkBlockElement(
     role: Role,
     sponsorship: Option[Sponsorship],
 ) extends PageElement
+object RichLinkBlockElement {
+  implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]
+}
+
 case class SoundcloudBlockElement(html: String, id: String, isTrack: Boolean, isMandatory: Boolean) extends PageElement
+object SoundcloudBlockElement {
+  implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
+}
+
 case class SpotifyBlockElement(
     embedUrl: Option[String],
     height: Option[Int],
@@ -225,13 +352,41 @@ case class SpotifyBlockElement(
     title: Option[String],
     caption: Option[String],
 ) extends PageElement
+object SpotifyBlockElement {
+  implicit val SpotifyBlockElementWrites: Writes[SpotifyBlockElement] = Json.writes[SpotifyBlockElement]
+}
+
 case class SubheadingBlockElement(html: String) extends PageElement
+object SubheadingBlockElement {
+  implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
+}
+
 case class TableBlockElement(html: Option[String], role: Role, isMandatory: Option[Boolean]) extends PageElement
+object TableBlockElement {
+  implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
+}
+
 case class TextBlockElement(html: String) extends PageElement
+object TextBlockElement {
+  implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
+}
+
 case class TimelineBlockElement(id: String, title: String, description: Option[String], events: Seq[TimelineEvent])
     extends PageElement
+object TimelineBlockElement {
+  implicit val TimelineBlockElementWrites: Writes[TimelineBlockElement] = Json.writes[TimelineBlockElement]
+}
+
 case class TweetBlockElement(html: String, url: String, id: String, hasMedia: Boolean, role: Role) extends PageElement
+object TweetBlockElement {
+  implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
+}
+
 case class UnknownBlockElement(html: Option[String]) extends PageElement
+object UnknownBlockElement {
+  implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
+}
+
 case class VideoBlockElement(
     caption: Option[String],
     url: String,
@@ -240,6 +395,10 @@ case class VideoBlockElement(
     width: Int,
     role: Role,
 ) extends PageElement
+object VideoBlockElement {
+  implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
+}
+
 case class VideoFacebookBlockElement(
     caption: Option[String],
     url: String,
@@ -249,6 +408,11 @@ case class VideoFacebookBlockElement(
     width: Int,
     role: Role,
 ) extends PageElement
+object VideoFacebookBlockElement {
+  implicit val VideoFacebookBlockElementWrites: Writes[VideoFacebookBlockElement] =
+    Json.writes[VideoFacebookBlockElement]
+}
+
 case class VideoVimeoBlockElement(
     caption: Option[String],
     url: String,
@@ -258,6 +422,10 @@ case class VideoVimeoBlockElement(
     width: Int,
     role: Role,
 ) extends PageElement
+object VideoVimeoBlockElement {
+  implicit val VideoVimeoElementWrites: Writes[VideoVimeoBlockElement] = Json.writes[VideoVimeoBlockElement]
+}
+
 case class VideoYoutubeBlockElement(
     caption: Option[String],
     url: String,
@@ -267,8 +435,20 @@ case class VideoYoutubeBlockElement(
     width: Int,
     role: Role,
 ) extends PageElement
+object VideoYoutubeBlockElement {
+  implicit val VideoYoutubeBlockElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
+}
+
 case class VineBlockElement(html: Option[String]) extends PageElement
+object VineBlockElement {
+  implicit val VideoYoutubeBlockElementWrites: Writes[VineBlockElement] = Json.writes[VineBlockElement]
+}
+
 case class WitnessBlockElement(html: Option[String]) extends PageElement
+object WitnessBlockElement {
+  implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
+}
+
 case class YoutubeBlockElement(
     id: String,
     assetId: String,
@@ -277,9 +457,15 @@ case class YoutubeBlockElement(
     overrideImage: Option[String],
     expired: Boolean,
 ) extends PageElement
+object YoutubeBlockElement {
+  implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
+}
 
 // Intended for unstructured html that we can't model, typically rejected by consumers
 case class HTMLFallbackBlockElement(html: String) extends PageElement
+object HTMLFallbackBlockElement {
+  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
+}
 
 //noinspection ScalaStyle
 object PageElement {
@@ -309,6 +495,7 @@ object PageElement {
       case _: ProfileAtomBlockElement     => true
       case _: PullquoteBlockElement       => true
       case _: QABlockElement              => true
+      case _: QuizAtomBlockElement        => true
       case _: RichLinkBlockElement        => true
       case _: SoundcloudBlockElement      => true
       case _: SpotifyBlockElement         => true
@@ -388,7 +575,7 @@ object PageElement {
       case Image =>
         def ensureHTTPS(src: String): String = src.replace("http:", "https:")
 
-        val signedAssets = element.assets.zipWithIndex
+        val imageAssets = element.assets.zipWithIndex
           .map { case (a, i) => ImageAsset.make(a, i) }
 
         val imageSources: Seq[ImageSource] = DotcomRenderingImageRoleWidthByBreakpointMapping.all.map {
@@ -398,12 +585,12 @@ object PageElement {
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(signedAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets)),
                 ),
                 ImgSrc.srcsetForBreakpoint(
                   b,
                   DotcomRenderingImageRoleWidthByBreakpointMapping.immersive.breakpoints,
-                  maybeImageMedia = Some(ImageMedia(signedAssets)),
+                  maybeImageMedia = Some(ImageMedia(imageAssets)),
                   hidpi = true,
                 ),
               )
@@ -424,7 +611,7 @@ object PageElement {
 
         List(
           ImageBlockElement(
-            ImageMedia(signedAssets),
+            ImageMedia(imageAssets),
             imageDataFor(element),
             element.imageTypeData.flatMap(_.displayCredit),
             Role(element.imageTypeData.flatMap(_.role), defaultRole),
@@ -670,6 +857,27 @@ object PageElement {
               ),
             )
           }
+          case Some(quizAtom: QuizAtom) =>
+            Some(
+              QuizAtomBlockElement(
+                id = quizAtom.id,
+                questions = quizAtom.content.questions.map { q =>
+                  QuizAtomQuestion(
+                    id = q.id,
+                    text = q.text,
+                    answers = q.answers.map(a =>
+                      QuizAtomAnswer(
+                        id = a.id,
+                        text = a.text,
+                        revealText = a.revealText,
+                        isCorrect = a.weight == 1,
+                      ),
+                    ),
+                    imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
+                  )
+                },
+              ),
+            )
 
           // Here we capture all the atom types which are not yet supported.
           // ContentAtomBlockElement is mapped to null in the DCR source code.
@@ -709,6 +917,7 @@ object PageElement {
         List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
       case Form                      => List(FormBlockElement(None))
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
+      case _                         => Nil
     }
   }
 
@@ -783,7 +992,7 @@ object PageElement {
         Audio is a versatile carrier. It carries both audio and, incorrectly, non audio (in legacy content).
 
         The audioToPageElement function performs the transformation of an Audio element to the appropriate
-        PageElement
+        PageElement.
 
         The function returns either:
            1. SoundcloudBlockElement
@@ -874,67 +1083,7 @@ object PageElement {
 
   }
 
-  // Below alphabetical order (modulo two exceptions)
-
-  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
-  implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
-  implicit val BlockquoteBlockElementWrites: Writes[BlockquoteBlockElement] = Json.writes[BlockquoteBlockElement]
-  implicit val CalloutBlockElementWrites: Writes[CalloutBlockElement] = Json.writes[CalloutBlockElement]
-  implicit val ChartAtomBlockElementWrites: Writes[ChartAtomBlockElement] = Json.writes[ChartAtomBlockElement]
-  implicit val CodeBlockElementWrites: Writes[CodeBlockElement] = Json.writes[CodeBlockElement]
-  implicit val CommentBlockElementWrites: Writes[CommentBlockElement] = Json.writes[CommentBlockElement]
-  implicit val ContentAtomBlockElementWrites: Writes[ContentAtomBlockElement] = Json.writes[ContentAtomBlockElement]
-  implicit val DisclaimerBlockElementWrites: Writes[DisclaimerBlockElement] = Json.writes[DisclaimerBlockElement]
-  implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
-  implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
-  implicit val ExplainerAtomBlockElementWrites: Writes[ExplainerAtomBlockElement] =
-    Json.writes[ExplainerAtomBlockElement]
-  implicit val FormBlockElementWrites: Writes[FormBlockElement] = Json.writes[FormBlockElement]
-  implicit val GenericAtomBlockElementWrites: Writes[GenericAtomBlockElement] = Json.writes[GenericAtomBlockElement]
-  implicit val GuideBlockElementWrites = Json.writes[GuideAtomBlockElement]
-  implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
-  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
-  implicit val ImageWeightingWrites: Writes[ImageSource] = Json.writes[ImageSource]
-  implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
-  implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
-  implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
-    Json.writes[InteractiveAtomBlockElement]
-  implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
-  implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
-  implicit val MembershipBlockElementWrites: Writes[MembershipBlockElement] = Json.writes[MembershipBlockElement]
-  implicit val ProfileBlockElementWrites = Json.writes[ProfileAtomBlockElement]
-  implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
-  implicit val QABlockElementWrites = Json.writes[QABlockElement]
-  implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
-  implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
-    def writes(sponsorship: Sponsorship): JsObject =
-      Json.obj(
-        "sponsorName" -> sponsorship.sponsorName,
-        "sponsorLogo" -> sponsorship.sponsorLogo,
-        "sponsorLink" -> sponsorship.sponsorLink,
-        "sponsorshipType" -> sponsorship.sponsorshipType.name,
-      )
-  }
-  implicit val SpotifyBlockElementWrites: Writes[SpotifyBlockElement] = Json.writes[SpotifyBlockElement]
-  implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]
-  implicit val SubheadingBlockElementWrites: Writes[SubheadingBlockElement] = Json.writes[SubheadingBlockElement]
-  implicit val TableBlockElementWrites: Writes[TableBlockElement] = Json.writes[TableBlockElement]
-  implicit val TextBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
-  implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
-  implicit val TimelineEventWrites = Json.writes[TimelineEvent]
-  implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
-  implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
-  implicit val VideoFacebookBlockElementWrites: Writes[VideoFacebookBlockElement] =
-    Json.writes[VideoFacebookBlockElement]
-  implicit val VideoVimeoElementWrites: Writes[VideoVimeoBlockElement] = Json.writes[VideoVimeoBlockElement]
-  implicit val VideoYouTubeElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
-  implicit val VineBlockElementWrites: Writes[VineBlockElement] = Json.writes[VineBlockElement]
-  implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
-  implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
-  implicit val TimelineBlockElementWrites = Json.writes[TimelineBlockElement]
-
-  val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
-
+  val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
 }
 
 // ------------------------------------------------------

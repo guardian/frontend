@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Test Connatix Integration",
     owners = Seq(Owner.withGithub("ioanna0")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 28),
+    sellByDate = new LocalDate(2020, 10, 6),
     exposeClientSide = true,
   )
 
@@ -93,6 +93,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 10, 5),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-curated-container-test",
+    "Tests an additional 'curated' onwards container below the article body.",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 11, 2),
     exposeClientSide = true,
   )
 }

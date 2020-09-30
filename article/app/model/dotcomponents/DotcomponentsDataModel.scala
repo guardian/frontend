@@ -45,6 +45,10 @@ import views.support.JavaScriptPage
 // only one reason for change.
 // exceptions: we do resuse the existing Nav & BlockElement classes right now
 
+// -----------------------------------------------------------------
+// Supporting Types
+// -----------------------------------------------------------------
+
 case class Tag(
     id: String,
     `type`: String,
@@ -52,6 +56,10 @@ case class Tag(
     twitterHandle: Option[String],
     bylineImageUrl: Option[String],
 )
+
+object Tag {
+  implicit val writes = Json.writes[Tag]
+}
 
 case class Block(
     id: String,
@@ -67,6 +75,11 @@ case class Block(
     secondaryDateLine: String,
 )
 
+object Block {
+  implicit val pageElementWrites = PageElement.pageElementWrites
+  implicit val writes = Json.writes[Block]
+}
+
 case class Pagination(
     currentPage: Int,
     totalPages: Int,
@@ -76,11 +89,19 @@ case class Pagination(
     older: Option[String],
 )
 
+object Pagination {
+  implicit val writes = Json.writes[Pagination]
+}
+
 case class ReaderRevenueLink(
     contribute: String,
     subscribe: String,
     support: String,
 )
+
+object ReaderRevenueLink {
+  implicit val writes = Json.writes[ReaderRevenueLink]
+}
 
 case class ReaderRevenueLinks(
     header: ReaderRevenueLink,
@@ -90,6 +111,10 @@ case class ReaderRevenueLinks(
     ampFooter: ReaderRevenueLink,
 )
 
+object ReaderRevenueLinks {
+  implicit val writes = Json.writes[ReaderRevenueLinks]
+}
+
 case class Commercial(
     editionCommercialProperties: Map[String, EditionCommercialProperties],
     prebidIndexSites: List[PrebidIndexSite],
@@ -97,29 +122,8 @@ case class Commercial(
     pageType: PageType,
 )
 
-object Block {
-  implicit val blockElementWrites: Writes[PageElement] = Json.writes[PageElement]
-  implicit val writes = Json.writes[Block]
-}
-
 object Commercial {
   implicit val writes = Json.writes[Commercial]
-}
-
-object Tag {
-  implicit val writes = Json.writes[Tag]
-}
-
-object ReaderRevenueLink {
-  implicit val writes = Json.writes[ReaderRevenueLink]
-}
-
-object ReaderRevenueLinks {
-  implicit val writes = Json.writes[ReaderRevenueLinks]
-}
-
-object Pagination {
-  implicit val writes = Json.writes[Pagination]
 }
 
 case class Config(
@@ -260,7 +264,7 @@ case class DCRDataModel(
 
 object DCRDataModel {
 
-  implicit val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+  implicit val pageElementWrites = PageElement.pageElementWrites
 
   implicit val writes = new Writes[DCRDataModel] {
     def writes(model: DCRDataModel) =
