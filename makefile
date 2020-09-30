@@ -24,8 +24,6 @@ install: check-node-env
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
 	@rm -rf node_modules
-	@rm -rf ui/node_modules
-	@rm -rf dev/eslint-plugin-guardian-frontend/node_modules
 	@rm -rf tools/amp-validation/node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
