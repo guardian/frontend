@@ -59,10 +59,7 @@
         "strict": true,
         "target": "ES2020"
     },
-    "exclude": [
-        "**/*.spec.*",
-        "**/*.test.*"
-    ],
+
     "include": [
         "static/src/javascripts"
     ]
