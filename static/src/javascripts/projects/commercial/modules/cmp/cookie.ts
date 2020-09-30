@@ -1,4 +1,4 @@
-// @flow strict
+
 import { log } from "commercial/modules/cmp/log";
 import { getCookie, addCookie } from "lib/cookies";
 import { vendorVersionMap, VENDOR_CONSENT_COOKIE_NAME, VENDOR_CONSENT_COOKIE_MAX_AGE } from "commercial/modules/cmp/cmp-env";

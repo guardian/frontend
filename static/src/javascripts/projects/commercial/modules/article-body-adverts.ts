@@ -1,4 +1,3 @@
-// @flow strict
 import config from "lib/config";
 import { isBreakpoint } from "lib/detect";
 import fastdom from "lib/fastdom-promise";

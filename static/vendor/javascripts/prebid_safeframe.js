@@ -1,4 +1,4 @@
-// @flow
+
 
 // this script can be returned by an ad server delivering a cross domain iframe, into which the
 // creative will be rendered, e.g. DFP delivering a SafeFrame
@@ -31,7 +31,7 @@ var guardian_pb_safeframe = {
         var url = adObject.adUrl;
         var width = adObject.width;
         var height = adObject.height;
-        
+
         if (adObject.mediaType === 'video') {
             console.log('Error trying to write ad. mediaType "video" is not supported in adObject = ', adObject);
             return;

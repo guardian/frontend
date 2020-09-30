@@ -1,4 +1,4 @@
-// @flow strict
+
 import { log } from "commercial/modules/cmp/log";
 
 import { ConsentData, VendorConsentData, VendorConsentResponse, ShortVendorList, SelectedData } from "commercial/modules/cmp/types";

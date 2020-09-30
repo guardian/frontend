@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import once from "lodash/once";
 import { getBreakpoint, isBreakpoint } from "lib/detect";

@@ -1,4 +1,4 @@
-// @flow strict
+
 import { log } from "commercial/modules/cmp/log";
 
 const SIX_BIT_ASCII_OFFSET = 65;

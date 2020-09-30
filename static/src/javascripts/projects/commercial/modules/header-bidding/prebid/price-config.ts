@@ -1,4 +1,4 @@
-// @flow strict
+
 
 type PrebidPriceGranularity = {
   buckets: Array<{

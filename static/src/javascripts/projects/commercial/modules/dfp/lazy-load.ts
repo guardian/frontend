@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import { Advert } from "commercial/modules/dfp/Advert";
 import { dfpEnv } from "commercial/modules/dfp/dfp-env";

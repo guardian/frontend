@@ -1,4 +1,4 @@
-// @flow strict
+
 import fastdom from "lib/fastdom-promise";
 import { addSlot } from "commercial/modules/dfp/add-slot";
 import { createSlots } from "commercial/modules/dfp/create-slots";
