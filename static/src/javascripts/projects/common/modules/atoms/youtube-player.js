@@ -59,7 +59,7 @@ onConsentChange(state => {
         tcfData = state.tcfv2;
         tcfState = tcfData
             ? Object.values(tcfData.consents).every(Boolean)
-            : state[1] && state[2] && state[3] && state[4] && state[5];
+            : false
     }
 });
 
