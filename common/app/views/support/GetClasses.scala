@@ -20,7 +20,6 @@ object GetClasses {
     )
   }
 
-
   def forItem(item: ContentCard, isFirstContainer: Boolean, isDynamic: Boolean = false)(implicit
       request: RequestHeader,
   ): String = {
@@ -48,8 +47,15 @@ object GetClasses {
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
         ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
-        ("fc-item--has-floating-sublinks", hasFloatingSublinks(isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined, item, item.sublinks.length))
-    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
+        (
+          "fc-item--has-floating-sublinks",
+          hasFloatingSublinks(
+            isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined,
+            item,
+            item.sublinks.length,
+          ),
+        ),
+      ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
     )
@@ -69,18 +75,14 @@ object GetClasses {
     //    &.fc-item--three-quarters-tall-tablet
 
     item.cardTypes.allTypes match {
-      case types if types.contains(cards.FullMedia75) && sublinksLength == 3 => true
-      case types if types.contains(cards.FullMedia100) => true
+      case types if types.contains(cards.FullMedia75) && sublinksLength == 3   => true
+      case types if types.contains(cards.FullMedia100)                         => true
       case types if types.contains(cards.ThreeQuarters) && sublinksLength == 2 => true
-      case types if types.contains(cards.ThreeQuartersTall) => true
-      case _ => false
+      case types if types.contains(cards.ThreeQuartersTall)                    => true
+      case _                                                                   => false
     }
 
-
-
-
   }
-
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String =
     RenderClasses(
