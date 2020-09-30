@@ -25,7 +25,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(callback =>
-        callback({ tcfv2: { consents: { '1': true } } })
+        callback({ tcfv2: { consents: { '1': true }, gdprApplies: true, tcString:"testTcString", addtlConsent: "testaddtlConsent" } })
     ),
 }));
 
