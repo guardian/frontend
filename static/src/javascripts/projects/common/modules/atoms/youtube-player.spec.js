@@ -105,18 +105,18 @@ describe('create ads config', () => {
         }
     });
 
-    it('in non ad-free includes url-escaped targeting params', () => {
+    it('in non ad-free includes url-escaped and tcfv2 targeting params', () => {
         const result = youtubePlayer.createAdsConfig(false, null, null);
-
+        const expectedAdTargetingParams =  {
+            "cmpGdpr": 1,
+            "cmpGvcd": "testaddtlConsent",
+            "cmpVcd": "testTcString",
+            "cust_params": "key%3Dvalue%26permutive%3D42",
+            "iu": "adunit"
+        };
         expect(result.adTagParameters).toBeDefined();
         if (result.adTagParameters) {
-            expect(result.adTagParameters.cust_params).toEqual(
-                'key%3Dvalue%26permutive%3D42'
-            );
-            expect(result.adTagParameters.cmpGdpr).toEqual(1);
-            expect(result.adTagParameters.cmpVcd).toEqual("testTcString");
-            expect(result.adTagParameters.cmpGvcd).toEqual("testaddtlConsent");
-
+            expect(result.adTagParameters).toEqual(expectedAdTargetingParams);
         }
     });
 });
