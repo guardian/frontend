@@ -77,7 +77,7 @@ module.exports = {
                 }),
         },
         {
-            description: 'Run Flowtype checks',
+            description: 'Run Typescript checks',
             task: () =>
                 getChangedFiles().then(files => {
                     const jsFiles = files.filter(
@@ -86,7 +86,7 @@ module.exports = {
                     );
 
                     if (jsFiles.length) {
-                        return execa('yarn', ['flow']);
+                        return execa('yarn', ['tsc']);
                     }
 
                     return Promise.resolve();
