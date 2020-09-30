@@ -1,6 +1,7 @@
 package views.support
 
 import layout._
+import layout.cards
 import model.pressed.{Audio, Gallery, Video, SpecialReport}
 import slices.{Dynamic, DynamicSlowMPU}
 import play.api.mvc.RequestHeader
@@ -18,6 +19,7 @@ object GetClasses {
       ) ++ item.customCssClasses: _*,
     )
   }
+
 
   def forItem(item: ContentCard, isFirstContainer: Boolean, isDynamic: Boolean = false)(implicit
       request: RequestHeader,
@@ -46,11 +48,39 @@ object GetClasses {
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
         ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
-      ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
+        ("fc-item--has-floating-sublinks", hasFloatingSublinks(isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined, item, item.sublinks.length))
+    ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
     )
   }
+
+  def hasFloatingSublinks(canHaveFloatingSublinks: Boolean, item: ContentCard, sublinksLength: Number) = {
+
+    // We're moving the logic for these classes in CSS into the Scala
+    // because this generates loads and loads of pointeless CSS, and it would
+    // be better to just have one class to define whether sublinks floated
+    // over the main media. So here we are.
+    // Replaces:
+    //    &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
+    //    &.fc-item--full-media-100-tablet,
+    //    &.fc-item--full-media-100-tablet,
+    //    &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
+    //    &.fc-item--three-quarters-tall-tablet
+
+    item.cardTypes.allTypes match {
+      case types if types.contains(cards.FullMedia75) && sublinksLength == 3 => true
+      case types if types.contains(cards.FullMedia100) => true
+      case types if types.contains(cards.ThreeQuarters) && sublinksLength == 2 => true
+      case types if types.contains(cards.ThreeQuartersTall) => true
+      case _ => false
+    }
+
+
+
+
+  }
+
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String =
     RenderClasses(
