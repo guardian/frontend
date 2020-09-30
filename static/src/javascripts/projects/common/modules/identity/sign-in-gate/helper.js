@@ -23,6 +23,27 @@ const setGoogleTargeting = (canShow: GateStatus): void => {
     }
 };
 
+// We use this key for storing the gate dismissed count against
+const localStorageDismissedCountKey = (variant: string, name: string): string => `gate-dismissed-count-${name}-${variant}`;
+
+const retrieveDismissedCount = (
+    variant: string,
+    name: string,
+    componentName: string
+): number => {
+    try {
+        const prefs = userPrefs.get(componentName) || {};
+        const dismissed: any = prefs[localStorageDismissedCountKey(variant, name)];
+
+        if (Number.isFinite(dismissed)) {
+            return dismissed;
+        }
+        return 0;
+    } catch (error) {
+        return 0;
+    }
+};
+
 // wrapper over isLoggedIn
 export const isLoggedIn = isUserLoggedIn;
 
@@ -111,38 +132,13 @@ export const hasUserDismissedGateInWindow: ({
     return true;
 };
 
-// We use this key for storing the gate dismissed count against
-const localStorageDismissedCountKey = (variant: string, name: string): string => {
-    return `gate-dismissed-count-${name}-${variant}`;
-};
-
-const retrieveDismissedCount = (
-    variant: string,
-    name: string,
-    componentName: string
-): number => {
-    try {
-        const prefs = userPrefs.get(componentName) || {};
-        const dismissed: any = prefs[localStorageDismissedCountKey(variant, name)];
-
-        if (Number.isFinite(dismissed)) {
-            return dismissed;
-        }
-        return 0;
-    } catch (error) {
-        return 0;
-    }
-};
-
 // Test whether the user has dismissed the gate variant more than `count` times
 export const hasUserDismissedGateMoreThanCount = (
     variant: string,
     name: string,
     componentName: string,
     count: number
-): boolean => {
-    return retrieveDismissedCount(variant, name, componentName) > count;
-};
+): boolean => retrieveDismissedCount(variant, name, componentName) > count;
 
 // Increment the number of times a user has dismissed this gate variant
 export const incrementUserDismissedGateCount = (
@@ -152,7 +148,7 @@ export const incrementUserDismissedGateCount = (
 ): void => {
     try {
         const prefs = userPrefs.get(componentName) || {};
-        prefs[localStorageDismissedCountKey(variant, name)] = retrieveDismissedCount(variant, name) + 1;
+        prefs[localStorageDismissedCountKey(variant, name)] = retrieveDismissedCount(variant, name, componentName) + 1;
         userPrefs.set(componentName, prefs);
     } catch (error) {
         // localstorage isn't available so show the gate

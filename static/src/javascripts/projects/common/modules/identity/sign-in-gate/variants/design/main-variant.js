@@ -11,9 +11,9 @@ import {
     addOverlayVariantCSS,
     setGatePageTargeting,
     gateBorderFix,
-    addCSSOnOpinion
+    addCSSOnOpinion,
+    incrementUserDismissedGateCount
 } from '../../helper';
-import { incrementUserDismissedGateCount } from "common/modules/identity/sign-in-gate/helper";
 
 // add the html template as the return of the function below
 // signInUrl - parameter which holds the link to the sign in/register page with the tracking parameters added

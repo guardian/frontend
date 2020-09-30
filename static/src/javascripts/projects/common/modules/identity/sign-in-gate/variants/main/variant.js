@@ -8,11 +8,11 @@ import {
     isInvalidSection,
     isIOS9,
     setGatePageTargeting,
+    hasUserDismissedGateMoreThanCount
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
 import { designShow } from '../design/main-variant';
-import { hasUserDismissedGateMoreThanCount } from "common/modules/identity/sign-in-gate/helper";
 
 // define the variant name here
 const variant = 'main-variant-2';
