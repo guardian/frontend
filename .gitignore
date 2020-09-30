@@ -20,6 +20,8 @@ static/vendor/data/cmp_vendorlist.json
 .node-version
 .sbt
 .sbt.*
+
+# metal vscode extension
 .metals
 .bloop
 /project/metals.sbt
