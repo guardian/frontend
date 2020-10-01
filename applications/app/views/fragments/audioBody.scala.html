@@ -42,7 +42,7 @@
                 data-component="main audio"
                 id="audio-component-container"
                 data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
-                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, isAdFree))"
+                data-source="@audio.downloadUrl"
                 data-download-url="@audio.downloadUrl.getOrElse("#")"
                 data-duration="@audio.duration"
                 >
