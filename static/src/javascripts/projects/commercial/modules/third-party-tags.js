@@ -2,7 +2,10 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
