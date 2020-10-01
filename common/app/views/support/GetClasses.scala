@@ -60,7 +60,7 @@ object GetClasses {
         ("fc-item--is-commentable", item.discussionSettings.isCommentable),
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
-        ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
+        ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
         (
           "fc-item--has-floating-sublinks",
           hasFloatingSublinks(

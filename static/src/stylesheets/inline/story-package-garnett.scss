@@ -7,26 +7,26 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
 // Defaults Styles
 .fc-item {
-    &.fc-item--dynamic-layout {
+    &.fc-item--is-dynamic-card {
         background-color: #ffffff;
     }
 
-    &.fc-item--dynamic-layout .fc-item__title,
-    &.fc-item--dynamic-layout.fc-item--live .fc-item__headline {
+    &.fc-item--is-dynamic-card .fc-item__title,
+    &.fc-item--is-dynamic-card.fc-item--live .fc-item__headline {
         color: #121212;
     }
 
-    &.fc-item--dynamic-layout .fc-item__kicker,
-    &.fc-item--dynamic-layout.fc-item--live .fc-item__kicker {
+    &.fc-item--is-dynamic-card .fc-item__kicker,
+    &.fc-item--is-dynamic-card.fc-item--live .fc-item__kicker {
         color: #c70000;
     }
 
-    &.fc-item--dynamic-layout .live-pulse-icon::before,
-    &.fc-item--dynamic-layout.fc-item--live .live-pulse-icon::before {
+    &.fc-item--is-dynamic-card .live-pulse-icon::before,
+    &.fc-item--is-dynamic-card.fc-item--live .live-pulse-icon::before {
         background-color: #c70000;
     }
 
-    &.fc-item--dynamic-layout.fc-item--has-floating-sublinks .fc-sublink {
+    &.fc-item--is-dynamic-card.fc-item--has-floating-sublinks .fc-sublink {
         background-color: #ffffff;
         color: #000000;
     }
@@ -45,7 +45,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        &.fc-item--dynamic-layout {
+        &.fc-item--is-dynamic-card {
 
             &.fc-item:not(.fc-item--pillar-special-report) {
                 .fc-sublink--pillar-#{$tone} {
@@ -333,7 +333,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
         display: none;
     }
 
-    .fc-item--dynamic-layout {
+    .fc-item--is-dynamic-card {
 
         // The white line above the story
         .fc-item__container:before {
