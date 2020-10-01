@@ -2,7 +2,10 @@
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
@@ -11,7 +14,10 @@ import { ias, permutive } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
-import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
+import {
+    twitterUwt,
+    twitterUwtPhd,
+} from 'commercial/modules/third-party-tags/twitter-uwt';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
 
@@ -85,6 +91,7 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
+        twitterUwtPhd(),
         lotame(),
     ].filter(_ => _.shouldRun);
 
