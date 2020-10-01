@@ -24,8 +24,6 @@ describe('twitterUwt', () => {
         config.set('switches.twitterUwt', true);
         const { insertSnippet } = twitterUwt();
 
-        console.log(twitterUwt());
-
         expect(insertSnippet).toBeDefined();
     });
 });
