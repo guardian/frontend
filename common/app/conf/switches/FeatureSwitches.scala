@@ -409,7 +409,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   // Simple & Coherent

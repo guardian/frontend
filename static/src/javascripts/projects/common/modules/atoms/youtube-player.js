@@ -40,6 +40,9 @@ interface AdsConfig {
     adTagParameters?: {
         iu: any,
         cust_params: string,
+        cmpGdpr: number,
+        cmpVcd: string,
+        cmpGvcd: string,
     };
     disableAds?: boolean;
     nonPersonalizedAd?: boolean;
@@ -48,13 +51,15 @@ interface AdsConfig {
 
 let tcfState = null;
 let ccpaState = null;
+let tcfData = {};
 onConsentChange(state => {
     if (state.ccpa) {
         ccpaState = state.doNotSell;
     } else {
-        tcfState = state.tcfv2
-            ? Object.values(state.tcfv2.consents).every(Boolean)
-            : state[1] && state[2] && state[3] && state[4] && state[5];
+        tcfData = state.tcfv2;
+        tcfState = tcfData
+            ? Object.values(tcfData.consents).every(Boolean)
+            : false
     }
 });
 
@@ -134,6 +139,9 @@ const createAdsConfig = (
         adTagParameters: {
             iu: config.get('page.adUnit'),
             cust_params: encodeURIComponent(constructQuery(custParams)),
+            cmpGdpr: tcfData.gdprApplies ? 1 : 0,
+            cmpVcd: tcfData.tcString,
+            cmpGvcd: tcfData.addtlConsent,
         },
     };
 
