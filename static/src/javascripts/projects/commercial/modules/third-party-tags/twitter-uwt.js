@@ -1,7 +1,7 @@
 // @flow strict
 import config from 'lib/config';
 
-const insertSnippet = () => {
+const insertSnippet = (trackingId: string) => {
     // Twitter universal website tag code
     // How to set up conversion tracking: https://business.twitter.com/en/help/campaign-measurement-and-analytics/conversion-tracking-for-websites.html
     /* eslint-disable */ // prettier-ignore
@@ -11,7 +11,7 @@ const insertSnippet = () => {
         a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
     // Insert Twitter Pixel ID and Standard Event data below
     // $FlowFixMe
-    twq('init', 'nyl43');
+    twq('init', trackingId);
     twq('track', 'PageView');
     /* eslint-enable */
 };
@@ -20,5 +20,11 @@ const insertSnippet = () => {
 export const twitterUwt: () => ThirdPartyTag = () => ({
     shouldRun: config.get('switches.twitterUwt', false),
     name: 'twitter',
-    insertSnippet,
+    insertSnippet: insertSnippet('nyl43'),
+});
+
+export const twitterUwtPhd: () => ThirdPartyTag = () => ({
+    shouldRun: config.get('switches.twitterUwt', false),
+    name: 'twitter',
+    insertSnipper: insertSnippet('ny4k9'),
 });
