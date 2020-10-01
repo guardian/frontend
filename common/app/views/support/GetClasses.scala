@@ -93,11 +93,15 @@ object GetClasses {
     //    &.fc-item--three-quarters-tall-tablet
 
     item.cardTypes.allTypes match {
-      case types if types.contains(cards.FullMedia75) && sublinksLength == 3   => true
-      case types if types.contains(cards.FullMedia100)                         => true
-      case types if types.contains(cards.ThreeQuarters) && sublinksLength == 2 => true
-      case types if types.contains(cards.ThreeQuartersTall)                    => true
-      case _                                                                   => false
+      case types if types.contains(cards.FullMedia75) && canHaveFloatingSublinks && sublinksLength == 3 =>
+        true
+      case types if types.contains(cards.FullMedia100) && canHaveFloatingSublinks =>
+        true
+      case types if types.contains(cards.ThreeQuarters) && canHaveFloatingSublinks && sublinksLength == 2 =>
+        true
+      case types if types.contains(cards.ThreeQuartersTall) && canHaveFloatingSublinks =>
+        true
+      case _ => false
     }
 
   }
