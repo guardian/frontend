@@ -97,7 +97,7 @@ module.exports = {
                     {
                         test: /node_modules/,
                         exclude: [
-                            /@guardian\/(?!(automat-modules))/,
+                            /@guardian\/(?!(automat-modules|atom-renderer))/,
                             /dynamic-import-polyfill/,
                         ],
                     },
