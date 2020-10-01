@@ -62,6 +62,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-item__content--above {
                 padding: 6px 0;
             }
+
             .fc-item__content--below {
                 @include mq($until: tablet) {
                     padding: 0;
@@ -201,7 +202,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             @include f-textSans;
             background-color: transparent;
             border-top: 0;
-            //border-bottom: $border-bottom-width solid $story-package-card-colour;
             padding-left: 20px;
             position: relative;
         }
@@ -213,31 +213,10 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         .fc-item__liveblog-block__text:after {
-            //color: mix(#ffffff, $story-package-card-colour, 92%);
-            //background-color: $story-package-card-colour;
-            //box-shadow: -5px 0 5px -.04px $story-package-card-colour;
             bottom: 1.2px;
             font-size: 20px;
             line-height: 13px;
             padding-right: 24px;
-        }
-
-        &:hover {
-            &.fc-item--three-quarters-tablet, &.fc-item--full-media-75-tablet {
-                .fc-item__liveblog-blocks__inner {
-                    //background-color: darken($story-package-card-colour, 5%);
-                }
-            }
-
-            .fc-item__liveblog-block__text:after {
-                //color: mix(#ffffff, $story-package-card-colour, 92%);
-                //background-color: darken($story-package-card-colour, 5%);
-                //box-shadow: -5px 0 5px -2px darken($story-package-card-colour, 5%);
-            }
-
-            .fc-item__liveblog-block__text {
-                //border-bottom: $border-bottom-width solid darken($story-package-card-colour, 5%);
-            }
         }
 
         .fc-item__liveblog-blocks--visible {
@@ -297,21 +276,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
         // and the live update blocks with a dark blue background. There's a little extra styling here to
         // ensure hover states are correct.
         &.fc-item--full-media-75-tablet {
-            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
-                //background-color: darken($story-package-card-colour, 5%);
-            }
 
             .fc-item__liveblog-blocks__inner {
-                //background-color: $story-package-card-colour;
                 margin-left: -5px;
                 margin-right: 5px;
                 padding-left: 5px;
                 position: absolute;
                 bottom: 0;
-
-                &:hover {
-                    //background-color: darken($story-package-card-colour, 5%);
-                }
             }
 
             .fc-item__standfirst-wrapper {
@@ -320,17 +291,8 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         &.fc-item--three-quarters-tablet {
-            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
-                //background-color: darken($story-package-card-colour, 5%);
-            }
-
             .fc-item__liveblog-blocks__inner {
-                //background-color: $story-package-card-colour;
                 padding-left: 5px;
-
-                &:hover {
-                    //background-color: darken($story-package-card-colour, 5%);
-                }
             }
         }
 
@@ -354,53 +316,11 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
 
             .fc-item__liveblog-block__time {
-                //color: $story-package-card-colour;
                 display: inline;
             }
 
             .fc-item__liveblog-block__text {
-                //color: $story-package-card-colour;
                 padding-right: 0; // Remove padding in this layout so that we only use the gutter padding from the block
-            }
-
-            .fc-item__liveblog-block__text {
-                //border-bottom-color: $story-package-container-colour;
-
-                // Ellipses
-                &:after {
-                    //color: $story-package-card-colour;
-                    //background-color: $story-package-container-colour;
-                    //box-shadow: -5px 0 5px -2px $story-package-container-colour;
-                }
-            }
-
-            &:hover {
-                .fc-item__liveblog-block__text {
-                    //border-bottom-color: darken($story-package-container-colour, 5%);
-
-                    // Ellipses
-                    &:after {
-                        //background-color: darken($story-package-container-colour, 5%);
-                        //box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
-                    }
-                }
-            }
-
-            .u-faux-block-link--hover {
-                .fc-item__liveblog-block__text {
-                    //border-bottom-color: darken($story-package-container-colour, 5%);
-
-                    // Ellipses
-                    &:after {
-                        //background-color: darken($story-package-container-colour, 5%);
-                        //box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
-                    }
-                }
-            }
-
-            // Circle
-            .fc-item__liveblog-block__time:before {
-                border: $thin-border solid $news-bright;
             }
 
             // Connector line
@@ -425,7 +345,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
         .fc-item__content:before {
             content: '';
-            //background-color: $story-package-dynamic-card-text;
             position: absolute;
             top: 0;
             left: 0;
@@ -518,7 +437,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-sublink {
                 flex: 1 1 100%;
 
-                &+* {
+                & + * {
                     margin-left: $gs-gutter / 2;
                 }
             }
