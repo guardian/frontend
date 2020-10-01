@@ -14,10 +14,7 @@ import { ias, permutive } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
 import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
-import {
-    twitterUwt,
-    twitterUwtPhd,
-} from 'commercial/modules/third-party-tags/twitter-uwt';
+import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
 
@@ -91,7 +88,6 @@ const loadOther = (): void => {
         inizio,
         fbPixel(),
         twitterUwt(),
-        twitterUwtPhd(),
         lotame(),
     ].filter(_ => _.shouldRun);
 

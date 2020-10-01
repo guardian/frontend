@@ -22,7 +22,9 @@ describe('twitterUwt', () => {
 
     it('should have insertSnippet function', () => {
         config.set('switches.twitterUwt', true);
-        const { insertSnippet  } = twitterUwt();
+        const { insertSnippet } = twitterUwt();
+
+        console.log(twitterUwt());
 
         expect(insertSnippet).toBeDefined();
     });
