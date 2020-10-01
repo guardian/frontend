@@ -1705,10 +1705,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
-"@guardian/atom-renderer@1.1.6":
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.1.6.tgz#e5bfc53d48dc3d49191903c133484cbfd3a142b6"
-  integrity sha512-l206iwL+8TcUHwozpw5phTBNVp0jFqk/azAcZ+YxwP3MEqE68XcR/SuP9FybKcAomeOd7xM6TzX1031Ci3LHCw==
+"@guardian/atom-renderer@1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@guardian/atom-renderer/-/atom-renderer-1.2.1.tgz#b908676560d66154f3d812eff0643db3d6e4732c"
+  integrity sha512-tx3CKQknhWOtxCeAqvTHAYFwsVt3cfGiAIwU3oKbqq9cx4DkfN3aXqodfESkbb22qUEH+dEKxSvUG6VYiLcCYw==
   dependencies:
     "@babel/preset-env" "^7.3.1"
     "@babel/preset-flow" "^7.0.0"
