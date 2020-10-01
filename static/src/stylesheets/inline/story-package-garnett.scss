@@ -1,14 +1,11 @@
 @import '../_vars';
 @import '../_mixins';
 
-//specific vars for colours for dynamo
-$story-package-container-colour: #e0e4e8;
-$story-package-card-colour: #041f4a;
-$container-title: $story-package-card-colour;
-$story-package-dynamic-card-text: $story-package-card-colour;
+//specific vars for dynamo
 $fc-item-gutter: $gs-gutter / 4;
 $block-height: 58px; // Note: duplicated from _item.scss
 
+// Defaults Styles
 .fc-item {
     &.fc-item--dynamic-layout {
         background-color: #ffffff;
