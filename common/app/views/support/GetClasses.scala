@@ -23,6 +23,7 @@ import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
 
 object GetClasses {
+
   def forHtmlBlob(item: HtmlBlob): String = {
     RenderClasses(
       Seq(
@@ -63,7 +64,7 @@ object GetClasses {
         (
           "fc-item--has-floating-sublinks",
           hasFloatingSublinks(
-            isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined,
+            canHaveFloatingSublinks(isDynamic, item),
             item,
             item.sublinks.length,
           ),
@@ -72,6 +73,10 @@ object GetClasses {
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
     )
+  }
+
+  def canHaveFloatingSublinks(isDynamic: Boolean, item: ContentCard): Boolean = {
+    isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined
   }
 
   def hasFloatingSublinks(canHaveFloatingSublinks: Boolean, item: ContentCard, sublinksLength: Number) = {
