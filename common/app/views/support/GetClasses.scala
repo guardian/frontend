@@ -61,25 +61,14 @@ object GetClasses {
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
         ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
-        (
-          "fc-item--has-floating-sublinks",
-          hasFloatingSublinks(
-            canHaveFloatingSublinks(isDynamic, item),
-            item,
-            item.sublinks.length,
-          ),
-        ),
+        ("fc-item--has-floating-sublinks", hasFloatingSublinks(item, isDynamic)),
       ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
     )
   }
 
-  def canHaveFloatingSublinks(isDynamic: Boolean, item: ContentCard): Boolean = {
-    isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined
-  }
-
-  def hasFloatingSublinks(canHaveFloatingSublinks: Boolean, item: ContentCard, sublinksLength: Number) = {
+  def hasFloatingSublinks(item: ContentCard, isDynamic: Boolean) = {
 
     // We're moving the logic for these classes in CSS into the Scala
     // because this generates loads and loads of pointeless CSS, and it would
@@ -92,18 +81,16 @@ object GetClasses {
     //    &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
     //    &.fc-item--three-quarters-tall-tablet
 
-    item.cardTypes.allTypes match {
-      case types if types.contains(cards.FullMedia75) && canHaveFloatingSublinks && sublinksLength == 3 =>
-        true
-      case types if types.contains(cards.FullMedia100) && canHaveFloatingSublinks =>
-        true
-      case types if types.contains(cards.ThreeQuarters) && canHaveFloatingSublinks && sublinksLength == 2 =>
-        true
-      case types if types.contains(cards.ThreeQuartersTall) && canHaveFloatingSublinks =>
-        true
-      case _ => false
-    }
+    val canHaveFloatingSublinks = isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined
+    val sublinksLength = item.sublinks.length
+    val types = item.cardTypes.allTypes
 
+    val b1 = types.contains(cards.FullMedia75) && sublinksLength == 3
+    val b2 = types.contains(cards.FullMedia100)
+    val b3 = types.contains(cards.ThreeQuarters) && sublinksLength == 2
+    val b4 = types.contains(cards.ThreeQuartersTall)
+
+    canHaveFloatingSublinks && (b1 || b2 || b3 || b4)
   }
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String =
