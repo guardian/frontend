@@ -71,7 +71,7 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
         },
-        symlinks: false // Inserted to enable linking @guardian/consent-management-platform
+        symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
         modules: [
@@ -97,7 +97,7 @@ module.exports = {
                     {
                         test: /node_modules/,
                         exclude: [
-                            /@guardian\/(?!(automat-modules))/,
+                            /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
                             /dynamic-import-polyfill/,
                         ],
                     },
@@ -111,10 +111,10 @@ module.exports = {
                 loader: 'svg-loader',
             },
             {
-                include: path.resolve(__dirname, "node_modules/preact-x"),
+                include: path.resolve(__dirname, 'node_modules/preact-x'),
                 resolve: {
-                    alias: { 'preact': 'preact-x' },
-                }
+                    alias: { preact: 'preact-x' },
+                },
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This
