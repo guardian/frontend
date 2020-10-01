@@ -163,13 +163,28 @@ const checkResponseOk = response => {
     );
 };
 
+const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
+    if (URLSearchParams) {
+        const params = new URLSearchParams(window.location.search);
+        const value = params.get(`force-${type}`);
+        if (value) {
+            return value;
+        }
+    }
+
+    return null;
+};
+
 // TODO: add this to the client library
 const getStickyBottomBanner = (payload: {}) => {
     const isProd = config.get('page.isProd');
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
-    return fetchJson(URL, {
+    const forcedVariant = getForcedVariant('banner');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${URL}${queryString}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: json,
