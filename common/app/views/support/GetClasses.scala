@@ -85,12 +85,15 @@ object GetClasses {
     val sublinksLength = item.sublinks.length
     val types = item.cardTypes.allTypes
 
-    val b1 = types.contains(cards.FullMedia75) && sublinksLength == 3
-    val b2 = types.contains(cards.FullMedia100)
-    val b3 = types.contains(cards.ThreeQuarters) && sublinksLength == 2
-    val b4 = types.contains(cards.ThreeQuartersTall)
+    val checks: List[Boolean] = List(
+      types.contains(cards.FullMedia75) && sublinksLength == 3,
+      types.contains(cards.FullMedia100),
+      types.contains(cards.ThreeQuarters) && sublinksLength == 2,
+      types.contains(cards.ThreeQuartersTall),
+    )
 
-    canHaveFloatingSublinks && (b1 || b2 || b3 || b4)
+    // checks.exists(_ == true) evaluates to true if any of the booleans is true
+    canHaveFloatingSublinks && checks.exists(_ == true)
   }
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String =
