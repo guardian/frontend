@@ -36,9 +36,8 @@ const go = () => {
         // CCPA and TCFv2
         const browserId: ?string = getCookie('bwid');
         const pageViewId: ?string = config.get('ophan.pageViewId');
-        const cmpInitTimeUtc: ?number = new Date().getTime();
-        const pubData: { browserId?: ?string, pageViewId?: ?string, cmpInitTimeUtc?: ?number } =
-            { browserId, pageViewId, cmpInitTimeUtc };
+        const pubData: { browserId?: ?string, pageViewId?: ?string } =
+            { browserId, pageViewId };
         cmp.init({ pubData, isInUsa: isInUsa() });
 
         // 2. once standard is done, next is commercial
