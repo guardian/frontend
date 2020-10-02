@@ -27,13 +27,6 @@ GET         /form/complete                          controllers.FormstackControl
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)
 GET         /form/embed/:formReference              controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = true)
 
-#Email Footer signup routes
-GET        /email/form/$emailType<article|footer>/$listId<[0-9]+>               controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET        /email/form/$emailType<article>/:listName                     controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
-GET        /email/$result<success|invalid|error>                                controllers.EmailSignupController.subscriptionResult(result: String)
-POST       /email                                                               controllers.EmailSignupController.submit()
-OPTIONS    /email                                                               controllers.EmailSignupController.options()
-
 # Account deletion
 GET         /delete                                 controllers.AccountDeletionController.renderAccountDeletionForm
 POST        /delete                                 controllers.AccountDeletionController.processAccountDeletionForm

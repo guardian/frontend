@@ -43,9 +43,8 @@ GET            /crosswords/lookup                                               
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
 GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
 GET        /email/form/footer/:listName                                         controllers.EmailSignupController.renderFooterForm(listName: String)
-GET        /email/$result<success|invalid|error>                                controllers.EmailSignupController.subscriptionResult(result: String)
-GET        /email/$result<success|invalid|error>/:listName                      controllers.EmailSignupController.subscriptionResultV2(result: String, listName: String)
-POST       /email/:listName                                                     controllers.EmailSignupController.submitV2(listName: String)
+GET        /email/$result<success|invalid|error>/:listName                      controllers.EmailSignupController.subscriptionResult(result: String, listName: String)
+POST       /email/:listName                                                     controllers.EmailSignupController.submit(listName: String)
 OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data

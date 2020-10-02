@@ -138,17 +138,7 @@ class EmailSignupController(
       }
     }
 
-  def subscriptionResult(result: String): Action[AnyContent] =
-    Action { implicit request =>
-      Cached(7.days)(result match {
-        case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, Subscribed))
-        case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail))
-        case "error"   => RevalidatableResult.Ok(views.html.emailSubscriptionResult(emailLandingPage, OtherError))
-        case _         => WithoutRevalidationResult(NotFound)
-      })
-    }
-
-  def subscriptionResultV2(result: String, listName: String): Action[AnyContent] =
+  def subscriptionResult(result: String, listName: String): Action[AnyContent] =
     Action { implicit request =>
       listName match {
         case "footer" => {
@@ -181,70 +171,7 @@ class EmailSignupController(
       }
     }
 
-  def submit(): Action[AnyContent] =
-    Action.async { implicit request =>
-      AllEmailSubmission.increment()
-
-      def respond(result: SubscriptionResult): Result = {
-        render {
-          case Accepts.Html() =>
-            result match {
-              case Subscribed   => SeeOther(LinkTo("/email/success"))
-              case InvalidEmail => SeeOther(LinkTo("/email/invalid"))
-              case OtherError   => SeeOther(LinkTo("/email/error"))
-            }
-
-          case Accepts.Json() =>
-            Cors(NoCache(result match {
-              case Subscribed   => Created("Subscribed")
-              case InvalidEmail => BadRequest("Invalid email")
-              case OtherError   => InternalServerError("Internal error")
-            }))
-          case _ =>
-            NotAccepted.increment()
-            NotAcceptable
-        }
-      }
-
-      emailForm.bindFromRequest.fold(
-        formWithErrors => {
-          log.info(s"Form has been submitted with errors: ${formWithErrors.errors}")
-          EmailFormError.increment()
-          Future.successful(respond(InvalidEmail))
-        },
-        form => {
-          log.info(
-            "Post request received to /email/ - " +
-              s"email: ${form.email}, " +
-              s"referer: ${request.headers.get("referer").getOrElse("unknown")}, " +
-              s"user-agent: ${request.headers.get("user-agent").getOrElse("unknown")}, " +
-              s"x-requested-with: ${request.headers.get("x-requested-with").getOrElse("unknown")}",
-          )
-          emailFormService
-            .submit(form)
-            .map(_.status match {
-              case 200 | 201 =>
-                EmailSubmission.increment()
-                respond(Subscribed)
-
-              case status =>
-                log.error(s"Error posting to ExactTarget: HTTP $status")
-                APIHTTPError.increment()
-                respond(OtherError)
-
-            }) recover {
-            case _: IllegalAccessException =>
-              respond(Subscribed)
-            case e: Exception =>
-              log.error(s"Error posting to ExactTarget: ${e.getMessage}")
-              APINetworkError.increment()
-              respond(OtherError)
-          }
-        },
-      )
-    }
-
-  def submitV2(listName: String): Action[AnyContent] =
+  def submit(listName: String): Action[AnyContent] =
     Action.async { implicit request =>
       AllEmailSubmission.increment()
 
