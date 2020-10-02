@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 10, 5),
+    sellByDate = new LocalDate(2020, 11, 5),
     exposeClientSide = true,
   )
 
