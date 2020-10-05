@@ -204,9 +204,7 @@ object GetClasses {
 
   def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Fixed(_) | Dynamic(DynamicSlow) | Dynamic(DynamicFast) | Dynamic(DynamicSlowMPU(_, _)) | Dynamic(
-            DynamicPackage,
-          ) =>
+      case Fixed(_) | Dynamic(_) =>
         primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
       case _ => None
     }
