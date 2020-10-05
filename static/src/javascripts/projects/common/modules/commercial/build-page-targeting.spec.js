@@ -28,7 +28,6 @@ const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 const getPrivacyFramework: any = getPrivacyFramework_;
 
-jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
