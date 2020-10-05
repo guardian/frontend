@@ -1,7 +1,0 @@
-@import model.SubscriptionResult
-@import com.gu.identity.model.EmailEmbed
-@(page: model.Page, result: SubscriptionResult, emailEmbedData: EmailEmbed)(implicit request: RequestHeader, context: model.ApplicationContext)
-
-@emailEmbed(page){
-    @fragments.email.signup.subscriptionResultV2(result, emailEmbedData)
-}

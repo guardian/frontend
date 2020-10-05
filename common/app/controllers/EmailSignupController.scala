@@ -155,13 +155,13 @@ class EmailSignupController(
             case Some(newsletter) =>
               Cached (7.days) (result match {
                 case "success" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResultV2(emailLandingPage, Subscribed, newsletter.emailEmbed)
+                  views.html.emailSubscriptionResult(emailLandingPage, Subscribed, newsletter.emailEmbed)
                 )
                 case "invalid" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResultV2(emailLandingPage, InvalidEmail, newsletter.emailEmbed)
+                  views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail, newsletter.emailEmbed)
                 )
                 case "error" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResultV2(emailLandingPage, OtherError, newsletter.emailEmbed)
+                  views.html.emailSubscriptionResult(emailLandingPage, OtherError, newsletter.emailEmbed)
                 )
                 case _ => WithoutRevalidationResult(NotFound)
               })

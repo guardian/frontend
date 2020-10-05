@@ -1,14 +1,15 @@
 @import model.{InvalidEmail, OtherError, Subscribed, SubscriptionResult}
 
-@(result: SubscriptionResult)
+@import com.gu.identity.model.EmailEmbed
+@(result: SubscriptionResult, emailEmbedData: EmailEmbed)
 
 <div class="email-sub email-sub--article">
     <div class="email-sub__message">
         @result match {
             case Subscribed => {
                 @fragments.inlineSvg("mail", "icon")
-                <h2 class="email-sub__message__headline">Please check your emails to confirm your subscription!</h2>
-              <p
+                <h2 class="email-sub__message__headline">@Html(emailEmbedData.successHeadline)</h2>
+                <p class="email-sub__message__description">@Html(emailEmbedData.successDescription)</p>
             }
 
             case InvalidEmail => {
