@@ -13,7 +13,7 @@ const supportUrl = `${supportSubscribeDigitalURL()}?acquisitionData=%7B%22compon
 const askHtml = `
 <div class="contributions__adblock">
     <a href="${supportUrl}">
-        <img src="https://media.guim.co.uk/3edc720c6210f873c7e75df4c46bea75615401d8/0_0_300_250/300.jpg" alt="" />
+        <img src="https://uploads.guim.co.uk/2020/10/02/Digisubs_MPU_c1_my_opt.png" alt="" />
     </a>
 </div>
 `;
