@@ -32,7 +32,7 @@ const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
 ) && !remoteSubscriptionsBannerSwitchIsOn;
 
-const pageviews: number = local.get('gu.alreadyVisited');
+const pageviews: number = local.getRaw('gu.alreadyVisited');
 
 const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
     geolocationGetSync()

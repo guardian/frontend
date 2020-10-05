@@ -153,7 +153,7 @@ describe('Build Page Targeting', () => {
             },
         });
 
-        local.set('gu.alreadyVisited', 0);
+        local.setRaw('gu.alreadyVisited', 0);
 
         getSync.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
@@ -378,17 +378,17 @@ describe('Build Page Targeting', () => {
 
     describe('Already visited frequency', () => {
         it('can pass a value of five or less', () => {
-            local.set('gu.alreadyVisited', 5);
+            local.setRaw('gu.alreadyVisited', 5);
             expect(getPageTargeting().fr).toEqual('5');
         });
 
         it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
-            local.set('gu.alreadyVisited', 18);
+            local.setRaw('gu.alreadyVisited', 18);
             expect(getPageTargeting().fr).toEqual('16-19');
         });
 
         it('over thirty, includes it in the bucket "30plus"', () => {
-            local.set('gu.alreadyVisited', 300);
+            local.setRaw('gu.alreadyVisited', 300);
             expect(getPageTargeting().fr).toEqual('30plus');
         });
 

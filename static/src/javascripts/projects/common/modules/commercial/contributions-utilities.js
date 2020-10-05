@@ -85,7 +85,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
     }
 };
 
-const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
+const getVisitCount = (): number => local.getRaw('gu.alreadyVisited') || 0;
 
 const replaceCountryName = (text: string, countryName: ?string): string =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
