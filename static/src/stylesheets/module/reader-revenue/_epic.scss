@@ -233,65 +233,12 @@ div.contributions__secondary-button.contributions__secondary-button--epic {
     top: 6px;
     padding-top: $gs-baseline/2;
     width: 93%;
-    background-color: $highlight-main;
-
-    .contributions__adblock-header {
-        padding-left: 10px;
-        padding-top: 3px;
-
-        h2 {
-            @include fs-headline(6);
-            font-weight: 700;
-            font-size: 28px;
-            line-height: 30px;
-        }
-    }
-
-    .contributions__adblock-sub {
-        @include fs-headline(2);
-        padding: 12px 0 10px 10px;
-    }
-
-    .contributions__adblock-button {
-        margin: 25px 0 78px 10px;
-        background-color: $brightness-7 !important;
-        color: $brightness-100 !important;
-        font-size: 16px;
-        line-height: 22px;
-        font-family: $f-sans-serif-text;
-        display: inline-flex;
-        align-items: center;
-        text-decoration: none;
-        font-weight: bold;
-        height: 42px;
-        min-height: 42px;
-        padding: 0 21px;
-        border-radius: 21px;
-        box-sizing: border-box;
-        cursor: pointer;
-        transition: .3s ease-in-out;
-        justify-content: space-between;
-        position: relative;
-
-        &:hover, &:focus {
-            background-color: $highlight-dark;
-            svg {
-                transform: translateX(20%);
-            }
-        }
-
-        span {
-            flex: 0 0 auto;
-            display: block;
-        }
-    }
 
     .contributions__adblock-image {
-        height: 150px;
+        height: 100%;
         position: absolute;
         bottom: 0;
-        right: 0;
-    }
+     }
 }
 
 .contributions__epic-image {
