@@ -1,12 +1,12 @@
 package controllers
 
+import com.gu.identity.model.EmailNewsletter
+import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
-import com.gu.identity.model.{EmailEmbed, EmailNewsletter}
-import com.typesafe.scalalogging.LazyLogging
 import play.api.data.Forms._
 import play.api.data._
 import play.api.data.format.Formats._
@@ -110,12 +110,16 @@ class EmailSignupController(
 
         identityNewsletter match {
           case Some(newsletter) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(
-              emailLandingPage,
-              emailType,
-              newsletter.identityName,
-              newsletter.emailEmbed
-            )))
+            Cached(1.day)(
+              RevalidatableResult.Ok(
+                views.html.emailFragment(
+                  emailLandingPage,
+                  emailType,
+                  newsletter.identityName,
+                  newsletter.emailEmbed,
+                ),
+              ),
+            )
           case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -127,12 +131,16 @@ class EmailSignupController(
         val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
         identityNewsletter match {
           case Some(newsletter) =>
-            Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragment(
-              emailLandingPage,
-              emailType,
-              newsletter.identityName,
-              newsletter.emailEmbed
-            )))
+            Cached(1.day)(
+              RevalidatableResult.Ok(
+                views.html.emailFragment(
+                  emailLandingPage,
+                  emailType,
+                  newsletter.identityName,
+                  newsletter.emailEmbed,
+                ),
+              ),
+            )
           case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -143,9 +151,12 @@ class EmailSignupController(
       listName match {
         case "footer" => {
           Cached(7.days)(result match {
-            case "success" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, Subscribed))
-            case "invalid" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, InvalidEmail))
-            case "error" => RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, OtherError))
+            case "success" =>
+              RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, Subscribed))
+            case "invalid" =>
+              RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, InvalidEmail))
+            case "error" =>
+              RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, OtherError))
             case _ => WithoutRevalidationResult(NotFound)
           })
         }
@@ -153,16 +164,19 @@ class EmailSignupController(
           val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
           identityNewsletter match {
             case Some(newsletter) =>
-              Cached (7.days) (result match {
-                case "success" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResult(emailLandingPage, Subscribed, newsletter.emailEmbed)
-                )
-                case "invalid" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail, newsletter.emailEmbed)
-                )
-                case "error" => RevalidatableResult.Ok (
-                  views.html.emailSubscriptionResult(emailLandingPage, OtherError, newsletter.emailEmbed)
-                )
+              Cached(7.days)(result match {
+                case "success" =>
+                  RevalidatableResult.Ok(
+                    views.html.emailSubscriptionResult(emailLandingPage, Subscribed, newsletter.emailEmbed),
+                  )
+                case "invalid" =>
+                  RevalidatableResult.Ok(
+                    views.html.emailSubscriptionResult(emailLandingPage, InvalidEmail, newsletter.emailEmbed),
+                  )
+                case "error" =>
+                  RevalidatableResult.Ok(
+                    views.html.emailSubscriptionResult(emailLandingPage, OtherError, newsletter.emailEmbed),
+                  )
                 case _ => WithoutRevalidationResult(NotFound)
               })
             case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
