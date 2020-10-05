@@ -60,40 +60,12 @@ object GetClasses {
         ("fc-item--is-commentable", item.discussionSettings.isCommentable),
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
-        ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
-        ("fc-item--has-floating-sublinks", hasFloatingSublinks(item, isDynamic)),
+        ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && item.cutOut.isEmpty),
+        ("fc-item--has-floating-sublinks", item.hasFloatingSublinks(isDynamic)),
       ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
     )
-  }
-
-  def hasFloatingSublinks(item: ContentCard, isDynamic: Boolean) = {
-
-    // We're moving the logic for these classes in CSS into the Scala
-    // because this generates loads and loads of pointeless CSS, and it would
-    // be better to just have one class to define whether sublinks floated
-    // over the main media. So here we are.
-    // Replaces:
-    //    &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
-    //    &.fc-item--full-media-100-tablet,
-    //    &.fc-item--full-media-100-tablet,
-    //    &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
-    //    &.fc-item--three-quarters-tall-tablet
-
-    val canHaveFloatingSublinks = isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined
-    val sublinksLength = item.sublinks.length
-    val types = item.cardTypes.allTypes
-
-    val checks: List[Boolean] = List(
-      types.contains(cards.FullMedia75) && sublinksLength == 3,
-      types.contains(cards.FullMedia100),
-      types.contains(cards.ThreeQuarters) && sublinksLength == 2,
-      types.contains(cards.ThreeQuartersTall),
-    )
-
-    // checks.exists(_ == true) evaluates to true if any of the booleans is true
-    canHaveFloatingSublinks && checks.exists(_ == true)
   }
 
   def forSubLink(sublink: Sublink)(implicit request: RequestHeader): String =

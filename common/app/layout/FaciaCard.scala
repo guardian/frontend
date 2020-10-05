@@ -171,6 +171,32 @@ case class ContentCard(
 
   def showTimestamp: Boolean = timeStampDisplay.isDefined && webPublicationDate.isDefined
 
+  def hasFloatingSublinks(isDynamicCard: Boolean): Boolean = {
+    // We're moving the logic for these classes in CSS into the Scala
+    // because this generates loads and loads of pointless CSS, and it would
+    // be better to just have one class to define whether sublinks floated
+    // over the main media. So here we are.
+    // Replaces:
+    //    &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
+    //    &.fc-item--full-media-100-tablet,
+    //    &.fc-item--full-media-100-tablet,
+    //    &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
+    //    &.fc-item--three-quarters-tall-tablet
+
+    val canHaveFloatingSublinks = isDynamicCard && cardTypes.canBeDynamicLayout && cutOut.isEmpty
+    val sublinksLength = sublinks.length
+    val types = cardTypes.allTypes
+
+    val checks: List[Boolean] = List(
+      types.contains(cards.FullMedia75) && sublinksLength == 3,
+      types.contains(cards.FullMedia100),
+      types.contains(cards.ThreeQuarters) && sublinksLength == 2,
+      types.contains(cards.ThreeQuartersTall),
+    )
+
+    canHaveFloatingSublinks && checks.contains(true)
+  }
+
   val analyticsPrefix = s"${cardStyle.toneString} | group-$group${if (displaySettings.isBoosted) "+" else ""}"
 
   val hasInlineSnapHtml = snapStuff.exists(_.embedHtml.isDefined)
