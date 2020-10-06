@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'fastdom';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 
 const launchOverlay = (event: Event): void => {
     event.preventDefault();

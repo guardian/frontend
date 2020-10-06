@@ -1,7 +1,7 @@
 // @flow strict
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 type comscoreGlobals = {

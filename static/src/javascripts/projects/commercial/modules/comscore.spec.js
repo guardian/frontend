@@ -1,5 +1,5 @@
 // @flow
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
@@ -42,7 +42,7 @@ const ccpaWithoutConsentMock = (callback): void =>
         },
     });
 
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 

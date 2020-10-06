@@ -39,7 +39,7 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
     isInUsRegion: () => true,
 }));
 
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/libs', () => ({
     loadScript: () => Promise.resolve(),
 }));
 

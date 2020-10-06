@@ -20,7 +20,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     ),
 }));
 
-jest.mock('lib/load-script', () => ({ loadScript: jest.fn() }));
+jest.mock('@guardian/libs', () => ({ loadScript: jest.fn() }));
 
 const plista = _plista;
 
