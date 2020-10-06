@@ -121,7 +121,7 @@ const enhanceAdPrefs = (): void => {
         .measure(() => Array.from(document.querySelectorAll(rootSelector)))
         .then((wrapperEls: HTMLElement[]) => {
             wrapperEls.forEach(_ => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     render(
                         <AdPrefsWrapper
                             initialConsentsWithState={getAllAdConsentsWithState()}

@@ -18,7 +18,7 @@ const enableButton = cForm => {
 
 const showConfirmation = cForm => {
     const calloutWrapper = cForm.closest('.element-campaign');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         calloutWrapper.classList.add('success');
     });
 };
@@ -26,7 +26,7 @@ const showConfirmation = cForm => {
 const showWaiting = cForm => {
     const button = cForm.querySelector('button');
     const errorField = cForm.querySelector('.error_box');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         button.textContent = 'Sending...';
         button.disabled = true;
         errorField.innerHTML = '';
@@ -36,7 +36,7 @@ const showWaiting = cForm => {
 const showError = (cForm: HTMLElement, msg: string) => {
     const errorField = cForm.querySelector('.error_box');
     if (errorField) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             errorField.innerHTML = `<p class="error">${msg}</p>`;
         });
     }

@@ -7,7 +7,7 @@ import { isIOS, getUserAgent } from 'lib/detect';
 import $ from 'lib/$';
 
 const jsEnableFooterNav = (): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         $('.navigation-container--default')
             .removeClass('navigation-container--default')
             .addClass('navigation-container--collapsed');
@@ -31,7 +31,7 @@ const copyMegaNavMenu = (): Promise<void> => {
             );
 
             if (placeholder) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     placeholder.append(megaNavCopy);
                 });
             }
@@ -42,7 +42,7 @@ const replaceAllSectionsLink = (): Promise<void> =>
     fastdom
         .measure(() => $('.js-navigation-header .js-navigation-toggle'))
         .then(elems =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 elems.attr('href', '#nav-allsections');
             })
         );
@@ -52,7 +52,7 @@ const addOverflowScrollTouch = (): Promise<void> =>
         .measure(() => $('.navigation__scroll'))
         .then(navScroll => {
             if (navScroll) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     navScroll.css({
                         '-webkit-overflow-scrolling': 'touch',
                     });
@@ -66,7 +66,7 @@ const enableMegaNavToggle = (): void => {
 
         e.preventDefault();
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             target.toggleClass(
                 'navigation-container--expanded navigation-container--collapsed'
             );

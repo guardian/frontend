@@ -8,7 +8,7 @@ const bindFollow = (el): void => {
     fastdom
         .measure(() => el.querySelector('.identity-follow__button-target'))
         .then((wrapperEl: HTMLElement) => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 render(
                     <FollowButtonWrap
                         following

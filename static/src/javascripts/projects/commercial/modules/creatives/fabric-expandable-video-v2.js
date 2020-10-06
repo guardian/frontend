@@ -108,7 +108,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         };
 
         bean.on(adSlot, 'click', '.ad-exp__open', () => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 open(isClosed);
             });
         });
@@ -118,13 +118,13 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
             'click',
             '.video-container__cta, .creative__cta',
             () => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     open(false);
                 });
             }
         );
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             $ad.css('height', closedHeight);
             $('.ad-exp-collapse__slide', $fabricExpandableVideo).css(
                 'height',

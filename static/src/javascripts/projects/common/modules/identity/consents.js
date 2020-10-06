@@ -100,7 +100,7 @@ const showUnsubscribeConfirmation = (): Promise<void> => {
     const updateVisibilityAndShowMessage = (
         elem: HTMLButtonElement
     ): Promise<void> =>
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (elem.parentElement) {
                 prependSuccessMessage(
                     UNSUBSCRIPTION_SUCCESS_MESSAGE,
@@ -248,7 +248,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
         const updateCheckStatus = () =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
                 labelEl.style.visibility = 'visible';
@@ -275,7 +275,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             );
 
             checkboxesToUpdate.forEach(wrappedCheckboxEl => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     wrappedCheckboxEl.checked = checkboxEl.checked;
                 });
             });

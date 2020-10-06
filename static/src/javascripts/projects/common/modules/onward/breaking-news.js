@@ -148,7 +148,7 @@ const renderAlert = (alert: Alert): bonzo => {
 
     if (closeButton) {
         bean.on(closeButton, 'click', () => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $('[data-breaking-article-id]').hide();
             });
             markAlertAsDismissed(alert.id);
@@ -183,7 +183,7 @@ const show = (): Promise<boolean> => {
 
     // inject the alerts into DOM
     setTimeout(() => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (alertDelay === 0) {
                 $breakingNews.removeClass('breaking-news--fade-in');
             }

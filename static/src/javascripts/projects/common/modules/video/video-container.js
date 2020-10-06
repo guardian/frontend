@@ -122,12 +122,12 @@ const reducers = {
                 );
 
                 inview.on('firstview', elem => {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         const dataSrc = elem.getAttribute('data-src');
                         const src = elem.getAttribute('src');
 
                         if (dataSrc && !src) {
-                            fastdom.write(() => {
+                            fastdom.mutate(() => {
                                 elem.setAttribute('src', dataSrc);
                             });
                         }
@@ -149,7 +149,7 @@ const fetchLazyImage = (container: Element, i: number): void => {
             })
             .then(src => {
                 if (src) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         el.setAttribute('src', src);
                     });
                 }
@@ -160,7 +160,7 @@ const fetchLazyImage = (container: Element, i: number): void => {
 const update = (state: State, container: Element): Promise<number> => {
     const translateWidth = -state.videoWidth * state.position;
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
         );

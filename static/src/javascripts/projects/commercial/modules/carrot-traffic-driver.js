@@ -153,7 +153,7 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
     const slots = createSlots('carrot');
     const candidates = paras.slice(1);
     return fastdom
-        .write(() => {
+        .mutate(() => {
             slots.forEach(slot => {
                 if (candidates[0] && candidates[0].parentNode) {
                     candidates[0].parentNode.insertBefore(slot, candidates[0]);

@@ -39,7 +39,7 @@ const insertCommentAd = (
 
     return (
         fastdom
-            .write(() => {
+            .mutate(() => {
                 $commentMainColumn.addClass('discussion__ad-wrapper');
                 if (
                     !config.get('page.isLiveBlog') &&
@@ -71,7 +71,7 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
     if (!containsDMPU(ad)) {
         ad.sizes.desktop.push([300, 600], [160, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $adSlot[0].setAttribute(
                 'data-desktop',
                 '1,1|2,2|300,250|300,274|fluid|300,600|160,600'

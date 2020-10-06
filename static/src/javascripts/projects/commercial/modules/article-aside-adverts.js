@@ -51,7 +51,7 @@ export const init = (): Promise<boolean> => {
             // the sticky behaviour and conditionally adjust the slot size depending on how far down
             // the page the first immersive image appears.
             if (config.get('page.isImmersive') && $immersiveEls.length > 0) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',
@@ -63,7 +63,7 @@ export const init = (): Promise<boolean> => {
             // most articles are long enough to fit a DMPU. However, the occasional shorter article
             // will need the slot sizes to be adjusted, and the sticky behaviour removed.
             if (mainColHeight < minArticleHeight) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
                     $adSlot[0].setAttribute(
                         'data-mobile',

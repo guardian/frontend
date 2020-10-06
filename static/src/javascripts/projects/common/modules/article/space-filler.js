@@ -28,7 +28,7 @@ class SpaceFiller {
         options: ?Object
     ): Promise<any> {
         const onSpacesFound = (paragraphs: HTMLElement[]): Promise<any> =>
-            fastdom.write(() => writer(paragraphs));
+            fastdom.mutate(() => writer(paragraphs));
 
         const onNoSpacesFound = (ex: Error): boolean => {
             if (ex instanceof SpaceError) {

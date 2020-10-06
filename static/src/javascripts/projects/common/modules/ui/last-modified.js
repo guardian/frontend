@@ -12,14 +12,14 @@ const lastModified = (): void => {
             const { lastModifiedElm, webPublicationDateElm } = els;
 
             if (lastModifiedElm && webPublicationDateElm) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     webPublicationDateElm.classList.add(
                         'content__dateline-wpd--modified'
                     );
                 });
 
                 webPublicationDateElm.addEventListener('click', () => {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         lastModifiedElm.classList.toggle('u-h');
                     });
                 });

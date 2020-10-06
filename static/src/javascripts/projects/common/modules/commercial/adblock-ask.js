@@ -29,7 +29,7 @@ export const initAdblockAsk = () => {
             .measure(() => $('.js-aside-slot-container'))
             .then(slot => {
                 if (slot) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         slot.append(askHtml);
                     });
                 }

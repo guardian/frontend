@@ -73,7 +73,7 @@ const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
         width = el.offsetWidth;
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         breakpoints
             .map((breakpoint, i, arr) => {
                 const isAdd =
@@ -124,7 +124,7 @@ const injectIframe = (el: HTMLElement): void => {
     snapIframes.push(iframe);
     bindIframeMsgReceiverOnce();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         bonzo(el)
             .empty()
             .append(containerEl);
@@ -151,7 +151,7 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
         })
         .then(resp => {
             $.create(resp).each(html => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     bonzo(el).html(html);
                 });
             });
@@ -166,7 +166,7 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
 
 const initStandardSnap = (el: HTMLElement): void => {
     addProximityLoader(el, 1500, () => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             bonzo(el).addClass('facia-snap-embed');
         });
         addCss(el);

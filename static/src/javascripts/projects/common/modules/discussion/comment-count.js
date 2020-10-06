@@ -81,7 +81,7 @@ const updateElement = (el: HTMLElement, count: number): Promise<void> => {
     const meta = Array.from(el.getElementsByClassName('js-item__meta'));
     const containers = meta.length ? meta : [el];
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         containers.forEach(container => {
             container.insertAdjacentHTML('beforeend', html);
         });

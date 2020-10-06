@@ -117,7 +117,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         }
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (backgroundParent) {
                     // Create a stacking context in DCR
                     if (
@@ -188,7 +188,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                     }
                 })
                 .then(rect =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (config.get('isDotcomRendering', false)) {
                             background.style.position = 'fixed';
                         }

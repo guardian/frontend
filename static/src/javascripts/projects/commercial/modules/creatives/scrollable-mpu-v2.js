@@ -59,7 +59,7 @@ class ScrollableMpu {
     }
 
     updateBgFluid250() {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (this.$scrollableImage) {
                 this.$scrollableImage.addClass(
                     'creative--scrollable-mpu-image-fixed'
@@ -71,7 +71,7 @@ class ScrollableMpu {
     updateBgParallax() {
         const scrollAmount =
             Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (this.$scrollableImage) {
                 this.$scrollableImage
                     .addClass('creative--scrollable-mpu-image-parallax')
@@ -84,7 +84,7 @@ class ScrollableMpu {
         if (this.$scrollableMpu) {
             const position = -this.$scrollableMpu[0].getBoundingClientRect()
                 .top;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.$scrollableImage) {
                     this.$scrollableImage.css(
                         'background-position',

@@ -84,7 +84,7 @@ class Sticky {
         }
 
         if (css) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (stick) {
                     this.element.classList.add('is-sticky');
                 } else {

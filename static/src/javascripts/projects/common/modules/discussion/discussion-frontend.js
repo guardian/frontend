@@ -16,7 +16,7 @@ const loadDiscussionFrontend = (
         const formatted = integerCommas(value);
 
         if (formatted) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 element.textContent = formatted;
             });
         }

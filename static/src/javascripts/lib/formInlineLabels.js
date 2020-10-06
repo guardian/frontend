@@ -13,7 +13,7 @@ const updateClass = (
     const shouldUpdateClass = testFunc !== undefined ? testFunc() : true;
 
     if (shouldUpdateClass) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $el[type === 'add' ? 'addClass' : 'removeClass'](cssClass);
         });
     }

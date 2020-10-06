@@ -218,7 +218,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
                 container.classList.add('remote-banner');

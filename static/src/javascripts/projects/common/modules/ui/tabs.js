@@ -14,7 +14,7 @@ const getTabTarget = (tab: HTMLElement): Promise<?string> =>
 const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'false');
             NAV_CLASSES.forEach(className =>
@@ -29,7 +29,7 @@ const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
 const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'true');
             NAV_CLASSES.forEach(className => tabList.classList.add(className));
@@ -58,7 +58,7 @@ const init = (): Promise<void> => {
                 return;
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
 
@@ -98,7 +98,7 @@ const init = (): Promise<void> => {
                 }
             });
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
         });

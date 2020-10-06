@@ -10,7 +10,7 @@ const renderContributionsBanner = el => {
         supportContributeURL: supportContributeURL(),
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         el.insertAdjacentHTML('afterend', banner);
     });
 };

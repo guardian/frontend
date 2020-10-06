@@ -29,7 +29,7 @@ const resizeStickyBanner = (newHeight: number): Promise<number> => {
         return Promise.resolve(-1);
     }
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (stickyBanner && header) {
             const newCSSHeight = `${newHeight}px`;
             stickyBanner.classList.add('sticky-top-banner-ad');
@@ -49,7 +49,7 @@ const resizeStickyBanner = (newHeight: number): Promise<number> => {
 // them for a better experience. We only do this if the slot is in view
 // though.
 const setupAnimation = (): Promise<any> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (stickyBanner && header) {
             if (scrollY <= headerHeight) {
                 header.classList.add('l-header--animate');
@@ -67,7 +67,7 @@ const onScroll = (): Promise<any> => {
         updateQueued = true;
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 updateQueued = false;
                 if (stickyBanner) {
                     if (headerHeight < scrollY) {

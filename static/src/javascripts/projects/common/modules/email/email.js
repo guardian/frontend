@@ -63,7 +63,7 @@ const replaceContent = (isSuccess: boolean, $form: bonzo, $formHeader: ?bonzo): 
             <p class="email-sub__message__description">${submissionMessage}</p>
         </div>`;
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if ($formHeader) {
             $formHeader.addClass('email-sub__header--is-hidden')
         }
@@ -99,7 +99,7 @@ const updateFormForLoggedIn = (
     el: HTMLElement
 ): void => {
     if (userFromId && userFromId.primaryEmailAddress) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $('.js-email-sub__inline-label', el).addClass(
                 'email-sub__inline-label--is-hidden'
             );
@@ -136,7 +136,7 @@ const updateForm = (
         updateFormForLoggedIn(userFromId, $el);
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (formDisplayNameNormalText) {
             $('.js-email-sub__display-name-normal-text', $el).text(
                 formDisplayNameNormalText
@@ -209,7 +209,7 @@ const heightSetter = ($wrapper: bonzo, reset: boolean): (() => void) => {
     };
 
     const resetHeight = () => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $wrapper.css('min-height', '');
             getHeight();
             setHeight();
@@ -233,7 +233,7 @@ const setIframeHeight = (
     fastdom
         .measure(() => iFrameEl.contentWindow.document.body.clientHeight)
         .then(height =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 iFrameEl.height = `${height}px`;
             })
         )

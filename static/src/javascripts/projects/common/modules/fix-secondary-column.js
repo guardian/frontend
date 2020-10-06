@@ -29,7 +29,7 @@ export const fixSecondaryColumn = (): void => {
             return calcShowcaseOffset(showcaseDim, mainColDim);
         })
         .then(offset =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 secondaryCol.style.paddingTop = `${offset}px`;
             })
         );

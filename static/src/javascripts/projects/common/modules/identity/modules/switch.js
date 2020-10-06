@@ -17,7 +17,7 @@ const checkboxShouldUpdate = (
 };
 
 const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         labelEl.dataset.linkName = labelEl.dataset.linkNameTemplate.replace(
             '[action]',
             checked ? 'untick' : 'tick'
@@ -65,7 +65,7 @@ export const flip = (labelEl: HTMLElement): Promise<any> =>
     fastdom
         .measure((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 checkboxEl.checked = !checkboxEl.checked;
             });
         });
@@ -75,7 +75,7 @@ export const addSpinner = (
     latencyTimeout: number = 500
 ): Promise<any> =>
     fastdom
-        .write(() => {
+        .mutate(() => {
             labelEl.classList.add('is-updating');
             if (document.body) document.body.classList.add('is-updating-js');
         })
@@ -83,7 +83,7 @@ export const addSpinner = (
             labelEl.dataset.slowLoadTimeout = timeouts
                 .push(
                     setTimeout(() => {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             if (document.body) {
                                 document.body.classList.add(
                                     'is-updating-cursor'
@@ -97,7 +97,7 @@ export const addSpinner = (
         });
 
 export const removeSpinner = (labelEl: HTMLElement): Promise<any> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (document.body) document.body.classList.remove('is-updating-cursor');
         if (document.body) document.body.classList.remove('is-updating-js');
         labelEl.classList.remove('is-updating');

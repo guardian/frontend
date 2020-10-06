@@ -20,7 +20,7 @@ const addEditLink = (containerEl: HTMLElement): void => {
         holderEl.appendChild(linkEl);
         holderEl.classList.add('user-profile__edit-link');
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             containerEl.insertAdjacentElement('afterend', holderEl);
         });
     }

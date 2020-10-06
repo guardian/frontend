@@ -92,7 +92,7 @@ const handleMembershipAccess = (): void => {
             const { body } = document;
 
             if (body) {
-                fastdom.write(() => body.classList.remove(requireClass));
+                fastdom.mutate(() => body.classList.remove(requireClass));
             }
         } else {
             redirect();

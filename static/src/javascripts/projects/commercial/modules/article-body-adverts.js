@@ -42,7 +42,7 @@ const insertAdAtPara = (
     });
 
     return fastdom
-        .write(() =>
+        .mutate(() =>
             ads.forEach(ad => {
                 if (para.parentNode) {
                     para.parentNode.insertBefore(ad, para);

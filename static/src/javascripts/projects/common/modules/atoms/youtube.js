@@ -77,7 +77,7 @@ document.addEventListener('focusout', () => {
                 }
             })
             .then(($playButton: ?bonzo) => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     if ($playButton) {
                         $playButton.addClass('youtube-play-btn-focussed');
                     }
@@ -90,7 +90,7 @@ document.addEventListener('focusin', () => {
     fastdom
         .measure(() => $('.vjs-big-play-button'))
         .then(($playButton: ?bonzo) => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if ($playButton) {
                     $playButton.removeClass('youtube-play-btn-focussed');
                 }

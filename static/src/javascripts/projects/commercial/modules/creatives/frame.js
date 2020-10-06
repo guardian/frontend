@@ -46,7 +46,7 @@ class Frame {
             },
         });
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             this.adSlot.insertAdjacentHTML('beforeend', frameMarkup);
 
             if (this.adSlot.lastElementChild) {

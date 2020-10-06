@@ -81,7 +81,7 @@ const maybeAnimateBlocks = (
 
             if (isVisible) {
                 timeoutPromise(immediate ? 0 : animateDelayMs).then(() =>
-                    fastdomPromise.write(() =>
+                    fastdomPromise.mutate(() =>
                         el.classList.remove(
                             'fc-item__liveblog-blocks__inner--offset'
                         )
@@ -113,7 +113,7 @@ const animateBlocks = (el: Element, container: Element): void => {
         }
     });
 
-    fastdomPromise.write(() => {
+    fastdomPromise.mutate(() => {
         container.classList.remove('fc-item__liveblog-blocks--hidden');
         container.classList.add('fc-item__liveblog-blocks--visible');
     });
@@ -123,7 +123,7 @@ const applyUpdate = (
     container: Element,
     content: Array<Element>
 ): Promise<void> =>
-    fastdomPromise.write(() => {
+    fastdomPromise.mutate(() => {
         bonzo(container)
             .empty()
             .append(content);

@@ -5,10 +5,10 @@ import fastdom from 'lib/fastdom-promise';
 import loadEnhancers from './modules/loadEnhancers';
 
 const showJourney = (journeyEl: HTMLElement): Promise<void> =>
-    fastdom.write(() => journeyEl.classList.remove('u-h'));
+    fastdom.mutate(() => journeyEl.classList.remove('u-h'));
 
 const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
-    fastdom.write(() => loadingEl.remove());
+    fastdom.mutate(() => loadingEl.remove());
 
 const enhanceConsentJourney = (): void => {
     const loaders = [

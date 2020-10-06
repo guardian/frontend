@@ -56,7 +56,7 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     });
 
     if (hasScriptsToInsert) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (ref && ref.parentNode) {
                 ref.parentNode.insertBefore(frag, ref);
             }

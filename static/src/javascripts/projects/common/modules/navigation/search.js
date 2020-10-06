@@ -37,7 +37,7 @@ class Search {
                             return;
                         }
 
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             toggle.setAttribute('role', 'button');
                             toggle.setAttribute(
                                 'aria-controls',
@@ -172,7 +172,7 @@ class Search {
                 // Unload any search placeholders elsewhere in the DOM
                 allSearchPlaceholders.forEach(c => {
                     if (c !== searchPlaceholder) {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             c.innerHTML = '';
                         });
                     }
@@ -181,7 +181,7 @@ class Search {
                 // Load the Google search monolith, if not already present in this context.
                 // We have to re-run their script each time we do this.
                 if (!searchPlaceholder.innerHTML) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (searchPlaceholder) {
                             searchPlaceholder.innerHTML = `<div class="search-box" role="search">
                             <gcse:searchbox></gcse:searchbox>
@@ -202,7 +202,7 @@ class Search {
                             );
                             const windowOffset = $(window).scrollTop();
 
-                            fastdom.write(() => {
+                            fastdom.mutate(() => {
                                 $autoCompleteObject.css({
                                     top:
                                         parseInt(searchFromTop, 10) +
@@ -231,7 +231,7 @@ class Search {
                     s.src = this.gcsUrl;
                     x = document.getElementsByTagName('script')[0];
 
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (x.parentNode) {
                             x.parentNode.insertBefore(s, x);
                         }

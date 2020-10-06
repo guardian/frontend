@@ -119,7 +119,7 @@ const addEpicToBlocks = (
         getLiveblogEntryTimeData(el),
     ]);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         elementsWithTimeData.forEach(([el, timeData]) => {
             if (!timeData) {
                 return;

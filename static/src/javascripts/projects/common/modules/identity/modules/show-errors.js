@@ -20,7 +20,7 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 const errorEl = document.createElement('div');
                 errorEl.setAttribute('role', 'alert');
                 errorEl.setAttribute('aria-live', 'polite');
@@ -53,7 +53,7 @@ const renderList = (): Promise<void> =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 while (errorHolderEl.firstChild) {
                     errorHolderEl.removeChild(errorHolderEl.firstChild);
                 }

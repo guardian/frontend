@@ -11,7 +11,7 @@ import { getBreakpoint } from 'lib/detect';
 
 const renderBlock = (state: Object): Promise<void> =>
     fastdom
-        .write(() => {
+        .mutate(() => {
             state.$el.css('height', '');
         })
         .then(() => {
@@ -19,7 +19,7 @@ const renderBlock = (state: Object): Promise<void> =>
                 return fastdom
                     .measure(() => state.$el.height())
                     .then(height =>
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             state.$el.css('height', height);
                         })
                     );

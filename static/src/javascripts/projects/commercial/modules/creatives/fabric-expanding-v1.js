@@ -67,7 +67,7 @@ class FabricExpandingV1 {
         switch (this.params.backgroundImagePType) {
             case 'split':
                 scrollAmount = bottomScroll + topScroll;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $('.ad-exp--expand-scrolling-bg', this.adSlot).css({
                         'background-repeat': 'no-repeat',
                         'background-position': `50%${scrollAmount}%`,
@@ -76,7 +76,7 @@ class FabricExpandingV1 {
                 break;
             case 'fixed':
                 scrollAmount = -adSlotTop;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $('.ad-exp--expand-scrolling-bg', this.adSlot).css(
                         'background-position',
                         `50%${scrollAmount}px`
@@ -84,7 +84,7 @@ class FabricExpandingV1 {
                 });
                 break;
             case 'fixed matching fluid250':
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $('.ad-exp--expand-scrolling-bg', this.adSlot).addClass(
                         'ad-exp--expand-scrolling-bg-fixed'
                     );
@@ -92,7 +92,7 @@ class FabricExpandingV1 {
                 break;
             case 'parallax':
                 scrollAmount = Math.ceil(adSlotTop * 0.3) + 20;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $('.ad-exp--expand-scrolling-bg', this.adSlot).addClass(
                         'ad-exp--expand-scrolling-bg-parallax'
                     );
@@ -121,7 +121,7 @@ class FabricExpandingV1 {
             if (!local.get(`gu.commercial.expandable.${itemIdArray[1]}`)) {
                 // expires in 1 week
                 const week = 1000 * 60 * 60 * 24 * 7;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     local.set(
                         `gu.commercial.expandable.${itemIdArray[1]}`,
                         true,
@@ -138,7 +138,7 @@ class FabricExpandingV1 {
                     this.initialExpandCounter = true;
                 });
             } else if (this.isClosed) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $('.ad-exp__open-chevron').addClass('chevron-up');
                 });
             }
@@ -265,7 +265,7 @@ class FabricExpandingV1 {
                 this.stopVideo(1000);
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $('.ad-exp__close-button').toggleClass('button-spin');
                 $('.ad-exp__open-chevron')
                     .removeClass('chevron-up')
@@ -288,7 +288,7 @@ class FabricExpandingV1 {
             mediator.on('window:throttledResize', this.updateBgPosition);
         }
 
-        return fastdom.write(function() {
+        return fastdom.mutate(function() {
             this.$ad = $('.ad-exp--expand', $fabricExpandingV1).css(
                 'height',
                 this.closedHeight

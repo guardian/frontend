@@ -21,7 +21,7 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     const playerEl = player.el();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         Array.from(playerEl.querySelectorAll('.vjs-tech')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });

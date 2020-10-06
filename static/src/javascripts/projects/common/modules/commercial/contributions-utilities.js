@@ -504,7 +504,7 @@ const makeEpicABTestVariant = (
 
                         emitBeginEvent(trackingCampaignId);
 
-                        return fastdom.write(() => {
+                        return fastdom.mutate(() => {
                             const targets = getTargets('.submeta');
 
                             setupClickHandling(

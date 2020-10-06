@@ -39,7 +39,7 @@ const handleCompletion = (): void => {
 
             // if we find a message for your total show it, and exit
             if (bucketMessage) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     bucketMessage.style.display = 'block';
                 });
                 bean.off(document, 'click', onClick);

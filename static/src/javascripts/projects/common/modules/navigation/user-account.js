@@ -12,7 +12,7 @@ const updateCommentLink = (commentItems): void => {
                     commentItem.querySelector('.js-add-comment-activity-link')
                 )
                 .then(commentLink =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         commentItem.classList.remove('u-h');
                         commentLink.setAttribute(
                             'href',
@@ -44,7 +44,7 @@ const showMyAccountIfNecessary = (): void => {
         .then(els => {
             const { signIns, accountActionsLists, commentItems } = els;
             return fastdom
-                .write(() => {
+                .mutate(() => {
                     signIns.forEach(signIn => {
                         signIn.remove();
                     });

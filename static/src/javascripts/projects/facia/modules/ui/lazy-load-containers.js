@@ -41,7 +41,7 @@ export const lazyLoadContainers = (): void => {
 
                 containers = containersInRange.out;
 
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     containersInRange.in.forEach(displayContainer);
                 });
             });

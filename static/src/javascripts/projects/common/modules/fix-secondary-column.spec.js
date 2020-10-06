@@ -62,7 +62,7 @@ describe('fixSecondaryColumn when showcase element is present', () => {
         jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(880));
 
         fastdom
-            .write(() => {
+            .mutate(() => {
                 fixSecondaryColumn();
             })
             .then(() => {

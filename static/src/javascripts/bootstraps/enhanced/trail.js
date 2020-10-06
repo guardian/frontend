@@ -165,7 +165,7 @@ const repositionComments = () => {
         fastdom
             .measure(() => $('.js-comments'))
             .then($comments =>
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $comments.appendTo(qwery('.js-repositioned-comments'));
                     if (window.location.hash === '#comments') {
                         const top = $comments.offset().top;

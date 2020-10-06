@@ -8,7 +8,7 @@ Before             |  After
 
 ## Fastdom
 
-**Do not use fastdom** when inserting elements with steady page. The utility uses fastdom under the hood to read and write where required. It batches the insertion of elements, so that if multiple elements are queued in the same animation frame they will be inserted in the same fastdom.write and the position scrolled once to prevent excessive page jumping.
+**Do not use fastdom** when inserting elements with steady page. The utility uses fastdom under the hood to read and write where required. It batches the insertion of elements, so that if multiple elements are queued in the same animation frame they will be inserted in the same fastdom.mutate and the position scrolled once to prevent excessive page jumping.
 
 It is not a direct replacement for fastdom as it requires the context of the element being passed in, in the form of its measurable container - the height of which must be the change of scroll position.
 

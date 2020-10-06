@@ -153,14 +153,14 @@ const toggleMenu = (): void => {
                     return docRect.right - rect.right + rect.width / 2;
                 })
                 .then(marginRight =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         menu.style.marginRight = `${marginRight}px`;
                     })
                 );
         };
         const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
         const removeEnhancedMenuMargin = (): Promise<void> =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 menu.style.marginRight = '';
             });
 
@@ -232,7 +232,7 @@ const toggleMenu = (): void => {
         }
     };
 
-    fastdom.write(update);
+    fastdom.mutate(update);
 };
 
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
@@ -253,7 +253,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
             const expandedAttr = isOpen ? 'false' : 'true';
             const hiddenAttr = isOpen ? 'true' : 'false';
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 if (trigger) {
                     trigger.setAttribute('aria-expanded', expandedAttr);
                 }
@@ -423,7 +423,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             enhanced[button.id] = true;
         };
 
-        fastdom.write(enhance);
+        fastdom.mutate(enhance);
     });
 };
 
@@ -495,7 +495,7 @@ const showMoreButton = (): void => {
 
                     // +1 to compensate for the border top on the subnav
                     if (subnavRect.top + 1 === lastChildRect.top) {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             if (moreButton) {
                                 moreButton.classList.add('is-hidden');
                             }
@@ -511,7 +511,7 @@ const toggleSubnavSections = (moreButton: HTMLElement): void => {
         .measure(() => document.querySelector('.js-expand-subnav'))
         .then(subnav => {
             if (subnav) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     const isOpen = subnav.classList.contains(
                         'subnav--expanded'
                     );

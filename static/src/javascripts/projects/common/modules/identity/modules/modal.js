@@ -13,7 +13,7 @@ const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
             buttonEls
                 .filter(buttonEl => !buttonEl.dataset.closeIsBound)
                 .map(buttonEl =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         buttonEl.dataset.closeIsBound = true;
                         buttonEl.addEventListener('click', () => {
                             modalEl.classList.remove('identity-modal--active');

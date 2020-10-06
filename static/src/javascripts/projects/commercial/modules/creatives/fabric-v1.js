@@ -99,7 +99,7 @@ class FabricV1 {
             );
         }
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             this.adSlot.insertAdjacentHTML(
                 'beforeend',
                 fabricV1Tpl({
@@ -167,7 +167,7 @@ class FabricV1 {
         if (this.scrollType === 'parallax') {
             const scrollAmount =
                 Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.scrollingBg) {
                     this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
                     this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
@@ -179,7 +179,7 @@ class FabricV1 {
                 ((window.innerHeight - adRect.bottom + adRect.height / 2) /
                     window.innerHeight) *
                 100;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.scrollingBg) {
                     this.scrollingBg.style.backgroundPosition = `50% ${vPos}%`;
                 }
@@ -197,7 +197,7 @@ class FabricV1 {
         ) {
             inViewB =
                 getViewport().height > this.adSlot.getBoundingClientRect().top;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.layer2) {
                     this.layer2.classList.add(
                         `ad-scrolling-text-hide${

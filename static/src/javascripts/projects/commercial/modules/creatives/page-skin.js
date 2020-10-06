@@ -16,7 +16,7 @@ const pageSkin = (): void => {
 
     const togglePageSkinActiveClass = (): void => {
         if (bodyEl) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 bodyEl.classList.toggle(
                     'has-active-pageskin',
                     isBreakpoint({ min: 'wide' })

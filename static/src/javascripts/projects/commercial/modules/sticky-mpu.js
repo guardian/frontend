@@ -40,7 +40,7 @@ const stickyCommentsMpu = (adSlot: HTMLElement) => {
     fastdom
         .measure(() => referenceElement.offsetHeight - 600)
         .then(newHeight =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;
             })
         )
@@ -80,7 +80,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
     fastdom
         .measure(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;
             })
         )

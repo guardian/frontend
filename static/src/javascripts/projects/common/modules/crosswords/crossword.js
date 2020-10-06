@@ -89,7 +89,7 @@ class Crossword extends Component<*, CrosswordState> {
             const stickyClueWrapperOffset = $stickyClueWrapper.offset();
             const scrollY = window.scrollY;
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 // Clear previous state
                 $stickyClueWrapper
                     .css('top', '')
@@ -328,7 +328,7 @@ class Crossword extends Component<*, CrosswordState> {
             fastdom.measure(() => {
                 // Our grid is a square, set the height of the grid wrapper
                 // to the width of the grid wrapper
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$gridWrapper.css(
                         'height',
                         `${this.$gridWrapper.offset().width}px`
