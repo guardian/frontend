@@ -10,7 +10,6 @@ import {
     showPrivacySettingsCMPModule,
     addOverlayVariantCSS,
     setGatePageTargeting,
-    gateBorderFix,
     addCSSOnOpinion,
     incrementUserDismissedGateCount
 } from '../../helper';
@@ -84,9 +83,6 @@ export const designShow: ({
             guUrl,
         }),
         handler: ({ articleBody, shadowArticleBody }) => {
-            // fix the border on the faqlinks
-            gateBorderFix();
-
             addCSSOnOpinion({
                 element: shadowArticleBody,
                 selector: '.signin-gate__faqlinks--var',
