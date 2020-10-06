@@ -2,7 +2,7 @@
 @(page: model.Page, emailType: String, listName: String, emailEmbedData: EmailEmbed)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @emailEmbed(page) {
-    @fragments.email.signup.emailSignUp(
+    @fragments.email.signup.emailSignUpNewDesign(
         emailType,
         listName,
         emailEmbedData

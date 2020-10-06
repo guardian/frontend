@@ -1,0 +1,126 @@
+/* Newsletter Description */
+
+$base-margin: 8px;
+$desktop-img-size: 200px;
+$mobile-img-size: 100px;
+
+.newsletter-embed {
+    * {
+        box-sizing: border-box;
+    }
+    height: 100%;
+    overflow: hidden;
+}
+.newsletter-embed__image {
+    max-width: $mobile-img-size;
+    float: left;
+    margin: $base-margin;
+}
+
+.newsletter-embed__image img {
+    width: 100%;
+}
+
+.newsletter-embed__body {
+    margin: $base-margin;
+}
+
+.newsletter-embed__summary {
+    font-family: 'Guardian Egyptian Web', Georgia, serif;
+}
+
+.newsletter-embed__headline {
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    margin: 0 0 $base-margin;
+}
+
+.newsletter-embed__description {
+    /* Small hack to get description to go under image if close to fitting under */
+    padding-top: 2px;
+    font-size: 16px;
+}
+
+/* Sign up Form */
+.newsletter-embed__form {
+    clear: left;
+    font-size: 16px;
+    font-family: 'Guardian Text Sans Web', SansSerif;
+}
+
+.newsletter-embed__form-wrapper {
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+    'label label . '
+    'input input button'
+    'privacy-link privacy-link .';
+    justify-items: start;
+}
+
+.newsletter-embed__form label {
+    grid-area: label;
+    align-self: end;
+    font-weight: bold;
+}
+
+.newsletter-embed__input {
+    border: 2px solid #808080;
+    background: #ffffff;
+    outline: 0;
+    grid-area: input;
+    width: 100%;
+    height: 2rem;
+}
+
+
+.newsletter-embed__submit-button {
+    color: #ffffff;
+    background-color: #000000;
+    border: 0;
+    width: 75px;
+    border-radius: 62.5rem;
+    grid-area: button;
+    margin-left: 15px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.newsletter-embed__privacy-policy {
+    grid-area: privacy-link;
+    align-self: end;
+    font-size: 12px;
+    font-family: 'Guardian Text Sans', Sans-Serif;
+    font-weight: normal;
+}
+
+
+/* Desktop View */
+
+@media screen and (min-device-width: 600px) and (-webkit-min-device-pixel-ratio: 1) {
+
+    .newsletter-embed__image {
+        max-width: $desktop-img-size;
+    }
+
+    .newsletter-embed__form {
+        clear: none;
+        margin: auto;
+    }
+
+    .newsletter-embed__headline {
+        font-size: 30px;
+    }
+
+    .newsletter-embed__image + .newsletter-embed__body {
+        min-height: calc(#{$base-margin} + #{$desktop-img-size});
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+}

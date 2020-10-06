@@ -13,6 +13,7 @@
     // adjustments, off grid, based on element font-size
     width: calc(100% + #{$rounded-adjustment});
     margin-left: -#{$rounded-adjustment / 2};
+    min-height: 260px; // TODO: remove and replace with javascript
 }
 
 .email-sub__form {
