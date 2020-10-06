@@ -1,30 +1,39 @@
 @import '../_vars';
 @import '../_mixins';
 
-//specific vars for colours for dynamo
-$story-package-container-colour: #e0e4e8;
-$story-package-card-colour: #041f4a;
-$container-title: $story-package-card-colour;
-$story-package-dynamic-card-text: $story-package-card-colour;
+//specific vars for dynamo
 $fc-item-gutter: $gs-gutter / 4;
 $block-height: 58px; // Note: duplicated from _item.scss
 
+// Defaults Styles
+.fc-item {
+    &.fc-item--is-dynamic-card {
+        background-color: #ffffff;
+    }
+
+    &.fc-item--is-dynamic-card .fc-item__title,
+    &.fc-item--is-dynamic-card.fc-item--live .fc-item__headline {
+        color: #121212;
+    }
+
+    &.fc-item--is-dynamic-card .fc-item__kicker,
+    &.fc-item--is-dynamic-card.fc-item--live .fc-item__kicker {
+        color: #c70000;
+    }
+
+    &.fc-item--is-dynamic-card .live-pulse-icon::before,
+    &.fc-item--is-dynamic-card.fc-item--live .live-pulse-icon::before {
+        background-color: #c70000;
+    }
+
+    &.fc-item--is-dynamic-card.fc-item--has-floating-sublinks .fc-sublink {
+        background-color: #ffffff;
+        color: #000000;
+    }
+}
+
 @mixin pillar-override($tone, $colour, $dark-colour) {
     .fc-item--pillar-#{$tone} {
-        .fc-item__kicker,
-        .rich-link__kicker,
-        .fc-sublink__kicker,
-        .fc-item__byline {
-            color: $colour;
-        }
-
-        .live-pulse-icon:before {
-            background-color: $colour;
-        }
-
-        .inline-garnett-quote {
-            fill: $dark-colour;
-        }
 
         &.fc-item--type-comment {
             .fc-item__meta {
@@ -34,26 +43,9 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-item__standfirst-wrapper .fc-item__meta {
                 background-image: none;
             }
-
-            &.fc-item--type-comment:not(.fc-item--pillar-special-report):not(.fc-item--dynamic-layout) .fc-item__container.u-faux-block-link--hover {
-                background-color: darken($story-package-card-colour, 5%);
-            }
         }
 
-        &.fc-item--dynamic-layout {
-            .fc-item__kicker,
-            .rich-link__kicker,
-            .fc-item__byline {
-                color: $dark-colour;
-            }
-
-            .inline-garnett-quote {
-                fill: $dark-colour;
-            }
-
-            .fc-item__container.u-faux-block-link--hover {
-                background-color: darken($story-package-container-colour, 5%);
-            }
+        &.fc-item--is-dynamic-card {
 
             &.fc-item:not(.fc-item--pillar-special-report) {
                 .fc-sublink--pillar-#{$tone} {
@@ -67,6 +59,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-item__content--above {
                 padding: 6px 0;
             }
+
             .fc-item__content--below {
                 @include mq($until: tablet) {
                     padding: 0;
@@ -74,29 +67,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        .fc-item__container:before {
-            background-color: #ffffff;
-        }
-
         &.fc-item.fc-item--full-media-100-tablet .fc-item__title {
             background-image: none;
         }
     }
-
-    .fc-sublink--pillar-#{$tone} .fc-sublink__kicker {
-        color: $colour;
-    }
 }
 
 .fc-container--story-package {
-
-    background-color: $story-package-container-colour;
-
-    .facia-snap {
-        @include mq($from: desktop) {
-            border-bottom: 1px solid #929698
-        }
-    }
 
     .fc-container__body {
         position: relative;
@@ -124,10 +101,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
     }
 
-    .fc-slice__item + .fc-slice__item:before {
-        border-left-color: #929698; // This colour does not exist (in the palette)
-    }
-
     .fc-container__toggle {
         display: none;
     }
@@ -136,7 +109,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
         padding-left: calc((#{$gs-baseline} / 2) - 2px);
         margin-bottom: $gs-baseline / 2;
         width: 100%;
-        border-bottom: 1px solid #d6d6d6;
 
         @include mq($from: leftCol) {
             border-bottom: 0;
@@ -152,7 +124,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
         & > span,
         h2.fc-container__title__text {
-            color: $container-title;
+            //color: $container-title;
             display: inline-block;
             line-height: 24px;
             top: 0;
@@ -182,10 +154,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
     }
 
-    .fc-container__header__description {
-        color: $story-package-dynamic-card-text;
-    }
-
     .fc-container__inner {
         border-top: 1px solid #929698;
 
@@ -194,53 +162,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
     }
 
-    .fc-item--pillar-news.fc-item--type-analysis.fc-item--full-media-75-tablet .fc-item__title {
-        background-image: none;
-    }
-
-    //These need to be this specific as elsewhere in pillars.scss these are targeted using 3 selectors
-    .fc-item,
-    .fc-item.fc-item--pillar-opinion,
-    .fc-item.fc-item--pillar-news.fc-item--type-comment,
-    .fc-item.fc-item--pillar-opinion.fc-item--type-comment,
-    .fc-item.fc-item--pillar-sport.fc-item--type-comment,
-    .fc-item.fc-item--pillar-lifestyle.fc-item--type-comment,
-    .fc-item.fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item.fc-item--type-feature {
-        &:not(.fc-item--dynamic-layout) {
-            background-color: $story-package-card-colour;
-
-            .fc-item__headline {
-                color: #ffffff;
-            }
-
-            &:hover {
-                background-color: darken($story-package-card-colour, 5%);
-
-                .fc-trail__count--commentcount {
-                    background-color: darken($story-package-card-colour, 5%);
-                }
-            }
-        }
-
-        .fc-trail__count--commentcount {
-            background-color: $story-package-card-colour;
-        }
-    }
-
-    .fc-item--pillar-news.fc-item--type-comment,
-    .fc-item--pillar-opinion.fc-item--type-comment,
-    .fc-item--pillar-sport.fc-item--type-comment,
-    .fc-item--pillar-arts.fc-item--type-comment,
-    .fc-item--pillar-lifestyle.fc-item--type-comment {
-        .fc-item__meta {
-            background-image: none;
-        }
-
-        .fc-item__standfirst-wrapper .fc-item__meta {
-            background-image: none;
-        }
-    }
 
     // I'm not sure this is at all reliable, or a good idea, but until I figure
     // out what classes I want to add in Scala this gets things moving:
@@ -278,7 +199,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             @include f-textSans;
             background-color: transparent;
             border-top: 0;
-            border-bottom: $border-bottom-width solid $story-package-card-colour;
             padding-left: 20px;
             position: relative;
         }
@@ -290,31 +210,10 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         .fc-item__liveblog-block__text:after {
-            color: mix(#ffffff, $story-package-card-colour, 92%);
-            background-color: $story-package-card-colour;
-            box-shadow: -5px 0 5px -.04px $story-package-card-colour;
             bottom: 1.2px;
             font-size: 20px;
             line-height: 13px;
             padding-right: 24px;
-        }
-
-        &:hover {
-            &.fc-item--three-quarters-tablet, &.fc-item--full-media-75-tablet {
-                .fc-item__liveblog-blocks__inner {
-                    background-color: darken($story-package-card-colour, 5%);
-                }
-            }
-
-            .fc-item__liveblog-block__text:after {
-                color: mix(#ffffff, $story-package-card-colour, 92%);
-                background-color: darken($story-package-card-colour, 5%);
-                box-shadow: -5px 0 5px -2px darken($story-package-card-colour, 5%);
-            }
-
-            .fc-item__liveblog-block__text {
-                border-bottom: $border-bottom-width solid darken($story-package-card-colour, 5%);
-            }
         }
 
         .fc-item__liveblog-blocks--visible {
@@ -374,21 +273,13 @@ $block-height: 58px; // Note: duplicated from _item.scss
         // and the live update blocks with a dark blue background. There's a little extra styling here to
         // ensure hover states are correct.
         &.fc-item--full-media-75-tablet {
-            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
-                background-color: darken($story-package-card-colour, 5%);
-            }
 
             .fc-item__liveblog-blocks__inner {
-                background-color: $story-package-card-colour;
                 margin-left: -5px;
                 margin-right: 5px;
                 padding-left: 5px;
                 position: absolute;
                 bottom: 0;
-
-                &:hover {
-                    background-color: darken($story-package-card-colour, 5%);
-                }
             }
 
             .fc-item__standfirst-wrapper {
@@ -397,17 +288,8 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
 
         &.fc-item--three-quarters-tablet {
-            .fc-item__container.u-faux-block-link--hover .fc-item__liveblog-blocks__inner {
-                background-color: darken($story-package-card-colour, 5%);
-            }
-
             .fc-item__liveblog-blocks__inner {
-                background-color: $story-package-card-colour;
                 padding-left: 5px;
-
-                &:hover {
-                    background-color: darken($story-package-card-colour, 5%);
-                }
             }
         }
 
@@ -431,53 +313,11 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
 
             .fc-item__liveblog-block__time {
-                color: $story-package-card-colour;
                 display: inline;
             }
 
             .fc-item__liveblog-block__text {
-                color: $story-package-card-colour;
                 padding-right: 0; // Remove padding in this layout so that we only use the gutter padding from the block
-            }
-
-            .fc-item__liveblog-block__text {
-                border-bottom-color: $story-package-container-colour;
-
-                // Ellipses
-                &:after {
-                    color: $story-package-card-colour;
-                    background-color: $story-package-container-colour;
-                    box-shadow: -5px 0 5px -2px $story-package-container-colour;
-                }
-            }
-
-            &:hover {
-                .fc-item__liveblog-block__text {
-                    border-bottom-color: darken($story-package-container-colour, 5%);
-
-                    // Ellipses
-                    &:after {
-                        background-color: darken($story-package-container-colour, 5%);
-                        box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
-                    }
-                }
-            }
-
-            .u-faux-block-link--hover {
-                .fc-item__liveblog-block__text {
-                    border-bottom-color: darken($story-package-container-colour, 5%);
-
-                    // Ellipses
-                    &:after {
-                        background-color: darken($story-package-container-colour, 5%);
-                        box-shadow: -5px 0 5px -2px darken($story-package-container-colour, 5%);
-                    }
-                }
-            }
-
-            // Circle
-            .fc-item__liveblog-block__time:before {
-                border: $thin-border solid $news-bright;
             }
 
             // Connector line
@@ -487,63 +327,21 @@ $block-height: 58px; // Note: duplicated from _item.scss
         }
     }
 
-    .fc-item__container.u-faux-block-link--hover {
-        background-color: darken($story-package-card-colour, 5%);
-    }
-
-    .fc-item__standfirst {
-        color: #ffffff;
-    }
-
-    .fc-sublink__title {
-        color: #ffffff;
-    }
-
-    &.fc-item--dynamic-layout {
-        .fc-item__standfirst {
-            color: $story-package-dynamic-card-text;
-        }
-
-        .fc-sublink__title {
-            color: $story-package-dynamic-card-text;
-        }
-    }
-
-    .treats__list-item {
-        .treats__treat {
-            background-color: $story-package-container-colour;
-            border-color: $special-report-dark;
-            color: $special-report-dark;
-        }
-    }
-
-    .fc-container__header__title>h2 {
-        color: $story-package-dynamic-card-text;
-    }
 
     // 'Dynamic Layout'
     .fc-item__content--above {
         display: none;
     }
 
-    .fc-item--dynamic-layout {
-        background-color: $story-package-container-colour;
-        &.fc-item--type-feature {
-            background-color: $story-package-container-colour;
-        }
+    .fc-item--is-dynamic-card {
 
         // The white line above the story
         .fc-item__container:before {
             display: none; // Remove existing on container
         }
 
-        .fc-item__container.u-faux-block-link--hover {
-            background-color: darken($story-package-container-colour, 5%);
-        }
-
         .fc-item__content:before {
             content: '';
-            background-color: $story-package-dynamic-card-text;
             position: absolute;
             top: 0;
             left: 0;
@@ -585,24 +383,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        &:hover {
-            background-color: darken($story-package-container-colour, 5%);
-
-            .fc-trail__count--commentcount {
-                background-color: darken($story-package-container-colour, 5%);
-            }
-        }
-
-        .fc-trail__count--commentcount {
-            background-color: $story-package-container-colour;
-        }
-
-        .fc-item__headline,
-        .fc-item__standfirst,
-        .fc-sublink__title {
-            color: $story-package-dynamic-card-text;
-        }
-
         // Flip the headline and image!
         &.fc-item--three-quarters-tall-tablet,
         &.fc-item--full-media-100-tablet {
@@ -642,10 +422,6 @@ $block-height: 58px; // Note: duplicated from _item.scss
             }
         }
 
-        &.fc-item--type-live.fc-item--pillar-news .fc-sublink__link {
-            color: $story-package-dynamic-card-text;
-        }
-
         // Sublinks
 
         @mixin fc-sublinks--horizontal {
@@ -658,25 +434,20 @@ $block-height: 58px; // Note: duplicated from _item.scss
             .fc-sublink {
                 flex: 1 1 100%;
 
-                &+* {
+                & + * {
                     margin-left: $gs-gutter / 2;
                 }
             }
         }
 
-        &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
-        &.fc-item--full-media-100-tablet,
-        &.fc-item--full-media-100-tablet,
-        &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
-        &.fc-item--three-quarters-tall-tablet {
+        &.fc-item--has-floating-sublinks {
 
             .fc-sublink {
                 padding: $gs-gutter / 4 $gs-gutter / 4 $gs-gutter / 2;
-                background-color: $story-package-dynamic-card-text;
                 margin-bottom: 0;
 
                 @include mq($from: tablet) {
-                    background-color: rgba(4, 31, 74, .8);
+                    background-color: rgba(0, 0, 0, .8);
                     border-left: 0;
                     border-bottom: 0;
                     max-width: 33%;
@@ -706,11 +477,7 @@ $block-height: 58px; // Note: duplicated from _item.scss
 
         // Sublink desktop widths
         @include mq($from: tablet) {
-            &.fc-item--full-media-75-tablet.fc-item--has-sublinks-3,
-            &.fc-item--full-media-100-tablet,
-            &.fc-item--full-media-100-tablet,
-            &.fc-item--three-quarters-tablet.fc-item--has-sublinks-2,
-            &.fc-item--three-quarters-tall-tablet {
+            &.fc-item--has-floating-sublinks {
                 .fc-sublink {
                     margin-bottom: $gs-baseline;
                 }
