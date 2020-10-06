@@ -203,7 +203,7 @@ const heightSetter = ($wrapper: bonzo, reset: boolean): (() => void) => {
     };
 
     const setHeight = () => {
-        fastdom.defer(() => {
+        fastdom.mutate(() => {
             $wrapper.css('min-height', wrapperHeight);
         });
     };
