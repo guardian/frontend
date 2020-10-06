@@ -47,7 +47,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),
 }));
 
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/libs', () => ({
     loadScript: () => Promise.resolve(),
 }));
 

@@ -6,7 +6,7 @@ import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 
 const adblockInUse: any = adblockInUse_;
 

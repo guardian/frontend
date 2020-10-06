@@ -12,7 +12,7 @@ import {
 } from '../../helper';
 
 // define the variant name here
-const variant = 'main-control-1';
+const variant = 'main-control-2';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {

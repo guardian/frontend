@@ -11,7 +11,8 @@ import {
     addOverlayVariantCSS,
     setGatePageTargeting,
     gateBorderFix,
-    addCSSOnOpinion
+    addCSSOnOpinion,
+    incrementUserDismissedGateCount
 } from '../../helper';
 
 // add the html template as the return of the function below
@@ -136,6 +137,13 @@ export const designShow: ({
                         name: abTest.name,
                         variant: abTest.variant,
                     });
+
+                    // increment gate dismissed count
+                    incrementUserDismissedGateCount(
+                        abTest.variant,
+                        abTest.name,
+                        componentName,
+                    );
                 },
             });
 

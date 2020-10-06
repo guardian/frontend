@@ -11,6 +11,11 @@ import com.gu.facia.client.models.{
 }
 import layout._
 import layout.slices._
+import layout.cards
+import model.pressed.{Audio, Gallery, Video, SpecialReport}
+import slices.{Dynamic, DynamicSlowMPU}
+import play.api.mvc.RequestHeader
+import model.Pillar.RichPillar
 import model.ContentDesignType.RichContentDesignType
 import model.Pillar.RichPillar
 import model.pressed.{Audio, Gallery, SpecialReport, Video}
@@ -18,6 +23,7 @@ import play.api.mvc.RequestHeader
 import views.support.Commercial.isAdFree
 
 object GetClasses {
+
   def forHtmlBlob(item: HtmlBlob): String = {
     RenderClasses(
       Seq(
@@ -54,7 +60,8 @@ object GetClasses {
         ("fc-item--is-commentable", item.discussionSettings.isCommentable),
         ("fc-item--is-media-link", item.isMediaLink),
         ("fc-item--has-video-main-media", item.hasVideoMainMedia),
-        ("fc-item--dynamic-layout", isDynamic && item.cardTypes.canBeDynamicLayout && !item.cutOut.isDefined),
+        ("fc-item--is-dynamic-card", isDynamic && item.cardTypes.canBeDynamicLayout && item.cutOut.isEmpty),
+        ("fc-item--has-floating-sublinks", item.hasFloatingSublinks(isDynamic)),
       ) ++ item.snapStuff.map(_.cssClasses.map(_ -> true).toMap).getOrElse(Map.empty)
         ++ mediaTypeClass(item).map(_ -> true)
         ++ adFeatureMediaClass(item).map(_ -> true),
@@ -169,7 +176,7 @@ object GetClasses {
 
   def paletteClasses(container: Container, metadata: Seq[Metadata]): Option[Seq[String]] = {
     container match {
-      case Fixed(_) | Dynamic(DynamicSlow) | Dynamic(DynamicFast) | Dynamic(DynamicSlowMPU(_, _)) =>
+      case Fixed(_) | Dynamic(_) =>
         primaryPaletteClass(metadata).map(Seq(_, "fc-container--has-palette"))
       case _ => None
     }

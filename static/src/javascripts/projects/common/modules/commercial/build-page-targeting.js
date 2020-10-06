@@ -110,7 +110,7 @@ const abParam = (): Array<string> => {
 };
 
 const getVisitedValue = (): string => {
-    const visitCount: number = local.get('gu.alreadyVisited') || 0;
+    const visitCount: number = parseInt(local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();

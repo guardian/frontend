@@ -1,5 +1,10 @@
 // @flow
-import { hasUserDismissedGateInWindow, isCountry } from './helper';
+import {
+    hasUserDismissedGateInWindow,
+    hasUserDismissedGateMoreThanCount,
+    incrementUserDismissedGateCount,
+    isCountry,
+} from './helper';
 
 jest.mock('bean', () => ({
     record: jest.fn(),
@@ -7,6 +12,7 @@ jest.mock('bean', () => ({
 
 jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => undefined),
+    set: jest.fn(() => undefined),
     remove: jest.fn(),
 }));
 
@@ -84,6 +90,111 @@ describe('Sign In Gate Helper functions', () => {
 
             expect(hasUserDismissedGateInWindow(test)).toBe(false);
             expect(fakeUserPrefs.remove).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe('hasUserDismissedGateMoreThanCount', () => {
+        let userPrefs = {};
+
+        beforeEach(() => {
+            userPrefs = {};
+            fakeUserPrefs.get.mockImplementation(k => userPrefs[k]);
+            fakeUserPrefs.set.mockImplementation((k, v) => {
+                userPrefs[k] = v;
+            });
+        });
+
+        afterEach(() => {
+            fakeUserPrefs.get.mockRestore();
+            fakeUserPrefs.set.mockRestore();
+        });
+
+        it('should depend on the counter incremented by incrementUserDismissedGateCount', () => {
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-1',
+                    'sign-in-gate',
+                    0
+                )
+            ).toBe(false);
+
+            incrementUserDismissedGateCount(
+                'variant-1',
+                'test-1',
+                'sign-in-gate'
+            );
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-1',
+                    'sign-in-gate',
+                    0
+                )
+            ).toBe(true);
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-1',
+                    'sign-in-gate',
+                    1
+                )
+            ).toBe(false);
+
+            incrementUserDismissedGateCount(
+                'variant-1',
+                'test-1',
+                'sign-in-gate'
+            );
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-1',
+                    'sign-in-gate',
+                    1
+                )
+            ).toBe(true);
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-1',
+                    'sign-in-gate',
+                    2
+                )
+            ).toBe(false);
+
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-2',
+                    'test-1',
+                    'sign-in-gate',
+                    0
+                )
+            ).toBe(false);
+        });
+
+        it('should not be affected by incrementing other variants or tests', () => {
+            incrementUserDismissedGateCount(
+                'variant-1',
+                'test-1',
+                'sign-in-gate'
+            );
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-2',
+                    'test-1',
+                    'sign-in-gate',
+                    0
+                )
+            ).toBe(false);
+            expect(
+                hasUserDismissedGateMoreThanCount(
+                    'variant-1',
+                    'test-2',
+                    'sign-in-gate',
+                    0
+                )
+            ).toBe(false);
         });
     });
 
