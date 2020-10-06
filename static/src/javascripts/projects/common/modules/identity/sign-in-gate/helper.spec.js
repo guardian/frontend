@@ -22,7 +22,7 @@ jest.mock('lib/config', () => ({
 
 jest.mock('lib/storage', () => ({
     local: {
-        get: jest.fn(() => [{}]),
+        get: jest.fn(() => undefined),
     },
 }));
 
