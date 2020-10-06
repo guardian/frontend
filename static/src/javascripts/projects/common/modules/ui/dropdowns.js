@@ -25,7 +25,7 @@ const init = (): void => {
 
         if (container) {
             fastdom
-                .read(() => {
+                .measure(() => {
                     const documentElement: ?HTMLElement =
                         document.documentElement;
                     const content = container.querySelector(`.${contentCN}`);

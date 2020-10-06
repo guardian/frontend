@@ -147,7 +147,7 @@ const toggleMenu = (): void => {
             }
 
             return fastdom
-                .read(() => {
+                .measure(() => {
                     const docRect = body.getBoundingClientRect();
                     const rect = menuToggle.getBoundingClientRect();
                     return docRect.right - rect.right + rect.width / 2;
@@ -241,7 +241,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
     fastdom
-        .read(() => menuAndTriggerEls)
+        .measure(() => menuAndTriggerEls)
         .then(els => {
             const { menu, trigger } = els;
 
@@ -290,7 +290,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
 const returnFocusToButton = (btnId: string): void => {
     fastdom
-        .read(() => document.getElementById(btnId))
+        .measure(() => document.getElementById(btnId))
         .then(btn => {
             if (btn) {
                 btn.focus();
@@ -363,7 +363,7 @@ const menuKeyHandlers = {
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
@@ -467,7 +467,7 @@ const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
 const showMoreButton = (): void => {
     fastdom
-        .read(() => {
+        .measure(() => {
             const moreButton = document.querySelector('.js-show-more-button');
             const subnav = document.querySelector('.js-expand-subnav');
             const subnavList = document.querySelector(
@@ -508,7 +508,7 @@ const showMoreButton = (): void => {
 
 const toggleSubnavSections = (moreButton: HTMLElement): void => {
     fastdom
-        .read(() => document.querySelector('.js-expand-subnav'))
+        .measure(() => document.querySelector('.js-expand-subnav'))
         .then(subnav => {
             if (subnav) {
                 fastdom.write(() => {

@@ -244,7 +244,7 @@ const renderToDom = (button: Button): void => {
 };
 
 export const init = (): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const containers = qwery('.js-container--fc-show-more').map(bonzo);
         const buttons = containers
             .map(container => {

@@ -17,11 +17,11 @@ const copyMegaNavMenu = (): Promise<void> => {
     let megaNav;
 
     return fastdom
-        .read(() => $('.js-mega-nav'))
+        .measure(() => $('.js-mega-nav'))
         .then(elem => {
             megaNav = elem;
 
-            return fastdom.read(() => $('.js-mega-nav-placeholder'));
+            return fastdom.measure(() => $('.js-mega-nav-placeholder'));
         })
         .then(placeholder => {
             const megaNavCopy = $.create(megaNav.html());
@@ -40,7 +40,7 @@ const copyMegaNavMenu = (): Promise<void> => {
 
 const replaceAllSectionsLink = (): Promise<void> =>
     fastdom
-        .read(() => $('.js-navigation-header .js-navigation-toggle'))
+        .measure(() => $('.js-navigation-header .js-navigation-toggle'))
         .then(elems =>
             fastdom.write(() => {
                 elems.attr('href', '#nav-allsections');
@@ -49,7 +49,7 @@ const replaceAllSectionsLink = (): Promise<void> =>
 
 const addOverflowScrollTouch = (): Promise<void> =>
     fastdom
-        .read(() => $('.navigation__scroll'))
+        .measure(() => $('.navigation__scroll'))
         .then(navScroll => {
             if (navScroll) {
                 return fastdom.write(() => {

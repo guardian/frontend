@@ -5,7 +5,7 @@ export const getCsrfTokenFromElement = (
     originalEl: ?HTMLElement
 ): Promise<string> =>
     fastdom
-        .read(() => {
+        .measure(() => {
             if (!originalEl) return Promise.reject();
             const closestFormEl: ?Element = originalEl.closest('form');
             if (closestFormEl) {

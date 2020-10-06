@@ -117,7 +117,7 @@ const addScrollHandler = (): void => {
     const onScroll = (): void => {
         if (!scrollRunning) {
             scrollRunning = true;
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 mediator.emitEvent('window:throttledScroll');
                 scrollRunning = false;
             });
@@ -193,7 +193,7 @@ const bootStandard = (): void => {
         Adds a global window:throttledScroll event to mediator, which throttles
         scroll events until there's a spare animationFrame.
         Callbacks of all listeners to window:throttledScroll are run in a
-        fastdom.read, meaning they can all perform DOM reads for free
+        fastdom.measure, meaning they can all perform DOM reads for free
         (after the first one that needs layout triggers it).
         However, this means it's VITAL that all writes in callbacks are
         delegated to fastdom.

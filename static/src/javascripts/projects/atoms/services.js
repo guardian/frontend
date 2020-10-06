@@ -46,7 +46,7 @@ const services: Services = {
     ophan,
     dom: {
         write: promisify(fastdom.write),
-        read: promisify(fastdom.read),
+        read: promisify(fastdom.measure),
     },
     viewport,
     consent: {

@@ -75,7 +75,7 @@ const maybeAnimateBlocks = (
     immediate?: boolean
 ): Promise<boolean> =>
     fastdomPromise
-        .read(() => el.getBoundingClientRect().top)
+        .measure(() => el.getBoundingClientRect().top)
         .then(vPosition => {
             const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
 
@@ -232,7 +232,7 @@ const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
 
 const showUpdatesFromLiveBlog = (): Promise<void> =>
     fastdomPromise
-        .read(() => {
+        .measure(() => {
             const elementsById: Map<string, Array<Element>> = new Map();
 
             // For each liveblock block

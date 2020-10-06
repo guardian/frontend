@@ -47,7 +47,7 @@ const getPrefill = (el: HTMLElement): Prefill => ({
 
 const bindBlockList = (el): void => {
     fastdom
-        .read(() => getPrefill(el))
+        .measure(() => getPrefill(el))
         .then(prefill =>
             fastdom.write(() => {
                 render(

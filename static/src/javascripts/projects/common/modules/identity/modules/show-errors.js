@@ -16,7 +16,7 @@ type IdentityRenderableError = {
 
 const renderError = (error: IdentityRenderableError): Promise<void> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>
@@ -49,7 +49,7 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
 
 const renderList = (): Promise<void> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>

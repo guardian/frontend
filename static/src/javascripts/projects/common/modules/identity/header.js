@@ -33,7 +33,7 @@ const bindNavToggle = (buttonEl: HTMLElement): void => {
         ev.preventDefault();
 
         fastdom
-            .read(() => document.getElementById(menuElSelector))
+            .measure(() => document.getElementById(menuElSelector))
             .then((menuEl: HTMLElement) => {
                 if (!menuEl) throw new Error(ERR_UNDEFINED_MENU);
                 const watchForOutsideClick = subEv => {

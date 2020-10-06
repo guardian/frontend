@@ -8,7 +8,7 @@ import {
 
 const init = (): void => {
     fastdom
-        .read(() =>
+        .measure(() =>
             document.getElementsByClassName('js-id-send-validation-email')
         )
         .then(elems => {

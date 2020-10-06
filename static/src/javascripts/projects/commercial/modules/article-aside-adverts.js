@@ -36,7 +36,7 @@ export const init = (): Promise<boolean> => {
     }
 
     return fastdom
-        .read(
+        .measure(
             (): [number, number] => [
                 $mainCol.dim().height,
                 $immersiveEls.offset().top - $mainCol.offset().top,

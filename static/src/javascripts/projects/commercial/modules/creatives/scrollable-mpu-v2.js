@@ -155,7 +155,7 @@ class ScrollableMpu {
             );
 
             // update bg position
-            fastdom.read(updateFn);
+            fastdom.measure(updateFn);
 
             mediator.on('window:throttledScroll', updateFn);
             // to be safe, also update on window resize

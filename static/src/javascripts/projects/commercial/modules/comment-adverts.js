@@ -115,7 +115,7 @@ export const initCommentAdverts = (): Promise<boolean> => {
             );
 
             fastdom
-                .read(() => $commentMainColumn.dim().height)
+                .measure(() => $commentMainColumn.dim().height)
                 .then((mainColHeight: number) => {
                     // always insert an MPU/DMPU if the user is logged in, since the
                     // containers are reordered, and comments are further from most-pop

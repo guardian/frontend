@@ -197,7 +197,7 @@ const heightSetter = ($wrapper: bonzo, reset: boolean): (() => void) => {
     let wrapperHeight;
 
     const getHeight = () => {
-        fastdom.read(() => {
+        fastdom.measure(() => {
             wrapperHeight = $wrapper[0].clientHeight;
         });
     };
@@ -231,7 +231,7 @@ const setIframeHeight = (
     callback: () => void
 ): (() => void) => () => {
     fastdom
-        .read(() => iFrameEl.contentWindow.document.body.clientHeight)
+        .measure(() => iFrameEl.contentWindow.document.body.clientHeight)
         .then(height =>
             fastdom.write(() => {
                 iFrameEl.height = `${height}px`;

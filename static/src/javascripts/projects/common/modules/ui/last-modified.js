@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 
 const lastModified = (): void => {
     fastdom
-        .read(() => ({
+        .measure(() => ({
             lastModifiedElm: document.querySelector('.js-lm'),
             webPublicationDateElm: document.querySelector('.js-wpd'),
         }))

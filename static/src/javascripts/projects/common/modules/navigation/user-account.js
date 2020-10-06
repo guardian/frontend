@@ -8,7 +8,7 @@ const updateCommentLink = (commentItems): void => {
     if (user) {
         commentItems.forEach(commentItem => {
             fastdom
-                .read(() =>
+                .measure(() =>
                     commentItem.querySelector('.js-add-comment-activity-link')
                 )
                 .then(commentLink =>
@@ -30,7 +30,7 @@ const showMyAccountIfNecessary = (): void => {
     }
 
     fastdom
-        .read(() => ({
+        .measure(() => ({
             signIns: Array.from(
                 document.querySelectorAll('.js-navigation-sign-in')
             ),

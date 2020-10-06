@@ -177,7 +177,7 @@ class FabricVideo {
                     this.video.onended = this.onVideoEnded;
                 }
 
-                fastdom.read(this.onScroll, this);
+                fastdom.measure(this.onScroll, this);
 
                 return true;
             });

@@ -34,7 +34,7 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
 };
 
 const elementIsBelowViewport = (el: Element): Promise<boolean> =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const rect = el.getBoundingClientRect();
         const height =
             window.innerHeight ||

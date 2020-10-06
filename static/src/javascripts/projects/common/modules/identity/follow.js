@@ -6,7 +6,7 @@ import loadEnhancers from './modules/loadEnhancers';
 
 const bindFollow = (el): void => {
     fastdom
-        .read(() => el.querySelector('.identity-follow__button-target'))
+        .measure(() => el.querySelector('.identity-follow__button-target'))
         .then((wrapperEl: HTMLElement) => {
             fastdom.write(() => {
                 render(

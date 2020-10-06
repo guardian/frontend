@@ -181,7 +181,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     const setUpListeners = (): void => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
-                fastdom.read(() => {
+                fastdom.measure(() => {
                     scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
 
                     fastdom

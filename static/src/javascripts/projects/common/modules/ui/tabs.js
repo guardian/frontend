@@ -9,7 +9,7 @@ const NAV_CLASSES = [
 ];
 
 const getTabTarget = (tab: HTMLElement): Promise<?string> =>
-    fastdom.read(() => tab.getAttribute('href'));
+    fastdom.measure(() => tab.getAttribute('href'));
 
 const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
@@ -42,7 +42,7 @@ const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
 
 const init = (): Promise<void> => {
     const findTabs = (): Promise<Array<HTMLElement>> =>
-        fastdom.read(() => Array.from(document.querySelectorAll('.tabs')));
+        fastdom.measure(() => Array.from(document.querySelectorAll('.tabs')));
 
     return findTabs().then(tabs => {
         tabs.forEach(tab => {

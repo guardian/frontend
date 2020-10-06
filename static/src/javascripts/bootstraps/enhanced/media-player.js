@@ -234,7 +234,7 @@ const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
 };
 
 const initPlayButtons = (root: ?HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
             bean.on(el, 'click', () => {
@@ -269,7 +269,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
 const initPlayer = (): void => {
     videojs.plugin('fullscreener', fullscreener);
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-gu-media--enhance').each(el => {
             enhanceVideo(el, false);
         });

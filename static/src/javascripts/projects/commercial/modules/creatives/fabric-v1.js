@@ -75,7 +75,7 @@ class FabricV1 {
 
         if (templateOptions.scrollbg) {
             // update bg position
-            fastdom.read(this.updateBgPosition, this);
+            fastdom.measure(this.updateBgPosition, this);
             mediator.on(
                 'window:throttledScroll',
                 this.updateBgPosition.bind(this)

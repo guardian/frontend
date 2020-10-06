@@ -12,7 +12,7 @@ class Search {
 
     constructor(): void {
         fastdom
-            .read(() =>
+            .measure(() =>
                 Array.from(document.getElementsByClassName('js-search-toggle'))
             )
             .then(toggles => {
@@ -47,7 +47,7 @@ class Search {
                         });
 
                         fastdom
-                            .read(
+                            .measure(
                                 () =>
                                     document.getElementsByClassName(
                                         popupClass
@@ -154,7 +154,7 @@ class Search {
         let x;
 
         fastdom
-            .read(() => ({
+            .measure(() => ({
                 allSearchPlaceholders: Array.from(
                     document.getElementsByClassName('js-search-placeholder')
                 ),
@@ -195,7 +195,7 @@ class Search {
                     });
 
                     bean.on(searchPlaceholder, 'keydown', '.gsc-input', () => {
-                        fastdom.read(() => {
+                        fastdom.measure(() => {
                             const $autoCompleteObject = $('.gssb_c');
                             const searchFromTop = $autoCompleteObject.css(
                                 'top'

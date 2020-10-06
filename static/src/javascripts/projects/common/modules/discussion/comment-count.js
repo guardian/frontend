@@ -28,7 +28,7 @@ const getTemplate = (
 
 const getElementsIndexedById = (context: HTMLElement): Promise<any> =>
     fastdom
-        .read(() => Array.from(context.querySelectorAll(`[${ATTRIBUTE_NAME}]`)))
+        .measure(() => Array.from(context.querySelectorAll(`[${ATTRIBUTE_NAME}]`)))
         .then(elements => {
             if (elements.length === 0) {
                 return;

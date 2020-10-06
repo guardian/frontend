@@ -26,7 +26,7 @@ const canShow = () =>
 export const initAdblockAsk = () => {
     if (canShow()) {
         fastdom
-            .read(() => $('.js-aside-slot-container'))
+            .measure(() => $('.js-aside-slot-container'))
             .then(slot => {
                 if (slot) {
                     fastdom.write(() => {

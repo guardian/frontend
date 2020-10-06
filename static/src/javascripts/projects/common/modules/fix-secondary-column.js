@@ -23,7 +23,7 @@ export const fixSecondaryColumn = (): void => {
     }
 
     fastdom
-        .read(() => {
+        .measure(() => {
             const mainColDim = mainCol.getBoundingClientRect();
             const showcaseDim = showcase.getBoundingClientRect();
             return calcShowcaseOffset(showcaseDim, mainColDim);

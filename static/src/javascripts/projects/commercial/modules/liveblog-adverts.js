@@ -131,7 +131,7 @@ export const init = (): Promise<void> => {
     }
 
     fastdom
-        .read(() => {
+        .measure(() => {
             WINDOWHEIGHT = getWindowHeight();
             return WINDOWHEIGHT;
         })

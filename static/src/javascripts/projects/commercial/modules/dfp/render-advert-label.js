@@ -31,7 +31,7 @@ const createAdLabel = (): HTMLDivElement => {
 };
 
 export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (shouldRenderLabel(adSlotNode)) {
             return fastdom.write(() => {
                 adSlotNode.prepend(createAdLabel());

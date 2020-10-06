@@ -8,7 +8,7 @@ let iframes = {};
 let iframeCounter = 0;
 let taskQueued = false;
 
-const lastViewportRead = () => fastdom.read(() => getViewport());
+const lastViewportRead = () => fastdom.measure(() => getViewport());
 
 const reset = (window_: WindowProxy): void => {
     w = window_ || window;

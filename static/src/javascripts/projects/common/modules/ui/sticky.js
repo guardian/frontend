@@ -32,14 +32,14 @@ class Sticky {
             return;
         }
 
-        fastdom.read(() => {
+        fastdom.measure(() => {
             this.offsetFromParent =
                 this.element.getBoundingClientRect().top -
                 parentElement.getBoundingClientRect().top;
         }, this);
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
-        fastdom.read(this.updatePosition, this);
+        fastdom.measure(this.updatePosition, this);
     }
 
     updatePosition(): void {

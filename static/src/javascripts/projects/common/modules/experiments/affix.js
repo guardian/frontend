@@ -50,7 +50,7 @@ class Affix {
                 this.$container.css('top', '0');
             })
             .then(() =>
-                fastdom.read(
+                fastdom.measure(
                     () =>
                         this.$markerTop.offset().top -
                         this.$container.offset().top

@@ -26,7 +26,7 @@ const updateDataLink = (labelEl: HTMLElement, checked): Promise<any> =>
 
 export const bindAnalyticsEventsOnce = (labelEl: HTMLElement): Promise<any> =>
     fastdom
-        .read((): ?HTMLElement => labelEl.querySelector('input'))
+        .measure((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => {
             if (!labelEl.dataset.updateDataLinkBound) {
                 labelEl.addEventListener('change', () => {
@@ -40,7 +40,7 @@ export const bindAnalyticsEventsOnce = (labelEl: HTMLElement): Promise<any> =>
 export const getInfo = (labelEl: HTMLElement): Promise<any> =>
     bindAnalyticsEventsOnce(labelEl)
         .then(() =>
-            fastdom.read((): ?HTMLElement => labelEl.querySelector('input'))
+            fastdom.measure((): ?HTMLElement => labelEl.querySelector('input'))
         )
         .then((checkboxEl: HTMLInputElement) => {
             if (!labelEl.dataset.updateDataLinkBound) {
@@ -63,7 +63,7 @@ export const getInfo = (labelEl: HTMLElement): Promise<any> =>
 
 export const flip = (labelEl: HTMLElement): Promise<any> =>
     fastdom
-        .read((): ?HTMLElement => labelEl.querySelector('input'))
+        .measure((): ?HTMLElement => labelEl.querySelector('input'))
         .then((checkboxEl: HTMLInputElement) => {
             fastdom.write(() => {
                 checkboxEl.checked = !checkboxEl.checked;

@@ -87,7 +87,7 @@ const onScroll = (): Promise<any> => {
 
 const update = (newHeight: number): Promise<any> =>
     fastdom
-        .read(() => {
+        .measure(() => {
             topSlotStyles = topSlotStyles || window.getComputedStyle(topSlot);
             return (
                 newHeight +
@@ -138,7 +138,7 @@ const onFirstRender = (): void => {
                 adSize1 > 0
             ) {
                 return fastdom
-                    .read(() => {
+                    .measure(() => {
                         const styles = window.getComputedStyle(topSlot);
 
                         return (
@@ -150,7 +150,7 @@ const onFirstRender = (): void => {
                     .then(resizeStickyBanner);
             }
             return fastdom
-                .read(
+                .measure(
                     () =>
                         (topSlot && topSlot.getBoundingClientRect().height) || 0
                 )
@@ -162,7 +162,7 @@ const onFirstRender = (): void => {
 
 const initState = (): Promise<any> =>
     fastdom
-        .read(() => {
+        .measure(() => {
             if (header) {
                 headerHeight = header.getBoundingClientRect().height;
             }

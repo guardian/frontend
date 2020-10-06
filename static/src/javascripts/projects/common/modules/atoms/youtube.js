@@ -71,7 +71,7 @@ const iframes = [];
 document.addEventListener('focusout', () => {
     iframes.forEach(iframe => {
         fastdom
-            .read(() => {
+            .measure(() => {
                 if (document.activeElement === iframe) {
                     return $('.vjs-big-play-button', iframe.parentElement);
                 }
@@ -88,7 +88,7 @@ document.addEventListener('focusout', () => {
 
 document.addEventListener('focusin', () => {
     fastdom
-        .read(() => $('.vjs-big-play-button'))
+        .measure(() => $('.vjs-big-play-button'))
         .then(($playButton: ?bonzo) => {
             fastdom.write(() => {
                 if ($playButton) {
@@ -489,7 +489,7 @@ const getUniqueAtomId = (atomId: string): string =>
         .substr(2, 9)}`;
 
 const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (!el) return;
 
         const iframe = el.querySelector('.youtube-media-atom__iframe');
@@ -541,7 +541,7 @@ const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
 const checkElemForVideo = (elem: ?HTMLElement): void => {
     if (!elem) return;
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.youtube-media-atom:not(.no-player)', elem).each(el => {
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 

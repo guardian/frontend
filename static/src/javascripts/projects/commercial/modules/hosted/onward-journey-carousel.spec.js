@@ -12,21 +12,21 @@ describe('Hosted onward journey carousel', () => {
                             <span class="prev-oj-item"></span>
                             <span class="next-oj-item"></span>
                         </div>
-                    
+
                         <div class="js-carousel-pages">
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                         </div>
-                    
+
                         <div>
                             <div class="js-carousel-dot highlighted"></div>
                             <div class="js-carousel-dot "></div>
                             <div class="js-carousel-dot "></div>
                             <div class="js-carousel-dot "></div>
                         </div>
-                    
+
                     </div>
                 `;
         }
@@ -47,7 +47,7 @@ describe('Hosted onward journey carousel', () => {
         expectedPage: number
     ): any => {
         (document.querySelector(`.${clickOn}`): any).click();
-        return fastdom.read(() => {
+        return fastdom.measure(() => {
             const transform = (1 - expectedPage) * 100;
 
             expect(

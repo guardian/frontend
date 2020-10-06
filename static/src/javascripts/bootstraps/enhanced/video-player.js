@@ -96,7 +96,7 @@ const bindTrackingEvents = (el: HTMLMediaElement): void => {
 };
 
 const initPlayer = (): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-gu-media--enhance').each(el => {
             bindTrackingEvents(el);
             // hide download button in Chrome

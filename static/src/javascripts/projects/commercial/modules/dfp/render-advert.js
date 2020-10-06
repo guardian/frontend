@@ -85,7 +85,7 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
 sizeCallbacks[adSizes.mpu] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('js-sticky-mpu')) {
             if (advert.node.classList.contains('ad-slot--right')) {
                 stickyMpu(advert.node);
@@ -101,7 +101,7 @@ sizeCallbacks[adSizes.mpu] = (_, advert) =>
  * Resolve the stickyMpu.whenRendered promise
  */
 sizeCallbacks[adSizes.halfPage] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('ad-slot--right')) {
             stickyMpu(advert.node);
         }
@@ -112,7 +112,7 @@ sizeCallbacks[adSizes.halfPage] = (_, advert) =>
     });
 
 sizeCallbacks[adSizes.skyscraper] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('ad-slot--right')) {
             stickyMpu(advert.node);
         }

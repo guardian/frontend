@@ -78,7 +78,7 @@ const controlEpicComponent = (
 
 const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
     fastdom
-        .read(() => document.querySelector('.submeta'))
+        .measure(() => document.querySelector('.submeta'))
         .then(element => {
             if (element && element.parentElement) {
                 element.parentElement.insertBefore(epic.html, element);

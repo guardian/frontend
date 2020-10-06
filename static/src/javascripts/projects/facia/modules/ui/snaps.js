@@ -69,7 +69,7 @@ const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
         },
     ];
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         width = el.offsetWidth;
     });
 

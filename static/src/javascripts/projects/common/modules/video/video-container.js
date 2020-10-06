@@ -107,7 +107,7 @@ const reducers = {
         };
         makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
 
-        fastdom.read(() => {
+        fastdom.measure(() => {
             // Lazy load images on scroll for mobile
             $('.js-video-playlist-image', previousState.container).each(el => {
                 const inview = elementInView(
@@ -142,7 +142,7 @@ const reducers = {
 const fetchLazyImage = (container: Element, i: number): void => {
     $(`.js-video-playlist-image--${i}`, container).each(el => {
         fastdom
-            .read(() => {
+            .measure(() => {
                 const dataSrc = el.getAttribute('data-src');
                 const src = el.getAttribute('src');
                 return dataSrc && !src ? dataSrc : null;

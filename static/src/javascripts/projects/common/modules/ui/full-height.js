@@ -17,7 +17,7 @@ const renderBlock = (state: Object): Promise<void> =>
         .then(() => {
             if (state.isMobile) {
                 return fastdom
-                    .read(() => state.$el.height())
+                    .measure(() => state.$el.height())
                     .then(height =>
                         fastdom.write(() => {
                             state.$el.css('height', height);
@@ -36,7 +36,7 @@ const getState = (): Promise<{
     elements: Array<HTMLElement>,
     isMobile: boolean,
 }> =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const elements = Array.from(
             document.getElementsByClassName('js-is-fixed-height')
         );
