@@ -79,6 +79,17 @@ class Storage {
         );
     }
 
+    setRaw(key: string, value: any): any {
+        if (!this.available) {
+            return;
+        }
+
+        return this.storage.setItem(
+            key,
+            value,
+        );
+    }
+
     setIfNotExists(key: string, value: any, options: Object = {}): any {
         if (!this.available) {
             return;

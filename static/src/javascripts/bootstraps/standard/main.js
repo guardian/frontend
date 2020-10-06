@@ -230,8 +230,8 @@ const bootStandard = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.get(key) || 0;
-        storage.set(key, alreadyVisited + 1);
+        const alreadyVisited = parseInt(storage.getRaw(key), 10) || 0;
+        storage.setRaw(key, alreadyVisited + 1);
     }
 
     if (
