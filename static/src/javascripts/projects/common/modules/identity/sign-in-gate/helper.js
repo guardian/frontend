@@ -389,17 +389,6 @@ export const addOverlayVariantCSS: ({
     }
 };
 
-// helper method to fix the border on the faqlinks bg colour
-export const gateBorderFix = () => {
-    const contentMainColumn = document.querySelector('.js-content-main-column');
-
-    if (contentMainColumn) {
-        contentMainColumn.classList.add(
-            'signin-gate__content-main-column__border-fix'
-        );
-    }
-};
-
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function
 export const showGate: ({
