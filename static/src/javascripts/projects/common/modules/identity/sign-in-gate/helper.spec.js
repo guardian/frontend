@@ -1,5 +1,5 @@
 // @flow
-import { hasUserDismissedGateInWindow } from './helper';
+import { hasUserDismissedGateInWindow, isCountry } from './helper';
 
 jest.mock('bean', () => ({
     record: jest.fn(),
@@ -10,14 +10,14 @@ jest.mock('common/modules/user-prefs', () => ({
     remove: jest.fn(),
 }));
 
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => [{ count: 2, day: 1 }]),
-    },
-}));
-
 jest.mock('lib/config', () => ({
     get: jest.fn(() => false),
+}));
+
+jest.mock('lib/storage', () => ({
+    local: {
+        get: jest.fn(() => [{}]),
+    },
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -52,6 +52,7 @@ jest.mock('./component-event-tracking', () => ({
 }));
 
 const fakeUserPrefs: any = require('common/modules/user-prefs');
+const fakeLocal: any = require('lib/storage').local;
 
 describe('Sign In Gate Helper functions', () => {
     describe('hasUserDismissedGateInWindow', () => {
@@ -83,6 +84,26 @@ describe('Sign In Gate Helper functions', () => {
 
             expect(hasUserDismissedGateInWindow(test)).toBe(false);
             expect(fakeUserPrefs.remove).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("isCountry('countryCode')", () => {
+        test('geolocation is US', () => {
+            fakeLocal.get.mockReturnValueOnce({
+                value: 'US',
+            });
+            expect(isCountry('US')).toBe(true);
+        });
+
+        test('geolocation is not US', () => {
+            fakeLocal.get.mockReturnValueOnce({
+                value: 'GB',
+            });
+            expect(isCountry('US')).toBe(false);
+        });
+
+        test('geolocation is false if not set', () => {
+            expect(isCountry('US')).toBe(false);
         });
     });
 });

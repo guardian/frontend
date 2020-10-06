@@ -3,6 +3,7 @@ import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
 import { local } from 'lib/storage';
 import config from 'lib/config';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
@@ -136,6 +137,14 @@ export const isNPageOrHigherPageView = (n: number = 2): boolean => {
 
     // check if count is greater or equal to 1 less than n since dailyArticleCount is incremented after this component is loaded
     return count >= n - 1;
+};
+
+// use gu.location to determine is the browser is in the specified country
+// Note, use country codes specified in /static/src/javascripts/lib/geolocation.js
+export const isCountry = (countryCode: string): boolean => {
+    const geolocation = JSON.parse(geolocationGetSync());
+    const countryCodeFromStorage = geolocation && geolocation.value;
+    return countryCodeFromStorage === countryCode;
 };
 
 // determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
