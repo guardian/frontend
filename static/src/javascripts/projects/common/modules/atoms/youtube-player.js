@@ -2,7 +2,7 @@
 import fastdom from 'fastdom';
 
 import config from 'lib/config';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import { constructQuery } from 'lib/url';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';

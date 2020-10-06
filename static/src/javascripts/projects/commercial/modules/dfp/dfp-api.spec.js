@@ -77,7 +77,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
     applyCreativeTemplate: () => Promise.resolve(true),
 }));
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('lodash/once', () => fn => fn);

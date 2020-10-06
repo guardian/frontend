@@ -1,6 +1,6 @@
 // @flow strict
 import config from 'lib/config';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 
 const errorHandler = (error: Error) => {
     // Looks like some plugins block ad-verification

@@ -3,7 +3,7 @@
 import qwery from 'qwery';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
 import { session } from 'lib/storage';
