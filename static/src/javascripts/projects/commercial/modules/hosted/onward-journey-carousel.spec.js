@@ -55,7 +55,7 @@ describe('Hosted onward journey carousel', () => {
                     '.js-carousel-pages'
                 ): any).getAttribute('style')
             ).toEqual(
-                `-webkit-transform: translate(${transform || '-000'}%, 0);`
+                `transform: translate(${transform || '-000'}%, 0);`
             );
 
             [1, 2, 3, 4].forEach(i => {
