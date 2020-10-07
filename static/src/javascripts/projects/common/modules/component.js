@@ -2,7 +2,6 @@
 /* eslint-disable no-underscore-dangle */
 
 import bean from 'bean';
-import bonzo from 'bonzo';
 import fetchJSON from 'lib/fetch-json';
 import qwery from 'qwery';
 

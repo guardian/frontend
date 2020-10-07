@@ -1,7 +1,6 @@
 // @flow
 
 import bean from 'bean';
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { isIOS } from 'lib/detect';

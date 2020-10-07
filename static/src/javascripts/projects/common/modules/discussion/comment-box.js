@@ -1,7 +1,6 @@
 // @flow
 
 import bean from 'bean';
-import bonzo from 'bonzo';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';

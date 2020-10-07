@@ -1,6 +1,5 @@
 // @flow
 
-import bonzo from 'bonzo';
 import qwery from 'qwery';
 
 import { _ } from 'facia/modules/ui/container-show-more';

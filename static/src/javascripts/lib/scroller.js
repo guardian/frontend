@@ -11,7 +11,6 @@
 */
 
 import { createEasing } from 'lib/easing';
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 
 const scrollTo = (

@@ -1,6 +1,5 @@
 // @flow
 
-import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 

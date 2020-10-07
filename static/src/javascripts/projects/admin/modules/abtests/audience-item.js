@@ -4,7 +4,6 @@
  Description: Displays information about how the test users are divided.
  */
 import { Component } from 'common/modules/component';
-import bonzo from 'bonzo';
 
 class AudienceItem extends Component {
     constructor(config: Object): void {

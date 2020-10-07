@@ -1,10 +1,9 @@
 // @flow
 import bean from 'bean';
-import bonzo from 'bonzo';
 
 /**
     videojs plugins can't use arrow functions
-    as 'this' needs to be available as it 
+    as 'this' needs to be available as it
     represents an instance of the videojs player
 * */
 const fullscreener = function fullscreener(): void {

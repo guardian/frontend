@@ -1,7 +1,6 @@
 // @flow
 
 import avatarApi from 'common/modules/avatar/api';
-import bonzo from 'bonzo';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 

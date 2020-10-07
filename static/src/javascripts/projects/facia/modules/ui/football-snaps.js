@@ -1,5 +1,4 @@
 // @flow
-import bonzo from 'bonzo';
 import { getBreakpoint } from 'lib/detect';
 
 /**

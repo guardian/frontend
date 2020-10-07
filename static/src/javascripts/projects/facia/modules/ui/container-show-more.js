@@ -1,5 +1,4 @@
 // @flow
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import $ from 'lib/$';

@@ -1,6 +1,5 @@
 // @flow
 
-import bonzo from 'bonzo';
 import bean from 'bean';
 import $ from 'lib/$';
 import {

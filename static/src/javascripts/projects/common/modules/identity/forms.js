@@ -1,6 +1,5 @@
 // @flow
 import bean from 'bean';
-import bonzo from 'bonzo';
 
 export const forgottenEmail = (): void => {
     let hashEmail;
@@ -24,7 +23,7 @@ export const passwordToggle = (): void => {
         if (form) {
             const password = form.querySelector('.js-register-password');
             const toggleClass = 'js-toggle-password';
-            const toggleTmpl = `<div class="form-field__note form-field__note--right mobile-only"> 
+            const toggleTmpl = `<div class="form-field__note form-field__note--right mobile-only">
                     <a href="#toggle-password" class="'${toggleClass}" data-password-label="Show password"
                     data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>
                 </div>`;

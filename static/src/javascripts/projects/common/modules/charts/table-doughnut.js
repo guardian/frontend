@@ -1,5 +1,4 @@
 // @flow
-import bonzo from 'bonzo';
 import $ from 'lib/$';
 import { Doughnut } from 'common/modules/charts/doughnut';
 

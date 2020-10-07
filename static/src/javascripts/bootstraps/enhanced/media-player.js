@@ -7,7 +7,6 @@ import 'videojs-persistvolume';
 import 'videojs-playlist';
 import 'videojs-contrib-ads';
 import bean from 'bean';
-import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import $ from 'lib/$';

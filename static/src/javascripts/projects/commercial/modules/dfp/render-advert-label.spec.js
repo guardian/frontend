@@ -1,6 +1,5 @@
 // @flow
 import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
-import bonzo from 'bonzo';
 
 jest.mock('lib/detect', () => {});
 jest.mock('common/modules/commercial/commercial-features', () => ({

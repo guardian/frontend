@@ -1,7 +1,6 @@
 // @flow
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { adSizes } from 'commercial/modules/ad-sizes';
-import bonzo from 'bonzo';
 
 const imHtml = `
 <div id="dfp-ad--im"

@@ -1,5 +1,4 @@
 // @flow
-import bonzo from 'bonzo';
 import { makeRelativeDate } from 'common/modules/ui/relativedates';
 import $ from 'lib/$';
 import { getViewport } from 'lib/detect';

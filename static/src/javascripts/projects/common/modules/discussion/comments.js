@@ -2,7 +2,6 @@
 
 import $ from 'lib/$';
 import bean from 'bean';
-import bonzo from 'bonzo';
 import qwery from 'qwery';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';

@@ -1,6 +1,5 @@
 // @flow
 import $ from 'lib/$';
-import bonzo from 'bonzo';
 
 type RelativeDateOptions = {
     notAfter?: number,
