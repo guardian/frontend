@@ -6,8 +6,8 @@ export const signInGatePageview: ABTest = {
     author: 'vlbee',
     description:
         'Compare showing the gate on the 2nd vs 3rd article view with new and old dimiss rule variants, on simple article templates, with higher priority over banners and epi, excluding the US',
-    audience: 0.2333,
-    audienceOffset: 0.6667,
+    audience: 0.129,
+    audienceOffset: 0.771,
     successMeasure: 'Users sign in or create a Guardian account',
     audienceCriteria:
         '2nd or 3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss or reshown after 5 dismisses, not on help, info sections etc. Exclude US, iOS 9 and guardian-live-australia. Suppresses other banners, and appears over epics',
