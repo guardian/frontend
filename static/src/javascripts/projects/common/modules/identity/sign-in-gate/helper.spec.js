@@ -200,16 +200,12 @@ describe('Sign In Gate Helper functions', () => {
 
     describe("isCountry('countryCode')", () => {
         test('geolocation is US', () => {
-            fakeLocal.get.mockReturnValueOnce({
-                value: 'US',
-            });
+            fakeLocal.get.mockReturnValueOnce('US');
             expect(isCountry('US')).toBe(true);
         });
 
         test('geolocation is not US', () => {
-            fakeLocal.get.mockReturnValueOnce({
-                value: 'GB',
-            });
+            fakeLocal.get.mockReturnValueOnce('GB');
             expect(isCountry('US')).toBe(false);
         });
 

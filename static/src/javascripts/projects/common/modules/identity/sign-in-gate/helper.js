@@ -186,9 +186,8 @@ export const isNPageOrHigherPageView = (n: number = 2): boolean => {
 // use gu.location to determine is the browser is in the specified country
 // Note, use country codes specified in /static/src/javascripts/lib/geolocation.js
 export const isCountry = (countryCode: string): boolean => {
-    const geolocation: Object = geolocationGetSync();
-    const countryCodeFromStorage = geolocation && geolocation.value;
-    return countryCodeFromStorage === countryCode;
+    const geolocation = geolocationGetSync();
+    return geolocation === countryCode;
 };
 
 // determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
