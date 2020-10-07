@@ -5,8 +5,6 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
-const host = `${window.location.protocol}//${window.location.host}`;
-
 /* This is for native ads. We send two pieces of information:
    - the ID of the iframe into which this ad is embedded. This is currently
      the only way to link an incoming message to the iframe it is "coming from"
@@ -25,7 +23,7 @@ export const onSlotLoad = (event: SlotOnloadEvent) => {
     postMessage(
         {
             id: iframe.id,
-            host,
+            host: '*',
         },
         iframe.contentWindow
     );
