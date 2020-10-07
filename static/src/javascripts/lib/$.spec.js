@@ -1,6 +1,6 @@
 // @flow
 
-import $ from './$';
+import { $ } from './$';
 
 beforeEach(() => {
     if (document.body) {

@@ -1,6 +1,6 @@
 // @flow
 
-// this is the one place we want to import bonzo – for now...
+// this is the one place we want to import bonzo - for now...
 // eslint-disable-next-line no-restricted-imports
 import bonzo from 'bonzo';
 import qwery from 'qwery';
@@ -12,8 +12,9 @@ bonzo.aug({
     },
 });
 
-// #? Use of `Node` throughout this file may need a second look?
-const $ = (selector: ?string | ?Node, context: ?Node | ?string): bonzo =>
+// #? this shouldn't really be an `any`, but bonzo is and was previously being 'used' as a type
+// this will be good correct whenever we remove bonzo
+const $: any = (selector: ?string | ?Node, context?: Node | string): bonzo =>
     bonzo(qwery(selector, context));
 
 $.create = (s: string | Node): bonzo => bonzo(bonzo.create(s));
@@ -40,6 +41,4 @@ $.forEachElement = (selector: string, fn: Function): Array<Element> => {
     return els;
 };
 
-// #es6 can be named exports once we're es6-only
-// eslint-disable-next-line guardian-frontend/no-default-export
-export default $;
+export { $ };
