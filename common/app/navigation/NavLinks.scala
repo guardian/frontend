@@ -182,6 +182,7 @@ private object NavLinks {
       NavLink("Comment", "/theobserver/news/comment"),
       NavLink("The New Review", "/theobserver/new-review"),
       NavLink("Observer Magazine", "/theobserver/magazine"),
+      NavLink("Observer Food Monthly", "/theobserver/foodmonthly"),
     ),
   )
   val weekly = NavLink("Guardian Weekly", "https://www.theguardian.com/weekly")
