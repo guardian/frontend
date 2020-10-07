@@ -2,7 +2,7 @@
 
 import fastdom from 'fastdom';
 import reportError from 'lib/report-error';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';

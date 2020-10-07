@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import Rangefix from 'rangefix';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { hasTouchScreen } from 'lib/detect';
 import mediator from 'lib/mediator';

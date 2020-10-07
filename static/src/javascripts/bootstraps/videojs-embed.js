@@ -1,8 +1,7 @@
 // @flow
-import qwery from 'qwery';
 import videojs from 'videojs';
 import 'videojs-embed';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import template from 'lodash/template';
@@ -39,14 +38,14 @@ const addTitleBar = (): void => {
 const initPlayer = (): void => {
     videojs.plugin('fullscreener', fullscreener);
 
-    bonzo(qwery('.js-gu-media--enhance')).each(el => {
-        const $el = bonzo(el).addClass('vjs');
+    $('.js-gu-media--enhance').each(el => {
+        const $el = $(el).addClass('vjs');
         const mediaId = $el.attr('data-media-id');
         const canonicalUrl = $el.attr('data-canonical-url');
         const gaEventLabel = canonicalUrl;
         const mediaType = el.tagName.toLowerCase();
 
-        bonzo(el).addClass('vjs');
+        $(el).addClass('vjs');
 
         const player = createVideoPlayer(
             el,

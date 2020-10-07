@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import {
     init as selectionSharingInit,
     updateSelection,

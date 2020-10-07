@@ -1,6 +1,6 @@
 // @flow
 import bean from 'bean';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fastdom from 'fastdom';
 
 const updateClass = (

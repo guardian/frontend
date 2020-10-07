@@ -1,5 +1,6 @@
 // @flow
 import bean from 'bean';
+import { $ } from 'lib/$';
 
 export const forgottenEmail = (): void => {
     let hashEmail;
@@ -27,7 +28,7 @@ export const passwordToggle = (): void => {
                     <a href="#toggle-password" class="'${toggleClass}" data-password-label="Show password"
                     data-text-label="Hide password" data-link-name="Toggle password field">Show password</a>
                 </div>`;
-            const $toggle = bonzo(bonzo.create(toggleTmpl)).insertBefore(
+            const $toggle = $($.create(toggleTmpl)).insertBefore(
                 password
             );
 
@@ -44,7 +45,7 @@ export const passwordToggle = (): void => {
                 if (password) {
                     password.setAttribute('type', inputType);
                 }
-                bonzo(link).text(label);
+                $(link).text(label);
             });
         }
     }

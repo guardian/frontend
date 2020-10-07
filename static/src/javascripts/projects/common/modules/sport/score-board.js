@@ -2,7 +2,7 @@
 
 import { Component } from 'common/modules/component';
 import { isBreakpoint } from 'lib/detect';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 
 type PageTypes = 'minbymin' | 'preview' | 'report' | 'stats';
 
@@ -10,7 +10,7 @@ type ScoreBoardContext = {
     autoupdated: boolean,
     pageType: PageTypes,
     placeholder?: HTMLElement,
-    parent: bonzo,
+    parent: $,
     responseDataKey: string,
     updateEvery?: number,
 };
@@ -36,7 +36,7 @@ class ScoreBoard extends Component {
         });
 
         this.updateEvery = isBreakpoint({ min: 'desktop' }) ? 30 : 60;
-        this.placeholder = bonzo.create(scoreContainerHtml)[0];
+        this.placeholder = $.create(scoreContainerHtml)[0];
 
         if (this.pageType === 'report') {
             context.parent.after(this.placeholder);
@@ -47,7 +47,7 @@ class ScoreBoard extends Component {
 
     placeholder: HTMLElement;
     pageType: PageTypes;
-    parent: bonzo;
+    parent: $;
 
     prerender(): void {
         const scoreLoadingPlaceholder = $(

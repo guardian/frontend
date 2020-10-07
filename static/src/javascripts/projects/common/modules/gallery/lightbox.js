@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint, hasTouchScreen, isBreakpoint } from 'lib/detect';
 import FiniteStateMachine from 'lib/fsm';
@@ -39,7 +39,7 @@ type GalleryJson = {
 };
 
 const pulseButton = (button: HTMLElement): void => {
-    const $btn: bonzo = bonzo(button);
+    const $btn: $ = $(button);
     $btn.addClass('gallery-lightbox__button-pulse');
 
     window.setTimeout(() => {
@@ -49,7 +49,7 @@ const pulseButton = (button: HTMLElement): void => {
 
 class Endslate extends Component {
     prerender(): void {
-        bonzo(this.elem).addClass(this.componentClass);
+        $(this.elem).addClass(this.componentClass);
     }
 }
 
@@ -57,28 +57,28 @@ class GalleryLightbox {
     showEndslate: boolean;
     useSwipe: boolean;
     swipeThreshold: number;
-    lightboxEl: bonzo;
-    $lightboxEl: bonzo;
-    $indexEl: bonzo;
-    $countEl: bonzo;
-    $contentEl: bonzo;
+    lightboxEl: $;
+    $lightboxEl: $;
+    $indexEl: $;
+    $countEl: $;
+    $contentEl: $;
     nextBtn: HTMLElement;
     prevBtn: HTMLElement;
     closeBtn: HTMLElement;
     infoBtn: HTMLElement;
-    $swipeContainer: bonzo;
+    $swipeContainer: $;
     resize: Function;
     toggleInfo: Function;
     fsm: FiniteStateMachine;
     states: Object;
     images: Array<ImageJson>;
     swipeContainerWidth: number;
-    $slides: bonzo;
+    $slides: $;
     index: number;
-    $images: bonzo;
+    $images: $;
     galleryJson: GalleryJson;
     bodyScrollPosition: number;
-    endslateEl: bonzo;
+    endslateEl: $;
     endslate: Object;
     startIndex: number;
     handleKeyEvents: (KeyboardEvent) => void;
@@ -119,8 +119,8 @@ class GalleryLightbox {
             </div>`;
 
         // ELEMENT BINDINGS
-        this.lightboxEl = bonzo.create(galleryLightboxHtml);
-        this.$lightboxEl = bonzo(this.lightboxEl).prependTo(document.body);
+        this.lightboxEl = $.create(galleryLightboxHtml);
+        this.$lightboxEl = $(this.lightboxEl).prependTo(document.body);
         this.$indexEl = $('.js-gallery-index', this.lightboxEl);
         this.$countEl = $('.js-gallery-count', this.lightboxEl);
         this.$contentEl = $('.js-gallery-content', this.lightboxEl);
@@ -136,7 +136,7 @@ class GalleryLightbox {
         this.resize = this.trigger.bind(this, 'resize');
         this.toggleInfo = (e): void => {
             const infoPanelClick =
-                bonzo(e.target).hasClass('js-gallery-lightbox-info') ||
+                $(e.target).hasClass('js-gallery-lightbox-info') ||
                 $.ancestor(e.target, 'js-gallery-lightbox-info');
 
             if (!infoPanelClick) {
@@ -349,7 +349,7 @@ class GalleryLightbox {
                         .reverse()
                         .concat(galleryJson.images, next);
                     if (allImages.length < 2) {
-                        bonzo([this.nextBtn, this.prevBtn]).hide();
+                        $([this.nextBtn, this.prevBtn]).hide();
                         $(
                             '.gallery-lightbox__progress',
                             this.lightboxEl
@@ -384,10 +384,10 @@ class GalleryLightbox {
             .map(i => (index + i === 0 ? count - 1 : (index - 1 + i) % count))
             .forEach(i => {
                 imageContent = this.images[i];
-                $img = bonzo(this.$images[i]);
+                $img = $(this.$images[i]);
 
                 if (!$img.attr('src')) {
-                    $img.parent().append(bonzo.create(loaderTpl));
+                    $img.parent().append($.create(loaderTpl));
 
                     $img.attr('src', imageContent.src);
                     $img.attr('srcset', imageContent.srcsets);
@@ -417,7 +417,7 @@ class GalleryLightbox {
     }
 
     show(): void {
-        const $body = bonzo(document.body);
+        const $body = $(document.body);
         this.bodyScrollPosition = $body.scrollTop();
         $body.addClass('has-overlay');
         this.$lightboxEl.addClass('gallery-lightbox--open');
@@ -437,7 +437,7 @@ class GalleryLightbox {
     hide(): void {
         // remove has-overlay first to show body behind lightbox then scroll and
         // close the lightbox at the same time. this way we get no scroll flicker
-        const $body = bonzo(document.body);
+        const $body = $(document.body);
         $body.removeClass('has-overlay');
         bean.off(document.body, 'keydown', this.handleKeyEvents);
         window.setTimeout(() => {
@@ -475,7 +475,7 @@ class GalleryLightbox {
 
     loadEndslate(): void {
         if (!this.endslate.rendered && this.$contentEl) {
-            this.endslateEl = bonzo.create(endslateTpl);
+            this.endslateEl = $.create(endslateTpl);
             this.$contentEl.append(this.endslateEl);
 
             this.endslate.componentClass = 'gallery-lightbox__endslate';
@@ -669,7 +669,7 @@ const init = (): void => {
             bean.on(document.body, 'click', '.js-gallerythumbs', (e: Event) => {
                 e.preventDefault();
 
-                const $el = bonzo(e.currentTarget);
+                const $el = $(e.currentTarget);
                 const galleryHref =
                     $el.attr('href') || $el.attr('data-gallery-url');
                 const galleryHrefParts = galleryHref.split('#img-');

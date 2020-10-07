@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
 
@@ -22,8 +22,8 @@ const template = (): string => `
                 </div>
                 <div class="survey-text">
                     <p class="survey-text__paragraph">
-                        Advertiser content. This article was paid for, produced and controlled by the advertiser rather 
-                        than the publisher. It is subject to regulation by the Advertising Standards Authority. This 
+                        Advertiser content. This article was paid for, produced and controlled by the advertiser rather
+                        than the publisher. It is subject to regulation by the Advertising Standards Authority. This
                         content is produced by the advertiser with no involvement from Guardian News and Media staff.
                     </p>
                 </div>

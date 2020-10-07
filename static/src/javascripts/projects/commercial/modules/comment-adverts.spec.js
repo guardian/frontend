@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fakeMediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';

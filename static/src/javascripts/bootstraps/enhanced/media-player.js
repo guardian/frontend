@@ -9,7 +9,7 @@ import 'videojs-contrib-ads';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import { isBreakpoint } from 'lib/detect';
@@ -72,12 +72,12 @@ const initEndSlate = (player: any, endSlatePath: string): void => {
         endSlate.fetch(player.el(), 'html');
 
         player.on('ended', () => {
-            bonzo(player.el()).addClass(endStateClass);
+            $(player.el()).addClass(endStateClass);
         });
     });
 
     player.on('playing', () => {
-        bonzo(player.el()).removeClass(endStateClass);
+        $(player.el()).removeClass(endStateClass);
     });
 };
 
@@ -235,9 +235,9 @@ const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
 const initPlayButtons = (root: ?HTMLElement): void => {
     fastdom.read(() => {
         $('.js-video-play-button', root).each(el => {
-            const $el = bonzo(el);
+            const $el = $(el);
             bean.on(el, 'click', () => {
-                const container = bonzo(el)
+                const container = $(el)
                     .parent()
                     .parent();
                 const placeholder = $('.js-video-placeholder', container);

@@ -1,7 +1,7 @@
 // @flow
 /** Bootstrap for functionality common to articles and live blogs */
 import fence from 'fence';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { shouldHideFlashingElements } from 'common/modules/accessibility/helpers';
 import { init as initT, enhanceTweets } from 'common/modules/article/twitter';

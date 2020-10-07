@@ -6,6 +6,7 @@
  */
 import { Component } from 'common/modules/component';
 import { Participation } from 'admin/modules/abtests/participation';
+import { $ } from 'lib/$';
 import debounce from 'lodash/debounce';
 
 class ABTestReportItem extends Component {
@@ -52,7 +53,7 @@ class ABTestReportItem extends Component {
             );
         }
 
-        bonzo(this.elem).addClass(
+        $(this.elem).addClass(
             window.abSwitches[`ab${this.config.test.id}`]
                 ? 'abtest-item--switched-on'
                 : 'abtest-item--switched-off'

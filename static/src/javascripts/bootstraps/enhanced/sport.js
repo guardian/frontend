@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { Component } from 'common/modules/component';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';

@@ -1,5 +1,6 @@
 // @flow
 
+import { $ } from 'lib/$';
 import fastdom from 'fastdom';
 import { getUserFromCookie } from 'common/modules/identity/api';
 
@@ -65,10 +66,10 @@ class Profile {
     init(): void {
         // setFragmentFromCookie
         const user = getUserFromCookie();
-        const $container = bonzo(this.dom.container);
-        const $content = bonzo(this.dom.content);
-        const $register = bonzo(this.dom.register);
-        const $commentActivity = bonzo(this.dom.commentActivity);
+        const $container = $(this.dom.container);
+        const $content = $(this.dom.content);
+        const $register = $(this.dom.register);
+        const $commentActivity = $(this.dom.commentActivity);
         if (user) {
             // Run this code only if we haven't already inserted
             // the username in the header

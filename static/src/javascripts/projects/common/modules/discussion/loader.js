@@ -2,7 +2,7 @@
 
 import bean from 'bean';
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import raven from 'lib/raven';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
@@ -84,7 +84,7 @@ class Loader extends Component {
         window.location.replace(`#comment-${id}`);
     }
 
-    $topCommentsContainer: bonzo;
+    $topCommentsContainer: $;
     comments: ?Comments;
     topCommentCount: number;
     user: ?DiscussionProfile;
@@ -203,7 +203,7 @@ class Loader extends Component {
 
                 if (this.comments) {
                     // $FlowFixMe
-                    this.comments.options.order = bonzo(e.currentTarget).data(
+                    this.comments.options.order = $(e.currentTarget).data(
                         'order'
                     );
                 }
@@ -230,7 +230,7 @@ class Loader extends Component {
 
                 if (this.comments) {
                     // $FlowFixMe
-                    this.comments.options.threading = bonzo(
+                    this.comments.options.threading = $(
                         e.currentTarget
                     ).data('threading');
                 }
@@ -270,7 +270,7 @@ class Loader extends Component {
                 'click',
                 '.js-timestamps-dropdown .popup__action',
                 (e: Event) => {
-                    const format = bonzo(e.currentTarget).data('timestamp');
+                    const format = $(e.currentTarget).data('timestamp');
 
                     bean.fire(
                         qwery('.js-timestamps-dropdown [data-toggle]')[0],
@@ -299,7 +299,7 @@ class Loader extends Component {
             'click',
             '.js-comment-pagesize-dropdown .popup__action',
             (e: Event) => {
-                const selectedPageSize = bonzo(e.currentTarget).data(
+                const selectedPageSize = $(e.currentTarget).data(
                     'pagesize'
                 );
 
@@ -360,7 +360,7 @@ class Loader extends Component {
 
         if (this.comments) {
             this.comments.on('rendered', (paginationHtml: string) => {
-                const newPagination = bonzo.create(paginationHtml);
+                const newPagination = $.create(paginationHtml);
                 const toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
                 const container = $(
                     '.js-discussion-pagination',
@@ -431,7 +431,7 @@ class Loader extends Component {
 
         this.on('click', '.js-jump-to-comment', (e: Event) => {
             e.preventDefault();
-            const commentId = bonzo(e.currentTarget).data('comment-id');
+            const commentId = $(e.currentTarget).data('comment-id');
             this.gotoComment(commentId);
         });
 

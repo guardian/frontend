@@ -8,7 +8,7 @@ import {
     initYoutubeEvents,
 } from 'common/modules/atoms/youtube-tracking';
 import { Component } from 'common/modules/component';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { isIOS, isAndroid, isBreakpoint } from 'lib/detect';
 import debounce from 'lodash/debounce';
@@ -75,7 +75,7 @@ document.addEventListener('focusout', () => {
                     return $('.vjs-big-play-button', iframe.parentElement);
                 }
             })
-            .then(($playButton: ?bonzo) => {
+            .then(($playButton: ?$) => {
                 fastdom.write(() => {
                     if ($playButton) {
                         $playButton.addClass('youtube-play-btn-focussed');
@@ -88,7 +88,7 @@ document.addEventListener('focusout', () => {
 document.addEventListener('focusin', () => {
     fastdom
         .read(() => $('.vjs-big-play-button'))
-        .then(($playButton: ?bonzo) => {
+        .then(($playButton: ?$) => {
             fastdom.write(() => {
                 if ($playButton) {
                     $playButton.removeClass('youtube-play-btn-focussed');

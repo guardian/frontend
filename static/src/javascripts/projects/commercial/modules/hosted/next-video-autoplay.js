@@ -2,7 +2,7 @@
 import bean from 'bean';
 import fastdom from 'fastdom';
 import { load } from 'commercial/modules/hosted/next-video';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 
 let nextVideoInterval;

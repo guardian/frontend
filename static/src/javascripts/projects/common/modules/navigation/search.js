@@ -2,7 +2,7 @@
 
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 
 // TODO refactor to singleton

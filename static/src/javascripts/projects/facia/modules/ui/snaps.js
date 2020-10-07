@@ -2,7 +2,7 @@
 
 import bean from 'bean';
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { isIOS } from 'lib/detect';
 import fetch from 'lib/fetch';
 import mediator from 'lib/mediator';
@@ -25,7 +25,7 @@ const bindIframeMsgReceiverOnce = once(() => {
             message = JSON.parse(event.data);
 
             if (message.type === 'set-height') {
-                bonzo(iframe)
+                $(iframe)
                     .parent()
                     .css('height', message.value);
             }
@@ -35,7 +35,7 @@ const bindIframeMsgReceiverOnce = once(() => {
 
 const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
     let width;
-    const $el = bonzo(el);
+    const $el = $(el);
     const prefix = 'facia-snap-point--';
     const breakpoints: Array<{
         width: number,
@@ -104,7 +104,7 @@ const addCss = (el: HTMLElement, isResize: boolean = false): void => {
 };
 
 const injectIframe = (el: HTMLElement): void => {
-    const spec = bonzo(el).offset();
+    const spec = $(el).offset();
     const minIframeHeight = Math.ceil((spec.width || 0) / 2);
     const maxIframeHeight = 400;
     const src = el.getAttribute('data-snap-uri') || '';
@@ -112,19 +112,19 @@ const injectIframe = (el: HTMLElement): void => {
         Math.max(spec.height || 0, minIframeHeight),
         maxIframeHeight
     );
-    const containerEl = bonzo.create(
+    const containerEl = $.create(
         `<div style="width: 100%; height: ${height}px; overflow: hidden; -webkit-overflow-scrolling:touch"></div>`
     )[0];
-    const iframe = bonzo.create(
+    const iframe = $.create(
         `<iframe src="${src}" style="width: 100%; height: 100%; border: none;"></iframe>`
     )[0];
 
-    bonzo(containerEl).append(iframe);
+    $(containerEl).append(iframe);
     snapIframes.push(iframe);
     bindIframeMsgReceiverOnce();
 
     fastdom.write(() => {
-        bonzo(el)
+        $(el)
             .empty()
             .append(containerEl);
     });
@@ -151,7 +151,7 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
         .then(resp => {
             $.create(resp).each(html => {
                 fastdom.write(() => {
-                    bonzo(el).html(html);
+                    $(el).html(html);
                 });
             });
             initRelativeDates(el);
@@ -166,7 +166,7 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
 const initStandardSnap = (el: HTMLElement): void => {
     addProximityLoader(el, 1500, () => {
         fastdom.write(() => {
-            bonzo(el).addClass('facia-snap-embed');
+            $(el).addClass('facia-snap-embed');
         });
         addCss(el);
 

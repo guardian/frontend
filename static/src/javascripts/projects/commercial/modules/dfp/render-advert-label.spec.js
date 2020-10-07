@@ -1,5 +1,6 @@
 // @flow
 import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
+import { $ } from 'lib/$';
 
 jest.mock('lib/detect', () => {});
 jest.mock('common/modules/commercial/commercial-features', () => ({
@@ -11,24 +12,24 @@ const labelSelector = '.ad-slot__label';
 
 describe('Rendering advert labels', () => {
     beforeAll(() => {
-        adverts.withLabel = bonzo(
-            bonzo.create('<div class="js-ad-slot"></div>')
+        adverts.withLabel = $(
+            $.create('<div class="js-ad-slot"></div>')
         );
 
-        adverts.labelDisabled = bonzo(
-            bonzo.create('<div class="js-ad-slot" data-label="false"></div>')
+        adverts.labelDisabled = $(
+            $.create('<div class="js-ad-slot" data-label="false"></div>')
         );
 
-        adverts.alreadyLabelled = bonzo(
-            bonzo.create(`
+        adverts.alreadyLabelled = $(
+            $.create(`
                 <div class="js-ad-slot">
                     <div class="ad-slot__label">Advertisement</div>
                 </div>
             `)
         );
 
-        adverts.frame = bonzo(
-            bonzo.create('<div class="js-ad-slot ad-slot--frame"></div>')
+        adverts.frame = $(
+            $.create('<div class="js-ad-slot ad-slot--frame"></div>')
         );
     });
 

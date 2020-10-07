@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 
 type RelativeDateOptions = {
     notAfter?: number,
@@ -164,7 +164,7 @@ const makeRelativeDate = (
     );
 };
 
-const findValidTimestamps = (): bonzo =>
+const findValidTimestamps = (): $ =>
     // `.blocktime time` used in blog html
     $('.js-timestamp, .js-item__timestamp');
 
@@ -174,7 +174,7 @@ const replaceLocaleTimestamps = (html: ?Element): void => {
 
     $(`.${cls}`, context).each(el => {
         let datetime;
-        const $el = bonzo(el);
+        const $el = $(el);
         const timestamp = parseInt($el.attr('data-timestamp'), 10);
 
         if (timestamp) {
@@ -190,7 +190,7 @@ const replaceLocaleTimestamps = (html: ?Element): void => {
 const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
     findValidTimestamps().each(el => {
         let targetEl;
-        const $el = bonzo(el);
+        const $el = $(el);
 
         const // Epoch dates are more reliable, fallback to datetime for liveblog blocks
             timestamp =
@@ -201,7 +201,7 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
 
         const relativeDate = makeRelativeDate(datetime.getTime(), {
             // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-            showTime: bonzo($el.parent()).hasClass('block-time'),
+            showTime: $($el.parent()).hasClass('block-time'),
             format: $el.attr('data-relativeformat'),
             notAfter: opts.notAfter,
         });
@@ -210,7 +210,7 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
             // If we find .timestamp__text (facia), use that instead
             targetEl = $el[0].querySelector('.timestamp__text') || $el[0];
             if (!targetEl.getAttribute('title')) {
-                targetEl.setAttribute('title', bonzo(targetEl).text());
+                targetEl.setAttribute('title', $(targetEl).text());
             }
             targetEl.innerHTML = relativeDate;
         } else if (opts.notAfter) {

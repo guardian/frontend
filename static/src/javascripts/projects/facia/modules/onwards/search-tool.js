@@ -1,12 +1,12 @@
 // @flow
 import bean from 'bean';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 
 type WeatherSearchOptions = {
-    container: bonzo,
+    container: $,
     apiUrl: string,
 };
 
@@ -32,8 +32,8 @@ export type CityPreference = {
 
 export class SearchTool {
     apiUrl: string;
-    $list: bonzo;
-    $input: bonzo;
+    $list: $;
+    $input: $;
     oldQuery: string;
     newQuery: string;
     inputTmp: string;
@@ -262,7 +262,7 @@ export class SearchTool {
         this.clear().append(docFragment);
     }
 
-    clear(): bonzo {
+    clear(): $ {
         return this.$list.html('');
     }
 

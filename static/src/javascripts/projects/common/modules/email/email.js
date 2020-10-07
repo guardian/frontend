@@ -2,7 +2,7 @@
 import formInlineLabels from 'lib/formInlineLabels';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { getUserAgent } from 'lib/detect';
 import fetch from 'lib/fetch';
@@ -17,7 +17,6 @@ import envelope from 'svgs/icon/envelope.svg';
 import crossIcon from 'svgs/icon/cross.svg';
 
 import type { IdentityUser } from 'common/modules/identity/api';
-import type { bonzo } from 'bonzo';
 
 type Analytics = {
     formType: string,
@@ -44,7 +43,7 @@ const classes = {
     listNameHiddenInput: 'js-email-sub__listname-input',
 };
 
-const replaceContent = (isSuccess: boolean, $form: bonzo, $formHeader: ?bonzo): void => {
+const replaceContent = (isSuccess: boolean, $form: $, $formHeader: ?$): void => {
     const formData = $form.data('formData');
     const statusClass = isSuccess
         ? 'email-sub__message--success'
@@ -115,7 +114,7 @@ const updateFormForLoggedIn = (
 
 const updateForm = (
     thisRootEl: HTMLElement,
-    $el: bonzo,
+    $el: $,
     analytics: Analytics
 ): void => {
     const formData = $(thisRootEl).data();
@@ -193,7 +192,7 @@ const updateForm = (
     });
 };
 
-const heightSetter = ($wrapper: bonzo, reset: boolean): (() => void) => {
+const heightSetter = ($wrapper: $, reset: boolean): (() => void) => {
     let wrapperHeight;
 
     const getHeight = () => {
@@ -240,14 +239,14 @@ const setIframeHeight = (
         .then(callback());
 };
 
-const handleSubmit = (isSuccess: boolean, $form: bonzo, $formHeader: ?bonzo): (() => void) => () => {
+const handleSubmit = (isSuccess: boolean, $form: $, $formHeader: ?$): (() => void) => () => {
     replaceContent(isSuccess, $form, $formHeader);
     state.submitting = false;
 };
 
 const submitForm = (
-    $form: bonzo,
-    $formHeader: ?bonzo,
+    $form: $,
+    $formHeader: ?$,
     url: string,
     analytics: Analytics
 ): (Event => ?Promise<any>) => {
@@ -324,7 +323,7 @@ const submitForm = (
     };
 };
 
-const bindSubmit = ($form: bonzo, $formHeader: ?bonzo, analytics: Analytics): void => {
+const bindSubmit = ($form: $, $formHeader: ?$, analytics: Analytics): void => {
     const url = '/email';
 
     bean.on($form[0], 'submit', submitForm($form, $formHeader, url, analytics));

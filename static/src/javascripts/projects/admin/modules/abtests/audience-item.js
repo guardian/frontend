@@ -3,6 +3,7 @@
  Module: audience-item.js
  Description: Displays information about how the test users are divided.
  */
+import { $ } from 'lib/$';
 import { Component } from 'common/modules/component';
 
 class AudienceItem extends Component {
@@ -29,7 +30,7 @@ class AudienceItem extends Component {
         const captionRange = this.getElem('caption-range');
 
         if (testLabel) {
-            bonzo(testLabel).prepend(this.config.test.id);
+            $(testLabel).prepend(this.config.test.id);
         }
 
         // Set the width and absolute position to match the audience size and offset.
@@ -43,11 +44,11 @@ class AudienceItem extends Component {
         }
 
         if (captionTest) {
-            bonzo(captionTest).append(this.config.test.id);
+            $(captionTest).append(this.config.test.id);
         }
 
         if (captionRange) {
-            bonzo(captionRange).append(`${audienceOffset}% to ${audienceEnd}%`);
+            $(captionRange).append(`${audienceOffset}% to ${audienceEnd}%`);
         }
     }
 }

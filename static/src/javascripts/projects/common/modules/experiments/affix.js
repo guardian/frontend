@@ -1,5 +1,6 @@
 // @flow
 
+import { $ } from 'lib/$';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 
@@ -8,11 +9,11 @@ const getPixels = (top: string): number =>
 
 class Affix {
     affixed: boolean;
-    $markerTop: bonzo;
-    $markerBottom: bonzo;
-    $container: bonzo;
-    $element: bonzo;
-    $window: bonzo;
+    $markerTop: $;
+    $markerBottom: $;
+    $container: $;
+    $element: $;
+    $window: $;
 
     constructor(options: {
         element: ?HTMLElement,
@@ -33,11 +34,11 @@ class Affix {
         });
 
         this.affixed = false;
-        this.$markerTop = bonzo(options.topMarker);
-        this.$markerBottom = bonzo(options.bottomMarker);
-        this.$container = bonzo(options.containerElement);
-        this.$element = bonzo(options.element);
-        this.$window = bonzo(document.body);
+        this.$markerTop = $(options.topMarker);
+        this.$markerBottom = $(options.bottomMarker);
+        this.$container = $(options.containerElement);
+        this.$element = $(options.element);
+        this.$window = $(document.body);
 
         this.checkPosition();
         this.calculateContainerPositioning();
@@ -69,7 +70,7 @@ class Affix {
         const elHeight = this.$element.dim().height;
         const topCheck = scrollTop >= markerTopTop;
         const bottomCheck = scrollTop + elHeight < markerBottomTop;
-        const viewportCheck = elHeight < bonzo.viewport().height;
+        const viewportCheck = elHeight < $.viewport().height;
         const affixClass = 'affix';
         const affixBottomClass = 'affix-bottom';
         const affix = bottomCheck && topCheck && viewportCheck; // This is true when the element is positioned below the top threshold and above the bottom threshold.

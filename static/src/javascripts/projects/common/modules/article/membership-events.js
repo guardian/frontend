@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 

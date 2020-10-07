@@ -4,7 +4,7 @@
  *  Handle History updates and monitor for unsaved changes on account profile
  *  forms.
  */
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import bean from 'bean';
 import { pushUrl } from 'lib/url';
 import avatarApi from 'common/modules/avatar/api';
@@ -138,7 +138,7 @@ class AccountProfile {
                 // Prevent multiple errors from appearing
                 if (!form.querySelector(classes.formError)) {
                     // Append error message
-                    bonzo(form).prepend(this.genUnsavedError());
+                    $(form).prepend(this.genUnsavedError());
                     // Bind form submit to error message 'save' action
                     bean.on(
                         form.querySelector('.js-save-unsaved'),
@@ -216,7 +216,7 @@ class AccountProfile {
         const input = ((event.target: any):
             | HTMLInputElement
             | HTMLTextAreaElement);
-        bonzo(input.form).addClass(classes.changed);
+        $(input.form).addClass(classes.changed);
         this.unsavedChangesForm = input.form;
         if (!this.unsavedFields.some(el => el === input)) {
             this.unsavedFields.push(input);

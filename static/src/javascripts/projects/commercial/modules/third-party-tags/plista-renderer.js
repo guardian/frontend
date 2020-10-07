@@ -5,7 +5,7 @@ import { plista } from 'commercial/modules/third-party-tags/plista';
 import template from 'lodash/template';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 
 const findAnchor = (): Promise<HTMLElement | null> => {
     const selector = !(

@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import debounce from 'lodash/debounce';
 import mediator from 'lib/mediator';
@@ -47,7 +47,7 @@ const scrolledToComments = (): void => {
 const areCommentsVisible = (): boolean => {
     const comments = $('#comments').offset();
     const scrollTop = window.pageYOffset;
-    const viewport = bonzo.viewport().height;
+    const viewport = $.viewport().height;
 
     if (
         comments.top - viewport / 2 < scrollTop &&

@@ -1,6 +1,6 @@
 // @flow
 import bean from 'bean';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fastdom from 'fastdom';
 import qwery from 'qwery';
 import config from 'lib/config';
@@ -138,10 +138,10 @@ const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> =>
 const pickNewest = (alerts: Array<Alert>): Alert =>
     alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
-const renderAlert = (alert: Alert): bonzo => {
+const renderAlert = (alert: Alert): $ => {
     alert.closeIcon = inlineSvg('closeCentralIcon');
 
-    const $alert = bonzo.create(template(alertHtml)(alert));
+    const $alert = $.create(template(alertHtml)(alert));
 
     const closeButton = $('.js-breaking-news__item__close', $alert)[0];
 
@@ -157,14 +157,14 @@ const renderAlert = (alert: Alert): bonzo => {
     return $alert;
 };
 
-const renderSpectre = ($breakingNews: bonzo): bonzo =>
-    bonzo(bonzo.create($breakingNews[0]))
+const renderSpectre = ($breakingNews: $): $ =>
+    $($.create($breakingNews[0]))
         .addClass('breaking-news--spectre')
         .removeClass('breaking-news--fade-in breaking-news--hidden');
 
 const show = (): Promise<boolean> => {
-    const $body = bonzo(document.body);
-    const $breakingNews = bonzo(qwery('.js-breaking-news-placeholder'));
+    const $body = $(document.body);
+    const $breakingNews = $(qwery('.js-breaking-news-placeholder'));
 
     // if its the first time we've seen this alert, we wait 3 secs to show it
     // otherwise we show it immediately

@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 
 export const addUpdatingState = (buttonEl: HTMLButtonElement) =>
     fastdom.write(() => {

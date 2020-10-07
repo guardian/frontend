@@ -3,16 +3,17 @@
 import avatarApi from 'common/modules/avatar/api';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
+import { $ } from 'lib/$'
 
 const avatarify = (container: HTMLElement): void => {
-    const updating = bonzo(bonzo.create('<div class="is-updating"></div>'));
-    const avatar = bonzo(
-        bonzo.create('<img class="user-avatar__image" alt="" />')
+    const updating = $($.create('<div class="is-updating"></div>'));
+    const avatar = $(
+        $.create('<img class="user-avatar__image" alt="" />')
     );
     const avatarUserId = container.dataset.userid;
     const userId = config.get('user.id', null);
 
-    const updateCleanup = (upd: bonzo, avat: bonzo) => {
+    const updateCleanup = (upd: $, avat: $) => {
         upd.remove();
         avat.appendTo(container);
     };

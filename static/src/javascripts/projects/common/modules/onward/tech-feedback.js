@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { adblockInUse } from 'lib/detect';
 import { getSynchronousParticipations as getABParticipations } from 'common/modules/experiments/ab';
 import { getCookie } from 'lib/cookies';

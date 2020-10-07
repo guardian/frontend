@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { Expandable } from 'common/modules/ui/expandable';
 
 describe('Expandable', () => {

@@ -10,7 +10,7 @@ import {
     submitInsertEvent,
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { local } from 'lib/storage';
 import { elementInView } from 'lib/element-inview';

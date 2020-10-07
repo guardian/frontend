@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fetchJson from 'lib/fetch-json';
 import { constructQuery } from 'lib/url';
 import range from 'lodash/range';
@@ -53,9 +53,9 @@ const runConcurrently = (
     });
 
 class WholeDiscussion {
-    commentsThread: bonzo;
+    commentsThread: $;
     discussion: Array<Object>;
-    discussionContainer: bonzo;
+    discussionContainer: $;
     discussionId: number;
     lastPage: number;
     params: {
@@ -83,7 +83,7 @@ class WholeDiscussion {
 
         /* Keep a copy of the comments thread and discussion container so it
            can be easily reduced later. */
-        this.discussionContainer = bonzo.create(resp.commentsHtml);
+        this.discussionContainer = $.create(resp.commentsHtml);
         this.postedCommentHtml = resp.postedCommentHtml;
         this.lastPage = resp.lastPage;
         this.commentsThread = $(
@@ -100,12 +100,12 @@ class WholeDiscussion {
         return range(2, this.lastPage + 1);
     }
 
-    /* Caches a bonzo object/array of comments, so that they can be
+    /* Caches a $ object/array of comments, so that they can be
        re-assembled when the load is complete. */
     storeCommentPage(response: Object, page: number): void {
         const container = $(
             '.d-thread--comments',
-            bonzo.create(response.commentsHtml)
+            $.create(response.commentsHtml)
         );
         let comments = $('.d-comment--top-level', container);
 

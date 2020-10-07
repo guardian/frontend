@@ -1,5 +1,6 @@
 // @flow
 import bean from 'bean';
+import { $ } from 'lib/$';
 
 /**
     videojs plugins can't use arrow functions
@@ -7,11 +8,11 @@ import bean from 'bean';
     represents an instance of the videojs player
 * */
 const fullscreener = function fullscreener(): void {
-    const clickbox = bonzo.create(
+    const clickbox = $.create(
         '<div class="vjs-fullscreen-clickbox"></div>'
     )[0];
 
-    bonzo(clickbox).appendTo(this.contentEl());
+    $(clickbox).appendTo(this.contentEl());
 
     bean.on(
         clickbox,

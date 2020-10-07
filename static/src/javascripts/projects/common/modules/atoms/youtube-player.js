@@ -7,7 +7,7 @@ import { constructQuery } from 'lib/url';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { buildPfpEvent } from 'common/modules/video/ga-helper';
 
 import { getPermutivePFPSegments } from '../commercial/permutive';

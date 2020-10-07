@@ -4,14 +4,13 @@
  Description: replaces general most popular trails with geo based most popular on fronts.
  */
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
-import type bonzo from 'bonzo';
 
-const hideTabs = (parent: bonzo): void => {
+const hideTabs = (parent: $): void => {
     $('.js-tabs-content', parent).addClass('tabs__content--no-border');
     $('.js-tabs', parent).addClass('u-h');
 };
@@ -31,7 +30,7 @@ export class GeoMostPopularFront extends Component {
     isNetworkFront: boolean;
     isVideoFront: boolean;
     isInternational: boolean;
-    parent: ?bonzo;
+    parent: ?$;
 
     prerender(): void {
         this.elem = qwery('.headline-list', this.elem)[0];

@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 
@@ -19,13 +19,13 @@ const btnTmpl = ({ text, dataLink }) => `
 `;
 
 export class ContainerToggle {
-    $container: bonzo;
+    $container: $;
     state: ToggleState;
-    $button: bonzo;
+    $button: $;
     constructor(container: Element) {
-        this.$container = bonzo(container);
-        this.$button = bonzo(
-            bonzo.create(
+        this.$container = $(container);
+        this.$button = $(
+            $.create(
                 btnTmpl({
                     text: 'Hide',
                     dataLink: 'Show',
@@ -35,7 +35,7 @@ export class ContainerToggle {
         this.state = 'displayed';
     }
 
-    buttonText(): bonzo {
+    buttonText(): $ {
         return $('.fc-container__toggle__text', this.$button);
     }
 

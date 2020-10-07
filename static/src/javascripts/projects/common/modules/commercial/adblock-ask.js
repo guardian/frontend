@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 
 import { supportSubscribeDigitalURL } from 'common/modules/commercial/support-utilities';
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';

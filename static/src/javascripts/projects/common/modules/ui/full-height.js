@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { getBreakpoint } from 'lib/detect';

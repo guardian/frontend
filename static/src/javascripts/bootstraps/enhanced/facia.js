@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';

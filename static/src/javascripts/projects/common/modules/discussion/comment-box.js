@@ -1,5 +1,6 @@
 // @flow
 
+import { $ } from 'lib/$';
 import bean from 'bean';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
@@ -257,7 +258,7 @@ class CommentBox extends Component {
             </div>`;
 
         if (messages) {
-            messages.appendChild(bonzo.create(errorMessage)[0]);
+            messages.appendChild($.create(errorMessage)[0]);
         }
 
         this.errors.push(type);

@@ -1,5 +1,6 @@
 // @flow
 import React, { Component, findDOMNode } from 'preact-compat';
+import { $ } from 'lib/$';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';
 import { isBreakpoint } from 'lib/detect';
@@ -19,7 +20,7 @@ class HiddenInput extends Component<*, *> {
             })
         ) {
             fastdom.read(() => {
-                const offsets = bonzo(findDOMNode(this.input)).offset();
+                const offsets = $(findDOMNode(this.input)).offset();
                 const clueHeight = document.getElementsByClassName(
                     'crossword__sticky-clue'
                 )[0].offsetHeight;

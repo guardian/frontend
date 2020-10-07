@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fastdom from 'fastdom';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
@@ -32,14 +32,14 @@ describe('Container Toggle', () => {
     };
 
     beforeEach(() => {
-        container = bonzo.create(
+        container = $.create(
             `<section class="fc-container js-container--toggle fc-container__will-have-toggle" data-id="${containerId}">` +
                 `<div class="fc-container__header js-container__header">` +
                 `<h2>A container</h2>` +
                 `</div>` +
                 `</section>`
         );
-        $container = bonzo(container[0]);
+        $container = $(container[0]);
     });
 
     afterEach(() => {

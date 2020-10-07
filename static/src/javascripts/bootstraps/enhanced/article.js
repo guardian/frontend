@@ -2,7 +2,7 @@
 /* eslint-disable no-new */
 import config from 'lib/config';
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { catchErrorsWithContext } from 'lib/robust';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';

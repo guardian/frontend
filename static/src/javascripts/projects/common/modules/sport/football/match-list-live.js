@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { Component } from 'common/modules/component';
 
 class MatchListLive extends Component {
@@ -20,8 +20,8 @@ class MatchListLive extends Component {
         const updated = $('.football-match', elem);
 
         $('.football-match', this.elem).each((match, i) => {
-            const $match = bonzo(match).removeClass('football-match--updated');
-            const $updated = bonzo(updated[i]);
+            const $match = $(match).removeClass('football-match--updated');
+            const $updated = $(updated[i]);
 
             ['score-home', 'score-away', 'match-status'].forEach(state => {
                 const stateData = `data-${state}`;

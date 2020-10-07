@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
 import { isIOS, isAndroid, getBreakpoint, getUserAgent } from 'lib/detect';
 import template from 'lodash/template';

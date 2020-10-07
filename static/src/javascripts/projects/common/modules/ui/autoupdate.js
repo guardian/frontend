@@ -3,7 +3,7 @@
 import bean from 'bean';
 import qwery from 'qwery';
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
 import fetchJSON from 'lib/fetch-json';
 import { isBreakpoint, pageVisible, initPageVisibility } from 'lib/detect';
@@ -92,7 +92,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         let elementsToAdd;
 
         fastdom.write(() => {
-            bonzo(resultHtml.children).addClass('autoupdate--hidden');
+            $(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
 
             // Insert new blocks

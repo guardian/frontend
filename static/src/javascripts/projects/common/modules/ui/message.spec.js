@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import userPrefs from 'common/modules/user-prefs';
 import { Message } from './message';
 

@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';

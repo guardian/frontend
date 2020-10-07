@@ -1,6 +1,6 @@
 // @flow
 import { makeRelativeDate } from 'common/modules/ui/relativedates';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
@@ -123,7 +123,7 @@ const applyUpdate = (
     content: Array<Element>
 ): Promise<void> =>
     fastdomPromise.write(() => {
-        bonzo(container)
+        $(container)
             .empty()
             .append(content);
     });
@@ -208,7 +208,7 @@ const showBlocks = (
             })
             .slice(0, calculateBlockCount(hasNewBlock, isDynamic(element)));
 
-        const el = bonzo.create(
+        const el = $.create(
             `<div class="${wrapperClasses.join(' ')}">${blocksHtml.join(
                 ''
             )}</div>`

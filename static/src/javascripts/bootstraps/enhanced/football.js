@@ -1,6 +1,6 @@
 // @flow
 import bean from 'bean';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import {
@@ -32,7 +32,7 @@ declare type Extra = {
 
 const renderNav = (
     match: Object,
-    callback?: (resp: Object, $nav: bonzo, endpoint: string) => void
+    callback?: (resp: Object, $nav: $, endpoint: string) => void
 ): Promise<void> => {
     const matchInfo = new MatchInfo(match, config.get('page.pageId'));
 
@@ -124,8 +124,8 @@ const loading = (
         href: string,
     }
 ): void => {
-    bonzo(elem).append(
-        bonzo.create(`
+    $(elem).append(
+        $.create(`
             <div class="loading">
                 <div class="loading__message">${message}</div>
                     <a href="${link.href}"
@@ -341,9 +341,9 @@ const init = (): void => {
                                 const nurl = resp[newData];
 
                                 if (nurl) {
-                                    bonzo(el).attr('href', nurl);
+                                    $(el).attr('href', nurl);
                                 } else {
-                                    bonzo(el).remove();
+                                    $(el).remove();
                                 }
                             });
                         })

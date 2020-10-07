@@ -1,5 +1,5 @@
 // @flow strict
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
@@ -13,8 +13,6 @@ import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { getBreakpoint } from 'lib/detect';
 
 import type { Advert } from 'commercial/modules/dfp/Advert';
-import type bonzo from 'bonzo';
-
 
 const createCommentSlots = (
     canBeDmpu: boolean
@@ -31,8 +29,8 @@ const createCommentSlots = (
 };
 
 const insertCommentAd = (
-    $commentMainColumn: bonzo,
-    $adSlotContainer: bonzo,
+    $commentMainColumn: $,
+    $adSlotContainer: $,
     canBeDmpu: boolean
 ): Promise<void> => {
     const commentSlots = createCommentSlots(canBeDmpu);
@@ -67,7 +65,7 @@ const containsDMPU = (ad: Advert): boolean =>
             (el => el[0] === 160 && el[1] === 600)
     );
 
-const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
+const maybeUpgradeSlot = (ad: Advert, $adSlot: $): Advert => {
     if (!containsDMPU(ad)) {
         ad.sizes.desktop.push([300, 600], [160, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
@@ -82,10 +80,10 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
 };
 
 const runSecondStage = (
-    $commentMainColumn: bonzo,
-    $adSlotContainer: bonzo
+    $commentMainColumn: $,
+    $adSlotContainer: $
 ): void => {
-    const $adSlot: bonzo = $('.js-ad-slot', $adSlotContainer);
+    const $adSlot: $ = $('.js-ad-slot', $adSlotContainer);
     const commentAdvert = getAdvertById('dfp-ad--comments');
 
     if (commentAdvert && $adSlot.length) {
@@ -100,7 +98,7 @@ const runSecondStage = (
 };
 
 export const initCommentAdverts = (): Promise<boolean> => {
-    const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
+    const $adSlotContainer: $ = $('.js-discussion__ad-slot');
     const isMobile = getBreakpoint() === 'mobile';
     if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
         return Promise.resolve(false);
@@ -110,7 +108,7 @@ export const initCommentAdverts = (): Promise<boolean> => {
         'modules:comments:renderComments:rendered',
         (): void => {
             const isLoggedIn: boolean = isUserLoggedIn();
-            const $commentMainColumn: bonzo = $(
+            const $commentMainColumn: $ = $(
                 '.js-comments .content__main-column'
             );
 

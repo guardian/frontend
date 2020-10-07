@@ -1,6 +1,7 @@
 // @flow
 
 import qwery from 'qwery';
+import { $ } from 'lib/$';
 
 import { _ } from 'facia/modules/ui/container-show-more';
 
@@ -14,8 +15,8 @@ describe('Container Show More', () => {
     const itemWithId = id => `<div class="js-fc-item" data-id="${id}"></div>`;
 
     beforeEach(() => {
-        $container = bonzo(
-            bonzo.create(
+        $container = $(
+            $.create(
                 `<div>${itemWithId('loldongs')}${itemWithId(
                     'corgi'
                 )}${itemWithId('geekpie')}</div>`

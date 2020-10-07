@@ -5,10 +5,9 @@
  * - http://codepen.io/githiro/pen/ICfFE
  * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
  */
-import $ from 'lib/$';
-import type { bonzo } from 'bonzo';
+import { $ } from 'lib/$';
 
-const svgEl = (type: string): bonzo =>
+const svgEl = (type: string): $ =>
     $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
 const translate = (v: Array<number>): string => `translate(${v.toString()})`;
@@ -18,7 +17,7 @@ const translate = (v: Array<number>): string => `translate(${v.toString()})`;
  * @param {Object.<string, *>} o the options
  * @return {Bonzo} SVG Element
  */
-const Doughnut = (data: Object, o: Object): bonzo => {
+const Doughnut = (data: Object, o: Object): $ => {
     const obj: Object = Object.assign(
         {
             percentCutout: 35,

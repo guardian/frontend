@@ -12,6 +12,7 @@
 
 import { createEasing } from 'lib/easing';
 import fastdom from 'fastdom';
+import { $ } from 'lib/$';
 
 const scrollTo = (
     offset: number,
@@ -19,7 +20,7 @@ const scrollTo = (
     easeFn?: string = 'easeOutQuad',
     container: ?HTMLElement = document.body
 ): void => {
-    const $container = bonzo(container);
+    const $container = $(container);
     const from = $container.scrollTop();
     const distance = offset - from;
     const ease = createEasing(easeFn, duration);
@@ -40,7 +41,7 @@ const scrollToElement = (
     easeFn?: string,
     container: ?HTMLElement
 ): void => {
-    const top = bonzo(element).offset().top;
+    const top = $(element).offset().top;
     scrollTo(top, duration, easeFn, container);
 };
 

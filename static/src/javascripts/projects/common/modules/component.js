@@ -4,6 +4,7 @@
 import bean from 'bean';
 import fetchJSON from 'lib/fetch-json';
 import qwery from 'qwery';
+import { $ } from 'lib/$'
 
 class ComponentError {
     constructor(message) {
@@ -75,9 +76,9 @@ class Component {
         }
 
         if (template) {
-            this.elem = bonzo.create(template)[0];
+            this.elem = $.create(template)[0];
             this._prerender();
-            bonzo(parent)[this.manipulationType](this.elem);
+            $(parent)[this.manipulationType](this.elem);
         }
 
         this._ready();
@@ -102,11 +103,11 @@ class Component {
 
         return this._fetch()
             .then(resp => {
-                this.elem = bonzo.create(resp[this.responseDataKey])[0];
+                this.elem = $.create(resp[this.responseDataKey])[0];
                 this._prerender();
 
                 if (!this.destroyed) {
-                    bonzo(parent)[this.manipulationType](this.elem);
+                    $(parent)[this.manipulationType](this.elem);
                     this._ready(this.elem);
                 }
             })
@@ -167,7 +168,7 @@ class Component {
             this._fetch()
                 .then(resp => {
                     this.autoupdate(
-                        bonzo.create(resp[this.responseDataKey])[0]
+                        $.create(resp[this.responseDataKey])[0]
                     );
 
                     if (this.autoupdated) {
@@ -220,7 +221,7 @@ class Component {
         this.elem = elem;
 
         this._prerender();
-        bonzo(oldElem).replaceWith(this.elem);
+        $(oldElem).replaceWith(this.elem);
     }
 
     /**
@@ -277,7 +278,7 @@ class Component {
 
     setState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        const $elem = bonzo(elem);
+        const $elem = $(elem);
 
         if (this.componentClass) {
             $elem.addClass(
@@ -289,7 +290,7 @@ class Component {
 
     removeState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        const $elem = bonzo(elem);
+        const $elem = $(elem);
 
         if (this.componentClass) {
             $elem.removeClass(
@@ -301,7 +302,7 @@ class Component {
 
     toggleState(state: string, elemName: ?string): void {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        const $elem = bonzo(elem);
+        const $elem = $(elem);
 
         if (this.componentClass) {
             $elem.toggleClass(
@@ -313,7 +314,7 @@ class Component {
 
     hasState(state: string, elemName: ?string): boolean {
         const elem = elemName ? this.getElem(elemName) : this.elem;
-        const $elem = bonzo(elem);
+        const $elem = $(elem);
 
         if (this.componentClass) {
             return $elem.hasClass(
@@ -339,7 +340,7 @@ class Component {
      */
     destroy(): void {
         if (this.elem) {
-            bonzo(this.elem).remove();
+            $(this.elem).remove();
             delete this.elem;
         }
 

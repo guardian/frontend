@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import bean from 'bean';
 import raven from 'lib/raven';
 import {

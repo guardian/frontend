@@ -1,6 +1,7 @@
 // @flow
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { adSizes } from 'commercial/modules/ad-sizes';
+import { $ } from 'lib/$';
 
 const imHtml = `
 <div id="dfp-ad--im"
@@ -60,7 +61,7 @@ describe('Create Ad Slot', () => {
         const adSlots = createSlots('inline', { classes: 'inline-extra' });
         const adSlot = adSlots[0];
 
-        expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+        expect($(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
     });
 
     it('should create "inline1" ad slot with additional size', () => {
@@ -70,14 +71,14 @@ describe('Create Ad Slot', () => {
         const adSlot = adSlots[0];
 
         expect(
-            bonzo(adSlot)
+            $(adSlot)
                 .attr('data-desktop')
                 .indexOf(adSizes.leaderboard.toString())
         ).toBeTruthy();
     });
 
     it('should use correct sizes for the mobile top-above-nav slot', () => {
-        const topAboveNavSlot = bonzo(createSlots('top-above-nav')[0]);
+        const topAboveNavSlot = $(createSlots('top-above-nav')[0]);
         const mobileSizes = topAboveNavSlot.attr('data-mobile');
         expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
     });

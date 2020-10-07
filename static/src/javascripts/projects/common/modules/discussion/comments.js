@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import bean from 'bean';
 import qwery from 'qwery';
 import config from 'lib/config';
@@ -77,7 +77,7 @@ class Comments extends Component {
             li.innerHTML = 'Loading…';
         }
 
-        const source = bonzo(target).data('source-comment');
+        const source = $(target).data('source-comment');
         const commentId = currentTarget.getAttribute('data-comment-id');
 
         if (commentId) {
@@ -87,16 +87,16 @@ class Comments extends Component {
                 mode: 'cors',
             })
                 .then(resp => {
-                    const comment = bonzo.create(resp.html);
+                    const comment = $.create(resp.html);
                     const replies = qwery(
                         this.getClass('reply'),
                         comment
                     ).slice(this.options && this.options.showRepliesCount);
 
-                    bonzo(qwery('.d-thread--responses', source)).append(
+                    $(qwery('.d-thread--responses', source)).append(
                         replies
                     );
-                    bonzo(li).addClass('u-h');
+                    $(li).addClass('u-h');
 
                     this.emit('untruncate-thread');
 
@@ -248,7 +248,7 @@ class Comments extends Component {
         }
     }
 
-    pickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+    pickComment(commentId: string, $thisButton: $): Promise<void> {
         const comment = qwery(`#comment-${commentId}`, this.elem);
 
         return pickComment(commentId).then(() => {
@@ -305,7 +305,7 @@ class Comments extends Component {
         }
     }
 
-    unPickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+    unPickComment(commentId: string, $thisButton: $): Promise<void> {
         const comment = qwery(`#comment-${commentId}`);
 
         return unPickComment(commentId).then(() => {
@@ -324,8 +324,8 @@ class Comments extends Component {
     }
 
     addComment(comment: CommentType, parent?: HTMLElement): void {
-        const commentElem = bonzo.create(this.postedCommentEl)[0];
-        const $commentElem = bonzo(commentElem);
+        const commentElem = $.create(this.postedCommentEl)[0];
+        const $commentElem = $(commentElem);
         const replyButton =
             commentElem &&
             commentElem.getElementsByClassName(
@@ -383,7 +383,7 @@ class Comments extends Component {
         } else {
             $commentElem.removeClass(this.getClass('topLevelComment', true));
             $commentElem.addClass(this.getClass('reply', true));
-            bonzo(parent).append($commentElem);
+            $(parent).append($commentElem);
         }
 
         window.location.replace(`#comment-${comment.id}`);
@@ -416,7 +416,7 @@ class Comments extends Component {
         const replyToAuthorId = replyToComment.getAttribute(
             'data-comment-author-id'
         );
-        const $replyToComment = bonzo(replyToComment);
+        const $replyToComment = $(replyToComment);
         const replyToBody = qwery(
             this.getClass('commentBody'),
             replyToComment
@@ -442,7 +442,7 @@ class Comments extends Component {
             focus: true,
         });
 
-        // this is a bit toffee, but we don't have .parents() in bonzo
+        // this is a bit toffee, but we don't have .parents() in $
         const parentCommentEl = $replyToComment.hasClass(
             this.getClass('topLevelComment', true)
         )
@@ -456,7 +456,7 @@ class Comments extends Component {
 
         if (
             showRepliesElem.length > 0 &&
-            !bonzo(showRepliesElem).hasClass('u-h')
+            !$(showRepliesElem).hasClass('u-h')
         ) {
             showRepliesElem[0].click();
         }
@@ -467,10 +467,10 @@ class Comments extends Component {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
 
             if (!responses) {
-                responses = bonzo.create(
+                responses = $.create(
                     '<ul class="d-thread d-thread--responses"></ul>'
                 )[0];
-                bonzo(parentCommentEl).append(responses);
+                $(parentCommentEl).append(responses);
             }
 
             commentBox.destroy();
@@ -605,10 +605,10 @@ class Comments extends Component {
         paginationHtml: string,
         postedCommentHtml: string,
     }): void {
-        const contentEl = bonzo.create(resp.commentsHtml);
+        const contentEl = $.create(resp.commentsHtml);
         const comments = qwery(this.getClass('comment'), contentEl);
 
-        bonzo(this.elem)
+        $(this.elem)
             .empty()
             .append(contentEl);
         this.addMoreRepliesButtons(comments);

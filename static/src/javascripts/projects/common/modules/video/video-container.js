@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { elementInView } from 'lib/element-inview';
 import { onVideoContainerNavigation } from 'common/modules/atoms/youtube';
 import { isBreakpoint } from 'lib/detect';

@@ -1,7 +1,7 @@
 // @flow
 
 import bean from 'bean';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import {
     getUrlVars,
     constructQuery,
@@ -42,13 +42,13 @@ class ActivityStream extends Component {
 
             $('.tabs__tab--selected').removeClass('tabs__tab--selected');
 
-            bonzo($(`a[data-stream-type=${type}]`))
+            $($(`a[data-stream-type=${type}]`))
                 .parent()
                 .addClass('tabs__tab--selected');
         };
 
         // update display
-        const $el = bonzo(this.elem).empty();
+        const $el = $(this.elem).empty();
 
         this.setState('loading');
 
@@ -122,7 +122,7 @@ class ActivityStream extends Component {
         if (id) {
             recommendComment(id);
 
-            bonzo(el).addClass('disc-comment__recommend--active');
+            $(el).addClass('disc-comment__recommend--active');
 
             $('.js-disc-recommend-count', el).each(countEl => {
                 countEl.innerHTML = parseInt(countEl.innerHTML, 10) + 1;

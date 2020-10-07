@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { addSpinner, removeSpinner, getInfo } from './switch';
 
 beforeEach(() => {

@@ -1,7 +1,7 @@
 // @flow
 import fastdom from 'fastdom';
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
@@ -64,17 +64,17 @@ const loadShowMore = (pageId: string, containerId: string): Promise<any> => {
     );
 };
 
-const itemsByArticleId = ($el: bonzo): Object =>
+const itemsByArticleId = ($el: $): Object =>
     groupBy(qwery(ITEM_SELECTOR, $el), el =>
-        bonzo(el).attr(ARTICLE_ID_ATTRIBUTE)
+        $(el).attr(ARTICLE_ID_ATTRIBUTE)
     );
 
-const dedupShowMore = ($container: bonzo, html: string): bonzo => {
+const dedupShowMore = ($container: $, html: string): $ => {
     const seenArticles = itemsByArticleId($container);
-    const $html = bonzo.create(html);
+    const $html = $.create(html);
 
     $(ITEM_SELECTOR, $html).each(article => {
-        const $article = bonzo(article);
+        const $article = $(article);
         const articleClass = $article.attr('class');
         if (
             $article.attr(ARTICLE_ID_ATTRIBUTE) in seenArticles ||
@@ -93,15 +93,15 @@ class Button {
     id: string;
     state: DisplayState;
     isLoaded: boolean;
-    $el: bonzo;
-    $container: bonzo;
-    $iconEl: bonzo;
-    $placeholder: bonzo;
-    $textEl: bonzo;
-    $errorMessage: ?bonzo;
+    $el: $;
+    $container: $;
+    $iconEl: $;
+    $placeholder: $;
+    $textEl: $;
+    $errorMessage: ?$;
     messages: Map<DisplayState, string>;
 
-    constructor(el: bonzo, container: bonzo) {
+    constructor(el: $, container: $) {
         this.id = container.attr('data-id');
         this.state = readDisplayPrefForContainer(this.id);
         this.$el = el;
@@ -193,8 +193,8 @@ class Button {
             this.$errorMessage.remove();
         }
 
-        this.$errorMessage = bonzo(
-            bonzo.create(
+        this.$errorMessage = $(
+            $.create(
                 '<div class="show-more__error-message">' +
                     'Sorry, failed to load more stories. Please try again.' +
                     '</div>'
@@ -244,7 +244,7 @@ const renderToDom = (button: Button): void => {
 
 export const init = (): void => {
     fastdom.read(() => {
-        const containers = qwery('.js-container--fc-show-more').map(bonzo);
+        const containers = qwery('.js-container--fc-show-more').map($);
         const buttons = containers
             .map(container => {
                 const el = $('.js-show-more-button', container);

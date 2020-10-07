@@ -1,7 +1,7 @@
 // @flow
 import template from 'lodash/template';
 import { local as storage } from 'lib/storage';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import bean from 'bean';
 import config from 'lib/config';
 import overlay from 'raw-loader!common/views/experiments/overlay.html';

@@ -2,7 +2,7 @@
 import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
 import raven from 'lib/raven';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { catchErrorsWithContext } from 'lib/robust';

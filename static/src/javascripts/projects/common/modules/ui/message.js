@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { noop } from 'lib/noop';
 import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';

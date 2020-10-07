@@ -1,6 +1,6 @@
 // @flow
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';

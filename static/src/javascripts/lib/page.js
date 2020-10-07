@@ -1,6 +1,6 @@
 // @flow
 
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 

@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import bean from 'bean';
 import fastdom from 'fastdom';
 

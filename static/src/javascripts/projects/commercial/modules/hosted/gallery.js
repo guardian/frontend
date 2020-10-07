@@ -1,6 +1,6 @@
 // @flow
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import qwery from 'qwery';
 import config from 'lib/config';
 import { pushUrl } from 'lib/url';
@@ -17,23 +17,23 @@ class HostedGallery {
     swipeContainerWidth: number;
     index: number;
     imageRatios: number[];
-    $galleryEl: bonzo;
-    $galleryFrame: bonzo;
-    $header: bonzo;
-    $imagesContainer: bonzo;
-    $captionContainer: bonzo;
-    $captions: bonzo;
-    $scrollEl: bonzo;
-    $images: bonzo;
-    $progress: bonzo;
-    $border: bonzo;
+    $galleryEl: $;
+    $galleryFrame: $;
+    $header: $;
+    $imagesContainer: $;
+    $captionContainer: $;
+    $captions: $;
+    $scrollEl: $;
+    $images: $;
+    $progress: $;
+    $border: $;
     prevBtn: HTMLElement;
     nextBtn: HTMLElement;
     infoBtn: HTMLElement;
-    $counter: bonzo;
-    $ctaFloat: bonzo;
-    $ojFloat: bonzo;
-    $meta: bonzo;
+    $counter: $;
+    $ctaFloat: $;
+    $ojFloat: $;
+    $meta: $;
     ojClose: HTMLElement;
     resize: (data?: Object) => void;
     resizer: () => void;
@@ -116,7 +116,7 @@ class HostedGallery {
     }
 
     toggleOj() {
-        bonzo(this.$ojFloat).toggleClass('minimise-oj');
+        $(this.$ojFloat).toggleClass('minimise-oj');
     }
 
     initScroll() {
@@ -289,19 +289,19 @@ class HostedGallery {
             $sizer.css('top', imageSize.topBottom);
             $sizer.css('left', imageSize.leftRight);
             if (imgIndex === ctaIndex) {
-                bonzo($ctaFloat).css('bottom', ctaSize.topBottom);
+                $($ctaFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css('bottom', ctaSize.topBottom);
+                $($ojFloat).css('bottom', ctaSize.topBottom);
             }
             if (imgIndex === $images.length - 1) {
-                bonzo($ojFloat).css(
+                $($ojFloat).css(
                     'padding-bottom',
                     ctaSize.topBottom > 40 || width > tabletSize ? 0 : 40
                 );
             }
             if (imgIndex === 0) {
-                bonzo($meta).css(
+                $($meta).css(
                     'padding-bottom',
                     imageSize.topBottom > 40 || width > tabletSize ? 20 : 40
                 );
@@ -325,7 +325,7 @@ class HostedGallery {
         galleryEl.style.transform = `translate(${px +
             offset}px,0) translateZ(0)`;
         fastdom.write(() => {
-            bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
+            $($meta).css('opacity', offset !== 0 ? 0 : 1);
         });
     }
 
@@ -344,27 +344,27 @@ class HostedGallery {
         fastdom.write(() => {
             this.$images.each((image, index) => {
                 const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
-                bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
+                $(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
             });
 
-            bonzo(this.$border).css('transform', `rotate(${deg}deg)`);
-            bonzo(this.$border).css('-webkit-transform', `rotate(${deg}deg)`);
+            $(this.$border).css('transform', `rotate(${deg}deg)`);
+            $(this.$border).css('-webkit-transform', `rotate(${deg}deg)`);
 
-            bonzo(this.$galleryEl).toggleClass(
+            $(this.$galleryEl).toggleClass(
                 'show-cta',
                 progress <= ctaIndex && progress >= ctaIndex - 0.25
             );
-            bonzo(this.$galleryEl).toggleClass(
+            $(this.$galleryEl).toggleClass(
                 'show-oj',
                 progress >= length - 1.25
             );
 
-            bonzo(this.$progress).toggleClass(
+            $(this.$progress).toggleClass(
                 'first-half',
                 fractionProgress && fractionProgress < 0.5
             );
 
-            bonzo(this.$meta).css('opacity', progress !== 0 ? 0 : 1);
+            $(this.$meta).css('opacity', progress !== 0 ? 0 : 1);
         });
 
         if (newIndex && newIndex !== this.index) {
@@ -483,20 +483,20 @@ HostedGallery.prototype.states = {
             // load prev/current/next
             this.loadSurroundingImages(this.index, this.$images.length);
             this.$captions.each((caption, index) => {
-                bonzo(caption).toggleClass(
+                $(caption).toggleClass(
                     'current-caption',
                     that.index === index + 1
                 );
             });
-            bonzo(this.$counter).html(`${this.index}/${this.$images.length}`);
+            $(this.$counter).html(`${this.index}/${this.$images.length}`);
 
             if (this.useSwipe) {
                 this.translateContent(this.index, 0, 100);
-                bonzo(this.$galleryEl).toggleClass(
+                $(this.$galleryEl).toggleClass(
                     'show-oj',
                     this.index === this.$images.length
                 );
-                bonzo(this.$galleryEl).toggleClass(
+                $(this.$galleryEl).toggleClass(
                     'show-cta',
                     this.index === HostedGallery.ctaIndex() + 1
                 );

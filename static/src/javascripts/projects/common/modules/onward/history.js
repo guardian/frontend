@@ -4,12 +4,11 @@
  Description: Gets and sets users reading history
  */
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { local } from 'lib/storage';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/isObject';
 
-import type { bonzo } from 'bonzo';
 import {getCookie} from "lib/cookies";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 
@@ -411,7 +410,7 @@ const logSummary = (pageConfig: Object, mockToday?: number): void => {
     saveSummary(summary);
 };
 
-const getMegaNav = (): bonzo => $('.js-global-navigation');
+const getMegaNav = (): $ => $('.js-global-navigation');
 
 const removeFromMegaNav = (): void => {
     getMegaNav().each(megaNav => {

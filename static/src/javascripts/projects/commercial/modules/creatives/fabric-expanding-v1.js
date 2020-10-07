@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { local } from 'lib/storage';

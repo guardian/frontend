@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import template from 'lodash/template';
 import fabricExpandableVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
 import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';

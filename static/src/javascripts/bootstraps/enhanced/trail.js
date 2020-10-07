@@ -4,7 +4,7 @@
 
 import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { addProximityLoader } from 'lib/proximity-loader';

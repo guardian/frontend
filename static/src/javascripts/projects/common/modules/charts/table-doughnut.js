@@ -1,5 +1,5 @@
 // @flow
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import { Doughnut } from 'common/modules/charts/doughnut';
 
 const TableDoughnut = () => {};
@@ -14,14 +14,14 @@ TableDoughnut.prototype.render = (el: Element) => {
         color: td.getAttribute('data-chart-color'),
     }));
 
-    bonzo(el).addClass('u-h');
+    $(el).addClass('u-h');
     const $doughnut = new Doughnut(data, {
         showValues: el.getAttribute('data-chart-show-values') === 'true',
         unit: el.getAttribute('data-chart-unit'),
         width,
     });
 
-    // can't use bonzo's class methods, don't play well in IE
+    // can't use $'s class methods, don't play well in IE
     const currentClasses = $doughnut.attr('class');
     return $doughnut.attr(
         'class',

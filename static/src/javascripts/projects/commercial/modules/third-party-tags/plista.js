@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import { $ } from 'lib/$';
 import config from 'lib/config';
 import { adblockInUse as adblockInUse_ } from 'lib/detect';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
