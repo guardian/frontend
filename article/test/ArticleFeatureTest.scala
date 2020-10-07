@@ -140,10 +140,6 @@ import scala.collection.JavaConverters._
         el("[itemprop='contentUrl']").attribute("src") should
           include("Gunnerside-village-Swaled")
 
-//        And("I should see the image caption")
-//        el("[itemprop='associatedMedia image'] [itemprop='description']").text should
-//          be("Our rivers and natural resources are to be valued and commodified, a move that will benefit only the rich, argues George Monbiot. Photograph: Alamy")
-
         And("I should see the image url")
         el("[itemprop='associatedMedia image'] [itemprop=url]").attribute("content") should
           include(
@@ -157,13 +153,6 @@ import scala.collection.JavaConverters._
         el("[itemprop='associatedMedia image'] [itemprop=height]").attribute("content") should be("276")
       }
     }
-
-    // scenario("Poster image on embedded video", ArticleComponents) {
-    //   goTo("/world/2013/sep/25/kenya-mall-attack-bodies") { browser =>
-    //     import browser._
-    //     $("video").attribute("poster") should endWith("Westgate-shopping-centre--016.jpg")
-    //   }
-    // }
 
     scenario("Display the article publication date", ArticleComponents) {
 
@@ -212,17 +201,6 @@ import scala.collection.JavaConverters._
       }
 
     }
-
-//    scenario("Article body", ArticleComponents) {
-//
-//      Given("I am on an article entitled 'New Viking invasion at Lindisfarne'")
-//      goTo("/uk/the-northerner/2012/aug/07/lindisfarne-vikings-northumberland-heritage-holy-island") { browser =>
-//        import browser._
-//
-//        Then("I should see the body of the article")
-//        $("[itemprop=articleBody]").text should startWith("This week Lindisfarne celebrates its long and frequently bloody Viking heritage")
-//      }
-//    }
 
     scenario("Article aside MPU", ArticleComponents) {
 
@@ -366,19 +344,6 @@ import scala.collection.JavaConverters._
       }
     }
 
-//    scenario("Review body", ArticleComponents) {
-//
-//      // Nb, The schema.org markup for a review body is different to an article body
-//
-//      Given("I am on a review entitled 'Phill Jupitus is Porky the Poet in 27 Years On - Edinburgh festival review'")
-//      goTo("/culture/2012/aug/07/phill-jupitus-edinburgh-review") { browser =>
-//        import browser._
-//
-//        Then("I should see the star body")
-//        $("[itemprop=reviewBody]").text should startWith("What's so funny?")
-//      }
-//    }
-
     scenario("correct placeholder for ad is rendered") {
 
       Given("the user navigates to a page")
@@ -403,31 +368,6 @@ import scala.collection.JavaConverters._
 
         And("the placeholder has the correct analytics name")
         adPlaceholder.attribute("data-link-name") should be("ad slot top-above-nav")
-      }
-    }
-
-    scenario("Video as main element should act as main media") {
-      Given("I am on an article with a main video")
-      goTo("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
-        import browser._
-        Then("the main media should contain a video")
-        $(".media-primary video") should have size 1
-
-        And("video meta name should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=name]").attribute("content") should be(
-          "Nigel Farage's LBC interview – the key moments",
-        )
-
-        And("video meta thumbnailUrl should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
-          include(
-            "img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&quality=85&auto=format&fit=max&s=",
-          )
-
-        And("video meta uploadDate should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be(
-          "2014-05-16T16:09:34.000+01:00",
-        )
       }
     }
 
