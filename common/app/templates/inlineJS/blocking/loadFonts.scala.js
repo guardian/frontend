@@ -127,15 +127,10 @@ do you have fonts in localStorage?
                 function fetchFont(url, el, fontName, fontHash) {
                     const xhr = new XMLHttpRequest();
 
-                    // JSONP callback
-                    // hangover from previous version
-                    // added to local scope to stop closurecompiler discarding it
-                    this['guFont'] = fontData => fontData.css;
-
                     xhr.open("GET", url, true);
                     xhr.onreadystatechange = () => {
                         if (xhr.readyState === 4 && xhr.status === 200) {
-                            const css = eval(xhr.responseText);
+                            const css = JSON.parse(xhr.responseText).css;
                             useFont(el, css, fontName);
                             saveFont(fontName, fontHash, css);
                         }
