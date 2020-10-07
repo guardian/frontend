@@ -1,4 +1,7 @@
 // @flow
+
+// this is the one place we want to import bonzo – for now...
+// eslint-disable-next-line no-restricted-imports
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 

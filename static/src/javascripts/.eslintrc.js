@@ -65,6 +65,10 @@ module.exports = {
                     'lodash/compact',
                     'lodash/intersection',
                     'Promise',
+                    {
+                        "name": 'bonzo',
+                        "message": "Use lib/$ instead."
+                    }
                 ],
                 patterns: ['!lodash/*'],
             },
