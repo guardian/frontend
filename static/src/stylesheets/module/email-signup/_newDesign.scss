@@ -29,17 +29,29 @@ $mobile-img-size: 100px;
     font-family: 'Guardian Egyptian Web', Georgia, serif;
 }
 
+.newsletter-embed__headline-wrapper {
+    margin: 0 0 $base-margin;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: $mobile-img-size;
+}
+
+.newsletter-embed__image + .newsletter-embed__headline-wrapper {
+    padding-left: $base-margin;
+}
+
 .newsletter-embed__headline {
     font-size: 24px;
     font-weight: 700;
     line-height: 1;
-    margin: 0 0 $base-margin;
 }
 
 .newsletter-embed__description {
     /* Small hack to get description to go under image if close to fitting under */
     padding-top: 2px;
     font-size: 16px;
+    clear: left;
 }
 
 /* Sign up Form */
@@ -111,8 +123,18 @@ $mobile-img-size: 100px;
         margin: auto;
     }
 
+    .newsletter-embed__headline-wrapper {
+        display: block;
+        height: auto;
+        padding-left: 0;
+    }
+
     .newsletter-embed__headline {
         font-size: 30px;
+    }
+
+    .newsletter-embed__description {
+        clear: none;
     }
 
     .newsletter-embed__image + .newsletter-embed__body {
