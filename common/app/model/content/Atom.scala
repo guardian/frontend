@@ -106,6 +106,7 @@ final case class InteractiveAtom(
     html: String,
     mainJS: Option[String],
     docData: Option[String],
+    placeholderUrl: Option[String],
 ) extends Atom
 
 object InteractiveAtom {
@@ -119,6 +120,7 @@ object InteractiveAtom {
       html = interactive.html,
       mainJS = interactive.mainJS,
       docData = interactive.docData,
+      placeholderUrl = interactive.placeholderUrl,
     )
   }
 }
