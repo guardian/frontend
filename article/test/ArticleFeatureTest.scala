@@ -371,31 +371,6 @@ import scala.collection.JavaConverters._
       }
     }
 
-    scenario("Video as main element should act as main media") {
-      Given("I am on an article with a main video")
-      goTo("/politics/2014/may/16/nigel-farage-lbc-interview-key-moments") { browser =>
-        import browser._
-        Then("the main media should contain a video")
-        $(".media-primary video") should have size 1
-
-        And("video meta name should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=name]").attribute("content") should be(
-          "Nigel Farage's LBC interview – the key moments",
-        )
-
-        And("video meta thumbnailUrl should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=thumbnailUrl]").attribute("content") should
-          include(
-            "img/static/sys-images/Guardian/Pix/audio/video/2014/5/16/1400240928538/Nigel-Farage-LBC-debate-i-014.jpg?width=640&quality=85&auto=format&fit=max&s=",
-          )
-
-        And("video meta uploadDate should be set")
-        $("[itemprop='associatedMedia video'] [itemprop=uploadDate]").attribute("content") should be(
-          "2014-05-16T16:09:34.000+01:00",
-        )
-      }
-    }
-
     scenario("SEO Thumbnail") {
       goTo("/society/2013/mar/26/failing-hospitals-nhs-jeremy-hunt") { browser =>
         import browser._
