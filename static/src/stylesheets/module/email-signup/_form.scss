@@ -213,8 +213,8 @@
     margin: 0 0 $gs-baseline;
 }
 
-.email-sub__message__headline__footer,
-.email-sub__message__description__footer {
+.email-sub-footer__message__headline,
+.email-sub-footer__message__description {
     @include fs-textSans(3);
     color: #ffffff;
 }
