@@ -147,20 +147,20 @@ const toggleMenu = (): void => {
             }
 
             return fastdom
-                .read(() => {
+                .measure(() => {
                     const docRect = body.getBoundingClientRect();
                     const rect = menuToggle.getBoundingClientRect();
                     return docRect.right - rect.right + rect.width / 2;
                 })
                 .then(marginRight =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         menu.style.marginRight = `${marginRight}px`;
                     })
                 );
         };
         const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
         const removeEnhancedMenuMargin = (): Promise<void> =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 menu.style.marginRight = '';
             });
 
@@ -232,7 +232,7 @@ const toggleMenu = (): void => {
         }
     };
 
-    fastdom.write(update);
+    fastdom.mutate(update);
 };
 
 const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
@@ -241,7 +241,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
     const openClass = 'dropdown-menu--open';
 
     fastdom
-        .read(() => menuAndTriggerEls)
+        .measure(() => menuAndTriggerEls)
         .then(els => {
             const { menu, trigger } = els;
 
@@ -253,7 +253,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
             const expandedAttr = isOpen ? 'false' : 'true';
             const hiddenAttr = isOpen ? 'true' : 'false';
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 if (trigger) {
                     trigger.setAttribute('aria-expanded', expandedAttr);
                 }
@@ -290,7 +290,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
 
 const returnFocusToButton = (btnId: string): void => {
     fastdom
-        .read(() => document.getElementById(btnId))
+        .measure(() => document.getElementById(btnId))
         .then(btn => {
             if (btn) {
                 btn.focus();
@@ -363,7 +363,7 @@ const menuKeyHandlers = {
 };
 
 const enhanceCheckbox = (checkbox: HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
@@ -423,7 +423,7 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             enhanced[button.id] = true;
         };
 
-        fastdom.write(enhance);
+        fastdom.mutate(enhance);
     });
 };
 
@@ -467,7 +467,7 @@ const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
 
 const showMoreButton = (): void => {
     fastdom
-        .read(() => {
+        .measure(() => {
             const moreButton = document.querySelector('.js-show-more-button');
             const subnav = document.querySelector('.js-expand-subnav');
             const subnavList = document.querySelector(
@@ -495,7 +495,7 @@ const showMoreButton = (): void => {
 
                     // +1 to compensate for the border top on the subnav
                     if (subnavRect.top + 1 === lastChildRect.top) {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             if (moreButton) {
                                 moreButton.classList.add('is-hidden');
                             }
@@ -508,10 +508,10 @@ const showMoreButton = (): void => {
 
 const toggleSubnavSections = (moreButton: HTMLElement): void => {
     fastdom
-        .read(() => document.querySelector('.js-expand-subnav'))
+        .measure(() => document.querySelector('.js-expand-subnav'))
         .then(subnav => {
             if (subnav) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     const isOpen = subnav.classList.contains(
                         'subnav--expanded'
                     );

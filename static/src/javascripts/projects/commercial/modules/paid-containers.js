@@ -15,11 +15,11 @@ const onOpenClick = (event: EventHandler) => {
     const details = summary.parentNode;
     const label = summary.querySelector('.js-button__label');
     if (details.hasAttribute('open')) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             label.textContent = `More ${summary.getAttribute('data-text')}`;
         });
     } else {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             label.textContent = 'Less';
         });
     }

@@ -46,7 +46,7 @@ const addProximityLoader = (
     loadFn: () => void
 ): void => {
     // calls `loadFn` when screen is within `distanceThreshold` of `el`
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const $el = bonzo(el);
         const conditionFn = () => {
             const elOffset = $el.offset();

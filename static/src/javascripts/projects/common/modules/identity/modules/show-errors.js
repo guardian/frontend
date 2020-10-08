@@ -16,11 +16,11 @@ type IdentityRenderableError = {
 
 const renderError = (error: IdentityRenderableError): Promise<void> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 const errorEl = document.createElement('div');
                 errorEl.setAttribute('role', 'alert');
                 errorEl.setAttribute('aria-live', 'polite');
@@ -49,11 +49,11 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
 
 const renderList = (): Promise<void> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
         .then((errorHolderEl: HTMLElement) =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 while (errorHolderEl.firstChild) {
                     errorHolderEl.removeChild(errorHolderEl.firstChild);
                 }

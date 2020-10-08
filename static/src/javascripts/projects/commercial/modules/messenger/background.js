@@ -117,7 +117,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         }
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (backgroundParent) {
                     // Create a stacking context in DCR
                     if (
@@ -182,13 +182,13 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
 
         if (specs.scrollType === 'fixed') {
             return fastdom
-                .read(() => {
+                .measure(() => {
                     if (adSlot instanceof Element) {
                         return adSlot.getBoundingClientRect();
                     }
                 })
                 .then(rect =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (config.get('isDotcomRendering', false)) {
                             background.style.position = 'fixed';
                         }
@@ -213,7 +213,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent: HTMLElement,
         background: HTMLElement
     ) => {
-        fastdom.read(() => {
+        fastdom.measure(() => {
             const rect = adSlot.getBoundingClientRect();
             background.style.clip = `rect(${rect.top}px,100vw,${
                 rect.bottom
@@ -225,7 +225,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         backgroundParent: HTMLElement,
         background: HTMLElement
     ) => {
-        fastdom.read(() => {
+        fastdom.measure(() => {
             // We update the style in a read batch because the DIV
             // has been promoted to its own layer and is also
             // strictly self-contained. Also, without doing that

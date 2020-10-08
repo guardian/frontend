@@ -17,7 +17,7 @@ const trackInteraction = (interaction: string): void => {
 
 const bindAccountCreation = (el): void => {
     trackInteraction('set-password : display');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         render(
             <AccountCreationCompleteConsentsFlow
                 csrfToken={el.dataset.csrf}
@@ -47,9 +47,9 @@ const getPrefill = (el: HTMLElement): Prefill => ({
 
 const bindBlockList = (el): void => {
     fastdom
-        .read(() => getPrefill(el))
+        .measure(() => getPrefill(el))
         .then(prefill =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 render(
                     <StatefulConfirmEmailPage
                         csrfToken={prefill.csrfToken}

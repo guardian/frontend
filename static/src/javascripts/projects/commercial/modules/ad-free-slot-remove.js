@@ -43,7 +43,7 @@ const adFreeSlotRemove = once(
             '.commercial-thrasher'
         );
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             if (bodyEl) {
                 if (bodyEl.classList.toString().includes('has-page-skin')) {
                     bodyEl.classList.remove('has-page-skin');

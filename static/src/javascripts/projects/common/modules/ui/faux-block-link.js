@@ -7,7 +7,7 @@ const overlaySelector = '.u-faux-block-link__overlay';
 const hoverStateClassName = 'u-faux-block-link--hover';
 
 const showIntentToClick = (e: Event): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if ((e.currentTarget: any).parentElement) {
             (e.currentTarget: any).parentElement.classList.add(
                 hoverStateClassName
@@ -17,7 +17,7 @@ const showIntentToClick = (e: Event): void => {
 };
 
 const removeIntentToClick = (e: Event): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if ((e.currentTarget: any).parentElement) {
             (e.currentTarget: any).parentElement.classList.remove(
                 hoverStateClassName

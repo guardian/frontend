@@ -21,7 +21,7 @@ export const init = (): Promise<void> => {
             container.appendChild(slot);
         });
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             if (anchor && anchor.parentNode) {
                 anchor.parentNode.insertBefore(container, anchor);
             }

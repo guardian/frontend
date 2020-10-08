@@ -15,7 +15,7 @@ const closeDisabledSlots = once(
         // remove the ones which should not be there
         adSlots = adSlots.filter(shouldDisableAdSlot);
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             adSlots.forEach((adSlot: Element) => adSlot.remove());
         });
     }

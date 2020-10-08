@@ -45,8 +45,8 @@ const acastConsentState = (): Promise<boolean> => {
 const services: Services = {
     ophan,
     dom: {
-        write: promisify(fastdom.write),
-        read: promisify(fastdom.read),
+        write: promisify(fastdom.mutate),
+        read: promisify(fastdom.measure),
     },
     viewport,
     consent: {

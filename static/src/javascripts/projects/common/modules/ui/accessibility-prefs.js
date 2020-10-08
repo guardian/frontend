@@ -35,7 +35,7 @@ const breuer = (): void => {
 };
 
 const initAccessibilityPreferences = (): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         FILTERS.forEach(filter => {
             if (userPrefs.isOn(filter)) {
                 setFilter(filter);

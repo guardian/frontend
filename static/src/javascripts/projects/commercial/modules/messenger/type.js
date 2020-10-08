@@ -3,7 +3,7 @@ import fastdom from 'lib/fastdom-promise';
 import type { RegisterListeners } from 'commercial/modules/messenger';
 
 const setType = (type: ?string, adSlot: any) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         adSlot.classList.add(`ad-slot--${type || ''}`);
     });
 const init = (register: RegisterListeners) => {

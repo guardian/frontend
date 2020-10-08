@@ -10,7 +10,7 @@ const renderCampaign = (calloutNode: HTMLElement, calloutData): void => {
     const campaignDiv = `<figure class="element element-campaign">${campaign}</figure>`;
 
     fastdom
-        .write(() => {
+        .mutate(() => {
             calloutNode.innerHTML = campaignDiv;
         })
         .then(() => {

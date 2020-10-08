@@ -17,7 +17,7 @@ const upgradeEvent = (el: Node): void => {
         })
             .then(resp => {
                 if (resp.html) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         $(el)
                             .html(resp.html)
                             .removeClass(ELEMENT_INITIAL_CLASS)

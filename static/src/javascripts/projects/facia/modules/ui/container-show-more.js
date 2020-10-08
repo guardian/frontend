@@ -140,7 +140,7 @@ class Button {
     }
 
     loadShowMoreForContainer(): void {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             this.setState(DISPLAY_STATE.loading);
         });
 
@@ -153,7 +153,7 @@ class Button {
                     dedupedShowMore = dedupShowMore(this.$container, html);
                 }
 
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     if (dedupedShowMore) {
                         this.$placeholder.replaceWith(dedupedShowMore);
                     }
@@ -164,7 +164,7 @@ class Button {
                 this.isLoaded = true;
             })
             .catch(err => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.setState(DISPLAY_STATE.hidden);
                 });
 
@@ -180,7 +180,7 @@ class Button {
     }
 
     hideErrorMessage(): void {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (this.$errorMessage != null) {
                 this.$errorMessage.addClass(
                     'show-more__error-message--invisible'
@@ -202,7 +202,7 @@ class Button {
             )
         );
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (this.$errorMessage != null) {
                 this.$errorMessage.insertAfter(this.$el);
 
@@ -215,7 +215,7 @@ class Button {
 }
 
 const showMore = (button: Button): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         /**
          * Do not remove: it should retain context for the click stream module, which recurses upwards through
          * DOM nodes.
@@ -230,7 +230,7 @@ const showMore = (button: Button): void => {
 };
 
 const renderToDom = (button: Button): void => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         button.$container
             .addClass(HIDDEN_CLASS_NAME)
             .removeClass('js-container--fc-show-more')
@@ -244,7 +244,7 @@ const renderToDom = (button: Button): void => {
 };
 
 export const init = (): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const containers = qwery('.js-container--fc-show-more').map(bonzo);
         const buttons = containers
             .map(container => {

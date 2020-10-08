@@ -57,7 +57,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             expect($container.hasClass('js-container--toggle')).toBeFalsy();
             done();
         });
@@ -67,7 +67,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             expect(
                 $container.hasClass('fc-container--will-have-toggle')
             ).toBeFalsy();
@@ -79,7 +79,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             expect(
                 $container.hasClass('fc-container--has-toggle')
             ).toBeTruthy();
@@ -91,7 +91,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             expect(
                 $('.js-container__header .fc-container__toggle', container)
                     .length
@@ -104,7 +104,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             assertState($container, 'open');
             done();
         });
@@ -114,10 +114,10 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             simulateClick();
 
-            fastdom.defer(1, () => {
+            fastdom.mutate(() => {
                 assertState($container, 'closed');
                 done();
             });
@@ -129,19 +129,19 @@ describe('Container Toggle', () => {
         toggle.addToggle();
 
         // click button
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             simulateClick();
 
             const expectedValue = {};
             expectedValue[containerId] = 'closed';
 
-            fastdom.defer(1, () => {
+            fastdom.mutate(() => {
                 expect(userPrefs.get(storageId)).toEqual(expectedValue);
 
                 // now close container
                 simulateClick();
 
-                fastdom.defer(1, () => {
+                fastdom.mutate(() => {
                     expect(userPrefs.get(storageId)).toEqual({});
 
                     done();
@@ -157,7 +157,7 @@ describe('Container Toggle', () => {
         const toggle = new ContainerToggle(container);
         toggle.addToggle();
 
-        fastdom.defer(1, () => {
+        fastdom.mutate(() => {
             assertState($container, 'closed');
             done();
         });

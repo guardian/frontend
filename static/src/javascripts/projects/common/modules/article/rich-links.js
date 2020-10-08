@@ -24,7 +24,7 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
     if (!commercialFeatures.adFree) {
         return Promise.resolve();
     }
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         [...el.children]
             .filter(child =>
                 child.classList.toString().includes('rich-link--paidfor')
@@ -34,7 +34,7 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
 };
 
 const elementIsBelowViewport = (el: Element): Promise<boolean> =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const rect = el.getBoundingClientRect();
         const height =
             window.innerHeight ||
@@ -45,7 +45,7 @@ const elementIsBelowViewport = (el: Element): Promise<boolean> =>
     });
 
 const doUpgrade = (el: Element, resp: Object): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         el.innerHTML = resp.html;
         el.classList.remove('element-rich-link--not-upgraded');
         el.classList.add('element-rich-link--upgraded');

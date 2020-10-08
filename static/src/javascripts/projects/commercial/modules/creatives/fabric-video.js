@@ -65,7 +65,7 @@ class FabricVideo {
         this.inView = rect.top >= 0 && rect.bottom < viewportHeight;
         if (!this.isUpdating) {
             this.isUpdating = true;
-            fastdom.write(this.updateView, this);
+            fastdom.mutate(this.updateView, this);
         }
     }
 
@@ -115,7 +115,7 @@ class FabricVideo {
         const fabricVideoTpl = template(fabricVideoStr);
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (this.params.Trackingpixel) {
                     addTrackingPixel(
                         this.params.Trackingpixel + this.params.cacheBuster
@@ -177,7 +177,7 @@ class FabricVideo {
                     this.video.onended = this.onVideoEnded;
                 }
 
-                fastdom.read(this.onScroll, this);
+                fastdom.measure(this.onScroll, this);
 
                 return true;
             });

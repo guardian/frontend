@@ -59,10 +59,10 @@ describe('fixSecondaryColumn when showcase element is present', () => {
     });
 
     it('should set the padding-top of the secondary column to the correct value', done => {
-        jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(880));
+        jest.spyOn(fastdom, 'measure').mockReturnValue(Promise.resolve(880));
 
         fastdom
-            .write(() => {
+            .mutate(() => {
                 fixSecondaryColumn();
             })
             .then(() => {

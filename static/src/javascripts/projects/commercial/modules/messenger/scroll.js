@@ -70,7 +70,7 @@ const onScroll = (): ?Promise<any> => {
         const viewport = getViewport();
         taskQueued = true;
 
-        return fastdom.read(() => {
+        return fastdom.measure(() => {
             taskQueued = false;
 
             const iframeIds = Object.keys(iframes);
@@ -116,7 +116,7 @@ const addScrollListener = (iframe: Element, respond: any): ?Promise<any> => {
     }
 
     fastdom
-        .read(() => iframe.getBoundingClientRect())
+        .measure(() => iframe.getBoundingClientRect())
         .then(domRect => {
             sendCoordinates(iframe.id, domRect);
         });

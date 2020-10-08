@@ -20,7 +20,7 @@ const renderWidget = (widgetType: string, init: any): Promise<void> => {
     const externalTpl = template(externalContentContainerStr);
     return findAnchor()
         .then(anchorNode =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $(anchorNode).after(
                     externalTpl({
                         widgetType,

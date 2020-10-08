@@ -29,7 +29,7 @@ const addClassIfHasClass = (newClassNames: Array<string>) =>
                     advert.node.classList.contains(className)
                 )
             ) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     newClassNames.forEach(className => {
                         advert.node.classList.add(className);
                     });
@@ -62,7 +62,7 @@ const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 const removeStyleFromAdIframe = (advert: Advert, style: string) => {
     const adIframe: ?HTMLElement = advert.node.querySelector('iframe');
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (adIframe) {
             adIframe.style.removeProperty(style);
         }
@@ -85,7 +85,7 @@ sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
  * Trigger sticky scrolling for MPUs in the right-hand article column
  */
 sizeCallbacks[adSizes.mpu] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('js-sticky-mpu')) {
             if (advert.node.classList.contains('ad-slot--right')) {
                 stickyMpu(advert.node);
@@ -94,58 +94,58 @@ sizeCallbacks[adSizes.mpu] = (_, advert) =>
                 stickyCommentsMpu(advert.node);
             }
         }
-        return fastdom.write(() => advert.updateExtraSlotClasses());
+        return fastdom.mutate(() => advert.updateExtraSlotClasses());
     });
 
 /**
  * Resolve the stickyMpu.whenRendered promise
  */
 sizeCallbacks[adSizes.halfPage] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('ad-slot--right')) {
             stickyMpu(advert.node);
         }
         if (advert.node.classList.contains('ad-slot--comments')) {
             stickyCommentsMpu(advert.node);
         }
-        return fastdom.write(() => advert.updateExtraSlotClasses());
+        return fastdom.mutate(() => advert.updateExtraSlotClasses());
     });
 
 sizeCallbacks[adSizes.skyscraper] = (_, advert) =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (advert.node.classList.contains('ad-slot--right')) {
             stickyMpu(advert.node);
         }
         if (advert.node.classList.contains('ad-slot--comments')) {
             stickyCommentsMpu(advert.node);
         }
-        return fastdom.write(() =>
+        return fastdom.mutate(() =>
             advert.updateExtraSlotClasses('ad-slot--sky')
         );
     });
 
 sizeCallbacks[adSizes.video] = (_, advert) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.updateExtraSlotClasses('u-h');
     });
 
 sizeCallbacks[adSizes.outstreamDesktop] = (_, advert) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
 
 sizeCallbacks[adSizes.outstreamGoogleDesktop] = (_, advert) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
 
 sizeCallbacks[adSizes.outstreamMobile] = (_, advert) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.updateExtraSlotClasses('ad-slot--outstream');
     });
 
 sizeCallbacks[adSizes.googleCard] = (_, advert) =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         advert.updateExtraSlotClasses('ad-slot--gc');
     });
 
@@ -156,7 +156,7 @@ sizeCallbacks[adSizes.googleCard] = (_, advert) =>
 const outOfPageCallback = (event, advert) => {
     if (!event.slot.getOutOfPage()) {
         const parent = advert.node.parentNode;
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             advert.node.classList.add('u-h');
             // if in a slice, add the 'no mpu' class
             if (parent.classList.contains('fc-slice__item--mpu-candidate')) {
@@ -175,7 +175,7 @@ sizeCallbacks[adSizes.empty] = outOfPageCallback;
 sizeCallbacks[adSizes.portrait] = () =>
     // remove geo most popular
     geoMostPopular.whenRendered.then(popular =>
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (popular && popular.elem) {
                 popular.elem.remove();
                 popular.elem = null;
@@ -194,7 +194,7 @@ const addContentClass = adSlotNode => {
     const adSlotContent = qwery('> div:not(.ad-slot__label)', adSlotNode);
 
     if (adSlotContent.length) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             adSlotContent[0].classList.add('ad-slot__content');
         });
     }
@@ -231,7 +231,7 @@ export const renderAdvert = (
                     return Promise.resolve(
                         sizeCallbacks[size]
                             ? sizeCallbacks[size](slotRenderEndedEvent, advert)
-                            : fastdom.write(() => {
+                            : fastdom.mutate(() => {
                                   advert.updateExtraSlotClasses();
                               })
                     );
@@ -241,7 +241,7 @@ export const renderAdvert = (
 
             const addRenderedClass = () =>
                 isRendered
-                    ? fastdom.write(() => {
+                    ? fastdom.mutate(() => {
                           advert.node.classList.add('ad-slot--rendered');
                       })
                     : Promise.resolve();

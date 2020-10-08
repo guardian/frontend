@@ -45,7 +45,7 @@ export const loadOnwardComponent = (
     if (placeholders && placeholders.length) {
         fetchJson(jsonUrl, { mode: 'cors' })
             .then(json =>
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     insertHtmlFn(json, placeholders);
                 })
             )

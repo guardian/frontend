@@ -33,7 +33,7 @@
     "emotion": "^10.0.27",
     "emotion-server": "^10.0.5",
     "emotion-theming": "^10.0.27",
-    "fastdom": "0.8.5",
+    "fastdom": "1.0.9",
     "fence": "guardian/fence#0.2.11",
     "lodash": "^4.17.13",
     "object-fit-videos": "^1.0.3",

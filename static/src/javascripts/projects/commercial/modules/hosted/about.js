@@ -33,7 +33,7 @@ const template = (): string => `
 
 export const init = () =>
     fastdom
-        .write(() => {
+        .mutate(() => {
             $(document.body).append(template());
         })
         .then(() => {
@@ -47,11 +47,11 @@ export const init = () =>
                     'click',
                     (e: Event): mixed => {
                         e.preventDefault();
-                        fastdom.write(() => overlay.classList.remove('u-h'));
+                        fastdom.mutate(() => overlay.classList.remove('u-h'));
                     }
                 );
             });
             closeBtn.addEventListener('click', () => {
-                fastdom.write(() => overlay.classList.add('u-h'));
+                fastdom.mutate(() => overlay.classList.add('u-h'));
             });
         });

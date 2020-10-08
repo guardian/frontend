@@ -415,7 +415,7 @@ const getMegaNav = (): bonzo => $('.js-global-navigation');
 
 const removeFromMegaNav = (): void => {
     getMegaNav().each(megaNav => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $('.js-global-navigation__section--history', megaNav).remove();
         });
     });
@@ -453,7 +453,7 @@ const showInMegaNav = (): void => {
                             <a class="button button--small button--tag button--tertiary" href="/preferences" data-link-name="edit">edit these</a>
                         </ul>
                     </li>`;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             getMegaNav().prepend(tagsHTML);
         });
         inMegaNav = true;

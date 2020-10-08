@@ -25,7 +25,7 @@ export const lazyLoadContainers = (): void => {
         if (containers.length === 0) {
             mediator.off('window:throttledScroll', lazyLoad);
         } else {
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 const containersInRange = containers.reduce(
                     (result, container) => {
                         result[withinRange(container) ? 'in' : 'out'].push(
@@ -41,7 +41,7 @@ export const lazyLoadContainers = (): void => {
 
                 containers = containersInRange.out;
 
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     containersInRange.in.forEach(displayContainer);
                 });
             });

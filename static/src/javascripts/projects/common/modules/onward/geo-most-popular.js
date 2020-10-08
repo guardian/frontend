@@ -50,7 +50,7 @@ const geoMostPopular = {
     render: once(
         (): Promise<void> => {
             fastdom
-                .read(() => {
+                .measure(() => {
                     const jsArticleBodyElement = document.querySelector(
                         '.js-article__body'
                     );

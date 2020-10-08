@@ -42,7 +42,7 @@ const avatarify = (container: HTMLElement): void => {
 
 const initUserAvatars = (): Promise<void> =>
     fastdom
-        .read(() => document.getElementsByClassName('user-avatar'))
+        .measure(() => document.getElementsByClassName('user-avatar'))
         .then(avatars => {
             if (avatars) {
                 Array.from(avatars).forEach(avatarify);

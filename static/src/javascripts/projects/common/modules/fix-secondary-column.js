@@ -23,13 +23,13 @@ export const fixSecondaryColumn = (): void => {
     }
 
     fastdom
-        .read(() => {
+        .measure(() => {
             const mainColDim = mainCol.getBoundingClientRect();
             const showcaseDim = showcase.getBoundingClientRect();
             return calcShowcaseOffset(showcaseDim, mainColDim);
         })
         .then(offset =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 secondaryCol.style.paddingTop = `${offset}px`;
             })
         );

@@ -55,7 +55,7 @@ describe('Next video autoplay', () => {
 
     it('should show end slate information', done => {
         triggerEndSlate();
-        fastdom.read(() => {
+        fastdom.measure(() => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'
@@ -68,7 +68,7 @@ describe('Next video autoplay', () => {
     it('should hide end slate information when cancel button is clicked', done => {
         addCancelListener();
         (document.querySelector('.js-autoplay-cancel'): any).click();
-        fastdom.read(() => {
+        fastdom.measure(() => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'

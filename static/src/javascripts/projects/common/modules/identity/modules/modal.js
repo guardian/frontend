@@ -6,14 +6,14 @@ const ERR_MODAL_MALFORMED = 'Modal is malformed';
 
 const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             Array.from(modalEl.querySelectorAll('.js-identity-modal__closer'))
         )
         .then(buttonEls =>
             buttonEls
                 .filter(buttonEl => !buttonEl.dataset.closeIsBound)
                 .map(buttonEl =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         buttonEl.dataset.closeIsBound = true;
                         buttonEl.addEventListener('click', () => {
                             modalEl.classList.remove('identity-modal--active');
@@ -25,7 +25,7 @@ const bindCloserOnce = (modalEl: HTMLElement): Promise<void[]> =>
 
 const getModal = (name: string): Promise<HTMLElement> =>
     fastdom
-        .read(() => {
+        .measure(() => {
             const modalEl: ?HTMLElement = document.querySelector(
                 `.identity-modal.identity-modal--${name}`
             );
@@ -36,7 +36,7 @@ const getModal = (name: string): Promise<HTMLElement> =>
 
 const getContents = (name: string): Promise<HTMLElement> =>
     getModal(name).then(modalEl =>
-        fastdom.read(() => {
+        fastdom.measure(() => {
             const contentsEl: ?HTMLElement = modalEl.querySelector(
                 `.identity-modal__content`
             );
@@ -47,14 +47,14 @@ const getContents = (name: string): Promise<HTMLElement> =>
 
 const show = (name: string): Promise<void> =>
     getModal(name).then(modalEl =>
-        fastdom.read(() => {
+        fastdom.measure(() => {
             modalEl.classList.add('identity-modal--active');
         })
     );
 
 const hide = (name: string): Promise<void> =>
     getModal(name).then(modalEl =>
-        fastdom.read(() => {
+        fastdom.measure(() => {
             modalEl.classList.remove('identity-modal--active');
         })
     );

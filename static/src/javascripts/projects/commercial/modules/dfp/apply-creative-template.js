@@ -58,7 +58,7 @@ const renderCreativeTemplate = (
         });
 
     const hideIframe = (): Promise<any> =>
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             iFrame.style.display = 'none';
         });
 

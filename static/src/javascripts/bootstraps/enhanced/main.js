@@ -173,7 +173,7 @@ const bootEnhanced = (): void => {
             }
 
             fastdom
-                .read(() => qwery('audio'))
+                .measure(() => qwery('audio'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -192,7 +192,7 @@ const bootEnhanced = (): void => {
 
             // Native video player enhancements
             fastdom
-                .read(() => qwery('video'))
+                .measure(() => qwery('video'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -336,7 +336,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 if ($('.youtube-media-atom').length > 0) {
                     require.ensure(
                         [],

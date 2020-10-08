@@ -9,7 +9,7 @@ const deleteLoaderElm = $('#deleteLoader')[0];
 
 const disableDeleteButton = (): void => {
     if (deleteButtonElm) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             deleteButtonElm.disabled = true;
         });
     }
@@ -17,7 +17,7 @@ const disableDeleteButton = (): void => {
 
 const showLoader = (): void => {
     if (deleteLoaderElm) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             deleteLoaderElm.classList.remove('is-hidden');
         });
     }

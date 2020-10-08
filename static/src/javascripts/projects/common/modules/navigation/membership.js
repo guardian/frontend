@@ -172,7 +172,7 @@ export const initMembership = (): void => {
 
     if (isPayingMember()) {
         fastdom
-            .read(() => document.getElementsByClassName('js-become-member'))
+            .measure(() => document.getElementsByClassName('js-become-member'))
             .then(becomeMemberLinks => {
                 if (becomeMemberLinks.length) {
                     becomeMemberLinks[0].setAttribute('hidden', 'hidden');
@@ -180,7 +180,7 @@ export const initMembership = (): void => {
             });
 
         fastdom
-            .read(() => document.getElementsByClassName('js-subscribe'))
+            .measure(() => document.getElementsByClassName('js-subscribe'))
             .then(subscriberLinks => {
                 if (subscriberLinks.length) {
                     subscriberLinks[0].classList.remove(

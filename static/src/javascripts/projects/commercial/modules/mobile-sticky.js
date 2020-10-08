@@ -33,7 +33,7 @@ export const init = (): Promise<void> => {
     if (shouldIncludeMobileSticky()) {
         const mobileStickyWrapper = createAdWrapper();
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (document.body && mobileStickyWrapper)
                     document.body.appendChild(mobileStickyWrapper);
             })

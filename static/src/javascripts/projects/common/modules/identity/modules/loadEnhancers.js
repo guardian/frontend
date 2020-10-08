@@ -10,7 +10,7 @@ const loadEnhancers = (loaders: Array<Array<any>>): void => {
         if (typeof classname !== 'string') throw new Error('Invalid classname');
         if (typeof action !== 'function') throw new Error('Invalid action');
         return fastdom
-            .read(() => Array.from(document.querySelectorAll(classname)))
+            .measure(() => Array.from(document.querySelectorAll(classname)))
             .then(elements =>
                 elements.forEach((element: HTMLElement) => {
                     robust.catchAndLogError(classname, () => {

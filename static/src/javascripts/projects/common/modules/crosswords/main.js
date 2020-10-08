@@ -8,7 +8,7 @@ import Crossword from 'common/modules/crosswords/crossword';
 
 const initCrosswords = (): void => {
     fastdom
-        .read(() => document.getElementsByClassName('js-crossword'))
+        .measure(() => document.getElementsByClassName('js-crossword'))
         .then(elements => {
             Array.from(elements).forEach(element => {
                 const data = element.getAttribute('data-crossword-data');

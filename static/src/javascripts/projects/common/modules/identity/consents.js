@@ -58,7 +58,7 @@ const buildConsentUpdatePayload = (
 };
 
 const getInputFields = (labelEl: HTMLElement): Promise<NodeList<HTMLElement>> =>
-    fastdom.read(() => labelEl.querySelectorAll('[name][value]'));
+    fastdom.measure(() => labelEl.querySelectorAll('[name][value]'));
 
 const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
     buttonEl.classList.add(isLoadingClassName);
@@ -72,7 +72,7 @@ const unsubscribeFromAll = (buttonEl: HTMLButtonElement): Promise<void> => {
 
 const toggleInputsWithSelector = (className: string, checked: boolean) =>
     fastdom
-        .read(() =>
+        .measure(() =>
             Array.from(
                 document.querySelectorAll(
                     `.${className} input[type="checkbox"]`
@@ -93,14 +93,14 @@ const uncheckAllOptIns = (): Promise<void> =>
 
 const showUnsubscribeConfirmation = (): Promise<void> => {
     const fetchButton = (): Promise<HTMLButtonElement> =>
-        fastdom.read(() =>
+        fastdom.measure(() =>
             document.querySelector(`.${unsubscribeButtonClassName}`)
         );
 
     const updateVisibilityAndShowMessage = (
         elem: HTMLButtonElement
     ): Promise<void> =>
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (elem.parentElement) {
                 prependSuccessMessage(
                     UNSUBSCRIPTION_SUCCESS_MESSAGE,
@@ -204,20 +204,20 @@ const getCheckedAllStatus = (checkboxesEl: HTMLInputElement[]): boolean =>
 
 const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
     const fetchElements = (): Promise<(HTMLInputElement | HTMLElement)[]> =>
-        fastdom.read(() => [
+        fastdom.measure(() => [
             labelEl.querySelector('input'),
             labelEl.querySelector('.manage-account__switch-title'),
         ]);
 
     const fetchWrappedCheckboxes = (): Promise<HTMLInputElement[]> =>
         fastdom
-            .read(() => [
+            .measure(() => [
                 labelEl.dataset.wrapper
                     ? labelEl.dataset.wrapper
                     : '.manage-account__switches',
             ])
             .then(selector =>
-                fastdom.read(() => {
+                fastdom.measure(() => {
                     const nearestWrapperEl = labelEl.closest(selector);
                     if (!nearestWrapperEl) throw new Error(ERR_MALFORMED_HTML);
                     return Array.from(
@@ -248,7 +248,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             status ? LC_UNCHECK_ALL : LC_CHECK_ALL;
 
         const updateCheckStatus = () =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 checkboxEl.checked = getCheckedAllStatus(wrappedCheckboxEls);
                 titleEl.innerHTML = getTextForStatus(checkboxEl.checked);
                 labelEl.style.visibility = 'visible';
@@ -275,7 +275,7 @@ const bindCheckAllSwitch = (labelEl: HTMLElement): void => {
             );
 
             checkboxesToUpdate.forEach(wrappedCheckboxEl => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     wrappedCheckboxEl.checked = checkboxEl.checked;
                 });
             });

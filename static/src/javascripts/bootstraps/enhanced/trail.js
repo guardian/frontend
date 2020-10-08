@@ -53,7 +53,7 @@ const insertOrProximity = (selector, insert) => {
         insert();
     } else {
         fastdom
-            .read(() => document.querySelector(selector))
+            .measure(() => document.querySelector(selector))
             .then(el => {
                 if (el) {
                     addProximityLoader(el, 1500, insert);
@@ -132,7 +132,7 @@ const initOnwardContent = () => {
             new OnwardContent(qwery('.js-onward'));
         } else if (config.get('page.tones', '') !== '') {
             fastdom
-                .read(() => Array.from(document.querySelectorAll('.js-onward')))
+                .measure(() => Array.from(document.querySelectorAll('.js-onward')))
                 .then(els => {
                     els.forEach(c => {
                         new TonalComponent().fetch(c, 'html');
@@ -151,7 +151,7 @@ const initDiscussion = () => {
         config.get('page.commentable')
     ) {
         fastdom
-            .read(() => document.querySelector('.discussion'))
+            .measure(() => document.querySelector('.discussion'))
             .then(el => {
                 if (el) {
                     new DiscussionLoader().attachTo(el);
@@ -163,9 +163,9 @@ const initDiscussion = () => {
 const repositionComments = () => {
     if (!isUserLoggedIn()) {
         fastdom
-            .read(() => $('.js-comments'))
+            .measure(() => $('.js-comments'))
             .then($comments =>
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $comments.appendTo(qwery('.js-repositioned-comments'));
                     if (window.location.hash === '#comments') {
                         const top = $comments.offset().top;
