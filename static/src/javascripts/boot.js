@@ -34,7 +34,7 @@ const go = () => {
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid');
+        const browserId: ?string = getCookie('bwid') || undefined;
         const pubData: { browserId?: string } | void = browserId
             ? { browserId }
             : undefined;
