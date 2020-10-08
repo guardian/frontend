@@ -247,6 +247,7 @@ case class InteractiveAtomBlockElement(
     html: Option[String],
     css: Option[String],
     js: Option[String],
+    placeholderUrl: Option[String],
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -786,6 +787,7 @@ object PageElement {
                 html = Some(interactive.html),
                 css = Some(interactive.css),
                 js = interactive.mainJS,
+                placeholderUrl = interactive.placeholderUrl,
               ),
             )
           }
