@@ -21,6 +21,7 @@ __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
 // Debug preact in DEV
 if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-unused-expressions
     import(/* webpackChunkName: "preact-debug" */ 'preact/debug');
 }
 
