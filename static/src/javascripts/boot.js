@@ -34,10 +34,10 @@ const go = () => {
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid') || undefined;
-        const pubData: { browserId?: string } | void = browserId
-            ? { browserId }
-            : undefined;
+        const browserId: ?string = getCookie('bwid') || undefined;;
+        const pageViewId: ?string = config.get('ophan.pageViewId');
+        const pubData: { browserId?: ?string, pageViewId?: ?string } =
+            { browserId, pageViewId };
         cmp.init({ pubData, isInUsa: isInUsa() });
 
         // 2. once standard is done, next is commercial
