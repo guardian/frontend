@@ -8,6 +8,7 @@ import { remoteEpicVariants } from 'common/modules/experiments/tests/remote-epic
 import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
+import { signInGatePageview } from 'common/modules/experiments/tests/sign-in-gate-pageview';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -15,6 +16,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGatePatientia,
     signInGateMainVariant,
     signInGateMainControl,
+    signInGatePageview,
 ];
 
 export const priorityEpicTest: AcquisitionsABTest = remoteEpicVariants;

@@ -88,6 +88,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-pageview",
+    "Show sign in gate on 3rd vs 2nd article view, with dismiss rule variants",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-remote-epic-variants",
     "Serve epics from remote service for subset of audience",
     owners = Seq(Owner.withGithub("nicl")),
