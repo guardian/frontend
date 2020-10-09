@@ -31,15 +31,11 @@ const promisify = (fdaction: FastdomAction) => (
         });
     });
 
-const acastConsentState = (): Promise<boolean> => {
-    const p = new Promise(resolve => {
-        onConsentChange(state => {
-            const consented = getConsentFor('acast', state);
-            resolve(consented);
-        });
+const onAcastConsentChange = (callback: boolean => void): void => {
+    onConsentChange(state => {
+        const consented = getConsentFor('acast', state);
+        callback(consented);
     });
-
-    return p;
 };
 
 const services: Services = {
@@ -50,7 +46,7 @@ const services: Services = {
     },
     viewport,
     consent: {
-        acast: acastConsentState(),
+        onAcastConsentChange,
     },
     commercial: {
         isAdFree: isAdFreeUser(),
