@@ -37,6 +37,12 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
     isInUsRegion: () => true,
 }));
 
+jest.mock('@guardian/consent-management-platform', () => ({
+    onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
+}));
+
+
 jest.mock('@guardian/libs', () => ({
     loadScript: () => Promise.resolve(),
 }));
