@@ -45,6 +45,7 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
 import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
+import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -276,6 +277,31 @@ const startPinterest = (): void => {
     }
 };
 
+const initialiseEmail = (): void => {
+    // Initalise email embedded in page
+    initEmail();
+
+    // Initalise email forms in iframes
+    Array.from(document.getElementsByClassName('js-email-sub__iframe')).forEach(
+        el => {
+            const iframe: HTMLIFrameElement = (el: any);
+
+            initEmail(iframe);
+        }
+    );
+
+    // Listen for interactive load event and initalise forms
+    bean.on(window, 'interactive-loaded', () => {
+        Array.from(
+            document.querySelectorAll('.guInteractive .js-email-sub__iframe')
+        ).forEach(el => {
+            const iframe: HTMLIFrameElement = (el: any);
+
+            initEmail(iframe);
+        });
+    });
+};
+
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
@@ -329,6 +355,7 @@ const init = (): void => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
+        ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],

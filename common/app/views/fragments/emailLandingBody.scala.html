@@ -1,5 +1,4 @@
 @import com.gu.identity.model.EmailNewsletters
-@import com.gu.identity.model.EmailEmbed
 @()(implicit request: RequestHeader)
 @import views.support.RenderClasses
 
@@ -14,7 +13,11 @@
                 @fragments.email.signup.emailSignUp(
                     "landing",
                     EmailNewsletters.guardianTodayUk.identityName,
-                    EmailNewsletters.guardianTodayUk.emailEmbed
+                    "Catch up when you wake up with <span class=\"email-sub__heading-emph\">The Guardian Today Email</span>",
+                    "<span class=\"email-sub__description-emph\">Subscribe to The Guardian Today</span> We'll send you the biggest headlines each and every morning.",
+                    "Your email address",
+                    "Subscribe",
+                    "http://placehold.it/350x150"
                 )
             </div>
         </div>
