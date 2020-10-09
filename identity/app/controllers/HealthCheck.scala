@@ -9,5 +9,5 @@ import scala.concurrent.ExecutionContext
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     executionContext: ExecutionContext,
 ) extends AllGoodCachedHealthCheck(
-      NeverExpiresSingleHealthCheck(routes.EmailSignupController.renderForm("footer", 37).url),
+      NeverExpiresSingleHealthCheck(routes.AdvertsManager.renderAdvertsManager(None).url),
     )(wsClient, executionContext)
