@@ -1,6 +1,7 @@
 // @flow strict
 
 import config from 'lib/config';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import once from 'lodash/once';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
@@ -36,7 +37,12 @@ const setupA9: () => Promise<void> = () => {
 const setupA9Once: () => Promise<void> = once(setupA9);
 
 export const init = (): Promise<void> => {
-    setupA9Once();
+    onConsentChange(state => {
+        if (getConsentFor('a9', state)) {
+            setupA9Once();
+        }
+    });
+
     return Promise.resolve();
 };
 
