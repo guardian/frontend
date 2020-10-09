@@ -12,6 +12,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     DotcomRendering,
     DCRBubble,
     NGInteractiveDCR,
+    NewsletterEmbedDesign,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -53,4 +54,13 @@ object NGInteractiveDCR
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = new LocalDate(2021, 6, 1),
       participationGroup = Perc0B,
+    )
+
+object NewsletterEmbedDesign
+    extends Experiment(
+      name = "new-newsletter-embed-designs",
+      description = "New newsletter signup embeds for discoverability OKR",
+      owners = Seq(Owner.withGithub("buck06191")),
+      sellByDate = new LocalDate(2020, 11, 1),
+      participationGroup = Perc0C,
     )
