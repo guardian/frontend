@@ -2,7 +2,8 @@
 
 $base-margin: 8px;
 $desktop-img-size: 200px;
-$mobile-img-size: 100px;
+$mobile-headline-font-size: 24px;
+$mobile-img-size: 3 * $mobile-headline-font-size;
 
 .newsletter-embed {
     * {
@@ -13,7 +14,7 @@ $mobile-img-size: 100px;
 }
 .newsletter-embed__image {
     max-width: $mobile-img-size;
-    float: left;
+    float: right;
     margin: $base-margin;
 }
 
@@ -33,7 +34,7 @@ $mobile-img-size: 100px;
     margin: 0 0 $base-margin;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: start;
     height: $mobile-img-size;
 }
 
@@ -116,6 +117,7 @@ $mobile-img-size: 100px;
 
     .newsletter-embed__image {
         max-width: $desktop-img-size;
+        float: left;
     }
 
     .newsletter-embed__form {
