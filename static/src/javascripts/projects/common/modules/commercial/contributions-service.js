@@ -6,7 +6,7 @@ import {
     setupOphanView,
     emitBeginEvent,
     setupClickHandling,
-    makeEvent, submitOphanInsert,
+    submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
@@ -26,7 +26,6 @@ import {
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
-import { setupEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 
 type ServiceModule = {
     url: string,
@@ -193,6 +192,13 @@ const getStickyBottomBanner = (payload: {}) => {
     });
 };
 
+const getEpicUrl = (contentType: string): string => {
+    const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
+    return config.get('page.isDev') ?
+        `https://contributions.code.dev-guardianapis.com/${path}` :
+        `https://contributions.guardianapis.com/${path}`
+};
+
 export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
     const payload = buildBannerPayload();
 
@@ -275,26 +281,10 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-const insertArticleEpic = (component, props) => {
-    const el = epicEl();
-
-    mountDynamic(el, component.ContributionsEpic, props, true);
-};
-
-const getEpicUrl = (contentType: string): string => {
-    const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
-    return config.get('page.isDev') ?
-        `https://contributions.code.dev-guardianapis.com/${path}` :
-        `https://contributions.guardianapis.com/${path}`
-};
-
 export const fetchAndRenderEpic = async (): void => {
     const page = config.get('page');
 
-    // TODO - ignore liveblogs for now
-
-    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
-        console.log('fetchAndRenderEpic')
+    if (page.contentType === 'Article') {
         try {
             const payload = buildEpicPayload();
 
@@ -323,12 +313,8 @@ export const fetchAndRenderEpic = async (): void => {
             emitBeginEvent(campaignId);
             setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
 
-            if (page.contentType === 'Article') {
-                insertArticleEpic(component, module.props);
-            } else if (page.contentType === 'LiveBlog') {
-                console.log("it's a liveblog")
-                setupEpicInLiveblog(component, module.props);
-            }
+            const el = epicEl();
+            mountDynamic(el, component.ContributionsEpic, module.props, true);
 
             // TODO - epic view log not updating!
             submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)

@@ -49,7 +49,7 @@ import {
     bannerMultipleTestsGoogleDocUrl,
     getGoogleDoc,
 } from 'common/modules/commercial/contributions-google-docs';
-import { getEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
+import { getLiveblogEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
@@ -791,13 +791,12 @@ export const buildConfiguredEpicTestFromJson = (
     };
 };
 
-export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
-    getEpicTestData()
+export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getLiveblogEpicTestData()
         .then(epicTestData => {
-            const showDrafts = window.location.hash === '#show-draft-epics';
             if (epicTestData.tests) {
                 return epicTestData.tests
-                    .filter(test => test.isOn || showDrafts)
+                    .filter(test => test.isOn)
                     .map(json =>
                         makeEpicABTest(buildConfiguredEpicTestFromJson(json))
                     );
@@ -807,9 +806,9 @@ export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple configured epic tests. ${
+                    `Error getting multiple configured liveblog epic tests. ${
                         err.message
-                    }. Stack: ${err.stack}`
+                        }. Stack: ${err.stack}`
                 ),
                 {
                     feature: 'epic',
