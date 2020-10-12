@@ -290,7 +290,6 @@ const submitOphanInsert = (
 
 const setupOphanView = (
     element: HTMLElement,
-    viewEvent: string,
     testId: string,
     variantId: string,
     campaignCode: string,
@@ -531,7 +530,6 @@ const makeEpicABTestVariant = (
 
                                     setupOphanView(
                                         element,
-                                        parentTest.viewEvent,
                                         parentTest.id,
                                         initVariant.id,
                                         campaignCode,

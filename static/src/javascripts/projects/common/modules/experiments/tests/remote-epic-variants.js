@@ -6,7 +6,7 @@ const id = 'RemoteEpicVariants';
 
 const remoteVariant: Variant = {
     id: 'remote',
-    test: (): void => { fetchAndRenderEpic(id) },
+    test: (): void => { fetchAndRenderEpic() },
     canRun: () => true,
 };
 
