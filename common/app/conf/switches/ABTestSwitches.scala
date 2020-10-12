@@ -96,6 +96,16 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+   Switch(
+    ABTests,
+    "ab-sign-in-gate-personalised-ad-copy",
+    "Show sign in gate with and without copy about personalized advertising",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
   Switch(
     ABTests,
     "ab-remote-epic-variants",
