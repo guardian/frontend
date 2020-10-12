@@ -64,19 +64,34 @@ class ArticleController(
 
   def renderHeadline(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      def responseFromHeadline(headline: Option[String]) = {
-        headline
-          .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
+      def responseFromOptionalString(str: Option[String]) = {
+        str
+          .map(s => Cached(CacheTime.Default)(RevalidatableResult.Ok(s)))
           .getOrElse {
             log.warn(s"headline not found for $path")
             Cached(10)(WithoutRevalidationResult(NotFound))
           }
       }
-
       capiLookup
         .lookup(path, Some(ArticleBlocks))
         .map(_.content.map(_.webTitle))
-        .map(responseFromHeadline)
+        .map(responseFromOptionalString)
+    }
+
+  def renderHeadline2(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      def responseFromOptionalString(str: Option[String]) = {
+        str
+          .map(s => Cached(CacheTime.Default)(RevalidatableResult.Ok(s)))
+          .getOrElse {
+            log.warn(s"headline not found for $path")
+            Cached(10)(WithoutRevalidationResult(NotFound))
+          }
+      }
+      capiLookup
+        .lookup(path, Some(ArticleBlocks))
+        .map(c => c.content.flatMap(_.fields.flatMap(_.headline)))
+        .map(responseFromOptionalString)
     }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
