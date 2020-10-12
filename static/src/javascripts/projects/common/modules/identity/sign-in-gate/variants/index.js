@@ -10,6 +10,8 @@ import { signInGateVariant as pageviewVariant1 } from './pageview/variant-1';
 import { signInGateVariant as pageviewVariant2 } from './pageview/variant-2';
 import { signInGateVariant as pageviewVariant3 } from './pageview/variant-3';
 import { signInGateVariant as pageviewVariant4 } from './pageview/variant-4';
+import { signInGateVariant as personalisedAdCopyVariant1 } from './personalised-ad-copy/variant-1';
+import { signInGateVariant as personalisedAdCopyVariant2 } from './personalised-ad-copy/variant-2';
 
 // to add a variant, first import the variant in the SignInGateVariant type, and then add to this exported array
 export const variants: Array<SignInGateVariant> = [
@@ -22,4 +24,6 @@ export const variants: Array<SignInGateVariant> = [
     pageviewVariant2,
     pageviewVariant3,
     pageviewVariant4,
+    personalisedAdCopyVariant1,
+    personalisedAdCopyVariant2,
 ];
