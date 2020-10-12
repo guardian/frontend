@@ -2,5 +2,5 @@
 @(page: model.Page, result: SubscriptionResult)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @emailEmbed(page){
-    @fragments.email.signup.subscriptionResult(result)
+    @fragments.email.signup.footer.subscriptionResultFooter(result)
 }
