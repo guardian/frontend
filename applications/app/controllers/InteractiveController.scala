@@ -10,6 +10,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import experiments.{ActiveExperiments, NGInteractiveDCR}
 import pages.InteractiveHtmlPage
 
 import scala.concurrent.duration._
@@ -82,11 +83,16 @@ class InteractiveController(
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
-  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
-    lookup(path) map {
-      case Left(model)  => render(model)
-      case Right(other) => RenderOtherStatus(other)
+  override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
+    if (ActiveExperiments.isParticipating(NGInteractiveDCR)) {
+      Future.successful(Ok("Experiment: NGInteractiveDCR"))
+    } else {
+      lookup(path) map {
+        case Left(model)  => render(model)
+        case Right(other) => RenderOtherStatus(other)
+      }
     }
+  }
 
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 }
