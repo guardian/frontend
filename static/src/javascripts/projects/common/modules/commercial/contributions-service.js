@@ -199,6 +199,38 @@ const getEpicUrl = (contentType: string): string => {
         `https://contributions.guardianapis.com/${path}`
 };
 
+const renderEpic = async (module, meta): Promise<void> => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
+
+    emitBeginEvent(campaignId);
+    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+
+    const el = epicEl();
+    mountDynamic(el, component.ContributionsEpic, module.props, true);
+
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    setupOphanView(
+        el,
+        abTestName,
+        abTestVariant,
+        campaignCode,
+        campaignId,
+        componentType,
+        products,
+        abTestVariant.showTicker,
+        abTestVariant.tickerSettings,
+    );
+};
+
 export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
     const payload = buildBannerPayload();
 
@@ -284,6 +316,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
 export const fetchAndRenderEpic = async (): void => {
     const page = config.get('page');
 
+    // Liveblog epics are still selected and rendered natively
     if (page.contentType === 'Article') {
         try {
             const payload = buildEpicPayload();
@@ -293,42 +326,11 @@ export const fetchAndRenderEpic = async (): void => {
             checkResponseOk(response);
             const json = await response.json();
 
-            // TODO - what if there is just no epic?
-            if (!json || !json.data) {
-                throw new Error("epic unexpected response format");
+            if (json && json.data) {
+                const {module, meta} = json.data;
+                await renderEpic(module, meta);
             }
 
-            const {module, meta} = json.data;
-            const component = await window.guardianPolyfilledImport(module.url);
-
-            const {
-                abTestName,
-                abTestVariant,
-                componentType,
-                products = [],
-                campaignCode,
-                campaignId
-            } = meta;
-
-            emitBeginEvent(campaignId);
-            setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
-            const el = epicEl();
-            mountDynamic(el, component.ContributionsEpic, module.props, true);
-
-            // TODO - epic view log not updating!
-            submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
-            setupOphanView(
-                el,
-                abTestName,
-                abTestVariant,
-                campaignCode,
-                campaignId,
-                componentType,
-                products,
-                abTestVariant.showTicker,
-                abTestVariant.tickerSettings,
-            );
         } catch (error) {
             console.log(`Error importing remote epic: ${error}`);
             reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
