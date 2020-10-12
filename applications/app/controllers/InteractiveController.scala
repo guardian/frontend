@@ -84,8 +84,6 @@ class InteractiveController(
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
     lookup(path) map {
-      case Left(model) if model.interactive.content.isExpired =>
-        RenderOtherStatus(Gone) // TODO - delete this line after switching to new content api
       case Left(model)  => render(model)
       case Right(other) => RenderOtherStatus(other)
     }
