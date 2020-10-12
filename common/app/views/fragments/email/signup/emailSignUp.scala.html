@@ -1,11 +1,9 @@
 @import com.gu.identity.model.EmailNewsletters._
+@import com.gu.identity.model.EmailEmbed
+@import com.gu.identity.model.EmailNewsletter
 @(  componentClass: String,
-    listName: String,
-    formHeading: String = "",
-    formDescription: String = "",
-    labelText: String = "Email address",
-    submitText: String = "Sign up",
-    formImage: String = "")(implicit request: RequestHeader)
+    listName:String,
+    emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -31,45 +29,36 @@
 @inputId = @{ componentClass + "-email-sub-input" }
 @dummyInputId = @{ componentClass + "-email-sub-input-name" }
 
-@wrapperClass = @{ "email-sub js-email-sub" + " email-sub--" + componentClass + " js-email-sub--" + componentClass }
+@wrapperClass = @{ "email-sub" + " email-sub--" + componentClass  }
 @wrapperToneClass = @{ if (componentClass == "plaintone") "email-sub--tone-" + listNamesTones.getOrElse(listName, "news") }
-@formClass = @{ "email-sub__form js-email-sub__form" + " email-sub__form--" + componentClass }
-@headerClass = @{"email-sub__header js-email-sub__header" + " email-sub__header--" + componentClass + " js-email-sub__header--" + componentClass }
+@formClass = @{ "email-sub__form" + " email-sub__form--" + componentClass }
+@headerClass = @{"email-sub__header" + " email-sub__header--" + componentClass  }
 
 
 @form = {
-    <form action="@LinkTo("/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
+    <form action="@LinkTo(s"/email")" method="post" id="@formId" class="@formClass" data-email-form-type="@componentClass" data-email-list-name="@listName">
         @helper.CSRF.formField
         <div class="email-sub__form-wrapper">
-            <div class="email-sub__inline-label js-email-sub__inline-label">
-                @if(componentClass == "plaintone") {
-                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" placeholder="Email address" />
-                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" placeholder="Name" />
-                } else {
-                    <label class="email-sub__label js-email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))@labelText</label>
-                    <input class="email-sub__text-input js-email-sub__text-input" type="email" name="email" id="@inputId" />
-                    <input class="email-sub__text-input js-email-sub__text-input-name u-h" autocomplete="nope" type="text" name="name" id="@dummyInputId" />
-                }
-                <input class="js-email-sub__listname-input" type="hidden" name="listName" value="@listName" />
+            <div class="email-sub__inline-label">
+
+                <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
+                <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
+                <input class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" placeholder="Name" />
+
+                <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 
             </div>
-            <button type="submit" class="email-sub__submit-button js-email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))@submitText</button>
+            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
         </div>
     </form>
 }
 
 
 <div class="@wrapperClass @wrapperToneClass">
-    @if(formHeading) {
-        <div class="@headerClass">
-            <h2 class="email-sub__heading js-email-sub__heading">@Html(formHeading)</h2>
-
-            @if(formDescription) {
-                <div class="email-sub__description js-email-sub__description">@Html(formDescription)</div>
-            }
-        </div>
-    }
-
+    <div class="@headerClass">
+        <h2 class="email-sub__heading">@Html(emailEmbedData.title)</h2>
+        <div class="email-sub__description">@Html(emailEmbedData.description)</div>
+    </div>
     @form
 </div>
 

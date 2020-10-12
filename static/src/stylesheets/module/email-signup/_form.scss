@@ -22,6 +22,15 @@
     * {
         box-sizing: border-box;
     }
+
+    .email-sub__label {
+        @include fs-textSans(5);
+        line-height: 41px;
+        color: rgba($brightness-7, .5);
+        left: $gs-gutter;
+        position: absolute;
+        pointer-events: none;
+    }
 }
 
 .email-sub__form--is-hidden {
@@ -53,6 +62,10 @@
 }
 
 .email-sub__inline-label--is-hidden {
+    display: none;
+}
+
+.email-sub__text-input:focus ~ .email-sub__label {
     display: none;
 }
 
@@ -155,6 +168,7 @@
 .email-sub__message__headline,
 .email-sub__message__description {
     @include fs-textSans(3);
+    color: #000000;
 }
 
 .email-sub__message__headline {
@@ -197,6 +211,12 @@
     max-width: gs-span(4);
     min-height: 150px;
     margin: 0 0 $gs-baseline;
+}
+
+.email-sub-footer__message__headline,
+.email-sub-footer__message__description {
+    @include fs-textSans(3);
+    color: #ffffff;
 }
 
 .email-sub__form--footer {
