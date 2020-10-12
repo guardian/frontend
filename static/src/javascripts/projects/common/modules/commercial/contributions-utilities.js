@@ -790,8 +790,9 @@ export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABT
     getLiveblogEpicTestData()
         .then(epicTestData => {
             if (epicTestData.tests) {
+                const showDrafts = window.location.hash === '#show-draft-epics';
                 return epicTestData.tests
-                    .filter(test => test.isOn)
+                    .filter(test => test.isOn || showDrafts)
                     .map(json =>
                         makeEpicABTest(buildConfiguredEpicTestFromJson(json))
                     );
