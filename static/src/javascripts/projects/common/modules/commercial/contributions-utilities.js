@@ -54,7 +54,6 @@ import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
@@ -485,11 +484,7 @@ const makeEpicABTestVariant = (
         },
 
         test() {
-            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
-                (this.copy && Promise.resolve(this.copy)) ||
-                getControlEpicCopy();
-
-            copyPromise
+            Promise.resolve(this.copy)
                 .then((copy: AcquisitionsEpicTemplateCopy) =>
                     this.template(this, copy)
                 )

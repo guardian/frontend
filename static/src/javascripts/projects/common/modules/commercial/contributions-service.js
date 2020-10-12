@@ -313,7 +313,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = async (): void => {
+export const fetchAndRenderEpic = async (): Promise<void> => {
     const page = config.get('page');
 
     // Liveblog epics are still selected and rendered natively
