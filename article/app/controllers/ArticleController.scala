@@ -64,9 +64,9 @@ class ArticleController(
 
   def renderHeadline(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      def responseFromHeadline(headline: Option[String]) = {
+      def responseFromOptionalString(headline: Option[String]) = {
         headline
-          .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
+          .map(s => Cached(CacheTime.Default)(RevalidatableResult.Ok(s)))
           .getOrElse {
             log.warn(s"headline not found for $path")
             Cached(10)(WithoutRevalidationResult(NotFound))
@@ -76,7 +76,7 @@ class ArticleController(
       capiLookup
         .lookup(path, Some(ArticleBlocks))
         .map(_.content.map(_.webTitle))
-        .map(responseFromHeadline)
+        .map(responseFromOptionalString)
     }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
