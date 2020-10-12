@@ -11,6 +11,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     OldTLSSupportDeprecation,
     DotcomRendering,
     DCRBubble,
+    NGInteractiveDCR,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
