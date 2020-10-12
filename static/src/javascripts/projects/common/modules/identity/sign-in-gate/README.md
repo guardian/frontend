@@ -1,4 +1,9 @@
 # Sign In Gate Test
+
+All sign in gate AB tests and designs should be logged in the Sign In Gate Variants Directory spreadsheet in the Identity team drive.
+
+AB tests runs should also be added to the Identity calendar.
+
 ## Running a new test
 When making changes to a test, for example adding a new variant, it is worth modifying the id of the test to seperate it out from the previous test.
 
