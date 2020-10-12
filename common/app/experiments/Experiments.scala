@@ -41,6 +41,15 @@ object DCRBubble
       name = "always-dcr-rendering",
       description = "Use DCR for all article pages (equivalent to always adding ?dcr)",
       owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2020, 12, 1),
-      participationGroup = Perc0B, // Also see ArticlePicker.scala - our main filter mechanism is by page features
+      sellByDate = new LocalDate(2021, 6, 1),
+      participationGroup = Perc0A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
+    )
+
+object NGInteractiveDCR
+    extends Experiment(
+      name = "ng-interactive-dcr",
+      description = "Use DCR to render (ng)-interactives",
+      owners = Seq(Owner.withGithub("shtukas")),
+      sellByDate = new LocalDate(2021, 6, 1),
+      participationGroup = Perc0B,
     )
