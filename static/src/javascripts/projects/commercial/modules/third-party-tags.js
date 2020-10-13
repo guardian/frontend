@@ -10,12 +10,11 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { ias, permutive } from '@guardian/commercial-core';
+import { ias, permutive, twitter, lotame } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
+import {isInAuOrNz, isInUsOrCa} from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -101,6 +100,16 @@ const loadOther = (): void => {
 const init = (): Promise<boolean> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
+    }
+
+    // Section 1
+    // Outbrain/Plista needs to be loaded before the first ad as it is checking
+    // for the presence of high relevance component on page
+    // I'm leaving this to check adFree state because while the thirdPartyTags
+    // check above is now sensitive to ad-free, it could be changed independently
+    // in the future - even by accident.  Justin.
+    if (!commercialFeatures.adFree) {
+        initPlistaRenderer();
     }
 
     loadOther();
