@@ -43,7 +43,7 @@ declare type EpicVariant = Variant & {
     ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
-    copy: AcquisitionsEpicTemplateCopy,
+    copy?: AcquisitionsEpicTemplateCopy,
     backgroundImageUrl?: string,
 };
 
@@ -118,7 +118,7 @@ declare type InitEpicABTestVariant = {
     ) => string,
     ctaText?: string,
     secondaryCta?: EpicCta,
-    copy: AcquisitionsEpicTemplateCopy,
+    copy?: AcquisitionsEpicTemplateCopy,
     classNames?: string[],
     showTicker?: boolean,
     tickerSettings?: TickerSettings | null,

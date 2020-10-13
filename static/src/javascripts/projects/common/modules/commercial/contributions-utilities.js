@@ -49,11 +49,12 @@ import {
     bannerMultipleTestsGoogleDocUrl,
     getGoogleDoc,
 } from 'common/modules/commercial/contributions-google-docs';
-import { getLiveblogEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
+import { getEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
+import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
@@ -289,6 +290,7 @@ const submitOphanInsert = (
 
 const setupOphanView = (
     element: HTMLElement,
+    viewEvent: string,
     testId: string,
     variantId: string,
     campaignCode: string,
@@ -484,7 +486,11 @@ const makeEpicABTestVariant = (
         },
 
         test() {
-            Promise.resolve(this.copy)
+            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
+                (this.copy && Promise.resolve(this.copy)) ||
+                getControlEpicCopy();
+
+            copyPromise
                 .then((copy: AcquisitionsEpicTemplateCopy) =>
                     this.template(this, copy)
                 )
@@ -525,6 +531,7 @@ const makeEpicABTestVariant = (
 
                                     setupOphanView(
                                         element,
+                                        parentTest.viewEvent,
                                         parentTest.id,
                                         initVariant.id,
                                         campaignCode,
@@ -786,11 +793,11 @@ export const buildConfiguredEpicTestFromJson = (
     };
 };
 
-export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
-    getLiveblogEpicTestData()
+export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getEpicTestData()
         .then(epicTestData => {
+            const showDrafts = window.location.hash === '#show-draft-epics';
             if (epicTestData.tests) {
-                const showDrafts = window.location.hash === '#show-draft-epics';
                 return epicTestData.tests
                     .filter(test => test.isOn || showDrafts)
                     .map(json =>
@@ -802,9 +809,9 @@ export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABT
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple configured liveblog epic tests. ${
+                    `Error getting multiple configured epic tests. ${
                         err.message
-                        }. Stack: ${err.stack}`
+                    }. Stack: ${err.stack}`
                 ),
                 {
                     feature: 'epic',

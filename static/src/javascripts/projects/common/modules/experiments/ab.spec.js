@@ -14,13 +14,14 @@ import {
 import {
     concurrentTests,
     epicTests,
+    priorityEpicTest,
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
-import { getConfiguredLiveblogEpicTests as getConfiguredLiveblogEpicTests_ } from 'common/modules/commercial/contributions-utilities';
+import { getConfiguredEpicTests as getConfiguredEpicTests_ } from 'common/modules/commercial/contributions-utilities';
 
-const getConfiguredLiveblogEpicTests: any = getConfiguredLiveblogEpicTests_;
+const getConfiguredEpicTests: any = getConfiguredEpicTests_;
 
 // This is required as loading these seems to cause an error locally (and in CI)
 // because of some implicit dependency evil that I haven't been able to figure out.
@@ -39,7 +40,7 @@ jest.mock('common/modules/experiments/ab-ophan', () => ({
     buildOphanPayload: () => {},
 }));
 jest.mock('common/modules/commercial/contributions-utilities', () => ({
-    getConfiguredLiveblogEpicTests: jest.fn(),
+    getConfiguredEpicTests: jest.fn(),
 }));
 
 jest.mock('lodash/memoize', () => f => f);
@@ -59,7 +60,7 @@ describe('A/B', () => {
         overwriteMvtCookie(1234);
         window.location.hash = '';
         setParticipationsInLocalStorage({});
-        getConfiguredLiveblogEpicTests.mockReturnValue(Promise.resolve(null));
+        getConfiguredEpicTests.mockReturnValue(Promise.resolve(null));
     });
 
     afterEach(() => {
@@ -90,6 +91,7 @@ describe('A/B', () => {
                 jest.spyOn(concurrentTests[2].variants[0], 'test'),
                 jest.spyOn(epicTests[1].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
+                jest.spyOn(priorityEpicTest.variants[0], 'test'),
             ];
 
             runAndTrackAbTests().then(() => {
@@ -234,6 +236,10 @@ describe('A/B', () => {
             });
             window.location.hash = '#ab-DummyTest=variant';
 
+            const expectedAsyncTestsToRun = {
+                EpicTest: { variant: 'control' },
+            };
+
             const expectedSynchronousTestsToRun = {
                 DummyTest: { variant: 'variant' },
                 DummyTest2: { variant: 'variant' },
@@ -241,6 +247,7 @@ describe('A/B', () => {
 
             const expectedTestsToRun = {
                 ...expectedSynchronousTestsToRun,
+                ...expectedAsyncTestsToRun,
             };
 
             const checkTests = tests =>
