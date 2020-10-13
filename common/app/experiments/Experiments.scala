@@ -61,6 +61,6 @@ object NewsletterEmbedDesign
       name = "new-newsletter-embed-designs",
       description = "New newsletter signup embeds for discoverability OKR",
       owners = Seq(Owner.withGithub("buck06191")),
-      sellByDate = new LocalDate(2020, 11, 1),
+      sellByDate = new LocalDate(2020, 11, 2),
       participationGroup = Perc0C,
     )
