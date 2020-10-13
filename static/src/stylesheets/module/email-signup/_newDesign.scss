@@ -3,6 +3,7 @@
 $base-margin: 8px;
 $desktop-img-size: 200px;
 $mobile-headline-font-size: 24px;
+$mobile-description-font-size: 16px;
 $mobile-img-size: 3 * $mobile-headline-font-size;
 
 .newsletter-embed {
@@ -15,7 +16,7 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
 .newsletter-embed__image {
     max-width: $mobile-img-size;
     float: right;
-    margin: $base-margin;
+    margin: $base-margin $base-margin 0;
 }
 
 .newsletter-embed__image img {
@@ -43,9 +44,9 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
 }
 
 .newsletter-embed__headline {
-    font-size: 24px;
+    font-size: $mobile-headline-font-size;
     font-weight: 700;
-    line-height: 1;
+    line-height: 110%;
 }
 
 .newsletter-embed__description {
@@ -53,13 +54,14 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
     padding-top: 2px;
     font-size: 16px;
     clear: left;
+    line-height: 120%;
 }
 
 /* Sign up Form */
 .newsletter-embed__form {
     clear: left;
-    font-size: 16px;
-    font-family: 'Guardian Text Sans Web', SansSerif;
+    font-size: $mobile-description-font-size;
+    font-family: 'Guardian Text Sans Web', sans-serif;
 }
 
 .newsletter-embed__form-wrapper {
@@ -98,16 +100,18 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
     border-radius: 62.5rem;
     grid-area: button;
     margin-left: 15px;
-    font-size: 16px;
+    font-size: $mobile-description-font-size;
     font-weight: bold;
+    font-family: 'Guardian Text Sans Web', sans-serif;
+    line-height: 100%;
 }
 
 .newsletter-embed__privacy-policy {
     grid-area: privacy-link;
     align-self: end;
     font-size: 12px;
-    font-family: 'Guardian Text Sans', Sans-Serif;
     font-weight: normal;
+    color: black;
 }
 
 
