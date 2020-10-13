@@ -138,6 +138,7 @@ const liveBlogTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         supportURL: variant.supportURL,
+        ctaText: variant.ctaText,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
