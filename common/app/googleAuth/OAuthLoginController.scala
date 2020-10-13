@@ -32,12 +32,9 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
     Action.async { implicit request =>
       googleAuthConfig(request)
         .flatMap(overrideRedirectUrl)
-        .map { config =>
-          val antiForgeryToken = GoogleAuth.generateAntiForgeryToken()
-          GoogleAuth.redirectToGoogle(config, antiForgeryToken).map {
-            _.withSession {
-              request.session + (ANTI_FORGERY_KEY -> antiForgeryToken)
-            }
+        .map { authConfig =>
+          authConfig.antiForgeryChecker.ensureUserHasSessionId { sessionId =>
+            GoogleAuth.redirectToGoogle(authConfig, sessionId)
           }
         }
         .getOrElse(Future.successful(forbiddenNoCredentials))
@@ -62,41 +59,33 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
       googleAuthConfig(request)
         .flatMap(overrideRedirectUrl)
         .map { config =>
-          request.session.get(ANTI_FORGERY_KEY) match {
-            case None =>
-              Future.successful(
-                Redirect("/login").withNewSession
-                  .flashing("error" -> "Anti forgery token missing in session"),
-              )
-            case Some(token) =>
-              GoogleAuth.validatedUserIdentity(config, token).map { userIdentity: UserIdentity =>
-                // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
-                // Redirect a user back there now if it exists
-                val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
-                  case Some(url) => Redirect(url)
-                  case None      => Redirect("/")
-                }
-                // Store the JSON representation of the identity in the session - this is checked by AuthAction later
-                val sessionAdd: Seq[(String, String)] = Seq(
-                  Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
-                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
-                ).flatten
+          GoogleAuth.validatedUserIdentity(config).map { userIdentity: UserIdentity =>
+            // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
+            // Redirect a user back there now if it exists
+            val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
+              case Some(url) => Redirect(url)
+              case None      => Redirect("/")
+            }
+            // Store the JSON representation of the identity in the session - this is checked by AuthAction later
+            val sessionAdd: Seq[(String, String)] = Seq(
+              Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
+              Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
+            ).flatten
 
-                val result = redirect
-                  .addingToSession(sessionAdd: _*)
-                  .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
+            val result = redirect
+              .addingToSession(sessionAdd: _*)
+              .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
 
-                authCookie
-                  .from(userIdentity)
-                  .map(authCookie => result.withCookies(authCookie))
-                  .getOrElse(result)
-              } recover {
-                case t =>
-                  // you might want to record login failures here - we just redirect to the login page
-                  Redirect("/login")
-                    .withSession(request.session - ANTI_FORGERY_KEY)
-                    .flashing("error" -> s"Login failure: ${t.toString}")
-              }
+            authCookie
+              .from(userIdentity)
+              .map(authCookie => result.withCookies(authCookie))
+              .getOrElse(result)
+          } recover {
+            case t =>
+              // you might want to record login failures here - we just redirect to the login page
+              Redirect("/login")
+                .withSession(request.session - ANTI_FORGERY_KEY)
+                .flashing("error" -> s"Login failure: ${t.toString}")
           }
         }
         .getOrElse(Future.successful(forbiddenNoCredentials))

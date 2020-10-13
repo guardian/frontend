@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.googleauth.{GoogleAuthConfig, UserIdentity}
+import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig, UserIdentity}
 import conf.Configuration
 import googleAuth.OAuthLoginController
 import model.ApplicationContext
@@ -27,7 +27,8 @@ class OAuthLoginPreviewController(
         cred.oauthCallback, // The redirect URL Google send users back to (must be the same as
         // that configured in the developer console)
         "guardian.co.uk", // Google App domain to restrict login
-        None,
+        maxAuthAge = None,
+        antiForgeryChecker = AntiForgeryChecker.borrowSettingsFromPlay(httpConfiguration)
       )
     }
 }
