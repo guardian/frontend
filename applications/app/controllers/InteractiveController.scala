@@ -16,6 +16,8 @@ import pages.InteractiveHtmlPage
 import scala.concurrent.duration._
 import scala.concurrent.Future
 
+import services._
+
 case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
   override lazy val item = interactive
 }
@@ -84,13 +86,14 @@ class InteractiveController(
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    if (ActiveExperiments.isParticipating(NGInteractiveDCR)) {
-      Future.successful(Ok("Experiment: NGInteractiveDCR"))
-    } else {
-      lookup(path) map {
-        case Left(model)  => render(model)
-        case Right(other) => RenderOtherStatus(other)
+    ApplicationsRenderingService.getRenderingTier(request) match {
+      case Legacy => {
+        lookup(path) map {
+          case Left(model)  => render(model)
+          case Right(other) => RenderOtherStatus(other)
+        }
       }
+      case DotcomRendering => Future.successful(Ok("Experiment: NGInteractiveDCR"))
     }
   }
 
