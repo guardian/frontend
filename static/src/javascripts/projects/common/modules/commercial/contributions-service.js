@@ -145,6 +145,7 @@ const buildBannerPayload = () => {
             remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
         },
         weeklyArticleHistory: getWeeklyArticleHistory(),
+        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name),
     };
 
     return {
