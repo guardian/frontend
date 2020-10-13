@@ -2,8 +2,10 @@
 @import experiments.{ActiveExperiments, NewsletterEmbedDesign}
 @(page: model.Page, emailType: String, listName: String, emailEmbedData: EmailEmbed)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}
+
 @emailEmbed(page) {
-    @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign)){
+    @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign) && electionNewsletters.contains(listName)){
         @fragments.email.signup.emailSignUpNewDesign(
             emailType,
             listName,
