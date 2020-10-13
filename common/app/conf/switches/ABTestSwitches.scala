@@ -96,7 +96,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-   Switch(
+  Switch(
     ABTests,
     "ab-sign-in-gate-personalised-ad-copy",
     "Show sign in gate with and without copy about personalized advertising",
