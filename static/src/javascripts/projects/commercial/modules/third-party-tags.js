@@ -13,7 +13,7 @@ import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { ias, permutive, twitter, lotame, fbPixel } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import config from 'lib/config';
-import {isInAuOrNz, isInUsOrCa} from "common/modules/commercial/geo-utils";
+import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
