@@ -21,7 +21,6 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
   val authCookie = new AuthCookie(httpConfiguration)
 
   val LOGIN_ORIGIN_KEY = "loginOriginUrl"
-  val ANTI_FORGERY_KEY = "antiForgeryToken"
   val forbiddenNoCredentials = Forbidden("Invalid OAuth credentials set")
   lazy val validRedirectDomain = """^(\w+:\/\/[^/]+\.(?:dev-)?gutools\.co\.uk\/.*)$""".r
 
@@ -74,7 +73,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
 
             val result = redirect
               .addingToSession(sessionAdd: _*)
-              .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
+              .removingFromSession(LOGIN_ORIGIN_KEY)
 
             authCookie
               .from(userIdentity)
@@ -84,7 +83,7 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
             case t =>
               // you might want to record login failures here - we just redirect to the login page
               Redirect("/login")
-                .withSession(request.session - ANTI_FORGERY_KEY)
+                .withSession(request.session)
                 .flashing("error" -> s"Login failure: ${t.toString}")
           }
         }
