@@ -3,7 +3,7 @@ package test
 import com.gu.contentapi.client.model.v1.Blocks
 import controllers.{ArticleController, ArticlePage}
 import model.Cached.RevalidatableResult
-import model.dotcomponents.PageType
+import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, PageWithStoryPackage}
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.mockito.MockitoSugar

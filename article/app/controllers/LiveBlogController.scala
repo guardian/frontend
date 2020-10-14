@@ -14,12 +14,12 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel}
+import model.dotcomrendering.{DCRDataModel, DotcomponentsDataModel}
 import renderers.RemoteRenderer
 
 import scala.concurrent.Future
 
-import model.dotcomponents.PageType
+import model.dotcomrendering.PageType
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 

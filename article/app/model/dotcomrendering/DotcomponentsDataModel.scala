@@ -1,4 +1,4 @@
-package model.dotcomponents
+package model.dotcomrendering
 
 import java.net.URLEncoder
 

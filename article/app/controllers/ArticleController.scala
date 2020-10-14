@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel, PageType}
+import model.dotcomrendering.{DCRDataModel, DotcomponentsDataModel, PageType}
 import model.{ContentType, PageWithStoryPackage, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json

@@ -7,7 +7,7 @@ import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
-import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel}
+import model.dotcomrendering.{DCRDataModel, DotcomponentsDataModel}
 import model.{Cached, NoCache, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
@@ -16,7 +16,7 @@ import play.twirl.api.Html
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
-import model.dotcomponents.PageType
+import model.dotcomrendering.PageType
 
 class RemoteRenderer extends Logging {
 
