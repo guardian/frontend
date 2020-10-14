@@ -5,6 +5,7 @@ import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-ga
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { signInGatePageview } from 'common/modules/experiments/tests/sign-in-gate-pageview';
+import { signInGatePersonalisedAdCopy } from 'common/modules/experiments/tests/sign-in-gate-personalised-ad-copy';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
@@ -12,6 +13,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateMainVariant,
     signInGateMainControl,
     signInGatePageview,
+    signInGatePersonalisedAdCopy,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [];
