@@ -114,6 +114,21 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
     color: #000000;
 }
 
+.newsletter-embed__result {
+    .email-sub--article {
+        padding: 0;
+        .email-sub__message {
+            padding-left: 0;
+            .inline-mail {
+                display: none;
+            }
+            .email-sub__message__headline {
+                font-size: $mobile-description-font-size
+            }
+        }
+    }
+}
+
 
 /* Desktop View */
 
@@ -148,7 +163,7 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-between;
+        justify-content: space-around;
     }
 
 }
