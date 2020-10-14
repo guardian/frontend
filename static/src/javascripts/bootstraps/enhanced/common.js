@@ -60,6 +60,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
+import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -159,10 +160,11 @@ const updateHistory = (): void => {
     }
 };
 
-const updateArticleCounts = (): void => {
+const updateArticleCounts = async (): Promise<void> => {
     const page = config.get('page');
+    const hasConsentedToArticleCounts = await getArticleCountConsent();
 
-    if (page) {
+    if (page && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
         incrementWeeklyArticleCount(page);
     }

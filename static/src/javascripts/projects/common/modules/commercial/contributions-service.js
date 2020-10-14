@@ -1,6 +1,7 @@
 // @flow
 
 import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
+import { onConsentChange } from '@guardian/consent-management-platform'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
@@ -81,7 +82,44 @@ const epicEl = () => {
     return container;
 }
 
-const buildEpicPayload = () => {
+const hasOptedOutOfArticleCount = () =>
+    !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+
+const DAILY_ARTICLE_COUNT_KEY = 'gu.history.dailyArticleCount';
+const WEEKLY_ARTICLE_COUNT_KEY = 'gu.history.weeklyArticleCount';
+
+const removeArticleCountsFromLocalStorage = () => {
+    window.localStorage.removeItem(DAILY_ARTICLE_COUNT_KEY);
+    window.localStorage.removeItem(WEEKLY_ARTICLE_COUNT_KEY);
+}
+
+const REQUIRED_CONSENTS_FOR_ARTICLE_COUNT = [1, 3, 7];
+
+/* eslint-disable guardian-frontend/exports-last */
+export const getArticleCountConsent = (): Promise<boolean> => {
+    if (hasOptedOutOfArticleCount()) {
+        return Promise.resolve(false);
+    }
+    return new Promise((resolve) => {
+        onConsentChange(({ ccpa, tcfv2 }) => {
+            if (ccpa) {
+                resolve(true);
+            } else if (tcfv2) {
+                const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
+                    (consent) => tcfv2.consents[consent],
+                );
+
+                if (!hasRequiredConsents) {
+                    removeArticleCountsFromLocalStorage();
+                }
+
+                resolve(hasRequiredConsents);
+            }
+        });
+    });
+};
+
+const buildEpicPayload = async () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
@@ -112,7 +150,7 @@ const buildEpicPayload = () => {
         countryCode,
         epicViewLog: getViewLog(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
     };
 
     return {
@@ -121,7 +159,7 @@ const buildEpicPayload = () => {
     };
 };
 
-const buildBannerPayload = () => {
+const buildBannerPayload = async () => {
     const page = config.get('page');
 
     // TODO: Review whether we need to send all of this in the payload to the server
@@ -145,7 +183,7 @@ const buildBannerPayload = () => {
             remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
         },
         weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name),
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
     };
 
     return {
@@ -232,9 +270,10 @@ const renderEpic = async (module, meta): Promise<void> => {
 };
 
 export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
-    const payload = buildBannerPayload();
+    const asyncPayload = buildBannerPayload();
 
-    return getStickyBottomBanner(payload)
+    return asyncPayload
+        .then(payload => getStickyBottomBanner(payload))
         .then(json => {
             if (!json.data) {
                 return null;
@@ -319,7 +358,7 @@ export const fetchAndRenderEpic = async (): Promise<void> => {
     // Liveblog epics are still selected and rendered natively
     if (page.contentType === 'Article') {
         try {
-            const payload = buildEpicPayload();
+            const payload = await buildEpicPayload();
 
             const url = getEpicUrl(page.contentType);
             const response = await getEpicMeta(payload, url);
