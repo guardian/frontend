@@ -93,7 +93,10 @@ class InteractiveController(
           case Right(other) => RenderOtherStatus(other)
         }
       }
-      case DotcomRendering => Future.successful(Ok("Experiment: NGInteractiveDCR"))
+      case DotcomRendering => {
+        val html: String = ApplicationsRenderingService.getHtmlFromDCR()
+        Future.successful(Ok(html))
+      }
     }
   }
 

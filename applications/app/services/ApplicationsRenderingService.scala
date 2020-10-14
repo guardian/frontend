@@ -15,4 +15,8 @@ object ApplicationsRenderingService {
       Legacy
     }
   }
+
+  def getHtmlFromDCR(): String = {
+    "HTML from DCR"
+  }
 }
