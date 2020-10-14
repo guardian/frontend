@@ -163,7 +163,13 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
         height: 100%;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
+    }
+
+    .newsletter-embed-result {
+        .email-sub__message {
+            padding-bottom: 26px;
+        }
     }
 
 }
