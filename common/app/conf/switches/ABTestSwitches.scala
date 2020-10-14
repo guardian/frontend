@@ -48,16 +48,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-connatix",
-    "Test Connatix Integration",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 10, 13),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sign-in-gate-patientia",
     "Marathon sign in gate test on 2nd article view",
     owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),

@@ -49,12 +49,11 @@ import {
     bannerMultipleTestsGoogleDocUrl,
     getGoogleDoc,
 } from 'common/modules/commercial/contributions-google-docs';
-import { getEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
+import { getLiveblogEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
@@ -139,6 +138,7 @@ const liveBlogTemplate: EpicTemplate = (
         copy,
         componentName: variant.componentName,
         supportURL: variant.supportURL,
+        ctaText: variant.ctaText,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -290,7 +290,6 @@ const submitOphanInsert = (
 
 const setupOphanView = (
     element: HTMLElement,
-    viewEvent: string,
     testId: string,
     variantId: string,
     campaignCode: string,
@@ -486,11 +485,7 @@ const makeEpicABTestVariant = (
         },
 
         test() {
-            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
-                (this.copy && Promise.resolve(this.copy)) ||
-                getControlEpicCopy();
-
-            copyPromise
+            Promise.resolve(this.copy)
                 .then((copy: AcquisitionsEpicTemplateCopy) =>
                     this.template(this, copy)
                 )
@@ -531,7 +526,6 @@ const makeEpicABTestVariant = (
 
                                     setupOphanView(
                                         element,
-                                        parentTest.viewEvent,
                                         parentTest.id,
                                         initVariant.id,
                                         campaignCode,
@@ -793,11 +787,11 @@ export const buildConfiguredEpicTestFromJson = (
     };
 };
 
-export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
-    getEpicTestData()
+export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getLiveblogEpicTestData()
         .then(epicTestData => {
-            const showDrafts = window.location.hash === '#show-draft-epics';
             if (epicTestData.tests) {
+                const showDrafts = window.location.hash === '#show-draft-epics';
                 return epicTestData.tests
                     .filter(test => test.isOn || showDrafts)
                     .map(json =>
@@ -809,9 +803,9 @@ export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple configured epic tests. ${
+                    `Error getting multiple configured liveblog epic tests. ${
                         err.message
-                    }. Stack: ${err.stack}`
+                        }. Stack: ${err.stack}`
                 ),
                 {
                     feature: 'epic',

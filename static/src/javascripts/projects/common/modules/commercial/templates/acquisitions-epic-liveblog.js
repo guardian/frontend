@@ -1,5 +1,5 @@
 // @flow
-const lastSentenceTemplate = (highlightedText?: string, supportURL: string) =>
+const lastSentenceTemplate = (highlightedText?: string, supportURL: string, ctaText?: string) =>
     `${
         highlightedText
             ? `<span className="contributions__highlight">${highlightedText}</span>`
@@ -9,7 +9,7 @@ const lastSentenceTemplate = (highlightedText?: string, supportURL: string) =>
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
           target="_blank">
-          Make a contribution
+          ${ctaText || 'Support the Guardian'}
         </a>
     </div>`;
 
@@ -17,10 +17,12 @@ export const epicLiveBlogTemplate = ({
                                          copy,
                                          componentName,
                                          supportURL,
+                                         ctaText,
                                      }: {
     copy: AcquisitionsEpicTemplateCopy,
     componentName: string,
     supportURL: string,
+    ctaText?: string
 }) =>
     `<div class="block block--content is-epic" data-component="${componentName}">
         <p class="block-time published-time">
@@ -35,7 +37,8 @@ export const epicLiveBlogTemplate = ({
         .join('')}
             <p><em>${lastSentenceTemplate(
         copy.highlightedText,
-        supportURL
+        supportURL,
+        ctaText,
     )}</em></p>
         </div>
     </div>`;

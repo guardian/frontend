@@ -6,7 +6,7 @@ import {
     setupOphanView,
     emitBeginEvent,
     setupClickHandling,
-    makeEvent, submitOphanInsert,
+    submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
@@ -145,6 +145,7 @@ const buildBannerPayload = () => {
             remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
         },
         weeklyArticleHistory: getWeeklyArticleHistory(),
+        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name),
     };
 
     return {
@@ -189,6 +190,45 @@ const getStickyBottomBanner = (payload: {}) => {
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
+};
+
+const getEpicUrl = (contentType: string): string => {
+    const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
+    return config.get('page.isDev') ?
+        `https://contributions.code.dev-guardianapis.com/${path}` :
+        `https://contributions.guardianapis.com/${path}`
+};
+
+const renderEpic = async (module, meta): Promise<void> => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
+
+    emitBeginEvent(campaignId);
+    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+
+    const el = epicEl();
+    mountDynamic(el, component.ContributionsEpic, module.props, true);
+
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    setupOphanView(
+        el,
+        abTestName,
+        abTestVariant,
+        campaignCode,
+        campaignId,
+        componentType,
+        products,
+        abTestVariant.showTicker,
+        abTestVariant.tickerSettings,
+    );
 };
 
 export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
@@ -273,52 +313,27 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = async (id: string): Promise<void> => {
-    try {
-        const payload = buildEpicPayload();
-        const viewEvent = makeEvent(id, 'view');
+export const fetchAndRenderEpic = async (): Promise<void> => {
+    const page = config.get('page');
 
-        const response = await getEpicMeta(payload);
-        checkResponseOk(response);
-        const json = await response.json();
+    // Liveblog epics are still selected and rendered natively
+    if (page.contentType === 'Article') {
+        try {
+            const payload = buildEpicPayload();
 
-        if (!json || !json.data) {
-            throw new Error("epic unexpected response format");
+            const url = getEpicUrl(page.contentType);
+            const response = await getEpicMeta(payload, url);
+            checkResponseOk(response);
+            const json = await response.json();
+
+            if (json && json.data) {
+                const {module, meta} = json.data;
+                await renderEpic(module, meta);
+            }
+
+        } catch (error) {
+            console.log(`Error importing remote epic: ${error}`);
+            reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
         }
-
-        const {module, meta} = json.data;
-        const component = await window.guardianPolyfilledImport(module.url);
-        const el = epicEl();
-
-        const {
-            abTestName,
-            abTestVariant,
-            componentType,
-            products = [],
-            campaignCode,
-            campaignId
-        } = meta;
-
-        emitBeginEvent(campaignId);
-        setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
-        mountDynamic(el, component.ContributionsEpic, module.props, true);
-
-        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
-        setupOphanView(
-            el,
-            viewEvent,
-            abTestName,
-            abTestVariant,
-            campaignCode,
-            campaignId,
-            componentType,
-            products,
-            abTestVariant.showTicker,
-            abTestVariant.tickerSettings,
-        );
-    } catch (error) {
-        console.log(`Error importing remote epic: ${error}`);
-        reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
     }
-}
+};
