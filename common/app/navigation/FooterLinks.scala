@@ -82,12 +82,18 @@ object FooterLinks {
     FooterLink("All topics", "/index/subjects/a", s"${edition} : footer : all topics")
   def allWriters(edition: String): FooterLink =
     FooterLink("All writers", "/index/contributors", s"${edition} : footer : all contributors")
-  val digitalNewspaperArchive =
+  val digitalNewspaperArchive: FooterLink =
     FooterLink("Digital newspaper archive", "https://theguardian.newspapers.com", "digital newspaper archive")
   def facebook(edition: String): FooterLink =
     FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
   def twitter(edition: String): FooterLink =
     FooterLink("Twitter", "https://twitter.com/guardian", s"${edition}: footer : twitter")
+  def newsletters(edition: String): FooterLink =
+    FooterLink(
+      text = "Newsletters",
+      url = s"/email-newsletters?INTCMP=DOTCOM_FOOTER_NEWSLETTER_${edition.toUpperCase}",
+      dataLinkName = s"$edition : footer : newsletters",
+    )
 
   val ukListTwo = List(
     allTopics("uk"),
@@ -100,6 +106,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("uk"),
     twitter("uk"),
+    newsletters("uk"),
   )
 
   val usListTwo = List(
@@ -108,6 +115,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("us"),
     twitter("us"),
+    newsletters("us"),
   )
 
   val auListTwo = List(
@@ -117,6 +125,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("au"),
     twitter("au"),
+    newsletters("au"),
   )
 
   val intListTwo = List(
@@ -125,6 +134,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("international"),
     twitter("international"),
+    newsletters("international"),
   )
 
   // Footer column three
