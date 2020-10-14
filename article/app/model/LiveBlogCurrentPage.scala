@@ -4,7 +4,7 @@ import model.liveblog.{Blocks, BodyBlock}
 
 case class LiveBlogCurrentPage(
     currentPage: PageReference,
-    pagination: Option[Pagination],
+    pagination: Option[N1Pagination],
 )
 
 // Extends normal Pages due to the need for pagination and since-last-seen logic on
@@ -45,7 +45,7 @@ object LiveBlogCurrentPage {
       val pagination =
         if (blocks.totalBodyBlocks > firstPageBlocks.size)
           Some(
-            Pagination(
+            N1Pagination(
               newest = None,
               newer = None,
               oldest = oldestPage,
@@ -92,7 +92,7 @@ object LiveBlogCurrentPage {
             pagination =
               if (pages.length > 1)
                 Some(
-                  Pagination(
+                  N1Pagination(
                     newest = if (isNewestPage) None else Some(newestPage),
                     newer = newerPage,
                     oldest = if (oldestPage.equals(currentPage)) None else Some(oldestPage),
@@ -123,7 +123,7 @@ sealed trait PageReference {
   def isArchivePage: Boolean
 }
 
-case class Pagination(
+case class N1Pagination(
     newest: Option[PageReference],
     newer: Option[PageReference],
     oldest: Option[PageReference],
