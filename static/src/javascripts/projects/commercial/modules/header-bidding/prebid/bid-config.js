@@ -15,7 +15,7 @@ import { isInUk,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
 import { getLotameData } from '@guardian/commercial-core';
-// $FlowFixMe
+// $FlowFixMe -- temporarily until new release in commercial-core is made
 import type { LotameData } from '@guardian/commercial-core';
 import type {
     PrebidAdYouLikeParams,
