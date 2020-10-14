@@ -19,11 +19,11 @@ import scala.concurrent.Future.successful
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
 class PageDecacheController(
-  wsClient: WSClient,
-  val httpConfiguration: HttpConfiguration,
-  val controllerComponents: ControllerComponents,
+    wsClient: WSClient,
+    val httpConfiguration: HttpConfiguration,
+    val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
-  extends BaseController
+    extends BaseController
     with Logging
     with ImplicitControllerExecutionContext
     with AdminAuthController {

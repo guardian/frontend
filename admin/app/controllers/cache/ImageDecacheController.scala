@@ -23,8 +23,7 @@ class ImageDecacheController(
     extends BaseController
     with Logging
     with ImplicitControllerExecutionContext
-    with AdminAuthController
-{
+    with AdminAuthController {
   import ImageDecacheController._
 
   private val iGuim = """i.(guim|guimcode).co.uk/img/(static|media|uploads|sport)(/.*)""".r

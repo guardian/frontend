@@ -28,7 +28,7 @@ class OAuthLoginPreviewController(
         // that configured in the developer console)
         "guardian.co.uk", // Google App domain to restrict login
         maxAuthAge = None,
-        antiForgeryChecker = AntiForgeryChecker.borrowSettingsFromPlay(httpConfiguration)
+        antiForgeryChecker = AntiForgeryChecker.borrowSettingsFromPlay(httpConfiguration),
       )
     }
 }
