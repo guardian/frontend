@@ -138,19 +138,19 @@ describe('third party tags', () => {
     });
 
     describe('insertScripts', () => {
-        const fakeThirdPartyAdvertisingTag: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
             name: 'permutive',
         };
-        const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
+        const fakeThirdPartyAdvertisingTag2 = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
             name: 'lotame',
         };
-        const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
+        const fakeThirdPartyPerformanceTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),

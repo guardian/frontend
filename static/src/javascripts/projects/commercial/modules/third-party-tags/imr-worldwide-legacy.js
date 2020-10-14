@@ -1,6 +1,8 @@
 // @flow
 import config from 'lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
+// $FlowFixMe -- temporarily until new release in commercial-core is made
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 
 // nol_t is a global function defined by the IMR worldwide library
 // eslint-disable-next-line camelcase

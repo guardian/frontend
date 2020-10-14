@@ -1,5 +1,7 @@
 // @flow strict
 import config from 'lib/config';
+// $FlowFixMe -- temporarily until new release in commercial-core is made
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 
 const onLoad = () => {
     const handleQuerySurveyDone = (

@@ -11,6 +11,8 @@ import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide'
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { ias, permutive, twitter, lotame, fbPixel } from '@guardian/commercial-core';
+// $FlowFixMe -- temporarily until new release in commercial-core is made
+import type { ThirdPartyTag } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import config from 'lib/config';
 import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";

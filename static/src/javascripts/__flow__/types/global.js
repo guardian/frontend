@@ -21,24 +21,6 @@ declare var require: {
     main: typeof module,
 };
 
-declare type TagAtrribute = {
-    name: string,
-    value: string,
-};
-
-declare type ThirdPartyTag = {
-    shouldRun: boolean,
-    url?: string,
-    name?: string,
-    onLoad?: () => any,
-    beforeLoad?: () => any,
-    useImage?: boolean,
-    attrs?: Array<TagAtrribute>,
-    async?: boolean,
-    loaded?: boolean,
-    insertSnippet?: () => any,
-};
-
 declare var jsdom: {
     reconfigure: (settings: {}) => any,
 };
