@@ -23,6 +23,7 @@ import model.{
   LiveBlogPage,
   PageWithStoryPackage,
   Pillar,
+  RelatedContent,
 }
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
@@ -33,7 +34,6 @@ import play.api.mvc.RequestHeader
 import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
-import controllers.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -48,6 +48,8 @@ import views.support.JavaScriptPage
 // -----------------------------------------------------------------
 // Supporting Types
 // -----------------------------------------------------------------
+
+case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 case class Tag(
     id: String,
