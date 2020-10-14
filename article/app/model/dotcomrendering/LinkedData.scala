@@ -1,4 +1,4 @@
-package model.dotcomponents
+package model.dotcomrendering
 
 import com.gu.contentapi.client.model.v1.{Block => CAPIBlock}
 import model.{Article, LiveBlogPage}

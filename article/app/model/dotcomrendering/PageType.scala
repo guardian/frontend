@@ -1,4 +1,4 @@
-package model.dotcomponents
+package model.dotcomrendering
 
 import common.Edition
 import model.{ApplicationContext, PageWithStoryPackage}
