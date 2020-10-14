@@ -4,7 +4,6 @@ import java.util.Locale
 
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import implicits.Dates.CapiRichDateTime
-import model.dotcomrendering.pageElements.PageElement
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
