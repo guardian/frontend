@@ -130,15 +130,16 @@ const controlTemplate: EpicTemplate = (
         backgroundImageUrl: variant.backgroundImageUrl,
     });
 
-const liveBlogTemplate: EpicTemplate = (
+const liveBlogTemplate: (cssClass?: string) => EpicTemplate = cssClass => (
     variant: EpicVariant,
-    copy: AcquisitionsEpicTemplateCopy
+    copy: AcquisitionsEpicTemplateCopy,
 ) =>
     epicLiveBlogTemplate({
         copy,
         componentName: variant.componentName,
         supportURL: variant.supportURL,
         ctaText: variant.ctaText,
+        cssClass,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -581,6 +582,11 @@ const makeEpicABTest = ({
         geolocation,
         highPriority,
         canRun() {
+            // const a = canRun()
+            // const b = countryNameIsOk(testHasCountryName, geolocation)
+            // const c = articleViewCountIsOk(articlesViewedSettings)
+            // const d = shouldShowEpic(this)
+            // debugger
             return (
                 canRun() &&
                 countryNameIsOk(testHasCountryName, geolocation) &&
@@ -729,7 +735,7 @@ export const buildConfiguredEpicTestFromJson = (
                 : 'AllNonSupporters',
         ...(test.isLiveBlog
             ? {
-                  template: liveBlogTemplate,
+                  template: liveBlogTemplate(),
                   pageCheck: isCompatibleWithLiveBlogEpic,
               }
             : {
@@ -977,4 +983,5 @@ export {
     isCompatibleWithLiveBlogEpic,
     replaceArticlesViewed,
     makeEvent,
+    liveBlogTemplate,
 };

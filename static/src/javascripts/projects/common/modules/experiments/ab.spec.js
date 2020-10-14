@@ -13,7 +13,7 @@ import {
 } from 'common/modules/experiments/ab';
 import {
     concurrentTests,
-    epicTests,
+    hardcodedEpicTests,
     engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
 import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
@@ -82,13 +82,13 @@ describe('A/B', () => {
             const shouldRun = [
                 jest.spyOn(concurrentTests[0].variants[0], 'test'),
                 jest.spyOn(concurrentTests[1].variants[0], 'test'),
-                jest.spyOn(epicTests[0].variants[0], 'test'),
+                jest.spyOn(hardcodedEpicTests[0].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[0].variants[0], 'test'),
             ];
 
             const shouldNotRun = [
                 jest.spyOn(concurrentTests[2].variants[0], 'test'),
-                jest.spyOn(epicTests[1].variants[0], 'test'),
+                jest.spyOn(hardcodedEpicTests[1].variants[0], 'test'),
                 jest.spyOn(engagementBannerTests[1].variants[0], 'test'),
             ];
 

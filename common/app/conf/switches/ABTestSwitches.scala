@@ -98,21 +98,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remote-epic-variants",
-    "Serve epics from remote service for subset of audience",
-    owners = Seq(Owner.withGithub("nicl")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 5),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-curated-container-test",
     "Tests an additional 'curated' onwards container below the article body.",
     owners = Seq(Owner.withGithub("nicl")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 11, 2),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-liveblog-epic-design-test",
+    "Test designs for the liveblog epic",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true,
   )
 }

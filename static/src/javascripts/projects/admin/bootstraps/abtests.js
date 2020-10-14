@@ -3,7 +3,7 @@ import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-rep
 import { Audience } from 'admin/modules/abtests/audience';
 import {
     concurrentTests,
-    epicTests,
+    hardcodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 
@@ -26,7 +26,7 @@ const renderTests = (
 };
 
 const initABTests = (): void => {
-    const tests = [].concat(concurrentTests, epicTests);
+    const tests = [].concat(concurrentTests, hardcodedEpicTests);
 
     renderTests(
         tests.filter(test => !isExpired(test.expiry)),
