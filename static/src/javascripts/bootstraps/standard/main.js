@@ -39,6 +39,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
+import { initEmbedResize } from "./emailEmbeds";
 
 const setAdTestCookie = (): void => {
     const queryParams = getUrlVars();
@@ -271,6 +272,8 @@ const bootStandard = (): void => {
     }
 
     initAtoms();
+
+    initEmbedResize();
 
     showHiringMessage();
 
