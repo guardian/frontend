@@ -1,8 +1,5 @@
 // @flow
 
-// Main test is a feature switch where we roll out winning changes from other AB sign in gate tests
-// variant audience sees the gate
-
 export const signInGatePersonalisedAdCopy: ABTest = {
     id: 'SignInGatePersonalisedAdCopy',
     start: '2020-10-13',
