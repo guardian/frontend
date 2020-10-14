@@ -19,7 +19,6 @@ const variant = 'personalised-ad-copy-variant-2'; // without personalised advert
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {
-    console.log(`running ${variant}`);
     const isGateDismissed = hasUserDismissedGateMoreThanCount(
         variant,
         name,
