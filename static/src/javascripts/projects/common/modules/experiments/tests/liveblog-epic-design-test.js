@@ -5,7 +5,8 @@ import {setupEpicInLiveblog} from "common/modules/commercial/contributions-liveb
 import {
     isCompatibleWithLiveBlogEpic,
     liveBlogTemplate,
-    makeEpicABTest
+    makeEpicABTest,
+    buildEpicCopy,
 } from "common/modules/commercial/contributions-utilities";
 
 const copy: AcquisitionsEpicTemplateCopy = {
@@ -46,21 +47,21 @@ export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
             template: liveBlogTemplate('liveblog-epic-test__control'),
-            copy,
+            copy: buildEpicCopy(copy, false, geolocation),
         },
         {
             id: 'v1',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
             template: liveBlogTemplate('liveblog-epic-test__v1'),
-            copy,
+            copy: buildEpicCopy(copy, false, geolocation),
         },
         {
             id: 'v2',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
             template: liveBlogTemplate('liveblog-epic-test__v2'),
-            copy,
+            copy: buildEpicCopy(copy, false, geolocation),
         },
     ],
 });

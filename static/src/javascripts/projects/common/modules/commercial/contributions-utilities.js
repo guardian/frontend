@@ -582,11 +582,6 @@ const makeEpicABTest = ({
         geolocation,
         highPriority,
         canRun() {
-            // const a = canRun()
-            // const b = countryNameIsOk(testHasCountryName, geolocation)
-            // const c = articleViewCountIsOk(articlesViewedSettings)
-            // const d = shouldShowEpic(this)
-            // debugger
             return (
                 canRun() &&
                 countryNameIsOk(testHasCountryName, geolocation) &&
@@ -643,23 +638,28 @@ const buildEpicCopy = (
         ? getCountryName(geolocation)
         : undefined;
 
-    const replaceCountryNameAndArticlesViewed = (s: string): string =>
-        replaceArticlesViewed(
-            replaceCountryName(s, countryName),
-            articlesViewedCount
+    const localCurrencySymbol = getLocalCurrencySymbol(geolocation);
+    const replaceCurrencySymbol = (s: string): string => s.replace(
+        /%%CURRENCY_SYMBOL%%/g,
+        localCurrencySymbol,
+    );
+
+    const replaceTemplates = (s: string): string =>
+        replaceCurrencySymbol(
+            replaceArticlesViewed(
+                replaceCountryName(s, countryName),
+                articlesViewedCount
+            )
         );
 
 
     return {
         heading: heading
-            ? replaceCountryNameAndArticlesViewed(heading)
+            ? replaceTemplates(heading)
             : heading,
-        paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
+        paragraphs: paragraphs.map<string>(replaceTemplates),
         highlightedText: row.highlightedText
-            ? row.highlightedText.replace(
-                  /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol(geolocation)
-              )
+            ? replaceCurrencySymbol(row.highlightedText)
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
     };
