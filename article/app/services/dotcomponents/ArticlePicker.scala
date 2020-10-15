@@ -1,6 +1,6 @@
 package services.dotcomponents
 
-import controllers.ArticlePage
+import model.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._

@@ -33,7 +33,7 @@ import play.api.mvc.RequestHeader
 import common.RichRequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
-import controllers.ArticlePage
+import model.ArticlePage
 import experiments.ActiveExperiments
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat

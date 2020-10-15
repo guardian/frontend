@@ -1,7 +1,8 @@
 package test
 
 import com.gu.contentapi.client.model.v1.Blocks
-import controllers.{ArticleController, ArticlePage}
+import model.ArticlePage
+import controllers.ArticleController
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, PageWithStoryPackage}
