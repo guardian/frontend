@@ -1,0 +1,47 @@
+@import com.gu.identity.model.EmailEmbed
+@(listName: String,
+        emailEmbedData: EmailEmbed,
+        resultHtml: Html)(implicit request: RequestHeader)
+
+@wrapperClass = @{
+    "newsletter-embed newsletter-embed--result"
+}
+
+@imageAltText = @{
+    s"${emailEmbedData.name} profile image"
+}
+
+
+<div class="@wrapperClass" style="background-color: @emailEmbedData.hexCode">
+    @if(emailEmbedData.imageUrl.nonEmpty) {
+        <aside class="newsletter-embed__image">
+            <img
+            src="@emailEmbedData.imageUrl"
+            alt="@imageAltText"/>
+        </aside>
+    }
+    <div class="newsletter-embed__body">
+        <section class="newsletter-embed__summary">
+            <div class="newsletter-embed__headline-wrapper">
+                <h2 class="newsletter-embed__headline">
+                @{
+                    emailEmbedData.title
+                }
+                </h2>
+            </div>
+            <p class="newsletter-embed__description">
+            @{
+                emailEmbedData.description
+            }
+            </p>
+        </section>
+        <section class="newsletter-embed__result">
+            @resultHtml
+        </section>
+    </div>
+</div>
+
+<script>
+    trackClickEvent(document.getElementById("email-embed-signup-button"))
+</script>
+

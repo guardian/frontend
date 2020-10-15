@@ -6,13 +6,13 @@
 
 @emailEmbed(page) {
     @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign) && electionNewsletters.contains(listName)){
-        @fragments.email.signup.emailSignUpNewDesign(
+        @fragments.email.signup.subscription.emailSignUpNewDesign(
             emailType,
             listName,
             emailEmbedData
         )
     } else {
-      @fragments.email.signup.emailSignUp(
+      @fragments.email.signup.subscription.emailSignUp(
           emailType,
           listName,
           emailEmbedData
