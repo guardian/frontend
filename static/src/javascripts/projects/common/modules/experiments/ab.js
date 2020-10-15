@@ -23,6 +23,7 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
+    epicTests as hardcodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
@@ -37,8 +38,7 @@ export const getLiveblogEpicTest = memoize(
                     config.set(`switches.ab${test.id}`, true)
                 );
 
-                const result = firstRunnableTest<ABTest>(configuredEpicTests);
-                return result;
+                return firstRunnableTest<ABTest>([...hardcodedEpicTests, ...configuredEpicTests]);
             });
         }
 
