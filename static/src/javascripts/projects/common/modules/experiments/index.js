@@ -9,7 +9,7 @@ import styles from 'raw-loader!common/views/experiments/styles.css';
 import {
     concurrentTests,
     engagementBannerTests,
-    hardcodedEpicTests,
+    epicTests,
 } from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 import {
@@ -90,7 +90,7 @@ const appendOverlay = (): Promise<void> => {
             testGroups: [
                 {
                     name: 'Epic',
-                    tests: [ ...hardcodedEpicTests, ...asyncEpicTests].map(extractData),
+                    tests: [ ...epicTests, ...asyncEpicTests].map(extractData),
                 },
                 {
                     name: 'Banner',

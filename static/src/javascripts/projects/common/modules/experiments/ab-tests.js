@@ -17,7 +17,7 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGatePersonalisedAdCopy,
 ];
 
-export const hardcodedEpicTests: $ReadOnlyArray<EpicABTest> = [liveblogEpicDesignTest];
+export const epicTests: $ReadOnlyArray<EpicABTest> = [liveblogEpicDesignTest];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [
     contributionsBannerArticlesViewedOptOut,

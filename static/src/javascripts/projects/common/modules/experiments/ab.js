@@ -23,7 +23,7 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
-    hardcodedEpicTests,
+    epicTests as hardcodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
