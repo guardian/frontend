@@ -10,8 +10,6 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
 import { ias, permutive, twitter, lotame, fbPixel, remarketing } from '@guardian/commercial-core';
-// $FlowFixMe -- temporarily
-import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import config from 'lib/config';
 import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";

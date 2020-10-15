@@ -1,8 +1,6 @@
 // @flow
 import config from 'lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
-// $FlowFixMe -- temporarily
-import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 
 // NOLCMB is a global function defined by the IMR worldwide library
 declare var NOLCMB: Object;
@@ -90,7 +88,7 @@ const onLoad = () => {
     nSdkInstance.ggPM('staticstart', dcrStaticMetadata);
 };
 
-export const imrWorldwide: ThirdPartyTag = {
+export const imrWorldwide = {
     shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
     url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
     onLoad,
