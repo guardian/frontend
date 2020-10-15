@@ -9,10 +9,9 @@ import {
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { ias, permutive, twitter, lotame, fbPixel } from '@guardian/commercial-core';
-// $FlowFixMe -- temporarily until new release in commercial-core is made
-import type { ThirdPartyTag } from '@guardian/commercial-core';
+import { ias, permutive, twitter, lotame, fbPixel, remarketing } from '@guardian/commercial-core';
+// $FlowFixMe -- temporarily
+import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import config from 'lib/config';
 import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
@@ -81,7 +80,7 @@ const insertScripts = (
 
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
-        remarketing(),
+        remarketing({ shouldRun: config.get('switches.remarketing', false) }),
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio,

@@ -1,8 +1,8 @@
 // @flow
 import config from 'lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
-// $FlowFixMe -- temporarily until new release in commercial-core is made
-import type { ThirdPartyTag } from '@guardian/commercial-core';
+// $FlowFixMe -- temporarily
+import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 
 // NOLCMB is a global function defined by the IMR worldwide library
 declare var NOLCMB: Object;

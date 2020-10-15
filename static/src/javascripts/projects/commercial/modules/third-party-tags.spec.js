@@ -3,10 +3,10 @@ import {
     getConsentFor as getConsentFor_,
     onConsentChange as onConsentChange_
 } from '@guardian/consent-management-platform';
-import type { ThirdPartyTag } from '@guardian/commercial-core';
+// $FlowFixMe -- temporarily
+import type { ThirdPartyTag } from '@guardian/commercial-core/dist/esm';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
-// $FlowFixMe -- temporarily until new release in commercial-core is made
 
 const { insertScripts, loadOther } = _;
 
