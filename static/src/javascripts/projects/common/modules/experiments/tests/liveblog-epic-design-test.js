@@ -9,6 +9,7 @@ import {
     buildEpicCopy,
 } from "common/modules/commercial/contributions-utilities";
 
+// TODO - correct copy
 const copy: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
         'In these extraordinary times, the Guardian’s editorial independence has never been more important. Because no one sets our agenda, or edits our editor, we can keep delivering quality, trustworthy, fact-checked journalism each and every day. Free from commercial or political bias, we can report fearlessly on world events and challenge those in power.',
