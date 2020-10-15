@@ -90,7 +90,7 @@ const appendOverlay = (): Promise<void> => {
             testGroups: [
                 {
                     name: 'Epic',
-                    tests: [ ...epicTests, ...asyncEpicTests].map(extractData),
+                    tests: [...asyncEpicTests, ...epicTests].map(extractData),
                 },
                 {
                     name: 'Banner',

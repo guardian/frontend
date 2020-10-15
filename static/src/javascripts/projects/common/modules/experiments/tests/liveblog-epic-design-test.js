@@ -37,7 +37,7 @@ export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
     geolocation,
     highPriority: false,
 
-    start: '2017-01-24',
+    start: '2020-10-15',
     expiry: '2021-01-27',
 
     author: 'TF',
