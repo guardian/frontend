@@ -14,7 +14,7 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomrendering.{DCRDataModel, DotcomponentsDataModel}
+import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms}
 import renderers.RemoteRenderer
 
 import scala.concurrent.Future
@@ -172,8 +172,8 @@ class LiveBlogController(
       blocks: Blocks,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, pageType)
-    val json = DCRDataModel.toJson(model)
+    val model = DotcomRenderingTransforms.fromArticle(blog, request, blocks, pageType)
+    val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
 
