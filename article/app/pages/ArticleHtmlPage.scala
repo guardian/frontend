@@ -1,6 +1,6 @@
 package pages
 
-import controllers.ArticlePage
+import model.ArticlePage
 import html.HtmlPage
 import html.HtmlPageHelpers._
 import model.ApplicationContext

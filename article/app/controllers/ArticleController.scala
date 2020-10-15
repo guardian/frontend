@@ -6,7 +6,7 @@ import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.dotcomrendering.{DCRDataModel, DotcomponentsDataModel, PageType}
-import model.{ContentType, PageWithStoryPackage, _}
+import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
@@ -17,8 +17,6 @@ import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
 import scala.concurrent.Future
-
-case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
 class ArticleController(
     contentApiClient: ContentApiClient,
