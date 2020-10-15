@@ -31,8 +31,8 @@ const copyUS: AcquisitionsEpicTemplateCopy = {
 const copy = geolocation === 'US' ? copyUS : copyGlobal;
 
 export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
-    id: 'LiveblogEpicDesignTest',
-    campaignId: 'liveblog-epic-design-test',
+    id: 'LiveblogEpicDesignTestR1',
+    campaignId: 'liveblog-epic-design-test-r1',
 
     geolocation,
     highPriority: false,
