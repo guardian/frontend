@@ -34,18 +34,14 @@ let requestQueue: Promise<void> = Promise.resolve();
 const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
-    onConsentChange(state => {
-        const canRun: boolean = getConsentFor('a9', state);
-
-        if (!initialised && canRun) {
-            initialised = true;
-            window.apstag.init({
-                pubID: config.get('page.a9PublisherId'),
-                adServer: 'googletag',
-                bidTimeout: bidderTimeout,
-            });
-        }
-    });
+    if (!initialised && canRun) {
+        initialised = true;
+        window.apstag.init({
+            pubID: config.get('page.a9PublisherId'),
+            adServer: 'googletag',
+            bidTimeout: bidderTimeout,
+        });
+    }
 };
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
