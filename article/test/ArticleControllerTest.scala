@@ -1,7 +1,6 @@
 package test
 
 import com.gu.contentapi.client.model.v1.Blocks
-import model.ArticlePage
 import controllers.ArticleController
 import model.Cached.RevalidatableResult
 import model.dotcomrendering.PageType
@@ -14,7 +13,6 @@ import play.api.mvc.{RequestHeader, Result}
 import play.api.test.Helpers._
 import play.api.test._
 import play.twirl.api.Html
-import services.dotcomponents.{RemoteRender, RenderType}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}

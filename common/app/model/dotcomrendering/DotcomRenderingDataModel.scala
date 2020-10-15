@@ -1,49 +1,8 @@
 package model.dotcomrendering
 
-import java.net.URLEncoder
-
-import com.gu.contentapi.client.model.v1.ElementType.Text
-import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
-import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
-import common.Edition
-import common.Maps.RichMap
-import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
-import conf.Configuration.affiliateLinks
-import conf.switches.Switches
-import conf.{Configuration, Static}
-import model.content.Atom
-import model.dotcomrendering.pageElements.{Cleaners, DisclaimerBlockElement, PageElement}
-import model.{
-  Article,
-  ArticleDateTimes,
-  Badges,
-  Canonical,
-  DisplayedDateTimesDCR,
-  GUDateTimeFormatNew,
-  LiveBlogPage,
-  PageWithStoryPackage,
-  Pillar,
-}
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
-import navigation.UrlHelpers._
-import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
-import navigation.{FooterLink, FooterLinks}
+import common.commercial.EditionCommercialProperties
+import model.dotcomrendering.pageElements.PageElement
 import play.api.libs.json._
-import play.api.mvc.RequestHeader
-import common.RichRequestHeader
-import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
-import model.ArticlePage
-import experiments.ActiveExperiments
-import org.joda.time.DateTime
-import org.joda.time.format.DateTimeFormat
-import views.support.JavaScriptPage
-
-// We have introduced our own set of objects for serializing data to the DotComponents API,
-// because we don't want people changing the core frontend models and as a side effect,
-// making them incompatible with Dotcomponents. By having our own set of models, there's
-// only one reason for change.
-// exceptions: we do resuse the existing Nav & BlockElement classes right now
 
 // -----------------------------------------------------------------
 // DCR DataModel

@@ -7,7 +7,7 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => Cli
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import common.Maps.RichMap
-import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
+import common.commercial.{EditionCommercialProperties}
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -26,8 +26,8 @@ import model.{
 }
 import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
 import navigation.UrlHelpers._
-import navigation.{FlatSubnav, NavLink, NavMenu, ParentSubnav, Subnav}
-import navigation.{FooterLink, FooterLinks}
+import navigation.NavMenu
+import navigation.FooterLinks
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import common.RichRequestHeader
