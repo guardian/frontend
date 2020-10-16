@@ -86,7 +86,7 @@ class InteractiveController(
   }
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsRenderingService.getRenderingTier(request) match {
+    ApplicationsDotcomRenderingInterface.getRenderingTier(request) match {
       case Legacy => {
         lookup(path) map {
           case Left(model)  => render(model)
@@ -94,7 +94,7 @@ class InteractiveController(
         }
       }
       case DotcomRendering => {
-        val html: String = ApplicationsRenderingService.getHtmlFromDCR()
+        val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
         Future.successful(Ok(html))
       }
     }
