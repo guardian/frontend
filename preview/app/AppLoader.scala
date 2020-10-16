@@ -94,7 +94,7 @@ trait AppComponents
   override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
 
-  lazy val remoteRender = wire[renderers.RemoteRenderer]
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,

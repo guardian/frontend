@@ -20,7 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // I had trouble getting Mockito to play nicely with how scala is using implicits and consts so I've introduced
 // these
 
-class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
+class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
   override def getArticle(
       ws: WSClient,
       path: String,

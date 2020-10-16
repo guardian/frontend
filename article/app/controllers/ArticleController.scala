@@ -11,7 +11,7 @@ import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.RemoteRenderer
+import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.{ArticlePicker, _}
 import views.support._
@@ -22,7 +22,7 @@ class ArticleController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     ws: WSClient,
-    remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
