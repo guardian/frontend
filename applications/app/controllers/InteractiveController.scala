@@ -10,12 +10,11 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
-import experiments.{ActiveExperiments, NGInteractiveDCR}
 import pages.InteractiveHtmlPage
+import renderers.DotcomRenderingService
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
-
 import services._
 
 case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
@@ -94,6 +93,7 @@ class InteractiveController(
         }
       }
       case DotcomRendering => {
+        val remoteRenderer = DotcomRenderingService()
         val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
         Future.successful(Ok(html))
       }

@@ -17,6 +17,6 @@ object ApplicationsDotcomRenderingInterface {
   }
 
   def getHtmlFromDCR(): String = {
-    "HTML from DCR"
+    "Experiment: NGInteractiveDCR (2)"
   }
 }
