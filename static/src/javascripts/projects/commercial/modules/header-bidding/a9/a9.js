@@ -1,7 +1,6 @@
 // @flow strict
 
 import config from 'lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
@@ -34,18 +33,14 @@ let requestQueue: Promise<void> = Promise.resolve();
 const bidderTimeout: number = 1500;
 
 const initialise = (): void => {
-    onConsentChange(state => {
-        const canRun: boolean = getConsentFor('a9', state);
-
-        if (!initialised && canRun) {
-            initialised = true;
-            window.apstag.init({
-                pubID: config.get('page.a9PublisherId'),
-                adServer: 'googletag',
-                bidTimeout: bidderTimeout,
-            });
-        }
-    });
+    if (!initialised) {
+        initialised = true;
+        window.apstag.init({
+            pubID: config.get('page.a9PublisherId'),
+            adServer: 'googletag',
+            bidTimeout: bidderTimeout,
+        });
+    }
 };
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
