@@ -124,7 +124,7 @@ class CrosswordPageController(val contentApiClient: ContentApiClient, val contro
         val globalStylesheet = Static(s"stylesheets/$ContentCSSFile.css")
 
         Cached(60) {
-          val body = s"""<?xml-stylesheet type="text/css" href="$globalStylesheet" ?>$xml"""
+          val body = s"""$xml"""
           RevalidatableResult(
             Cors {
               Ok(body).as("image/svg+xml")
