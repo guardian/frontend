@@ -141,8 +141,7 @@
 .is-immersive-interactive {
     .content--interactive .content__head,
     .content--interactive .content__main,
-    .content--interactive ~ *,
-    .l-footer {
+    .content--interactive ~ * {
         display: none;
     }
 }
