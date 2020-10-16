@@ -1,5 +1,18 @@
 @()
 
+const postMessages = (msg) => {
+    const targetDomains = [
+        "https://theguardian.com",
+        "file://theguardian.com",
+        "https://m.thegulocal.com/",
+        "https://m.code.dev-theguardian.com",
+    ]
+    targetDomains.forEach((target) => {
+        console.log(`*** Sending to ${target}`)
+        console.log(JSON.stringify(msg))
+        window.parent.postMessage(msg, target)
+    })
+}
 const sendEvent = (payload, eventType) => {
     const msg = {
         id: 'xxxxxxxxxx'.replace(/x/g, () =>
@@ -10,7 +23,7 @@ const sendEvent = (payload, eventType) => {
         iframeId: window.frameElement ? window.frameElement.id : null,
         value: payload,
     };
-    window.parent.postMessage(msg, '*');
+    postMessages(msg);
     return msg.id;
 };
 
