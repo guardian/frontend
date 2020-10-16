@@ -28,7 +28,7 @@ const measureTiming = (name: string) => {
         perf.measure(name, startKey, endKey);
         const measureEntries = perf.getEntriesByName(name, "measure");
         const timeTakenFloat = measureEntries[0].duration;
-        const timeTakenInt = Math.trunc(timeTakenFloat);
+        const timeTakenInt = Math.float(timeTakenFloat);
 
         return timeTakenInt;
     };
@@ -194,14 +194,15 @@ const canShow = async (): Promise<boolean> => {
     }
 
     try {
-        return await getMessageFromBraze(apiKey, brazeUuid).then(result => {
-            const timeTaken = canShowTiming.endAndReturn();
-            ophan.record({
-                component: 'braze-banner-timing',
-                value: timeTaken,
-            });
-            return result;
+        const result = await getMessageFromBraze(apiKey, brazeUuid)
+        const timeTaken = canShowTiming.endAndReturn();
+
+        ophan.record({
+            component: 'braze-banner-timing',
+            value: timeTaken,
         });
+
+        return result;
     } catch (e) {
         return false;
     }
