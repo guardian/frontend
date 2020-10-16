@@ -10,6 +10,7 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import model.dotcomrendering.PageType
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
 
@@ -94,6 +95,12 @@ class InteractiveController(
       }
       case DotcomRendering => {
         val remoteRenderer = DotcomRenderingService()
+
+        // article: ArticlePage
+        // blocks: Blocks
+        // val pageType: PageType = PageType(article, request, context)
+        // remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
+
         val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
         Future.successful(Ok(html))
       }
