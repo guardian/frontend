@@ -7,11 +7,37 @@ import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import { getUrlVars } from 'lib/url';
+import ophan from 'ophan/ng';
 
 import {getUserFromApi} from '../../common/modules/identity/api';
 import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
+
+const measureTiming = (name: string) => {
+    const perf = window.performance;
+    const startKey = `${name}-start`;
+    const endKey = `${name}-end`;
+
+    const start = () => {
+        perf.mark(startKey);
+    };
+
+    const endAndReturn = () => {
+        perf.mark(endKey);
+        perf.measure(name, startKey, endKey);
+        const measureEntries = perf.getEntriesByName(name, "measure");
+        const timeTakenFloat = measureEntries[0].duration;
+        const timeTakenInt = Math.trunc(timeTakenFloat);
+
+        return timeTakenInt;
+    };
+
+    return {
+        start,
+        endAndReturn,
+    };
+};
 
 const getBrazeUuid = (): Promise<?string> =>
     new Promise((resolve) => {
@@ -140,6 +166,9 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
 };
 
 const canShow = async (): Promise<boolean> => {
+    const canShowTiming = measureTiming('braze-banner');
+    canShowTiming.start();
+
     const forcedBrazeMessage = getMessageFromQueryString();
     if (forcedBrazeMessage) {
         messageConfig = forcedBrazeMessage;
@@ -165,7 +194,14 @@ const canShow = async (): Promise<boolean> => {
     }
 
     try {
-        return await getMessageFromBraze(apiKey, brazeUuid);
+        return await getMessageFromBraze(apiKey, brazeUuid).then(result => {
+            const timeTaken = canShowTiming.endAndReturn();
+            ophan.record({
+                component: 'braze-banner-timing',
+                value: timeTaken,
+            });
+            return result;
+        });
     } catch (e) {
         return false;
     }
