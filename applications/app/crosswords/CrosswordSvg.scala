@@ -14,7 +14,7 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
                      y={y.toString}
                      width={CellSize.toString}
                      height={CellSize.toString}
-                     style="fill: #ffffff" />
+                     fill="#fff" />
 
     cell.number map { n =>
       <g>
@@ -24,16 +24,20 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
     } getOrElse cellRect
   }
 
+  val style =
+    "text { font-family: 'Guardian Text Sans Web','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif; font-size: 10px; }"
+
   def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String], trim: Boolean): Elem = {
     val CrosswordDimensions(columns, rows) = crossword.dimensions
 
     val width = columns * (BorderSize + CellSize) + BorderSize
     val height = rows * (BorderSize + CellSize) + BorderSize
 
-    val viewBoxHeight = if (trim) width * 0.6 else height
+    val viewBoxHeight = if (trim) (width * 0.6).ceil.toString else height
 
-    <svg viewBox={s"0, 0, $width, $viewBoxHeight"} class="crossword__grid" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width={width.toString} height={height.toString} class="crossword__grid-background" />
+    <svg viewBox={s"0 0, $width $viewBoxHeight"} xmlns="http://www.w3.org/2000/svg">
+      <style>{style}</style>
+      <rect x="0" y="0" width={width.toString} height={height.toString} fill="#000" />
       {
       for {
         (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
