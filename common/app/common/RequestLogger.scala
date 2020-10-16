@@ -51,7 +51,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
       .map { r: Result =>
         List[LogField](
           "resp.status" -> r.header.status,
-          "resp.dotcomponents" -> r.header.headers.get("X-GU-Dotcomponents").isDefined,
+          "resp.dotcomponents" -> r.header.headers.get("x-gu-dotcomrendering").isDefined,
         )
       }
       .getOrElse(Nil)

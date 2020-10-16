@@ -66,7 +66,7 @@ const maybeRunValidator = (validator, options) => endpoint => {
                 (options.checkIfAmp &&
                     res.body.includes('<link rel="amphtml" href="')) ||
                 (options.checkIfDotComponents &&
-                    res.resp.headers['x-gu-dotcomponents'])
+                    res.resp.headers['x-gu-dotcomrendering'])
             ) {
                 return validate(endpoint);
             }

@@ -63,17 +63,17 @@ class DotcomRenderingService extends Logging {
       response.status match {
         case 200 =>
           Cached(page)(RevalidatableResult.Ok(Html(response.body)))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withHeaders("x-gu-dotcomrendering" -> "true")
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withHeaders("x-gu-dotcomrendering" -> "true")
         case _ =>
           // Ensure AMP doesn't cache error responses by redirecting them to non-AMP
           NoCache(
             play.api.mvc.Results
               .TemporaryRedirect(LinkTo(page.metadata.url))
-              .withHeaders("X-GU-Dotcomponents" -> "true"),
+              .withHeaders("x-gu-dotcomrendering" -> "true"),
           )
       }
     }
@@ -95,16 +95,16 @@ class DotcomRenderingService extends Logging {
       response.status match {
         case 200 =>
           Cached(page)(RevalidatableResult.Ok(Html(response.body)))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withHeaders("x-gu-dotcomrendering" -> "true")
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
-            .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withHeaders("x-gu-dotcomrendering" -> "true")
         case _ =>
           NoCache(
             play.api.mvc.Results
               .InternalServerError("Remote renderer error (500)")
-              .withHeaders("X-GU-Dotcomponents" -> "true"),
+              .withHeaders("x-gu-dotcomrendering" -> "true"),
           )
       }
     }
