@@ -18,7 +18,7 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomrendering.PageType
 
-class RemoteRenderer extends Logging {
+class DotcomRenderingService extends Logging {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
@@ -113,6 +113,6 @@ class RemoteRenderer extends Logging {
   }
 }
 
-object RemoteRenderer {
-  def apply(): RemoteRenderer = new RemoteRenderer()
+object DotcomRenderingService {
+  def apply(): DotcomRenderingService = new DotcomRenderingService()
 }

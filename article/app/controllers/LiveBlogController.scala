@@ -15,7 +15,7 @@ import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
 import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms}
-import renderers.RemoteRenderer
+import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 
@@ -27,7 +27,7 @@ class LiveBlogController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     ws: WSClient,
-    remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with Logging
