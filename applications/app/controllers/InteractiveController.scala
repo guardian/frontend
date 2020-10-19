@@ -101,8 +101,9 @@ class InteractiveController(
         val remoteRenderer = DotcomRenderingService()
         val range = ArticleBlocks
 
+        val path2 = "world/2013/jun/09/edward-snowden-nsa-whistleblower-surveillance"
         capiLookup
-          .lookup(path, Some(range))
+          .lookup(path2, Some(range))
           .map(responseToModelOrResult)
           .recover(convertApiExceptions) // Future[Either[(ArticlePage, Blocks), Result]]
           .flatMap { e =>
