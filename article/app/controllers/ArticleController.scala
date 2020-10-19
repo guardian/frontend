@@ -129,12 +129,10 @@ class ArticleController(
   )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
     val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
     val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-
     ModelOrResult(supportedContent, response) match {
       case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
       case Right(r)               => Right(r)
       case _                      => Right(NotFound)
     }
   }
-
 }

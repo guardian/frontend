@@ -2,21 +2,33 @@ package controllers
 
 import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
+import conf.Configuration
 import contentapi.ContentApiClient
 import conf.switches.Switches
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import views.support.RenderOtherStatus
+import views.support.{ContentLayout, RenderOtherStatus}
 import conf.Configuration.interactive.cdnPath
-import model.dotcomrendering.PageType
+import model.dotcomrendering.DotcomRenderingTransforms.{designTypeAsString, findPillar, makeMatchUrl}
+import model.dotcomrendering.{
+  Author,
+  DotcomRenderingDataModel,
+  PageFooter,
+  PageType,
+  ReaderRevenueLink,
+  ReaderRevenueLinks,
+  SubMetaLink,
+}
+import navigation.{FooterLink, NavLink, Subnav}
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
 import services.{CAPILookup, _}
+import play.api.libs.json._
 
 case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
   override lazy val item = interactive
@@ -100,43 +112,88 @@ class InteractiveController(
       case DotcomRendering => {
         val remoteRenderer = DotcomRenderingService()
         val range = ArticleBlocks
-
-        val path2 = "world/2013/jun/09/edward-snowden-nsa-whistleblower-surveillance"
-        capiLookup
-          .lookup(path2, Some(range))
-          .map(responseToModelOrResult)
-          .recover(convertApiExceptions) // Future[Either[(ArticlePage, Blocks), Result]]
-          .flatMap { e =>
-            e match {
-              case Left((article, blocks)) => {
-                val pageType: PageType = PageType(article, request, context)
-                remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
-              }
-              case Right(other) => Future.successful(Ok("Experiment 2"))
-            }
-          }
-
+        val dataModel = DotcomRenderingDataModel(
+          version = 3,
+          headline = "article.trail.headline",
+          standfirst = "article.fields.standfirst",
+          webTitle = "article.metadata.webTitle",
+          mainMediaElements = List(),
+          main = "article.fields.main",
+          keyEvents = List(),
+          blocks = List(),
+          pagination = None,
+          author = Author(None, None),
+          webPublicationDate = "article.trail.webPublicationDate.toString",
+          webPublicationDateDisplay = "webPublicationDateDisplay",
+          editionLongForm = "Edition(request).displayName",
+          editionId = "Edition(request).id",
+          pageId = "article.metadata.id",
+          tags = List(),
+          pillar = "findPillar(article.metadata.pillar, article.metadata.designType)",
+          isImmersive = false,
+          sectionLabel = "article.content.sectionLabelName",
+          sectionUrl = "world/coronavirus-outbreak",
+          sectionName = None,
+          subMetaSectionLinks = List(),
+          subMetaKeywordLinks = List(),
+          shouldHideAds = false,
+          isAdFreeUser = false,
+          webURL = "article.metadata.webUrl",
+          linkedData = List(),
+          openGraphData = Map(),
+          twitterData = Map(),
+          config = Json.toJsObject(Map("key" -> "Pascal")),
+          guardianBaseURL = "https://www.theguardian.com",
+          contentType = "contentType",
+          hasRelated = false,
+          hasStoryPackage = false,
+          beaconURL = "Configuration.debug.beaconUrl",
+          isCommentable = false,
+          commercialProperties = Map(),
+          pageType = PageType(
+            hasShowcaseMainElement = false,
+            isFront = false,
+            isLiveblog = false,
+            isMinuteArticle = false,
+            isPaidContent = false,
+            isPreview = false,
+            isSensitive = false,
+          ),
+          starRating = None,
+          trailText = "article.trail.fields.trailText",
+          nav = model.dotcomrendering.Nav(
+            currentUrl = "currentUrl",
+            pillars = List(),
+            otherLinks = List(),
+            brandExtensions = List(),
+            currentNavLink = None,
+            currentParent = None,
+            currentPillar = None,
+            subNavSections = None,
+            readerRevenueLinks = ReaderRevenueLinks(
+              header = ReaderRevenueLink("", "", ""),
+              footer = ReaderRevenueLink("", "", ""),
+              sideMenu = ReaderRevenueLink("", "", ""),
+              ampHeader = ReaderRevenueLink("", "", ""),
+              ampFooter = ReaderRevenueLink("", "", ""),
+            ),
+          ),
+          showBottomSocialButtons = false,
+          designType = "designTypeAsString(article.metadata.designType)",
+          pageFooter = PageFooter(
+            footerLinks = List(),
+          ),
+          publication = "article.content.publication",
+          shouldHideReaderRevenue = false,
+          slotMachineFlags = "request.slotMachineFlags",
+          contributionsServiceUrl = "https://contributions.guardianapis.com",
+          badge = None,
+          matchUrl = None,
+        )
+        remoteRenderer.getAMPArticleExperimental(wsClient, dataModel)
         // val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
         // Future.successful(Ok(html))
       }
-    }
-  }
-
-  // ---------------------------------------------
-  // ongoing [applications] on DCR experiment
-
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
-
-  private def responseToModelOrResult(
-      response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
-    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-
-    ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
     }
   }
 }
