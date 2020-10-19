@@ -81,6 +81,26 @@ class DotcomRenderingService extends Logging {
     get(ws, json, Configuration.rendering.AMPArticleEndpoint, handler)
   }
 
+  /*
+   author: Pascal
+   date: 19th October 2020
+   message: Experimental AMP getter that only takes an instance of the DCR data model.
+   */
+  def getAMPArticleExperimental(
+      ws: WSClient,
+      dataModel: DotcomRenderingDataModel,
+  )(implicit request: RequestHeader): Future[Result] = {
+    val json = DotcomRenderingDataModel.toJson(dataModel)
+    def handler(response: WSResponse): Result = {
+      response.status match {
+        case 200 => play.api.mvc.Results.Ok(Html(response.body))
+        case 400 => play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)")
+        case _   => play.api.mvc.Results.Ok("Experimental redirect case")
+      }
+    }
+    get(ws, json, Configuration.rendering.AMPArticleEndpoint, handler)
+  }
+
   def getArticle(
       ws: WSClient,
       path: String,
