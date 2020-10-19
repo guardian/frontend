@@ -9,7 +9,7 @@
 
 <!-- Please use the following table template to make image comparison easier to parse:
 
-| before      | after      |
+| Before      | After      |
 |-------------|------------|
 | ![before][] | ![after][] |
 
