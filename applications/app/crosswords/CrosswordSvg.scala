@@ -39,11 +39,15 @@ text {
   font-display: swap;
 }"""
 
+  def cellSizing(x: Double): Double = {
+    x * (CellSize + BorderSize) + BorderSize
+  }
+
   def apply(crossword: Crossword, boxWidth: Option[String], boxHeight: Option[String], trim: Boolean): Elem = {
     val CrosswordDimensions(columns, rows) = crossword.dimensions
 
-    val width = columns * (BorderSize + CellSize) + BorderSize
-    val height = rows * (BorderSize + CellSize) + BorderSize
+    val width = cellSizing(columns)
+    val height = cellSizing(rows)
 
     val viewBoxHeight = if (trim) (width * 0.6).ceil.toString else height
 
@@ -54,8 +58,8 @@ text {
       for {
         (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
       } yield drawCell(
-        x * (CellSize + BorderSize) + BorderSize,
-        y * (CellSize + BorderSize) + BorderSize,
+        cellSizing(x),
+        cellSizing(y),
         cell,
       )
     }
