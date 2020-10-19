@@ -9,9 +9,7 @@ import {
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { ias, permutive, twitter, lotame, fbPixel, remarketing } from '@guardian/commercial-core';
-import { inizio } from 'commercial/modules/third-party-tags/inizio';
-import config from 'lib/config';
+import { ias, permutive, twitter, lotame, fbPixel, remarketing, inizio } from '@guardian/commercial-core';import config from 'lib/config';
 import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
@@ -82,7 +80,7 @@ const loadOther = (): void => {
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio,
-        fbPixel(),
+        fbPixel({ shouldRun: config.get('switches.facebookTrackingPixel', false)}),
         twitter({ shouldRun: config.get('switches.twitterUwt', false)}),
         lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
     ].filter(_ => _.shouldRun);
