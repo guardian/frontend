@@ -16,7 +16,6 @@ class CommercialFeatures {
     highMerch: boolean;
     thirdPartyTags: boolean;
     relatedWidgetEnabled: boolean;
-    plista: boolean;
     commentAdverts: boolean;
     liveblogAdverts: boolean;
     paidforBand: boolean;
@@ -122,10 +121,6 @@ class CommercialFeatures {
             !config.get('page.isPreview') &&
             config.get('page.showRelatedContent') &&
             !(isUserLoggedIn() && config.get('page.commentable'));
-
-        this.plista =
-            this.relatedWidgetEnabled &&
-            switches.plistaForAu;
 
         this.commentAdverts =
             this.dfpAdvertising &&

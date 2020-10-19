@@ -57,16 +57,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val PlistaForAU = Switch(
-    SwitchGroup.Feature,
-    "plista-for-au",
-    "Enable the Plista content recommendation widget in Australia",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val GeoMostPopular = Switch(
     SwitchGroup.Feature,
     "geo-most-popular",

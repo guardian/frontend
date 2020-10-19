@@ -91,10 +91,6 @@ afterEach(() => {
 
 jest.mock('ophan/ng', () => null);
 
-jest.mock('commercial/modules/third-party-tags/plista', () => ({
-    plista: jest.fn(),
-}));
-
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
