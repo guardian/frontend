@@ -13,7 +13,6 @@ import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
 import { ias, permutive } from '@guardian/commercial-core';
 import { inizio } from 'commercial/modules/third-party-tags/inizio';
 import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { init as initPlistaRenderer } from 'commercial/modules/third-party-tags/plista-renderer';
 import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import { lotame } from 'commercial/modules/third-party-tags/lotame';
 import config from 'lib/config';
@@ -102,16 +101,6 @@ const loadOther = (): void => {
 const init = (): Promise<boolean> => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
-    }
-
-    // Section 1
-    // Outbrain/Plista needs to be loaded before the first ad as it is checking
-    // for the presence of high relevance component on page
-    // I'm leaving this to check adFree state because while the thirdPartyTags
-    // check above is now sensitive to ad-free, it could be changed independently
-    // in the future - even by accident.  Justin.
-    if (!commercialFeatures.adFree) {
-        initPlistaRenderer();
     }
 
     loadOther();

@@ -207,8 +207,6 @@ GET            /config                                                          
 GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
-GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
-POST           /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.save()
 GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
 GET            /metrics/googlebot/404                                                                                            controllers.admin.MetricsController.renderGooglebot404s()
 GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()

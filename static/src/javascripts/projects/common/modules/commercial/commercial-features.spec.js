@@ -58,7 +58,6 @@ describe('Commercial features', () => {
         });
 
         config.set('switches', {
-            plistaForAu: true,
             commercial: true,
             enableDiscussionSwitch: true,
         });
@@ -262,75 +261,6 @@ describe('Commercial features', () => {
 
             const features = new CommercialFeatures();
             expect(features.thirdPartyTags).toBe(false);
-        });
-    });
-
-    describe('Outbrain / Plista', () => {
-        // These are the 'promoted links from around the web' widgets
-        it('Runs by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(true);
-        });
-
-        it('Is disabled under perf tests', () => {
-            window.location.hash = '#noads';
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled in sensitive content', () => {
-            config.set('page.shouldHideAdverts', true);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled when related content is hidden', () => {
-            config.set('page.showRelatedContent', false);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled when user is logged in and page is commentable', () => {
-            isUserLoggedIn.mockReturnValue(true);
-            config.set('page.commentable', true);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-    });
-
-    describe('Outbrain / Plista under ad-free', () => {
-        beforeEach(() => {
-            isAdFreeUser.mockReturnValue(true);
-        });
-
-        // happy time!
-        it('Does not run by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled under perf tests', () => {
-            window.location.hash = '#noads';
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled in sensitive content', () => {
-            config.set('page.shouldHideAdverts', true);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled when related content is hidden', () => {
-            config.set('page.showRelatedContent', false);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
-        });
-
-        it('Is disabled when user is logged in and page is commentable', () => {
-            config.set('page.commentable', true);
-            const features = new CommercialFeatures();
-            expect(features.plista).toBe(false);
         });
     });
 

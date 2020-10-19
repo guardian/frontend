@@ -48,7 +48,6 @@ trait AdminControllers {
   lazy val pageDecacheController = wire[PageDecacheController]
   lazy val appConfigController = wire[AppConfigController]
   lazy val switchboardController = wire[SwitchboardController]
-  lazy val switchboardPlistaController = wire[SwitchboardPlistaController]
   lazy val analyticsController = wire[AnalyticsController]
   lazy val analyticsConfidenceController = wire[AnalyticsConfidenceController]
   lazy val metricsController = wire[MetricsController]
