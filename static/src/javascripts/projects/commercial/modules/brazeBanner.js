@@ -8,36 +8,11 @@ import {mountDynamic} from "@guardian/automat-modules";
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import { getUrlVars } from 'lib/url';
 import ophan from 'ophan/ng';
-
-import {getUserFromApi} from '../../common/modules/identity/api';
-import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
+import {getUserFromApi} from 'common/modules/identity/api';
+import {isDigitalSubscriber} from "common/modules/commercial/user-features";
+import {measureTiming} from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
-
-const measureTiming = (name: string) => {
-    const perf = window.performance;
-    const startKey = `${name}-start`;
-    const endKey = `${name}-end`;
-
-    const start = () => {
-        perf.mark(startKey);
-    };
-
-    const endAndReturn = () => {
-        perf.mark(endKey);
-        perf.measure(name, startKey, endKey);
-        const measureEntries = perf.getEntriesByName(name, "measure");
-        const timeTakenFloat = measureEntries[0].duration;
-        const timeTakenInt = Math.float(timeTakenFloat);
-
-        return timeTakenInt;
-    };
-
-    return {
-        start,
-        endAndReturn,
-    };
-};
 
 const getBrazeUuid = (): Promise<?string> =>
     new Promise((resolve) => {
@@ -195,7 +170,7 @@ const canShow = async (): Promise<boolean> => {
 
     try {
         const result = await getMessageFromBraze(apiKey, brazeUuid)
-        const timeTaken = canShowTiming.endAndReturn();
+        const timeTaken = canShowTiming.end();
 
         ophan.record({
             component: 'braze-banner-timing',
