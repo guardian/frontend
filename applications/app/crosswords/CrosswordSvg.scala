@@ -10,22 +10,23 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
   val CellSize = 31
 
   def drawCell(x: Double, y: Double, cell: Cell): Elem = {
-    val cellRect = <rect x={x.toString}
-                     y={y.toString}
-                     width={CellSize.toString}
-                     height={CellSize.toString}
-                     fill="#fff" />
+    val cellRect = <rect x={x.intValue.toString}
+                     y={y.intValue.toString}
+                     width={CellSize.intValue.toString}
+                     height={CellSize.intValue.toString} />
 
     cell.number map { n =>
       <g>
         {cellRect}
-        <text x={(x + 1).toString} y={(y + 9).toString} class="crossword__cell-number">{n}</text>
+        <text x={(x + 1).toString} y={(y + 9).toString}>{n}</text>
       </g>
     } getOrElse cellRect
   }
 
   val style =
     """
+rect { fill: #fff }
+
 text {
   font-family: 'Guardian Text Sans Web','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
   font-size: 10px;
@@ -49,11 +50,11 @@ text {
     val width = cellSizing(columns)
     val height = cellSizing(rows)
 
-    val viewBoxHeight = if (trim) (width * 0.6).ceil.toString else height
+    val viewBoxHeight = if (trim) (width * 0.6).ceil.intValue.toString else height
 
     <svg viewBox={s"0 0, $width $viewBoxHeight"} xmlns="http://www.w3.org/2000/svg">
       <style>{style}</style>
-      <rect x="0" y="0" width={width.toString} height={height.toString} fill="#000" />
+      <rect x="0" y="0" width={width.intValue.toString} height={height.intValue.toString} style="fill: #000" />
       {
       for {
         (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
