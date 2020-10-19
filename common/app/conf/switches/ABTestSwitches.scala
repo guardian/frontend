@@ -78,8 +78,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-pageview-us",
+    "Show sign in gate on 3rd vs 2nd article view, with dismiss rule variants - Only US browsers",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-sign-in-gate-pageview",
-    "Show sign in gate on 3rd vs 2nd article view, with dismiss rule variants",
+    "Show sign in gate on 3rd vs 2nd article view, with dismiss rule variants, excluding US",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
