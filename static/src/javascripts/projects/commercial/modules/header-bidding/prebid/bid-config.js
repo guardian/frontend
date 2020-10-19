@@ -14,8 +14,7 @@ import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
-import { getLotameData } from 'commercial/modules/third-party-tags/lotame';
-import type { LotameData } from 'commercial/modules/third-party-tags/lotame';
+import { getLotameData } from '@guardian/commercial-core';
 import type {
     PrebidAdYouLikeParams,
     PrebidAppNexusParams,
@@ -265,7 +264,7 @@ const getTripleLiftInventoryCode = (
 };
 
 const getOzoneTargeting = (): { } => {
-    const lotameData: LotameData = getLotameData();
+    const lotameData = getLotameData();
     const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
     if (typeof lotameData !== 'undefined') {
         return {

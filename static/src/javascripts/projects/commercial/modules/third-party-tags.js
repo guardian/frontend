@@ -9,13 +9,9 @@ import {
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { ias, permutive } from '@guardian/commercial-core';
-import { inizio } from 'commercial/modules/third-party-tags/inizio';
-import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
-import { lotame } from 'commercial/modules/third-party-tags/lotame';
+import { ias, permutive, twitter, lotame, fbPixel, remarketing, inizio } from '@guardian/commercial-core';
 import config from 'lib/config';
+import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -81,13 +77,13 @@ const insertScripts = (
 
 const loadOther = (): void => {
     const advertisingServices: Array<ThirdPartyTag> = [
-        remarketing(),
+        remarketing({ shouldRun: config.get('switches.remarketing', false) }),
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
-        inizio,
-        fbPixel(),
-        twitterUwt(),
-        lotame(),
+        inizio({ shouldRun: config.get('switches.inizio', false) }),
+        fbPixel({ shouldRun: config.get('switches.facebookTrackingPixel', false)}),
+        twitter({ shouldRun: config.get('switches.twitterUwt', false)}),
+        lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [

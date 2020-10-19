@@ -1753,10 +1753,10 @@
     "@guardian/src-icons" "^2.2.0"
     emotion-theming "^10.0.19"
 
-"@guardian/commercial-core@^0.6.0":
-  version "0.6.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.6.0.tgz#0dc4a868e7d1c70e200627496e6a66b0e387745b"
-  integrity sha512-CUZxEmWoJ8kEE6OwFKcE6xyODDF5ktln9JhtmbwxKhGqzOkQnYI0e3PtqA/tpIc+qTIfeew9tRr9nRTFrcp8Ug==
+"@guardian/commercial-core@^0.9.0":
+  version "0.9.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.9.0.tgz#2c578b61a6af99436abd83760d3349ef99d53ab8"
+  integrity sha512-2o/au3c/SRUYrlPA1x6Rog6+UpXkSf6UrSX16lD19VaFyia60LaIXtBu9mkZNhSm0FWqfLSgync8RTCeCRG47w==
 
 "@guardian/consent-management-platform@6.4.0":
   version "6.4.0"
