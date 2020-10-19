@@ -7,6 +7,17 @@
 
 ## Screenshots
 
+<!-- Please use the following table template to make image comparison easier to parse:
+
+| before      | after      |
+|-------------|------------|
+| ![before][] | ![after][] |
+
+[before]: https://example.com/before.png
+[after]: https://example.com/after.png
+
+-->
+
 ## What is the value of this and can you measure success?
 
 ## Checklist
