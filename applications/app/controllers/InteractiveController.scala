@@ -1,6 +1,6 @@
 package controllers
 
-import com.gu.contentapi.client.model.v1.ItemResponse
+import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiContent}
 import common._
 import contentapi.ContentApiClient
 import conf.switches.Switches
@@ -10,13 +10,13 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
-import experiments.{ActiveExperiments, NGInteractiveDCR}
+import model.dotcomrendering.PageType
 import pages.InteractiveHtmlPage
+import renderers.DotcomRenderingService
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
-
-import services._
+import services.{CAPILookup, _}
 
 case class InteractivePage(interactive: Interactive, related: RelatedContent) extends ContentPage {
   override lazy val item = interactive
@@ -31,6 +31,8 @@ class InteractiveController(
     with RendersItemResponse
     with Logging
     with ImplicitControllerExecutionContext {
+
+  val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
 
   def renderInteractiveJson(path: String): Action[AnyContent] = renderInteractive(path)
   def renderInteractive(path: String): Action[AnyContent] = Action.async { implicit request => renderItem(path) }
@@ -85,17 +87,56 @@ class InteractiveController(
     renderFormat(htmlResponse, jsonResponse, model, Switches.all)
   }
 
+  override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
+
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsRenderingService.getRenderingTier(request) match {
+    ApplicationsDotcomRenderingInterface.getRenderingTier(request) match {
       case Legacy => {
         lookup(path) map {
           case Left(model)  => render(model)
           case Right(other) => RenderOtherStatus(other)
         }
       }
-      case DotcomRendering => Future.successful(Ok("Experiment: NGInteractiveDCR"))
+      case DotcomRendering => {
+        val remoteRenderer = DotcomRenderingService()
+        val range = ArticleBlocks
+
+        val path2 = "world/2013/jun/09/edward-snowden-nsa-whistleblower-surveillance"
+        capiLookup
+          .lookup(path2, Some(range))
+          .map(responseToModelOrResult)
+          .recover(convertApiExceptions) // Future[Either[(ArticlePage, Blocks), Result]]
+          .flatMap { e =>
+            e match {
+              case Left((article, blocks)) => {
+                val pageType: PageType = PageType(article, request, context)
+                remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
+              }
+              case Right(other) => Future.successful(Ok("Experiment 2"))
+            }
+          }
+
+        // val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
+        // Future.successful(Ok(html))
+      }
     }
   }
 
-  override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
+  // ---------------------------------------------
+  // ongoing [applications] on DCR experiment
+
+  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
+
+  private def responseToModelOrResult(
+      response: ItemResponse,
+  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
+    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
+    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
+
+    ModelOrResult(supportedContent, response) match {
+      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
+      case Right(r)               => Right(r)
+      case _                      => Right(NotFound)
+    }
+  }
 }
