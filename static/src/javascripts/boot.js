@@ -10,8 +10,9 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp } from '@guardian/consent-management-platform';
-import { isInUsa } from 'projects/common/modules/commercial/geo-utils.js';
 import { getCookie } from 'lib/cookies';
+import { isInAustralia } from 'common/modules/commercial/geo-utils';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -38,7 +39,18 @@ const go = () => {
         const pageViewId: ?string = config.get('ophan.pageViewId');
         const pubData: { browserId?: ?string, pageViewId?: ?string } =
             { browserId, pageViewId };
-        cmp.init({ pubData, isInUsa: isInUsa() });
+
+
+        if (isInAustralia()) {
+            if (config.get('tests.useAusCmpVariant') === 'variant') {
+                cmp.init({ pubData, country: 'AU' });
+            } else {
+                cmp.init({ pubData, country: 'GB' });
+            }
+        } else {
+            cmp.init({ pubData, country: geolocationGetSync() });
+        }
+
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
