@@ -45,7 +45,7 @@ const go = () => {
             if (config.get('tests.useAusCmpVariant') === 'variant') {
                 cmp.init({ pubData, country: 'AU' });
             } else {
-                cmp.init({ pubData, country: 'GB' });
+                cmp.init({ pubData, country: 'GB' }); // Use TCFv2 Framework
             }
         } else {
             cmp.init({ pubData, country: geolocationGetSync() });
