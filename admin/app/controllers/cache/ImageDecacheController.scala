@@ -7,6 +7,7 @@ import com.gu.googleauth.UserIdentity
 import common.{ImplicitControllerExecutionContext, Logging}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
+import play.api.http.HttpConfiguration
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -16,6 +17,7 @@ import scala.concurrent.Future.successful
 
 class ImageDecacheController(
     wsClient: WSClient,
+    val httpConfiguration: HttpConfiguration,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
