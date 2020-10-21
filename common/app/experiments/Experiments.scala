@@ -13,7 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     DCRBubble,
     NGInteractiveDCR,
     NewsletterEmbedDesign,
-    UseAusCmp
+    UseAusCmp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -74,4 +74,3 @@ object UseAusCmp
       sellByDate = new LocalDate(2020, 11, 6),
       participationGroup = Perc0D,
     )
-
