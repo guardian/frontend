@@ -13,7 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     DCRBubble,
     NGInteractiveDCR,
     NewsletterEmbedDesign,
-    UseAusCmp
+    UseAusCmp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
