@@ -74,4 +74,3 @@ object UseAusCmp
       sellByDate = new LocalDate(2020, 11, 6),
       participationGroup = Perc0D,
     )
-
