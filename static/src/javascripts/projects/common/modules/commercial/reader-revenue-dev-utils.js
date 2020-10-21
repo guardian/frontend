@@ -20,7 +20,6 @@ import {
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
-import { COOKIE_NAME as CONSENT_COOKIE_NAME } from 'commercial/modules/cmp/cmp-env';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
@@ -97,7 +96,6 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
 
 const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
     addCookie('GU_geo_continent', 'EU');
-    removeCookie(CONSENT_COOKIE_NAME);
     showMeTheBanner(asExistingSupporter);
 };
 
