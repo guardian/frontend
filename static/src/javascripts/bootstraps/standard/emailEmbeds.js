@@ -1,9 +1,9 @@
 // @flow
 
 const initEmbedResize = () => {
-    const allIframes: HTMLIFrameElement[] = ([
-        ...document.querySelectorAll('.element-embed > .email-sub__iframe'),
-    ]: any);
+    const allIframes: HTMLIFrameElement[] = [].slice.call(
+        document.querySelectorAll('.element-embed > .email-sub__iframe')
+    );
 
     window.addEventListener('message', event => {
         const iframes: HTMLIFrameElement[] = allIframes.filter(i => {
