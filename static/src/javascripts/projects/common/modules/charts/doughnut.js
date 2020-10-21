@@ -3,7 +3,7 @@
  * Inspired by
  * - http://www.chartjs.org/
  * - http://codepen.io/githiro/pen/ICfFE
- * - https://github.com/mbostock/d3/blob/master/src/svg/arc.js
+ * - https://github.com/d3/d3-shape/blob/master/src/arc.js
  */
 import $ from 'lib/$';
 import type { bonzo } from 'bonzo';

@@ -10,9 +10,12 @@ import play.api.libs.ws.WSClient
 import play.api.mvc._
 import views.support.RenderOtherStatus
 import conf.Configuration.interactive.cdnPath
+import model.content.InteractiveAtom
 import model.dotcomrendering.PageType
+import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
+import services.ApplicationsSpecial2020Election
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -81,6 +84,17 @@ class InteractiveController(
     result recover convertApiExceptions
   }
 
+  private def lookupWithoutModelConvertion(path: String): Future[ItemResponse] = {
+    val edition = Edition.defaultEdition
+    val response: Future[ItemResponse] = contentApiClient.getResponse(
+      contentApiClient
+        .item(path, edition)
+        .showFields("all")
+        .showAtoms("all"),
+    )
+    response
+  }
+
   private def render(model: InteractivePage)(implicit request: RequestHeader) = {
     val htmlResponse = () => InteractiveHtmlPage.html(model)
     val jsonResponse = () => views.html.fragments.interactiveBody(model)
@@ -90,11 +104,17 @@ class InteractiveController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsDotcomRenderingInterface.getRenderingTier(request) match {
+    ApplicationsDotcomRenderingInterface.getRenderingTier(path) match {
       case Legacy => {
         lookup(path) map {
           case Left(model)  => render(model)
           case Right(other) => RenderOtherStatus(other)
+        }
+      }
+      case Election2020Hack => {
+        lookup(path) flatMap {
+          case Left(something) => renderInteractivePageElection2020(something)
+          case Right(other)    => Future.successful(RenderOtherStatus(other))
         }
       }
       case DotcomRendering => {
@@ -112,7 +132,7 @@ class InteractiveController(
                 val pageType: PageType = PageType(article, request, context)
                 remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
               }
-              case Right(other) => Future.successful(Ok("Experiment 2"))
+              case Right(other) => Future.successful(Ok("case: ade30b6a-de4a-469d-8ad8-701996e5be06"))
             }
           }
 
@@ -123,7 +143,30 @@ class InteractiveController(
   }
 
   // ---------------------------------------------
-  // ongoing [applications] on DCR experiment
+  // Election2020
+
+  def renderInteractivePageElection2020(i: InteractivePage): Future[Result] = {
+    val atomIdOpt = i.item.content.atoms.flatMap(atoms => atoms.interactives.headOption.map(atom => atom.id))
+    atomIdOpt match {
+      case Some(atomId) => {
+        val capiLookupString = ApplicationsSpecial2020Election.atomIdToCapiPath(atomId)
+        val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
+        response.map { response =>
+          response.interactive match {
+            case Some(i2) => {
+              val interactive = InteractiveAtom.make(i2)
+              Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
+            }
+            case None => Ok("error: 6523e5f4-c4fe-48f6-b307-8f6fb2cadf96")
+          }
+        }
+      }
+      case None => Future.successful(Ok("error: b62cfee4-cdc6-4e13-b965-89d4bd313039"))
+    }
+  }
+
+  // ---------------------------------------------
+  // [applications] on DCR experiment
 
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
 
