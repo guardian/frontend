@@ -25,7 +25,7 @@ object CrosswordSvg extends CrosswordGridDataOrdering {
 
   val style =
     """
-rect { fill: #fff }
+.cells rect { fill: #fff }
 
 text {
   font-family: 'Guardian Text Sans Web','Helvetica Neue',Helvetica,Arial,'Lucida Grande',sans-serif;
@@ -52,9 +52,10 @@ text {
 
     val viewBoxHeight = if (trim) (width * 0.6).ceil.intValue.toString else height
 
-    <svg viewBox={s"0 0, $width $viewBoxHeight"} xmlns="http://www.w3.org/2000/svg">
+    <svg viewBox={s"0 0, $width $viewBoxHeight"} xmlns="http://www.w3.org/2000/svg" class="crossword__grid" >
       <style>{style}</style>
-      <rect x="0" y="0" width={width.intValue.toString} height={height.intValue.toString} style="fill: #000" />
+      <rect x="0" y="0" width={width.intValue.toString} height={height.intValue.toString} class="crossword__grid-background" />
+      <g class="cells">
       {
       for {
         (CrosswordPosition(x, y), cell) <- Grid.fromCrossword(crossword).cells.toSeq.sortBy(_._1)
@@ -63,7 +64,7 @@ text {
         cellSizing(y),
         cell,
       )
-    }
+    }</g>
     </svg>
   }
 }
