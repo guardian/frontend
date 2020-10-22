@@ -1,11 +1,6 @@
 // @flow
-const lastSentenceTemplate = (highlightedText?: string, supportURL: string, ctaText?: string) =>
-    `${
-        highlightedText
-            ? `<span className="contributions__highlight">${highlightedText}</span>`
-            : ''
-    }
-    <div class="component-button--liveblog-container">
+const lastSentenceTemplate = (supportURL: string, ctaText?: string) =>
+    `<div class="component-button--liveblog-container">
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
           target="_blank">
@@ -38,7 +33,6 @@ export const epicLiveBlogTemplate = ({
         .map(paragraph => `<p><em>${paragraph}</em></p>`)
         .join('')}
             <p><em>${lastSentenceTemplate(
-        copy.highlightedText,
         supportURL,
         ctaText,
     )}</em></p>
