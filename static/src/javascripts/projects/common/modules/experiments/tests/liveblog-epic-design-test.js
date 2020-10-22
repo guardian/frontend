@@ -44,7 +44,7 @@ const getCopy = (): AcquisitionsEpicTemplateCopy => {
     if (geolocation === 'US') {
         return copyUS;
     }
-    if (USElectionTags.some(tag => config.get('page.keywordIds').includes(tag))) {
+    if (USElectionTags.some(tag => `${config.get('page.keywordIds')}`.includes(tag))) {
         return copyElectionNonUS;
     }
     return copyGlobal;
