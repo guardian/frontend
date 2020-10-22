@@ -4,6 +4,7 @@ object IpsosTags {
 
   /*
    * The keys are taken from the section ID returned by CAPI unless otherwise stated
+   *
    *  */
 
   val tags = Map(
@@ -13,6 +14,7 @@ object IpsosTags {
     "artanddesign" -> "artanddesign",
     "australia-news" -> "australianews",
     "books" -> "books",
+    "business" -> "business", /* There isn't a tag specifically for business articles so mapping to business */
     "uk/business" -> "business",
     "us/business" -> "usbusiness",
     "careers" -> "careers",
