@@ -141,8 +141,8 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
 };
 
 const canShow = async (): Promise<boolean> => {
-    const canShowTiming = measureTiming('braze-banner');
-    canShowTiming.start();
+    const timing = measureTiming('braze-banner');
+    timing.start();
 
     const forcedBrazeMessage = getMessageFromQueryString();
     if (forcedBrazeMessage) {
@@ -170,12 +170,14 @@ const canShow = async (): Promise<boolean> => {
 
     try {
         const result = await getMessageFromBraze(apiKey, brazeUuid)
-        const timeTaken = canShowTiming.end();
+        const timeTaken = timing.end();
 
-        ophan.record({
-            component: 'braze-banner-timing',
-            value: timeTaken,
-        });
+        if (timeTaken) {
+            ophan.record({
+                component: 'braze-banner-timing',
+                value: timeTaken,
+            });
+        }
 
         return result;
     } catch (e) {
