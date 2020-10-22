@@ -40,7 +40,6 @@ const copyUS: AcquisitionsEpicTemplateCopy = {
 const USElectionTags = ['us-news/us-elections-2020', 'us-news/series/us-politics-live'];
 
 const getCopy = (): AcquisitionsEpicTemplateCopy => {
-    console.log("tags",config.get('page.keywordIds'))
     if (geolocation === 'US') {
         return copyUS;
     }
