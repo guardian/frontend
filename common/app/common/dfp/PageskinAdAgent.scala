@@ -40,9 +40,8 @@ trait PageskinAdAgent {
     println("*********** adUnitPath", adUnitPath);
 
     if (PageSkin.isValidAdUnit(adUnitPath)) {
+      println("*********** HAS MATCHING UNIT CANDIDATES", candidates filter hasMatchingAdUnit);
       candidates filter hasMatchingAdUnit
-      println("*********** HAS MATCHING UNIT CANDIDATES", candidates);
-      candidates
     } else {
       val targetingMap = toMap(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty))
 
@@ -55,15 +54,15 @@ trait PageskinAdAgent {
       val keywordTargeting = targetingMapValues(targetingMap, "k")
       val seriesTargeting = targetingMapValues(targetingMap, "se")
 
-      candidates filter { sponsorship =>
+      val filtered = candidates filter { sponsorship =>
         sponsorship.keywords.intersect(keywordTargeting).nonEmpty ||
         sponsorship.series.intersect(seriesTargeting).nonEmpty
       }
 
       println("*********** PAGESKIN CANDIDATES");
-      println(candidates);
+      println(filtered);
 
-      candidates
+      filtered
     }
   }
 
