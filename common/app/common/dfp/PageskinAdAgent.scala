@@ -20,6 +20,8 @@ trait PageskinAdAgent {
       edition: Edition,
   ): Seq[PageSkinSponsorship] = {
 
+    println("*********** findSponsorships");
+
     val nextGenSuffix = "/ng"
 
     def containsAdUnit(adUnits: Seq[String], adUnit: String): Boolean =
@@ -34,8 +36,13 @@ trait PageskinAdAgent {
       sponsorship.editions.contains(edition)
     }
 
+    println("*********** ALL CANDIDATES", candidates);
+    println("*********** adUnitPath", adUnitPath);
+
     if (PageSkin.isValidAdUnit(adUnitPath)) {
       candidates filter hasMatchingAdUnit
+      println("*********** HAS MATCHING UNIT CANDIDATES", candidates);
+      candidates
     } else {
       val targetingMap = toMap(metaData.commercial.map(_.adTargeting(edition)).getOrElse(Set.empty))
 
@@ -52,6 +59,11 @@ trait PageskinAdAgent {
         sponsorship.keywords.intersect(keywordTargeting).nonEmpty ||
         sponsorship.series.intersect(seriesTargeting).nonEmpty
       }
+
+      println("*********** PAGESKIN CANDIDATES");
+      println(candidates);
+
+      candidates
     }
   }
 

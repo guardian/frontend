@@ -5,7 +5,7 @@ import model.ApplicationContext
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 import views.html.stacked
-import views.html.fragments._
+import views.html.fragments.{page, _}
 import views.html.fragments.page.body._
 import views.support.Commercial
 
@@ -41,6 +41,7 @@ object HtmlPageHelpers {
       applicationContext: ApplicationContext,
   ): Map[String, Boolean] = {
     val edition = Edition(request)
+    println("HAS PAGE SKIN", page.metadata.hasPageSkin(edition));
     Map(
       ("has-page-skin", page.metadata.hasPageSkin(edition)),
       ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
