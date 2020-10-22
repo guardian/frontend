@@ -1,5 +1,5 @@
 // @flow
-const lastSentenceTemplate = (supportURL: string, ctaText?: string) =>
+const ctaTemplate = (supportURL: string, ctaText?: string) =>
     `<div class="component-button--liveblog-container">
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
@@ -32,7 +32,7 @@ export const epicLiveBlogTemplate = ({
             ${copy.paragraphs
         .map(paragraph => `<p><em>${paragraph}</em></p>`)
         .join('')}
-            <p><em>${lastSentenceTemplate(
+            <p><em>${ctaTemplate(
         supportURL,
         ctaText,
     )}</em></p>
