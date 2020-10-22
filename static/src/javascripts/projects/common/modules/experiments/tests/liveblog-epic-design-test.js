@@ -38,12 +38,13 @@ const copyUS: AcquisitionsEpicTemplateCopy = {
 };
 
 const USElectionTags = ['us-news/us-elections-2020', 'us-news/series/us-politics-live'];
+const keywordTags = config.get('page.keywordIds');
 
 const getCopy = (): AcquisitionsEpicTemplateCopy => {
     if (geolocation === 'US') {
         return copyUS;
     }
-    if (USElectionTags.some(tag => `${config.get('page.keywordIds')}`.includes(tag))) {
+    if (USElectionTags.some(tag => `${keywordTags}`.includes(tag))) {
         return copyElectionNonUS;
     }
     return copyGlobal;
