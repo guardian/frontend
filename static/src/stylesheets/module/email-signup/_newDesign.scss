@@ -12,6 +12,10 @@ $mobile-img-size: 3 * $mobile-headline-font-size;
     }
     height: 100%;
     overflow: hidden;
+    /* Filthy hacks during AB test */
+    /* TODO: Remove these and update iframe class post-AB test */
+    width: calc(100% - #{$rounded-adjustment});
+    margin-left: #{$rounded-adjustment / 2};
 }
 .newsletter-embed__image {
     max-width: $mobile-img-size;
