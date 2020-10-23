@@ -10,7 +10,7 @@ export const signInGateMainControl: ABTest = {
     author: 'Mahesh Makani',
     description:
         'Show sign in gate to 100% of users on 3rd article view of simple article templates, with higher priority over banners and epic. Control Audience.',
-    audience: 0.09,
+    audience: 0.1,
     audienceOffset: 0.9,
     successMeasure: 'N/A - User does not see gate, only to compare to variant.',
     audienceCriteria:

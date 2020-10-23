@@ -31,12 +31,12 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGatePatientia', // Update for each new test
-            dataLinkNames: 'SignInGatePatientia', // Update for each new test
+            id: 'SignInGateMainVariant', // Update for each new test
+            dataLinkNames: 'SignInGateMain', // Update for each new test
             variantToRun: {
-                id: 'patientia-variant-1', // Update for each new test
+                id: 'main-variant-2', // Update for each new test
             },
-            ophanComponentId: 'patientia_test',
+            ophanComponentId: 'main_test',
         },
     ]),
 }));
@@ -69,27 +69,27 @@ describe('Sign In Gate Helper functions', () => {
 
         const test = {
             window: 'day',
-            name: 'SignInGatePatientia',
-            variant: 'patientia-variant-1',
+            name: 'SignInGateMainVariant',
+            variant: 'main-variant-2',
             componentName: 'sign-in-gate',
         };
 
         it('should return true if timestamp is less than specified window', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-patientia-variant-1': lessThanADayAgo.toISOString(),
+                'SignInGateMainVariant-main-variant-2': lessThanADayAgo.toISOString(),
             });
 
-            expect(hasUserDismissedGateInWindow(test)).toBe(true);
+            expect(hasUserDismissedGateInWindow(test)).toBe(true); // todo
             expect(fakeUserPrefs.remove).toHaveBeenCalledTimes(0);
         });
 
         it('should clear local storage prefs and return false if timestamp from prefs is more than specified window', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-patientia-variant-1': moreThanADayAgo.toISOString(),
+                'SignInGateMainVariant-main-variant-2': moreThanADayAgo.toISOString(),
             });
 
             expect(hasUserDismissedGateInWindow(test)).toBe(false);
-            expect(fakeUserPrefs.remove).toHaveBeenCalledTimes(1);
+            expect(fakeUserPrefs.remove).toHaveBeenCalledTimes(1); // todo
         });
     });
 
