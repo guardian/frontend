@@ -8,14 +8,14 @@ import {
     isInvalidSection,
     isIOS9,
     setGatePageTargeting,
-    hasUserDismissedGateMoreThanCount
+    hasUserDismissedGateMoreThanCount,
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
 import { designShow } from '../design/main-variant';
 
 // define the variant name here
-const variant = 'main-variant-2';
+const variant = 'main-variant-3';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {

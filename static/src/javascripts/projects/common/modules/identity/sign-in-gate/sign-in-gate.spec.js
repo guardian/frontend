@@ -13,7 +13,7 @@ jest.mock('common/modules/experiments/ab', () => ({
             id: 'SignInGateMainVariant', // Update for each new test
             dataLinkNames: 'SignInGateMain', // Update for each new test
             variantToRun: {
-                id: 'main-variant-2', // Update for each new test
+                id: 'main-variant-3', // Update for each new test
             },
             ophanComponentId: 'main_test',
         },
