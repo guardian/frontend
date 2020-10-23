@@ -13,7 +13,7 @@ import {
 } from '../../helper';
 
 // pull in the show method from the design folder, which has the html template and and click handlers etc.
-import { designShow } from '../design/main-variant';
+import { designShow } from '../design/main-variant-2';
 
 // define the variant name here
 const variant = 'pageview-us-variant-2'; // 2nd page view & new dismiss rule (capped at 5)
