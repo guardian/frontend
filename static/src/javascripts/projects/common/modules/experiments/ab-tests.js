@@ -5,7 +5,6 @@ import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { signInGatePageview } from 'common/modules/experiments/tests/sign-in-gate-pageview';
 import { signInGatePageviewUs } from 'common/modules/experiments/tests/sign-in-gate-pageview-us';
-import { signInGatePersonalisedAdCopy } from 'common/modules/experiments/tests/sign-in-gate-personalised-ad-copy';
 import { liveblogEpicDesignTest } from 'common/modules/experiments/tests/liveblog-epic-design-test';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -14,7 +13,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateMainControl,
     signInGatePageview,
     signInGatePageviewUs,
-    signInGatePersonalisedAdCopy,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [liveblogEpicDesignTest];
