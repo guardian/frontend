@@ -35,9 +35,6 @@
                     <a href="/logout">Logout</a>
                 </div>
                 <div class="logged-in">
-                    @identity.avatarUrl.map { url =>
-                        <img class="avatar" src="@url" />
-                    }
                     <p class="logged-in-message">You are logged in as @identity.fullName</p>
                 </div>
             }
