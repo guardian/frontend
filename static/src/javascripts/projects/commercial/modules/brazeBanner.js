@@ -7,9 +7,10 @@ import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import { getUrlVars } from 'lib/url';
-
-import {getUserFromApi} from '../../common/modules/identity/api';
-import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
+import ophan from 'ophan/ng';
+import {getUserFromApi} from 'common/modules/identity/api';
+import {isDigitalSubscriber} from "common/modules/commercial/user-features";
+import {measureTiming} from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -140,6 +141,9 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
 };
 
 const canShow = async (): Promise<boolean> => {
+    const timing = measureTiming('braze-banner');
+    timing.start();
+
     const forcedBrazeMessage = getMessageFromQueryString();
     if (forcedBrazeMessage) {
         messageConfig = forcedBrazeMessage;
@@ -165,7 +169,17 @@ const canShow = async (): Promise<boolean> => {
     }
 
     try {
-        return await getMessageFromBraze(apiKey, brazeUuid);
+        const result = await getMessageFromBraze(apiKey, brazeUuid)
+        const timeTaken = timing.end();
+
+        if (timeTaken) {
+            ophan.record({
+                component: 'braze-banner-timing',
+                value: timeTaken,
+            });
+        }
+
+        return result;
     } catch (e) {
         return false;
     }

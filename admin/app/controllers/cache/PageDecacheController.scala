@@ -7,7 +7,6 @@ import common.{ImplicitControllerExecutionContext, Logging}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import org.apache.commons.codec.digest.DigestUtils
-import play.api.http.HttpConfiguration
 import play.api.libs.ws.WSClient
 import play.api.mvc.Security.AuthenticatedRequest
 import play.api.mvc._
@@ -18,12 +17,9 @@ import scala.concurrent.Future.successful
 
 case class PrePurgeTestResult(url: String, passed: Boolean)
 
-class PageDecacheController(
-    wsClient: WSClient,
-    val httpConfiguration: HttpConfiguration,
-    val controllerComponents: ControllerComponents,
-)(implicit context: ApplicationContext)
-    extends BaseController
+class PageDecacheController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+    context: ApplicationContext,
+) extends BaseController
     with Logging
     with ImplicitControllerExecutionContext
     with AdminAuthController {
