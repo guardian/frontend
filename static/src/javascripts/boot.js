@@ -11,7 +11,7 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp } from '@guardian/consent-management-platform';
 import { getCookie } from 'lib/cookies';
-import { isInAustralia } from 'common/modules/commercial/geo-utils';
+import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 // Let webpack know where to get files from
@@ -40,17 +40,11 @@ const go = () => {
         const pubData: { browserId?: ?string, pageViewId?: ?string } =
             { browserId, pageViewId };
 
-
-        if (isInAustralia()) {
-            if (config.get('tests.useAusCmpVariant') === 'variant') {
-                cmp.init({ pubData, country: 'AU' });
-            } else {
-                cmp.init({ pubData, country: 'GB' }); // Use TCFv2 Framework
-            }
-        } else {
+        if (config.get('tests.useAusCmpVariant') === 'variant') {
             cmp.init({ pubData, country: geolocationGetSync() });
+        } else {
+            cmp.init({ pubData, isInUsa: isInUsa() });
         }
-
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
