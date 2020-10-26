@@ -43,6 +43,7 @@ object IpsosTags {
     "about" -> "info",
     "law" -> "law",
     "uk/lifeandstyle" -> "lifeandstyle", /* There is no US or AU lifeandstyle tag - should these map to lifeandstyle? */
+    "lifeandstyle" -> "lifeandstyle",
     "uk/media" -> "media", /* There is no US or AU media tag - should these map to media? */
     "membership" -> "membership",
     "uk/money" -> "money", /* There is no US or AU money tag - should these map to money? */
@@ -101,9 +102,12 @@ object IpsosTags {
     tags.get(sectionId)
   }
 
+  /* Will fronts need a separate function that takes a page? */
   def getScriptTagForEdition(edition: String): Option[String] = {
     tags.get(edition)
   }
+
+  // email-newsletter pages needs to be tagged as well
 
   /*
   def getScriptTagForSubdomain(url: String): Option[String] = {
