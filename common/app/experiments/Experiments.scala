@@ -13,6 +13,7 @@ object ActiveExperiments extends ExperimentsDefinition {
     DCRBubble,
     NGInteractiveDCR,
     NewsletterEmbedDesign,
+    UseAusCmp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -63,4 +64,13 @@ object NewsletterEmbedDesign
       owners = Seq(Owner.withGithub("buck06191")),
       sellByDate = new LocalDate(2020, 11, 2),
       participationGroup = Perc20A,
+    )
+
+object UseAusCmp
+    extends Experiment(
+      name = "use-aus-cmp",
+      description = "Use AU framework in CMP in Australia",
+      owners = group(Commercial),
+      sellByDate = new LocalDate(2020, 11, 6),
+      participationGroup = Perc0D,
     )
