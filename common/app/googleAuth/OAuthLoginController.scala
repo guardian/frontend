@@ -69,28 +69,32 @@ trait OAuthLoginController extends BaseController with ImplicitControllerExecuti
                   .flashing("error" -> "Anti forgery token missing in session"),
               )
             case Some(token) =>
-              GoogleAuth.validatedUserIdentity(config, token).map { userIdentity: UserIdentity =>
-                // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
-                // Redirect a user back there now if it exists
-                val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
-                  case Some(url) => Redirect(url)
-                  case None      => Redirect("/")
-                }
-                // Store the JSON representation of the identity in the session - this is checked by AuthAction later
-                val sessionAdd: Seq[(String, String)] = Seq(
-                  Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
-                  Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
-                ).flatten
+              GoogleAuth
+                .validatedUserIdentity(config, token)
+                // drop the avatarUrl as it can be very large and we don't use it anywhere
+                .map(_.copy(avatarUrl = None))
+                .map { userIdentity: UserIdentity =>
+                  // We store the URL a user was trying to get to in the LOGIN_ORIGIN_KEY in AuthAction
+                  // Redirect a user back there now if it exists
+                  val redirect = request.session.get(LOGIN_ORIGIN_KEY) match {
+                    case Some(url) => Redirect(url)
+                    case None      => Redirect("/")
+                  }
+                  // Store the JSON representation of the identity in the session - this is checked by AuthAction later
+                  val sessionAdd: Seq[(String, String)] = Seq(
+                    Option((UserIdentity.KEY, Json.toJson(userIdentity).toString())),
+                    Option((Configuration.cookies.lastSeenKey, DateTime.now.toString())),
+                  ).flatten
 
-                val result = redirect
-                  .addingToSession(sessionAdd: _*)
-                  .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
+                  val result = redirect
+                    .addingToSession(sessionAdd: _*)
+                    .removingFromSession(ANTI_FORGERY_KEY, LOGIN_ORIGIN_KEY)
 
-                authCookie
-                  .from(userIdentity)
-                  .map(authCookie => result.withCookies(authCookie))
-                  .getOrElse(result)
-              } recover {
+                  authCookie
+                    .from(userIdentity)
+                    .map(authCookie => result.withCookies(authCookie))
+                    .getOrElse(result)
+                } recover {
                 case t =>
                   // you might want to record login failures here - we just redirect to the login page
                   Redirect("/login")
