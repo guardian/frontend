@@ -63,6 +63,7 @@ object StoryHtmlPage {
         checkModuleSupport(),
         inlineJSBlocking(),
         htmlDcrCouldRender(pageWithStoryPackage, request),
+        ipsosScript("test"),
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
