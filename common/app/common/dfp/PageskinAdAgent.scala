@@ -2,11 +2,11 @@ package common.dfp
 
 import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues}
-import common.{Edition, Logging}
+import common.Edition
 import model.MetaData
 import play.api.mvc.RequestHeader
 
-trait PageskinAdAgent extends Logging {
+trait PageskinAdAgent {
 
   protected val environmentIsProd: Boolean
 
@@ -61,7 +61,6 @@ trait PageskinAdAgent extends Logging {
   def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition, request: RequestHeader): Boolean = {
     if (metaData.isFront) {
       val adTestParam = request.getQueryString("adtest")
-      log.info(s"**** ADTEST PARAM '$adTestParam' ")
       findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
         if (sponsorship.targetsAdTest) {
           sponsorship.adTestValue == adTestParam
