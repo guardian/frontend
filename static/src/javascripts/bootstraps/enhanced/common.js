@@ -44,7 +44,6 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -286,7 +285,6 @@ const initialiseBanner = (): void => {
         signInGate,
         membershipBanner,
         readerRevenueBanner,
-        subscriptionBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
