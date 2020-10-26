@@ -47,12 +47,14 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     }
 
   // Need to get front ID
-  val ipsosTag = getScriptTagForEdition("edition")
-  val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
-  // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
+
 
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
+    println(page.id)
+    val ipsosTag = getScriptTagForEdition(page.id)
+    val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
+    // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
@@ -63,6 +65,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         fixIEReferenceErrors(),
         checkModuleSupport(),
         inlineJSBlocking(),
+        ipsosHtml,
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
