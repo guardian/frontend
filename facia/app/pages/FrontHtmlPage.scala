@@ -16,6 +16,7 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.stacked
 import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile}
+import model.IpsosTags.getScriptTagForEdition
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -44,6 +45,11 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       override def IE9LinkCss: Html = stylesheetLink(s"stylesheets/ie9.head.$FaciaCSSFile.css")
       override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
     }
+
+  // Need to get front ID
+  val ipsosTag = getScriptTagForEdition("edition")
+  val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
+  // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
 
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page

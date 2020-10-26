@@ -16,16 +16,19 @@ object IpsosTags {
     "books" -> "books",
     "business" -> "business", /* There isn't a tag specifically for business articles so mapping to business */
     "uk/business" -> "business",
+    "uk/business-to-business" -> "business", /* No specific tag given for this */
     "us/business" -> "usbusiness",
     "careers" -> "careers",
     "cities" -> "cities",
     "uk/commentisfree" -> "commentisfree",
+    "commentisfree" -> "commentisfree", /* For comment articles */
     "us/commentisfree" -> "uscommentisfree",
     "community" -> "community",
     "crosswords" -> "crosswords",
     "uk/culture" -> "culture", /* There is no US or AU culture tag - should these map to culture? */
     "education" -> "education",
     "uk/environment" -> "environment", /* There is no US or AU environment tag - should these map to environment? */
+    "environment" -> "environment", /* For environment articles */
     "fashion" -> "fashion",
     "uk/film" -> "film", /* There is no US or AU film tag - should these map to film? */
     "food" -> "food",
@@ -64,6 +67,7 @@ object IpsosTags {
     "sport/rugbyleague" -> "rugbyleague", /* This needs to use tag id as section id shows just 'sport' */
     "sport/horse-racing" -> "horseracing", /* This needs to use tag id as section id shows just 'sport' */
     "sport/us-sport" -> "ussport", /* This needs to use tag id as section id shows just 'sport' */
+    "sport" -> "sport", /* All sport articles */
     "stage" -> "stage",
     "teacher-network" -> "teachernetwork",
     "uk/technology" -> "technology", /* There is no US or AU technology tag - should these map to technology? */
@@ -92,6 +96,7 @@ object IpsosTags {
   )
 
   def getScriptTagForPage(page: Page): Option[String] = {
+    println(page.metadata.sectionId)
     val sectionId = page.metadata.sectionId
     tags.get(sectionId)
   }
@@ -99,4 +104,11 @@ object IpsosTags {
   def getScriptTagForEdition(edition: String): Option[String] = {
     tags.get(edition)
   }
+
+  /*
+  def getScriptTagForSubdomain(url: String): Option[String] = {
+    //TODO Pass in subdomain for Jobs and split the string to jobs
+  }
+   */
+
 }
