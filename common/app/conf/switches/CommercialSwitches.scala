@@ -247,16 +247,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val SubscriptionBanner = Switch(
-    Commercial,
-    "subscription-banner",
-    "if this is switched on the subscriptions banner will show (region visibility is controlled from the frontend banner code)",
-    owners = group(Membership),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val MembershipEngagementBannerBlockUK = Switch(
     Commercial,
     "membership-engagement-banner-block-uk",
