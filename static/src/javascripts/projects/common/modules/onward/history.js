@@ -84,7 +84,7 @@ let inMegaNav: boolean = false;
 
 const saveHistory = (history: Array<Array<any>>): void => {
     historyCache = history;
-    storage.set(storageKeyHistory, history);
+    storage.local.set(storageKeyHistory, history);
 };
 
 const saveSummary = (summary: Object): void => {

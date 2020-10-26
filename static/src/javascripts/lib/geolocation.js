@@ -36,11 +36,13 @@ const get = (): Promise<string> =>
 
 const setGeolocation = (geolocation: string): void => {
     const currentDate = new Date();
-    storage.local.set(storageKey, geolocation, {
-        expires: currentDate.setDate(
+    storage.local.set(
+        storageKey,
+        geolocation,
+        currentDate.setDate(
             currentDate.getDate() + daysBeforeGeolocationRefresh
-        ),
-    });
+        )
+    );
 };
 
 const init = (): void => {

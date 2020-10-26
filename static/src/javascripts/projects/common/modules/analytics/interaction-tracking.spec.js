@@ -11,7 +11,6 @@ import { storage } from '@guardian/libs';
 import interactionTracking from './interaction-tracking';
 
 jest.mock('lib/mediator');
-jest.mock('@guardian/libs');
 jest.mock('lib/raven');
 
 jest.mock('common/modules/analytics/google', () => ({

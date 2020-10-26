@@ -15,7 +15,6 @@ import { getCookie as getCookie_ } from 'lib/cookies';
 import { ajax as ajax_ } from 'lib/ajax';
 import { storage } from '@guardian/libs';
 
-jest.mock('@guardian/libs');
 jest.mock('lib/config');
 jest.mock('lib/ajax', () => ({
     ajax: jest.fn(),

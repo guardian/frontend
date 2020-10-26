@@ -13,7 +13,6 @@ import config from 'lib/config';
 import { genRunnableAbTestWhereControlIsRunnable } from './__fixtures__/ab-test';
 
 jest.mock('lib/raven');
-jest.mock('@guardian/libs');
 jest.mock('lib/report-error');
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('lodash/memoize', () => f => f);

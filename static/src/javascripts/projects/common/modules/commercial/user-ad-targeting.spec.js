@@ -12,7 +12,6 @@ import {
 const getUserFromApi: any = getUserFromApi_;
 const getUserFromCookie: any = getUserFromCookie_;
 
-jest.mock('@guardian/libs');
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn(),
     getUserFromApi: jest.fn(),

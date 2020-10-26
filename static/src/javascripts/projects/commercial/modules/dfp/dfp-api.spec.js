@@ -79,6 +79,7 @@ jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
 }));
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
+    storage: jest.requireActual('@guardian/libs').storage
 }));
 jest.mock('lodash/once', () => fn => fn);
 jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
