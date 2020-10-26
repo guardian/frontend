@@ -91,8 +91,12 @@ object IpsosTags {
     "jobs" -> "jobs", /* This may have to be mapped via url */
   )
 
-  def getScriptTag(): Option[String] = {
-    Some("Testing")
+  def getScriptTagForPage(page: Page): Option[String] = {
+    val sectionId = page.metadata.sectionId
+    tags.get(sectionId)
   }
 
+  def getScriptTagForEdition(edition: String): Option[String] = {
+    tags.get(edition)
+  }
 }
