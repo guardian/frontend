@@ -125,9 +125,7 @@ class FabricExpandingV1 {
                     storage.local.set(
                         `gu.commercial.expandable.${itemIdArray[1]}`,
                         true,
-                        {
-                            expires: Date.now() + week,
-                        }
+                        expires: Date.now() + week
                     );
                     this.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron')

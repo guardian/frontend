@@ -42,9 +42,7 @@ const requestUserSegmentsFromId = (): void => {
                         segments: userSegments,
                         userHash: user.id % 9999,
                     },
-                    {
-                        expires: new Date().getTime() + 24 * 60 * 60 * 1000,
-                    }
+                    new Date().getTime() + 24 * 60 * 60 * 1000
                 );
             }
         });
