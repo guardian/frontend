@@ -7,7 +7,7 @@ import qwery from 'qwery';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import flattenDeep from 'lodash/flattenDeep';
 import pickBy from 'lodash/pickBy';
@@ -50,7 +50,7 @@ type AlertIds = {
 let knownAlertIDs: AlertIds;
 
 const storeKnownAlertIDs = (): void => {
-    local.set(knownAlertIDsStorageKey, knownAlertIDs);
+    storage.local.set(knownAlertIDsStorageKey, knownAlertIDs);
 };
 
 const updateKnownAlertID = (id: string, state: boolean): void => {
@@ -68,7 +68,7 @@ const markAlertAsDismissed = (id: string): void => {
 };
 
 // if we can't record a dismissal, we won't show an alert
-const userCanDismissAlerts = (): ?boolean => local.isAvailable();
+const userCanDismissAlerts = (): ?boolean => storage.local.isAvailable();
 
 const fetchBreakingNews = (): Promise<any> =>
     fetchJson(breakingNewsURL, {
@@ -198,7 +198,7 @@ const show = (): Promise<boolean> => {
 
 const canShow = (): Promise<boolean> => {
     if (userCanDismissAlerts()) {
-        knownAlertIDs = local.get(knownAlertIDsStorageKey) || {};
+        knownAlertIDs = storage.local.get(knownAlertIDsStorageKey) || {};
 
         return fetchBreakingNews()
             .then(parseResponse)

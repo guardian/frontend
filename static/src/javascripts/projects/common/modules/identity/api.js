@@ -5,7 +5,7 @@ import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
@@ -198,7 +198,7 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
 
 export const shouldAutoSigninInUser = (): boolean => {
     const signedInUser = !!getCookieByName(cookieName);
-    const checkFacebook = !!local.get(fbCheckKey);
+    const checkFacebook = !!storage.local.get(fbCheckKey);
     return (
         !signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
     );

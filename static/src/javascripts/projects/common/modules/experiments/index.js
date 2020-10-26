@@ -1,6 +1,6 @@
 // @flow
 import template from 'lodash/template';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import $ from 'lib/$';
 import bean from 'bean';
 import config from 'lib/config';
@@ -48,7 +48,7 @@ const bindEvents = () => {
     });
 
     bean.on($('.js-experiments-clear-ab')[0], 'click', () => {
-        storage.set('gu.experiments.ab', JSON.stringify([]));
+        storage.local.set('gu.experiments.ab', JSON.stringify([]));
         selectRadios();
     });
 

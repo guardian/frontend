@@ -6,12 +6,12 @@ import {
     trackSponsorLogoLinkClick,
 } from 'common/modules/analytics/google';
 import mediator from 'lib/mediator';
-import { session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 import interactionTracking from './interaction-tracking';
 
 jest.mock('lib/mediator');
-jest.mock('lib/storage');
+jest.mock('@guardian/libs');
 jest.mock('lib/raven');
 
 jest.mock('common/modules/analytics/google', () => ({
@@ -22,7 +22,7 @@ jest.mock('common/modules/analytics/google', () => ({
 
 describe('interaction-tracking', () => {
     afterEach(() => {
-        session.remove('gu.analytics.referrerVars');
+        storage.session.remove('gu.analytics.referrerVars');
         mediator.removeEvent('module:clickstream:interaction');
         mediator.removeEvent('module:clickstream:click');
     });
@@ -69,7 +69,7 @@ describe('interaction-tracking', () => {
             tag: tagName,
         });
 
-        const referrerVars = session.get('gu.analytics.referrerVars');
+        const referrerVars = storage.session.get('gu.analytics.referrerVars');
 
         expect(referrerVars.tag).toEqual(tagName);
         expect(referrerVars.path).toEqual(pathName);

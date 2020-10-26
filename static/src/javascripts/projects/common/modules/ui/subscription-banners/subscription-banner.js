@@ -1,7 +1,7 @@
 // @flow
 
 import config from 'lib/config';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import userPrefs from 'common/modules/user-prefs';
 
 import { shouldHideSupportMessaging } from 'common/modules/commercial/user-features';
@@ -32,7 +32,7 @@ const subscriptionBannerSwitchIsOn: boolean = config.get(
     'switches.subscriptionBanner'
 ) && !remoteSubscriptionsBannerSwitchIsOn;
 
-const pageviews: number = parseInt(local.getRaw('gu.alreadyVisited'), 10) || 0;
+const pageviews: number = parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
 const currentRegion: ReaderRevenueRegion = getReaderRevenueRegion(
     geolocationGetSync()

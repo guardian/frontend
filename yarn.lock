@@ -1775,10 +1775,10 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/libs@^1.0.0":
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.0.0.tgz#a83e24faff2ecdb218bf75b58cd208fa5abbaca1"
-  integrity sha512-v8TXJJA3/tWBHUMyDuuBEuS44alIlimJGMmonpXaaPfh27/UFZrQDTNcS2qQdHSbCt89nRJlJM0OmHHeraVj9g==
+"@guardian/libs@^1.2.0":
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.2.0.tgz#92f914af352a17886bc469a97a98a171f0c3c3ce"
+  integrity sha512-7vPYG3hqe5YZ24/lGgmI7fo5EkUF7+DrjgcxCDcJfiDgnYPKOe7HdCsTZPaNSSS9oX2Z0djWvJQG/IBL/VEN2g==
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"

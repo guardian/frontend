@@ -6,7 +6,7 @@ import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
@@ -252,7 +252,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
             let oldBlockDates;
 
             if (elementsById.size) {
-                oldBlockDates = session.get(sessionStorageKey) || {};
+                oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
                 elementsById.forEach((elements, articleId) => {
                     fetchJson(`/${articleId}.json?rendered=false`, {
@@ -271,7 +271,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
                                 );
                                 oldBlockDates[articleId] =
                                     blocks[0].publishedDateTime;
-                                session.set(sessionStorageKey, oldBlockDates);
+                                storage.session.set(sessionStorageKey, oldBlockDates);
                             }
                         })
                         .catch(() => {});

@@ -13,9 +13,9 @@ import {
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import { ajax as ajax_ } from 'lib/ajax';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
-jest.mock('lib/storage');
+jest.mock('@guardian/libs');
 jest.mock('lib/config');
 jest.mock('lib/ajax', () => ({
     ajax: jest.fn(),
@@ -157,11 +157,11 @@ describe('Identity API', () => {
         getCookieStub
             .mockImplementationOnce(() => null) // GU_U
             .mockImplementationOnce(() => null); // GU_SO
-        local.set('gu.id.nextFbCheck', 'blah|blah');
+            storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
 
-        local.remove('gu.id.nextFbCheck');
+        storage.local.remove('gu.id.nextFbCheck');
     });
 
     it('should not attempt to autosigin a user who is not currently signed in, has not previously signed out, before the facebook check overlaps', () => {
@@ -201,11 +201,11 @@ describe('Identity API', () => {
         getCookieStub
             .mockImplementationOnce(() => null) // GU_U
             .mockImplementationOnce(() => timeStampInSeconds.toString()); // GU_SO
-        local.set('gu.id.nextFbCheck', 'blah|blah');
+            storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
 
-        local.remove('gu.id.nextFbCheck');
+        storage.local.remove('gu.id.nextFbCheck');
     });
 
     it('should not attempt to autosignin a user who has signed out within the last 24 hours', () => {

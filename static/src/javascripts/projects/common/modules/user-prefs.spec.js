@@ -1,6 +1,6 @@
 // @flow
 import userPrefs from 'common/modules/user-prefs';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 class LocalStorageMock {
     store: Object;
@@ -30,8 +30,8 @@ const localStorage = new LocalStorageMock();
 
 describe('userPrefs - Client-side preferences', () => {
     beforeAll(() => {
-        local.storage = localStorage;
-        local.available = true;
+        storage.local.storage = localStorage;
+        storage.local.available = true;
     });
 
     beforeEach(() => {
@@ -86,8 +86,8 @@ describe('userPrefs - Client-side preferences', () => {
 
 describe('userPrefs - Switch overrides', () => {
     beforeAll(() => {
-        local.storage = localStorage;
-        local.available = true;
+        storage.local.storage = localStorage;
+        storage.local.available = true;
     });
 
     beforeEach(() => {

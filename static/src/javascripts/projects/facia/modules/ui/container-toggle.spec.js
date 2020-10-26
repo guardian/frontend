@@ -6,7 +6,7 @@ import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { ContainerToggle } from 'facia/modules/ui/container-toggle';
 
-jest.mock('lib/storage');
+jest.mock('@guardian/libs');
 
 describe('Container Toggle', () => {
     let container;

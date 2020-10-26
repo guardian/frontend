@@ -18,15 +18,17 @@ import {
     incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import { local as localStorageStub } from 'lib/storage';
+import { storage as storageStub } from '@guardian/libs';
 
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(),
-        set: jest.fn(),
-        isAvailable: jest.fn(),
-        remove: jest.fn(),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(),
+            set: jest.fn(),
+            isAvailable: jest.fn(),
+            remove: jest.fn(),
+        },
+    }
 }));
 
 jest.mock('lib/url', () => ({
@@ -93,7 +95,7 @@ describe('history', () => {
     beforeEach(() => {
         mockContains = contains;
 
-        localStorageStub.get.mockImplementation(key => {
+        storageStub.local.get.mockImplementation(key => {
             if (key === 'gu.history') {
                 return mockContains;
             } else if (key === 'gu.history.summary') {
@@ -105,7 +107,7 @@ describe('history', () => {
             }
         });
 
-        localStorageStub.set.mockImplementation((key, data) => {
+        storageStub.local.set.mockImplementation((key, data) => {
             if (key === 'gu.history') {
                 mockContains = data;
             } else if (key === 'gu.history.summary') {
@@ -157,7 +159,7 @@ describe('history', () => {
             max.push([chance.string(), 1]);
         }
 
-        localStorageStub.set('gu.history', max);
+        storageStub.local.set('gu.history', max);
 
         logHistory(pageConfig);
 
@@ -382,21 +384,21 @@ describe('history', () => {
     // dailyArticleCount tests
     it('gets article count for today only', () => {
         const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        localStorageStub.set('gu.history.dailyArticleCount', counts);
+        storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         expect(getArticleViewCountForDays(1)).toEqual(1);
     });
 
     it('gets article count for 2 days', () => {
         const counts = [{ day: today, count: 1 }, { day: today - 1, count: 1 }];
-        localStorageStub.set('gu.history.dailyArticleCount', counts);
+        storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         expect(getArticleViewCountForDays(2)).toEqual(2);
     });
 
     it('increments the daily article count', () => {
         const counts = [{ day: today, count: 1 }];
-        localStorageStub.set('gu.history.dailyArticleCount', counts);
+        storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
 
@@ -405,7 +407,7 @@ describe('history', () => {
 
     it('increments the yearly article count', () => {
         const counts = [{ day: today, count: 1 }];
-        localStorageStub.set('gu.history.dailyArticleCount', counts);
+        storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
 
@@ -414,11 +416,11 @@ describe('history', () => {
 
     it('removes old daily history while incrementing the article count', () => {
         const counts = [{ day: today - 70, count: 9 }];
-        localStorageStub.set('gu.history.dailyArticleCount', counts);
+        storageStub.local.set('gu.history.dailyArticleCount', counts);
 
         incrementDailyArticleCount(pageConfig);
 
-        expect(localStorageStub.get('gu.history.dailyArticleCount')).toEqual([
+        expect(storageStub.local.get('gu.history.dailyArticleCount')).toEqual([
             { day: today, count: 1 },
         ]);
     });
@@ -429,7 +431,7 @@ describe('history', () => {
             { week: startOfThisWeek, count: 1 },
             { week: startOfThisWeek - 7, count: 1 },
         ];
-        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
 
         expect(getArticleViewCountForWeeks(1)).toEqual(1);
     });
@@ -439,14 +441,14 @@ describe('history', () => {
             { week: startOfThisWeek, count: 1 },
             { week: startOfThisWeek - 7, count: 1 },
         ];
-        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
 
         expect(getArticleViewCountForWeeks(2)).toEqual(2);
     });
 
     it('increments the weekly article count', () => {
         const counts = [{ week: startOfThisWeek, count: 1 }];
-        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
 
         incrementWeeklyArticleCount(pageConfig);
 
@@ -455,18 +457,18 @@ describe('history', () => {
 
     it('removes old weekly history while incrementing the article count', () => {
         const counts = [{ week: startOfThisWeek - 400, count: 9 }];
-        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
 
         incrementWeeklyArticleCount(pageConfig);
 
-        expect(localStorageStub.get('gu.history.weeklyArticleCount')).toEqual([
+        expect(storageStub.local.get('gu.history.weeklyArticleCount')).toEqual([
             { week: startOfThisWeek, count: 1 },
         ]);
     });
 
     it('does not increment the weekly article count if opt-out cookie set', () => {
         const counts = [{ week: startOfThisWeek, count: 1 }];
-        localStorageStub.set('gu.history.weeklyArticleCount', counts);
+        storageStub.local.set('gu.history.weeklyArticleCount', counts);
         getCookie.mockReturnValue(new Date().getTime().toString());
 
         incrementWeeklyArticleCount(pageConfig);

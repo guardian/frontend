@@ -5,7 +5,7 @@ import {
     buildOphanPayload,
 } from 'common/modules/experiments/ab-ophan';
 
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 import { concurrentTests } from 'common/modules/experiments/ab-tests';
 import config from 'lib/config';
@@ -13,7 +13,7 @@ import config from 'lib/config';
 import { genRunnableAbTestWhereControlIsRunnable } from './__fixtures__/ab-test';
 
 jest.mock('lib/raven');
-jest.mock('lib/storage');
+jest.mock('@guardian/libs');
 jest.mock('lib/report-error');
 jest.mock('common/modules/analytics/mvt-cookie');
 jest.mock('lodash/memoize', () => f => f);
@@ -31,7 +31,7 @@ describe('A/B Ophan analytics', () => {
     });
 
     afterEach(() => {
-        local.storage = {};
+        storage.local.storage = {};
     });
 
     test('Ophan data structure contains the correct values', () => {

@@ -20,10 +20,12 @@ jest.mock('lib/config', () => ({
     get: jest.fn(() => false),
 }));
 
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => undefined),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(() => undefined),
+        },
+    }
 }));
 
 jest.mock('common/modules/experiments/ab', () => ({
@@ -58,7 +60,7 @@ jest.mock('./component-event-tracking', () => ({
 }));
 
 const fakeUserPrefs: any = require('common/modules/user-prefs');
-const fakeLocal: any = require('lib/storage').local;
+const fakeLocal: any = require('@guardian/libs').storage.local;
 
 describe('Sign In Gate Helper functions', () => {
     describe('hasUserDismissedGateInWindow', () => {

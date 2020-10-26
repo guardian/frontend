@@ -5,7 +5,7 @@
  */
 import fastdom from 'fastdom';
 import $ from 'lib/$';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { getPath } from 'lib/url';
 import isObject from 'lodash/isObject';
 
@@ -84,22 +84,22 @@ let inMegaNav: boolean = false;
 
 const saveHistory = (history: Array<Array<any>>): void => {
     historyCache = history;
-    local.set(storageKeyHistory, history);
+    storage.set(storageKeyHistory, history);
 };
 
 const saveSummary = (summary: Object): void => {
     summaryCache = summary;
-    local.set(storageKeySummary, summary);
+    storage.local.set(storageKeySummary, summary);
 };
 
 const getHistory = (): Array<Array<any>> => {
-    historyCache = historyCache || local.get(storageKeyHistory) || [];
+    historyCache = historyCache || storage.local.get(storageKeyHistory) || [];
     return historyCache;
 };
 
 const getSummary = (): Object => {
     if (!summaryCache) {
-        summaryCache = local.get(storageKeySummary);
+        summaryCache = storage.local.get(storageKeySummary);
 
         if (
             !isObject(summaryCache) ||
@@ -345,9 +345,9 @@ const firstCsv = (str: string): string => (str || '').split(',')[0];
 const reset = (): void => {
     historyCache = undefined;
     summaryCache = undefined;
-    local.remove(storageKeyHistory);
-    local.remove(storageKeySummary);
-    local.remove(storageKeyDailyArticleCount);
+    storage.local.remove(storageKeyHistory);
+    storage.local.remove(storageKeySummary);
+    storage.local.remove(storageKeyDailyArticleCount);
 };
 
 const logHistory = (pageConfig: Object): void => {
@@ -479,7 +479,7 @@ const showInMegaNavEnable = (bool: boolean): void => {
 
 const incrementDailyArticleCount = (pageConfig: Object): void => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
-        const dailyCount = local.get(storageKeyDailyArticleCount) || [];
+        const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
 
         if (dailyCount[0] && dailyCount[0].day && dailyCount[0].day === today) {
             dailyCount[0].count += 1;
@@ -497,14 +497,14 @@ const incrementDailyArticleCount = (pageConfig: Object): void => {
             }
         }
 
-        local.set(storageKeyDailyArticleCount, dailyCount);
+        storage.local.set(storageKeyDailyArticleCount, dailyCount);
     }
 };
 
 const incrementWeeklyArticleCount = (pageConfig: Object): void => {
     if (!pageConfig.isFront && !getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         const weeklyArticleCount =
-            local.get(storageKeyWeeklyArticleCount) || [];
+            storage.local.get(storageKeyWeeklyArticleCount) || [];
         if (
             weeklyArticleCount[0] &&
             weeklyArticleCount[0].week &&
@@ -528,12 +528,12 @@ const incrementWeeklyArticleCount = (pageConfig: Object): void => {
             }
         }
 
-        local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
+        storage.local.set(storageKeyWeeklyArticleCount, weeklyArticleCount);
     }
 };
 
 const getArticleViewCountForDays = (days: number): number => {
-    const dailyCount = local.get(storageKeyDailyArticleCount) || [];
+    const dailyCount = storage.local.get(storageKeyDailyArticleCount) || [];
     const cutOff = today - days;
 
     const firstOldDayIndex = dailyCount.findIndex(
@@ -548,7 +548,7 @@ const getArticleViewCountForDays = (days: number): number => {
 };
 
 const getArticleViewCountForWeeks = (weeks: number): number => {
-    const weeklyCount = local.get(storageKeyWeeklyArticleCount) || [];
+    const weeklyCount = storage.local.get(storageKeyWeeklyArticleCount) || [];
     const cutOff = startOfThisWeek - weeks * 7;
 
     const firstOldWeekIndex = weeklyCount.findIndex(
