@@ -10,12 +10,12 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGatePatientia', // Update for each new test
-            dataLinkNames: 'SignInGatePatientia', // Update for each new test
+            id: 'SignInGateMainVariant', // Update for each new test
+            dataLinkNames: 'SignInGateMain', // Update for each new test
             variantToRun: {
-                id: 'patientia-variant-1', // Update for each new test
+                id: 'main-variant-3', // Update for each new test
             },
-            ophanComponentId: 'patientia_test',
+            ophanComponentId: 'main_test',
         },
     ]),
 }));
@@ -116,7 +116,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-patientia-variant-1': Date.now(),
+                'SignInGateMain-main-variant-2': Date.now(),
             });
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);

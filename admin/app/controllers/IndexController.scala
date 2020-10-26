@@ -3,15 +3,14 @@ package controllers.admin
 import com.gu.googleauth.AuthAction
 import play.api.mvc._
 import model.{ApplicationContext, NoCache}
-import play.components.HttpConfigurationComponents
 
-trait AdminAuthController extends HttpConfigurationComponents {
+trait AdminAuthController {
 
   def controllerComponents: ControllerComponents
 
   object AdminAuthAction
       extends AuthAction(
-        conf.GoogleAuth(httpConfiguration).getConfigOrDie,
+        conf.GoogleAuth.getConfigOrDie,
         routes.OAuthLoginAdminController.login(),
         controllerComponents.parsers.default,
       )(controllerComponents.executionContext)

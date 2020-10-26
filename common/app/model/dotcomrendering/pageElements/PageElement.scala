@@ -457,6 +457,7 @@ case class YoutubeBlockElement(
     mediaTitle: String,
     overrideImage: Option[String],
     expired: Boolean,
+    duration: Option[Long],
 ) extends PageElement
 object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
@@ -804,6 +805,7 @@ object PageElement {
                     mediaTitle = mediaAtom.title, // Caption
                     overrideImage = if (isMainBlock) imageOverride else None,
                     expired = mediaAtom.expired.getOrElse(false),
+                    duration = mediaAtom.duration, // Duration in seconds
                   )
                 })
               }

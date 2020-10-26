@@ -11,7 +11,7 @@ import {
     addOverlayVariantCSS,
     setGatePageTargeting,
     addCSSOnOpinion,
-    incrementUserDismissedGateCount
+    incrementUserDismissedGateCount,
 } from '../../helper';
 
 // add the html template as the return of the function below
@@ -34,11 +34,10 @@ const htmlTemplate: ({
         </div>
         <div class="signin-gate__paragraph--var">
             <p class="signin-gate__paragraph--text--var">
-               We need more readers to register with us to help sustain our independent, quality journalism. Without you taking this simple step, we miss out on revenues from personalised advertising – a critical source of funding for our future.
+               Registering is a free and simple way to help us sustain our independent Guardian journalism.
             </p>
             <p class="signin-gate__paragraph--text--var">
-               Through doing so, you’ll help ensure that our reporting remains freely available to everyone, and if we recognise you when you come back, we can improve your news experience too.
-               You can still control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>. Thank you.
+               When you register with us we are able to improve our news experience for you and for others. You will always be able to control your own <a id="js-signin-gate__privacy" class="signin-gate__link--var">privacy settings</a>. Thank you.
             </p>
         </div>
         <div class="signin-gate__buttons">
@@ -138,7 +137,7 @@ export const designShow: ({
                     incrementUserDismissedGateCount(
                         abTest.variant,
                         abTest.name,
-                        componentName,
+                        componentName
                     );
                 },
             });

@@ -1,9 +1,8 @@
 package conf
 
-import com.gu.googleauth.{AntiForgeryChecker, GoogleAuthConfig}
-import play.api.http.HttpConfiguration
+import com.gu.googleauth.GoogleAuthConfig
 
-case class GoogleAuth(httpConfiguration: HttpConfiguration, currentHost: Option[String] = None) {
+case class GoogleAuth(currentHost: Option[String]) {
   val config = AdminConfiguration.oauthCredentials.flatMap { cred =>
     for {
       callback <- cred.authorizedOauthCallbacks.collectFirst {
@@ -18,8 +17,7 @@ case class GoogleAuth(httpConfiguration: HttpConfiguration, currentHost: Option[
         cred.oauthClientId, // The client ID from the dev console
         cred.oauthSecret, // The client secret from the dev console
         callback, // The redirect URL Google send users back to (must be the same as that configured in the developer console)
-        "guardian.co.uk", // Google App domain to restrict login,
-        antiForgeryChecker = AntiForgeryChecker.borrowSettingsFromPlay(httpConfiguration),
+        "guardian.co.uk", // Google App domain to restrict login
       )
     }
   }
@@ -29,3 +27,5 @@ case class GoogleAuth(httpConfiguration: HttpConfiguration, currentHost: Option[
       throw new RuntimeException("You must set up credentials for Google Auth")
     }
 }
+
+object GoogleAuth extends GoogleAuth(None)
