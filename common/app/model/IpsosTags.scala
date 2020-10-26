@@ -91,4 +91,8 @@ object IpsosTags {
     "jobs" -> "jobs", /* This may have to be mapped via url */
   )
 
+  def getScriptTag(): Option[String] = {
+    Some("Testing")
+  }
+
 }
