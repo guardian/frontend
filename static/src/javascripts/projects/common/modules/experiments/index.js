@@ -48,7 +48,7 @@ const bindEvents = () => {
     });
 
     bean.on($('.js-experiments-clear-ab')[0], 'click', () => {
-        storage.local.set('gu.experiments.ab', JSON.stringify([]));
+        storage.local.set('gu.experiments.ab', []);
         selectRadios();
     });
 
