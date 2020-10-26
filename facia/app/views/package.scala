@@ -14,7 +14,7 @@ object FrontsCleaner {
       CommercialComponentHigh(
         page.frontProperties.isPaidContent,
         page.isNetworkFront,
-        page.metadata.hasPageSkin(edition),
+        page.metadata.hasPageSkin(edition, request),
       ),
       CommercialMPUForFronts(),
     )

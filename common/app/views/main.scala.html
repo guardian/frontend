@@ -42,7 +42,7 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkin(edition, request)) {
             @fragments.commercial.pageSkin()
         }
 

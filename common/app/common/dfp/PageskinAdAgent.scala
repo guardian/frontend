@@ -4,6 +4,7 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues}
 import common.Edition
 import model.MetaData
+import play.api.mvc.RequestHeader
 
 trait PageskinAdAgent {
 
@@ -56,16 +57,17 @@ trait PageskinAdAgent {
   }
 
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
-  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
+  // If the sponsorship is targetting an adtest we also consider that the request URL includes the same adtest param
+  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition, request: RequestHeader): Boolean = {
     if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
-    } else false
-  }
-
-  // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
-  def hasPageSkinOrAdTestPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
-    if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
+      val adTestParam = request.getQueryString("adtest")
+      findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
+        if (sponsorship.targetsAdTest) {
+          sponsorship.adTestValue == adTestParam
+        } else {
+          true
+        },
+      )
     } else false
   }
 }
