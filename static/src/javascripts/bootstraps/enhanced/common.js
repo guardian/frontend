@@ -142,7 +142,7 @@ const cleanupLocalStorage = (): void => {
         'gu.recommendationsEnabled',
         'gu.abb3.exempt',
     ];
-    deprecatedKeys.forEach(storage.local.remove);
+    deprecatedKeys.forEach(key => storage.local.remove(key));
 };
 
 const updateHistory = (): void => {
