@@ -20,10 +20,12 @@ jest.mock('common/modules/experiments/ab', () => ({
     ]),
 }));
 
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => [{ count: 2, day: 1 }]),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(() => [{ count: 2, day: 1 }]),
+        },
+    }
 }));
 
 jest.mock('common/modules/identity/api', () => ({
@@ -53,7 +55,7 @@ jest.mock('lib/cookies', () => ({
 const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
     .isInABTestSynchronous;
 
-const fakeLocal: any = require('lib/storage').local;
+const fakeLocal: any = require('@guardian/libs').storage.local;
 
 const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
     .isUserLoggedIn;

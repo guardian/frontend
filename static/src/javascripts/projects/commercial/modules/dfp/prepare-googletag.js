@@ -3,10 +3,9 @@
 import qwery from 'qwery';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { loadScript } from '@guardian/libs';
+import { loadScript, storage } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
-import { session } from 'lib/storage';
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -52,9 +51,9 @@ const setDfpListeners = (): void => {
     pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 
     pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
-    if (session.isAvailable()) {
-        const pageViews = session.get('gu.commercial.pageViews') || 0;
-        session.set('gu.commercial.pageViews', pageViews + 1);
+    if (storage.session.isAvailable()) {
+        const pageViews = storage.session.get('gu.commercial.pageViews') || 0;
+        storage.session.set('gu.commercial.pageViews', pageViews + 1);
     }
 };
 

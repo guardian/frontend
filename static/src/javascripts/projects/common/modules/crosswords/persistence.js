@@ -1,6 +1,6 @@
 // @flow
 
-import { local as localStorage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 const localStorageKey = (id: string) => `crosswords.${id}`;
 
@@ -10,13 +10,13 @@ const saveGridState = (id: string, grid: Grid): boolean => {
     const entries = grid.map(row => row.map(cell => cell.value));
 
     try {
-        return localStorage.set(localStorageKey(id), entries);
+        return storage.local.set(localStorageKey(id), entries);
     } catch (e) {
         return false;
     }
 };
 
 const loadGridState = (id: string): Array<Array<string>> =>
-    localStorage.get(localStorageKey(id));
+    storage.local.get(localStorageKey(id));
 
 export { saveGridState, loadGridState };

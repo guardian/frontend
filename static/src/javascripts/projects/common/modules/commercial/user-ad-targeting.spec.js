@@ -1,5 +1,5 @@
 // @flow
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import {
     getUserFromApi as getUserFromApi_,
     getUserFromCookie as getUserFromCookie_,
@@ -12,7 +12,6 @@ import {
 const getUserFromApi: any = getUserFromApi_;
 const getUserFromCookie: any = getUserFromCookie_;
 
-jest.mock('lib/storage');
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn(),
     getUserFromApi: jest.fn(),
@@ -31,7 +30,7 @@ describe('User Ad Targeting', () => {
     });
 
     it('should only return segments when consent is true or null', () => {
-        local.set(userSegmentsKey, {
+        storage.local.set(userSegmentsKey, {
             userHash: 123,
             segments: 'something',
         });
@@ -41,7 +40,7 @@ describe('User Ad Targeting', () => {
     });
 
     it('should return user segments data from local storage', () => {
-        local.set(userSegmentsKey, {
+        storage.local.set(userSegmentsKey, {
             userHash: 123,
             segments: 'something',
         });
@@ -49,12 +48,12 @@ describe('User Ad Targeting', () => {
     });
 
     it('should remove user segments belonging to another user from local storage', () => {
-        local.set(userSegmentsKey, {
+        storage.local.set(userSegmentsKey, {
             userHash: 456,
             segments: 'anything',
         });
         expect(getUserSegments(true).length).toBe(0);
-        expect(local.get(userSegmentsKey)).toBeFalsy();
+        expect(storage.local.get(userSegmentsKey)).toBeFalsy();
     });
 
     it('should request user data from API and populate local storage', () => {
@@ -68,7 +67,7 @@ describe('User Ad Targeting', () => {
             })
         );
         requestUserSegmentsFromId();
-        expect(local.get(userSegmentsKey)).toMatchObject({
+        expect(storage.local.get(userSegmentsKey)).toMatchObject({
             segments: ['ab', 'cd'],
             userHash: 789,
         });

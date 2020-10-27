@@ -7,7 +7,7 @@ import {
     getViewport,
 } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import { onConsentChange } from '@guardian/consent-management-platform';
@@ -110,7 +110,7 @@ const abParam = (): Array<string> => {
 };
 
 const getVisitedValue = (): string => {
-    const visitCount: number = parseInt(local.getRaw('gu.alreadyVisited'), 10) || 0;
+    const visitCount: number = parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();

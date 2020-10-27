@@ -12,7 +12,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -84,7 +84,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
     }
 };
 
-const getVisitCount = (): number => parseInt(local.getRaw('gu.alreadyVisited'), 10) || 0;
+const getVisitCount = (): number => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
 const replaceCountryName = (text: string, countryName: ?string): string =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;

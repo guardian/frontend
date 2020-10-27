@@ -1,7 +1,7 @@
 // @flow
 import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import config from 'lib/config';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
@@ -174,7 +174,7 @@ export const setGatePageTargeting = (
 // in our case if this is the n-numbered article or higher the user has viewed then set the gate
 export const isNPageOrHigherPageView = (n: number = 2): boolean => {
     // get daily read article count array from local storage
-    const dailyArticleCount = local.get('gu.history.dailyArticleCount') || [];
+    const dailyArticleCount = storage.local.get('gu.history.dailyArticleCount') || [];
 
     // get the count from latest date, if it doesnt exist, set to 0
     const { count = 0 } = dailyArticleCount[0] || {};

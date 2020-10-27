@@ -7,7 +7,7 @@ import { cleanUp, addSessionCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
-import { local as localStorage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
@@ -142,7 +142,7 @@ const cleanupLocalStorage = (): void => {
         'gu.recommendationsEnabled',
         'gu.abb3.exempt',
     ];
-    deprecatedKeys.forEach(key => localStorage.remove(key));
+    deprecatedKeys.forEach(storage.local.remove);
 };
 
 const updateHistory = (): void => {
@@ -203,12 +203,12 @@ const checkIframe = (): void => {
 
 const normalise = (): void => {
     if (document.location.hash === '#nfn') {
-        localStorage.set('nfn', true);
+        storage.local.set('nfn', true);
     }
     if (document.location.hash === '#nnfn') {
-        localStorage.remove('nfn');
+        storage.local.remove('nfn');
     }
-    if (localStorage.get('nfn')) {
+    if (storage.local.get('nfn')) {
         import('common/modules/ui/normalise').then(({ go }) => {
             go();
         });

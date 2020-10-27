@@ -12,12 +12,14 @@ const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => 10), // gu.alreadyVisited
-        set: jest.fn(),
-        isAvailable: jest.fn(),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(() => 10), // gu.alreadyVisited
+            set: jest.fn(),
+            isAvailable: jest.fn(),
+        },
+    }
 }));
 jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
@@ -98,7 +100,7 @@ const FakeMessage: any = require('common/modules/ui/message').Message;
 const fakeConstructQuery: any = require('lib/url').constructQuery;
 const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
-const fakeGet: any = require('lib/storage').local.get;
+const fakeGet: any = require('@guardian/libs').storage.local.get;
 const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
     .pageShouldHideReaderRevenue;
 const fakeCanShowBannerSync: any = require('common/modules/commercial/contributions-utilities')

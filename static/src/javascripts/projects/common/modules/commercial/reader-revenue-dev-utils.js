@@ -11,7 +11,7 @@ import {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import {
     initMvtCookie,
     decrementMvtCookie,
@@ -90,7 +90,9 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     clearBannerHistory();
 
     // The banner only displays after a certain number of pageviews. So let's get there quick!
-    local.setRaw('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
+    storage.local.setRaw('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
+
+
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 

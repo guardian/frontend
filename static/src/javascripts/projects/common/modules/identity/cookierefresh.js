@@ -4,7 +4,7 @@ import {
     isUserLoggedIn,
     getUserFromApiWithRefreshedCookie,
 } from 'common/modules/identity/api';
-import { local as localStorage } from 'lib/storage';
+import { storage } from '@guardian/libs'
 
 const shouldRefreshCookie = (
     lastRefresh: ?number,
@@ -17,12 +17,12 @@ const shouldRefreshCookie = (
 const init = (): void => {
     const lastRefreshKey = 'identity.lastRefresh';
 
-    if (localStorage.isAvailable() && isUserLoggedIn()) {
+    if (storage.local.isAvailable() && isUserLoggedIn()) {
         const currentTime = new Date().getTime();
-        const lastRefresh = localStorage.get(lastRefreshKey);
+        const lastRefresh = storage.local.get(lastRefreshKey);
         if (shouldRefreshCookie(lastRefresh, currentTime)) {
             getUserFromApiWithRefreshedCookie();
-            localStorage.set(lastRefreshKey, currentTime);
+            storage.local.set(lastRefreshKey, currentTime);
         }
     }
 };
