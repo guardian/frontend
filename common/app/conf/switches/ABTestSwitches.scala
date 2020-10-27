@@ -108,7 +108,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r1",
+    "ab-liveblog-epic-design-test-r1b",
     "Test designs for the liveblog epic",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
