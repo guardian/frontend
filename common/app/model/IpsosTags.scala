@@ -3,7 +3,6 @@ package model
 object IpsosTags {
 
   /*
-   * The keys are taken from the section ID returned by CAPI unless otherwise stated
    *
    * https://www.theguardian.com/technology/motoring doesn't generate a section ID
    *
