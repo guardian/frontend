@@ -21,7 +21,7 @@ const copyGlobal: AcquisitionsEpicTemplateCopy = {
 
 const copyElectionNonUS: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
-        'Four more years of Donald Trump is a real possibility. America faces an epic choice in November and the result of the presidential election will have global repercussions for democracy, progress and solidarity for generations. Transatlantic ties, superpower relations and the climate emergency are all in the balance.',
+        'Four more years of Donald Trump would have serious consequences for the world. America faces an epic choice in November and the result of the presidential election will have global repercussions for democracy, progress and solidarity for generations. Transatlantic ties, superpower relations and the climate emergency are all in the balance.',
         'In these chaotic, perilous times, an independent, truth-seeking news organisation like the Guardian is essential. Free from commercial or political bias, we can report fearlessly on critical events like this, bringing you a clear, international perspective.',
         'Support from readers funds our work, motivating us to do better, investigate deeper, challenge more. It means we can keep our quality reporting open for everyone to read, and protects our independence for the long term. Every contribution, however big or small, makes a difference.',
         'Support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
@@ -51,8 +51,8 @@ const getCopy = (): AcquisitionsEpicTemplateCopy => {
 };
 
 export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
-    id: 'LiveblogEpicDesignTestR1',
-    campaignId: 'liveblog-epic-design-test-r1',
+    id: 'LiveblogEpicDesignTestR1b',
+    campaignId: 'liveblog-epic-design-test-r1b',
 
     geolocation,
     highPriority: false,
@@ -84,14 +84,7 @@ export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
             id: 'v1',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
-            template: liveBlogTemplate('liveblog-epic-test__v1'),
-            copy: buildEpicCopy(getCopy(), false, geolocation),
-        },
-        {
-            id: 'v2',
-            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
-            test: setupEpicInLiveblog,
-            template: liveBlogTemplate('liveblog-epic-test__v2'),
+            template: liveBlogTemplate('liveblog-epic-test__v1b'),
             copy: buildEpicCopy(getCopy(), false, geolocation),
         },
     ],

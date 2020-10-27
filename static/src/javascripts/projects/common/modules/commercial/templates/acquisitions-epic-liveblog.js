@@ -30,11 +30,11 @@ export const epicLiveBlogTemplate = ({
         </p>
         <div class="block-elements block-elements--no-byline">
             ${copy.paragraphs
-        .map(paragraph => `<p><em>${paragraph}</em></p>`)
+        .map(paragraph => `<p>${paragraph}</p>`)
         .join('')}
-            <p><em>${ctaTemplate(
+            <p>${ctaTemplate(
         supportURL,
         ctaText,
-    )}</em></p>
+    )}</p>
         </div>
     </div>`;
