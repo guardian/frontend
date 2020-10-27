@@ -10,6 +10,9 @@ import conf.switches.Switches.a9Switch
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
+import model.IpsosTags.{getScriptTag, getScriptTagForEdition}
+import play.twirl.api.Html
+import views.html.fragments.page.head.ipsosScript
 
 object JavaScriptPage {
 
@@ -69,6 +72,9 @@ object JavaScriptPage {
       case _                 => Map()
     }
 
+    val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
+    //val ipsosTag = ipsos.fold(Map[String, String]())(tag => Map(("ipsosTag", tag)))
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -86,6 +92,7 @@ object JavaScriptPage {
       ("cardStyle", JsString(cardStyle)),
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
+      ("ipsosTag", JsString(ipsos)),
     )
   }
 }

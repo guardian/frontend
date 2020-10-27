@@ -48,7 +48,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
 
   // Need to get front ID
 
-
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
     println(page.id)
@@ -65,7 +64,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
         fixIEReferenceErrors(),
         checkModuleSupport(),
         inlineJSBlocking(),
-        ipsosHtml,
       ),
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
