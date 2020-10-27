@@ -15,6 +15,8 @@ export const init = (): Promise<void> => {
     return Promise.resolve();
 };
 
+window.DotMetricsObj = undefined;
+
 function IpsosTagging() {
     console.log("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
