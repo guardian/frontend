@@ -250,8 +250,8 @@ final case class MetaData(
 
   private val fullAdUnitPath = AdUnitMaker.make(id, adUnitSuffix)
 
-  def hasPageSkin(edition: Edition, request: RequestHeader): Boolean =
-    DfpAgent.hasPageSkin(fullAdUnitPath, this, edition, request)
+  def hasPageSkin(request: RequestHeader): Boolean =
+    DfpAgent.hasPageSkin(fullAdUnitPath, this, request)
 
   def omitMPUsFromContainers(edition: Edition): Boolean =
     if (isPressedPage) {

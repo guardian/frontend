@@ -66,7 +66,7 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkin(Edition(request), request),
+        pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),

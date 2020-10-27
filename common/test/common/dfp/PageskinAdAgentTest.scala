@@ -19,7 +19,9 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     prebidIndexSites = None,
   )
 
-  val requestWithNoAdTestParam = FakeRequest(GET, "/uk")
+  val requestAU = FakeRequest(GET, "/au")
+  val requestUS = FakeRequest(GET, "/us")
+  val requestUK = FakeRequest(GET, "/uk")
   val requestWithAdTestParam = FakeRequest(GET, "/uk?adtest=6")
   val colourSeriesCommercial = CommercialProperties(
     editionBrandings = Set.empty,
@@ -160,8 +162,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/business/front",
       pressedFrontMeta,
-      Uk,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(true)
   }
 
@@ -169,8 +170,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/fake-series-adunit/new-view-series",
       colourSeriesMeta,
-      Uk,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(true)
   }
 
@@ -178,8 +178,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/business/front",
       pressedFrontMeta,
-      Au,
-      requestWithNoAdTestParam,
+      requestAU,
     ) should be(false)
   }
 
@@ -187,8 +186,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/culture/front",
       pressedFrontMeta,
-      defaultEdition,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(
       false,
     )
@@ -198,14 +196,12 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/music/front",
       pressedFrontMeta,
-      defaultEdition,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(false)
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/music/front",
       pressedFrontMeta,
-      Us,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(false)
   }
 
@@ -213,8 +209,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/sport",
       articleMeta,
-      defaultEdition,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(false)
   }
 
@@ -222,8 +217,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/sport-index",
       sportIndexFrontMeta,
-      defaultEdition,
-      requestWithNoAdTestParam,
+      requestUK,
     ) should be(
       true,
     )
@@ -233,7 +227,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     NotProductionTestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/testSport/front",
       pressedFrontMeta,
-      defaultEdition,
       requestWithAdTestParam,
     ) should be(true)
   }
@@ -242,7 +235,6 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     TestPageskinAdAgent.hasPageSkin(
       s"$dfpAdUnitGuRoot/testSport/front",
       pressedFrontMeta,
-      defaultEdition,
       requestWithAdTestParam,
     ) should be(
       true,

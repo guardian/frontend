@@ -29,7 +29,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
       CommercialComponentHigh(
         isPaidContent = false,
         isNetworkFront = false,
-        hasPageSkin = page.metadata.hasPageSkin(edition, request),
+        hasPageSkin = page.metadata.hasPageSkin(request),
       ),
     )
   }
@@ -85,7 +85,7 @@ object ContentHtmlPage extends HtmlPage[Page] {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkin(Edition(request), request),
+        pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),
