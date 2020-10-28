@@ -4,13 +4,13 @@ import config from 'lib/config';
 
 const IpsosTagging = function () {
     console.log("Ipsos tag fired");
-    // $FlowIgnore
+    // $FlowFixMe
     window.dm = window.dm ||{ AjaxData:[]};
-    // $FlowIgnore
+    // $FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
-        // $FlowIgnore
+        // $FlowFixMe
         dm.AjaxData.push({ et,d,ssid,ad});
-        // $FlowIgnore
+        // $FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     const d = document;
