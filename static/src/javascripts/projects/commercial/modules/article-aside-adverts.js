@@ -62,6 +62,7 @@ export const init = (): Promise<boolean> => {
             }
             // most articles are long enough to fit a DMPU. However, the occasional shorter article
             // will need the slot sizes to be adjusted, and the sticky behaviour removed.
+            // mark: 01303e88-ef1f-462d-9b6e-242419435cec
             if (mainColHeight < minArticleHeight) {
                 return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
