@@ -10,7 +10,12 @@ const IpsosTagging = function () {
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         dm.AjaxData.push({ et,d,ssid,ad});
-        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
+        try {
+            window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
+        }
+        catch(err) {
+            console.log(err.message);
+        }
     };
     const d = document;
     const h = d.getElementsByTagName('head')[0];
