@@ -2,6 +2,8 @@
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 
+let dm;
+let DotMetricsObj;
 const IpsosTagging = function () {
     /* eslint-disable no-eval */
     console.log("Ipsos tag fired");
