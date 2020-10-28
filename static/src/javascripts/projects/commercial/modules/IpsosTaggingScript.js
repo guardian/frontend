@@ -15,12 +15,15 @@ export const init = (): Promise<void> => {
     return Promise.resolve();
 };
 
+
+window.DotMetricsObj = undefined;
+
 function IpsosTagging() {
     console.log("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         dm.AjaxData.push({ et,d,ssid,ad});
-        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-use-before-define
+        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     let d = document,
         h = d.getElementsByTagName('head')[0],
