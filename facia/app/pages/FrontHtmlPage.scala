@@ -45,11 +45,8 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       override def IE9CriticalCss: Html = stylesheetLink(s"stylesheets/ie9.$ContentCSSFile.css")
     }
 
-  // Need to get front ID
-
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
-
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
