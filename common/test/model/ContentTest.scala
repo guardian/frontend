@@ -13,6 +13,8 @@ import org.scalatestplus.play.guice.GuiceOneAppPerSuite
 import views.support.JavaScriptPage
 import common.Edition
 import play.api.libs.json.JsBoolean
+import play.api.test.FakeRequest
+import play.api.test.Helpers.GET
 
 class ContentTest
     extends FlatSpec
@@ -63,6 +65,10 @@ class ContentTest
     trail.metadata.url should be("/foo/2012/jan/07/bar")
     trail.elements.mainPicture.flatMap(_.images.largestImage.flatMap(_.url)) should be(Some("http://www.foo.com/bar"))
   }
+
+  val requestWithNoAdTestParam = FakeRequest(GET, "/uk")
+  val requestWithAdTestParam = FakeRequest(GET, "/uk?adtest=6")
+  val noAdTestParam: Option[String] = None
 
   "Tags" should "understand tag types" in {
 
@@ -173,7 +179,7 @@ class ContentTest
     val content =
       Content(article.copy(webPublicationDate = dateBeforeCutoff, fields = Some(ContentFields(sensitive = Some(true)))))
     JavaScriptPage
-      .getMap(SimpleContentPage(content), edition, isPreview = false)
+      .getMap(SimpleContentPage(content), edition, isPreview = false, requestWithNoAdTestParam)
       .get("shouldHideReaderRevenue") should equal(Some(JsBoolean(true)))
   }
 
@@ -183,7 +189,7 @@ class ContentTest
       article.copy(webPublicationDate = dateBeforeCutoff, fields = Some(ContentFields(sensitive = Some(false)))),
     )
     JavaScriptPage
-      .getMap(SimpleContentPage(content), edition, isPreview = false)
+      .getMap(SimpleContentPage(content), edition, isPreview = false, requestWithNoAdTestParam)
       .get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
   }
 
@@ -196,7 +202,7 @@ class ContentTest
       ),
     )
     JavaScriptPage
-      .getMap(SimpleContentPage(content), edition, isPreview = false)
+      .getMap(SimpleContentPage(content), edition, isPreview = false, requestWithNoAdTestParam)
       .get("shouldHideReaderRevenue") should be(Some(JsBoolean(false)))
   }
 
@@ -209,7 +215,7 @@ class ContentTest
       ),
     )
     JavaScriptPage
-      .getMap(SimpleContentPage(content), edition, isPreview = false)
+      .getMap(SimpleContentPage(content), edition, isPreview = false, requestWithNoAdTestParam)
       .get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
@@ -222,7 +228,7 @@ class ContentTest
       ),
     )
     JavaScriptPage
-      .getMap(SimpleContentPage(content), edition, isPreview = false)
+      .getMap(SimpleContentPage(content), edition, isPreview = false, requestWithNoAdTestParam)
       .get("shouldHideReaderRevenue") should be(Some(JsBoolean(true)))
   }
 
@@ -236,7 +242,9 @@ class ContentTest
           tags = List(tag(s"tone/advertisement-features")),
         ),
       )
-    JavaScriptPage.getMap(SimpleContentPage(content), edition, false).get("shouldHideReaderRevenue") should be(
+    JavaScriptPage
+      .getMap(SimpleContentPage(content), edition, false, requestWithNoAdTestParam)
+      .get("shouldHideReaderRevenue") should be(
       Some(JsBoolean(true)),
     )
   }

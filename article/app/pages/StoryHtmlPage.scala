@@ -67,7 +67,7 @@ object StoryHtmlPage {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        pageSkin() when page.metadata.hasPageSkin(request),
         survey() when SurveySwitch.isSwitchedOn,
         header,
         mainContent(),

@@ -26,7 +26,7 @@ object IndexCleaner {
       CommercialComponentHigh(
         isPaidContent = false,
         isNetworkFront = false,
-        hasPageSkin = page.page.metadata.hasPageSkin(edition),
+        hasPageSkin = page.page.metadata.hasPageSkin(request),
       ),
       CommercialMPUForFronts(),
     )

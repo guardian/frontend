@@ -63,7 +63,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),

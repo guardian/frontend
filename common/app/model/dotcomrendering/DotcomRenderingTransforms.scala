@@ -280,7 +280,7 @@ object DotcomRenderingTransforms {
       frontendAssetsFullURL = Configuration.assets.fullURL(common.Environment.stage),
     )
 
-    val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false)
+    val jsPageConfig = JavaScriptPage.getMap(page, Edition(request), false, request)
     val combinedConfig = Json.toJsObject(config).deepMerge(JsObject(jsPageConfig))
     val calloutsUrl = combinedConfig.fields.toList
       .filter(entry => entry._1 == "calloutsUrl")
