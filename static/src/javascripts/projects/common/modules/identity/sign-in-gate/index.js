@@ -7,7 +7,6 @@ import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { signInGatePageview } from 'common/modules/experiments/tests/sign-in-gate-pageview';
 import { signInGatePageviewUs } from 'common/modules/experiments/tests/sign-in-gate-pageview-us';
-import { signInGatePersonalisedAdCopy } from 'common/modules/experiments/tests/sign-in-gate-personalised-ad-copy';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { withComponentId, componentName } from './component';
@@ -24,7 +23,6 @@ const tests = [
     signInGateMainControl,
     signInGatePageview,
     signInGatePageviewUs,
-    signInGatePersonalisedAdCopy,
 ];
 
 const canShow: () => Promise<boolean> = () =>
