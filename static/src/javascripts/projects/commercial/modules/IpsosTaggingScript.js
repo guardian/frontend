@@ -1,20 +1,5 @@
-// @flow
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
-
-// Need to change to correct consent vendor
-export const init = (): Promise<void> => {
-    console.log("Ipsos init");
-    onConsentChange(state => {
-        console.log(getConsentFor('a9', state));
-        if (getConsentFor('a9', state)) {
-            IpsosTagging();
-        }
-    });
-
-    return Promise.resolve();
-};
-
 
 function IpsosTagging() {
     console.log("Ipsos tag fired");
@@ -32,4 +17,17 @@ function IpsosTagging() {
     s.type = 'text/javascript';
     s.async = true;
     s.src = `https://uk-script.dotmetrics.net/door.js?d=${  document.location.host  }&t=${ config.get('page.ipsosTag', '')}`; h.appendChild(s);
+};
+
+// Need to change to correct consent vendor
+export const init = (): Promise<void> => {
+    console.log("Ipsos init");
+    onConsentChange(state => {
+        console.log(getConsentFor('a9', state));
+        if (getConsentFor('a9', state)) {
+            IpsosTagging();
+        }
+    });
+
+    return Promise.resolve();
 };
