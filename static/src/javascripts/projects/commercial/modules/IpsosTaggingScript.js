@@ -3,7 +3,9 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-let DotMetricsObj, dm;
+let DotMetricsObj;
+let dm;
+
 const IpsosTagging = function () {
 
     console.debug("Ipsos tag fired");
