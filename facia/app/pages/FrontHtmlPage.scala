@@ -50,9 +50,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
 
-    // val ipsosTag = getScriptTagForEdition(page.id)
-    // val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
-    // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,

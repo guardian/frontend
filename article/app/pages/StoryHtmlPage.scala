@@ -53,10 +53,6 @@ object StoryHtmlPage {
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive)),
     )
 
-    // val ipsosTag = getScriptTagForPage(page)
-    // val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
-    // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
-
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
@@ -68,7 +64,6 @@ object StoryHtmlPage {
         checkModuleSupport(),
         inlineJSBlocking(),
         htmlDcrCouldRender(pageWithStoryPackage, request),
-        /* ipsosHtml, */
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
