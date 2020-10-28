@@ -28,7 +28,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       CommercialComponentHigh(
         page.frontProperties.isPaidContent,
         page.isNetworkFront,
-        page.metadata.hasPageSkin(edition, request),
+        page.metadata.hasPageSkin(request),
       ),
       CommercialMPUForFronts(),
     )
