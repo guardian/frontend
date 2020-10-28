@@ -3,6 +3,7 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 
 const IpsosTagging = function () {
+    /* eslint-disable no-eval */
     console.log("Ipsos tag fired");
     // $FlowFixMe
     window.dm = window.dm ||{ AjaxData:[]}; // eslint-disable-line no-eval

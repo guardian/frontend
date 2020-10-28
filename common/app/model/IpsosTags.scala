@@ -115,7 +115,7 @@ object IpsosTags {
   }
 
   def getScriptTag(id: String): String = {
-    if (tags.contains(id)) return tags(id) else return ""
+    if (tags.contains(id)) return tags(id) else return "guardian"
   }
 
   /* Sport subsections (sport/boxing for example) do not get created by frontHtmlPage and this error is generated:

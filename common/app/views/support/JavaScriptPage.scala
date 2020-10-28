@@ -73,7 +73,6 @@ object JavaScriptPage {
     }
 
     val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
-    //val ipsosTag = ipsos.fold(Map[String, String]())(tag => Map(("ipsosTag", tag)))
 
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
