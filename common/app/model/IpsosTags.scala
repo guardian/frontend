@@ -117,7 +117,7 @@ object IpsosTags {
 
   // Default to top level `guardian` tag if key is not found
   def getScriptTag(id: String): String = {
-    if (tags.contains(id)) return tags(id) else return "guardian"
+    tags.getOrElse(id, "guardian")
   }
 
   def getScriptTagForEdition(edition: String): Option[String] = {
