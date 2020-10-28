@@ -6,12 +6,15 @@ const IpsosTagging = function () {
     /* eslint-disable no-eval */
     console.log("Ipsos tag fired");
     // $FlowFixMe
+    // $FlowFixMe[no-undef]
     window.dm = window.dm ||{ AjaxData:[]}; // eslint-disable-line no-eval
     // $FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         // $FlowFixMe
         dm.AjaxData.push({ et,d,ssid,ad}); // eslint-disable-line no-eval
         // $FlowFixMe
+        // $FlowFixMe[no-undef]
+        // $FlowFixMe[no-unused-expressions]
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-eval
     };
     const d = document;
