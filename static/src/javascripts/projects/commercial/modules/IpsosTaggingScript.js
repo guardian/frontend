@@ -10,8 +10,9 @@ const IpsosTagging = function () {
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         dm.AjaxData.push({ et,d,ssid,ad});
-        // eslint-disable-next-line no-unused-expressions
-        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
+        if (window.DotMetricsObj) {
+                DotMetricsObj.onAjaxDataUpdate();
+        }
     };
     const d = document;
     const h = d.getElementsByTagName('head')[0];
