@@ -12,7 +12,6 @@ import model._
 import play.api.libs.json._
 import model.IpsosTags.{getScriptTag}
 import play.twirl.api.Html
-import views.html.fragments.page.head.ipsosScript
 
 object JavaScriptPage {
 

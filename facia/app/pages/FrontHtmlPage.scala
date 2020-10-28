@@ -16,7 +16,6 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.stacked
 import html.HtmlPageHelpers.{ContentCSSFile, FaciaCSSFile}
-import model.IpsosTags.getScriptTagForEdition
 
 object FrontHtmlPage extends HtmlPage[PressedPage] {
 
@@ -50,9 +49,9 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
 
   def html(page: PressedPage)(implicit request: RequestHeader, applicationContext: ApplicationContext): Html = {
     implicit val p: PressedPage = page
-    println(page.id)
-    val ipsosTag = getScriptTagForEdition(page.id)
-    val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
+
+    // val ipsosTag = getScriptTagForEdition(page.id)
+    // val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
     // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
     htmlTag(
       headTag(

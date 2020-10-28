@@ -15,7 +15,7 @@ import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
 import html.HtmlPageHelpers.ContentCSSFile
-import model.IpsosTags.getScriptTagForPage
+// import model.IpsosTags.getScriptTagForPage
 import views.html.stacked
 import services.dotcomponents.ArticlePicker.{forall, primaryFeatures}
 
@@ -53,8 +53,8 @@ object StoryHtmlPage {
       ("is-immersive", Page.getContent(page).exists(_.content.isImmersive)),
     )
 
-    val ipsosTag = getScriptTagForPage(page)
-    val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
+    // val ipsosTag = getScriptTagForPage(page)
+    // val ipsosHtml = ipsosTag.fold(Html(""))(tag => ipsosScript(tag))
     // If the tag is not defined (meaning a None was returned by getScriptTag() then this is an empty piece of Html)
 
     htmlTag(
@@ -68,7 +68,7 @@ object StoryHtmlPage {
         checkModuleSupport(),
         inlineJSBlocking(),
         htmlDcrCouldRender(pageWithStoryPackage, request),
-        ipsosHtml,
+        /* ipsosHtml, */
       ),
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
