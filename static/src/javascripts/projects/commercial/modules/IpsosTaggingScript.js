@@ -2,12 +2,15 @@
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 
+// $FlowIssue[func-style]
 function IpsosTagging() {
     console.log("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     // $FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         // $FlowFixMe
+        // $FlowIgnore[no-undef]
+        // $FlowIgnore[prefer-const]
         dm.AjaxData.push({ et,d,ssid,ad});
         // $FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
