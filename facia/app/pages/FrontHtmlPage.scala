@@ -23,7 +23,6 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     import views.support.`package`.withJsoup
     import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts}
     val html: Html = frontBody(page)
-    val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(
         page.frontProperties.isPaidContent,
