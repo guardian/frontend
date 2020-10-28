@@ -19,11 +19,11 @@ export const init = (): Promise<void> => {
 function IpsosTagging() {
     console.log("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
-    //$$FlowExpectedError
+    //$$FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
-        //$$FlowExpectedError
+        //$$FlowFixMe
         dm.AjaxData.push({ et,d,ssid,ad});
-        //$$FlowExpectedError
+        //$$FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     let d = document,
