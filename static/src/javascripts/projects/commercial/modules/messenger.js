@@ -2,10 +2,6 @@
 import reportError from 'lib/report-error';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
-/* const ALLOWED_HOSTS = [
-    dfpOrigin,
-    `${window.location.protocol}//${window.location.host}`,
-]; */
 const LISTENERS = {};
 let REGISTERED_LISTENERS = 0;
 
@@ -104,10 +100,6 @@ const formatError = (error, ...args) =>
 
 const onMessage = (event: Event): void => {
     let data;
-    // We only allow communication with ads created by DFP
-    /* if (ALLOWED_HOSTS.indexOf(event.origin) < 0) {
-        return;
-    } */
 
     // #? This try-catch is a good target for splitting out into a seperate function
     try {
@@ -136,7 +128,6 @@ const onMessage = (event: Event): void => {
                 result,
             },
             event.source,
-            '*'
         );
     };
 
