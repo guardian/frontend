@@ -5,19 +5,12 @@ import config from 'lib/config';
 let dm;
 let DotMetricsObj;
 const IpsosTagging = function () {
-    /* eslint-disable no-eval */
+
     console.log("Ipsos tag fired");
-    // $FlowFixMe
-    // $FlowFixMe[no-undef]
-    window.dm = window.dm ||{ AjaxData:[]}; // eslint-disable-line no-eval
-    // $FlowFixMe
+    window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
-        // $FlowFixMe
-        dm.AjaxData.push({ et,d,ssid,ad}); // eslint-disable-line no-eval
-        // $FlowFixMe
-        // $FlowFixMe[no-undef]
-        // $FlowFixMe[no-unused-expressions]
-        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-eval
+        dm.AjaxData.push({ et,d,ssid,ad});
+        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     const d = document;
     const h = d.getElementsByTagName('head')[0];
