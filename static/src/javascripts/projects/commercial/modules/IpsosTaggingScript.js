@@ -5,13 +5,13 @@ import config from 'lib/config';
 const IpsosTagging = function () {
     console.log("Ipsos tag fired");
     // $FlowFixMe
-    window.dm = window.dm ||{ AjaxData:[]};
+    window.dm = window.dm ||{ AjaxData:[]}; // eslint-disable-line no-eval
     // $FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         // $FlowFixMe
-        dm.AjaxData.push({ et,d,ssid,ad});
+        dm.AjaxData.push({ et,d,ssid,ad}); // eslint-disable-line no-eval
         // $FlowFixMe
-        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
+        window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-eval
     };
     const d = document;
     const h = d.getElementsByTagName('head')[0];
