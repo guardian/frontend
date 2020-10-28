@@ -16,13 +16,13 @@ export const init = (): Promise<void> => {
 };
 
 
-window.DotMetricsObj = undefined;
-
 function IpsosTagging() {
     console.log("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
+        //$FlowFixMe
         dm.AjaxData.push({ et,d,ssid,ad});
+        //$FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     let d = document,
