@@ -9,10 +9,11 @@ import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
-import { cmp } from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getCookie } from 'lib/cookies';
 import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -40,6 +41,21 @@ const go = () => {
         const pubData: { browserId?: ?string, pageViewId?: ?string } =
             { browserId, pageViewId };
 
+
+        let recordedConsentTime = false;
+        onConsentChange(() => {
+            if (!recordedConsentTime) {
+                markTime('Consent acquired');
+                trackPerformance(
+                    'CMP init',
+                    'Consent acquired',
+                    'Time to get consent'
+                );
+                recordedConsentTime = true;
+            }
+        })
+
+        markTime('CMP init');
         if (config.get('tests.useAusCmpVariant') === 'variant') {
             cmp.init({ pubData, country: geolocationGetSync() });
         } else {
