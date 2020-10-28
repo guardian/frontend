@@ -7,6 +7,7 @@ import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
 import conf.switches.Switches.prebidSwitch
 import conf.switches.Switches.a9Switch
+import model.IpsosTags.{getScriptTag}
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
@@ -69,6 +70,8 @@ object JavaScriptPage {
       case _                 => Map()
     }
 
+    val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -86,6 +89,7 @@ object JavaScriptPage {
       ("cardStyle", JsString(cardStyle)),
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
+      ("ipsosTag", JsString(ipsos)),
     )
   }
 }
