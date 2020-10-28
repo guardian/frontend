@@ -3,7 +3,7 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 
 // $FlowFixMe
-function IpsosTagging() {
+const IpsosTagging = function () {
     console.log("Ipsos tag fired");
     // $FlowFixMe
     window.dm = window.dm ||{ AjaxData:[]};
