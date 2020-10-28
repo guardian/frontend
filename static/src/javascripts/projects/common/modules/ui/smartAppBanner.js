@@ -66,7 +66,7 @@ const canShow = (): Promise<boolean> =>
             isDevice() &&
             validImpressionCount() &&
             !hasUserAcknowledgedBanner(messageCode);
-        resolve(false); // Temporarily disabling this banner to measure performance metric impact
+        resolve(result && false); // Temporarily disabling this banner to measure performance metric impact
     });
 
 const show = (): Promise<boolean> =>
