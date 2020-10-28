@@ -14,9 +14,9 @@ function IpsosTagging() {
         // $FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
-    const d = document,
-        h = d.getElementsByTagName('head')[0],
-        s = d.createElement('script');
+    const d = document;
+    const h = d.getElementsByTagName('head')[0];
+    const s = d.createElement('script');
     s.type = 'text/javascript';
     s.async = true;
     s.src = `https://uk-script.dotmetrics.net/door.js?d=${  document.location.host  }&t=${ config.get('page.ipsosTag', '')}`; h.appendChild(s);
