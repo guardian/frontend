@@ -262,11 +262,9 @@ export const isInvalidTag = (include: Array<String> = []): boolean => {
 
     return invalidTags
         .filter(el => !include.includes(el))
-        .reduce((isTagInvalid, tag) => {
-            if (isTagInvalid) return true;
-            // look up window.guardian.config object in browser console
-            return config.get(`page.keywordIds`, "").split(',').includes(tag)
-        }, false);
+        .some((tag) => config.get(`page.keywordIds`, "")
+            .split(',')
+            .includes(tag));
 };
 
 // html event wrapper using bean
