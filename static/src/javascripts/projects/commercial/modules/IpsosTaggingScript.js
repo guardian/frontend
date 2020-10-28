@@ -14,7 +14,7 @@ function IpsosTagging() {
         // $FlowFixMe
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
-    let d = document,
+    const d = document,
         h = d.getElementsByTagName('head')[0],
         s = d.createElement('script');
     s.type = 'text/javascript';
