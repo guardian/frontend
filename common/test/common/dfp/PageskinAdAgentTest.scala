@@ -19,10 +19,10 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     prebidIndexSites = None,
   )
 
-  val requestAU = FakeRequest(GET, "/au")
-  val requestUS = FakeRequest(GET, "/us")
-  val requestUK = FakeRequest(GET, "/uk")
-  val requestWithAdTestParam = FakeRequest(GET, "/uk?adtest=6")
+  val requestAU = FakeRequest(GET, "/au?_edition=au")
+  val requestUS = FakeRequest(GET, "/us?_edition=us")
+  val requestUK = FakeRequest(GET, "/uk?_edition=uk")
+  val requestWithAdTestParam = FakeRequest(GET, "/uk?_edition=uk&adtest=6")
   val colourSeriesCommercial = CommercialProperties(
     editionBrandings = Set.empty,
     prebidIndexSites = None,
