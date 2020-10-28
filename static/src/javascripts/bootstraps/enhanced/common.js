@@ -7,7 +7,7 @@ import { cleanUp, addSessionCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
-import { local as localStorage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
@@ -44,7 +44,6 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -143,7 +142,7 @@ const cleanupLocalStorage = (): void => {
         'gu.recommendationsEnabled',
         'gu.abb3.exempt',
     ];
-    deprecatedKeys.forEach(key => localStorage.remove(key));
+    deprecatedKeys.forEach(key => storage.local.remove(key));
 };
 
 const updateHistory = (): void => {
@@ -204,12 +203,12 @@ const checkIframe = (): void => {
 
 const normalise = (): void => {
     if (document.location.hash === '#nfn') {
-        localStorage.set('nfn', true);
+        storage.local.set('nfn', true);
     }
     if (document.location.hash === '#nnfn') {
-        localStorage.remove('nfn');
+        storage.local.remove('nfn');
     }
-    if (localStorage.get('nfn')) {
+    if (storage.local.get('nfn')) {
         import('common/modules/ui/normalise').then(({ go }) => {
             go();
         });
@@ -286,7 +285,6 @@ const initialiseBanner = (): void => {
         signInGate,
         membershipBanner,
         readerRevenueBanner,
-        subscriptionBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,

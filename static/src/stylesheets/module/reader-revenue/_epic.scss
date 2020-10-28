@@ -254,3 +254,9 @@ div.contributions__secondary-button.contributions__secondary-button--epic {
         object-fit: cover;
     }
 }
+
+.block--content.is-epic {
+    &:not(.liveblog-epic-test__v1b) {
+        font-style: italic;
+    }
+}

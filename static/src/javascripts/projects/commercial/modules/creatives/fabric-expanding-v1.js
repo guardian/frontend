@@ -4,7 +4,7 @@ import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
 import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
@@ -118,16 +118,14 @@ class FabricExpandingV1 {
             const itemId = $('.ad-slot__content', this.adSlot).attr('id');
             const itemIdArray = itemId.split('/');
 
-            if (!local.get(`gu.commercial.expandable.${itemIdArray[1]}`)) {
+            if (!storage.local.get(`gu.commercial.expandable.${itemIdArray[1]}`)) {
                 // expires in 1 week
                 const week = 1000 * 60 * 60 * 24 * 7;
                 fastdom.mutate(() => {
-                    local.set(
+                    storage.local.set(
                         `gu.commercial.expandable.${itemIdArray[1]}`,
                         true,
-                        {
-                            expires: Date.now() + week,
-                        }
+                        Date.now() + week
                     );
                     this.$button.addClass('button-spin');
                     $('.ad-exp__open-chevron')

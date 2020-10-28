@@ -179,9 +179,6 @@ const buildBannerPayload = async () => {
         subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: geolocationGetSync(),
-        switches: {
-            remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
-        },
         weeklyArticleHistory: getWeeklyArticleHistory(),
         hasOptedOutOfArticleCount: !(await getArticleCountConsent())
     };

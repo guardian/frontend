@@ -1,7 +1,7 @@
 // @flow
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 const storageKey = 'gu.geolocation';
 const editionToGeolocationMap = {
@@ -11,7 +11,7 @@ const editionToGeolocationMap = {
 };
 const daysBeforeGeolocationRefresh = 10;
 
-const getFromStorage = (): string => storage.get(storageKey);
+const getFromStorage = (): string => storage.local.get(storageKey);
 
 const get = (): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -36,11 +36,13 @@ const get = (): Promise<string> =>
 
 const setGeolocation = (geolocation: string): void => {
     const currentDate = new Date();
-    storage.set(storageKey, geolocation, {
-        expires: currentDate.setDate(
+    storage.local.set(
+        storageKey,
+        geolocation,
+        currentDate.setDate(
             currentDate.getDate() + daysBeforeGeolocationRefresh
-        ),
-    });
+        )
+    );
 };
 
 const init = (): void => {

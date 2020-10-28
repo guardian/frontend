@@ -1,5 +1,5 @@
 // @flow
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
@@ -152,7 +152,7 @@ describe('Build Page Targeting', () => {
             },
         });
 
-        local.setRaw('gu.alreadyVisited', 0);
+        storage.local.setRaw('gu.alreadyVisited', 0);
 
         getSync.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
@@ -377,22 +377,22 @@ describe('Build Page Targeting', () => {
 
     describe('Already visited frequency', () => {
         it('can pass a value of five or less', () => {
-            local.setRaw('gu.alreadyVisited', 5);
+            storage.local.setRaw('gu.alreadyVisited', 5);
             expect(getPageTargeting().fr).toEqual('5');
         });
 
         it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
-            local.setRaw('gu.alreadyVisited', 18);
+            storage.local.setRaw('gu.alreadyVisited', 18);
             expect(getPageTargeting().fr).toEqual('16-19');
         });
 
         it('over thirty, includes it in the bucket "30plus"', () => {
-            local.setRaw('gu.alreadyVisited', 300);
+            storage.local.setRaw('gu.alreadyVisited', 300);
             expect(getPageTargeting().fr).toEqual('30plus');
         });
 
         it('passes a value of 0 if the value is not stored', () => {
-            local.remove('gu.alreadyVisited');
+            storage.local.remove('gu.alreadyVisited');
             expect(getPageTargeting().fr).toEqual('0');
         });
     });

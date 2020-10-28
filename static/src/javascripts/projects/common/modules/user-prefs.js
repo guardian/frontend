@@ -1,10 +1,6 @@
 // @flow
-import { local, session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
-const storage = {
-    local,
-    session,
-};
 const storagePrefix = 'gu.prefs.';
 const defaultOptions = {
     type: 'local',

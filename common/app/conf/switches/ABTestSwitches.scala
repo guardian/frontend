@@ -88,16 +88,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-personalised-ad-copy",
-    "Show sign in gate with and without copy about personalized advertising",
-    owners = Seq(Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-curated-container-test",
     "Tests an additional 'curated' onwards container below the article body.",
     owners = Seq(Owner.withGithub("nicl")),
@@ -108,7 +98,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r1",
+    "ab-liveblog-epic-design-test-r1b",
     "Test designs for the liveblog epic",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,

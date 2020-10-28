@@ -18,7 +18,7 @@
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { addEventListener } from 'lib/events';
@@ -231,8 +231,8 @@ const bootStandard = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = parseInt(storage.getRaw(key), 10) || 0;
-        storage.setRaw(key, alreadyVisited + 1);
+        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
+        storage.local.setRaw(key, alreadyVisited + 1);
     }
 
     if (

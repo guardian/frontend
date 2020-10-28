@@ -106,24 +106,6 @@ $gu-cta-height: 42px;
     margin-left: 8px;
 }
 
-.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__v1 {
-    .component-button--liveblog {
-        border: 1px solid $news-main;
-    }
-    background-color: $opinion-faded;
-}
-
-.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__v2 {
-    border-top-color: $highlight-main;
-    background-color: $brightness-93;
-
-    .component-button--liveblog {
-        background: $highlight-main;
-        border-color: $highlight-main;
-        color: $brightness-7;
-    }
-}
-
 .component-button--reminder-prompt {
     background-color: transparent;
     border-color: $brightness-7;

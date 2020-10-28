@@ -227,4 +227,6 @@
     background: none !important;
     top: auto !important;
     position: fixed !important;
+    max-height: 80vh;
+    overflow: auto;
 }

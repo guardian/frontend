@@ -5,7 +5,7 @@ import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import { showMyAccountIfNecessary } from './user-account';
@@ -446,9 +446,9 @@ const enhanceMenuToggles = (): void => {
     });
 };
 
-const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
+const getRecentSearch = (): ?string => storage.local.get(SEARCH_STORAGE_KEY);
 
-const clearRecentSearch = (): void => local.remove(SEARCH_STORAGE_KEY);
+const clearRecentSearch = (): void => storage.local.remove(SEARCH_STORAGE_KEY);
 
 const trackRecentSearch = (): void => {
     const recent = getRecentSearch();
@@ -463,7 +463,7 @@ const trackRecentSearch = (): void => {
     }
 };
 
-const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
+const saveSearchTerm = (term: string) => storage.local.set(SEARCH_STORAGE_KEY, term);
 
 const showMoreButton = (): void => {
     fastdom
