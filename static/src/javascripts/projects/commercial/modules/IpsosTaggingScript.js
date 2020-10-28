@@ -9,10 +9,10 @@ function IpsosTagging() {
     // $FlowFixMe
     window.dm.AjaxEvent = function(et, d, ssid, ad){
         // $FlowFixMe
-        // $FlowIgnore[no-undef]
-        // $FlowIgnore[prefer-const]
+        // $FlowFixMe[no-undef]
+        // $FlowFixMe[prefer-const]
         dm.AjaxData.push({ et,d,ssid,ad});
-        // $FlowFixMe
+        // $FlowFixMe[no-undef]
         window.DotMetricsObj && DotMetricsObj.onAjaxDataUpdate();
     };
     let d = document,
