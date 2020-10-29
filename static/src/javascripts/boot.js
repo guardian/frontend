@@ -45,18 +45,17 @@ const go = () => {
 
         // keep this in sync with src/web/components/App.tsx in frontend
         let recordedConsentTime = false;
-        cmp.willShowPrivacyMessage().then(willShow => {
-            onConsentChange(() => {
-                if (!recordedConsentTime) {
+        onConsentChange(() => {
+            if (!recordedConsentTime) {
+                recordedConsentTime = true;
+                cmp.willShowPrivacyMessage().then((willShow) => {
                     trackPerformance(
                         'consent',
                         'acquired',
-                        willShow ? 'new' : 'existing'
+                        willShow ? 'new' : 'existing',
                     );
-
-                    recordedConsentTime = true;
-                }
-            });
+                });
+            }
         });
 
         if (config.get('tests.useAusCmpVariant') === 'variant') {
