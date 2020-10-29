@@ -6,7 +6,7 @@ export const newsletterMerchUnit: ABTest = {
     expiry: '2020-12-01',
     author: 'Josh Buckland',
     description:
-        'Show a newsletter advert in the merchandising unit to 50% of ',
+        'Show a newsletter advert in the merchandising unit to 50% of users',
     audience: 1,
     audienceOffset: 0.0,
     successMeasure: 'We see increased engagement from users shown the Newsletters ad unit',
