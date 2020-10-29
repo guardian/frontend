@@ -56,8 +56,8 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
-        ampTag,
         titleTag(),
+        ampTag,
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
