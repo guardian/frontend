@@ -14,7 +14,7 @@ object DotcomRendering extends RenderingTier
 
 object ApplicationsDotcomRenderingInterface {
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
-    val isSpecialElection = ApplicationsSpecial2020Election.pathIsSpecialElection(path)
+    val isSpecialElection = ApplicationsSpecial2020Election.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
     val isExperiment = ActiveExperiments.isParticipating(NGInteractiveDCR)
     (isSpecialElection && isAmp, isExperiment) match {

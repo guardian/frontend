@@ -4,12 +4,12 @@ import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
 object ApplicationsSpecial2020Election {
-  val specialElectionPaths = List(
+  val specialHandlingPaths = List(
     "world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
     "world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
   )
-  def pathIsSpecialElection(path: String): Boolean = {
-    specialElectionPaths.contains(path)
+  def pathIsSpecialHanding(path: String): Boolean = {
+    specialHandlingPaths.contains(path)
   }
   def atomIdToCapiPath(atomId: String): String = {
     /*
