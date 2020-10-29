@@ -23,13 +23,23 @@ const IpsosTagging = function () {
 
 // Need to change to correct consent vendor
 export const init = (): Promise<void> => {
-    console.debug("Ipsos init");
+
+    // Initial testing only
+    if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3")
+    {
+        IpsosTagging();
+    }
+
+    /*
+
     onConsentChange(state => {
         console.log(getConsentFor('a9', state));
         if (getConsentFor('a9', state)) {
             IpsosTagging();
         }
     });
+
+     */
 
     return Promise.resolve();
 };
