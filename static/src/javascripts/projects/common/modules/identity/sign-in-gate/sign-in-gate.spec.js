@@ -151,7 +151,7 @@ describe('Sign in gate test', () => {
         });
 
         it('should return false if its a newsletter landing page', () => {
-            fakeConfig.get.mockReturnValueOnce("newsletters/newsletters,us-news/us-news,society/homelessness,society/housing");
+            fakeConfig.get.mockReturnValueOnce("info/newsletter-sign-up,us-news/us-news,society/homelessness,society/housing");
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });

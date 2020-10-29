@@ -219,8 +219,8 @@ describe('Sign In Gate Helper functions', () => {
     });
 
     describe("isInvalidTag('tag')", () => {
-        test("'newsletters/newsletters' article is invalid", () => {
-            fakeConfig.get.mockReturnValueOnce("newsletters/newsletters,us-news/us-news,society/homelessness,society/housing");
+        test("'info/newsletter-sign-up' article is invalid", () => {
+            fakeConfig.get.mockReturnValueOnce("info/newsletter-sign-up,us-news/us-news,society/homelessness,society/housing");
             expect(isInvalidTag()).toBe(true);
         });
 
