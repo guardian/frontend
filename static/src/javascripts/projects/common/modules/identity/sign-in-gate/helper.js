@@ -257,7 +257,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
 // add to the include parameter array if there are specific tags that should be included/overridden
 export const isInvalidTag = (include: Array<String> = []): boolean => {
     const invalidTags = [
-        'newsletters/newsletters'
+        'info/newsletter-sign-up'
     ];
 
     return invalidTags
