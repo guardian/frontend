@@ -26,7 +26,7 @@ object ApplicationsSpecial2020Election {
           // s"<link rel=\"amphtml\" href=\"https://amp.theguardian.com/${path}\">",
 
           // Going for another solution then
-          List("<link rel=\"amphtml\" href=\"https://amp.theguardian.com/", path, "\">").mkString(""),
+          Array("<link rel=\"amphtml\" href=\"https://amp.theguardian.com/", path, "\">").mkString(""),
         )
       }
       case _ => Html("")
