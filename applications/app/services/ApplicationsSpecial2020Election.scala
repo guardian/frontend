@@ -5,11 +5,19 @@ import play.twirl.api.Html
 
 object ApplicationsSpecial2020Election {
   val specialHandlingPaths = List(
-    "world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
-    "world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
+    "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
+    "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
   )
+  def ensureStartingForwardSlash(str: String): String = {
+    if (!str.startsWith("/")) ("/" + str) else str
+  }
   def pathIsSpecialHanding(path: String): Boolean = {
-    specialHandlingPaths.contains(path)
+    /*
+      We pass the path through `ensureStartingForwardSlash` because
+      when called from `ApplicationsDotcomRenderingInterface.getRenderingTier` it comes without starting slash, but
+      when called from `InteractiveHtmlPage.html` it comes with it.
+     */
+    specialHandlingPaths.contains(ensureStartingForwardSlash(path))
   }
   def atomIdToCapiPath(atomId: String): String = {
     /*
@@ -25,18 +33,12 @@ object ApplicationsSpecial2020Election {
   }
 
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {
-    ApplicationsDotcomRenderingInterface.getRenderingTier(path) match {
-      case Election2020Hack => {
-        Html(
-          // The following simple string interpolation wasn't compiling.
-          // (probable reason: Proximity of string interpolation and quote escaping.)
-          // s"<link rel=\"amphtml\" href=\"https://amp.theguardian.com/${path}\">",
-
-          // Going for another solution then
-          Array("<link rel=\"amphtml\" href=\"https://amp.theguardian.com/", path, "\">").mkString(""),
-        )
-      }
-      case _ => Html("")
+    if (ApplicationsSpecial2020Election.pathIsSpecialHanding(path)) {
+      Html(
+        s"""<link rel="amphtml" href="https://amp.theguardian.com${ensureStartingForwardSlash(path)}">""",
+      )
+    } else {
+      Html("")
     }
   }
 }
