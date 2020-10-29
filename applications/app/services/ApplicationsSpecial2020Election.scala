@@ -28,12 +28,7 @@ object ApplicationsSpecial2020Election {
     ApplicationsDotcomRenderingInterface.getRenderingTier(path) match {
       case Election2020Hack => {
         Html(
-          // The following simple string interpolation wasn't compiling.
-          // (probable reason: Proximity of string interpolation and quote escaping.)
-          // s"<link rel=\"amphtml\" href=\"https://amp.theguardian.com/${path}\">",
-
-          // Going for another solution then
-          Array("<link rel=\"amphtml\" href=\"https://amp.theguardian.com/", path, "\">").mkString(""),
+          s"""<link rel="amphtml" href="https://amp.theguardian.com/${path}">""",
         )
       }
       case _ => Html("")
