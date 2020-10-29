@@ -35,7 +35,7 @@ object ApplicationsSpecial2020Election {
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {
     if (ApplicationsSpecial2020Election.pathIsSpecialHanding(path)) {
       Html(
-        s"""<link rel="amphtml" href="https://amp.theguardian.com/${path}">""",
+        s"""<link rel="amphtml" href="https://amp.theguardian.com${ensureStartingForwardSlash(path)}">""",
       )
     } else {
       Html("")
