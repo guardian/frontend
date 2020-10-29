@@ -1,5 +1,5 @@
 // @flow
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+// import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
