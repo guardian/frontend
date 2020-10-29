@@ -70,9 +70,9 @@ trait ABTestSwitches {
     ABTests,
     "ab-curated-container-test",
     "Tests an additional 'curated' onwards container below the article body.",
-    owners = Seq(Owner.withGithub("nicl")),
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 2),
+    sellByDate = new LocalDate(2020, 11, 10),
     exposeClientSide = true,
   )
 
