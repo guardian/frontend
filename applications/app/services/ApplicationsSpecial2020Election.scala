@@ -15,7 +15,7 @@ object ApplicationsSpecial2020Election {
     /*
       We pass the path through `ensureStartingForwardSlash` because
       when called from `ApplicationsDotcomRenderingInterface.getRenderingTier` it comes without starting slash, but
-      when called from `ApplicationsSpecial2020Election.ampTagHtml` it comes with it.
+      when called from `InteractiveHtmlPage.html` it comes with it.
      */
     specialHandlingPaths.contains(ensureStartingForwardSlash(path))
   }
