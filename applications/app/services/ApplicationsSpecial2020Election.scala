@@ -9,11 +9,7 @@ object ApplicationsSpecial2020Election {
     "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
   )
   def ensureStartingForwardSlash(str: String): String = {
-    if (!str.startsWith("/")) {
-      "/" + str
-    } else {
-      str
-    }
+    if (!str.startsWith("/")) ("/" + str) else str
   }
   def pathIsSpecialHanding(path: String): Boolean = {
     /*
