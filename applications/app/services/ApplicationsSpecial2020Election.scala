@@ -3,6 +3,11 @@ package services
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
 
+// ApplicationsSpecial2020Election is a temporary object introduced for the special handling
+// of the US election Nov 2020 results election tracker, a ng-interactive page which we need an amp version of,
+// something that DCR doesn't yet know how to do. It's essentially the hack version of
+// ApplicationsDotcomRenderingInterface , which is not a (slower) work in progress.
+
 object ApplicationsSpecial2020Election {
   val specialHandlingPaths = List(
     "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
