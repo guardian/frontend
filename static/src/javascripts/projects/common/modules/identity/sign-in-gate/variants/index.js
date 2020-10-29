@@ -4,6 +4,7 @@ import type { SignInGateVariant } from '../types';
 // import { signInGateVariant as example } from './example';
 import { signInGateVariant as mainVariant } from './main/variant';
 import { signInGateVariant as mainControl } from './main/control';
+// TODO
 
 // to add a variant, first import the variant in the SignInGateVariant type, and then add to this exported array
 export const variants: Array<SignInGateVariant> = [

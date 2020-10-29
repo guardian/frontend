@@ -68,6 +68,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-design-opt",
+    "Compare 6 different gate design changes",
+    owners = Seq(Owner.withGithub("vlbee")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-curated-container-test",
     "Tests an additional 'curated' onwards container below the article body.",
     owners = Seq(Owner.withGithub("nicl")),
