@@ -7,6 +7,7 @@ import implicits.Requests._
 import model.liveblog.{
   AudioBlockElement,
   BlockElement,
+  CommentBlockElement,
   ContentAtomBlockElement,
   DocumentBlockElement,
   GuVideoBlockElement,
@@ -53,6 +54,7 @@ object ArticlePageChecks {
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
         case _: AudioBlockElement     => false
+        case _: CommentBlockElement   => false
         case _: DocumentBlockElement  => false
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
