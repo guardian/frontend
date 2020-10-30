@@ -1,5 +1,5 @@
 // @flow
-// import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
@@ -21,25 +21,17 @@ const IpsosTagging = function () {
     loadScript(ipsosSource, { id: 'ipsos', async: true, type: 'text/javascript' });
 };
 
-// Need to change to correct consent vendor
 export const init = (): Promise<void> => {
 
-    // Initial testing only
-    if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3")
-    {
-        IpsosTagging();
-    }
-
-    /*
-
-    onConsentChange(state => {
-        console.log(getConsentFor('a9', state));
-        if (getConsentFor('a9', state)) {
-            IpsosTagging();
-        }
-    });
-
-     */
+        onConsentChange(state => {
+            console.log(getConsentFor('ipsos', state));
+            // Initial testing only
+            if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3") {
+                if (getConsentFor('ipsos', state)) {
+                    IpsosTagging();
+                }
+            }
+        });
 
     return Promise.resolve();
 };
