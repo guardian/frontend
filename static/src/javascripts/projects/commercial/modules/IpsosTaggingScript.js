@@ -1,5 +1,5 @@
 // @flow
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+//import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
@@ -22,16 +22,15 @@ const IpsosTagging = function () {
 };
 
 // Need to change to correct consent vendor
-export const init = (): Promise<void> =>{
+export const init = (): Promise<void> => {
 
     // Initial testing only
-    /* if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3")
+    if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3")
     {
-        console.log("Href condition met");
         IpsosTagging();
     }
-    */
 
+    /*
 
     onConsentChange(state => {
         console.log(getConsentFor('5f745ab96f3aae0163740409', state));
@@ -40,7 +39,7 @@ export const init = (): Promise<void> =>{
         }
     });
 
-
+    */
 
     return Promise.resolve();
 };
