@@ -75,14 +75,4 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 11, 10),
     exposeClientSide = true,
   )
-
-  Switch(
-    ABTests,
-    "ab-liveblog-epic-design-test-r1b",
-    "Test designs for the liveblog epic",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
 }
