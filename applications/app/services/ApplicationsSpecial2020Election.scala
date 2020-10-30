@@ -25,7 +25,7 @@ object ApplicationsSpecial2020Election {
      */
     specialHandlingPaths.contains(ensureStartingForwardSlash(path))
   }
-  def atomIdToCapiPath(atomId: String): String = {
+  def defaultAtomIdToAmpAtomId(atomId: String): String = {
     /*
         This function transforms an atom id
           "interactives/2020/07/interactive-vaccine-tracker/default"
@@ -37,6 +37,20 @@ object ApplicationsSpecial2020Election {
           "atom/interactive/interactives/2020/11/us-election/prod/amp-page"
      */
     (Array("atom", "interactive") ++ atomId.split("/").dropRight(1) ++ Array("amp-page")).mkString("/")
+  }
+
+  def pathToAmpAtomId(path: String): Option[String] = {
+    /*
+        This version is a more limited, but much more robust version, of `defaultAtomIdToAmpAtomId`
+        In particular, it doesn't rely on a particular format for the atom ids, and instead
+        maps paths dirctly to capi query ids, which is fine since we essentially only want to support a couple of urls.
+     */
+    val map = Map(
+      "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
+      "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
+      "/us-news/ng-interactive/2020/nov/03/us-election-2020-live-results-donald-trump-joe-biden-who-won-presidential-republican-democrat" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
+    )
+    map.get(ensureStartingForwardSlash(path))
   }
 
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {

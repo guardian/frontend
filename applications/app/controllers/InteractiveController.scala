@@ -16,6 +16,7 @@ import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
 import services.ApplicationsSpecial2020Election
+import services.ApplicationsSpecial2020Election.pathToAmpAtomId
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -111,12 +112,7 @@ class InteractiveController(
           case Right(other) => RenderOtherStatus(other)
         }
       }
-      case Election2020Hack => {
-        lookup(path) flatMap {
-          case Left(something) => renderInteractivePageElection2020(something)
-          case Right(other)    => Future.successful(RenderOtherStatus(other))
-        }
-      }
+      case Election2020Hack => renderInteractivePageElection2020_v2(path)
       case DotcomRendering => {
         val remoteRenderer = DotcomRenderingService()
         val range = ArticleBlocks
@@ -146,10 +142,14 @@ class InteractiveController(
   // Election2020
 
   def renderInteractivePageElection2020(i: InteractivePage): Future[Result] = {
+    /*
+      This version takes the interactive page, extract the atom id and then make
+      another CAPI query (using a derived id) to retrieve the AMP version
+     */
     val atomIdOpt = i.item.content.atoms.flatMap(atoms => atoms.interactives.headOption.map(atom => atom.id))
     atomIdOpt match {
       case Some(atomId) => {
-        val capiLookupString = ApplicationsSpecial2020Election.atomIdToCapiPath(atomId)
+        val capiLookupString = ApplicationsSpecial2020Election.defaultAtomIdToAmpAtomId(atomId)
         val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
         response.map { response =>
           response.interactive match {
@@ -162,6 +162,28 @@ class InteractiveController(
         }
       }
       case None => Future.successful(Ok("error: b62cfee4-cdc6-4e13-b965-89d4bd313039"))
+    }
+  }
+
+  def renderInteractivePageElection2020_v2(path: String): Future[Result] = {
+    /*
+      This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
+     */
+    ApplicationsSpecial2020Election.pathToAmpAtomId(path) match {
+      case None =>
+        Future.successful(Ok("error: 5ce31f26-6dfe-4981-aad0-5d858e6dba8a (amp document not available at this path)"))
+      case Some(capiLookupString) => {
+        val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
+        response.map { response =>
+          response.interactive match {
+            case Some(i2) => {
+              val interactive = InteractiveAtom.make(i2)
+              Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
+            }
+            case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
+          }
+        }
+      }
     }
   }
 
