@@ -159,6 +159,25 @@ const buildEpicPayload = async () => {
     };
 };
 
+export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
+const twentyMins = 20*60000;
+
+export const withinLocalNoBannerCachePeriod = (): boolean => {
+    const item = window.localStorage.getItem(NO_RR_BANNER_TIMESTAMP_KEY);
+    if (item && !Number.isNaN(parseInt(item, 10))) {
+        const withinCachePeriod = (parseInt(item, 10) + twentyMins) > Date.now();
+        if (!withinCachePeriod) {
+            // Expired
+            window.localStorage.removeItem(NO_RR_BANNER_TIMESTAMP_KEY);
+        }
+        return withinCachePeriod;
+    }
+    return false;
+};
+
+export const setLocalNoBannerCachePeriod = (): void =>
+    window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
+
 const buildBannerPayload = async () => {
     const page = config.get('page');
 
@@ -266,18 +285,30 @@ const renderEpic = async (module, meta): Promise<void> => {
     );
 };
 
-export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
-    const asyncPayload = buildBannerPayload();
+export const fetchBannerData: () => Promise<?BannerDataResponse> = async () => {
+    const payload = await buildBannerPayload();
 
-    return asyncPayload
-        .then(payload => getStickyBottomBanner(payload))
-        .then(json => {
-            if (!json.data) {
-                return null;
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return Promise.resolve(null);
+    }
+
+    if (payload.targeting.engagementBannerLastClosedAt &&
+        payload.targeting.subscriptionBannerLastClosedAt &&
+        withinLocalNoBannerCachePeriod()
+    ) {
+        return Promise.resolve(null);
+    }
+
+    return getStickyBottomBanner(payload).then(json => {
+        if (!json.data) {
+            if (payload.targeting.engagementBannerLastClosedAt && payload.targeting.subscriptionBannerLastClosedAt) {
+                setLocalNoBannerCachePeriod();
             }
+            return null;
+        }
 
-            return (json: BannerDataResponse);
-        });
+        return (json: BannerDataResponse);
+    });
 };
 
 export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
