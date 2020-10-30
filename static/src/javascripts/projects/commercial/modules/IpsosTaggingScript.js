@@ -3,10 +3,7 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-let DotMetricsObj;
-let dm;
-
-const IpsosTagging = function () {
+const loadIpsosScript = function () {
 
     console.debug("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
@@ -28,7 +25,7 @@ export const init = (): Promise<void> => {
             // Initial testing only
             if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3") {
                 if (getConsentFor('ipsos', state)) {
-                    IpsosTagging();
+                    loadIpsosScript();
                 }
             }
         });
