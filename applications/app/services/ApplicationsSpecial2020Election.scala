@@ -10,8 +10,9 @@ import play.twirl.api.Html
 
 object ApplicationsSpecial2020Election {
   val specialHandlingPaths = List(
-    "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
-    "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready",
+    "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready", // test 1
+    "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready", // test 2
+    "/us-news/ng-interactive/2020/nov/03/us-election-2020-live-results-donald-trump-joe-biden-who-won-presidential-republican-democrat", // US election tracker
   )
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
@@ -31,8 +32,9 @@ object ApplicationsSpecial2020Election {
         into the corresponding amp capi query path
           "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page"
 
-        I realise that this code is a little bit fragile, hopefully we will double check beforehand
-        that the logic still applies for the election result tracker.
+        Election tracker:
+          "interactives/2020/11/us-election/prod/default" (expected, to be confirmed)
+          "atom/interactive/interactives/2020/11/us-election/prod/amp-page"
      */
     (Array("atom", "interactive") ++ atomId.split("/").dropRight(1) ++ Array("amp-page")).mkString("/")
   }
