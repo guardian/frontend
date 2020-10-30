@@ -36,26 +36,29 @@ const go = () => {
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid') || undefined;;
+        const browserId: ?string = getCookie('bwid') || undefined;
         const pageViewId: ?string = config.get('ophan.pageViewId');
-        const pubData: { browserId?: ?string, pageViewId?: ?string } =
-            { browserId, pageViewId };
+        const pubData: { browserId?: ?string, pageViewId?: ?string } = {
+            browserId,
+            pageViewId,
+        };
 
-
+        // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
+        // mark: CONSENT_TIMING
         let recordedConsentTime = false;
         onConsentChange(() => {
             if (!recordedConsentTime) {
-                markTime('Consent acquired');
-                trackPerformance(
-                    'CMP init',
-                    'Consent acquired',
-                    'Time to get consent'
-                );
                 recordedConsentTime = true;
+                cmp.willShowPrivacyMessage().then((willShow) => {
+                    trackPerformance(
+                        'consent',
+                        'acquired',
+                        willShow ? 'new' : 'existing',
+                    );
+                });
             }
-        })
+        });
 
-        markTime('CMP init');
         if (config.get('tests.useAusCmpVariant') === 'variant') {
             cmp.init({ pubData, country: geolocationGetSync() });
         } else {
