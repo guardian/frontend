@@ -6,7 +6,7 @@ import play.twirl.api.Html
 // ApplicationsSpecial2020Election is a temporary object introduced for the special handling
 // of the US election Nov 2020 results election tracker, a ng-interactive page which we need an amp version of,
 // something that DCR doesn't yet know how to do. It's essentially the hack version of
-// ApplicationsDotcomRenderingInterface , which is not a (slower) work in progress.
+// ApplicationsDotcomRenderingInterface , which is not ready ; a (slower) work in progress.
 
 object ApplicationsSpecial2020Election {
   val specialHandlingPaths = List(
@@ -26,7 +26,7 @@ object ApplicationsSpecial2020Election {
   }
   def atomIdToCapiPath(atomId: String): String = {
     /*
-        This function transforms and atom id
+        This function transforms an atom id
           "interactives/2020/07/interactive-vaccine-tracker/default"
         into the corresponding amp capi query path
           "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page"
