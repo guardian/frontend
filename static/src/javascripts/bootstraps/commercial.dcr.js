@@ -20,6 +20,7 @@ import { init as initStickyTopBanner } from 'commercial/modules/sticky-top-banne
 import { init as initThirdPartyTags } from 'commercial/modules/third-party-tags';
 import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
+import { init as initIpsosMori } from 'commercial/modules/ipsosTaggingScript';
 import { paidContainers } from 'commercial/modules/paid-containers';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -31,6 +32,7 @@ const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-comscore', initComscore],
+    ['cm-ipsosmori', initIpsosMori],
 ];
 
 if (!commercialFeatures.adFree) {
