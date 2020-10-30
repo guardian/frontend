@@ -8,8 +8,10 @@ const loadIpsosScript = function () {
     console.debug("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
+        // eslint-disable-next-line no-undef
         dm.AjaxData.push({ et,d,ssid,ad});
         if (window.DotMetricsObj) {
+                // eslint-disable-next-line no-undef
                 DotMetricsObj.onAjaxDataUpdate();
         }
     };
