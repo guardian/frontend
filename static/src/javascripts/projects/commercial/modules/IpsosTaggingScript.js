@@ -33,13 +33,13 @@ export const init = (): Promise<void> => {
     /*
 
     onConsentChange(state => {
-        console.log(getConsentFor('5f745ab96f3aae0163740409', state));
-        if (getConsentFor('5f745ab96f3aae0163740409', state)) {
+        console.log(getConsentFor('a9', state));
+        if (getConsentFor('a9', state)) {
             IpsosTagging();
         }
     });
 
-    */
+     */
 
     return Promise.resolve();
 };
