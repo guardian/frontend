@@ -3,17 +3,16 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
+let dm;
+let DotMetricsObj;
+
 const loadIpsosScript = function () {
 
     console.debug("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
-        // $FlowIgnore
-        // eslint-disable-next-line no-undef
         dm.AjaxData.push({ et,d,ssid,ad});
         if (window.DotMetricsObj) {
-                // $FlowIgnore
-                // eslint-disable-next-line no-undef
                 DotMetricsObj.onAjaxDataUpdate();
         }
     };
@@ -25,8 +24,8 @@ const loadIpsosScript = function () {
 export const init = (): Promise<void> => {
 
         onConsentChange(state => {
-            console.log(getConsentFor('ipsos', state));
             // Initial testing only
+            console.log(getConsentFor('ipsos', state));
             if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3") {
                 if (getConsentFor('ipsos', state)) {
                     loadIpsosScript();
