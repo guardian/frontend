@@ -3,17 +3,16 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-let dm;
-let DotMetricsObj;
-
 const loadIpsosScript = function () {
 
     console.debug("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
     window.dm.AjaxEvent = function(et, d, ssid, ad){
-        dm.AjaxData.push({ et,d,ssid,ad});
+        // $FlowFixMe
+        dm.AjaxData.push({ et,d,ssid,ad}); // eslint-disable-line no-undef
         if (window.DotMetricsObj) {
-                DotMetricsObj.onAjaxDataUpdate();
+                // $FlowFixMe
+                DotMetricsObj.onAjaxDataUpdate(); // eslint-disable-line no-undef
         }
     };
     const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${  document.location.host  }&t=${ config.get('page.ipsosTag')}`;
