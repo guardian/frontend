@@ -3,7 +3,7 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-const allowSections = ["lifeandstyle", "food", "travel", "sport"];
+const allowSections = ["lifeandstyle", "food", "travel", "sport"]; // eslint-disable-line no-unused-vars
 
 const loadIpsosScript = function () {
 
