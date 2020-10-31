@@ -3,6 +3,8 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
+const allowSections = ["lifeandstyle", "food", "travel", "sport"];
+
 const loadIpsosScript = function () {
 
     console.debug("Ipsos tag fired");
@@ -25,12 +27,10 @@ export const init = (): Promise<void> => {
         onConsentChange(state => {
             // Initial testing only
             console.log(getConsentFor('ipsos', state));
-            if(document.location.pathname === "/science/grrlscientist/2012/aug/07/3")
-                {
-                    if (getConsentFor('ipsos', state))
-                    {
-                        loadIpsosScript();
-                    }
+            if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3" || document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3?dcr=true") {
+                if (getConsentFor('ipsos', state)) {
+                    loadIpsosScript();
+                }
             }
         });
 
