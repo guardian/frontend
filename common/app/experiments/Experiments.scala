@@ -12,7 +12,6 @@ object ActiveExperiments extends ExperimentsDefinition {
     DotcomRendering,
     DCRBubble,
     NGInteractiveDCR,
-    NewsletterEmbedDesign,
     UseAusCmp,
   )
 
