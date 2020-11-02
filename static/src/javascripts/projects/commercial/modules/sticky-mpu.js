@@ -82,9 +82,6 @@ const stickyMpu = (adSlot: HTMLElement) => {
         .measure(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
             fastdom.mutate(() => {
-                console.log("referenceElement.offsetTop", referenceElement.offsetTop);
-                console.log("adSlot.parentNode", adSlot.parentNode);
-                console.log(`**** resize height for : ${adSlot.parentNode} to ${newHeight}px`);
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;
             })
         )
