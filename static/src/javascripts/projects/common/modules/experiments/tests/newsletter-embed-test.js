@@ -22,13 +22,21 @@ export const newsletterEmbeds: ABTest = {
         {
             id: 'variant',
             test: (): void => {
-                const iframes = document.querySelectorAll('.email-sub__iframe')
+                const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
                 iframes.forEach(
                     (ifrm) => {
-                        ifrm.setAttribute("height", "224px")
-                        const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                        doc.querySelector('.js-ab-embed-old-design').classList.add("hide-element")
-                        doc.querySelector('.js-ab-embed-new-design').classList.remove("hide-element")
+                        const ifrmElement = (ifrm: HTMLIFrameElement)
+                        ifrmElement.setAttribute("height", "224px")
+                        const doc = ifrmElement.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
+                        if (doc) {
+                            const oldDesign = doc.querySelector('.js-ab-embed-old-design');
+                            const newDesign = doc.querySelector('.js-ab-embed-new-design');
+                            if (oldDesign && newDesign) {
+                                oldDesign.classList.add("hide-element")
+                                newDesign.classList.remove("hide-element")
+
+                            }
+                        }
                     })
             },
         },
