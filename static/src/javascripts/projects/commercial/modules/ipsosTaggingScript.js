@@ -3,7 +3,25 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-const allowSections = ["lifeandstyle", "food", "travel", "sport"]; // eslint-disable-line no-unused-vars
+/* Sections to be included in initial release of Ipsos Mori tagging */
+const allowSections = [
+    "lifeandstyle", /* Lifestyle sections */
+    "fashion",
+    "food",
+    "travel",
+    "fashion",
+    "money",
+    "technology",
+    "culture", /* Culture sections */
+    "film",
+    "music",
+    "tv-and-radio",
+    "books",
+    "artanddesign",
+    "stage",
+    "games",
+    "sport", /* Sport sections */
+    "football",];
 
 const loadIpsosScript = function () {
 
@@ -25,10 +43,9 @@ const loadIpsosScript = function () {
 export const init = (): Promise<void> => {
 
         onConsentChange(state => {
-            // Initial testing only
-            console.log(getConsentFor('ipsos', state));
-            if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3" || document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3?dcr=true") {
-                if (getConsentFor('ipsos', state)) {
+            if (getConsentFor('ipsos', state))
+            {
+                if(allowSections.includes(config.get('page.section'))) {
                     loadIpsosScript();
                 }
             }
@@ -36,5 +53,4 @@ export const init = (): Promise<void> => {
 
     return Promise.resolve();
 };
-
 
