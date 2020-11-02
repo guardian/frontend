@@ -25,7 +25,7 @@ export const init = (): Promise<void> => {
         onConsentChange(state => {
             // Initial testing only
             console.log(getConsentFor('ipsos', state));
-            if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3") {
+            if(document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3" || document.location.href === "https://www.theguardian.com/science/grrlscientist/2012/aug/07/3?dcr=true") {
                 if (getConsentFor('ipsos', state)) {
                     loadIpsosScript();
                 }
