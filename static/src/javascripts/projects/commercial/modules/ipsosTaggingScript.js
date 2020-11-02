@@ -26,10 +26,12 @@ export const init = (): Promise<void> => {
             // Initial testing only
             console.log(getConsentFor('ipsos', state));
             // $FlowFixMe
-            if(location.pathname === "/science/grrlscientist/2012/aug/07/3" || location.pathname === "/science/grrlscientist/2012/aug/07/3?dcr=true") // eslint-disable-line no-restricted-globals {
-                if (getConsentFor('ipsos', state)) {
-                    loadIpsosScript();
-                }
+            if(location.pathname === "/science/grrlscientist/2012/aug/07/3" || location.pathname === "/science/grrlscientist/2012/aug/07/3?dcr=true") // eslint-disable-line no-restricted-globals
+                {
+                    if (getConsentFor('ipsos', state))
+                    {
+                        loadIpsosScript();
+                    }
             }
         });
 
