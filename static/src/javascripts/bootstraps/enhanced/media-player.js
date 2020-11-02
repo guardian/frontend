@@ -204,12 +204,12 @@ const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
                             // built in vjs-user-active is buggy so using custom implementation
                             player.on('mousemove', () => {
                                 clearTimeout(mouseMoveIdle);
-                                fastdom.write(() => {
+                                fastdom.mutate(() => {
                                     player.addClass('vjs-mousemoved');
                                 });
 
                                 mouseMoveIdle = setTimeout(() => {
-                                    fastdom.write(() => {
+                                    fastdom.mutate(() => {
                                         player.removeClass('vjs-mousemoved');
                                     });
                                 }, 500);
@@ -234,7 +234,7 @@ const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
 };
 
 const initPlayButtons = (root: ?HTMLElement): void => {
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
             bean.on(el, 'click', () => {
@@ -244,7 +244,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
                 const placeholder = $('.js-video-placeholder', container);
                 const player = $('.js-video-player', container);
 
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     placeholder
                         .removeClass('media__placeholder--active')
                         .addClass('media__placeholder--hidden');
@@ -257,7 +257,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
                     enhanceVideo($('video', player).get(0), true);
                 });
             });
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $el.removeClass('media__placeholder--hidden').addClass(
                     'media__placeholder--active'
                 );
@@ -269,7 +269,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
 const initPlayer = (): void => {
     videojs.plugin('fullscreener', fullscreener);
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-gu-media--enhance').each(el => {
             enhanceVideo(el, false);
         });

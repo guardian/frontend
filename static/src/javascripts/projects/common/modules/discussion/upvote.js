@@ -39,7 +39,7 @@ const showSignInTooltip = (target: Element): Promise<void> => {
 
     const links = tooltip.querySelectorAll('.js-rec-tooltip-link');
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         updateReturnUrl(links, target.getAttribute('data-comment-url'));
         tooltip.removeAttribute('hidden');
         target.appendChild(tooltip);
@@ -50,19 +50,19 @@ const isOpenForRecommendations = (element: ?Element): boolean =>
     !!element && !!element.querySelector('.d-discussion--recommendations-open');
 
 const setClicked = (target: Element): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         target.classList.remove(RECOMMENDATION_CLASS);
         target.classList.add('d-comment__recommend--clicked');
     });
 
 const unsetClicked = (target: Element): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         target.classList.add(RECOMMENDATION_CLASS);
         target.classList.remove('d-comment__recommend--clicked');
     });
 
 const setRecommended = (target: Element): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         target.classList.add('d-comment__recommend--recommended');
     });
 
@@ -102,7 +102,7 @@ const handle = (
 };
 
 const closeTooltip = (): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         const tooltip = document.querySelector(`.${TOOLTIP_CLASS}`);
 
         if (tooltip) {

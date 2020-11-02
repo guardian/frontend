@@ -3,11 +3,10 @@
 import qwery from 'qwery';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { loadScript } from 'lib/load-script';
+import { loadScript, storage } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
-import { session } from 'lib/storage';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -24,6 +23,7 @@ import { init as background } from 'commercial/modules/messenger/background';
 import { init as sendClick } from 'commercial/modules/messenger/click';
 import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
 import { init as initGetPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
+import { init as initGetPageUrl } from 'commercial/modules/messenger/get-page-url';
 import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import { init as hide } from 'commercial/modules/messenger/hide';
 import { init as resize } from 'commercial/modules/messenger/resize';
@@ -35,6 +35,7 @@ initMessenger(
     type,
     getStyles,
     initGetPageTargeting,
+    initGetPageUrl,
     resize,
     hide,
     scroll,
@@ -44,8 +45,6 @@ initMessenger(
     disableRefresh
 );
 
-const SOURCEPOINT_ID: string = '5f1aada6b8e05c306c0597d7';
-
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
@@ -54,9 +53,9 @@ const setDfpListeners = (): void => {
     pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 
     pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
-    if (session.isAvailable()) {
-        const pageViews = session.get('gu.commercial.pageViews') || 0;
-        session.set('gu.commercial.pageViews', pageViews + 1);
+    if (storage.session.isAvailable()) {
+        const pageViews = storage.session.get('gu.commercial.pageViews') || 0;
+        storage.session.set('gu.commercial.pageViews', pageViews + 1);
     }
 };
 
@@ -76,7 +75,7 @@ const removeAdSlots = (): Promise<void> => {
     // Get all ad slots
     const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
 
-    return fastdom.write(() =>
+    return fastdom.mutate(() =>
         adSlots.forEach((adSlot: Element) => adSlot.remove())
     );
 };
@@ -120,10 +119,7 @@ export const init = (): Promise<void> => {
                     npaFlag =
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
-                    canRun = state.tcfv2.vendorConsents[SOURCEPOINT_ID];
-                } else {
-                    // TCFv1 mode
-                    npaFlag = Object.values(state).includes(false);
+                    canRun = getConsentFor('googletag', state);
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag

@@ -27,23 +27,23 @@ object ProjectSettings {
       "-encoding",
       "utf8",
       "-feature",
-      "-Xfatal-warnings"
+      "-Xfatal-warnings",
     ),
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile, doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    scalaVersion := "2.12.7",
+    scalaVersion := "2.12.12",
     initialize := {
       val _ = initialize.value
       assert(
         sys.props("java.specification.version") == "1.8",
-        "Java 8 is required for this project."
+        "Java 8 is required for this project.",
       )
     },
     cleanAll := Def.taskDyn {
       val allProjects = ScopeFilter(inAnyProject)
       clean.all(allProjects)
-    }.value
+    }.value,
   )
 
   val frontendDependencyManagementSettings = Seq(
@@ -58,12 +58,12 @@ object ProjectSettings {
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/",
-      "emueller-bintray" at "http://dl.bintray.com/emueller/maven"
+      "emueller-bintray" at "http://dl.bintray.com/emueller/maven",
     ),
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
       .withWarnDirectEvictions(false)
-      .withWarnScalaVersionEviction(false)
+      .withWarnScalaVersionEviction(false),
   )
 
   val frontendTestSettings = Seq(
@@ -75,7 +75,7 @@ object ProjectSettings {
     libraryDependencies ++= Seq(
       scalaTest,
       scalaTestPlus,
-      mockito
+      mockito,
     ),
     // These settings are needed for forking, which in turn is needed for concurrent restrictions.
     javaOptions in Test += "-DAPP_SECRET=this_is_not_a_real_secret_just_for_tests",
@@ -85,7 +85,7 @@ object ProjectSettings {
     baseDirectory in Test := file("."),
     // Set testResultLogger back to the default, fixes an issue with `sbt-teamcity-logger`
     //   See: https://github.com/JetBrains/sbt-tc-logger/issues/9
-    testResultLogger in (Test, test) := TestResultLogger.Default
+    testResultLogger in (Test, test) := TestResultLogger.Default,
   )
 
   val testAll = taskKey[Unit]("test all aggregate projects")
@@ -112,7 +112,7 @@ object ProjectSettings {
               upload.toTask
           }
         })
-        .value
+        .value,
     )
 
   def root(): Project =

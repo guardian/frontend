@@ -4,7 +4,7 @@ import { submitClickEvent } from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
 import { addCookie } from "lib/cookies";
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import reportError from "lib/report-error";
 
 type ArticlesViewedTooltipElements = {
@@ -91,8 +91,8 @@ const setupHandlers = (elements: ArticlesViewedTooltipElements) => {
 
         // Stop counting and clear the user's history
         addCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name, new Date().getTime().toString(), ARTICLES_VIEWED_OPT_OUT_COOKIE.daysToLive);
-        local.remove(storageKeyWeeklyArticleCount);
-        local.remove(storageKeyDailyArticleCount);
+        storage.local.remove(storageKeyWeeklyArticleCount);
+        storage.local.remove(storageKeyDailyArticleCount);
 
         // Update the dialog message
         elements.buttons.remove();

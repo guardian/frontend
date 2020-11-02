@@ -1,0 +1,9 @@
+@import com.gu.identity.model.EmailEmbed
+@(emailEmbedData: EmailEmbed)
+<div class="email-sub email-sub--article">
+    <div class="email-sub__message">
+        @fragments.inlineSvg("mail", "icon")
+    <h2 class="email-sub__message__headline">@Html(emailEmbedData.successHeadline)</h2>
+    <p class="email-sub__message__description">@Html(emailEmbedData.successDescription)</p>
+    </div>
+</div>

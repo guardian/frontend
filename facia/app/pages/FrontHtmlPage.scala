@@ -23,12 +23,11 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
     import views.support.`package`.withJsoup
     import views.support.{BulletCleaner, CommercialComponentHigh, CommercialMPUForFronts}
     val html: Html = frontBody(page)
-    val edition = Edition(request)
     withJsoup(BulletCleaner(html.toString))(
       CommercialComponentHigh(
         page.frontProperties.isPaidContent,
         page.isNetworkFront,
-        page.metadata.hasPageSkin(edition),
+        page.metadata.hasPageSkin(request),
       ),
       CommercialMPUForFronts(),
     )
@@ -61,7 +60,7 @@ object FrontHtmlPage extends HtmlPage[PressedPage] {
       bodyTag(classes = defaultBodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),
         breakingNewsDiv(),

@@ -5,11 +5,9 @@ import { isGoogleProxy } from 'lib/detect';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {  isInUsa as isInUsa_} from "common/modules/commercial/geo-utils";
 import { _ } from './prepare-a9';
 
 const { setupA9 } = _;
-const isInUsa: any = isInUsa_;
 
 jest.mock('common/modules/commercial/geo-utils');
 
@@ -39,7 +37,13 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
     isInUsRegion: () => true,
 }));
 
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/consent-management-platform', () => ({
+    onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
+}));
+
+
+jest.mock('@guardian/libs', () => ({
     loadScript: () => Promise.resolve(),
 }));
 
@@ -66,7 +70,6 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).toBeCalled();
     });
@@ -75,21 +78,18 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: true };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).toBeCalled();
     });
 
     it('should not initialise A9 when useragent is Google Web Preview', async () => {
         fakeUserAgent('Google Web Preview');
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
 
     it('should not initialise A9 when no external demand', async () => {
         dfpEnv.hbImpl = { a9: false, prebid: false };
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
@@ -98,7 +98,6 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = false;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
@@ -107,7 +106,6 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = true;
-        isInUsa.mockReturnValue(true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });
@@ -116,7 +114,6 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         config.set('page.hasPageSkin', true);
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
@@ -126,7 +123,6 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         config.set('page.hasPageSkin', false);
         await setupA9();
         expect(a9.initialise).toBeCalled();
@@ -136,18 +132,7 @@ describe('init', () => {
         dfpEnv.hbImpl = { a9: true, prebid: false };
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(true);
         commercialFeatures.isSecureContact = true;
-        await setupA9();
-        expect(a9.initialise).not.toBeCalled();
-    });
-
-    it('should not initialise a9 on when country not US', async () => {
-        dfpEnv.hbImpl = { a9: true, prebid: false };
-        commercialFeatures.dfpAdvertising = true;
-        commercialFeatures.adFree = false;
-        isInUsa.mockReturnValue(false);
-        commercialFeatures.isSecureContact = false;
         await setupA9();
         expect(a9.initialise).not.toBeCalled();
     });

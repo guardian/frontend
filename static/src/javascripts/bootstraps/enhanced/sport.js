@@ -50,7 +50,7 @@ const cricket = (): void => {
         cricketScore.endpoint = `/sport/cricket/match/${matchDate}/${team}.json`;
 
         fastdom
-            .read(() => document.querySelector('.js-cricket-score'))
+            .measure(() => document.querySelector('.js-cricket-score'))
             .then(parentEl => {
                 cricketScore.fetch(parentEl, 'summary');
             });
@@ -81,13 +81,13 @@ const rugby = (): void => {
         // $FlowFixMe
         scoreBoard.fetched = (resp: Object): void => {
             fastdom
-                .read(() => document.querySelector('article'))
+                .measure(() => document.querySelector('article'))
                 .then(liveblog => {
                     liveblog.classList.add('content--has-scores');
                 });
 
             fastdom
-                .read(() => document.querySelector('.content--liveblog'))
+                .measure(() => document.querySelector('.content--liveblog'))
                 .then(liveblog => {
                     liveblog.classList.add('content--liveblog--rugby');
                 });

@@ -4,7 +4,6 @@ import java.util.Locale
 
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import implicits.Dates.CapiRichDateTime
-import model.dotcomrendering.pageElements.PageElement
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -75,7 +74,6 @@ object BodyBlock {
 
   implicit val dateWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val blockElementWrites = BlockElement.blockElementWrites
-  implicit val pageElementsWrites = PageElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 

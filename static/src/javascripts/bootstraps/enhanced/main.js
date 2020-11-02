@@ -11,6 +11,7 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
+import {fetchAndRenderEpic} from "common/modules/commercial/contributions-service";
 
 const bootEnhanced = (): void => {
     const bootstrapContext = (featureName, bootstrap) => {
@@ -58,6 +59,8 @@ const bootEnhanced = (): void => {
         ],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
+
+        ['remote-epics', fetchAndRenderEpic ]
     ]);
 
     /** common sets up many things that subsequent modules may need.
@@ -173,7 +176,7 @@ const bootEnhanced = (): void => {
             }
 
             fastdom
-                .read(() => qwery('audio'))
+                .measure(() => qwery('audio'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -192,7 +195,7 @@ const bootEnhanced = (): void => {
 
             // Native video player enhancements
             fastdom
-                .read(() => qwery('video'))
+                .measure(() => qwery('video'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -336,7 +339,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 if ($('.youtube-media-atom').length > 0) {
                     require.ensure(
                         [],

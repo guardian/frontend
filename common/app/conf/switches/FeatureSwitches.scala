@@ -57,16 +57,6 @@ trait FeatureSwitches {
     exposeClientSide = false,
   )
 
-  val PlistaForAU = Switch(
-    SwitchGroup.Feature,
-    "plista-for-au",
-    "Enable the Plista content recommendation widget in Australia",
-    owners = group(Commercial),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val GeoMostPopular = Switch(
     SwitchGroup.Feature,
     "geo-most-popular",
@@ -409,7 +399,7 @@ trait FeatureSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false,
+    exposeClientSide = true,
   )
 
   // Simple & Coherent
@@ -459,16 +449,6 @@ trait FeatureSwitches {
     "remote-banner",
     "Enables the banner fetched from contributions-service",
     owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 8, 3),
-    exposeClientSide = true,
-  )
-
-  val remoteSubscriptionsBanner = Switch(
-    SwitchGroup.Feature,
-    "remote-subscriptions-banner",
-    "Enables the subscriptions banner fetched from contributions-service",
-    owners = Seq(Owner.withGithub("GHaberis")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 8, 3),
     exposeClientSide = true,

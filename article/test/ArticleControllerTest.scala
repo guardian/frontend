@@ -1,9 +1,9 @@
 package test
 
 import com.gu.contentapi.client.model.v1.Blocks
-import controllers.{ArticleController, ArticlePage}
+import controllers.ArticleController
 import model.Cached.RevalidatableResult
-import model.dotcomponents.PageType
+import model.dotcomrendering.PageType
 import model.{ApplicationContext, Cached, PageWithStoryPackage}
 import org.apache.commons.codec.digest.DigestUtils
 import org.scalatest.mockito.MockitoSugar
@@ -13,7 +13,6 @@ import play.api.mvc.{RequestHeader, Result}
 import play.api.test.Helpers._
 import play.api.test._
 import play.twirl.api.Html
-import services.dotcomponents.{RemoteRender, RenderType}
 
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
@@ -21,7 +20,7 @@ import scala.concurrent.{ExecutionContext, Future}
 // I had trouble getting Mockito to play nicely with how scala is using implicits and consts so I've introduced
 // these
 
-class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.RemoteRenderer {
+class FakeRemoteRender(implicit context: ApplicationContext) extends renderers.DotcomRenderingService {
   override def getArticle(
       ws: WSClient,
       path: String,

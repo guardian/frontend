@@ -226,5 +226,7 @@
     z-index: 1090 !important;
     background: none !important;
     top: auto !important;
-    position: sticky !important;
+    position: fixed !important;
+    max-height: 80vh;
+    overflow: auto;
 }

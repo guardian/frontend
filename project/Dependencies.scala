@@ -3,16 +3,16 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.225"
+  val identityLibVersion = "3.232"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.1"
-  val faciaVersion = "3.0.20"
+  val capiVersion = "17.2"
+  val faciaVersion = "3.2.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val playJsonExtensionsVersion = "0.10.0"
-  val guBox = "com.gu" %% "box" %  "0.1.0"
+  val guBox = "com.gu" %% "box" % "0.1.0"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
   val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
@@ -65,25 +65,25 @@ object Dependencies {
   val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
-  val scanamo = "com.gu" %% "scanamo" % "0.9.5"
+  val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "1.1.6"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
-  val jsonSchema = "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M4"
+  val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
   // sbt-native-packager does not seem respect the latestRevision conflict manager when building the
   // classpath in the executable shell file for the service. The classpath output is different to the
   // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
   // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
   val jacksonVersion = "2.11.0"
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor"  % jacksonVersion
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
   val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion

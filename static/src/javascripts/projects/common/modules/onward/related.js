@@ -113,7 +113,7 @@ const related = (opts: Object): void => {
 
             fetchJSON(relatedUrl, { mode: 'cors' })
                 .then(resp =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         container.innerHTML = resp.html;
                         container.classList.add('lazyloaded');
                     })

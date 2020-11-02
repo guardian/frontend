@@ -8,7 +8,7 @@ import {
 
 const init = (): void => {
     fastdom
-        .read(() =>
+        .measure(() =>
             document.getElementsByClassName('js-id-send-validation-email')
         )
         .then(elems => {
@@ -28,7 +28,7 @@ const init = (): void => {
                                             'module:identity:validation-email:fail'
                                         );
 
-                                        fastdom.write(() => {
+                                        fastdom.mutate(() => {
                                             resendButton.innerHTML =
                                                 'An error occured, please click here to try again.';
                                         });
@@ -48,7 +48,7 @@ const init = (): void => {
                                             sentMsgEl.innerText =
                                                 'Sent. Please check your email and follow the link.';
 
-                                            fastdom.write(() => {
+                                            fastdom.mutate(() => {
                                                 resendButtonParent.replaceChild(
                                                     sentMsgEl,
                                                     resendButton
@@ -62,7 +62,7 @@ const init = (): void => {
                                         'module:identity:validation-email:fail'
                                     );
 
-                                    fastdom.write(() => {
+                                    fastdom.mutate(() => {
                                         resendButton.innerHTML =
                                             'An error occured, please click here to try again.';
                                     });

@@ -75,7 +75,7 @@ class Clues extends Component<*, *> {
             (this.props.focussed &&
                 (!prev.focussed || prev.focussed.id !== this.props.focussed.id))
         ) {
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 this.scrollIntoView(this.props.focussed);
             });
         }

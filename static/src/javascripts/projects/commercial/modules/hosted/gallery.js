@@ -284,7 +284,7 @@ class HostedGallery {
         const tabletSize = 740;
         const imageSize = getFrame(imgRatio);
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $sizer.css('width', imageSize.width);
             $sizer.css('height', imageSize.height);
             $sizer.css('top', imageSize.topBottom);
@@ -325,7 +325,7 @@ class HostedGallery {
         galleryEl.style.msTransform = `translate(${px + offset}px,0)`;
         galleryEl.style.transform = `translate(${px +
             offset}px,0) translateZ(0)`;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             bonzo($meta).css('opacity', offset !== 0 ? 0 : 1);
         });
     }
@@ -342,7 +342,7 @@ class HostedGallery {
         const deg = Math.ceil(fractionProgress * 360);
         const newIndex = Math.round(progress + 0.75);
         const ctaIndex: number = HostedGallery.ctaIndex() || -1;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             this.$images.each((image, index) => {
                 const opacity = ((progress - index + 1) * 16) / 11 - 0.0625;
                 bonzo(image).css('opacity', Math.min(Math.max(opacity, 0), 1));
@@ -380,7 +380,7 @@ class HostedGallery {
         const scrollEl = this.$scrollEl;
         const length = this.$images.length;
         const scrollHeight = scrollEl[0].scrollHeight;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             scrollEl.scrollTop(((index - 1) * scrollHeight) / length);
         });
     }
@@ -425,7 +425,7 @@ class HostedGallery {
             leftRight = `${(width - imageWidth) / 2}px`;
         }
         this.swipeContainerWidth = imageWidth;
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $header.css('width', imageWidth);
             $footer.css('margin', `0 ${leftRight}`);
             $footer.css('width', 'auto');

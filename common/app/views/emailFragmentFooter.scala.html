@@ -1,0 +1,5 @@
+@(page: model.Page, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@emailEmbed(page) {
+    @fragments.email.signup.footer.emailSignUpFooter(listName)
+}

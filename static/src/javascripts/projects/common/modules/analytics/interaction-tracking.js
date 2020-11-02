@@ -1,6 +1,6 @@
 // @flow
 import mediator from 'lib/mediator';
-import { session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import {
     trackSamePageLinkClick as trackSamePageLinkClickGoogle,
     trackNonClickInteraction as trackNonClickInteractionGoogle,
@@ -44,7 +44,7 @@ const trackInternalLinkClick = (spec: Spec): void => {
         tag: spec.tag || 'untracked',
         time: new Date().getTime(),
     };
-    session.set(NG_STORAGE_KEY, storeObj);
+    storage.session.set(NG_STORAGE_KEY, storeObj);
 };
 
 const trackExternalLinkClick = (spec: Spec): void => {

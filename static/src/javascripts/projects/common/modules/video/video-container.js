@@ -107,7 +107,7 @@ const reducers = {
         };
         makeYouTubeNonPlayableAtSmallBreakpoint(previousState);
 
-        fastdom.read(() => {
+        fastdom.measure(() => {
             // Lazy load images on scroll for mobile
             $('.js-video-playlist-image', previousState.container).each(el => {
                 const inview = elementInView(
@@ -122,12 +122,12 @@ const reducers = {
                 );
 
                 inview.on('firstview', elem => {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         const dataSrc = elem.getAttribute('data-src');
                         const src = elem.getAttribute('src');
 
                         if (dataSrc && !src) {
-                            fastdom.write(() => {
+                            fastdom.mutate(() => {
                                 elem.setAttribute('src', dataSrc);
                             });
                         }
@@ -142,14 +142,14 @@ const reducers = {
 const fetchLazyImage = (container: Element, i: number): void => {
     $(`.js-video-playlist-image--${i}`, container).each(el => {
         fastdom
-            .read(() => {
+            .measure(() => {
                 const dataSrc = el.getAttribute('data-src');
                 const src = el.getAttribute('src');
                 return dataSrc && !src ? dataSrc : null;
             })
             .then(src => {
                 if (src) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         el.setAttribute('src', src);
                     });
                 }
@@ -160,7 +160,7 @@ const fetchLazyImage = (container: Element, i: number): void => {
 const update = (state: State, container: Element): Promise<number> => {
     const translateWidth = -state.videoWidth * state.position;
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         const activeEl = container.querySelector(
             '.video-playlist__item--active'
         );

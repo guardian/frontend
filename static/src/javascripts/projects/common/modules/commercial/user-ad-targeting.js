@@ -1,12 +1,12 @@
 // @flow
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
 const getUserSegments = (adConsentState: boolean | null): Array<any> => {
-    if (local.isAvailable() && adConsentState !== false) {
-        const userSegmentsData = local.get(userSegmentsKey);
+    if (storage.local.isAvailable() && adConsentState !== false) {
+        const userSegmentsData = storage.local.get(userSegmentsKey);
 
         if (userSegmentsData) {
             const userCookieData = getUserFromCookie();
@@ -17,7 +17,7 @@ const getUserSegments = (adConsentState: boolean | null): Array<any> => {
             ) {
                 return userSegmentsData.segments;
             }
-            local.remove(userSegmentsKey);
+            storage.local.remove(userSegmentsKey);
         }
     }
 
@@ -26,8 +26,8 @@ const getUserSegments = (adConsentState: boolean | null): Array<any> => {
 
 const requestUserSegmentsFromId = (): void => {
     if (
-        local.isAvailable() &&
-        local.get(userSegmentsKey) === null &&
+        storage.local.isAvailable() &&
+        storage.local.get(userSegmentsKey) === null &&
         getUserFromCookie()
     ) {
         getUserFromApi(user => {
@@ -36,15 +36,13 @@ const requestUserSegmentsFromId = (): void => {
                 Object.keys(user.adData).forEach(key => {
                     userSegments.push(key + user.adData[key]);
                 });
-                local.set(
+                storage.local.set(
                     userSegmentsKey,
                     {
                         segments: userSegments,
                         userHash: user.id % 9999,
                     },
-                    {
-                        expires: new Date().getTime() + 24 * 60 * 60 * 1000,
-                    }
+                    new Date().getTime() + 24 * 60 * 60 * 1000
                 );
             }
         });

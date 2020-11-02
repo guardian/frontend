@@ -78,7 +78,7 @@ const show = (): Promise<boolean> =>
 
         addCookie(COOKIE_IMPRESSION_KEY, String(impressions + 1));
 
-        fastdom.read(() => {
+        fastdom.measure(() => {
             const $banner = $('.site-message--ios, .site-message--android');
             const bannerHeight = $banner.dim().height;
             if (window.scrollY !== 0) {

@@ -11,7 +11,7 @@ beforeEach(() => {
 });
 
 test('gets info', () => {
-    const el = $('.originalClassName');
+    const el = $('.originalClassName').get(0);
     getInfo(el).then(info => {
         expect(info.checked).toEqual(true);
         expect(info.name).toEqual('test-name');
@@ -25,7 +25,7 @@ test('doesnt force update with an empty data-originally-checked', () => {
             <div class="originalClassName"><input type="checkbox" checked name="test-name" /></div>
         `;
     }
-    const el = $('.originalClassName');
+    const el = $('.originalClassName').get(0);
     getInfo(el).then(info => {
         expect(info.shouldUpdate).toEqual(false);
     });
@@ -37,14 +37,14 @@ test('doesnt force update with an invalid data-originally-checked', () => {
             <div class="originalClassName" data-originally-checked="🔔"><input type="checkbox" checked name="test-name" /></div>
         `;
     }
-    const el = $('.originalClassName');
+    const el = $('.originalClassName').get(0);
     getInfo(el).then(info => {
         expect(info.shouldUpdate).toEqual(false);
     });
 });
 
 test('adds a spinner', () => {
-    const el = $('.originalClassName');
+    const el = $('.originalClassName').get(0);
     addSpinner(el).then(() => {
         expect(el.hasClass('is-updating')).toEqual(true);
         expect($(document.body).hasClass('is-updating-cursor')).toEqual(true);
@@ -56,8 +56,8 @@ test('removes a spinner', () => {
     expect(el.length).toEqual(1);
 
     if (el[0]) {
-        addSpinner(el)
-            .then(() => removeSpinner(el))
+        addSpinner(el.get(0))
+            .then(() => removeSpinner(el.get(0)))
             .then(() => {
                 expect(el[0].className).toEqual('originalClassName');
                 expect($(document.body).hasClass('is-updating-cursor')).toEqual(

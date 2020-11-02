@@ -9,9 +9,10 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_} from '@guardian/consent-management-platform';
 
 const onConsentChange: any = onConsentChange_;
+const getConsentFor: any = getConsentFor_;
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -76,8 +77,10 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
     applyCreativeTemplate: () => Promise.resolve(true),
 }));
-jest.mock('lib/load-script', () => ({
+jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
+    // $FlowFixMe - i think typ def needs updating, but loads of types errors if you do...
+    storage: jest.requireActual('@guardian/libs').storage
 }));
 jest.mock('lodash/once', () => fn => fn);
 jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
@@ -95,6 +98,7 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 let $style;
@@ -473,6 +477,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2WithConsent)
             );
+            getConsentFor.mockReturnValue(true);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
@@ -486,6 +491,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2WithConsent)
             );
+            getConsentFor.mockReturnValue(true);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
@@ -496,6 +502,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2NullConsent)
             );
+            getConsentFor.mockReturnValue(true);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
@@ -506,6 +513,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2WithoutConsent)
             );
+            getConsentFor.mockReturnValue(false);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
@@ -516,6 +524,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(tcfv2MixedConsent)
             );
+            getConsentFor.mockReturnValue(false);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
@@ -528,6 +537,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithConsent)
             );
+            getConsentFor.mockReturnValue(true);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings
@@ -540,6 +550,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ccpaWithoutConsent)
             );
+            getConsentFor.mockReturnValue(false);
             prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings

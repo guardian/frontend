@@ -2,6 +2,12 @@
 
 import React, { Component } from 'react';
 import { render } from 'react-dom';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import config from 'lib/config';
 import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan, registerOphanListeners } from './utils';
 
@@ -11,11 +17,44 @@ type Props = {
     duration: string,
 };
 
-class AudioContainer extends Component<Props, *> {
+type State = {
+    acastConsent: boolean,
+};
+
+class AudioContainer extends Component<Props, State> {
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            acastConsent: false,
+        };
+    }
+
+    componentDidMount() {
+        onConsentChange(consentState => {
+            const acast = getConsentFor('acast', consentState);
+            this.setState({
+                acastConsent: acast,
+            });
+        });
+    }
+
     render() {
+        const acastEnabled = config.get('switches.acast');
+        const isPodcast = config.get('page.isPodcast');
+        const sourceUrl =
+            acastEnabled &&
+            isPodcast &&
+            this.state.acastConsent &&
+            !isAdFreeUser()
+                ? this.props.source.replace(
+                      'https://',
+                      'https://flex.acast.com/'
+                  )
+                : this.props.source;
+
         return (
             <AudioPlayer
-                sourceUrl={this.props.source}
+                sourceUrl={sourceUrl}
                 mediaId={this.props.mediaId}
                 duration={this.props.duration}
             />

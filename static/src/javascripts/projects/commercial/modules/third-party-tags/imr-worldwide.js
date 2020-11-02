@@ -88,7 +88,7 @@ const onLoad = () => {
     nSdkInstance.ggPM('staticstart', dcrStaticMetadata);
 };
 
-export const imrWorldwide: ThirdPartyTag = {
+export const imrWorldwide = {
     shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
     url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
     onLoad,

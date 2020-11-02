@@ -1,0 +1,6 @@
+@import model.NonsuccessResult
+@(page: model.Page, result: NonsuccessResult)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@emailEmbed(page) {
+    @fragments.email.signup.result.emailNonsuccess(result)
+}

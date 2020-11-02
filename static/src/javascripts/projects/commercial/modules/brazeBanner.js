@@ -5,9 +5,12 @@ import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
-
-import {getUserFromApi} from '../../common/modules/identity/api';
-import {isDigitalSubscriber} from "../../common/modules/commercial/user-features";
+import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import { getUrlVars } from 'lib/url';
+import ophan from 'ophan/ng';
+import {getUserFromApi} from 'common/modules/identity/api';
+import {isDigitalSubscriber} from "common/modules/commercial/user-features";
+import {measureTiming} from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -82,7 +85,71 @@ const canShowPreChecks = ({
 let messageConfig: InAppMessage;
 let appboy: ?AppBoy;
 
+const getMessageFromQueryString = (): InAppMessage | null => {
+        const params = getUrlVars();
+        const qsArg = 'force-braze-message';
+        const value = params[qsArg];
+        if (value) {
+            try {
+                const dataFromBraze = JSON.parse(value);
+
+                return {
+                    extras: dataFromBraze,
+                };
+            } catch (e) {
+                // Parsing failed. Log a message and fall through.
+                console.log(
+                    `There was an error with ${qsArg}:`,
+                    e.message,
+                );
+            }
+        }
+
+    return null;
+};
+
+const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<boolean> => {
+    appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+    appboy.initialize(apiKey, {
+        enableLogging: false,
+        noCookies: true,
+        baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
+        sessionTimeoutInSeconds: 1,
+        minimumIntervalBetweenTriggerActionsInSeconds: 0,
+    });
+
+    return new Promise(resolve => {
+        // Needed to keep Flow happy
+        if (!appboy) {
+            resolve(false);
+            return;
+        }
+
+        appboy.subscribeToInAppMessage((message: InAppMessage) => {
+            if (message.extras) {
+                messageConfig = message;
+                resolve(true);
+            } else {
+                resolve(false);
+            }
+        });
+
+        appboy.changeUser(brazeUuid);
+        appboy.openSession();
+    });
+};
+
 const canShow = async (): Promise<boolean> => {
+    const timing = measureTiming('braze-banner');
+    timing.start();
+
+    const forcedBrazeMessage = getMessageFromQueryString();
+    if (forcedBrazeMessage) {
+        messageConfig = forcedBrazeMessage;
+        return true;
+    }
+
     const brazeSwitch = config.get('switches.brazeSwitch');
     const apiKey = config.get('page.brazeApiKey');
 
@@ -102,35 +169,17 @@ const canShow = async (): Promise<boolean> => {
     }
 
     try {
-        appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+        const result = await getMessageFromBraze(apiKey, brazeUuid)
+        const timeTaken = timing.end();
 
-        appboy.initialize(apiKey, {
-            enableLogging: false,
-            noCookies: true,
-            baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
-            sessionTimeoutInSeconds: 1,
-            minimumIntervalBetweenTriggerActionsInSeconds: 0,
-        });
-
-        return new Promise(resolve => {
-            // Needed to keep Flow happy
-            if (!appboy) {
-                resolve(false);
-                return;
-            }
-
-            appboy.subscribeToInAppMessage((message: InAppMessage) => {
-                if (message.extras) {
-                    messageConfig = message;
-                    resolve(true);
-                } else {
-                    resolve(false);
-                }
+        if (timeTaken) {
+            ophan.record({
+                component: 'braze-banner-timing',
+                value: timeTaken,
             });
+        }
 
-            appboy.changeUser(brazeUuid);
-            appboy.openSession();
-        });
+        return result;
     } catch (e) {
         return false;
     }
@@ -150,9 +199,10 @@ const show = (): Promise<boolean> => import(
 
         mountDynamic(
             container,
-            module.DigitalSubscriberAppBanner,
+            module.BrazeMessage,
             {
-                onButtonClick: (buttonId: number) => {
+                componentName: messageConfig.extras.componentName,
+                logButtonClickWithBraze: (buttonId: number) => {
                     if (appboy) {
                         const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
                         appboy.logInAppMessageButtonClick(
@@ -160,8 +210,8 @@ const show = (): Promise<boolean> => import(
                         );
                     }
                 },
-                header: messageConfig.extras.header,
-                body: messageConfig.extras.body,
+                submitComponentEvent,
+                brazeMessageProps: messageConfig.extras,
             },
             true,
         );
@@ -170,6 +220,14 @@ const show = (): Promise<boolean> => import(
             // Log the impression with Braze
             appboy.logInAppMessageImpression(messageConfig);
         }
+
+        // Log the impression with Ophan
+        submitViewEvent({
+            component: {
+                componentType: 'RETENTION_ENGAGEMENT_BANNER',
+                id: messageConfig.extras.componentName,
+            },
+        });
 
         return true;
     })

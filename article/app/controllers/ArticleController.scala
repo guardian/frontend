@@ -5,26 +5,24 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel, PageType}
-import model.{ContentType, PageWithStoryPackage, _}
+import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms, PageType}
+import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
 import play.api.libs.ws.WSClient
 import play.api.mvc._
-import renderers.RemoteRenderer
+import renderers.DotcomRenderingService
 import services.CAPILookup
 import services.dotcomponents.{ArticlePicker, _}
 import views.support._
 
 import scala.concurrent.Future
 
-case class ArticlePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
-
 class ArticleController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     ws: WSClient,
-    remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
@@ -64,9 +62,9 @@ class ArticleController(
 
   def renderHeadline(path: String): Action[AnyContent] =
     Action.async { implicit request =>
-      def responseFromHeadline(headline: Option[String]) = {
+      def responseFromOptionalString(headline: Option[String]) = {
         headline
-          .map(title => Cached(CacheTime.Default)(RevalidatableResult.Ok(title)))
+          .map(s => Cached(CacheTime.Default)(RevalidatableResult.Ok(s)))
           .getOrElse {
             log.warn(s"headline not found for $path")
             Cached(10)(WithoutRevalidationResult(NotFound))
@@ -76,7 +74,7 @@ class ArticleController(
       capiLookup
         .lookup(path, Some(ArticleBlocks))
         .map(_.content.map(_.webTitle))
-        .map(responseFromHeadline)
+        .map(responseFromOptionalString)
     }
 
   private def getJson(article: ArticlePage)(implicit request: RequestHeader): List[(String, Object)] = {
@@ -92,7 +90,7 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
-    DCRDataModel.toJson(DotcomponentsDataModel.fromArticle(article, request, blocks, pageType))
+    DotcomRenderingDataModel.toJson(DotcomRenderingTransforms.fromArticle(article, request, blocks, pageType))
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit

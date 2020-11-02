@@ -12,7 +12,7 @@ import {
 } from 'common/modules/commercial/acquisitions-ophan';
 import $ from 'lib/$';
 import config from 'lib/config';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -49,12 +49,11 @@ import {
     bannerMultipleTestsGoogleDocUrl,
     getGoogleDoc,
 } from 'common/modules/commercial/contributions-google-docs';
-import { getEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
+import { getLiveblogEpicTestData } from 'common/modules/commercial/contributions-epic-test-data';
 import {
     defaultExclusionRules,
     isArticleWorthAnEpicImpression,
 } from 'common/modules/commercial/epic/epic-exclusion-rules';
-import { getControlEpicCopy } from 'common/modules/commercial/acquisitions-copy';
 import { initTicker, parseTickerSettings } from 'common/modules/commercial/ticker';
 import { getArticleViewCountForWeeks } from 'common/modules/onward/history';
 import {
@@ -85,7 +84,7 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
     }
 };
 
-const getVisitCount = (): number => local.get('gu.alreadyVisited') || 0;
+const getVisitCount = (): number => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
 const replaceCountryName = (text: string, countryName: ?string): string =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
@@ -131,14 +130,16 @@ const controlTemplate: EpicTemplate = (
         backgroundImageUrl: variant.backgroundImageUrl,
     });
 
-const liveBlogTemplate: EpicTemplate = (
+const liveBlogTemplate: (cssClass?: string) => EpicTemplate = cssClass => (
     variant: EpicVariant,
-    copy: AcquisitionsEpicTemplateCopy
+    copy: AcquisitionsEpicTemplateCopy,
 ) =>
     epicLiveBlogTemplate({
         copy,
         componentName: variant.componentName,
         supportURL: variant.supportURL,
+        ctaText: variant.ctaText,
+        cssClass,
     });
 
 const doTagsMatch = (test: EpicABTest): boolean =>
@@ -290,7 +291,6 @@ const submitOphanInsert = (
 
 const setupOphanView = (
     element: HTMLElement,
-    viewEvent: string,
     testId: string,
     variantId: string,
     campaignCode: string,
@@ -486,11 +486,7 @@ const makeEpicABTestVariant = (
         },
 
         test() {
-            const copyPromise: Promise<AcquisitionsEpicTemplateCopy> =
-                (this.copy && Promise.resolve(this.copy)) ||
-                getControlEpicCopy();
-
-            copyPromise
+            Promise.resolve(this.copy)
                 .then((copy: AcquisitionsEpicTemplateCopy) =>
                     this.template(this, copy)
                 )
@@ -504,7 +500,7 @@ const makeEpicABTestVariant = (
 
                         emitBeginEvent(trackingCampaignId);
 
-                        return fastdom.write(() => {
+                        return fastdom.mutate(() => {
                             const targets = getTargets('.submeta');
 
                             setupClickHandling(
@@ -531,7 +527,6 @@ const makeEpicABTestVariant = (
 
                                     setupOphanView(
                                         element,
-                                        parentTest.viewEvent,
                                         parentTest.id,
                                         initVariant.id,
                                         campaignCode,
@@ -643,23 +638,28 @@ const buildEpicCopy = (
         ? getCountryName(geolocation)
         : undefined;
 
-    const replaceCountryNameAndArticlesViewed = (s: string): string =>
-        replaceArticlesViewed(
-            replaceCountryName(s, countryName),
-            articlesViewedCount
+    const localCurrencySymbol = getLocalCurrencySymbol(geolocation);
+    const replaceCurrencySymbol = (s: string): string => s.replace(
+        /%%CURRENCY_SYMBOL%%/g,
+        localCurrencySymbol,
+    );
+
+    const replaceTemplates = (s: string): string =>
+        replaceCurrencySymbol(
+            replaceArticlesViewed(
+                replaceCountryName(s, countryName),
+                articlesViewedCount
+            )
         );
 
 
     return {
         heading: heading
-            ? replaceCountryNameAndArticlesViewed(heading)
+            ? replaceTemplates(heading)
             : heading,
-        paragraphs: paragraphs.map<string>(replaceCountryNameAndArticlesViewed),
+        paragraphs: paragraphs.map<string>(replaceTemplates),
         highlightedText: row.highlightedText
-            ? row.highlightedText.replace(
-                  /%%CURRENCY_SYMBOL%%/g,
-                  getLocalCurrencySymbol(geolocation)
-              )
+            ? replaceCurrencySymbol(row.highlightedText)
             : undefined,
         footer: optionalSplitAndTrim(row.footer, '\n'),
     };
@@ -735,7 +735,7 @@ export const buildConfiguredEpicTestFromJson = (
                 : 'AllNonSupporters',
         ...(test.isLiveBlog
             ? {
-                  template: liveBlogTemplate,
+                  template: liveBlogTemplate(),
                   pageCheck: isCompatibleWithLiveBlogEpic,
               }
             : {
@@ -793,11 +793,11 @@ export const buildConfiguredEpicTestFromJson = (
     };
 };
 
-export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
-    getEpicTestData()
+export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+    getLiveblogEpicTestData()
         .then(epicTestData => {
-            const showDrafts = window.location.hash === '#show-draft-epics';
             if (epicTestData.tests) {
+                const showDrafts = window.location.hash === '#show-draft-epics';
                 return epicTestData.tests
                     .filter(test => test.isOn || showDrafts)
                     .map(json =>
@@ -809,9 +809,9 @@ export const getConfiguredEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
         .catch((err: Error) => {
             reportError(
                 new Error(
-                    `Error getting multiple configured epic tests. ${
+                    `Error getting multiple configured liveblog epic tests. ${
                         err.message
-                    }. Stack: ${err.stack}`
+                        }. Stack: ${err.stack}`
                 ),
                 {
                     feature: 'epic',
@@ -983,4 +983,5 @@ export {
     isCompatibleWithLiveBlogEpic,
     replaceArticlesViewed,
     makeEvent,
+    liveBlogTemplate,
 };

@@ -45,7 +45,7 @@ const resize = (
         styles.height = normalise(specs.height);
     }
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         Object.assign(iframe.style, styles);
 
         if (iframeContainer) {
@@ -56,7 +56,7 @@ const resize = (
 
 // When an outstream resizes we want it to revert to its original styling
 const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         if (adSlot) {
             adSlot.classList.remove('ad-slot--outstream');
         }

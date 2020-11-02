@@ -5,6 +5,11 @@
 
 import ophan from 'ophan/ng';
 import fastdom from 'fastdom';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { viewport } from './services/viewport';
 
 // Need to pass in the API to native services, something that looks
@@ -26,13 +31,26 @@ const promisify = (fdaction: FastdomAction) => (
         });
     });
 
+const onAcastConsentChange = (callback: boolean => void): void => {
+    onConsentChange(state => {
+        const consented = getConsentFor('acast', state);
+        callback(consented);
+    });
+};
+
 const services: Services = {
     ophan,
     dom: {
-        write: promisify(fastdom.write),
-        read: promisify(fastdom.read),
+        write: promisify(fastdom.mutate),
+        read: promisify(fastdom.measure),
     },
     viewport,
+    consent: {
+        onAcastConsentChange,
+    },
+    commercial: {
+        isAdFree: isAdFreeUser(),
+    },
 };
 
 export { services };

@@ -14,7 +14,7 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 import services.dotcomponents.ArticlePicker.{forall, primaryFeatures}
 
@@ -67,7 +67,7 @@ object StoryHtmlPage {
       bodyTag(classes = bodyClasses)(
         tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
-        pageSkin() when page.metadata.hasPageSkinOrAdTestPageSkin(Edition(request)),
+        pageSkin() when page.metadata.hasPageSkin(request),
         survey() when SurveySwitch.isSwitchedOn,
         header,
         mainContent(),

@@ -38,7 +38,7 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
   lazy val devAssetsController = wire[DevAssetsController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
-  lazy val remoteRender = wire[renderers.RemoteRenderer]
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   override lazy val lifecycleComponents = List(
     wire[LogstashLifecycle],

@@ -20,7 +20,7 @@ const addEditLink = (containerEl: HTMLElement): void => {
         holderEl.appendChild(linkEl);
         holderEl.classList.add('user-profile__edit-link');
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             containerEl.insertAdjacentElement('afterend', holderEl);
         });
     }
@@ -28,7 +28,7 @@ const addEditLink = (containerEl: HTMLElement): void => {
 
 const initUserEditLink = (): Promise<void> =>
     fastdom
-        .read(() =>
+        .measure(() =>
             Array.from(document.getElementsByClassName('user-profile__name'))
         )
         .then(names => {

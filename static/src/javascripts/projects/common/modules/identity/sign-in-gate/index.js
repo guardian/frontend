@@ -3,7 +3,6 @@ import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
 import type { Banner } from 'common/modules/ui/bannerPicker';
-import { signInGatePatientia } from 'common/modules/experiments/tests/sign-in-gate-patientia';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { submitViewEventTracking } from './component-event-tracking';
@@ -17,11 +16,7 @@ import type {
 } from './types';
 
 // if using multiple tests, then add them all in this array. (all the variant names in each test in the array must be unique)
-const tests = [
-    signInGatePatientia,
-    signInGateMainVariant,
-    signInGateMainControl,
-];
+const tests = [signInGateMainVariant, signInGateMainControl];
 
 const canShow: () => Promise<boolean> = () =>
     new Promise(resolve => {

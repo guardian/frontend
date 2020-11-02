@@ -34,22 +34,23 @@ import akka.actor.ActorSystem
 import concurrent.BlockingOperations
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait Controllers
-  extends AdminControllers
-  with ApplicationsControllers
-  with ArticleControllers
-  with CommercialControllers
-  with DiagnosticsControllers
-  with DiscussionControllers
-  with FaciaControllers
-  with OnwardControllers
-  with FootballControllers
-  with RugbyControllers
-  with FrontendComponents
-  with CricketControllers {
+    extends AdminControllers
+    with ApplicationsControllers
+    with ArticleControllers
+    with CommercialControllers
+    with DiagnosticsControllers
+    with DiscussionControllers
+    with FaciaControllers
+    with OnwardControllers
+    with FootballControllers
+    with RugbyControllers
+    with FrontendComponents
+    with CricketControllers {
   self: BuiltInComponents =>
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
@@ -60,15 +61,15 @@ trait Controllers
 }
 
 trait AppComponents
-  extends FrontendComponents
-  with Controllers
-  with AdminServices
-  with SportServices
-  with CommercialServices
-  with DiscussionServices
-  with OnwardServices
-  with FapiServices
-  with ApplicationsServices {
+    extends FrontendComponents
+    with Controllers
+    with AdminServices
+    with SportServices
+    with CommercialServices
+    with DiscussionServices
+    with OnwardServices
+    with FapiServices
+    with ApplicationsServices {
 
   //Overriding conflicting members
   override lazy val ophanApi = wire[OphanApi]
@@ -77,32 +78,33 @@ trait AppComponents
   override lazy val blockingOperations = wire[BlockingOperations]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
-  lazy val remoteRender = wire[renderers.RemoteRenderer]
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("dev-build")
 
-  override def lifecycleComponents: List[LifecycleComponent] = List(
-    wire[LogstashLifecycle],
-    wire[AdminLifecycle],
-    wire[DiagnosticsLifecycle],
-    wire[OnwardJourneyLifecycle],
-    wire[CommercialLifecycle],
-    wire[DfpDataCacheLifecycle],
-    wire[FaciaDfpAgentLifecycle],
-    wire[ConfigAgentLifecycle],
-    wire[SurgingContentAgentLifecycle],
-    wire[SectionsLookUpLifecycle],
-    wire[MostPopularFacebookAutoRefreshLifecycle],
-    wire[SwitchboardLifecycle],
-    wire[FootballLifecycle],
-    wire[CricketLifecycle],
-    wire[RugbyLifecycle],
-    wire[TargetingLifecycle],
-    wire[DiscussionExternalAssetsLifecycle],
-    wire[StocksDataLifecycle]
-  )
+  override def lifecycleComponents: List[LifecycleComponent] =
+    List(
+      wire[LogstashLifecycle],
+      wire[AdminLifecycle],
+      wire[DiagnosticsLifecycle],
+      wire[OnwardJourneyLifecycle],
+      wire[CommercialLifecycle],
+      wire[DfpDataCacheLifecycle],
+      wire[FaciaDfpAgentLifecycle],
+      wire[ConfigAgentLifecycle],
+      wire[SurgingContentAgentLifecycle],
+      wire[SectionsLookUpLifecycle],
+      wire[MostPopularFacebookAutoRefreshLifecycle],
+      wire[SwitchboardLifecycle],
+      wire[FootballLifecycle],
+      wire[CricketLifecycle],
+      wire[RugbyLifecycle],
+      wire[TargetingLifecycle],
+      wire[DiscussionExternalAssetsLifecycle],
+      wire[StocksDataLifecycle],
+    )
 
   override lazy val httpFilters = wire[DevFilters].filters
   override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]

@@ -12,7 +12,7 @@ class Search {
 
     constructor(): void {
         fastdom
-            .read(() =>
+            .measure(() =>
                 Array.from(document.getElementsByClassName('js-search-toggle'))
             )
             .then(toggles => {
@@ -37,7 +37,7 @@ class Search {
                             return;
                         }
 
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             toggle.setAttribute('role', 'button');
                             toggle.setAttribute(
                                 'aria-controls',
@@ -47,7 +47,7 @@ class Search {
                         });
 
                         fastdom
-                            .read(
+                            .measure(
                                 () =>
                                     document.getElementsByClassName(
                                         popupClass
@@ -154,7 +154,7 @@ class Search {
         let x;
 
         fastdom
-            .read(() => ({
+            .measure(() => ({
                 allSearchPlaceholders: Array.from(
                     document.getElementsByClassName('js-search-placeholder')
                 ),
@@ -172,7 +172,7 @@ class Search {
                 // Unload any search placeholders elsewhere in the DOM
                 allSearchPlaceholders.forEach(c => {
                     if (c !== searchPlaceholder) {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             c.innerHTML = '';
                         });
                     }
@@ -181,7 +181,7 @@ class Search {
                 // Load the Google search monolith, if not already present in this context.
                 // We have to re-run their script each time we do this.
                 if (!searchPlaceholder.innerHTML) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (searchPlaceholder) {
                             searchPlaceholder.innerHTML = `<div class="search-box" role="search">
                             <gcse:searchbox></gcse:searchbox>
@@ -195,14 +195,14 @@ class Search {
                     });
 
                     bean.on(searchPlaceholder, 'keydown', '.gsc-input', () => {
-                        fastdom.read(() => {
+                        fastdom.measure(() => {
                             const $autoCompleteObject = $('.gssb_c');
                             const searchFromTop = $autoCompleteObject.css(
                                 'top'
                             );
                             const windowOffset = $(window).scrollTop();
 
-                            fastdom.write(() => {
+                            fastdom.mutate(() => {
                                 $autoCompleteObject.css({
                                     top:
                                         parseInt(searchFromTop, 10) +
@@ -231,7 +231,7 @@ class Search {
                     s.src = this.gcsUrl;
                     x = document.getElementsByTagName('script')[0];
 
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         if (x.parentNode) {
                             x.parentNode.insertBefore(s, x);
                         }

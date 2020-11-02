@@ -46,18 +46,18 @@ class Affix {
 
     calculateContainerPositioning(): void {
         fastdom
-            .write(() => {
+            .mutate(() => {
                 this.$container.css('top', '0');
             })
             .then(() =>
-                fastdom.read(
+                fastdom.measure(
                     () =>
                         this.$markerTop.offset().top -
                         this.$container.offset().top
                 )
             )
             .then(containerTop => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.css('top', `${containerTop}px`);
                 });
             });
@@ -80,7 +80,7 @@ class Affix {
 
             // Lock the affix container to the bottom marker.
             if (bottomCheck) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.removeClass(affixBottomClass);
                 });
                 this.calculateContainerPositioning();
@@ -94,13 +94,13 @@ class Affix {
                     markerTopTop -
                     elHeight +
                     oldContainerStyling;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.css('top', `${topStyle}px`);
                     this.$container.addClass(affixBottomClass);
                 });
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (affix) {
                     this.$element.addClass(affixClass);
                 } else {

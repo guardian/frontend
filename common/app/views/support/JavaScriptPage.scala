@@ -7,15 +7,19 @@ import common.commercial.EditionAdTargeting._
 import conf.Configuration.environment
 import conf.switches.Switches.prebidSwitch
 import conf.switches.Switches.a9Switch
+import model.IpsosTags.{getScriptTag}
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
+import model.IpsosTags.{getScriptTag}
+import play.api.mvc.RequestHeader
 
 object JavaScriptPage {
 
-  def get(page: Page, edition: Edition, isPreview: Boolean): JsValue = Json.toJson(getMap(page, edition, isPreview))
+  def get(page: Page, edition: Edition, isPreview: Boolean, request: RequestHeader): JsValue =
+    Json.toJson(getMap(page, edition, isPreview, request))
 
-  def getMap(page: Page, edition: Edition, isPreview: Boolean): Map[String, JsValue] = {
+  def getMap(page: Page, edition: Edition, isPreview: Boolean, request: RequestHeader): Map[String, JsValue] = {
     val metaData = page.metadata
     val content: Option[Content] = Page.getContent(page).map(_.content)
 
@@ -41,7 +45,7 @@ object JavaScriptPage {
 
     val commercialMetaData = Map(
       "dfpHost" -> JsString("pubads.g.doubleclick.net"),
-      "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(edition)),
+      "hasPageSkin" -> JsBoolean(metaData.hasPageSkin(request)),
       "dfpNonRefreshableLineItemIds" -> nonRefreshableLineItemIds,
       "shouldHideAdverts" -> JsBoolean(page match {
         case c: ContentPage if c.item.content.shouldHideAdverts => true
@@ -69,6 +73,8 @@ object JavaScriptPage {
       case _                 => Map()
     }
 
+    val ipsos = if (page.metadata.isFront) getScriptTag(page.metadata.id) else getScriptTag(page.metadata.sectionId)
+
     javascriptConfig ++ config ++ commercialMetaData ++ journalismMetaData ++ Map(
       ("edition", JsString(edition.id)),
       ("ajaxUrl", JsString(Configuration.ajax.url)),
@@ -86,6 +92,7 @@ object JavaScriptPage {
       ("cardStyle", JsString(cardStyle)),
       ("discussionFrontendUrl", JsString(DiscussionAsset("discussion-frontend.preact.iife"))),
       ("brazeApiKey", JsString(Configuration.braze.apiKey)),
+      ("ipsosTag", JsString(ipsos)),
     )
   }
 }

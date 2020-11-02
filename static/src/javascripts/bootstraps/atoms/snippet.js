@@ -14,7 +14,7 @@ __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
 const updateHeight = () => {
     fastdom
-        .read(
+        .measure(
             () =>
                 document.documentElement &&
                 document.documentElement.getBoundingClientRect().height

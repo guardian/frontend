@@ -48,26 +48,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-connatix",
-    "Test Connatix Integration",
-    owners = Seq(Owner.withGithub("ioanna0")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 9, 28),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-sign-in-gate-patientia",
-    "Marathon sign in gate test on 2nd article view",
-    owners = Seq(Owner.withGithub("coldlink"), Owner.withGithub("vlbee")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sign-in-gate-main-control",
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
@@ -88,11 +68,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-remote-epic-variants",
-    "Serve epics from remote service for subset of audience",
-    owners = Seq(Owner.withGithub("nicl")),
+    "ab-curated-container-test",
+    "Tests an additional 'curated' onwards container below the article body.",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 10, 5),
+    sellByDate = new LocalDate(2020, 11, 10),
     exposeClientSide = true,
   )
 }

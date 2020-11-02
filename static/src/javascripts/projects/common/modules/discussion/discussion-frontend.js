@@ -3,7 +3,7 @@
 import config from 'lib/config';
 import fastdom from 'fastdom';
 import { integerCommas } from 'lib/formatters';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import type { Loader } from './loader';
@@ -16,7 +16,7 @@ const loadDiscussionFrontend = (
         const formatted = integerCommas(value);
 
         if (formatted) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 element.textContent = formatted;
             });
         }

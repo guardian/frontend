@@ -31,16 +31,16 @@ const createAdLabel = (): HTMLDivElement => {
 };
 
 export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
-    fastdom.read(() => {
+    fastdom.measure(() => {
         if (shouldRenderLabel(adSlotNode)) {
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 adSlotNode.prepend(createAdLabel());
             });
         }
     });
 
 export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         const adSlotLabel = document.createElement('div');
         adSlotLabel.classList.add('ad-slot__label');
         adSlotLabel.classList.add('sticky');
@@ -51,7 +51,7 @@ export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
 export const renderStickyScrollForMoreLabel = (
     adSlotNode: HTMLElement
 ): Promise<null> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         const scrollForMoreLabel = document.createElement('div');
         scrollForMoreLabel.classList.add('ad-slot__scroll');
         scrollForMoreLabel.innerHTML = 'Scroll for More';

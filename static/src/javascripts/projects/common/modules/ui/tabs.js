@@ -9,12 +9,12 @@ const NAV_CLASSES = [
 ];
 
 const getTabTarget = (tab: HTMLElement): Promise<?string> =>
-    fastdom.read(() => tab.getAttribute('href'));
+    fastdom.measure(() => tab.getAttribute('href'));
 
 const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'false');
             NAV_CLASSES.forEach(className =>
@@ -29,7 +29,7 @@ const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
 const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     const tabList: HTMLElement = (tab.parentNode: any);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'true');
             NAV_CLASSES.forEach(className => tabList.classList.add(className));
@@ -42,7 +42,7 @@ const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
 
 const init = (): Promise<void> => {
     const findTabs = (): Promise<Array<HTMLElement>> =>
-        fastdom.read(() => Array.from(document.querySelectorAll('.tabs')));
+        fastdom.measure(() => Array.from(document.querySelectorAll('.tabs')));
 
     return findTabs().then(tabs => {
         tabs.forEach(tab => {
@@ -58,7 +58,7 @@ const init = (): Promise<void> => {
                 return;
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
 
@@ -98,7 +98,7 @@ const init = (): Promise<void> => {
                 }
             });
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
         });

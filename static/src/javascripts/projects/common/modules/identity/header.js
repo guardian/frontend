@@ -9,7 +9,7 @@ const showAccountMenu = (
     buttonEl: HTMLElement,
     menuEl: HTMLElement
 ): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         menuEl.classList.add('is-active');
         menuEl.setAttribute('aria-hidden', 'false');
         buttonEl.setAttribute('aria-expanded', 'true');
@@ -19,7 +19,7 @@ const hideAccountMenu = (
     buttonEl: HTMLElement,
     menuEl: HTMLElement
 ): Promise<void> =>
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         menuEl.classList.remove('is-active');
         menuEl.setAttribute('aria-hidden', 'true');
         buttonEl.setAttribute('aria-expanded', 'false');
@@ -33,7 +33,7 @@ const bindNavToggle = (buttonEl: HTMLElement): void => {
         ev.preventDefault();
 
         fastdom
-            .read(() => document.getElementById(menuElSelector))
+            .measure(() => document.getElementById(menuElSelector))
             .then((menuEl: HTMLElement) => {
                 if (!menuEl) throw new Error(ERR_UNDEFINED_MENU);
                 const watchForOutsideClick = subEv => {

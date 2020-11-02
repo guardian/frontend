@@ -25,7 +25,7 @@ const init = (): void => {
 
         if (container) {
             fastdom
-                .read(() => {
+                .measure(() => {
                     const documentElement: ?HTMLElement =
                         document.documentElement;
                     const content = container.querySelector(`.${contentCN}`);
@@ -68,7 +68,7 @@ const init = (): void => {
                     }) => {
                         if (isAnimated && 'ontransitionend' in window) {
                             fastdom
-                                .write(() => {
+                                .mutate(() => {
                                     container.style.pointerEvents = 'none';
                                     if (!isActive) {
                                         container.classList.toggle(
@@ -89,7 +89,7 @@ const init = (): void => {
                                             content,
                                             'transitionend',
                                             () => {
-                                                fastdom.write(() => {
+                                                fastdom.mutate(() => {
                                                     content.style.height =
                                                         'auto';
                                                     container.style.pointerEvents =
@@ -106,7 +106,7 @@ const init = (): void => {
                                     });
                                 });
                         } else {
-                            fastdom.write(() => {
+                            fastdom.mutate(() => {
                                 container.classList.toggle('dropdown--active');
                                 updateAria(container);
                             });

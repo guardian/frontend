@@ -1,7 +1,7 @@
 // @flow
 
 import fastdom from 'fastdom';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 
 const launchOverlay = (event: Event): void => {
     event.preventDefault();
@@ -12,7 +12,7 @@ const launchOverlay = (event: Event): void => {
         document.querySelectorAll('img:not(.gu-image):not(.responsive-img)')
     );
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         images.forEach(img => {
             img.setAttribute('data-pin-nopin', 'true');
         });
@@ -26,7 +26,7 @@ const initPinterest = (): void => {
         document.querySelectorAll('.social__item--pinterest')
     );
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         buttons.forEach(el => {
             el.addEventListener('click', launchOverlay);
         });

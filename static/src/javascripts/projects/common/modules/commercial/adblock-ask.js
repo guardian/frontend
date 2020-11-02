@@ -12,20 +12,9 @@ const supportUrl = `${supportSubscribeDigitalURL()}?acquisitionData=%7B%22compon
 
 const askHtml = `
 <div class="contributions__adblock">
-    <div class="contributions__adblock-content">
-        <div class="contributions__adblock-header">
-            <h2>
-                Read The<br>
-                Guardian without<br>
-                interruption on all<br>
-                your devices
-            </h2>
-        </div>
-        <a class="contributions__adblock-button" href="${supportUrl}">
-            <span class="component-button__content">Subscribe now</span>
-        </a>
-        <img src="https://media.guim.co.uk/b437f809d9fa4c72336ccbead1730b6bb0965239/0_0_432_503/432.png" class="contributions__adblock-image" alt="" />
-    </div>
+    <a href="${supportUrl}">
+        <img src="https://uploads.guim.co.uk/2020/10/02/Digisubs_MPU_c1_my_opt.png" width="300" alt="" />
+    </a>
 </div>
 `;
 
@@ -37,10 +26,10 @@ const canShow = () =>
 export const initAdblockAsk = () => {
     if (canShow()) {
         fastdom
-            .read(() => $('.js-aside-slot-container'))
+            .measure(() => $('.js-aside-slot-container'))
             .then(slot => {
                 if (slot) {
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         slot.append(askHtml);
                     });
                 }

@@ -1,8 +1,9 @@
 // @flow
 import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import config from 'lib/config';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     getSynchronousTestsToRun,
     isInABTestSynchronous,
@@ -20,6 +21,27 @@ const setGoogleTargeting = (canShow: GateStatus): void => {
                 .pubads()
                 .setTargeting('gate', canShow.toString().slice(0, 1)); // must be a short string so we slice to "t"/"f"/"d"/"s"
         });
+    }
+};
+
+// We use this key for storing the gate dismissed count against
+const localStorageDismissedCountKey = (variant: string, name: string): string => `gate-dismissed-count-${name}-${variant}`;
+
+const retrieveDismissedCount = (
+    variant: string,
+    name: string,
+    componentName: string
+): number => {
+    try {
+        const prefs = userPrefs.get(componentName) || {};
+        const dismissed: any = prefs[localStorageDismissedCountKey(variant, name)];
+
+        if (Number.isFinite(dismissed)) {
+            return dismissed;
+        }
+        return 0;
+    } catch (error) {
+        return 0;
     }
 };
 
@@ -111,6 +133,29 @@ export const hasUserDismissedGateInWindow: ({
     return true;
 };
 
+// Test whether the user has dismissed the gate variant more than `count` times
+export const hasUserDismissedGateMoreThanCount = (
+    variant: string,
+    name: string,
+    componentName: string,
+    count: number
+): boolean => retrieveDismissedCount(variant, name, componentName) > count;
+
+// Increment the number of times a user has dismissed this gate variant
+export const incrementUserDismissedGateCount = (
+    variant: string,
+    name: string,
+    componentName: string
+): void => {
+    try {
+        const prefs = userPrefs.get(componentName) || {};
+        prefs[localStorageDismissedCountKey(variant, name)] = retrieveDismissedCount(variant, name, componentName) + 1;
+        userPrefs.set(componentName, prefs);
+    } catch (error) {
+        // localstorage isn't available so show the gate
+    }
+};
+
 // Dynamically sets the gate custom parameter for Google ad request page targeting
 export const setGatePageTargeting = (
     isGateDismissed: boolean,
@@ -129,13 +174,20 @@ export const setGatePageTargeting = (
 // in our case if this is the n-numbered article or higher the user has viewed then set the gate
 export const isNPageOrHigherPageView = (n: number = 2): boolean => {
     // get daily read article count array from local storage
-    const dailyArticleCount = local.get('gu.history.dailyArticleCount') || [];
+    const dailyArticleCount = storage.local.get('gu.history.dailyArticleCount') || [];
 
     // get the count from latest date, if it doesnt exist, set to 0
     const { count = 0 } = dailyArticleCount[0] || {};
 
     // check if count is greater or equal to 1 less than n since dailyArticleCount is incremented after this component is loaded
     return count >= n - 1;
+};
+
+// use gu.location to determine is the browser is in the specified country
+// Note, use country codes specified in /static/src/javascripts/lib/geolocation.js
+export const isCountry = (countryCode: string): boolean => {
+    const geolocation = geolocationGetSync();
+    return geolocation === countryCode;
 };
 
 // determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
@@ -342,17 +394,6 @@ export const addOverlayVariantCSS: ({
         } else {
             overlay.classList.add('overlay--var');
         }
-    }
-};
-
-// helper method to fix the border on the faqlinks bg colour
-export const gateBorderFix = () => {
-    const contentMainColumn = document.querySelector('.js-content-main-column');
-
-    if (contentMainColumn) {
-        contentMainColumn.classList.add(
-            'signin-gate__content-main-column__border-fix'
-        );
     }
 };
 

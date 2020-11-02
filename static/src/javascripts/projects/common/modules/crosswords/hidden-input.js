@@ -19,7 +19,7 @@ class HiddenInput extends Component<*, *> {
                 max: 'mobile',
             })
         ) {
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 const offsets = bonzo(findDOMNode(this.input)).offset();
                 const clueHeight = document.getElementsByClassName(
                     'crossword__sticky-clue'

@@ -18,7 +18,7 @@
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import { addEventListener } from 'lib/events';
@@ -39,6 +39,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
+import { initEmbedResize } from "./emailEmbeds";
 
 const setAdTestCookie = (): void => {
     const queryParams = getUrlVars();
@@ -92,7 +93,7 @@ const handleMembershipAccess = (): void => {
             const { body } = document;
 
             if (body) {
-                fastdom.write(() => body.classList.remove(requireClass));
+                fastdom.mutate(() => body.classList.remove(requireClass));
             }
         } else {
             redirect();
@@ -117,7 +118,7 @@ const addScrollHandler = (): void => {
     const onScroll = (): void => {
         if (!scrollRunning) {
             scrollRunning = true;
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 mediator.emitEvent('window:throttledScroll');
                 scrollRunning = false;
             });
@@ -193,7 +194,7 @@ const bootStandard = (): void => {
         Adds a global window:throttledScroll event to mediator, which throttles
         scroll events until there's a spare animationFrame.
         Callbacks of all listeners to window:throttledScroll are run in a
-        fastdom.read, meaning they can all perform DOM reads for free
+        fastdom.measure, meaning they can all perform DOM reads for free
         (after the first one that needs layout triggers it).
         However, this means it's VITAL that all writes in callbacks are
         delegated to fastdom.
@@ -230,8 +231,8 @@ const bootStandard = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.get(key) || 0;
-        storage.set(key, alreadyVisited + 1);
+        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
+        storage.local.setRaw(key, alreadyVisited + 1);
     }
 
     if (
@@ -271,6 +272,8 @@ const bootStandard = (): void => {
     }
 
     initAtoms();
+
+    initEmbedResize();
 
     showHiringMessage();
 

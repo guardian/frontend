@@ -10,20 +10,22 @@ jest.mock('common/modules/experiments/ab', () => ({
     getAsyncTestsToRun: jest.fn(() => Promise.resolve([])),
     getSynchronousTestsToRun: jest.fn(() => [
         {
-            id: 'SignInGatePatientia', // Update for each new test
-            dataLinkNames: 'SignInGatePatientia', // Update for each new test
+            id: 'SignInGateMainVariant', // Update for each new test
+            dataLinkNames: 'SignInGateMain', // Update for each new test
             variantToRun: {
-                id: 'patientia-variant-1', // Update for each new test
+                id: 'main-variant-3', // Update for each new test
             },
-            ophanComponentId: 'patientia_test',
+            ophanComponentId: 'main_test',
         },
     ]),
 }));
 
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => [{ count: 2, day: 1 }]),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(() => [{ count: 2, day: 1 }]),
+        },
+    }
 }));
 
 jest.mock('common/modules/identity/api', () => ({
@@ -53,7 +55,7 @@ jest.mock('lib/cookies', () => ({
 const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
     .isInABTestSynchronous;
 
-const fakeLocal: any = require('lib/storage').local;
+const fakeLocal: any = require('@guardian/libs').storage.local;
 
 const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
     .isUserLoggedIn;
@@ -94,12 +96,7 @@ describe('Sign in gate test', () => {
 
     describe('canShow returns false', () => {
         it('should return false if not in correct test', () => {
-            // mock for each sign in gate test we have in experiments/tests
-            fakeIsInABTestSynchronous
-                .mockReturnValueOnce(false)
-                .mockReturnValueOnce(false)
-                .mockReturnValueOnce(false)
-                .mockReturnValueOnce(false);
+            fakeIsInABTestSynchronous.mockReturnValue(false);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });
@@ -121,7 +118,7 @@ describe('Sign in gate test', () => {
 
         it('should return false if user has dismissed the gate', () => {
             fakeUserPrefs.get.mockReturnValueOnce({
-                'SignInGatePatientia-patientia-variant-1': Date.now(),
+                'SignInGateMain-main-variant-2': Date.now(),
             });
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);

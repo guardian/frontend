@@ -83,7 +83,7 @@ describe('Scrollable MPU', () => {
             backgroundImage: 'image',
         });
         new ScrollableMpu(adSlot, theParams).create();
-        fastdom.read(() => {
+        fastdom.measure(() => {
             expect(
                 document.querySelector(
                     '.creative--scrollable-mpu-image.creative--scrollable-mpu-image-fixed'
@@ -99,7 +99,7 @@ describe('Scrollable MPU', () => {
             backgroundImage: 'image',
         });
         new ScrollableMpu(adSlot, theParams).create();
-        fastdom.read(() => {
+        fastdom.measure(() => {
             expect(
                 document.querySelector(
                     '.creative--scrollable-mpu-image.creative--scrollable-mpu-image-parallax'

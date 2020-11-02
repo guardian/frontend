@@ -54,7 +54,7 @@ const getBreakpoint: any = getBreakpoint_;
 const refreshAdvert: any = refreshAdvert_;
 
 const mockHeight = (height: number) => {
-    jest.spyOn(fastdom, 'read').mockReturnValue(Promise.resolve(height));
+    jest.spyOn(fastdom, 'measure').mockReturnValue(Promise.resolve(height));
 };
 
 const generateInnerHtmlWithAdSlot = () => {

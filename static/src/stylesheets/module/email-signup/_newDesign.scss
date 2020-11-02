@@ -1,0 +1,179 @@
+/* Newsletter Description */
+
+$base-margin: 8px;
+$desktop-img-size: 200px;
+$mobile-headline-font-size: 24px;
+$mobile-description-font-size: 16px;
+$mobile-img-size: 3 * $mobile-headline-font-size;
+
+.newsletter-embed {
+    * {
+        box-sizing: border-box;
+    }
+    height: 100%;
+    overflow: hidden;
+    /* Filthy hacks during AB test */
+    /* TODO: Remove these and update iframe class post-AB test */
+    width: calc(100% - #{$rounded-adjustment});
+    margin-left: #{$rounded-adjustment / 2};
+}
+.newsletter-embed__image {
+    max-width: $mobile-img-size;
+    float: right;
+    margin: $base-margin $base-margin 0;
+}
+
+.newsletter-embed__image img {
+    width: 100%;
+}
+
+.newsletter-embed__body {
+    margin: $base-margin;
+}
+
+.newsletter-embed__summary {
+    font-family: 'Guardian Egyptian Web', Georgia, serif;
+}
+
+.newsletter-embed__headline-wrapper {
+    margin: 0 0 $base-margin;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    height: $mobile-img-size;
+}
+
+.newsletter-embed__image + .newsletter-embed__headline-wrapper {
+    padding-left: $base-margin;
+}
+
+.newsletter-embed__headline {
+    font-size: $mobile-headline-font-size;
+    font-weight: 700;
+    line-height: 110%;
+}
+
+.newsletter-embed__description {
+    /* Small hack to get description to go under image if close to fitting under */
+    padding-top: 2px;
+    font-size: 16px;
+    clear: left;
+    line-height: 120%;
+}
+
+/* Sign up Form */
+.newsletter-embed__form {
+    clear: left;
+    font-size: $mobile-description-font-size;
+    font-family: 'Guardian Text Sans Web', sans-serif;
+}
+
+.newsletter-embed__form-wrapper {
+    max-width: 500px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+    'label label . '
+    'input input button'
+    'privacy-link privacy-link .';
+    justify-items: start;
+}
+
+.newsletter-embed__form label {
+    grid-area: label;
+    align-self: end;
+    font-weight: bold;
+}
+
+.newsletter-embed__input {
+    border: 2px solid #808080;
+    background: #ffffff;
+    outline: 0;
+    grid-area: input;
+    width: 100%;
+    height: 2rem;
+}
+
+
+.newsletter-embed__submit-button {
+    color: #ffffff;
+    background-color: #000000;
+    border: 0;
+    width: 75px;
+    border-radius: 62.5rem;
+    grid-area: button;
+    margin-left: 15px;
+    font-size: $mobile-description-font-size;
+    font-weight: bold;
+    font-family: 'Guardian Text Sans Web', sans-serif;
+    line-height: 100%;
+}
+
+.newsletter-embed__privacy-policy {
+    grid-area: privacy-link;
+    align-self: end;
+    font-size: 12px;
+    font-weight: normal;
+    color: #000000;
+}
+
+.newsletter-embed__result {
+    .email-sub--article {
+        padding: 0;
+        .email-sub__message {
+            padding-left: 0;
+            .inline-mail {
+                display: none;
+            }
+            .email-sub__message__headline {
+                font-size: $mobile-description-font-size
+            }
+        }
+    }
+}
+
+
+/* Desktop View */
+
+@media screen and (min-device-width: 600px) and (-webkit-min-device-pixel-ratio: 1) {
+
+    .newsletter-embed__image {
+        max-width: $desktop-img-size;
+        float: left;
+    }
+
+    .newsletter-embed__form {
+        clear: none;
+        margin: auto;
+    }
+
+    .newsletter-embed__headline-wrapper {
+        display: block;
+        height: auto;
+        padding-left: 0;
+    }
+
+    .newsletter-embed__headline {
+        font-size: 30px;
+    }
+
+    .newsletter-embed__description {
+        clear: none;
+    }
+
+    .newsletter-embed__image + .newsletter-embed__body {
+        min-height: calc(#{$base-margin} + #{$desktop-img-size});
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .newsletter-embed-result {
+        .email-sub__message {
+            padding-bottom: 26px;
+        }
+    }
+
+}

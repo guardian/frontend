@@ -39,12 +39,18 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
-# Email signup paths
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/$listId<[0-9]+>                                  controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/:listName                                        controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
-GET            /email/$result<success|invalid|error>                                                                             controllers.EmailSignupController.subscriptionResult(result: String)
-POST           /email                                                                                                            controllers.EmailSignupController.submit()
-OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
+# Email paths
+GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+## Submission results (Only accessed server side)
+GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
+GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)
+GET        /email/$result<invalid|error>                                        controllers.EmailSignupController.subscriptionNonsuccessResult(result: String)
+## Submission endpoints
+POST       /email/footer                                                        controllers.EmailSignupController.submitFooter()
+POST       /email                                                               controllers.EmailSignupController.submit()
+OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
@@ -201,8 +207,6 @@ GET            /config                                                          
 GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
-GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
-POST           /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.save()
 GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
 GET            /metrics/googlebot/404                                                                                            controllers.admin.MetricsController.renderGooglebot404s()
 GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()

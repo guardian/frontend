@@ -14,12 +14,12 @@ import play.api.mvc._
 import services.CAPILookup
 import views.support.RenderOtherStatus
 import implicits.{AmpFormat, HtmlFormat}
-import model.dotcomponents.{DCRDataModel, DotcomponentsDataModel}
-import renderers.RemoteRenderer
+import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms}
+import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
 
-import model.dotcomponents.PageType
+import model.dotcomrendering.PageType
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
 
@@ -27,7 +27,7 @@ class LiveBlogController(
     contentApiClient: ContentApiClient,
     val controllerComponents: ControllerComponents,
     ws: WSClient,
-    remoteRenderer: renderers.RemoteRenderer = RemoteRenderer(),
+    remoteRenderer: renderers.DotcomRenderingService = DotcomRenderingService(),
 )(implicit context: ApplicationContext)
     extends BaseController
     with Logging
@@ -172,8 +172,8 @@ class LiveBlogController(
       blocks: Blocks,
   )(implicit request: RequestHeader): Result = {
     val pageType: PageType = PageType(blog, request, context)
-    val model = DotcomponentsDataModel.fromArticle(blog, request, blocks, pageType)
-    val json = DCRDataModel.toJson(model)
+    val model = DotcomRenderingTransforms.fromArticle(blog, request, blocks, pageType)
+    val json = DotcomRenderingDataModel.toJson(model)
     common.renderJson(json, blog).as("application/json")
   }
 

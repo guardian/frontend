@@ -58,7 +58,7 @@ const enhanceTweets = (): void => {
     tweetElements.forEach(element => {
         const rect = element.getBoundingClientRect();
         if (viewportHeight * 2.5 > rect.top && rect.top + rect.height > 0) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 element.classList.remove('js-tweet');
                 element.classList.add('twitter-tweet');
                 // We only want to render tweets once the class has been added

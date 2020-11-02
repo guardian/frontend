@@ -1,12 +1,13 @@
 // @flow
 
 import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
+import { onConsentChange } from '@guardian/consent-management-platform'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
     emitBeginEvent,
     setupClickHandling,
-    makeEvent, submitOphanInsert,
+    submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
 import reportError from 'lib/report-error';
@@ -81,7 +82,44 @@ const epicEl = () => {
     return container;
 }
 
-const buildEpicPayload = () => {
+const hasOptedOutOfArticleCount = () =>
+    !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+
+const DAILY_ARTICLE_COUNT_KEY = 'gu.history.dailyArticleCount';
+const WEEKLY_ARTICLE_COUNT_KEY = 'gu.history.weeklyArticleCount';
+
+const removeArticleCountsFromLocalStorage = () => {
+    window.localStorage.removeItem(DAILY_ARTICLE_COUNT_KEY);
+    window.localStorage.removeItem(WEEKLY_ARTICLE_COUNT_KEY);
+}
+
+const REQUIRED_CONSENTS_FOR_ARTICLE_COUNT = [1, 3, 7];
+
+/* eslint-disable guardian-frontend/exports-last */
+export const getArticleCountConsent = (): Promise<boolean> => {
+    if (hasOptedOutOfArticleCount()) {
+        return Promise.resolve(false);
+    }
+    return new Promise((resolve) => {
+        onConsentChange(({ ccpa, tcfv2 }) => {
+            if (ccpa) {
+                resolve(true);
+            } else if (tcfv2) {
+                const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
+                    (consent) => tcfv2.consents[consent],
+                );
+
+                if (!hasRequiredConsents) {
+                    removeArticleCountsFromLocalStorage();
+                }
+
+                resolve(hasRequiredConsents);
+            }
+        });
+    });
+};
+
+const buildEpicPayload = async () => {
     const ophan = config.get('ophan');
     const page = config.get('page');
 
@@ -112,7 +150,7 @@ const buildEpicPayload = () => {
         countryCode,
         epicViewLog: getViewLog(),
         weeklyArticleHistory: getWeeklyArticleHistory(),
-        hasOptedOutOfArticleCount: !!getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
     };
 
     return {
@@ -121,7 +159,26 @@ const buildEpicPayload = () => {
     };
 };
 
-const buildBannerPayload = () => {
+export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
+const twentyMins = 20*60000;
+
+export const withinLocalNoBannerCachePeriod = (): boolean => {
+    const item = window.localStorage.getItem(NO_RR_BANNER_TIMESTAMP_KEY);
+    if (item && !Number.isNaN(parseInt(item, 10))) {
+        const withinCachePeriod = (parseInt(item, 10) + twentyMins) > Date.now();
+        if (!withinCachePeriod) {
+            // Expired
+            window.localStorage.removeItem(NO_RR_BANNER_TIMESTAMP_KEY);
+        }
+        return withinCachePeriod;
+    }
+    return false;
+};
+
+export const setLocalNoBannerCachePeriod = (): void =>
+    window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
+
+const buildBannerPayload = async () => {
     const page = config.get('page');
 
     // TODO: Review whether we need to send all of this in the payload to the server
@@ -141,10 +198,8 @@ const buildBannerPayload = () => {
         subscriptionBannerLastClosedAt: userPrefs.get('subscriptionBannerLastClosedAt') || undefined,
         mvtId: getMvtValue(),
         countryCode: geolocationGetSync(),
-        switches: {
-            remoteSubscriptionsBanner: config.get('switches.remoteSubscriptionsBanner', false)
-        },
         weeklyArticleHistory: getWeeklyArticleHistory(),
+        hasOptedOutOfArticleCount: !(await getArticleCountConsent())
     };
 
     return {
@@ -163,30 +218,97 @@ const checkResponseOk = response => {
     );
 };
 
+const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
+    if (URLSearchParams) {
+        const params = new URLSearchParams(window.location.search);
+        const value = params.get(`force-${type}`);
+        if (value) {
+            return value;
+        }
+    }
+
+    return null;
+};
+
 // TODO: add this to the client library
 const getStickyBottomBanner = (payload: {}) => {
     const isProd = config.get('page.isProd');
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
-    return fetchJson(URL, {
+    const forcedVariant = getForcedVariant('banner');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${URL}${queryString}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
 };
 
-export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
-    const payload = buildBannerPayload();
+const getEpicUrl = (contentType: string): string => {
+    const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
+    return config.get('page.isDev') ?
+        `https://contributions.code.dev-guardianapis.com/${path}` :
+        `https://contributions.guardianapis.com/${path}`
+};
 
-    return getStickyBottomBanner(payload)
-        .then(json => {
-            if (!json.data) {
-                return null;
+const renderEpic = async (module, meta): Promise<void> => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
+
+    emitBeginEvent(campaignId);
+    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+
+    const el = epicEl();
+    mountDynamic(el, component.ContributionsEpic, module.props, true);
+
+    submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+    setupOphanView(
+        el,
+        abTestName,
+        abTestVariant,
+        campaignCode,
+        campaignId,
+        componentType,
+        products,
+        abTestVariant.showTicker,
+        abTestVariant.tickerSettings,
+    );
+};
+
+export const fetchBannerData: () => Promise<?BannerDataResponse> = async () => {
+    const payload = await buildBannerPayload();
+
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return Promise.resolve(null);
+    }
+
+    if (payload.targeting.engagementBannerLastClosedAt &&
+        payload.targeting.subscriptionBannerLastClosedAt &&
+        withinLocalNoBannerCachePeriod()
+    ) {
+        return Promise.resolve(null);
+    }
+
+    return getStickyBottomBanner(payload).then(json => {
+        if (!json.data) {
+            if (payload.targeting.engagementBannerLastClosedAt && payload.targeting.subscriptionBannerLastClosedAt) {
+                setLocalNoBannerCachePeriod();
             }
+            return null;
+        }
 
-            return (json: BannerDataResponse);
-        });
+        return (json: BannerDataResponse);
+    });
 };
 
 export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
@@ -203,7 +325,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
                 container.classList.add('remote-banner');
@@ -258,52 +380,27 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = async (id: string): Promise<void> => {
-    try {
-        const payload = buildEpicPayload();
-        const viewEvent = makeEvent(id, 'view');
+export const fetchAndRenderEpic = async (): Promise<void> => {
+    const page = config.get('page');
 
-        const response = await getEpicMeta(payload);
-        checkResponseOk(response);
-        const json = await response.json();
+    // Liveblog epics are still selected and rendered natively
+    if (page.contentType === 'Article') {
+        try {
+            const payload = await buildEpicPayload();
 
-        if (!json || !json.data) {
-            throw new Error("epic unexpected response format");
+            const url = getEpicUrl(page.contentType);
+            const response = await getEpicMeta(payload, url);
+            checkResponseOk(response);
+            const json = await response.json();
+
+            if (json && json.data) {
+                const {module, meta} = json.data;
+                await renderEpic(module, meta);
+            }
+
+        } catch (error) {
+            console.log(`Error importing remote epic: ${error}`);
+            reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
         }
-
-        const {module, meta} = json.data;
-        const component = await window.guardianPolyfilledImport(module.url);
-        const el = epicEl();
-
-        const {
-            abTestName,
-            abTestVariant,
-            componentType,
-            products = [],
-            campaignCode,
-            campaignId
-        } = meta;
-
-        emitBeginEvent(campaignId);
-        setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
-        mountDynamic(el, component.ContributionsEpic, module.props, true);
-
-        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode)
-        setupOphanView(
-            el,
-            viewEvent,
-            abTestName,
-            abTestVariant,
-            campaignCode,
-            campaignId,
-            componentType,
-            products,
-            abTestVariant.showTicker,
-            abTestVariant.tickerSettings,
-        );
-    } catch (error) {
-        console.log(`Error importing remote epic: ${error}`);
-        reportError(new Error(`Error importing remote epic: ${error}`), {}, false);
     }
-}
+};

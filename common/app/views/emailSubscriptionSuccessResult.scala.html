@@ -1,0 +1,18 @@
+@import com.gu.identity.model.EmailEmbed
+@import experiments.{ActiveExperiments, NewsletterEmbedDesign}
+@(page: model.Page, emailEmbedData: EmailEmbed, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}
+
+@emailEmbed(page) {
+    @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign) && electionNewsletters.contains(listName)) {
+        @fragments.email.signup.result.emailResultNewDesign(
+            listName,
+            emailEmbedData,
+            fragments.email.signup.result.emailSuccess(emailEmbedData)
+        )
+    } else {
+        @fragments.email.signup.result.emailSuccess(emailEmbedData)
+    }
+
+}

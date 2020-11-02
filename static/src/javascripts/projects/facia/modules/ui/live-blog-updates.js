@@ -6,7 +6,7 @@ import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
@@ -75,13 +75,13 @@ const maybeAnimateBlocks = (
     immediate?: boolean
 ): Promise<boolean> =>
     fastdomPromise
-        .read(() => el.getBoundingClientRect().top)
+        .measure(() => el.getBoundingClientRect().top)
         .then(vPosition => {
             const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
 
             if (isVisible) {
                 timeoutPromise(immediate ? 0 : animateDelayMs).then(() =>
-                    fastdomPromise.write(() =>
+                    fastdomPromise.mutate(() =>
                         el.classList.remove(
                             'fc-item__liveblog-blocks__inner--offset'
                         )
@@ -113,7 +113,7 @@ const animateBlocks = (el: Element, container: Element): void => {
         }
     });
 
-    fastdomPromise.write(() => {
+    fastdomPromise.mutate(() => {
         container.classList.remove('fc-item__liveblog-blocks--hidden');
         container.classList.add('fc-item__liveblog-blocks--visible');
     });
@@ -123,7 +123,7 @@ const applyUpdate = (
     container: Element,
     content: Array<Element>
 ): Promise<void> =>
-    fastdomPromise.write(() => {
+    fastdomPromise.mutate(() => {
         bonzo(container)
             .empty()
             .append(content);
@@ -232,7 +232,7 @@ const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
 
 const showUpdatesFromLiveBlog = (): Promise<void> =>
     fastdomPromise
-        .read(() => {
+        .measure(() => {
             const elementsById: Map<string, Array<Element>> = new Map();
 
             // For each liveblock block
@@ -252,7 +252,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
             let oldBlockDates;
 
             if (elementsById.size) {
-                oldBlockDates = session.get(sessionStorageKey) || {};
+                oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
                 elementsById.forEach((elements, articleId) => {
                     fetchJson(`/${articleId}.json?rendered=false`, {
@@ -271,7 +271,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
                                 );
                                 oldBlockDates[articleId] =
                                     blocks[0].publishedDateTime;
-                                session.set(sessionStorageKey, oldBlockDates);
+                                storage.session.set(sessionStorageKey, oldBlockDates);
                             }
                         })
                         .catch(() => {});

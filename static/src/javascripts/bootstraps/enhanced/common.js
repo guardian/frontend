@@ -7,7 +7,7 @@ import { cleanUp, addSessionCookie } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { getUrlVars } from 'lib/url';
 import { catchErrorsWithContext } from 'lib/robust';
-import { local as localStorage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { mediaListener } from 'common/modules/analytics/media-listener';
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { initAnalyticsRegister } from 'common/modules/analytics/register';
@@ -44,8 +44,6 @@ import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
 import { initPinterest } from 'common/modules/social/pinterest';
-import { subscriptionBanner } from 'common/modules/ui/subscription-banners/subscription-banner';
-import { initEmail } from 'common/modules/email/email';
 import { init as initIdentity } from 'bootstraps/enhanced/identity-common';
 import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { breakingNews } from 'common/modules/onward/breaking-news';
@@ -61,6 +59,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
+import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -143,7 +142,7 @@ const cleanupLocalStorage = (): void => {
         'gu.recommendationsEnabled',
         'gu.abb3.exempt',
     ];
-    deprecatedKeys.forEach(key => localStorage.remove(key));
+    deprecatedKeys.forEach(key => storage.local.remove(key));
 };
 
 const updateHistory = (): void => {
@@ -160,10 +159,11 @@ const updateHistory = (): void => {
     }
 };
 
-const updateArticleCounts = (): void => {
+const updateArticleCounts = async (): Promise<void> => {
     const page = config.get('page');
+    const hasConsentedToArticleCounts = await getArticleCountConsent();
 
-    if (page) {
+    if (page && hasConsentedToArticleCounts) {
         incrementDailyArticleCount(page);
         incrementWeeklyArticleCount(page);
     }
@@ -203,12 +203,12 @@ const checkIframe = (): void => {
 
 const normalise = (): void => {
     if (document.location.hash === '#nfn') {
-        localStorage.set('nfn', true);
+        storage.local.set('nfn', true);
     }
     if (document.location.hash === '#nnfn') {
-        localStorage.remove('nfn');
+        storage.local.remove('nfn');
     }
-    if (localStorage.get('nfn')) {
+    if (storage.local.get('nfn')) {
         import('common/modules/ui/normalise').then(({ go }) => {
             go();
         });
@@ -277,31 +277,6 @@ const startPinterest = (): void => {
     }
 };
 
-const initialiseEmail = (): void => {
-    // Initalise email embedded in page
-    initEmail();
-
-    // Initalise email forms in iframes
-    Array.from(document.getElementsByClassName('js-email-sub__iframe')).forEach(
-        el => {
-            const iframe: HTMLIFrameElement = (el: any);
-
-            initEmail(iframe);
-        }
-    );
-
-    // Listen for interactive load event and initalise forms
-    bean.on(window, 'interactive-loaded', () => {
-        Array.from(
-            document.querySelectorAll('.guInteractive .js-email-sub__iframe')
-        ).forEach(el => {
-            const iframe: HTMLIFrameElement = (el: any);
-
-            initEmail(iframe);
-        });
-    });
-};
-
 const initialiseBanner = (): void => {
     // ordered by priority
     const bannerList = [
@@ -310,7 +285,6 @@ const initialiseBanner = (): void => {
         signInGate,
         membershipBanner,
         readerRevenueBanner,
-        subscriptionBanner,
         smartAppBanner,
         adFreeBanner,
         emailSignInBanner,
@@ -355,7 +329,6 @@ const init = (): void => {
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],
-        ['c-email', initialiseEmail],
         ['c-user-features', refreshUserFeatures],
         ['c-membership', initMembership],
         ['c-banner-picker', initialiseBanner],

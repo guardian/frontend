@@ -11,7 +11,7 @@ import {
     clearBannerHistory,
     minArticlesBeforeShowingBanner,
 } from 'common/modules/commercial/membership-engagement-banner';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import {
     initMvtCookie,
     decrementMvtCookie,
@@ -20,7 +20,6 @@ import {
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
-import { COOKIE_NAME as CONSENT_COOKIE_NAME } from 'commercial/modules/cmp/cmp-env';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
@@ -91,13 +90,14 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     clearBannerHistory();
 
     // The banner only displays after a certain number of pageviews. So let's get there quick!
-    local.set('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
+    storage.local.setRaw('gu.alreadyVisited', minArticlesBeforeShowingBanner + 1);
+
+
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
 const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
     addCookie('GU_geo_continent', 'EU');
-    removeCookie(CONSENT_COOKIE_NAME);
     showMeTheBanner(asExistingSupporter);
 };
 

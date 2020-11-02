@@ -498,7 +498,7 @@ class Loader extends Component {
             // If comments are hidden, lets show them
             if (commentsAreHidden) {
                 fastdom
-                    .write(() => {
+                    .mutate(() => {
                         if (this.comments) {
                             this.comments.showHiddenComments();
                         }
@@ -523,7 +523,7 @@ class Loader extends Component {
             // Scroll to toolbar and show message
             scrollToElement(qwery('.js-discussion-toolbar'), 100);
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $('.js-discussion-main-comments').prepend(
                     '<div class="d-discussion__message d-discussion__message--error">The comment you requested could not be found.</div>'
                 );

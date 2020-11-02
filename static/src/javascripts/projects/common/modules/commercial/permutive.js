@@ -1,12 +1,12 @@
 // @flow
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 const PERMUTIVE_KEY = `_papns`;
 const PERMUTIVE_PFP_KEY = `_pdfps`;
 
 const getSegments = (key: string): Array<string> => {
     try {
-        return JSON.parse(local.getRaw(key) || '[]')
+        return JSON.parse(storage.local.getRaw(key) || '[]')
             .slice(0, 250)
             .map(s => Number.parseInt(s, 10))
             .filter(n => typeof n === 'number' && !Number.isNaN(n))

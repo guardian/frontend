@@ -82,12 +82,18 @@ object FooterLinks {
     FooterLink("All topics", "/index/subjects/a", s"${edition} : footer : all topics")
   def allWriters(edition: String): FooterLink =
     FooterLink("All writers", "/index/contributors", s"${edition} : footer : all contributors")
-  val digitalNewspaperArchive =
+  val digitalNewspaperArchive: FooterLink =
     FooterLink("Digital newspaper archive", "https://theguardian.newspapers.com", "digital newspaper archive")
   def facebook(edition: String): FooterLink =
     FooterLink("Facebook", "https://www.facebook.com/theguardian", s"${edition} : footer : facebook")
   def twitter(edition: String): FooterLink =
     FooterLink("Twitter", "https://twitter.com/guardian", s"${edition}: footer : twitter")
+  def newsletters(edition: String): FooterLink =
+    FooterLink(
+      text = "Newsletters",
+      url = s"/email-newsletters?INTCMP=DOTCOM_FOOTER_NEWSLETTER_${edition.toUpperCase}",
+      dataLinkName = s"$edition : footer : newsletters",
+    )
 
   val ukListTwo = List(
     allTopics("uk"),
@@ -100,6 +106,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("uk"),
     twitter("uk"),
+    newsletters("uk"),
   )
 
   val usListTwo = List(
@@ -108,6 +115,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("us"),
     twitter("us"),
+    newsletters("us"),
   )
 
   val auListTwo = List(
@@ -117,6 +125,7 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("au"),
     twitter("au"),
+    newsletters("au"),
   )
 
   val intListTwo = List(
@@ -125,24 +134,16 @@ object FooterLinks {
     digitalNewspaperArchive,
     facebook("international"),
     twitter("international"),
+    newsletters("international"),
   )
 
   // Footer column three
-
-  def discountCodes(edition: String): FooterLink =
-    FooterLink(
-      "Discount Codes",
-      "https://discountcode.theguardian.com/",
-      s"${edition}: footer : discount code",
-      "js-discount-code-link",
-    )
 
   val ukListThree = List(
     FooterLink("Advertise with us", "https://advertising.theguardian.com", "uk : footer : advertise with us"),
     FooterLink("Guardian Labs", "/guardian-labs", "uk : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_UK_GU_JOBS", "uk : footer : jobs"),
     FooterLink("Patrons", "https://patrons.theguardian.com?INTCMP=footer_patrons", "uk : footer : patrons"),
-    discountCodes("uk"),
   )
 
   val usListThree = List(
@@ -153,14 +154,12 @@ object FooterLinks {
     ),
     FooterLink("Guardian Labs", "/guardian-labs-us", "us : footer : guardian labs"),
     FooterLink("Search jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_US_GU_JOBS", "us : footer : jobs"),
-    discountCodes("us"),
   )
 
   val auListThree = List(
     FooterLink("Guardian Labs", "/guardian-labs-australia", "au : footer : guardian labs"),
     FooterLink("Advertise with us", "https://advertising.theguardian.com/", "au : footer : advertise with us"),
     FooterLink("Search UK jobs", "https://jobs.theguardian.com?INTCMP=NGW_FOOTER_AU_GU_JOBS", "au : footer : uk-jobs"),
-    discountCodes("au"),
   )
 
   val intListThree = List(
@@ -174,7 +173,6 @@ object FooterLinks {
       "https://jobs.theguardian.com/?INTCMP=NGW_FOOTER_INT_GU_JOBS",
       "international : footer : uk-jobs",
     ),
-    discountCodes("international"),
   )
 
   def getFooterByEdition(edition: Edition): Seq[Seq[FooterLink]] =

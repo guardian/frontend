@@ -1,17 +1,19 @@
 package services.dotcomponents
 
-import controllers.ArticlePage
+import model.ArticlePage
 import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{
   AudioBlockElement,
   BlockElement,
+  CommentBlockElement,
   ContentAtomBlockElement,
   DocumentBlockElement,
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
+  MapBlockElement,
   PullquoteBlockElement,
   RichLinkBlockElement,
   TableBlockElement,
@@ -52,10 +54,12 @@ object ArticlePageChecks {
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
         case _: AudioBlockElement     => false
+        case _: CommentBlockElement   => false
         case _: DocumentBlockElement  => false
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
+        case _: MapBlockElement       => false
         case _: PullquoteBlockElement => false
         case _: RichLinkBlockElement  => false
         case _: TableBlockElement     => false
@@ -65,7 +69,8 @@ object ArticlePageChecks {
         case ContentAtomBlockElement(_, atomtype) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
-          val supportedAtomTypes = List("explainer", "interactive", "qanda", "guide", "timeline", "profile", "chart")
+          val supportedAtomTypes =
+            List("audio", "chart", "explainer", "guide", "interactive", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
         }
         case _ => true

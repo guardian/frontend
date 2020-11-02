@@ -1,7 +1,7 @@
 // @flow strict
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
-import { loadScript } from 'lib/load-script';
+import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
 type comscoreGlobals = {
@@ -14,7 +14,6 @@ type comscoreGlobals = {
 const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';
 const comscoreC1 = '2';
 const comscoreC2 = '6035250';
-const SOURCEPOINT_ID: string = '5efefe25b8e05c06542b2a77';
 
 let initialised = false;
 
@@ -55,7 +54,7 @@ export const init = (): Promise<void> => {
     if (commercialFeatures.comscore) {
         onConsentChange(state => {
             const canRunTcfv2 =
-                state.tcfv2 && state.tcfv2.vendorConsents[SOURCEPOINT_ID];
+                state.tcfv2 && getConsentFor('comscore', state);
             const canRunCcpa = !!state.ccpa; // always runs in CCPA
             if (canRunTcfv2 || canRunCcpa) initOnConsent(true);
         });
@@ -73,5 +72,4 @@ export const _ = {
     comscoreSrc,
     comscoreC1,
     comscoreC2,
-    SOURCEPOINT_ID,
 };

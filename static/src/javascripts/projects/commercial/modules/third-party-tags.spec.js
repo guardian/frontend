@@ -1,5 +1,8 @@
 // @flow
-import { onConsentChange as onConsentChange_ } from '@guardian/consent-management-platform';
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
 
@@ -9,9 +12,11 @@ jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    getConsentFor: jest.fn()
 }));
 
 const onConsentChange: any = onConsentChange_;
+const getConsentFor: any = getConsentFor_;
 
 const tcfv2AllConsentMock = (callback): void =>
     callback({
@@ -86,10 +91,6 @@ afterEach(() => {
 
 jest.mock('ophan/ng', () => null);
 
-jest.mock('commercial/modules/third-party-tags/plista', () => ({
-    plista: jest.fn(),
-}));
-
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
@@ -141,19 +142,19 @@ describe('third party tags', () => {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag.js',
             onLoad: jest.fn(),
-            sourcepointId: '100',
+            name: 'permutive',
         };
         const fakeThirdPartyAdvertisingTag2: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
-            sourcepointId: '300',
+            name: 'lotame',
         };
         const fakeThirdPartyPerformanceTag: ThirdPartyTag = {
             shouldRun: true,
             url: '//fakeThirdPartyPerformanceTag.js',
             onLoad: jest.fn(),
-            sourcepointId: '200',
+            name: 'twitter',
         };
 
         beforeEach(() => {
@@ -164,14 +165,17 @@ describe('third party tags', () => {
 
         it('should add scripts to the document when TCFv2 consent has been given', () => {
             onConsentChange.mockImplementation(tcfv2AllConsentMock);
+            getConsentFor.mockReturnValue(true);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
             );
             expect(document.scripts.length).toBe(3);
         });
+
         it('should only add performance scripts to the document when TCFv2 consent has not been given', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            getConsentFor.mockReturnValue(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
@@ -182,6 +186,7 @@ describe('third party tags', () => {
             onConsentChange.mockImplementation(callback =>
                 callback({ ccpa: { doNotSell: false } })
             );
+            getConsentFor.mockReturnValue(true);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
@@ -192,6 +197,7 @@ describe('third party tags', () => {
             onConsentChange.mockImplementation(callback =>
                 callback({ ccpa: { doNotSell: true } })
             );
+            getConsentFor.mockReturnValue(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag],
                 [fakeThirdPartyPerformanceTag]
@@ -201,6 +207,8 @@ describe('third party tags', () => {
 
         it('should only add consented custom vendors to the document for TCFv2', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []
@@ -210,6 +218,10 @@ describe('third party tags', () => {
 
         it('should not add already loaded tags ', () => {
             onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
+            getConsentFor.mockReturnValueOnce(true);
+            getConsentFor.mockReturnValueOnce(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []
@@ -223,6 +235,7 @@ describe('third party tags', () => {
 
         it('should not add scripts to the document when TCFv2 consent has not been given', () => {
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+            getConsentFor.mockReturnValue(false);
             insertScripts(
                 [fakeThirdPartyAdvertisingTag, fakeThirdPartyAdvertisingTag2],
                 []

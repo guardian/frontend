@@ -16,8 +16,8 @@ class PreviewTestSuite
   // preview server can start up and serve a page
 
   "Preview Server" should "be able to serve an article" in goTo(
-    "/news/2017/nov/16/a-mission-for-journalism-in-a-time-of-crisis",
+    "/business/2020/oct/07/tesco-hit-by-533m-covid-costs-but-sales-jump-during-pandemic",
   ) { browser =>
-    browser.$("body").text should include("Now we are living through another extraordinary period in history")
+    browser.$("body").text should include("Britain’s biggest supermarket chain said UK food sale")
   }
 }
