@@ -25,6 +25,7 @@ export const init = (): Promise<void> => {
         onConsentChange(state => {
             // Initial testing only
             console.log(getConsentFor('ipsos', state));
+            // $FlowFixMe
             if(location.pathname === "/science/grrlscientist/2012/aug/07/3" || location.pathname === "/science/grrlscientist/2012/aug/07/3?dcr=true") {
                 if (getConsentFor('ipsos', state)) {
                     loadIpsosScript();
