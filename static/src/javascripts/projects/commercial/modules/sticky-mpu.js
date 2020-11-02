@@ -64,7 +64,8 @@ const stickyMpu = (adSlot: HTMLElement) => {
     }
 
     const referenceElement: ?HTMLElement = document.querySelector(
-        '.js-article__body,.js-liveblog-body-content'
+        '.js-article__body:not([style*="display: none;"]), ' +
+        '.js-liveblog-body-content:not([style*="display: none;"])'
     );
 
     const stickyPixelBoundary: number = 600; // This is the ad-height.
@@ -81,6 +82,9 @@ const stickyMpu = (adSlot: HTMLElement) => {
         .measure(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
             fastdom.mutate(() => {
+                console.log("referenceElement.offsetTop", referenceElement.offsetTop);
+                console.log("adSlot.parentNode", adSlot.parentNode);
+                console.log(`**** resize height for : ${adSlot.parentNode} to ${newHeight}px`);
                 (adSlot.parentNode: any).style.height = `${newHeight}px`;
             })
         )
