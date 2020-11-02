@@ -13,9 +13,11 @@
     var pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
 }
 
+// This is to prevent console errors from code calling window.ga for sessions where we have not loaded the tracking script
+// (where the user has not given their consent for GA tracking)
+window.ga = function() {};
 
-(function() {
-
+window.initialiseGa = function() {
     // Remove spaces from content type and convert it to lower case
     function convertContentType(contentType) {
         var result = contentType;
@@ -59,6 +61,7 @@
     }
     var isLoggedIn = (!!identityId).toString();
 
+    delete window.ga;
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
     ***************************************************************************************@
@@ -161,7 +164,7 @@
     // Mediator will be intialised if we need to use this, otherwise just use GA straight away
     guardian.app && guardian.app.mediator && guardian.app.mediator.emit('modules:ga:ready');
 
-})();
+};
 </script>
 
 @*
