@@ -26,7 +26,6 @@ export const newsletterEmbeds: ABTest = {
                 iframes.forEach(
                     (ifrm) => {
                         const ifrmElement = (ifrm: HTMLIFrameElement)
-                        ifrmElement.setAttribute("height", "224px")
                         const doc = ifrmElement.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
                         if (doc) {
                             const oldDesign = doc.querySelector('.js-ab-embed-old-design');
