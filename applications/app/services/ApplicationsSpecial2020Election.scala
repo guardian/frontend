@@ -15,7 +15,7 @@ object ApplicationsSpecial2020Election {
     "/world/ng-interactive/2020/oct/29/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
     "/us-news/ng-interactive/2020/nov/03/us-election-2020-live-results-donald-trump-joe-biden-who-won-presidential-republican-democrat" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
   )
-  val specialPaths = specialPathsToCapiIdsMap.values.toList
+  val specialPaths = specialPathsToCapiIdsMap.keys.toList
 
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
