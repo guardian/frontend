@@ -5,18 +5,18 @@
 @electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}
 
 @emailEmbed(page) {
-    @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign) && electionNewsletters.contains(listName)){
+    @if(electionNewsletters.contains(listName)){
         @fragments.email.signup.subscription.emailSignUpNewDesign(
             emailType,
             listName,
             emailEmbedData
         )
-    } else {
-      @fragments.email.signup.subscription.emailSignUp(
-          emailType,
-          listName,
-          emailEmbedData
-        )
     }
+    @fragments.email.signup.subscription.emailSignUp(
+        emailType,
+        listName,
+        emailEmbedData
+    )
+
 
 }
