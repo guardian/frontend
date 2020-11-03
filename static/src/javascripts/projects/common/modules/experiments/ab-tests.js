@@ -10,8 +10,8 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     signInGateMainVariant,
     signInGateMainControl,
-    newsletterEmbeds
-    newsletterMerchUnit,
+    newsletterEmbeds,
+    newsletterMerchUnit
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [];
