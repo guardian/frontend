@@ -7,7 +7,7 @@ export const newsletterMerchUnit: ABTest = {
     author: 'Josh Buckland',
     description:
         'Show a newsletter advert in the merchandising unit to 50% of users',
-    audience: 1,
+    audience: 0.5,
     audienceOffset: 0.0,
     successMeasure: 'We see increased engagement from users shown the Newsletters ad unit',
     audienceCriteria:
