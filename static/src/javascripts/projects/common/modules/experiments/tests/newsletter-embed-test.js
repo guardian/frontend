@@ -7,8 +7,8 @@ export const newsletterEmbeds: ABTest = {
     author: 'Josh Buckland',
     description:
         'Show a new newsletter embed design',
-    audience: 1,
-    audienceOffset: 0.0,
+    audience: 0.5,
+    audienceOffset: 0.5,
     successMeasure: 'We see increased engagement from users shown the new design',
     audienceCriteria:
         'Website users only.',
