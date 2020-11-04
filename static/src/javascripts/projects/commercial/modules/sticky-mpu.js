@@ -67,7 +67,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
         '.js-article__body,.js-liveblog-body-content'
     );
 
-    const stickyPixelBoundary: number = 300;
+    const stickyPixelBoundary: number = 600; //this is the ad-height.
 
     if (
         !referenceElement ||
