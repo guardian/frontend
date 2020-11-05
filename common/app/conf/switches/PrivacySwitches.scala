@@ -21,7 +21,7 @@ trait PrivacySwitches {
     "au-consent",
     "Enable consent management for Australia.",
     owners = group(Commercial),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
   )
