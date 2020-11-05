@@ -15,4 +15,14 @@ trait PrivacySwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
+
+  val AuConsent = Switch(
+    SwitchGroup.Privacy,
+    "au-consent",
+    "Enable consent management for Australia.",
+    owners = group(Commercial),
+    safeState = Off,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
 }

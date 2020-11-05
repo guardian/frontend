@@ -49,17 +49,20 @@ const go = () => {
         onConsentChange(() => {
             if (!recordedConsentTime) {
                 recordedConsentTime = true;
-                cmp.willShowPrivacyMessage().then((willShow) => {
+                cmp.willShowPrivacyMessage().then(willShow => {
                     trackPerformance(
                         'consent',
                         'acquired',
-                        willShow ? 'new' : 'existing',
+                        willShow ? 'new' : 'existing'
                     );
                 });
             }
         });
 
-        if (config.get('tests.useAusCmpVariant') === 'variant') {
+        if (
+            config.get('switches.auConsent', false) ||
+            config.get('tests.useAusCmpVariant') === 'variant'
+        ) {
             cmp.init({ pubData, country: geolocationGetSync() });
         } else {
             cmp.init({ pubData, isInUsa: isInUsa() });
