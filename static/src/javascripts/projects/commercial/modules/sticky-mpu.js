@@ -64,8 +64,8 @@ const stickyMpu = (adSlot: HTMLElement) => {
     }
 
     const referenceElement: ?HTMLElement = document.querySelector(
-        '.js-article__body:not([style*="display: none;"]), ' +
-        '.js-liveblog-body-content:not([style*="display: none;"])'
+        ['.js-article__body:not([style*="display: none;"])',
+        '.js-liveblog-body-content:not([style*="display: none;"])'].join(', ')
     );
 
     const stickyPixelBoundary: number = 600; // This is the ad-height.
