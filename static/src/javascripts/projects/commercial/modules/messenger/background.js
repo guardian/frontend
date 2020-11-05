@@ -126,7 +126,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                         }
 
                         if (config.get('isDotcomRendering', false)) {
-                            background.style.position = 'fixed';
                             const bottomLine = document.createElement('div');
                             bottomLine.classList.add('ad-slot__line');
                             bottomLine.style.position = 'absolute';
@@ -155,12 +154,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
             specs.scrollType
         }`;
 
-        if (
-            config.get('isDotcomRendering', false) &&
-            specs.scrollType === 'parallax'
-        )
-            background.style.position = 'absolute';
-
         Object.assign(background.style, specStyles);
 
         if (specs.scrollType === 'fixed') {
@@ -172,9 +165,6 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                 })
                 .then(rect =>
                     fastdom.mutate(() => {
-                        if (config.get('isDotcomRendering', false)) {
-                            background.style.position = 'fixed';
-                        }
                         if (specStyles.backgroundColor) {
                             backgroundParent.style.backgroundColor =
                                 specStyles.backgroundColor;
