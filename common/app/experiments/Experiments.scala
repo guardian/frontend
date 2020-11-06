@@ -70,6 +70,6 @@ object UseAusCmp
       name = "use-aus-cmp",
       description = "Use AU framework in CMP in Australia",
       owners = group(Commercial),
-      sellByDate = new LocalDate(2020, 11, 6),
+      sellByDate = new LocalDate(2020, 11, 13),
       participationGroup = Perc0D,
     )
