@@ -1,16 +1,60 @@
+.newsletters-heading__container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    padding-bottom: 8px;
+}
+
 .newsletters-heading {
     @include fs-headline(8);
     font-weight: 700;
     color: $brightness-7;
     padding-top: $gs-baseline;
+    margin-bottom: $gs-baseline;
+    margin-right: $gs-baseline;
 
     @include mq($from: tablet) {
         @include fs-headline(9, true);
         padding-top: $gs-baseline * 2;
+        width: 80%;
     }
 
     @include mq($until: tablet) {
         @include fs-headline(4);
+    }
+}
+
+.newsletters-heading__manage-button-wrapper {
+    @include mq($from: desktop) {
+        margin-top: 24px;
+    }
+
+    @include mq($from: tablet) {
+        width: 120px;
+        height: auto;
+    }
+}
+
+.newsletters-heading__manage-button {
+
+    @include fs-textSans(3);
+
+    @include mq($from: tablet) {
+        @include fs-textSans(5);
+    }
+    
+    border-radius: 1000px;
+    color: #ffffff;
+    border: 1px solid $sport-dark;
+    background-color: $sport-dark;
+
+    height: auto;
+
+    &:hover,
+    &:focus {
+        border-color: darken($sport-dark, 10%);
+        background-color: darken($sport-dark, 10%);
     }
 }
 
@@ -102,7 +146,6 @@
         border: 1px solid $sport-dark;
         background-color: $sport-dark;
         border-radius: 1000px;
-        border-width: 1px;
         height: 3em;
         width: 48%;
         margin: 0;
@@ -216,7 +259,7 @@
 
 .newsletters-category {
     border-top: 1px solid $brightness-86;
-    margin-top: $gs-baseline * 2;
+    margin-bottom: $gs-baseline * 2;
 
     @include mq(tablet) {
         margin-left: -$gs-gutter;
