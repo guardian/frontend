@@ -253,6 +253,20 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
         }, false);
 };
 
+// hide the sign in gate for certain tags on the site
+// add to the include parameter array if there are specific tags that should be included/overridden
+export const isInvalidTag = (include: Array<String> = []): boolean => {
+    const invalidTags = [
+        'info/newsletter-sign-up'
+    ];
+
+    return invalidTags
+        .filter(el => !include.includes(el))
+        .some((tag) => config.get(`page.keywordIds`, "")
+            .split(',')
+            .includes(tag));
+};
+
 // html event wrapper using bean
 export const addEventHandler: ({
     element: HTMLElement,
