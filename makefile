@@ -38,7 +38,7 @@ check-node-env: # PRIVATE
 # *********************** DEVELOPMENT ***********************
 
 # Watch and automatically compile/reload all JS/SCSS.
-# Uses port 3000 insead of 9000.
+# Uses port 3000 instead of 9000.
 watch: compile-watch
 	@./dev/watch.js
 
@@ -60,7 +60,7 @@ compile-atoms: install
 	@./tools/task-runner/runner compile/javascript/index.atoms
 
 # Compile all assets for watch.
-compile-watch: install # PRIVATE
+compile-watch: install compile # PRIVATE
 	@NODE_ENV=development ./tools/task-runner/runner compile/index.watch
 
 compile-javascript: install # PRIVATE
