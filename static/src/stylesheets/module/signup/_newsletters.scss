@@ -25,30 +25,29 @@
     }
 }
 
-.newsletters-heading__manage-button-wrapper {
+.newsletters-heading__manage-button {
     @include mq($from: desktop) {
         margin-top: 24px;
     }
 
     @include mq($from: tablet) {
+        @include fs-textSans(5);
         width: 120px;
         height: auto;
     }
-}
 
-.newsletters-heading__manage-button {
+    @include mq($until: tablet) {
+        padding: 5px;
+    }
 
     @include fs-textSans(3);
 
-    @include mq($from: tablet) {
-        @include fs-textSans(5);
-    }
-    
     border-radius: 1000px;
     color: #ffffff;
     border: 1px solid $sport-dark;
     background-color: $sport-dark;
-
+    text-align: center;
+    text-decoration: none;
     height: auto;
 
     &:hover,

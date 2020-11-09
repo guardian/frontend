@@ -106,15 +106,13 @@
             <div class="newsletters-heading">
                 Guardian newsletters: sign&nbsp;up
             </div>
-            <div class="newsletters-heading__manage-button-wrapper">
-                <a
-                data-link-name="all-newsletters : manage-emails"
-                href=@manageEmailsUrl>
-                    <button class="newsletters-heading__manage-button">
-                        <span>Manage my newsletters</span>
-                    </button>
-                </a>
-            </div>
+            <a data-link-name="all-newsletters : manage-emails" href="@manageEmailsUrl">
+                <div class="newsletters-heading__manage-button">
+                    <span class="">
+                        Manage my newsletters
+                    </span>
+                </div>
+            </a>
         </div>
         @displayNewslettersByTheme
     </div>
