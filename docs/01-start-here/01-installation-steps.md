@@ -42,7 +42,7 @@ Make sure your dev manager has added you to the necessary teams, in case you hav
 
 You need a Mac or Linux PC (Ubuntu).
 
-## Stage 1 - Automatic
+## Automatic
 
 1. Make sure you have `git` installed. Run `brew install git` if required.
 
@@ -61,7 +61,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 1. All being well, you should be able to [run the app](#running-the-app)
 
-## Stage 2 - Manual
+## Manual
 
 ### Configuration
 
@@ -133,7 +133,7 @@ $ brew install node@10.22
 Install additional dependencies:
 
 ```bash
-$ make install
+$ make install compile
 ```
 
 The frontend application should now be ready to run.
