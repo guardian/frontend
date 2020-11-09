@@ -61,8 +61,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 1. All being well, you should be able to [run the app](#running-the-app)
 
-Manual
-------
+## Manual
 
 ### Configuration
 
@@ -134,7 +133,7 @@ $ brew install node@10.22
 Install additional dependencies:
 
 ```bash
-$ make install
+$ make install compile
 ```
 
 The frontend application should now be ready to run.
