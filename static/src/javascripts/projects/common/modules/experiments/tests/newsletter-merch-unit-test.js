@@ -2,12 +2,12 @@
 
 export const newsletterMerchUnit: ABTest = {
     id: 'NewsletterMerchUnit',
-    start: '2020-11-02',
+    start: '2020-11-12',
     expiry: '2020-12-01',
     author: 'Josh Buckland',
     description:
         'Show a newsletter advert in the merchandising unit to 50% of users',
-    audience: 0.5,
+    audience: 1.0,
     audienceOffset: 0.0,
     successMeasure: 'We see increased engagement from users shown the Newsletters ad unit',
     audienceCriteria:
@@ -15,13 +15,17 @@ export const newsletterMerchUnit: ABTest = {
     ophanComponentId: 'newsletter_merch_unit',
     dataLinkNames: 'n/a',
     idealOutcome:
-        'Increase engagement for lighthouse segments 4 and 5 via newsletters',
+        'Investigate lighthouse segment engagement via newsletters',
     showForSensitive: false,
     canRun: () => true,
     variants: [
         {
-            id: 'variant',
+            id: 'control',
             test: (): void => {},
         },
+        {
+            id: 'variant',
+            test: (): void => {},
+        }
     ],
 };
