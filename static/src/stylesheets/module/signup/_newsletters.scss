@@ -3,7 +3,7 @@
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
-    padding-bottom: 8px;
+    padding-bottom: 16px;
 }
 
 .newsletters-heading {
@@ -32,12 +32,7 @@
 
     @include mq($from: tablet) {
         @include fs-textSans(5);
-        width: 120px;
         height: auto;
-    }
-
-    @include mq($until: tablet) {
-        padding: 5px;
     }
 
     @include fs-textSans(3);
@@ -49,6 +44,7 @@
     text-align: center;
     text-decoration: none;
     height: auto;
+    padding: 5px;
 
     &:hover,
     &:focus {
