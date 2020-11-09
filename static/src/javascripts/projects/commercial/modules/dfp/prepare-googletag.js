@@ -125,16 +125,7 @@ export const init = (): Promise<void> => {
                     canRun = getConsentFor('googletag', state);
                 } else if (state.aus) {
                     // AUS mode
-                    const advertising = '5f859c3420e4ec3e476c7006';
-                    if (typeof state.aus.rejectedCategories === 'undefined')
-                        npaFlag = false;
-                    else
-                        npaFlag =
-                            state.aus.rejectedCategories.filter(
-                                rejectedCategory =>
-                                    // eslint-disable-next-line no-underscore-dangle
-                                    rejectedCategory._id === advertising
-                            ).length > 0;
+                    npaFlag = !getConsentFor('googletag', state);
                     canRun = true;
                 }
                 window.googletag.cmd.push(() => {

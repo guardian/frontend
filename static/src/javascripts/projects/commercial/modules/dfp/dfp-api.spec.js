@@ -187,14 +187,12 @@ const tcfv2MixedConsent = {
 
 const ausNotRejected = {
     aus: {
-        ccpaApplies: true,
         rejectedCategories: [],
     },
 };
 
 const ausRejected = {
     aus: {
-        ccpaApplies: true,
         rejectedCategories: [
             {
                 _id: '5f859c3420e4ec3e476c7006',
@@ -559,6 +557,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ausNotRejected)
             );
+            getConsentFor.mockReturnValue(true);
             return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
@@ -569,6 +568,7 @@ describe('DFP', () => {
             onConsentChange.mockImplementation(callback =>
                 callback(ausRejected)
             );
+            getConsentFor.mockReturnValue(false);
             return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
