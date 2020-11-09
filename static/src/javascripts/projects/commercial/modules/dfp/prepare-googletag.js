@@ -125,8 +125,8 @@ export const init = (): Promise<void> => {
                     canRun = getConsentFor('googletag', state);
                 } else if (state.aus) {
                     // AUS mode
+                    // canRun stays true, set NPA flag if consent is retracted
                     npaFlag = !getConsentFor('googletag', state);
-                    canRun = true;
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
