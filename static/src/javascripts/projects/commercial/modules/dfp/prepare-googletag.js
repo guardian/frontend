@@ -6,7 +6,10 @@ import fastdom from 'lib/fastdom-promise';
 import { loadScript, storage } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -120,6 +123,19 @@ export const init = (): Promise<void> => {
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
                     canRun = getConsentFor('googletag', state);
+                } else if (state.aus) {
+                    // AUS mode
+                    const advertising = '5f859c3420e4ec3e476c7006';
+                    if (typeof state.aus.rejectedCategories === 'undefined')
+                        npaFlag = false;
+                    else
+                        npaFlag =
+                            state.aus.rejectedCategories.filter(
+                                rejectedCategory =>
+                                    // eslint-disable-next-line no-underscore-dangle
+                                    rejectedCategory._id === advertising
+                            ).length > 0;
+                    canRun = true;
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
