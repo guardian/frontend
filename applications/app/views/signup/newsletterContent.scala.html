@@ -7,6 +7,8 @@
 
 @(signupPage: Page)(implicit request: RequestHeader, context: model.ApplicationContext)
 
+@manageEmailsUrl = @{"https://manage.theguardian.com/email-prefs"}
+
 @emailListCategoryList(theme: String, emailListings: List[EmailNewsletter]) = {
     <div class="newsletters-category__heading">
         @theme
@@ -100,7 +102,16 @@
 <div class="l-side-margins">
 <div class="content">
     <div class="gs-container">
-        <div class="newsletters-heading">Guardian newsletters: sign up</div>
+        <div class="newsletters-heading__container">
+            <div class="newsletters-heading">
+                Guardian newsletters: sign&nbsp;up
+            </div>
+            <a data-link-name="all-newsletters : manage-emails" href="@manageEmailsUrl">
+                <div class="newsletters-heading__manage-button">
+                    <span> Manage my newsletters </span>
+                </div>
+            </a>
+        </div>
         @displayNewslettersByTheme
     </div>
 </div>
