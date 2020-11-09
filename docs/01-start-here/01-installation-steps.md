@@ -42,7 +42,7 @@ Make sure your dev manager has added you to the necessary teams, in case you hav
 
 You need a Mac or Linux PC (Ubuntu).
 
-## Automatic
+## Stage 1 - Automatic
 
 1. Make sure you have `git` installed. Run `brew install git` if required.
 
@@ -61,8 +61,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 1. All being well, you should be able to [run the app](#running-the-app)
 
-Manual
-------
+## Stage 2 - Manual
 
 ### Configuration
 
