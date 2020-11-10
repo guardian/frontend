@@ -3,7 +3,10 @@
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
-import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
@@ -38,7 +41,7 @@ jest.mock('commercial/modules/header-bidding/utils', () => ({
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
-    getConsentFor: jest.fn()
+    getConsentFor: jest.fn(),
 }));
 
 const tcfv2WithConsentMock = (callback): void =>
@@ -49,6 +52,24 @@ const tcfv2WithConsentMock = (callback): void =>
 const tcfv2WithoutConsentMock = (callback): void =>
     callback({
         tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false } },
+    });
+
+const ccpaWithConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: false } });
+
+const ccpaWithoutConsentMock = (callback): void =>
+    callback({ ccpa: { doNotSell: true } });
+
+const ausWithConsentMock = (callback): void =>
+    callback({ aus: { rejectedCategories: [] } });
+
+const ausWithoutConsentMock = (callback): void =>
+    callback({
+        aus: {
+            rejectedCategories: [
+                { _id: '5f859c3420e4ec3e476c7006', name: 'Advertising' },
+            ],
+        },
     });
 
 const fakeUserAgent = (userAgent: string): void => {
@@ -145,6 +166,46 @@ describe('init', () => {
         commercialFeatures.dfpAdvertising = true;
         commercialFeatures.adFree = false;
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        getConsentFor.mockReturnValue(false);
+        await setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
+    });
+
+    it('should initialise Prebid in CCPA if doNotSell is false', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(ccpaWithConsentMock);
+        getConsentFor.mockReturnValue(true); // TODO: Why do we need to mock this?
+        await setupPrebid();
+        expect(prebid.initialise).toBeCalled();
+    });
+
+    it('should not initialise Prebid in CCPA if doNotSell is true', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+        getConsentFor.mockReturnValue(false);
+        await setupPrebid();
+        expect(prebid.initialise).not.toBeCalled();
+    });
+
+    it('should initialise Prebid in AUS if Advertising is not rejected', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(ausWithConsentMock);
+        getConsentFor.mockReturnValue(true);
+        await setupPrebid();
+        expect(prebid.initialise).toBeCalled();
+    });
+
+    it('should not initialise Prebid in AUS if Advertising is rejected', async () => {
+        dfpEnv.hbImpl = { prebid: true, a9: false };
+        commercialFeatures.dfpAdvertising = true;
+        commercialFeatures.adFree = false;
+        onConsentChange.mockImplementation(ausWithoutConsentMock);
         getConsentFor.mockReturnValue(false);
         await setupPrebid();
         expect(prebid.initialise).not.toBeCalled();
