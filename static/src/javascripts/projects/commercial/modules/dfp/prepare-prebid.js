@@ -1,7 +1,10 @@
 // @flow
 
 import config from 'lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -30,10 +33,9 @@ const loadPrebid: () => void = () => {
 
 const setupPrebid: () => Promise<void> = () => {
     onConsentChange(state => {
-        // Only TCFv2 mode can prevent running Prebid
-        const canRun: boolean = state.tcfv2
-            ? getConsentFor('prebid', state)
-            : true;
+        // TCFv2 and AUS mode can prevent running Prebid
+        const canRun: boolean =
+            state.tcfv2 || state.aus ? getConsentFor('prebid', state) : true;
         if (canRun) {
             loadPrebid();
         }
