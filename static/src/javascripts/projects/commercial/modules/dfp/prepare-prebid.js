@@ -33,7 +33,6 @@ const loadPrebid: () => void = () => {
 
 const setupPrebid: () => Promise<void> = () => {
     onConsentChange(state => {
-        // TCFv2 and AUS mode can prevent running Prebid
         const canRun: boolean = getConsentFor('prebid', state);
         if (canRun) {
             loadPrebid();
