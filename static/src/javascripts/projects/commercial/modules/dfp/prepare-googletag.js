@@ -6,7 +6,10 @@ import fastdom from 'lib/fastdom-promise';
 import { loadScript, storage } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
@@ -120,6 +123,10 @@ export const init = (): Promise<void> => {
                         Object.keys(state.tcfv2.consents).length === 0 ||
                         Object.values(state.tcfv2.consents).includes(false);
                     canRun = getConsentFor('googletag', state);
+                } else if (state.aus) {
+                    // AUS mode
+                    // canRun stays true, set NPA flag if consent is retracted
+                    npaFlag = !getConsentFor('googletag', state);
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
