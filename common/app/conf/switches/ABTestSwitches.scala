@@ -98,7 +98,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-newsletter-merch-unit",
+    "ab-newsletter-merch-unit-lighthouse",
     "Test impact of newsletter merch unit across lighthouse segments",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,

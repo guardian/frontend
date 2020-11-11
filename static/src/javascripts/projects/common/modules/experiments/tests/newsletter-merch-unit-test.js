@@ -1,8 +1,8 @@
 // @flow
 
-export const newsletterMerchUnit: ABTest = {
-    id: 'NewsletterMerchUnit',
-    start: '2020-11-12',
+export const newsletterMerchUnitLighthouse: ABTest = {
+    id: 'NewsletterMerchUnitLighthouse',
+    start: '2020-11-11',
     expiry: '2020-12-01',
     author: 'Josh Buckland',
     description:
