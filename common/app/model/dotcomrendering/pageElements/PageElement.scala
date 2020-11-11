@@ -467,7 +467,7 @@ case class YoutubeBlockElement(
     channelId: Option[String],
     mediaTitle: String,
     overrideImage: Option[String],
-    posterImage: Seq[NSImage1],
+    posterImage: Option[Seq[NSImage1]],
     expired: Boolean,
     duration: Option[Long],
 ) extends PageElement
@@ -819,10 +819,6 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
-            val overrideImages = mediaAtom.posterImage match {
-              case None             => Seq()
-              case Some(imageCrops) => NSImage1.imageMediaToSequence(imageCrops)
-            }
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -832,7 +828,7 @@ object PageElement {
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
                     overrideImage = if (isMainBlock) imageOverride else None,
-                    posterImage = overrideImages,
+                    posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                   )
