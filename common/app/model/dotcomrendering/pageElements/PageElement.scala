@@ -845,8 +845,6 @@ object PageElement {
           }
 
           case Some(mediaAtom: MediaAtom) => {
-            println("mediaAtom")
-            println(mediaAtom)
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
