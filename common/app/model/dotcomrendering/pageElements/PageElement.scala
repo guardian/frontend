@@ -59,6 +59,17 @@ object Sponsorship {
   }
 }
 
+case class NSImage1(url: String, width: Long)
+object NSImage1 {
+  implicit val NSImage1Writes: Writes[NSImage1] = Json.writes[NSImage1]
+  def imageMediaToSequence(image: ImageMedia): Seq[NSImage1] = {
+    image.imageCrops
+      .filter(_.url.isDefined)
+      .map(i => NSImage1(i.url.get, i.fields("width").toLong))
+    // calling .get is safe here because of the previous filter
+  }
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -450,25 +461,13 @@ object WitnessBlockElement {
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
 }
 
-case class YoutubeBlockElementImage(url: String, width: Long)
-object YoutubeBlockElementImage {
-  implicit val YoutubeBlockElementImageWrites: Writes[YoutubeBlockElementImage] = Json.writes[YoutubeBlockElementImage]
-
-  def imageMediaToSequence(image: ImageMedia): Seq[YoutubeBlockElementImage] = {
-    image.imageCrops
-      .filter(_.url.isDefined)
-      .map(i => YoutubeBlockElementImage(i.url.get, i.fields("width").toLong))
-    // calling .get is safe here because of the previous filter
-  }
-
-}
 case class YoutubeBlockElement(
     id: String,
     assetId: String,
     channelId: Option[String],
     mediaTitle: String,
     overrideImage: Option[String],
-    posterImage: Seq[YoutubeBlockElementImage],
+    posterImage: Seq[NSImage1],
     expired: Boolean,
     duration: Option[Long],
 ) extends PageElement
@@ -822,7 +821,7 @@ object PageElement {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             val overrideImages = mediaAtom.posterImage match {
               case None             => Seq()
-              case Some(imageCrops) => YoutubeBlockElementImage.imageMediaToSequence(imageCrops)
+              case Some(imageCrops) => NSImage1.imageMediaToSequence(imageCrops)
             }
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
