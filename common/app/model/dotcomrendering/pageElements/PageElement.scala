@@ -59,6 +59,19 @@ object Sponsorship {
   }
 }
 
+case class YoutubeBlockElementImage(url: String, width: Long)
+object YoutubeBlockElementImage {
+  implicit val YoutubeBlockElementImageWrites: Writes[YoutubeBlockElementImage] = Json.writes[YoutubeBlockElementImage]
+
+  def imageMediaToSequence(image: ImageMedia): Seq[YoutubeBlockElementImage] = {
+    image.imageCrops
+      .filter(_.url.isDefined)
+      .map(i => YoutubeBlockElementImage(i.url.get, i.fields("width").toLong))
+    // calling .get is safe here because of the previous filter
+  }
+
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -450,18 +463,6 @@ object WitnessBlockElement {
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
 }
 
-case class YoutubeBlockElementImage(url: String, width: Long)
-object YoutubeBlockElementImage {
-  implicit val YoutubeBlockElementImageWrites: Writes[YoutubeBlockElementImage] = Json.writes[YoutubeBlockElementImage]
-
-  def imageMediaToSequence(image: ImageMedia): Seq[YoutubeBlockElementImage] = {
-    image.imageCrops
-      .filter(_.url.isDefined)
-      .map(i => YoutubeBlockElementImage(i.url.get, i.fields("width").toLong))
-    // calling .get is safe here because of the previous filter
-  }
-
-}
 case class YoutubeBlockElement(
     id: String,
     assetId: String,
