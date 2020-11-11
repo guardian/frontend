@@ -450,15 +450,40 @@ object WitnessBlockElement {
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
 }
 
+case class YoutubeBlockElementImage(url: String, width: Long)
+object YoutubeBlockElementImage {
+  implicit val YoutubeBlockElementImageWrites: Writes[YoutubeBlockElementImage] = Json.writes[YoutubeBlockElementImage]
+
+  def imageMediaToSequence(image: ImageMedia): Seq[YoutubeBlockElementImage] = {
+    image.imageCrops
+      .filter(_.url.isDefined)
+      .map(i => YoutubeBlockElementImage(i.url.get, i.fields("width").toLong))
+    // calling .get is safe here because of the previous filter
+  }
+
+}
 case class YoutubeBlockElement(
     id: String,
     assetId: String,
     channelId: Option[String],
     mediaTitle: String,
     overrideImage: Option[String],
+    posterImage: Seq[YoutubeBlockElementImage],
     expired: Boolean,
     duration: Option[Long],
 ) extends PageElement
+/*
+  The difference between `overrideImage` and `posterImage`
+
+  When the `YoutubeBlockElement` is in main media position then `overrideImage` is set to the main media image.
+  The reasons is:
+    Since moving to Atoms, the multimedia team have commented that they're reluctant to use videos
+    in main media as it makes the content look stale. This is because an Atom only has 1 image. Before Atoms, it was
+    possible to set a different image for a video on each use. This change is bringing that functionality back.
+    source: https://github.com/guardian/frontend/pull/20637
+
+  In all cases `posterImage` carries the video own images.
+ */
 object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
 }
@@ -795,6 +820,10 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
+            val overrideImages = mediaAtom.posterImage match {
+              case None             => Seq()
+              case Some(imageCrops) => YoutubeBlockElementImage.imageMediaToSequence(imageCrops)
+            }
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -804,6 +833,7 @@ object PageElement {
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
                     overrideImage = if (isMainBlock) imageOverride else None,
+                    posterImage = overrideImages,
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                   )
