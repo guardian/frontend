@@ -3,7 +3,7 @@ package model.dotcomrendering
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
 import navigation.{FlatSubnav, NavLink, ParentSubnav, Subnav}
-import navigation.{FooterLink}
+import navigation.FooterLink
 import play.api.libs.json._
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,

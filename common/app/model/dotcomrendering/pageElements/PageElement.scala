@@ -12,11 +12,11 @@ import com.gu.contentapi.client.model.v1.{
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet, Video700}
+import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
@@ -288,6 +288,32 @@ object MapBlockElement {
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
 }
 
+case class MediaAtomBlockElementMediaAsset(
+    url: String,
+    mimeType: Option[String],
+)
+object MediaAtomBlockElementMediaAsset {
+  implicit val MediaAtomBlockElementMediaAssetWrites: Writes[MediaAtomBlockElementMediaAsset] =
+    Json.writes[MediaAtomBlockElementMediaAsset]
+  def fromMediaAsset(asset: MediaAsset): MediaAtomBlockElementMediaAsset = {
+    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType)
+  }
+}
+case class MediaAtomBlockElement(
+    id: String,
+    title: String,
+    defaultHtml: String,
+    assets: Seq[MediaAtomBlockElementMediaAsset],
+    duration: Option[Long],
+    posterImage: Option[Seq[NSImage1]],
+    expired: Option[Boolean],
+    activeVersion: Option[Long],
+    channelId: Option[String],
+) extends PageElement
+object MediaAtomBlockElement {
+  implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
+}
+
 case class MembershipBlockElement(
     originalUrl: Option[String],
     linkText: Option[String],
@@ -518,6 +544,7 @@ object PageElement {
       case _: InteractiveAtomBlockElement => true
       case _: InteractiveBlockElement     => true
       case _: MapBlockElement             => true
+      case _: MediaAtomBlockElement       => true
       case _: ProfileAtomBlockElement     => true
       case _: PullquoteBlockElement       => true
       case _: QABlockElement              => true
@@ -818,6 +845,8 @@ object PageElement {
           }
 
           case Some(mediaAtom: MediaAtom) => {
+            println("mediaAtom")
+            println(mediaAtom)
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             val overrideImages = mediaAtom.posterImage match {
               case None             => Seq()
@@ -838,8 +867,20 @@ object PageElement {
                   )
                 })
               }
-              // TODO - handle self-hosted video case.
-              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
+              case _ =>
+                Some(
+                  MediaAtomBlockElement(
+                    mediaAtom.id,
+                    mediaAtom.title,
+                    mediaAtom.defaultHtml,
+                    mediaAtom.assets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
+                    mediaAtom.duration,
+                    mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
+                    mediaAtom.expired,
+                    mediaAtom.activeVersion,
+                    mediaAtom.channelId,
+                  ),
+                )
             }
           }
 
