@@ -27,12 +27,14 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
+import {refresh as refreshUserFeatures} from "common/modules/commercial/user-features";
 
 const commercialModules: Array<Array<any>> = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-comscore', initComscore],
     ['cm-ipsosmori', initIpsosMori],
+    ['c-user-features', refreshUserFeatures],
 ];
 
 if (!commercialFeatures.adFree) {
