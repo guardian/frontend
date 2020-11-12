@@ -4,7 +4,7 @@ import { contributionsBannerArticlesViewedOptOut } from 'common/modules/experime
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { newsletterEmbeds } from 'common/modules/experiments/tests/newsletter-embed-test';
-import { newsletterMerchUnitLighthouse } from 'common/modules/experiments/tests/newsletter-merch-unit-test';
+import { newsletterMerchUnitLighthouseControl, newsletterMerchUnitLighthouseVariant } from 'common/modules/experiments/tests/newsletter-merch-unit-test';
 
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -12,7 +12,8 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     signInGateMainVariant,
     signInGateMainControl,
     newsletterEmbeds,
-    newsletterMerchUnitLighthouse
+    newsletterMerchUnitLighthouseControl,
+    newsletterMerchUnitLighthouseVariant
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [];
