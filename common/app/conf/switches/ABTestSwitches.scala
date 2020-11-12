@@ -98,8 +98,18 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-newsletter-merch-unit-lighthouse",
-    "Test impact of newsletter merch unit across lighthouse segments",
+    "ab-newsletter-merch-unit-lighthouse-control",
+    "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-newsletter-merch-unit-lighthouse-variants",
+    "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),

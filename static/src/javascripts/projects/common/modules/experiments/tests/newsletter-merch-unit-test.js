@@ -1,7 +1,7 @@
 // @flow
 
 export const newsletterMerchUnitLighthouseControl: ABTest = {
-    id: 'NewsletterMerchUnitLighthouse',
+    id: 'NewsletterMerchUnitLighthouseControl',
     start: '2020-11-11',
     expiry: '2020-12-01',
     author: 'Josh Buckland & Alex Dufournet',
@@ -26,13 +26,14 @@ export const newsletterMerchUnitLighthouseControl: ABTest = {
 };
 
 export const newsletterMerchUnitLighthouseVariant: ABTest = {
-    id: 'NewsletterMerchUnitLighthouse',
+    id: 'NewsletterMerchUnitLighthouseVariants',
     start: '2020-11-11',
     expiry: '2020-12-01',
     author: 'Josh Buckland & Alex Dufournet',
-    description: 'Show a newsletter advert in the merchandising unit to 25% of users. ' +
-        'These two variants test value of showing newsletter merch units instead of reader revenue ones. ' +
-        'This test needs to run at the same time as NewsletterMerchUnitLighthouseControl',
+    description: 'Show a newsletter advert in the merchandising unit to 25% of users and reader revenue' +
+        'to another 25%. The remaining 50% are covered by NewsletterMerchUnitLighthouseControl ' +
+        'which needs to run at the same time. These two variants test the value of showing ' +
+        'newsletter merch units instead of reader revenue ones.',
     audience: 0.5,
     audienceOffset: 0.5,
     successMeasure: 'We see increased engagement from users shown the Newsletters ad unit',
