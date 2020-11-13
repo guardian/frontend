@@ -10,7 +10,10 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { getPermutiveSegments } from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
@@ -110,7 +113,8 @@ const abParam = (): Array<string> => {
 };
 
 const getVisitedValue = (): string => {
-    const visitCount: number = parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
+    const visitCount: number =
+        parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();
@@ -239,7 +243,7 @@ const buildPageTargetting = (
     const pageTargets: PageTargeting = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            permutive: getPermutiveSegments(),
+            permutive: adConsentState ? getPermutiveSegments() : [],
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
@@ -309,6 +313,9 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 ? Object.keys(state.tcfv2.consents).length > 0 &&
                   Object.values(state.tcfv2.consents).every(Boolean)
                 : false;
+        } else if (state.aus) {
+            // AUS mode
+            canRun = getConsentFor('aus-advertising', state);
         } else {
             // TCFv1 mode
             canRun = state[1] && state[2] && state[3] && state[4] && state[5];
