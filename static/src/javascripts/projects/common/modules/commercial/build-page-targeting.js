@@ -243,7 +243,7 @@ const buildPageTargetting = (
     const pageTargets: PageTargeting = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            permutive: getPermutiveSegments(adConsentState),
+            permutive: adConsentState !== false ? getPermutiveSegments() : [],
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
