@@ -205,11 +205,11 @@
 
 .newsletter-card__frequency {
     @include fs-textSans(1);
-    color: $brightness-46;
+    color: $brightness-20;
     padding-bottom: $gs-baseline / 2;
 
     .inline-icon {
-        fill: $brightness-86;
+        fill: $brightness-20;
     }
 }
 
