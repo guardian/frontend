@@ -16,8 +16,10 @@ const getSegments = (key: string): Array<string> => {
     }
 };
 
-export const getPermutiveSegments = () => getSegments(PERMUTIVE_KEY);
-export const getPermutivePFPSegments = () => getSegments(PERMUTIVE_PFP_KEY);
+export const getPermutiveSegments = (adConsentState: boolean | null) =>
+    adConsentState !== false ? getSegments(PERMUTIVE_KEY) : [];
+export const getPermutivePFPSegments = (adConsentState: boolean | null) =>
+    adConsentState !== false ? getSegments(PERMUTIVE_PFP_KEY) : [];
 
 export const _ = {
     PERMUTIVE_KEY,
