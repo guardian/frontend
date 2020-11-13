@@ -14,7 +14,10 @@ import {
     onConsentChange,
     getConsentFor,
 } from '@guardian/consent-management-platform';
-import { getPermutiveSegments } from 'common/modules/commercial/permutive';
+import {
+    getPermutiveSegments,
+    clearPermutiveSegments,
+} from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -243,7 +246,10 @@ const buildPageTargetting = (
     const pageTargets: PageTargeting = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            permutive: adConsentState !== false ? getPermutiveSegments() : [],
+            permutive:
+                adConsentState !== false
+                    ? getPermutiveSegments()
+                    : clearPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
