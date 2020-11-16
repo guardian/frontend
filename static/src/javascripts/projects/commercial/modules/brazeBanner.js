@@ -120,6 +120,9 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
         value: sdkLoadTimeTaken,
     });
 
+    const appboyTiming = measureTiming('braze-appboy');
+    appboyTiming.start();
+
     appboy.initialize(apiKey, {
         enableLogging: false,
         noCookies: true,
@@ -128,7 +131,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
         minimumIntervalBetweenTriggerActionsInSeconds: 0,
     });
 
-    return new Promise(resolve => {
+    const canShowPromise = new Promise(resolve => {
         // Needed to keep Flow happy
         if (!appboy) {
             resolve(false);
@@ -147,6 +150,19 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
         appboy.changeUser(brazeUuid);
         appboy.openSession();
     });
+
+    canShowPromise.then(() => {
+        const appboyTimeTaken = appboyTiming.end();
+
+        ophan.record({
+            component: 'braze-appboy-timing',
+            value: appboyTimeTaken,
+        });
+    }).catch(() => {
+        console.log("Appboy Timing failed.");
+    });
+
+    return canShowPromise
 };
 
 const canShow = async (): Promise<boolean> => {
