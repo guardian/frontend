@@ -2,7 +2,6 @@ package pages
 
 import common.Edition
 import conf.switches.Switches.WeAreHiring
-import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.{HtmlPage, Styles}
 import model.{
@@ -64,7 +63,6 @@ object TagIndexHtmlPage extends HtmlPage[StandalonePage] {
         inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
-        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
