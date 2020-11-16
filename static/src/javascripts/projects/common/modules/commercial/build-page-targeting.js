@@ -322,9 +322,6 @@ const getPageTargeting = (): { [key: string]: mixed } => {
         } else if (state.aus) {
             // AUS mode
             canRun = getConsentFor('aus-advertising', state);
-        } else {
-            // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
         }
 
         if (canRun !== latestConsentCanRun) {
