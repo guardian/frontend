@@ -240,16 +240,14 @@ const buildPageTargetting = (
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
+    if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
     const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
     const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
     const pageTargets: PageTargeting = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            permutive:
-                adConsentState !== false
-                    ? getPermutiveSegments()
-                    : clearPermutiveSegments(),
+            permutive: getPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
             at: getCookie('adtest') || undefined,
@@ -322,7 +320,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
         } else if (state.aus) {
             // AUS mode
             canRun = getConsentFor('aus-advertising', state);
-        }
+        } else canRun = false;
 
         if (canRun !== latestConsentCanRun) {
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
