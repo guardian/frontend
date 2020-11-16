@@ -91,6 +91,11 @@ class MostPopularController(
       }
     }
 
+  def renderDeeplyRead(): Action[AnyContent] =
+    Action.async { implicit request =>
+      Future.successful(Ok("Test 15:04"))
+    }
+
   private val countryNames = Map(
     "AU" -> "Australia",
     "US" -> "US",
