@@ -22,6 +22,7 @@ object ApplicationsSpecial2020Election {
     "/us-news/ng-interactive/2020/nov/13/us-election-results-2020-joe-biden-donald-trump-presidential-electoral-college-votes" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
     "/us-news/ng-interactive/2020/nov/14/us-election-results-2020-joe-biden-donald-trump-presidential-electoral-college-votes" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
     "/us-news/ng-interactive/2020/nov/15/us-election-results-2020-joe-biden-donald-trump-presidential-electoral-college-votes" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
+    "/us-news/ng-interactive/2020/nov/16/us-election-results-2020-joe-biden-donald-trump-presidential-electoral-college-votes" -> "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
   )
   val specialPaths = specialPathsToCapiIdsMap.keys.toList
 
