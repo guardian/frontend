@@ -109,7 +109,16 @@ const getMessageFromQueryString = (): InAppMessage | null => {
 };
 
 const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<boolean> => {
+    const sdkLoadTiming = measureTiming('braze-sdk-load');
+    sdkLoadTiming.start();
+
     appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+    const sdkLoadTimeTaken = sdkLoadTiming.end();
+    ophan.record({
+        component: 'braze-sdk-load-timing',
+        value: sdkLoadTimeTaken,
+    });
 
     appboy.initialize(apiKey, {
         enableLogging: false,
@@ -141,8 +150,8 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
 };
 
 const canShow = async (): Promise<boolean> => {
-    const timing = measureTiming('braze-banner');
-    timing.start();
+    const bannerTiming = measureTiming('braze-banner');
+    bannerTiming.start();
 
     const forcedBrazeMessage = getMessageFromQueryString();
     if (forcedBrazeMessage) {
@@ -170,7 +179,7 @@ const canShow = async (): Promise<boolean> => {
 
     try {
         const result = await getMessageFromBraze(apiKey, brazeUuid)
-        const timeTaken = timing.end();
+        const timeTaken = bannerTiming.end();
 
         if (timeTaken) {
             ophan.record({
