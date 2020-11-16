@@ -158,7 +158,13 @@ $ make sbt
 ```
 
 Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
-it's done when you get a prompt. If it is your first time, compile the project.
+it's done when you get a prompt. If it is your first time, clean and compile the project.
+
+```
+clean
+```
+
+Then, when it's finished
 
 ```
 compile
