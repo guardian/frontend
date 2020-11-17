@@ -28,10 +28,13 @@ object ApplicationsSpecial2020Election {
   )
   val specialPaths = specialPathsToCapiIdsMap.keys.toList
 
+  val pathIsNovemberElectionTrackerRegex: Regex =
+    """^/us-news/ng-interactive/2020/nov/\d\d/us-election-results-2020-""".r
+
   def pathIsElectionTracker(path: String): Boolean = {
     // This function was introduced to avoid having to update `specialPathsToCapiIdsMap` every day with new path
     // by allow listing anything of the form /us-news/ng-interactive/2020/nov/??/us-election-results-2020-*
-    """^/us-news/ng-interactive/2020/nov/\d\d/us-election-results-2020-""".r.findFirstIn(path).isDefined
+    pathIsNovemberElectionTrackerRegex.findFirstIn(path).isDefined
   }
 
   def ensureStartingForwardSlash(str: String): String = {
