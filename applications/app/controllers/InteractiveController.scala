@@ -169,20 +169,15 @@ class InteractiveController(
     /*
       This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
      */
-    ApplicationsSpecial2020Election.pathToAmpAtomId(path) match {
-      case None =>
-        Future.successful(Ok("error: 5ce31f26-6dfe-4981-aad0-5d858e6dba8a (amp document not available at this path)"))
-      case Some(capiLookupString) => {
-        val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
-        response.map { response =>
-          response.interactive match {
-            case Some(i2) => {
-              val interactive = InteractiveAtom.make(i2)
-              Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
-            }
-            case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
-          }
+    val capiLookupString = ApplicationsSpecial2020Election.pathToAmpAtomId(path)
+    val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
+    response.map { response =>
+      response.interactive match {
+        case Some(i2) => {
+          val interactive = InteractiveAtom.make(i2)
+          Ok(StringEscapeUtils.unescapeHtml(interactive.html)).withHeaders("Content-Type" -> "text/html")
         }
+        case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
       }
     }
   }

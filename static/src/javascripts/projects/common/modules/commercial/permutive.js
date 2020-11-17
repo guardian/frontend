@@ -19,6 +19,11 @@ const getSegments = (key: string): Array<string> => {
 export const getPermutiveSegments = () => getSegments(PERMUTIVE_KEY);
 export const getPermutivePFPSegments = () => getSegments(PERMUTIVE_PFP_KEY);
 
+export const clearPermutiveSegments = (): void => {
+    storage.local.remove(PERMUTIVE_KEY);
+    storage.local.remove(PERMUTIVE_PFP_KEY);
+};
+
 export const _ = {
     PERMUTIVE_KEY,
     PERMUTIVE_PFP_KEY,

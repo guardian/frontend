@@ -10,8 +10,14 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { onConsentChange } from '@guardian/consent-management-platform';
-import { getPermutiveSegments } from 'common/modules/commercial/permutive';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
+import {
+    getPermutiveSegments,
+    clearPermutiveSegments,
+} from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -110,7 +116,8 @@ const abParam = (): Array<string> => {
 };
 
 const getVisitedValue = (): string => {
-    const visitCount: number = parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
+    const visitCount: number =
+        parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();
@@ -233,6 +240,7 @@ const buildPageTargetting = (
 ): { [key: string]: mixed } => {
     const page = config.get('page');
     // personalised ads targeting
+    if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
     const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
     const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
@@ -309,10 +317,10 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 ? Object.keys(state.tcfv2.consents).length > 0 &&
                   Object.values(state.tcfv2.consents).every(Boolean)
                 : false;
-        } else {
-            // TCFv1 mode
-            canRun = state[1] && state[2] && state[3] && state[4] && state[5];
-        }
+        } else if (state.aus) {
+            // AUS mode
+            canRun = getConsentFor('aus-advertising', state);
+        } else canRun = false;
 
         if (canRun !== latestConsentCanRun) {
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;

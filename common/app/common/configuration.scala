@@ -149,11 +149,6 @@ class GuardianConfiguration extends Logging {
       configuration.getMandatoryStringProperty("business_data.url") // Decommissioned, see marker: 7dde429f00b1
   }
 
-  object feedback {
-    lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
-    lazy val feedbackHelpConfig = configuration.getMandatoryStringProperty("feedback.helpconfig")
-  }
-
   object rendering {
     lazy val renderingEndpoint = configuration.getMandatoryStringProperty("rendering.endpoint")
     lazy val AMPArticleEndpoint = configuration.getMandatoryStringProperty("rendering.AMPArticleEndpoint")
