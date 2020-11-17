@@ -93,6 +93,8 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
+  def getDeeplyReadContent(): Future[JsValue] = getBody("deeplyread")()
+
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
     getBody("video/mostviewed")(

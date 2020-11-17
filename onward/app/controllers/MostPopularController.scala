@@ -97,7 +97,7 @@ class MostPopularController(
   def renderDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
       val ophanApi = new OphanApi(wsClient)
-      val something = ophanApi.getSurgingContent()
+      val something = ophanApi.getDeeplyReadContent()
       something.map(x => Ok(x.toString()))
     }
 
