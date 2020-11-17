@@ -28,8 +28,8 @@ GET        /crosswords/$crosswordType<cryptic|quick|quiptic|prize|everyman|speci
 GET        /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize|everyman|azed|special|genius|speedy|weekend>/:id     controllers.CrosswordPageController.accessibleCrossword(crosswordType: String, id: Int)
 
 # Crosswords search
-GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
-GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
+GET        /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
+GET        /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
 # Email paths
 GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
@@ -83,6 +83,10 @@ GET        /$path<theguardian|theobserver>/$year<\d\d\d\d>/$month<\w\w\w>/$day<\
 # Atoms
 POST       /atom/quiz/:id/*path                                                 controllers.QuizController.submit(id, path)
 GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
+
+# Nx1Config
+GET        /nx1-config.json                                                     controllers.Nx1ConfigController.nx1Config
+
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
