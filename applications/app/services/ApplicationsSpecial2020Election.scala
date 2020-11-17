@@ -2,6 +2,7 @@ package services
 
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
+import scala.util.matching.Regex
 
 // ApplicationsSpecial2020Election is a temporary object introduced for the special handling
 // of the US election Nov 2020 results election tracker, a ng-interactive page which we need an amp version of,
@@ -27,6 +28,12 @@ object ApplicationsSpecial2020Election {
   )
   val specialPaths = specialPathsToCapiIdsMap.keys.toList
 
+  def pathIsElectionTracker(path: String): Boolean = {
+    // This function was introduced to avoid having to update `specialPathsToCapiIdsMap` every day with new path
+    // by allow listing anything of the form /us-news/ng-interactive/2020/nov/??/us-election-results-2020-*
+    """^/us-news/ng-interactive/2020/nov/\d\d/us-election-results-2020-""".r.findFirstIn(path).isDefined
+  }
+
   def ensureStartingForwardSlash(str: String): String = {
     if (!str.startsWith("/")) ("/" + str) else str
   }
@@ -37,7 +44,8 @@ object ApplicationsSpecial2020Election {
       when called from `ApplicationsDotcomRenderingInterface.getRenderingTier` it comes without starting slash, but
       when called from `InteractiveHtmlPage.html` it comes with it.
      */
-    specialPaths.contains(ensureStartingForwardSlash(path))
+    val path1 = ensureStartingForwardSlash(path)
+    specialPaths.contains(path1) || pathIsElectionTracker(path1)
   }
 
   def defaultAtomIdToAmpAtomId(atomId: String): String = {
