@@ -159,6 +159,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
             value: appboyTimeTaken,
         });
     }).catch(() => {
+        appboyTiming.clear()
         console.log("Appboy Timing failed.");
     });
 
@@ -206,6 +207,7 @@ const canShow = async (): Promise<boolean> => {
 
         return result;
     } catch (e) {
+        bannerTiming.clear()
         return false;
     }
 };
