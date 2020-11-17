@@ -15,7 +15,7 @@
     "@guardian/automat-modules": "^0.3.7",
     "@guardian/braze-components": "0.0.12",
     "@guardian/commercial-core": "^0.9.0",
-    "@guardian/consent-management-platform": "6.7.1",
+    "@guardian/consent-management-platform": "6.7.2",
     "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
     "@guardian/libs": "^1.3.0",
     "@guardian/shimport": "^1.0.2",
