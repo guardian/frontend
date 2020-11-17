@@ -65,13 +65,20 @@ object ApplicationsSpecial2020Election {
     (Array("atom", "interactive") ++ atomId.split("/").dropRight(1) ++ Array("amp-page")).mkString("/")
   }
 
-  def pathToAmpAtomId(path: String): Option[String] = {
+  def pathToAmpAtomId(path: String): String = {
     /*
         This version is a more limited, but much more robust version, of `defaultAtomIdToAmpAtomId`
         In particular, it doesn't rely on a particular format for the atom ids, and instead
-        maps paths dirctly to capi query ids, which is fine since we essentially only want to support a couple of urls.
+        maps paths directly to capi query ids, which is fine since we essentially only want to support few urls.
+
+        Update, 17th Nov: with the introduction of `pathIsNovemberElectionTrackerRegex` and `pathIsElectionTracker`
+        The paths that are not in `specialPathsToCapiIdsMap`, but pass the `pathIsElectionTracker` test are missing
+        a CAPI Id. When that happens we are going to default to the election tracker atom Id.
      */
-    specialPathsToCapiIdsMap.get(ensureStartingForwardSlash(path))
+    specialPathsToCapiIdsMap.getOrElse(
+      ensureStartingForwardSlash(path),
+      "atom/interactive/interactives/2020/11/us-election/prod/amp-page",
+    )
   }
 
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {
