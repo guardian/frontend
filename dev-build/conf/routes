@@ -374,6 +374,9 @@ GET            /$shortCode<p/[\w]+>/:campaignCode                               
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
+# Nx1Config
+GET            /nx1-config.json                                                                                                  controllers.Nx1ConfigController.nx1Config
+
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
 GET            /theobserver                                                                                                      controllers.NewspaperController.latestObserverNewspaper()
