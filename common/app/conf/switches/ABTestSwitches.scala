@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Test designs for the liveblog epic",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 1, 1),
+    sellByDate = new LocalDate(2021, 1, 1),
     exposeClientSide = true,
   )
 
