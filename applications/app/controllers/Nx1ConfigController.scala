@@ -26,7 +26,7 @@ object Nx1Config {
     ActiveExperiments.allExperiments
       .filter(e => isParticipating(e) || isControl(e))
       .toSeq
-      .map { e => (e.description, e.value) }
+      .map { e => (e.name, e.value) }
       .toMap
   }
 }
