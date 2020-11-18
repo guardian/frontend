@@ -52,7 +52,7 @@ GET /confirm-email/thank-you                        controllers.UpsellController
 # Consents journey
 ########################################################################################################################
 GET         /consents/thank-you                     controllers.editprofile.EditProfileController.displayConsentsJourneyThankYou
-GET         /consents                               controllers.editprofile.EditProfileController.displayConsentsJourney(consentHint: Option[String])
+
 POST        /complete-consents                      controllers.editprofile.EditProfileController.submitRepermissionedFlag
 GET         /complete-consents                      controllers.editprofile.EditProfileController.displayConsentComplete()
 ########################################################################################################################
@@ -60,5 +60,4 @@ GET         /complete-consents                      controllers.editprofile.Edit
 ########################################################################################################################
 # Old routes
 ########################################################################################################################
-GET         /consents/staywithus                    controllers.editprofile.EditProfileController.redirectToConsentsJourney()
 GET         /privacy/edit                           controllers.editprofile.EditProfileController.redirectToEmailPrefs
