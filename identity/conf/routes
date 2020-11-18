@@ -13,8 +13,6 @@ GET         /user/id/:id                            controllers.PublicProfileCon
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
 GET         /user/:vanityUrl                        controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType = "discussions")
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
-GET         /verify-email/:token                    controllers.EmailVerificationController.verify(token: String)
-GET         /verify-email                           controllers.EmailVerificationController.resendEmailValidationEmail
 
 GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration
 
