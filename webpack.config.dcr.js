@@ -17,8 +17,14 @@ config.entry = {
     ),
 };
 
+// The Ophan alias removes duplicating the js in the commercial bundle sent to DCR.
 module.exports = webpackMerge.smart(config, {
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
+    },
+    resolve: {
+        alias: {
+            "ophan/ng": path.join(__dirname, 'static', 'src', 'javascripts', 'projects', 'commercial', 'modules', 'ophan-dcr.js'),
+        },
     },
 });
