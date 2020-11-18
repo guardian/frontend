@@ -10,10 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -319,7 +316,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 : false;
         } else if (state.aus) {
             // AUS mode
-            canRun = getConsentFor('aus-advertising', state);
+            canRun = state.aus.personalisedAdvertising;
         } else canRun = false;
 
         if (canRun !== latestConsentCanRun) {
