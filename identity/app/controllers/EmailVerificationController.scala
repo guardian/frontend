@@ -1,6 +1,5 @@
 package controllers
 
-
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
@@ -26,7 +25,6 @@ class EmailVerificationController(
     with SafeLogging {
 
   import authenticatedActions.fullAuthWithIdapiUserAction
-
 
   def completeRegistration(): Action[AnyContent] =
     fullAuthWithIdapiUserAction.async { implicit request =>
