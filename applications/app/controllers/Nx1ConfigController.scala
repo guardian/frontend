@@ -6,11 +6,21 @@ import views.support.CamelCase
 import experiments.ActiveExperiments
 import experiments.ActiveExperiments._
 
-case class Nx1Config(switches: Map[String, Boolean], abTests: Map[String, String])
+/*
+  Nx1Config (project name) was introduced to provide the client-side with metadata in places where the
+  usual article client side JavaScript config object is not available
+
+  The urls currently active are
+
+    - https://www.theguardian.com/switches.json
+    - https://www.theguardian.com/tests.json
+
+  If more metadata is required in the future then do add new routes instead of overloading existing public objects.
+
+  If an object need to be modified in a non backward compatible way also create a new route and let the clients know.
+ */
 
 object Nx1Config {
-  implicit val jf: Format[Nx1Config] = Json.format[Nx1Config]
-
   def makeAbTestReport(implicit request: RequestHeader) = {
     ActiveExperiments.allExperiments
       .filter(e => isParticipating(e) || isControl(e))
@@ -18,22 +28,22 @@ object Nx1Config {
       .map { e => (e.description, e.value) }
       .toMap
   }
-
-  def make(request: RequestHeader): Nx1Config = {
-    val switches = conf.switches.Switches.all
-      .filter(_.exposeClientSide)
-      .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
-        acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
-      })
-    val abTests = makeAbTestReport(request)
-    Nx1Config(switches = switches, abTests = abTests)
-  }
 }
 
 class Nx1ConfigController(val controllerComponents: ControllerComponents) extends BaseController {
-  def nx1Config: Action[AnyContent] =
+  def switches: Action[AnyContent] =
     Action { implicit request =>
-      val config = Nx1Config.make(request)
-      Ok(Json.toJson(config))
+      val switches = conf.switches.Switches.all
+        .filter(_.exposeClientSide)
+        .foldLeft(Map.empty[String, Boolean])((acc, switch) => {
+          acc + (CamelCase.fromHyphenated(switch.name) -> switch.isSwitchedOn)
+        })
+      Ok(Json.toJson(switches))
+    }
+
+  def tests: Action[AnyContent] =
+    Action { implicit request =>
+      val abTests = Nx1Config.makeAbTestReport(request)
+      Ok(Json.toJson(abTests))
     }
 }

@@ -85,8 +85,8 @@ POST       /atom/quiz/:id/*path                                                 
 GET        /atom/youtube/:id.json                                               controllers.YoutubeController.getAtomId(id: String)
 
 # Nx1Config
-GET        /nx1-config.json                                                     controllers.Nx1ConfigController.nx1Config
-
+GET        /switches.json                                                       controllers.Nx1ConfigController.switches
+GET        /tests.json                                                          controllers.Nx1ConfigController.tests
 
 GET        /$path<.+/\d\d\d\d/\w\w\w/\d\d>                                      controllers.AllIndexController.on(path)
 GET        /$path<.+>/latest                                                    controllers.LatestIndexController.latest(path)
