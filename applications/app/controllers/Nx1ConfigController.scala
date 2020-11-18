@@ -17,7 +17,7 @@ import experiments.ActiveExperiments._
 
   If more metadata is required in the future then do add new routes instead of overloading existing public objects.
 
-  If an object needs to be modified in a non backward compatible way also create a new route and let the clients know.
+  If an object needs to be modified in a non backward compatible way, then also create a new route and let the clients know.
  */
 
 object Nx1Config {
