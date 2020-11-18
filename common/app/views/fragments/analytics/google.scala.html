@@ -17,7 +17,7 @@
 // (where the user has not given their consent for GA tracking)
 window.ga = function() {};
 
-window.initialiseGa = function() {
+window.guardian.ga.initialiseGa = function() {
     // Remove spaces from content type and convert it to lower case
     function convertContentType(contentType) {
         var result = contentType;
@@ -61,6 +61,8 @@ window.initialiseGa = function() {
     }
     var isLoggedIn = (!!identityId).toString();
 
+    // If we have stubbed window.ga = function() {};, remove the stub before Google attempts
+    // to initialise it properly (it will not get initialised if the stub already exists)
     delete window.ga;
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
@@ -73,6 +75,7 @@ window.initialiseGa = function() {
     @***************************************************************************************
     * Code that is customised by us                                                        *
     ***************************************************************************************@
+    window.guardian.ga.hasInitialised = true;
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
             'sampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.samplePercentage },

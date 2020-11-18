@@ -123,11 +123,12 @@ const loadAnalytics = (): void => {
 
 const loadGoogleAnalytics = (): void => {
     const handleGoogleAnalytics = (gaHasConsent: boolean): void => {
-        if (gaHasConsent && !window.ga.loaded) {
-            window.initialiseGa()
+        if (gaHasConsent && !window.guardian.ga.hasInitialised) {
+            window.guardian.ga.initialiseGa()
         } else {
             // set window.ga back to a stub function when ga consents are removed so that we don't track events
             window.ga = function() {}
+            window.guardian.ga.hasInitialised = false
         }
     }
     mediator.on('ga:gaConsentChange', handleGoogleAnalytics)
