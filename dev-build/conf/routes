@@ -370,6 +370,11 @@ GET            /$shortCode<p/[\w]+>/:campaignCode                               
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
+# Nx1Config
+# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+GET            /switches.json                                                       controllers.Nx1ConfigController.switches
+GET            /tests.json                                                          controllers.Nx1ConfigController.tests
+
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
 GET            /theobserver                                                                                                      controllers.NewspaperController.latestObserverNewspaper()
@@ -461,4 +466,3 @@ GET     /*path/email/headline.txt                                               
 GET     /*path/email.emailjson                                                                                                   controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt                                                                                                    controllers.ArticleController.renderEmail(path)
 GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
-
