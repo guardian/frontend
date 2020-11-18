@@ -150,20 +150,4 @@ class ResetPasswordController(
       )
     }
 
-  def processUpdatePasswordToken(token: String, returnUrl: Option[String]): Action[AnyContent] =
-    Action.async { implicit request =>
-      val idRequest = idRequestParser(request)
-      api.userForToken(token) map {
-        case Left(errors) =>
-          logger.warn(s"Could not retrieve password reset request for token: $token, errors: ${errors.toString()}")
-          val idRequest = idRequestParser(request)
-          NoCache(SeeOther(idUrlBuilder.buildUrl("/reset/resend", idRequest)))
-        case Right(user) =>
-          val filledForm = passwordResetForm.fill("", "", user.primaryEmailAddress, returnUrl)
-          NoCache(
-            SeeOther(routes.ResetPasswordController.renderResetPassword(token, returnUrl).url)
-              .flashing(filledForm.toFlash),
-          )
-      }
-    }
 }
