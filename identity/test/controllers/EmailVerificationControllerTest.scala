@@ -40,7 +40,6 @@ class EmailVerificationControllerTest
   val signinService = mock[PlaySigninService]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
-
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
   val testAuth = ScGuU("abc")
@@ -77,7 +76,6 @@ class EmailVerificationControllerTest
   )(testApplicationContext)
 
   "Given resendEmailValidationEmail is called" - Fake {
-
 
     "Given completeRegistration is called" - Fake {
 
