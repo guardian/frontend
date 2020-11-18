@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "Tests an additional 'curated' onwards container below the article body.",
     owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 18),
+    sellByDate = new LocalDate(2020, 12, 9),
     exposeClientSide = true,
   )
 

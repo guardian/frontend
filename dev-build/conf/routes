@@ -124,10 +124,6 @@ GET            /embed/card/*path                                                
 GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
 GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
 
-# User tech feedback
-POST           /info/tech-feedback/send                                                                                          controllers.TechFeedbackController.submitFeedback(path = "")
-GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
-
 # Sport
 GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
 GET            /sport/cricket/match/:matchDate/:teamId                                                                           cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)

@@ -109,7 +109,19 @@ const getMessageFromQueryString = (): InAppMessage | null => {
 };
 
 const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<boolean> => {
+    const sdkLoadTiming = measureTiming('braze-sdk-load');
+    sdkLoadTiming.start();
+
     appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+    const sdkLoadTimeTaken = sdkLoadTiming.end();
+    ophan.record({
+        component: 'braze-sdk-load-timing',
+        value: sdkLoadTimeTaken,
+    });
+
+    const appboyTiming = measureTiming('braze-appboy');
+    appboyTiming.start();
 
     appboy.initialize(apiKey, {
         enableLogging: false,
@@ -119,7 +131,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
         minimumIntervalBetweenTriggerActionsInSeconds: 0,
     });
 
-    return new Promise(resolve => {
+    const canShowPromise = new Promise(resolve => {
         // Needed to keep Flow happy
         if (!appboy) {
             resolve(false);
@@ -138,11 +150,25 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
         appboy.changeUser(brazeUuid);
         appboy.openSession();
     });
+
+    canShowPromise.then(() => {
+        const appboyTimeTaken = appboyTiming.end();
+
+        ophan.record({
+            component: 'braze-appboy-timing',
+            value: appboyTimeTaken,
+        });
+    }).catch(() => {
+        appboyTiming.clear()
+        console.log("Appboy Timing failed.");
+    });
+
+    return canShowPromise
 };
 
 const canShow = async (): Promise<boolean> => {
-    const timing = measureTiming('braze-banner');
-    timing.start();
+    const bannerTiming = measureTiming('braze-banner');
+    bannerTiming.start();
 
     const forcedBrazeMessage = getMessageFromQueryString();
     if (forcedBrazeMessage) {
@@ -170,7 +196,7 @@ const canShow = async (): Promise<boolean> => {
 
     try {
         const result = await getMessageFromBraze(apiKey, brazeUuid)
-        const timeTaken = timing.end();
+        const timeTaken = bannerTiming.end();
 
         if (timeTaken) {
             ophan.record({
@@ -181,6 +207,7 @@ const canShow = async (): Promise<boolean> => {
 
         return result;
     } catch (e) {
+        bannerTiming.clear()
         return false;
     }
 };
