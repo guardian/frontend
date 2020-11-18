@@ -5,13 +5,9 @@ GET         /_healthcheck                           controllers.HealthCheck.heal
 
 GET         /google1ec7a89a27d60d47.html            controllers.Assets.at(path = "/public", file = "google1ec7a89a27d60d47.html")
 
-POST        /reset-password/:resetToken             controllers.ResetPasswordController.resetPassword( resetToken : String, returnUrl: Option[String])
-GET         /reset-password/:resetToken             controllers.ResetPasswordController.renderResetPassword( resetToken : String, returnUrl: Option[String] )
 GET         /password/confirm                       controllers.ChangePasswordController.renderPasswordConfirmation(returnUrl: Option[String])
 GET         /password/change                        controllers.ChangePasswordController.displayForm
 POST        /password/change                        controllers.ChangePasswordController.submitForm
-GET         /password/reset-confirmation            controllers.ResetPasswordController.renderPasswordResetConfirmation(returnUrl: Option[String])
-GET         /password/email-sent                    controllers.ResetPasswordController.renderEmailSentConfirmation
 POST        /password/guest                         controllers.editprofile.EditProfileController.guestPasswordSet()
 GET         /user/id/:id                            controllers.PublicProfileController.renderProfileFromId(id: String, activityType = "discussions")
 GET         /user/id/:id/:activityType              controllers.PublicProfileController.renderProfileFromId(id: String, activityType: String)
