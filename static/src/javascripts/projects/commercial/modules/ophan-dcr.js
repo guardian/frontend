@@ -1,4 +1,5 @@
-//Monkey patch to facilitate the removal of ophan tracking from the commercial bundle sent to DCR.
+// @flow strict
+// Monkey patch to facilitate the removal of ophan tracking from the commercial bundle sent to DCR.
 export default {
     record: (value) => {
         if (window && window.guardian && window.guardian.ophan && window.guardian.ophan.record)
