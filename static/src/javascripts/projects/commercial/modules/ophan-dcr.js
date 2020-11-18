@@ -1,21 +1,21 @@
 // @flow strict
 // Monkey patch to facilitate the removal of ophan tracking from the commercial bundle sent to DCR.
 export default {
-    // $FlowIssue[missing-annot]
+    // $FlowFixMe
     record: (value) => {
         if (window && window.guardian && window.guardian.ophan && window.guardian.ophan.record)
         {
             window.guardian.ophan.record(value);
         }
     },
-    // $FlowIssue[missing-annot]
+    // $FlowFixMe
     trackComponentAttention: (name, el, visibilityThreshhold) => {
         if (window && window.guardian && window.guardian.ophan && window.guardian.ophan.trackComponentAttention)
         {
             window.guardian.ophan.trackComponentAttention(name,el,visibilityThreshhold);
         }
     },
-    // $FlowIssue[missing-annot]
+    // $FlowFixMe
     setEventEmitter: (value) => {
         if (window && window.guardian && window.guardian.ophan && window.guardian.ophan.setEventEmitter)
         {
