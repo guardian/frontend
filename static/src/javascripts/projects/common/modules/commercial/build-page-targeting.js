@@ -66,6 +66,7 @@ const findBreakpoint = (): string => {
 };
 
 const inskinTargetting = (): string => {
+    return 'f';
     const vp = getViewport();
     if (vp && vp.width >= 1560) return 't';
     return 'f';
