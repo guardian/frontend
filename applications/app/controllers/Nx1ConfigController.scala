@@ -22,7 +22,7 @@ import experiments.ActiveExperiments._
  */
 
 object Nx1Config {
-  def makeAbTestReport(implicit request: RequestHeader) = {
+  def makeExperimentsReport(implicit request: RequestHeader) = {
     ActiveExperiments.allExperiments
       .filter(e => isParticipating(e) || isControl(e))
       .toSeq
@@ -42,9 +42,9 @@ class Nx1ConfigController(val controllerComponents: ControllerComponents) extend
       Ok(Json.toJson(switches))
     }
 
-  def tests: Action[AnyContent] =
+  def experiments: Action[AnyContent] =
     Action { implicit request =>
-      val abTests = Nx1Config.makeAbTestReport(request)
-      Ok(Json.toJson(abTests))
+      val currentExperiments = Nx1Config.makeExperimentsReport(request)
+      Ok(Json.toJson(currentExperiments))
     }
 }

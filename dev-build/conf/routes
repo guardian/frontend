@@ -373,7 +373,7 @@ GET            /atom/youtube/:id.json                                           
 # Nx1Config
 # mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
 GET            /switches.json                                                       controllers.Nx1ConfigController.switches
-GET            /tests.json                                                          controllers.Nx1ConfigController.tests
+GET            /experiments.json                                                          controllers.Nx1ConfigController.experiments
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
