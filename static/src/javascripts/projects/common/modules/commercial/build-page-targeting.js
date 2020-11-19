@@ -64,7 +64,7 @@ const findBreakpoint = (): string => {
 
 const inskinTargetting = (): string => {
     const vp = getViewport();
-    if (geolocationGetSync()=='AU') {
+    if (geolocationGetSync()==='AU') {
         return 'f';
     }
     if (vp && vp.width >= 1560) return 't';
