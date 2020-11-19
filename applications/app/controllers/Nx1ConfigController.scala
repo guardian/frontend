@@ -44,7 +44,7 @@ class Nx1ConfigController(val controllerComponents: ControllerComponents) extend
 
   def experiments: Action[AnyContent] =
     Action { implicit request =>
-      val currentExperiments = Nx1Config.makeExperimentsReport(request)
-      Ok(Json.toJson(currentExperiments))
+      val activeExperiments = Nx1Config.makeExperimentsReport(request)
+      Ok(Json.toJson(activeExperiments))
     }
 }
