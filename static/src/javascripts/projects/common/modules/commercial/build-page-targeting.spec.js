@@ -17,7 +17,7 @@ import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFrame
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import {cmp, onConsentChange} from '@guardian/consent-management-platform';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -59,6 +59,9 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
 }));
 
 // TCFv1
@@ -156,6 +159,7 @@ describe('Build Page Targeting', () => {
 
         getSync.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
+        cmp.willShowPrivacyMessage.mockResolvedValue(true);
 
         expect.hasAssertions();
     });
@@ -452,7 +456,7 @@ describe('Build Page Targeting', () => {
             ]);
         });
 
-        it('should get correct keywords when trailing slash is present', () => {
+        it('should get correct keywords when trailing slash is present',  () => {
             config.page.pageId =
                 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
             expect(getPageTargeting().urlkw).toEqual([
