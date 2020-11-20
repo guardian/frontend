@@ -32,7 +32,7 @@ const setupRedplanet: () => Promise<void> = () => {
         // CCPA only runs in the US and tcfv2 outside Aus
         // Redplanet only runs in Australia
         // so this should never happen
-        if (state.ccpa || state.tcfv2) {
+        if (!state.aus) {
             throw new Error(
                 `Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`
             );
