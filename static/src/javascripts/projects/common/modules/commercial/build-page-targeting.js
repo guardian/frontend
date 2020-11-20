@@ -65,7 +65,7 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = async (): string => {
+const inskinTargetting = async (): Promise<string> => {
     const vp = getViewport();
     const willShowPrivacyMessage: boolean = await cmp.willShowPrivacyMessage();
     return vp && vp.width >= 1560 && willShowPrivacyMessage ? 't' : 'f';
