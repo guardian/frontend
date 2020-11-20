@@ -153,11 +153,6 @@ object ArticlePicker {
     )
   }
 
-  def isInAllowList(path: String): Boolean = {
-    // our allow-list is only one article at the moment
-    path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
-  }
-
   def forall(features: Map[String, Boolean]): Boolean = {
     features.forall({ case (_, isMet) => isMet })
   }
@@ -178,7 +173,7 @@ object ArticlePicker {
   }
 
   def dcrForced(request: RequestHeader): Boolean = {
-    request.forceDCR || isInAllowList(request.path)
+    request.forceDCR
   }
 
   def dcrDisabled(request: RequestHeader): Boolean = {
