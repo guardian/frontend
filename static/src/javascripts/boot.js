@@ -11,7 +11,6 @@ import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getCookie } from 'lib/cookies';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
