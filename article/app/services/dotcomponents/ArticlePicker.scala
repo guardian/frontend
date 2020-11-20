@@ -168,8 +168,7 @@ object ArticlePicker {
         "isNotPaidContent",
       ),
     )
-    val isArticle100PercentPage = article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
-    isArticle100PercentPage
+    article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
   }
 
   def dcrForced(request: RequestHeader): Boolean = {
