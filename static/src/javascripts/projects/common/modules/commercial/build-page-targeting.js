@@ -237,7 +237,7 @@ const buildPageTargetting = async (
     adConsentState: boolean | null,
     ccpaState: boolean | null,
     tcfv2EventStatus: string | null
-): { [key: string]: mixed } => {
+): Promise<{ [key: string]: mixed }> => {
     const page = config.get('page');
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
@@ -300,7 +300,7 @@ const buildPageTargetting = async (
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
     page.pageAdTargeting = pageTargeting;
 
-    return pageTargeting;
+    return Promise.resolve(pageTargeting);
 };
 
 const getPageTargeting = async (): { [key: string]: mixed } => {
