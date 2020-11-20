@@ -7,7 +7,7 @@ case object ArticleBlocks extends BlockRange {
   val query = None
 }
 
-case object Canonical extends BlockRange {
+case object CanonicalLiveBlog extends BlockRange {
   // sport pagesize is 30 so the first page could be 30+29 if it's one block away from splitting off a page
   // plus we need an extra one to be able to reference the second page if necessary making 30+29+1=60
   val mainBlock = "main"

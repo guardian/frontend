@@ -17,7 +17,7 @@ import model.{
   Article,
   ArticleDateTimes,
   Badges,
-  Canonical,
+  CanonicalLiveBlog,
   DisplayedDateTimesDCR,
   GUDateTimeFormatNew,
   LiveBlogPage,
@@ -132,7 +132,7 @@ object DotcomRenderingDataModelFunctions {
   private def blocksForLiveblogPage(liveblog: LiveBlogPage, blocks: APIBlocks): Seq[APIBlock] = {
     val last60 = blocks.requestedBodyBlocks
       .getOrElse(Map.empty[String, Seq[APIBlock]])
-      .getOrElse(Canonical.firstPage, Seq.empty[APIBlock])
+      .getOrElse(CanonicalLiveBlog.firstPage, Seq.empty[APIBlock])
       .toList
 
     // For the newest page, the last 60 blocks are requested, but for other page,
