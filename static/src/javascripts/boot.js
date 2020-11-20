@@ -10,6 +10,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { storage } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { isInUsa } from 'common/modules/commercial/geo-utils';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -57,6 +58,10 @@ const go = () => {
                     );
                 });
             }
+        });
+
+        cmp.willShowPrivacyMessage().then(willShow => {
+            if (!willShow) storage.local.set('gu.hasSeenPrivacyBanner', true);
         });
 
         if (

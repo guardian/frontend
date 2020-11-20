@@ -66,11 +66,10 @@ const findBreakpoint = (): string => {
 };
 
 const inskinTargetting = (): string => {
-    const vp = getViewport();
-    if (geolocationGetSync()==='AU') {
-        return 'f';
+    if (storage.local.get('gu.hasSeenPrivacyBanner')) {
+        const vp = getViewport();
+        if (vp && vp.width >= 1560) return 't';
     }
-    if (vp && vp.width >= 1560) return 't';
     return 'f';
 };
 
