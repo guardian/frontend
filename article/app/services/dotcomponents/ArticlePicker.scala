@@ -171,10 +171,6 @@ object ArticlePicker {
     article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
   }
 
-  def dcrForced(request: RequestHeader): Boolean = {
-    request.forceDCR
-  }
-
   def dcrDisabled(request: RequestHeader): Boolean = {
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
     val forceDCROff = request.forceDCROff
@@ -185,16 +181,16 @@ object ArticlePicker {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
 
-    val userInDCRTest = ActiveExperiments.isParticipating(DotcomRendering)
+    val userInDCRGroup = ActiveExperiments.isParticipating(DotcomRendering)
     val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
-      if (dcrForced(request)) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
+      if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
       // is always going to be selected if `?dcr=true`, regardless of
       // the switch.
       else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
       else if (userInDCRBubble) RemoteRender
-      else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
+      else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
@@ -211,7 +207,7 @@ object ArticlePicker {
     // include features that we wish to log but not allow-list against
     val features = primaryChecks.mapValues(_.toString) +
       ("dcrTestGroup" -> testGroup(DotcomRendering)) +
-      ("userIsInCohort" -> userInDCRTest.toString) +
+      ("userIsInCohort" -> userInDCRGroup.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> hasPrimaryFeatures.toString) +
