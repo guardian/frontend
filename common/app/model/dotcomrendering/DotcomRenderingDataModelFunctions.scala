@@ -312,7 +312,7 @@ object DotcomRenderingDataModelFunctions {
     )
 
     val bodyBlocks = bodyBlocksRaw
-      .filter(_.published)
+      .filter(_.published || pageType.isPreview)
       .map(block =>
         toBlock(
           block,

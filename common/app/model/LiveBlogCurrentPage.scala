@@ -17,6 +17,7 @@ object LiveBlogCurrentPage {
       case PageWithBlock(isRequestedBlock) => findPageWithBlock(pageSize, blocks.body, isRequestedBlock)
       case SinceBlockId(blockId)           => updates(blocks, SinceBlockId(blockId))
       case ArticleBlocks                   => None
+      case GenericFallback                 => None
     }
   }
 

@@ -14,8 +14,19 @@ case object CanonicalLiveBlog extends BlockRange {
   val firstPage = "body:latest:60"
   val oldestPage = "body:oldest:1"
   val timeline = "body:key-events"
-  // this only makes sense for liveblogs at the moment, but article use field body not blocks anyway
   val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline))
+}
+
+// Created to handle ArticleController (for preview) specifically, where we may render an
+// article or a liveblog (that doesn't get caught by the liveblog specific routes, which may
+// or may not actually happen in the wild) so we request both specific blocks and the whole body
+case object GenericFallback extends BlockRange {
+  val mainBlock = "main"
+  val firstPage = "body:latest:60"
+  val oldestPage = "body:oldest:1"
+  val timeline = "body:key-events"
+  val body = "body" // supports Dotcom Rendering model which currently requires field body
+  val query = Some(Seq(mainBlock, firstPage, oldestPage, timeline, body))
 }
 
 case class PageWithBlock(page: String) extends BlockRange {
