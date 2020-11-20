@@ -102,7 +102,7 @@ const tcfv2MixedConsentMock = (callback): void =>
     });
 
 describe('Build Page Targeting', () => {
-    beforeEach(() => {
+    beforeEach(async () => {
         config.page = {
             authorIds: 'profile/gabrielle-chan',
             blogIds: 'a/blog',
@@ -172,8 +172,8 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting).toBeDefined();
     });
 
-    it('should build correct page targeting', () => {
-        const pageTargeting = getPageTargeting();
+    it('should build correct page targeting', async () => {
+        const pageTargeting = await getPageTargeting();
 
         expect(pageTargeting.sens).toBe('f');
         expect(pageTargeting.edition).toBe('us');
@@ -195,123 +195,127 @@ describe('Build Page Targeting', () => {
         expect(pageTargeting.rp).toEqual('dotcom-platform');
     });
 
-    it('should set correct personalized ad (pa) param', () => {
+    it('should set correct personalized ad (pa) param', async () => {
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
-        expect(getPageTargeting().pa).toBe('t');
+        expect((await getPageTargeting()).pa).toBe('t');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-        expect(getPageTargeting().pa).toBe('f');
+        expect((await getPageTargeting()).pa).toBe('f');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
-        expect(getPageTargeting().pa).toBe('f');
+        expect((await getPageTargeting()).pa).toBe('f');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2MixedConsentMock);
-        expect(getPageTargeting().pa).toBe('f');
+        expect((await getPageTargeting()).pa).toBe('f');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithConsentMock);
-        expect(getPageTargeting().pa).toBe('t');
+        expect((await getPageTargeting()).pa).toBe('t');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-        expect(getPageTargeting().pa).toBe('f');
+        expect((await getPageTargeting()).pa).toBe('f');
     });
 
-    it('Should correctly set the RDP flag (rdp) param', () => {
+    it('Should correctly set the RDP flag (rdp) param', async () => {
         onConsentChange.mockImplementation(tcfWithConsentMock);
-        expect(getPageTargeting().rdp).toBe('na');
+        expect((await getPageTargeting()).rdp).toBe('na');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
-        expect(getPageTargeting().rdp).toBe('na');
+        expect((await getPageTargeting()).rdp).toBe('na');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
-        expect(getPageTargeting().rdp).toBe('na');
+        expect((await getPageTargeting()).rdp).toBe('na');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfMixedConsentMock);
-        expect(getPageTargeting().rdp).toBe('na');
+        expect((await getPageTargeting()).rdp).toBe('na');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithConsentMock);
-        expect(getPageTargeting().rdp).toBe('f');
+        expect((await getPageTargeting()).rdp).toBe('f');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithoutConsentMock);
-        expect(getPageTargeting().rdp).toBe('t');
+        expect((await getPageTargeting()).rdp).toBe('t');
     });
 
-    it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
+    it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', async () => {
         _.resetPageTargeting();
         getPrivacyFramework.mockReturnValue({ tcfv2: true });
 
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
 
-        expect(getPageTargeting().consent_tcfv2).toBe('t');
-        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+        expect((await getPageTargeting()).consent_tcfv2).toBe('t');
+        expect((await getPageTargeting()).cmp_interaction).toBe(
+            'useractioncomplete'
+        );
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 
-        expect(getPageTargeting().consent_tcfv2).toBe('f');
-        expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
+        expect((await getPageTargeting()).consent_tcfv2).toBe('f');
+        expect((await getPageTargeting()).cmp_interaction).toBe('cmpuishown');
 
         _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2MixedConsentMock);
 
-        expect(getPageTargeting().consent_tcfv2).toBe('f');
-        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+        expect((await getPageTargeting()).consent_tcfv2).toBe('f');
+        expect((await getPageTargeting()).cmp_interaction).toBe(
+            'useractioncomplete'
+        );
 
         _.resetPageTargeting();
         getPrivacyFramework.mockReturnValue({ tcfv1: true });
         onConsentChange.mockImplementation(tcfWithConsentMock);
 
-        expect(getPageTargeting().consent_tcfv2).toBe('na');
-        expect(getPageTargeting().cmp_interaction).toBe('na');
+        expect((await getPageTargeting()).consent_tcfv2).toBe('na');
+        expect((await getPageTargeting()).cmp_interaction).toBe('na');
     });
 
-    it('should set correct edition param', () => {
-        expect(getPageTargeting().edition).toBe('us');
+    it('should set correct edition param', async () => {
+        expect((await getPageTargeting()).edition).toBe('us');
     });
 
-    it('should set correct se param', () => {
-        expect(getPageTargeting().se).toEqual(['filmweekly']);
+    it('should set correct se param', async () => {
+        expect((await getPageTargeting()).se).toEqual(['filmweekly']);
     });
 
-    it('should set correct k param', () => {
-        expect(getPageTargeting().k).toEqual([
+    it('should set correct k param', async () => {
+        expect((await getPageTargeting()).k).toEqual([
             'prince-charles-letters',
             'uk/uk',
             'prince-charles',
         ]);
     });
 
-    it('should set correct ab param', () => {
-        expect(getPageTargeting().ab).toEqual(['MtMaster-variantName']);
+    it('should set correct ab param', async () => {
+        expect((await getPageTargeting()).ab).toEqual(['MtMaster-variantName']);
     });
 
-    it('should set Observer flag for Observer content', () => {
-        expect(getPageTargeting().ob).toEqual('t');
+    it('should set Observer flag for Observer content', async () => {
+        expect((await getPageTargeting()).ob).toEqual('t');
     });
 
-    it('should set correct branding param for paid content', () => {
-        expect(getPageTargeting().br).toEqual('p');
+    it('should set correct branding param for paid content', async () => {
+        expect((await getPageTargeting()).br).toEqual('p');
     });
 
-    it('should not contain an ad-free targeting value', () => {
-        expect(getPageTargeting().af).toBeUndefined();
+    it('should not contain an ad-free targeting value', async () => {
+        expect((await getPageTargeting()).af).toBeUndefined();
     });
 
-    it('should remove empty values', () => {
+    it('should remove empty values', async () => {
         config.page = {};
         config.ophan = { pageViewId: '123456' };
         getUserSegments.mockReturnValue([]);
 
-        expect(getPageTargeting()).toEqual({
+        expect(await getPageTargeting()).toEqual({
             sens: 'f',
             bp: 'mobile',
             at: 'ng101',
@@ -331,108 +335,108 @@ describe('Build Page Targeting', () => {
     });
 
     describe('Breakpoint targeting', () => {
-        it('should set correct breakpoint targeting for a mobile device', () => {
+        it('should set correct breakpoint targeting for a mobile device', async () => {
             getBreakpoint.mockReturnValue('mobile');
-            expect(getPageTargeting().bp).toEqual('mobile');
+            expect((await getPageTargeting()).bp).toEqual('mobile');
         });
 
-        it('should set correct breakpoint targeting for a medium mobile device', () => {
+        it('should set correct breakpoint targeting for a medium mobile device', async () => {
             getBreakpoint.mockReturnValue('mobileMedium');
-            expect(getPageTargeting().bp).toEqual('mobile');
+            expect((await getPageTargeting()).bp).toEqual('mobile');
         });
 
-        it('should set correct breakpoint targeting for a mobile device in landscape mode', () => {
+        it('should set correct breakpoint targeting for a mobile device in landscape mode', async () => {
             getBreakpoint.mockReturnValue('mobileLandscape');
-            expect(getPageTargeting().bp).toEqual('mobile');
+            expect((await getPageTargeting()).bp).toEqual('mobile');
         });
 
-        it('should set correct breakpoint targeting for a phablet device', () => {
+        it('should set correct breakpoint targeting for a phablet device', async () => {
             getBreakpoint.mockReturnValue('phablet');
-            expect(getPageTargeting().bp).toEqual('tablet');
+            expect((await getPageTargeting()).bp).toEqual('tablet');
         });
 
-        it('should set correct breakpoint targeting for a tablet device', () => {
+        it('should set correct breakpoint targeting for a tablet device', async () => {
             getBreakpoint.mockReturnValue('tablet');
-            expect(getPageTargeting().bp).toEqual('tablet');
+            expect((await getPageTargeting()).bp).toEqual('tablet');
         });
 
-        it('should set correct breakpoint targeting for a desktop device', () => {
+        it('should set correct breakpoint targeting for a desktop device', async () => {
             getBreakpoint.mockReturnValue('desktop');
-            expect(getPageTargeting().bp).toEqual('desktop');
+            expect((await getPageTargeting()).bp).toEqual('desktop');
         });
 
-        it('should set correct breakpoint targeting for a leftCol device', () => {
+        it('should set correct breakpoint targeting for a leftCol device', async () => {
             getBreakpoint.mockReturnValue('leftCol');
-            expect(getPageTargeting().bp).toEqual('desktop');
+            expect((await getPageTargeting()).bp).toEqual('desktop');
         });
 
-        it('should set correct breakpoint targeting for a wide device', () => {
+        it('should set correct breakpoint targeting for a wide device', async () => {
             getBreakpoint.mockReturnValue('wide');
-            expect(getPageTargeting().bp).toEqual('desktop');
+            expect((await getPageTargeting()).bp).toEqual('desktop');
         });
     });
 
     describe('Build Page Targeting (ad-free)', () => {
-        it('should set the ad-free param to t when enabled', () => {
+        it('should set the ad-free param to t when enabled', async () => {
             commercialFeatures.adFree = true;
-            expect(getPageTargeting().af).toBe('t');
+            expect((await getPageTargeting()).af).toBe('t');
         });
     });
 
     describe('Already visited frequency', () => {
-        it('can pass a value of five or less', () => {
+        it('can pass a value of five or less', async () => {
             storage.local.setRaw('gu.alreadyVisited', 5);
-            expect(getPageTargeting().fr).toEqual('5');
+            expect((await getPageTargeting()).fr).toEqual('5');
         });
 
-        it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
+        it('between five and thirty, includes it in a bucket in the form "x-y"', async () => {
             storage.local.setRaw('gu.alreadyVisited', 18);
-            expect(getPageTargeting().fr).toEqual('16-19');
+            expect((await getPageTargeting()).fr).toEqual('16-19');
         });
 
-        it('over thirty, includes it in the bucket "30plus"', () => {
+        it('over thirty, includes it in the bucket "30plus"', async () => {
             storage.local.setRaw('gu.alreadyVisited', 300);
-            expect(getPageTargeting().fr).toEqual('30plus');
+            expect((await getPageTargeting()).fr).toEqual('30plus');
         });
 
-        it('passes a value of 0 if the value is not stored', () => {
+        it('passes a value of 0 if the value is not stored', async () => {
             storage.local.remove('gu.alreadyVisited');
-            expect(getPageTargeting().fr).toEqual('0');
+            expect((await getPageTargeting()).fr).toEqual('0');
         });
     });
 
     describe('Referrer', () => {
-        it('should set ref to Facebook', () => {
+        it('should set ref to Facebook', async () => {
             getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'
             );
-            expect(getPageTargeting().ref).toEqual('facebook');
+            expect((await getPageTargeting()).ref).toEqual('facebook');
         });
 
-        it('should set ref to Twitter', () => {
+        it('should set ref to Twitter', async () => {
             getReferrer.mockReturnValue(
                 'https://www.t.co/you-must-unlearn-what-you-have-learned'
             );
-            expect(getPageTargeting().ref).toEqual('twitter');
+            expect((await getPageTargeting()).ref).toEqual('twitter');
         });
 
-        it('should set ref to reddit', () => {
+        it('should set ref to reddit', async () => {
             getReferrer.mockReturnValue(
                 'https://www.reddit.com/its-not-my-fault'
             );
-            expect(getPageTargeting().ref).toEqual('reddit');
+            expect((await getPageTargeting()).ref).toEqual('reddit');
         });
 
-        it('should set ref to google', () => {
+        it('should set ref to google', async () => {
             getReferrer.mockReturnValue(
                 'https://www.google.com/i-find-your-lack-of-faith-distrubing'
             );
-            expect(getPageTargeting().ref).toEqual('google');
+            expect((await getPageTargeting()).ref).toEqual('google');
         });
 
-        it('should set ref empty string if referrer does not match', () => {
+        it('should set ref empty string if referrer does not match', async () => {
             getReferrer.mockReturnValue('https://theguardian.com');
-            expect(getPageTargeting().ref).toEqual(undefined);
+            expect((await getPageTargeting()).ref).toEqual(undefined);
         });
     });
 
