@@ -9,7 +9,6 @@ import conf.switches.SwitchGroup.Commercial
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
-    DCRBubble,
     NGInteractiveDCR,
     UseAusCmp,
   )
@@ -24,15 +23,6 @@ object DotcomRendering
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = new LocalDate(2020, 12, 1),
       participationGroup = Perc50, // Also see ArticlePicker.scala - our main filter mechanism is by page features
-    )
-
-object DCRBubble
-    extends Experiment(
-      name = "always-dcr-rendering",
-      description = "Use DCR for all article pages (equivalent to always adding ?dcr)",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
-      participationGroup = Perc0A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
     )
 
 object NGInteractiveDCR

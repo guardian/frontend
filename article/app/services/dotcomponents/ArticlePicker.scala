@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import model.ArticlePage
-import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
+import experiments.{ActiveExperiments, Control, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{
@@ -182,14 +182,12 @@ object ArticlePicker {
     val hasPrimaryFeatures = forall(primaryChecks)
 
     val userInDCRGroup = ActiveExperiments.isParticipating(DotcomRendering)
-    val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
 
     val tier =
       if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
       // is always going to be selected if `?dcr=true`, regardless of
       // the switch.
       else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
-      else if (userInDCRBubble) RemoteRender
       else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
