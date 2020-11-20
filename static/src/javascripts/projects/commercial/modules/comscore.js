@@ -55,8 +55,8 @@ export const init = (): Promise<void> => {
         onConsentChange(state => {
             const canRunTcfv2 =
                 state.tcfv2 && getConsentFor('comscore', state);
-            const canRunCcpa = !!state.ccpa; // always runs in CCPA
-            if (canRunTcfv2 || canRunCcpa) initOnConsent(true);
+            const canRunCcpaOrAus = !!state.ccpa || !!state.aus; // always runs in CCPA and AUS
+            if (canRunTcfv2 || canRunCcpaOrAus) initOnConsent(true);
         });
     }
 
