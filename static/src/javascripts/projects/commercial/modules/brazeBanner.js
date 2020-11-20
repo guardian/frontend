@@ -27,11 +27,13 @@ const getBrazeUuid = (): Promise<?string> =>
 
 const hasRequiredConsents = (): Promise<boolean> =>
     new Promise((resolve) => {
-        onConsentChange(({ tcfv2, ccpa }) => {
+        onConsentChange(({ tcfv2, ccpa, aus }) => {
             if (tcfv2) {
                 resolve(tcfv2.vendorConsents[brazeVendorId]);
             } else if (ccpa) {
                 resolve(!ccpa.doNotSell);
+            } else if (aus) {
+                resolve(aus.personalisedAdvertising);
             } else {
                 resolve(false);
             }
