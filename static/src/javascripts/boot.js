@@ -59,14 +59,7 @@ const go = () => {
             }
         });
 
-        if (
-            config.get('switches.auConsent', false) ||
-            config.get('tests.useAusCmpVariant') === 'variant'
-        ) {
-            cmp.init({ pubData, country: geolocationGetSync() });
-        } else {
-            cmp.init({ pubData, isInUsa: isInUsa() });
-        }
+        cmp.init({ pubData, country: geolocationGetSync() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
