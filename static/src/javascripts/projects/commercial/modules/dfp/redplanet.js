@@ -28,15 +28,16 @@ const initialise = (): void => {
 };
 
 const setupRedplanet: () => Promise<void> = () => {
-    onConsentChange(state => {
-        // CCPA only runs in the US and Redplanet only runs in Australia
+    onConsentChange((state) => {
+        // CCPA only runs in the US and tcfv2 outside Aus
+        // Redplanet only runs in Australia
         // so this should never happen
-        if (state.ccpa) {
+        if (state.ccpa || state.tcfv2) {
             throw new Error(
-                `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on AUS mode`
+                `Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`
             );
         }
-        const canRun: boolean = state.aus && getConsentFor('redplanet', state);
+        const canRun: boolean = getConsentFor('redplanet', state);
 
         if (!initialised && canRun) {
             initialised = true;
