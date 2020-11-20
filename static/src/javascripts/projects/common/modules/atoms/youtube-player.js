@@ -52,11 +52,16 @@ interface AdsConfig {
 let tcfState = null;
 let ccpaState = null;
 let tcfData = {};
-onConsentChange(state => {
-    if (state.ccpa) {
-        ccpaState = state.doNotSell;
-    } else {
-        tcfData = state.tcfv2;
+onConsentChange((consentState) => {
+    if (consentState.ccpa) {
+        ccpaState = consentState.doNotSell;
+    }
+    else if (consentState.aus) {
+        ccpaState = !consentState.aus.personalisedAdvertising;
+    }
+
+    else {
+        tcfData = consentState.tcfv2;
         tcfState = tcfData
             ? Object.values(tcfData.consents).every(Boolean)
             : false
