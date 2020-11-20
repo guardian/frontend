@@ -513,12 +513,6 @@ object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
 }
 
-// Intended for unstructured html that we can't model, typically rejected by consumers
-case class HTMLFallbackBlockElement(html: String) extends PageElement
-object HTMLFallbackBlockElement {
-  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
-}
-
 //noinspection ScalaStyle
 object PageElement {
 
