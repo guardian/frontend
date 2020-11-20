@@ -176,9 +176,9 @@ object ArticlePicker {
   }
 
   def dcrDisabled(request: RequestHeader): Boolean = {
-    val forceDCROff = request.forceDCROff
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    forceDCROff || !dcrEnabled
+    val forceDCROff = request.forceDCROff
+    !dcrEnabled || forceDCROff
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
