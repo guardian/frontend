@@ -100,12 +100,24 @@ class PrebidAdUnit {
     code: ?string;
     bids: ?(PrebidBid[]);
     mediaTypes: ?PrebidMediaTypes;
+    build: Promise<PrebidAdUnit>;
 
-    constructor(advert: Advert, slot: HeaderBiddingSlot) {
+    constructor(
+        advert: Advert,
+        slot: HeaderBiddingSlot,
+        asyncBids: ?(PrebidBid[])
+    ) {
+        if (typeof asyncBids === 'undefined')
+            throw new Error('Needs to be called async');
+
         this.code = advert.id;
-        // How to make a constructor Async? 2020-10-23
-        this.bids = bids(advert.id, slot.sizes);
+        this.bids = asyncBids;
         this.mediaTypes = { banner: { sizes: slot.sizes } };
+    }
+
+    static async build(advert: Advert, slot: HeaderBiddingSlot) {
+        const asyncBids = await bids(advert.id, slot.sizes);
+        return new PrebidAdUnit(advert, slot, asyncBids);
     }
 
     isEmpty() {
@@ -210,7 +222,7 @@ const initialise = (window: {
 
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
-const requestBids = (
+const requestBids = async (
     advert: Advert,
     slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
 ): Promise<void> => {
@@ -226,7 +238,10 @@ const requestBids = (
         advert,
         slotFlatMap
     )
-        .map(slot => new PrebidAdUnit(advert, slot))
+        .map(slot => {
+            const prebidAdUnit = new PrebidAdUnit(advert, slot);
+            return prebidAdUnit.build(advert, slot);
+        })
         .filter(adUnit => !adUnit.isEmpty());
 
     if (adUnits.length === 0) {
