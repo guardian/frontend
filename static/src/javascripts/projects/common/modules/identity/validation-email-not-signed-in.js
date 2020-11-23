@@ -3,6 +3,19 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import fetch from 'lib/fetch';
 
+const emailToken = (): string | null => new URLSearchParams(window.location.search).get('encryptedEmail');
+
+const sendValidationEmail = (token: string): any => {
+    const endpoint = `/resend-validation-email/${token}`;
+    return fetch(endpoint, {
+        method: 'post',
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+        },
+    });
+};
+
 const init = (): void => {
     fastdom
         .measure(() =>
@@ -16,7 +29,7 @@ const init = (): void => {
                     'click',
                     (event: Event): void => {
                         event.preventDefault();
-                        let token = emailToken();
+                        const token = emailToken();
                         if (token) {
                             sendValidationEmail(token).then(
                                 resp => {
@@ -75,19 +88,6 @@ const init = (): void => {
                 );
             }
         });
-};
-
-const emailToken = (): string | null => new URLSearchParams(window.location.search).get('encryptedEmail');
-
-const sendValidationEmail = (token: string): any => {
-    const endpoint = `/resend-validation-email/${token}`;
-    return fetch(endpoint, {
-        method: 'post',
-        headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-        },
-    });
 };
 
 export { init };
