@@ -2,7 +2,6 @@ package pages
 
 import common.Edition
 import conf.switches.Switches._
-import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.HtmlPageHelpers._
 import html.Styles
 import model.{ApplicationContext, Page, PageWithStoryPackage}
@@ -14,7 +13,7 @@ import views.html.fragments.page._
 import views.html.fragments.page.body._
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
 import views.html.fragments.page.head._
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
 import services.dotcomponents.ArticlePicker.{forall, primaryFeatures}
 
@@ -65,7 +64,6 @@ object StoryHtmlPage {
         htmlDcrCouldRender(pageWithStoryPackage, request),
       ),
       bodyTag(classes = bodyClasses)(
-        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         survey() when SurveySwitch.isSwitchedOn,

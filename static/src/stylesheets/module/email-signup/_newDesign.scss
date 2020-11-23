@@ -6,6 +6,14 @@ $mobile-headline-font-size: 24px;
 $mobile-description-font-size: 16px;
 $mobile-img-size: 3 * $mobile-headline-font-size;
 
+/* iframe hacks for AB test */
+
+.hide-element {
+    display: none;
+}
+
+/* Design CSS for new designs */
+
 .newsletter-embed {
     * {
         box-sizing: border-box;

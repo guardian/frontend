@@ -3,7 +3,6 @@ package pages
 import common.Edition
 import conf.switches.Switches.WeAreHiring
 import controllers.InteractivePage
-import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import html.{HtmlPage, Styles}
 import html.HtmlPageHelpers._
 import model.{ApplicationContext, Page}
@@ -16,7 +15,8 @@ import views.html.fragments.page.head.stylesheets.{criticalStyleInline, critical
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
-import html.HtmlPageHelpers.{ContentCSSFile}
+import html.HtmlPageHelpers.ContentCSSFile
+import services.ApplicationsSpecial2020Election
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -50,10 +50,13 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       ),
     )
 
+    val ampTag = ApplicationsSpecial2020Election.ampTagHtml(request.path)
+
     htmlTag(
       headTag(
         weAreHiring() when WeAreHiring.isSwitchedOn,
         titleTag(),
+        ampTag,
         metaData(),
         styles(allStyles),
         fixIEReferenceErrors(),
@@ -61,7 +64,6 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
         inlineJSBlocking(),
       ),
       bodyTag(classes = bodyClasses)(
-        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),

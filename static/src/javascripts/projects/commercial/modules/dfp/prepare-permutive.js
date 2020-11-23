@@ -77,8 +77,8 @@ const generatePayload = (
             ? new Date(webPublicationDate).toISOString()
             : '';
     const safeToneIds = (toneIds && typeof toneIds === 'string'
-            ? toneIds.split(',')
-            : []
+        ? toneIds.split(',')
+        : []
     ).map(str => str.trim());
     const cleanPayload = removeEmpty({
         content: {

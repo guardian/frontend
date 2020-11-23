@@ -81,10 +81,13 @@ describe('Sign in gate test', () => {
     });
 
     describe('canShow returns true', () => {
-        it('should return true using default mocks', () =>
+        it('should return true using default mocks', () => {
+            // Add a fake default config.get call for the keywordIds
+            fakeConfig.get.mockReturnValueOnce("")
             signInGate.canShow().then(show => {
                 expect(show).toBe(true);
-            }));
+            })
+        });
 
         it('should return true if page view is greater than or equal to 2', () => {
             fakeLocal.get.mockReturnValueOnce([{ count: 10, day: 1 }]);
@@ -103,7 +106,7 @@ describe('Sign in gate test', () => {
         });
 
         it('should return false if this is the first page view', () => {
-            fakeLocal.get.mockReturnValueOnce([{ count: 0, day: 1 }]);
+            fakeLocal.get.mockReturnValueOnce([{count: 0, day: 1}]);
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });
@@ -142,6 +145,13 @@ describe('Sign in gate test', () => {
         it('should return false if its an ios 9 device', () => {
             window.navigator.userAgent =
                 'Mozilla/5.0 (iPad; CPU OS 9_1 like Mac OS X) AppleWebKit/600.1.4 (KHTML, like Gecko) CriOS/46.0.2490.73 Mobile/13C143 Safari/600.1.4 (000718)';
+            return signInGate.canShow().then(show => {
+                expect(show).toBe(false);
+            });
+        });
+
+        it('should return false if its a newsletter landing page', () => {
+            fakeConfig.get.mockReturnValueOnce("info/newsletter-sign-up,us-news/us-news,society/homelessness,society/housing");
             return signInGate.canShow().then(show => {
                 expect(show).toBe(false);
             });

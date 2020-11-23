@@ -10,9 +10,9 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { getLocale, storage } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
@@ -29,35 +29,45 @@ if (process.env.NODE_ENV !== 'production') {
 
 // kick off the app
 const go = () => {
-    domready(() => {
+    domready(async () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid') || undefined;;
+        const browserId: ?string = getCookie('bwid') || undefined;
         const pageViewId: ?string = config.get('ophan.pageViewId');
-        const pubData: { browserId?: ?string, pageViewId?: ?string } =
-            { browserId, pageViewId };
+        const pubData: { browserId?: ?string, pageViewId?: ?string } = {
+            browserId,
+            pageViewId,
+        };
 
-
+        // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
+        // mark: CONSENT_TIMING
         let recordedConsentTime = false;
         onConsentChange(() => {
             if (!recordedConsentTime) {
-                markTime('Consent acquired');
-                trackPerformance(
-                    'CMP init',
-                    'Consent acquired',
-                    'Time to get consent'
-                );
                 recordedConsentTime = true;
+                cmp.willShowPrivacyMessage().then(willShow => {
+                    trackPerformance(
+                        'consent',
+                        'acquired',
+                        willShow ? 'new' : 'existing'
+                    );
+                });
             }
-        })
+        });
 
-        markTime('CMP init');
-        if (config.get('tests.useAusCmpVariant') === 'variant') {
-            cmp.init({ pubData, country: geolocationGetSync() });
+        cmp.willShowPrivacyMessage().then(willShow => {
+            if (!willShow) storage.local.set('gu.hasSeenPrivacyBanner', true);
+        });
+
+        if (
+            config.get('switches.auConsent', false) ||
+            config.get('tests.useAusCmpVariant') === 'variant'
+        ) {
+            cmp.init({ pubData, country: await getLocale() });
         } else {
             cmp.init({ pubData, isInUsa: isInUsa() });
         }

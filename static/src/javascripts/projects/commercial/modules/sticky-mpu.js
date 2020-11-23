@@ -64,10 +64,12 @@ const stickyMpu = (adSlot: HTMLElement) => {
     }
 
     const referenceElement: ?HTMLElement = document.querySelector(
-        '.js-article__body,.js-liveblog-body-content'
+        ['.js-article__body:not([style*="display: none;"])',
+        '.js-liveblog-body-content:not([style*="display: none;"])'].join(', ')
     );
 
-    const stickyPixelBoundary: number = 300;
+    // Fixes overlapping ad issue on liveblogs by Setting to max ad height.
+    const stickyPixelBoundary: number = config.get('page.isLiveBlog') ? 600 : 300;
 
     if (
         !referenceElement ||

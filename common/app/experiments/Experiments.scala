@@ -8,27 +8,13 @@ import conf.switches.SwitchGroup.Commercial
 
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
-    OldTLSSupportDeprecation,
     DotcomRendering,
-    DCRBubble,
     NGInteractiveDCR,
-    NewsletterEmbedDesign,
     UseAusCmp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
 }
-
-object OldTLSSupportDeprecation
-    extends Experiment(
-      name = "old-tls-support-deprecation",
-      description =
-        "This will turn on a deprecation notice to any user who is accessing our site using TLS v1.0 or v1.1",
-      owners = Seq(Owner.withGithub("siadcock")),
-      sellByDate = new LocalDate(2020, 11, 11),
-      // Custom group based on header set in Fastly
-      participationGroup = TLSSupport,
-    )
 
 object DotcomRendering
     extends Experiment(
@@ -37,15 +23,6 @@ object DotcomRendering
       owners = Seq(Owner.withGithub("shtukas")),
       sellByDate = new LocalDate(2020, 12, 1),
       participationGroup = Perc50, // Also see ArticlePicker.scala - our main filter mechanism is by page features
-    )
-
-object DCRBubble
-    extends Experiment(
-      name = "always-dcr-rendering",
-      description = "Use DCR for all article pages (equivalent to always adding ?dcr)",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
-      participationGroup = Perc0A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
     )
 
 object NGInteractiveDCR
@@ -71,6 +48,6 @@ object UseAusCmp
       name = "use-aus-cmp",
       description = "Use AU framework in CMP in Australia",
       owners = group(Commercial),
-      sellByDate = new LocalDate(2020, 11, 6),
+      sellByDate = new LocalDate(2020, 11, 27),
       participationGroup = Perc0D,
     )

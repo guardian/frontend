@@ -42,19 +42,19 @@
             <div class="email-sub__inline-label">
 
                 <input class="email-sub__text-input" type="email" name="email" id="@inputId" />
-                <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Email address</label>
+                <label class="email-sub__label" for="@inputId">@fragments.inlineSvg("envelope", "icon", Seq("label__icon"))Enter your email address</label>
                 <input class="email-sub__text-input u-h" autocomplete="off" type="text" name="name" id="@dummyInputId" placeholder="Name" />
 
                 <input class="email-sub__listname-input" type="hidden" name="listName" value="@listName" />
 
             </div>
-            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
+            <button type="submit" class="email-sub__submit-button button button--tertiary button--large" id="email-embed-signup-button--old" data-component="email-signup-button @componentClass-@listName" data-link-name="@componentClass | @listName">@fragments.inlineSvg("envelope", "icon", Seq("submit-input__icon"))Sign up</button>
         </div>
     </form>
 }
 
 
-<div class="@wrapperClass @wrapperToneClass">
+<div class="@wrapperClass @wrapperToneClass js-ab-embed-old-design">
     <div class="@headerClass">
         <h2 class="email-sub__heading">@Html(emailEmbedData.title)</h2>
         <div class="email-sub__description">@Html(emailEmbedData.description)</div>
@@ -63,6 +63,6 @@
 </div>
 
 <script>
-    trackClickEvent(document.getElementById("email-embed-signup-button"))
+    trackClickEvent(document.getElementById("email-embed-signup-button--old"))
 </script>
 

@@ -13,10 +13,12 @@ object FrontHeadline extends Results with Logging {
   )
 
   private[this] def headline(collection: PressedCollection): Option[String] = {
-    for {
-      content <- collection.curatedPlusBackfillDeduplicated.headOption
+    val headlines = for {
+      content <- collection.curatedPlusBackfillDeduplicated
       if content.properties.webTitle != ""
     } yield content.properties.webTitle
+
+    headlines.headOption
   }
 
   def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {

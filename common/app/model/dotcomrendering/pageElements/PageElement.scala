@@ -12,11 +12,11 @@ import com.gu.contentapi.client.model.v1.{
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
-import model.{AudioAsset, ImageAsset, ImageElement, ImageMedia, VideoAsset}
+import model.{ImageAsset, ImageElement, ImageMedia, VideoAsset}
 import org.jsoup.Jsoup
 import play.api.libs.json._
 import views.support.cleaner.SoundcloudHelper
-import views.support.{AffiliateLinksCleaner, ImgSrc, SrcSet, Video700}
+import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
@@ -56,6 +56,17 @@ object Sponsorship {
         "sponsorLink" -> sponsorship.sponsorLink,
         "sponsorshipType" -> sponsorship.sponsorshipType.name,
       )
+  }
+}
+
+case class NSImage1(url: String, width: Long)
+object NSImage1 {
+  implicit val NSImage1Writes: Writes[NSImage1] = Json.writes[NSImage1]
+  def imageMediaToSequence(image: ImageMedia): Seq[NSImage1] = {
+    image.imageCrops
+      .filter(_.url.isDefined)
+      .map(i => NSImage1(i.url.get, i.fields("width").toLong))
+    // calling .get is safe here because of the previous filter
   }
 }
 
@@ -277,6 +288,32 @@ object MapBlockElement {
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
 }
 
+case class MediaAtomBlockElementMediaAsset(
+    url: String,
+    mimeType: Option[String],
+)
+object MediaAtomBlockElementMediaAsset {
+  implicit val MediaAtomBlockElementMediaAssetWrites: Writes[MediaAtomBlockElementMediaAsset] =
+    Json.writes[MediaAtomBlockElementMediaAsset]
+  def fromMediaAsset(asset: MediaAsset): MediaAtomBlockElementMediaAsset = {
+    MediaAtomBlockElementMediaAsset(asset.id, asset.mimeType)
+  }
+}
+case class MediaAtomBlockElement(
+    id: String,
+    title: String,
+    defaultHtml: String,
+    assets: Seq[MediaAtomBlockElementMediaAsset],
+    duration: Option[Long],
+    posterImage: Option[Seq[NSImage1]],
+    expired: Option[Boolean],
+    activeVersion: Option[Long],
+    channelId: Option[String],
+) extends PageElement
+object MediaAtomBlockElement {
+  implicit val MediaAtomBlockElementWrites: Writes[MediaAtomBlockElement] = Json.writes[MediaAtomBlockElement]
+}
+
 case class MembershipBlockElement(
     originalUrl: Option[String],
     linkText: Option[String],
@@ -456,17 +493,25 @@ case class YoutubeBlockElement(
     channelId: Option[String],
     mediaTitle: String,
     overrideImage: Option[String],
+    posterImage: Option[Seq[NSImage1]],
     expired: Boolean,
     duration: Option[Long],
+    altText: Option[String],
 ) extends PageElement
+/*
+  The difference between `overrideImage` and `posterImage`
+
+  When the `YoutubeBlockElement` is in main media position then `overrideImage` is set to the main media image.
+  The reasons is:
+    Since moving to Atoms, the multimedia team have commented that they're reluctant to use videos
+    in main media as it makes the content look stale. This is because an Atom only has 1 image. Before Atoms, it was
+    possible to set a different image for a video on each use. This change is bringing that functionality back.
+    source: https://github.com/guardian/frontend/pull/20637
+
+  In all cases `posterImage` carries the video own images.
+ */
 object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
-}
-
-// Intended for unstructured html that we can't model, typically rejected by consumers
-case class HTMLFallbackBlockElement(html: String) extends PageElement
-object HTMLFallbackBlockElement {
-  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 }
 
 //noinspection ScalaStyle
@@ -494,6 +539,7 @@ object PageElement {
       case _: InteractiveAtomBlockElement => true
       case _: InteractiveBlockElement     => true
       case _: MapBlockElement             => true
+      case _: MediaAtomBlockElement       => true
       case _: ProfileAtomBlockElement     => true
       case _: PullquoteBlockElement       => true
       case _: QABlockElement              => true
@@ -795,6 +841,7 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
+            val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -804,13 +851,27 @@ object PageElement {
                     channelId = mediaAtom.channelId, // Channel ID
                     mediaTitle = mediaAtom.title, // Caption
                     overrideImage = if (isMainBlock) imageOverride else None,
+                    posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
+                    altText = altText,
                   )
                 })
               }
-              // TODO - handle self-hosted video case.
-              case htmlBlob if mediaAtom.assets.nonEmpty => Some(HTMLFallbackBlockElement(mediaAtom.defaultHtml))
+              case _ =>
+                Some(
+                  MediaAtomBlockElement(
+                    mediaAtom.id,
+                    mediaAtom.title,
+                    mediaAtom.defaultHtml,
+                    mediaAtom.assets.map(MediaAtomBlockElementMediaAsset.fromMediaAsset),
+                    mediaAtom.duration,
+                    mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
+                    mediaAtom.expired,
+                    mediaAtom.activeVersion,
+                    mediaAtom.channelId,
+                  ),
+                )
             }
           }
 

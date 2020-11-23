@@ -22,10 +22,15 @@ export const measureTiming = (name: string) => {
             return timeTakenInt;
         };
 
+        const clear = () => {
+            perf.clearMarks(startKey)
+        }
+
         return {
             start,
             end,
+            clear
         };
     }
-    return { start: () => null, end: (): TimeTakenInMilliseconds => null }
+    return { start: () => null, end: (): TimeTakenInMilliseconds => null, clear: () => null }
 };

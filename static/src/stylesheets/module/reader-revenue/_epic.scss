@@ -255,8 +255,28 @@ div.contributions__secondary-button.contributions__secondary-button--epic {
     }
 }
 
-.block--content.is-epic {
-    &:not(.liveblog-epic-test__v1b) {
-        font-style: italic;
+.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__control {
+    font-style: italic;
+}
+
+.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__v1 {
+    border-top-color: $highlight-main;
+    background-color: $brightness-93;
+
+    .component-button--liveblog {
+        background: $highlight-main;
+        border-color: $brightness-7;
+        color: $brightness-7;
+    }
+}
+
+.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__v2 {
+    border-top-color: $brand-main;
+    background-color: $brightness-93;
+
+    .component-button--liveblog {
+        background: $brand-main;
+        border-color: $brand-main;
+        color: $brightness-100;
     }
 }

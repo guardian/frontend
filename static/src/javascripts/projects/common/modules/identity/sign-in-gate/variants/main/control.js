@@ -9,6 +9,7 @@ import {
     isInvalidSection,
     isIOS9,
     setGatePageTargeting,
+    isInvalidTag,
 } from '../../helper';
 
 // define the variant name here
@@ -27,6 +28,7 @@ const canShow: (name?: string) => boolean = (name = '') => {
         !isLoggedIn() &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
+        !isInvalidTag() &&
         !isIOS9();
 
     setGatePageTargeting(isGateDismissed, canShowCheck);

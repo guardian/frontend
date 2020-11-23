@@ -110,7 +110,7 @@ class EmailSignupController(
 
         identityNewsletter match {
           case Some(newsletter) =>
-            Cached(1.day)(
+            Cached(1.hour)(
               RevalidatableResult.Ok(
                 views.html.emailFragment(
                   emailLandingPage,
@@ -131,7 +131,7 @@ class EmailSignupController(
         val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
         identityNewsletter match {
           case Some(newsletter) =>
-            Cached(1.day)(
+            Cached(1.hour)(
               RevalidatableResult.Ok(
                 views.html.emailFragment(
                   emailLandingPage,
@@ -148,7 +148,7 @@ class EmailSignupController(
 
   def subscriptionResultFooter(result: String): Action[AnyContent] =
     Action { implicit request =>
-      Cached(7.days)(result match {
+      Cached(1.hour)(result match {
         case "success" =>
           RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, Subscribed))
         case "invalid" =>
@@ -164,7 +164,7 @@ class EmailSignupController(
       val identityNewsletter = EmailNewsletter.fromIdentityName(listName)
       identityNewsletter match {
         case Some(newsletter) =>
-          Cached(7.days)(
+          Cached(1.hour)(
             RevalidatableResult.Ok(
               views.html.emailSubscriptionSuccessResult(emailLandingPage, newsletter.emailEmbed, listName),
             ),
@@ -175,7 +175,7 @@ class EmailSignupController(
 
   def subscriptionNonsuccessResult(result: String): Action[AnyContent] =
     Action { implicit request =>
-      Cached(7.days)(result match {
+      Cached(1.hour)(result match {
         case "invalid" =>
           RevalidatableResult.Ok(
             views.html.emailSubscriptionNonsuccessResult(emailLandingPage, InvalidEmail),

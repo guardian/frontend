@@ -5,6 +5,7 @@
 @import conf.switches.Switches
 @import experiments.{ActiveExperiments}
 
+@import views.support.ImageProfile
 @(
     classes: Seq[String],
     widths: WidthsByBreakpoint,
@@ -25,7 +26,7 @@
         srcset="@SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, widths.breakpoints, maybePath, maybeImageMedia))" />
     }
     <!--[if IE 9]></video><![endif]-->
-    @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath).map { src =>
+    @maybeImageMedia.map(ImgSrc.getFallbackUrl(_)).orElse(maybeSrc).orElse(maybePath.map(ImgSrc(_, ImageProfile(width = widths.desktop.map(_.get))))).map { src =>
         <img loading="@{ if (Switches.LazyLoadImages.isSwitchedOn) "lazy" else "auto"}" class="@RenderClasses(classes: _*)" alt="" src="@src"/>
     }
 </picture>

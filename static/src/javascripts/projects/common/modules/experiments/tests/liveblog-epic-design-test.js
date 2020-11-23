@@ -13,46 +13,26 @@ const geolocation = geolocationGetSync();
 
 const copyGlobal: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
-        'In these extraordinary times, the Guardian’s editorial independence has never been more important. Because no one sets our agenda, or edits our editor, we can keep delivering quality, trustworthy, fact-checked journalism each and every day. Free from commercial or political bias, we can report fearlessly on world events and challenge those in power.',
+        'In these extraordinary times, the Guardian’s editorial independence has never been more important. Because no one sets our agenda, or edits our editor, we can keep delivering quality, trustworthy, fact-checked journalism each and every day. Free from commercial or political influence, we can report fearlessly on world events and challenge those in power.',
         'Your support protects the Guardian’s independence. We believe every one of us deserves equal access to accurate news and calm explanation. No matter how unpredictable the future feels, we will remain with you, delivering high quality news so we can all make critical decisions about our lives, health and security – based on fact, not fiction.',
-        'Support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.'
-    ],
-};
-
-const copyElectionNonUS: AcquisitionsEpicTemplateCopy = {
-    paragraphs: [
-        'Four more years of Donald Trump would have serious consequences for the world. America faces an epic choice in November and the result of the presidential election will have global repercussions for democracy, progress and solidarity for generations. Transatlantic ties, superpower relations and the climate emergency are all in the balance.',
-        'In these chaotic, perilous times, an independent, truth-seeking news organisation like the Guardian is essential. Free from commercial or political bias, we can report fearlessly on critical events like this, bringing you a clear, international perspective.',
-        'Support from readers funds our work, motivating us to do better, investigate deeper, challenge more. It means we can keep our quality reporting open for everyone to read, and protects our independence for the long term. Every contribution, however big or small, makes a difference.',
         'Support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
     ],
 };
 
 const copyUS: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
-        '<b>America faces an epic choice … </b>',
-        '… and the results will define the country for a generation. These are perilous times. In recent years, much of what the Guardian holds dear has been threatened – democracy, civility, truth.',
-        'At a time like this, an independent news organization that fights for truth and holds power to account is not just optional. It is essential. We believe every one of us deserves equal access to fact-based news and analysis. That’s why we’ve decided to keep Guardian journalism free for all readers, regardless of where they live or what they can afford to pay.',
-        'If you can, support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.'
+        '<b>Since you’re here ...</b>',
+        '... we have a small favour to ask. Millions are flocking to the Guardian for independent, quality news every day. As we prepare for what promises to be a pivotal year for America, we’re asking you to consider a year-end gift to help fund our journalism.',
+        'We believe everyone deserves access to information that’s grounded in science and truth. That’s why we made a different choice: to keep our reporting open for all readers, regardless of where they live or what they can afford to pay.',
+        'We’re asking readers to help us raise $1.25m to support our reporting in the new year. If you’ve enjoyed our live updates and in-depth coverage, support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
     ],
 };
 
-const USElectionTags = ['us-news/us-elections-2020', 'us-news/series/us-politics-live'];
-const keywordTags = config.get('page.keywordIds');
-
-const getCopy = (): AcquisitionsEpicTemplateCopy => {
-    if (geolocation === 'US') {
-        return copyUS;
-    }
-    if (USElectionTags.some(tag => `${keywordTags}`.includes(tag))) {
-        return copyElectionNonUS;
-    }
-    return copyGlobal;
-};
+const copy = geolocation === 'US' ? copyUS : copyGlobal;
 
 export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
-    id: 'LiveblogEpicDesignTestR1b',
-    campaignId: 'liveblog-epic-design-test-r1b',
+    id: 'LiveblogEpicDesignTestR2',
+    campaignId: 'liveblog-epic-design-test-r2',
 
     geolocation,
     highPriority: false,
@@ -78,14 +58,21 @@ export const liveblogEpicDesignTest: EpicABTest = makeEpicABTest({
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
             template: liveBlogTemplate('liveblog-epic-test__control'),
-            copy: buildEpicCopy(getCopy(), false, geolocation),
+            copy: buildEpicCopy(copy, false, geolocation),
         },
         {
             id: 'v1',
             products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
             test: setupEpicInLiveblog,
-            template: liveBlogTemplate('liveblog-epic-test__v1b'),
-            copy: buildEpicCopy(getCopy(), false, geolocation),
+            template: liveBlogTemplate('liveblog-epic-test__v1'),
+            copy: buildEpicCopy(copy, false, geolocation),
+        },
+        {
+            id: 'v2',
+            products: ['CONTRIBUTION', 'MEMBERSHIP_SUPPORTER'],
+            test: setupEpicInLiveblog,
+            template: liveBlogTemplate('liveblog-epic-test__v2'),
+            copy: buildEpicCopy(copy, false, geolocation),
         },
     ],
 });

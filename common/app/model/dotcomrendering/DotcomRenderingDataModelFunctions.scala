@@ -45,7 +45,7 @@ import views.support.JavaScriptPage
 // only one reason for change.
 // exceptions: we do resuse the existing Nav & BlockElement classes right now
 
-object DotcomRenderingTransforms {
+object DotcomRenderingDataModelFunctions {
 
   private def makeMatchUrl(articlePage: PageWithStoryPackage): Option[String] = {
 

@@ -11,6 +11,7 @@ import model.IpsosTags.{getScriptTag}
 import conf.{Configuration, DiscussionAsset}
 import model._
 import play.api.libs.json._
+import model.IpsosTags.{getScriptTag}
 import play.api.mvc.RequestHeader
 
 object JavaScriptPage {

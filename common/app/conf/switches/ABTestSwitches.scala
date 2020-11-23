@@ -78,9 +78,29 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r1b",
+    "ab-liveblog-epic-design-test-r2",
     "Test designs for the liveblog epic",
     owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 1, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-newsletter-merch-unit-lighthouse-control",
+    "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2020, 12, 1),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-newsletter-merch-unit-lighthouse-variants",
+    "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
+    owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
     sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true,

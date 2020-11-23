@@ -74,19 +74,16 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
     return false;
 };
 
-const getBodySelector = (): string =>
-    !config.get('isDotcomRendering', false)
-        ? '.js-article__body'
-        : '.article-body-commercial-selector';
+const isDotcomRendering = config.get('isDotcomRendering', false);
+const articleBodySelector = isDotcomRendering ? '.article-body-commercial-selector' : '.js-article__body';
 
 const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     const isImmersive = config.get('page.isImmersive');
-
     const defaultRules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: isImmersive ? 700 : 300,
-        minBelow: 700,
+        minBelow: isDotcomRendering ? 300 : 700,
         selectors: {
             ' > h2': {
                 minAbove: 5,
@@ -111,10 +108,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
     // For any other inline
     const relaxedRules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: isPaidContent ? 1600 : 1000,
-        minBelow: 800,
+        minBelow: isDotcomRendering ? 300 : 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
             ' figure.element--immersive': {
@@ -156,7 +153,7 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
 const addMobileInlineAds = (): Promise<number> => {
     const rules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: 200,
         minBelow: 200,
@@ -212,7 +209,7 @@ const addInlineAds = (): Promise<number> => {
 
 const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     const rules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: 300,
         minBelow: 0,

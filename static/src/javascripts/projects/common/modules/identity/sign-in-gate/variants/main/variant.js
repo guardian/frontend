@@ -6,6 +6,7 @@ import {
     isLoggedIn,
     isInvalidArticleType,
     isInvalidSection,
+    isInvalidTag,
     isIOS9,
     setGatePageTargeting,
     hasUserDismissedGateMoreThanCount,
@@ -31,6 +32,7 @@ const canShow: (name?: string) => boolean = (name = '') => {
         !isLoggedIn() &&
         !isInvalidArticleType() &&
         !isInvalidSection() &&
+        !isInvalidTag() &&
         !isIOS9();
 
     setGatePageTargeting(isGateDismissed, canShowCheck);
