@@ -103,6 +103,7 @@ class PrebidAdUnit {
 
     constructor(advert: Advert, slot: HeaderBiddingSlot) {
         this.code = advert.id;
+        // How to make a constructor Async? 2020-10-23
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
     }
