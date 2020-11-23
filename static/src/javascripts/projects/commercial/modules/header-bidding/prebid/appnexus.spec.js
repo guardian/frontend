@@ -1,15 +1,15 @@
 // @flow
 import config from 'lib/config';
-import { isInUsOrCa as isInUsOrCa_,
-    isInAuOrNz as isInAuOrNz_} from 'common/modules/commercial/geo-utils';
+import {
+    isInUsOrCa as isInUsOrCa_,
+    isInAuOrNz as isInAuOrNz_,
+} from 'common/modules/commercial/geo-utils';
 import {
     _,
     getAppNexusDirectBidParams,
     getAppNexusServerSideBidParams,
 } from './appnexus';
-import {
-    getBreakpointKey as getBreakpointKey_
-} from '../utils';
+import { getBreakpointKey as getBreakpointKey_ } from '../utils';
 import type { HeaderBiddingSize } from '../types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
@@ -32,8 +32,8 @@ jest.mock('../utils', () => {
 });
 
 jest.mock('common/modules/commercial/geo-utils', () => ({
-        isInAuOrNz: jest.fn(),
-        isInUsOrCa: jest.fn(),
+    isInAuOrNz: jest.fn(),
+    isInUsOrCa: jest.fn(),
 }));
 
 jest.mock('lib/cookies', () => ({
@@ -269,20 +269,20 @@ describe('getAppNexusDirectBidParams', () => {
         resetConfig();
     });
 
-    test('should include placementId for AU region when invCode switch is off', () => {
+    test('should include placementId for AU region when invCode switch is off', async () => {
         getBreakpointKey.mockReturnValue('M');
         isInAuOrNz.mockReturnValue(true);
-        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        expect(await getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '11016434',
         });
     });
 
-    test('should exclude placementId for AU region when including member and invCode', () => {
+    test('should exclude placementId for AU region when including member and invCode', async () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
         isInAuOrNz.mockReturnValueOnce(true);
-        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        expect(await getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: {
                 edition: 'UK',
                 sens: 'f',
@@ -294,10 +294,10 @@ describe('getAppNexusDirectBidParams', () => {
         });
     });
 
-    test('should include placementId and not include invCode if outside AU region', () => {
+    test('should include placementId and not include invCode if outside AU region', async () => {
         config.set('switches.prebidAppnexusInvcode', true);
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusDirectBidParams([[300, 250]])).toEqual({
+        expect(await getAppNexusDirectBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '4298191',
         });
