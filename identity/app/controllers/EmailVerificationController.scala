@@ -52,10 +52,10 @@ class EmailVerificationController(
                 idUrlBuilder,
                 verifiedReturnUrlAsOpt,
                 returnUrlVerifier.defaultReturnUrl,
-                email
+                email,
               ),
-            )(page, request, context)
-          )
+            )(page, request, context),
+          ),
         )
     }
   }
