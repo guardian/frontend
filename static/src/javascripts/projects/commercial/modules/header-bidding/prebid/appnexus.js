@@ -6,9 +6,7 @@ import {
     buildAppNexusTargetingObject,
 } from 'common/modules/commercial/build-page-targeting';
 
-import {
-    isInUsOrCa,
-    isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 import {
     getLargestSize,
@@ -16,7 +14,7 @@ import {
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
-    getBreakpointKey
+    getBreakpointKey,
 } from '../utils';
 
 import type { PrebidAppNexusParams, HeaderBiddingSize } from '../types';
@@ -101,9 +99,9 @@ export const getAppNexusDirectPlacementId = (
     }
 };
 
-export const getAppNexusDirectBidParams = (
+export const getAppNexusDirectBidParams = async (
     sizes: HeaderBiddingSize[]
-): PrebidAppNexusParams => {
+): Promise<PrebidAppNexusParams> => {
     if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
@@ -113,14 +111,14 @@ export const getAppNexusDirectBidParams = (
                 member: '7012',
                 keywords: {
                     invc: [invCode],
-                    ...buildAppNexusTargetingObject(getPageTargeting()),
+                    ...buildAppNexusTargetingObject(await getPageTargeting()),
                 },
             };
         }
     }
     return {
         placementId: getAppNexusDirectPlacementId(sizes),
-        keywords: buildAppNexusTargetingObject(getPageTargeting()),
+        keywords: buildAppNexusTargetingObject(await getPageTargeting()),
     };
 };
 
