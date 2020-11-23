@@ -128,7 +128,7 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
     }
 };
 
-const createAdsConfig = (
+const createAdsConfig = async (
     adFree: boolean,
     tcfStateFlag: boolean | null,
     ccpaStateFlag: boolean | null
@@ -137,7 +137,7 @@ const createAdsConfig = (
         return { disableAds: true };
     }
 
-    const custParams = getPageTargeting();
+    const custParams = await getPageTargeting();
     custParams.permutive = getPermutivePFPSegments();
 
     const adsConfig: AdsConfig = {

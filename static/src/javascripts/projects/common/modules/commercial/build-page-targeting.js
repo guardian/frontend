@@ -303,8 +303,8 @@ const buildPageTargetting = async (
     return Promise.resolve(pageTargeting);
 };
 
-const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+const getPageTargeting = async (): Promise<{ [key: string]: mixed }> => {
+    if (Object.keys(myPageTargetting).length !== 0) return Promise.resolve(myPageTargetting);
 
     let resolveOnConsentChange;
     const pageTargetingPromise = new Promise(resolve => {
