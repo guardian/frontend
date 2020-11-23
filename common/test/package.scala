@@ -103,7 +103,15 @@ trait SingleServerSuite extends TestSuite with GuiceOneServerPerSuite with OneBr
 object TestRequest {
   // MOST of the time we do not care what path is set on the request - only need to override where we do
   def apply(path: String = "/does-not-matter"): FakeRequest[play.api.mvc.AnyContentAsEmpty.type] = {
-    FakeRequest("GET", if (!path.startsWith("/")) s"/$path" else path)
+    val path1 = if (!path.startsWith("/")) s"/$path" else path
+    FakeRequest("GET", path1).withHeaders(("X-GU-Backend-Test", "True"))
+    /*
+        3e6e0ab7-f82c-4441-9b7d-b6de1ed8c6e5
+        Date: 2020 Nov
+        We are moving to DCR as default renderer (as part of moving to 90%) consequently "X-GU-Backend-Test" is
+        introduced to help detecting when a request is a test request, to then trigger the selection of legacy rendering
+        since frontend tests expect legacy rendering.
+     */
   }
 }
 
