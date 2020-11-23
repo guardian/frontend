@@ -23,8 +23,8 @@ const loadPrebid: () => void = () => {
         !shouldIncludeOnlyA9
     ) {
         import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid').then(
-            () => {
-                getPageTargeting();
+            async () => {
+                await getPageTargeting();
                 prebid.initialise(window);
             }
         );
