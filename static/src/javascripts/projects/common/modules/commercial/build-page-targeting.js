@@ -44,7 +44,9 @@ type PageTargeting = {
     urlkw: string,
 };
 
-let myPageTargetting: Promise<{}> = Promise.resolve({});
+type PageTargettingLoose = { [key: string]: mixed };
+
+let myPageTargetting: Promise<PageTargettingLoose> = Promise.resolve({});
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -236,7 +238,7 @@ const buildPageTargetting = async (
     adConsentState: boolean | null,
     ccpaState: boolean | null,
     tcfv2EventStatus: string | null
-): Promise<{ [key: string]: mixed }> => {
+): Promise<PageTargettingLoose> => {
     const page = config.get('page');
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
@@ -286,7 +288,7 @@ const buildPageTargetting = async (
     );
 
     // filter out empty values
-    const pageTargeting: {} = pickBy(pageTargets, target => {
+    const pageTargeting: PageTargettingLoose = pickBy(pageTargets, target => {
         if (Array.isArray(target)) {
             return target.length > 0;
         }
@@ -302,7 +304,7 @@ const buildPageTargetting = async (
     return pageTargeting;
 };
 
-const getPageTargeting = async (): Promise<{ [key: string]: mixed }> =>
+const getPageTargeting = async (): Promise<PageTargettingLoose> =>
     myPageTargetting;
 
 onConsentChange(state => {
