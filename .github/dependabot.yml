@@ -12,5 +12,5 @@ updates:
     allow:
       - dependency-name: "@guardian/*"
     reviewers:
-      - "@guardian/dotcom-platform"
+      - "@guardian/guardian-frontend-team"
     open-pull-requests-limit: 10
