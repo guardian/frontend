@@ -332,21 +332,23 @@ const openxClientSideBidder: PrebidBidder = {
 const ozoneClientSideBidder: PrebidBidder = {
     name: 'ozone',
     switchName: 'prebidOzone',
-    bidParams: (): PrebidOzoneParams =>
-        Object.assign(
-            {},
-            (() => ({
-                publisherId: 'OZONEGMG0001',
-                siteId: '4204204209',
-                placementId: '0420420500',
-                customData: [
-                    {
-                        settings: {},
-                        targeting: getOzoneTargeting(),
-                    },
-                ],
-                ozoneData: {}, // TODO: confirm if we need to send any
-            }))()
+    bidParams: (): Promise<PrebidOzoneParams> =>
+        Promise.resolve(
+            Object.assign(
+                {},
+                (() => ({
+                    publisherId: 'OZONEGMG0001',
+                    siteId: '4204204209',
+                    placementId: '0420420500',
+                    customData: [
+                        {
+                            settings: {},
+                            targeting: getOzoneTargeting(),
+                        },
+                    ],
+                    ozoneData: {}, // TODO: confirm if we need to send any
+                }))()
+            )
         ),
 };
 
@@ -354,17 +356,19 @@ const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
     bidParams: async (slotId: string): Promise<PrebidSonobiParams> =>
-        Object.assign(
-            {},
-            {
-                ad_unit: config.get('page.adUnit'),
-                dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(
-                    await getPageTargeting()
-                ),
-                pageViewId: config.get('ophan.pageViewId'),
-            },
-            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
+        Promise.resolve(
+            Object.assign(
+                {},
+                {
+                    ad_unit: config.get('page.adUnit'),
+                    dom_id: slotId,
+                    appNexusTargeting: buildAppNexusTargeting(
+                        await getPageTargeting()
+                    ),
+                    pageViewId: config.get('ophan.pageViewId'),
+                },
+                isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
+            )
         ),
 };
 
@@ -381,22 +385,25 @@ const getPubmaticPublisherId = (): string => {
 const pubmaticBidder: PrebidBidder = {
     name: 'pubmatic',
     switchName: 'prebidPubmatic',
-    bidParams: (slotId: string): PrebidPubmaticParams =>
-        Object.assign(
-            {},
-            {
-                publisherId: getPubmaticPublisherId(),
-                adSlot: stripDfpAdPrefixFrom(slotId),
-            }
+    bidParams: (slotId: string): Promise<PrebidPubmaticParams> =>
+        Promise.resolve(
+            Object.assign(
+                {},
+                {
+                    publisherId: getPubmaticPublisherId(),
+                    adSlot: stripDfpAdPrefixFrom(slotId),
+                }
+            )
         ),
 };
 
 const trustXBidder: PrebidBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
-    bidParams: (slotId: string): PrebidTrustXParams => ({
-        uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
-    }),
+    bidParams: (slotId: string): Promise<PrebidTrustXParams> =>
+        Promise.resolve({
+            uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
+        }),
 };
 
 const tripleLiftBidder: PrebidBidder = {
@@ -405,9 +412,10 @@ const tripleLiftBidder: PrebidBidder = {
     bidParams: (
         slotId: string,
         sizes: HeaderBiddingSize[]
-    ): PrebidTripleLiftParams => ({
-        inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
-    }),
+    ): Promise<PrebidTripleLiftParams> =>
+        Promise.resolve({
+            inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
+        }),
 };
 
 const improveDigitalBidder: PrebidBidder = {
@@ -416,10 +424,11 @@ const improveDigitalBidder: PrebidBidder = {
     bidParams: (
         slotId: string,
         sizes: HeaderBiddingSize[]
-    ): PrebidImproveParams => ({
-        placementId: getImprovePlacementId(sizes),
-        size: getImproveSizeParam(slotId),
-    }),
+    ): Promise<PrebidImproveParams> =>
+        Promise.resolve({
+            placementId: getImprovePlacementId(sizes),
+            size: getImproveSizeParam(slotId),
+        }),
 };
 
 const xaxisBidder: PrebidBidder = {
@@ -428,34 +437,35 @@ const xaxisBidder: PrebidBidder = {
     bidParams: (
         slotId: string,
         sizes: HeaderBiddingSize[]
-    ): PrebidXaxisParams => ({
-        placementId: getXaxisPlacementId(sizes),
-    }),
+    ): Promise<PrebidXaxisParams> =>
+        Promise.resolve({
+            placementId: getXaxisPlacementId(sizes),
+        }),
 };
 
 const adYouLikeBidder: PrebidBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
-    bidParams: (): PrebidAdYouLikeParams => {
+    bidParams: (): Promise<PrebidAdYouLikeParams> => {
         if (isInUk()) {
-            return {
+            return Promise.resolve({
                 placement: '2b4d757e0ec349583ce704699f1467dd',
-            };
+            });
         }
         if (isInUsOrCa()) {
-            return {
+            return Promise.resolve({
                 placement: '7fdf0cd05e1d4bf39a2d3df9c61b3495',
-            };
+            });
         }
         if (isInAuOrNz()) {
-            return {
+            return Promise.resolve({
                 placement: '5cf05e1705a2d57ba5d51e03f2af9208',
-            };
+            });
         }
         // ROW
-        return {
+        return Promise.resolve({
             placement: 'c1853ee8bfe0d4e935cbf2db9bb76a8b',
-        };
+        });
     },
 };
 
@@ -467,10 +477,11 @@ const indexExchangeBidders: (
     return slotSizes.map(size => ({
         name: 'ix',
         switchName: 'prebidIndexExchange',
-        bidParams: (): PrebidIndexExchangeParams => ({
-            siteId: indexSiteId,
-            size,
-        }),
+        bidParams: (): Promise<PrebidIndexExchangeParams> =>
+            Promise.resolve({
+                siteId: indexSiteId,
+                size,
+            }),
     }));
 };
 
@@ -514,7 +525,7 @@ export const bids: (
     HeaderBiddingSize[]
 ) => Promise<PrebidBid[]> = async (slotId, slotSizes) => {
     const currentBiddersAsync = await currentBidders(slotSizes);
-    currentBiddersAsync.map(async (bidder: PrebidBidder) => ({
+    return (await currentBiddersAsync).map(async (bidder: PrebidBidder) => ({
         bidder: bidder.name,
         params: await bidder.bidParams(slotId, slotSizes),
     }));

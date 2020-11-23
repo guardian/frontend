@@ -3,10 +3,12 @@
 
 import config from 'lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
-import {isInUk as isInUk_,
+import {
+    isInUk as isInUk_,
     isInUsOrCa as isInUsOrCa_,
     isInAuOrNz as isInAuOrNz_,
-    isInRow as isInRow_} from "common/modules/commercial/geo-utils";
+    isInRow as isInRow_,
+} from 'common/modules/commercial/geo-utils';
 import { _, bids } from './bid-config';
 import type { PrebidBidder, HeaderBiddingSize } from '../types';
 
@@ -53,8 +55,8 @@ const isInUk: any = isInUk_;
 const isInUsOrCa: any = isInUsOrCa_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
-const getBidders = () =>
-    bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
+const getBidders = async () =>
+    (await bids('dfp-ad--top-above-nav', [[728, 90]])).map(bid => bid.bidder);
 
 const {
     getIndexSiteId,
@@ -443,79 +445,85 @@ describe('bids', () => {
         });
     };
 
-    test('should only include bidders that are switched on if no bidders being tested', () => {
+    test('should only include bidders that are switched on if no bidders being tested', async () => {
         config.set('switches.prebidXaxis', false);
         shouldIncludeImproveDigital.mockReturnValueOnce(true);
-        expect(getBidders()).toEqual(['ix', 'improvedigital', 'adyoulike']);
+        expect(await getBidders()).toEqual([
+            'ix',
+            'improvedigital',
+            'adyoulike',
+        ]);
     });
 
-    test('should not include ix bidders when switched off', () => {
+    test('should not include ix bidders when switched off', async () => {
         config.set('switches.prebidIndexExchange', false);
-        expect(getBidders()).toEqual(['adyoulike']);
+        expect(await getBidders()).toEqual(['adyoulike']);
     });
 
-    test('should include Sonobi if in target geolocation', () => {
+    test('should include Sonobi if in target geolocation', async () => {
         shouldIncludeSonobi.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
+        expect(await getBidders()).toEqual(['ix', 'sonobi', 'adyoulike']);
     });
 
-    test('should include AppNexus directly if in target geolocation', () => {
+    test('should include AppNexus directly if in target geolocation', async () => {
         shouldIncludeAppNexus.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'and', 'adyoulike']);
+        expect(await getBidders()).toEqual(['ix', 'and', 'adyoulike']);
     });
 
-    test('should include OpenX directly if in target geolocation', () => {
+    test('should include OpenX directly if in target geolocation', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'adyoulike', 'oxd']);
+        expect(await getBidders()).toEqual(['ix', 'adyoulike', 'oxd']);
     });
 
-    test('should include TrustX if in target geolocation', () => {
+    test('should include TrustX if in target geolocation', async () => {
         shouldIncludeTrustX.mockReturnValue(true);
-        expect(getBidders()).toEqual(['ix', 'trustx', 'adyoulike']);
+        expect(await getBidders()).toEqual(['ix', 'trustx', 'adyoulike']);
     });
 
-    test('should include ix bidder for each size that slot can take', () => {
-        const rightSlotBidders = () =>
-            bids('dfp-right', [[300, 600], [300, 250]]).map(bid => bid.bidder);
+    test('should include ix bidder for each size that slot can take', async () => {
+        const rightSlotBidders = async () =>
+            (await bids('dfp-right', [[300, 600], [300, 250]])).map(
+                bid => bid.bidder
+            );
         expect(rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
     });
 
-    test('should only include bidder being tested', () => {
+    test('should only include bidder being tested', async () => {
         setQueryString('pbtest=xhb');
-        expect(getBidders()).toEqual(['xhb']);
+        expect(await getBidders()).toEqual(['xhb']);
     });
 
-    test('should only include bidder being tested, even when its switch is off', () => {
+    test('should only include bidder being tested, even when its switch is off', async () => {
         setQueryString('pbtest=xhb');
         config.set('switches.prebidXaxis', false);
-        expect(getBidders()).toEqual(['xhb']);
+        expect(await getBidders()).toEqual(['xhb']);
     });
 
-    test('should only include bidder being tested, even when it should not be included', () => {
+    test('should only include bidder being tested, even when it should not be included', async () => {
         setQueryString('pbtest=xhb');
         shouldIncludeXaxis.mockReturnValue(false);
-        expect(getBidders()).toEqual(['xhb']);
+        expect(await getBidders()).toEqual(['xhb']);
     });
 
-    test('should only include multiple bidders being tested, even when their switches are off', () => {
+    test('should only include multiple bidders being tested, even when their switches are off', async () => {
         setQueryString('pbtest=xhb&pbtest=sonobi');
         isInVariantSynchronous.mockImplementation(
             (testId, variantId) => variantId === 'variant'
         );
         config.set('switches.prebidXaxis', false);
         config.set('switches.prebidSonobi', false);
-        expect(getBidders()).toEqual(['sonobi', 'xhb']);
+        expect(await getBidders()).toEqual(['sonobi', 'xhb']);
     });
 
-    test('should ignore bidder that does not exist', () => {
+    test('should ignore bidder that does not exist', async () => {
         setQueryString('pbtest=nonexistentbidder&pbtest=xhb');
-        expect(getBidders()).toEqual(['xhb']);
+        expect(await getBidders()).toEqual(['xhb']);
     });
 
-    test('should use correct parameters in OpenX bids geolocated in UK', () => {
+    test('should use correct parameters in OpenX bids geolocated in UK', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInUk.mockReturnValue(true);
-        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-d.openx.net',
@@ -523,10 +531,10 @@ describe('bids', () => {
         });
     });
 
-    test('should use correct parameters in OpenX bids geolocated in US', () => {
+    test('should use correct parameters in OpenX bids geolocated in US', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInUsOrCa.mockReturnValue(true);
-        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-us-d.openx.net',
@@ -534,10 +542,10 @@ describe('bids', () => {
         });
     });
 
-    test('should use correct parameters in OpenX bids geolocated in AU', () => {
+    test('should use correct parameters in OpenX bids geolocated in AU', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInAuOrNz.mockReturnValue(true);
-        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-aus-d.openx.net',
@@ -545,10 +553,10 @@ describe('bids', () => {
         });
     });
 
-    test('should use correct parameters in OpenX bids geolocated in FR', () => {
+    test('should use correct parameters in OpenX bids geolocated in FR', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInRow.mockReturnValue(true);
-        const openXBid = bids('dfp-ad--top-above-nav', [[728, 90]])[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-d.openx.net',
@@ -572,39 +580,42 @@ describe('triplelift adapter', () => {
         expect(getBidders()).toEqual(['ix', 'triplelift']);
     });
 
-    test('should return correct triplelift adapter params for leaderboard', () => {
+    test('should return correct triplelift adapter params for leaderboard', async () => {
         containsLeaderboard.mockReturnValueOnce(true);
         containsMpu.mockReturnValueOnce(false);
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
-        const tripleLiftBids = bids('dfp-ad--top-above-nav', [[728, 90]])[1]
-            .params;
+        const tripleLiftBids = (await bids('dfp-ad--top-above-nav', [
+            [728, 90],
+        ]))[1].params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_topbanner_728x90_prebid',
         });
     });
 
-    test('should return correct triplelift adapter params for mbu', () => {
+    test('should return correct triplelift adapter params for mbu', async () => {
         containsLeaderboard.mockReturnValueOnce(false);
         containsMpu.mockReturnValueOnce(true);
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
-        const tripleLiftBids = bids('dfp-ad--inline1', [[300, 250]])[1].params;
+        const tripleLiftBids = (await bids('dfp-ad--inline1', [[300, 250]]))[1]
+            .params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_sectionfront_300x250_prebid',
         });
     });
 
-    test('should return correct triplelift adapter params for mobile sticky', () => {
+    test('should return correct triplelift adapter params for mobile sticky', async () => {
         containsLeaderboard.mockReturnValueOnce(false);
         containsMpu.mockReturnValueOnce(false);
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(true);
 
-        const tripleLiftBids = bids('dfp-ad--top-above-nav', [[320, 50]])[1]
-            .params;
+        const tripleLiftBids = (await bids('dfp-ad--top-above-nav', [
+            [320, 50],
+        ]))[1].params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
         });
