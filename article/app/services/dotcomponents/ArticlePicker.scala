@@ -177,6 +177,11 @@ object ArticlePicker {
     !dcrEnabled || forceDCROff
   }
 
+  def requestIsALegacyBackendTestRequest(request: RequestHeader): Boolean = {
+    // See 3e6e0ab7-f82c-4441-9b7d-b6de1ed8c6e5 for details.
+    request.headers.hasHeader("X-GU-Backend-Test")
+  }
+
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
@@ -184,10 +189,15 @@ object ArticlePicker {
     val userInDCRGroup = ActiveExperiments.isParticipating(DotcomRendering)
 
     val tier =
-      if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
-      // is always going to be selected if `?dcr=true`, regardless of
-      // the switch.
-      else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
+      if (requestIsALegacyBackendTestRequest(request)) LocalRenderArticle
+      // We select LocalRenderArticle when we are in a backend test.
+      // See 3e6e0ab7-f82c-4441-9b7d-b6de1ed8c6e5 for details.
+      else if (request.forceDCR) RemoteRender
+      // The `request.forceDCR` doesn't check the switch.
+      // This means that RemoteRender is always going to be selected if `?dcr=true`, regardless of the value of the switch.
+      else if (dcrDisabled(request)) LocalRenderArticle
+      // The `dcrDisabled(request)` checks the switch.
+      // Switch off implies dcrDisabled
       else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
