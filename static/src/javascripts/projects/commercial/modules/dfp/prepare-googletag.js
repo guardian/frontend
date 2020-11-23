@@ -62,10 +62,10 @@ const setDfpListeners = (): void => {
     }
 };
 
-const setPageTargeting = (): void => {
+const setPageTargeting = async (): Promise<void> => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
-    const targeting = getPageTargeting();
+    const targeting = await getPageTargeting();
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });

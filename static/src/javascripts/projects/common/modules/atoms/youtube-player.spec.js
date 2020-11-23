@@ -2,7 +2,7 @@
 import { _ as youtubePlayer } from 'common/modules/atoms/youtube-player';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
-    getPageTargeting: jest.fn(() => ({ key: 'value' })),
+    getPageTargeting: jest.fn(() => (Promise.resolve({ key: 'value' }))),
 }));
 
 jest.mock('common/modules/commercial/permutive', () => ({
@@ -38,8 +38,8 @@ jest.mock('common/modules/experiments/ab', () => ({
 }));
 
 describe('create ads config', () => {
-    it('disables ads in ad-free', () => {
-        const result = youtubePlayer.createAdsConfig(
+    it('disables ads in ad-free', async () => {
+        const result = await youtubePlayer.createAdsConfig(
             true, // ad-free
             null,
             null
@@ -48,14 +48,14 @@ describe('create ads config', () => {
         expect(result.disableAds).toBeTruthy();
     });
 
-    it('does not disable ads when we are not in ad-free', () => {
-        const result = youtubePlayer.createAdsConfig(false, null, null);
+    it('does not disable ads when we are not in ad-free', async () => {
+        const result = await youtubePlayer.createAdsConfig(false, null, null);
 
         expect(result.disableAds).toBeFalsy();
     });
 
-    it('in non ad-free, returns false nonPersonalizedAd without consent in TCF', () => {
-        const result = youtubePlayer.createAdsConfig(false, false, null);
+    it('in non ad-free, returns false nonPersonalizedAd without consent in TCF', async () => {
+        const result = await youtubePlayer.createAdsConfig(false, false, null);
 
         if (result.hasOwnProperty('nonPersonalizedAd')) {
             expect(result.nonPersonalizedAd).toBeTruthy();
@@ -96,8 +96,8 @@ describe('create ads config', () => {
         expect(result.nonPersonalizedAd).toBeUndefined();
     });
 
-    it('in non ad-free includes adUnit', () => {
-        const result = youtubePlayer.createAdsConfig(false, null, null);
+    it('in non ad-free includes adUnit', async () => {
+        const result = await youtubePlayer.createAdsConfig(false, null, null);
 
         expect(result.adTagParameters).toBeDefined();
         if (result.adTagParameters) {
@@ -105,8 +105,8 @@ describe('create ads config', () => {
         }
     });
 
-    it('in non ad-free includes url-escaped and tcfv2 targeting params', () => {
-        const result = youtubePlayer.createAdsConfig(false, null, null);
+    it('in non ad-free includes url-escaped and tcfv2 targeting params', async () => {
+        const result = await youtubePlayer.createAdsConfig(false, null, null);
         const expectedAdTargetingParams =  {
             "cmpGdpr": 1,
             "cmpGvcd": "testaddtlConsent",
