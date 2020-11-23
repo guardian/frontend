@@ -1,49 +1,39 @@
 @(
-    user: com.gu.identity.model.User,
-    idRequest: services.IdentityRequest,
     idUrlBuilder: services.IdentityUrlBuilder,
     verifiedReturnUrl: Option[String],
     defaultReturnUrl: String,
-    isSignupFlow: Boolean = false
+    email: Option[String] = None
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @import common.LinkTo
 
-@emailBlock = {
-    <div class="identity-forms-email-wrap">
-        <header>@user.primaryEmailAddress</header>
-        <aside>
-            Not the right email? <a href="@idUrlBuilder.buildUrl(controllers.editprofile.routes.EditProfileController.redirectToAccountSettings.url, idRequest)" data-link-name="mma : verify-email : update-email-from-error">Change it here</a>
-        </aside>
-    </div>
-}
-
 <div class="identity-wrapper monocolumn-wrapper">
     <section class="identity-forms-message">
-        @if(isSignupFlow) {
-            <h1 class="identity-title">Please check your inbox</h1>
+        @if(email.isDefined) {
+            <h1 class="identity-title">Please verify your email to complete your registration</h1>
+            <div class="identity-forms-message__body">
+                <p>We've sent a verification email to:</p>
+                <p><b>@email</b></p>
+                <p>Please click on the link in this email to confirm your email address and complete your registration.</p>
+            </div>
+            <aside class="identity-forms-message__body">
+                <p class="identity-forms-message__explainer">Note that the link is only valid for 30 minutes. If you can't find it, it may be in your spam folder.</p>
+            </aside>
+                <footer class="identity-forms-message__body">
+                    <p>Didn't receive it? <a class="u-underline js-id-send-validation-email-not-signed-in">Resend link</a></p>
+                    <p>Wrong email address? <a class="u-underline" href="@idUrlBuilder.buildUrl("/signin")" data-link-name="mma : verify-email : update-email-from-error">Change it here</a></p>
+                </footer>
         } else {
-            <h1 class="identity-title">To continue, you must confirm this is your email address</h1>
-        }
-        @emailBlock
-        <div class="identity-forms-message__body">
-            @if(isSignupFlow) {
-                <p>We've sent you an email – please open it up and click on the verify button to confirm your email address.</p>
-            } else {
-                <p>We have sent a link to this email address. Please check your inbox and follow the instructions.</p>
-            }
-        </div>
-        <aside class="identity-forms-message__body">
-            <p class="identity-forms-message__explainer">Note that the link is only valid for 30 minutes, so be sure to open it soon!</p>
-            <a class="manage-account__button manage-account__button--center js-id-send-validation-email" data-link-name="mma : verify-email : resent">Resend confirmation email</a>
-        </aside>
-        @if(isSignupFlow) {
+            <h1 class="identity-title">Sorry, something went wrong</h1>
+            <div class="identity-forms-message__body">
+                <p>Having troubles registering? Please visit our <a class="u-underline" href="@LinkTo("/help/identity-faq")">help page</a> or <a class="u-underline" href="https://manage.theguardian.com/contact-us">contact our support team</a>.</p>
+            </div>
             <footer class="identity-forms-message__body">
-                <a class="u-underline" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
-                    @(verifiedReturnUrl match {
-                        case Some(_) => "Exit and continue"
-                        case None => "Exit and go to The Guardian home page"
-                    })
+                <a class="manage-account__button manage-account__button--center" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
+                @(verifiedReturnUrl match {
+                    case Some(_) => "Exit and continue"
+                    case None => "Exit and go to The Guardian home page"
+                })
                 </a>
             </footer>
         }

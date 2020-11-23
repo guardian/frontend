@@ -1,5 +1,7 @@
 package controllers
 
+import java.net.URLEncoder
+
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
@@ -7,7 +9,10 @@ import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
+import cats.data.EitherT
+import cats.instances.future._
 import pages.IdentityHtmlPage
+
 import scala.concurrent.Future
 
 class EmailVerificationController(
@@ -24,28 +29,52 @@ class EmailVerificationController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  import authenticatedActions.fullAuthWithIdapiUserAction
-
-  def completeRegistration(): Action[AnyContent] =
-    fullAuthWithIdapiUserAction.async { implicit request =>
-      val idRequest = idRequestParser(request)
+  def completeRegistration(): Action[AnyContent] = {
+    Action.async { implicit request =>
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
-      Future.successful(
-        Ok(
-          IdentityHtmlPage.html(
-            views.html.verificationEmailResent(
-              request.user,
-              idRequest,
-              idUrlBuilder,
-              verifiedReturnUrlAsOpt,
-              returnUrlVerifier.defaultReturnUrl,
-              isSignupFlow = true,
-            ),
-          )(page, request, context),
-        ),
-      )
-    }
+      def decryptEmail(token: Option[String]): Future[Option[String]] = {
+        token match {
+          case Some(token) => api.decryptEmailToken(token).map(_.toOption)
+          case _ => {
+            logger.error("encryptedEmail parameter was absent from complete-registration page")
+            Future.successful(None)
+          }
+        }
+      }
 
+      decryptEmail(request.getQueryString("encryptedEmail"))
+        .map(email =>
+          Ok(
+            IdentityHtmlPage.html(
+              views.html.verificationEmailResent(
+                idUrlBuilder,
+                verifiedReturnUrlAsOpt,
+                returnUrlVerifier.defaultReturnUrl,
+                email
+              ),
+            )(page, request, context)
+          )
+        )
+    }
+  }
+
+  def resendValidationEmail(token: String): Action[AnyContent] = {
+    Action.async { implicit request =>
+      val response = for {
+        email <- EitherT(api.decryptEmailToken(token))
+        user <- EitherT(api.userFromQueryParam(URLEncoder.encode(email, "UTF-8"), "emailAddress"))
+        response <- EitherT(api.resendEmailValidationEmail(user.id))
+      } yield response
+
+      response.value map {
+        case Left(errors) => {
+          logger.error(s"Could not resend email verification email: $errors")
+          InternalServerError("Internal error: Could not resend email verification email")
+        }
+        case Right(_) => Ok("")
+      }
+    }
+  }
 }

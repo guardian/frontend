@@ -173,6 +173,17 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     ) map extractUnit
   }
 
+  def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[CookiesResponse]] =
+    post(urlJoin("user", "validate-email", token), trackingParameters = Some(trackingParameters)) map extract[
+      CookiesResponse,
+    ](jsonField("cookies"))
+
+  def resendEmailValidationEmail(id: String): Future[Response[Unit]] = {
+    val apiPath = urlJoin("user", id, "send-validation-email")
+    val response = httpClient.POST(uri = apiUrl(apiPath), None, None, buildHeaders())
+    response map extractUnit
+  }
+
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
     put(
@@ -205,6 +216,13 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
       urlParameters = Nil,
       headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey))),
     ) map extract[AccountDeletionResult](identity)
+  }
+
+  // EMAIL TOKENS
+  def decryptEmailToken(token: String): Future[Response[String]] = {
+    val apiPath = urlJoin("signin-token", "token", token)
+    val response = httpClient.GET(uri = apiUrl(apiPath), None, None, buildHeaders())
+    response map extract(jsonField("email"))
   }
 
   def put(

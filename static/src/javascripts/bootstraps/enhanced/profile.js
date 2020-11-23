@@ -6,6 +6,7 @@ import { Formstack } from 'common/modules/identity/formstack';
 import { FormstackIframe } from 'common/modules/identity/formstack-iframe';
 import { FormstackEmbedIframe } from 'common/modules/identity/formstack-iframe-embed';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
+import { init as initValidationEmailNotSignedIn } from 'common/modules/identity/validation-email-not-signed-in';
 import { AccountProfile } from 'common/modules/identity/account-profile';
 import { init as initPublicProfile } from 'common/modules/identity/public-profile';
 import { enhanceFormAjax } from 'common/modules/identity/form-ajax';
@@ -56,6 +57,7 @@ const initProfile = (): void => {
         ['forgotten-email', forgottenEmail],
         ['password-toggle', passwordToggle],
         ['init-validation-email', initValidationEmail],
+        ['init-validation-email-not-signed-in', initValidationEmailNotSignedIn],
         ['init-user-avatars', initUserAvatars],
         ['init-user-edit-link', initUserEditLink],
         ['init-tabs', initTabs],
