@@ -177,6 +177,13 @@ object ArticlePicker {
     !dcrEnabled || forceDCROff
   }
 
+  def requestHasGoneThroughFastly(request: RequestHeader): Boolean = {
+    /*
+        This function checks the presence of the X-GU-mvt-id as a way to check that the request has gone through Fastly
+     */
+    request.headers.hasHeader("X-GU-mvt-id")
+  }
+
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
@@ -184,7 +191,13 @@ object ArticlePicker {
     val userInDCRGroup = ActiveExperiments.isParticipating(DotcomRendering)
 
     val tier =
-      if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
+      if (!requestHasGoneThroughFastly(request)) LocalRenderArticle
+      // ^ We default to legacy if we are on local or on team city
+      // Note that this is not a perfect situation to be in, because one day we will want to be able to use DCR local from frontend local
+      // But for the moment (Nov 2020), RemoteRender is only ever relevant in CODE and PROD, and we are simply acknowledging that.
+      // Note that this was introduced as a preliminary to bumping DCR to 90%. Turns out that switching the logic from calling DCR from
+      // variant to { control and excluded } simply broke the legacy tests (we will take care of them soon enough)
+      else if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
       // is always going to be selected if `?dcr=true`, regardless of
       // the switch.
       else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
