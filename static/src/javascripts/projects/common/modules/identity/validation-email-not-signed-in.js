@@ -77,7 +77,7 @@ const init = (): void => {
         });
 };
 
-const emailToken = (): string => new URLSearchParams(window.location.search).get('encryptedEmail');
+const emailToken = (): string | null => new URLSearchParams(window.location.search).get('encryptedEmail');
 
 const sendValidationEmail = (token: string): any => {
     const endpoint = `/resend-validation-email/${token}`;
