@@ -24,6 +24,8 @@ import model.liveblog.{
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 
+import conf.Configuration
+
 object ArticlePageChecks {
 
   def isAdFree(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
@@ -177,17 +179,33 @@ object ArticlePicker {
     !dcrEnabled || forceDCROff
   }
 
+  def canConnectToDCR(): Boolean = {
+    Configuration.environment.isProd || Configuration.environment.isCode
+  }
+
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
 
-    val userInDCRGroup = ActiveExperiments.isParticipating(DotcomRendering)
+    /*
+        date: Friday 20th Nov 2020
+        id: cea453f4-9b71-435e-8a11-35ef690c7821
+        message: We are moving to exposing 90% of the audience to DCR rendering.
+        Unfortunately our experiment framework does not allow the variant group to be bigger than 50%.
+        We are then going to expose DCR to { the control group and the excluded } and reduce the size of the variant to 10%.
+     */
+    val userInDCRGroup = !ActiveExperiments.isParticipating(DotcomRendering)
+    // true if user is not participating / not in variant
 
     val tier =
-      if (request.forceDCR) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
-      // is always going to be selected if `?dcr=true`, regardless of
-      // the switch.
-      else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
+      if (!canConnectToDCR()) LocalRenderArticle
+      // We select LocalRenderArticle when we are not in PROD or and not in CODE.
+      else if (request.forceDCR) RemoteRender
+      // The `request.forceDCR` doesn't check the switch.
+      // This means that RemoteRender is always going to be selected if `?dcr=true`, regardless of the value of the switch.
+      else if (dcrDisabled(request)) LocalRenderArticle
+      // The `dcrDisabled(request)` checks the switch.
+      // Switch off implies dcrDisabled
       else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
@@ -197,9 +215,9 @@ object ArticlePicker {
 
     def testGroup(experiment: Experiment): String =
       ActiveExperiments.groupFor(experiment) match {
-        case Participant => "participant"
-        case Control     => "control"
-        case Excluded    => "excluded"
+        case Participant => "participant" // Not showed DCR (see: cea453f4-9b71-435e-8a11-35ef690c7821)
+        case Control     => "control" // Showed DCR
+        case Excluded    => "excluded" // Showed DCR
       }
 
     // include features that we wish to log but not allow-list against
