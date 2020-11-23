@@ -10,10 +10,12 @@ import {
 } from 'common/modules/commercial/build-page-targeting';
 import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
 import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { isInUk,
+import {
+    isInUk,
     isInUsOrCa,
     isInAuOrNz,
-    isInRow } from 'common/modules/commercial/geo-utils';
+    isInRow,
+} from 'common/modules/commercial/geo-utils';
 import { getLotameData } from '@guardian/commercial-core';
 import type {
     PrebidAdYouLikeParams,
@@ -56,6 +58,7 @@ import {
 import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
+// Now it's a Promise, is this needed? 2020-10-23
 getPageTargeting();
 
 const isInSafeframeTestVariant = (): boolean =>
@@ -263,15 +266,17 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
-const getOzoneTargeting = (): { } => {
+const getOzoneTargeting = async (): {} => {
     const lotameData = getLotameData();
-    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
+    const appNexusTargetingObject = buildAppNexusTargetingObject(
+        await getPageTargeting()
+    );
     if (typeof lotameData !== 'undefined') {
         return {
             ...appNexusTargetingObject,
-            'lotameSegs': lotameData.ozoneLotameData,
-            'lotamePid': lotameData.ozoneLotameProfileId,
-        }
+            lotameSegs: lotameData.ozoneLotameData,
+            lotamePid: lotameData.ozoneLotameProfileId,
+        };
     }
     return appNexusTargetingObject;
 };
@@ -285,35 +290,41 @@ const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
 const appNexusBidder: PrebidBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
-    bidParams: (
+    bidParams: async (
         slotId: string,
         sizes: HeaderBiddingSize[]
-    ): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
+    ): Promise<PrebidAppNexusParams> => getAppNexusDirectBidParams(sizes),
 };
 
 const openxClientSideBidder: PrebidBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
-    bidParams: (): PrebidOpenXParams => {
+    bidParams: async (): Promise<PrebidOpenXParams> => {
         if (isInUsOrCa()) {
             return {
                 delDomain: 'guardian-us-d.openx.net',
                 unit: '540279544',
-                customParams: buildAppNexusTargetingObject(getPageTargeting()),
+                customParams: buildAppNexusTargetingObject(
+                    await getPageTargeting()
+                ),
             };
         }
         if (isInAuOrNz()) {
             return {
                 delDomain: 'guardian-aus-d.openx.net',
                 unit: '540279542',
-                customParams: buildAppNexusTargetingObject(getPageTargeting()),
+                customParams: buildAppNexusTargetingObject(
+                    await getPageTargeting()
+                ),
             };
         }
         // UK and ROW
         return {
             delDomain: 'guardian-d.openx.net',
             unit: '540279541',
-            customParams: buildAppNexusTargetingObject(getPageTargeting()),
+            customParams: buildAppNexusTargetingObject(
+                await getPageTargeting()
+            ),
         };
     },
 };
@@ -335,20 +346,22 @@ const ozoneClientSideBidder: PrebidBidder = {
                     },
                 ],
                 ozoneData: {}, // TODO: confirm if we need to send any
-            }))(),
+            }))()
         ),
 };
 
 const sonobiBidder: PrebidBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
-    bidParams: (slotId: string): PrebidSonobiParams =>
+    bidParams: async (slotId: string): Promise<PrebidSonobiParams> =>
         Object.assign(
             {},
             {
                 ad_unit: config.get('page.adUnit'),
                 dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+                appNexusTargeting: buildAppNexusTargeting(
+                    await getPageTargeting()
+                ),
                 pageViewId: config.get('ophan.pageViewId'),
             },
             isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
@@ -470,7 +483,9 @@ const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
     return allBidders.filter(bidder => isSwitchedOn(bidder));
 };
 
-const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
+const currentBidders: (
+    HeaderBiddingSize[]
+) => Promise<PrebidBidder[]> = async slotSizes => {
     const otherBidders: PrebidBidder[] = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
@@ -488,21 +503,22 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
         ...(shouldIncludeOpenx() ? [openxClientSideBidder] : []),
     ];
 
-    const allBidders = indexExchangeBidders(slotSizes)
-        .concat(otherBidders);
+    const allBidders = indexExchangeBidders(slotSizes).concat(otherBidders);
     return isPbTestOn()
         ? biddersBeingTested(allBidders)
         : biddersSwitchedOn(allBidders);
 };
 
-export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
-    slotId,
-    slotSizes
-) =>
-    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+export const bids: (
+    string,
+    HeaderBiddingSize[]
+) => Promise<PrebidBid[]> = async (slotId, slotSizes) => {
+    const currentBiddersAsync = await currentBidders(slotSizes);
+    currentBiddersAsync.map(async (bidder: PrebidBidder) => ({
         bidder: bidder.name,
-        params: bidder.bidParams(slotId, slotSizes),
+        params: await bidder.bidParams(slotId, slotSizes),
     }));
+};
 
 export const _ = {
     getIndexSiteId,

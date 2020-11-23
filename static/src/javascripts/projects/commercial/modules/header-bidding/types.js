@@ -86,7 +86,7 @@ export type PrebidBidder = {
     bidParams: (
         slotId: string,
         sizes: HeaderBiddingSize[]
-    ) =>
+    ) => Promise<
         | PrebidSonobiParams
         | PrebidIndexExchangeParams
         | PrebidTrustXParams
@@ -97,7 +97,8 @@ export type PrebidBidder = {
         | PrebidOpenXParams
         | PrebidOzoneParams
         | PrebidAdYouLikeParams
-        | PrebidPubmaticParams,
+        | PrebidPubmaticParams
+    >,
 };
 
 export type PrebidBid = {
