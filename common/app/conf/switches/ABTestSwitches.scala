@@ -68,11 +68,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-curated-container-test",
-    "Tests an additional 'curated' onwards container below the article body.",
-    owners = Seq(Owner.withGithub("nicl")),
+    "ab-curated-container-test2",
+    "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
+    owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 2),
+    sellByDate = new LocalDate(2020, 12, 10),
     exposeClientSide = true,
   )
 
