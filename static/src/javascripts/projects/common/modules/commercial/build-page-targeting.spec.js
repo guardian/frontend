@@ -335,6 +335,7 @@ describe('Build Page Targeting', () => {
     });
 
     describe('Breakpoint targeting', () => {
+<<<<<<< HEAD
         it('should set correct breakpoint targeting for a mobile device', async () => {
             getBreakpoint.mockReturnValue('mobile');
             expect((await getPageTargeting()).bp).toEqual('mobile');
@@ -374,6 +375,25 @@ describe('Build Page Targeting', () => {
             getBreakpoint.mockReturnValue('wide');
             expect((await getPageTargeting()).bp).toEqual('desktop');
         });
+=======
+        // $FlowFixMe -- it.each does not have a type
+        it.each([
+            ['mobile', 'mobile'],
+            ['mobileMedium', 'mobile'],
+            ['mobileLandscape', 'mobile'],
+            ['phablet', 'tablet'],
+            ['tablet', 'tablet'],
+            ['desktop', 'desktop'],
+            ['leftCol', 'desktop'],
+            ['wide', 'desktop'],
+        ])(
+            'should set correct breakpoint targetting for a %s device (%s)',
+            async (mock, value) => {
+                getBreakpoint.mockReturnValue(mock);
+                expect((await getPageTargeting()).bp).toEqual(value);
+            }
+        );
+>>>>>>> 41c00d142c... ignore missing Jest flow types
     });
 
     describe('Build Page Targeting (ad-free)', () => {
@@ -406,6 +426,7 @@ describe('Build Page Targeting', () => {
     });
 
     describe('Referrer', () => {
+<<<<<<< HEAD
         it('should set ref to Facebook', async () => {
             getReferrer.mockReturnValue(
                 'https://www.facebook.com/feel-the-force'
@@ -432,6 +453,23 @@ describe('Build Page Targeting', () => {
                 'https://www.google.com/i-find-your-lack-of-faith-distrubing'
             );
             expect((await getPageTargeting()).ref).toEqual('google');
+=======
+        // $FlowFixMe -- it.each does not have a type
+        it.each([
+            ['facebook', 'https://www.facebook.com/feel-the-force'],
+            [
+                'twitter',
+                'https://www.t.co/you-must-unlearn-what-you-have-learned',
+            ],
+            ['reddit', 'https://www.reddit.com/its-not-my-fault'],
+            [
+                'google',
+                'https://www.google.com/i-find-your-lack-of-faith-distrubing',
+            ],
+        ])('should set ref to %s', async (ref, url) => {
+            getReferrer.mockReturnValue(url);
+            expect((await getPageTargeting()).ref).toEqual(ref);
+>>>>>>> 41c00d142c... ignore missing Jest flow types
         });
 
         it('should set ref empty string if referrer does not match', async () => {
