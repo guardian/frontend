@@ -437,14 +437,15 @@ describe('Build Page Targeting', () => {
     });
 
     describe('URL Keywords', () => {
-        it('should return correct keywords from pageId', () => {
-            expect(getPageTargeting().urlkw).toEqual(['footballweekly']);
+        it('should return correct keywords from pageId', async() => {
+            const pageTargeting = await getPageTargeting();
+            expect(pageTargeting.urlkw).toEqual(['footballweekly']);
         });
 
-        it('should extract multiple url keywords correctly', () => {
+        it('should extract multiple url keywords correctly', async () => {
             config.page.pageId =
                 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
-            expect(getPageTargeting().urlkw).toEqual([
+            expect((await getPageTargeting()).urlkw).toEqual([
                 'harry',
                 'potter',
                 'cursed',
@@ -456,10 +457,10 @@ describe('Build Page Targeting', () => {
             ]);
         });
 
-        it('should get correct keywords when trailing slash is present',  () => {
+        it('should get correct keywords when trailing slash is present',  async () => {
             config.page.pageId =
                 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
-            expect(getPageTargeting().urlkw).toEqual([
+            expect((await getPageTargeting()).urlkw).toEqual([
                 'harry',
                 'potter',
                 'cursed',

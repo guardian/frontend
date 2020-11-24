@@ -303,8 +303,13 @@ const buildPageTargetting = async (
     return pageTargeting;
 };
 
-const getPageTargeting = (): { [key: string]: mixed } => {
+const getPageTargeting = async (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+
+    let resolveOnConsentChange: typeof Promise.resolve;
+    const pageTargetingPromise = new Promise(resolve => {
+        resolveOnConsentChange = resolve;
+    });
 
     onConsentChange(async state => {
         let canRun: boolean | null;
@@ -330,11 +335,12 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 ccpaState,
                 eventStatus
             );
+            resolveOnConsentChange(myPageTargetting);
             latestConsentCanRun = canRun;
         }
     });
 
-    return myPageTargetting;
+    return pageTargetingPromise;
 };
 
 const resetPageTargeting = (): void => {
