@@ -234,15 +234,12 @@ const requestBids = async (
         return requestQueue;
     }
 
-    const adUnits: Array<PrebidAdUnit> = getHeaderBiddingAdSlots(
-        advert,
-        slotFlatMap
-    )
-        .map(slot => {
-            const prebidAdUnit = new PrebidAdUnit(advert, slot);
-            return prebidAdUnit.build(advert, slot);
-        })
-        .filter(adUnit => !adUnit.isEmpty());
+    const adUnits: Array<PrebidAdUnit> = (await Promise.all(
+        getHeaderBiddingAdSlots(advert, slotFlatMap).map(
+            // eslint-disable-next-line new-cap
+            async slot => new PrebidAdUnit.build(advert, slot)
+        )
+    )).filter(adUnit => !adUnit.isEmpty());
 
     if (adUnits.length === 0) {
         return requestQueue;
