@@ -55,12 +55,8 @@ const isInUk: any = isInUk_;
 const isInUsOrCa: any = isInUsOrCa_;
 const isInVariantSynchronous: any = isInVariantSynchronous_;
 
-const getBidders = async () => {
-    const asyncBids = await Promise.all(
-        await bids('dfp-ad--top-above-nav', [[728, 90]])
-    );
-    return asyncBids.map(bid => bid.bidder);
-};
+const getBidders = async () =>
+    (await bids('dfp-ad--top-above-nav', [[728, 90]])).map(bid => bid.bidder);
 
 const {
     getIndexSiteId,
@@ -486,9 +482,9 @@ describe('bids', () => {
 
     test('should include ix bidder for each size that slot can take', async () => {
         const rightSlotBidders = async () =>
-            (await Promise.all(
-                await bids('dfp-right', [[300, 600], [300, 250]])
-            )).map(bid => bid.bidder);
+            (await bids('dfp-right', [[300, 600], [300, 250]])).map(
+                bid => bid.bidder
+            );
         expect(await rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
     });
 
@@ -527,9 +523,7 @@ describe('bids', () => {
     test('should use correct parameters in OpenX bids geolocated in UK', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInUk.mockReturnValue(true);
-        const openXBid = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[728, 90]])
-        ))[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-d.openx.net',
@@ -540,9 +534,7 @@ describe('bids', () => {
     test('should use correct parameters in OpenX bids geolocated in US', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInUsOrCa.mockReturnValue(true);
-        const openXBid = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[728, 90]])
-        ))[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-us-d.openx.net',
@@ -553,9 +545,7 @@ describe('bids', () => {
     test('should use correct parameters in OpenX bids geolocated in AU', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInAuOrNz.mockReturnValue(true);
-        const openXBid = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[728, 90]])
-        ))[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-aus-d.openx.net',
@@ -566,9 +556,7 @@ describe('bids', () => {
     test('should use correct parameters in OpenX bids geolocated in FR', async () => {
         shouldIncludeOpenx.mockReturnValue(true);
         isInRow.mockReturnValue(true);
-        const openXBid = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[728, 90]])
-        ))[2];
+        const openXBid = (await bids('dfp-ad--top-above-nav', [[728, 90]]))[2];
         expect(openXBid.params).toEqual({
             customParams: 'someAppNexusTargetingObject',
             delDomain: 'guardian-d.openx.net',
@@ -598,9 +586,9 @@ describe('triplelift adapter', () => {
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
-        const tripleLiftBids = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[728, 90]])
-        ))[1].params;
+        const tripleLiftBids = (await bids('dfp-ad--top-above-nav', [
+            [728, 90],
+        ]))[1].params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_topbanner_728x90_prebid',
         });
@@ -612,9 +600,8 @@ describe('triplelift adapter', () => {
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(false);
 
-        const tripleLiftBids = (await Promise.all(
-            await bids('dfp-ad--inline1', [[300, 250]])
-        ))[1].params;
+        const tripleLiftBids = (await bids('dfp-ad--inline1', [[300, 250]]))[1]
+            .params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_sectionfront_300x250_prebid',
         });
@@ -626,9 +613,9 @@ describe('triplelift adapter', () => {
         containsDmpu.mockReturnValueOnce(false);
         containsMobileSticky.mockReturnValueOnce(true);
 
-        const tripleLiftBids = (await Promise.all(
-            await bids('dfp-ad--top-above-nav', [[320, 50]])
-        ))[1].params;
+        const tripleLiftBids = (await bids('dfp-ad--top-above-nav', [
+            [320, 50],
+        ]))[1].params;
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
         });
