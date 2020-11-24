@@ -10,7 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { onConsentChange, cmp } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -65,12 +65,10 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = (): string => {
-    if (storage.local.get('gu.hasSeenPrivacyBanner')) {
-        const vp = getViewport();
-        if (vp && vp.width >= 1560) return 't';
-    }
-    return 'f';
+const inskinTargetting = async (): string => {
+    const vp = getViewport();
+    const willShowPrivacyMessage: boolean = await cmp.willShowPrivacyMessage();
+    return vp && vp.width >= 1560 && willShowPrivacyMessage ? 't' : 'f';
 };
 
 const format = (keyword: string): string =>
@@ -232,7 +230,7 @@ const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
     return 'na';
 };
 
-const buildPageTargetting = (
+const buildPageTargetting = async (
     adConsentState: boolean | null,
     ccpaState: boolean | null,
     tcfv2EventStatus: string | null
@@ -273,7 +271,7 @@ const buildPageTargetting = (
             // Indicates whether the page is DCR eligible. This happens when the page
             // was DCR eligible and was actually rendered by DCR or
             // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-            inskin: inskinTargetting(),
+            inskin: await inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),
@@ -305,7 +303,7 @@ const buildPageTargetting = (
 const getPageTargeting = (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
-    onConsentChange(state => {
+    onConsentChange(async state => {
         let canRun: boolean | null;
         if (state.ccpa) {
             // CCPA mode
@@ -324,7 +322,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
         if (canRun !== latestConsentCanRun) {
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
             const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = buildPageTargetting(
+            myPageTargetting = await buildPageTargetting(
                 canRun,
                 ccpaState,
                 eventStatus
