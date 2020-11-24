@@ -525,10 +525,12 @@ export const bids: (
     HeaderBiddingSize[]
 ) => Promise<PrebidBid[]> = async (slotId, slotSizes) => {
     const currentBiddersAsync = await currentBidders(slotSizes);
-    return (await currentBiddersAsync).map(async (bidder: PrebidBidder) => ({
-        bidder: bidder.name,
-        params: await bidder.bidParams(slotId, slotSizes),
-    }));
+    return Promise.all(
+        currentBiddersAsync.map(async (bidder: PrebidBidder) => ({
+            bidder: bidder.name,
+            params: await bidder.bidParams(slotId, slotSizes),
+        }))
+    );
 };
 
 export const _ = {

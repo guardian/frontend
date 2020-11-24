@@ -344,14 +344,14 @@ describe('indexExchangeBidders', () => {
         ]);
     });
 
-    test('should include methods in the response that generate the correct bid params', () => {
+    test('should include methods in the response that generate the correct bid params', async () => {
         const slotSizes: Array<HeaderBiddingSize> = [[300, 250], [300, 600]];
         const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
-        expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
+        expect(await bidders[0].bidParams('type', [[1, 2]])).toEqual({
             siteId: '123456',
             size: [300, 250],
         });
-        expect(bidders[1].bidParams('type', [[1, 2]])).toEqual({
+        expect(await bidders[1].bidParams('type', [[1, 2]])).toEqual({
             siteId: '123456',
             size: [300, 600],
         });
@@ -485,7 +485,7 @@ describe('bids', () => {
             (await bids('dfp-right', [[300, 600], [300, 250]])).map(
                 bid => bid.bidder
             );
-        expect(rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
+        expect(await rightSlotBidders()).toEqual(['ix', 'ix', 'adyoulike']);
     });
 
     test('should only include bidder being tested', async () => {
@@ -576,8 +576,8 @@ describe('triplelift adapter', () => {
         jest.resetAllMocks();
     });
 
-    test('should include triplelift adapter if condition is true ', () => {
-        expect(getBidders()).toEqual(['ix', 'triplelift']);
+    test('should include triplelift adapter if condition is true ', async () => {
+        expect(await getBidders()).toEqual(['ix', 'triplelift']);
     });
 
     test('should return correct triplelift adapter params for leaderboard', async () => {
