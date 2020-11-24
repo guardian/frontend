@@ -306,7 +306,7 @@ const buildPageTargetting = async (
 const getPageTargeting = async (): { [key: string]: mixed } => {
     if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
-    let resolveOnConsentChange: typeof Promise.resolve;
+    let resolveOnConsentChange;
     const pageTargetingPromise = new Promise(resolve => {
         resolveOnConsentChange = resolve;
     });
