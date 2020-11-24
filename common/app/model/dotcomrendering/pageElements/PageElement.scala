@@ -854,7 +854,7 @@ object PageElement {
                     posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
-                    altText = altText,
+                    altText = if (isMainBlock) altText else None,
                   )
                 })
               }
