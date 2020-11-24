@@ -31,7 +31,7 @@
             <footer class="identity-forms-message__body">
                 <a class="manage-account__button manage-account__button--center" href="@LinkTo {@verifiedReturnUrl.getOrElse(defaultReturnUrl)}" data-link-name="mma : verify-email : exit-to-gu">
                 @(verifiedReturnUrl match {
-                    case Some(_) => "Exit and continue"
+                    case Some(_) => "Exit and continue to The Guardian"
                     case None => "Exit and go to The Guardian home page"
                 })
                 </a>
