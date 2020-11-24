@@ -10,7 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -65,12 +65,13 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = (): string => {
-    if (storage.local.get('gu.hasSeenPrivacyBanner')) {
-        const vp = getViewport();
-        if (vp && vp.width >= 1560) return 't';
+const inskinTargetting = async (): Promise<string> => {
+    const vp = getViewport();
+    if (vp && vp.width < 1560) {
+        return 'f';
     }
-    return 'f';
+    const willShowPrivacyMessage: boolean = await cmp.willShowPrivacyMessage();
+    return willShowPrivacyMessage ? 't' : 'f';
 };
 
 const format = (keyword: string): string =>
