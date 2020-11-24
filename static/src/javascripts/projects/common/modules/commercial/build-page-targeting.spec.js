@@ -17,7 +17,7 @@ import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFrame
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import {cmp, onConsentChange} from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
@@ -437,7 +437,7 @@ describe('Build Page Targeting', () => {
     });
 
     describe('URL Keywords', () => {
-        it('should return correct keywords from pageId', async() => {
+        it('should return correct keywords from pageId', async () => {
             const pageTargeting = await getPageTargeting();
             expect(pageTargeting.urlkw).toEqual(['footballweekly']);
         });
@@ -457,7 +457,7 @@ describe('Build Page Targeting', () => {
             ]);
         });
 
-        it('should get correct keywords when trailing slash is present',  async () => {
+        it('should get correct keywords when trailing slash is present', async () => {
             config.page.pageId =
                 'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
             expect((await getPageTargeting()).urlkw).toEqual([

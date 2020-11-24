@@ -71,7 +71,7 @@ const inskinTargetting = async (): Promise<string> => {
         return 'f';
     }
     const willShowPrivacyMessage: boolean = await cmp.willShowPrivacyMessage();
-    return willShowPrivacyMessage ? 't' : 'f';
+    return willShowPrivacyMessage ? 'f' : 't';
 };
 
 const format = (keyword: string): string =>
