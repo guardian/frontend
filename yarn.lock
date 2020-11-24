@@ -1758,10 +1758,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.9.0.tgz#2c578b61a6af99436abd83760d3349ef99d53ab8"
   integrity sha512-2o/au3c/SRUYrlPA1x6Rog6+UpXkSf6UrSX16lD19VaFyia60LaIXtBu9mkZNhSm0FWqfLSgync8RTCeCRG47w==
 
-"@guardian/consent-management-platform@6.7.0":
-  version "6.7.0"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.7.0.tgz#d129694886442c6d5d5d41fa4e0f4328a26f102e"
-  integrity sha512-ltF+pGlc4CMnoxril09cFUbAR5LPOSxD79fnMf2nQJI/+2I/N00SObk3JFnklz608I7iVHL6o0ifVEodbmwTDg==
+"@guardian/consent-management-platform@6.7.4":
+  version "6.7.4"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.7.4.tgz#ae75775c40f8234a2e2774c126a688e9a98f5df4"
+  integrity sha512-f/XieB0dOyGYZDhP/UmyrHiyuehETt2L1GKqacsySFdcD/++fKe7LLcXbza4NE54MHyS0wbvd+Qh4avjG4IPLg==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
@@ -1775,10 +1775,10 @@
     inquirer "^5.2.0"
     pretty-bytes "^4.0.2"
 
-"@guardian/libs@^1.3.0":
-  version "1.3.0"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.3.0.tgz#abe4b55c14335a151d0b6cc65a290eb87defd6ab"
-  integrity sha512-WnkeD0Hh8MOxhBGrfL/3eRu74m3FDgLcbhwpjtASUrIcD9I3ALzc79PNao/NwXubK1SZMGTTe4taJxfonB6EKA==
+"@guardian/libs@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.4.2.tgz#76f525cf37b37ad58d17288c85008e4ab176a929"
+  integrity sha512-ZACBS1NmAjss8Q60c3SWHZ7alsS2tvjI5rQipEidW3fvWI8kdWWXck6FSM4F42vNzLdRFjAGmzEA36rG/NsZSg==
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"

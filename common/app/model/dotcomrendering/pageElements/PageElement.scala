@@ -496,6 +496,7 @@ case class YoutubeBlockElement(
     posterImage: Option[Seq[NSImage1]],
     expired: Boolean,
     duration: Option[Long],
+    altText: Option[String],
 ) extends PageElement
 /*
   The difference between `overrideImage` and `posterImage`
@@ -511,12 +512,6 @@ case class YoutubeBlockElement(
  */
 object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
-}
-
-// Intended for unstructured html that we can't model, typically rejected by consumers
-case class HTMLFallbackBlockElement(html: String) extends PageElement
-object HTMLFallbackBlockElement {
-  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 }
 
 //noinspection ScalaStyle
@@ -846,6 +841,7 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
+            val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -858,6 +854,7 @@ object PageElement {
                     posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
+                    altText = if (isMainBlock) altText else None,
                   )
                 })
               }

@@ -124,10 +124,6 @@ GET            /embed/card/*path                                                
 GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
 GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
 
-# User tech feedback
-POST           /info/tech-feedback/send                                                                                          controllers.TechFeedbackController.submitFeedback(path = "")
-GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
-
 # Sport
 GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
 GET            /sport/cricket/match/:matchDate/:teamId                                                                           cricket.controllers.CricketMatchController.renderMatchId(matchDate, teamId)
@@ -374,6 +370,11 @@ GET            /$shortCode<p/[\w]+>/:campaignCode                               
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
 
+# Nx1Config
+# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+GET            /switches.json                                                       controllers.Nx1ConfigController.switches
+GET            /tests.json                                                          controllers.Nx1ConfigController.tests
+
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
 GET            /theobserver                                                                                                      controllers.NewspaperController.latestObserverNewspaper()
@@ -465,4 +466,3 @@ GET     /*path/email/headline.txt                                               
 GET     /*path/email.emailjson                                                                                                   controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt                                                                                                    controllers.ArticleController.renderEmail(path)
 GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
-

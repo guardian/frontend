@@ -10,10 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
+import { onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -69,8 +66,10 @@ const findBreakpoint = (): string => {
 };
 
 const inskinTargetting = (): string => {
-    const vp = getViewport();
-    if (vp && vp.width >= 1560) return 't';
+    if (storage.local.get('gu.hasSeenPrivacyBanner')) {
+        const vp = getViewport();
+        if (vp && vp.width >= 1560) return 't';
+    }
     return 'f';
 };
 
@@ -319,7 +318,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
                 : false;
         } else if (state.aus) {
             // AUS mode
-            canRun = getConsentFor('aus-advertising', state);
+            canRun = state.aus.personalisedAdvertising;
         } else canRun = false;
 
         if (canRun !== latestConsentCanRun) {

@@ -34,7 +34,6 @@ import {
     incrementDailyArticleCount,
     incrementWeeklyArticleCount,
 } from 'common/modules/onward/history';
-import { initTechFeedback } from 'common/modules/onward/tech-feedback';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
@@ -325,7 +324,6 @@ const init = (): void => {
         ['c-localStorage', cleanupLocalStorage],
         ['c-overlay', initOpenOverlayOnClick],
         ['c-public-api', initPublicApi],
-        ['c-tech-feedback', initTechFeedback],
         ['c-media-listeners', mediaListener],
         ['c-accessibility-prefs', initAccessibilityPreferences],
         ['c-pinterest', startPinterest],

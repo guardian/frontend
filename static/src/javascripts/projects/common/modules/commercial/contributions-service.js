@@ -101,8 +101,8 @@ export const getArticleCountConsent = (): Promise<boolean> => {
         return Promise.resolve(false);
     }
     return new Promise((resolve) => {
-        onConsentChange(({ ccpa, tcfv2 }) => {
-            if (ccpa) {
+        onConsentChange(({ ccpa, tcfv2 , aus}) => {
+            if (ccpa || aus) {
                 resolve(true);
             } else if (tcfv2) {
                 const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
