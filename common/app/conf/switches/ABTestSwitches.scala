@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed-opt-out",
-    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
-    owners = Seq(Owner.withGithub("paulbrown1982")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
