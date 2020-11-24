@@ -307,7 +307,7 @@ const buildPageTargetting = async (
 
 const getPageTargeting = async (): Promise<PageTargettingLoose> => {
     if (Object.keys(myPageTargetting).length !== 0)
-        return Promise.resolve(myPageTargetting);
+        return myPageTargetting;
 
     let resolveOnConsentChange;
     const pageTargetingPromise: Promise<PageTargettingLoose> = new Promise(
