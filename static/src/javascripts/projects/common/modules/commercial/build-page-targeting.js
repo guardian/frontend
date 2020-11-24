@@ -302,12 +302,11 @@ const buildPageTargetting = async (
     // This can be removed once we get sign-off from third parties who prefer to use appNexusPageTargeting.
     page.pageAdTargeting = pageTargeting;
 
-    return Promise.resolve(pageTargeting);
+    return pageTargeting;
 };
 
 const getPageTargeting = async (): Promise<PageTargettingLoose> => {
-    if (Object.keys(myPageTargetting).length !== 0)
-        return myPageTargetting;
+    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
     let resolveOnConsentChange;
     const pageTargetingPromise: Promise<PageTargettingLoose> = new Promise(
