@@ -360,7 +360,7 @@ object QABlockElement {
 
 case class QuizAtomAnswer(id: String, text: String, revealText: Option[String], isCorrect: Boolean)
 case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
-case class QuizAtomBlockElement(id: String, questions: Seq[QuizAtomQuestion]) extends PageElement
+case class QuizAtomBlockElement(id: String, quizType: String, questions: Seq[QuizAtomQuestion]) extends PageElement
 object QuizAtomBlockElement {
   implicit val QuizAtomAnswerWrites: Writes[QuizAtomAnswer] = Json.writes[QuizAtomAnswer]
   implicit val QuizAtomQuestionWrites: Writes[QuizAtomQuestion] = Json.writes[QuizAtomQuestion]
@@ -922,27 +922,30 @@ object PageElement {
               ),
             )
           }
-          case Some(quizAtom: QuizAtom) =>
+          case Some(quizAtom: QuizAtom) => {
+            val questions = quizAtom.content.questions.map { q =>
+              QuizAtomQuestion(
+                id = q.id,
+                text = q.text,
+                answers = q.answers.map(a =>
+                  QuizAtomAnswer(
+                    id = a.id,
+                    text = a.text,
+                    revealText = a.revealText,
+                    isCorrect = a.weight == 1,
+                  ),
+                ),
+                imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
+              )
+            }
             Some(
               QuizAtomBlockElement(
                 id = quizAtom.id,
-                questions = quizAtom.content.questions.map { q =>
-                  QuizAtomQuestion(
-                    id = q.id,
-                    text = q.text,
-                    answers = q.answers.map(a =>
-                      QuizAtomAnswer(
-                        id = a.id,
-                        text = a.text,
-                        revealText = a.revealText,
-                        isCorrect = a.weight == 1,
-                      ),
-                    ),
-                    imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
-                  )
-                },
+                quizType = quizAtom.quizType,
+                questions = questions,
               ),
             )
+          }
 
           // Here we capture all the atom types which are not yet supported.
           // ContentAtomBlockElement is mapped to null in the DCR source code.
