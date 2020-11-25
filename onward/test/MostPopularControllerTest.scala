@@ -26,6 +26,7 @@ import services.OphanApi
     new DayMostPopularAgent(testContentApiClient, ophanApi),
     new MostPopularAgent(testContentApiClient, ophanApi, wsClient),
     play.api.test.Helpers.stubControllerComponents(),
+    wsClient,
   )
 
   "Most Popular Controller" should "200 when content type is tag" in {
