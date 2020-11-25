@@ -9,6 +9,7 @@ const minArticleHeight: number = 1300;
 
 const getAllowedSizesForImmersive = (availableSpace: number): string => {
     // filter ad slot sizes based on the available height
+    // mark: 01303e88-ef1f-462d-9b6e-242419435cec
     if (availableSpace > 600) {
         return '1,1|2,2|300,250|300,274|300,600|fluid';
     } else if (availableSpace > 274) {
@@ -62,7 +63,6 @@ export const init = (): Promise<boolean> => {
             }
             // most articles are long enough to fit a DMPU. However, the occasional shorter article
             // will need the slot sizes to be adjusted, and the sticky behaviour removed.
-            // mark: 01303e88-ef1f-462d-9b6e-242419435cec
             if (mainColHeight < minArticleHeight) {
                 return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
