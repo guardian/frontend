@@ -2,6 +2,7 @@
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
+import { isInUk } from 'common/modules/commercial/geo-utils'
 
 /* Sections to be included in initial release of Ipsos Mori tagging */
 const allowSections = [
@@ -23,11 +24,10 @@ const allowSections = [
     "sport", /* Sport sections */
     "football",];
 
-const loadIpsosScript = function () {
+const loadIpsosScript = () => {
 
-    console.debug("Ipsos tag fired");
     window.dm = window.dm ||{ AjaxData:[]};
-    window.dm.AjaxEvent = function(et, d, ssid, ad){
+    window.dm.AjaxEvent = (et, d, ssid, ad) => {
         // $FlowFixMe
         dm.AjaxData.push({ et,d,ssid,ad}); // eslint-disable-line no-undef
         if (window.DotMetricsObj) {
@@ -37,19 +37,20 @@ const loadIpsosScript = function () {
     };
     const ipsosSource = `https://uk-script.dotmetrics.net/door.js?d=${  document.location.host  }&t=${ config.get('page.ipsosTag')}`;
 
-    loadScript(ipsosSource, { id: 'ipsos', async: true, type: 'text/javascript' });
+    return loadScript(ipsosSource, { id: 'ipsos', async: true, type: 'text/javascript' });
 };
 
 export const init = (): Promise<void> => {
 
+    if (isInUk()) {
         onConsentChange(state => {
-            if (getConsentFor('ipsos', state))
-            {
-                if(allowSections.includes(config.get('page.section'))) {
-                    loadIpsosScript();
+            if (getConsentFor('ipsos', state)) {
+                if (allowSections.includes(config.get('page.section'))) {
+                    return loadIpsosScript();
                 }
             }
         });
+    }
 
     return Promise.resolve();
 };
