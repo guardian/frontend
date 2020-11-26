@@ -1,8 +1,7 @@
 // @flow
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from 'lib/config';
-import { loadScript } from '@guardian/libs';
-import { isInUk } from 'common/modules/commercial/geo-utils'
+import { loadScript, getLocale } from '@guardian/libs';
 
 /* Sections to be included in initial release of Ipsos Mori tagging */
 const allowSections = [
@@ -42,15 +41,17 @@ const loadIpsosScript = () => {
 
 export const init = (): Promise<void> => {
 
-    if (isInUk()) {
-        onConsentChange(state => {
-            if (getConsentFor('ipsos', state)) {
-                if (allowSections.includes(config.get('page.section'))) {
-                    return loadIpsosScript();
+    getLocale().then((locale) => {
+        if(locale === 'GB') {
+            onConsentChange(state => {
+                if (getConsentFor('ipsos', state)) {
+                    if (allowSections.includes(config.get('page.section'))) {
+                        return loadIpsosScript();
+                    }
                 }
-            }
-        });
-    }
+            });
+        }
+    });
 
     return Promise.resolve();
 };
