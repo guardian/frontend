@@ -476,4 +476,28 @@ describe('Build Page Targeting', () => {
             ]);
         });
     });
+
+    describe('asynchronous setting', () => {
+        it('will return the targetting object on the first run', async () => {
+            _.resetPageTargeting();
+            onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+
+            let myPageTargetting = await getPageTargeting();
+
+            expect(myPageTargetting.pv).toEqual('presetOphanPageViewId');
+            expect(myPageTargetting.pa).toEqual('f');
+            expect(myPageTargetting.rp).toEqual('dotcom-platform');
+            expect(myPageTargetting.edition).toEqual('us');
+
+            config.page.sharedAdTargeting.edition = 'au';
+            myPageTargetting = await getPageTargeting();
+
+            expect(myPageTargetting.edition).toEqual('au');
+            onConsentChange.mockImplementation(tcfv2WithConsentMock);
+            myPageTargetting = await getPageTargeting();
+
+            // Only when we change the consent will the targetting change
+            expect(myPageTargetting.edition).toEqual('au');
+        });
+    });
 });
