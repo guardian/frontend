@@ -6,7 +6,7 @@
 export const signInGateMainVariant: ABTest = {
     id: 'SignInGateMainVariant',
     start: '2020-05-20',
-    expiry: '2020-12-01',
+    expiry: '2021-12-01',
     author: 'Mahesh Makani',
     description:
         'Show sign in gate to 100% of users on 3rd article view of simple article templates, with higher priority over banners and epic. Main/Variant Audience.',
