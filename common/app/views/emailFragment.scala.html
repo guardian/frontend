@@ -1,10 +1,26 @@
 @import com.gu.identity.model.EmailEmbed
 @(page: model.Page, emailType: String, listName: String, emailEmbedData: EmailEmbed)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-@emailEmbed(page) {
-    @fragments.email.signup.subscription.emailSignUp(
-        emailType,
-        listName,
-        emailEmbedData
+@electionNewsletters = @{
+    List(
+        "minute-us", "us-morning-newsletter", "today-us", "green-light", "business-today",
+        "the-recap", "the-fiver", "the-spin", "the-breakdown", "sports-au"
     )
+}
+
+@emailEmbed(page) {
+    @emailEmbed(page) {
+        @if(electionNewsletters.contains(listName)) {
+            @fragments.email.signup.subscription.emailSignUpNewDesign(
+                emailType,
+                listName,
+                emailEmbedData
+            )
+        }
+        @fragments.email.signup.subscription.emailSignUp(
+            emailType,
+            listName,
+            emailEmbedData
+        )
+    }
 }

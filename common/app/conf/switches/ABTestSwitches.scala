@@ -95,4 +95,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2020, 12, 8),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-newsletter-embeds",
+    "New newsletter signup embeds for discoverability OKR",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 1, 4),
+    exposeClientSide = true,
+  )
 }
