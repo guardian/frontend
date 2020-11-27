@@ -12,10 +12,12 @@ import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill
 import {
     onConsentChange as onConsentChange_,
     getConsentFor as getConsentFor_,
+    cmp as cmp_,
 } from '@guardian/consent-management-platform';
 
 const onConsentChange: any = onConsentChange_;
 const getConsentFor: any = getConsentFor_;
+const cmp: any = cmp_;
 
 // $FlowFixMe property requireActual is actually not missing Flow.
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
@@ -102,7 +104,12 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
     getConsentFor: jest.fn(),
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
 }));
+
+cmp.willShowPrivacyMessage.mockResolvedValue(true);
 
 let $style;
 const makeFakeEvent = (creativeId, id) => ({
