@@ -73,7 +73,7 @@ class EmailVerificationController(
           logger.error(s"Could not resend email verification email: $errors")
           InternalServerError("Internal error: Could not resend email verification email")
         }
-        case Right(_) => Ok("")
+        case Right(_) => NoContent
       }
     }
   }

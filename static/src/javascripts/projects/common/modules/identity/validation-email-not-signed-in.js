@@ -33,7 +33,7 @@ const init = (): void => {
                         if (token) {
                             sendValidationEmail(token).then(
                                 resp => {
-                                    if (resp.status !== 200) {
+                                    if (resp.status !== 204) {
                                         mediator.emit(
                                             'module:identity:validation-email:fail'
                                         );
