@@ -358,12 +358,25 @@ object QABlockElement {
   implicit val QABlockElementWrites: Writes[QABlockElement] = Json.writes[QABlockElement]
 }
 
-case class QuizAtomAnswer(id: String, text: String, revealText: Option[String], isCorrect: Boolean)
+case class QuizAtomAnswer(
+    id: String,
+    text: String,
+    revealText: Option[String],
+    answerBuckets: Seq[String],
+    isCorrect: Boolean,
+)
+case class QuizAtomResultBucket(id: String, title: String, description: String)
 case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
-case class QuizAtomBlockElement(id: String, quizType: String, questions: Seq[QuizAtomQuestion]) extends PageElement
+case class QuizAtomBlockElement(
+    id: String,
+    quizType: String,
+    questions: Seq[QuizAtomQuestion],
+    resultBuckets: Seq[QuizAtomResultBucket],
+) extends PageElement
 object QuizAtomBlockElement {
   implicit val QuizAtomAnswerWrites: Writes[QuizAtomAnswer] = Json.writes[QuizAtomAnswer]
   implicit val QuizAtomQuestionWrites: Writes[QuizAtomQuestion] = Json.writes[QuizAtomQuestion]
+  implicit val QuizAtomResultBucketWrites: Writes[QuizAtomResultBucket] = Json.writes[QuizAtomResultBucket]
   implicit val QuizAtomBlockElementWrites: Writes[QuizAtomBlockElement] = Json.writes[QuizAtomBlockElement]
 }
 
@@ -932,6 +945,7 @@ object PageElement {
                     id = a.id,
                     text = a.text,
                     revealText = a.revealText,
+                    answerBuckets = a.buckets,
                     isCorrect = a.weight == 1,
                   ),
                 ),
@@ -943,6 +957,9 @@ object PageElement {
                 id = quizAtom.id,
                 quizType = quizAtom.quizType,
                 questions = questions,
+                resultBuckets = quizAtom.content.resultBuckets.map { bucket =>
+                  QuizAtomResultBucket(bucket.id, bucket.title, bucket.description)
+                },
               ),
             )
           }
