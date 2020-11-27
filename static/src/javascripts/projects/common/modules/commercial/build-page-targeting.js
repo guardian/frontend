@@ -47,7 +47,6 @@ type PageTargeting = {
 type PageTargettingLoose = { [key: string]: mixed };
 
 let myPageTargetting: {} = {};
-let latestConsentCanRun;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -307,9 +306,6 @@ const buildPageTargetting = async (
 
 const getPageTargeting = async (): Promise<PageTargettingLoose> =>
     new Promise(resolve => {
-        if (Object.keys(myPageTargetting).length !== 0)
-            return resolve(myPageTargetting);
-
         onConsentChange(async state => {
             let canRun: boolean | null;
             if (state.ccpa) {
@@ -326,25 +322,19 @@ const getPageTargeting = async (): Promise<PageTargettingLoose> =>
                 canRun = state.aus.personalisedAdvertising;
             } else canRun = false;
 
-            if (canRun !== latestConsentCanRun) {
-                const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-                const eventStatus = state.tcfv2
-                    ? state.tcfv2.eventStatus
-                    : 'na';
-                myPageTargetting = await buildPageTargetting(
-                    canRun,
-                    ccpaState,
-                    eventStatus
-                );
-                latestConsentCanRun = canRun;
-                resolve(myPageTargetting);
-            }
+            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+            myPageTargetting = await buildPageTargetting(
+                canRun,
+                ccpaState,
+                eventStatus
+            );
+            resolve(myPageTargetting);
         });
     });
 
 const resetPageTargeting = (): void => {
     myPageTargetting = {};
-    latestConsentCanRun = undefined;
 };
 
 export {
