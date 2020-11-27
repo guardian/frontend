@@ -322,7 +322,7 @@ const getPageTargeting = async (): Promise<PageTargettingLoose> =>
 
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
             const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            resolve(await buildPageTargetting(canRun, ccpaState, eventStatus));
+            resolve(buildPageTargetting(canRun, ccpaState, eventStatus));
         });
     });
 
