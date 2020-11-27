@@ -3,26 +3,6 @@ import { onConsentChange, getConsentFor } from '@guardian/consent-management-pla
 import config from 'lib/config';
 import { loadScript, getLocale } from '@guardian/libs';
 
-/* Sections to be included in initial release of Ipsos Mori tagging */
-const allowSections = [
-    "lifeandstyle", /* Lifestyle sections */
-    "fashion",
-    "food",
-    "travel",
-    "fashion",
-    "money",
-    "technology",
-    "culture", /* Culture sections */
-    "film",
-    "music",
-    "tv-and-radio",
-    "books",
-    "artanddesign",
-    "stage",
-    "games",
-    "sport", /* Sport sections */
-    "football",];
-
 const loadIpsosScript = () => {
 
     window.dm = window.dm ||{ AjaxData:[]};
@@ -45,9 +25,7 @@ export const init = (): Promise<void> => {
         if(locale === 'GB') {
             onConsentChange(state => {
                 if (getConsentFor('ipsos', state)) {
-                    if (allowSections.includes(config.get('page.section'))) {
-                        return loadIpsosScript();
-                    }
+                    return loadIpsosScript();
                 }
             });
         }
