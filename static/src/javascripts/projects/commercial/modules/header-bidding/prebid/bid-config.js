@@ -266,7 +266,7 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
-const getOzoneTargeting = async (): {} => {
+const getOzoneTargeting = async (): Promise<{}> => {
     const lotameData = getLotameData();
     const appNexusTargetingObject = buildAppNexusTargetingObject(
         await getPageTargeting()
@@ -332,18 +332,18 @@ const openxClientSideBidder: PrebidBidder = {
 const ozoneClientSideBidder: PrebidBidder = {
     name: 'ozone',
     switchName: 'prebidOzone',
-    bidParams: (): Promise<PrebidOzoneParams> =>
+    bidParams: async (): Promise<PrebidOzoneParams> =>
         Promise.resolve(
             Object.assign(
                 {},
-                (() => ({
+                (async () => ({
                     publisherId: 'OZONEGMG0001',
                     siteId: '4204204209',
                     placementId: '0420420500',
                     customData: [
                         {
                             settings: {},
-                            targeting: getOzoneTargeting(),
+                            targeting: await getOzoneTargeting(),
                         },
                     ],
                     ozoneData: {}, // TODO: confirm if we need to send any

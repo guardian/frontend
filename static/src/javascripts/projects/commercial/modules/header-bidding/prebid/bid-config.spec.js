@@ -30,6 +30,7 @@ import {
     shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
+    shouldUseOzoneAdaptor as shouldUseOzoneAdaptor_,
 } from '../utils';
 
 const containsBillboard: any = containsBillboard_;
@@ -47,6 +48,7 @@ const shouldIncludeTrustX: any = shouldIncludeTrustX_;
 const shouldIncludeXaxis: any = shouldIncludeXaxis_;
 const shouldIncludeSonobi: any = shouldIncludeSonobi_;
 const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
+const shouldUseOzoneAdaptor: any = shouldUseOzoneAdaptor_;
 const stripMobileSuffix: any = stripMobileSuffix_;
 const getBreakpointKey: any = getBreakpointKey_;
 const isInAuOrNz: any = isInAuOrNz_;
@@ -95,6 +97,7 @@ const resetConfig = () => {
     config.set('switches.prebidXaxis', true);
     config.set('switches.prebidAdYouLike', true);
     config.set('switches.prebidTriplelift', true);
+    config.set('switches.prebidOzone', true);
     config.set('ophan', { pageViewId: 'pvid' });
     config.set('page.contentType', 'Article');
     config.set('page.section', 'Magic');
@@ -619,5 +622,21 @@ describe('triplelift adapter', () => {
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
         });
+    });
+});
+
+describe('ozone adapter', () => {
+    beforeEach(() => {
+        resetConfig();
+        config.set('page.contentType', 'Article');
+        shouldUseOzoneAdaptor.mockReturnValue(true);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    test('should include ozone adapter if condition is true ', async () => {
+        expect(await getBidders()).toEqual(['ix', 'ozone']);
     });
 });
