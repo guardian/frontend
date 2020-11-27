@@ -46,8 +46,6 @@ type PageTargeting = {
 
 type PageTargettingLoose = { [key: string]: mixed };
 
-let myPageTargetting: {} = {};
-
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
         case 'mobile':
@@ -324,25 +322,12 @@ const getPageTargeting = async (): Promise<PageTargettingLoose> =>
 
             const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
             const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = await buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            resolve(myPageTargetting);
+            resolve(await buildPageTargetting(canRun, ccpaState, eventStatus));
         });
     });
-
-const resetPageTargeting = (): void => {
-    myPageTargetting = {};
-};
 
 export {
     getPageTargeting,
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
-};
-
-export const _ = {
-    resetPageTargeting,
 };

@@ -2,10 +2,7 @@
 import { storage } from '@guardian/libs';
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {
-    getPageTargeting,
-    _,
-} from 'common/modules/commercial/build-page-targeting';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import {
@@ -139,7 +136,6 @@ describe('Build Page Targeting', () => {
 
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
@@ -199,23 +195,18 @@ describe('Build Page Targeting', () => {
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
         expect((await getPageTargeting()).pa).toBe('t');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         expect((await getPageTargeting()).pa).toBe('f');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
         expect((await getPageTargeting()).pa).toBe('f');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2MixedConsentMock);
         expect((await getPageTargeting()).pa).toBe('f');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithConsentMock);
         expect((await getPageTargeting()).pa).toBe('t');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithoutConsentMock);
         expect((await getPageTargeting()).pa).toBe('f');
     });
@@ -224,29 +215,23 @@ describe('Build Page Targeting', () => {
         onConsentChange.mockImplementation(tcfWithConsentMock);
         expect((await getPageTargeting()).rdp).toBe('na');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         expect((await getPageTargeting()).rdp).toBe('na');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2NullConsentMock);
         expect((await getPageTargeting()).rdp).toBe('na');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfMixedConsentMock);
         expect((await getPageTargeting()).rdp).toBe('na');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithConsentMock);
         expect((await getPageTargeting()).rdp).toBe('f');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(ccpaWithoutConsentMock);
         expect((await getPageTargeting()).rdp).toBe('t');
     });
 
     it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', async () => {
-        _.resetPageTargeting();
         getPrivacyFramework.mockReturnValue({ tcfv2: true });
 
         onConsentChange.mockImplementation(tcfv2WithConsentMock);
@@ -256,13 +241,11 @@ describe('Build Page Targeting', () => {
             'useractioncomplete'
         );
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 
         expect((await getPageTargeting()).consent_tcfv2).toBe('f');
         expect((await getPageTargeting()).cmp_interaction).toBe('cmpuishown');
 
-        _.resetPageTargeting();
         onConsentChange.mockImplementation(tcfv2MixedConsentMock);
 
         expect((await getPageTargeting()).consent_tcfv2).toBe('f');
@@ -270,7 +253,6 @@ describe('Build Page Targeting', () => {
             'useractioncomplete'
         );
 
-        _.resetPageTargeting();
         getPrivacyFramework.mockReturnValue({ tcfv1: true });
         onConsentChange.mockImplementation(tcfWithConsentMock);
 
@@ -479,7 +461,6 @@ describe('Build Page Targeting', () => {
 
     describe('asynchronous setting', () => {
         it('will return the targetting object on the first run', async () => {
-            _.resetPageTargeting();
             onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
 
             let myPageTargetting = await getPageTargeting();
