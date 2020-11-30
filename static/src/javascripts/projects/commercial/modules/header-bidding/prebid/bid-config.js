@@ -58,8 +58,6 @@ import {
 import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
-// Now it's a Promise, is this needed? 2020-10-23
-getPageTargeting();
 
 const isInSafeframeTestVariant = (): boolean =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
