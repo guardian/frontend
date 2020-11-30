@@ -21,11 +21,10 @@ const copyGlobal: AcquisitionsEpicTemplateCopy = {
 
 const copyUS: AcquisitionsEpicTemplateCopy = {
     paragraphs: [
-        '<b>The real work is just beginning … </b>',
-        '… following Joe Biden’s victory in the 2020 election. A majority of American voters have rejected four years of divisiveness, racism and sustained assaults on constitutional democracy. They have chosen a new path. But America’s systemic challenges remain.',
-        'The Guardian welcomes the opportunity to refocus our journalism on the opportunities that lie ahead for America – from fixing a broken healthcare system, to repairing global alliances, to addressing wealth inequality and corrosive racial bias.',
-        'We believe every one of us deserves equal access to fact-based news and analysis. That’s why we’ve decided to keep Guardian journalism free for all readers, regardless of where they live or what they can afford to pay.',
-        'If you’ve enjoyed our live updates and in-depth coverage, support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
+        '<b>Since you’re here ...</b>',
+        '... we have a small favour to ask. Millions are flocking to the Guardian for independent, quality news every day. As we prepare for what promises to be a pivotal year for America, we’re asking you to consider a year-end gift to help fund our journalism.',
+        'We believe everyone deserves access to information that’s grounded in science and truth. That’s why we made a different choice: to keep our reporting open for all readers, regardless of where they live or what they can afford to pay.',
+        'We’re asking readers to help us raise $1.25m to support our reporting in the new year. If you’ve enjoyed our live updates and in-depth coverage, support the Guardian from as little as %%CURRENCY_SYMBOL%%1 – and it only takes a minute. Thank you.',
     ],
 };
 

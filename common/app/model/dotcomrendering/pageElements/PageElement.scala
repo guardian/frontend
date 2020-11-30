@@ -358,12 +358,25 @@ object QABlockElement {
   implicit val QABlockElementWrites: Writes[QABlockElement] = Json.writes[QABlockElement]
 }
 
-case class QuizAtomAnswer(id: String, text: String, revealText: Option[String], isCorrect: Boolean)
+case class QuizAtomAnswer(
+    id: String,
+    text: String,
+    revealText: Option[String],
+    answerBuckets: Seq[String],
+    isCorrect: Boolean,
+)
+case class QuizAtomResultBucket(id: String, title: String, description: String)
 case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
-case class QuizAtomBlockElement(id: String, questions: Seq[QuizAtomQuestion]) extends PageElement
+case class QuizAtomBlockElement(
+    id: String,
+    quizType: String,
+    questions: Seq[QuizAtomQuestion],
+    resultBuckets: Seq[QuizAtomResultBucket],
+) extends PageElement
 object QuizAtomBlockElement {
   implicit val QuizAtomAnswerWrites: Writes[QuizAtomAnswer] = Json.writes[QuizAtomAnswer]
   implicit val QuizAtomQuestionWrites: Writes[QuizAtomQuestion] = Json.writes[QuizAtomQuestion]
+  implicit val QuizAtomResultBucketWrites: Writes[QuizAtomResultBucket] = Json.writes[QuizAtomResultBucket]
   implicit val QuizAtomBlockElementWrites: Writes[QuizAtomBlockElement] = Json.writes[QuizAtomBlockElement]
 }
 
@@ -496,6 +509,7 @@ case class YoutubeBlockElement(
     posterImage: Option[Seq[NSImage1]],
     expired: Boolean,
     duration: Option[Long],
+    altText: Option[String],
 ) extends PageElement
 /*
   The difference between `overrideImage` and `posterImage`
@@ -840,6 +854,7 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
+            val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -852,6 +867,7 @@ object PageElement {
                     posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
+                    altText = if (isMainBlock) altText else None,
                   )
                 })
               }
@@ -919,27 +935,34 @@ object PageElement {
               ),
             )
           }
-          case Some(quizAtom: QuizAtom) =>
+          case Some(quizAtom: QuizAtom) => {
+            val questions = quizAtom.content.questions.map { q =>
+              QuizAtomQuestion(
+                id = q.id,
+                text = q.text,
+                answers = q.answers.map(a =>
+                  QuizAtomAnswer(
+                    id = a.id,
+                    text = a.text,
+                    revealText = a.revealText,
+                    answerBuckets = a.buckets,
+                    isCorrect = a.weight == 1,
+                  ),
+                ),
+                imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
+              )
+            }
             Some(
               QuizAtomBlockElement(
                 id = quizAtom.id,
-                questions = quizAtom.content.questions.map { q =>
-                  QuizAtomQuestion(
-                    id = q.id,
-                    text = q.text,
-                    answers = q.answers.map(a =>
-                      QuizAtomAnswer(
-                        id = a.id,
-                        text = a.text,
-                        revealText = a.revealText,
-                        isCorrect = a.weight == 1,
-                      ),
-                    ),
-                    imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
-                  )
+                quizType = quizAtom.quizType,
+                questions = questions,
+                resultBuckets = quizAtom.content.resultBuckets.map { bucket =>
+                  QuizAtomResultBucket(bucket.id, bucket.title, bucket.description)
                 },
               ),
             )
+          }
 
           // Here we capture all the atom types which are not yet supported.
           // ContentAtomBlockElement is mapped to null in the DCR source code.
