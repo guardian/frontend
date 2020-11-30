@@ -3,7 +3,7 @@
 export const newsletterMerchUnitLighthouseControl: ABTest = {
     id: 'NewsletterMerchUnitLighthouseControl',
     start: '2020-11-11',
-    expiry: '2020-12-01',
+    expiry: '2020-12-08',
     author: 'Josh Buckland & Alex Dufournet',
     description: 'Show BAU merch unit to 50% of users. This is the control for the NewsletterMerchUnitLighthouseVariants test.',
     audience: 0.5,
@@ -28,7 +28,7 @@ export const newsletterMerchUnitLighthouseControl: ABTest = {
 export const newsletterMerchUnitLighthouseVariant: ABTest = {
     id: 'NewsletterMerchUnitLighthouseVariants',
     start: '2020-11-11',
-    expiry: '2020-12-01',
+    expiry: '2020-12-08',
     author: 'Josh Buckland & Alex Dufournet',
     description: 'Show a newsletter advert in the merchandising unit to 25% of users and reader revenue' +
         'to another 25%. The remaining 50% are covered by NewsletterMerchUnitLighthouseControl ' +

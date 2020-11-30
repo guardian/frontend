@@ -82,7 +82,7 @@ trait ABTestSwitches {
     "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2020, 12, 8),
     exposeClientSide = true,
   )
 
@@ -92,7 +92,7 @@ trait ABTestSwitches {
     "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2020, 12, 8),
     exposeClientSide = true,
   )
 }
