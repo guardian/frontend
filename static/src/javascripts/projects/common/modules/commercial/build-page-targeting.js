@@ -10,7 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -302,38 +302,26 @@ const buildPageTargetting = (
     return pageTargeting;
 };
 
-const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+const getPageTargeting = (state: ConsentState): { [key: string]: mixed } => {
+    let canRun: boolean | null;
+    if (state.ccpa) {
+        // CCPA mode
+        canRun = !state.ccpa.doNotSell;
+    } else if (state.tcfv2) {
+        // TCFv2 mode
+        canRun = state.tcfv2.consents
+            ? Object.keys(state.tcfv2.consents).length > 0 &&
+              Object.values(state.tcfv2.consents).every(Boolean)
+            : false;
+    } else if (state.aus) {
+        // AUS mode
+        canRun = state.aus.personalisedAdvertising;
+    } else canRun = false;
 
-    onConsentChange(state => {
-        let canRun: boolean | null;
-        if (state.ccpa) {
-            // CCPA mode
-            canRun = !state.ccpa.doNotSell;
-        } else if (state.tcfv2) {
-            // TCFv2 mode
-            canRun = state.tcfv2.consents
-                ? Object.keys(state.tcfv2.consents).length > 0 &&
-                  Object.values(state.tcfv2.consents).every(Boolean)
-                : false;
-        } else if (state.aus) {
-            // AUS mode
-            canRun = state.aus.personalisedAdvertising;
-        } else canRun = false;
+    const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+    const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
 
-        if (canRun !== latestConsentCanRun) {
-            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            latestConsentCanRun = canRun;
-        }
-    });
-
-    return myPageTargetting;
+    return buildPageTargetting(canRun, ccpaState, eventStatus);
 };
 
 const resetPageTargeting = (): void => {
