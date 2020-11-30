@@ -22,6 +22,9 @@ export const onSlotLoad = (event: SlotOnloadEvent) => {
     }
 
     const iframe = advert.node.getElementsByTagName('iframe')[0];
+    if (!iframe) {
+        return;
+    }
     postMessage(
         {
             id: iframe.id,
