@@ -10,7 +10,6 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
     NGInteractiveDCR,
-    UseAusCmp,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -43,13 +42,4 @@ object NewsletterEmbedDesign
       owners = Seq(Owner.withGithub("buck06191")),
       sellByDate = new LocalDate(2020, 11, 30),
       participationGroup = Perc20A,
-    )
-
-object UseAusCmp
-    extends Experiment(
-      name = "use-aus-cmp",
-      description = "Use AU framework in CMP in Australia",
-      owners = group(Commercial),
-      sellByDate = new LocalDate(2020, 12, 4),
-      participationGroup = Perc0D,
     )

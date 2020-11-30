@@ -10,9 +10,9 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { getLocale, storage } from '@guardian/libs';
+import { storage } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
-import { isInUsa } from 'common/modules/commercial/geo-utils';
+import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
@@ -63,14 +63,7 @@ const go = () => {
             if (!willShow) storage.local.set('gu.hasSeenPrivacyBanner', true);
         });
 
-        if (
-            config.get('switches.auConsent', false) ||
-            config.get('tests.useAusCmpVariant') === 'variant'
-        ) {
-            cmp.init({ pubData, country: await getLocale() });
-        } else {
-            cmp.init({ pubData, isInUsa: isInUsa() });
-        }
+        cmp.init({ pubData, country: geolocationGetSync() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
