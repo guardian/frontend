@@ -5,6 +5,7 @@ import {
     onConsentChange,
     getConsentFor,
 } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -13,7 +14,7 @@ import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
-const loadPrebid: () => void = () => {
+const loadPrebid: (state: ConsentState) => void = state => {
     if (
         dfpEnv.hbImpl.prebid &&
         commercialFeatures.dfpAdvertising &&
@@ -24,7 +25,7 @@ const loadPrebid: () => void = () => {
     ) {
         import(/* webpackChunkName: "Prebid.js" */ 'prebid.js/build/dist/prebid').then(
             async () => {
-                await getPageTargeting();
+                await getPageTargeting(state);
                 prebid.initialise(window);
             }
         );
@@ -35,7 +36,7 @@ const setupPrebid: () => Promise<void> = () => {
     onConsentChange(state => {
         const canRun: boolean = getConsentFor('prebid', state);
         if (canRun) {
-            loadPrebid();
+            loadPrebid(state);
         }
     });
 
