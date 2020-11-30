@@ -63,10 +63,17 @@ const setDfpListeners = (): void => {
     }
 };
 
+let initalConsentStateResolved: (value?: ConsentState) => void;
+let currentConsentState: Promise<ConsentState> = new Promise(resolve => {
+    initalConsentStateResolved = resolve;
+});
+
 const setPageTargeting = async (): Promise<void> => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
-    const targeting = await getPageTargeting();
+    const state = await currentConsentState;
+
+    const targeting = await getPageTargeting(state);
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
@@ -92,8 +99,8 @@ const setPublisherProvidedId = (): void => {
     }
 };
 
-export const init = (): Promise<void> => {
-    const setupAdvertising = (): Promise<void> => {
+export const init = (): Promise<ConsentState> => {
+    const setupAdvertising = (): Promise<ConsentState> => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
@@ -108,6 +115,8 @@ export const init = (): Promise<void> => {
         );
 
         onConsentChange(state => {
+            initalConsentStateResolved(state);
+            currentConsentState = Promise.resolve(state);
             let canRun: boolean = true;
             if (state.ccpa) {
                 // CCPA mode
@@ -147,7 +156,7 @@ export const init = (): Promise<void> => {
                 );
             }
         });
-        return Promise.resolve();
+        return currentConsentState;
     };
 
     if (commercialFeatures.dfpAdvertising) {
@@ -158,7 +167,7 @@ export const init = (): Promise<void> => {
             .then(adFreeSlotRemove)
             .catch(removeAdSlots);
 
-        return Promise.resolve();
+        return currentConsentState;
     }
 
     return removeAdSlots();
