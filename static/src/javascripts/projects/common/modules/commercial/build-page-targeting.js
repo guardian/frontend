@@ -11,7 +11,7 @@ import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import { cmp } from '@guardian/consent-management-platform';
-import type { ConsentState } from '@guardian/consent-management-platform/dist/types';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types/index.js.flow';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,

@@ -10,6 +10,7 @@ import {
     onConsentChange,
     getConsentFor,
 } from '@guardian/consent-management-platform';
+import type { ConsentState } from '@guardian/consent-management-platform/dist/types/index.js.flow';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
