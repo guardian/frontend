@@ -42,5 +42,5 @@ const getAllAdConsentsWithState = (): AdConsentWithState[] => allAdConsents.map(
   state: getAdConsentState(consent)
 }));
 
-export { AdConsent, AdConsentWithState };
+export type { AdConsent, AdConsentWithState };
 export { setAdConsentState, getAdConsentState, getAllAdConsentsWithState, allAdConsents, thirdPartyTrackingAdConsent };

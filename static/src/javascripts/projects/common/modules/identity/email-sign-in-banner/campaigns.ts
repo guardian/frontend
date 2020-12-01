@@ -19,5 +19,5 @@ const getEmailCampaignFromUrl = (): Campaign | null | undefined => {
   return getEmailCampaignFromUtm(emailCampaignInUrl);
 };
 
-export { Campaign };
+export type { Campaign };
 export { campaigns, getEmailCampaignFromUtm, getEmailCampaignFromUrl };

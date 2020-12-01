@@ -60,5 +60,5 @@ const buildPfpEvent = (pfpEventType: PfpEventType, videoId: string): PfpEventPar
   };
 };
 
-export { MediaEvent };
+export type { MediaEvent };
 export { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction, buildPfpEvent };

@@ -212,5 +212,5 @@ const hasUserAcknowledgedBanner = (id: string): boolean => {
   return messageStates && messageStates.includes(id);
 };
 
-export { MessagePosition };
+export type { MessagePosition };
 export { Message, hasUserAcknowledgedBanner };

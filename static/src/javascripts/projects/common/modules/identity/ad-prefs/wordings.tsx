@@ -65,5 +65,5 @@ const getConsentWording = (consent: AdConsent): ConsentWording => {
   };
 };
 
-export { ConsentWording, CheckboxWording, QuestionWording };
+export type { ConsentWording, CheckboxWording, QuestionWording };
 export { getConsentWording };

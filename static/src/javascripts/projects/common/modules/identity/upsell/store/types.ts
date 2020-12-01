@@ -57,5 +57,5 @@ class EmailConsentWithState extends ConsentWithState {
 
 const consentTypeList = [UserConsentWithState, EmailConsentWithState];
 
-export { Consent, ConsentWithState };
-export { UserConsentWithState, EmailConsentWithState, consentTypeList };
+export type { Consent };
+export { ConsentWithState, UserConsentWithState, EmailConsentWithState, consentTypeList };

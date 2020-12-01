@@ -110,5 +110,5 @@ class AccountCreationForm extends Component<AccountCreationFormProps, {
   }
 }
 
-export { AccountCreationFormProps };
+export type { AccountCreationFormProps };
 export { AccountCreationForm };
