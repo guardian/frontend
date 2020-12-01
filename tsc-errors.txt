@@ -1,0 +1,123 @@
+yarn run v1.22.4
+$ /Users/alex_sanders/Documents/code/frontend/node_modules/.bin/tsc
+static/src/javascripts/projects/admin/bootstraps/drama.ts(203,5): error TS1005: ')' expected.
+static/src/javascripts/projects/admin/modules/abtests/abtest-report-item.ts(85,18): error TS1005: ';' expected.
+static/src/javascripts/projects/admin/modules/abtests/abtest-report-item.ts(85,23): error TS1005: ';' expected.
+static/src/javascripts/projects/admin/modules/abtests/abtest-report-item.ts(85,33): error TS1005: ';' expected.
+static/src/javascripts/projects/admin/modules/abtests/abtest-report-item.ts(85,37): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,7): error TS1136: Property assignment expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,11): error TS1005: ')' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,17): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,21): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,25): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,31): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,45): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,51): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,54): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,60): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,67): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,70): error TS1005: '(' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,74): error TS1005: ')' expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(83,76): error TS1109: Expression expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(85,1): error TS1109: Expression expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(85,2): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/dfp/dfp-api.spec.ts(85,3): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,43): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,49): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,53): error TS1005: '(' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,58): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,62): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(316,70): error TS1005: ')' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(317,13): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(317,15): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,40): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,46): error TS1005: ',' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,50): error TS1005: '(' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,55): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,59): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(319,67): error TS1005: ')' expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(320,13): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/dfp/prepare-permutive.spec.ts(320,15): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,16): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,30): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,33): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,42): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,46): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,54): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/prebid/appnexus.spec.ts(25,59): error TS1003: Identifier expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,16): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,30): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,33): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,42): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,46): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,54): error TS1005: ';' expected.
+static/src/javascripts/projects/commercial/modules/header-bidding/slot-config.spec.ts(15,59): error TS1003: Identifier expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,16): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,30): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,33): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,42): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,46): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,54): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(13,59): error TS1003: Identifier expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,16): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,30): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,33): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,42): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,46): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,54): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(23,59): error TS1003: Identifier expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,26): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,30): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,35): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,37): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,43): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,54): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,63): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,69): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,74): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(257,78): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,26): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,30): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,35): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,37): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,43): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,54): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,63): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,69): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,74): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/atoms/youtube.spec.ts(264,78): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,10): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,17): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,20): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,22): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,27): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,31): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,34): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,39): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,43): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,46): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(35,51): error TS1003: Identifier expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,18): error TS1128: Declaration or statement expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,25): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,28): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,30): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,35): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,39): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,42): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,47): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,51): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,54): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/fix-secondary-column.spec.ts(67,59): error TS1003: Identifier expected.
+static/src/javascripts/projects/common/modules/identity/account-profile.ts(41,5): error TS1005: ')' expected.
+static/src/javascripts/projects/common/modules/identity/account-profile.ts(84,9): error TS1005: ')' expected.
+static/src/javascripts/projects/common/modules/ui/accessibility-prefs.ts(21,26): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/accessibility-prefs.ts(21,29): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/accessibility-prefs.ts(21,33): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(45,25): error TS1005: ')' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(45,32): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(45,35): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(45,51): error TS1005: ';' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(86,14): error TS1005: 'finally' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(87,7): error TS1005: ',' expected.
+static/src/javascripts/projects/common/modules/ui/normalise.ts(90,1): error TS1128: Declaration or statement expected.
+info Visit https://yarnpkg.com/en/docs/cli/run for documentation about this command.
