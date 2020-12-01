@@ -1758,10 +1758,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.9.0.tgz#2c578b61a6af99436abd83760d3349ef99d53ab8"
   integrity sha512-2o/au3c/SRUYrlPA1x6Rog6+UpXkSf6UrSX16lD19VaFyia60LaIXtBu9mkZNhSm0FWqfLSgync8RTCeCRG47w==
 
-"@guardian/consent-management-platform@6.7.4":
-  version "6.7.4"
-  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.7.4.tgz#ae75775c40f8234a2e2774c126a688e9a98f5df4"
-  integrity sha512-f/XieB0dOyGYZDhP/UmyrHiyuehETt2L1GKqacsySFdcD/++fKe7LLcXbza4NE54MHyS0wbvd+Qh4avjG4IPLg==
+"@guardian/consent-management-platform@6.8.0":
+  version "6.8.0"
+  resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.8.0.tgz#295d5aaeb41bf46f02a4e124ef23908c92d728fe"
+  integrity sha512-z37UdPuH2cLGDfEmIH9koQWio0Tamvp53OJvkjP8Xiwcx5GlEqMxmBTYSeYc7eEXvGz2448cnVU7YDwCAjuiSQ==
 
 "@guardian/dotcom-rendering@git://github.com/guardian/dotcom-rendering.git#version-1-alpha":
   version "0.1.0-alpha"
