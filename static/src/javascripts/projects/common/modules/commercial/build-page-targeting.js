@@ -308,34 +308,38 @@ const buildPageTargetting = async (
 };
 
 const getPageTargeting = async (): Promise<PageTargettingLoose> => {
-    onConsentChange(async state => {
-        myPageTargetting = new Promise(async resolve => {
-            let canRun: boolean | null;
-            if (state.ccpa) {
-                // CCPA mode
-                canRun = !state.ccpa.doNotSell;
-            } else if (state.tcfv2) {
-                // TCFv2 mode
-                canRun = state.tcfv2.consents
-                    ? Object.keys(state.tcfv2.consents).length > 0 &&
-                      Object.values(state.tcfv2.consents).every(Boolean)
-                    : false;
-            } else if (state.aus) {
-                // AUS mode
-                canRun = state.aus.personalisedAdvertising;
-            } else canRun = false;
+    once(
+        onConsentChange(async state => {
+            myPageTargetting = new Promise(async resolve => {
+                let canRun: boolean | null;
+                if (state.ccpa) {
+                    // CCPA mode
+                    canRun = !state.ccpa.doNotSell;
+                } else if (state.tcfv2) {
+                    // TCFv2 mode
+                    canRun = state.tcfv2.consents
+                        ? Object.keys(state.tcfv2.consents).length > 0 &&
+                          Object.values(state.tcfv2.consents).every(Boolean)
+                        : false;
+                } else if (state.aus) {
+                    // AUS mode
+                    canRun = state.aus.personalisedAdvertising;
+                } else canRun = false;
 
-            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            const pageTargetting = await buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            resolve(pageTargetting);
-            resolveInitialPageTargetting(pageTargetting);
-        });
-    });
+                const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+                const eventStatus = state.tcfv2
+                    ? state.tcfv2.eventStatus
+                    : 'na';
+                const pageTargetting = await buildPageTargetting(
+                    canRun,
+                    ccpaState,
+                    eventStatus
+                );
+                resolve(pageTargetting);
+                resolveInitialPageTargetting(pageTargetting);
+            });
+        })
+    );
     return myPageTargetting;
 };
 
