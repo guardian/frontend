@@ -46,7 +46,10 @@ type PageTargeting = {
 
 type PageTargettingLoose = { [key: string]: mixed };
 
-let myPageTargetting: Promise<PageTargettingLoose> = Promise.resolve({});
+let resolveInitialPageTargetting: (value: PageTargettingLoose) => void;
+let myPageTargetting: Promise<PageTargettingLoose> = new Promise(resolve => {
+    resolveInitialPageTargetting = resolve;
+});
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -304,34 +307,39 @@ const buildPageTargetting = async (
     return pageTargeting;
 };
 
-const getPageTargeting = async (): Promise<PageTargettingLoose> =>
-    myPageTargetting;
+const getPageTargeting = async (): Promise<PageTargettingLoose> => {
+    onConsentChange(async state => {
+        myPageTargetting = new Promise(async resolve => {
+            let canRun: boolean | null;
+            if (state.ccpa) {
+                // CCPA mode
+                canRun = !state.ccpa.doNotSell;
+            } else if (state.tcfv2) {
+                // TCFv2 mode
+                canRun = state.tcfv2.consents
+                    ? Object.keys(state.tcfv2.consents).length > 0 &&
+                      Object.values(state.tcfv2.consents).every(Boolean)
+                    : false;
+            } else if (state.aus) {
+                // AUS mode
+                canRun = state.aus.personalisedAdvertising;
+            } else canRun = false;
 
-onConsentChange(state => {
-    let canRun: boolean | null;
-    if (state.ccpa) {
-        // CCPA mode
-        canRun = !state.ccpa.doNotSell;
-    } else if (state.tcfv2) {
-        // TCFv2 mode
-        canRun = state.tcfv2.consents
-            ? Object.keys(state.tcfv2.consents).length > 0 &&
-              Object.values(state.tcfv2.consents).every(Boolean)
-            : false;
-    } else if (state.aus) {
-        // AUS mode
-        canRun = state.aus.personalisedAdvertising;
-    } else canRun = false;
-
-    const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-    const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-    myPageTargetting = buildPageTargetting(canRun, ccpaState, eventStatus);
-});
-
-const resetPageTargeting = (): void => {
-    myPageTargetting = Promise.resolve({});
-    latestConsentCanRun = undefined;
+            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+            const pageTargetting = await buildPageTargetting(
+                canRun,
+                ccpaState,
+                eventStatus
+            );
+            resolve(pageTargetting);
+            resolveInitialPageTargetting(pageTargetting);
+        });
+    });
+    return myPageTargetting;
 };
+
+const resetPageTargeting = (): void => {};
 
 export {
     getPageTargeting,
