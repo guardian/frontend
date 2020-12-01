@@ -12,6 +12,7 @@ import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill
 import {
     onConsentChange as onConsentChange_,
     getConsentFor as getConsentFor_,
+    cmp,
 } from '@guardian/consent-management-platform';
 
 const onConsentChange: any = onConsentChange_;
@@ -102,6 +103,9 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
     getConsentFor: jest.fn(),
+    cmp: {
+        willShowPrivacyMessage: jest.fn(),
+    },
 }));
 
 let $style;
@@ -294,6 +298,8 @@ describe('DFP', () => {
         window.__switch_zero = false;
 
         commercialFeatures.dfpAdvertising = true;
+
+        cmp.willShowPrivacyMessage.mockResolvedValue(true);
     });
 
     afterEach(() => {
@@ -498,7 +504,7 @@ describe('DFP', () => {
                 callback(tcfv2WithConsent)
             );
             getConsentFor.mockReturnValue(true);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setTargeting
                 ).toHaveBeenCalledWith('k', ['korea', 'ukraine']);
@@ -512,7 +518,7 @@ describe('DFP', () => {
                 callback(tcfv2WithConsent)
             );
             getConsentFor.mockReturnValue(true);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(0);
@@ -523,7 +529,7 @@ describe('DFP', () => {
                 callback(tcfv2NullConsent)
             );
             getConsentFor.mockReturnValue(true);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(0);
@@ -534,7 +540,7 @@ describe('DFP', () => {
                 callback(tcfv2WithoutConsent)
             );
             getConsentFor.mockReturnValue(false);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);
@@ -545,7 +551,7 @@ describe('DFP', () => {
                 callback(tcfv2MixedConsent)
             );
             getConsentFor.mockReturnValue(false);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);
@@ -582,7 +588,7 @@ describe('DFP', () => {
                 callback(ccpaWithConsent)
             );
             getConsentFor.mockReturnValue(true);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings
                 ).toHaveBeenCalledWith({
@@ -595,7 +601,7 @@ describe('DFP', () => {
                 callback(ccpaWithoutConsent)
             );
             getConsentFor.mockReturnValue(false);
-            prepareGoogletag().then(() => {
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setPrivacySettings
                 ).toHaveBeenCalledWith({

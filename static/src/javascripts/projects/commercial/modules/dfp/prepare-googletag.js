@@ -48,6 +48,11 @@ initMessenger(
     disableRefresh
 );
 
+let hasTargettingResolve: (value?: void) => void;
+let hasTargettingPromise: Promise<void> = new Promise(resolve => {
+    hasTargettingResolve = resolve;
+});
+
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
@@ -69,6 +74,7 @@ const setPageTargeting = async (): Promise<void> => {
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
+    hasTargettingResolve(); // let init() resolve
 };
 
 // This is specifically a separate function to close-disabled-slots. One is for
@@ -157,7 +163,7 @@ export const init = (): Promise<void> => {
             .then(adFreeSlotRemove)
             .catch(removeAdSlots);
 
-        return Promise.resolve();
+        return hasTargettingPromise;
     }
 
     return removeAdSlots();
