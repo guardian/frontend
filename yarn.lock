@@ -1853,6 +1853,13 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-0.16.1.tgz#331d6bb30513c45b09e5b4807832eb4a146a27ea"
   integrity sha512-OudfWJaKpTTP0J1QckqX0NmfneXgQ5YieZ/4em2lNXGZFEfYyxHnIXrAQE5LjmIGR8eJQoIikkwWiAFt4ziHXQ==
 
+"@guardian/types@^0.5.2":
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/@guardian/types/-/types-0.5.2.tgz#edde87dde496554cbcd32cb1bffe2baada591926"
+  integrity sha512-fQ5+cyQQGhQ4qHuzMvaGLsHNxwz82dlb3nYKEahrhg5K3Hyf4jno0pPTxUVMM80uNL9xE8g7843LpkKp6YpE/w==
+  dependencies:
+    typescript "^3.8.3"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -1944,6 +1951,11 @@
     universal-user-agent "^2.0.0"
     url-template "^2.0.8"
 
+"@types/applepayjs@^3.0.1":
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/@types/applepayjs/-/applepayjs-3.0.1.tgz#e6aa0e7a23dda22c99a634998946cde228eb5c71"
+  integrity sha512-zcwMSbo75E7VYi0jAo6rNpl+l4AXL98PCQRJEbUtChcSEiqfX+KFLz5eqaACI8fFx9lF4EjUv0W9XxAZXuMCNg==
+
 "@types/babel__core@^7.0.0", "@types/babel__core@^7.1.7":
   version "7.1.9"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.9.tgz#77e59d438522a6fb898fa43dc3455c6e72f3963d"
@@ -1995,6 +2007,11 @@
     "@types/events" "*"
     "@types/minimatch" "*"
     "@types/node" "*"
+
+"@types/google.analytics@^0.0.40":
+  version "0.0.40"
+  resolved "https://registry.yarnpkg.com/@types/google.analytics/-/google.analytics-0.0.40.tgz#35526e9d78333423c430ade1c821ce54d0f0f850"
+  integrity sha512-R3HpnLkqmKxhUAf8kIVvDVGJqPtaaZlW4yowNwjOZUTmYUQEgHh8Nh5wkSXKMroNAuQM8gbXJHmNbbgA8tdb7Q==
 
 "@types/graceful-fs@^4.1.2":
   version "4.1.3"
@@ -12385,6 +12402,11 @@ typescript-tuple@^2.2.1:
   integrity sha512-Zcr0lbt8z5ZdEzERHAMAniTiIKerFCMgd7yjq1fPnDJ43et/k9twIFQMUYff9k5oXcsQ0WpvFcgzK2ZKASoW6Q==
   dependencies:
     typescript-compare "^0.0.2"
+
+typescript@^3.8.3:
+  version "3.9.7"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.7.tgz#98d600a5ebdc38f40cb277522f12dc800e9e25fa"
+  integrity sha512-BLbiRkiBzAwsjut4x/dsibSTB6yWpwT5qWmC2OfuCg3GgVQCSgMs4vEctYPhsaGtd0AeuuHMkjZ2h2WG8MSzRw==
 
 typescript@^4.1.2:
   version "4.1.2"
