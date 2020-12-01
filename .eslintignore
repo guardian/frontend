@@ -3,8 +3,6 @@
 
 # since we'll opting their parents back in, we need to explicitly exclude these
 node_modules
-__flow__
-flow-type*
 __snapshots__
 dist
 coverage
