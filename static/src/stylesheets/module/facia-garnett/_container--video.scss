@@ -272,8 +272,9 @@ $video-width-desktop: 700px;
     }
 
     @include mq($until: tablet) {
-    .video-container-overlay-link {
-        z-index: 3;
+        .video-container-overlay-link {
+            z-index: 3;
+        }
     }
 }
 
