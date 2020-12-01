@@ -81,8 +81,8 @@ const getIframe = (data: StandardMessage): ?HTMLElement => {
 // such as validating the anatomy of the payload and whitelisting
 // event type
 const isValidPayload = (payload: StandardMessage): boolean =>
-    !!payload && //typeof null==='object' because... javascript
     typeof payload === 'object' &&
+    !!payload && // Needed because typeof null==='object'
     'type' in payload &&
     'value' in payload &&
     'id' in payload &&
