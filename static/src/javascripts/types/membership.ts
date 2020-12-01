@@ -32,9 +32,6 @@ declare type UserDetails = {
       accountName: string;
     };
     card?: StripeCard;
-    account?: {
-      accountName: string;
-    };
   };
   alertText?: string;
 };

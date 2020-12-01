@@ -2,7 +2,7 @@
 
 import { formatData } from "journalism/modules/submit-form";
 
-let mockFormEls: NodeList<any>;
+let mockFormEls: NodeListOf<HTMLElement>;
 
 describe('Submitting a callout response to formstack', () => {
   beforeEach(() => {

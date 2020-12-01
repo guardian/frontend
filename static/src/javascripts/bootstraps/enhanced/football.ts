@@ -22,7 +22,7 @@ declare type Extra = {
   ready: boolean;
 };
 
-const renderNav = (match: Object, callback?: (resp: Object, $nav: bonzo, endpoint: string) => void): Promise<void> => {
+const renderNav = (match: Object, callback?: (resp: Object, $nav: Bonzo, endpoint: string) => void): Promise<void> => {
   const matchInfo = new MatchInfo(match, config.get('page.pageId'));
 
   return matchInfo.fetch().then((resp: Object): void => {

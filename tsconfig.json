@@ -2,9 +2,12 @@
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "checkJs": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "isolatedModules": true,
+    "jsx": "preserve",
     "lib": [
       "DOM",
       "ES2015",
@@ -18,10 +21,42 @@
     "module": "ES2020",
     "moduleResolution": "node",
     "noEmit": true,
+    "paths": {
+      "admin/*": [
+        "static/src/javascripts/projects/admin/*"
+      ],
+      "commercial/*": [
+        "static/src/javascripts/projects/commercial/*"
+      ],
+      "common/*": [
+        "static/src/javascripts/projects/common/*"
+      ],
+      "facia/*": [
+        "static/src/javascripts/projects/facia/*"
+      ],
+      "journalism/*": [
+        "static/src/javascripts/projects/journalism/*"
+      ],
+      "lib/*": [
+        "static/src/javascripts/lib/*"
+      ],
+      "membership/*": [
+        "static/src/javascripts/projects/membership/*"
+      ],
+      "svgs/*": [
+        "static/src/inline-svgs*"
+      ]
+    },
     "resolveJsonModule": true,
-    "strict": true,
+    "strict": false,
     "target": "ES2020"
   },
-  "include": ["src"],
-  "exclude": ["node_modules", "dist", "coverage"]
+  "exclude": [
+    "node_modules",
+    "dist",
+    "coverage"
+  ],
+  "include": [
+    "static/src/javascripts"
+  ]
 }

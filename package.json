@@ -69,6 +69,8 @@
     "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
+    "@types/jest": "^26.0.15",
+    "@types/lodash": "^4.14.165",
     "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
     "autoprefixer": "^9.1.5",
@@ -184,6 +186,7 @@
     "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
     "flow": "flow",
+    "typescript": "tsc",
     "test": "jest"
   },
   "prettier": {

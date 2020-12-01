@@ -1,16 +1,16 @@
 
 import fetchJSON from "lib/fetch-json";
 
-declare type TickerEndType = "unlimited" | "hardstop";
-declare type TickerCountType = "money" | "people";
+export type TickerEndType = "unlimited" | "hardstop";
+export type TickerCountType = "money" | "people";
 
-declare type TickerCopy = {
+export type TickerCopy = {
   countLabel: string;
   goalReachedPrimary: string;
   goalReachedSecondary: string;
 };
 
-declare type TickerSettings = {
+export type TickerSettings = {
   endType: TickerEndType;
   countType: TickerCountType;
   currencySymbol: string;
