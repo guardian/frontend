@@ -138,6 +138,7 @@
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",
+    "typescript": "^4.1.2",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.44.2",
@@ -176,7 +177,7 @@
     "testEnvironment": "jest-environment-jsdom-global",
     "testURL": "http://testurl.theguardian.com",
     "transformIgnorePatterns": [
-      "/node_modules/(?!@guardian\/).+\\.js$"
+      "/node_modules/(?!@guardian/).+\\.js$"
     ]
   },
   "scripts": {
