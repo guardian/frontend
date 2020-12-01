@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import fastdom from "lib/fastdom-promise";
 

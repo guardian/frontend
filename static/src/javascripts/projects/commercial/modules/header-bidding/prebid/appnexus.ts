@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import config from "lib/config";
 import { getPageTargeting, buildAppNexusTargetingObject } from "common/modules/commercial/build-page-targeting";

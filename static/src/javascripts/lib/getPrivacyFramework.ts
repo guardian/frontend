@@ -1,4 +1,4 @@
-// @flow strict
+
 import { isInUsa } from "common/modules/commercial/geo-utils";
 
 let frameworks: {

@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import config from "lib/config";
 import { onConsentChange, getConsentFor } from "@guardian/consent-management-platform";

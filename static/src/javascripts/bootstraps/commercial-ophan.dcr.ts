@@ -1,4 +1,4 @@
-// @flow strict
+
 // Monkey patch to facilitate the removal of ophan tracking from the commercial bundle sent to DCR.
 export default {
   // $FlowFixMe

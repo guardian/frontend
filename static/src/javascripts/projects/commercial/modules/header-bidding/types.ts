@@ -1,4 +1,4 @@
-// @flow strict
+
 
 export type HeaderBiddingSize = [number, number];
 

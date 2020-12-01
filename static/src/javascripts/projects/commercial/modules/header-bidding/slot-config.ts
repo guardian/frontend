@@ -1,4 +1,4 @@
-// @flow strict
+
 import { Advert } from "commercial/modules/dfp/Advert";
 
 import { getBreakpointKey, stripMobileSuffix, stripTrailingNumbersAbove1, shouldIncludeMobileSticky } from "commercial/modules/header-bidding/utils";

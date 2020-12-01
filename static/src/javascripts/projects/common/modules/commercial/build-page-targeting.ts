@@ -1,4 +1,4 @@
-// @flow strict
+
 import config from "lib/config";
 import { getCookie } from "lib/cookies";
 import { getReferrer as detectGetReferrer, getBreakpoint, getViewport } from "lib/detect";

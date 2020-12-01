@@ -1,4 +1,4 @@
-// @flow strict
+
 
 /* A regionalised container for all the commercial tags. */
 

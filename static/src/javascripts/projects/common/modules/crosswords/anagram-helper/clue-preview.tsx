@@ -1,4 +1,4 @@
-// @flow
+
 import React, { Component } from 'preact-compat';
 
 type WordSeparator = ',' | '-';

@@ -1,7 +1,6 @@
-// @flow
-import fetchJSON from 'lib/fetch-json';
-import config from 'lib/config';
 import { storage } from '@guardian/libs';
+import config from 'lib/config';
+import fetchJSON from 'lib/fetch-json';
 
 const storageKey = 'gu.geolocation';
 const editionToGeolocationMap = {
