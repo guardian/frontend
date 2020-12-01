@@ -10,7 +10,6 @@ const isIOS: any = _isIOS;
 const accessibilityIsOn: any = _isOn;
 
 jest.mock('lib/detect', () => {
-
     const original = jest.requireActual('lib/detect');
     return {
         ...original,
@@ -20,7 +19,6 @@ jest.mock('lib/detect', () => {
 });
 
 jest.mock('common/modules/accessibility/main', () => {
-
     const original = jest.requireActual('common/modules/accessibility/main');
     return {
         ...original,
@@ -254,7 +252,6 @@ describe('youtube', () => {
         });
 
         it('correctly identifies Internal Referrer', () => {
-
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.theguardian.com'
             );

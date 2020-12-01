@@ -82,7 +82,6 @@ class ABTestReportItem extends Component {
         }
 
         if (elements.expiry) {
-
             elements.expiry.textContent =
                 Math.floor(daysTillExpiry).toString() +
                 (daysTillExpiry === 1 ? ' day' : ' days');

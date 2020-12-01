@@ -63,7 +63,6 @@ describe('fixSecondaryColumn when showcase element is present', () => {
                 fixSecondaryColumn();
             })
             .then(() => {
-
                 const secondaryCol: HTMLElement = document.querySelector(
                     '.js-secondary-column'
                 );

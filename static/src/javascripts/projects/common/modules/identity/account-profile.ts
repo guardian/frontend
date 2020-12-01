@@ -36,9 +36,7 @@ const messages = {
 };
 
 const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
-    const form = document.querySelector(
-        `form${classes.avatarUploadForm}`)
-    ;
+    const form = document.querySelector(`form${classes.avatarUploadForm}`);
     if (form) {
         const formData = new FormData(form);
 
@@ -46,6 +44,7 @@ const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
         const avatarUploadButton = document.querySelector(
             classes.avatarUploadButton
         ) as HTMLButtonElement;
+
         avatarUploadButton.disabled = true;
 
         avatarApi.updateAvatar(formData).then(
@@ -79,9 +78,7 @@ class AccountProfile {
     constructor() {
         this.unsavedFields = [];
 
-        this.accountProfileForms = document.querySelector(
-            classes.forms)
-        ;
+        this.accountProfileForms = document.querySelector(classes.forms);
 
         if (this.accountProfileForms) {
             this.bindAvatarUpload();

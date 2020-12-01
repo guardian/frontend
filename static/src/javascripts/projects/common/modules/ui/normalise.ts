@@ -42,7 +42,6 @@ export const go = () => {
 
                 let node;
 
-
                 const walker = document.createTreeWalker(
                     document.body,
                     NodeFilter.SHOW_TEXT,

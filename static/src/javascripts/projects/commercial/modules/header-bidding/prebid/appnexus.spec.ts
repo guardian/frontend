@@ -22,7 +22,6 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('../utils', () => {
-
     const original = jest.requireActual('../utils');
     return {
         ...original,

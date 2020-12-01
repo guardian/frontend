@@ -18,7 +18,6 @@ const setFilter = (mode: string): void => {
     const value = `${mode}(100%)`;
 
     if (body) {
-
         Object.assign(body.style, {
             '-webkit-filter': value,
             filter: value,

@@ -23,18 +23,15 @@ import {
 import { initCommentCount } from 'common/modules/discussion/comment-count';
 import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh';
 import { emailSignInBanner } from 'common/modules/identity/email-sign-in-banner/index';
+import { signInGate } from 'common/modules/identity/sign-in-gate';
 import {
     initMembership,
     membershipBanner,
 } from 'common/modules/navigation/membership';
 import { initNavigation } from 'common/modules/navigation/navigation';
-import config from "lib/config";
-import { cleanUp, addSessionCookie } from "lib/cookies";
-import mediator from "lib/mediator";
-import { getUrlVars } from "lib/url";
-import { catchErrorsWithContext } from "lib/robust";
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
+import { breakingNews } from 'common/modules/onward/breaking-news';
 import {
     incrementDailyArticleCount,
     incrementWeeklyArticleCount,
@@ -42,23 +39,26 @@ import {
     logSummary,
     showInMegaNav,
 } from 'common/modules/onward/history';
+import { initPinterest } from 'common/modules/social/pinterest';
 import { initAccessibilityPreferences } from 'common/modules/ui/accessibility-prefs';
+import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
 import { initClickstream } from 'common/modules/ui/clickstream';
 import { init as initDropdowns } from 'common/modules/ui/dropdowns';
+import config from "lib/config";
+import { cleanUp, addSessionCookie } from "lib/cookies";
+import mediator from "lib/mediator";
+import { getUrlVars } from "lib/url";
+import { catchErrorsWithContext } from "lib/robust";
 import { fauxBlockLink } from 'common/modules/ui/faux-block-link';
 import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { smartAppBanner } from 'common/modules/ui/smartAppBanner';
 import { init as initTabs } from 'common/modules/ui/tabs';
 import { Toggles } from 'common/modules/ui/toggles';
-import { initPinterest } from 'common/modules/social/pinterest';
-import { init as initBannerPicker } from 'common/modules/ui/bannerPicker';
-import { breakingNews } from 'common/modules/onward/breaking-news';
 import ophan from 'ophan/ng';
 import {
     addPrivacySettingsLink,
     cmpBannerCandidate,
 } from 'common/modules/ui/cmp-ui';
-import { signInGate } from 'common/modules/identity/sign-in-gate';
 
 const initialiseTopNavItems = (): void => {
     const header: HTMLElement | null | undefined = document.getElementById(

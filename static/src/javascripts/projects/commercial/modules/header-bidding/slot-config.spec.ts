@@ -12,7 +12,6 @@ const getBreakpointKey: any = getBreakpointKey_;
 const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
-
     const original = jest.requireActual('./utils');
     return {
         ...original,
