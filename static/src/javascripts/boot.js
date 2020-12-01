@@ -12,7 +12,6 @@ import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { storage, getLocale } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
