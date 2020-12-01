@@ -22,6 +22,10 @@ export const onSlotLoad = (event: SlotOnloadEvent) => {
     }
 
     const iframe = advert.node.getElementsByTagName('iframe')[0];
+    if (!iframe) {
+        console.log("No iFrame found for slot", advert.id,  advert.slot)
+        return;
+    }
     postMessage(
         {
             id: iframe.id,
