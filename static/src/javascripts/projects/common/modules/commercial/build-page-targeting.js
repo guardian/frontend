@@ -44,8 +44,7 @@ type PageTargeting = {
     urlkw: string,
 };
 
-let myPageTargetting: {} = {};
-let latestConsentCanRun;
+let myPageTargetting: Promise<{}> = Promise.resolve({});
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -233,11 +232,11 @@ const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
     return 'na';
 };
 
-const buildPageTargetting = (
+const buildPageTargetting = async (
     adConsentState: boolean | null,
     ccpaState: boolean | null,
     tcfv2EventStatus: string | null
-): { [key: string]: mixed } => {
+): Promise<{ [key: string]: mixed }> => {
     const page = config.get('page');
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
@@ -274,7 +273,7 @@ const buildPageTargetting = (
             // Indicates whether the page is DCR eligible. This happens when the page
             // was DCR eligible and was actually rendered by DCR or
             // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
-            inskin: inskinTargetting(),
+            inskin: await inskinTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),
@@ -303,42 +302,32 @@ const buildPageTargetting = (
     return pageTargeting;
 };
 
-const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+const getPageTargeting = async (): Promise<{ [key: string]: mixed }> =>
+    myPageTargetting;
 
-    onConsentChange(state => {
-        let canRun: boolean | null;
-        if (state.ccpa) {
-            // CCPA mode
-            canRun = !state.ccpa.doNotSell;
-        } else if (state.tcfv2) {
-            // TCFv2 mode
-            canRun = state.tcfv2.consents
-                ? Object.keys(state.tcfv2.consents).length > 0 &&
-                  Object.values(state.tcfv2.consents).every(Boolean)
-                : false;
-        } else if (state.aus) {
-            // AUS mode
-            canRun = state.aus.personalisedAdvertising;
-        } else canRun = false;
+onConsentChange(state => {
+    let canRun: boolean | null;
+    if (state.ccpa) {
+        // CCPA mode
+        canRun = !state.ccpa.doNotSell;
+    } else if (state.tcfv2) {
+        // TCFv2 mode
+        canRun = state.tcfv2.consents
+            ? Object.keys(state.tcfv2.consents).length > 0 &&
+              Object.values(state.tcfv2.consents).every(Boolean)
+            : false;
+    } else if (state.aus) {
+        // AUS mode
+        canRun = state.aus.personalisedAdvertising;
+    } else canRun = false;
 
-        if (canRun !== latestConsentCanRun) {
-            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            latestConsentCanRun = canRun;
-        }
-    });
-
-    return myPageTargetting;
-};
+    const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
+    const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
+    myPageTargetting = buildPageTargetting(canRun, ccpaState, eventStatus);
+});
 
 const resetPageTargeting = (): void => {
-    myPageTargetting = {};
+    myPageTargetting = Promise.resolve({});
     latestConsentCanRun = undefined;
 };
 
