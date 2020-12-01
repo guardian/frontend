@@ -37,7 +37,7 @@ const messages = {
 
 const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
     const form = document.querySelector(
-        `form${classes.avatarUploadForm}`
+        `form${classes.avatarUploadForm}`)
     ;
     if (form) {
         const formData = new FormData(form);
@@ -80,7 +80,7 @@ class AccountProfile {
         this.unsavedFields = [];
 
         this.accountProfileForms = document.querySelector(
-            classes.forms
+            classes.forms)
         ;
 
         if (this.accountProfileForms) {

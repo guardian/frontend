@@ -42,7 +42,7 @@ export const go = () => {
 
                 let node;
 
-                  (tree walker is confused in flow)
+
                 const walker = document.createTreeWalker(
                     document.body,
                     NodeFilter.SHOW_TEXT,

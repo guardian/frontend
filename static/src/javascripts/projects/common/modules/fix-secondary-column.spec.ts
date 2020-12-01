@@ -32,7 +32,6 @@ describe('fixSecondaryColumn when there is no showcase element', () => {
 
     it('should do nothing if a showcase element does not exist', () => {
         fixSecondaryColumn();
-         : This is a test and it will not be null.
         const col: HTMLElement = document.querySelector('.js-secondary-column');
         expect(col.style.paddingTop).toBe('');
     });
@@ -64,7 +63,7 @@ describe('fixSecondaryColumn when showcase element is present', () => {
                 fixSecondaryColumn();
             })
             .then(() => {
-                 : This is a test and it will not be null.
+
                 const secondaryCol: HTMLElement = document.querySelector(
                     '.js-secondary-column'
                 );

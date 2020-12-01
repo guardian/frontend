@@ -22,7 +22,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('../utils', () => {
-      property requireActual is actually not missing Flow.
+
     const original = jest.requireActual('../utils');
     return {
         ...original,

@@ -10,7 +10,7 @@ const isIOS: any = _isIOS;
 const accessibilityIsOn: any = _isOn;
 
 jest.mock('lib/detect', () => {
-      property requireActual is actually not missing Flow.
+
     const original = jest.requireActual('lib/detect');
     return {
         ...original,
@@ -20,7 +20,7 @@ jest.mock('lib/detect', () => {
 });
 
 jest.mock('common/modules/accessibility/main', () => {
-      property requireActual is actually not missing Flow.
+
     const original = jest.requireActual('common/modules/accessibility/main');
     return {
         ...original,
@@ -254,14 +254,14 @@ describe('youtube', () => {
         });
 
         it('correctly identifies Internal Referrer', () => {
-              jest.spyon can take a third accesstype argument since jest 22.1.0
+
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.theguardian.com'
             );
             expect(getIFrameBehaviourConfig(iframe).isInternalReferrer).toBe(
                 true
             );
-              jest.spyon can take a third accesstype argument since jest 22.1.0
+
             jest.spyOn(global.document, 'referrer', 'get').mockReturnValueOnce(
                 'https://www.garbage-site.com'
             );

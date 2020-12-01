@@ -12,7 +12,7 @@ const getBreakpointKey: any = getBreakpointKey_;
 const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
-      property requireActual is actually not missing Flow.
+
     const original = jest.requireActual('./utils');
     return {
         ...original,
