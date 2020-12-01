@@ -2,7 +2,10 @@
 import $ from 'lib/$';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
-import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
+import {
+    init as prepareGoogletag,
+    _,
+} from 'commercial/modules/dfp/prepare-googletag';
 import { getAdverts } from 'commercial/modules/dfp/get-adverts';
 import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -126,6 +129,7 @@ const reset = () => {
     dfpEnv.advertsToLoad = [];
     dfpEnv.hbImpl = { prebid: false, a9: false };
     fillAdvertSlots.mockReset();
+    _.resetHasTargettingPromise();
 };
 
 const tcfv2WithConsent = {
@@ -358,12 +362,17 @@ describe('DFP', () => {
         });
     });
 
-    it('should set listeners', () =>
+    it('should set listeners', () => {
+        onConsentChange.mockImplementation(callback =>
+            callback(tcfv2WithoutConsent)
+        );
+
         prepareGoogletag().then(() => {
             expect(
                 window.googletag.pubads().addEventListener
             ).toHaveBeenCalledWith('slotRenderEnded', expect.anything());
-        }));
+        });
+    });
 
     it('should define slots', () =>
         new Promise(resolve => {

@@ -53,6 +53,12 @@ let hasTargettingPromise: Promise<void> = new Promise(resolve => {
     hasTargettingResolve = resolve;
 });
 
+const resetHasTargettingPromise = () => {
+    hasTargettingPromise = new Promise(resolve => {
+        hasTargettingResolve = resolve;
+    });
+};
+
 const setDfpListeners = (): void => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
@@ -167,4 +173,8 @@ export const init = (): Promise<void> => {
     }
 
     return removeAdSlots();
+};
+
+export const _ = {
+    resetHasTargettingPromise,
 };
