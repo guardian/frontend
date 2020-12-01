@@ -1994,6 +1994,11 @@
   resolved "https://registry.yarnpkg.com/@types/color-name/-/color-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
   integrity sha512-rr+OQyAjxze7GgWrSaJwydHStIhHq2lvY3BOC2Mj7KnzI7XK0Uw1TOOdI9lDoajEbSWLiYgoo4f1R51erQfhPQ==
 
+"@types/doubleclick-gpt@^2019041801.0.4":
+  version "2019041801.0.4"
+  resolved "https://registry.yarnpkg.com/@types/doubleclick-gpt/-/doubleclick-gpt-2019041801.0.4.tgz#6cd7abdb4b38216c5ee46d28b8f8d3054c83b365"
+  integrity sha512-VZkwxAGKpKKgwf95T2NhB1MLo3uwMX1iN+KnfywCfpYVzjTtQREUoqtWf4pYmsSrub/st889oXE5JU1Qp1v6mQ==
+
 "@types/events@*":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@types/events/-/events-3.0.0.tgz#2862f3f58a9a7f7c3e78d79f130dd4d71c25c2a7"

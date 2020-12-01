@@ -71,6 +71,7 @@
     "@babel/register": "^7.11.5",
     "@guardian/types": "^0.5.2",
     "@types/applepayjs": "^3.0.1",
+    "@types/doubleclick-gpt": "^2019041801.0.4",
     "@types/google.analytics": "^0.0.40",
     "@types/jest": "^26.0.15",
     "@types/lodash": "^4.14.165",
