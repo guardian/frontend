@@ -8,19 +8,19 @@
     )
 }
 
+
 @emailEmbed(page) {
-    @emailEmbed(page) {
-        @if(electionNewsletters.contains(listName)) {
-            @fragments.email.signup.subscription.emailSignUpNewDesign(
-                emailType,
-                listName,
-                emailEmbedData
-            )
-        }
-        @fragments.email.signup.subscription.emailSignUp(
+    @if(electionNewsletters.contains(listName)) {
+        @fragments.email.signup.subscription.emailSignUpNewDesign(
             emailType,
             listName,
             emailEmbedData
         )
     }
+    @fragments.email.signup.subscription.emailSignUp(
+        emailType,
+        listName,
+        emailEmbedData
+    )
 }
+
