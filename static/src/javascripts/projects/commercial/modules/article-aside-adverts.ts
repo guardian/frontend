@@ -21,16 +21,16 @@ const getAllowedSizesForImmersive = (availableSpace: number): string => {
 };
 
 export const init = (): Promise<boolean> => {
-  const $col: bonzo = $('.js-secondary-column');
+  const $col: Bonzo = $('.js-secondary-column');
 
   // article aside ads are added server-side if the container doesn't exist then stop.
   if (!$col.length || $col.css('display') === 'none') {
     return Promise.resolve(false);
   }
 
-  const $mainCol: bonzo = $('.js-content-main-column');
-  const $adSlot: bonzo = $('.js-ad-slot', $col);
-  const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
+  const $mainCol: Bonzo = $('.js-content-main-column');
+  const $adSlot: Bonzo = $('.js-ad-slot', $col);
+  const $immersiveEls: Bonzo = $('.element--immersive', $mainCol);
 
   if (!$adSlot.length || !$mainCol.length) {
     return Promise.resolve(false);

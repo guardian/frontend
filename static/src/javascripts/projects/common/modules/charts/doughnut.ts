@@ -9,7 +9,7 @@
 import $ from "lib/$";
 import { bonzo } from "bonzo";
 
-const svgEl = (type: string): bonzo => $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
+const svgEl = (type: string): Bonzo => $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
 const translate = (v: Array<number>): string => `translate(${v.toString()})`;
 
@@ -18,7 +18,7 @@ const translate = (v: Array<number>): string => `translate(${v.toString()})`;
  * @param {Object.<string, *>} o the options
  * @return {Bonzo} SVG Element
  */
-const Doughnut = (data: Object, o: Object): bonzo => {
+const Doughnut = (data: Object, o: Object): Bonzo => {
   const obj: Object = Object.assign({
     percentCutout: 35,
     unit: '',

@@ -4,7 +4,7 @@ import bonzo from "bonzo";
 
 /**
     videojs plugins can't use arrow functions
-    as 'this' needs to be available as it 
+    as 'this' needs to be available as it
     represents an instance of the videojs player
 * */
 const fullscreener = function fullscreener(): void {
@@ -12,7 +12,7 @@ const fullscreener = function fullscreener(): void {
 
   bonzo(clickbox).appendTo(this.contentEl());
 
-  bean.on(clickbox, 'click', (e: bean): void => {
+  bean.on(clickbox, 'click', (e: Bean): void => {
     if (this.paused()) {
       this.play();
     } else {
@@ -21,7 +21,7 @@ const fullscreener = function fullscreener(): void {
     e.stop();
   });
 
-  bean.on(clickbox, 'dblclick', (e: bean): void => {
+  bean.on(clickbox, 'dblclick', (e: Bean): void => {
     e.stop();
     if (this.isFullscreen()) {
       this.exitFullscreen();

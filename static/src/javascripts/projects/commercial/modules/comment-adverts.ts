@@ -26,7 +26,7 @@ const createCommentSlots = (canBeDmpu: boolean): Array<HTMLDivElement | HTMLSpan
   return adSlots;
 };
 
-const insertCommentAd = ($commentMainColumn: bonzo, $adSlotContainer: bonzo, canBeDmpu: boolean): Promise<void> => {
+const insertCommentAd = ($commentMainColumn: Bonzo, $adSlotContainer: Bonzo, canBeDmpu: boolean): Promise<void> => {
   const commentSlots = createCommentSlots(canBeDmpu);
 
   return fastdom.mutate(() => {
@@ -48,7 +48,7 @@ const insertCommentAd = ($commentMainColumn: bonzo, $adSlotContainer: bonzo, can
 
 const containsDMPU = (ad: Advert): boolean => ad.sizes.desktop.some((el => el[0] === 300 && el[1] === 600) || (el => el[0] === 160 && el[1] === 600));
 
-const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
+const maybeUpgradeSlot = (ad: Advert, $adSlot: Bonzo): Advert => {
   if (!containsDMPU(ad)) {
     ad.sizes.desktop.push([300, 600], [160, 600]);
     ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
@@ -59,8 +59,8 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
   return ad;
 };
 
-const runSecondStage = ($commentMainColumn: bonzo, $adSlotContainer: bonzo): void => {
-  const $adSlot: bonzo = $('.js-ad-slot', $adSlotContainer);
+const runSecondStage = ($commentMainColumn: Bonzo, $adSlotContainer: Bonzo): void => {
+  const $adSlot: Bonzo = $('.js-ad-slot', $adSlotContainer);
   const commentAdvert = getAdvertById('dfp-ad--comments');
 
   if (commentAdvert && $adSlot.length) {
@@ -75,7 +75,7 @@ const runSecondStage = ($commentMainColumn: bonzo, $adSlotContainer: bonzo): voi
 };
 
 export const initCommentAdverts = (): Promise<boolean> => {
-  const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
+  const $adSlotContainer: Bonzo = $('.js-discussion__ad-slot');
   const isMobile = getBreakpoint() === 'mobile';
   if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
     return Promise.resolve(false);
@@ -83,7 +83,7 @@ export const initCommentAdverts = (): Promise<boolean> => {
 
   mediator.once('modules:comments:renderComments:rendered', (): void => {
     const isLoggedIn: boolean = isUserLoggedIn();
-    const $commentMainColumn: bonzo = $('.js-comments .content__main-column');
+    const $commentMainColumn: Bonzo = $('.js-comments .content__main-column');
 
     fastdom.measure(() => $commentMainColumn.dim().height).then((mainColHeight: number) => {
       // always insert an MPU/DMPU if the user is logged in, since the

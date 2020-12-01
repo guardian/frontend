@@ -7,7 +7,7 @@ import reportError from "lib/report-error";
 import bonzo from "bonzo";
 
 type WeatherSearchOptions = {
-  container: bonzo;
+  container: Bonzo;
   apiUrl: string;
 };
 
@@ -34,8 +34,8 @@ export type CityPreference = {
 export class SearchTool {
 
   apiUrl: string;
-  $list: bonzo;
-  $input: bonzo;
+  $list: Bonzo;
+  $input: Bonzo;
   oldQuery: string;
   newQuery: string;
   inputTmp: string;
@@ -75,7 +75,7 @@ export class SearchTool {
     return this.oldQuery.length !== this.newQuery.length;
   }
 
-  handleClick(e: bean): void {
+  handleClick(e: Bean): void {
     const isInput = $(e.target).hasClass('js-search-tool-input');
     const isLink = SearchTool.nearestLinkNode(e.target);
 
@@ -92,7 +92,7 @@ export class SearchTool {
     }
   }
 
-  toggleControls(value: bean): void {
+  toggleControls(value: Bean): void {
     const $input = $('.js-search-tool-input')[0];
     const $location = $('.js-search-tool');
     const $close = $('.js-close-location');
@@ -138,7 +138,7 @@ export class SearchTool {
     setTimeout(this.destroy.bind(this), 50);
   }
 
-  getListOfResults(e: bean): void {
+  getListOfResults(e: Bean): void {
     this.newQuery = e.target.value;
 
     // If we have empty input clear everything and don't fetch the data
@@ -169,7 +169,7 @@ export class SearchTool {
     });
   }
 
-  handleKeyEvents(e: bean): void {
+  handleKeyEvents(e: Bean): void {
     const key = keyCodeMap[e.which || e.keyCode];
 
     // Run this function only if we are inside the input
@@ -251,7 +251,7 @@ export class SearchTool {
     this.clear().append(docFragment);
   }
 
-  clear(): bonzo {
+  clear(): Bonzo {
     return this.$list.html('');
   }
 

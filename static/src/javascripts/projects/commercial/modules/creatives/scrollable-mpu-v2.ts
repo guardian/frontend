@@ -46,8 +46,8 @@ class ScrollableMpu {
 
   adSlot: HTMLElement;
   params: ScrollableMpuParams;
-  $scrollableImage: bonzo | null | undefined;
-  $scrollableMpu: bonzo | null | undefined;
+  $scrollableImage: Bonzo | null | undefined;
+  $scrollableMpu: Bonzo | null | undefined;
 
   constructor(adSlot: HTMLElement, params: Object) {
     this.adSlot = adSlot;

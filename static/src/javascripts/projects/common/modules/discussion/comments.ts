@@ -101,7 +101,7 @@ class Comments extends Component {
   }
 
   comments: Comments | null | undefined;
-  topLevelComments: qwery | null | undefined;
+  topLevelComments: Qwery | null | undefined;
   user: DiscussionProfile | null | undefined;
   postedCommentEl: string | null | undefined;
   wholeDiscussionErrors: boolean | null | undefined;
@@ -204,7 +204,7 @@ class Comments extends Component {
     }
   }
 
-  pickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+  pickComment(commentId: string, $thisButton: Bonzo): Promise<void> {
     const comment = qwery(`#comment-${commentId}`, this.elem);
 
     return pickComment(commentId).then(() => {
@@ -252,7 +252,7 @@ class Comments extends Component {
     }
   }
 
-  unPickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+  unPickComment(commentId: string, $thisButton: Bonzo): Promise<void> {
     const comment = qwery(`#comment-${commentId}`);
 
     return unPickComment(commentId).then(() => {

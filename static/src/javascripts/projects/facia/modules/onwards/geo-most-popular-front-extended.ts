@@ -21,7 +21,7 @@ export class GeoMostPopularFrontExtended extends Component {
     this.manipulationType = 'html';
   }
 
-  parent: bonzo | null | undefined;
+  parent: Bonzo | null | undefined;
 
   prerender(): void {
     const isInternational = config.get('page.pageId') === 'international';

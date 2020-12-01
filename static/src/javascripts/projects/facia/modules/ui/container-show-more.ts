@@ -57,9 +57,9 @@ const loadShowMore = (pageId: string, containerId: string): Promise<any> => {
   }));
 };
 
-const itemsByArticleId = ($el: bonzo): Object => groupBy(qwery(ITEM_SELECTOR, $el), el => bonzo(el).attr(ARTICLE_ID_ATTRIBUTE));
+const itemsByArticleId = ($el: Bonzo): Object => groupBy(qwery(ITEM_SELECTOR, $el), el => bonzo(el).attr(ARTICLE_ID_ATTRIBUTE));
 
-const dedupShowMore = ($container: bonzo, html: string): bonzo => {
+const dedupShowMore = ($container: Bonzo, html: string): Bonzo => {
   const seenArticles = itemsByArticleId($container);
   const $html = bonzo.create(html);
 
@@ -79,15 +79,15 @@ class Button {
   id: string;
   state: DisplayState;
   isLoaded: boolean;
-  $el: bonzo;
-  $container: bonzo;
-  $iconEl: bonzo;
-  $placeholder: bonzo;
-  $textEl: bonzo;
-  $errorMessage: bonzo | null | undefined;
+  $el: Bonzo;
+  $container: Bonzo;
+  $iconEl: Bonzo;
+  $placeholder: Bonzo;
+  $textEl: Bonzo;
+  $errorMessage: Bonzo | null | undefined;
   messages: Map<DisplayState, string>;
 
-  constructor(el: bonzo, container: bonzo) {
+  constructor(el: Bonzo, container: Bonzo) {
     this.id = container.attr('data-id');
     this.state = readDisplayPrefForContainer(this.id);
     this.$el = el;

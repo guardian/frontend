@@ -79,7 +79,7 @@ class Loader extends Component {
     window.location.replace(`#comment-${id}`);
   }
 
-  $topCommentsContainer: bonzo;
+  $topCommentsContainer: Bonzo;
   comments: Comments | null | undefined;
   topCommentCount: number;
   user: DiscussionProfile | null | undefined;

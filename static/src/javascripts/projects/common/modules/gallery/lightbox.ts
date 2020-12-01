@@ -40,7 +40,7 @@ type GalleryJson = {
 };
 
 const pulseButton = (button: HTMLElement): void => {
-  const $btn: bonzo = bonzo(button);
+  const $btn: Bonzo = bonzo(button);
   $btn.addClass('gallery-lightbox__button-pulse');
 
   window.setTimeout(() => {
@@ -60,28 +60,28 @@ class GalleryLightbox {
   showEndslate: boolean;
   useSwipe: boolean;
   swipeThreshold: number;
-  lightboxEl: bonzo;
-  $lightboxEl: bonzo;
-  $indexEl: bonzo;
-  $countEl: bonzo;
-  $contentEl: bonzo;
+  lightboxEl: Bonzo;
+  $lightboxEl: Bonzo;
+  $indexEl: Bonzo;
+  $countEl: Bonzo;
+  $contentEl: Bonzo;
   nextBtn: HTMLElement;
   prevBtn: HTMLElement;
   closeBtn: HTMLElement;
   infoBtn: HTMLElement;
-  $swipeContainer: bonzo;
+  $swipeContainer: Bonzo;
   resize: Function;
   toggleInfo: Function;
   fsm: FiniteStateMachine;
   states: Object;
   images: Array<ImageJson>;
   swipeContainerWidth: number;
-  $slides: bonzo;
+  $slides: Bonzo;
   index: number;
-  $images: bonzo;
+  $images: Bonzo;
   galleryJson: GalleryJson;
   bodyScrollPosition: number;
-  endslateEl: bonzo;
+  endslateEl: Bonzo;
   endslate: Object;
   startIndex: number;
   handleKeyEvents: (arg0: KeyboardEvent) => void;

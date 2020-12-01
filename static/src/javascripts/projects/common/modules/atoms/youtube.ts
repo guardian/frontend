@@ -71,7 +71,7 @@ document.addEventListener('focusout', () => {
       if (document.activeElement === iframe) {
         return $('.vjs-big-play-button', iframe.parentElement);
       }
-    }).then(($playButton: bonzo | null | undefined) => {
+    }).then(($playButton: Bonzo | null | undefined) => {
       fastdom.mutate(() => {
         if ($playButton) {
           $playButton.addClass('youtube-play-btn-focussed');
@@ -82,7 +82,7 @@ document.addEventListener('focusout', () => {
 });
 
 document.addEventListener('focusin', () => {
-  fastdom.measure(() => $('.vjs-big-play-button')).then(($playButton: bonzo | null | undefined) => {
+  fastdom.measure(() => $('.vjs-big-play-button')).then(($playButton: Bonzo | null | undefined) => {
     fastdom.mutate(() => {
       if ($playButton) {
         $playButton.removeClass('youtube-play-btn-focussed');

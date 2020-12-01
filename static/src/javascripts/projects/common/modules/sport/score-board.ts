@@ -11,7 +11,7 @@ type ScoreBoardContext = {
   autoupdated: boolean;
   pageType: PageTypes;
   placeholder?: HTMLElement;
-  parent: bonzo;
+  parent: Bonzo;
   responseDataKey: string;
   updateEvery?: number;
 };
@@ -48,7 +48,7 @@ class ScoreBoard extends Component {
 
   placeholder: HTMLElement;
   pageType: PageTypes;
-  parent: bonzo;
+  parent: Bonzo;
 
   prerender(): void {
     const scoreLoadingPlaceholder = $('.score__loading', $(this.placeholder));

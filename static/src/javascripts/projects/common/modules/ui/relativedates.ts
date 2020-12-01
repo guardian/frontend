@@ -127,7 +127,7 @@ const makeRelativeDate = (epoch: number, opts: RelativeDateOptions = {}): false 
   return [then.getDate(), monthAbbr(then.getMonth()), then.getFullYear()].join(' ') + (opts.showTime ? withTime(then) : '');
 };
 
-const findValidTimestamps = (): bonzo => // `.blocktime time` used in blog html
+const findValidTimestamps = (): Bonzo => // `.blocktime time` used in blog html
 $('.js-timestamp, .js-item__timestamp');
 
 const replaceLocaleTimestamps = (html: Element | null | undefined): void => {
@@ -159,7 +159,7 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
 
     const relativeDate = makeRelativeDate(datetime.getTime(), {
       // NOTE: if this is in a block (blog), assume we want added time on > 1 day old dates
-      showTime: bonzo($el.parent()).hasClass('block-time'),
+      showTime: Bonzo($el.parent()).hasClass('block-time'),
       format: $el.attr('data-relativeformat'),
       notAfter: opts.notAfter
     });

@@ -51,9 +51,9 @@ const runConcurrently = (workFunction: (num: number) => Promise<any>, items: Arr
 
 class WholeDiscussion {
 
-  commentsThread: bonzo;
+  commentsThread: Bonzo;
   discussion: Array<Object>;
-  discussionContainer: bonzo;
+  discussionContainer: Bonzo;
   discussionId: number;
   lastPage: number;
   params: {

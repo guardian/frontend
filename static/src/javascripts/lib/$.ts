@@ -14,7 +14,7 @@ const $ = (
     context?: (Node | null | undefined) | (string | null | undefined)
 ): Bonzo => bonzo(qwery(selector, context));
 
-$.create = (s: string | Node): bonzo => bonzo(bonzo.create(s));
+$.create = (s: string | Node): Bonzo => bonzo(bonzo.create(s));
 
 // #? duplicated in lib/closest.js?
 $.ancestor = (

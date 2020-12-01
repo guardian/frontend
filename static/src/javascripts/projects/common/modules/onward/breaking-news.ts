@@ -117,7 +117,7 @@ const filterAlertsByAge = (alerts: Array<Alert>): Array<Alert> => alerts.filter(
 // we only show one alert at a time, pick the youngest available
 const pickNewest = (alerts: Array<Alert>): Alert => alerts.sort((a, b) => b.frontPublicationDate - a.frontPublicationDate)[0];
 
-const renderAlert = (alert: Alert): bonzo => {
+const renderAlert = (alert: Alert): Bonzo => {
   alert.closeIcon = inlineSvg('closeCentralIcon');
 
   const $alert = bonzo.create(template(alertHtml)(alert));
@@ -136,7 +136,7 @@ const renderAlert = (alert: Alert): bonzo => {
   return $alert;
 };
 
-const renderSpectre = ($breakingNews: bonzo): bonzo => bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--fade-in breaking-news--hidden');
+const renderSpectre = ($breakingNews: Bonzo): Bonzo => bonzo(bonzo.create($breakingNews[0])).addClass('breaking-news--spectre').removeClass('breaking-news--fade-in breaking-news--hidden');
 
 const show = (): Promise<boolean> => {
   const $body = bonzo(document.body);

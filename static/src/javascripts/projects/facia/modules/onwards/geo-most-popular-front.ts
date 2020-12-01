@@ -12,7 +12,7 @@ import { begin, end } from "common/modules/analytics/register";
 import { Component } from "common/modules/component";
 import bonzo from "bonzo";
 
-const hideTabs = (parent: bonzo): void => {
+const hideTabs = (parent: Bonzo): void => {
   $('.js-tabs-content', parent).addClass('tabs__content--no-border');
   $('.js-tabs', parent).addClass('u-h');
 };
@@ -32,7 +32,7 @@ export class GeoMostPopularFront extends Component {
   isNetworkFront: boolean;
   isVideoFront: boolean;
   isInternational: boolean;
-  parent: bonzo | null | undefined;
+  parent: Bonzo | null | undefined;
 
   prerender(): void {
     this.elem = qwery('.headline-list', this.elem)[0];

@@ -11,7 +11,7 @@ const avatarify = (container: HTMLElement): void => {
   const avatarUserId = container.dataset.userid;
   const userId = config.get('user.id', null);
 
-  const updateCleanup = (upd: bonzo, avat: bonzo) => {
+  const updateCleanup = (upd: Bonzo, avat: Bonzo) => {
     upd.remove();
     avat.appendTo(container);
   };

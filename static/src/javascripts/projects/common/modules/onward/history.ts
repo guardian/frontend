@@ -348,7 +348,7 @@ const logSummary = (pageConfig: Object, mockToday?: number): void => {
   saveSummary(summary);
 };
 
-const getMegaNav = (): bonzo => $('.js-global-navigation');
+const getMegaNav = (): Bonzo => $('.js-global-navigation');
 
 const removeFromMegaNav = (): void => {
   getMegaNav().each(megaNav => {
