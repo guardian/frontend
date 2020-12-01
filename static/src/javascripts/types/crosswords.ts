@@ -17,7 +17,7 @@ type SeparatorLocations = {
     [separator: Separator]: Array<number>,
 }
 
-type CluePosition = {
+type Position = {
     [axis: Axis]: number
 };
 
@@ -38,7 +38,7 @@ type Clue = {
     humanNumber: number | string,
     group: Array<string>,
     clue: string,
-    position: CluePosition,
+    position: Position,
     separatorLocations: SeparatorLocations,
     direction: Direction,
     length: number,
@@ -47,16 +47,16 @@ type Clue = {
 
 type GroupClue = {
     id: string,
-    number: number | string,
+    number: number | string | undefined,
     length: number,
     separatorLocations: SeparatorLocations,
     direction: '',
-    clue: string,
+    clue: string | undefined,
 }
 
 type CluesIntersect = {
-    across: Clue,
-    down: Clue,
+    across?: Clue,
+    down?: Clue,
 };
 
 type ClueMap = {
