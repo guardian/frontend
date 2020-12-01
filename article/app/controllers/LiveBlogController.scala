@@ -7,7 +7,7 @@ import contentapi.ContentApiClient
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
-import model.{ApplicationContext, Canonical, _}
+import model.{ApplicationContext, CanonicalLiveBlog, _}
 import pages.{ArticleEmailHtmlPage, LiveBlogHtmlPage, MinuteHtmlPage}
 import play.api.libs.ws.WSClient
 import play.api.mvc._
@@ -79,7 +79,7 @@ class LiveBlogController(
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(Canonical) // no page param
+        case None => renderWithRange(CanonicalLiveBlog) // no page param
       }
     }
   }
@@ -111,7 +111,7 @@ class LiveBlogController(
   private[this] def getRange(lastUpdate: Option[String], rendered: Option[Boolean]): BlockRange = {
     lastUpdate.map(ParseBlockId.fromBlockId) match {
       case Some(ParsedBlockId(id)) => SinceBlockId(id)
-      case _                       => Canonical
+      case _                       => CanonicalLiveBlog
     }
   }
 

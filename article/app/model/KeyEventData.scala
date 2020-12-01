@@ -10,7 +10,7 @@ object KeyEventData {
   def apply(maybeBlocks: Option[Blocks], timezone: DateTimeZone): Seq[KeyEventData] = {
 
     val blocks =
-      maybeBlocks.toSeq.flatMap(blocks => blocks.requestedBodyBlocks.getOrElse(Canonical.timeline, blocks.body))
+      maybeBlocks.toSeq.flatMap(blocks => blocks.requestedBodyBlocks.getOrElse(CanonicalLiveBlog.timeline, blocks.body))
 
     apply(blocks, timezone)
   }
