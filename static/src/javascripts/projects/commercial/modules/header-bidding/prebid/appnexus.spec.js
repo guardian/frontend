@@ -240,19 +240,19 @@ describe('getAppNexusServerSideBidParams', () => {
         window.OzoneLotameData = undefined;
     });
 
-    test('should include OzoneLotameData if available', () => {
+    test('should include OzoneLotameData if available', async () => {
         getBreakpointKey.mockReturnValue('M');
         window.OzoneLotameData = { some: 'lotamedata' };
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
+        expect(await getAppNexusServerSideBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '13366904',
             lotame: { some: 'lotamedata' },
         });
     });
 
-    test('should excude lotame if data is unavailable', () => {
+    test('should excude lotame if data is unavailable', async () => {
         getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
+        expect(await getAppNexusServerSideBidParams([[300, 250]])).toEqual({
             keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
             placementId: '13366904',
         });
