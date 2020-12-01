@@ -10,7 +10,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { storage } from '@guardian/libs';
+import { storage, getLocale } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
@@ -63,7 +63,7 @@ const go = () => {
             if (!willShow) storage.local.set('gu.hasSeenPrivacyBanner', true);
         });
 
-        cmp.init({ pubData, country: geolocationGetSync() });
+        cmp.init({ pubData, country: await getLocale() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
