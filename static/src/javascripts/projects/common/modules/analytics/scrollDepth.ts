@@ -1,109 +1,119 @@
-
-
-import mediator from "lib/mediator";
-import debounce from "lodash/debounce";
+import mediator from 'lib/mediator';
+import debounce from 'lodash/debounce';
 
 const timeSince = (time: number): number => new Date().getTime() - time;
 
-const getPercentageInViewPort = (el: HTMLElement): number | null | undefined => {
-  if (document.body) {
-    const height = window.innerHeight || document.body.clientHeight;
-    const rect = el.getBoundingClientRect();
+const getPercentageInViewPort = (
+    el: HTMLElement
+): number | null | undefined => {
+    if (document.body) {
+        const height = window.innerHeight || document.body.clientHeight;
+        const rect = el.getBoundingClientRect();
 
-    if (rect.bottom < 0 || rect.bottom < height) {
-      return 100;
-    } else if (rect.top > height) {
-      return 0;
-    } else if (rect.top > 0) {
-      return 100 / (rect.height || 1) * (height - rect.top);
+        if (rect.bottom < 0 || rect.bottom < height) {
+            return 100;
+        }
+        if (rect.top > height) {
+            return 0;
+        }
+        if (rect.top > 0) {
+            return (100 / (rect.height || 1)) * (height - rect.top);
+        }
+
+        return (100 / (rect.height || 1)) * (Math.abs(rect.top) + height);
     }
-
-    return 100 / (rect.height || 1) * (Math.abs(rect.top) + height);
-  }
 };
 
 class ScrollDepth {
+    opts: Object;
 
-  opts: Object;
-  data: Object;
-  timeoutId: number;
+    data: Object;
 
-  constructor(options: Object): void {
-    this.opts = Object.assign({}, {
-      changeThreshold: 10,
-      isContent: false,
-      pageEl: document.body
-    }, options);
+    timeoutId: number;
 
-    this.data = {
-      page: {
-        start: new Date().getTime(),
-        depth: 0,
-        duration: 0
-      },
-      content: {
-        depth: 0
-      }
-    };
+    constructor(options: Object): void {
+        this.opts = {
+            changeThreshold: 10,
+            isContent: false,
+            pageEl: document.body,
+            ...options,
+        };
 
-    this.init();
-  }
+        this.data = {
+            page: {
+                start: new Date().getTime(),
+                depth: 0,
+                duration: 0,
+            },
+            content: {
+                depth: 0,
+            },
+        };
 
-  setData(type: string): boolean {
-    const el = this.opts[`${type}El`];
-
-    if (!el) {
-      return false;
+        this.init();
     }
 
-    const currentDepth = getPercentageInViewPort(el);
+    setData(type: string): boolean {
+        const el = this.opts[`${type}El`];
 
-    if (currentDepth && currentDepth - this.data[type].depth > this.opts.changeThreshold) {
-      this.data[type].depth = currentDepth;
+        if (!el) {
+            return false;
+        }
 
-      if (typeof this.data[type].duration === 'number') {
-        this.data[type].duration = timeSince(this.data[type].start);
-      }
+        const currentDepth = getPercentageInViewPort(el);
 
-      return true;
-    }
-    return false;
-  }
+        if (
+            currentDepth &&
+            currentDepth - this.data[type].depth > this.opts.changeThreshold
+        ) {
+            this.data[type].depth = currentDepth;
 
-  hasDataChanged(): void {
-    const page = this.setData('page');
-    const content = this.opts.isContent ? this.setData('content') : false;
+            if (typeof this.data[type].duration === 'number') {
+                this.data[type].duration = timeSince(this.data[type].start);
+            }
 
-    if (page || content) {
-      this.log();
-    }
-  }
-
-  assertScrolling(): void {
-    if (typeof this.timeoutId === 'number') {
-      window.clearTimeout(this.timeoutId);
+            return true;
+        }
+        return false;
     }
 
-    this.timeoutId = window.setTimeout(() => {
-      mediator.emit('scrolldepth:inactive');
-    }, 1000);
-  }
+    hasDataChanged(): void {
+        const page = this.setData('page');
+        const content = this.opts.isContent ? this.setData('content') : false;
 
-  log(): void {
-    mediator.emit('scrolldepth:data', this.data);
-  }
+        if (page || content) {
+            this.log();
+        }
+    }
 
-  init(): void {
-    mediator.on('window:throttledScroll', debounce(() => {
-      this.assertScrolling();
-    }, 200));
-    mediator.on('scrolldepth:inactive', () => {
-      this.hasDataChanged();
-    });
-    mediator.on('module:clickstream:click', () => {
-      this.hasDataChanged();
-    });
-  }
+    assertScrolling(): void {
+        if (typeof this.timeoutId === 'number') {
+            window.clearTimeout(this.timeoutId);
+        }
+
+        this.timeoutId = window.setTimeout(() => {
+            mediator.emit('scrolldepth:inactive');
+        }, 1000);
+    }
+
+    log(): void {
+        mediator.emit('scrolldepth:data', this.data);
+    }
+
+    init(): void {
+        mediator.on(
+            'window:throttledScroll',
+            debounce(() => {
+                this.assertScrolling();
+            }, 200)
+        );
+        mediator.on('scrolldepth:inactive', () => {
+            this.hasDataChanged();
+        });
+        mediator.on('module:clickstream:click', () => {
+            this.hasDataChanged();
+        });
+    }
 }
 
 export { ScrollDepth };

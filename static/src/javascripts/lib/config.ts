@@ -1,8 +1,4 @@
-
-
-export type Config = {
-  [key: string]: any;
-};
+export type Config = Record<string, any>;
 
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
@@ -11,14 +7,17 @@ const config: Config = window.guardian.config;
 
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
-const get = (path: string = '', defaultValue?: unknown): unknown => {
-  const value = path.replace(/\[(.+?)\]/g, '.$1').split('.').reduce((o, key) => o && o[key], config);
+const get = (path = '', defaultValue?: unknown): unknown => {
+    const value = path
+        .replace(/\[(.+?)\]/g, '.$1')
+        .split('.')
+        .reduce((o, key) => o && o[key], config);
 
-  if (typeof value !== 'undefined') {
-    return value;
-  }
+    if (typeof value !== 'undefined') {
+        return value;
+    }
 
-  return defaultValue;
+    return defaultValue;
 };
 
 // let S = { l1, l2, ..., ln } be a non-empty ordered set of labels
@@ -27,51 +26,62 @@ const get = (path: string = '', defaultValue?: unknown): unknown => {
 // object following the path described by S, making sure that path
 // actually leads somewhere.
 const set = (path: string, value: any): void => {
-  const pathSegments = path.split('.');
-  const last = pathSegments.pop();
-  pathSegments.reduce((obj, subpath) => {
-    if (typeof obj[subpath] === 'object') {
-      return obj[subpath];
-    }
-    obj[subpath] = {};
-    return obj[subpath];
-  }, config)[last] = value;
+    const pathSegments = path.split('.');
+    const last = pathSegments.pop();
+    pathSegments.reduce((obj, subpath) => {
+        if (typeof obj[subpath] === 'object') {
+            return obj[subpath];
+        }
+        obj[subpath] = {};
+        return obj[subpath];
+    }, config)[last] = value;
 };
 
-const hasTone = (name: string): boolean => (config.page.tones || '').includes(name);
+const hasTone = (name: string): boolean =>
+    (config.page.tones || '').includes(name);
 
-const hasSeries = (name: string): boolean => (config.page.series || '').includes(name);
+const hasSeries = (name: string): boolean =>
+    (config.page.series || '').includes(name);
 
-const referencesOfType = (name: string): Array<string> => (config.page.references || []).filter(reference => typeof reference[name] !== 'undefined').map(reference => reference[name]);
+const referencesOfType = (name: string): string[] =>
+    (config.page.references || [])
+        .filter((reference) => typeof reference[name] !== 'undefined')
+        .map((reference) => reference[name]);
 
 const referenceOfType = (name: string): string => referencesOfType(name)[0];
 
 // the date nicely formatted and padded for use as part of a url
 // looks like    2012/04/31
 const webPublicationDateAsUrlPart = (): string | null | undefined => {
-  const webPublicationDate = config.page.webPublicationDate;
+    const webPublicationDate = config.page.webPublicationDate;
 
-  if (webPublicationDate) {
-    const pubDate = new Date(webPublicationDate);
-    return `${pubDate.getFullYear()}/${(pubDate.getMonth() + 1).toString().padStart(2, '0')}/${pubDate.getDate().toString().padStart(2, '0')}`;
-  }
+    if (webPublicationDate) {
+        const pubDate = new Date(webPublicationDate);
+        return `${pubDate.getFullYear()}/${(pubDate.getMonth() + 1)
+            .toString()
+            .padStart(2, '0')}/${pubDate
+            .getDate()
+            .toString()
+            .padStart(2, '0')}`;
+    }
 
-  return null;
+    return null;
 };
 
 // returns 2014/apr/22
 const dateFromSlug = (): string | null | undefined => {
-  const s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
-  return s ? s[0] : null;
+    const s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
+    return s ? s[0] : null;
 };
 
-export default Object.assign({}, {
-  get,
-  set,
-  hasTone,
-  hasSeries,
-  referencesOfType,
-  referenceOfType,
-  webPublicationDateAsUrlPart,
-  dateFromSlug
-}, config);
+export default {
+    get,
+    set,
+    hasTone,
+    hasSeries,
+    referencesOfType,
+    referenceOfType,
+    webPublicationDateAsUrlPart,
+    dateFromSlug,
+    ...config,
+};

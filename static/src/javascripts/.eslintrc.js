@@ -1,23 +1,15 @@
-// @flow
+
 module.exports = {
     env: {
         browser: true,
         jest: true,
     },
-    parser: 'babel-eslint',
-    parserOptions: {
-        sourceType: 'module',
-        ecmaVersion: 6,
-    },
     settings: {
         'import/resolver': 'webpack',
     },
     extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
-        'prettier/react',
+        '@guardian/eslint-config-typescript',
     ],
-    plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
         'import/extensions': 'off',
@@ -70,7 +62,6 @@ module.exports = {
             },
         ],
 
-        'flow-header/flow-header': 'error',
         'no-param-reassign': ['error', { props: false }],
         'no-prototype-builtins': 'off',
 

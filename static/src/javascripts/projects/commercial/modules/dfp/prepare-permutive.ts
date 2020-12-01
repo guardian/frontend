@@ -1,116 +1,143 @@
-
-import config, { Config } from "lib/config";
-import reportError, { ErrorLogger } from "lib/report-error";
+import type { Config } from 'lib/config';
+import config from 'lib/config';
+import type { ErrorLogger } from 'lib/report-error';
+import reportError from 'lib/report-error';
 
 declare var permutive: any;
 type PermutiveSchema = {
-  content: {
-    premium?: boolean;
-    id?: string;
-    title?: string;
-    type?: string;
-    section?: string;
-    authors?: Array<string>;
-    keywords?: Array<string>;
-    publishedAt?: string;
-    series?: string;
-    tone?: Array<string>;
-  };
-  user: {
-    edition?: string;
-    identity?: boolean;
-  };
+    content: {
+        premium?: boolean;
+        id?: string;
+        title?: string;
+        type?: string;
+        section?: string;
+        authors?: string[];
+        keywords?: string[];
+        publishedAt?: string;
+        series?: string;
+        tone?: string[];
+    };
+    user: {
+        edition?: string;
+        identity?: boolean;
+    };
 };
 
 type PermutiveIdentity = {
-  id: string;
-  tag: string;
+    id: string;
+    tag: string;
 };
 
-const isEmpty = (value: any) => value === '' || value === null || typeof value === 'undefined' || (Array.isArray(value) && value.length === 0) || (typeof value === 'object' && Object.keys(value).length === 0);
+const isEmpty = (value: any) =>
+    value === '' ||
+    value === null ||
+    typeof value === 'undefined' ||
+    (Array.isArray(value) && value.length === 0) ||
+    (typeof value === 'object' && Object.keys(value).length === 0);
 
 const removeEmpty = <T extends Config>(payload: T): T => {
-  Object.keys(payload).forEach(key => {
-    if (typeof payload[key] === 'object' && payload[key] !== null) {
-      removeEmpty(payload[key]);
-    }
-    if (isEmpty(payload[key])) {
-      delete payload[key];
-    }
-  });
-  return payload;
-};
-
-const generatePayload = (permutiveConfig: Config = { page: {}, user: {} }): PermutiveSchema => {
-  const {
-    page,
-    user
-  } = permutiveConfig;
-  const {
-    isPaidContent,
-    pageId,
-    headline,
-    contentType,
-    section,
-    author,
-    keywords,
-    webPublicationDate,
-    series,
-    edition,
-    toneIds
-  } = page;
-
-  const safeAuthors = (author && typeof author === 'string' ? author.split(',') : []).map(str => str.trim());
-  const safeKeywords = (keywords && typeof keywords === 'string' ? keywords.split(',') : []).map(str => str.trim());
-  const safePublishedAt = webPublicationDate && typeof webPublicationDate === 'number' ? new Date(webPublicationDate).toISOString() : '';
-  const safeToneIds = (toneIds && typeof toneIds === 'string' ? toneIds.split(',') : []).map(str => str.trim());
-  const cleanPayload = removeEmpty({
-    content: {
-      premium: isPaidContent,
-      id: pageId,
-      title: headline,
-      type: contentType,
-      section,
-      authors: safeAuthors,
-      keywords: safeKeywords,
-      publishedAt: safePublishedAt,
-      series,
-      tone: safeToneIds
-    },
-    user: {
-      edition,
-      identity: isEmpty(user) ? false : !isEmpty(user.id)
-    }
-  });
-
-  return cleanPayload;
-};
-
-const generatePermutiveIdentities = (pageConfig: Config = {}): Array<PermutiveIdentity> => {
-  if (typeof pageConfig.ophan === 'object' && typeof pageConfig.ophan.browserId === 'string' && pageConfig.ophan.browserId.length > 0) {
-    return [{ tag: 'ophan', id: pageConfig.ophan.browserId }];
-  }
-  return [];
-};
-
-const runPermutive = (pageConfig: Config = {}, permutiveGlobal: any, logger: ErrorLogger): void => {
-  try {
-    if (!permutiveGlobal || !permutiveGlobal.addon) {
-      throw new Error('Global Permutive setup error');
-    }
-
-    const permutiveIdentities = generatePermutiveIdentities(pageConfig);
-    if (permutiveIdentities.length > 0) {
-      permutiveGlobal.identify(permutiveIdentities);
-    }
-
-    const payload = generatePayload(pageConfig);
-    permutiveGlobal.addon('web', {
-      page: payload
+    Object.keys(payload).forEach((key) => {
+        if (typeof payload[key] === 'object' && payload[key] !== null) {
+            removeEmpty(payload[key]);
+        }
+        if (isEmpty(payload[key])) {
+            delete payload[key];
+        }
     });
-  } catch (err) {
-    logger(err, { feature: 'commercial' }, false);
-  }
+    return payload;
+};
+
+const generatePayload = (
+    permutiveConfig: Config = { page: {}, user: {} }
+): PermutiveSchema => {
+    const { page, user } = permutiveConfig;
+    const {
+        isPaidContent,
+        pageId,
+        headline,
+        contentType,
+        section,
+        author,
+        keywords,
+        webPublicationDate,
+        series,
+        edition,
+        toneIds,
+    } = page;
+
+    const safeAuthors = (author && typeof author === 'string'
+        ? author.split(',')
+        : []
+    ).map((str) => str.trim());
+    const safeKeywords = (keywords && typeof keywords === 'string'
+        ? keywords.split(',')
+        : []
+    ).map((str) => str.trim());
+    const safePublishedAt =
+        webPublicationDate && typeof webPublicationDate === 'number'
+            ? new Date(webPublicationDate).toISOString()
+            : '';
+    const safeToneIds = (toneIds && typeof toneIds === 'string'
+        ? toneIds.split(',')
+        : []
+    ).map((str) => str.trim());
+    const cleanPayload = removeEmpty({
+        content: {
+            premium: isPaidContent,
+            id: pageId,
+            title: headline,
+            type: contentType,
+            section,
+            authors: safeAuthors,
+            keywords: safeKeywords,
+            publishedAt: safePublishedAt,
+            series,
+            tone: safeToneIds,
+        },
+        user: {
+            edition,
+            identity: isEmpty(user) ? false : !isEmpty(user.id),
+        },
+    });
+
+    return cleanPayload;
+};
+
+const generatePermutiveIdentities = (
+    pageConfig: Config = {}
+): PermutiveIdentity[] => {
+    if (
+        typeof pageConfig.ophan === 'object' &&
+        typeof pageConfig.ophan.browserId === 'string' &&
+        pageConfig.ophan.browserId.length > 0
+    ) {
+        return [{ tag: 'ophan', id: pageConfig.ophan.browserId }];
+    }
+    return [];
+};
+
+const runPermutive = (
+    pageConfig: Config = {},
+    permutiveGlobal: any,
+    logger: ErrorLogger
+): void => {
+    try {
+        if (!permutiveGlobal || !permutiveGlobal.addon) {
+            throw new Error('Global Permutive setup error');
+        }
+
+        const permutiveIdentities = generatePermutiveIdentities(pageConfig);
+        if (permutiveIdentities.length > 0) {
+            permutiveGlobal.identify(permutiveIdentities);
+        }
+
+        const payload = generatePayload(pageConfig);
+        permutiveGlobal.addon('web', {
+            page: payload,
+        });
+    } catch (err) {
+        logger(err, { feature: 'commercial' }, false);
+    }
 };
 
 /* eslint-disable */
@@ -141,20 +168,20 @@ export const initPermutive = (): Promise<void> => new Promise(resolve => {
   });
 
   /* eslint-enable */
-  const permutiveConfig = {
-    user: config.get('user', {}),
-    page: config.get('page', {}),
-    ophan: config.get('ophan', {})
-  };
-  runPermutive(permutiveConfig, permutive, reportError);
+        const permutiveConfig = {
+            user: config.get('user', {}),
+            page: config.get('page', {}),
+            ophan: config.get('ophan', {}),
+        };
+        runPermutive(permutiveConfig, permutive, reportError);
 
-  return resolve();
-});
+        return resolve();
+    });
 
 export const _ = {
-  isEmpty,
-  removeEmpty,
-  generatePayload,
-  generatePermutiveIdentities,
-  runPermutive
+    isEmpty,
+    removeEmpty,
+    generatePayload,
+    generatePermutiveIdentities,
+    runPermutive,
 };

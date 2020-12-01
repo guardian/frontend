@@ -1,23 +1,20 @@
-
-
-import fetchJSON from "lib/fetch-json";
+import fetchJSON from 'lib/fetch-json';
 
 class MatchInfo {
+    constructor(match: Object, whosCalling: string): void {
+        const base = '/football/api/match-nav';
+        const slug = match.id || [match.date].concat(match.teams).join('/');
+        const page = encodeURIComponent(whosCalling);
+        this.endpoint = `${base}/${slug}.json?page=${page}`;
+    }
 
-  constructor(match: Object, whosCalling: string): void {
-    const base = '/football/api/match-nav';
-    const slug = match.id || [match.date].concat(match.teams).join('/');
-    const page = encodeURIComponent(whosCalling);
-    this.endpoint = `${base}/${slug}.json?page=${page}`;
-  }
+    endpoint: string;
 
-  endpoint: string;
-
-  fetch(): Promise<any> {
-    return fetchJSON(this.endpoint, {
-      mode: 'cors'
-    });
-  }
+    fetch(): Promise<any> {
+        return fetchJSON(this.endpoint, {
+            mode: 'cors',
+        });
+    }
 }
 
 export { MatchInfo };

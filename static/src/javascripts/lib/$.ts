@@ -35,7 +35,7 @@ $.ancestor = (
 };
 
 // #? does this offer any value?
-$.forEachElement = (selector: string, fn: Function): Array<Element> => {
+$.forEachElement = (selector: string, fn: Function): Element[] => {
     const els = qwery(selector);
     els.forEach(fn);
     return els;

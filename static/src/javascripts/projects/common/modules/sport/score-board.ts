@@ -1,19 +1,17 @@
+import bonzo from 'bonzo';
+import { Component } from 'common/modules/component';
+import $ from 'lib/$';
+import { isBreakpoint } from 'lib/detect';
 
-
-import bonzo from "bonzo";
-import { Component } from "common/modules/component";
-import { isBreakpoint } from "lib/detect";
-import $ from "lib/$";
-
-type PageTypes = "minbymin" | "preview" | "report" | "stats";
+type PageTypes = 'minbymin' | 'preview' | 'report' | 'stats';
 
 type ScoreBoardContext = {
-  autoupdated: boolean;
-  pageType: PageTypes;
-  placeholder?: HTMLElement;
-  parent: Bonzo;
-  responseDataKey: string;
-  updateEvery?: number;
+    autoupdated: boolean;
+    pageType: PageTypes;
+    placeholder?: HTMLElement;
+    parent: Bonzo;
+    responseDataKey: string;
+    updateEvery?: number;
 };
 
 const getScoreContainerHtml = (context: Object): string => `
@@ -26,55 +24,60 @@ const getScoreContainerHtml = (context: Object): string => `
 `;
 
 class ScoreBoard extends Component {
+    constructor(context: ScoreBoardContext): void {
+        super();
 
-  constructor(context: ScoreBoardContext): void {
-    super();
+        Object.assign(this, context);
 
-    Object.assign(this, context);
+        const scoreContainerHtml = getScoreContainerHtml({
+            loadingState:
+                this.pageType !== 'report' ? ' score__loading--live' : '',
+        });
 
-    const scoreContainerHtml = getScoreContainerHtml({
-      loadingState: this.pageType !== 'report' ? ' score__loading--live' : ''
-    });
+        this.updateEvery = isBreakpoint({ min: 'desktop' }) ? 30 : 60;
+        this.placeholder = bonzo.create(scoreContainerHtml)[0];
 
-    this.updateEvery = isBreakpoint({ min: 'desktop' }) ? 30 : 60;
-    this.placeholder = bonzo.create(scoreContainerHtml)[0];
-
-    if (this.pageType === 'report') {
-      context.parent.after(this.placeholder);
-    } else {
-      context.parent.addClass('u-h').before(this.placeholder);
+        if (this.pageType === 'report') {
+            context.parent.after(this.placeholder);
+        } else {
+            context.parent.addClass('u-h').before(this.placeholder);
+        }
     }
-  }
 
-  placeholder: HTMLElement;
-  pageType: PageTypes;
-  parent: Bonzo;
+    placeholder: HTMLElement;
 
-  prerender(): void {
-    const scoreLoadingPlaceholder = $('.score__loading', $(this.placeholder));
+    pageType: PageTypes;
 
-    if (scoreLoadingPlaceholder.length) {
-      scoreLoadingPlaceholder.remove();
+    parent: Bonzo;
+
+    prerender(): void {
+        const scoreLoadingPlaceholder = $(
+            '.score__loading',
+            $(this.placeholder)
+        );
+
+        if (scoreLoadingPlaceholder.length) {
+            scoreLoadingPlaceholder.remove();
+        }
     }
-  }
 
-  ready(): void {
-    this.setState(this.pageType);
-  }
+    ready(): void {
+        this.setState(this.pageType);
+    }
 
-  load(): void {
-    this.fetch(this.placeholder);
-  }
+    load(): void {
+        this.fetch(this.placeholder);
+    }
 
-  loadFromJson(html: string): void {
-    this.template = html;
-    this.render(this.placeholder);
-  }
+    loadFromJson(html: string): void {
+        this.template = html;
+        this.render(this.placeholder);
+    }
 
-  error(): void {
-    this.placeholder.innerHTML = '';
-    this.parent.removeClass('u-h');
-  }
+    error(): void {
+        this.placeholder.innerHTML = '';
+        this.parent.removeClass('u-h');
+    }
 }
 
 export { ScoreBoard };

@@ -1,9 +1,7 @@
-
-
-import fastdom from "lib/fastdom-promise";
-import $ from "lib/$";
-import crossIcon from "svgs/icon/cross.svg";
-import paidContent from "svgs/commercial/paid-content.svg";
+import $ from 'lib/$';
+import fastdom from 'lib/fastdom-promise';
+import paidContent from 'svgs/commercial/paid-content.svg';
+import crossIcon from 'svgs/icon/cross.svg';
 
 const template = (): string => `
         <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
@@ -31,21 +29,24 @@ const template = (): string => `
         </div>
     `;
 
-export const init = () => fastdom.mutate(() => {
-  $(document.body).append(template());
-}).then(() => {
-  const aboutBtns = document.querySelectorAll('.js-hosted-about');
-  const closeBtn = document.querySelector('.js-survey-close');
-  const overlay = document.querySelector('.js-survey-overlay');
-  if (!overlay || !aboutBtns || !closeBtn) return;
+export const init = () =>
+    fastdom
+        .mutate(() => {
+            $(document.body).append(template());
+        })
+        .then(() => {
+            const aboutBtns = document.querySelectorAll('.js-hosted-about');
+            const closeBtn = document.querySelector('.js-survey-close');
+            const overlay = document.querySelector('.js-survey-overlay');
+            if (!overlay || !aboutBtns || !closeBtn) return;
 
-  aboutBtns.forEach(btn => {
-    btn.addEventListener('click', (e: Event): unknown => {
-      e.preventDefault();
-      fastdom.mutate(() => overlay.classList.remove('u-h'));
-    });
-  });
-  closeBtn.addEventListener('click', () => {
-    fastdom.mutate(() => overlay.classList.add('u-h'));
-  });
-});
+            aboutBtns.forEach((btn) => {
+                btn.addEventListener('click', (e: Event): unknown => {
+                    e.preventDefault();
+                    fastdom.mutate(() => overlay.classList.remove('u-h'));
+                });
+            });
+            closeBtn.addEventListener('click', () => {
+                fastdom.mutate(() => overlay.classList.add('u-h'));
+            });
+        });

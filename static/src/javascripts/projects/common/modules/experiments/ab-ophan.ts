@@ -1,30 +1,32 @@
+import config from 'lib/config';
+import { noop } from 'lib/noop';
+import reportError from 'lib/report-error';
+import ophan from 'ophan/ng';
 
+const not = (f) => (...args: any[]): boolean => !f(...args);
 
-import { noop } from "lib/noop";
-import config from "lib/config";
-import reportError from "lib/report-error";
-import ophan from "ophan/ng";
-
-const not = f => (...args: any[]): boolean => !f(...args);
-
-const submit = (payload: OphanABPayload): void => ophan.record({
-  abTestRegister: payload
-});
+const submit = (payload: OphanABPayload): void =>
+    ophan.record({
+        abTestRegister: payload,
+    });
 
 /**
  * generate an A/B event for ophan
  */
-const makeABEvent = (variant: Variant, complete: string | boolean): OphanABEvent => {
-  const event: OphanABEvent = {
-    variantName: variant.id,
-    complete
-  };
+const makeABEvent = (
+    variant: Variant,
+    complete: string | boolean
+): OphanABEvent => {
+    const event: OphanABEvent = {
+        variantName: variant.id,
+        complete,
+    };
 
-  if (variant.campaignCode) {
-    event.campaignCodes = [variant.campaignCode];
-  }
+    if (variant.campaignCode) {
+        event.campaignCodes = [variant.campaignCode];
+    }
 
-  return event;
+    return event;
 };
 
 /**
@@ -33,16 +35,21 @@ const makeABEvent = (variant: Variant, complete: string | boolean): OphanABEvent
  * If it does, the test won't be included in the Ophan call that happens at pageload, and must fire the impression
  * itself via the callback passed to the `impression` property in the variant.
  */
-const defersImpression = (test: ABTest): boolean => test.variants.every(variant => typeof variant.impression === 'function');
+const defersImpression = (test: ABTest): boolean =>
+    test.variants.every((variant) => typeof variant.impression === 'function');
 
 /**
  * Create a function that will fire an A/B test to Ophan
  */
-const buildOphanSubmitter = (test: ABTest, variant: Variant, complete: boolean): () => void => {
-  const data = {
-    [test.id]: makeABEvent(variant, String(complete))
-  };
-  return () => submit(data);
+const buildOphanSubmitter = (
+    test: ABTest,
+    variant: Variant,
+    complete: boolean
+): (() => void) => {
+    const data = {
+        [test.id]: makeABEvent(variant, String(complete)),
+    };
+    return () => submit(data);
 };
 
 /**
@@ -51,47 +58,58 @@ const buildOphanSubmitter = (test: ABTest, variant: Variant, complete: boolean):
  *
  * @see {@link defersImpression}
  */
-const registerCompleteEvent = (complete: boolean) => (test: Runnable<ABTest>): void => {
-  const variant = test.variantToRun;
-  const listener = (complete ? variant.success : variant.impression) || noop;
+const registerCompleteEvent = (complete: boolean) => (
+    test: Runnable<ABTest>
+): void => {
+    const variant = test.variantToRun;
+    const listener = (complete ? variant.success : variant.impression) || noop;
 
-  try {
-    listener(buildOphanSubmitter(test, variant, complete));
-  } catch (err) {
-    reportError(err, {}, false);
-  }
+    try {
+        listener(buildOphanSubmitter(test, variant, complete));
+    } catch (err) {
+        reportError(err, {}, false);
+    }
 };
 
-export const registerCompleteEvents = (tests: ReadonlyArray<Runnable<ABTest>>): void => tests.forEach(registerCompleteEvent(true));
+export const registerCompleteEvents = (
+    tests: ReadonlyArray<Runnable<ABTest>>
+): void => tests.forEach(registerCompleteEvent(true));
 
-export const registerImpressionEvents = (tests: ReadonlyArray<Runnable<ABTest>>): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
+export const registerImpressionEvents = (
+    tests: ReadonlyArray<Runnable<ABTest>>
+): void => tests.filter(defersImpression).forEach(registerCompleteEvent(false));
 
-export const buildOphanPayload = (tests: ReadonlyArray<Runnable<ABTest>>): OphanABPayload => {
-  try {
-    const log = {};
-    const serverSideTests = Object.keys(config.get('tests')).filter(test => !!config.get(`tests.${test}`));
+export const buildOphanPayload = (
+    tests: ReadonlyArray<Runnable<ABTest>>
+): OphanABPayload => {
+    try {
+        const log = {};
+        const serverSideTests = Object.keys(config.get('tests')).filter(
+            (test) => !!config.get(`tests.${test}`)
+        );
 
-    tests.filter(not(defersImpression)).forEach(test => {
-      log[test.id] = makeABEvent(test.variantToRun, 'false');
-    });
+        tests.filter(not(defersImpression)).forEach((test) => {
+            log[test.id] = makeABEvent(test.variantToRun, 'false');
+        });
 
-    serverSideTests.forEach(test => {
-      const serverSideVariant: Variant = {
-        id: 'inTest',
-        test: () => undefined
-      };
+        serverSideTests.forEach((test) => {
+            const serverSideVariant: Variant = {
+                id: 'inTest',
+                test: () => undefined,
+            };
 
-      log[`ab${test}`] = makeABEvent(serverSideVariant, 'false');
-    });
+            log[`ab${test}`] = makeABEvent(serverSideVariant, 'false');
+        });
 
-    return log;
-  } catch (error) {
-    // Encountering an error should invalidate the logging process.
-    reportError(error, {}, false);
-    return {};
-  }
+        return log;
+    } catch (error) {
+        // Encountering an error should invalidate the logging process.
+        reportError(error, {}, false);
+        return {};
+    }
 };
 
-export const trackABTests = (tests: ReadonlyArray<Runnable<ABTest>>) => submit(buildOphanPayload(tests));
+export const trackABTests = (tests: ReadonlyArray<Runnable<ABTest>>) =>
+    submit(buildOphanPayload(tests));
 
 export { buildOphanSubmitter };

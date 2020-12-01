@@ -1,60 +1,56 @@
-
-
-import { Advert } from "commercial/modules/dfp/Advert";
-import { getUrlVars } from "lib/url";
-import config from "lib/config";
+import type { Advert } from 'commercial/modules/dfp/Advert';
+import config from 'lib/config';
+import { getUrlVars } from 'lib/url';
 
 export type DfpEnv = {
-  renderStartTime: number;
-  adSlotSelector: string;
-  hbImpl: {prebid: boolean;a9: boolean;};
-  lazyLoadEnabled: boolean;
-  lazyLoadObserve: boolean;
-  creativeIDs: Array<number>;
-  advertIds: {
-    [k: string]: number;
-  };
-  advertsToLoad: Array<Advert>;
-  advertsToRefresh: Array<Advert>;
-  adverts: Array<Advert>;
-  shouldLazyLoad: () => boolean;
+    renderStartTime: number;
+    adSlotSelector: string;
+    hbImpl: { prebid: boolean; a9: boolean };
+    lazyLoadEnabled: boolean;
+    lazyLoadObserve: boolean;
+    creativeIDs: number[];
+    advertIds: Record<string, number>;
+    advertsToLoad: Advert[];
+    advertsToRefresh: Advert[];
+    adverts: Advert[];
+    shouldLazyLoad: () => boolean;
 };
 
 export const dfpEnv: DfpEnv = {
-  /* renderStartTime: integer. Point in time when DFP kicks in */
-  renderStartTime: -1,
+    /* renderStartTime: integer. Point in time when DFP kicks in */
+    renderStartTime: -1,
 
-  /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
-  adSlotSelector: '.js-ad-slot',
+    /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
+    adSlotSelector: '.js-ad-slot',
 
-  /* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
-  hbImpl: config.get('page.hbImpl'),
+    /* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
+    hbImpl: config.get('page.hbImpl'),
 
-  /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
-  lazyLoadEnabled: false,
+    /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
+    lazyLoadEnabled: false,
 
-  /* lazyLoadObserve: boolean. Use IntersectionObserver in supporting browsers */
-  lazyLoadObserve: 'IntersectionObserver' in window,
+    /* lazyLoadObserve: boolean. Use IntersectionObserver in supporting browsers */
+    lazyLoadObserve: 'IntersectionObserver' in window,
 
-  /* creativeIDs: array<string>. List of loaded creative IDs */
-  creativeIDs: [],
+    /* creativeIDs: array<string>. List of loaded creative IDs */
+    creativeIDs: [],
 
-  /* advertIds: map<string -> int>. Keeps track of slot IDs and their position in the array of adverts */
-  advertIds: {},
+    /* advertIds: map<string -> int>. Keeps track of slot IDs and their position in the array of adverts */
+    advertIds: {},
 
-  /* advertsToLoad: array<Advert>. Lists adverts waiting to be loaded */
-  advertsToLoad: [],
+    /* advertsToLoad: array<Advert>. Lists adverts waiting to be loaded */
+    advertsToLoad: [],
 
-  /* advertsToRefresh: array<Advert>. Lists adverts refreshed when a breakpoint has been crossed */
-  advertsToRefresh: [],
+    /* advertsToRefresh: array<Advert>. Lists adverts refreshed when a breakpoint has been crossed */
+    advertsToRefresh: [],
 
-  /* adverts: array<Advert>. Keeps track of adverts and their state */
-  adverts: [],
+    /* adverts: array<Advert>. Keeps track of adverts and their state */
+    adverts: [],
 
-  /* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
-  shouldLazyLoad() {
-    // We do not want lazy loading on pageskins because it messes up the roadblock
-    // Also, if the special dll parameter is passed with a value of 1, we don't lazy load
-    return !config.get('page.hasPageSkin') && getUrlVars().dll !== '1';
-  }
+    /* shouldLazyLoad: () -> boolean. Determines whether ads should be lazy loaded */
+    shouldLazyLoad() {
+        // We do not want lazy loading on pageskins because it messes up the roadblock
+        // Also, if the special dll parameter is passed with a value of 1, we don't lazy load
+        return !config.get('page.hasPageSkin') && getUrlVars().dll !== '1';
+    },
 };

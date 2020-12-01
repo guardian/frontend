@@ -1,66 +1,70 @@
-
-
 /*
  Module: geo-most-popular-front.js
  Description: replaces general most popular trails with geo based most popular on fronts.
  */
-import qwery from "qwery";
-import $ from "lib/$";
-import config from "lib/config";
-import mediator from "lib/mediator";
-import { begin, end } from "common/modules/analytics/register";
-import { Component } from "common/modules/component";
-import bonzo from "bonzo";
+import bonzo from 'bonzo';
+import { begin, end } from 'common/modules/analytics/register';
+import { Component } from 'common/modules/component';
+import $ from 'lib/$';
+import config from 'lib/config';
+import mediator from 'lib/mediator';
+import qwery from 'qwery';
 
 const hideTabs = (parent: Bonzo): void => {
-  $('.js-tabs-content', parent).addClass('tabs__content--no-border');
-  $('.js-tabs', parent).addClass('u-h');
+    $('.js-tabs-content', parent).addClass('tabs__content--no-border');
+    $('.js-tabs', parent).addClass('u-h');
 };
 
 export class GeoMostPopularFront extends Component {
+    constructor() {
+        super();
+        begin('most-popular');
+        this.endpoint = '/most-read-geo.json';
+        this.isNetworkFront =
+            config.get('page.contentType') === 'Network Front';
+        this.isVideoFront = config.get('page.pageId') === 'video';
+        this.isInternational = config.get('page.pageId') === 'international';
+        this.manipulationType = 'html';
+    }
 
-  constructor() {
-    super();
-    begin('most-popular');
-    this.endpoint = '/most-read-geo.json';
-    this.isNetworkFront = config.get('page.contentType') === 'Network Front';
-    this.isVideoFront = config.get('page.pageId') === 'video';
-    this.isInternational = config.get('page.pageId') === 'international';
-    this.manipulationType = 'html';
-  }
+    isNetworkFront: boolean;
 
-  isNetworkFront: boolean;
-  isVideoFront: boolean;
-  isInternational: boolean;
-  parent: Bonzo | null | undefined;
+    isVideoFront: boolean;
 
-  prerender(): void {
-    this.elem = qwery('.headline-list', this.elem)[0];
-  }
+    isInternational: boolean;
 
-  go(): void {
-    const tabSelector = this.isNetworkFront ? '.js-tab-1' : '.js-tab-2';
-    this.parent = qwery('.js-popular-trails')[0];
+    parent: Bonzo | null | undefined;
 
-    if (this.parent) {
-      if ((this.isInternational && this.isNetworkFront) || this.isVideoFront) {
-        // hide the tabs
-        hideTabs(this.parent);
-      } else {
-        const tab = this.parent.querySelector(tabSelector);
+    prerender(): void {
+        this.elem = qwery('.headline-list', this.elem)[0];
+    }
 
-        if (tab) {
-          this.fetch(tab, 'html');
+    go(): void {
+        const tabSelector = this.isNetworkFront ? '.js-tab-1' : '.js-tab-2';
+        this.parent = qwery('.js-popular-trails')[0];
+
+        if (this.parent) {
+            if (
+                (this.isInternational && this.isNetworkFront) ||
+                this.isVideoFront
+            ) {
+                // hide the tabs
+                hideTabs(this.parent);
+            } else {
+                const tab = this.parent.querySelector(tabSelector);
+
+                if (tab) {
+                    this.fetch(tab, 'html');
+                }
+            }
         }
-      }
     }
-  }
 
-  ready(): void {
-    if (this.isNetworkFront) {
-      hideTabs(this.parent);
+    ready(): void {
+        if (this.isNetworkFront) {
+            hideTabs(this.parent);
+        }
+        end('most-popular');
+        mediator.emit('modules:geomostpopular:ready');
     }
-    end('most-popular');
-    mediator.emit('modules:geomostpopular:ready');
-  }
 }

@@ -1,9 +1,7 @@
-
-import { SlotOnloadEvent } from "commercial/types";
-
-import { Advert } from "commercial/modules/dfp/Advert";
-import { getAdvertById } from "commercial/modules/dfp/get-advert-by-id";
-import { postMessage } from "commercial/modules/messenger/post-message";
+import type { Advert } from 'commercial/modules/dfp/Advert';
+import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { postMessage } from 'commercial/modules/messenger/post-message';
+import type { SlotOnloadEvent } from 'commercial/types';
 
 const host = `${window.location.protocol}//${window.location.host}`;
 
@@ -16,14 +14,19 @@ const host = `${window.location.protocol}//${window.location.host}`;
      we resort to sending it as a token of welcome :)
 */
 export const onSlotLoad = (event: SlotOnloadEvent) => {
-  const advert: Advert | null | undefined = getAdvertById(event.slot.getSlotElementId());
-  if (!advert) {
-    return;
-  }
+    const advert: Advert | null | undefined = getAdvertById(
+        event.slot.getSlotElementId()
+    );
+    if (!advert) {
+        return;
+    }
 
-  const iframe = advert.node.getElementsByTagName('iframe')[0];
-  postMessage({
-    id: iframe.id,
-    host
-  }, iframe.contentWindow);
+    const iframe = advert.node.getElementsByTagName('iframe')[0];
+    postMessage(
+        {
+            id: iframe.id,
+            host,
+        },
+        iframe.contentWindow
+    );
 };

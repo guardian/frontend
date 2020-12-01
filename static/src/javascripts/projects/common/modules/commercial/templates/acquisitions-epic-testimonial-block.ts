@@ -1,7 +1,8 @@
+import quoteSvg from 'svgs/icon/garnett-quote.svg';
 
-import quoteSvg from "svgs/icon/garnett-quote.svg";
-
-export const acquisitionsTestimonialBlockTemplate = (params: AcquisitionsEpicTestimonialCopy) => `<div class="epic__testimonial-container">
+export const acquisitionsTestimonialBlockTemplate = (
+    params: AcquisitionsEpicTestimonialCopy
+) => `<div class="epic__testimonial-container">
         <div class="epic__testimonial-quote">
             ${quoteSvg.markup}
         </div>

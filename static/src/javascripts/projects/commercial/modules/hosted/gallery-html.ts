@@ -1,4 +1,3 @@
-
 export const galleryHtml = `
 <div>
     <div class="js-hosted-gallery-container">

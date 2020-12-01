@@ -1,94 +1,121 @@
-
-
 export type HeaderBiddingSize = [number, number];
 
 export type HeaderBiddingSlot = {
-  key: "top-above-nav" | "right" | "inline1" | "inline" | "mostpop" | "comments" | "mobile-sticky" | "banner";
-  sizes: HeaderBiddingSize[];
+    key:
+        | 'top-above-nav'
+        | 'right'
+        | 'inline1'
+        | 'inline'
+        | 'mostpop'
+        | 'comments'
+        | 'mobile-sticky'
+        | 'banner';
+    sizes: HeaderBiddingSize[];
 };
 
 export type PrebidOzoneParams = {
-  publisherId: string;
-  siteId: string;
-  placementId: string;
-  customData?: [{
-    [key: string]: unknown;
-  }];
-  ozoneData?: {
-    [key: string]: unknown;
-  };
+    publisherId: string;
+    siteId: string;
+    placementId: string;
+    customData?: [Record<string, unknown>];
+    ozoneData?: Record<string, unknown>;
 };
 
 export type PrebidSonobiParams = {
-  ad_unit: string;
-  dom_id: string;
-  appNexusTargeting: string;
-  pageViewId: string;
-  render?: string;
+    ad_unit: string;
+    dom_id: string;
+    appNexusTargeting: string;
+    pageViewId: string;
+    render?: string;
 };
 
 export type PrebidPubmaticParams = {
-  publisherId: string;
-  adSlot: string;
+    publisherId: string;
+    adSlot: string;
 };
 
 export type PrebidIndexExchangeParams = {
-  siteId: string;
-  size: HeaderBiddingSize;
+    siteId: string;
+    size: HeaderBiddingSize;
 };
 
 export type PrebidTrustXParams = {
-  uid: string;
+    uid: string;
 };
 
 export type PrebidTripleLiftParams = {
-  inventoryCode: string;
+    inventoryCode: string;
 };
 
 export type PrebidImproveParams = {
-  placementId: number;
-  size: {
-    w?: number;
-    h?: number;
-  };
+    placementId: number;
+    size: {
+        w?: number;
+        h?: number;
+    };
 };
 
 export type PrebidXaxisParams = {
-  placementId: number;
+    placementId: number;
 };
 
 export type PrebidAppNexusParams = {
-  invCode?: string;
-  member?: string;
-  placementId?: string;
-  keywords: {};
-  lotame?: {};
+    invCode?: string;
+    member?: string;
+    placementId?: string;
+    keywords: {};
+    lotame?: {};
 };
 
 export type PrebidOpenXParams = {
-  delDomain: string;
-  unit: string;
-  customParams: {};
-  lotame?: {};
+    delDomain: string;
+    unit: string;
+    customParams: {};
+    lotame?: {};
 };
 
 export type PrebidAdYouLikeParams = {
-  placement: string;
+    placement: string;
 };
 
 export type PrebidBidder = {
-  name: string;
-  switchName: string;
-  bidParams: (slotId: string, sizes: HeaderBiddingSize[]) => PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams | PrebidTripleLiftParams | PrebidImproveParams | PrebidXaxisParams | PrebidAppNexusParams | PrebidOpenXParams | PrebidOzoneParams | PrebidAdYouLikeParams | PrebidPubmaticParams;
+    name: string;
+    switchName: string;
+    bidParams: (
+        slotId: string,
+        sizes: HeaderBiddingSize[]
+    ) =>
+        | PrebidSonobiParams
+        | PrebidIndexExchangeParams
+        | PrebidTrustXParams
+        | PrebidTripleLiftParams
+        | PrebidImproveParams
+        | PrebidXaxisParams
+        | PrebidAppNexusParams
+        | PrebidOpenXParams
+        | PrebidOzoneParams
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams;
 };
 
 export type PrebidBid = {
-  bidder: string;
-  params: PrebidSonobiParams | PrebidIndexExchangeParams | PrebidTrustXParams | PrebidTripleLiftParams | PrebidImproveParams | PrebidXaxisParams | PrebidAppNexusParams | PrebidOpenXParams | PrebidOzoneParams | PrebidAdYouLikeParams | PrebidPubmaticParams;
+    bidder: string;
+    params:
+        | PrebidSonobiParams
+        | PrebidIndexExchangeParams
+        | PrebidTrustXParams
+        | PrebidTripleLiftParams
+        | PrebidImproveParams
+        | PrebidXaxisParams
+        | PrebidAppNexusParams
+        | PrebidOpenXParams
+        | PrebidOzoneParams
+        | PrebidAdYouLikeParams
+        | PrebidPubmaticParams;
 };
 
 export type PrebidMediaTypes = {
-  banner: {
-    sizes: HeaderBiddingSize[];
-  };
+    banner: {
+        sizes: HeaderBiddingSize[];
+    };
 };

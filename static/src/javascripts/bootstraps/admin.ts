@@ -1,23 +1,22 @@
-
-import { init as initDrama } from "admin/bootstraps/drama";
-import { initABTests } from "admin/bootstraps/abtests";
-import { initRadiator } from "admin/bootstraps/radiator";
-import domReady from "domready";
+import { initABTests } from 'admin/bootstraps/abtests';
+import { init as initDrama } from 'admin/bootstraps/drama';
+import { initRadiator } from 'admin/bootstraps/radiator';
+import domReady from 'domready';
 
 domReady(() => {
-  switch (window.location.pathname) {
-    case '/analytics/abtests':
-      initABTests();
-      break;
+    switch (window.location.pathname) {
+        case '/analytics/abtests':
+            initABTests();
+            break;
 
-    case '/dev/switchboard':
-      initDrama();
-      break;
+        case '/dev/switchboard':
+            initDrama();
+            break;
 
-    case '/radiator':
-      initRadiator();
-      break;
+        case '/radiator':
+            initRadiator();
+            break;
 
-    default: // do nothing
-  }
+        default: // do nothing
+    }
 });

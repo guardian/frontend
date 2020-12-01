@@ -1,39 +1,54 @@
+import type {
+    AdConsent,
+    AdConsentWithState,
+} from 'common/modules/commercial/ad-prefs.lib';
+import userPrefs from 'common/modules/user-prefs';
+import ophan from 'ophan/ng';
 
-import ophan from "ophan/ng";
-import userPrefs from "common/modules/user-prefs";
-import { AdConsent, AdConsentWithState } from "common/modules/commercial/ad-prefs.lib";
+const alertViewCount = 'first-pv-consent.lifetime-views';
 
-const alertViewCount: string = 'first-pv-consent.lifetime-views';
-
-const getAlertViewCount = (): number => parseInt(userPrefs.get(alertViewCount) || 0, 10);
+const getAlertViewCount = (): number =>
+    parseInt(userPrefs.get(alertViewCount) || 0, 10);
 
 const upAlertViewCount = (): void => {
-  userPrefs.set(alertViewCount, getAlertViewCount() + 1);
-  ophan.record({
-    component: `privacy-prefs`,
-    value: `lifetime-alert-views : ${getAlertViewCount()}`
-  });
+    userPrefs.set(alertViewCount, getAlertViewCount() + 1);
+    ophan.record({
+        component: `privacy-prefs`,
+        value: `lifetime-alert-views : ${getAlertViewCount()}`,
+    });
 };
 
 const resetAlertViewCount = (): void => {
-  userPrefs.set(alertViewCount, 0);
+    userPrefs.set(alertViewCount, 0);
 };
 
-const onConsentSet = (consent: AdConsent, status: boolean | null | undefined): void => {
-  ophan.record({
-    component: `privacy-prefs`,
-    value: `set : ${String(status)} : ${consent.cookie.toLowerCase()}`
-  });
-  resetAlertViewCount();
-};
-
-const trackConsentCookies = (allConsentsWithState: AdConsentWithState[]): void => {
-  allConsentsWithState.forEach((consentWithState: AdConsentWithState) => {
+const onConsentSet = (
+    consent: AdConsent,
+    status: boolean | null | undefined
+): void => {
     ophan.record({
-      component: `privacy-prefs`,
-      value: `pv : ${String(consentWithState.state)} : ${consentWithState.consent.cookie.toLowerCase()}`
+        component: `privacy-prefs`,
+        value: `set : ${String(status)} : ${consent.cookie.toLowerCase()}`,
     });
-  });
+    resetAlertViewCount();
 };
 
-export { onConsentSet, trackConsentCookies, upAlertViewCount, getAlertViewCount };
+const trackConsentCookies = (
+    allConsentsWithState: AdConsentWithState[]
+): void => {
+    allConsentsWithState.forEach((consentWithState: AdConsentWithState) => {
+        ophan.record({
+            component: `privacy-prefs`,
+            value: `pv : ${String(
+                consentWithState.state
+            )} : ${consentWithState.consent.cookie.toLowerCase()}`,
+        });
+    });
+};
+
+export {
+    onConsentSet,
+    trackConsentCookies,
+    upAlertViewCount,
+    getAlertViewCount,
+};

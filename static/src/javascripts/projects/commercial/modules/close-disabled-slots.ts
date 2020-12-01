@@ -1,21 +1,23 @@
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import fastdom from 'lib/fastdom-promise';
+import once from 'lodash/once';
+import qwery from 'qwery';
 
-import qwery from "qwery";
-import fastdom from "lib/fastdom-promise";
-import once from "lodash/once";
-import { dfpEnv } from "commercial/modules/dfp/dfp-env";
+const shouldDisableAdSlot = (adSlot) =>
+    window.getComputedStyle(adSlot).display === 'none';
 
-const shouldDisableAdSlot = adSlot => window.getComputedStyle(adSlot).display === 'none';
+const closeDisabledSlots = once(
+    (): Promise<void> => {
+        // Get all ad slots
+        let adSlots: Element[] = qwery(dfpEnv.adSlotSelector);
 
-const closeDisabledSlots = once((): Promise<void> => {
-  // Get all ad slots
-  let adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
+        // remove the ones which should not be there
+        adSlots = adSlots.filter(shouldDisableAdSlot);
 
-  // remove the ones which should not be there
-  adSlots = adSlots.filter(shouldDisableAdSlot);
-
-  return fastdom.mutate(() => {
-    adSlots.forEach((adSlot: Element) => adSlot.remove());
-  });
-});
+        return fastdom.mutate(() => {
+            adSlots.forEach((adSlot: Element) => adSlot.remove());
+        });
+    }
+);
 
 export { closeDisabledSlots };

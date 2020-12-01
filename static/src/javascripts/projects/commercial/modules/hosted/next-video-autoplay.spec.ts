@@ -1,15 +1,19 @@
-
-import fastdom from "lib/fastdom-promise";
-import { init, canAutoplay, triggerEndSlate, addCancelListener } from "commercial/modules/hosted/next-video-autoplay";
+import {
+    addCancelListener,
+    canAutoplay,
+    init,
+    triggerEndSlate,
+} from 'commercial/modules/hosted/next-video-autoplay';
+import fastdom from 'lib/fastdom-promise';
 
 jest.mock('common/modules/analytics/google', () => {});
 jest.mock('commercial/modules/hosted/next-video', () => ({
-  init: () => Promise.resolve(),
-  load: () => Promise.resolve()
+    init: () => Promise.resolve(),
+    load: () => Promise.resolve(),
 }));
 
 describe('Next video autoplay', () => {
-  const domSnippet = `
+    const domSnippet = `
         <div>
             <video data-duration="160">
                 <source type="video/mp4" src="">
@@ -21,57 +25,66 @@ describe('Next video autoplay', () => {
         <button class="js-autoplay-cancel"></button>;
     `;
 
-  const domSnippetNoVideo = '<div class="js-autoplay-timer" data-next-page="">10s</div>';
+    const domSnippetNoVideo =
+        '<div class="js-autoplay-timer" data-next-page="">10s</div>';
 
-  beforeEach(done => {
-    if (document.body) {
-      document.body.innerHTML = domSnippet;
-    }
+    beforeEach((done) => {
+        if (document.body) {
+            document.body.innerHTML = domSnippet;
+        }
 
-    init().then(done);
-  });
-
-  afterEach(() => {
-    if (document.body) {
-      document.body.innerHTML = '';
-    }
-  });
-
-  it('should exist', done => {
-    expect(init).toBeDefined();
-    done();
-  });
-
-  it('should trigger autoplay when there is a next video', done => {
-    expect(canAutoplay()).toBeTruthy();
-    done();
-  });
-
-  it('should show end slate information', done => {
-    triggerEndSlate();
-    fastdom.measure(() => {
-      expect((document.querySelector('.js-hosted-next-autoplay') as any).classList.toString()).toEqual(expect.stringContaining('js-autoplay-start'));
-      done();
+        init().then(done);
     });
-  });
 
-  it('should hide end slate information when cancel button is clicked', done => {
-    addCancelListener();
-    (document.querySelector('.js-autoplay-cancel') as any).click();
-    fastdom.measure(() => {
-      expect((document.querySelector('.js-hosted-next-autoplay') as any).classList.toString()).toEqual(expect.stringContaining('hosted-slide-out'));
-      done();
+    afterEach(() => {
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
     });
-  });
 
-  it('should not trigger autoplay when there is no next video', done => {
-    if (document.body) {
-      document.body.innerHTML = domSnippetNoVideo;
-    }
-
-    init().then(() => {
-      expect(canAutoplay()).toBeFalsy();
-      done();
+    it('should exist', (done) => {
+        expect(init).toBeDefined();
+        done();
     });
-  });
+
+    it('should trigger autoplay when there is a next video', (done) => {
+        expect(canAutoplay()).toBeTruthy();
+        done();
+    });
+
+    it('should show end slate information', (done) => {
+        triggerEndSlate();
+        fastdom.measure(() => {
+            expect(
+                document
+                    .querySelector('.js-hosted-next-autoplay')
+                    .classList.toString()
+            ).toEqual(expect.stringContaining('js-autoplay-start'));
+            done();
+        });
+    });
+
+    it('should hide end slate information when cancel button is clicked', (done) => {
+        addCancelListener();
+        document.querySelector('.js-autoplay-cancel').click();
+        fastdom.measure(() => {
+            expect(
+                document
+                    .querySelector('.js-hosted-next-autoplay')
+                    .classList.toString()
+            ).toEqual(expect.stringContaining('hosted-slide-out'));
+            done();
+        });
+    });
+
+    it('should not trigger autoplay when there is no next video', (done) => {
+        if (document.body) {
+            document.body.innerHTML = domSnippetNoVideo;
+        }
+
+        init().then(() => {
+            expect(canAutoplay()).toBeFalsy();
+            done();
+        });
+    });
 });

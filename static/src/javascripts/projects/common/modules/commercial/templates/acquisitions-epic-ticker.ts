@@ -1,5 +1,3 @@
-
-
 export const acquisitionsEpicTickerTemplate = `
     <div id="epic-ticker" class="js-epic-ticker epic-ticker is-hidden">
     

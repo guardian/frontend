@@ -1,5 +1,7 @@
-
-
-const api = window.performance || window.msPerformance || window.webkitPerformance || window.mozPerformance;
+const api =
+    window.performance ||
+    window.msPerformance ||
+    window.webkitPerformance ||
+    window.mozPerformance;
 
 export default api;

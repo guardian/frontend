@@ -1,24 +1,23 @@
-
-import qwery from "qwery";
-import config from "lib/config";
-import { Component } from "common/modules/component";
-import { initTrails } from "bootstraps/enhanced/trail";
+import { initTrails } from 'bootstraps/enhanced/trail';
+import { Component } from 'common/modules/component';
+import config from 'lib/config';
+import qwery from 'qwery';
 
 const transcludeMostPopular = (): void => {
-  const mostViewed = new Component();
-  const container = qwery('.js-gallery-most-popular')[0];
+    const mostViewed = new Component();
+    const container = qwery('.js-gallery-most-popular')[0];
 
-  mostViewed.manipulationType = 'html';
-  mostViewed.endpoint = '/gallery/most-viewed.json';
-  mostViewed.fetch(container, 'html');
+    mostViewed.manipulationType = 'html';
+    mostViewed.endpoint = '/gallery/most-viewed.json';
+    mostViewed.fetch(container, 'html');
 };
 
 const init = (): void => {
-  initTrails();
+    initTrails();
 
-  if (config.get('page.showRelatedContent')) {
-    transcludeMostPopular();
-  }
+    if (config.get('page.showRelatedContent')) {
+        transcludeMostPopular();
+    }
 };
 
 export { init };

@@ -1,19 +1,25 @@
-
-import mediator from "lib/mediator";
-import { CurrentABTest } from "../../types";
-import { componentName, withComponentId } from "../../component";
-import { addOpinionBgColour, addClickHandler, setUserDismissedGate, showGate, showPrivacySettingsCMPModule, addOverlayVariantCSS, setGatePageTargeting, addCSSOnOpinion, incrementUserDismissedGateCount } from "../../helper";
+import mediator from 'lib/mediator';
+import { componentName, withComponentId } from '../../component';
+import {
+    addClickHandler,
+    addCSSOnOpinion,
+    addOpinionBgColour,
+    addOverlayVariantCSS,
+    incrementUserDismissedGateCount,
+    setGatePageTargeting,
+    setUserDismissedGate,
+    showGate,
+    showPrivacySettingsCMPModule,
+} from '../../helper';
+import type { CurrentABTest } from '../../types';
 
 // add the html template as the return of the function below
 // signInUrl - parameter which holds the link to the sign in/register page with the tracking parameters added
 // guUrl - url of the STAGE frontend site, e.g. in DEV stage it would be https://m.thegulocal.com,
 //         and for PROD it would be https://theguardian.com
-const htmlTemplate: (arg0: {
-  signInUrl: string;
-  guUrl: string;
-}) => string = ({
-  signInUrl,
-  guUrl
+const htmlTemplate: (arg0: { signInUrl: string; guUrl: string }) => string = ({
+    signInUrl,
+    guUrl,
 }) => `
 <div class="signin-gate">
     <div class="signin-gate__content--var">
@@ -64,128 +70,127 @@ const htmlTemplate: (arg0: {
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
 // in our case it returns true if the design ran successfully, and false if there were any problems encountered
 export const designShow: (arg0: {
-  abTest: CurrentABTest;
-  guUrl: string;
-  signInUrl: string;
-  ophanComponentId: string;
-}) => boolean = ({
-  abTest,
-  guUrl,
-  signInUrl,
-  ophanComponentId
-}) => showGate({
-  template: htmlTemplate({
-    signInUrl,
-    guUrl
-  }),
-  handler: ({
-    articleBody,
-    shadowArticleBody
-  }) => {
-    addCSSOnOpinion({
-      element: shadowArticleBody,
-      selector: '.signin-gate__faqlinks--var',
-      css: 'signin-gate__faqlinks--var--comment'
+    abTest: CurrentABTest;
+    guUrl: string;
+    signInUrl: string;
+    ophanComponentId: string;
+}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+    showGate({
+        template: htmlTemplate({
+            signInUrl,
+            guUrl,
+        }),
+        handler: ({ articleBody, shadowArticleBody }) => {
+            addCSSOnOpinion({
+                element: shadowArticleBody,
+                selector: '.signin-gate__faqlinks--var',
+                css: 'signin-gate__faqlinks--var--comment',
+            });
+
+            addOverlayVariantCSS({
+                element: shadowArticleBody,
+                selector: '.signin-gate__first-paragraph-overlay',
+            });
+
+            // check if comment, and add comment/opinion bg colour
+            addOpinionBgColour({
+                element: shadowArticleBody,
+                selector: '.signin-gate__first-paragraph-overlay',
+            });
+
+            const ophanComponent: OphanComponent = withComponentId(
+                ophanComponentId
+            );
+
+            // add click handler for the dismiss of the gate
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__dismiss',
+                abTest,
+                component: ophanComponent,
+                value: 'not-now',
+                callback: () => {
+                    // show the current body. Remove the shadow one
+                    articleBody.style.display = 'block';
+                    shadowArticleBody.remove();
+
+                    // The page does not reload when a user dismisses the gate,
+                    // so we must reset page targeting params dynamically via googletags
+                    setGatePageTargeting(true, false);
+
+                    // Tell other things the article has been redisplayed
+                    mediator.emit('page:article:redisplayed');
+
+                    // user pref dismissed gate
+                    setUserDismissedGate({
+                        componentName,
+                        name: abTest.name,
+                        variant: abTest.variant,
+                    });
+
+                    // increment gate dismissed count
+                    incrementUserDismissedGateCount(
+                        abTest.variant,
+                        abTest.name,
+                        componentName
+                    );
+                },
+            });
+
+            // add click handler for sign in link click
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__register-button',
+                abTest,
+                component: ophanComponent,
+                value: 'register-link',
+            });
+
+            // add click handler for sign in link click
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__sign-in',
+                abTest,
+                component: ophanComponent,
+                value: 'sign-in-link',
+            });
+
+            // add click handler for the why sign in link
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__why',
+                abTest,
+                component: ophanComponent,
+                value: 'why-link',
+            });
+
+            // add click handler for the how info used link
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__how',
+                abTest,
+                component: ophanComponent,
+                value: 'how-link',
+            });
+
+            // add click handler for the help link
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '.js-signin-gate__help',
+                abTest,
+                component: ophanComponent,
+                value: 'help-link',
+            });
+
+            // add click handler for the privacy settings link
+            // to show the consent management platform module
+            addClickHandler({
+                element: shadowArticleBody,
+                selector: '#js-signin-gate__privacy',
+                abTest,
+                component: ophanComponent,
+                value: 'privacy-settings-link',
+                callback: showPrivacySettingsCMPModule,
+            });
+        },
     });
-
-    addOverlayVariantCSS({
-      element: shadowArticleBody,
-      selector: '.signin-gate__first-paragraph-overlay'
-    });
-
-    // check if comment, and add comment/opinion bg colour
-    addOpinionBgColour({
-      element: shadowArticleBody,
-      selector: '.signin-gate__first-paragraph-overlay'
-    });
-
-    const ophanComponent: OphanComponent = withComponentId(ophanComponentId);
-
-    // add click handler for the dismiss of the gate
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__dismiss',
-      abTest,
-      component: ophanComponent,
-      value: 'not-now',
-      callback: () => {
-        // show the current body. Remove the shadow one
-        articleBody.style.display = 'block';
-        shadowArticleBody.remove();
-
-        // The page does not reload when a user dismisses the gate,
-        // so we must reset page targeting params dynamically via googletags
-        setGatePageTargeting(true, false);
-
-        // Tell other things the article has been redisplayed
-        mediator.emit('page:article:redisplayed');
-
-        // user pref dismissed gate
-        setUserDismissedGate({
-          componentName,
-          name: abTest.name,
-          variant: abTest.variant
-        });
-
-        // increment gate dismissed count
-        incrementUserDismissedGateCount(abTest.variant, abTest.name, componentName);
-      }
-    });
-
-    // add click handler for sign in link click
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__register-button',
-      abTest,
-      component: ophanComponent,
-      value: 'register-link'
-    });
-
-    // add click handler for sign in link click
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__sign-in',
-      abTest,
-      component: ophanComponent,
-      value: 'sign-in-link'
-    });
-
-    // add click handler for the why sign in link
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__why',
-      abTest,
-      component: ophanComponent,
-      value: 'why-link'
-    });
-
-    // add click handler for the how info used link
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__how',
-      abTest,
-      component: ophanComponent,
-      value: 'how-link'
-    });
-
-    // add click handler for the help link
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '.js-signin-gate__help',
-      abTest,
-      component: ophanComponent,
-      value: 'help-link'
-    });
-
-    // add click handler for the privacy settings link
-    // to show the consent management platform module
-    addClickHandler({
-      element: shadowArticleBody,
-      selector: '#js-signin-gate__privacy',
-      abTest,
-      component: ophanComponent,
-      value: 'privacy-settings-link',
-      callback: showPrivacySettingsCMPModule
-    });
-  }
-});

@@ -1,13 +1,14 @@
-
-
 // expose some frontend modules to atoms
 // managed by the atoms team
 
-import ophan from "ophan/ng";
-import fastdom from "fastdom";
-import { isAdFreeUser } from "common/modules/commercial/user-features";
-import { onConsentChange, getConsentFor } from "@guardian/consent-management-platform";
-import { viewport } from "./services/viewport";
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import fastdom from 'fastdom';
+import ophan from 'ophan/ng';
+import { viewport } from './services/viewport';
 
 // Need to pass in the API to native services, something that looks
 // like this:
@@ -19,32 +20,35 @@ import { viewport } from "./services/viewport";
 
 type FastdomAction = (arg0: Function) => void;
 
-const promisify = (fdaction: FastdomAction) => (thunk: Function): Promise<any> => new Promise(resolve => {
-  fdaction.call(fastdom, () => {
-    resolve(thunk());
-  });
-});
+const promisify = (fdaction: FastdomAction) => (
+    thunk: Function
+): Promise<any> =>
+    new Promise((resolve) => {
+        fdaction.call(fastdom, () => {
+            resolve(thunk());
+        });
+    });
 
 const onAcastConsentChange = (callback: (arg0: boolean) => void): void => {
-  onConsentChange(state => {
-    const consented = getConsentFor('acast', state);
-    callback(consented);
-  });
+    onConsentChange((state) => {
+        const consented = getConsentFor('acast', state);
+        callback(consented);
+    });
 };
 
 const services: Services = {
-  ophan,
-  dom: {
-    write: promisify(fastdom.mutate),
-    read: promisify(fastdom.measure)
-  },
-  viewport,
-  consent: {
-    onAcastConsentChange
-  },
-  commercial: {
-    isAdFree: isAdFreeUser()
-  }
+    ophan,
+    dom: {
+        write: promisify(fastdom.mutate),
+        read: promisify(fastdom.measure),
+    },
+    viewport,
+    consent: {
+        onAcastConsentChange,
+    },
+    commercial: {
+        isAdFree: isAdFreeUser(),
+    },
 };
 
 export { services };

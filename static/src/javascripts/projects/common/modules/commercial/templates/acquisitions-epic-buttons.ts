@@ -1,12 +1,14 @@
+import { getDefaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
+import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
+import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
-import { paymentMethodLogosTemplate } from "common/modules/commercial/templates/payment-method-logos-template";
-import { ReminderFields } from "common/modules/commercial/templates/acquisitions-epic-reminder";
-import { getDefaultReminderFields } from "common/modules/commercial/templates/acquisitions-epic-control";
-import { canShowContributionsReminderFeature } from "common/modules/commercial/user-features";
-
-
-export const epicButtonsTemplate = (primaryCta: EpicCta, secondaryCta?: EpicCta, reminderFields?: ReminderFields) => {
-  const supportButtonSupport = `
+export const epicButtonsTemplate = (
+    primaryCta: EpicCta,
+    secondaryCta?: EpicCta,
+    reminderFields?: ReminderFields
+) => {
+    const supportButtonSupport = `
         <div>
             <a class="component-button component-button--primary component-button--hasicon-right contributions__contribute--epic-member"
               href="${primaryCta.url}"
@@ -25,7 +27,8 @@ export const epicButtonsTemplate = (primaryCta: EpicCta, secondaryCta?: EpicCta,
             </a>
         </div>`;
 
-  const secondaryButton = secondaryCta ? `
+    const secondaryButton = secondaryCta
+        ? `
             <a class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--hasicon-right contributions__contribute--epic-member contributions__secondary-button contributions__secondary-button--epic"
               href=${secondaryCta.url}
               target="_blank">
@@ -40,28 +43,36 @@ export const epicButtonsTemplate = (primaryCta: EpicCta, secondaryCta?: EpicCta,
                 >
                     <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
                 </svg>
-                </a>` : '';
+                </a>`
+        : '';
 
-  const getReminderCta = (): string | null | undefined => {
-    const fields = reminderFields || getDefaultReminderFields();
-    return fields && fields.reminderCTA;
-  };
+    const getReminderCta = (): string | null | undefined => {
+        const fields = reminderFields || getDefaultReminderFields();
+        return fields && fields.reminderCTA;
+    };
 
-  const reminderCta = canShowContributionsReminderFeature() && getReminderCta();
+    const reminderCta =
+        canShowContributionsReminderFeature() && getReminderCta();
 
-  const reminderButton = reminderCta ? `<label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
+    const reminderButton = reminderCta
+        ? `<label for="epic-reminder__reveal-reminder" class="epic-reminder__prompt-label">
             <div data-cta-copy="${reminderCta}" tabindex="0" class="component-button component-button--greyHollow component-button--greyHollow--for-epic component-button--reminder-prompt contributions__secondary-button contributions__secondary-button--epic" role="checkbox">
                     ${reminderCta}
             </div>
-        </label>` : '';
+        </label>`
+        : '';
 
-  const reminderInput = reminderCta ? `<input type="checkbox" id="epic-reminder__reveal-reminder" class="epic-reminder__reveal-reminder" />` : '';
+    const reminderInput = reminderCta
+        ? `<input type="checkbox" id="epic-reminder__reveal-reminder" class="epic-reminder__reveal-reminder" />`
+        : '';
 
-  return `
+    return `
         ${reminderInput}
         <div class="contributions__buttons">
             ${supportButtonSupport}
             ${secondaryButton || reminderButton || ''}
-            ${paymentMethodLogosTemplate('contributions__payment-logos contributions__contribute--epic-member')}
+            ${paymentMethodLogosTemplate(
+                'contributions__payment-logos contributions__contribute--epic-member'
+            )}
         </div>`;
 };

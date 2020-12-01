@@ -1,5 +1,4 @@
-
-import { storage } from "@guardian/libs";
+import { storage } from '@guardian/libs';
 
 const viewKey = 'gu.contributions.views';
 const viewLog = storage.local.get(viewKey) || [];
@@ -13,23 +12,29 @@ const maxLogEntries = 50;
  * @param testId
  */
 const logView = (testId: string): void => {
-  viewLog.push({
-    date: new Date().getTime(),
-    testId
-  });
+    viewLog.push({
+        date: new Date().getTime(),
+        testId,
+    });
 
-  storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
+    storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
 };
 
-const viewsInPreviousDays = (days: number, testId: string | null | undefined): number => {
-  const ms = days * 1000 * 60 * 60 * 24;
-  const now = new Date().getTime();
+const viewsInPreviousDays = (
+    days: number,
+    testId: string | null | undefined
+): number => {
+    const ms = days * 1000 * 60 * 60 * 24;
+    const now = new Date().getTime();
 
-  return viewLog.filter(view => (testId ? view.testId === testId : true) && view.date > now - ms).length;
+    return viewLog.filter(
+        (view) =>
+            (testId ? view.testId === testId : true) && view.date > now - ms
+    ).length;
 };
 
 const clearViewLog = (): void => {
-  storage.local.remove(viewKey);
+    storage.local.remove(viewKey);
 };
 
 const overallNumberOfViews = () => viewLog.length;

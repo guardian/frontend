@@ -1,28 +1,31 @@
-
-import { dfpEnv } from "commercial/modules/dfp/dfp-env";
-import { loadAdvert } from "commercial/modules/dfp/load-advert";
-import { Advert } from "commercial/modules/dfp/Advert";
-import { enableLazyLoad } from "commercial/modules/dfp/lazy-load";
+import type { Advert } from 'commercial/modules/dfp/Advert';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
+import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 
 const advertsToInstantlyLoad = ['dfp-ad--im'];
 
 const instantLoad = (): void => {
-  const instantLoadAdverts = dfpEnv.advertsToLoad.filter((advert: Advert): boolean => advertsToInstantlyLoad.includes(advert.id));
+    const instantLoadAdverts = dfpEnv.advertsToLoad.filter(
+        (advert: Advert): boolean => advertsToInstantlyLoad.includes(advert.id)
+    );
 
-  dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter((advert: Advert): boolean => !advertsToInstantlyLoad.includes(advert.id));
+    dfpEnv.advertsToLoad = dfpEnv.advertsToLoad.filter(
+        (advert: Advert): boolean => !advertsToInstantlyLoad.includes(advert.id)
+    );
 
-  instantLoadAdverts.forEach(loadAdvert);
+    instantLoadAdverts.forEach(loadAdvert);
 };
 
 const displayLazyAds = (): void => {
-  window.googletag.pubads().collapseEmptyDivs();
-  window.googletag.enableServices();
+    window.googletag.pubads().collapseEmptyDivs();
+    window.googletag.enableServices();
 
-  instantLoad();
+    instantLoad();
 
-  dfpEnv.advertsToLoad.forEach((advert: Advert): void => {
-    enableLazyLoad(advert);
-  });
+    dfpEnv.advertsToLoad.forEach((advert: Advert): void => {
+        enableLazyLoad(advert);
+    });
 };
 
 export { displayLazyAds };

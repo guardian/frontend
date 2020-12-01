@@ -1,6 +1,4 @@
-
-
-import { getLocalCurrencySymbolSync } from "lib/geolocation";
+import { getLocalCurrencySymbolSync } from 'lib/geolocation';
 
 export const acquisitionsBannerTickerTemplate = `
     <div id="banner-ticker" class="js-engagement-banner-ticker engagement-banner-ticker is-hidden">

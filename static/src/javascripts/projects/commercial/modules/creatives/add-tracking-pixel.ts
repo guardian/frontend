@@ -1,6 +1,5 @@
-
 const addTrackingPixel = (url: string): void => {
-  new Image().src = url;
+    new Image().src = url;
 };
 
 export { addTrackingPixel };

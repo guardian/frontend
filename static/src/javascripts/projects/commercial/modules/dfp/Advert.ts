@@ -1,10 +1,8 @@
-
-import { AdSize, AdSizes } from "commercial/types";
-
-import { breakpoints } from "lib/detect";
-import { getCurrentTime } from "lib/user-timing";
-import { defineSlot } from "commercial/modules/dfp/define-slot";
-import { breakpointNameToAttribute } from "commercial/modules/dfp/breakpoint-name-to-attribute";
+import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
+import { defineSlot } from 'commercial/modules/dfp/define-slot';
+import type { AdSize, AdSizes } from 'commercial/types';
+import { breakpoints } from 'lib/detect';
+import { getCurrentTime } from 'lib/user-timing';
 
 type Resolver = (x: boolean) => void;
 
@@ -14,129 +12,162 @@ type Resolver = (x: boolean) => void;
  * One size       - `data-mobile="300,50"`
  * Multiple sizes - `data-mobile="300,50|320,50"`
  */
-const createSizeMapping = (attr: string): Array<AdSize> => attr.split('|').map(size => size === 'fluid' ? 'fluid' : size.split(',').map(Number));
+const createSizeMapping = (attr: string): AdSize[] =>
+    attr
+        .split('|')
+        .map((size) =>
+            size === 'fluid' ? 'fluid' : size.split(',').map(Number)
+        );
 
-const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes => breakpoints.reduce((sizes, breakpoint) => {
-  const data = advertNode.getAttribute(`data-${breakpointNameToAttribute(breakpoint.name)}`);
-  if (data) {
-    sizes[breakpoint.name] = createSizeMapping(data);
-  }
-  return sizes;
-}, {});
+const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
+    breakpoints.reduce((sizes, breakpoint) => {
+        const data = advertNode.getAttribute(
+            `data-${breakpointNameToAttribute(breakpoint.name)}`
+        );
+        if (data) {
+            sizes[breakpoint.name] = createSizeMapping(data);
+        }
+        return sizes;
+    }, {});
 
 class Advert {
+    id: string;
 
-  id: string;
-  node: HTMLElement;
-  sizes: AdSizes;
-  size: AdSize | null | undefined;
-  slot: any;
-  isEmpty: boolean | null | undefined;
-  isLoading: boolean;
-  isRendering: boolean;
-  isLoaded: boolean;
-  isRendered: boolean;
-  shouldRefresh: boolean;
-  maxViewPercentage: number;
-  whenLoaded: Promise<boolean>;
-  whenLoadedResolver: Resolver;
-  whenRendered: Promise<boolean>;
-  whenRenderedResolver: Resolver;
-  whenSlotReady: Promise<void>;
-  extraNodeClasses: Array<string>;
-  timings: {
-    createTime: number | null | undefined;
-    startLoading: number | null | undefined;
-    stopLoading: number | null | undefined;
-    startRendering: number | null | undefined;
-    stopRendering: number | null | undefined;
-    loadingMethod: number | null | undefined;
-    lazyWaitComplete: number | null | undefined;
-  };
-  hasPrebidSize: boolean;
+    node: HTMLElement;
 
-  constructor(adSlotNode: HTMLElement) {
-    const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
-    const slotDefinition = defineSlot(adSlotNode, sizes);
+    sizes: AdSizes;
 
-    this.id = adSlotNode.id;
-    this.node = adSlotNode;
-    this.sizes = sizes;
-    this.size = null;
-    this.slot = slotDefinition.slot;
-    this.isEmpty = null;
-    this.isLoading = false;
-    this.isRendering = false;
-    this.isLoaded = false;
-    this.isRendered = false;
-    this.whenSlotReady = slotDefinition.slotReady;
-    this.timings = {
-      createTime: null,
-      startLoading: null,
-      stopLoading: null,
-      startRendering: null,
-      stopRendering: null,
-      loadingMethod: null,
-      lazyWaitComplete: null
+    size: AdSize | null | undefined;
+
+    slot: any;
+
+    isEmpty: boolean | null | undefined;
+
+    isLoading: boolean;
+
+    isRendering: boolean;
+
+    isLoaded: boolean;
+
+    isRendered: boolean;
+
+    shouldRefresh: boolean;
+
+    maxViewPercentage: number;
+
+    whenLoaded: Promise<boolean>;
+
+    whenLoadedResolver: Resolver;
+
+    whenRendered: Promise<boolean>;
+
+    whenRenderedResolver: Resolver;
+
+    whenSlotReady: Promise<void>;
+
+    extraNodeClasses: string[];
+
+    timings: {
+        createTime: number | null | undefined;
+        startLoading: number | null | undefined;
+        stopLoading: number | null | undefined;
+        startRendering: number | null | undefined;
+        stopRendering: number | null | undefined;
+        loadingMethod: number | null | undefined;
+        lazyWaitComplete: number | null | undefined;
     };
-    this.shouldRefresh = false;
-    this.maxViewPercentage = 0;
-    this.hasPrebidSize = false;
 
-    this.whenLoaded = new Promise(resolve => {
-      this.whenLoadedResolver = resolve;
-    }).then((isLoaded: boolean): boolean => {
-      this.isLoaded = isLoaded;
-      return isLoaded;
-    });
+    hasPrebidSize: boolean;
 
-    this.whenRendered = new Promise(resolve => {
-      this.whenRenderedResolver = resolve;
-    }).then((isRendered: boolean): boolean => {
-      this.isRendered = isRendered;
-      return isRendered;
-    });
+    constructor(adSlotNode: HTMLElement) {
+        const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
+        const slotDefinition = defineSlot(adSlotNode, sizes);
 
-    this.extraNodeClasses = [];
-  }
+        this.id = adSlotNode.id;
+        this.node = adSlotNode;
+        this.sizes = sizes;
+        this.size = null;
+        this.slot = slotDefinition.slot;
+        this.isEmpty = null;
+        this.isLoading = false;
+        this.isRendering = false;
+        this.isLoaded = false;
+        this.isRendered = false;
+        this.whenSlotReady = slotDefinition.slotReady;
+        this.timings = {
+            createTime: null,
+            startLoading: null,
+            stopLoading: null,
+            startRendering: null,
+            stopRendering: null,
+            loadingMethod: null,
+            lazyWaitComplete: null,
+        };
+        this.shouldRefresh = false;
+        this.maxViewPercentage = 0;
+        this.hasPrebidSize = false;
 
-  startLoading() {
-    this.isLoading = true;
-    this.timings.startLoading = getCurrentTime();
-  }
+        this.whenLoaded = new Promise((resolve) => {
+            this.whenLoadedResolver = resolve;
+        }).then((isLoaded: boolean): boolean => {
+            this.isLoaded = isLoaded;
+            return isLoaded;
+        });
 
-  stopLoading(isLoaded: boolean) {
-    this.isLoading = false;
-    if (this.whenLoadedResolver) {
-      this.whenLoadedResolver(isLoaded);
+        this.whenRendered = new Promise((resolve) => {
+            this.whenRenderedResolver = resolve;
+        }).then((isRendered: boolean): boolean => {
+            this.isRendered = isRendered;
+            return isRendered;
+        });
+
+        this.extraNodeClasses = [];
     }
-    this.timings.stopLoading = getCurrentTime();
-  }
 
-  startRendering() {
-    this.isRendering = true;
-    this.timings.startRendering = getCurrentTime();
-  }
-
-  stopRendering(isRendered: boolean) {
-    this.isRendering = false;
-    if (this.whenRenderedResolver) {
-      this.whenRenderedResolver(isRendered);
+    startLoading() {
+        this.isLoading = true;
+        this.timings.startLoading = getCurrentTime();
     }
-  }
 
-  static filterClasses = (oldClasses: Array<string>, newClasses: Array<string>): Array<string> => oldClasses.filter(oldClass => !newClasses.includes(oldClass));
+    stopLoading(isLoaded: boolean) {
+        this.isLoading = false;
+        if (this.whenLoadedResolver) {
+            this.whenLoadedResolver(isLoaded);
+        }
+        this.timings.stopLoading = getCurrentTime();
+    }
 
-  updateExtraSlotClasses(...newClasses: Array<string>): void {
-    const classesToRemove: Array<string> = Advert.filterClasses(this.extraNodeClasses, newClasses);
-    this.node.classList.remove(...classesToRemove);
-    this.node.classList.add(...newClasses);
-    this.extraNodeClasses = newClasses;
-  }
+    startRendering() {
+        this.isRendering = true;
+        this.timings.startRendering = getCurrentTime();
+    }
+
+    stopRendering(isRendered: boolean) {
+        this.isRendering = false;
+        if (this.whenRenderedResolver) {
+            this.whenRenderedResolver(isRendered);
+        }
+    }
+
+    static filterClasses = (
+        oldClasses: string[],
+        newClasses: string[]
+    ): string[] =>
+        oldClasses.filter((oldClass) => !newClasses.includes(oldClass));
+
+    updateExtraSlotClasses(...newClasses: string[]): void {
+        const classesToRemove: string[] = Advert.filterClasses(
+            this.extraNodeClasses,
+            newClasses
+        );
+        this.node.classList.remove(...classesToRemove);
+        this.node.classList.add(...newClasses);
+        this.extraNodeClasses = newClasses;
+    }
 }
 
 export { Advert };
 
 export const _ = {
-  filterClasses: Advert.filterClasses
+    filterClasses: Advert.filterClasses,
 };

@@ -1,6 +1,5 @@
-
-import { deleteOldData } from "common/modules/commercial/user-features";
+import { deleteOldData } from 'common/modules/commercial/user-features';
 
 export const init = (): void => {
-  deleteOldData();
+    deleteOldData();
 };

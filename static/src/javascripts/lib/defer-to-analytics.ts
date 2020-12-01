@@ -1,7 +1,5 @@
-
-
 const deferToAnalytics = (afterAnalytics: () => void): void => {
-  afterAnalytics();
+    afterAnalytics();
 };
 
 export default deferToAnalytics;

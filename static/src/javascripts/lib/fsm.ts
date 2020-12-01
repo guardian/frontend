@@ -1,6 +1,4 @@
-
-
-import { noop } from "lib/noop";
+import { noop } from 'lib/noop';
 
 /*
     simple practical and flexible "finite state machine" implementation
@@ -35,42 +33,45 @@ import { noop } from "lib/noop";
     };
 */
 class FiniteStateMachine {
+    context: Object;
 
-  context: Object;
-  states: Object;
-  debug: boolean | null | undefined;
-  onChangeState: (oldState: string, newState: string) => void;
+    states: Object;
 
-  constructor(options: Object) {
-    this.context = options.context;
-    this.states = options.states || {};
-    this.context.state = options.initial || '';
-    this.debug = options.debug || false;
-    this.onChangeState = options.onChangeState.bind(this.context) || (() => {});
-  }
+    debug: boolean | null | undefined;
 
-  log(...args: Array<string>): void {
-    if (this.debug && window.console && window.console.log) {
-      window.console.log(...args);
+    onChangeState: (oldState: string, newState: string) => void;
+
+    constructor(options: Object) {
+        this.context = options.context;
+        this.states = options.states || {};
+        this.context.state = options.initial || '';
+        this.debug = options.debug || false;
+        this.onChangeState =
+            options.onChangeState.bind(this.context) || (() => {});
     }
-  }
 
-  trigger(event: string, data?: Object): void {
-    this.log('fsm: (event)', event);
-
-    const state = this.context.state;
-    (this.states[state].events[event] || noop).call(this.context, data);
-
-    // execute leave/enter callbacks if present and we have changed state
-    if (state !== this.context.state || this.context.reloadState) {
-      this.context.reloadState = false;
-      this.onChangeState(state, this.context.state);
-      (this.states[state].leave || noop).apply(this.context);
-      (this.states[this.context.state].enter || noop).apply(this.context);
-
-      this.log('fsm: (state)', `${state} -> ${this.context.state}`);
+    log(...args: string[]): void {
+        if (this.debug && window.console && window.console.log) {
+            window.console.log(...args);
+        }
     }
-  }
+
+    trigger(event: string, data?: Object): void {
+        this.log('fsm: (event)', event);
+
+        const state = this.context.state;
+        (this.states[state].events[event] || noop).call(this.context, data);
+
+        // execute leave/enter callbacks if present and we have changed state
+        if (state !== this.context.state || this.context.reloadState) {
+            this.context.reloadState = false;
+            this.onChangeState(state, this.context.state);
+            (this.states[state].leave || noop).apply(this.context);
+            (this.states[this.context.state].enter || noop).apply(this.context);
+
+            this.log('fsm: (state)', `${state} -> ${this.context.state}`);
+        }
+    }
 }
 
 export default FiniteStateMachine;

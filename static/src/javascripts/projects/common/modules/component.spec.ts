@@ -1,382 +1,403 @@
+import bean from 'bean';
+import fetchJSON_ from 'lib/fetch-json';
+import { Component } from './component';
 
-
-import bean from "bean";
-import fetchJSON_ from "lib/fetch-json";
-
-import { Component } from "./component";
-
-const fetchJSON: JestMockFn<any, any> = (fetchJSON_ as any);
+const fetchJSON: JestMockFn<any, any> = fetchJSON_ as any;
 
 const mockResponse = {
-  html: '<p>html</p>',
-  other: '<p>other</p>'
+    html: '<p>html</p>',
+    other: '<p>other</p>',
 };
 
 const createComponent = (props: Object = {}): Component => {
-  const component = new Component();
-  const defaults = {
-    endpoint: 'whatever'
-  };
+    const component = new Component();
+    const defaults = {
+        endpoint: 'whatever',
+    };
 
-  Object.assign(component, defaults, props);
+    Object.assign(component, defaults, props);
 
-  return component;
+    return component;
 };
 
 jest.mock('lib/fetch-json', () => jest.fn(() => Promise.resolve(mockResponse)));
 
 jest.mock('bean', () => ({
-  off: jest.fn()
+    off: jest.fn(),
 }));
 
 describe('Component', () => {
-  let elem;
-  let subElem;
+    let elem;
+    let subElem;
 
-  beforeEach(() => {
-    if (document.body) {
-      document.body.innerHTML = `
+    beforeEach(() => {
+        if (document.body) {
+            document.body.innerHTML = `
                 <div class="component">
                     <div class="component__element"></div>
                 </div>
             `;
-    }
-
-    // Apologies for the typecast, but it makes things just way easier ...
-    elem = ((document.querySelector('.component') as any) as HTMLElement);
-    subElem = ((document.querySelector('.component__element') as any) as HTMLElement);
-  });
-
-  describe('fetch()', () => {
-    test('call fetched() with an endpoint', () => {
-      const component = createComponent({
-        fetched: jest.fn()
-      });
-
-      return component.fetch(elem).then(() => {
-        expect(component.fetched).toHaveBeenCalledWith(mockResponse);
-      });
-    });
-
-    test('not call fetched() without an endpoint', () => {
-      const component = createComponent({
-        endpoint: false,
-        fetched: jest.fn()
-      });
-
-      return component.fetch(elem).then(() => {
-        expect(component.fetched).not.toHaveBeenCalled();
-      });
-    });
-
-    test('extract the content of `html` in response by default', () => {
-      const component = createComponent({
-        fetched: jest.fn()
-      });
-
-      return component.fetch(elem).then(() => {
-        if (!component.elem) {
-          return Promise.reject(new Error('.elem property should exist'));
         }
 
-        if (component.elem) {
-          expect(component.elem.tagName).toBe('P');
-        }
-
-        if (component.elem) {
-          expect(component.elem.innerHTML).toBe('html');
-        }
-
-        expect(component.fetched).toHaveBeenCalledWith(mockResponse);
-      });
+        // Apologies for the typecast, but it makes things just way easier ...
+        elem = document.querySelector('.component');
+        subElem = document.querySelector('.component__element');
     });
 
-    test('properly extract data from response, if key was passed', () => {
-      const component = createComponent({
-        fetched: jest.fn()
-      });
+    describe('fetch()', () => {
+        test('call fetched() with an endpoint', () => {
+            const component = createComponent({
+                fetched: jest.fn(),
+            });
 
-      return component.fetch(elem, 'other').then(() => {
-        if (!component.elem) {
-          return Promise.reject(new Error('.elem property should exist'));
-        }
+            return component.fetch(elem).then(() => {
+                expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+            });
+        });
 
-        expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+        test('not call fetched() without an endpoint', () => {
+            const component = createComponent({
+                endpoint: false,
+                fetched: jest.fn(),
+            });
 
-        if (component.elem) {
-          expect(component.elem.innerHTML).toBe('other');
-        }
-      });
+            return component.fetch(elem).then(() => {
+                expect(component.fetched).not.toHaveBeenCalled();
+            });
+        });
+
+        test('extract the content of `html` in response by default', () => {
+            const component = createComponent({
+                fetched: jest.fn(),
+            });
+
+            return component.fetch(elem).then(() => {
+                if (!component.elem) {
+                    return Promise.reject(
+                        new Error('.elem property should exist')
+                    );
+                }
+
+                if (component.elem) {
+                    expect(component.elem.tagName).toBe('P');
+                }
+
+                if (component.elem) {
+                    expect(component.elem.innerHTML).toBe('html');
+                }
+
+                expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+            });
+        });
+
+        test('properly extract data from response, if key was passed', () => {
+            const component = createComponent({
+                fetched: jest.fn(),
+            });
+
+            return component.fetch(elem, 'other').then(() => {
+                if (!component.elem) {
+                    return Promise.reject(
+                        new Error('.elem property should exist')
+                    );
+                }
+
+                expect(component.fetched).toHaveBeenCalledWith(mockResponse);
+
+                if (component.elem) {
+                    expect(component.elem.innerHTML).toBe('other');
+                }
+            });
+        });
+
+        test('calls all required callbacks, but not error(), if everything works', () => {
+            const component = createComponent({
+                checkAttached: jest.fn(),
+                fetched: jest.fn(),
+                prerender: jest.fn(),
+                ready: jest.fn(),
+                error: jest.fn(),
+            });
+
+            return component.fetch(elem).then(() => {
+                expect(component.ready).toHaveBeenCalledWith(component.elem);
+                expect(component.checkAttached).toHaveBeenCalled();
+                expect(component.prerender).toHaveBeenCalled();
+                expect(component.error).not.toHaveBeenCalled();
+            });
+        });
+
+        test('does not call ready() if destroyed is set to true', () => {
+            const component = createComponent({
+                checkAttached: jest.fn(),
+                destroyed: true,
+                fetched: jest.fn(),
+                prerender: jest.fn(),
+                ready: jest.fn(),
+                error: jest.fn(),
+            });
+
+            return component.fetch(elem).then(() => {
+                expect(component.ready).not.toHaveBeenCalled();
+                expect(component.checkAttached).toHaveBeenCalled();
+                expect(component.prerender).toHaveBeenCalled();
+                expect(component.error).not.toHaveBeenCalled();
+            });
+        });
+
+        test('calls error() if something went wrong', () => {
+            const component = createComponent({
+                ready: jest.fn(),
+                error: jest.fn(),
+            });
+            const mockError = new Error('Bad response');
+
+            fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
+
+            return component.fetch(elem).catch(() => {
+                expect(component.ready).toHaveBeenCalled();
+                expect(component.error).toHaveBeenCalledWith(mockError);
+            });
+        });
     });
 
-    test('calls all required callbacks, but not error(), if everything works', () => {
-      const component = createComponent({
-        checkAttached: jest.fn(),
-        fetched: jest.fn(),
-        prerender: jest.fn(),
-        ready: jest.fn(),
-        error: jest.fn()
-      });
+    describe('getClass()', () => {
+        test('should return proper class name with BEM', () => {
+            const component = createComponent({
+                componentClass: 'component',
+                useBem: true,
+            });
 
-      return component.fetch(elem).then(() => {
-        expect(component.ready).toHaveBeenCalledWith(component.elem);
-        expect(component.checkAttached).toHaveBeenCalled();
-        expect(component.prerender).toHaveBeenCalled();
-        expect(component.error).not.toHaveBeenCalled();
-      });
+            expect(component.getClass('element')).toBe('.component__element');
+            expect(component.getClass('element', true)).toBe(
+                'component__element'
+            );
+        });
+
+        test('should return proper class name without BEM', () => {
+            const component = createComponent({
+                classes: {
+                    element: 'my-element-class',
+                },
+            });
+
+            expect(component.getClass('element')).toBe('.my-element-class');
+            expect(component.getClass('element', true)).toBe(
+                'my-element-class'
+            );
+            expect(component.getClass('element-2')).toBeDefined();
+            expect(component.getClass('element-2', true)).not.toBe('.');
+        });
     });
 
-    test('does not call ready() if destroyed is set to true', () => {
-      const component = createComponent({
-        checkAttached: jest.fn(),
-        destroyed: true,
-        fetched: jest.fn(),
-        prerender: jest.fn(),
-        ready: jest.fn(),
-        error: jest.fn()
-      });
+    describe('setOptions()', () => {
+        test('extends options', () => {
+            const component = createComponent();
 
-      return component.fetch(elem).then(() => {
-        expect(component.ready).not.toHaveBeenCalled();
-        expect(component.checkAttached).toHaveBeenCalled();
-        expect(component.prerender).toHaveBeenCalled();
-        expect(component.error).not.toHaveBeenCalled();
-      });
+            component.setOptions({
+                a: 1,
+                b: 2,
+            });
+
+            expect(component.options.a).toBe(1);
+            expect(component.options.b).toBe(2);
+        });
+
+        test('extends options with defaultOptions', () => {
+            const component = createComponent({
+                defaultOptions: {
+                    a: 1,
+                    b: 2,
+                },
+            });
+
+            component.setOptions({
+                a: 3,
+            });
+
+            expect(component.options.a).toBe(3);
+            expect(component.options.b).toBe(2);
+        });
+
+        test('extends options with defaultOptions and options', () => {
+            const component = createComponent({
+                defaultOptions: {
+                    a: 1,
+                    b: 2,
+                },
+
+                options: {
+                    a: 2,
+                    c: 5,
+                },
+            });
+
+            component.setOptions({
+                c: 6,
+            });
+
+            expect(component.options.a).toBe(2);
+            expect(component.options.b).toBe(2);
+            expect(component.options.c).toBe(6);
+        });
     });
 
-    test('calls error() if something went wrong', () => {
-      const component = createComponent({
-        ready: jest.fn(),
-        error: jest.fn()
-      });
-      const mockError = new Error('Bad response');
+    describe('setState(), removeState(), toggleState()', () => {
+        let component;
 
-      fetchJSON.mockReturnValueOnce(Promise.reject(mockError));
+        beforeEach(() => {
+            component = createComponent({
+                componentClass: 'component',
+            });
 
-      return component.fetch(elem).catch(() => {
-        expect(component.ready).toHaveBeenCalled();
-        expect(component.error).toHaveBeenCalledWith(mockError);
-      });
-    });
-  });
+            component.attachTo(elem);
+        });
 
-  describe('getClass()', () => {
-    test('should return proper class name with BEM', () => {
-      const component = createComponent({
-        componentClass: 'component',
-        useBem: true
-      });
+        test('setState() should add class name to elem (without elementName)', () => {
+            component.setState('state');
 
-      expect(component.getClass('element')).toBe('.component__element');
-      expect(component.getClass('element', true)).toBe('component__element');
-    });
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(true);
+            }
+        });
 
-    test('should return proper class name without BEM', () => {
-      const component = createComponent({
-        classes: {
-          element: 'my-element-class'
-        }
-      });
+        test('setState() should add class name to elem (with elementName)', () => {
+            component.setState('state', 'element');
 
-      expect(component.getClass('element')).toBe('.my-element-class');
-      expect(component.getClass('element', true)).toBe('my-element-class');
-      expect(component.getClass('element-2')).toBeDefined();
-      expect(component.getClass('element-2', true)).not.toBe('.');
-    });
-  });
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(true);
+            }
+        });
 
-  describe('setOptions()', () => {
-    test('extends options', () => {
-      const component = createComponent();
+        test('removeState() should remove class name to elem (without elementName)', () => {
+            component.setState('state');
+            component.removeState('state');
 
-      component.setOptions({
-        a: 1,
-        b: 2
-      });
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(false);
+            }
+        });
 
-      expect(component.options.a).toBe(1);
-      expect(component.options.b).toBe(2);
-    });
+        test('removeState() should remove class name to elem (with elementName)', () => {
+            component.setState('state', 'element');
+            component.removeState('state', 'element');
 
-    test('extends options with defaultOptions', () => {
-      const component = createComponent({
-        defaultOptions: {
-          a: 1,
-          b: 2
-        }
-      });
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(false);
+            }
+        });
 
-      component.setOptions({
-        a: 3
-      });
+        test('toggleState() should toggle class name to elem (without elementName)', () => {
+            component.toggleState('state');
 
-      expect(component.options.a).toBe(3);
-      expect(component.options.b).toBe(2);
-    });
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(true);
+            }
 
-    test('extends options with defaultOptions and options', () => {
-      const component = createComponent({
-        defaultOptions: {
-          a: 1,
-          b: 2
-        },
+            component.toggleState('state');
 
-        options: {
-          a: 2,
-          c: 5
-        }
-      });
+            if (component.elem) {
+                expect(
+                    component.elem.classList.contains('component--state')
+                ).toBe(false);
+            }
+        });
 
-      component.setOptions({
-        c: 6
-      });
+        test('toggleState() should toggle class name to elem (with elementName)', () => {
+            component.toggleState('state', 'element');
 
-      expect(component.options.a).toBe(2);
-      expect(component.options.b).toBe(2);
-      expect(component.options.c).toBe(6);
-    });
-  });
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(true);
+            }
 
-  describe('setState(), removeState(), toggleState()', () => {
-    let component;
+            component.toggleState('state', 'element');
 
-    beforeEach(() => {
-      component = createComponent({
-        componentClass: 'component'
-      });
+            if (subElem) {
+                expect(
+                    subElem.classList.contains('component__element--state')
+                ).toBe(false);
+            }
+        });
 
-      component.attachTo(elem);
-    });
+        test('hasState() should return the proper state (without elementName)', () => {
+            component.setState('state');
+            expect(component.hasState('state')).toBe(true);
+            expect(component.hasState('whatever')).toBe(false);
+        });
 
-    test('setState() should add class name to elem (without elementName)', () => {
-      component.setState('state');
+        test('hasState() should return the proper state (with elementName)', () => {
+            component.setState('state', 'element');
+            expect(component.hasState('state', 'element')).toBe(true);
+            expect(component.hasState('whatever', 'element')).toBe(false);
+        });
 
-      if (component.elem) {
-        expect(component.elem.classList.contains('component--state')).toBe(true);
-      }
+        test('hasState() should always return false without componentClass', () => {
+            component.componentClass = '';
+
+            component.setState('state', 'element');
+            expect(component.hasState('state')).toBe(false);
+            expect(component.hasState('state', 'element')).toBe(false);
+        });
     });
 
-    test('setState() should add class name to elem (with elementName)', () => {
-      component.setState('state', 'element');
+    describe('attachTo()', () => {
+        test('calls ready() callback', () => {
+            const component = createComponent({
+                ready: jest.fn(),
+            });
 
-      if (subElem) {
-        expect(subElem.classList.contains('component__element--state')).toBe(true);
-      }
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.ready).toHaveBeenCalled();
+            }
+        });
+
+        test('calls prerender() callback', () => {
+            const component = createComponent({
+                prerender: jest.fn(),
+            });
+
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.prerender).toHaveBeenCalled();
+            }
+        });
+
+        test('calls checkAttached() callback', () => {
+            const component = createComponent({
+                checkAttached: jest.fn(),
+            });
+
+            if (elem) {
+                component.attachTo(elem);
+                expect(component.checkAttached).toHaveBeenCalled();
+            }
+        });
     });
 
-    test('removeState() should remove class name to elem (without elementName)', () => {
-      component.setState('state');
-      component.removeState('state');
+    describe('destroy()', () => {
+        test('cleans up the instance', () => {
+            const component = createComponent({
+                elem: document.createElement('p'),
+            });
 
-      if (component.elem) {
-        expect(component.elem.classList.contains('component--state')).toBe(false);
-      }
+            component.destroy();
+
+            expect(component.elem).not.toBeDefined();
+            expect(component.t).toBe(null);
+            expect(bean.off).toHaveBeenCalledWith(component.elem);
+        });
     });
-
-    test('removeState() should remove class name to elem (with elementName)', () => {
-      component.setState('state', 'element');
-      component.removeState('state', 'element');
-
-      if (subElem) {
-        expect(subElem.classList.contains('component__element--state')).toBe(false);
-      }
-    });
-
-    test('toggleState() should toggle class name to elem (without elementName)', () => {
-      component.toggleState('state');
-
-      if (component.elem) {
-        expect(component.elem.classList.contains('component--state')).toBe(true);
-      }
-
-      component.toggleState('state');
-
-      if (component.elem) {
-        expect(component.elem.classList.contains('component--state')).toBe(false);
-      }
-    });
-
-    test('toggleState() should toggle class name to elem (with elementName)', () => {
-      component.toggleState('state', 'element');
-
-      if (subElem) {
-        expect(subElem.classList.contains('component__element--state')).toBe(true);
-      }
-
-      component.toggleState('state', 'element');
-
-      if (subElem) {
-        expect(subElem.classList.contains('component__element--state')).toBe(false);
-      }
-    });
-
-    test('hasState() should return the proper state (without elementName)', () => {
-      component.setState('state');
-      expect(component.hasState('state')).toBe(true);
-      expect(component.hasState('whatever')).toBe(false);
-    });
-
-    test('hasState() should return the proper state (with elementName)', () => {
-      component.setState('state', 'element');
-      expect(component.hasState('state', 'element')).toBe(true);
-      expect(component.hasState('whatever', 'element')).toBe(false);
-    });
-
-    test('hasState() should always return false without componentClass', () => {
-      component.componentClass = '';
-
-      component.setState('state', 'element');
-      expect(component.hasState('state')).toBe(false);
-      expect(component.hasState('state', 'element')).toBe(false);
-    });
-  });
-
-  describe('attachTo()', () => {
-    test('calls ready() callback', () => {
-      const component = createComponent({
-        ready: jest.fn()
-      });
-
-      if (elem) {
-        component.attachTo(elem);
-        expect(component.ready).toHaveBeenCalled();
-      }
-    });
-
-    test('calls prerender() callback', () => {
-      const component = createComponent({
-        prerender: jest.fn()
-      });
-
-      if (elem) {
-        component.attachTo(elem);
-        expect(component.prerender).toHaveBeenCalled();
-      }
-    });
-
-    test('calls checkAttached() callback', () => {
-      const component = createComponent({
-        checkAttached: jest.fn()
-      });
-
-      if (elem) {
-        component.attachTo(elem);
-        expect(component.checkAttached).toHaveBeenCalled();
-      }
-    });
-  });
-
-  describe('destroy()', () => {
-    test('cleans up the instance', () => {
-      const component = createComponent({
-        elem: document.createElement('p')
-      });
-
-      component.destroy();
-
-      expect(component.elem).not.toBeDefined();
-      expect(component.t).toBe(null);
-      expect(bean.off).toHaveBeenCalledWith(component.elem);
-    });
-  });
 });

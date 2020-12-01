@@ -1,22 +1,37 @@
-
-import { SignInGateVariant } from "../../types";
-import { componentName } from "../../component";
-import { hasUserDismissedGate, isNPageOrHigherPageView, isLoggedIn, isInvalidArticleType, isInvalidSection, isIOS9, setGatePageTargeting, isInvalidTag } from "../../helper";
+import { componentName } from '../../component';
+import {
+    hasUserDismissedGate,
+    isInvalidArticleType,
+    isInvalidSection,
+    isInvalidTag,
+    isIOS9,
+    isLoggedIn,
+    isNPageOrHigherPageView,
+    setGatePageTargeting,
+} from '../../helper';
+import type { SignInGateVariant } from '../../types';
 
 // define the variant name here
 const variant = 'main-control-3';
 
 // method which returns a boolean determining if this variant can be shown on the current pageview
 const canShow: (name?: string) => boolean = (name = '') => {
-  const isGateDismissed = hasUserDismissedGate({
-    name,
-    variant,
-    componentName
-  });
-  const canShowCheck = !isGateDismissed && isNPageOrHigherPageView(3) && !isLoggedIn() && !isInvalidArticleType() && !isInvalidSection() && !isInvalidTag() && !isIOS9();
+    const isGateDismissed = hasUserDismissedGate({
+        name,
+        variant,
+        componentName,
+    });
+    const canShowCheck =
+        !isGateDismissed &&
+        isNPageOrHigherPageView(3) &&
+        !isLoggedIn() &&
+        !isInvalidArticleType() &&
+        !isInvalidSection() &&
+        !isInvalidTag() &&
+        !isIOS9();
 
-  setGatePageTargeting(isGateDismissed, canShowCheck);
-  return canShowCheck;
+    setGatePageTargeting(isGateDismissed, canShowCheck);
+    return canShowCheck;
 };
 
 // method which runs if the canShow method returns true, used to display the gate and logic associated with it
@@ -26,7 +41,7 @@ const show: () => boolean = () => true;
 
 // export the variant as a SignInGateVariant type
 export const signInGateVariant: SignInGateVariant = {
-  name: variant,
-  canShow,
-  show
+    name: variant,
+    canShow,
+    show,
 };

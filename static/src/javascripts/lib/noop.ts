@@ -1,6 +1,4 @@
-
-
 // eslint-disable-next-line no-unused-vars
-const noop = (...args: Array<any>): any => {};
+const noop = (...args: any[]): any => {};
 
 export { noop };

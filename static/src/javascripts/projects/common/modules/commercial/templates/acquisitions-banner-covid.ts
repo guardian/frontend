@@ -1,9 +1,9 @@
+import closeCentralIcon from 'svgs/icon/close-central.svg';
+import marque36icon from 'svgs/icon/marque-36.svg';
 
-
-import marque36icon from "svgs/icon/marque-36.svg";
-import closeCentralIcon from "svgs/icon/close-central.svg";
-
-export const acquisitionsBannerCovidTemplate = (params: EngagementBannerTemplateParams): string => `
+export const acquisitionsBannerCovidTemplate = (
+    params: EngagementBannerTemplateParams
+): string => `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel">
                 ${marque36icon.markup}
@@ -18,20 +18,32 @@ export const acquisitionsBannerCovidTemplate = (params: EngagementBannerTemplate
             <div class="engagement-banner__header-container">
                 <div class="engagement-banner__header">
                     <h2 class="engagement-banner__header-text">
-                    <span>${params.titles && params.titles[0] ? params.titles[0] : ''}</span>
-                    <span>${params.titles && params.titles[1] ? params.titles[1] : ''}</span>
+                    <span>${
+                        params.titles && params.titles[0]
+                            ? params.titles[0]
+                            : ''
+                    }</span>
+                    <span>${
+                        params.titles && params.titles[1]
+                            ? params.titles[1]
+                            : ''
+                    }</span>
                     </h2>
                 </div>
             </div>
 
             <div class="engagement-banner__text-container">
                 <div class="engagement-banner__body">
-                    <p><span class="engagement-banner__lead-sentence">${params.leadSentence ? params.leadSentence : ''}</span>${params.messageText}</p>
+                    <p><span class="engagement-banner__lead-sentence">${
+                        params.leadSentence ? params.leadSentence : ''
+                    }</span>${params.messageText}</p>
                 </div>
 
                 <div class="engagement-banner__cta-container">
                     <div class="engagement-banner__cta">
-                        <a tabIndex="3" class="component-button component-button--hasicon-right component-button--secondary" href="${params.linkUrl}">
+                        <a tabIndex="3" class="component-button component-button--hasicon-right component-button--secondary" href="${
+                            params.linkUrl
+                        }">
                             ${params.ctaText}
                             <svg
                                 class="svg-arrow-right-straight"
@@ -47,7 +59,9 @@ export const acquisitionsBannerCovidTemplate = (params: EngagementBannerTemplate
                     </div>
 
 
-                    ${params.secondaryLinkLabel && params.subsLinkUrl ? `
+                    ${
+                        params.secondaryLinkLabel && params.subsLinkUrl
+                            ? `
                         <div class="engagement-banner__cta engagement-banner__cta--subscribe">
                             <a tabIndex="3" class="component-button component-button--hasicon-right component-button--primary component-button--primary--covid-banner" href="${params.subsLinkUrl}">
                                     ${params.secondaryLinkLabel}
@@ -62,7 +76,9 @@ export const acquisitionsBannerCovidTemplate = (params: EngagementBannerTemplate
                                         <path d="M20 9.35l-9.08 8.54-.86-.81 6.54-7.31H0V8.12h16.6L10.06.81l.86-.81L20 8.51v.84z" />
                                     </svg>
                                 </a>
-                            </div>` : ''}
+                            </div>`
+                            : ''
+                    }
 
                 </div>
             </div>

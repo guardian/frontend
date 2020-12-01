@@ -1,65 +1,76 @@
+import type { MediaEvent } from 'common/modules/video/ga-helper';
+import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
+import config from 'lib/config';
+import mediator from 'lib/mediator';
+import ophan from 'ophan/ng';
 
-import mediator from "lib/mediator";
-import config from "lib/config";
-import ophan from "ophan/ng";
-import { buildGoogleAnalyticsEvent } from "common/modules/video/ga-helper";
-import { MediaEvent } from "common/modules/video/ga-helper";
-
-const buildEventId = (event: string, videoId: string): string => `${event}:${videoId}`;
+const buildEventId = (event: string, videoId: string): string =>
+    `${event}:${videoId}`;
 
 const initYoutubeEvents = (videoId: string): void => {
-  const gaTracker = config.get('googleAnalytics.trackers.editorial');
-  const eventAction = 'video content';
-  const events = {
-    metricMap: {
-      play: 'metric1',
-      skip: 'metric2',
-      '25': 'metric3',
-      '50': 'metric4',
-      '75': 'metric5',
-      end: 'metric6'
-    },
-    baseEventObject: {
-      eventCategory: 'media',
-      eventAction,
-      eventLabel: videoId,
-      dimension19: videoId,
-      dimension20: 'gu-video-youtube'
-    }
-  };
-  const ophanRecord = (event: MediaEvent): void => {
-    const eventObject = {
-      video: {
-        id: `gu-video-youtube-${event.mediaId}`,
-        eventType: `video:content:${event.eventType}`
-      }
+    const gaTracker = config.get('googleAnalytics.trackers.editorial');
+    const eventAction = 'video content';
+    const events = {
+        metricMap: {
+            play: 'metric1',
+            skip: 'metric2',
+            '25': 'metric3',
+            '50': 'metric4',
+            '75': 'metric5',
+            end: 'metric6',
+        },
+        baseEventObject: {
+            eventCategory: 'media',
+            eventAction,
+            eventLabel: videoId,
+            dimension19: videoId,
+            dimension20: 'gu-video-youtube',
+        },
     };
-    ophan.record(eventObject);
-  };
+    const ophanRecord = (event: MediaEvent): void => {
+        const eventObject = {
+            video: {
+                id: `gu-video-youtube-${event.mediaId}`,
+                eventType: `video:content:${event.eventType}`,
+            },
+        };
+        ophan.record(eventObject);
+    };
 
-  ['play', '25', '50', '75', 'end'].forEach(event => {
-    mediator.once(buildEventId(event, videoId), id => {
-      const mediaEvent: MediaEvent = {
+    ['play', '25', '50', '75', 'end'].forEach((event) => {
+        mediator.once(buildEventId(event, videoId), (id) => {
+            const mediaEvent: MediaEvent = {
+                mediaId: videoId,
+                mediaType: 'video',
+                eventType: event,
+                isPreroll: false,
+            };
+            ophanRecord(mediaEvent);
+            window.ga(
+                `${gaTracker}.send`,
+                'event',
+                buildGoogleAnalyticsEvent(
+                    mediaEvent,
+                    events.metricMap,
+                    id,
+                    'gu-video-youtube',
+                    () => eventAction,
+                    videoId
+                )
+            );
+        });
+    });
+
+    ophanRecord({
         mediaId: videoId,
         mediaType: 'video',
-        eventType: event,
-        isPreroll: false
-      };
-      ophanRecord(mediaEvent);
-      window.ga(`${gaTracker}.send`, 'event', buildGoogleAnalyticsEvent(mediaEvent, events.metricMap, id, 'gu-video-youtube', () => eventAction, videoId));
+        eventType: 'ready',
+        isPreroll: false,
     });
-  });
-
-  ophanRecord({
-    mediaId: videoId,
-    mediaType: 'video',
-    eventType: 'ready',
-    isPreroll: false
-  });
 };
 
 const trackYoutubeEvent = (event: string, id: string): void => {
-  mediator.emit(buildEventId(event, id), id);
+    mediator.emit(buildEventId(event, id), id);
 };
 
 export { trackYoutubeEvent, initYoutubeEvents };

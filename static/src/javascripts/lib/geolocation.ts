@@ -23,7 +23,7 @@ const get = (): Promise<string> =>
         fetchJSON('/geolocation', {
             mode: 'cors',
         })
-            .then(response => {
+            .then((response) => {
                 if (response.country) {
                     resolve(response.country);
                 } else {
@@ -48,7 +48,7 @@ const init = (): void => {
     get().then(setGeolocation);
 };
 
-const editionToGeolocation = (editionKey: string = 'UK'): string =>
+const editionToGeolocation = (editionKey = 'UK'): string =>
     editionToGeolocationMap[editionKey];
 
 const getSync = (): string => {
@@ -87,14 +87,14 @@ export type SupportInternationalisationId =
 export type IsoCurrency = 'GBP' | 'USD' | 'AUD' | 'EUR' | 'NZD' | 'CAD';
 
 export type CountryGroup = {
-    name: string,
-    currency: IsoCurrency,
-    countries: string[],
-    supportInternationalisationId: SupportInternationalisationId,
+    name: string;
+    currency: IsoCurrency;
+    countries: string[];
+    supportInternationalisationId: SupportInternationalisationId;
 };
 
 type CountryGroups = {
-    [CountryGroupId]: CountryGroup,
+    [CountryGroupId]: CountryGroup;
 };
 
 const countryGroups: CountryGroups = {
@@ -382,7 +382,7 @@ const countryGroups: CountryGroups = {
 const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
-    availableCountryGroups.forEach(countryGroup => {
+    availableCountryGroups.forEach((countryGroup) => {
         if (countryGroups[countryGroup].countries.includes(countryCode)) {
             response = countryGroup;
         }

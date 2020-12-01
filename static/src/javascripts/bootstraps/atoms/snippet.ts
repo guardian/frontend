@@ -1,10 +1,8 @@
-
-
-import domready from "domready";
-import config from "lib/config";
-import fastdom from "lib/fastdom-promise";
-import { comready } from "lib/comready";
-import { send } from "commercial/modules/messenger/send";
+import { send } from 'commercial/modules/messenger/send';
+import domready from 'domready';
+import { comready } from 'lib/comready';
+import config from 'lib/config';
+import fastdom from 'lib/fastdom-promise';
 
 // let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -13,18 +11,32 @@ import { send } from "commercial/modules/messenger/send";
 __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
 const updateHeight = () => {
-  fastdom.measure(() => document.documentElement && document.documentElement.getBoundingClientRect().height).then(height => {
-    send('resize', { height });
-  });
+    fastdom
+        .measure(
+            () =>
+                document.documentElement &&
+                document.documentElement.getBoundingClientRect().height
+        )
+        .then((height) => {
+            send('resize', { height });
+        });
 };
 
-Promise.all([window.guardian.polyfilled ? Promise.resolve() : new Promise(resolve => {
-  window.guardian.onPolyfilled = resolve;
-}), new Promise(domready), new Promise(comready)]).then(() => {
-  updateHeight();
-  Array.from(document.getElementsByTagName('details')).slice(0, 1).forEach(details => {
-    new MutationObserver(updateHeight).observe(details, {
-      attributes: true
-    });
-  });
+Promise.all([
+    window.guardian.polyfilled
+        ? Promise.resolve()
+        : new Promise((resolve) => {
+              window.guardian.onPolyfilled = resolve;
+          }),
+    new Promise(domready),
+    new Promise(comready),
+]).then(() => {
+    updateHeight();
+    Array.from(document.getElementsByTagName('details'))
+        .slice(0, 1)
+        .forEach((details) => {
+            new MutationObserver(updateHeight).observe(details, {
+                attributes: true,
+            });
+        });
 });

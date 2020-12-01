@@ -1,13 +1,14 @@
-
-import closeCentralIcon from "svgs/icon/close-central.svg";
+import closeCentralIcon from 'svgs/icon/close-central.svg';
 
 export type ReminderFields = {
-  reminderCTA: string;
-  reminderDate: string;
-  reminderDateAsString: string;
+    reminderCTA: string;
+    reminderDate: string;
+    reminderDateAsString: string;
 };
 
-export const acquisitionsEpicReminderTemplate = (reminderFields: ReminderFields) => `
+export const acquisitionsEpicReminderTemplate = (
+    reminderFields: ReminderFields
+) => `
     <div id="epic-reminder" class="js-epic-reminder epic-reminder">
         <div class="epic-reminder__signup">
             <label for="epic-reminder__reveal-reminder" class="epic-reminder__close-button-label">

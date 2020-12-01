@@ -1,6 +1,4 @@
-
-
-import config from "lib/config";
+import config from 'lib/config';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable

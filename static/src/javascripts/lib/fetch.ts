@@ -1,5 +1,4 @@
-
-import reqwest from "reqwest";
+import reqwest from 'reqwest';
 
 /**
  * Provide a minimal function equivalent to fetch. I don't dare calling it a
@@ -26,74 +25,84 @@ import reqwest from "reqwest";
  * - response.ok .status .statusText
  */
 type CustomFetchRequest = {
-  url: string;
-  type: string;
-  method: string;
-  crossOrigin: boolean;
-  headers: Object | null | undefined;
-  data: string;
-  withCredentials: boolean;
+    url: string;
+    type: string;
+    method: string;
+    crossOrigin: boolean;
+    headers: Object | null | undefined;
+    data: string;
+    withCredentials: boolean;
 };
 
 type CustomFetchResponse = {
-  status: number;
-  ok: boolean;
-  statusText: string;
-  url: string;
-  text: () => Promise<string>;
-  json: () => Promise<Object>;
+    status: number;
+    ok: boolean;
+    statusText: string;
+    url: string;
+    text: () => Promise<string>;
+    json: () => Promise<Object>;
 };
 
 const buildRequest = (path: string, options: Object): CustomFetchRequest => {
-  const isCors = options.mode === 'cors';
-  const withCredentials = (isCors && options.credentials === 'include') || (!isCors && options.credentials === 'same-origin');
+    const isCors = options.mode === 'cors';
+    const withCredentials =
+        (isCors && options.credentials === 'include') ||
+        (!isCors && options.credentials === 'same-origin');
 
-  return {
-    url: path,
-    type: 'text',
-    method: options.method || 'GET',
-    crossOrigin: isCors,
-    headers: options.headers,
-    data: options.body,
-    withCredentials
-  };
+    return {
+        url: path,
+        type: 'text',
+        method: options.method || 'GET',
+        crossOrigin: isCors,
+        headers: options.headers,
+        data: options.body,
+        withCredentials,
+    };
 };
 
 const createResponse = (response: Object): CustomFetchResponse => {
-  let bodyRead = false;
-  const body = response.responseText;
+    let bodyRead = false;
+    const body = response.responseText;
 
-  const text = () => {
-    const result = bodyRead ? Promise.reject(new TypeError('Already read')) : Promise.resolve(body);
-    bodyRead = true;
-    return result;
-  };
+    const text = () => {
+        const result = bodyRead
+            ? Promise.reject(new TypeError('Already read'))
+            : Promise.resolve(body);
+        bodyRead = true;
+        return result;
+    };
 
-  return {
-    status: response.status,
-    ok: response.status >= 200 && response.status < 300,
-    statusText: response.statusText,
-    url: response.responseURL || '',
-    text,
-    json() {
-      return text().then(JSON.parse);
-    }
-  };
+    return {
+        status: response.status,
+        ok: response.status >= 200 && response.status < 300,
+        statusText: response.statusText,
+        url: response.responseURL || '',
+        text,
+        json() {
+            return text().then(JSON.parse);
+        },
+    };
 };
 
-const fetch = (input: string, init: Object | null | undefined): Promise<CustomFetchResponse> => new Promise((resolve, reject) => {
-  const req = buildRequest(input, init || {});
-  reqwest(req).then(resp => {
-    resolve(createResponse(resp));
-  }).catch(resp => {
-    if (resp.status === 0) {
-      // reqwest wasn't able to make the request
-      reject(new Error(`Fetch error: ${resp.statusText}`));
-    } else {
-      // an error response was received, in fetch this is not a rejection
-      resolve(createResponse(resp));
-    }
-  });
-});
+const fetch = (
+    input: string,
+    init: Object | null | undefined
+): Promise<CustomFetchResponse> =>
+    new Promise((resolve, reject) => {
+        const req = buildRequest(input, init || {});
+        reqwest(req)
+            .then((resp) => {
+                resolve(createResponse(resp));
+            })
+            .catch((resp) => {
+                if (resp.status === 0) {
+                    // reqwest wasn't able to make the request
+                    reject(new Error(`Fetch error: ${resp.statusText}`));
+                } else {
+                    // an error response was received, in fetch this is not a rejection
+                    resolve(createResponse(resp));
+                }
+            });
+    });
 
 export default fetch;

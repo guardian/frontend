@@ -1,7 +1,9 @@
+import closeIcon from 'svgs/icon/close-large.svg';
 
-import closeIcon from "svgs/icon/close-large.svg";
-
-export const epicArticlesViewedOptOutTemplate = (count: number, nextWord: string | null | undefined): string => `
+export const epicArticlesViewedOptOutTemplate = (
+    count: number,
+    nextWord: string | null | undefined
+): string => `
     <span class="epic-article-count">
         <input type="checkbox" id="epic-article-count__dialog-checkbox" class="epic-article-count__dialog-checkbox" />
         <label for="epic-article-count__dialog-checkbox" class="epic-article-count__prompt-label">

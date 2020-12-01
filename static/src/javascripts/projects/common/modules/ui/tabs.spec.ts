@@ -1,8 +1,10 @@
+import { _, init as tabsInit } from './tabs';
 
-
-import { init as tabsInit, _ } from "./tabs";
-
-const NAV_CLASSES = ['tabs__tab--selected', 'tone-colour', 'tone-accent-border'];
+const NAV_CLASSES = [
+    'tabs__tab--selected',
+    'tone-colour',
+    'tone-accent-border',
+];
 
 jest.mock('lib/fastdom-promise');
 
@@ -42,62 +44,64 @@ const markup = `
 `;
 
 beforeEach(() => {
-  if (document.body) {
-    document.body.innerHTML = markup;
-  }
+    if (document.body) {
+        document.body.innerHTML = markup;
+    }
 });
 
 afterEach(() => {
-  if (document.body) {
-    document.body.innerHTML = '';
-  }
+    if (document.body) {
+        document.body.innerHTML = '';
+    }
 });
 
 test('should properly save the initialized state', () => {
-  const nav: HTMLElement = (document.querySelector('.js-tabs') as any);
+    const nav: HTMLElement = document.querySelector('.js-tabs');
 
-  expect(nav.getAttribute('data-tabs-initialized')).toBe(null);
+    expect(nav.getAttribute('data-tabs-initialized')).toBe(null);
 
-  return tabsInit().then(() => {
-    expect(nav.getAttribute('data-tabs-initialized')).toBe('true');
-  });
+    return tabsInit().then(() => {
+        expect(nav.getAttribute('data-tabs-initialized')).toBe('true');
+    });
 });
 
 test('showPane()', () => {
-  const tab: HTMLElement = (document.getElementById('tab2') as any);
-  const tabList: HTMLElement = (tab.parentNode as any);
-  const pane: HTMLElement = (document.getElementById('tab2panel') as any);
+    const tab: HTMLElement = document.getElementById('tab2') as any;
+    const tabList: HTMLElement = tab.parentNode as any;
+    const pane: HTMLElement = document.getElementById('tab2panel') as any;
 
-  return _.showPane(tab, pane).then(() => {
-    expect(pane.classList.contains('u-h')).toBe(false);
-    expect(pane.classList.contains('modern-hidden')).toBe(false);
-    expect(tabList.getAttribute('aria-selected')).toBe('true');
+    return _.showPane(tab, pane).then(() => {
+        expect(pane.classList.contains('u-h')).toBe(false);
+        expect(pane.classList.contains('modern-hidden')).toBe(false);
+        expect(tabList.getAttribute('aria-selected')).toBe('true');
 
-    NAV_CLASSES.forEach(className => {
-      expect(tabList.classList.contains(className)).toBe(true);
+        NAV_CLASSES.forEach((className) => {
+            expect(tabList.classList.contains(className)).toBe(true);
+        });
     });
-  });
 });
 
 test('hidePane()', () => {
-  const tab: HTMLElement = (document.getElementById('tab2') as any);
-  const tabList: HTMLElement = (tab.parentNode as any);
-  const pane: HTMLElement = (document.getElementById('tab2panel') as any);
+    const tab: HTMLElement = document.getElementById('tab2') as any;
+    const tabList: HTMLElement = tab.parentNode as any;
+    const pane: HTMLElement = document.getElementById('tab2panel') as any;
 
-  return _.showPane(tab, pane).then(() => _.hidePane(tab, pane).then(() => {
-    expect(pane.classList.contains('u-h')).toBe(true);
-    expect(tabList.getAttribute('aria-selected')).toBe('false');
+    return _.showPane(tab, pane).then(() =>
+        _.hidePane(tab, pane).then(() => {
+            expect(pane.classList.contains('u-h')).toBe(true);
+            expect(tabList.getAttribute('aria-selected')).toBe('false');
 
-    NAV_CLASSES.forEach(className => {
-      expect(tabList.classList.contains(className)).toBe(false);
-    });
-  }));
+            NAV_CLASSES.forEach((className) => {
+                expect(tabList.classList.contains(className)).toBe(false);
+            });
+        })
+    );
 });
 
 test('getTabTarget()', () => {
-  const tab: HTMLElement = (document.getElementById('tab2') as any);
+    const tab: HTMLElement = document.getElementById('tab2') as any;
 
-  return _.getTabTarget(tab).then(target => {
-    expect(target).toBe('#tab2panel');
-  });
+    return _.getTabTarget(tab).then((target) => {
+        expect(target).toBe('#tab2panel');
+    });
 });

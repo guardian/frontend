@@ -1,12 +1,12 @@
+import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/templates/acquisitions-banner-ticker';
+import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
+import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
+import closeCentralIcon from 'svgs/icon/close-central.svg';
+import marque36icon from 'svgs/icon/marque-36.svg';
 
-
-import marque36icon from "svgs/icon/marque-36.svg";
-import closeCentralIcon from "svgs/icon/close-central.svg";
-import arrowWhiteRight from "svgs/icon/arrow-white-right.svg";
-import { acquisitionsBannerTickerTemplate } from "common/modules/commercial/templates/acquisitions-banner-ticker";
-import { paymentMethodLogosTemplate } from "common/modules/commercial/templates/payment-method-logos-template";
-
-export const acquisitionsBannerControlTemplate = (params: EngagementBannerTemplateParams): string => `
+export const acquisitionsBannerControlTemplate = (
+    params: EngagementBannerTemplateParams
+): string => `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel hide-until-phablet">
                 ${marque36icon.markup}
@@ -18,17 +18,25 @@ export const acquisitionsBannerControlTemplate = (params: EngagementBannerTempla
         </div>
         <div class="engagement-banner__container">
             <div class="engagement-banner__text">
-                ${params.leadSentence ? `<div class="engagement-banner__header">
+                ${
+                    params.leadSentence
+                        ? `<div class="engagement-banner__header">
                         ${params.leadSentence}
-                    </div>` : ''}
+                    </div>`
+                        : ''
+                }
                 ${params.messageText}${params.ctaText}
                 ${params.hasTicker ? acquisitionsBannerTickerTemplate : ''}
             </div>
             <div class="engagement-banner__cta">
-                <a tabindex="3" class="button engagement-banner__button" href="${params.linkUrl}">
+                <a tabindex="3" class="button engagement-banner__button" href="${
+                    params.linkUrl
+                }">
                     ${params.buttonCaption}${arrowWhiteRight.markup}
                 </a>
-                ${paymentMethodLogosTemplate('engagement-banner__payment-logos')}
+                ${paymentMethodLogosTemplate(
+                    'engagement-banner__payment-logos'
+                )}
             </div>
         </div>
 

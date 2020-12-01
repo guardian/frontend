@@ -1,6 +1,5 @@
-
-import bean from "bean";
-import bonzo from "bonzo";
+import bean from 'bean';
+import bonzo from 'bonzo';
 
 /**
     videojs plugins can't use arrow functions
@@ -8,33 +7,35 @@ import bonzo from "bonzo";
     represents an instance of the videojs player
 * */
 const fullscreener = function fullscreener(): void {
-  const clickbox = bonzo.create('<div class="vjs-fullscreen-clickbox"></div>')[0];
+    const clickbox = bonzo.create(
+        '<div class="vjs-fullscreen-clickbox"></div>'
+    )[0];
 
-  bonzo(clickbox).appendTo(this.contentEl());
+    bonzo(clickbox).appendTo(this.contentEl());
 
-  bean.on(clickbox, 'click', (e: Bean): void => {
-    if (this.paused()) {
-      this.play();
-    } else {
-      this.pause();
-    }
-    e.stop();
-  });
+    bean.on(clickbox, 'click', (e: Bean): void => {
+        if (this.paused()) {
+            this.play();
+        } else {
+            this.pause();
+        }
+        e.stop();
+    });
 
-  bean.on(clickbox, 'dblclick', (e: Bean): void => {
-    e.stop();
-    if (this.isFullscreen()) {
-      this.exitFullscreen();
-    } else {
-      this.requestFullscreen();
-    }
-  });
+    bean.on(clickbox, 'dblclick', (e: Bean): void => {
+        e.stop();
+        if (this.isFullscreen()) {
+            this.exitFullscreen();
+        } else {
+            this.requestFullscreen();
+        }
+    });
 
-  this.on('fullscreenchange', (): void => {
-    if (this.isFullscreen()) {
-      this.trigger('player:fullscreen');
-    }
-  });
+    this.on('fullscreenchange', (): void => {
+        if (this.isFullscreen()) {
+            this.trigger('player:fullscreen');
+        }
+    });
 };
 
 export { fullscreener };

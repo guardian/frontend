@@ -1,5 +1,3 @@
-
-
 export const articlesReadTooltipMarkup = (count: number): string => `
     <span class="engagement-banner__articles-read-tooltip-wrapper">
         <span class="engagement-banner__articles-read">

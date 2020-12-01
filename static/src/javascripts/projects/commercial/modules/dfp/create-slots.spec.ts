@@ -1,7 +1,6 @@
-
-import { createSlots } from "commercial/modules/dfp/create-slots";
-import { adSizes } from "commercial/modules/ad-sizes";
-import bonzo from "bonzo";
+import bonzo from 'bonzo';
+import { adSizes } from 'commercial/modules/ad-sizes';
+import { createSlots } from 'commercial/modules/dfp/create-slots';
 
 const imHtml = `
 <div id="dfp-ad--im"
@@ -27,50 +26,59 @@ const inline1Html = `
 `;
 
 describe('Create Ad Slot', () => {
-  it('should exist', () => {
-    expect(createSlots).toBeDefined();
-  });
-
-  [{
-    type: 'im',
-    htmls: [imHtml]
-  }, {
-    type: 'inline',
-    classes: 'inline',
-    name: 'inline1',
-    htmls: [inline1Html]
-  }].forEach((expectation: Object) => {
-    it(`should create "${expectation.type}" ad slot`, () => {
-      const adSlots = createSlots(expectation.type, {
-        name: expectation.name,
-        classes: expectation.classes
-      });
-
-      adSlots.forEach((adSlot, i) => {
-        expect(adSlot.outerHTML).toBe(expectation.htmls[i].replace(/\n/g, '').replace(/\s+/g, ' '));
-      });
+    it('should exist', () => {
+        expect(createSlots).toBeDefined();
     });
-  });
 
-  it('should create "inline1" ad slot for inline-extra slots', () => {
-    const adSlots = createSlots('inline', { classes: 'inline-extra' });
-    const adSlot = adSlots[0];
+    [
+        {
+            type: 'im',
+            htmls: [imHtml],
+        },
+        {
+            type: 'inline',
+            classes: 'inline',
+            name: 'inline1',
+            htmls: [inline1Html],
+        },
+    ].forEach((expectation: Object) => {
+        it(`should create "${expectation.type}" ad slot`, () => {
+            const adSlots = createSlots(expectation.type, {
+                name: expectation.name,
+                classes: expectation.classes,
+            });
 
-    expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
-  });
-
-  it('should create "inline1" ad slot with additional size', () => {
-    const adSlots = createSlots('inline', {
-      sizes: { desktop: [adSizes.leaderboard] }
+            adSlots.forEach((adSlot, i) => {
+                expect(adSlot.outerHTML).toBe(
+                    expectation.htmls[i].replace(/\n/g, '').replace(/\s+/g, ' ')
+                );
+            });
+        });
     });
-    const adSlot = adSlots[0];
 
-    expect(bonzo(adSlot).attr('data-desktop').indexOf(adSizes.leaderboard.toString())).toBeTruthy();
-  });
+    it('should create "inline1" ad slot for inline-extra slots', () => {
+        const adSlots = createSlots('inline', { classes: 'inline-extra' });
+        const adSlot = adSlots[0];
 
-  it('should use correct sizes for the mobile top-above-nav slot', () => {
-    const topAboveNavSlot = bonzo(createSlots('top-above-nav')[0]);
-    const mobileSizes = topAboveNavSlot.attr('data-mobile');
-    expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
-  });
+        expect(bonzo(adSlot).hasClass('ad-slot--inline-extra')).toBeTruthy();
+    });
+
+    it('should create "inline1" ad slot with additional size', () => {
+        const adSlots = createSlots('inline', {
+            sizes: { desktop: [adSizes.leaderboard] },
+        });
+        const adSlot = adSlots[0];
+
+        expect(
+            bonzo(adSlot)
+                .attr('data-desktop')
+                .indexOf(adSizes.leaderboard.toString())
+        ).toBeTruthy();
+    });
+
+    it('should use correct sizes for the mobile top-above-nav slot', () => {
+        const topAboveNavSlot = bonzo(createSlots('top-above-nav')[0]);
+        const mobileSizes = topAboveNavSlot.attr('data-mobile');
+        expect(mobileSizes).toBe('1,1|2,2|88,71|300,197|300,250|fluid');
+    });
 });

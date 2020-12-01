@@ -1,7 +1,6 @@
-
-import { getViewport } from "lib/detect";
-import fastdom from "lib/fastdom-promise";
-import { RegisterListeners } from "commercial/modules/messenger";
+import type { RegisterListeners } from 'commercial/modules/messenger';
+import { getViewport } from 'lib/detect';
+import fastdom from 'lib/fastdom-promise';
 
 let w = window;
 let iframes = {};
@@ -11,69 +10,73 @@ let taskQueued = false;
 const lastViewportRead = () => fastdom.measure(() => getViewport());
 
 const reset = (window_: WindowProxy): void => {
-  w = window_ || window;
-  taskQueued = false;
-  iframes = {};
-  iframeCounter = 0;
+    w = window_ || window;
+    taskQueued = false;
+    iframes = {};
+    iframeCounter = 0;
 };
 
 const sendViewportDimensions = (iframeId, viewport): void => {
-  if (iframes[iframeId] && iframes[iframeId].respond) {
-    iframes[iframeId].respond(null, viewport);
-  }
+    if (iframes[iframeId] && iframes[iframeId].respond) {
+        iframes[iframeId].respond(null, viewport);
+    }
 };
 
 const onResize = (): Promise<any> | null | undefined => {
-  if (!taskQueued) {
-    taskQueued = true;
+    if (!taskQueued) {
+        taskQueued = true;
 
-    return lastViewportRead().then(viewport => {
-      Object.keys(iframes).forEach(iframeId => {
-        sendViewportDimensions(iframeId, viewport);
-      });
-      taskQueued = false;
-    });
-  }
+        return lastViewportRead().then((viewport) => {
+            Object.keys(iframes).forEach((iframeId) => {
+                sendViewportDimensions(iframeId, viewport);
+            });
+            taskQueued = false;
+        });
+    }
 };
 
 const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
-  if (iframeCounter === 0) {
-    w.addEventListener('resize', onResize);
-  }
+    if (iframeCounter === 0) {
+        w.addEventListener('resize', onResize);
+    }
 
-  iframes[iframe.id] = {
-    node: iframe,
-    respond
-  };
-  iframeCounter += 1;
-  return lastViewportRead().then(viewport => {
-    sendViewportDimensions(iframe.id, viewport);
-  });
+    iframes[iframe.id] = {
+        node: iframe,
+        respond,
+    };
+    iframeCounter += 1;
+    return lastViewportRead().then((viewport) => {
+        sendViewportDimensions(iframe.id, viewport);
+    });
 };
 
 const removeResizeListener = (iframe: Element): void => {
-  if (iframes[iframe.id]) {
-    iframes[iframe.id] = false;
-    iframeCounter -= 1;
-  }
+    if (iframes[iframe.id]) {
+        iframes[iframe.id] = false;
+        iframeCounter -= 1;
+    }
 
-  if (iframeCounter === 0) {
-    w.removeEventListener('resize', onResize);
-  }
+    if (iframeCounter === 0) {
+        w.removeEventListener('resize', onResize);
+    }
 };
 
-const onMessage = (respond: any, start: any, iframe: Element | null | undefined): void => {
-  if (!iframe) return;
-  if (start) {
-    addResizeListener(iframe, respond);
-  } else {
-    removeResizeListener(iframe);
-  }
+const onMessage = (
+    respond: any,
+    start: any,
+    iframe: Element | null | undefined
+): void => {
+    if (!iframe) return;
+    if (start) {
+        addResizeListener(iframe, respond);
+    } else {
+        removeResizeListener(iframe);
+    }
 };
 const init = (register: RegisterListeners) => {
-  register('viewport', onMessage, {
-    persist: true
-  });
+    register('viewport', onMessage, {
+        persist: true,
+    });
 };
 
 export const _ = { addResizeListener, removeResizeListener, reset, onMessage };

@@ -1,44 +1,53 @@
-
-
-import config from "lib/config";
-import { onConsentChange, getConsentFor } from "@guardian/consent-management-platform";
-import { commercialFeatures } from "common/modules/commercial/commercial-features";
-import { getPageTargeting } from "common/modules/commercial/build-page-targeting";
-import { dfpEnv } from "commercial/modules/dfp/dfp-env";
-import once from "lodash/once";
-import prebid from "commercial/modules/header-bidding/prebid/prebid";
-import { isGoogleProxy } from "lib/detect";
-import { shouldIncludeOnlyA9 } from "commercial/modules/header-bidding/utils";
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import prebid from 'commercial/modules/header-bidding/prebid/prebid';
+import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
+import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import config from 'lib/config';
+import { isGoogleProxy } from 'lib/detect';
+import once from 'lodash/once';
 
 const loadPrebid: () => void = () => {
-  if (dfpEnv.hbImpl.prebid && commercialFeatures.dfpAdvertising && !commercialFeatures.adFree && !config.get('page.hasPageSkin') && !isGoogleProxy() && !shouldIncludeOnlyA9) {
-    import(
-    /* webpackChunkName: "Prebid.js" */
-    'prebid.js/build/dist/prebid').then(() => {
-      getPageTargeting();
-      prebid.initialise(window);
-    });
-  }
+    if (
+        dfpEnv.hbImpl.prebid &&
+        commercialFeatures.dfpAdvertising &&
+        !commercialFeatures.adFree &&
+        !config.get('page.hasPageSkin') &&
+        !isGoogleProxy() &&
+        !shouldIncludeOnlyA9
+    ) {
+        import(
+            /* webpackChunkName: "Prebid.js" */
+            'prebid.js/build/dist/prebid'
+        ).then(() => {
+            getPageTargeting();
+            prebid.initialise(window);
+        });
+    }
 };
 
 const setupPrebid: () => Promise<void> = () => {
-  onConsentChange(state => {
-    const canRun: boolean = getConsentFor('prebid', state);
-    if (canRun) {
-      loadPrebid();
-    }
-  });
+    onConsentChange((state) => {
+        const canRun: boolean = getConsentFor('prebid', state);
+        if (canRun) {
+            loadPrebid();
+        }
+    });
 
-  return Promise.resolve();
+    return Promise.resolve();
 };
 
 export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
 
 export const init = (): Promise<void> => {
-  setupPrebidOnce();
-  return Promise.resolve();
+    setupPrebidOnce();
+    return Promise.resolve();
 };
 
 export const _ = {
-  setupPrebid
+    setupPrebid,
 };
