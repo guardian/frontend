@@ -153,13 +153,22 @@ class ContentTest
     Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
   }
 
-  it should "returns the correct shortUrlId" in {
+  it should "returns the correct shortUrlId (old version)" in {
 
     def contentWithShortUrl(shortUrl: String): ContentType =
       Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
 
     contentWithShortUrl("http://gu.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
     contentWithShortUrl("https://gu.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
+  }
+
+  it should "returns the correct shortUrlId (new version)" in {
+
+    def contentWithShortUrl(shortUrl: String): ContentType =
+      Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
+
+    contentWithShortUrl("http://www.theguardian.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
+    contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
   val dateBeforeCutoff = Some(

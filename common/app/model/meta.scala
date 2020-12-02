@@ -110,7 +110,23 @@ final case class Fields(
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
 ) {
-  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  def ensureStartingForwardSlash(str: String): String = {
+    if (!str.startsWith("/")) ("/" + str) else str
+  }
+
+  def shortUrlToShortId(shortUrl: String): String = {
+    /*
+        Date: 02nd Dec 2020
+        see (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) for details
+     */
+    val id = shortUrl
+      .replaceFirst("^[a-zA-Z]+://gu.com/", "")
+      .replaceFirst("^[a-zA-Z]+://www.theguardian.com/", "")
+    ensureStartingForwardSlash(id)
+  }
+
+  lazy val shortUrlId = shortUrlToShortId(shortUrl)
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")
 
   def javascriptConfig: Map[String, JsValue] = {
