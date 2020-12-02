@@ -59,6 +59,7 @@ import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
 import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
+import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
 const initialiseTopNavItems = (): void => {
     const header: ?HTMLElement = document.getElementById('header');
@@ -118,6 +119,19 @@ const loadAnalytics = (): void => {
         }
     }
 };
+
+const loadGoogleAnalytics = (): void => {
+    const handleGoogleAnalytics = (gaHasConsent: boolean): void => {
+        if (gaHasConsent && !config.get('page.gaIsInitalised')) {
+            window.guardian.googleAnalytics.initialiseGa()
+        } else {
+            // set window.ga back to a stub function when ga consents are removed so that we don't track events
+            window.ga = function() {}
+            config.set('page.gaIsInitalised', false)
+        }
+    }
+    mediator.on('ga:gaConsentChange', handleGoogleAnalytics)
+}
 
 const cleanupCookies = (): void => {
     cleanUp([
@@ -333,6 +347,8 @@ const init = (): void => {
         ['c-increment-article-counts', updateArticleCounts],
         ['c-reader-revenue-dev-utils', initReaderRevenueDevUtils],
         ['c-add-privacy-settings-link', addPrivacySettingsLink],
+        ['c-load-google-analytics', loadGoogleAnalytics],
+        ['c-google-analytics', initGoogleAnalytics],
     ]);
 };
 
