@@ -17,7 +17,7 @@
 // (where the user has not given their consent for GA tracking)
 window.ga = function() {};
 
-window.guardian.config.googleAnalytics.initialiseGa = function() {
+window.guardian.googleAnalytics.initialiseGa = function() {
     // Remove spaces from content type and convert it to lower case
     function convertContentType(contentType) {
         var result = contentType;

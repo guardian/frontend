@@ -124,7 +124,7 @@ const loadAnalytics = (): void => {
 const loadGoogleAnalytics = (): void => {
     const handleGoogleAnalytics = (gaHasConsent: boolean): void => {
         if (gaHasConsent && !config.get('page.gaIsInitalised')) {
-            window.guardian.config.googleAnalytics.initialiseGa()
+            window.guardian.googleAnalytics.initialiseGa()
         } else {
             // set window.ga back to a stub function when ga consents are removed so that we don't track events
             window.ga = function() {}
