@@ -265,8 +265,6 @@ GET            /commercial/travel/api/offers.json                               
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
-GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
-GET            /commercial/api/capi-multiple.json                                                                                commercial.controllers.ContentApiOffersController.nativeJsonMulti
 GET            /commercial/api/traffic-driver.json                                                                               commercial.controllers.TrafficDriverController.renderJson
 GET            /commercial/api/multi.json                                                                                        commercial.controllers.Multi.getMulti
 GET            /$path<commercial-containers>                                                                                     controllers.FaciaController.renderFront(path)
