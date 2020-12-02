@@ -10,10 +10,9 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { storage } from '@guardian/libs';
+import { getLocale, storage } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { isInUsa } from 'common/modules/commercial/geo-utils';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
@@ -30,7 +29,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // kick off the app
 const go = () => {
-    domready(() => {
+    domready(async () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
@@ -68,7 +67,7 @@ const go = () => {
             config.get('switches.auConsent', false) ||
             config.get('tests.useAusCmpVariant') === 'variant'
         ) {
-            cmp.init({ pubData, country: geolocationGetSync() });
+            cmp.init({ pubData, country: await getLocale() });
         } else {
             cmp.init({ pubData, isInUsa: isInUsa() });
         }
