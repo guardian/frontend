@@ -54,7 +54,7 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
       shortUrls: Seq[String],
   )(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
-      val shortIds = shortUrls.map(shortUrlToShortId) mkString ","
+      val shortIds = shortUrls.map(shortUrlToShortId).mkString(",")
       contentApiClient.getResponse(contentApiClient.search(defaultEdition).ids(shortIds)) map {
         _.results map (Content(_))
       }
