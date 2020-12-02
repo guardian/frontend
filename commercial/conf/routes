@@ -22,9 +22,7 @@ GET         /commercial/api/liveevent.json                                  comm
 
 # Multiple offer merchandising components
 GET         /commercial/api/multi.json                                      commercial.controllers.Multi.getMulti
-# Content API merchandising components
-GET         /commercial/api/capi-single.json                                commercial.controllers.ContentApiOffersController.nativeJson
-GET         /commercial/api/capi-multiple.json                              commercial.controllers.ContentApiOffersController.nativeJsonMulti
+
 GET         /commercial/api/traffic-driver.json                             commercial.controllers.TrafficDriverController.renderJson
 
 # Piggyback pixel from AppNexus, used for resizing mpus
