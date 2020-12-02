@@ -22,7 +22,6 @@ trait CommercialControllers {
   def controllerComponents: ControllerComponents
   implicit def appContext: ApplicationContext
   lazy val bookOffersController = wire[BookOffersController]
-  lazy val contentApiOffersController = wire[ContentApiOffersController]
   lazy val creativeTestPage = wire[CreativeTestPage]
   lazy val hostedContentController = wire[HostedContentController]
   lazy val jobsController = wire[JobsController]
