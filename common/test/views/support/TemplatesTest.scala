@@ -53,9 +53,51 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     tags.typeOrTone.get.id should be("tone/foo")
   }
 
-  "PictureCleaner" should "correctly format inline pictures" in {
+  /*
+    Date: 02nd Dec 2020
+    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "theguardian.com", this is due to a CAPI migration.
+    See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
+   */
+
+  "PictureCleaner" should "correctly format inline pictures (gu.com)" in {
     implicit val request: RequestHeader = TestRequest()
-    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent)).body)
+    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent1)).body)
+
+    val figures = body.getElementsByTag("figure")
+
+    val inlineImg = figures.get(0)
+    inlineImg.hasClass("img--inline") should be(true)
+    inlineImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    inlineImg.attr("data-media-id") should be("gu-image-1")
+    inlineImg.previousElementSibling.hasClass("previous-element") should be(true)
+
+    val landscapeImg = figures.get(3)
+    landscapeImg.hasClass("img--landscape") should be(true)
+    landscapeImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    landscapeImg.attr("data-media-id") should be("gu-image-4")
+
+    val portraitImg = figures.get(4)
+    portraitImg.hasClass("img--portrait") should be(true)
+    portraitImg.getElementsByTag("img").hasClass("gu-image") should be(true)
+    portraitImg.getElementsByTag("img").hasAttr("height") should be(false) // we remove the height attribute
+    portraitImg.attr("data-media-id") should be("gu-image-5")
+    portraitImg.nextElementSibling.hasClass("following-element") should be(true)
+
+    for { fig <- figures.asScala } {
+      fig.attr("itemprop") should be("associatedMedia image")
+      fig.attr("itemscope") should be("")
+      fig.attr("itemtype") should be("http://schema.org/ImageObject")
+    }
+
+    for { caption <- body.getElementsByTag("figcaption").asScala } {
+      caption.attr("itemprop") should be("description")
+      caption.text should include("test caption")
+    }
+  }
+
+  "PictureCleaner" should "correctly format inline pictures (theguardian.com)" in {
+    implicit val request: RequestHeader = TestRequest()
+    val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent2)).body)
 
     val figures = body.getElementsByTag("figure")
 
@@ -257,7 +299,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     ApiElement("gu-image-5", "body", ElementType.Image, Some(0), List(asset("test caption", 500, 700, "gu-image-5"))),
   )
 
-  val testContent = {
+  val testContent1 = {
     val content = Content.make(
       ApiContent(
         id = "foo/2012/jan/07/bar",
@@ -268,6 +310,23 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
         webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
         apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
         fields = Some(ContentFields(shortUrl = Some("http://gu.com/p/439az"))),
+        elements = Some(testImages),
+      ),
+    )
+    Article.make(content)
+  }
+
+  val testContent2 = {
+    val content = Content.make(
+      ApiContent(
+        id = "foo/2012/jan/07/bar",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDate = None,
+        webTitle = "Some article",
+        webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
+        apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
+        fields = Some(ContentFields(shortUrl = Some("http://theguardian.com/p/439az"))),
         elements = Some(testImages),
       ),
     )

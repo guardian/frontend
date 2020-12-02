@@ -153,6 +153,12 @@ class ContentTest
     Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
   }
 
+  /*
+    Date: 02nd Dec 2020
+    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "theguardian.com", this is due to a CAPI migration.
+    See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
+   */
+
   it should "returns the correct shortUrlId (gu.com)" in {
 
     def contentWithShortUrl(shortUrl: String): ContentType =
