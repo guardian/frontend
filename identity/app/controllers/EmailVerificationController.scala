@@ -1,7 +1,5 @@
 package controllers
 
-import java.net.URLEncoder
-
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
@@ -9,8 +7,6 @@ import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import cats.data.EitherT
-import cats.instances.future._
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
@@ -62,13 +58,8 @@ class EmailVerificationController(
 
   def resendValidationEmail(token: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      val response = for {
-        email <- EitherT(api.decryptEmailToken(token))
-        user <- EitherT(api.userFromQueryParam(URLEncoder.encode(email, "UTF-8"), "emailAddress"))
-        response <- EitherT(api.resendEmailValidationEmail(user.id))
-      } yield response
-
-      response.value map {
+      val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+      api.resendEmailValidationEmailByToken(token, verifiedReturnUrlAsOpt) map {
         case Left(errors) => {
           logger.error(s"Could not resend email verification email: $errors")
           InternalServerError("Internal error: Could not resend email verification email")

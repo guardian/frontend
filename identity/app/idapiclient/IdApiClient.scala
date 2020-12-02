@@ -184,6 +184,13 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     response map extractUnit
   }
 
+  def resendEmailValidationEmailByToken(token: String, returnUrl: Option[String]): Future[Response[Unit]] = {
+    val apiPath = urlJoin("signin-token", "send-validation-email", token)
+    val parameters = returnUrl.map(url => Iterable("returnUrl" -> url)).getOrElse(Iterable.empty)
+    val response = httpClient.POST(uri = apiUrl(apiPath), None, None, buildHeaders(extra = parameters))
+    response map extractUnit
+  }
+
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
     put(
