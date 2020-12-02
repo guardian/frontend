@@ -35,7 +35,7 @@ import scala.concurrent.duration._
     See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
    */
 
-  "contentByShortUrls (old version)" should "find content for genuine URLs" in {
+  "contentByShortUrls (gu.com)" should "find content for genuine URLs" in {
     val contents = contentsOf("http://gu.com/p/3qeqm", "http://gu.com/p/4v86p", "https://gu.com/p/4vf6t")
     contents.map(_.metadata.webTitle) should be(
       Seq(
