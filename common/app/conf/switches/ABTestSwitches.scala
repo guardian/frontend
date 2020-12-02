@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 12, 1),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true,
   )
 
@@ -52,17 +52,17 @@ trait ABTestSwitches {
     "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 12, 1),
+    sellByDate = new LocalDate(2020, 12, 1),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-curated-container-test2",
-    "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
-    owners = Seq(Owner.withGithub("rcrphillips")),
+    "ab-curated-container-test",
+    "Tests an additional 'curated' onwards container below the article body.",
+    owners = Seq(Owner.withGithub("gtrufitt")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 10),
+    sellByDate = new LocalDate(2020, 12, 9),
     exposeClientSide = true,
   )
 
@@ -73,26 +73,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 1, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-newsletter-merch-unit-lighthouse-control",
-    "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 8),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-newsletter-merch-unit-lighthouse-variants",
-    "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 8),
     exposeClientSide = true,
   )
 
