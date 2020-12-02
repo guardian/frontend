@@ -122,7 +122,7 @@ final case class Fields(
      */
     val id = shortUrl
       .replaceFirst("^[a-zA-Z]+://gu.com/", "")
-      .replaceFirst("^[a-zA-Z]+://www.theguardian.com/", "")
+      .replaceFirst("^[a-zA-Z]+://theguardian.com/", "")
     ensureStartingForwardSlash(id)
   }
 

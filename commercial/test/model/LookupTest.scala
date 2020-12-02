@@ -31,7 +31,7 @@ import scala.concurrent.duration._
 
   /*
     Date: 02nd Dec 2020
-    Some tests (those with hardcoded short urls), come in two versions "old" and "new", this is due to a CAPI migration.
+    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "theguardian.com", this is due to a CAPI migration.
     See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
    */
 
@@ -46,11 +46,11 @@ import scala.concurrent.duration._
     )
   }
 
-  "contentByShortUrls (new version)" should "find content for genuine URLs" in {
+  "contentByShortUrls (theguardian.com)" should "find content for genuine URLs" in {
     val contents = contentsOf(
-      "http://www.theguardian.com/p/3qeqm",
-      "http://www.theguardian.com/p/4v86p",
-      "https://www.theguardian.com/p/4vf6t",
+      "http://theguardian.com/p/3qeqm",
+      "http://theguardian.com/p/4v86p",
+      "https://theguardian.com/p/4vf6t",
     )
     contents.map(_.metadata.webTitle) should be(
       Seq(
@@ -70,12 +70,12 @@ import scala.concurrent.duration._
     )
   }
 
-  it should "not find content for fake URLs (old version)" in {
+  it should "not find content for fake URLs (gu.com)" in {
     contentsOf("http://gu.com/p/3qeqmjlkk", "https://gu.com/p/4gfshstv86p") should be(Nil)
   }
 
-  it should "not find content for fake URLs (new version)" in {
-    contentsOf("http://www.theguardian.com/p/3qeqmjlkk", "https://www.theguardian.com/p/4gfshstv86p") should be(Nil)
+  it should "not find content for fake URLs (theguardian.com)" in {
+    contentsOf("http://theguardian.com/p/3qeqmjlkk", "https://theguardian.com/p/4gfshstv86p") should be(Nil)
   }
 
   it should "not find content for badly-formed URLs" in {

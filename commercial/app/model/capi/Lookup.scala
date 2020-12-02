@@ -37,7 +37,7 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
           https://gu.com/p/abc
 
         to
-          https://www.theguardian.com/p/abc
+          https://theguardian.com/p/abc
 
         for "short" urls.
 
@@ -47,7 +47,7 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
      */
     shortUrl
       .replaceFirst("^[a-zA-Z]+://gu.com/", "")
-      .replaceFirst("^[a-zA-Z]+://www.theguardian.com/", "")
+      .replaceFirst("^[a-zA-Z]+://theguardian.com/", "")
   }
 
   def contentByShortUrls(
