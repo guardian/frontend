@@ -5,6 +5,7 @@ import common.Edition.defaultEdition
 import common.Logging
 import contentapi.ContentApiClient
 import model.{Content, ContentType, ImageElement}
+import utils.ShortUrls
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -30,7 +31,7 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
       shortUrls: Seq[String],
   )(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
-      val shortIds = shortUrls map (_.replaceFirst("^[a-zA-Z]+://gu.com/", "")) mkString ","
+      val shortIds = shortUrls.map(ShortUrls.shortUrlToShortId).mkString(",")
       contentApiClient.getResponse(contentApiClient.search(defaultEdition).ids(shortIds)) map {
         _.results map (Content(_))
       }
