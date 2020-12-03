@@ -86,7 +86,7 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
+  val GlobalEoyHeaderSwitch = Switch(
     ABTests,
     "ab-global-eoy-header-test",
     "Test reader revenue message in header",
