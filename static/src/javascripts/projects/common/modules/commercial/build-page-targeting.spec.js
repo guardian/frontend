@@ -467,4 +467,36 @@ describe('Build Page Targeting', () => {
             ]);
         });
     });
+
+    describe('inskin targetting', () => {
+        it('should not allow inskin if cmp has not initialised', () => {
+            cmp.hasInitialised.mockReturnValue(false);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        it('should not allow inskin if cmp will show a banner', () => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(true);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        // $FlowFixMe -- it.each does not have a type
+        it.each([
+            ['f', 1280],
+            ['f', 1440],
+            ['f', 1559],
+            ['t', 1560],
+            ['t', 1561],
+            ['t', 1920],
+            ['t', 2560],
+        ])("should return '%s' if viewport width is %s", (expected, width) => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width, height: 800 });
+            expect(getPageTargeting().inskin).toBe(expected);
+        });
+    });
 });
