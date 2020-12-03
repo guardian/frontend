@@ -4,7 +4,7 @@ import common.{CssPreloadAsset, JsPreloadAsset, PreloadAsset, ThirdPartyJsPreloa
 import model.ApplicationContext
 import play.api.mvc.{RequestHeader, Result}
 
-trait ResultWithPreload {
+trait ResultWithPreconnectPreload {
   final implicit class RichResult(self: Result) {
 
     val linkHeaderKey = "Link"
