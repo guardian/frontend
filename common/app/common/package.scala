@@ -18,6 +18,7 @@ import play.api.mvc.{RequestHeader, Result}
 import play.twirl.api.Html
 import model.ApplicationContext
 import http.ResultWithPreconnectPreload
+import http.HttpPreconnections
 
 object `package`
     extends implicits.Strings
@@ -137,6 +138,7 @@ object `package`
       .withPreload(
         Preload.config(request).getOrElse(context.applicationIdentity, Seq.empty),
       )(context, request)
+      .withPreconnect(HttpPreconnections.defaultUrls)
   }
 
   def renderJson(json: List[(String, Any)], page: model.Page)(implicit
