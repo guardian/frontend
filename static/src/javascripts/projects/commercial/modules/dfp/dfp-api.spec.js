@@ -102,6 +102,10 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
     getConsentFor: jest.fn(),
+    cmp: {
+        hasInitialised: jest.fn(),
+        willShowPrivacySync: jest.fn(),
+    },
 }));
 
 let $style;
