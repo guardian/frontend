@@ -10,6 +10,8 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 const edition = config.get('page.edition', '').toLowerCase();
 const geolocation = geolocationGetSync();
 
+const month = new Date().getMonth() + 1;    // js date month begins at 0
+
 const componentType = 'ACQUISITIONS_HEADER';
 const componentId = 'header_support';
 const campaignCode = 'header_support';
@@ -87,15 +89,12 @@ const buildHtml = (heading: string, subheading: string, variant: VariantName): s
     }
 `;
 
-const controlHtml = (): string => buildHtml('Support The Guardian', 'Available for everyone, funded by readers', 'control');
-const variantHtml = (): string => buildHtml('Support us this December', 'Power vital, open, independent journalism', 'variant');
-
 const getHeaderCtaBar = () => window.document.querySelector('.new-header__cta-bar');
 
 export const globalEoyHeaderTest: ABTest = {
     id: testName,
     start: '2020-12-02',
-    expiry: '2021-01-02',
+    expiry: '2021-02-01',
     author: 'Tom Forbes',
     description: 'Test reader revenue message in header',
     audience: 1.0,
@@ -104,14 +103,14 @@ export const globalEoyHeaderTest: ABTest = {
     idealOutcome: 'AV',
     showForSensitive: false,
     audienceCriteria: 'All',
-    canRun: () => geolocation !== 'US',
+    canRun: () => geolocation !== 'US' && (month === 12 || month === 1),
     variants: [
         {
             id: 'control',
             test: (): void => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
-                    bar.innerHTML = controlHtml();
+                    bar.innerHTML = buildHtml('Support The Guardian', 'Available for everyone, funded by readers', 'control');
                     onView('control')
                 }
             },
@@ -121,7 +120,8 @@ export const globalEoyHeaderTest: ABTest = {
             test: (): void => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
-                    bar.innerHTML = variantHtml();
+                    const heading = month === 12 ? `Support us this December` : 'Support us for 2021';
+                    bar.innerHTML = buildHtml(heading, 'Power vital, open, independent journalism', 'variant');
                     onView('variant')
                 }
             },
