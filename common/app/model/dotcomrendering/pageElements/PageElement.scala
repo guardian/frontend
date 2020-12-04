@@ -601,7 +601,8 @@ object PageElement {
         for {
           block <- element.textTypeData.toList
           text <- block.html.toList
-          element <- Cleaner.split(text)
+          element <- TextCleaner.split(text)
+          cleanedElement = (element._1, textCleaners(element._2))
         } yield {
           element match {
             case ("h2", heading)                  => SubheadingBlockElement(heading)

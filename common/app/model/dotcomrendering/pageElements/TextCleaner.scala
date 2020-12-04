@@ -4,12 +4,14 @@ import common.{Edition, LinkTo}
 import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
+import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
+import scala.collection.JavaConverters._
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
-object Cleaners {
+object TextCleaner {
 
   def affiliateLinks(pageUrl: String)(el: TextBlockElement): TextBlockElement = {
     val doc = Jsoup.parseBodyFragment(el.html)
@@ -37,6 +39,17 @@ object Cleaners {
       case other => other
     })
   }
+
+  def split(html: String): List[(String, String)] = {
+    Jsoup
+      .parseBodyFragment(html)
+      .body()
+      .children()
+      .asScala
+      .toList
+      .map(el => (el.tagName, el.outerHtml))
+  }
+
 }
 
 object TagLinker {

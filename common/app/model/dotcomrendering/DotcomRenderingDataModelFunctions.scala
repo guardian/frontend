@@ -12,7 +12,7 @@ import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
-import model.dotcomrendering.pageElements.{Cleaners, DisclaimerBlockElement, PageElement}
+import model.dotcomrendering.pageElements.{TextCleaner, DisclaimerBlockElement, PageElement}
 import model.{
   Article,
   ArticleDateTimes,
@@ -198,7 +198,7 @@ object DotcomRenderingDataModelFunctions {
       )
       .filter(PageElement.isSupported)
 
-    val withTagLinks = Cleaners.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
+    val withTagLinks = TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 

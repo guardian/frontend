@@ -4,10 +4,10 @@ import com.gu.contentapi.client.model.v1.TagType.Keyword
 import com.gu.contentapi.client.model.v1.{Tag => ApiTag}
 import common.editions
 import conf.Configuration
-import model.dotcomrendering.pageElements.{Cleaners, TagLinker, TextBlockElement}
+import model.dotcomrendering.pageElements.{TextCleaner, TagLinker, TextBlockElement}
 import org.scalatest.{FlatSpec, Matchers}
 
-class CleanersTest extends FlatSpec with Matchers {
+class TextCleanerTest extends FlatSpec with Matchers {
 
   val host = Configuration.site.host
 
@@ -94,7 +94,7 @@ class CleanersTest extends FlatSpec with Matchers {
       None,
     )
 
-    val got = Cleaners.tagLinks(
+    val got = TextCleaner.tagLinks(
       els = elements,
       tags = Tags(List(tag)),
       showInRelated = true,
@@ -132,7 +132,7 @@ class CleanersTest extends FlatSpec with Matchers {
       None,
     )
 
-    val got = Cleaners.tagLinks(
+    val got = TextCleaner.tagLinks(
       els = elements,
       tags = Tags(List(tag)),
       showInRelated = true,
