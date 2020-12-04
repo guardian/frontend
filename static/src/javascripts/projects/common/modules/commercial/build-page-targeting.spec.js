@@ -508,5 +508,10 @@ describe('Build Page Targeting', () => {
             getViewport.mockReturnValue({ width, height: 800 });
             expect(getPageTargeting().inskin).toBe(expected);
         });
+
+        it("should return 'f' if vp does not have a width", () => {
+            getViewport.mockReturnValue(undefined);
+            expect(getPageTargeting().inskin).toBe('f');
+        });
     });
 });
