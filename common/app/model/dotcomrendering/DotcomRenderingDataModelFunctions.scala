@@ -488,11 +488,12 @@ object DotcomRenderingDataModelFunctions {
     )
 
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
+    val edition = Edition(request)
 
     DotcomRenderingDataModel(
       version = 3,
       headline = article.trail.headline,
-      standfirst = article.fields.standfirst.getOrElse(""),
+      standfirst = TextCleaner.sanitiseLinks(edition)(article.fields.standfirst.getOrElse("")),
       webTitle = article.metadata.webTitle,
       mainMediaElements = mainBlock.toList.flatMap(_.elements),
       main = article.fields.main,
@@ -504,7 +505,7 @@ object DotcomRenderingDataModelFunctions {
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       editionLongForm = Edition(request).displayName, // TODO check
-      editionId = Edition(request).id,
+      editionId = edition.id,
       pageId = article.metadata.id,
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),
@@ -530,7 +531,7 @@ object DotcomRenderingDataModelFunctions {
       commercialProperties = commercial.editionCommercialProperties,
       pageType = pageType,
       starRating = article.content.starRating,
-      trailText = article.trail.fields.trailText.getOrElse(""),
+      trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
       designType = designTypeAsString(article.metadata.designType),
