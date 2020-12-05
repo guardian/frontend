@@ -3,8 +3,9 @@ package model
 import com.gu.contentapi.client.model.v1.TagType.Keyword
 import com.gu.contentapi.client.model.v1.{Tag => ApiTag}
 import common.editions
+import common.editions.Uk
 import conf.Configuration
-import model.dotcomrendering.pageElements.{TextCleaner, TagLinker, TextBlockElement}
+import model.dotcomrendering.pageElements.{TagLinker, TextBlockElement, TextCleaner}
 import org.scalatest.{FlatSpec, Matchers}
 
 class TextCleanerTest extends FlatSpec with Matchers {
@@ -31,7 +32,7 @@ class TextCleanerTest extends FlatSpec with Matchers {
     val examples = List(
       TextBlockElement("the Champions League is great!") ->
         (TextBlockElement(
-          s"""the <a href=${host}/championsleague data-component="auto-linked-tag">Champions League</a> is great!""",
+          s"""the <a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> is great!""",
         ), Set("Champions League")),
       TextBlockElement("What do you think about the Champions?") ->
         (TextBlockElement("What do you think about the Champions?"), Set.empty),
@@ -74,7 +75,7 @@ class TextCleanerTest extends FlatSpec with Matchers {
 
     val want = List(
       TextBlockElement(
-        s"""<a href=${host}/championsleague data-component="auto-linked-tag">Champions League</a> first""",
+        s"""<a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> first""",
       ),
       TextBlockElement("Champions League repeat"),
     )
@@ -113,7 +114,7 @@ class TextCleanerTest extends FlatSpec with Matchers {
     val want = List(
       TextBlockElement("""Champions League tables <a href="example.com/checkitoutfoo">here</a>"""),
       TextBlockElement(
-        s"""<a href=${host}/championsleague data-component="auto-linked-tag">Champions League</a> repeat""",
+        s"""<a href="${host}/championsleague" data-component="auto-linked-tag">Champions League</a> repeat""",
       ),
     )
 
@@ -140,5 +141,34 @@ class TextCleanerTest extends FlatSpec with Matchers {
     )
 
     got shouldBe want
+  }
+
+  "sanitiseLinks" should "update internal links" in {
+
+    val got = TextCleaner.sanitiseLinks(Uk)(
+      """<p>This is a paragraph with <a href="https://www.theguardian.com/help">a link</a></p>""",
+    )
+
+    val want = s"""<p>This is a paragraph with <a href="${host}/help">a link</a></p>"""
+
+    got shouldBe want
+  }
+
+  "sanitiseLinks" should "editionalise some internal links" in {
+    val got = TextCleaner.sanitiseLinks(Uk)(
+      """<p>This is a paragraph with <a href="https://www.theguardian.com">a link to the UK network front</a></p>""",
+    )
+
+    val want = s"""<p>This is a paragraph with <a href="${host}/uk">a link to the UK network front</a></p>"""
+
+    got shouldBe want
+  }
+
+  "sanitiseLinks" should "not update external links" in {
+    val original = """<p>This is a paragraph with <a href="example.com">a link</a></p>"""
+
+    val got = TextCleaner.sanitiseLinks(Uk)(original)
+
+    got shouldBe original
   }
 }

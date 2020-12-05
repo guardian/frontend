@@ -180,7 +180,7 @@ object DotcomRenderingDataModelFunctions {
   ): List[PageElement] = {
 
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
-    val edition = Edition.apply(request)
+    val edition = Edition(request)
 
     val elems = capiElems.toList
       .flatMap(el =>
@@ -194,6 +194,7 @@ object DotcomRenderingDataModelFunctions {
           campaigns,
           calloutsUrl,
           article.elements.thumbnail,
+          edition,
         ),
       )
       .filter(PageElement.isSupported)
