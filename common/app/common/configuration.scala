@@ -210,7 +210,7 @@ class GuardianConfiguration extends Logging {
 
     lazy val key: Option[String] = configuration.getStringProperty("content.api.key")
     lazy val timeout: FiniteDuration =
-      Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(2000), MILLISECONDS)
+      Duration.create(configuration.getIntegerProperty("content.api.timeout.millis").getOrElse(20000), MILLISECONDS)
 
     lazy val circuitBreakerErrorThreshold: Int =
       configuration.getIntegerProperty("content.api.circuit_breaker.max_failures").getOrElse(30)

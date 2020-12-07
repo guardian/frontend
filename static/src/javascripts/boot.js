@@ -10,7 +10,7 @@ import { markTime } from 'lib/user-timing';
 import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import { storage, getLocale } from '@guardian/libs';
+import { getLocale } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
 
@@ -56,10 +56,6 @@ const go = () => {
                     );
                 });
             }
-        });
-
-        cmp.willShowPrivacyMessage().then(willShow => {
-            if (!willShow) storage.local.set('gu.hasSeenPrivacyBanner', true);
         });
 
         cmp.init({ pubData, country: await getLocale() });
