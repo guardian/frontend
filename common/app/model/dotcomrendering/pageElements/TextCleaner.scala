@@ -4,25 +4,48 @@ import common.{Edition, LinkTo}
 import conf.Configuration.{affiliateLinks => affiliateLinksConfig}
 import model.{Tag, Tags}
 import org.jsoup.Jsoup
+import play.api.mvc.RequestHeader
 import views.support.AffiliateLinksCleaner
 
+import scala.collection.JavaConverters._
 import scala.util.matching.Regex
 import scala.util.matching.Regex.Match
 
-object Cleaners {
+object TextCleaner {
 
-  def affiliateLinks(pageUrl: String)(el: TextBlockElement): TextBlockElement = {
-    val doc = Jsoup.parseBodyFragment(el.html)
-    val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
-    links.foreach(el => {
-      val id = affiliateLinksConfig.skimlinksId
-      el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id))
-    })
+  def affiliateLinks(pageUrl: String, addAffiliateLinks: Boolean)(html: String): String = {
+    if (addAffiliateLinks) {
+      val doc = Jsoup.parseBodyFragment(html)
+      val links = AffiliateLinksCleaner.getAffiliateableLinks(doc)
+      links.foreach(el => {
+        val id = affiliateLinksConfig.skimlinksId
+        el.attr("href", AffiliateLinksCleaner.linkToSkimLink(el.attr("href"), pageUrl, id))
+      })
 
-    if (links.nonEmpty) {
-      TextBlockElement(doc.body().html())
+      if (links.nonEmpty) {
+        doc.body().html()
+      } else {
+        html
+      }
     } else {
-      el
+      html
+    }
+  }
+
+  def sanitiseLinks(edition: Edition)(html: String): String = {
+    val doc = Jsoup.parseBodyFragment(html)
+    val links = doc.body().getElementsByTag("a")
+
+    links.asScala.foreach { link =>
+      if (link.tagName == "a") {
+        link.attr("href", LinkTo(link.attr("href"), edition))
+      }
+    }
+
+    if (links.asScala.nonEmpty) {
+      doc.body().html()
+    } else {
+      html
     }
   }
 
@@ -37,6 +60,17 @@ object Cleaners {
       case other => other
     })
   }
+
+  def split(html: String): List[(String, String)] = {
+    Jsoup
+      .parseBodyFragment(html)
+      .body()
+      .children()
+      .asScala
+      .toList
+      .map(el => (el.tagName, el.outerHtml))
+  }
+
 }
 
 object TagLinker {
@@ -44,7 +78,7 @@ object TagLinker {
   def link(tag: Tag, edition: Edition): String = {
     val href = LinkTo(tag.metadata.url, edition)
 
-    s"""<a href=$href data-component="auto-linked-tag">${tag.name}</a>"""
+    s"""<a href="$href" data-component="auto-linked-tag">${tag.name}</a>"""
   }
 
   def keywordRegex(tagName: String): Regex = {

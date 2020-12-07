@@ -12,7 +12,7 @@ import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
-import model.dotcomrendering.pageElements.{Cleaners, DisclaimerBlockElement, PageElement}
+import model.dotcomrendering.pageElements.{TextCleaner, DisclaimerBlockElement, PageElement}
 import model.{
   Article,
   ArticleDateTimes,
@@ -180,7 +180,7 @@ object DotcomRenderingDataModelFunctions {
   ): List[PageElement] = {
 
     val atoms: Iterable[Atom] = article.content.atoms.map(_.all).getOrElse(Seq())
-    val edition = Edition.apply(request)
+    val edition = Edition(request)
 
     val elems = capiElems.toList
       .flatMap(el =>
@@ -194,11 +194,12 @@ object DotcomRenderingDataModelFunctions {
           campaigns,
           calloutsUrl,
           article.elements.thumbnail,
+          edition,
         ),
       )
       .filter(PageElement.isSupported)
 
-    val withTagLinks = Cleaners.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
+    val withTagLinks = TextCleaner.tagLinks(elems, article.content.tags, article.content.showInRelated, edition)
     addDisclaimer(withTagLinks, capiElems, affiliateLinks)
   }
 
@@ -487,11 +488,12 @@ object DotcomRenderingDataModelFunctions {
     )
 
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
+    val edition = Edition(request)
 
     DotcomRenderingDataModel(
       version = 3,
       headline = article.trail.headline,
-      standfirst = article.fields.standfirst.getOrElse(""),
+      standfirst = TextCleaner.sanitiseLinks(edition)(article.fields.standfirst.getOrElse("")),
       webTitle = article.metadata.webTitle,
       mainMediaElements = mainBlock.toList.flatMap(_.elements),
       main = article.fields.main,
@@ -503,7 +505,7 @@ object DotcomRenderingDataModelFunctions {
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
       editionLongForm = Edition(request).displayName, // TODO check
-      editionId = Edition(request).id,
+      editionId = edition.id,
       pageId = article.metadata.id,
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),
@@ -529,7 +531,7 @@ object DotcomRenderingDataModelFunctions {
       commercialProperties = commercial.editionCommercialProperties,
       pageType = pageType,
       starRating = article.content.starRating,
-      trailText = article.trail.fields.trailText.getOrElse(""),
+      trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
       designType = designTypeAsString(article.metadata.designType),

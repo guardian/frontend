@@ -9,6 +9,7 @@ import com.gu.contentapi.client.model.v1.{
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
 }
+import common.Edition
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
@@ -588,6 +589,7 @@ object PageElement {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
       overrideImage: Option[ImageElement],
+      edition: Edition,
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
@@ -598,16 +600,20 @@ object PageElement {
     element.`type` match {
 
       case Text =>
+        val textCleaners =
+          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks) _ andThen
+            TextCleaner.sanitiseLinks(edition)
+
         for {
           block <- element.textTypeData.toList
           text <- block.html.toList
-          element <- Cleaner.split(text)
+          element <- TextCleaner.split(text)
+          cleanedElement = (element._1, textCleaners(element._2))
         } yield {
-          element match {
-            case ("h2", heading)                  => SubheadingBlockElement(heading)
-            case ("blockquote", blockquote)       => BlockquoteBlockElement(blockquote)
-            case (_, para) if (addAffiliateLinks) => Cleaners.affiliateLinks(pageUrl)(TextBlockElement(para))
-            case (_, para)                        => TextBlockElement(para)
+          cleanedElement match {
+            case ("h2", heading)            => SubheadingBlockElement(heading)
+            case ("blockquote", blockquote) => BlockquoteBlockElement(blockquote)
+            case (_, para)                  => TextBlockElement(para)
           }
         }
 
@@ -1169,43 +1175,4 @@ object PageElement {
   }
 
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
-}
-
-// ------------------------------------------------------
-// Misc.
-// ------------------------------------------------------
-
-object Cleaner {
-  def split(html: String): List[(String, String)] = {
-    Jsoup
-      .parseBodyFragment(html)
-      .body()
-      .children()
-      .asScala
-      .toList
-      .map(el => (el.tagName, el.outerHtml))
-  }
-}
-
-object CommentCleaner {
-  def getBody(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-body")
-      .html()
-  }
-
-  def getAvatar(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-avatar")
-      .attr("src")
-  }
-
-  def getDateTime(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-datetime")
-      .html()
-  }
 }
