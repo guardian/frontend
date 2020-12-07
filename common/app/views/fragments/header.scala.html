@@ -33,7 +33,7 @@
 
             @defining(Edition(request).id.toLowerCase()) { editionId =>
                 <div class="new-header__cta-bar hide-until-mobile">
-                    @if(!GlobalEoyHeaderSwitch.isSwitchedOn) {
+                    @if(editionId == "us" || !GlobalEoyHeaderSwitch.isSwitchedOn) {
                         @if(!page.metadata.hasSlimHeader) {
                             <div class="cta-bar__text hide-until-tablet">
                                 <div class="cta-bar__heading">Support The Guardian</div>
