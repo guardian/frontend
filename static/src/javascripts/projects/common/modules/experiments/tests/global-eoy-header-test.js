@@ -5,10 +5,8 @@ import {
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
 import {addCountryGroupToSupportLink} from "common/modules/commercial/support-utilities";
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 const edition = config.get('page.edition', '').toLowerCase();
-const geolocation = geolocationGetSync();
 
 const month = new Date().getMonth() + 1;    // js date month begins at 0
 
@@ -103,7 +101,7 @@ export const globalEoyHeaderTest: ABTest = {
     idealOutcome: 'AV',
     showForSensitive: false,
     audienceCriteria: 'All',
-    canRun: () => geolocation !== 'US' && (month === 12 || month === 1),
+    canRun: () => edition !== 'US' && (month === 12 || month === 1),
     variants: [
         {
             id: 'control',
