@@ -101,7 +101,7 @@ export const globalEoyHeaderTest: ABTest = {
     idealOutcome: 'AV',
     showForSensitive: false,
     audienceCriteria: 'All',
-    canRun: () => edition !== 'US' && (month === 12 || month === 1),
+    canRun: () => edition !== 'us' && (month === 12 || month === 1),
     variants: [
         {
             id: 'control',
