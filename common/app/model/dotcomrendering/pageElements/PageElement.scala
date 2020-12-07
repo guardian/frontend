@@ -172,8 +172,13 @@ object DocumentBlockElement {
   implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
 }
 
-case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean)
-    extends PageElement
+case class EmbedBlockElement(
+    html: String,
+    safe: Option[Boolean],
+    alt: Option[String],
+    isMandatory: Boolean,
+    role: Option[String],
+) extends PageElement
 object EmbedBlockElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
 }
@@ -1038,22 +1043,25 @@ object PageElement {
     }
   }
 
-  private def extractChartDatawrapperEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+  private def extractChartDatawrapperEmbedBlockElement(
+      html: String,
+      role: Option[String],
+  ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false)
+      EmbedBlockElement(html, None, None, false, role)
     }
   }
 
-  private def extractGenericEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+  private def extractGenericEmbedBlockElement(html: String, role: Option[String]): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false)
+      EmbedBlockElement(html, None, None, false, role)
     }
   }
 
@@ -1100,8 +1108,8 @@ object PageElement {
        */
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         extractSpotifyBlockElement(element).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html).getOrElse {
-            extractGenericEmbedBlockElement(html).getOrElse {
+          extractChartDatawrapperEmbedBlockElement(html, d.role).getOrElse {
+            extractGenericEmbedBlockElement(html, d.role).getOrElse {
               // This version of AudioBlockElement is not currently supported in DCR
               // AudioBlockElement(element.assets.map(AudioAsset.make))
 
@@ -1127,7 +1135,7 @@ object PageElement {
     } yield {
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
-          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory, d.role)
         }
       }
     }
