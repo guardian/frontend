@@ -4,12 +4,14 @@ import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { newsletterEmbeds } from 'common/modules/experiments/tests/newsletter-embed-test';
 import { liveblogEpicDesignTest } from 'common/modules/experiments/tests/liveblog-epic-design-test';
+import { globalEoyHeaderTest } from 'common/modules/experiments/tests/global-eoy-header-test';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
     commercialPrebidSafeframe,
     signInGateMainVariant,
     signInGateMainControl,
-    newsletterEmbeds
+    newsletterEmbeds,
+    globalEoyHeaderTest,
 ];
 
 export const epicTests: $ReadOnlyArray<EpicABTest> = [liveblogEpicDesignTest];

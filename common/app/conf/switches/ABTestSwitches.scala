@@ -85,4 +85,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 1, 4),
     exposeClientSide = true,
   )
+
+  val GlobalEoyHeaderSwitch = Switch(
+    ABTests,
+    "ab-global-eoy-header-test",
+    "Test reader revenue message in header",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 2, 1),
+    exposeClientSide = true,
+  )
 }
