@@ -18,7 +18,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomrendering.PageType
 
-class DotcomRenderingService extends Logging {
+import http.ResultWithPreconnectPreload
+import http.HttpPreconnections
+
+class DotcomRenderingService extends Logging with ResultWithPreconnectPreload {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
@@ -135,6 +138,7 @@ class DotcomRenderingService extends Logging {
         case 200 =>
           Cached(page)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withPreconnect(HttpPreconnections.defaultUrls)
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))
