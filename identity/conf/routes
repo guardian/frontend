@@ -15,6 +15,7 @@ GET         /user/:vanityUrl                        controllers.PublicProfileCon
 GET         /user/:vanityUrl/:activityType          controllers.PublicProfileController.renderProfileFromVanityUrl(vanityUrl: String, activityType: String)
 
 GET         /complete-registration                  controllers.EmailVerificationController.completeRegistration
+GET         /resend-validation                      controllers.EmailVerificationController.resendValidationEmail
 
 GET         /form/complete                          controllers.FormstackController.complete
 GET         /form/:formReference                    controllers.FormstackController.formstackForm(formReference: String, composer: Boolean = false)

@@ -81,17 +81,17 @@ class EmailVerificationControllerTest
 
       "should render the proper view" in {
         when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
-        val result = controller.completeRegistration()(testRequest)
-        contentAsString(result) should include("Please check your inbox")
-        contentAsString(result) should include("Exit and go to The Guardian home page")
+        when(api.decryptEmailToken(anyString())).thenReturn(Future.successful(Right("an email address")))
+        val result = controller.completeRegistration()(TestRequest("/foo?encryptedEmail=someEncryptedString"))
+        contentAsString(result) should include("Please verify your email to complete your registration")
       }
 
-      "should link to the return url" in {
+      "should link to the return url if encrypted email parameter is not present" in {
         when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]]))
           .thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
         val result = controller.completeRegistration()(testRequest)
         contentAsString(result) should include("test-string-test")
-        contentAsString(result) should include("Exit and continue")
+        contentAsString(result) should include("Exit and continue to The Guardian")
       }
     }
   }
