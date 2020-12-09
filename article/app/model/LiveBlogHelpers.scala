@@ -19,7 +19,7 @@ object LiveBlogHelpers {
 
     val lbcp = param.map(ParseBlockId.fromPageParam) match {
       case Some(ParsedBlockId(id)) => modelWithRange(PageWithBlock(id))
-      case _                       => modelWithRange(Canonical)
+      case _                       => modelWithRange(CanonicalLiveBlog)
     }
 
     lbcp match {
@@ -111,7 +111,7 @@ object LiveBlogHelpers {
 
     val firstPageBlocks = for {
       blocks <- page.article.blocks.toSeq
-      firstPageBlocks <- blocks.requestedBodyBlocks.get(Canonical.firstPage).toSeq
+      firstPageBlocks <- blocks.requestedBodyBlocks.get(CanonicalLiveBlog.firstPage).toSeq
       firstPageBlock <- firstPageBlocks
     } yield firstPageBlock
 

@@ -1,7 +1,7 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v201911.StatementBuilder
-import com.google.api.ads.admanager.axis.v201911.{LineItemCreativeAssociationStatus, ThirdPartyCreative}
+import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
+import com.google.api.ads.admanager.axis.v202011.{LineItemCreativeAssociationStatus, ThirdPartyCreative}
 import common.Logging
 
 import scala.util.matching.Regex

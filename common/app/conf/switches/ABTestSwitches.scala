@@ -42,7 +42,7 @@ trait ABTestSwitches {
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
@@ -52,7 +52,7 @@ trait ABTestSwitches {
     "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
@@ -78,21 +78,21 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-newsletter-merch-unit-lighthouse-control",
-    "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
+    "ab-newsletter-embeds",
+    "New newsletter signup embeds for discoverability OKR",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 1, 4),
     exposeClientSide = true,
   )
 
-  Switch(
+  val GlobalEoyHeaderSwitch = Switch(
     ABTests,
-    "ab-newsletter-merch-unit-lighthouse-variants",
-    "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
-    owners = Seq(Owner.withGithub("buck06191")),
+    "ab-global-eoy-header-test",
+    "Test reader revenue message in header",
+    owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 2, 1),
     exposeClientSide = true,
   )
 }
