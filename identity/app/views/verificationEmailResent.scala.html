@@ -3,7 +3,7 @@
     verifiedReturnUrl: Option[String],
     defaultReturnUrl: String,
     email: Option[String],
-    validationEmailResent: Option[Boolean]
+    validationEmailResent: ValidationEmailSent
 )(implicit request: RequestHeader, context: model.ApplicationContext)
 
 <div class="identity-wrapper monocolumn-wrapper">
@@ -26,15 +26,14 @@
         </aside>
         <footer class="identity-forms-message__body">
             @validationEmailResent match {
-                case Some(emailResent) => {
-                    @if(emailResent) {
-                        <p>Validation email resent. Please check your email and follow the link.</p>
-                    } else {
-                        <form method="post" action="@routes.EmailVerificationController.resendValidationEmail(verifiedReturnUrl.getOrElse(defaultReturnUrl))"><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">An error occurred, please click here to try again.</span></button></form>
-                    }
+                case Yes => {
+                    <p>Validation email resent. Please check your email and follow the link.</p>
                 }
-                case _ => {
+                case No => {
                     <form method="post" action="@routes.EmailVerificationController.resendValidationEmail(verifiedReturnUrl.getOrElse(defaultReturnUrl))"><label>Didn't receive it? </label><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">Resend link</span></button></form>
+                }
+                case Error => {
+                    <form method="post" action="@routes.EmailVerificationController.resendValidationEmail(verifiedReturnUrl.getOrElse(defaultReturnUrl))"><button class="resend-link" type="submit" data-link-name="mma : verify-email : resent"><span class="u-underline">An error occurred, please click here to try again.</span></button></form>
                 }
             }
             <p>Wrong email address? <a class="u-underline" href="@idUrlBuilder.buildUrl("/signin")" data-link-name="mma : verify-email : update-email-from-error">Change it here</a></p>
