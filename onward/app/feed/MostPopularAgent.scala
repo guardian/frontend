@@ -13,6 +13,8 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
 import scala.concurrent.{ExecutionContext, Future}
 
+case class Country(code: String, edition: Edition)
+
 object MostPopularRefresh {
 
   def all[A](as: Seq[A])(
@@ -114,8 +116,6 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
     } yield newMap
   }
 }
-
-case class Country(code: String, edition: Edition)
 
 class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
