@@ -13,11 +13,21 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 
+case class MostReadItem(url: String, count: Int)
 object MostReadItem {
   implicit val jsonReads = Json.reads[MostReadItem]
 }
 
-case class MostReadItem(url: String, count: Int)
+case class DeeplyReadOphanItem(path: String, benchmarkedAttentionTime: Int)
+/*
+  {
+    "path": "/football/2020/dec/10/manchester-united-need-a-structure-to-break-the-blame-and-burn-cycle",
+    "benchmarkedAttentionTime": 100
+  }
+ */
+object DeeplyReadOphanItem {
+  implicit val jsonReads = Json.reads[DeeplyReadOphanItem]
+}
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends Logging
@@ -95,13 +105,13 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     } yield {
       key -> value
     }
-
     getBody("ads/render-time")(validatedParams)
   }
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
-  def getDeeplyReadContent(): Future[JsValue] = getBody("deeplyread")()
+  def getDeeplyReadContent(): Future[Seq[DeeplyReadOphanItem]] =
+    getBody("deeplyread")().map(_.as[Seq[DeeplyReadOphanItem]])
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
