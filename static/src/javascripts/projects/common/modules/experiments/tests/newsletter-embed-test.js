@@ -1,4 +1,19 @@
 // @flow
+import ophan from 'ophan/ng';
+
+const trackComponentInOphan = (newsletterId: string, variant: string) => {
+    ophan.record({
+        action: 'INSERT',
+        component: {
+            componentType: 'NEWSLETTER_SUBSCRIPTION',
+            id: newsletterId
+        },
+        abTest: {
+            name: 'NewsletterEmbeds',
+            variant
+        }
+    });
+};
 
 export const newsletterEmbeds: ABTest = {
     id: 'NewsletterEmbeds',
@@ -24,23 +39,33 @@ export const newsletterEmbeds: ABTest = {
             test: (): void => {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
                 iframes.forEach( (ifrm: HTMLIFrameElement) => {
-                    const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                    window.addEventListener('load', () => {
-                        if (doc) {
-                            const oldDesign = doc.querySelector('.js-ab-embed-old-design');
-                            const newDesign = doc.querySelector('.js-ab-embed-new-design');
-                            if (oldDesign && newDesign) {
-                                oldDesign.classList.add("hide-element");
-                                newDesign.classList.remove("hide-element")
+                    if (ifrm.id !== 'footer__email-form') {
+                        const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
+                        window.addEventListener('load', () => {
+                            if (doc) {
+                                const oldDesign = doc.querySelector('.js-ab-embed-old-design');
+                                const newDesign = doc.querySelector('.js-ab-embed-new-design');
+                                if (oldDesign && newDesign) {
+                                    oldDesign.classList.add("hide-element");
+                                    newDesign.classList.remove("hide-element")
+                                }
+                                trackComponentInOphan(ifrm.id, 'variant');
                             }
-                        }
-                    });
+                        });
+                    }
                 });
             },
         },
         {
             id: 'control',
-            test: (): void => {},
+            test: (): void => {
+                const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
+                iframes.forEach( (ifrm: HTMLIFrameElement) => {
+                    if (ifrm.id !== 'footer__email-form') {
+                        trackComponentInOphan(ifrm.id,'control');
+                    }
+                });
+            },
         }
     ],
 };
