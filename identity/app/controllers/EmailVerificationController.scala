@@ -48,9 +48,9 @@ class EmailVerificationController(
         })
     }
 
-  def resendValidationEmail(): Action[AnyContent] = {
+  def resendValidationEmail(returnUrl: String): Action[AnyContent] =
     Action.async { implicit request =>
-      val page = IdentityPage("/resend-validation", "Resend Validation", isFlow = true)
+      val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
       val email = request.session.get("email")
 
@@ -72,7 +72,6 @@ class EmailVerificationController(
           Future.successful(errorPage(verifiedReturnUrlAsOpt, page))
         })
     }
-  }
 
   private def successPage(
       verifiedReturnUrlAsOpt: Option[String],
