@@ -25,18 +25,22 @@ export const newsletterEmbeds: ABTest = {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
                 iframes.forEach(
                     (ifrm) => {
-                        const ifrmElement = (ifrm: HTMLIFrameElement)
-                        const doc = ifrmElement.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                        if (doc) {
-                            const oldDesign = doc.querySelector('.js-ab-embed-old-design');
-                            const newDesign = doc.querySelector('.js-ab-embed-new-design');
-                            if (oldDesign && newDesign) {
-                                oldDesign.classList.add("hide-element")
-                                newDesign.classList.remove("hide-element")
+                            const ifrmElement = (ifrm: HTMLIFrameElement)
+                            ifrmElement.onload = () => {
+                                console.log("THE IFRAME LOADED")
+
+                                const doc = ifrmElement.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
+                                if (doc) {
+                                    const oldDesign = doc.querySelector('.js-ab-embed-old-design');
+                                    const newDesign = doc.querySelector('.js-ab-embed-new-design');
+                                    if (oldDesign && newDesign) {
+                                        oldDesign.classList.add("hide-element")
+                                        newDesign.classList.remove("hide-element")
+                                    }
+                                }
 
                             }
-                        }
-                    })
+                        })
             },
         },
         {
