@@ -155,7 +155,7 @@ class ContentTest
 
   /*
     Date: 02nd Dec 2020
-    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "theguardian.com", this is due to a CAPI migration.
+    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "www.theguardian.com", this is due to a CAPI migration.
     See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
    */
 
@@ -168,13 +168,13 @@ class ContentTest
     contentWithShortUrl("https://gu.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
-  it should "returns the correct shortUrlId (theguardian.com)" in {
+  it should "returns the correct shortUrlId (www.theguardian.com)" in {
 
     def contentWithShortUrl(shortUrl: String): ContentType =
       Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
 
-    contentWithShortUrl("http://theguardian.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
-    contentWithShortUrl("https://theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
+    contentWithShortUrl("http://www.theguardian.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
+    contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
   val dateBeforeCutoff = Some(
