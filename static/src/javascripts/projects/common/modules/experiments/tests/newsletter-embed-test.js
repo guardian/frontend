@@ -25,7 +25,7 @@ export const newsletterEmbeds: ABTest = {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
                 iframes.forEach( (ifrm: HTMLIFrameElement) => {
                     const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                    window.addEventListener('load', (event) => {
+                    window.addEventListener('load', () => {
                         if (doc) {
                             const oldDesign = doc.querySelector('.js-ab-embed-old-design');
                             const newDesign = doc.querySelector('.js-ab-embed-new-design');
