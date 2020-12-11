@@ -95,7 +95,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     }
   }
 
-  "PictureCleaner" should "correctly format inline pictures (theguardian.com)" in {
+  "PictureCleaner" should "correctly format inline pictures (www.theguardian.com)" in {
     implicit val request: RequestHeader = TestRequest()
     val body = Jsoup.parse(withJsoup(bodyTextWithInlineElements)(PictureCleaner(testContent2)).body)
 
@@ -326,7 +326,7 @@ class TemplatesTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
         webTitle = "Some article",
         webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
         apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
-        fields = Some(ContentFields(shortUrl = Some("http://theguardian.com/p/439az"))),
+        fields = Some(ContentFields(shortUrl = Some("http://www.theguardian.com/p/439az"))),
         elements = Some(testImages),
       ),
     )
