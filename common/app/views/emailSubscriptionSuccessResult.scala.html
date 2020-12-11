@@ -1,6 +1,6 @@
-@import com.gu.identity.model.EmailEmbed
+@import com.gu.identity.model.EmailNewsletter
 @import experiments.{ActiveExperiments, NewsletterEmbedDesign}
-@(page: model.Page, emailEmbedData: EmailEmbed, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
+@(page: model.Page, emailNewsletter: EmailNewsletter, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}
 
@@ -8,11 +8,11 @@
     @if(ActiveExperiments.isParticipating(NewsletterEmbedDesign) && electionNewsletters.contains(listName)) {
         @fragments.email.signup.result.emailResultNewDesign(
             listName,
-            emailEmbedData,
-            fragments.email.signup.result.emailSuccess(emailEmbedData)
+            emailNewsletter,
+            fragments.email.signup.result.emailSuccess(emailNewsletter.emailEmbed)
         )
     } else {
-        @fragments.email.signup.result.emailSuccess(emailEmbedData)
+        @fragments.email.signup.result.emailSuccess(emailNewsletter.emailEmbed)
     }
 
 }
