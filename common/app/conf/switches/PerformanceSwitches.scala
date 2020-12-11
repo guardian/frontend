@@ -31,7 +31,7 @@ trait PerformanceSwitches {
     "long-cache-switch",
     "If this switch is on then content will get a longer cache time",
     owners = Owner.group(SwitchGroup.Performance),
-    safeState = On,
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = false,
   )
