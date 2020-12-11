@@ -62,7 +62,7 @@ type InAppMessageCallback = (InAppMessage) => void;
 
 type AppBoy = {
     initialize: (string, any) => void,
-    subscribeToInAppMessage: (InAppMessageCallback) => {},
+    subscribeToInAppMessage: (InAppMessageCallback) => string,
     removeSubscription: (string) => void,
     changeUser: (string) => void,
     openSession: () => void,
@@ -155,7 +155,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
             return;
         }
 
-        let subscriptionId: string | undefined;
+        let subscriptionId: ?string;
 
         const callback = (message: InAppMessage) => {
             if (message.extras) {
@@ -166,7 +166,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
             }
 
             // Unsubscribe
-            if (subscriptionId) {
+            if (appboy && subscriptionId) {
                 appboy.removeSubscription(subscriptionId);
             }
         };
