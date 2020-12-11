@@ -38,7 +38,7 @@ class EmailVerificationController(
               logger.error(s"Could not decrypt email address on complete registration page: $errors")
               errorPage(verifiedReturnUrlAsOpt, page)
             case Right(email) =>
-              successPage(verifiedReturnUrlAsOpt, page, Some(email), validationEmailResent = No)
+              successPage(verifiedReturnUrlAsOpt, page, Some(email), EmailNotResent)
                 .withSession("encryptedEmail" -> encryptedEmail, "email" -> email)
           }
         })
@@ -60,9 +60,9 @@ class EmailVerificationController(
           api.resendEmailValidationEmailByToken(token, verifiedReturnUrlAsOpt) map {
             case Left(errors) =>
               logger.error(s"Could not resent validation email on complete registration page: $errors")
-              successPage(verifiedReturnUrlAsOpt, page, email, validationEmailResent = Error)
+              successPage(verifiedReturnUrlAsOpt, page, email, ErrorResending)
             case Right(_) =>
-              successPage(verifiedReturnUrlAsOpt, page, email, validationEmailResent = Yes)
+              successPage(verifiedReturnUrlAsOpt, page, email, EmailResent)
           },
         )
         .getOrElse({
@@ -107,6 +107,6 @@ class EmailVerificationController(
 }
 
 sealed trait ValidationEmailSent
-case object Yes extends ValidationEmailSent
-case object No extends ValidationEmailSent
-case object Error extends ValidationEmailSent
+case object EmailResent extends ValidationEmailSent
+case object EmailNotResent extends ValidationEmailSent
+case object ErrorResending extends ValidationEmailSent
