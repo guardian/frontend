@@ -9,14 +9,14 @@ const trackComponentInOphan = (newsletterId: string, variant: string) => {
             id: newsletterId
         },
         abTest: {
-            name: 'NewsletterEmbeds',
+            name: 'NewsletterEmbeds2',
             variant
         }
     });
 };
 
 export const newsletterEmbeds: ABTest = {
-    id: 'NewsletterEmbeds',
+    id: 'NewsletterEmbeds2',
     start: '2020-12-02',
     expiry: '2021-01-04',
     author: 'Josh Buckland',
@@ -47,9 +47,9 @@ export const newsletterEmbeds: ABTest = {
                                 const newDesign = doc.querySelector('.js-ab-embed-new-design');
                                 if (oldDesign && newDesign) {
                                     oldDesign.classList.add("hide-element");
-                                    newDesign.classList.remove("hide-element")
+                                    newDesign.classList.remove("hide-element");
+                                    trackComponentInOphan(ifrm.id, 'variant');
                                 }
-                                trackComponentInOphan(ifrm.id, 'variant');
                             }
                         });
                     }
