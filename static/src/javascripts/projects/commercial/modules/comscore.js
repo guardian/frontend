@@ -28,7 +28,7 @@ const getGlobals = (
     };
 
     if (keywords !== 'Network Front') {
-        globals.comscorekw = keywords;
+        globals.comscorekw = encodeURIComponent(keywords);
     }
 
     return globals;
