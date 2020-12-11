@@ -22,7 +22,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     liveContent.metadata.cacheTime.cacheSeconds should be(5)
 
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(5, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
@@ -36,24 +36,24 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     liveContent.metadata.cacheTime.cacheSeconds should be(60)
 
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(60, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
   }
 
-  it should "cache older content for 1 minute" in {
+  it should "cache older content for 5 minutes" in {
     LongCacheSwitch.switchOff()
 
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    liveContent.metadata.cacheTime.cacheSeconds should be(60)
+    liveContent.metadata.cacheTime.cacheSeconds should be(300)
 
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(300, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
-    headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
+    headers("Cache-Control") should be("max-age=300, stale-while-revalidate=30, stale-if-error=864000")
   }
 
   it should "cache other things for 1 minute" in {
@@ -63,7 +63,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
     page.metadata.cacheTime.cacheSeconds should be(60)
 
-    val result = Cached(page.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(60, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
@@ -72,7 +72,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "have at least 1 second stale-while-revalidate" in {
     LongCacheSwitch.switchOff()
 
-    val result = Cached(CacheTime(5), WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(5, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=5, stale-while-revalidate=1, stale-if-error=864000")
@@ -81,7 +81,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "set Surrogate-Control the same as Cache-Control" in {
     LongCacheSwitch.switchOff()
 
-    val result = Cached(CacheTime(60, Some(120)), WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(60, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
@@ -94,38 +94,23 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    liveContent.metadata.cacheTime.surrogateSeconds should be(Some(3800))
+    liveContent.metadata.cacheTime.cacheSeconds should be(3800)
 
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(3800, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Surrogate-Control") should be("max-age=3800, stale-while-revalidate=380, stale-if-error=864000")
   }
 
-  it should "apply longer SurrogateControl cache time for live content" in {
-    LongCacheSwitch.switchOn()
-
-    val modified = new DateTime(2001, 5, 20, 12, 3, 4, 555)
-    val liveContent = content(lastModified = modified, live = true)
-
-    liveContent.metadata.cacheTime.surrogateSeconds should be(Some(60))
-
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
-    val headers = result.header.headers
-
-    headers("Surrogate-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
-  }
-
-  it should "use the cacheSeconds for browser max-age" in {
+  it should "limit the max-age to 60" in {
     LongCacheSwitch.switchOn()
 
     val modifiedLongAgo = DateTime.now - 25.hours
     val liveContent = content(lastModified = modifiedLongAgo, live = false)
 
-    liveContent.metadata.cacheTime.cacheSeconds should be(60)
-    liveContent.metadata.cacheTime.surrogateSeconds should be(Some(3800))
+    liveContent.metadata.cacheTime.cacheSeconds should be(3800)
 
-    val result = Cached(liveContent.metadata.cacheTime, WithoutRevalidationResult(Ok("foo")), None)
+    val result = Cached(3800, WithoutRevalidationResult(Ok("foo")), None)
     val headers = result.header.headers
 
     headers("Cache-Control") should be("max-age=60, stale-while-revalidate=6, stale-if-error=864000")
@@ -133,7 +118,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
 
   "ETags" should "should be added" in {
 
-    val result = Cached(CacheTime(5), RevalidatableResult(Ok("foo"), "A"), None)
+    val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), None)
     val headers = result.header.headers
 
     result.header.status should be(200)
@@ -144,7 +129,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "wrong etag should be ignored" in {
     LongCacheSwitch.switchOff()
 
-    val result = Cached(CacheTime(5), RevalidatableResult(Ok("foo"), "A"), Some("""W/"hasheroo""""))
+    val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hasheroo""""))
     val headers = result.header.headers
 
     result.header.status should be(200)
@@ -155,7 +140,7 @@ class CachedTest extends FlatSpec with Matchers with Results with implicits.Date
   it should "correct etag should not be ignored" in {
     LongCacheSwitch.switchOff()
 
-    val result = Cached(CacheTime(5), RevalidatableResult(Ok("foo"), "A"), Some("""W/"hash96""""))
+    val result = Cached(5, RevalidatableResult(Ok("foo"), "A"), Some("""W/"hash96""""))
     val headers = result.header.headers
 
     result.header.status should be(304)
