@@ -62,7 +62,7 @@ trait ABTestSwitches {
     "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
     owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 10),
+    sellByDate = new LocalDate(2020, 12, 23),
     exposeClientSide = true,
   )
 
@@ -83,6 +83,16 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 1, 4),
+    exposeClientSide = true,
+  )
+
+  val GlobalEoyHeaderSwitch = Switch(
+    ABTests,
+    "ab-global-eoy-header-test",
+    "Test reader revenue message in header",
+    owners = Seq(Owner.withGithub("tomrf1")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 2, 1),
     exposeClientSide = true,
   )
 }

@@ -5,7 +5,7 @@
     }
 }
 
-.new-header__cta-bar-aus-moment {
+.new-header__cta-bar-thankyou {
     display: none;
 
     .hide-support-messaging &,
@@ -14,7 +14,7 @@
     }
 }
 
-.new-header__cta-bar, .new-header__cta-bar-aus-moment {
+.new-header__cta-bar, .new-header__cta-bar-thankyou {
     position: absolute;
     top: 30px;
     left: $gs-gutter / 2;
@@ -32,7 +32,7 @@
     }
 
     @include mq(desktop) {
-        max-width: 300px;
+        max-width: 310px;
     }
 
     @include mq(leftCol) {

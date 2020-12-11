@@ -71,7 +71,7 @@ import scala.concurrent.duration._
       Some(
         URI.create("http://i.guimcode.co.uk/img/media/54c2dc737fc82bf793dd919694e3ea7111cf2d82/0_169_3936_2363/140.jpg"),
       ),
-      URI.create("http://theguardian.com/p/4fgcd"),
+      URI.create("http://www.theguardian.com/p/4fgcd"),
       None,
       DateTime.now(),
       Set(NewsAlertTypes.Uk, NewsAlertTypes.Sport).map(_.toString),
