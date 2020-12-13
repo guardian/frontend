@@ -33,25 +33,18 @@ object MostPopularRefresh {
 
 class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
 
-  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val boxRelatedContents = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+
+  // Container for most_shared and most_commented
+  val mostSingleCards = Box[Map[String, Content]](Map.empty)
 
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
     def isLiveBlog: Boolean = url.contains("/live/")
   }
+
   private object MostDiscussedItem {
     implicit val format = Json.format[MostDiscussedItem]
-  }
-
-  // Container for most_shared and most_commented
-  val mostSingleCards = Box[Map[String, Content]](Map.empty)
-
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = box().getOrElse(edition.id, Nil)
-
-  // Note that here we are in procedural land here (not functional)
-  def refresh()(implicit ec: ExecutionContext): Unit = {
-    MostPopularRefresh.refreshAll(Edition.all)(refresh)
-    refreshGlobal()
   }
 
   private def refreshGlobal()(implicit ec: ExecutionContext): Future[Map[String, Content]] = {
@@ -111,10 +104,17 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
     for {
       mostViewedResponse <- futureMostViewed
-
       mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
-      newMap <- box.alter(_ + (edition.id -> mostViewed))
+      newMap <- boxRelatedContents.alter(_ + (edition.id -> mostViewed))
     } yield newMap
+  }
+
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = boxRelatedContents().getOrElse(edition.id, Nil)
+
+  // Note that here we are in procedural land here (not functional)
+  def refresh()(implicit ec: ExecutionContext): Unit = {
+    MostPopularRefresh.refreshAll(Edition.all)(refresh)
+    refreshGlobal()
   }
 }
 
@@ -137,14 +137,6 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     defaultCountry,
   )
 
-  def mostPopular(country: String): Seq[RelatedContentItem] =
-    box().getOrElse(country, box().getOrElse(defaultCountry.code, Nil))
-
-  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
-    log.info("Refreshing most popular for countries.")
-    MostPopularRefresh.refreshAll(countries)(refresh)
-  }
-
   private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     val ophanMostViewed = ophanApi.getMostRead(hours = 3, count = 10, country = country.code.toLowerCase)
     MostViewed.relatedContentItems(ophanMostViewed, country.edition)(contentApiClient).flatMap { items =>
@@ -156,6 +148,14 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
       }
       box.alter(_ + (country.code -> validItems))
     }
+  }
+
+  def mostPopular(country: String): Seq[RelatedContentItem] =
+    box().getOrElse(country, box().getOrElse(defaultCountry.code, Nil))
+
+  def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
+    log.info("Refreshing most popular for countries.")
+    MostPopularRefresh.refreshAll(countries)(refresh)
   }
 }
 
