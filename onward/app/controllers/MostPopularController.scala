@@ -110,7 +110,6 @@ class MostPopularController(
 
   def renderDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
-      deeplyReadAgent.refresh()
       val ophanApi = new OphanApi(wsClient)
       ophanApi.getDeeplyReadContent().map { content =>
         val report = content.map(deeplyReadAgent.getDeeplyReadItemForOphanItem).filter(_.isDefined)

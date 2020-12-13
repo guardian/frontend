@@ -212,7 +212,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) {
   private val mapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
-  def refresh()(implicit ec: ExecutionContext): Unit = {
+  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { i =>
         val path = i.path
@@ -232,6 +232,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) {
           }
       }
     }
+    Future.successful(())
   }
 
   def getDataForPath(path: String): Option[Content] = {
