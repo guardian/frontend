@@ -18,15 +18,15 @@ object OphanMostReadItem {
   implicit val jsonReads = Json.reads[OphanMostReadItem]
 }
 
-case class DeeplyReadOphanItem(path: String, benchmarkedAttentionTime: Int)
+case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
 /*
   {
     "path": "/football/2020/dec/10/manchester-united-need-a-structure-to-break-the-blame-and-burn-cycle",
     "benchmarkedAttentionTime": 100
   }
  */
-object DeeplyReadOphanItem {
-  implicit val jsonReads = Json.reads[DeeplyReadOphanItem]
+object OphanDeeplyReadItem {
+  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
 }
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
@@ -110,8 +110,8 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
 
-  def getDeeplyReadContent(): Future[Seq[DeeplyReadOphanItem]] =
-    getBody("deeplyread")().map(_.as[Seq[DeeplyReadOphanItem]])
+  def getDeeplyReadContent(): Future[Seq[OphanDeeplyReadItem]] =
+    getBody("deeplyread")().map(_.as[Seq[OphanDeeplyReadItem]])
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
