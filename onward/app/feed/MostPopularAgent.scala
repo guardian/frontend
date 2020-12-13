@@ -7,7 +7,6 @@ import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
 import services.{MostReadItem, OphanApi}
 import model.RelatedContentItem
-
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -17,7 +16,9 @@ case class Country(code: String, edition: Edition)
 
 object MostPopularRefresh {
 
-  def all[A](as: Seq[A])(
+  // This function takes a sequence of items and a function that maps each item to a future.
+  // Each future carries a map, all the maps are collapsed into one using a reduce
+  def refreshAll[A](as: Seq[A])(
       refreshOne: A => Future[Map[String, Seq[RelatedContentItem]]],
   )(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     as.map(refreshOne)
@@ -49,7 +50,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
-    MostPopularRefresh.all(Edition.all)(refresh)
+    MostPopularRefresh.refreshAll(Edition.all)(refresh)
     refreshGlobal()
   }
 
@@ -141,7 +142,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for countries.")
-    MostPopularRefresh.all(countries)(refresh)
+    MostPopularRefresh.refreshAll(countries)(refresh)
   }
 
   private def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
@@ -172,7 +173,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
-    MostPopularRefresh.all(countries)(refresh)
+    MostPopularRefresh.refreshAll(countries)(refresh)
   }
 
   def refresh(country: Country)(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
