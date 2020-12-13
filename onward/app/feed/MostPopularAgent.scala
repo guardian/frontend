@@ -33,7 +33,7 @@ object MostPopularRefresh {
 
 class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
 
-  private val agent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
@@ -46,7 +46,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   // Container for most_shared and most_commented
   val mostSingleCards = Box[Map[String, Content]](Map.empty)
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = agent().getOrElse(edition.id, Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = box().getOrElse(edition.id, Nil)
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
@@ -113,7 +113,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
       mostViewedResponse <- futureMostViewed
 
       mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
-      newMap <- agent.alter(_ + (edition.id -> mostViewed))
+      newMap <- box.alter(_ + (edition.id -> mostViewed))
     } yield newMap
   }
 }
