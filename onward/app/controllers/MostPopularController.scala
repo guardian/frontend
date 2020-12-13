@@ -250,7 +250,7 @@ class MostPopularController(
 
   // Get "Most Commented" & "Most Shared" cards for Extended "Most Read" container
   private def mostCards(): Map[String, Option[ContentCard]] =
-    mostPopularAgent.mostSingleCards.get().mapValues(ContentCard.fromApiContent(_))
+    mostPopularAgent.mostSingleCardsBox.get().mapValues(ContentCard.fromApiContent(_))
 
   private def lookup(edition: Edition, path: String)(implicit request: RequestHeader): Future[Option[MostPopular]] = {
     log.info(s"Fetching most popular: $path for edition $edition")

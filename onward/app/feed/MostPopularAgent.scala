@@ -33,10 +33,10 @@ object MostPopularRefresh {
 
 class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
 
-  private val boxRelatedContents = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   // Container for most_shared and most_commented
-  val mostSingleCards = Box[Map[String, Content]](Map.empty)
+  val mostSingleCardsBox = Box[Map[String, Content]](Map.empty)
 
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
@@ -61,11 +61,11 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
       mostFacebook <- futureMostFaceBook
       oneFacebookMostRead = mostFacebook.headOption.get
       oneFacebookContent <- contentFromUrl(oneFacebookMostRead.url, contentApiClient)
-      _ <- mostSingleCards.alter(_ + ("most_shared" -> oneFacebookContent))
+      _ <- mostSingleCardsBox.alter(_ + ("most_shared" -> oneFacebookContent))
 
       oneMostCommentedItem <- futureMostCommented
       oneMostCommentedContent <- contentFromUrl(oneMostCommentedItem.url, contentApiClient)
-      newMap <- mostSingleCards.alter(_ + ("most_commented" -> oneMostCommentedContent))
+      newMap <- mostSingleCardsBox.alter(_ + ("most_commented" -> oneMostCommentedContent))
     } yield newMap
   }
 
@@ -105,11 +105,11 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
     for {
       mostViewedResponse <- futureMostViewed
       mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
-      newMap <- boxRelatedContents.alter(_ + (edition.id -> mostViewed))
+      newMap <- relatedContentsBox.alter(_ + (edition.id -> mostViewed))
     } yield newMap
   }
 
-  def mostPopular(edition: Edition): Seq[RelatedContentItem] = boxRelatedContents().getOrElse(edition.id, Nil)
+  def mostPopular(edition: Edition): Seq[RelatedContentItem] = relatedContentsBox().getOrElse(edition.id, Nil)
 
   // Note that here we are in procedural land here (not functional)
   def refresh()(implicit ec: ExecutionContext): Unit = {
