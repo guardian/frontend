@@ -161,7 +161,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
 
 class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
-  private val ophanPopularAgent = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
+  private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
   private val countries = Seq(
     Country("GB", editions.Uk),
@@ -169,7 +169,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
     Country("AU", editions.Au),
   )
 
-  def mostPopular(country: String): Seq[RelatedContentItem] = ophanPopularAgent().getOrElse(country, Nil)
+  def mostPopular(country: String): Seq[RelatedContentItem] = box().getOrElse(country, Nil)
 
   def refresh()(implicit ec: ExecutionContext): Future[Map[String, Seq[RelatedContentItem]]] = {
     log.info("Refreshing most popular for the day.")
@@ -183,7 +183,7 @@ class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
       if (validItems.isEmpty) {
         log.info(s"Day popular update for ${country.code} found nothing.")
       }
-      ophanPopularAgent.alter(_ + (country.code -> validItems))
+      box.alter(_ + (country.code -> validItems))
     }
   }
 }
