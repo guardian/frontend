@@ -207,6 +207,20 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     ) map extract[AccountDeletionResult](identity)
   }
 
+  // EMAIL TOKENS
+  def decryptEmailToken(token: String): Future[Response[String]] = {
+    val apiPath = urlJoin("signin-token", "token", token)
+    val response = httpClient.GET(uri = apiUrl(apiPath), None, None, buildHeaders())
+    response map extract(jsonField("email"))
+  }
+
+  def resendEmailValidationEmailByToken(token: String, returnUrl: Option[String]): Future[Response[Unit]] = {
+    val apiPath = urlJoin("signin-token", "send-validation-email", token)
+    val parameters = returnUrl.map(url => Iterable("returnUrl" -> url)).getOrElse(Iterable.empty)
+    val response = httpClient.POST(uri = apiUrl(apiPath), None, None, buildHeaders(extra = parameters))
+    response map extractUnit
+  }
+
   def put(
       apiPath: String,
       auth: Option[Auth] = None,
