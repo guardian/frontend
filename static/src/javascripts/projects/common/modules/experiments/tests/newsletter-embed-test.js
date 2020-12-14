@@ -48,18 +48,20 @@ export const newsletterEmbeds: ABTest = {
             id: 'variant',
             test: (): void => {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
-                iframes.forEach( (ifrm: HTMLIFrameElement) => {
-                    if (ifrm.id !== 'footer__email-form') {
-                        const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                        if (doc) {
-                            if (doc.readyState !== 'complete') {
-                                window.addEventListener('load', () => triggerVariant(doc, ifrm.id));
-                            } else {
-                                triggerVariant(doc, ifrm.id);
+                if (iframes) {
+                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                        if (ifrm.id !== 'footer__email-form') {
+                            const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
+                            if (doc) {
+                                if (doc.readyState !== 'complete') {
+                                    window.addEventListener('load', () => triggerVariant(doc, ifrm.id));
+                                } else {
+                                    triggerVariant(doc, ifrm.id);
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             },
         },
         {
