@@ -31,9 +31,11 @@ case class OnwardItem(
     starRating: Option[Int],
 )
 
-// OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
+// OnwardItemMost was introduced only to be the type of mostCommented and MostShared in OnwardCollectionForDCRv2
 // The only difference between OnwardItem and OnwardItemMost
 // is that the image is optional in OnwardItem but not in OnwardItemMost
+
+// Note that OnwardItemMost is now superseeded by MostPopularTrail
 
 case class OnwardItemMost(
     designType: String,
