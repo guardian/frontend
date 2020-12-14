@@ -78,7 +78,7 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-newsletter-embeds",
+    "ab-newsletter-embeds2",
     "New newsletter signup embeds for discoverability OKR",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
