@@ -25,20 +25,6 @@ import scala.concurrent.Future
 import play.api.libs.ws.WSClient
 import services.OphanApi
 
-/*
-      "url": "https://www.theguardian.com/politics/live/2020/dec/10/brexit-dominic-raab-eu-trade-deal-boris-johnson-covid-live-updates",
-      "linkText": "Brexit: No 10 refuses to commit to agreeing with EU's new no-deal contingency plan – live updates",
-      "showByline": false,
-      "byline": "Andrew Sparrow",
-      "image": "https://i.guim.co.uk/img/media/aa9685c6ddfa64e1844bee8d39c5d09864ef93c2/0_122_6048_3628/master/6048.jpg?width=300&quality=85&auto=format&fit=max&s=3f734551601ba14c590fdda3726c2334",
-      "isLiveBlog": true,
-      "pillar": c,
-      "designType": "Live",
-      "webPublicationDate": "2020-12-10T15:21:04.000Z",
-      "headline": "Brexit: No 10 refuses to commit to agreeing with EU's new no-deal contingency plan – live updates",
-      "shortUrl": "https://gu.com/p/fyzj7"
- */
-
 class MostPopularController(
     contentApiClient: ContentApiClient,
     geoMostPopularAgent: GeoMostPopularAgent,
