@@ -6,7 +6,7 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent, DeeplyReadAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
@@ -29,6 +29,7 @@ class MostPopularController(
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
+    deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
