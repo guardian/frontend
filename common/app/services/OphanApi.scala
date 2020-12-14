@@ -19,12 +19,6 @@ object OphanMostReadItem {
 }
 
 case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
-/*
-  {
-    "path": "/football/2020/dec/10/manchester-united-need-a-structure-to-break-the-blame-and-burn-cycle",
-    "benchmarkedAttentionTime": 100
-  }
- */
 object OphanDeeplyReadItem {
   implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
 }
