@@ -2,7 +2,6 @@ package controllers
 
 import java.time.Instant
 import java.time.temporal.ChronoUnit
-
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
@@ -89,6 +88,13 @@ class MostPopularController(
               )
             }
         }
+      }
+    }
+
+  def renderDeeplyRead(): Action[AnyContent] =
+    Action.async { implicit request =>
+      deeplyReadAgent.getReport().map { report =>
+        Ok(Json.toJson(report))
       }
     }
 

@@ -99,7 +99,6 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     } yield {
       key -> value
     }
-
     getBody("ads/render-time")(validatedParams)
   }
 

@@ -5,9 +5,8 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
-import services.{OphanMostReadItem, OphanApi}
+import services.{OphanApi}
 import model.RelatedContentItem
-
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -43,6 +42,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
     def isLiveBlog: Boolean = url.contains("/live/")
   }
+
   private object MostDiscussedItem {
     implicit val format = Json.format[MostDiscussedItem]
   }
@@ -104,7 +104,6 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
 
     for {
       mostViewedResponse <- futureMostViewed
-
       mostViewed = mostViewedResponse.mostViewed.getOrElse(Nil).take(10).map(RelatedContentItem(_))
       newMap <- relatedContentsBox.alter(_ + (edition.id -> mostViewed))
     } yield newMap
