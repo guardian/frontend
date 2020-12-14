@@ -15,8 +15,18 @@ const trackComponentInOphan = (newsletterId: string, variant: string) => {
     });
 };
 
+const triggerVariant = (doc: Document, iframeId: string) => {
+    const oldDesign = doc.querySelector('.js-ab-embed-old-design');
+    const newDesign = doc.querySelector('.js-ab-embed-new-design');
+    if (oldDesign && newDesign) {
+        oldDesign.classList.add("hide-element");
+        newDesign.classList.remove("hide-element");
+        trackComponentInOphan(iframeId, 'variant');
+    }
+};
+
 export const newsletterEmbeds: ABTest = {
-    id: 'NewsletterEmbeds2',
+    id: 'NewsletterEmbeds3',
     start: '2020-12-02',
     expiry: '2021-01-04',
     author: 'Josh Buckland',
@@ -38,33 +48,33 @@ export const newsletterEmbeds: ABTest = {
             id: 'variant',
             test: (): void => {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
-                iframes.forEach( (ifrm: HTMLIFrameElement) => {
-                    if (ifrm.id !== 'footer__email-form') {
-                        const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                        window.addEventListener('load', () => {
+                if (iframes) {
+                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                        if (ifrm.id !== 'footer__email-form') {
+                            const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
                             if (doc) {
-                                const oldDesign = doc.querySelector('.js-ab-embed-old-design');
-                                const newDesign = doc.querySelector('.js-ab-embed-new-design');
-                                if (oldDesign && newDesign) {
-                                    oldDesign.classList.add("hide-element");
-                                    newDesign.classList.remove("hide-element");
-                                    trackComponentInOphan(ifrm.id, 'variant');
+                                if (doc.readyState !== 'complete') {
+                                    window.addEventListener('load', () => triggerVariant(doc, ifrm.id));
+                                } else {
+                                    triggerVariant(doc, ifrm.id);
                                 }
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                }
             },
         },
         {
             id: 'control',
             test: (): void => {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
-                iframes.forEach( (ifrm: HTMLIFrameElement) => {
-                    if (ifrm.id !== 'footer__email-form') {
-                        trackComponentInOphan(ifrm.id,'control');
-                    }
-                });
+                if (iframes) {
+                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                        if (ifrm.id !== 'footer__email-form') {
+                            trackComponentInOphan(ifrm.id, 'control');
+                        }
+                    });
+                }
             },
         }
     ],
