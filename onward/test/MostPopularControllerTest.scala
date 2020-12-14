@@ -27,7 +27,6 @@ import services.OphanApi
     new MostPopularAgent(testContentApiClient, ophanApi, wsClient),
     new DeeplyReadAgent(testContentApiClient, ophanApi),
     play.api.test.Helpers.stubControllerComponents(),
-    wsClient,
   )
 
   "Most Popular Controller" should "200 when content type is tag" in {

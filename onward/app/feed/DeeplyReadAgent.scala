@@ -105,4 +105,14 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       shortUrl = fields.shortUrl,
     )
   }
+
+  def getReport()(implicit ec: ExecutionContext): Future[Seq[DeeplyReadItem]] = {
+    ophanApi
+      .getDeeplyReadContent()
+      .map {
+        _.map(getDeeplyReadItemForOphanItem)
+          .filter(_.isDefined)
+          .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
+      }
+  }
 }

@@ -22,8 +22,6 @@ import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
 
 import scala.concurrent.Future
-import play.api.libs.ws.WSClient
-import services.OphanApi
 
 class MostPopularController(
     contentApiClient: ContentApiClient,
@@ -32,7 +30,6 @@ class MostPopularController(
     mostPopularAgent: MostPopularAgent,
     deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
-    wsClient: WSClient,
 )(implicit context: ApplicationContext)
     extends BaseController
     with Logging
@@ -96,9 +93,7 @@ class MostPopularController(
 
   def renderDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
-      val ophanApi = new OphanApi(wsClient)
-      ophanApi.getDeeplyReadContent().map { content =>
-        val report = content.map(deeplyReadAgent.getDeeplyReadItemForOphanItem).filter(_.isDefined)
+      deeplyReadAgent.getReport().map { report =>
         Ok(Json.toJson(report))
       }
     }

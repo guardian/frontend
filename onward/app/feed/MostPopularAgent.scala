@@ -5,7 +5,7 @@ import conf.Configuration
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.{Content, ContentFields, ContentType}
 import common._
-import services.{CAPILookup, OphanApi, OphanMostReadItem, OphanDeeplyReadItem}
+import services.{OphanApi}
 import model.RelatedContentItem
 import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
