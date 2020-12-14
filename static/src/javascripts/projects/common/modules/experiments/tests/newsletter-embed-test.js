@@ -28,7 +28,7 @@ const triggerVariant = (doc: Document, iframeId: string) => {
 };
 
 export const newsletterEmbeds: ABTest = {
-    id: 'NewsletterEmbeds2',
+    id: 'NewsletterEmbeds3',
     start: '2020-12-02',
     expiry: '2021-01-04',
     author: 'Josh Buckland',
