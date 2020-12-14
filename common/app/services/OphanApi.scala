@@ -24,6 +24,7 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     with implicits.WSRequests {
   private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 
+  // getBody is the general function that queries Ophan
   private def getBody(path: String)(params: Map[String, String] = Map.empty): Future[JsValue] = {
     val maybeJson = for {
       host <- ophanApi.host
@@ -42,15 +43,20 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     }
   }
 
+  // Convenience functions
+
   private def getBreakdown: (Map[String, String]) => Future[JsValue] = getBody("breakdown") _
+
+  private def getMostRead(params: Map[String, String]): Future[Seq[MostReadItem]] =
+    getBody("mostread")(params).map(_.as[Seq[MostReadItem]])
+
+  // The below functions are convenience functions to call particular API paths
+  // Some return a Future[JsValue] and others Future[Seq[MostReadItem]]
 
   def getBreakdown(platform: String, hours: Int): Future[JsValue] =
     getBreakdown(Map("platform" -> platform, "hours" -> hours.toString))
 
   def getBreakdown(path: String): Future[JsValue] = getBreakdown(Map("path" -> s"/$path"))
-
-  private def getMostRead(params: Map[String, String]): Future[Seq[MostReadItem]] =
-    getBody("mostread")(params).map(_.as[Seq[MostReadItem]])
 
   def getMostReadFacebook(hours: Int): Future[Seq[MostReadItem]] =
     getMostRead("Facebook", hours)
