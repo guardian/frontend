@@ -13,11 +13,15 @@ import play.api.libs.ws.WSClient
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.DurationInt
 
+case class OphanMostReadItem(url: String, count: Int)
 object OphanMostReadItem {
   implicit val jsonReads = Json.reads[OphanMostReadItem]
 }
 
-case class OphanMostReadItem(url: String, count: Int)
+case class OphanDeeplyReadItem(path: String, benchmarkedAttentionTime: Int)
+object OphanDeeplyReadItem {
+  implicit val jsonReads = Json.reads[OphanDeeplyReadItem]
+}
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends Logging
@@ -100,6 +104,9 @@ class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
   }
 
   def getSurgingContent(): Future[JsValue] = getBody("surging")()
+
+  def getDeeplyReadContent(): Future[Seq[OphanDeeplyReadItem]] =
+    getBody("deeplyread")().map(_.as[Seq[OphanDeeplyReadItem]])
 
   def getMostViewedVideos(hours: Int, count: Int): Future[JsValue] = {
     val sixMonthsAgo = mostViewedDateFormatter.format(LocalDate.now.minus(6, ChronoUnit.MONTHS))
