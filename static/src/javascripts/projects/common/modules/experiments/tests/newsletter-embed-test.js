@@ -68,11 +68,13 @@ export const newsletterEmbeds: ABTest = {
             id: 'control',
             test: (): void => {
                 const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
-                iframes.forEach( (ifrm: HTMLIFrameElement) => {
-                    if (ifrm.id !== 'footer__email-form') {
-                        trackComponentInOphan(ifrm.id,'control');
-                    }
-                });
+                if (iframes) {
+                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                        if (ifrm.id !== 'footer__email-form') {
+                            trackComponentInOphan(ifrm.id, 'control');
+                        }
+                    });
+                }
             },
         }
     ],
