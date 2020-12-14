@@ -1,26 +1,41 @@
 package feed
 
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.v1.{Content}
+import com.gu.contentapi.client.model.v1.Content
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
+import model.{MostPopular, pressed}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
-  Note that it's different from OphanDeeplyReadItem which is the one we read from the Ophan Api
+  It is meant to be identical to a pressed.PressedContent
 
+  example:
+      {
+          "url": "http://localhost:9000/politics/2020/dec/14/brexit-trade-deal-possible-within-days-after-johnson-concession-says-eu",
+          "linkText": "Brexit trade deal possible within days after Johnson concession, says EU",
+          "showByline": false,
+          "byline": "Daniel Boffey in Brussels and Jon Henley in Paris",
+          "image": "https://i.guim.co.uk/img/media/fca2a46dbd70e2b61a3aa415c2c37f78d74b0830/48_37_3201_1920/master/3201.jpg?width=300&quality=85&auto=format&fit=max&s=e59bbf08537a12c39dd93e13697c280c",
+          "isLiveBlog": false,
+          "pillar": "news",
+          "designType": "Article",
+          "webPublicationDate": "2020-12-14T17:04:28.000Z",
+          "headline": "Brexit trade deal possible within days after Johnson concession, says EU",
+          "shortUrl": "https://gu.com/p/fn27g"
+      }
+
+  Note that it's different from OphanDeeplyReadItem which is the one we read from the Ophan Api
  */
 case class DeeplyReadItem(
-    path: String,
-    benchmarkedAttentionTime: Int,
     url: String,
     linkText: Option[String],
     showByline: Boolean,
     byline: Option[String],
-    thumbnail: Option[String],
+    image: Option[String],
     isLiveBlog: Boolean,
     pillar: Option[String],
     designType: String,
@@ -90,13 +105,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
     } yield DeeplyReadItem(
-      path = item.path,
-      benchmarkedAttentionTime = item.benchmarkedAttentionTime,
       url = content.webUrl,
       linkText = fields.trailText,
       showByline = false,
       byline = fields.byline,
-      thumbnail = fields.thumbnail,
+      image = fields.thumbnail,
       isLiveBlog = true,
       pillar = content.pillarName,
       designType = content.`type`.toString,

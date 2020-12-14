@@ -1,14 +1,15 @@
 package models
 
-import com.gu.contentapi.client.utils.{Article}
+import com.gu.contentapi.client.utils.Article
 import common.LinkTo
-import model.pressed.{PressedContent}
+import feed.DeeplyReadItem
+import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.InlineImage
+import model.{InlineImage, MostPopular}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 import org.joda.time.DateTimeZone
 
