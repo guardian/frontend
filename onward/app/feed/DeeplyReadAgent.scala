@@ -4,6 +4,7 @@ import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.{Content}
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
+import common._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -31,7 +32,7 @@ object DeeplyReadItem {
   implicit val jsonWrites = Json.writes[DeeplyReadItem]
 }
 
-class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) {
+class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
 
   /*
       This (DeeplyReadAgent) agent is similar in purpose and interface as the ones we already have at the
@@ -54,7 +55,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) {
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { i =>
         val path = i.path
-        println(s"Looking up data for path: ${path}")
+        log.info(s"Looking up data for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
