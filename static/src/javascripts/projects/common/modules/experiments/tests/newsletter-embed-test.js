@@ -16,14 +16,12 @@ const trackComponentInOphan = (newsletterId: string, variant: string) => {
 };
 
 const triggerVariant = (doc: Document, iframeId: string) => {
-    if (doc) {
-        const oldDesign = doc.querySelector('.js-ab-embed-old-design');
-        const newDesign = doc.querySelector('.js-ab-embed-new-design');
-        if (oldDesign && newDesign) {
-            oldDesign.classList.add("hide-element");
-            newDesign.classList.remove("hide-element");
-            trackComponentInOphan(iframeId, 'variant');
-        }
+    const oldDesign = doc.querySelector('.js-ab-embed-old-design');
+    const newDesign = doc.querySelector('.js-ab-embed-new-design');
+    if (oldDesign && newDesign) {
+        oldDesign.classList.add("hide-element");
+        newDesign.classList.remove("hide-element");
+        trackComponentInOphan(iframeId, 'variant');
     }
 };
 
@@ -53,10 +51,12 @@ export const newsletterEmbeds: ABTest = {
                 iframes.forEach( (ifrm: HTMLIFrameElement) => {
                     if (ifrm.id !== 'footer__email-form') {
                         const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
-                        if (doc.readyState !== 'complete' ) {
-                            window.addEventListener('load', () => triggerVariant(doc, ifrm.id));
-                        } else {
-                            triggerVariant(doc, ifrm.id);
+                        if (doc) {
+                            if (doc.readyState !== 'complete') {
+                                window.addEventListener('load', () => triggerVariant(doc, ifrm.id));
+                            } else {
+                                triggerVariant(doc, ifrm.id);
+                            }
                         }
                     }
                 });
