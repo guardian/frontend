@@ -38,9 +38,6 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   // Container for most_shared and most_commented
   val mostSingleCardsBox = Box[Map[String, Content]](Map.empty)
 
-  // Container for most_shared and most_commented
-  val mostSingleCards = Box[Map[String, Content]](Map.empty)
-
   // Helper case class to read from the most/comments discussion API call.
   private case class MostDiscussedItem(key: String, url: String, numberOfComments: Int) {
     def isLiveBlog: Boolean = url.contains("/live/")
