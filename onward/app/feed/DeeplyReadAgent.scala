@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.Content
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
-import model.{MostPopular, pressed}
+import models._
 
 import scala.concurrent.{ExecutionContext, Future}
 
@@ -36,6 +36,27 @@ case class DeeplyReadItem(
 )
 object DeeplyReadItem {
   implicit val jsonWrites = Json.writes[DeeplyReadItem]
+
+  def deeplyReadItemToOnwardItemNx2(item: DeeplyReadItem): OnwardItemNx2 = {
+    OnwardItemNx2(
+      url = item.url,
+      linkText = item.linkText,
+      showByline = item.showByline,
+      byline = item.byline,
+      image = item.image,
+      ageWarning = item.ageWarning,
+      isLiveBlog = item.isLiveBlog,
+      pillar = item.pillar,
+      designType = item.designType,
+      webPublicationDate = item.webPublicationDate,
+      headline = item.headline,
+      mediaType = item.mediaType,
+      shortUrl = item.shortUrl,
+      kickerText = item.kickerText,
+      starRating = item.starRating,
+      avatarUrl = None,
+    )
+  }
 }
 
 class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {

@@ -122,27 +122,8 @@ class MostPopularController(
       val sectionPopular: Future[List[MostPopularNx2]] = {
         if (path.nonEmpty) {
           deeplyReadAgent.getReport().map { sequence =>
-            val trails = sequence.map { item =>
-              OnwardItemNx2(
-                url = item.url,
-                linkText = item.linkText,
-                showByline = item.showByline,
-                byline = item.byline,
-                image = item.image,
-                ageWarning = item.ageWarning,
-                isLiveBlog = item.isLiveBlog,
-                pillar = item.pillar,
-                designType = item.designType,
-                webPublicationDate = item.webPublicationDate,
-                headline = item.headline,
-                mediaType = item.mediaType,
-                shortUrl = item.shortUrl,
-                kickerText = item.kickerText,
-                starRating = item.starRating,
-                avatarUrl = None,
-              )
-            }
-            List(MostPopularNx2("Deeply read", "", trails))
+            val items = sequence.map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2)
+            List(MostPopularNx2("Deeply read", "", items))
           }
         } else { Future(Nil) }
       }
