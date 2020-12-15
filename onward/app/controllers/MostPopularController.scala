@@ -91,55 +91,6 @@ class MostPopularController(
       }
     }
 
-  // December 2020
-  // This is for the experimental deeply-read tab of the most read container
-  def renderWithDeeplyRead(path: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val edition = Edition(request)
-
-      // Synchronous global popular, from the mostPopularAgent (stateful)
-      val globalPopular: Option[MostPopular] = {
-        val globalPopularContent = mostPopularAgent.mostPopular(edition)
-        if (globalPopularContent.nonEmpty)
-          Some(MostPopular("Across The&nbsp;Guardian", "", globalPopularContent.map(_.faciaContent)))
-        else
-          None
-      }
-
-      // Async section specific most Popular.
-      val sectionPopular: Future[List[MostPopular]] =
-        if (path.nonEmpty) lookup(edition, path).map(_.toList) else Future(Nil)
-
-      // map is not on a list, but on a Future
-      sectionPopular.map { sectionPopular =>
-        val sectionFirst = sectionPopular ++ globalPopular
-        val globalFirst = globalPopular.toList ++ sectionPopular
-        val mostPopular: List[MostPopular] = if (path == "global-development") sectionFirst else globalFirst
-
-        mostPopular match {
-          case Nil                         => NotFound
-          case popular if request.forceDCR => jsonResponse(popular, mostCards())
-          case popular if !request.isJson =>
-            Cached(900) {
-              RevalidatableResult.Ok(views.html.mostPopular(page, popular))
-            }
-          case popular =>
-            Cached(2) {
-              JsonComponent(
-                "html" -> {
-                  if (Switches.ExtendedMostPopular.isSwitchedOn) {
-                    views.html.fragments.collections.popularExtended(popular, mostCards())
-                  } else {
-                    views.html.fragments.collections.popular(popular)
-                  }
-                },
-                "rightHtml" -> views.html.fragments.rightMostPopular(globalPopular),
-              )
-            }
-        }
-      }
-    }
-
   private val countryNames = Map(
     "AU" -> "Australia",
     "US" -> "US",
