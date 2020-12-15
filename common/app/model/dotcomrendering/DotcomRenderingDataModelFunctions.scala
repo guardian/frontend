@@ -218,11 +218,8 @@ object DotcomRenderingDataModelFunctions {
 
     // We are passing through the block data here, not the article
     // the block dateTime types are used for liveblogs
-    // We will remove the non 'block' prefixed versions when DCR change is out
-    val createdOn = block.createdDate.map(_.dateTime)
-    val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
     val blockCreatedOn = block.createdDate.map(_.dateTime)
-    val blockCreatedOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockCreatedOnDisplay = blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
 
     val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
     val blockFirstPublishedDisplay =
@@ -252,17 +249,11 @@ object DotcomRenderingDataModelFunctions {
         campaigns,
         calloutsUrl,
       ),
-      createdOn = createdOn,
-      createdOnDisplay = createdOnDisplay,
       blockCreatedOn = blockCreatedOn,
       blockCreatedOnDisplay = blockCreatedOnDisplay,
-      lastUpdated = Some(displayedDateTimes.lastUpdated),
-      lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
       blockLastUpdated = blockLastUpdated,
       blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
-      firstPublished = Some(displayedDateTimes.firstPublished),
-      firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
       blockFirstPublished = blockFirstPublished,
       blockFirstPublishedDisplay = blockFirstPublishedDisplay,
       primaryDateLine = displayedDateTimes.primaryDateLine,
