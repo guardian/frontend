@@ -34,6 +34,8 @@ case class OnwardItem(
 
 object OnwardItem {
 
+  implicit val onwardItemWrites = Json.writes[OnwardItem]
+
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
     val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
@@ -86,32 +88,6 @@ object OnwardItem {
       avatarUrl = contentCardToAvatarUrl(contentCard),
     )
   }
-}
-
-case class MostPopularGeoResponse(
-    country: Option[String],
-    heading: String,
-    trails: Seq[OnwardItem],
-)
-
-case class OnwardCollectionResponse(
-    heading: String,
-    trails: Seq[OnwardItem],
-)
-
-case class OnwardCollectionForDCRv2(
-    tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[OnwardItem],
-    mostShared: Option[OnwardItem],
-)
-
-object OnwardCollection {
-
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
-  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
-  implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
-  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
-
   def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
     trails
       .take(10)
@@ -136,6 +112,32 @@ object OnwardCollection {
         ),
       )
   }
+}
+
+case class MostPopularGeoResponse(
+    country: Option[String],
+    heading: String,
+    trails: Seq[OnwardItem],
+)
+object MostPopularGeoResponse {
+  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
+}
+
+case class OnwardCollectionResponse(
+    heading: String,
+    trails: Seq[OnwardItem],
+)
+object OnwardCollectionResponse {
+  implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+}
+
+case class OnwardCollectionForDCRv2(
+    tabs: Seq[OnwardCollectionResponse],
+    mostCommented: Option[OnwardItem],
+    mostShared: Option[OnwardItem],
+)
+object OnwardCollectionForDCRv2 {
+  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
 }
 
 // MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
