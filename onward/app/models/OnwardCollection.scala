@@ -43,7 +43,7 @@ case class OnwardItemMost(
     linkText: String,
     showByline: Boolean,
     byline: Option[String],
-    image: String,
+    image: Option[String],
     webPublicationDate: String,
     ageWarning: Option[String],
     mediaType: Option[String],
@@ -85,7 +85,6 @@ object OnwardItemMost {
       headline = contentCard.header.headline
       isLiveBlog = properties.isLiveBlog
       showByline = properties.showByline
-      image <- maybeContent.trail.thumbnailPath
       webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
     } yield OnwardItemMost(
       designType = metadata.designType.toString,
@@ -96,7 +95,7 @@ object OnwardItemMost {
       linkText = "",
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
-      image = image,
+      image = maybeContent.trail.thumbnailPath,
       webPublicationDate = webPublicationDate,
       ageWarning = None,
       mediaType = contentCard.mediaType.map(x => x.toString),
