@@ -31,7 +31,7 @@ GET        /most-read-day.json                        controllers.MostPopularCon
 # This route, /deeply-read.json, is for testing purposes only
 GET        /deeply-read.json                          controllers.MostPopularController.renderDeeplyRead()
 
-# December 2020
+# Experimental (December 2020)
 # This route is for the experimental deeply-read tab of the most read container
 # Because it's only a test, it doesn't have a dev-build equivalent
 GET        /most-read-deeply-read/*path.json          controllers.MostPopularController.renderWithDeeplyRead(path)

@@ -102,6 +102,7 @@ class MostPopularController(
       }
     }
 
+  // Experimental (December 2020)
   def renderWithDeeplyRead(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       val edition = Edition(request)
