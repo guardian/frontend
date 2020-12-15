@@ -1,5 +1,4 @@
 import fastdom from 'fastdom';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 const removeFromDfpEnv = advert => {

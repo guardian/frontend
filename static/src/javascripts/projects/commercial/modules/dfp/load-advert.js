@@ -1,4 +1,3 @@
-import { Advert } from 'commercial/modules/dfp/Advert';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { markTime } from 'lib/user-timing';
 import a9 from 'commercial/modules/header-bidding/a9/a9';

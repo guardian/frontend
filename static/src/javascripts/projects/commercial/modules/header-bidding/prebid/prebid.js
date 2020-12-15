@@ -1,7 +1,6 @@
 
 
 import config from 'lib/config';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/header-bidding/prebid/bid-config';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';

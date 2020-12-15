@@ -1,7 +1,4 @@
 import { getUrlVars } from 'lib/url';
-
-
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 

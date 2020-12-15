@@ -1,5 +1,5 @@
 import { fetchNewsletters, fetchUserConsents } from './fetch';
-import { consentTypeList, UserConsentWithState } from './types';
+import { consentTypeList } from './types';
 
 const getAllUserConsents = () =>
     fetchUserConsents;

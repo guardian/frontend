@@ -1,4 +1,4 @@
-import React, { Node } from 'preact-compat';
+import React from 'preact-compat';
 import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
 

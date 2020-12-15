@@ -1,6 +1,3 @@
-
-import { Advert } from 'commercial/modules/dfp/Advert';
-
 import {
     getBreakpointKey,
     stripMobileSuffix,

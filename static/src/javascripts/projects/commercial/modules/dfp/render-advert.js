@@ -2,7 +2,6 @@ import qwery from 'qwery';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';

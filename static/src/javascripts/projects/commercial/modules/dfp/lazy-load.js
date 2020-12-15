@@ -1,6 +1,3 @@
-
-
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';

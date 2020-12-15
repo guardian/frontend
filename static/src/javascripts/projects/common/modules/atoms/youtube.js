@@ -1,5 +1,4 @@
 import fastdom from 'lib/fastdom-promise';
-import bonzo from 'bonzo';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
