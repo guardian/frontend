@@ -76,7 +76,9 @@ module.exports = {
         'guardian-frontend/no-default-export': 'warn',
         'guardian-frontend/no-direct-access-config': 'warn',
 
-        // flow (used to) take care of our return values (although, did it really?)
+        // flow (used to) take care of this stuff (although, did it really?)
+        // it will be managed by TS in the future
         'consistent-return': 'off',
-    },
+        'react/prop-types': 'off',
+    }
 };
