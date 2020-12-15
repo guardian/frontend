@@ -19,16 +19,14 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     let hasScriptsToInsert = false;
 
     tags.forEach(tag => {
-        if (tag.loaded === true) {
-            return;
-        }
-        if (tag.beforeLoad) {
-            tag.beforeLoad();
-        }
+        if (tag.loaded === true) return;
+        
+        if (tag.beforeLoad) tag.beforeLoad();
+
+        // Tag is either an image, a snippet or a script.
         if (tag.useImage === true && typeof tag.url !== 'undefined') {
             new Image().src = tag.url;
-        }
-        if (tag.insertSnippet) {
+        } else if (tag.insertSnippet) {
             tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
