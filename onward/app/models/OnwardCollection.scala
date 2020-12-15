@@ -28,6 +28,7 @@ case class OnwardItem(
     shortUrl: String,
     kickerText: Option[String],
     starRating: Option[Int],
+    avatarUrl: Option[String],
 )
 
 // OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
@@ -50,6 +51,7 @@ case class OnwardItemMost(
     avatarUrl: Option[String],
     kickerText: Option[String],
     starRating: Option[Int],
+    shortUrl: String,
 )
 
 object OnwardItemMost {
@@ -86,6 +88,7 @@ object OnwardItemMost {
       isLiveBlog = properties.isLiveBlog
       showByline = properties.showByline
       webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
+      shortUrl <- contentCard.shortUrl
     } yield OnwardItemMost(
       designType = metadata.designType.toString,
       pillar = correctPillar(pillar.toString.toLowerCase),
@@ -102,6 +105,7 @@ object OnwardItemMost {
       avatarUrl = contentCardToAvatarUrl(contentCard),
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
+      shortUrl = shortUrl,
     )
   }
 }
@@ -151,6 +155,7 @@ object OnwardCollection {
           shortUrl = content.card.shortUrl,
           kickerText = content.header.kicker.flatMap(_.properties.kickerText),
           starRating = content.card.starRating,
+          avatarUrl = None,
         ),
       )
   }
