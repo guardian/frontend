@@ -71,6 +71,7 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
         },
+        extensions: ['.js', '.ts', '.tsx', '.jsx'],
         symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
@@ -92,7 +93,7 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /(\.js)|(\.mjs)$/,
+                test: /\.[jt]sx?|mjs$/,
                 exclude: [
                     {
                         test: /node_modules/,
@@ -103,7 +104,17 @@ module.exports = {
                     },
                     path.resolve(__dirname, 'static/vendor'),
                 ],
-                loader: 'babel-loader',
+                use: [
+                    {
+                        loader: 'babel-loader',
+                    },
+                    {
+                        loader: 'ts-loader',
+                        options: {
+                            transpileOnly: true,
+                        },
+                    },
+                ]
             },
             {
                 test: /\.svg$/,

@@ -1,0 +1,70 @@
+{
+    "compilerOptions": {
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "baseUrl": "./",
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "jsx": "react",
+        "lib": [
+            "esnext",
+            "es2015",
+            "dom"
+        ],
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "noEmit": true,
+        "noUnusedLocals": true,
+        "paths": {
+            "admin/*": [
+                "./static/src/javascripts/projects/admin/*"
+            ],
+            "bootstraps/*": [
+                "./static/src/javascripts/bootstraps/*"
+            ],
+            "commercial/*": [
+                "./static/src/javascripts/projects/commercial/*"
+            ],
+            "common/*": [
+                "./static/src/javascripts/projects/common/*"
+            ],
+            "facia/*": [
+                "./static/src/javascripts/projects/facia/*"
+            ],
+            "journalism/*": [
+                "./static/src/javascripts/projects/journalism/*"
+            ],
+            "lib/*": [
+                "./static/src/javascripts/lib/*"
+            ],
+            "lodash/*": [
+                "node_modules/lodash-node/compat/*"
+            ],
+            "membership/*": [
+                "./static/src/javascripts/projects/membership/*"
+            ],
+            "ophan/embed": [
+                "node_modules/ophan-tracker-js/build/ophan.embed"
+            ],
+            "ophan/ng": [
+                "node_modules/ophan-tracker-js"
+            ],
+            "raven": [
+                "node_modules/raven-js"
+            ],
+            "svgs/*": [
+                "./static/src/inline-svgs/*"
+            ],
+            "videojs": [
+                "node_modules/video.js"
+            ]
+        },
+        "preserveConstEnums": true,
+        "resolveJsonModule": true,
+        "strict": true,
+        "target": "ESNEXT"
+    },
+    "include": [
+        "./static/src/javascripts"
+    ]
+}
