@@ -32,7 +32,7 @@ object OnwardItem {
 
   implicit def writes = Json.writes[OnwardItem]
 
-  def asOnwardItem(content: PressedContent, edition: Edition): OnwardItem = {
+  def pressedContentToOnwardItem(content: PressedContent, edition: Edition): OnwardItem = {
     // a DCR hack that we should standardise
     def pillarToString(pillar: Pillar): String = {
       pillar.toString.toLowerCase() match {
@@ -71,10 +71,12 @@ object OnwardCollection {
 
   implicit def writes = Json.writes[OnwardCollection]
 
-  def fromCollection(collection: PressedCollection)(implicit request: RequestHeader): OnwardCollection = {
+  def pressedCollectionToOnwardCollection(
+      collection: PressedCollection,
+  )(implicit request: RequestHeader): OnwardCollection = {
     val trails = collection.curatedPlusBackfillDeduplicated
       .take(10)
-      .map(pressed => OnwardItem.asOnwardItem(pressed, Edition(request)))
+      .map(pressed => OnwardItem.pressedContentToOnwardItem(pressed, Edition(request)))
 
     OnwardCollection(
       displayName = collection.displayName,
