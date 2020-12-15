@@ -1,16 +1,20 @@
 // @flow
 import ophan from 'ophan/ng';
 
+const abTestName = 'NewsletterEmbeds3'
+
 const trackComponentInOphan = (newsletterId: string, variant: string) => {
     ophan.record({
-        action: 'INSERT',
-        component: {
-            componentType: 'NEWSLETTER_SUBSCRIPTION',
-            id: newsletterId
-        },
-        abTest: {
-            name: 'NewsletterEmbeds2',
-            variant
+        componentEvent: {
+            action: 'INSERT',
+            component: {
+                componentType: 'NEWSLETTER_SUBSCRIPTION',
+                id: newsletterId
+            },
+            abTest: {
+                name: abTestName,
+                variant
+            }
         }
     });
 };
@@ -26,7 +30,7 @@ const triggerVariant = (doc: Document, iframeId: string) => {
 };
 
 export const newsletterEmbeds: ABTest = {
-    id: 'NewsletterEmbeds3',
+    id: abTestName,
     start: '2020-12-02',
     expiry: '2021-01-04',
     author: 'Josh Buckland',
