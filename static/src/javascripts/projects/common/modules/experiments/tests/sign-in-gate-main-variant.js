@@ -1,9 +1,7 @@
-// @flow
-
 // Main test is a feature switch where we roll out winning changes from other AB sign in gate tests
 // variant audience sees the gate
 
-export const signInGateMainVariant: ABTest = {
+export const signInGateMainVariant = {
     id: 'SignInGateMainVariant',
     start: '2020-05-20',
     expiry: '2021-12-01',
@@ -24,7 +22,7 @@ export const signInGateMainVariant: ABTest = {
     variants: [
         {
             id: 'main-variant-3',
-            test: (): void => {},
+            test: () => {},
         },
     ],
 };

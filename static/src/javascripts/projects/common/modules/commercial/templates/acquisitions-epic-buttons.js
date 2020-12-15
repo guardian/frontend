@@ -1,14 +1,12 @@
-// @flow
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
-import type { ReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-reminder';
 import { getDefaultReminderFields } from 'common/modules/commercial/templates/acquisitions-epic-control';
 import { canShowContributionsReminderFeature } from 'common/modules/commercial/user-features';
 
 
 export const epicButtonsTemplate = (
-    primaryCta: EpicCta,
-    secondaryCta?: EpicCta,
-    reminderFields?: ReminderFields
+    primaryCta,
+    secondaryCta,
+    reminderFields
 ) => {
     const supportButtonSupport = `
         <div>
@@ -48,7 +46,7 @@ export const epicButtonsTemplate = (
                 </a>`
         : '';
 
-    const getReminderCta = (): ?string => {
+    const getReminderCta = () => {
       const fields = reminderFields || getDefaultReminderFields();
       return fields && fields.reminderCTA;
     };

@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: geo-most-popular-front.js
  Description: replaces general most popular trails with geo based most popular on fronts.
@@ -9,7 +8,6 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
-import type bonzo from 'bonzo';
 
 export class GeoMostPopularFrontExtended extends Component {
     constructor() {
@@ -19,9 +17,9 @@ export class GeoMostPopularFrontExtended extends Component {
         this.manipulationType = 'html';
     }
 
-    parent: ?bonzo;
+    parent;
 
-    prerender(): void {
+    prerender() {
         const isInternational = config.get('page.pageId') === 'international';
 
         /**
@@ -91,7 +89,7 @@ export class GeoMostPopularFrontExtended extends Component {
         }
     }
 
-    go(): void {
+    go() {
         this.parent = qwery('.js-popular-trails')[0];
 
         if (this.parent) {
@@ -99,7 +97,7 @@ export class GeoMostPopularFrontExtended extends Component {
         }
     }
 
-    ready(): void {
+    ready() {
         const isNetworkFront =
             config.get('page.contentType') === 'Network Front';
 

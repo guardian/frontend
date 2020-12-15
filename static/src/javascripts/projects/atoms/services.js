@@ -1,5 +1,3 @@
-// @flow
-
 // expose some frontend modules to atoms
 // managed by the atoms team
 
@@ -20,25 +18,24 @@ import { viewport } from './services/viewport';
 //    ...
 // }
 
-type FastdomAction = Function => void;
 
-const promisify = (fdaction: FastdomAction) => (
-    thunk: Function
-): Promise<any> =>
+const promisify = (fdaction) => (
+    thunk
+) =>
     new Promise(resolve => {
         fdaction.call(fastdom, () => {
             resolve(thunk());
         });
     });
 
-const onAcastConsentChange = (callback: boolean => void): void => {
+const onAcastConsentChange = (callback) => {
     onConsentChange(state => {
         const consented = getConsentFor('acast', state);
         callback(consented);
     });
 };
 
-const services: Services = {
+const services = {
     ophan,
     dom: {
         write: promisify(fastdom.mutate),

@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import $ from 'lib/$';
 import fetchJson from 'lib/fetch-json';
@@ -6,16 +5,7 @@ import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import bonzo from 'bonzo';
 
-type WeatherSearchOptions = {
-    container: bonzo,
-    apiUrl: string,
-};
 
-type City = {
-    id: string,
-    city: string,
-    country: string,
-};
 
 // Keys must be strings for Flow: https://github.com/facebook/flow/issues/380
 const keyCodeMap = {
@@ -25,21 +15,16 @@ const keyCodeMap = {
     '27': 'escape',
 };
 
-export type CityPreference = {
-    id: string,
-    city: string,
-    store: 'set' | 'remove',
-};
 
 export class SearchTool {
-    apiUrl: string;
-    $list: bonzo;
-    $input: bonzo;
-    oldQuery: string;
-    newQuery: string;
-    inputTmp: string;
+    apiUrl;
+    $list;
+    $input;
+    oldQuery;
+    newQuery;
+    inputTmp;
 
-    constructor(options: WeatherSearchOptions) {
+    constructor(options) {
         const container = options.container;
         this.apiUrl = options.apiUrl;
 
@@ -51,30 +36,30 @@ export class SearchTool {
         this.inputTmp = '';
     }
 
-    static nearestLinkNode(target: ?Node): ?Node {
+    static nearestLinkNode(target) {
         if ($(target).hasClass('js-search-tool-link')) {
             return target;
         }
         return $.ancestor(target, 'js-search-tool-link');
     }
 
-    bindElements(container: ?Element): void {
+    bindElements(container) {
         this.$list = $('.js-search-tool-list', container);
         this.$input = $('.js-search-tool-input', container);
     }
 
-    bindEvents(): void {
+    bindEvents() {
         bean.on(document.body, 'keyup', this.handleKeyEvents.bind(this));
         bean.on(document.body, 'click', this.handleClick.bind(this));
 
         mediator.on('autocomplete:toggle', this.toggleControls.bind(this));
     }
 
-    hasInputValueChanged(): boolean {
+    hasInputValueChanged() {
         return this.oldQuery.length !== this.newQuery.length;
     }
 
-    handleClick(e: bean): void {
+    handleClick(e) {
         const isInput = $(e.target).hasClass('js-search-tool-input');
         const isLink = SearchTool.nearestLinkNode(e.target);
 
@@ -91,7 +76,7 @@ export class SearchTool {
         }
     }
 
-    toggleControls(value: bean): void {
+    toggleControls(value) {
         const $input = $('.js-search-tool-input')[0];
         const $location = $('.js-search-tool');
         const $close = $('.js-close-location');
@@ -109,7 +94,7 @@ export class SearchTool {
         }
     }
 
-    pushData(): void {
+    pushData() {
         const $active = $('.active', this.$list);
         let store = 'set';
 
@@ -121,7 +106,7 @@ export class SearchTool {
             }
         }
 
-        const data: CityPreference = {
+        const data = {
             id: $active.attr('data-weather-id'),
             city: $active.attr('data-weather-city'),
             store,
@@ -137,7 +122,7 @@ export class SearchTool {
         setTimeout(this.destroy.bind(this), 50);
     }
 
-    getListOfResults(e: bean): void {
+    getListOfResults(e) {
         this.newQuery = e.target.value;
 
         // If we have empty input clear everything and don't fetch the data
@@ -155,7 +140,7 @@ export class SearchTool {
         this.fetchData();
     }
 
-    fetchData(): Promise<void> {
+    fetchData() {
         return fetchJson(`${this.apiUrl}${this.newQuery}`, {
             mode: 'cors',
         })
@@ -170,7 +155,7 @@ export class SearchTool {
             });
     }
 
-    handleKeyEvents(e: bean): void {
+    handleKeyEvents(e) {
         const key = keyCodeMap[e.which || e.keyCode];
 
         // Run this function only if we are inside the input
@@ -196,7 +181,7 @@ export class SearchTool {
         }
     }
 
-    move(increment: number): void {
+    move(increment) {
         const $active = $('.active', this.$list);
         let id = parseInt($active.attr('id'), 10);
 
@@ -219,7 +204,7 @@ export class SearchTool {
         }
     }
 
-    getNewId(id: number): number {
+    getNewId(id) {
         const len = $('li', this.$list).length;
         let newId = id % len;
 
@@ -233,14 +218,14 @@ export class SearchTool {
         return newId;
     }
 
-    setInputValue(value?: string): void {
+    setInputValue(value) {
         const inputValue =
             value || $('.active', this.$list).attr('data-weather-city');
 
         this.$input.val(inputValue);
     }
 
-    renderList(results: Array<City>, resultsToShow: number): void {
+    renderList(results, resultsToShow) {
         const docFragment = document.createDocumentFragment();
 
         results.slice(0, resultsToShow).forEach((item, index) => {
@@ -263,11 +248,11 @@ export class SearchTool {
         this.clear().append(docFragment);
     }
 
-    clear(): bonzo {
+    clear() {
         return this.$list.html('');
     }
 
-    destroy(): void {
+    destroy() {
         this.clear();
     }
 }

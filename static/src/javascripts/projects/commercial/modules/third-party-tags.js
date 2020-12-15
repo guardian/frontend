@@ -1,4 +1,4 @@
-// @flow strict
+
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
@@ -13,7 +13,7 @@ import { ias, permutive, twitter, lotame, fbPixel, remarketing, inizio } from '@
 import config from 'lib/config';
 import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
-const addScripts = (tags: Array<ThirdPartyTag>): void => {
+const addScripts = (tags) => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
@@ -60,9 +60,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 };
 
 const insertScripts = (
-    advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag> // performanceServices always run
-): void => {
+    advertisingServices,
+    performanceServices // performanceServices always run
+) => {
     addScripts(performanceServices);
     onConsentChange(state => {
         const consentedAdvertisingServices = advertisingServices.filter(
@@ -75,8 +75,8 @@ const insertScripts = (
     });
 };
 
-const loadOther = (): void => {
-    const advertisingServices: Array<ThirdPartyTag> = [
+const loadOther = () => {
+    const advertisingServices = [
         remarketing({ shouldRun: config.get('switches.remarketing', false) }),
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
@@ -86,7 +86,7 @@ const loadOther = (): void => {
         lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
     ].filter(_ => _.shouldRun);
 
-    const performanceServices: Array<ThirdPartyTag> = [
+    const performanceServices = [
         imrWorldwide, // only in AU & NZ
         imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
@@ -94,7 +94,7 @@ const loadOther = (): void => {
     insertScripts(advertisingServices, performanceServices);
 };
 
-const init = (): Promise<boolean> => {
+const init = () => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }

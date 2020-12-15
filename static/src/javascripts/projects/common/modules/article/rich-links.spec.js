@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import {
     richLinkTag,
@@ -7,16 +5,16 @@ import {
 } from 'common/modules/article/rich-links';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-let mockParas: ?NodeList<HTMLParagraphElement>;
+let mockParas;
 
 jest.mock('lib/raven');
 jest.mock('lib/config');
 jest.mock('common/modules/article/space-filler', () => ({
     spaceFiller: {
         fillSpace: (
-            rules: Object,
-            writer: (?NodeList<HTMLParagraphElement>) => any
-        ): Promise<any> =>
+            rules,
+            writer
+        ) =>
             new Promise(resolve => {
                 writer(mockParas);
                 resolve(true);
@@ -28,7 +26,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 
 describe('rich-links', () => {
-    const getRichLinkElements = (): HTMLCollection<HTMLElement> =>
+    const getRichLinkElements = () =>
         document.getElementsByClassName('element-rich-link');
 
     beforeEach(() => {

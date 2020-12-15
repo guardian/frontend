@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import config from 'lib/config';
 
@@ -6,17 +6,13 @@ import { Advert } from 'commercial/modules/dfp/Advert';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
-import type {
-    HeaderBiddingSize,
-    HeaderBiddingSlot,
-} from 'commercial/modules/header-bidding/types';
 
 class A9AdUnit {
-    slotID: ?string;
-    slotName: ?string;
-    sizes: HeaderBiddingSize[];
+    slotID;
+    slotName;
+    sizes;
 
-    constructor(advert: Advert, slot: HeaderBiddingSlot) {
+    constructor(advert, slot) {
         this.slotID = advert.id;
         this.slotName = config.get('page.adUnit');
         this.sizes = slot.sizes;
@@ -27,12 +23,12 @@ class A9AdUnit {
     }
 }
 
-let initialised: boolean = false;
-let requestQueue: Promise<void> = Promise.resolve();
+let initialised = false;
+let requestQueue = Promise.resolve();
 
-const bidderTimeout: number = 1500;
+const bidderTimeout = 1500;
 
-const initialise = (): void => {
+const initialise = () => {
     if (!initialised) {
         initialised = true;
         window.apstag.init({
@@ -46,9 +42,9 @@ const initialise = (): void => {
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
 const requestBids = (
-    advert: Advert,
-    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
-): Promise<void> => {
+    advert,
+    slotFlatMap
+) => {
     if (!initialised) {
         return requestQueue;
     }
@@ -57,7 +53,7 @@ const requestBids = (
         return requestQueue;
     }
 
-    const adUnits: Array<A9AdUnit> = getHeaderBiddingAdSlots(
+    const adUnits = getHeaderBiddingAdSlots(
         advert,
         slotFlatMap
     )

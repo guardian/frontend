@@ -1,5 +1,3 @@
-// @flow
-
 export const participationsKey = 'gu.ab.participations';
 export const NOT_IN_TEST = 'notintest';
 

@@ -1,10 +1,9 @@
-// @flow
 import ophan from 'ophan/ng';
 import { getMarkTime } from 'lib/user-timing';
 import performanceAPI from 'lib/window-performance';
 import config from './config';
 
-const captureOphanInfo = (): void => {
+const captureOphanInfo = () => {
     const supportsPerformanceProperties =
         performanceAPI &&
         'navigation' in performanceAPI &&

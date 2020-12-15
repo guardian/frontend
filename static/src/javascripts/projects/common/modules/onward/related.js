@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fetchJSON from 'lib/fetch-json';
@@ -8,7 +6,7 @@ import { begin, error, end } from 'common/modules/analytics/register';
 import { Expandable } from 'common/modules/ui/expandable';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const buildExpandable = (el: HTMLElement): void => {
+const buildExpandable = (el) => {
     new Expandable({
         dom: el,
         expanded: false,
@@ -16,7 +14,7 @@ const buildExpandable = (el: HTMLElement): void => {
     }).init();
 };
 
-const popularInTagOverride = (): ?string | false => {
+const popularInTagOverride = () => {
     /* whitelist of tags to override related story component with a
        popular-in-tag component */
     if (!config.get('page.keywordIds')) {
@@ -57,7 +55,7 @@ const popularInTagOverride = (): ?string | false => {
         'football/liverpool',
     ];
 
-    const intersect = (a: Array<string>, b: Array<string>): Array<string> =>
+    const intersect = (a, b) =>
         [...new Set(a)].filter(_ => new Set(b).has(_));
     const pageTags = config.get('page.keywordIds', '').split(',');
     // if this is an advertisement feature, use the page's keyword (there'll only be one)
@@ -70,7 +68,7 @@ const popularInTagOverride = (): ?string | false => {
     }
 };
 
-const related = (opts: Object): void => {
+const related = (opts) => {
     let relatedUrl;
     let popularInTag;
     let componentName;

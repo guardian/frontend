@@ -1,7 +1,6 @@
-// @flow
 import { _ } from './get-stylesheet';
 
-const getStyles: any = _.getStyles;
+const getStyles = _.getStyles;
 
 let styleSheets;
 
@@ -54,14 +53,14 @@ describe('Cross-frame messenger: get stylesheets', () => {
 
     it('should return all webfonts available', () => {
         expect(styleSheets.length).toBe(4);
-        const result: Object = getStyles({ selector: '.webfont' }, styleSheets);
+        const result = getStyles({ selector: '.webfont' }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(3);
     });
 
     it('should return only the GuardianSansWeb webfont', () => {
         const selector = '.webfont[data-cache-name="GuardianSansWeb"]';
-        const result: Object = getStyles({ selector }, styleSheets);
+        const result = getStyles({ selector }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(1);
     });
@@ -69,7 +68,7 @@ describe('Cross-frame messenger: get stylesheets', () => {
     it('should return only the GuardianSansWeb and GuardianSansTextWeb webfonts', () => {
         const selector =
             '.webfont[data-cache-name="GuardianSansWeb"], .webfont[data-cache-name="GuardianSansTextWeb"]';
-        const result: Object = getStyles({ selector }, styleSheets);
+        const result = getStyles({ selector }, styleSheets);
         expect(result).not.toBeNull();
         expect(result.length).toBe(2);
     });

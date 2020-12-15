@@ -1,5 +1,3 @@
-// @flow
-
 import { priceGranularity } from './price-config';
 
 describe('priceGranularity', () => {

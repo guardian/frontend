@@ -1,9 +1,7 @@
-// @flow
-
 import fastdom from 'fastdom';
 import { loadScript } from '@guardian/libs';
 
-const launchOverlay = (event: Event): void => {
+const launchOverlay = (event) => {
     event.preventDefault();
 
     const scriptUrl = 'https://assets.pinterest.com/js/pinmarklet.js';
@@ -21,7 +19,7 @@ const launchOverlay = (event: Event): void => {
     loadScript(`${scriptUrl}?r=${cachePurge}`);
 };
 
-const initPinterest = (): void => {
+const initPinterest = () => {
     const buttons = Array.from(
         document.querySelectorAll('.social__item--pinterest')
     );

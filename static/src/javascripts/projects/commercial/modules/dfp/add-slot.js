@@ -1,4 +1,3 @@
-// @flow
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
@@ -6,8 +5,8 @@ import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
-    const advert: Advert = new Advert(adSlot);
+const displayAd = (adSlot, forceDisplay) => {
+    const advert = new Advert(adSlot);
 
     dfpEnv.advertIds[advert.id] = dfpEnv.adverts.push(advert) - 1;
     if (dfpEnv.shouldLazyLoad() && !forceDisplay) {
@@ -18,7 +17,7 @@ const displayAd = (adSlot: HTMLElement, forceDisplay: boolean) => {
     }
 };
 
-const addSlot = (adSlot: HTMLElement, forceDisplay: boolean) => {
+const addSlot = (adSlot, forceDisplay) => {
     window.googletag.cmd.push(() => {
         if (!(adSlot.id in dfpEnv.advertIds)) {
             // dynamically add ad slot

@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 import fastdomPromised from 'fastdom/extensions/fastdom-promised';
 

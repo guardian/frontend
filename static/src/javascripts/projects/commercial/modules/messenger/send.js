@@ -1,9 +1,8 @@
-// @flow
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
 /* eslint no-bitwise: "off" */
 
-const send = (type: string, payload: any): string => {
+const send = (type, payload) => {
     const msg = {
         id: 'xxxxxxxxxx'.replace(/x/g, () =>
             ((Math.random() * 36) | 0).toString(36)

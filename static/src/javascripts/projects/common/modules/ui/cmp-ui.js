@@ -1,23 +1,21 @@
-// @flow
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 
-export const addPrivacySettingsLink = (): void => {
+export const addPrivacySettingsLink = () => {
     if (!config.get('switches.consentManagement', true)) {
         return;
     }
 
-    const privacyLink: ?HTMLElement = document.querySelector(
+    const privacyLink = document.querySelector(
         'a[data-link-name=privacy]'
     );
 
     if (privacyLink) {
-        const privacyLinkListItem: ?Element = privacyLink.parentElement;
+        const privacyLinkListItem = privacyLink.parentElement;
 
         if (privacyLinkListItem) {
-            const newPrivacyLink: HTMLElement = privacyLink.cloneNode(false);
+            const newPrivacyLink = privacyLink.cloneNode(false);
 
             newPrivacyLink.dataset.linkName = 'privacy-settings';
             newPrivacyLink.removeAttribute('href');
@@ -25,7 +23,7 @@ export const addPrivacySettingsLink = (): void => {
                 ? 'California resident – Do Not Sell'
                 : 'Privacy settings';
 
-            const newPrivacyLinkListItem: Element = privacyLinkListItem.cloneNode(
+            const newPrivacyLinkListItem = privacyLinkListItem.cloneNode(
                 false
             );
 
@@ -43,12 +41,12 @@ export const addPrivacySettingsLink = (): void => {
     }
 };
 
-export const cmpBannerCandidate: Banner = {
+export const cmpBannerCandidate = {
     id: 'cmpUi',
-    canShow: (): Promise<boolean> => {
+    canShow: () => {
         if (!config.get('switches.cmp', true)) return Promise.resolve(false);
         return cmp.willShowPrivacyMessage();
     },
     // Remote banner is injected first: show() always resolves to `true`
-    show: (): Promise<boolean> => Promise.resolve(true),
+    show: () => Promise.resolve(true),
 };

@@ -1,25 +1,10 @@
-// @flow
 import React, { Node } from 'preact-compat';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.lib';
 
-type CheckboxWording = {
-    title: string,
-    text?: string,
-};
 
-type QuestionWording = {
-    title: string,
-    text?: Node,
-};
 
-type ConsentWording = {
-    question: QuestionWording,
-    yesCheckbox: CheckboxWording,
-    noCheckbox: CheckboxWording,
-};
 
-const ThirdPartyConsentWording: ConsentWording = {
+const ThirdPartyConsentWording = {
     question: {
         title: 'Set your personalised ads preferences',
         text: (
@@ -58,7 +43,7 @@ const ThirdPartyConsentWording: ConsentWording = {
     },
 };
 
-const getConsentWording = (consent: AdConsent): ConsentWording => {
+const getConsentWording = (consent) => {
     if (consent.cookie === thirdPartyTrackingAdConsent.cookie)
         return ThirdPartyConsentWording;
     return {
@@ -72,5 +57,4 @@ const getConsentWording = (consent: AdConsent): ConsentWording => {
     };
 };
 
-export type { ConsentWording, CheckboxWording, QuestionWording };
 export { getConsentWording };

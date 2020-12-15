@@ -1,4 +1,3 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import { markup as closeCentralIcon } from 'svgs/icon/close-central.svg';
 import {
@@ -10,7 +9,7 @@ import { ClueInput } from './clue-input';
 import { CluePreview } from './clue-preview';
 import { Ring } from './ring';
 
-class AnagramHelper extends Component<*, *> {
+class AnagramHelper extends Component {
     constructor() {
         super();
         this.state = {
@@ -19,14 +18,14 @@ class AnagramHelper extends Component<*, *> {
         };
     }
 
-    componentWillReceiveProps(next: Object) {
+    componentWillReceiveProps(next) {
         // reset on clue change
         if (next.clue !== this.props.focussedEntry) {
             this.reset();
         }
     }
 
-    onClueInput(text: string) {
+    onClueInput(text) {
         if (!/\s|\d/g.test(text)) {
             this.setState({
                 clueInput: text,
@@ -45,9 +44,9 @@ class AnagramHelper extends Component<*, *> {
      */
     // eslint-disable-next-line class-methods-use-this
     shuffleWord(
-        word: string,
-        entries: { value: string }[]
-    ): Array<{ value: string, entered: boolean }> {
+        word,
+        entries
+    ) {
         const wordEntries = entries
             .map(entry => entry.value.toLowerCase())
             .filter(entry => word.includes(entry))
@@ -97,7 +96,7 @@ class AnagramHelper extends Component<*, *> {
         }
     }
 
-    canShuffle(): boolean {
+    canShuffle() {
         return !!this.state.clueInput && this.state.clueInput.length > 0;
     }
 

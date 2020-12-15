@@ -1,11 +1,9 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
 
-const template = (): string => `
+const template = () => `
         <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
             <div class="survey-container">
                 <h3 class="survey-text__header">
@@ -45,7 +43,7 @@ export const init = () =>
             aboutBtns.forEach(btn => {
                 btn.addEventListener(
                     'click',
-                    (e: Event): mixed => {
+                    (e) => {
                         e.preventDefault();
                         fastdom.mutate(() => overlay.classList.remove('u-h'));
                     }

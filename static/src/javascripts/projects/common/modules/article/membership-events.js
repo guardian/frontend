@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import fetchJson from 'lib/fetch-json';
@@ -7,7 +6,7 @@ import reportError from 'lib/report-error';
 const ELEMENT_INITIAL_CLASS = 'element-membership--not-upgraded';
 const ELEMENT_UPGRADED_CLASS = 'element-membership--upgraded';
 
-const upgradeEvent = (el: Node): void => {
+const upgradeEvent = (el) => {
     const href = $('a', el).attr('href');
     const matches = href.match(/https:\/\/membership.theguardian.com/);
 
@@ -33,6 +32,6 @@ const upgradeEvent = (el: Node): void => {
     }
 };
 
-export const upgradeMembershipEvents = (): void => {
+export const upgradeMembershipEvents = () => {
     $(`.${ELEMENT_INITIAL_CLASS}`).each(upgradeEvent);
 };

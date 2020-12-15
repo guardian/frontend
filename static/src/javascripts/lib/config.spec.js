@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable guardian-frontend/global-config */
 
 Object.assign(window.guardian.config, {

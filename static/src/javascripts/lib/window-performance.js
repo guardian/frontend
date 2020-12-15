@@ -1,5 +1,3 @@
-// @flow
-
 const api =
     window.performance ||
     window.msPerformance ||

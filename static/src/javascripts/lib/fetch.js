@@ -1,4 +1,3 @@
-// @flow
 import reqwest from 'reqwest';
 
 /**
@@ -26,26 +25,9 @@ import reqwest from 'reqwest';
  * - response.ok .status .statusText
  */
 
-type CustomFetchRequest = {
-    url: string,
-    type: string,
-    method: string,
-    crossOrigin: boolean,
-    headers: ?Object,
-    data: string,
-    withCredentials: boolean,
-};
 
-type CustomFetchResponse = {
-    status: number,
-    ok: boolean,
-    statusText: string,
-    url: string,
-    text: () => Promise<string>,
-    json: () => Promise<Object>,
-};
 
-const buildRequest = (path: string, options: Object): CustomFetchRequest => {
+const buildRequest = (path, options) => {
     const isCors = options.mode === 'cors';
     const withCredentials =
         (isCors && options.credentials === 'include') ||
@@ -62,7 +44,7 @@ const buildRequest = (path: string, options: Object): CustomFetchRequest => {
     };
 };
 
-const createResponse = (response: Object): CustomFetchResponse => {
+const createResponse = (response) => {
     let bodyRead = false;
     const body = response.responseText;
 
@@ -86,7 +68,7 @@ const createResponse = (response: Object): CustomFetchResponse => {
     };
 };
 
-const fetch = (input: string, init: ?Object): Promise<CustomFetchResponse> =>
+const fetch = (input, init) =>
     new Promise((resolve, reject) => {
         const req = buildRequest(input, init || {});
         reqwest(req)

@@ -1,10 +1,8 @@
-// @flow
 import config from 'lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 // nol_t is a global function defined by the IMR worldwide library
 // eslint-disable-next-line camelcase
-declare var nol_t: (config: any) => any;
 
 const onLoad = () => {
     const pvar = {
@@ -17,7 +15,7 @@ const onLoad = () => {
     trac.record().post();
 };
 
-export const imrWorldwideLegacy: ThirdPartyTag = {
+export const imrWorldwideLegacy = {
     shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
     url: '//secure-au.imrworldwide.com/v60.js',
     onLoad,

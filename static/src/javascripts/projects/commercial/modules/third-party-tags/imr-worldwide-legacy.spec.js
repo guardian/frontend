@@ -1,4 +1,3 @@
-// @flow
 import { imrWorldwideLegacy } from './imr-worldwide-legacy';
 
 const { shouldRun, url, onLoad } = imrWorldwideLegacy;
@@ -24,7 +23,7 @@ jest.mock('lib/config', () => {
     };
 
     return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
+        get: (path = '', defaultValue) =>
             path
                 .replace(/\[(.+?)]/g, '.$1')
                 .split('.')

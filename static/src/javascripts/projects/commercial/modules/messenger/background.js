@@ -1,37 +1,15 @@
-// @flow
 import config from 'lib/config';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial/modules/messenger';
 import {
     renderStickyAdLabel,
     renderStickyScrollForMoreLabel,
 } from 'commercial/modules/dfp/render-advert-label';
 
-type AdSpec = {
-    scrollType: string,
-    backgroundColour: string,
-    backgroundImage: string,
-    backgroundRepeat: string,
-    backgroundPosition: string,
-    backgroundSize: string,
-    transform: string,
-    ctaUrl: string,
-};
 
-type SpecStyles = {
-    backgroundColor: string,
-    backgroundImage: string,
-    backgroundRepeat: string,
-    backgroundPosition: string,
-};
 
-type Background = {
-    backgroundParent: HTMLElement,
-    background: HTMLElement,
-};
 
-const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
+const getStylesFromSpec = (specs) =>
     Object.keys(specs).reduce((result, key) => {
         if (key !== 'scrollType') {
             result[key] = specs[key];
@@ -44,7 +22,7 @@ const getStylesFromSpec = (specs: AdSpec): SpecStyles =>
         return result;
     }, {});
 
-const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
+const setBackground = (specs, adSlot) => {
     if (
         !specs ||
         !('backgroundImage' in specs) ||
@@ -56,7 +34,7 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         return Promise.resolve();
     }
 
-    const specStyles: SpecStyles = getStylesFromSpec(specs);
+    const specStyles = getStylesFromSpec(specs);
 
     // check to see whether the parent div exists already, if so, jut alter the style
 
@@ -68,17 +46,17 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
 
     const maybeBackgroundParent = ((adSlot.getElementsByClassName(
         backgroundParentClass
-    ): any): HTMLCollection<HTMLElement>)[0];
+    )))[0];
     const maybeBackground = maybeBackgroundParent
         ? ((maybeBackgroundParent.getElementsByClassName(
               backgroundClass
-          ): any): HTMLCollection<HTMLElement>)[0]
+          )))[0]
         : null;
     const backgroundAlreadyExists = !!(
         maybeBackgroundParent && maybeBackground
     );
 
-    const getBackground = (): Promise<Background> => {
+    const getBackground = () => {
         if (
             maybeBackground &&
             maybeBackgroundParent &&
@@ -167,8 +145,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     };
 
     const updateStyles = (
-        backgroundParent: HTMLElement,
-        background: HTMLElement
+        backgroundParent,
+        background
     ) => {
         backgroundParent.className = backgroundParentClass;
         background.className = `${backgroundClass} creative__background--${
@@ -213,8 +191,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     };
 
     const onInterscrollerScroll = (
-        backgroundParent: HTMLElement,
-        background: HTMLElement
+        backgroundParent,
+        background
     ) => {
         fastdom.measure(() => {
             const rect = adSlot.getBoundingClientRect();
@@ -225,8 +203,8 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
     };
 
     const onScroll = (
-        backgroundParent: HTMLElement,
-        background: HTMLElement
+        backgroundParent,
+        background
     ) => {
         fastdom.measure(() => {
             // We update the style in a read batch because the DIV
@@ -245,11 +223,11 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
             // #? Flow does not currently list backgroundPositionY in
             // CSSStyleDeclaration: https://github.com/facebook/flow/issues/396
             // ...So we have to use a more convoluted hack-around:
-            (background.style: any).backgroundPositionY = `${parallaxBackgroundMovement}%`;
+            (background.style).backgroundPositionY = `${parallaxBackgroundMovement}%`;
         });
     };
 
-    const onIntersect = (entries: Array<IntersectionObserverEntry>): void => {
+    const onIntersect = (entries) => {
         entries
             .filter(entry => entry.isIntersecting)
             .forEach(entry => {
@@ -299,10 +277,10 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
         });
 };
 
-const init = (register: RegisterListeners): void => {
+const init = (register) => {
     register(
         'background',
-        (specs, ret, iframe): Promise<any> => {
+        (specs, ret, iframe) => {
             if (iframe && specs) {
                 return setBackground(specs, iframe.closest('.js-ad-slot'));
             }

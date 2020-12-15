@@ -1,4 +1,3 @@
-// @flow
 /**
     "WEATHER"
 
@@ -21,27 +20,19 @@ import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 import { SearchTool } from 'facia/modules/onwards/search-tool';
-import type { CityPreference } from 'facia/modules/onwards/search-tool';
 
 let $holder = null;
 let searchTool = null;
 let eventsBound = false;
 const prefName = 'weather-location';
 
-type Location = {
-    id: string,
-    city: string,
-};
 
-type WeatherResponse = {
-    html: string,
-};
 
-const isNetworkFront = (): boolean =>
+const isNetworkFront = () =>
     ['uk', 'us', 'au', 'international'].includes(config.get('page.pageId'));
 
 export const Weather = {
-    init(): ?boolean {
+    init() {
         if (!config.get('switches.weather', false) || !isNetworkFront()) {
             return false;
         }
@@ -53,7 +44,7 @@ export const Weather = {
      * Check if user has data in local storage.
      * If yes return data from local storage else return default location data.
      */
-    getUserLocation(): ?Location {
+    getUserLocation() {
         const prefs = userPrefs.get(prefName);
 
         if (prefs && prefs.id) {
@@ -61,7 +52,7 @@ export const Weather = {
         }
     },
 
-    getWeatherData(url: string): Promise<WeatherResponse> {
+    getWeatherData(url) {
         return fetchJson(url, {
             mode: 'cors',
         });
@@ -70,14 +61,14 @@ export const Weather = {
     /**
      * Save user location into localStorage
      */
-    saveUserLocation(location: Location): void {
+    saveUserLocation(location) {
         userPrefs.set(prefName, {
             id: location.id,
             city: location.city,
         });
     },
 
-    getDefaultLocation(): Promise<void> {
+    getDefaultLocation() {
         const location = this.getUserLocation();
 
         if (location) {
@@ -94,7 +85,7 @@ export const Weather = {
             });
     },
 
-    fetchWeatherData(location: Location): Promise<void> {
+    fetchWeatherData(location) {
         const weatherApiBase = config.get('page.weatherapiurl');
         const edition = config.get('page.edition');
         return this.getWeatherData(
@@ -113,14 +104,14 @@ export const Weather = {
             });
     },
 
-    clearLocation(): void {
+    clearLocation() {
         userPrefs.remove(prefName);
         if (searchTool !== null) {
             searchTool.setInputValue();
         }
     },
 
-    fetchForecastData(location: Location): Promise<void> {
+    fetchForecastData(location) {
         return this.getWeatherData(
             `${config.get('page.forecastsapiurl')}/${
                 location.id
@@ -136,7 +127,7 @@ export const Weather = {
             });
     },
 
-    saveDeleteLocalStorage(response: CityPreference): void {
+    saveDeleteLocalStorage(response) {
         if (response.store === 'set') {
             // After user interaction we want to store the location in localStorage
             this.saveUserLocation(response);
@@ -148,7 +139,7 @@ export const Weather = {
         }
     },
 
-    bindEvents(): void {
+    bindEvents() {
         bean.on(document.body, 'click', '.js-toggle-forecast', e => {
             e.preventDefault();
             this.toggleForecast();
@@ -160,18 +151,18 @@ export const Weather = {
         );
     },
 
-    toggleForecast(): void {
+    toggleForecast() {
         $('.weather').toggleClass('is-expanded');
     },
 
-    addSearch(): void {
+    addSearch() {
         searchTool = new SearchTool({
             container: $('.js-search-tool'),
             apiUrl: config.get('page.locationapiurl'),
         });
     },
 
-    render(weatherData: WeatherResponse, city: string): void {
+    render(weatherData, city) {
         this.attachToDOM(weatherData.html, city);
 
         if (!eventsBound) {
@@ -186,13 +177,13 @@ export const Weather = {
         }
     },
 
-    attachToDOM(tmpl: string, city: string): void {
+    attachToDOM(tmpl, city) {
         $holder = $('#headlines .js-container__header');
         $('.js-weather', $holder).remove();
         $holder.append(tmpl.replace(new RegExp('<%=city%>', 'g'), city));
     },
 
-    renderForecast(forecastData: WeatherResponse): void {
+    renderForecast(forecastData) {
         const $forecastHolder = $('.js-weather-forecast');
         const tmpl = forecastData.html;
 

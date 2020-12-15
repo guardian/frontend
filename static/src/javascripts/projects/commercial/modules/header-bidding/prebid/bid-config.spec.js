@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import config from 'lib/config';
@@ -8,7 +7,6 @@ import {isInUk as isInUk_,
     isInAuOrNz as isInAuOrNz_,
     isInRow as isInRow_} from "common/modules/commercial/geo-utils";
 import { _, bids } from './bid-config';
-import type { PrebidBidder, HeaderBiddingSize } from '../types';
 
 import {
     containsBillboard as containsBillboard_,
@@ -30,28 +28,28 @@ import {
     shouldIncludeTripleLift as shouldIncludeTripleLift_,
 } from '../utils';
 
-const containsBillboard: any = containsBillboard_;
-const containsDmpu: any = containsDmpu_;
-const containsLeaderboard: any = containsLeaderboard_;
-const containsLeaderboardOrBillboard: any = containsLeaderboardOrBillboard_;
-const containsMobileSticky: any = containsMobileSticky_;
-const containsMpu: any = containsMpu_;
-const containsMpuOrDmpu: any = containsMpuOrDmpu_;
-const shouldIncludeAdYouLike: any = shouldIncludeAdYouLike_;
-const shouldIncludeAppNexus: any = shouldIncludeAppNexus_;
-const shouldIncludeImproveDigital: any = shouldIncludeImproveDigital_;
-const shouldIncludeOpenx: any = shouldIncludeOpenx_;
-const shouldIncludeTrustX: any = shouldIncludeTrustX_;
-const shouldIncludeXaxis: any = shouldIncludeXaxis_;
-const shouldIncludeSonobi: any = shouldIncludeSonobi_;
-const shouldIncludeTripleLift: any = shouldIncludeTripleLift_;
-const stripMobileSuffix: any = stripMobileSuffix_;
-const getBreakpointKey: any = getBreakpointKey_;
-const isInAuOrNz: any = isInAuOrNz_;
-const isInRow: any = isInRow_;
-const isInUk: any = isInUk_;
-const isInUsOrCa: any = isInUsOrCa_;
-const isInVariantSynchronous: any = isInVariantSynchronous_;
+const containsBillboard = containsBillboard_;
+const containsDmpu = containsDmpu_;
+const containsLeaderboard = containsLeaderboard_;
+const containsLeaderboardOrBillboard = containsLeaderboardOrBillboard_;
+const containsMobileSticky = containsMobileSticky_;
+const containsMpu = containsMpu_;
+const containsMpuOrDmpu = containsMpuOrDmpu_;
+const shouldIncludeAdYouLike = shouldIncludeAdYouLike_;
+const shouldIncludeAppNexus = shouldIncludeAppNexus_;
+const shouldIncludeImproveDigital = shouldIncludeImproveDigital_;
+const shouldIncludeOpenx = shouldIncludeOpenx_;
+const shouldIncludeTrustX = shouldIncludeTrustX_;
+const shouldIncludeXaxis = shouldIncludeXaxis_;
+const shouldIncludeSonobi = shouldIncludeSonobi_;
+const shouldIncludeTripleLift = shouldIncludeTripleLift_;
+const stripMobileSuffix = stripMobileSuffix_;
+const getBreakpointKey = getBreakpointKey_;
+const isInAuOrNz = isInAuOrNz_;
+const isInRow = isInRow_;
+const isInUk = isInUk_;
+const isInUsOrCa = isInUsOrCa_;
+const isInVariantSynchronous = isInVariantSynchronous_;
 
 const getBidders = () =>
     bids('dfp-ad--top-above-nav', [[728, 90]]).map(bid => bid.bidder);
@@ -109,8 +107,8 @@ describe('getImprovePlacementId', () => {
         jest.resetAllMocks();
     });
 
-    const generateTestIds = (): Array<number> => {
-        const prebidSizes: Array<Array<HeaderBiddingSize>> = [
+    const generateTestIds = () => {
+        const prebidSizes = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],
@@ -328,8 +326,8 @@ describe('indexExchangeBidders', () => {
     });
 
     test('should return an IX bidder for every size that the slot can take', () => {
-        const slotSizes: Array<HeaderBiddingSize> = [[300, 250], [300, 600]];
-        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        const slotSizes = [[300, 250], [300, 600]];
+        const bidders = indexExchangeBidders(slotSizes);
         expect(bidders).toEqual([
             expect.objectContaining({
                 name: 'ix',
@@ -343,8 +341,8 @@ describe('indexExchangeBidders', () => {
     });
 
     test('should include methods in the response that generate the correct bid params', () => {
-        const slotSizes: Array<HeaderBiddingSize> = [[300, 250], [300, 600]];
-        const bidders: Array<PrebidBidder> = indexExchangeBidders(slotSizes);
+        const slotSizes = [[300, 250], [300, 600]];
+        const bidders = indexExchangeBidders(slotSizes);
         expect(bidders[0].bidParams('type', [[1, 2]])).toEqual({
             siteId: '123456',
             size: [300, 250],
@@ -437,7 +435,7 @@ describe('bids', () => {
         });
     });
 
-    const setQueryString = (s: string) => {
+    const setQueryString = (s) => {
         jsdom.reconfigure({
             url: `https://some.domain/path?${s}`,
         });

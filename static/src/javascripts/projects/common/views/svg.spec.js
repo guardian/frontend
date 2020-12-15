@@ -1,4 +1,3 @@
-// @flow
 import { addClassesAndTitle } from './svg';
 
 describe('svg.addClassesAndTitle', () => {

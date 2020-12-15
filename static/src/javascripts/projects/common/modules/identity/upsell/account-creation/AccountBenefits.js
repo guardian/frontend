@@ -1,22 +1,10 @@
-// @flow
 import React from 'preact-compat';
 import config from 'lib/config';
 
-type BenefitCta = {
-    name: string,
-    link: string,
-};
 
-type Benefit = {
-    title: string,
-    blurb: string,
-};
 
-type ActionableBenefit = Benefit & {
-    cta: BenefitCta[],
-};
 
-const benefits: Benefit[] = [
+const benefits = [
     {
         title: `Get closer to our journalism`,
         blurb: `Choose from over 40 exclusive newsletters and updates on the variety of topics that matter to you.`,
@@ -35,7 +23,7 @@ const benefits: Benefit[] = [
     },
 ];
 
-const actionableBenefits: ActionableBenefit[] = [
+const actionableBenefits = [
     {
         title: `Get closer to our journalism`,
         blurb: `Browse over 40 curated newsletters on a variety of topics - from daily news headlines to weekly culture highlights, and diverse dedicated topics like science, documentary films and fashion. You can also sign up to receive updates about Guardian events, holidays and offers.`,

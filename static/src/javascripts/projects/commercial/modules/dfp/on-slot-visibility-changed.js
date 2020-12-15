@@ -1,15 +1,12 @@
-// @flow
-
 import { storage } from '@guardian/libs';
-import type { SlotVisibilityChangedEvent } from 'commercial/types';
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 
 export const onSlotVisibilityChanged = (
-    event: SlotVisibilityChangedEvent
-): void => {
+    event
+) => {
     if (storage.session.isAvailable()) {
-        const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+        const advert = getAdvertById(event.slot.getSlotElementId());
 
         if (advert && advert.maxViewPercentage < event.inViewPercentage) {
             // Check the inViewPercentage has crossed the 90% threshold.

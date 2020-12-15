@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -6,7 +6,7 @@ import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import once from 'lodash/once';
 
-const displayAd = (advertId: string): void => {
+const displayAd = (advertId) => {
     const advert = getAdvertById(advertId);
     if (advert) {
         if (advert.isRendered) {
@@ -18,10 +18,10 @@ const displayAd = (advertId: string): void => {
 };
 
 const onIntersect = (
-    entries: Array<IntersectionObserverEntry>,
-    observer: IntersectionObserver
-): void => {
-    const advertIds: Array<string> = [];
+    entries,
+    observer
+) => {
+    const advertIds = [];
 
     entries
         .filter(entry => !('isIntersecting' in entry) || entry.isIntersecting)
@@ -44,7 +44,7 @@ const getObserver = once(() =>
     )
 );
 
-export const enableLazyLoad = (advert: Advert): void => {
+export const enableLazyLoad = (advert) => {
     if (dfpEnv.lazyLoadObserve) {
         getObserver().then(observer => observer.observe(advert.node));
     } else {

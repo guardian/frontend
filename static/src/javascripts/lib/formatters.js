@@ -1,8 +1,7 @@
-// @flow
 const integerCommas = (
-    val: string | number,
-    truncate?: boolean
-): string | void => {
+    val,
+    truncate
+) => {
     // commafy integers. see formatters.spec.js for expected input/output
     const num = parseInt(val, 10);
     if (Number.isNaN(num)) {

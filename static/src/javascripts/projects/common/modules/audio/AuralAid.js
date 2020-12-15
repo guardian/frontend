@@ -1,8 +1,7 @@
-// @flow
 import React from 'react';
 import styled from '@emotion/styled';
 
-// $FlowFixMe
+
 const VisuallyHidden = styled('span')({
     height: '1px',
     overflow: 'hidden',
@@ -11,10 +10,7 @@ const VisuallyHidden = styled('span')({
     width: '1px',
 });
 
-type Props = {
-    text: string,
-};
 
-export default function({ text }: Props) {
+export default function({ text }) {
     return <VisuallyHidden>{text}</VisuallyHidden>;
 }

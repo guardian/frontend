@@ -1,5 +1,3 @@
-// @flow
-
 export const go = () => {
     try {
         fetch('https://sndrs.github.io/nfn/nfn.json')
@@ -28,7 +26,7 @@ export const go = () => {
 
                 const transformers = Object.keys(transformRegexs);
 
-                const normalise = (s: string) => {
+                const normalise = (s) => {
                     transformers.forEach(transformer => {
                         // eslint-disable-next-line no-param-reassign
                         s = s.replace(
@@ -44,7 +42,7 @@ export const go = () => {
 
                 let node;
 
-                // $FlowFixMe (tree walker is confused in flow)
+                
                 const walker = document.createTreeWalker(
                     document.body,
                     NodeFilter.SHOW_TEXT,

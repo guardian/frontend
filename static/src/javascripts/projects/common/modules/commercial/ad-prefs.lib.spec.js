@@ -1,12 +1,10 @@
-// @flow
 import { getCookie as getCookie_, addCookie as addCookie_ } from 'lib/cookies';
 import { setAdConsentState, getAdConsentState } from './ad-prefs.lib';
-import type { AdConsent } from './ad-prefs.lib';
 
-const getCookie: any = getCookie_;
-const addCookie: any = addCookie_;
+const getCookie = getCookie_;
+const addCookie = addCookie_;
 
-const testConsent: AdConsent = {
+const testConsent = {
     label: 'Test consent',
     cookie: 'GU_AD_CONSENT_TEST',
 };

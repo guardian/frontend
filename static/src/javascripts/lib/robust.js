@@ -1,5 +1,3 @@
-// @flow
-
 /*
     Swallows (and reports) exceptions. Designed to wrap around modules at the "bootstrap" level.
     For example "comments throwing an exception should not stop auto refresh"
@@ -7,7 +5,7 @@
 
 import reportError from 'lib/report-error';
 
-const catchErrors = (fn: Function): ?Error => {
+const catchErrors = (fn) => {
     let error;
 
     try {
@@ -20,10 +18,10 @@ const catchErrors = (fn: Function): ?Error => {
 };
 
 const logError = (
-    module: string,
-    error: Error,
-    tags: ?{ [key: string]: string }
-): void => {
+    module,
+    error,
+    tags
+) => {
     if (window.console && window.console.warn) {
         window.console.warn('Caught error.', error.stack);
     }
@@ -36,10 +34,10 @@ const logError = (
 };
 
 const catchAndLogError = (
-    name: string,
-    fn: Function,
-    tags: ?{ [key: string]: string }
-): void => {
+    name,
+    fn,
+    tags
+) => {
     const error = catchErrors(fn);
 
     if (error) {
@@ -48,9 +46,9 @@ const catchAndLogError = (
 };
 
 const catchErrorsWithContext = (
-    modules: Array<any>,
-    tags: ?{ [key: string]: string }
-): void => {
+    modules,
+    tags
+) => {
     modules.forEach(([name, fn]) => catchAndLogError(name, fn, tags));
 };
 

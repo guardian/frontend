@@ -1,5 +1,3 @@
-// @flow
-
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     getConsentFor as getConsentFor_,
@@ -9,19 +7,19 @@ import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 import { init, resetModule } from './redplanet';
 
-const isInAuOrNz: any = isInAuOrNz_;
+const isInAuOrNz = isInAuOrNz_;
 
-const AusWithConsentMock = (callback): void =>
+const AusWithConsentMock = (callback) =>
     callback({
         aus: { personalisedAdvertising: true },
     });
 
-const AusWithoutConsentMock = (callback): void =>
+const AusWithoutConsentMock = (callback) =>
     callback({
         aus: { personalisedAdvertising: true },
     });
 
-const onConsentChange: any = onConsentChange_;
+const onConsentChange = onConsentChange_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -60,10 +58,10 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-const CcpaWithConsentMock = (callback): void =>
+const CcpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
 
-const getConsentFor: any = getConsentFor_;
+const getConsentFor = getConsentFor_;
 
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 

@@ -1,14 +1,13 @@
-// @flow
 const classes = {
     formError: '.form__error',
     formSuccess: '.form__success',
 };
 
 const prependMessage = (
-    message: string,
-    location: Element,
-    clazz: string
-): void => {
+    message,
+    location,
+    clazz
+) => {
     const errorHtml = document.createElement('div');
     errorHtml.innerHTML = message;
     errorHtml.className = clazz;
@@ -17,12 +16,12 @@ const prependMessage = (
     location.insertBefore(errorHtml, location.firstChild);
 };
 
-const prependErrorMessage = (message: string, location: Element): void => {
+const prependErrorMessage = (message, location) => {
     const errorClass = classes.formError.replace('.', '');
     prependMessage(message, location, errorClass);
 };
 
-const prependSuccessMessage = (message: string, location: Element): void => {
+const prependSuccessMessage = (message, location) => {
     const errorClass = classes.formSuccess.replace('.', '');
     prependMessage(message, location, errorClass);
 };

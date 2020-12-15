@@ -1,4 +1,3 @@
-// @flow
 import reportError from 'lib/report-error';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
@@ -14,44 +13,20 @@ const error500 = {
     message: 'Internal server error\n\n%%',
 };
 
-type Event = {
-    data: string,
-    origin: string,
-    source: string,
-};
 
-type StandardMessage = {
-    id: string,
-    type: string,
-    iframeId: ?string,
-    slotId: ?string,
-    value: {
-        height: number,
-        width: number,
-    },
-};
 
 // A legacy from programmatic ads running in friendly iframes. They can
 // on occasion be larger than the size returned by DFP. And so they
 // have been setup to send a message of the form:
-type ProgrammaticMessage = {
-    type: string,
-    value: {
-        id: ?string,
-        slotId: ?string,
-        height: number,
-        width: number,
-    },
-};
 
 const isProgrammaticMessage = (
-    payload: ProgrammaticMessage | StandardMessage
-): boolean =>
+    payload
+) =>
     payload.type === 'set-ad-height' &&
     ('id' in payload.value || 'slotId' in payload.value) &&
     'height' in payload.value;
 
-const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
+const toStandardMessage = (payload) => ({
     id: 'aaaa0000-bb11-cc22-dd33-eeeeee444444',
     type: 'resize',
     iframeId: payload.value.id,
@@ -64,7 +39,7 @@ const toStandardMessage = (payload: ProgrammaticMessage): StandardMessage => ({
 
 // Incoming messages contain the ID of the iframe into which the
 // source window is embedded.
-const getIframe = (data: StandardMessage): ?HTMLElement => {
+const getIframe = (data) => {
     if (data.slotId) {
         const container = document.getElementById(`dfp-ad--${data.slotId}`);
         const iframes = container
@@ -80,7 +55,7 @@ const getIframe = (data: StandardMessage): ?HTMLElement => {
 // in-house creatives, we are left with doing some basic tests
 // such as validating the anatomy of the payload and whitelisting
 // event type
-const isValidPayload = (payload: StandardMessage): boolean =>
+const isValidPayload = (payload) =>
     typeof payload === 'object' &&
     !!payload && // Needed because typeof null==='object'
     'type' in payload &&
@@ -100,7 +75,7 @@ const formatError = (error, ...args) =>
         return e;
     }, error);
 
-const onMessage = (event: Event): void => {
+const onMessage = (event) => {
     let data;
 
     // #? This try-catch is a good target for splitting out into a seperate function
@@ -122,7 +97,7 @@ const onMessage = (event: Event): void => {
         return;
     }
 
-    const respond = (error, result): void => {
+    const respond = (error, result) => {
         postMessage(
             {
                 id: data.id,
@@ -183,21 +158,16 @@ const onMessage = (event: Event): void => {
     }
 };
 
-const on = (window: WindowProxy): void => {
+const on = (window) => {
     window.addEventListener('message', onMessage);
 };
 
-const off = (window: WindowProxy): void => {
+const off = (window) => {
     window.removeEventListener('message', onMessage);
 };
 
-export type RegisterListeners = (
-    type: string,
-    callback: () => ?Promise<any> | ?Array<any>,
-    options: ?Object
-) => void;
 
-export const register: RegisterListeners = (type, callback, options) => {
+export const register = (type, callback, options) => {
     if (REGISTERED_LISTENERS === 0) {
         on((options && options.window) || window);
     }
@@ -218,10 +188,10 @@ export const register: RegisterListeners = (type, callback, options) => {
 };
 
 export const unregister = (
-    type: string,
-    callback: () => ?Promise<any>,
-    options: Object = {}
-): void => {
+    type,
+    callback,
+    options = {}
+) => {
     if (LISTENERS[type] === undefined) {
         throw new Error(formatError(error405, type));
     }
@@ -245,7 +215,7 @@ export const unregister = (
     }
 };
 
-export const init = (...modules: Array<(r: RegisterListeners) => void>) => {
+export const init = (...modules) => {
     modules.forEach(moduleInit => moduleInit(register));
 };
 

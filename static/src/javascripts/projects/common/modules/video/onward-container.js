@@ -1,10 +1,8 @@
-// @flow
-
 import bean from 'bean';
 import config from 'lib/config';
 import { Component } from 'common/modules/component';
 
-const getEndpoint = (mediaType: string): string => {
+const getEndpoint = (mediaType) => {
     const isInSeries = Boolean(config.get('page.seriesTags'));
 
     if (isInSeries) {
@@ -17,11 +15,11 @@ const getEndpoint = (mediaType: string): string => {
 };
 
 const createComponent = (
-    el: HTMLElement,
-    endpoint: string,
-    manipulationType: string,
-    page?: ?string
-): Promise<void> => {
+    el,
+    endpoint,
+    manipulationType,
+    page
+) => {
     const component = new Component();
 
     component.manipulationType = manipulationType;
@@ -32,12 +30,12 @@ const createComponent = (
 };
 
 const initEvents = (
-    el: HTMLElement,
-    manipulationType: string,
-    endpoint: string
-): void => {
-    bean.on(el, 'click', '.most-viewed-navigation__button', (ev: Event) => {
-        const target: HTMLElement = (ev.target: any);
+    el,
+    manipulationType,
+    endpoint
+) => {
+    bean.on(el, 'click', '.most-viewed-navigation__button', (ev) => {
+        const target = (ev.target);
         const page = target.getAttribute('data-page');
 
         createComponent(el, endpoint, manipulationType, page);
@@ -47,7 +45,7 @@ const initEvents = (
     });
 };
 
-const onwardVideo = (el: HTMLElement, mediaType: string) => {
+const onwardVideo = (el, mediaType) => {
     const manipulationType = mediaType === 'video' ? 'append' : 'html';
     const endpoint = getEndpoint(mediaType);
 

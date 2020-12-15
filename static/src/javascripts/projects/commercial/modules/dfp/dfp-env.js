@@ -1,24 +1,8 @@
-// @flow
-
-import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 
-export type DfpEnv = {
-    renderStartTime: number,
-    adSlotSelector: string,
-    hbImpl: { prebid: boolean, a9: boolean },
-    lazyLoadEnabled: boolean,
-    lazyLoadObserve: boolean,
-    creativeIDs: Array<number>,
-    advertIds: { [k: string]: number },
-    advertsToLoad: Array<Advert>,
-    advertsToRefresh: Array<Advert>,
-    adverts: Array<Advert>,
-    shouldLazyLoad: () => boolean,
-};
 
-export const dfpEnv: DfpEnv = {
+export const dfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 

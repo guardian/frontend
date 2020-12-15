@@ -1,5 +1,3 @@
-// @flow
-
 import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
 
 describe('A/B URL', () => {

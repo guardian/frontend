@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
 import audioContribBanner from 'raw-loader!journalism/views/audioSeriesContributions.html';

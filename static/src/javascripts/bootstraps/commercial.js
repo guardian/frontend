@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
@@ -27,7 +26,7 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
 
-const commercialModules: Array<Array<any>> = [
+const commercialModules = [
     ['cm-adFreeSlotRemove', adFreeSlotRemove],
     ['cm-closeDisabledSlots', closeDisabledSlots],
     ['cm-comscore', initComscore],
@@ -57,7 +56,7 @@ if (!commercialFeatures.adFree) {
     );
 }
 
-const loadHostedBundle = (): Promise<void> => {
+const loadHostedBundle = () => {
     if (config.get('page.isHosted')) {
         return new Promise(resolve => {
             require.ensure(
@@ -90,18 +89,18 @@ const loadHostedBundle = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const loadModules = (): Promise<any> => {
+const loadModules = () => {
     const modulePromises = [];
 
     commercialModules.forEach(module => {
-        const moduleName: string = module[0];
-        const moduleInit: () => void = module[1];
+        const moduleName = module[0];
+        const moduleInit = module[1];
 
         catchErrorsWithContext(
             [
                 [
                     moduleName,
-                    function pushAfterComplete(): void {
+                    function pushAfterComplete() {
                         const result = moduleInit();
                         modulePromises.push(result);
                     },
@@ -116,13 +115,13 @@ const loadModules = (): Promise<any> => {
     return Promise.all(modulePromises);
 };
 
-export const bootCommercial = (): Promise<void> => {
+export const bootCommercial = () => {
     markTime('commercial start');
     catchErrorsWithContext(
         [
             [
                 'ga-user-timing-commercial-start',
-                function runTrackPerformance(): void {
+                function runTrackPerformance() {
                     trackPerformance(
                         'Javascript Load',
                         'commercialStart',
@@ -149,7 +148,7 @@ export const bootCommercial = (): Promise<void> => {
                 [
                     [
                         'ga-user-timing-commercial-end',
-                        function runTrackPerformance(): void {
+                        function runTrackPerformance() {
                             trackPerformance(
                                 'Javascript Load',
                                 'commercialEnd',

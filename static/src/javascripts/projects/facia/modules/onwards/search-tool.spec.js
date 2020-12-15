@@ -1,5 +1,3 @@
-// @flow
-
 import bean from 'bean';
 import $ from 'lib/$';
 import fetchJson_ from 'lib/fetch-json';
@@ -10,7 +8,7 @@ jest.mock('lib/raven');
 
 jest.mock('lib/fetch-json', () => jest.fn());
 
-const fetchJson: JestMockFn<*, *> = (fetchJson_: any);
+const fetchJson = (fetchJson_);
 
 describe('Search tool', () => {
     let container;

@@ -1,7 +1,6 @@
-// @flow
 import ophan from 'ophan/ng';
 
-const trackComponentInOphan = (newsletterId: string, variant: string) => {
+const trackComponentInOphan = (newsletterId, variant) => {
     ophan.record({
         action: 'INSERT',
         component: {
@@ -15,7 +14,7 @@ const trackComponentInOphan = (newsletterId: string, variant: string) => {
     });
 };
 
-const triggerVariant = (doc: Document, iframeId: string) => {
+const triggerVariant = (doc, iframeId) => {
     const oldDesign = doc.querySelector('.js-ab-embed-old-design');
     const newDesign = doc.querySelector('.js-ab-embed-new-design');
     if (oldDesign && newDesign) {
@@ -25,7 +24,7 @@ const triggerVariant = (doc: Document, iframeId: string) => {
     }
 };
 
-export const newsletterEmbeds: ABTest = {
+export const newsletterEmbeds = {
     id: 'NewsletterEmbeds3',
     start: '2020-12-02',
     expiry: '2021-01-04',
@@ -46,10 +45,10 @@ export const newsletterEmbeds: ABTest = {
     variants: [
         {
             id: 'variant',
-            test: (): void => {
-                const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
+            test: () => {
+                const iframes = ((document.querySelectorAll('.email-sub__iframe')));
                 if (iframes) {
-                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                    iframes.forEach((ifrm) => {
                         if (ifrm.id !== 'footer__email-form') {
                             const doc = ifrm.contentDocument ? ifrm.contentDocument : ifrm.contentWindow.document;
                             if (doc) {
@@ -66,10 +65,10 @@ export const newsletterEmbeds: ABTest = {
         },
         {
             id: 'control',
-            test: (): void => {
-                const iframes = ((document.querySelectorAll('.email-sub__iframe'): NodeList<any>): NodeList<HTMLIFrameElement>);
+            test: () => {
+                const iframes = ((document.querySelectorAll('.email-sub__iframe')));
                 if (iframes) {
-                    iframes.forEach((ifrm: HTMLIFrameElement) => {
+                    iframes.forEach((ifrm) => {
                         if (ifrm.id !== 'footer__email-form') {
                             trackComponentInOphan(ifrm.id, 'control');
                         }

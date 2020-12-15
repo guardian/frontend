@@ -1,4 +1,4 @@
-// @flow strict
+
 import { Advert } from 'commercial/modules/dfp/Advert';
 
 import {
@@ -10,15 +10,14 @@ import {
 
 import config from 'lib/config';
 
-import type { HeaderBiddingSlot } from 'commercial/modules/header-bidding/types';
 
-const slotKeyMatchesAd = (pbs: HeaderBiddingSlot, ad: Advert): boolean =>
+const slotKeyMatchesAd = (pbs, ad) =>
     stripTrailingNumbersAbove1(stripMobileSuffix(ad.id)).endsWith(pbs.key);
 
 const filterByAdvert = (
-    ad: Advert,
-    slots: Array<HeaderBiddingSlot>
-): Array<HeaderBiddingSlot> => {
+    ad,
+    slots
+) => {
     const adUnits = slots.filter(slot => {
         if (slot.key === 'banner') {
             // Special case for interactive banner slots
@@ -34,14 +33,14 @@ const filterByAdvert = (
     return adUnits;
 };
 
-const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
+const getSlots = (contentType) => {
     const isArticle = contentType === 'Article';
     const isCrossword = contentType === 'Crossword';
     const hasShowcase = config.get('page.hasShowcaseMainElement', false);
     const hasExtendedMostPop =
         isArticle && config.get('switches.extendedMostPopular');
 
-    const commonSlots: Array<HeaderBiddingSlot> = [
+    const commonSlots = [
         {
             key: 'right',
             sizes: hasShowcase ? [[300, 250]] : [[300, 600], [300, 250]],
@@ -52,7 +51,7 @@ const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
         },
     ];
 
-    const desktopSlots: Array<HeaderBiddingSlot> = [
+    const desktopSlots = [
         {
             key: 'top-above-nav',
             sizes: [[970, 250], [728, 90]],
@@ -79,7 +78,7 @@ const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
         },
     ];
 
-    const tabletSlots: Array<HeaderBiddingSlot> = [
+    const tabletSlots = [
         {
             key: 'top-above-nav',
             sizes: [[728, 90]],
@@ -96,7 +95,7 @@ const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
         },
     ];
 
-    const mobileSlots: Array<HeaderBiddingSlot> = [
+    const mobileSlots = [
         {
             key: 'top-above-nav',
             sizes: [[300, 250]],
@@ -111,7 +110,7 @@ const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
         },
     ];
 
-    const mobileStickySlot: HeaderBiddingSlot = {
+    const mobileStickySlot = {
         key: 'mobile-sticky',
         sizes: [[320, 50]],
     };
@@ -130,9 +129,9 @@ const getSlots = (contentType: string): Array<HeaderBiddingSlot> => {
 };
 
 export const getHeaderBiddingAdSlots = (
-    ad: Advert,
-    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
-): Array<HeaderBiddingSlot> => {
+    ad,
+    slotFlatMap
+) => {
     const effectiveSlotFlatMap = slotFlatMap || (s => [s]); // default to identity
     const adSlots = filterByAdvert(
         ad,
@@ -141,7 +140,7 @@ export const getHeaderBiddingAdSlots = (
     return (
         adSlots
             .map(effectiveSlotFlatMap)
-            // $FlowFixMe
+            
             .reduce((acc, elt) => acc.concat(elt), [])
     ); // the "flat" in "flatMap"
 };

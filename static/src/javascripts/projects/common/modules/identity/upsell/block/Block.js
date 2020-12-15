@@ -1,17 +1,7 @@
-// @flow
 import React, { Component } from 'preact-compat';
 
-type BlockProps = {
-    title: string,
-    subtitle: ?string,
-    subtext: ?string,
-    sideBySide: ?boolean,
-    sideBySideBackwards: ?boolean,
-    halfWidth: ?boolean,
-    children: any,
-};
 
-export class Block extends Component<BlockProps> {
+export class Block extends Component {
     render() {
         const {
             title,

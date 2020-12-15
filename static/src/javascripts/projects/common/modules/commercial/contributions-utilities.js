@@ -1,4 +1,3 @@
-// @flow
 import { isAbTestTargeted } from 'common/modules/commercial/targeting-tool';
 import {
     logView,
@@ -62,14 +61,8 @@ import {
 } from 'common/modules/commercial/epic-reminder-email-signup';
 import {getCookie} from 'lib/cookies';
 
-export type ReaderRevenueRegion =
-    | 'united-kingdom'
-    | 'united-states'
-    | 'australia'
-    | 'european-union'
-    | 'rest-of-world';
 
-const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
+const getReaderRevenueRegion = (geolocation) => {
     switch (true) {
         case geolocation === 'GB':
             return 'united-kingdom';
@@ -84,12 +77,12 @@ const getReaderRevenueRegion = (geolocation: string): ReaderRevenueRegion => {
     }
 };
 
-const getVisitCount = (): number => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
+const getVisitCount = () => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
-const replaceCountryName = (text: string, countryName: ?string): string =>
+const replaceCountryName = (text, countryName) =>
     countryName ? text.replace(/%%COUNTRY_NAME%%/g, countryName) : text;
 
-const replaceArticlesViewed = (text: string, count: ?number): string => {
+const replaceArticlesViewed = (text, count) => {
     if (count) {
         const countValue = count;   // Flow gets confused about the value in count if we don't reassign to another const
         return text.replace(/%%ARTICLE_COUNT%%( \w+)?/g, (match, nextWord) =>
@@ -101,15 +94,15 @@ const replaceArticlesViewed = (text: string, count: ?number): string => {
 
 // How many times the user can see the Epic,
 // e.g. 6 times within 7 days with minimum of 1 day in between views.
-const defaultMaxViews: MaxViews = {
+const defaultMaxViews = {
     days: 30,
     count: 4,
     minDaysBetweenViews: 0,
 };
 
-const controlTemplate: EpicTemplate = (
-    variant: EpicVariant,
-    copy: AcquisitionsEpicTemplateCopy
+const controlTemplate = (
+    variant,
+    copy
 ) =>
     acquisitionsEpicControlTemplate({
         copy,
@@ -130,9 +123,9 @@ const controlTemplate: EpicTemplate = (
         backgroundImageUrl: variant.backgroundImageUrl,
     });
 
-const liveBlogTemplate: (cssClass?: string) => EpicTemplate = cssClass => (
-    variant: EpicVariant,
-    copy: AcquisitionsEpicTemplateCopy,
+const liveBlogTemplate = cssClass => (
+    variant,
+    copy,
 ) =>
     epicLiveBlogTemplate({
         copy,
@@ -142,13 +135,13 @@ const liveBlogTemplate: (cssClass?: string) => EpicTemplate = cssClass => (
         cssClass,
     });
 
-const doTagsMatch = (test: EpicABTest): boolean =>
+const doTagsMatch = (test) =>
     test.useTargetingTool ? isAbTestTargeted(test) : true;
 
 // Returns an array containing:
 // - the first element matching insertAtSelector
 // - or an empty array if the selector doesn't match anything on the page
-const getTargets = (insertAtSelector: string): Array<HTMLElement> => {
+const getTargets = (insertAtSelector) => {
     const els = Array.from(document.querySelectorAll(insertAtSelector));
 
     if (els.length) {
@@ -158,12 +151,12 @@ const getTargets = (insertAtSelector: string): Array<HTMLElement> => {
     return [];
 };
 
-const isCompatibleWithArticleEpic = (page: Object): boolean =>
+const isCompatibleWithArticleEpic = (page) =>
     page.contentType === 'Article' &&
     !page.isMinuteArticle &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
-const isCompatibleWithLiveBlogEpic = (page: Object): boolean =>
+const isCompatibleWithLiveBlogEpic = (page) =>
     page.contentType === 'LiveBlog' &&
     isArticleWorthAnEpicImpression(page, defaultExclusionRules);
 
@@ -172,8 +165,8 @@ const pageShouldHideReaderRevenue = () =>
     config.get('page.sponsorshipType') === 'paid-content';
 
 const userIsInCorrectCohort = (
-    userCohort: AcquisitionsComponentUserCohort
-): boolean => {
+    userCohort
+) => {
     switch (userCohort) {
         case 'PostAskPauseSingleContributors':
             return (
@@ -190,7 +183,7 @@ const userIsInCorrectCohort = (
     }
 };
 
-const isValidCohort = (cohort: string): boolean =>
+const isValidCohort = (cohort) =>
     [
         'AllExistingSupporters',
         'AllNonSupporters',
@@ -198,7 +191,7 @@ const isValidCohort = (cohort: string): boolean =>
         'PostAskPauseSingleContributors',
     ].includes(cohort);
 
-const shouldShowEpic = (test: EpicABTest): boolean => {
+const shouldShowEpic = (test) => {
     const onCompatiblePage = test.pageCheck(config.get('page'));
 
     const tagsMatch = doTagsMatch(test);
@@ -214,9 +207,9 @@ const shouldShowEpic = (test: EpicABTest): boolean => {
 const createTestAndVariantId = (campaignCodePrefix, campaignID, id) =>
     `${campaignCodePrefix}_${campaignID}_${id}`;
 
-const makeEvent = (id: string, event: string): string => `${id}:${event}`;
+const makeEvent = (id, event) => `${id}:${event}`;
 
-const pageMatchesTags = (tagIds: string[]): boolean =>
+const pageMatchesTags = (tagIds) =>
     tagIds.some(tagId =>
         `${config.get('page.keywordIds')},${config.get(
             'page.nonKeywordTagIds'
@@ -224,8 +217,8 @@ const pageMatchesTags = (tagIds: string[]): boolean =>
     );
 
 const userMatchesCountryGroups = (
-    countryGroups: string[],
-    geolocation: ?string
+    countryGroups,
+    geolocation
 ) => {
     const userCountryGroupId = geolocation
         ? countryCodeToCountryGroupId(geolocation).toUpperCase()
@@ -235,20 +228,20 @@ const userMatchesCountryGroups = (
     );
 };
 
-const pageMatchesSections = (sectionIds: string[]): boolean =>
+const pageMatchesSections = (sectionIds) =>
     sectionIds.some(section => config.get('page.section') === section);
 
-const copyHasVariables = (text: ?string): boolean =>
+const copyHasVariables = (text) =>
     !!text && text.includes('%%');
 
 const countryNameIsOk = (
-    testHasCountryName: boolean,
-    geolocation: ?string
-): boolean => (testHasCountryName ? !!getCountryName(geolocation) : true);
+    testHasCountryName,
+    geolocation
+) => (testHasCountryName ? !!getCountryName(geolocation) : true);
 
 const articleViewCountIsOk = (
-    articlesViewedSettings?: ArticlesViewedSettings
-): boolean => {
+    articlesViewedSettings
+) => {
     if (articlesViewedSettings && getCookie(ARTICLES_VIEWED_OPT_OUT_COOKIE.name)) {
         // User has opted out of articles viewed counting
         return false;
@@ -264,16 +257,16 @@ const articleViewCountIsOk = (
     return true;
 };
 
-const emitBeginEvent = (trackingCampaignId: string) => {
+const emitBeginEvent = (trackingCampaignId) => {
     mediator.emit('register:begin', trackingCampaignId);
 };
 
 const submitOphanInsert = (
-    testId: string,
-    variantId: string,
-    componentType: OphanComponentType,
-    products: $ReadOnlyArray<OphanProduct>,
-    campaignCode: string
+    testId,
+    variantId,
+    componentType,
+    products,
+    campaignCode
 ) => {
     submitInsertEvent({
         component: {
@@ -290,15 +283,15 @@ const submitOphanInsert = (
 };
 
 const setupOphanView = (
-    element: HTMLElement,
-    testId: string,
-    variantId: string,
-    campaignCode: string,
-    trackingCampaignId: string,
-    componentType: OphanComponentType,
-    products: $ReadOnlyArray<OphanProduct>,
-    showTicker: boolean = false,
-    tickerSettings: ?TickerSettings,
+    element,
+    testId,
+    variantId,
+    campaignCode,
+    trackingCampaignId,
+    componentType,
+    products,
+    showTicker = false,
+    tickerSettings,
 ) => {
     const inView = elementInView(element, window, {
         top: 18,
@@ -339,11 +332,11 @@ const setupOphanView = (
 };
 
 const setupClickHandling = (
-    testId: string,
-    variantId: string,
-    componentType: OphanComponentType,
-    campaignCode: ?string,
-    products: $ReadOnlyArray<OphanProduct>,
+    testId,
+    variantId,
+    componentType,
+    campaignCode,
+    products,
 ) => {
     awaitEpicButtonClicked().then(() =>
         submitClickEvent({
@@ -362,10 +355,10 @@ const setupClickHandling = (
 };
 
 const makeEpicABTestVariant = (
-    initVariant: InitEpicABTestVariant,
-    parentTemplate: EpicTemplate,
-    parentTest: EpicABTest
-): EpicVariant => {
+    initVariant,
+    parentTemplate,
+    parentTest
+) => {
     const trackingCampaignId = `epic_${parentTest.campaignId}`;
     const componentId = createTestAndVariantId(
         parentTest.campaignPrefix,
@@ -378,7 +371,7 @@ const makeEpicABTestVariant = (
         initVariant.id
     );
 
-    const addTrackingAndCountryGroupToCta = (cta: EpicCta): EpicCta => ({
+    const addTrackingAndCountryGroupToCta = (cta) => ({
         url: addTrackingCodesToUrl({
             base: addCountryGroupToSupportLink(cta.url),
             componentType: parentTest.componentType,
@@ -434,7 +427,7 @@ const makeEpicABTestVariant = (
                     !this.copy.paragraphs.some(copyHasVariables) &&
                     !copyHasVariables(this.copy.highlightedText));
 
-            const checkMaxViews = (maxViews: MaxViews) => {
+            const checkMaxViews = (maxViews) => {
                 const {
                     count: maxViewCount,
                     days: maxViewDays,
@@ -487,7 +480,7 @@ const makeEpicABTestVariant = (
 
         test() {
             Promise.resolve(this.copy)
-                .then((copy: AcquisitionsEpicTemplateCopy) =>
+                .then((copy) =>
                     this.template(this, copy)
                 )
                 .then(renderedTemplate => {
@@ -574,7 +567,7 @@ const makeEpicABTest = ({
     canRun = () => true,
     articlesViewedSettings,
     deploymentRules,
-}: InitEpicABTest): EpicABTest => {
+}) => {
     const test = {
         // this is true because we use the reader revenue flag rather than sensitive
         // to disable contributions asks for a particular piece of content
@@ -622,29 +615,29 @@ const makeEpicABTest = ({
 };
 
 const buildEpicCopy = (
-    row: any,
-    testHasCountryName: boolean,
-    geolocation: ?string,
-    articlesViewedCount?: number
+    row,
+    testHasCountryName,
+    geolocation,
+    articlesViewedCount
 ) => {
     const heading = row.heading;
 
-    const paragraphs: string[] = throwIfEmptyArray(
+    const paragraphs = throwIfEmptyArray(
         'paragraphs',
         row.paragraphs
     );
 
-    const countryName: ?string = testHasCountryName
+    const countryName = testHasCountryName
         ? getCountryName(geolocation)
         : undefined;
 
     const localCurrencySymbol = getLocalCurrencySymbol(geolocation);
-    const replaceCurrencySymbol = (s: string): string => s.replace(
+    const replaceCurrencySymbol = (s) => s.replace(
         /%%CURRENCY_SYMBOL%%/g,
         localCurrencySymbol,
     );
 
-    const replaceTemplates = (s: string): string =>
+    const replaceTemplates = (s) =>
         replaceCurrencySymbol(
             replaceArticlesViewed(
                 replaceCountryName(s, countryName),
@@ -657,7 +650,7 @@ const buildEpicCopy = (
         heading: heading
             ? replaceTemplates(heading)
             : heading,
-        paragraphs: paragraphs.map<string>(replaceTemplates),
+        paragraphs: paragraphs.map(replaceTemplates),
         highlightedText: row.highlightedText
             ? replaceCurrencySymbol(row.highlightedText)
             : undefined,
@@ -666,11 +659,11 @@ const buildEpicCopy = (
 };
 
 const buildBannerCopy = (
-    text: string,
-    testHasCountryName: boolean,
-    geolocation: ?string
-): string => {
-    const countryName: ?string = testHasCountryName
+    text,
+    testHasCountryName,
+    geolocation
+) => {
+    const countryName = testHasCountryName
         ? getCountryName(geolocation)
         : undefined;
 
@@ -678,8 +671,8 @@ const buildBannerCopy = (
 };
 
 export const buildConfiguredEpicTestFromJson = (
-    test: Object
-): InitEpicABTest => {
+    test
+) => {
     const geolocation = geolocationGetSync();
 
     const countryGroups = test.locations;
@@ -688,13 +681,13 @@ export const buildConfiguredEpicTestFromJson = (
     const excludedTagIds = test.excludedTagIds;
     const excludedSections = test.excludedSections;
 
-    const parseMaxViews = (): MaxViews =>
+    const parseMaxViews = () =>
         test.maxViews
             ? ({
                   days: test.maxViews.maxViewsDays,
                   count: test.maxViews.maxViewsCount,
                   minDaysBetweenViews: test.maxViews.minDaysBetweenViews,
-              }: MaxViews)
+              })
             : defaultMaxViews;
 
     const deploymentRules = test.alwaysAsk ? 'AlwaysAsk' : parseMaxViews();
@@ -793,7 +786,7 @@ export const buildConfiguredEpicTestFromJson = (
     };
 };
 
-export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABTest>> =>
+export const getConfiguredLiveblogEpicTests = () =>
     getLiveblogEpicTestData()
         .then(epicTestData => {
             if (epicTestData.tests) {
@@ -806,7 +799,7 @@ export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABT
             }
             return [];
         })
-        .catch((err: Error) => {
+        .catch((err) => {
             reportError(
                 new Error(
                     `Error getting multiple configured liveblog epic tests. ${
@@ -824,10 +817,10 @@ export const getConfiguredLiveblogEpicTests = (): Promise<$ReadOnlyArray<EpicABT
 // This is called by individual banner AbTests in their canRun functions
 // TODO - banner testing needs a refactor, as currently both canRun and canShow need to call this
 export const canShowBannerSync = (
-    minArticlesBeforeShowingBanner: number = 3,
-    userCohort: AcquisitionsComponentUserCohort = 'AllNonSupporters'
-): boolean => {
-    const userHasSeenEnoughArticles: boolean =
+    minArticlesBeforeShowingBanner = 3,
+    userCohort = 'AllNonSupporters'
+) => {
+    const userHasSeenEnoughArticles =
         getVisitCount() >= minArticlesBeforeShowingBanner;
     const bannerIsBlockedForEditorialReasons = pageShouldHideReaderRevenue();
 
@@ -838,9 +831,7 @@ export const canShowBannerSync = (
     );
 };
 
-export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
-    $ReadOnlyArray<AcquisitionsABTest>
-> =>
+export const getEngagementBannerTestsFromGoogleDoc = () =>
     getGoogleDoc(bannerMultipleTestsGoogleDocUrl)
         .then(googleDocJson => {
             const sheets = googleDocJson && googleDocJson.sheets;
@@ -951,7 +942,7 @@ export const getEngagementBannerTestsFromGoogleDoc = (): Promise<
                     };
                 });
         })
-        .catch((err: Error) => {
+        .catch((err) => {
             reportError(
                 new Error(
                     `Error getting multiple engagement banner tests from Google Docs. ${

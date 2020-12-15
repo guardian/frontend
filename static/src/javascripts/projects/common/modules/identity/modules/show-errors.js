@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 
 const formErrorClassName = 'form__error';
@@ -8,18 +7,13 @@ const genericErrorMessage = 'Sorry, something went wrong';
 
 const errors = [];
 
-type IdentityRenderableError = {
-    message: string,
-    action: string,
-    times: number,
-};
 
-const renderError = (error: IdentityRenderableError): Promise<void> =>
+const renderError = (error) =>
     fastdom
         .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
-        .then((errorHolderEl: HTMLElement) =>
+        .then((errorHolderEl) =>
             fastdom.mutate(() => {
                 const errorEl = document.createElement('div');
                 errorEl.setAttribute('role', 'alert');
@@ -47,12 +41,12 @@ const renderError = (error: IdentityRenderableError): Promise<void> =>
             })
         );
 
-const renderList = (): Promise<void> =>
+const renderList = () =>
     fastdom
         .measure(() =>
             window.document.querySelector(`.${formErrorHolderClassName}`)
         )
-        .then((errorHolderEl: HTMLElement) =>
+        .then((errorHolderEl) =>
             fastdom.mutate(() => {
                 while (errorHolderEl.firstChild) {
                     errorHolderEl.removeChild(errorHolderEl.firstChild);
@@ -62,18 +56,18 @@ const renderList = (): Promise<void> =>
         .then(() => Promise.all(errors.map(error => renderError(error))))
         .then(() => Promise.resolve());
 
-export const reset = (): void => {
+export const reset = () => {
     errors.length = 0;
 };
 
-export const push = (error: mixed, action: string = 'none'): Promise<void> => {
+export const push = (error, action = 'none') => {
     const message =
         error instanceof Error && error.message
             ? error.message
             : genericErrorMessage;
 
     const isDupeIndex = errors.findIndex(
-        (_: IdentityRenderableError) => _.message === message
+        (_) => _.message === message
     );
 
     if (isDupeIndex > -1) {

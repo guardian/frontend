@@ -1,5 +1,3 @@
-// @flow
-
 // es7 polyfills not provided by pollyfill.io
 import 'core-js/modules/es7.object.get-own-property-descriptors';
 
@@ -35,9 +33,9 @@ const go = () => {
 
         // Start CMP
         // CCPA and TCFv2
-        const browserId: ?string = getCookie('bwid') || undefined;
-        const pageViewId: ?string = config.get('ophan.pageViewId');
-        const pubData: { browserId?: ?string, pageViewId?: ?string } = {
+        const browserId = getCookie('bwid') || undefined;
+        const pageViewId = config.get('ophan.pageViewId');
+        const pubData = {
             browserId,
             pageViewId,
         };

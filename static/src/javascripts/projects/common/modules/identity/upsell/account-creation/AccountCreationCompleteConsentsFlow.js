@@ -1,22 +1,10 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import { AccountCreationFeatures } from './AccountCreationFeatures';
 import { AccountCreationForm } from './AccountCreationForm';
 import { AccountBenefits } from './AccountBenefits';
 
-type AccountCreationCompleteConsentsFlowProps = {
-    csrfToken: string,
-    returnUrl: string,
-    accountToken: string,
-    email: string,
-};
 
-class AccountCreationCompleteConsentsFlow extends Component<
-    AccountCreationCompleteConsentsFlowProps,
-    {
-        hasCreatedAccount?: boolean,
-    }
-> {
+class AccountCreationCompleteConsentsFlow extends Component {
     onAccountCreated = () => {
         this.setState({
             hasCreatedAccount: true,

@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 import config from 'lib/config';
 import { MostPopular } from 'common/modules/onward/popular';

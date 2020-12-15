@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable no-new */
 /* TODO - fix module constructors */
 import bean from 'bean';
@@ -61,14 +60,14 @@ import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-ba
 import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
-const initialiseTopNavItems = (): void => {
-    const header: ?HTMLElement = document.getElementById('header');
+const initialiseTopNavItems = () => {
+    const header = document.getElementById('header');
 
     new Search();
 
     if (header) {
         if (config.get('switches.idProfileNavigation')) {
-            const profile: Profile = new Profile({
+            const profile = new Profile({
                 url: config.get('page.idUrl'),
             });
             profile.init();
@@ -76,11 +75,11 @@ const initialiseTopNavItems = (): void => {
     }
 };
 
-const initialiseNavigation = (): void => {
+const initialiseNavigation = () => {
     initNavigation();
 };
 
-const showTabs = (): void => {
+const showTabs = () => {
     ['modules:popular:loaded', 'modules:geomostpopular:ready'].forEach(
         event => {
             mediator.on(event, initTabs);
@@ -88,24 +87,24 @@ const showTabs = (): void => {
     );
 };
 
-const showToggles = (): void => {
-    const toggles: Toggles = new Toggles();
+const showToggles = () => {
+    const toggles = new Toggles();
     toggles.init();
     toggles.reset();
     initDropdowns();
 };
 
-const showRelativeDates = (): void => {
+const showRelativeDates = () => {
     initRelativeDates();
 };
 
-const initialiseClickstream = (): void => {
+const initialiseClickstream = () => {
     initClickstream({
         filter: ['a', 'button'],
     });
 };
 
-const loadAnalytics = (): void => {
+const loadAnalytics = () => {
     interactionTracking.init();
     if (config.get('switches.ophan')) {
         if (config.get('switches.scrollDepth')) {
@@ -120,8 +119,8 @@ const loadAnalytics = (): void => {
     }
 };
 
-const loadGoogleAnalytics = (): void => {
-    const handleGoogleAnalytics = (gaHasConsent: boolean): void => {
+const loadGoogleAnalytics = () => {
+    const handleGoogleAnalytics = (gaHasConsent) => {
         if (gaHasConsent && !config.get('page.gaIsInitalised')) {
             window.guardian.googleAnalytics.initialiseGa()
         } else {
@@ -133,7 +132,7 @@ const loadGoogleAnalytics = (): void => {
     mediator.on('ga:gaConsentChange', handleGoogleAnalytics)
 }
 
-const cleanupCookies = (): void => {
+const cleanupCookies = () => {
     cleanUp([
         'mmcore.pd',
         'mmcore.srv',
@@ -147,7 +146,7 @@ const cleanupCookies = (): void => {
     ]);
 };
 
-const cleanupLocalStorage = (): void => {
+const cleanupLocalStorage = () => {
     const deprecatedKeys = [
         'gu.subscriber',
         'gu.contributor',
@@ -158,7 +157,7 @@ const cleanupLocalStorage = (): void => {
     deprecatedKeys.forEach(key => storage.local.remove(key));
 };
 
-const updateHistory = (): void => {
+const updateHistory = () => {
     const page = config.get('page');
 
     if (page) {
@@ -172,7 +171,7 @@ const updateHistory = (): void => {
     }
 };
 
-const updateArticleCounts = async (): Promise<void> => {
+const updateArticleCounts = async () => {
     const page = config.get('page');
     const hasConsentedToArticleCounts = await getArticleCountConsent();
 
@@ -182,7 +181,7 @@ const updateArticleCounts = async (): Promise<void> => {
     }
 };
 
-const showHistoryInMegaNav = (): void => {
+const showHistoryInMegaNav = () => {
     if (config.get('switches.historyTags')) {
         mediator.once('modules:nav:open', () => {
             showInMegaNav();
@@ -190,13 +189,13 @@ const showHistoryInMegaNav = (): void => {
     }
 };
 
-const idCookieRefresh = (): void => {
+const idCookieRefresh = () => {
     if (config.get('switches.idCookieRefresh')) {
         initCookieRefresh();
     }
 };
 
-const windowEventListeners = (): void => {
+const windowEventListeners = () => {
     ['orientationchange'].forEach(event => {
         window.addEventListener(
             event,
@@ -205,7 +204,7 @@ const windowEventListeners = (): void => {
     });
 };
 
-const checkIframe = (): void => {
+const checkIframe = () => {
     if (window.self !== window.top) {
         const html = document.documentElement;
         if (html) {
@@ -214,7 +213,7 @@ const checkIframe = (): void => {
     }
 };
 
-const normalise = (): void => {
+const normalise = () => {
     if (document.location.hash === '#nfn') {
         storage.local.set('nfn', true);
     }
@@ -228,31 +227,31 @@ const normalise = (): void => {
     }
 };
 
-const startRegister = (): void => {
+const startRegister = () => {
     initAnalyticsRegister();
 };
 
-const initDiscussion = (): void => {
+const initDiscussion = () => {
     if (config.get('switches.enableDiscussionSwitch')) {
         initCommentCount();
     }
 };
 
-const testCookie = (): void => {
+const testCookie = () => {
     const queryParams = getUrlVars();
     if (queryParams.test) {
         addSessionCookie('GU_TEST', encodeURIComponent(queryParams.test));
     }
 };
 
-const initOpenOverlayOnClick = (): void => {
-    let offset: ?number;
+const initOpenOverlayOnClick = () => {
+    let offset;
     const body = document.body;
 
     if (!body) return;
 
     bean.on(body, 'click', '[data-open-overlay-on-click]', e => {
-        const elId = (e.currentTarget: any).getAttribute(
+        const elId = (e.currentTarget).getAttribute(
             'data-open-overlay-on-click'
         );
         offset = body.scrollTop;
@@ -265,7 +264,7 @@ const initOpenOverlayOnClick = (): void => {
     });
 
     bean.on(body, 'click', '.js-overlay-close', e => {
-        const overlay = (e.target: any).closest('.overlay');
+        const overlay = (e.target).closest('.overlay');
         if (overlay) {
             overlay.classList.remove('overlay--open');
         }
@@ -279,18 +278,18 @@ const initOpenOverlayOnClick = (): void => {
     });
 };
 
-const initPublicApi = (): void => {
+const initPublicApi = () => {
     // BE CAREFUL what you expose here...
     window.guardian.api = {};
 };
 
-const startPinterest = (): void => {
+const startPinterest = () => {
     if (/Article|LiveBlog|Gallery|Video/.test(config.get('page.contentType'))) {
         initPinterest();
     }
 };
 
-const initialiseBanner = (): void => {
+const initialiseBanner = () => {
     // ordered by priority
     const bannerList = [
         cmpBannerCandidate,
@@ -307,10 +306,10 @@ const initialiseBanner = (): void => {
     initBannerPicker(bannerList);
 };
 
-const initialiseConsentCookieTracking = (): void =>
+const initialiseConsentCookieTracking = () =>
     trackConsentCookies(getAllAdConsentsWithState());
 
-const init = (): void => {
+const init = () => {
     catchErrorsWithContext([
         // Analytics comes at the top. If you think your thing is more important then please think again...
         ['c-analytics', loadAnalytics],

@@ -1,5 +1,3 @@
-// @flow
-
 /**
  * Identity crap that has to run on every page (putting in usernames, avatars, etc.)
  *
@@ -10,7 +8,7 @@ import { catchErrorsWithContext } from 'lib/robust';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 
 // Used to show elements that need signin. Use .sign-in-required
-const setCssClass = (): void => {
+const setCssClass = () => {
     if (!isUserLoggedIn() || !document.documentElement) {
         return;
     }
@@ -20,6 +18,6 @@ const setCssClass = (): void => {
     classList.remove('id--signed-out');
 };
 
-export const init = (): void => {
+export const init = () => {
     catchErrorsWithContext([['i-css-class', setCssClass]]);
 };

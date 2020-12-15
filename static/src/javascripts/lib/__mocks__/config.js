@@ -1,10 +1,8 @@
-// @flow
-
 export default {
-    get(path: string, defaultValue: any): any {
+    get(path, defaultValue) {
         const value = path
             .split('.')
-            .reduce((acc: Object, prop: string): any => {
+            .reduce((acc, prop) => {
                 if (acc[prop]) {
                     return acc[prop];
                 }

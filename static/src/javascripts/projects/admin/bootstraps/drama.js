@@ -1,5 +1,4 @@
-// @flow
-const typewrite = (message: string, $target: Element) =>
+const typewrite = (message, $target) =>
     new Promise(yay => {
         let i = 0;
         const len = message.length;
@@ -18,7 +17,7 @@ const typewrite = (message: string, $target: Element) =>
         }, 25);
     });
 
-const timeout = (to: number, $target: Element) =>
+const timeout = (to, $target) =>
     new Promise(yay => {
         const target = Date.now() + to * 1000;
         const loop = () =>
@@ -39,7 +38,7 @@ const timeout = (to: number, $target: Element) =>
         loop();
     });
 
-const RawMessage = (title: string) => {
+const RawMessage = (title) => {
     const $wrapper = document.createElement('div');
     $wrapper.classList.add('admin-drama__message');
     const $title = document.createElement('span');
@@ -59,7 +58,7 @@ const RawMessage = (title: string) => {
     };
 };
 
-const Message = (title: string, subtitle: string) => {
+const Message = (title, subtitle) => {
     const { $wrapper, $title, $subtitle, destroy } = RawMessage(title);
     return {
         $wrapper,
@@ -70,7 +69,7 @@ const Message = (title: string, subtitle: string) => {
     };
 };
 
-const Timeout = (title: string, to: number) => {
+const Timeout = (title, to) => {
     const { $wrapper, $title, $subtitle, destroy } = RawMessage(title);
     $wrapper.dataset.critical = 'true';
     return {
@@ -93,7 +92,7 @@ const Line = (line, isHead = false) => {
 
 const LineHead = line => Line(line, true);
 
-const writeTextLines = ($repl: Element): Promise<void> => {
+const writeTextLines = ($repl) => {
     const text = [
         LineHead('System online'),
         Line('User authenticated'),
@@ -115,7 +114,7 @@ const writeTextLines = ($repl: Element): Promise<void> => {
     );
 };
 
-const awaitForFormInput = ({ $repl }): Promise<void> =>
+const awaitForFormInput = ({ $repl }) =>
     new Promise(yay => {
         const $txt = document.createElement('input');
         const $form = document.createElement('form');
@@ -130,7 +129,7 @@ const awaitForFormInput = ({ $repl }): Promise<void> =>
         });
     });
 
-const showSuccessMsg = ({ $bg, $drama }): Promise<void> =>
+const showSuccessMsg = ({ $bg, $drama }) =>
     new Promise(yay => {
         const $status = Message('Status report', 'access granted');
         setTimeout(() => {
@@ -145,7 +144,7 @@ const showSuccessMsg = ({ $bg, $drama }): Promise<void> =>
         }, 500);
     });
 
-const showCountdownMsg = ({ $drama }): Promise<void> =>
+const showCountdownMsg = ({ $drama }) =>
     new Promise(yay => {
         const $countdown = Timeout('Launch in', 5);
         setTimeout(() => {
@@ -159,7 +158,7 @@ const showCountdownMsg = ({ $drama }): Promise<void> =>
         }, 500);
     });
 
-const start = ($switchboard: HTMLFormElement, $holder: Element) => {
+const start = ($switchboard, $holder) => {
     window.scrollTo(0, 0);
 
     const $drama = $holder.querySelector('.admin-drama-innermost');
@@ -201,7 +200,7 @@ const start = ($switchboard: HTMLFormElement, $holder: Element) => {
 const init = () => {
     const $switchboard = ((document.querySelector(
         '#switchboard'
-    ): any): HTMLFormElement);
+    )));
     if (!$switchboard || !$switchboard.submit) return;
     const $trigger = $switchboard.querySelector('.drama-trigger');
     if (!$trigger) return;

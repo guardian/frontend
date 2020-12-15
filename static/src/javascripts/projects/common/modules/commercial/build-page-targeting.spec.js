@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -23,16 +22,16 @@ import {
     onConsentChange,
 } from '@guardian/consent-management-platform';
 
-const getCookie: any = getCookie_;
-const getUserSegments: any = getUserSegments_;
-const getSynchronousParticipations: any = getSynchronousParticipations_;
-const getReferrer: any = getReferrer_;
-const getBreakpoint: any = getBreakpoint_;
-const getViewport: any = getViewport_;
-const isUserLoggedIn: any = isUserLoggedIn_;
-const getSync: any = getSync_;
-const getPrivacyFramework: any = getPrivacyFramework_;
-const cmp: any = cmp_;
+const getCookie = getCookie_;
+const getUserSegments = getUserSegments_;
+const getSynchronousParticipations = getSynchronousParticipations_;
+const getReferrer = getReferrer_;
+const getBreakpoint = getBreakpoint_;
+const getViewport = getViewport_;
+const isUserLoggedIn = isUserLoggedIn_;
+const getSync = getSync_;
+const getPrivacyFramework = getPrivacyFramework_;
+const cmp = cmp_;
 
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
@@ -72,9 +71,9 @@ jest.mock('@guardian/consent-management-platform', () => ({
 }));
 
 // TCFv1
-const tcfWithConsentMock = (callback): void =>
+const tcfWithConsentMock = (callback) =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const tcfMixedConsentMock = (callback): void =>
+const tcfMixedConsentMock = (callback) =>
     callback({
         '1': false,
         '2': true,
@@ -84,23 +83,23 @@ const tcfMixedConsentMock = (callback): void =>
     });
 
 // CCPA
-const ccpaWithConsentMock = (callback): void =>
+const ccpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
-const ccpaWithoutConsentMock = (callback): void =>
+const ccpaWithoutConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: true } });
 
 // TCFv2
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: {
             consents: { '1': true, '2': true },
             eventStatus: 'useractioncomplete',
         },
     });
-const tcfv2WithoutConsentMock = (callback): void =>
+const tcfv2WithoutConsentMock = (callback) =>
     callback({ tcfv2: { consents: {}, eventStatus: 'cmpuishown' } });
-const tcfv2NullConsentMock = (callback): void => callback({ tcfv2: {} });
-const tcfv2MixedConsentMock = (callback): void =>
+const tcfv2NullConsentMock = (callback) => callback({ tcfv2: {} });
+const tcfv2MixedConsentMock = (callback) =>
     callback({
         tcfv2: {
             consents: { '1': false, '2': true },
@@ -493,7 +492,7 @@ describe('Build Page Targeting', () => {
             expect(getPageTargeting().inskin).toBe('f');
         });
 
-        // $FlowFixMe -- it.each does not have a type
+        
         it.each([
             ['f', 1280],
             ['f', 1440],

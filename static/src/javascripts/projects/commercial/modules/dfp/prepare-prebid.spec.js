@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
@@ -12,8 +10,8 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -44,26 +42,26 @@ jest.mock('@guardian/consent-management-platform', () => ({
     getConsentFor: jest.fn(),
 }));
 
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': true } },
     });
 
-const tcfv2WithoutConsentMock = (callback): void =>
+const tcfv2WithoutConsentMock = (callback) =>
     callback({
         tcfv2: { vendorConsents: { '5f22bfd82a6b6c1afd1181a9': false } },
     });
 
-const ccpaWithConsentMock = (callback): void =>
+const ccpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
 
-const ccpaWithoutConsentMock = (callback): void =>
+const ccpaWithoutConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: true } });
 
-const ausWithConsentMock = (callback): void =>
+const ausWithConsentMock = (callback) =>
     callback({ aus: { rejectedCategories: [] } });
 
-const ausWithoutConsentMock = (callback): void =>
+const ausWithoutConsentMock = (callback) =>
     callback({
         aus: {
             rejectedCategories: [
@@ -72,7 +70,7 @@ const ausWithoutConsentMock = (callback): void =>
         },
     });
 
-const fakeUserAgent = (userAgent: string): void => {
+const fakeUserAgent = (userAgent) => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
     userAgentObject.configurable = true;

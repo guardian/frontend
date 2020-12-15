@@ -1,12 +1,10 @@
-// @flow
-
 import qwery from 'qwery';
 import config from 'lib/config';
 import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 
 class MostPopular extends Component {
-    constructor(): void {
+    constructor() {
         super();
 
         /* This is not going to evolve into a random list of sections. If
