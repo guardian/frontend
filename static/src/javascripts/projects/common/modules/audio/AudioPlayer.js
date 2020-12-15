@@ -16,9 +16,9 @@ import { registerOphanListeners } from './utils';
 
 import Time from './Time';
 
-const leftCol = '@media (min-width: 1140px)';
 // these used to be installed from @guardian/dotcom-rendering
 // but should really come from @guardian/src-foundations
+const leftCol = '@media (min-width: 1140px)';
 const wide = '@media (min-width: 1300px)';
 const palette = {
     red: {
