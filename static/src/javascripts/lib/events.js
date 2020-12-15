@@ -5,6 +5,8 @@ try {
         {},
         'passive',
         ({
+            // this is a feature test, it's ok
+            // eslint-disable-next-line getter-return
             get() {
                 supportsOptions = true;
             },

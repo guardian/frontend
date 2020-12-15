@@ -186,7 +186,7 @@ export const initPermutive = () =>
             page: config.get('page', {}),
             ophan: config.get('ophan', {}),
         };
-        runPermutive(permutiveConfig, permutive, reportError);
+        runPermutive(permutiveConfig, window.permutive, reportError);
 
         return resolve();
     });

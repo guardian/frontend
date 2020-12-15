@@ -74,7 +74,7 @@ const onLoad = () => {
         apn: 'theguardian',
     };
 
-    const nSdkInstance = NOLCMB.getInstance(nolggGlobalParams.apid);
+    const nSdkInstance = window.NOLCMB.getInstance(nolggGlobalParams.apid);
     nSdkInstance.ggInitialize(nolggGlobalParams);
 
     const dcrStaticMetadata = {

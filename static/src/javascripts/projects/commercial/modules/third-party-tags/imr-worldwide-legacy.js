@@ -2,7 +2,6 @@ import config from 'lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 // nol_t is a global function defined by the IMR worldwide library
-// eslint-disable-next-line camelcase
 
 const onLoad = () => {
     const pvar = {
@@ -11,7 +10,7 @@ const onLoad = () => {
         server: 'secure-gl',
     };
 
-    const trac = nol_t(pvar);
+    const trac = window.nol_t(pvar);
     trac.record().post();
 };
 
