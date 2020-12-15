@@ -256,14 +256,8 @@ div.contributions__secondary-button.contributions__secondary-button--epic {
 }
 
 .content--pillar-news:not(.paid-content) .block--content.is-epic {
-    font-style: italic;
-}
-
-.content--pillar-news:not(.paid-content) .block--content.liveblog-epic-test__v1 {
     border-top-color: $highlight-main;
     background-color: $brightness-93;
-
-    font-style: normal;
 
     .component-button--liveblog {
         background: $highlight-main;

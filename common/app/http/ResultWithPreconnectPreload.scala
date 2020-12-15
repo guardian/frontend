@@ -64,7 +64,6 @@ object HttpPreconnections {
     "https://api.nextgen.guardianapps.co.uk",
     "https://hits-secure.theguardian.com",
     "https://interactive.guim.co.uk",
-    "https://ipv6.guim.co.uk",
     "https://phar.gu-web.net",
     "https://static.theguardian.com",
     "https://support.theguardian.com",
