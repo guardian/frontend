@@ -31,6 +31,8 @@ import scala.concurrent.{ExecutionContext, Future}
   Note that it's different from OphanDeeplyReadItem which is the one we read from the Ophan Api
  */
 case class DeeplyReadItem(
+    path: String,
+    benchmarkedAttentionTime: Int,
     url: String,
     linkText: Option[String],
     showByline: Boolean,
@@ -105,6 +107,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
     } yield DeeplyReadItem(
+      path = item.path,
+      benchmarkedAttentionTime = item.benchmarkedAttentionTime,
       url = content.webUrl,
       linkText = fields.trailText,
       showByline = false,
