@@ -128,7 +128,7 @@ case class OnwardCollectionResponseForDCR(
     mostShared: Option[OnwardItem],
 )
 object OnwardCollectionResponseForDCR {
-  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionResponseForDCR]
+  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseForDCR]
 }
 
 case class MostPopularGeoResponse(
@@ -141,5 +141,13 @@ object MostPopularGeoResponse {
 }
 
 // MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
-// which is heavily replying on pressed.PressedContent
+// which is heavily relying on pressed.PressedContent
+// because we want to be able to create MostPopularNx2 from trails coming from the DeeplyReadAgent
 case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItem])
+
+object MostPopularNx2 {
+  implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
+  def mostPopularToMostPopularNx2(mostPopular: MostPopular): MostPopularNx2 = {
+    MostPopularNx2("", "", List())
+  }
+}
