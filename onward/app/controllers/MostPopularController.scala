@@ -9,7 +9,7 @@ import feed.{DayMostPopularAgent, DeeplyReadAgent, DeeplyReadItem, GeoMostPopula
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import models.{MostPopularGeoResponse, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
+import models.{MostPopularGeoResponse, OnwardCollectionResponseForDCR, OnwardCollectionResponse, OnwardItem}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -139,7 +139,7 @@ class MostPopularController(
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
       OnwardItem.maybeFromContentCard(contentCard)
     }
-    val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
 

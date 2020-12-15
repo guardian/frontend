@@ -114,15 +114,6 @@ object OnwardItem {
   }
 }
 
-case class MostPopularGeoResponse(
-    country: Option[String],
-    heading: String,
-    trails: Seq[OnwardItem],
-)
-object MostPopularGeoResponse {
-  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
-}
-
 case class OnwardCollectionResponse(
     heading: String,
     trails: Seq[OnwardItem],
@@ -131,13 +122,22 @@ object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
 }
 
-case class OnwardCollectionForDCRv2(
+case class OnwardCollectionResponseForDCR(
     tabs: Seq[OnwardCollectionResponse],
     mostCommented: Option[OnwardItem],
     mostShared: Option[OnwardItem],
 )
-object OnwardCollectionForDCRv2 {
-  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
+object OnwardCollectionResponseForDCR {
+  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionResponseForDCR]
+}
+
+case class MostPopularGeoResponse(
+    country: Option[String],
+    heading: String,
+    trails: Seq[OnwardItem],
+)
+object MostPopularGeoResponse {
+  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
 }
 
 // MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
