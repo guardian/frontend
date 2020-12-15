@@ -102,35 +102,6 @@ class MostPopularController(
       }
     }
 
-  def pressedContentToOnwardItem(content: PressedContent, edition: Edition): OnwardItemNx2 = {
-
-    def pillarToString(pillar: Pillar): String = {
-      pillar.toString.toLowerCase() match {
-        case "arts" => "culture"
-        case other  => other
-      }
-    }
-
-    OnwardItemNx2(
-      url = LinkTo(content.header.url, edition),
-      linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
-      showByline = content.properties.showByline,
-      byline = content.properties.byline,
-      image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-      ageWarning = content.ageWarning,
-      isLiveBlog = content.properties.isLiveBlog,
-      pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
-      designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
-      webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
-      headline = content.header.headline,
-      mediaType = content.card.mediaType.map(_.toString()),
-      shortUrl = content.card.shortUrl,
-      kickerText = content.header.kicker.flatMap(_.properties.kickerText),
-      starRating = content.card.starRating,
-      avatarUrl = None,
-    )
-  }
-
   def renderWithDeeplyRead(path: String): Action[AnyContent] =
     Action.async { implicit request =>
       val edition = Edition(request)
@@ -141,7 +112,7 @@ class MostPopularController(
         if (globalPopularContent.nonEmpty) {
           val items = globalPopularContent
             .map(_.faciaContent)
-            .map(pc => pressedContentToOnwardItem(pc, edition))
+            .map(pc => OnwardItemNx2.pressedContentToOnwardItemNx2(pc))
           Some(MostPopularNx2("Across The&nbsp;Guardian", "", items))
         } else
           None

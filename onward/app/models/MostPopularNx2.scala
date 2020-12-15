@@ -1,7 +1,7 @@
 package models
 
-import com.gu.contentapi.client.utils.Article
-import common.LinkTo
+import com.github.nscala_time.time.Imports.DateTimeZone
+import common.{Edition, LinkTo}
 import feed.DeeplyReadItem
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
@@ -9,9 +9,8 @@ import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{InlineImage, MostPopular}
+import model.{Article, InlineImage, MostPopular, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
-import org.joda.time.DateTimeZone
 
 case class OnwardItemNx2(
     url: String,
@@ -88,31 +87,44 @@ object OnwardItemNx2 {
       avatarUrl = contentCardToAvatarUrl(contentCard),
     )
   }
+
+  def pressedContentToOnwardItemNx2(content: PressedContent)(implicit
+      request: RequestHeader,
+  ): OnwardItemNx2 = {
+
+    def pillarToString(pillar: Pillar): String = {
+      pillar.toString.toLowerCase() match {
+        case "arts" => "culture"
+        case other  => other
+      }
+    }
+
+    OnwardItemNx2(
+      url = LinkTo(content.header.url),
+      linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
+      showByline = content.properties.showByline,
+      byline = content.properties.byline,
+      image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+      ageWarning = content.ageWarning,
+      isLiveBlog = content.properties.isLiveBlog,
+      pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
+      designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+      webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
+      headline = content.header.headline,
+      mediaType = content.card.mediaType.map(_.toString()),
+      shortUrl = content.card.shortUrl,
+      kickerText = content.header.kicker.flatMap(_.properties.kickerText),
+      starRating = content.card.starRating,
+      avatarUrl = None,
+    )
+  }
+
   def pressedContentsToOnwardItemsNx2(
       trails: Seq[PressedContent],
   )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
     trails
       .take(10)
-      .map(content =>
-        OnwardItemNx2(
-          url = LinkTo(content.header.url),
-          linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
-          showByline = content.properties.showByline,
-          byline = content.properties.byline,
-          image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-          ageWarning = content.ageWarning,
-          isLiveBlog = content.properties.isLiveBlog,
-          pillar = determinePillar(content.maybePillar),
-          designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
-          webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
-          headline = content.header.headline,
-          mediaType = content.card.mediaType.map(_.toString()),
-          shortUrl = content.card.shortUrl,
-          kickerText = content.header.kicker.flatMap(_.properties.kickerText),
-          starRating = content.card.starRating,
-          avatarUrl = None,
-        ),
-      )
+      .map(content => pressedContentToOnwardItemNx2(content))
   }
 }
 
