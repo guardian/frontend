@@ -3,7 +3,6 @@ import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/comm
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { newsletterEmbeds } from 'common/modules/experiments/tests/newsletter-embed-test';
-import { liveblogEpicDesignTest } from 'common/modules/experiments/tests/liveblog-epic-design-test';
 import { globalEoyHeaderTest } from 'common/modules/experiments/tests/global-eoy-header-test';
 
 export const concurrentTests: $ReadOnlyArray<ABTest> = [
@@ -14,6 +13,6 @@ export const concurrentTests: $ReadOnlyArray<ABTest> = [
     globalEoyHeaderTest,
 ];
 
-export const epicTests: $ReadOnlyArray<EpicABTest> = [liveblogEpicDesignTest];
+export const epicTests: $ReadOnlyArray<EpicABTest> = [];
 
 export const engagementBannerTests: $ReadOnlyArray<AcquisitionsABTest> = [];

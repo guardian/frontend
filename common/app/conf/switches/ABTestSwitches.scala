@@ -68,16 +68,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r2",
-    "Test designs for the liveblog epic",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-newsletter-embeds3",
     "New newsletter signup embeds for discoverability OKR",
     owners = Seq(Owner.withGithub("buck06191")),
