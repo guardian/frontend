@@ -96,6 +96,7 @@ class CommercialFeatures {
             !isHosted &&
             !isInteractive &&
             !config.get('page.isFront') &&
+            !config.get('isDotcomRendering', false) &&
             !newRecipeDesign;
 
         this.thirdPartyTags =

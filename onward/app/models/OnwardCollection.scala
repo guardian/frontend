@@ -1,14 +1,15 @@
 package models
 
-import com.gu.contentapi.client.utils.{Article}
+import com.gu.contentapi.client.utils.Article
 import common.LinkTo
-import model.pressed.{PressedContent}
+import feed.DeeplyReadItem
+import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.InlineImage
+import model.{InlineImage, MostPopular}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 import org.joda.time.DateTimeZone
 
@@ -32,6 +33,8 @@ case class OnwardItem(
 )
 
 object OnwardItem {
+
+  implicit val onwardItemWrites = Json.writes[OnwardItem]
 
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -85,32 +88,6 @@ object OnwardItem {
       avatarUrl = contentCardToAvatarUrl(contentCard),
     )
   }
-}
-
-case class MostPopularGeoResponse(
-    country: Option[String],
-    heading: String,
-    trails: Seq[OnwardItem],
-)
-
-case class OnwardCollectionResponse(
-    heading: String,
-    trails: Seq[OnwardItem],
-)
-
-case class OnwardCollectionForDCRv2(
-    tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[OnwardItem],
-    mostShared: Option[OnwardItem],
-)
-
-object OnwardCollection {
-
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
-  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
-  implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
-  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
-
   def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
     trails
       .take(10)
@@ -136,3 +113,33 @@ object OnwardCollection {
       )
   }
 }
+
+case class MostPopularGeoResponse(
+    country: Option[String],
+    heading: String,
+    trails: Seq[OnwardItem],
+)
+object MostPopularGeoResponse {
+  implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
+}
+
+case class OnwardCollectionResponse(
+    heading: String,
+    trails: Seq[OnwardItem],
+)
+object OnwardCollectionResponse {
+  implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
+}
+
+case class OnwardCollectionForDCRv2(
+    tabs: Seq[OnwardCollectionResponse],
+    mostCommented: Option[OnwardItem],
+    mostShared: Option[OnwardItem],
+)
+object OnwardCollectionForDCRv2 {
+  implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
+}
+
+// MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
+// which is heavily replying on pressed.PressedContent
+case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItem])

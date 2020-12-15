@@ -29,7 +29,7 @@ object SeriesStoriesDCR {
   implicit val onwardItemWrites = Json.writes[OnwardItem]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
-    val trails = OnwardCollection.trailsToItems(series.trails.faciaItems)
+    val trails = OnwardItem.trailsToItems(series.trails.faciaItems)
     SeriesStoriesDCR(
       id = series.id,
       displayname = series.displayName,
