@@ -1,4 +1,3 @@
-// @flow
 module.exports = {
     env: {
         browser: true,
@@ -13,11 +12,8 @@ module.exports = {
         'import/resolver': 'webpack',
     },
     extends: [
-        'plugin:flowtype/recommended',
-        'prettier/flowtype',
         'prettier/react',
     ],
-    plugins: ['flowtype', 'flow-header'],
     rules: {
         // require-specific overrides
         'import/extensions': 'off',
@@ -70,7 +66,6 @@ module.exports = {
             },
         ],
 
-        'flow-header/flow-header': 'error',
         'no-param-reassign': ['error', { props: false }],
         'no-prototype-builtins': 'off',
 
@@ -81,7 +76,7 @@ module.exports = {
         'guardian-frontend/no-default-export': 'warn',
         'guardian-frontend/no-direct-access-config': 'warn',
 
-        // flow should take care of our return values
+        // flow (used to) take care of our return values (although, did it really?)
         'consistent-return': 'off',
     },
 };
