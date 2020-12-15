@@ -9,9 +9,17 @@ import {
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { ias, permutive, twitter, lotame, fbPixel, remarketing, inizio } from '@guardian/commercial-core';
+import {
+    ias,
+    permutive,
+    twitter,
+    lotame,
+    fbPixel,
+    remarketing,
+    inizio,
+} from '@guardian/commercial-core';
 import config from 'lib/config';
-import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
+import { isInAuOrNz, isInUsOrCa } from 'common/modules/commercial/geo-utils';
 
 const addScripts = (tags: Array<ThirdPartyTag>): void => {
     const ref = document.scripts[0];
@@ -19,16 +27,14 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
     let hasScriptsToInsert = false;
 
     tags.forEach(tag => {
-        if (tag.loaded === true) {
-            return;
-        }
-        if (tag.beforeLoad) {
-            tag.beforeLoad();
-        }
+        if (tag.loaded === true) return;
+
+        if (tag.beforeLoad) tag.beforeLoad();
+
+        // Tag is either an image, a snippet or a script.
         if (tag.useImage === true && typeof tag.url !== 'undefined') {
             new Image().src = tag.url;
-        }
-        if (tag.insertSnippet) {
+        } else if (tag.insertSnippet) {
             tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
@@ -81,9 +87,15 @@ const loadOther = (): void => {
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio({ shouldRun: config.get('switches.inizio', false) }),
-        fbPixel({ shouldRun: config.get('switches.facebookTrackingPixel', false)}),
-        twitter({ shouldRun: config.get('switches.twitterUwt', false)}),
-        lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
+        fbPixel({
+            shouldRun: config.get('switches.facebookTrackingPixel', false),
+        }),
+        twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
+        lotame({
+            shouldRun:
+                config.get('switches.lotame', false) &&
+                !(isInUsOrCa() || isInAuOrNz()),
+        }),
     ].filter(_ => _.shouldRun);
 
     const performanceServices: Array<ThirdPartyTag> = [
