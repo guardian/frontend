@@ -27,6 +27,7 @@ GET        /most-read/*path.json                      controllers.MostPopularCon
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
 GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
 
+# December 2020
 # This route, /deeply-read.json, is for testing purposes only
 GET        /deeply-read.json                          controllers.MostPopularController.renderDeeplyRead()
 

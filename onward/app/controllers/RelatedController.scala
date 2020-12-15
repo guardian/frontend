@@ -6,8 +6,8 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
-import models.OnwardCollection._
 import models.OnwardCollectionResponse
+import models.OnwardItem
 import play.api.libs.json._
 import play.api.mvc._
 import services._
@@ -60,7 +60,7 @@ class RelatedController(
       if (request.forceDCR) {
         val data = OnwardCollectionResponse(
           heading = containerTitle,
-          trails = trailsToItems(trails.map(_.faciaContent)),
+          trails = OnwardItem.trailsToItems(trails.map(_.faciaContent)),
         )
 
         JsonComponent(data)

@@ -7,10 +7,10 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
+import models.OnwardItem
 import models.OnwardCollectionResponse
 import play.api.mvc._
 import services._
-import models.OnwardCollection._
 
 class PopularInTag(
     val contentApiClient: ContentApiClient,
@@ -45,7 +45,7 @@ class PopularInTag(
         JsonComponent(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails = trailsToItems(trails.items.map(_.faciaContent)),
+            trails = OnwardItem.trailsToItems(trails.items.map(_.faciaContent)),
           ),
         )
       } else {

@@ -1,17 +1,17 @@
 package feed
 
 import contentapi.ContentApiClient
-import com.gu.contentapi.client.model.v1.{Content}
+import com.gu.contentapi.client.model.v1.Content
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
+import model.{MostPopular, pressed}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
   Note that it's different from OphanDeeplyReadItem which is the one we read from the Ophan Api
-
  */
 case class DeeplyReadItem(
     path: String,
@@ -20,7 +20,7 @@ case class DeeplyReadItem(
     linkText: Option[String],
     showByline: Boolean,
     byline: Option[String],
-    thumbnail: Option[String],
+    image: Option[String],
     isLiveBlog: Boolean,
     pillar: Option[String],
     designType: String,
@@ -96,7 +96,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       linkText = fields.trailText,
       showByline = false,
       byline = fields.byline,
-      thumbnail = fields.thumbnail,
+      image = fields.thumbnail,
       isLiveBlog = true,
       pillar = content.pillarName,
       designType = content.`type`.toString,

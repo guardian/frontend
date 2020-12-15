@@ -5,12 +5,11 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent, DeeplyReadAgent}
+import feed.{DayMostPopularAgent, DeeplyReadAgent, DeeplyReadItem, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import models.OnwardCollection._
-import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
+import models.{MostPopularGeoResponse, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -131,7 +130,7 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = OnwardCollection.trailsToItems(section.trails),
+        trails = OnwardItem.trailsToItems(section.trails),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
@@ -148,9 +147,8 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = OnwardCollection.trailsToItems(mostPopular.trails),
+      trails = OnwardItem.trailsToItems(mostPopular.trails),
     )
-
     Cached(900)(JsonComponent(data))
   }
 
