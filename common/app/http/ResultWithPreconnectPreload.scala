@@ -64,9 +64,14 @@ object HttpPreconnections {
     "https://api.nextgen.guardianapps.co.uk",
     "https://hits-secure.theguardian.com",
     "https://interactive.guim.co.uk",
-    "https://ipv6.guim.co.uk",
+    // "https://ipv6.guim.co.uk", // [1]
     "https://phar.gu-web.net",
     "https://static.theguardian.com",
     "https://support.theguardian.com",
   )
+  /*
+    [1]
+    15th December 2020
+    Removed from the list while investigating a Safari error, which may also be linked to some iOS device crashes.
+   */
 }
