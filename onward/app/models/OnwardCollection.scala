@@ -28,31 +28,10 @@ case class OnwardItem(
     shortUrl: String,
     kickerText: Option[String],
     starRating: Option[Int],
-)
-
-// OnwardItemMost was introduced only to be the type of mostCommentedAndMostShared in OnwardCollectionForDCRv2
-// The only difference between OnwardItem and OnwardItemMost
-// is that the image is optional in OnwardItem but not in OnwardItemMost
-
-case class OnwardItemMost(
-    designType: String,
-    pillar: String,
-    url: String,
-    headline: String,
-    isLiveBlog: Boolean,
-    linkText: String,
-    showByline: Boolean,
-    byline: Option[String],
-    image: Option[String],
-    webPublicationDate: String,
-    ageWarning: Option[String],
-    mediaType: Option[String],
     avatarUrl: Option[String],
-    kickerText: Option[String],
-    starRating: Option[Int],
 )
 
-object OnwardItemMost {
+object OnwardItem {
 
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -75,7 +54,7 @@ object OnwardItemMost {
     }
 
   }
-  def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItemMost] = {
+  def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItem] = {
     for {
       properties <- contentCard.properties
       maybeContent <- properties.maybeContent
@@ -86,22 +65,24 @@ object OnwardItemMost {
       isLiveBlog = properties.isLiveBlog
       showByline = properties.showByline
       webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
-    } yield OnwardItemMost(
-      designType = metadata.designType.toString,
-      pillar = correctPillar(pillar.toString.toLowerCase),
+      shortUrl <- contentCard.shortUrl
+    } yield OnwardItem(
       url = url,
-      headline = headline,
-      isLiveBlog = isLiveBlog,
       linkText = "",
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
       image = maybeContent.trail.thumbnailPath,
-      webPublicationDate = webPublicationDate,
       ageWarning = None,
+      isLiveBlog = isLiveBlog,
+      pillar = correctPillar(pillar.toString.toLowerCase),
+      designType = metadata.designType.toString,
+      webPublicationDate = webPublicationDate,
+      headline = headline,
       mediaType = contentCard.mediaType.map(x => x.toString),
-      avatarUrl = contentCardToAvatarUrl(contentCard),
+      shortUrl = shortUrl,
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
+      avatarUrl = contentCardToAvatarUrl(contentCard),
     )
   }
 }
@@ -119,14 +100,13 @@ case class OnwardCollectionResponse(
 
 case class OnwardCollectionForDCRv2(
     tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[OnwardItemMost],
-    mostShared: Option[OnwardItemMost],
+    mostCommented: Option[OnwardItem],
+    mostShared: Option[OnwardItem],
 )
 
 object OnwardCollection {
 
   implicit val onwardItemWrites = Json.writes[OnwardItem]
-  implicit val onwardItemMostWrites = Json.writes[OnwardItemMost]
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
   implicit val onwardCollectionResponseForDRCv2Writes = Json.writes[OnwardCollectionForDCRv2]
@@ -151,6 +131,7 @@ object OnwardCollection {
           shortUrl = content.card.shortUrl,
           kickerText = content.header.kicker.flatMap(_.properties.kickerText),
           starRating = content.card.starRating,
+          avatarUrl = None,
         ),
       )
   }

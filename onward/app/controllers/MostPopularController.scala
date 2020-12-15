@@ -10,13 +10,7 @@ import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
 import models.OnwardCollection._
-import models.{
-  MostPopularGeoResponse,
-  OnwardCollection,
-  OnwardCollectionForDCRv2,
-  OnwardCollectionResponse,
-  OnwardItemMost,
-}
+import models.{MostPopularGeoResponse, OnwardCollection, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
@@ -141,10 +135,10 @@ class MostPopularController(
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItemMost.maybeFromContentCard(contentCard)
+      OnwardItem.maybeFromContentCard(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItemMost.maybeFromContentCard(contentCard)
+      OnwardItem.maybeFromContentCard(contentCard)
     }
     val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
