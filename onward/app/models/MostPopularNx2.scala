@@ -13,7 +13,7 @@ import model.{InlineImage, MostPopular}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 import org.joda.time.DateTimeZone
 
-case class OnwardItem(
+case class OnwardItemNx2(
     url: String,
     linkText: String,
     showByline: Boolean,
@@ -32,9 +32,9 @@ case class OnwardItem(
     avatarUrl: Option[String],
 )
 
-object OnwardItem {
+object OnwardItemNx2 {
 
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
+  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
 
   def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
@@ -57,7 +57,7 @@ object OnwardItem {
     }
 
   }
-  def maybeFromContentCard(contentCard: ContentCard): Option[OnwardItem] = {
+  def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
     for {
       properties <- contentCard.properties
       maybeContent <- properties.maybeContent
@@ -69,7 +69,7 @@ object OnwardItem {
       showByline = properties.showByline
       webPublicationDate <- contentCard.webPublicationDate.map(x => x.toDateTime().toString())
       shortUrl <- contentCard.shortUrl
-    } yield OnwardItem(
+    } yield OnwardItemNx2(
       url = url,
       linkText = "",
       showByline = showByline,
@@ -88,11 +88,13 @@ object OnwardItem {
       avatarUrl = contentCardToAvatarUrl(contentCard),
     )
   }
-  def trailsToItems(trails: Seq[PressedContent])(implicit request: RequestHeader): Seq[OnwardItem] = {
+  def pressedContentsToOnwardItemsNx2(
+      trails: Seq[PressedContent],
+  )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
     trails
       .take(10)
       .map(content =>
-        OnwardItem(
+        OnwardItemNx2(
           url = LinkTo(content.header.url),
           linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
           showByline = content.properties.showByline,
@@ -116,7 +118,7 @@ object OnwardItem {
 
 case class OnwardCollectionResponse(
     heading: String,
-    trails: Seq[OnwardItem],
+    trails: Seq[OnwardItemNx2],
 )
 object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
@@ -124,8 +126,8 @@ object OnwardCollectionResponse {
 
 case class OnwardCollectionResponseForDCR(
     tabs: Seq[OnwardCollectionResponse],
-    mostCommented: Option[OnwardItem],
-    mostShared: Option[OnwardItem],
+    mostCommented: Option[OnwardItemNx2],
+    mostShared: Option[OnwardItemNx2],
 )
 object OnwardCollectionResponseForDCR {
   implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseForDCR]
@@ -134,7 +136,7 @@ object OnwardCollectionResponseForDCR {
 case class MostPopularGeoResponse(
     country: Option[String],
     heading: String,
-    trails: Seq[OnwardItem],
+    trails: Seq[OnwardItemNx2],
 )
 object MostPopularGeoResponse {
   implicit val popularGeoWrites = Json.writes[MostPopularGeoResponse]
@@ -143,7 +145,7 @@ object MostPopularGeoResponse {
 // MostPopularNx2 was introduced to replace the less flexible [common] MostPopular
 // which is heavily relying on pressed.PressedContent
 // because we want to be able to create MostPopularNx2 from trails coming from the DeeplyReadAgent
-case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItem])
+case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardItemNx2])
 
 object MostPopularNx2 {
   implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
