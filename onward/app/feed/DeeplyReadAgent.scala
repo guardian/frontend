@@ -77,9 +77,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     scala.collection.mutable.Map.empty[String, Content]
 
   def refresh()(implicit ec: ExecutionContext): Future[Boolean] = {
-    log.info(
-      "deeplyReadAgent.refresh()",
-    ) // instruction left on purpose, do not delete for the moment (Pascal, 16th Dec)
+    log.info(s"[cb01a845] Deeply Read Agent refresh()")
     /*
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
         query CAPI and set the Content for the path.
@@ -92,9 +90,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { ophanItem =>
-        log.info(s"Registering Ophan deeply read item: ${ophanItem.toString}")
+        log.info(s"[cb01a845] Registering Ophan deeply read item: ${ophanItem.toString}")
         val path = ophanItem.path
-        log.info(s"Looking up CAPI data for path: ${path}")
+        log.info(s"[cb01a845] Looking up CAPI data for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
@@ -112,12 +110,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           }
         Thread.sleep(1000)
       }
-      log.info(s"ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
+      log.info(s"[cb01a845] ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
       if (ophanItemInProgress.toArray.size > 0) {
         ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
-        true
-      } else {
-        false
       }
     }
   }
@@ -163,23 +158,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     )
   }
 
-  def getReportCore()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+  def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
     ophanItems
       .map(ophanItemToDeeplyReadItem)
       .filter(_.isDefined)
       .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
-  }
-
-  def getReport()(implicit ec: ExecutionContext): Future[Seq[DeeplyReadItem]] = {
-    if (!hasBeenRefreshed) {
-      refresh().map { flag =>
-        if (flag) {
-          hasBeenRefreshed = true
-        }
-        getReportCore()
-      }
-    } else {
-      Future.successful(getReportCore())
-    }
   }
 }
