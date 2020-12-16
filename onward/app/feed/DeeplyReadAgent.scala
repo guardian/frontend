@@ -76,10 +76,12 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
    */
 
   private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
+
+  // Note that keys in pathToCapiContentMapping are paths without starting slash
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
-  def ophanPathToCapiPath(path: String): String = {
+  def removeStartingSlash(path: String): String = {
     if (path.startsWith("/")) path.stripPrefix("/") else path
   }
 
@@ -97,7 +99,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
       seq.foreach { ophanItem =>
         log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-        val path = ophanPathToCapiPath(ophanItem.path)
+        val path = removeStartingSlash(ophanItem.path)
         log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
@@ -168,7 +170,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
-    if (ophanItems.isEmpty || ophanItems.exists(oi => !pathToCapiContentMapping.keys.toSet.contains(oi.path))) {
+    if (
+      ophanItems.isEmpty || ophanItems
+        .exists(oi => !pathToCapiContentMapping.keys.toSet.contains(removeStartingSlash(oi.path)))
+    ) {
       println(s"[cb01a845] refresh() from getReport()")
       log.info(s"[cb01a845] refresh() from getReport()")
       refresh() // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
