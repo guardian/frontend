@@ -10,6 +10,9 @@ import models._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
+
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
   Note that it's different from OphanDeeplyReadItem which is the one we read from the Ophan Api
@@ -98,19 +101,23 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .showFields("all")
           .showReferences("all")
           .showAtoms("all")
-        contentApiClient
+        val fx = contentApiClient
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              log.info(s"[cb01a845] In memory Update CAPI data for path :${path}")
+              // println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
+              log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
           .recover {
             case NonFatal(e) =>
-              log.info(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
+              // println(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
+              log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
               None
           }
+        Await.ready(fx, Duration(2000, "millis"))
+        Thread.sleep(1000)
       }
     }
   }
@@ -157,7 +164,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
-    if (pathToCapiContentMapping.keys.size == 0) {
+    if (pathToCapiContentMapping.keys.isEmpty || (pathToCapiContentMapping.keys.size < ophanItems.size)) {
+      println("[cb01a845] refresh() from getReport()")
+      log.info(s"[cb01a845] refresh() from getReport()")
       refresh() // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
     }
     ophanItems
