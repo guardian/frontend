@@ -111,19 +111,18 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
           .recover {
             case NonFatal(e) =>
-              println(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
               log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
               None
           }
-        Await.ready(fx, Duration(2000, "millis"))
-        Thread.sleep(1000)
+        // We do the nest two instruction to, essentially, avoid spamming CAPI
+        Await.ready(fx, Duration(200, "millis"))
+        Thread.sleep(100)
       }
     }
   }
@@ -133,9 +132,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         This function returns any stored CAPI Content for a path, thereby making the link between the path read from
         a OphanDeeplyReadItem and a DeeplyReadItem (from the corresponding Content).
 
-        we use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
+        We use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
+
+        Note that the path are used without starting slash
      */
-    pathToCapiContentMapping.get(path)
+    pathToCapiContentMapping.get(removeStartingSlash(path))
   }
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
@@ -174,9 +175,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       ophanItems.isEmpty || ophanItems
         .exists(oi => !pathToCapiContentMapping.keys.toSet.contains(removeStartingSlash(oi.path)))
     ) {
-      println(s"[cb01a845] refresh() from getReport()")
+      // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
+      // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
       log.info(s"[cb01a845] refresh() from getReport()")
-      refresh() // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
+      refresh()
     }
     ophanItems
       .map(ophanItemToDeeplyReadItem)
