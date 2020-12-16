@@ -71,7 +71,6 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private var hasBeenRefreshed = false
   private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
@@ -83,16 +82,15 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         query CAPI and set the Content for the path.
      */
 
-    // ophanItemInProgress will be updated with a new items as we got through the Ophan answer
-    // Then used to atomically update ophanItems
-    val ophanItemInProgress: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
-      scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
-
     ophanApi.getDeeplyReadContent().map { seq =>
+      // This is where the atomic update of ophanItems which faithfully reflects the state of the Ophan answer
+      ophanItems = seq.toArray
+      log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
+
       seq.foreach { ophanItem =>
-        log.info(s"[cb01a845] Process Ophan deeply read item: ${ophanItem.toString}")
+        log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
         val path = ophanItem.path
-        log.info(s"[cb01a845] Looking up CAPI data for path: ${path}")
+        log.info(s"[cb01a845] CAPI Looking data for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
@@ -103,16 +101,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              log.info(s"[cb01a845] Register Ophan item to array : ${ophanItem.toString}")
-              ophanItemInProgress.append(ophanItem)
+              log.info(s"[cb01a845] In memory Update CAPI data for path :${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
-        Thread.sleep(1000)
-      }
-      log.info(s"[cb01a845] ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
-      if (ophanItemInProgress.toArray.size > 0) {
-        ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
       }
     }
   }
@@ -159,6 +151,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+    if (pathToCapiContentMapping.keys.size == 0) {
+      refresh() // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
+    }
     ophanItems
       .map(ophanItemToDeeplyReadItem)
       .filter(_.isDefined)
