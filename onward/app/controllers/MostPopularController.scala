@@ -104,7 +104,9 @@ class MostPopularController(
 
   def renderDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
-      Future.successful(Ok(Json.toJson(deeplyReadAgent.getReport())))
+      deeplyReadAgent.getReport().map { report =>
+        Ok(Json.toJson(report))
+      }
     }
 
   // Experimental (December 2020)
@@ -127,8 +129,9 @@ class MostPopularController(
       // Async section specific most Popular.
       val sectionPopular: Future[List[MostPopularNx2]] = {
         if (path.nonEmpty) {
-          val items = deeplyReadAgent.getReport().map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2)
-          Future.successful(List(MostPopularNx2("Deeply read", "", items)))
+          deeplyReadAgent.getReport().map { items =>
+            List(MostPopularNx2("Deeply read", "", items.map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2)))
+          }
         } else { Future(Nil) }
       }
 

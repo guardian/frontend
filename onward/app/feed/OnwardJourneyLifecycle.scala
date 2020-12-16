@@ -49,14 +49,14 @@ class OnwardJourneyLifecycle(
       mostViewedAudioAgent.refresh()
       mostViewedGalleryAgent.refresh()
       mostReadAgent.refresh()
-      deeplyReadAgent.refresh()
+      // deeplyReadAgent.refresh()
     }
 
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsLowFrequencyRefreshJob", 60) {
       dayMostPopularAgent.refresh()
     }
 
-    akkaAsync.after(1.second) {
+    akkaAsync.after1s {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
       dayMostPopularAgent.refresh()
@@ -64,10 +64,7 @@ class OnwardJourneyLifecycle(
       mostViewedGalleryAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostReadAgent.refresh()
-    }
-
-    akkaAsync.after(10.second) {
-      deeplyReadAgent.refresh()
+      // deeplyReadAgent.refresh()
     }
   }
 }
