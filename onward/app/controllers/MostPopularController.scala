@@ -217,7 +217,9 @@ class MostPopularController(
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
     val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
-    Cached(900)(JsonComponent(response))
+    // Value is 1 fr the moment.
+    // We do caching in Fasty and the Ophan/CAPI updates are on schedule and async
+    Cached(1)(JsonComponent(response))
   }
 
   def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
