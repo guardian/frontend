@@ -77,7 +77,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     scala.collection.mutable.Map.empty[String, Content]
 
   def refresh()(implicit ec: ExecutionContext): Future[Boolean] = {
-    println(
+    log.info(
       "deeplyReadAgent.refresh()",
     ) // instruction left on purpose, do not delete for the moment (Pascal, 16th Dec)
     /*
@@ -112,7 +112,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           }
         Thread.sleep(1000)
       }
-      println(s"ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
+      log.info(s"ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
       if (ophanItemInProgress.toArray.size > 0) {
         ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
         true
