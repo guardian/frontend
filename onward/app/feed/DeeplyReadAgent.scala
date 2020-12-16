@@ -79,6 +79,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
+  def ophanPathToCapiPath(path: String): String = {
+    if (path.startsWith("/")) path.stripPrefix("/") else path
+  }
+
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"[cb01a845] Deeply Read Agent refresh()")
     /*
@@ -93,7 +97,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
       seq.foreach { ophanItem =>
         log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-        val path = ophanItem.path
+        val path = ophanPathToCapiPath(ophanItem.path)
         log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
