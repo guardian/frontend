@@ -105,14 +105,14 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
+              // println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
           .recover {
             case NonFatal(e) =>
-              println(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
+              // println(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
               log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
               None
           }
@@ -165,7 +165,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
     if (pathToCapiContentMapping.keys.isEmpty || (pathToCapiContentMapping.keys.size < ophanItems.size)) {
-      println("refresh() from getReport()")
+      println("[cb01a845] refresh() from getReport()")
+      log.info(s"[cb01a845] refresh() from getReport()")
       refresh() // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
     }
     ophanItems
