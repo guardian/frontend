@@ -5,6 +5,7 @@ import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration._
 
 class OnwardJourneyLifecycle(
     appLifecycle: ApplicationLifecycle,
@@ -55,7 +56,7 @@ class OnwardJourneyLifecycle(
       dayMostPopularAgent.refresh()
     }
 
-    akkaAsync.after1s {
+    akkaAsync.after(1.second) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
       dayMostPopularAgent.refresh()
@@ -63,6 +64,9 @@ class OnwardJourneyLifecycle(
       mostViewedGalleryAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostReadAgent.refresh()
+    }
+
+    akkaAsync.after(10.second) {
       deeplyReadAgent.refresh()
     }
   }

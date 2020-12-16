@@ -71,7 +71,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private val mapping: scala.collection.mutable.Map[String, Content] =
+  private val ophanItems: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
+    scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
+  private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
@@ -81,8 +83,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
      */
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { i =>
+        log.info(s"Registering Ophan deeply read item: ${i.toString}")
+        ophanItems.append(i)
         val path = i.path
-        log.info(s"Looking up data for path: ${path}")
+        log.info(s"Looking up CAPI data for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
@@ -93,9 +97,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              mapping += (path -> c) // update the Content for a given map
+              pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
+        Thread.sleep(1000)
       }
     }
     Future.successful(())
@@ -108,10 +113,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
         we use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
      */
-    mapping.get(path)
+    pathToCapiContentMapping.get(path)
   }
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
+    println(item)
     for {
       content <- getDataForPath(item.path)
       webPublicationDate <- content.webPublicationDate
@@ -142,13 +148,10 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     )
   }
 
-  def getReport()(implicit ec: ExecutionContext): Future[Seq[DeeplyReadItem]] = {
-    ophanApi
-      .getDeeplyReadContent()
-      .map {
-        _.map(ophanItemToDeeplyReadItem)
-          .filter(_.isDefined)
-          .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
-      }
+  def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+    ophanItems
+      .map(ophanItemToDeeplyReadItem)
+      .filter(_.isDefined)
+      .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
   }
 }

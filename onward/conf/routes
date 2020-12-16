@@ -30,6 +30,7 @@ GET        /most-read-day.json                        controllers.MostPopularCon
 # December 2020
 # This route, /deeply-read.json, is for testing purposes only
 # Has no equivalent in dev-build
+GET        /deeply-read-run-refresh-cycle.json        controllers.MostPopularController.runDeeplyReadRefreshCycle()
 GET        /deeply-read.json                          controllers.MostPopularController.renderDeeplyRead()
 
 # Experimental (December 2020)
