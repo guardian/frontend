@@ -99,8 +99,8 @@
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
                     @if(!page.metadata.hasSlimHeader) {
-                        @if(GlobalEoyHeaderSwitch.isSwitchedOn) {
-                            <div class="top-bar__commercial-items">
+                        <!-- @if(GlobalEoyHeaderSwitch.isSwitchedOn) { -->
+                            <div class="top-bar__commercial-items js-gifting-cta is-hidden">
                                 <span class="top-bar__item__seperator hide-until-desktop"></span>
                                 <a class="top-bar__item hide-until-desktop"
                                 data-link-name="nav2 : gifting-cta"
@@ -109,7 +109,7 @@
                                     Gifting
                                 </a>
                             </div>
-                        }
+                        <!-- } -->
 
                         @if(editionId != "au" || editionId == "uk") {
                             <div class="top-bar__commercial-items">
