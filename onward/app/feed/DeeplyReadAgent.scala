@@ -8,6 +8,7 @@ import common._
 import models._
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
@@ -90,7 +91,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       seq.foreach { ophanItem =>
         log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
         val path = ophanItem.path
-        log.info(s"[cb01a845] CAPI Looking data for path: ${path}")
+        log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
@@ -104,6 +105,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
               log.info(s"[cb01a845] In memory Update CAPI data for path :${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
+          }
+          .recover {
+            case NonFatal(e) =>
+              log.info(s"[cb01a845] Error CAPI lookup for path :${path}. ${e.getMessage}")
+              None
           }
       }
     }
