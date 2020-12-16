@@ -76,7 +76,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
-  def refresh()(implicit ec: ExecutionContext): Future[Boolean] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"[cb01a845] Deeply Read Agent refresh()")
     /*
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
