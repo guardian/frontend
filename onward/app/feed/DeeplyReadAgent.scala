@@ -90,7 +90,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { ophanItem =>
-        log.info(s"[cb01a845] Registering Ophan deeply read item: ${ophanItem.toString}")
+        log.info(s"[cb01a845] Process Ophan deeply read item: ${ophanItem.toString}")
         val path = ophanItem.path
         log.info(s"[cb01a845] Looking up CAPI data for path: ${path}")
         val capiItem = contentApiClient
@@ -99,11 +99,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .showFields("all")
           .showReferences("all")
           .showAtoms("all")
-        println(capiItem)
         contentApiClient
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
+              log.info(s"[cb01a845] Register Ophan item to array : ${ophanItem.toString}")
               ophanItemInProgress.append(ophanItem)
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
