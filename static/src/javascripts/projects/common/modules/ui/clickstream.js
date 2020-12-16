@@ -36,7 +36,7 @@ const compareHosts = (url?: string = ''): boolean => {
 
     // Lack of a urlHost implies a relative url.
     // For absolute urls we are protocol-agnostic,
-    // e.g. we should treat https://gu.com/foo -> http://gu.com/bar as a same-host link.
+    // e.g. we should treat https://www.theguardian.com/foo -> http://www.theguardian.com/bar as a same-host link.
     return !urlHost || urlHost[1] === location.hostname;
 };
 

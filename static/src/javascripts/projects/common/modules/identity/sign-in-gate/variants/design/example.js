@@ -88,10 +88,6 @@ export const designShow: ({
                 component: ophanComponent,
                 value: 'not-now',
                 callback: () => {
-                    // reposition window to top of page without affecting browser's 'back' navigation
-                    const maincontent = document.getElementById('maincontent');
-                    if (maincontent) maincontent.scrollIntoView(true);
-
                     // show the current body. Remove the shadow one
                     articleBody.style.display = 'block';
                     shadowArticleBody.remove();

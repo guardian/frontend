@@ -2,11 +2,6 @@
 /* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
-import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
-import {
-    leftCol,
-    wide,
-} from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
 import { isIOS, isAndroid } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
@@ -20,6 +15,52 @@ import waveW from 'svgs/journalism/audio-player/wave-wide.svg';
 import { registerOphanListeners } from './utils';
 
 import Time from './Time';
+
+// these used to be installed from @guardian/dotcom-rendering
+// but should really come from @guardian/src-foundations
+const leftCol = '@media (min-width: 1140px)';
+const wide = '@media (min-width: 1300px)';
+const palette = {
+    red: {
+        light: '#ff4e36',
+        medium: '#c70000',
+        dark: '#ad0006',
+    },
+    orange: {
+        light: '#f5be2c',
+        medium: '#ff7f0f',
+        dark: '#ed6300',
+    },
+    blue: {
+        light: '#00b2ff',
+        medium: '#0084c6',
+        dark: '#005689',
+    },
+    gold: {
+        light: '#eacca0',
+        medium: '#ab8958',
+        dark: '#6b5840',
+    },
+    pink: {
+        light: '#ffabdb',
+        medium: '#bb3b80',
+        dark: '#7d0068',
+    },
+    yellow: {
+        medium: '#ffe500',
+        dark: '#edd600',
+    },
+    neutral: {
+        header: '#e9eff1',
+        '1': '#121212',
+        '2': '#333333',
+        '3': '#767676',
+        '4': '#999999',
+        '5': '#dcdcdc',
+        '6': '#ececec',
+        '7': '#f6f6f6',
+    },
+};
 
 // $FlowFixMe
 const AudioGrid = styled('div')({

@@ -22,14 +22,14 @@ case class SeriesStoriesDCR(
     displayname: String,
     description: Option[String],
     url: String,
-    trails: Seq[OnwardItem],
+    trails: Seq[OnwardItemNx2],
 )
 
 object SeriesStoriesDCR {
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
+  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
-    val trails = OnwardCollection.trailsToItems(series.trails.faciaItems)
+    val trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(series.trails.faciaItems)
     SeriesStoriesDCR(
       id = series.id,
       displayname = series.displayName,

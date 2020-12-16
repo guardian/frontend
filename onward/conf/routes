@@ -27,6 +27,18 @@ GET        /most-read/*path.json                      controllers.MostPopularCon
 GET        /most-read-geo.json                        controllers.MostPopularController.renderPopularGeo()
 GET        /most-read-day.json                        controllers.MostPopularController.renderPopularDay(countryCode)
 
+# December 2020
+# This route, /deeply-read.json, is for testing purposes only
+# Has no equivalent in dev-build
+GET        /deeply-read-run-refresh-cycle.json        controllers.MostPopularController.runDeeplyReadRefreshCycle()
+GET        /deeply-read.json                          controllers.MostPopularController.renderDeeplyRead()
+
+# Experimental (December 2020)
+# This route is for the experimental deeply-read tab of the most read container
+# Because it's only a test, it doesn't have a dev-build equivalent
+GET        /most-read-deeply-read.json                controllers.MostPopularController.renderWithDeeplyRead(path = "")
+GET        /most-read-deeply-read/*path.json          controllers.MostPopularController.renderWithDeeplyRead(path)
+
 GET        /top-stories.json                          controllers.TopStoriesController.renderTopStories()
 GET        /top-stories/trails.json                   controllers.TopStoriesController.renderTrails()
 

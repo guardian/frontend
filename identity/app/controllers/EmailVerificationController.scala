@@ -1,19 +1,15 @@
 package controllers
 
-import java.net.{URI, URLEncoder}
-
-import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
+import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result}
 import idapiclient.IdApiClient
 import services.{AuthenticationService, IdRequestParser, IdentityUrlBuilder, PlaySigninService, ReturnUrlVerifier}
 import common.ImplicitControllerExecutionContext
 import utils.SafeLogging
 import model.{ApplicationContext, IdentityPage}
 import actions.AuthenticatedActions
-import idapiclient.responses.CookiesResponse
 import pages.IdentityHtmlPage
 
 import scala.concurrent.Future
-import scala.util.Try
 
 class EmailVerificationController(
     api: IdApiClient,
@@ -29,113 +25,88 @@ class EmailVerificationController(
     with ImplicitControllerExecutionContext
     with SafeLogging {
 
-  import ValidationState._
-  import authenticatedActions.fullAuthWithIdapiUserAction
-
-  def verify(token: String): Action[AnyContent] =
-    Action.async { implicit request =>
-      val idRequest = idRequestParser(request)
-      val page = IdentityPage("/verify-email", "Verify Email")
-      api.validateEmail(token, idRequest.trackingData) map { response =>
-        val validationState = response match {
-          case Left(errors) =>
-            errors.head.message match {
-              case "User Already Validated" => alreadyValidated
-              case "Token expired"          => expired
-              case error                    => logger.warn("Error validating email: " + error); invalid
-            }
-
-          case Right(cookies) => validatedWithSession(cookies)
-        }
-        val userIsLoggedIn = authenticationService.userIsFullyAuthenticated(request)
-        val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
-        val verifiedReturnUrl = verifiedReturnUrlAsOpt.getOrElse(returnUrlVerifier.defaultReturnUrl)
-        val encodedReturnUrl = URLEncoder.encode(verifiedReturnUrl, "utf-8")
-
-        if (validationState.isValidated) {
-          // Only redirect to consent journey return URL if not the journey already
-          val redirectUrl = Try(new URI(verifiedReturnUrl)).toOption
-            .flatMap { uri =>
-              val consentJourneyPath = "^\\/consents([?/#].*)?$".r
-              consentJourneyPath.findFirstMatchIn(uri.getPath).map(_ => verifiedReturnUrl)
-            }
-
-          val cookies =
-            validationState.authenticationCookies.map(signinService.getCookies(_, rememberMe = true)).getOrElse(Nil)
-
-          SeeOther(redirectUrl.getOrElse(idUrlBuilder.buildUrl(s"/consents?returnUrl=$encodedReturnUrl")))
-            .withCookies(cookies: _*)
-        } else {
-          Ok(
-            IdentityHtmlPage.html(
-              views.html.emailVerified(validationState, idRequest, idUrlBuilder, userIsLoggedIn, verifiedReturnUrl),
-            )(page, request, context),
-          )
-        }
-      }
-    }
-
   def completeRegistration(): Action[AnyContent] =
-    fullAuthWithIdapiUserAction.async { implicit request =>
-      val idRequest = idRequestParser(request)
+    Action.async { implicit request =>
       val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
 
-      Future.successful(
-        Ok(
-          IdentityHtmlPage.html(
-            views.html.verificationEmailResent(
-              request.user,
-              idRequest,
-              idUrlBuilder,
-              verifiedReturnUrlAsOpt,
-              returnUrlVerifier.defaultReturnUrl,
-              isSignupFlow = true,
-            ),
-          )(page, request, context),
-        ),
-      )
+      request
+        .getQueryString("encryptedEmail")
+        .map(encryptedEmail => {
+          api.decryptEmailToken(encryptedEmail) map {
+            case Left(errors) =>
+              logger.error(s"Could not decrypt email address on complete registration page: $errors")
+              errorPage(verifiedReturnUrlAsOpt, page)
+            case Right(email) =>
+              successPage(verifiedReturnUrlAsOpt, page, Some(email), EmailNotResent)
+                .withSession("encryptedEmail" -> encryptedEmail, "email" -> email)
+          }
+        })
+        .getOrElse({
+          logger.error("No encryptedEmail parameter present on complete registration page request")
+          Future.successful(errorPage(verifiedReturnUrlAsOpt, page))
+        })
     }
 
-  def resendEmailValidationEmail(): Action[AnyContent] =
-    fullAuthWithIdapiUserAction.async { implicit request =>
-      val idRequest = idRequestParser(request)
-      val page = IdentityPage("/verify-email", "Verify Email")
+  def resendValidationEmail(returnUrl: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val page = IdentityPage("/complete-registration", "Complete Signup", isFlow = true)
       val verifiedReturnUrlAsOpt = returnUrlVerifier.getVerifiedReturnUrl(request)
+      val email = request.session.get("email")
 
-      api
-        .resendEmailValidationEmail(
-          request.user.auth,
-          idRequest.trackingData,
-          verifiedReturnUrlAsOpt,
+      request.session
+        .get("encryptedEmail")
+        .map(token =>
+          api.resendEmailValidationEmailByToken(token, verifiedReturnUrlAsOpt) map {
+            case Left(errors) =>
+              logger.error(s"Could not resent validation email on complete registration page: $errors")
+              successPage(verifiedReturnUrlAsOpt, page, email, ErrorResending)
+            case Right(_) =>
+              successPage(verifiedReturnUrlAsOpt, page, email, EmailResent)
+          },
         )
-        .map(_ =>
-          Ok(
-            IdentityHtmlPage.html(
-              views.html.verificationEmailResent(
-                request.user,
-                idRequest,
-                idUrlBuilder,
-                verifiedReturnUrlAsOpt,
-                returnUrlVerifier.defaultReturnUrl,
-              ),
-            )(page, request, context),
-          ),
-        )
-
+        .getOrElse({
+          logger.error(
+            "Could not resend validation on complete registration page - no encryptedEmail token present in session",
+          )
+          Future.successful(errorPage(verifiedReturnUrlAsOpt, page))
+        })
     }
+
+  private def successPage(
+      verifiedReturnUrlAsOpt: Option[String],
+      page: IdentityPage,
+      email: Option[String],
+      validationEmailResent: ValidationEmailSent,
+  )(implicit request: RequestHeader): Result = {
+    Ok(
+      IdentityHtmlPage.html(
+        views.html.verificationEmailResent(
+          idUrlBuilder,
+          verifiedReturnUrlAsOpt,
+          returnUrlVerifier.defaultReturnUrl,
+          email,
+          validationEmailResent,
+        ),
+      )(page, request, context),
+    )
+  }
+
+  private def errorPage(verifiedReturnUrlAsOpt: Option[String], page: IdentityPage)(implicit
+      request: RequestHeader,
+  ): Result = {
+    Ok(
+      IdentityHtmlPage.html(
+        views.html.verificationEmailResentError(
+          verifiedReturnUrlAsOpt,
+          returnUrlVerifier.defaultReturnUrl,
+        ),
+      )(page, request, context),
+    )
+  }
 }
 
-sealed case class ValidationState(
-    isValidated: Boolean,
-    isExpired: Boolean,
-    authenticationCookies: Option[CookiesResponse] = None,
-)
-
-object ValidationState {
-  def validatedWithSession(autheniticationCookies: CookiesResponse): ValidationState =
-    ValidationState(isValidated = true, isExpired = false, Some(autheniticationCookies))
-  val alreadyValidated = ValidationState(isValidated = true, isExpired = false)
-  val expired = ValidationState(isValidated = false, isExpired = true)
-  val invalid = ValidationState(isValidated = false, isExpired = false)
-}
+sealed trait ValidationEmailSent
+case object EmailResent extends ValidationEmailSent
+case object EmailNotResent extends ValidationEmailSent
+case object ErrorResending extends ValidationEmailSent

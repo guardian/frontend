@@ -1,7 +1,7 @@
 package services.dotcomponents
 
 import model.ArticlePage
-import experiments.{ActiveExperiments, Control, DCRBubble, DotcomRendering, Excluded, Experiment, Participant}
+import experiments.{ActiveExperiments, Control, DotcomRendering, Excluded, Experiment, Participant}
 import model.PageWithStoryPackage
 import implicits.Requests._
 import model.liveblog.{
@@ -23,6 +23,8 @@ import model.liveblog.{
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
+
+import conf.Configuration
 
 object ArticlePageChecks {
 
@@ -153,11 +155,6 @@ object ArticlePicker {
     )
   }
 
-  def isInAllowList(path: String): Boolean = {
-    // our allow-list is only one article at the moment
-    path == "/info/2019/dec/08/migrating-the-guardian-website-to-react";
-  }
-
   def forall(features: Map[String, Boolean]): Boolean = {
     features.forall({ case (_, isMet) => isMet })
   }
@@ -173,34 +170,43 @@ object ArticlePicker {
         "isNotPaidContent",
       ),
     )
-    val isArticle100PercentPage = article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
-    isArticle100PercentPage
-  }
-
-  def dcrForced(request: RequestHeader): Boolean = {
-    request.forceDCR || isInAllowList(request.path)
+    article100PercentPageFeatures.forall({ case (test, isMet) => isMet })
   }
 
   def dcrDisabled(request: RequestHeader): Boolean = {
-    val forceDCROff = request.forceDCROff
     val dcrEnabled = conf.switches.Switches.DotcomRendering.isSwitchedOn
-    forceDCROff || !dcrEnabled
+    val forceDCROff = request.forceDCROff
+    !dcrEnabled || forceDCROff
+  }
+
+  def canConnectToDCR(): Boolean = {
+    Configuration.environment.isProd || Configuration.environment.isCode
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
     val primaryChecks = primaryFeatures(page, request)
     val hasPrimaryFeatures = forall(primaryChecks)
 
-    val userInDCRTest = ActiveExperiments.isParticipating(DotcomRendering)
-    val userInDCRBubble = ActiveExperiments.isParticipating(DCRBubble)
+    /*
+        date: Friday 20th Nov 2020
+        id: cea453f4-9b71-435e-8a11-35ef690c7821
+        message: We are moving to exposing 90% of the audience to DCR rendering.
+        Unfortunately our experiment framework does not allow the variant group to be bigger than 50%.
+        We are then going to expose DCR to { the control group and the excluded } and reduce the size of the variant to 10%.
+     */
+    val userInDCRGroup = !ActiveExperiments.isParticipating(DotcomRendering)
+    // true if user is not participating / not in variant
 
     val tier =
-      if (dcrForced(request)) RemoteRender // dcrForced doesn't check the switch. This means that RemoteRender
-      // is always going to be selected if `?dcr=true`, regardless of
-      // the switch.
-      else if (dcrDisabled(request)) LocalRenderArticle // dcrDisabled does check the switch.
-      else if (userInDCRBubble) RemoteRender
-      else if (userInDCRTest && hasPrimaryFeatures) RemoteRender
+      if (!canConnectToDCR()) LocalRenderArticle
+      // We select LocalRenderArticle when we are not in PROD or and not in CODE.
+      else if (request.forceDCR) RemoteRender
+      // The `request.forceDCR` doesn't check the switch.
+      // This means that RemoteRender is always going to be selected if `?dcr=true`, regardless of the value of the switch.
+      else if (dcrDisabled(request)) LocalRenderArticle
+      // The `dcrDisabled(request)` checks the switch.
+      // Switch off implies dcrDisabled
+      else if (userInDCRGroup && hasPrimaryFeatures) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
@@ -209,15 +215,15 @@ object ArticlePicker {
 
     def testGroup(experiment: Experiment): String =
       ActiveExperiments.groupFor(experiment) match {
-        case Participant => "participant"
-        case Control     => "control"
-        case Excluded    => "excluded"
+        case Participant => "participant" // Not showed DCR (see: cea453f4-9b71-435e-8a11-35ef690c7821)
+        case Control     => "control" // Showed DCR
+        case Excluded    => "excluded" // Showed DCR
       }
 
     // include features that we wish to log but not allow-list against
     val features = primaryChecks.mapValues(_.toString) +
       ("dcrTestGroup" -> testGroup(DotcomRendering)) +
-      ("userIsInCohort" -> userInDCRTest.toString) +
+      ("userIsInCohort" -> userInDCRGroup.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
       ("dcrCouldRender" -> hasPrimaryFeatures.toString) +

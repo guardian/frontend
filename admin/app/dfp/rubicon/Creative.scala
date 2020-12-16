@@ -1,8 +1,8 @@
 package dfp.rubicon
 
-import com.google.api.ads.admanager.axis.utils.v201911.StatementBuilder
-import com.google.api.ads.admanager.axis.v201911.LineItemCreativeAssociationStatus.ACTIVE
-import com.google.api.ads.admanager.axis.v201911._
+import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
+import com.google.api.ads.admanager.axis.v202011.LineItemCreativeAssociationStatus.ACTIVE
+import com.google.api.ads.admanager.axis.v202011._
 import common.Logging
 import dfp.SessionWrapper
 

@@ -1,0 +1,26 @@
+@(
+    verifiedReturnUrl: Option[String],
+    defaultReturnUrl: String,
+)(implicit request: RequestHeader, context: model.ApplicationContext)
+
+@import common.LinkTo
+
+<div class="identity-wrapper monocolumn-wrapper">
+    <section class="identity-forms-message">
+       <h1 class="identity-title">Sorry, something went wrong</h1>
+       <div class="identity-forms-message__body">
+           <p>Having troubles registering? Please visit our <a class="u-underline" href="@LinkTo("/help/identity-faq")">help page</a>
+               or <a class="u-underline" href="https://manage.theguardian.com/contact-us">contact our support team</a>.</p>
+       </div>
+       <footer class="identity-forms-message__body">
+           <a class="manage-account__button manage-account__button--center" href="@LinkTo {
+               @verifiedReturnUrl.getOrElse(defaultReturnUrl)
+           }" data-link-name="mma : verify-email : exit-to-gu">
+           @(verifiedReturnUrl match {
+               case Some(_) => "Exit and continue to The Guardian"
+               case None => "Exit and go to The Guardian home page"
+           })
+           </a>
+       </footer>
+    </section>
+</div>

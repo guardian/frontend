@@ -136,6 +136,9 @@ const setBackground = (specs: AdSpec, adSlot: HTMLElement): Promise<any> => {
                             ctaURLAnchor.href = specs.ctaUrl;
                             ctaURLAnchor.target = '_new';
                             ctaURLAnchor.appendChild(backgroundParent);
+                            ctaURLAnchor.style.display = 'inline-block';
+                            ctaURLAnchor.style.width = '100%';
+                            ctaURLAnchor.style.height = '100%';
                             adSlot.insertBefore(
                                 ctaURLAnchor,
                                 adSlot.firstChild

@@ -10,10 +10,7 @@ import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
 import { getPrivacyFramework } from 'lib/getPrivacyFramework';
-import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
@@ -48,7 +45,8 @@ type PageTargeting = {
 };
 
 let myPageTargetting: {} = {};
-let latestConsentCanRun;
+let latestCmpHasInitalised;
+let latestCMPState;
 
 const findBreakpoint = (): string => {
     switch (getBreakpoint(true)) {
@@ -70,8 +68,13 @@ const findBreakpoint = (): string => {
 
 const inskinTargetting = (): string => {
     const vp = getViewport();
-    if (vp && vp.width >= 1560) return 't';
-    return 'f';
+    if (!vp || vp.width < 1560) {
+        return 'f';
+    }
+
+    // Don’t show inskin if we cannot tell if a privacy message will be shown
+    if (!cmp.hasInitialised()) return 'f';
+    return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
 
 const format = (keyword: string): string =>
@@ -233,11 +236,29 @@ const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
     return 'na';
 };
 
-const buildPageTargetting = (
-    adConsentState: boolean | null,
-    ccpaState: boolean | null,
-    tcfv2EventStatus: string | null
-): { [key: string]: mixed } => {
+const getAdConsentFromState = (state): boolean => {
+    if (state.ccpa) {
+        // CCPA mode
+        return !state.ccpa.doNotSell;
+    } else if (state.tcfv2) {
+        // TCFv2 mode
+        return state.tcfv2.consents
+            ? Object.keys(state.tcfv2.consents).length > 0 &&
+              Object.values(state.tcfv2.consents).every(Boolean)
+            : false;
+    } else if (state.aus) {
+        // AUS mode
+        return state.aus.personalisedAdvertising;
+    } 
+    // Unknown mode
+    return false;
+}
+
+const rebuildPageTargeting = () => {
+    latestCmpHasInitalised = cmp.hasInitialised();
+    const adConsentState = getAdConsentFromState(latestCMPState);
+    const ccpaState = latestCMPState.ccpa ? latestCMPState.ccpa.doNotSell : null;
+    const tcfv2EventStatus = latestCMPState.tcfv2 ? latestCMPState.tcfv2.eventStatus : 'na';
     const page = config.get('page');
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
@@ -301,45 +322,29 @@ const buildPageTargetting = (
     page.pageAdTargeting = pageTargeting;
 
     return pageTargeting;
-};
+}
 
 const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
 
-    onConsentChange(state => {
-        let canRun: boolean | null;
-        if (state.ccpa) {
-            // CCPA mode
-            canRun = !state.ccpa.doNotSell;
-        } else if (state.tcfv2) {
-            // TCFv2 mode
-            canRun = state.tcfv2.consents
-                ? Object.keys(state.tcfv2.consents).length > 0 &&
-                  Object.values(state.tcfv2.consents).every(Boolean)
-                : false;
-        } else if (state.aus) {
-            // AUS mode
-            canRun = getConsentFor('aus-advertising', state);
-        } else canRun = false;
-
-        if (canRun !== latestConsentCanRun) {
-            const ccpaState = state.ccpa ? state.ccpa.doNotSell : null;
-            const eventStatus = state.tcfv2 ? state.tcfv2.eventStatus : 'na';
-            myPageTargetting = buildPageTargetting(
-                canRun,
-                ccpaState,
-                eventStatus
-            );
-            latestConsentCanRun = canRun;
+    if (Object.keys(myPageTargetting).length !== 0) {
+        // If CMP was initalised since the last time myPageTargetting was built - rebuild
+        if (latestCmpHasInitalised !== cmp.hasInitialised()) {
+            myPageTargetting = rebuildPageTargeting();
         }
+        return myPageTargetting;
+    }
+    
+    // First call binds to onConsentChange and returns {}
+    onConsentChange((state)=>{
+    // On every consent change we rebuildPageTageting
+        latestCMPState = state;
+        myPageTargetting = rebuildPageTargeting();
     });
-
-    return myPageTargetting;
+    return myPageTargetting; 
 };
 
 const resetPageTargeting = (): void => {
     myPageTargetting = {};
-    latestConsentCanRun = undefined;
 };
 
 export {

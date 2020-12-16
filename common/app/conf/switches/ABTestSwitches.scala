@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed-opt-out",
-    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
-    owners = Seq(Owner.withGithub("paulbrown1982")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -52,7 +42,7 @@ trait ABTestSwitches {
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
@@ -62,47 +52,37 @@ trait ABTestSwitches {
     "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-curated-container-test",
-    "Tests an additional 'curated' onwards container below the article body.",
-    owners = Seq(Owner.withGithub("gtrufitt")),
+    "ab-curated-container-test2",
+    "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
+    owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 9),
+    sellByDate = new LocalDate(2020, 12, 23),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r1b",
-    "Test designs for the liveblog epic",
+    "ab-newsletter-embeds3",
+    "New newsletter signup embeds for discoverability OKR",
+    owners = Seq(Owner.withGithub("buck06191")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 1, 4),
+    exposeClientSide = true,
+  )
+
+  val GlobalEoyHeaderSwitch = Switch(
+    ABTests,
+    "ab-global-eoy-header-test",
+    "Test reader revenue message in header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-newsletter-merch-unit-lighthouse-control",
-    "Test impact of newsletter merch unit across lighthouse segments (Control bucket)",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-newsletter-merch-unit-lighthouse-variants",
-    "Test impact of newsletter merch unit across lighthouse segments (Variant buckets)",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 2, 1),
     exposeClientSide = true,
   )
 }

@@ -4,7 +4,7 @@ const ctaTemplate = (supportURL: string, ctaText?: string) =>
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
           target="_blank">
-          ${ctaText || 'Support the Guardian'}
+          ${ctaText || 'Show your support'}
         </a>
     </div>`;
 

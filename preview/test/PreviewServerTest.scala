@@ -18,6 +18,6 @@ class PreviewTestSuite
   "Preview Server" should "be able to serve an article" in goTo(
     "/business/2020/oct/07/tesco-hit-by-533m-covid-costs-but-sales-jump-during-pandemic",
   ) { browser =>
-    browser.$("body").text should include("Britain’s biggest supermarket chain said UK food sale")
+    browser.$("body").text should include("The UK’s biggest retailer reported")
   }
 }

@@ -27,11 +27,13 @@ const getBrazeUuid = (): Promise<?string> =>
 
 const hasRequiredConsents = (): Promise<boolean> =>
     new Promise((resolve) => {
-        onConsentChange(({ tcfv2, ccpa }) => {
+        onConsentChange(({ tcfv2, ccpa, aus }) => {
             if (tcfv2) {
                 resolve(tcfv2.vendorConsents[brazeVendorId]);
             } else if (ccpa) {
                 resolve(!ccpa.doNotSell);
+            } else if (aus) {
+                resolve(aus.personalisedAdvertising);
             } else {
                 resolve(false);
             }
@@ -85,25 +87,39 @@ const canShowPreChecks = ({
 let messageConfig: InAppMessage;
 let appboy: ?AppBoy;
 
-const getMessageFromQueryString = (): InAppMessage | null => {
-        const params = getUrlVars();
-        const qsArg = 'force-braze-message';
-        const value = params[qsArg];
-        if (value) {
-            try {
-                const dataFromBraze = JSON.parse(value);
+const FORCE_BRAZE_ALLOWLIST = [
+    'preview.gutools.co.uk',
+    'preview.code.dev-gutools.co.uk',
+    'localhost',
+    'm.thegulocal.com',
+];
 
-                return {
-                    extras: dataFromBraze,
-                };
-            } catch (e) {
-                // Parsing failed. Log a message and fall through.
-                console.log(
-                    `There was an error with ${qsArg}:`,
-                    e.message,
-                );
-            }
+const getMessageFromQueryString = (): InAppMessage | null => {
+    const qsArg = 'force-braze-message';
+
+    if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
+        console.log(`${qsArg} is not supported on this domain`)
+        return null;
+    }
+
+    const params = getUrlVars();
+    const value = params[qsArg];
+
+    if (value) {
+        try {
+            const dataFromBraze = JSON.parse(value);
+
+            return {
+                extras: dataFromBraze,
+            };
+        } catch (e) {
+            // Parsing failed. Log a message and fall through.
+            console.log(
+                `There was an error with ${qsArg}:`,
+                e.message,
+            );
         }
+    }
 
     return null;
 };

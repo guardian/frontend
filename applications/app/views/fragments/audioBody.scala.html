@@ -114,6 +114,16 @@
                             </a>
                         </li>
                     }
+                    @audio.seriesFeedUrl.map { seriesFeedUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--feed">
+                           <a class="podcast__meta__item-link podcast__section-link"
+                               href="@seriesFeedUrl"
+                               data-link-name="@trackingCode("feed")"
+                               >
+                               RSS Feed
+                           </a>
+                        </li>
+                    }
                     @audio.downloadUrl.map { downloadUrl =>
                         <li class="podcast__meta-item podcast__meta-item--download">
                             <a class="podcast__meta__item-link podcast__section-link"

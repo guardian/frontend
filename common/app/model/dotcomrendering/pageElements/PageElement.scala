@@ -9,6 +9,7 @@ import com.gu.contentapi.client.model.v1.{
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
 }
+import common.Edition
 import conf.Configuration
 import layout.ContentWidths.DotcomRenderingImageRoleWidthByBreakpointMapping
 import model.content._
@@ -171,8 +172,13 @@ object DocumentBlockElement {
   implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
 }
 
-case class EmbedBlockElement(html: String, safe: Option[Boolean], alt: Option[String], isMandatory: Boolean)
-    extends PageElement
+case class EmbedBlockElement(
+    html: String,
+    safe: Option[Boolean],
+    alt: Option[String],
+    isMandatory: Boolean,
+    role: Option[String],
+) extends PageElement
 object EmbedBlockElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
 }
@@ -358,12 +364,25 @@ object QABlockElement {
   implicit val QABlockElementWrites: Writes[QABlockElement] = Json.writes[QABlockElement]
 }
 
-case class QuizAtomAnswer(id: String, text: String, revealText: Option[String], isCorrect: Boolean)
+case class QuizAtomAnswer(
+    id: String,
+    text: String,
+    revealText: Option[String],
+    answerBuckets: Seq[String],
+    isCorrect: Boolean,
+)
+case class QuizAtomResultBucket(id: String, title: String, description: String)
 case class QuizAtomQuestion(id: String, text: String, answers: Seq[QuizAtomAnswer], imageUrl: Option[String])
-case class QuizAtomBlockElement(id: String, questions: Seq[QuizAtomQuestion]) extends PageElement
+case class QuizAtomBlockElement(
+    id: String,
+    quizType: String,
+    questions: Seq[QuizAtomQuestion],
+    resultBuckets: Seq[QuizAtomResultBucket],
+) extends PageElement
 object QuizAtomBlockElement {
   implicit val QuizAtomAnswerWrites: Writes[QuizAtomAnswer] = Json.writes[QuizAtomAnswer]
   implicit val QuizAtomQuestionWrites: Writes[QuizAtomQuestion] = Json.writes[QuizAtomQuestion]
+  implicit val QuizAtomResultBucketWrites: Writes[QuizAtomResultBucket] = Json.writes[QuizAtomResultBucket]
   implicit val QuizAtomBlockElementWrites: Writes[QuizAtomBlockElement] = Json.writes[QuizAtomBlockElement]
 }
 
@@ -496,6 +515,7 @@ case class YoutubeBlockElement(
     posterImage: Option[Seq[NSImage1]],
     expired: Boolean,
     duration: Option[Long],
+    altText: Option[String],
 ) extends PageElement
 /*
   The difference between `overrideImage` and `posterImage`
@@ -511,12 +531,6 @@ case class YoutubeBlockElement(
  */
 object YoutubeBlockElement {
   implicit val YoutubeBlockElementWrites: Writes[YoutubeBlockElement] = Json.writes[YoutubeBlockElement]
-}
-
-// Intended for unstructured html that we can't model, typically rejected by consumers
-case class HTMLFallbackBlockElement(html: String) extends PageElement
-object HTMLFallbackBlockElement {
-  implicit val HTMLBlockElementWrites: Writes[HTMLFallbackBlockElement] = Json.writes[HTMLFallbackBlockElement]
 }
 
 //noinspection ScalaStyle
@@ -580,6 +594,7 @@ object PageElement {
       campaigns: Option[JsValue],
       calloutsUrl: Option[String],
       overrideImage: Option[ImageElement],
+      edition: Edition,
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
@@ -590,16 +605,20 @@ object PageElement {
     element.`type` match {
 
       case Text =>
+        val textCleaners =
+          TextCleaner.affiliateLinks(pageUrl, addAffiliateLinks) _ andThen
+            TextCleaner.sanitiseLinks(edition)
+
         for {
           block <- element.textTypeData.toList
           text <- block.html.toList
-          element <- Cleaner.split(text)
+          element <- TextCleaner.split(text)
+          cleanedElement = (element._1, textCleaners(element._2))
         } yield {
-          element match {
-            case ("h2", heading)                  => SubheadingBlockElement(heading)
-            case ("blockquote", blockquote)       => BlockquoteBlockElement(blockquote)
-            case (_, para) if (addAffiliateLinks) => Cleaners.affiliateLinks(pageUrl)(TextBlockElement(para))
-            case (_, para)                        => TextBlockElement(para)
+          cleanedElement match {
+            case ("h2", heading)            => SubheadingBlockElement(heading)
+            case ("blockquote", blockquote) => BlockquoteBlockElement(blockquote)
+            case (_, para)                  => TextBlockElement(para)
           }
         }
 
@@ -846,6 +865,7 @@ object PageElement {
 
           case Some(mediaAtom: MediaAtom) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
+            val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
               case youtube if mediaAtom.assets.headOption.exists(_.platform == MediaAssetPlatform.Youtube) => {
                 mediaAtom.activeAssets.headOption.map(asset => {
@@ -858,6 +878,7 @@ object PageElement {
                     posterImage = mediaAtom.posterImage.map(NSImage1.imageMediaToSequence),
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
+                    altText = if (isMainBlock) altText else None,
                   )
                 })
               }
@@ -925,27 +946,34 @@ object PageElement {
               ),
             )
           }
-          case Some(quizAtom: QuizAtom) =>
+          case Some(quizAtom: QuizAtom) => {
+            val questions = quizAtom.content.questions.map { q =>
+              QuizAtomQuestion(
+                id = q.id,
+                text = q.text,
+                answers = q.answers.map(a =>
+                  QuizAtomAnswer(
+                    id = a.id,
+                    text = a.text,
+                    revealText = a.revealText,
+                    answerBuckets = a.buckets,
+                    isCorrect = a.weight == 1,
+                  ),
+                ),
+                imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
+              )
+            }
             Some(
               QuizAtomBlockElement(
                 id = quizAtom.id,
-                questions = quizAtom.content.questions.map { q =>
-                  QuizAtomQuestion(
-                    id = q.id,
-                    text = q.text,
-                    answers = q.answers.map(a =>
-                      QuizAtomAnswer(
-                        id = a.id,
-                        text = a.text,
-                        revealText = a.revealText,
-                        isCorrect = a.weight == 1,
-                      ),
-                    ),
-                    imageUrl = q.imageMedia.flatMap(i => ImgSrc.getAmpImageUrl(i.imageMedia)),
-                  )
+                quizType = quizAtom.quizType,
+                questions = questions,
+                resultBuckets = quizAtom.content.resultBuckets.map { bucket =>
+                  QuizAtomResultBucket(bucket.id, bucket.title, bucket.description)
                 },
               ),
             )
+          }
 
           // Here we capture all the atom types which are not yet supported.
           // ContentAtomBlockElement is mapped to null in the DCR source code.
@@ -1015,22 +1043,25 @@ object PageElement {
     }
   }
 
-  private def extractChartDatawrapperEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+  private def extractChartDatawrapperEmbedBlockElement(
+      html: String,
+      role: Option[String],
+  ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
       src <- getIframeSrc(html)
       if src.contains("charts-datawrapper.s3.amazonaws.com")
     } yield {
-      EmbedBlockElement(html, None, None, false)
+      EmbedBlockElement(html, None, None, false, role)
     }
   }
 
-  private def extractGenericEmbedBlockElement(html: String): Option[EmbedBlockElement] = {
+  private def extractGenericEmbedBlockElement(html: String, role: Option[String]): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
       src <- getIframeSrc(html)
     } yield {
-      EmbedBlockElement(html, None, None, false)
+      EmbedBlockElement(html, None, None, false, role)
     }
   }
 
@@ -1077,8 +1108,8 @@ object PageElement {
        */
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         extractSpotifyBlockElement(element).getOrElse {
-          extractChartDatawrapperEmbedBlockElement(html).getOrElse {
-            extractGenericEmbedBlockElement(html).getOrElse {
+          extractChartDatawrapperEmbedBlockElement(html, d.role).getOrElse {
+            extractGenericEmbedBlockElement(html, d.role).getOrElse {
               // This version of AudioBlockElement is not currently supported in DCR
               // AudioBlockElement(element.assets.map(AudioAsset.make))
 
@@ -1104,7 +1135,7 @@ object PageElement {
     } yield {
       extractSoundcloudBlockElement(html, mandatory).getOrElse {
         CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
-          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory)
+          EmbedBlockElement(html, d.safeEmbedCode, d.alt, mandatory, d.role)
         }
       }
     }
@@ -1152,43 +1183,4 @@ object PageElement {
   }
 
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
-}
-
-// ------------------------------------------------------
-// Misc.
-// ------------------------------------------------------
-
-object Cleaner {
-  def split(html: String): List[(String, String)] = {
-    Jsoup
-      .parseBodyFragment(html)
-      .body()
-      .children()
-      .asScala
-      .toList
-      .map(el => (el.tagName, el.outerHtml))
-  }
-}
-
-object CommentCleaner {
-  def getBody(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-body")
-      .html()
-  }
-
-  def getAvatar(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-avatar")
-      .attr("src")
-  }
-
-  def getDateTime(html: String): String = {
-    Jsoup
-      .parseBodyFragment(html)
-      .getElementsByClass("d2-datetime")
-      .html()
-  }
 }

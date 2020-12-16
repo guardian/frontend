@@ -11,22 +11,28 @@ import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
+    getViewport as getViewport_,
 } from 'lib/detect';
 import { getSync as getSync_ } from 'lib/geolocation';
 import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFramework';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { onConsentChange } from '@guardian/consent-management-platform';
+import {
+    cmp as cmp_,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
 
 const getCookie: any = getCookie_;
 const getUserSegments: any = getUserSegments_;
 const getSynchronousParticipations: any = getSynchronousParticipations_;
 const getReferrer: any = getReferrer_;
 const getBreakpoint: any = getBreakpoint_;
+const getViewport: any = getViewport_;
 const isUserLoggedIn: any = isUserLoggedIn_;
 const getSync: any = getSync_;
 const getPrivacyFramework: any = getPrivacyFramework_;
+const cmp: any = cmp_;
 
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
@@ -59,6 +65,10 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
+    cmp: {
+        hasInitialised: jest.fn(),
+        willShowPrivacyMessageSync: jest.fn(),
+    },
 }));
 
 // TCFv1
@@ -465,6 +475,43 @@ describe('Build Page Targeting', () => {
                 'theatre',
                 'london',
             ]);
+        });
+    });
+
+    describe('inskin targetting', () => {
+        it('should not allow inskin if cmp has not initialised', () => {
+            cmp.hasInitialised.mockReturnValue(false);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        it('should not allow inskin if cmp will show a banner', () => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(true);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        // $FlowFixMe -- it.each does not have a type
+        it.each([
+            ['f', 1280],
+            ['f', 1440],
+            ['f', 1559],
+            ['t', 1560],
+            ['t', 1561],
+            ['t', 1920],
+            ['t', 2560],
+        ])("should return '%s' if viewport width is %s", (expected, width) => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width, height: 800 });
+            expect(getPageTargeting().inskin).toBe(expected);
+        });
+
+        it("should return 'f' if vp does not have a width", () => {
+            getViewport.mockReturnValue(undefined);
+            expect(getPageTargeting().inskin).toBe('f');
         });
     });
 });

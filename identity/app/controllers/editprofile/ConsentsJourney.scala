@@ -70,10 +70,6 @@ trait ConsentsJourney extends EditProfileControllerComponents {
   def displayConsentsJourneyThankYou: Action[AnyContent] =
     displayConsentJourneyForm(ConsentJourneyPageThankYou, None)
 
-  /** GET /consents */
-  def displayConsentsJourney(consentHint: Option[String] = None): Action[AnyContent] =
-    displayConsentJourneyForm(ConsentJourneyPageDefault, consentHint)
-
   /** GET /complete-consents */
   def displayConsentComplete(guestPasswordForm: Option[Form[GuestPasswordFormData]] = None): Action[AnyContent] =
     displayConsentComplete(ConsentJourneyPageDefault, None, guestPasswordForm)
@@ -113,12 +109,6 @@ trait ConsentsJourney extends EditProfileControllerComponents {
           },
         )
       }
-    }
-
-  /** Handle redirects*/
-  def redirectToConsentsJourney: Action[AnyContent] =
-    Action { implicit request =>
-      Redirect(routes.EditProfileController.displayConsentsJourney(None), MOVED_PERMANENTLY)
     }
 
   private def displayConsentJourneyForm(page: ConsentJourneyPage, consentHint: Option[String]): Action[AnyContent] =

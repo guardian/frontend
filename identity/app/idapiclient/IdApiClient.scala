@@ -173,11 +173,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
     ) map extractUnit
   }
 
-  def validateEmail(token: String, trackingParameters: TrackingData): Future[Response[CookiesResponse]] =
-    post(urlJoin("user", "validate-email", token), trackingParameters = Some(trackingParameters)) map extract[
-      CookiesResponse,
-    ](jsonField("cookies"))
-
   def setPasswordGuest(password: String, token: String): Future[Response[CookiesResponse]] = {
     val body: JObject = "password" -> password
     put(
@@ -192,22 +187,6 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
       ),
       List("validate-email" -> "0"),
     ).map(extract(jsonField("cookies")))
-  }
-
-  def resendEmailValidationEmail(
-      auth: Auth,
-      trackingParameters: TrackingData,
-      returnUrlOpt: Option[String],
-  ): Future[Response[Unit]] = {
-    val extraParams = returnUrlOpt.map(url => List("returnUrl" -> url))
-    httpClient
-      .POST(
-        apiUrl("user/send-validation-email"),
-        None,
-        buildParams(Some(auth), Some(trackingParameters), extraParams),
-        buildHeaders(Some(auth), xForwardedForHeader(trackingParameters)),
-      )
-      .map(extractUnit)
   }
 
   def deleteTelephone(auth: Auth): Future[Response[Unit]] =
@@ -226,6 +205,20 @@ class IdApiClient(idJsonBodyParser: IdApiJsonBodyParser, conf: IdConfig, httpCli
       urlParameters = Nil,
       headers = buildHeaders(Some(auth), extra = Seq(("x-api-key", conf.accountDeletionApiKey))),
     ) map extract[AccountDeletionResult](identity)
+  }
+
+  // EMAIL TOKENS
+  def decryptEmailToken(token: String): Future[Response[String]] = {
+    val apiPath = urlJoin("signin-token", "token", token)
+    val response = httpClient.GET(uri = apiUrl(apiPath), None, None, buildHeaders())
+    response map extract(jsonField("email"))
+  }
+
+  def resendEmailValidationEmailByToken(token: String, returnUrl: Option[String]): Future[Response[Unit]] = {
+    val apiPath = urlJoin("signin-token", "send-validation-email", token)
+    val parameters = returnUrl.map(url => Iterable("returnUrl" -> url)).getOrElse(Iterable.empty)
+    val response = httpClient.POST(uri = apiUrl(apiPath), None, None, buildHeaders(extra = parameters))
+    response map extractUnit
   }
 
   def put(

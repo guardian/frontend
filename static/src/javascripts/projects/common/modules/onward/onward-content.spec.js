@@ -16,7 +16,7 @@ const getShortUrl = (): string =>
 describe('Onward Content', () => {
     beforeEach(() => {
         config.page = {
-            shortUrl: 'http://gu.com/p/42zeg',
+            shortUrl: 'http://www.theguardian.com/p/42zeg',
             blogIds: 'global-development/poverty-matters',
             seriesId: 'global-development/series/modern-day-slavery-in-focus',
         };

@@ -115,8 +115,7 @@ class EmailSignupController(
                 views.html.emailFragment(
                   emailLandingPage,
                   emailType,
-                  newsletter.identityName,
-                  newsletter.emailEmbed,
+                  newsletter,
                 ),
               ),
             )
@@ -136,8 +135,7 @@ class EmailSignupController(
                 views.html.emailFragment(
                   emailLandingPage,
                   emailType,
-                  newsletter.identityName,
-                  newsletter.emailEmbed,
+                  newsletter,
                 ),
               ),
             )
@@ -166,7 +164,7 @@ class EmailSignupController(
         case Some(newsletter) =>
           Cached(1.hour)(
             RevalidatableResult.Ok(
-              views.html.emailSubscriptionSuccessResult(emailLandingPage, newsletter.emailEmbed, listName),
+              views.html.emailSubscriptionSuccessResult(emailLandingPage, newsletter, listName),
             ),
           )
         case _ => Cached(15.minute)(WithoutRevalidationResult(NoContent))
