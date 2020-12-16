@@ -1,12 +1,12 @@
 // @flow
 import fastdom from 'lib/fastdom-promise';
-import { isDigitalSubscriber, isRecentOneOffContributor, isRecurringContributor } from 'common/modules/commercial/user-features';
+import { isDigitalSubscriber, isRecurringContributor } from 'common/modules/commercial/user-features';
 
 
 // @flow
 const showGiftingCTA = (): void => {
     // Unhide the gifting CTA for Subscribers and Contributors
-    if (isDigitalSubscriber() || isRecurringContributor() || isRecentOneOffContributor()) {
+    if (isDigitalSubscriber() || isRecurringContributor()) {
         const giftingCTA = document.querySelector('.js-gifting-cta');
 
         if (!giftingCTA) {
