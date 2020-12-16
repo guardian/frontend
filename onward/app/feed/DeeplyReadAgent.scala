@@ -71,8 +71,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private val ophanItems: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
-    scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
+  private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
@@ -81,10 +80,16 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
         query CAPI and set the Content for the path.
      */
+
+    // ophanItemInProgress will be updated with a new items as we got through the Ophan answer
+    // Then used to atomically update ophanItems
+    val ophanItemInProgress: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
+      scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
+
     ophanApi.getDeeplyReadContent().map { seq =>
       seq.foreach { i =>
         log.info(s"Registering Ophan deeply read item: ${i.toString}")
-        ophanItems.append(i)
+        ophanItemInProgress.append(i)
         val path = i.path
         log.info(s"Looking up CAPI data for path: ${path}")
         val capiItem = contentApiClient
@@ -102,8 +107,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           }
         Thread.sleep(1000)
       }
+      if (ophanItemInProgress.toArray.size > 0) {
+        ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
+      }
+      ()
     }
-    Future.successful(())
   }
 
   def getDataForPath(path: String): Option[Content] = {
@@ -117,7 +125,6 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
-    println(item)
     for {
       content <- getDataForPath(item.path)
       webPublicationDate <- content.webPublicationDate
