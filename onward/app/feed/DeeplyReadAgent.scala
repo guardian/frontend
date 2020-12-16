@@ -140,7 +140,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
     for {
-      content <- getDataForPath(item.path)
+      content <- getDataForPath(removeStartingSlash(item.path))
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
       linkText <- fields.trailText
