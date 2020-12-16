@@ -1590,10 +1590,10 @@
     lodash "^4.17.11"
     to-fast-properties "^2.0.0"
 
-"@braze/web-sdk-core@^3.0.0":
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/@braze/web-sdk-core/-/web-sdk-core-3.0.0.tgz#32fd4a045e143dc28bb0a623ebea4abd01068042"
-  integrity sha512-hRiHFG3a1V9dj47K0quiU+2TnYabdexpwuqb4yqWYn5s1eiUA3S+XFs0YvKM0jmpSnW9ok5uiLJnddvlrGsR8g==
+"@braze/web-sdk-core@3.1.0":
+  version "3.1.0"
+  resolved "https://registry.yarnpkg.com/@braze/web-sdk-core/-/web-sdk-core-3.1.0.tgz#68bba5ba284dbe082229c0604b8d7e6da401feaa"
+  integrity sha512-Eillspp84rLX4NdjwMF11TJuWgwlrXwnUm2hgEtT8BdBO6CNvqh2mQBBbcgs2Y41CgleTsvwQwvuXI/TFrxDuQ==
 
 "@cnakazawa/watch@^1.0.3":
   version "1.0.4"
