@@ -71,34 +71,55 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private val mapping: scala.collection.mutable.Map[String, Content] =
+  private var hasBeenRefreshed = false
+  private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
+  private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
 
-  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Boolean] = {
+    println(
+      "deeplyReadAgent.refresh()",
+    ) // instruction left on purpose, do not delete for the moment (Pascal, 16th Dec)
     /*
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
         query CAPI and set the Content for the path.
      */
+
+    // ophanItemInProgress will be updated with a new items as we got through the Ophan answer
+    // Then used to atomically update ophanItems
+    val ophanItemInProgress: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
+      scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
+
     ophanApi.getDeeplyReadContent().map { seq =>
-      seq.foreach { i =>
-        val path = i.path
-        log.info(s"Looking up data for path: ${path}")
+      seq.foreach { ophanItem =>
+        log.info(s"Registering Ophan deeply read item: ${ophanItem.toString}")
+        val path = ophanItem.path
+        log.info(s"Looking up CAPI data for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
           .showFields("all")
           .showReferences("all")
           .showAtoms("all")
+        println(capiItem)
         contentApiClient
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              mapping += (path -> c) // update the Content for a given map
+              ophanItemInProgress.append(ophanItem)
+              pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
+        Thread.sleep(1000)
+      }
+      println(s"ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
+      if (ophanItemInProgress.toArray.size > 0) {
+        ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
+        true
+      } else {
+        false
       }
     }
-    Future.successful(())
   }
 
   def getDataForPath(path: String): Option[Content] = {
@@ -108,7 +129,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
 
         we use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
      */
-    mapping.get(path)
+    pathToCapiContentMapping.get(path)
   }
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
@@ -142,13 +163,23 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     )
   }
 
+  def getReportCore()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+    ophanItems
+      .map(ophanItemToDeeplyReadItem)
+      .filter(_.isDefined)
+      .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
+  }
+
   def getReport()(implicit ec: ExecutionContext): Future[Seq[DeeplyReadItem]] = {
-    ophanApi
-      .getDeeplyReadContent()
-      .map {
-        _.map(ophanItemToDeeplyReadItem)
-          .filter(_.isDefined)
-          .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
+    if (!hasBeenRefreshed) {
+      refresh().map { flag =>
+        if (flag) {
+          hasBeenRefreshed = true
+        }
+        getReportCore()
       }
+    } else {
+      Future.successful(getReportCore())
+    }
   }
 }
