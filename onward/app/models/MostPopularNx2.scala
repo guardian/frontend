@@ -35,7 +35,7 @@ object OnwardItemNx2 {
 
   implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
 
-  def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
+  private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
     val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
       contentCard.cutOut.map { cutOut => cutOut.imageUrl }
