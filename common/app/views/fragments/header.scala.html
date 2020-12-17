@@ -4,7 +4,7 @@
 @import views.support.RenderClasses
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
-@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
+@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupportGifting}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, GlobalEoyHeaderSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
@@ -104,7 +104,7 @@
                             <a class="top-bar__item hide-until-desktop"
                             data-link-name="nav2 : gifting-cta"
                             data-edition="@{editionId}"
-                            href="@getReaderRevenueUrl(SupportSubscribe, Header)">
+                            href="@getReaderRevenueUrl(SupportGifting, Header)">
                                 @fragments.inlineSvg("gifting", "icon", List("top-bar__item__icon"))
                                 Subscriptions
                             </a>

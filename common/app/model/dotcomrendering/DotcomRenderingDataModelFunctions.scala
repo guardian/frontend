@@ -24,7 +24,7 @@ import model.{
   PageWithStoryPackage,
   Pillar,
 }
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupportGifting}
 import navigation.UrlHelpers._
 import navigation.NavMenu
 import navigation.FooterLinks
@@ -406,30 +406,35 @@ object DotcomRenderingDataModelFunctions {
       getReaderRevenueUrl(SupportContribute, Header)(request),
       getReaderRevenueUrl(SupportSubscribe, Header)(request),
       getReaderRevenueUrl(Support, Header)(request),
+      getReaderRevenueUrl(SupportGifting, Header)(request),
     )
 
     val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, Footer)(request),
       getReaderRevenueUrl(SupportSubscribe, Footer)(request),
       getReaderRevenueUrl(Support, Footer)(request),
+      getReaderRevenueUrl(SupportGifting, Footer)(request),
     )
 
     val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, SideMenu)(request),
       getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
       getReaderRevenueUrl(Support, SideMenu)(request),
+      getReaderRevenueUrl(SupportGifting, SideMenu)(request),
     )
 
     val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
       getReaderRevenueUrl(Support, AmpHeader)(request),
+      getReaderRevenueUrl(SupportGifting, AmpHeader)(request),
     )
 
     val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
       getReaderRevenueUrl(Support, AmpFooter)(request),
+      getReaderRevenueUrl(SupportGifting, AmpFooter)(request),
     )
 
     val readerRevenueLinks = ReaderRevenueLinks(
