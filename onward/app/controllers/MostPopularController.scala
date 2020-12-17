@@ -191,7 +191,7 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(section.trails),
+        trails = section.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
@@ -226,7 +226,7 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(mostPopular.trails),
+      trails = mostPopular.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
     )
     Cached(900)(JsonComponent(data))
   }

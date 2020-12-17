@@ -118,14 +118,6 @@ object OnwardItemNx2 {
       avatarUrl = None,
     )
   }
-
-  def pressedContentsToOnwardItemsNx2(
-      pcs: Seq[PressedContent],
-  )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
-    pcs
-      .take(10)
-      .map(content => pressedContentToOnwardItemNx2(content))
-  }
 }
 
 case class OnwardCollectionResponse(
