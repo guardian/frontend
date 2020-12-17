@@ -120,9 +120,9 @@ object OnwardItemNx2 {
   }
 
   def pressedContentsToOnwardItemsNx2(
-      trails: Seq[PressedContent],
+      pcs: Seq[PressedContent],
   )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
-    trails
+    pcs
       .take(10)
       .map(content => pressedContentToOnwardItemNx2(content))
   }
