@@ -161,7 +161,4 @@ case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardIt
 
 object MostPopularNx2 {
   implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
-  def mostPopularToMostPopularNx2(mostPopular: MostPopular): MostPopularNx2 = {
-    MostPopularNx2("", "", List())
-  }
 }
