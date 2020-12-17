@@ -215,7 +215,7 @@ const canShow = async (): Promise<boolean> => {
     })) {
         // Currently all active web canvases in Braze target existing supporters,
         // subscribers or otherwise those with a Guardian product. We can use the
-        // (inverse) value of `shouldNotBeShownSupportMessaging` to identify these users,
+        // value of `shouldNotBeShownSupportMessaging` to identify these users,
         // limiting the number of requests we need to initialise Braze on the page:
         return false;
     }
