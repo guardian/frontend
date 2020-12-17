@@ -219,7 +219,8 @@ object DotcomRenderingDataModelFunctions {
     // We are passing through the block data here, not the article
     // the block dateTime types are used for liveblogs
     val blockCreatedOn = block.createdDate.map(_.dateTime)
-    val blockCreatedOnDisplay = blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockCreatedOnDisplay =
+      blockCreatedOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
 
     val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
     val blockFirstPublishedDisplay =
