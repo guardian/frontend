@@ -136,13 +136,13 @@ object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
 }
 
-case class OnwardCollectionResponseForDCR(
+case class OnwardCollectionResponseDCR(
     tabs: Seq[OnwardCollectionResponse],
     mostCommented: Option[OnwardItemNx2],
     mostShared: Option[OnwardItemNx2],
 )
-object OnwardCollectionResponseForDCR {
-  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseForDCR]
+object OnwardCollectionResponseDCR {
+  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseDCR]
 }
 
 case class MostPopularGeoResponse(

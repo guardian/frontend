@@ -16,7 +16,7 @@ import models.{
   MostPopularGeoResponse,
   MostPopularNx2,
   OnwardCollectionResponse,
-  OnwardCollectionResponseForDCR,
+  OnwardCollectionResponseDCR,
   OnwardItemNx2,
 }
 import implicits.FaciaContentFrontendHelpers._
@@ -200,7 +200,7 @@ class MostPopularController(
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
-    val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
 
@@ -216,7 +216,7 @@ class MostPopularController(
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
-    val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     // Value is 1 fr the moment.
     // We do caching in Fasty and the Ophan/CAPI updates are on schedule and async
     Cached(1)(JsonComponent(response))
