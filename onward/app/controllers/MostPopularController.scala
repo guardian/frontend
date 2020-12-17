@@ -116,10 +116,15 @@ class MostPopularController(
       val globalPopular: Option[MostPopularNx2] = {
         val globalPopularContent = mostPopularAgent.mostPopular(edition)
         if (globalPopularContent.nonEmpty) {
-          val items = globalPopularContent
-            .map(_.faciaContent)
-            .map(pc => OnwardItemNx2.pressedContentToOnwardItemNx2(pc))
-          Some(MostPopularNx2("Across The&nbsp;Guardian", "", items))
+          Some(
+            MostPopularNx2(
+              "Across The&nbsp;Guardian",
+              "",
+              globalPopularContent
+                .map(_.faciaContent)
+                .map(OnwardItemNx2.pressedContentToOnwardItemNx2),
+            ),
+          )
         } else
           None
       }
