@@ -165,7 +165,6 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
                 resolve(false);
             }
 
-            // Unsubscribe
             if (appboy && subscriptionId) {
                 appboy.removeSubscription(subscriptionId);
             }
