@@ -4,7 +4,7 @@
 @import views.support.RenderClasses
 @import navigation.NavMenu
 @import navigation.UrlHelpers.{getJobUrl, Header, getReaderRevenueUrl}
-@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute}
+@import navigation.ReaderRevenueSite.{Support, SupportSubscribe, SupportContribute, SupportGifting}
 @import conf.switches.Switches.{ IdentityProfileNavigationSwitch, SearchSwitch, GlobalEoyHeaderSwitch }
 
 @defining(NavMenu(page, Edition(request))) { navMenu: NavMenu =>
@@ -99,6 +99,17 @@
             <div class="new-header__top-bar hide-until-mobile">
                 @defining(Edition(request).id.toLowerCase()) { editionId =>
                     @if(!page.metadata.hasSlimHeader) {
+                        <div class="top-bar__commercial-items js-gifting-cta is-hidden">
+                            <span class="top-bar__item__seperator hide-until-desktop"></span>
+                            <a class="top-bar__item hide-until-desktop"
+                            data-link-name="nav2 : gifting-cta"
+                            data-edition="@{editionId}"
+                            href="@getReaderRevenueUrl(SupportGifting, Header)">
+                                @fragments.inlineSvg("gifting", "icon", List("top-bar__item__icon"))
+                                Gift options
+                            </a>
+                        </div>
+
                         @if(editionId != "au" || editionId == "uk") {
                             <div class="top-bar__commercial-items">
                                 <span class="top-bar__item__seperator hide-until-desktop"></span>

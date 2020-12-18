@@ -70,6 +70,7 @@ case class ReaderRevenueLink(
     contribute: String,
     subscribe: String,
     support: String,
+    gifting: String,
 )
 
 object ReaderRevenueLink {
