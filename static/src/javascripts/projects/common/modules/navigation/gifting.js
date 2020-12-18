@@ -5,7 +5,7 @@ import { shouldHideSupportMessaging } from 'common/modules/commercial/user-featu
 
 // @flow
 const showGiftingCTA = (): void => {
-    // we want to unhide gifting link if hiding the support messaging
+    // show gifting if support messaging isn't shown
     if (shouldHideSupportMessaging()) {
         const giftingCTA = document.querySelector('.js-gifting-cta');
 
