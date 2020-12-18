@@ -10,6 +10,7 @@ import model.liveblog.{
   CommentBlockElement,
   ContentAtomBlockElement,
   DocumentBlockElement,
+  FormBlockElement,
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
@@ -19,11 +20,11 @@ import model.liveblog.{
   TableBlockElement,
   TextBlockElement,
   TweetBlockElement,
+  UnknownBlockElement,
   VideoBlockElement,
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
-
 import conf.Configuration
 
 object ArticlePageChecks {
@@ -58,6 +59,7 @@ object ArticlePageChecks {
         case _: AudioBlockElement     => false
         case _: CommentBlockElement   => false
         case _: DocumentBlockElement  => false
+        case _: FormBlockElement      => false
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false
@@ -67,6 +69,7 @@ object ArticlePageChecks {
         case _: TableBlockElement     => false
         case _: TextBlockElement      => false
         case _: TweetBlockElement     => false
+        case _: UnknownBlockElement   => false
         case _: VideoBlockElement     => false
         case ContentAtomBlockElement(_, atomtype) => {
           // ContentAtomBlockElement was expanded to include atomtype.
