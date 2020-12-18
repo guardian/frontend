@@ -29,13 +29,12 @@ object SeriesStoriesDCR {
   implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
-    val trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(series.trails.faciaItems)
     SeriesStoriesDCR(
       id = series.id,
       displayname = series.displayName,
       description = series.tag.properties.description,
       url = series.tag.properties.webUrl,
-      trails = trails,
+      trails = series.trails.faciaItems.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
     )
   }
 }

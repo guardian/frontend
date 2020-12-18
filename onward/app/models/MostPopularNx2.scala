@@ -35,7 +35,7 @@ object OnwardItemNx2 {
 
   implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
 
-  def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
+  private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 
     val maybeUrl1 = if (contentCard.cardTypes.showCutOut) {
       contentCard.cutOut.map { cutOut => cutOut.imageUrl }
@@ -118,14 +118,6 @@ object OnwardItemNx2 {
       avatarUrl = None,
     )
   }
-
-  def pressedContentsToOnwardItemsNx2(
-      trails: Seq[PressedContent],
-  )(implicit request: RequestHeader): Seq[OnwardItemNx2] = {
-    trails
-      .take(10)
-      .map(content => pressedContentToOnwardItemNx2(content))
-  }
 }
 
 case class OnwardCollectionResponse(
@@ -136,13 +128,13 @@ object OnwardCollectionResponse {
   implicit val collectionWrites = Json.writes[OnwardCollectionResponse]
 }
 
-case class OnwardCollectionResponseForDCR(
+case class OnwardCollectionResponseDCR(
     tabs: Seq[OnwardCollectionResponse],
     mostCommented: Option[OnwardItemNx2],
     mostShared: Option[OnwardItemNx2],
 )
-object OnwardCollectionResponseForDCR {
-  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseForDCR]
+object OnwardCollectionResponseDCR {
+  implicit val onwardCollectionResponseForDRCWrites = Json.writes[OnwardCollectionResponseDCR]
 }
 
 case class MostPopularGeoResponse(
@@ -161,7 +153,4 @@ case class MostPopularNx2(heading: String, section: String, trails: Seq[OnwardIt
 
 object MostPopularNx2 {
   implicit val mostPopularNx2Writes = Json.writes[MostPopularNx2]
-  def mostPopularToMostPopularNx2(mostPopular: MostPopular): MostPopularNx2 = {
-    MostPopularNx2("", "", List())
-  }
 }
