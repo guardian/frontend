@@ -1,5 +1,6 @@
 @import com.gu.identity.model.EmailNewsletter
-@(page: model.Page, emailType: String, emailNewsletter: EmailNewsletter)(implicit request: RequestHeader, context: model.ApplicationContext)
+@import services.NewsletterResponse
+@(page: model.Page, emailType: String, emailNewsletter: NewsletterResponse)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @electionNewsletters = @{
     List(
@@ -9,7 +10,7 @@
 }
 
 @emailEmbed(page) {
-    @if(electionNewsletters.contains(emailNewsletter.identityName)) {
+    @if(electionNewsletters.contains(emailNewsletter.id)) {
         @fragments.email.signup.subscription.emailSignUpNewDesign(
             emailType,
             emailNewsletter
@@ -17,7 +18,7 @@
     }
     @fragments.email.signup.subscription.emailSignUp(
         emailType,
-        emailNewsletter.identityName,
+        emailNewsletter.id,
         emailNewsletter.emailEmbed
     )
 }

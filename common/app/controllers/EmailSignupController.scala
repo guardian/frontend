@@ -15,7 +15,7 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.NewsletterApi
+import services.{NewsletterApi, NewsletterResponse}
 import utils.RemoteAddress
 
 import scala.concurrent.{Await, Future}
@@ -91,14 +91,14 @@ class EmailSignupController(
     log.error(s"API call to get newsletters failed: ${jsError.errors.mkString(", ")}")
   }
 
-  def getNewsletterByName(listName: String): Either[JsError, Option[EmailNewsletter]] = {
+  def getNewsletterByName(listName: String): Either[JsError, Option[NewsletterResponse]] = {
 
     val groupedNewsletters = for {
       groupedNewsletters <- newsletterClient.getNewsletters()
     } yield {
       groupedNewsletters match {
-        case s: JsSuccess[List[EmailNewsletter]] =>
-          Right(s.get.find(newsletter => newsletter.identityName == listName))
+        case s: JsSuccess[List[NewsletterResponse]] =>
+          Right(s.get.find(newsletter => newsletter.id == listName))
         case e: JsError => Left(e)
       }
     }
@@ -106,15 +106,17 @@ class EmailSignupController(
     Await.result(groupedNewsletters, 10.seconds)
   }
 
-  def getNewsletterById(listId: Int): Either[JsError, Option[EmailNewsletter]] = {
+  def getNewsletterById(listId: Int): Either[JsError, Option[NewsletterResponse]] = {
 
     val groupedNewsletters = for {
       groupedNewsletters <- newsletterClient.getNewsletters()
     } yield {
       groupedNewsletters match {
-        case s: JsSuccess[List[EmailNewsletter]] =>
+        case s: JsSuccess[List[NewsletterResponse]] =>
           Right(
-            s.get.find(newsletter => newsletter.listId == listId || newsletter.listIdV1 == listId),
+            // TODO: Amend Identity API endpoint to reveal listIdV1. Needed to prevent breaking old iframes
+            // s.get.find(newsletter => newsletter.listId == listId || newsletter.listIdv1 == listId),
+            s.get.find(newsletter => newsletter.exactTargetListId == listId),
           )
         case e: JsError => Left(e)
       }

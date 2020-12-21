@@ -1,6 +1,6 @@
-@import com.gu.identity.model.EmailNewsletter
+@import services.NewsletterResponse
 @(  componentClass: String,
-    emailNewsletter: EmailNewsletter)(implicit request: RequestHeader)
+    emailNewsletter: NewsletterResponse)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -12,7 +12,7 @@
 @formClass = @{ "newsletter-embed__form" + " newsletter-embed__form--" + componentClass }
 
 @emailEmbedData = @{emailNewsletter.emailEmbed}
-@listName = @{emailNewsletter.identityName}
+@listName = @{emailNewsletter.id}
 @imageAltText = @{s"${emailEmbedData.name} profile image"}
 
 
