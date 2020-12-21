@@ -731,6 +731,11 @@ class GuardianConfiguration extends Logging {
     lazy val apiKey = configuration.getStringProperty("braze.apikey").getOrElse("")
   }
 
+  object newsletterApi {
+    lazy val host = configuration.getStringProperty("newsletterApi.host")
+    lazy val origin = configuration.getStringProperty("newsletterApi.origin")
+  }
+
 }
 
 object ManifestData {
