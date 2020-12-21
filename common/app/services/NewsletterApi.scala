@@ -1,15 +1,8 @@
 package services
 
-import com.gu.identity.model.{
-  EmailEmbed,
-  EmailNewsletter,
-  GroupedNewsletter,
-  GroupedNewsletters,
-  NewsletterIllustration,
-}
+import com.gu.identity.model.{EmailEmbed, NewsletterIllustration}
 import common.{BadConfigurationException, Logging}
-import play.api.libs.json.{JsPath, JsResult, JsValue, Json, Reads}
-import play.api.libs.functional.syntax._
+import play.api.libs.json.{JsResult, JsValue, Json}
 import play.api.libs.ws.WSClient
 import conf.Configuration._
 
@@ -64,7 +57,7 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
   private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
 
   private def getBody(path: String): Future[JsValue] = {
-    val maybeJson = for {
+    val maybeJson: Option[Future[JsValue]] = for {
       host <- newsletterApi.host
       origin <- newsletterApi.origin
     } yield {
