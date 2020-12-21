@@ -8,12 +8,44 @@ import com.gu.identity.model.{
   NewsletterIllustration,
 }
 import common.{BadConfigurationException, Logging}
-import play.api.libs.json.{JsResult, JsValue, Json}
+import play.api.libs.json.{JsPath, JsResult, JsValue, Json, Reads}
+import play.api.libs.functional.syntax._
 import play.api.libs.ws.WSClient
 import conf.Configuration._
 
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}
+
+case class NewsletterResponse(
+    id: String,
+    name: String,
+    brazeNewsletterName: String,
+    brazeSubscribeAttributeName: String,
+    brazeSubscribeEventNamePrefix: String,
+    theme: String,
+    description: String,
+    frequency: String,
+    exactTargetListId: Int,
+    emailEmbed: EmailEmbed,
+    illustration: Option[NewsletterIllustration] = None,
+)
+
+case class GroupedNewsletterResponse(
+    displayName: String,
+    newsletters: List[NewsletterResponse],
+)
+
+case class GroupedNewslettersResponse(
+    newsRoundups: GroupedNewsletterResponse,
+    newsByTopic: GroupedNewsletterResponse,
+    features: GroupedNewsletterResponse,
+    sport: GroupedNewsletterResponse,
+    culture: GroupedNewsletterResponse,
+    lifestyle: GroupedNewsletterResponse,
+    comment: GroupedNewsletterResponse,
+    work: GroupedNewsletterResponse,
+    fromThePapers: GroupedNewsletterResponse,
+)
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends Logging
@@ -23,11 +55,11 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
 
   implicit val newsletterIllustrationReads = Json.reads[NewsletterIllustration]
 
-  implicit val newsletterReads = Json.reads[EmailNewsletter]
+  implicit val newsletterResponseReads = Json.reads[NewsletterResponse]
 
-  implicit val groupedNewsletterReads = Json.reads[GroupedNewsletter]
+  implicit val groupedNewsletterResponseReads = Json.reads[GroupedNewsletterResponse]
 
-  implicit val groupedNewslettersReads = Json.reads[GroupedNewsletters]
+  implicit val groupedNewslettersReads = Json.reads[GroupedNewslettersResponse]
 
   private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
 
@@ -51,18 +83,18 @@ case class NewsletterApi(wsClient: WSClient)(implicit executionContext: Executio
     )
   }
 
-  def getGroupedNewsletters(): Future[JsResult[GroupedNewsletters]] = {
+  def getGroupedNewsletters(): Future[JsResult[GroupedNewslettersResponse]] = {
     getBody("newsletters/grouped").map { json =>
       {
-        json.validate[GroupedNewsletters]
+        json.validate[GroupedNewslettersResponse]
       }
     }
   }
 
-  def getNewsletters(): Future[JsResult[List[EmailNewsletter]]] = {
+  def getNewsletters(): Future[JsResult[List[NewsletterResponse]]] = {
     getBody("newsletters").map { json =>
       {
-        json.validate[List[EmailNewsletter]]
+        json.validate[List[NewsletterResponse]]
       }
     }
   }
