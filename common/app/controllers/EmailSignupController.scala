@@ -1,6 +1,5 @@
 package controllers
 
-import com.gu.identity.model.EmailNewsletter
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
 import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
@@ -15,10 +14,10 @@ import play.api.libs.json._
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc._
 import play.filters.csrf.{CSRFAddToken, CSRFCheck}
-import services.{NewsletterApi, NewsletterResponse}
+import services.newsletters.{EmailEmbedAgent, NewsletterApi}
 import utils.RemoteAddress
 
-import scala.concurrent.{Await, Future}
+import scala.concurrent.Future
 import scala.concurrent.duration._
 
 object emailLandingPage extends StandalonePage {
@@ -70,12 +69,12 @@ class EmailSignupController(
     val controllerComponents: ControllerComponents,
     csrfCheck: CSRFCheck,
     csrfAddToken: CSRFAddToken,
+    emailEmbedAgent: EmailEmbedAgent,
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
     with Logging {
   val emailFormService = new EmailFormService(wsClient)
-  val newsletterClient: NewsletterApi = NewsletterApi(wsClient)
 
   val emailForm: Form[EmailForm] = Form(
     mapping(
@@ -91,40 +90,6 @@ class EmailSignupController(
     log.error(s"API call to get newsletters failed: ${jsError.errors.mkString(", ")}")
   }
 
-  def getNewsletterByName(listName: String): Either[JsError, Option[NewsletterResponse]] = {
-
-    val groupedNewsletters = for {
-      groupedNewsletters <- newsletterClient.getNewsletters()
-    } yield {
-      groupedNewsletters match {
-        case s: JsSuccess[List[NewsletterResponse]] =>
-          Right(s.get.find(newsletter => newsletter.id == listName))
-        case e: JsError => Left(e)
-      }
-    }
-
-    Await.result(groupedNewsletters, 10.seconds)
-  }
-
-  def getNewsletterById(listId: Int): Either[JsError, Option[NewsletterResponse]] = {
-
-    val groupedNewsletters = for {
-      groupedNewsletters <- newsletterClient.getNewsletters()
-    } yield {
-      groupedNewsletters match {
-        case s: JsSuccess[List[NewsletterResponse]] =>
-          Right(
-            // TODO: Amend Identity API endpoint to reveal listIdV1. Needed to prevent breaking old iframes
-            // s.get.find(newsletter => newsletter.listId == listId || newsletter.listIdv1 == listId),
-            s.get.find(newsletter => newsletter.exactTargetListId == listId),
-          )
-        case e: JsError => Left(e)
-      }
-    }
-
-    Await.result(groupedNewsletters, 10.seconds)
-  }
-
   def renderPage(): Action[AnyContent] =
     Action { implicit request =>
       Cached(60)(RevalidatableResult.Ok(views.html.emailLanding(emailLandingPage)))
@@ -133,7 +98,7 @@ class EmailSignupController(
   def renderFooterForm(listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = getNewsletterByName(listName)
+        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
         identityNewsletter match {
           case Right(Some(_)) =>
             Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
@@ -148,7 +113,7 @@ class EmailSignupController(
   def renderForm(emailType: String, listId: Int): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = getNewsletterById(listId)
+        val identityNewsletter = emailEmbedAgent.getNewsletterById(listId)
 
         identityNewsletter match {
           case Right(Some(newsletter)) =>
@@ -172,7 +137,7 @@ class EmailSignupController(
   def renderFormFromName(emailType: String, listName: String): Action[AnyContent] =
     csrfAddToken {
       Action { implicit request =>
-        val identityNewsletter = getNewsletterByName(listName)
+        val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
         identityNewsletter match {
           case Right(Some(newsletter)) =>
             Cached(1.hour)(
@@ -184,10 +149,10 @@ class EmailSignupController(
                 ),
               ),
             )
-          case Right(_) => Cached(15.minute)(WithoutRevalidationResult(NoContent))
+          case Right(_) => Cached(15.seconds)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
             logJsError(e)
-            Cached(15.minute)(WithoutRevalidationResult(NoContent))
+            Cached(15.seconds)(WithoutRevalidationResult(NoContent))
         }
       }
     }
@@ -207,7 +172,7 @@ class EmailSignupController(
 
   def subscriptionSuccessResult(listName: String): Action[AnyContent] =
     Action { implicit request =>
-      val identityNewsletter = getNewsletterByName(listName)
+      val identityNewsletter = emailEmbedAgent.getNewsletterByName(listName)
       identityNewsletter match {
         case Right(Some(newsletter)) =>
           Cached(1.hour)(

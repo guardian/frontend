@@ -46,8 +46,18 @@ class ArticleController(
 
   def renderArticle(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
-      mapModel(path, ArticleBlocks) { (article, blocks) =>
-        render(path, article, blocks)
+      mapModel(path, ArticleBlocks) { (articlePage, blocks) =>
+        val newArticlePage = articlePage.copy(
+          article = articlePage.article.copy(
+            content = articlePage.article.content.copy(
+              fields = articlePage.article.content.fields.copy(
+                body = articlePage.article.content.fields.body
+                  .replaceAll("https://www.theguardian.com/email/form", "/email/form"),
+              ),
+            ),
+          ),
+        )
+        render(path, newArticlePage, blocks)
       }
     }
   }

@@ -28,9 +28,15 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
+import services.newsletters.EmailEmbedLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
-trait PreviewLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
+trait PreviewLifecycleComponents
+    extends SportServices
+    with CommercialServices
+    with FapiServices
+    with OnwardServices
+    with ApplicationsServices {
   self: FrontendComponents =>
 
   //Override conflicting members
@@ -53,6 +59,7 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
       wire[TargetingLifecycle],
       wire[SkimLinksCacheLifeCycle],
       wire[CloudWatchMetricsLifecycle],
+      wire[EmailEmbedLifecycle],
     )
 
   def actorSystem: ActorSystem
@@ -67,7 +74,8 @@ trait PreviewControllerComponents
     with FootballControllers
     with CricketControllers
     with FrontendComponents
-    with RugbyControllers {
+    with RugbyControllers
+    with ApplicationsServices {
   self: BuiltInComponents =>
 
   def wsClient: WSClient

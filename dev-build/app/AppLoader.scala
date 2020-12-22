@@ -32,6 +32,10 @@ import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
+import play.api.libs.ws.WSClient
+import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
+
+import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -52,6 +56,11 @@ trait Controllers
     with FrontendComponents
     with CricketControllers {
   self: BuiltInComponents =>
+
+  // Required for EmailSignupController
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -76,6 +85,9 @@ trait AppComponents
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val blockingOperations = wire[BlockingOperations]
+  override lazy val newsletterApi = wire[NewsletterApi]
+  override lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
@@ -104,6 +116,7 @@ trait AppComponents
       wire[TargetingLifecycle],
       wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
+      wire[EmailEmbedLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

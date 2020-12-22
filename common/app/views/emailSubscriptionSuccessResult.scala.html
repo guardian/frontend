@@ -1,6 +1,6 @@
 @import com.gu.identity.model.EmailNewsletter
 @import experiments.{ActiveExperiments, NewsletterEmbedDesign}
-@import services.NewsletterResponse
+@import services.newsletters.NewsletterResponse
 @(page: model.Page, emailNewsletter: NewsletterResponse, listName: String)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @electionNewsletters = @{List("minute-us", "us-morning-newsletter", "today-us", "green-light")}

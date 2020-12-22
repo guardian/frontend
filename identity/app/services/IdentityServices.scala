@@ -1,7 +1,6 @@
 package services
 
 import java.util.concurrent.{Executors, ThreadPoolExecutor}
-
 import clients.DiscussionClient
 import com.gu.identity.cookie.IdentityCookieService
 import com.gu.identity.play.IdentityPlayAuthService
@@ -12,6 +11,7 @@ import idapiclient.IdApiComponents
 import org.http4s.Uri
 import play.api.libs.ws.WSClient
 import play.api.mvc.ControllerComponents
+import services.newsletters.{EmailEmbedAgent, NewsletterApi}
 import utils.IdentityApiThreadPoolMonitor
 
 import scala.concurrent.ExecutionContext
@@ -50,4 +50,6 @@ trait IdentityServices extends IdentityConfigurationComponents with IdApiCompone
   lazy val mdapiService = wire[MembersDataApiService]
   lazy val discussionApiService = wire[DiscussionApiService]
   lazy val discussionClient = wire[DiscussionClient]
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val emailEmbedAgent = wire[EmailEmbedAgent]
 }

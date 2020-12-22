@@ -1,10 +1,10 @@
-package services
+package services.newsletters
 
 import com.gu.identity.model.{EmailEmbed, NewsletterIllustration}
 import common.{BadConfigurationException, Logging}
+import conf.Configuration._
 import play.api.libs.json.{JsResult, JsValue, Json}
 import play.api.libs.ws.WSClient
-import conf.Configuration._
 
 import scala.concurrent.duration.DurationInt
 import scala.concurrent.{ExecutionContext, Future}

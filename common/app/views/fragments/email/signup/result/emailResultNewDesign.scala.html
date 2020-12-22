@@ -1,7 +1,6 @@
-@import services.NewsletterResponse
-@(listName: String,
-        emailNewsletter: NewsletterResponse,
-        resultHtml: Html)(implicit request: RequestHeader)
+@import services.newsletters.NewsletterResponse
+@(listName: String, emailNewsletter: NewsletterResponse, resultHtml: Html)(implicit request: RequestHeader)
+
 @emailEmbedData = @{emailNewsletter.emailEmbed}
 @wrapperClass = @{
     "newsletter-embed newsletter-embed--result"
