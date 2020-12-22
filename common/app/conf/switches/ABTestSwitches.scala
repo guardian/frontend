@@ -62,7 +62,7 @@ trait ABTestSwitches {
     "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
     owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 23),
+    sellByDate = new LocalDate(2021, 1, 6),
     exposeClientSide = true,
   )
 
