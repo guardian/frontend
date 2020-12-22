@@ -1,3 +1,5 @@
+// @flow
+
 import { getUrlVars } from 'lib/url';
 import { removeCookie, addCookie } from 'lib/cookies';
 
