@@ -72,7 +72,7 @@ trait ABTestSwitches {
     "New newsletter signup embeds for discoverability OKR",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 4),
+    sellByDate = new LocalDate(2021, 1, 11),
     exposeClientSide = true,
   )
 
