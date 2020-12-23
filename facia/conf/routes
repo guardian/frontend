@@ -16,7 +16,7 @@ GET        /humans.txt                                                          
 GET        /.well-known/security.txt                                                controllers.Assets.at(path="/public", file="security.txt")
 GET        /.well-known/security.txt.asc                                            controllers.Assets.at(path="/public", file="security.txt.asc")
 
-GET        /.well-known/amphtml/apikey.pub                                          controllers.Assets.at(path="/public/amphtml", file="apikey.pub")
+GET        /.well-known/amphtml/apikey.pub                                          controllers.FaciaController.ampRsaPublicKey()
 
 # AMP
 GET        /container/count/:count/offset/:offset/mf2.json                                      controllers.FaciaController.renderSomeFrontContainersMf2(count: Int, offset: Int, section = "", edition = "")
