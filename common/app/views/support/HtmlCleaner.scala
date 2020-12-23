@@ -779,7 +779,8 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
       Option(element.nextElementSibling()).exists(_.hasClass("fc-container--thrasher"))
 
     def isMostViewedContainer(element: Element): Boolean =
-      Option(element.id()).contains("most-viewed")
+      Option(element.id()).contains("most-viewed") || element.id().contains("popular-in")
+
 
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
