@@ -1,6 +1,6 @@
 @import com.gu.commercial.branding.Branding
 @import common.commercial.ContainerModel
-@import common.{Edition, Localisation}
+@import common.{Edition, LinkTo, Localisation}
 @import views.html.fragments.commercial.containerLogo
 @import views.support.RenderClasses
 
@@ -55,5 +55,40 @@
                 )
             }
         }
+
+        @if(containerDefinition.href){
+            @defining((containerDefinition.displayName, containerDefinition.href)) { case (title, href) =>
+                @title.map { title =>
+                    @defining(frontProperties.editorialType.contains("Contributor")) { isContributor =>
+
+                        <div class="@RenderClasses(Map(
+                            "fc-container__header__title" -> true,
+                            "tone-comment" -> isContributor,
+                            "tone-colour" -> isContributor))">
+                            @href.map { href =>
+                            <a data-link-name="section heading" href="@LinkTo {/@href}">
+                                <button class="@RenderClasses(Map(
+    ("button", true),
+    ("button--medium", true),
+    ("button--show-more", true),
+    ("button--primary", true),
+    ("collection__show-more", true),
+    ("js-show-more-button", true),
+    ("modern-visible", true)
+))"
+        data-test-id="show-more"
+        data-link-name="more">
+        <span class="js-button-text">See all @Localisation(title)</span>
+</button>
+                            </a>
+                            }.getOrElse {
+                                <button tabindex="0">@Localisation(title)</button>
+                            }
+                        </div>
+                    }
+                }
+        }
+        }
+
     </div>
 }
