@@ -118,7 +118,7 @@ export const globalEoyHeaderTest: ABTest = {
             test: (): void => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
-                    const heading = month === 12 ? `Support us this December` : 'Support us for 2021';
+                    const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
                     bar.innerHTML = buildHtml(heading, 'Power vital, open, independent journalism', 'variant');
                     onView('variant')
                 }
