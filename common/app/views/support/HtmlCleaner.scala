@@ -780,7 +780,7 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
 
     def isMostViewedContainer(element: Element): Boolean =
       Option(element.id()).contains("most-viewed") || Option(element.id()).exists(_.contains("popular-in"))
-     
+
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
     val containers: List[Element] = document.getElementsByClass("fc-container").asScala.toList
