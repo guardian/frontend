@@ -161,7 +161,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       byline = fields.byline,
       image = fields.thumbnail,
       ageWarning = None,
-      isLiveBlog = true,
+      isLiveBlog = fields.liveBloggingNow.getOrElse(false),
       pillar = correctPillar(pillar.toLowerCase),
       designType = content.`type`.toString,
       webPublicationDate = webPublicationDate.toString(),
