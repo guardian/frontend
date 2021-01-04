@@ -2,41 +2,40 @@ package services.newsletters
 
 import com.gu.Box
 import common._
-import play.api.libs.json.{JsError, JsSuccess}
 
 import scala.concurrent.{ExecutionContext, Future}
 
 class EmailEmbedAgent(newsletterApi: NewsletterApi) extends Logging {
 
-  private val agent = Box[Either[JsError, List[NewsletterResponse]]](Right(Nil))
+  private val agent = Box[Either[String, List[NewsletterResponse]]](Right(Nil))
 
-  def refresh()(implicit ec: ExecutionContext): Future[Either[JsError, List[NewsletterResponse]]] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Either[String, List[NewsletterResponse]]] = {
     log.info("Refreshing newsletters for newsletter signup embeds.")
 
     val newslettersQuery = newsletterApi.getNewsletters()
 
     newslettersQuery.flatMap { newsletters =>
       agent.alter(newsletters match {
-        case succ: JsSuccess[List[NewsletterResponse]] =>
-          Right(succ.get)
-        case err: JsError => Left(err)
+        case Right(response) => Right(response)
+        case Left(err)       => Left(err)
       })
     }
   }
 
-  def getNewsletterByName(listName: String): Either[JsError, Option[NewsletterResponse]] = {
+  def getNewsletterByName(listName: String): Either[String, Option[NewsletterResponse]] = {
     agent.get() match {
       case Left(err)          => Left(err)
       case Right(newsletters) => Right(newsletters.find(newsletter => newsletter.id == listName))
     }
   }
 
-  def getNewsletterById(listId: Int): Either[JsError, Option[NewsletterResponse]] = {
+  def getNewsletterById(listId: Int): Either[String, Option[NewsletterResponse]] = {
     agent.get() match {
       case Left(err) => Left(err)
-      // TODO: Amend Identity API endpoint to reveal listIdV1. Needed to prevent breaking old iframes
-      // find(newsletter => newsletter.listId == listId || newsletter.listIdv1 == listId),
-      case Right(newsletters) => Right(newsletters.find(newsletter => newsletter.exactTargetListId == listId))
+      case Right(newsletters) =>
+        Right(
+          newsletters.find(newsletter => newsletter.exactTargetListId == listId || newsletter.listIdv1 == listId),
+        )
     }
   }
 

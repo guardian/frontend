@@ -32,10 +32,7 @@ import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
-import play.api.libs.ws.WSClient
 import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
-
-import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =

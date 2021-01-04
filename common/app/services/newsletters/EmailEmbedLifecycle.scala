@@ -7,11 +7,9 @@ import play.api.inject.ApplicationLifecycle
 import java.util.concurrent.Executors
 import scala.concurrent.{ExecutionContext, ExecutionContextExecutorService, Future}
 
-class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, emailEmbedAgent: EmailEmbedAgent)
-    extends LifecycleComponent {
-
-  implicit val newsletterClientExecutionContext: ExecutionContextExecutorService =
-    ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
+class EmailEmbedLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, emailEmbedAgent: EmailEmbedAgent)(
+    implicit ec: ExecutionContext,
+) extends LifecycleComponent {
 
   appLifecycle.addStopHook { () =>
     Future {

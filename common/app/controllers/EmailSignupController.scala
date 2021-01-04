@@ -86,8 +86,8 @@ class EmailSignupController(
     )(EmailForm.apply)(EmailForm.unapply),
   )
 
-  def logJsError(jsError: JsError): Unit = {
-    log.error(s"API call to get newsletters failed: ${jsError.errors.mkString(", ")}")
+  def logApiError(error: String): Unit = {
+    log.error(s"API call to get newsletters failed: $error")
   }
 
   def renderPage(): Action[AnyContent] =
@@ -104,7 +104,7 @@ class EmailSignupController(
             Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
           case Right(_) => Cached(15.minute)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
-            logJsError(e)
+            logApiError(e)
             Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -128,7 +128,7 @@ class EmailSignupController(
             )
           case Right(_) => Cached(15.minute)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
-            logJsError(e)
+            logApiError(e)
             Cached(15.minute)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -151,7 +151,7 @@ class EmailSignupController(
             )
           case Right(_) => Cached(15.seconds)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
-            logJsError(e)
+            logApiError(e)
             Cached(15.seconds)(WithoutRevalidationResult(NoContent))
         }
       }
@@ -182,7 +182,7 @@ class EmailSignupController(
           )
         case Right(_) => Cached(15.minute)(WithoutRevalidationResult(NoContent))
         case Left(e) =>
-          logJsError(e)
+          logApiError(e)
           Cached(15.minute)(WithoutRevalidationResult(NoContent))
       }
     }
