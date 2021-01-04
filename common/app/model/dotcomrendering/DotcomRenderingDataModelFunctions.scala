@@ -24,7 +24,7 @@ import model.{
   PageWithStoryPackage,
   Pillar,
 }
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupportGifting}
 import navigation.UrlHelpers._
 import navigation.NavMenu
 import navigation.FooterLinks
@@ -216,11 +216,21 @@ object DotcomRenderingDataModelFunctions {
 
     val article = page.article
 
-    // For createdOn and createdOnDisplay we are going to carry on use the block information
-    // I am not sure they are used on DCR and I do not seem to be able to find them as article metadata
-    // Todo: Check whether they are used on DCR or not and if not remove them from the model
+    // We are passing through the block data here, not the article
+    // the block dateTime types are used for liveblogs
+    // We will remove the non 'block' prefixed versions when DCR change is out
     val createdOn = block.createdDate.map(_.dateTime)
     val createdOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+    val blockCreatedOn = block.createdDate.map(_.dateTime)
+    val blockCreatedOnDisplay = createdOn.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+    val blockFirstPublished = block.firstPublishedDate.map(_.dateTime)
+    val blockFirstPublishedDisplay =
+      blockFirstPublished.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
+
+    val blockLastUpdated = block.lastModifiedDate.map(_.dateTime)
+    val blockLastUpdatedDisplay =
+      blockLastUpdated.map(dt => GUDateTimeFormatNew.formatTimeForDisplay(new DateTime(dt), request))
 
     // last updated (in both versions) and first published (in both versions) are going to
     // be computed from the article metadata.
@@ -244,11 +254,17 @@ object DotcomRenderingDataModelFunctions {
       ),
       createdOn = createdOn,
       createdOnDisplay = createdOnDisplay,
+      blockCreatedOn = blockCreatedOn,
+      blockCreatedOnDisplay = blockCreatedOnDisplay,
       lastUpdated = Some(displayedDateTimes.lastUpdated),
       lastUpdatedDisplay = Some(displayedDateTimes.lastUpdatedDisplay),
+      blockLastUpdated = blockLastUpdated,
+      blockLastUpdatedDisplay = blockLastUpdatedDisplay,
       title = block.title,
       firstPublished = Some(displayedDateTimes.firstPublished),
       firstPublishedDisplay = Some(displayedDateTimes.firstPublishedDisplay),
+      blockFirstPublished = blockFirstPublished,
+      blockFirstPublishedDisplay = blockFirstPublishedDisplay,
       primaryDateLine = displayedDateTimes.primaryDateLine,
       secondaryDateLine = displayedDateTimes.secondaryDateLine,
     )
@@ -406,30 +422,35 @@ object DotcomRenderingDataModelFunctions {
       getReaderRevenueUrl(SupportContribute, Header)(request),
       getReaderRevenueUrl(SupportSubscribe, Header)(request),
       getReaderRevenueUrl(Support, Header)(request),
+      getReaderRevenueUrl(SupportGifting, Header)(request),
     )
 
     val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, Footer)(request),
       getReaderRevenueUrl(SupportSubscribe, Footer)(request),
       getReaderRevenueUrl(Support, Footer)(request),
+      getReaderRevenueUrl(SupportGifting, Footer)(request),
     )
 
     val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, SideMenu)(request),
       getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
       getReaderRevenueUrl(Support, SideMenu)(request),
+      getReaderRevenueUrl(SupportGifting, SideMenu)(request),
     )
 
     val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
       getReaderRevenueUrl(Support, AmpHeader)(request),
+      getReaderRevenueUrl(SupportGifting, AmpHeader)(request),
     )
 
     val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
       getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
       getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
       getReaderRevenueUrl(Support, AmpFooter)(request),
+      getReaderRevenueUrl(SupportGifting, AmpFooter)(request),
     )
 
     val readerRevenueLinks = ReaderRevenueLinks(

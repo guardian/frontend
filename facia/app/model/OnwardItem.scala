@@ -9,7 +9,6 @@ import views.support.{ImgSrc, RemoveOuterParaHtml}
 import implicits.FaciaContentFrontendHelpers._
 import play.api.mvc.RequestHeader
 
-// Temporarily copied from onward for the headlines test. We should move this/refactor if the test is successful.
 case class OnwardItem(
     url: String,
     linkText: String,

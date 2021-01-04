@@ -1,5 +1,7 @@
 package controllers
 
+import com.github.nscala_time.time.Imports.DateTimeZone
+
 import java.time.Instant
 import java.time.temporal.ChronoUnit
 import common._
@@ -9,10 +11,19 @@ import feed.{DayMostPopularAgent, DeeplyReadAgent, DeeplyReadItem, GeoMostPopula
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
-import models.{MostPopularGeoResponse, OnwardCollectionForDCRv2, OnwardCollectionResponse, OnwardItem}
+import model.pressed.PressedContent
+import models.{
+  MostPopularGeoResponse,
+  MostPopularNx2,
+  OnwardCollectionResponse,
+  OnwardCollectionResponseDCR,
+  OnwardItemNx2,
+}
+import implicits.FaciaContentFrontendHelpers._
 import play.api.libs.json._
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
+import views.support.{ImgSrc, RemoveOuterParaHtml}
 
 import scala.concurrent.Future
 
@@ -84,10 +95,65 @@ class MostPopularController(
       }
     }
 
+  def runDeeplyReadRefreshCycle(): Action[AnyContent] =
+    Action.async { implicit request =>
+      deeplyReadAgent.refresh().map { unit =>
+        Ok("done")
+      }
+    }
+
   def renderDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
-      deeplyReadAgent.getReport().map { report =>
-        Ok(Json.toJson(report))
+      Future.successful(Ok(Json.toJson(deeplyReadAgent.getReport())))
+    }
+
+  // Experimental (December 2020)
+  def renderWithDeeplyRead(path: String): Action[AnyContent] =
+    Action.async { implicit request =>
+      val edition = Edition(request)
+
+      // Synchronous global popular, from the mostPopularAgent (stateful)
+      val globalPopular: Option[MostPopularNx2] = {
+        val globalPopularContent = mostPopularAgent.mostPopular(edition)
+        if (globalPopularContent.nonEmpty) {
+          Some(
+            MostPopularNx2(
+              "Across The&nbsp;Guardian",
+              "",
+              globalPopularContent
+                .map(_.faciaContent)
+                .map(OnwardItemNx2.pressedContentToOnwardItemNx2),
+            ),
+          )
+        } else
+          None
+      }
+
+      // Async section specific most Popular.
+      val sectionPopular: Future[List[MostPopularNx2]] = {
+        if (path.nonEmpty) {
+          Future.successful(
+            List(
+              MostPopularNx2(
+                "Deeply read",
+                "",
+                deeplyReadAgent.getReport().map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2),
+              ),
+            ),
+          )
+        } else { Future(Nil) }
+      }
+
+      // map is not on a list, but on a Future
+      sectionPopular.map { sectionPopular =>
+        val sectionFirst = sectionPopular ++ globalPopular
+        val globalFirst = globalPopular.toList ++ sectionPopular
+        val mostPopular: List[MostPopularNx2] = if (path == "global-development") sectionFirst else globalFirst
+
+        mostPopular match {
+          case Nil     => NotFound
+          case popular => jsonResponseNx2(popular, mostCards())
+        }
       }
     }
 
@@ -130,24 +196,42 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = OnwardItem.trailsToItems(section.trails),
+        trails = section.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
-      OnwardItem.maybeFromContentCard(contentCard)
+      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
-      OnwardItem.maybeFromContentCard(contentCard)
+      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
-    val response = OnwardCollectionForDCRv2(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
+  }
+
+  def jsonResponseNx2(mostPopulars: Seq[MostPopularNx2], mostCards: Map[String, Option[ContentCard]])(implicit
+      request: RequestHeader,
+  ): Result = {
+    val tabs = mostPopulars.map { nx2 =>
+      OnwardCollectionResponse(nx2.heading, nx2.trails)
+    }
+    val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
+      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+    }
+    val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
+      OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
+    }
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
+    // Value is 1 fr the moment.
+    // We do caching in Fasty and the Ophan/CAPI updates are on schedule and async
+    Cached(1)(JsonComponent(response))
   }
 
   def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = OnwardItem.trailsToItems(mostPopular.trails),
+      trails = mostPopular.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
     )
     Cached(900)(JsonComponent(data))
   }

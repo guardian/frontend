@@ -22,20 +22,19 @@ case class SeriesStoriesDCR(
     displayname: String,
     description: Option[String],
     url: String,
-    trails: Seq[OnwardItem],
+    trails: Seq[OnwardItemNx2],
 )
 
 object SeriesStoriesDCR {
-  implicit val onwardItemWrites = Json.writes[OnwardItem]
+  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
-    val trails = OnwardItem.trailsToItems(series.trails.faciaItems)
     SeriesStoriesDCR(
       id = series.id,
       displayname = series.displayName,
       description = series.tag.properties.description,
       url = series.tag.properties.webUrl,
-      trails = trails,
+      trails = series.trails.faciaItems.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
     )
   }
 }

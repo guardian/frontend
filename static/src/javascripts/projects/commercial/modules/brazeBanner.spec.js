@@ -20,7 +20,7 @@ describe('canShowPreChecks', () => {
             const result = canShowPreChecks({
                 brazeSwitch: false,
                 apiKey: 'abcde',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })
 
@@ -33,7 +33,7 @@ describe('canShowPreChecks', () => {
             const result = canShowPreChecks({
                 brazeSwitch: true,
                 apiKey: '',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })
 
@@ -41,12 +41,12 @@ describe('canShowPreChecks', () => {
         });
     });
 
-    describe('when not a digital subscriber', () => {
+    describe('when not a supporter', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
                 brazeSwitch: true,
                 apiKey: 'abcde',
-                isDigiSubscriber: false,
+                userIsGuSupporter: false,
                 pageConfig: {isPaidContent: false},
             })
 
@@ -59,7 +59,7 @@ describe('canShowPreChecks', () => {
             const result = canShowPreChecks({
                 brazeSwitch: true,
                 apiKey: 'abcde',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: true},
             })
 
@@ -72,7 +72,7 @@ describe('canShowPreChecks', () => {
             const result = canShowPreChecks({
                 brazeSwitch: true,
                 apiKey: 'abcde',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })
 

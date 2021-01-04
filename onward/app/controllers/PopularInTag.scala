@@ -7,7 +7,7 @@ import containers.Containers
 import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model._
-import models.OnwardItem
+import models.OnwardItemNx2
 import models.OnwardCollectionResponse
 import play.api.mvc._
 import services._
@@ -45,7 +45,7 @@ class PopularInTag(
         JsonComponent(
           OnwardCollectionResponse(
             heading = "Related content",
-            trails = OnwardItem.trailsToItems(trails.items.map(_.faciaContent)),
+            trails = trails.items.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
           ),
         )
       } else {
