@@ -139,7 +139,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     pathToCapiContentMapping.get(removeStartingSlash(path))
   }
 
-  def correctPillar(pillar: String): String = if (pillar == "Arts") "Culture" else pillar
+  def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
     // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
@@ -162,7 +162,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       image = fields.thumbnail,
       ageWarning = None,
       isLiveBlog = true,
-      pillar = correctPillar(pillar),
+      pillar = correctPillar(pillar.toLowerCase),
       designType = content.`type`.toString,
       webPublicationDate = webPublicationDate.toString(),
       headline = headline,
