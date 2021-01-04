@@ -48,6 +48,14 @@
             display: none;
         }
     }
+
+    .cta-bar__heading {
+        body:not(.has-page-skin) & {
+            @include mq(leftCol) {
+                @include fs-headline(5, true);
+            }
+        }
+    }
 }
 
 .new-header__cta-bar-aus-moment .cta-bar__aus-map-cta {

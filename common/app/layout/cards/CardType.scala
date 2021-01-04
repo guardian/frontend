@@ -17,7 +17,7 @@ sealed trait CardType {
 
   def youTubeMediaAtomPlayer: VideoPlayerMode =
     this match {
-      case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight =>
+      case FullMedia50 | FullMedia75 | FullMedia100 | ThreeQuarters | ThreeQuartersRight | ThreeQuartersTall =>
         VideoPlayerMode(show = true, showEndSlate = true)
       case Half | Third =>
         VideoPlayerMode(show = true, showEndSlate = false)

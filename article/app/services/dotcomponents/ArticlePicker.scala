@@ -10,6 +10,7 @@ import model.liveblog.{
   CommentBlockElement,
   ContentAtomBlockElement,
   DocumentBlockElement,
+  EmbedBlockElement,
   GuVideoBlockElement,
   ImageBlockElement,
   InstagramBlockElement,
@@ -58,6 +59,7 @@ object ArticlePageChecks {
         case _: AudioBlockElement     => false
         case _: CommentBlockElement   => false
         case _: DocumentBlockElement  => false
+        case _: EmbedBlockElement     => true
         case _: GuVideoBlockElement   => false
         case _: ImageBlockElement     => false
         case _: InstagramBlockElement => false

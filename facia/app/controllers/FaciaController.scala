@@ -408,6 +408,22 @@ trait FaciaController
     if (request.isAdFree) FullAdFreeType else FullType
   def liteRequestType(implicit request: RequestHeader): PressedPageType =
     if (request.isAdFree) LiteAdFreeType else LiteType
+
+  def ampRsaPublicKey: Action[AnyContent] = {
+    Action {
+      val rsakey: String = """-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArLbfdMxclHAJvmVW7IXf
+SYjWoLl6qtwRY7CzX3Y7xV2vUx0O0YIyvXhjRsqrIBdUatDyukAM+m/3pPlYLTV5
+LniZcSDq/vjjaueCoTWjfpnp/cgS2mvOmReaa9lTdvQhYvckJaLD5vrr37XRqq8r
+McdNaVF84z8zdZoEAXigQVgQ7uPlBGiBTDl+nrNyUpBC4nL/9yozTS8To7MkNT1w
+X4fw/fFcAzZ4mizXr/msHGHtXU9lc/TS2yKMWjunSwQOxDIKnxueU8LMkdduYrve
+/bSPgXHAMlJ/Oz8df4e/8hz1FISnD4Y4morh/oPg0yemFfMya7GplzqWd27moE/R
+aQIDAQAB
+-----END PUBLIC KEY-----"""
+      Ok(rsakey)
+    }
+  }
+
 }
 
 class FaciaControllerImpl(

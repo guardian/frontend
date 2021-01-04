@@ -8,6 +8,10 @@ import common._
 import models._
 
 import scala.concurrent.{ExecutionContext, Future}
+import scala.util.control.NonFatal
+
+import scala.concurrent.duration.Duration
+import scala.concurrent.{Await, Future}
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
@@ -71,10 +75,15 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private var hasBeenRefreshed = false
   private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
+
+  // Note that keys in pathToCapiContentMapping are paths without starting slash
   private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
     scala.collection.mutable.Map.empty[String, Content]
+
+  def removeStartingSlash(path: String): String = {
+    if (path.startsWith("/")) path.stripPrefix("/") else path
+  }
 
   def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
     log.info(s"[cb01a845] Deeply Read Agent refresh()")
@@ -83,36 +92,37 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         query CAPI and set the Content for the path.
      */
 
-    // ophanItemInProgress will be updated with a new items as we got through the Ophan answer
-    // Then used to atomically update ophanItems
-    val ophanItemInProgress: scala.collection.mutable.ArrayBuffer[OphanDeeplyReadItem] =
-      scala.collection.mutable.ArrayBuffer.empty[OphanDeeplyReadItem]
-
     ophanApi.getDeeplyReadContent().map { seq =>
+      // This is where the atomic update of ophanItems which faithfully reflects the state of the Ophan answer
+      ophanItems = seq.toArray
+      log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
+
       seq.foreach { ophanItem =>
-        log.info(s"[cb01a845] Registering Ophan deeply read item: ${ophanItem.toString}")
-        val path = ophanItem.path
-        log.info(s"[cb01a845] Looking up CAPI data for path: ${path}")
+        log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+        val path = removeStartingSlash(ophanItem.path)
+        log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
         val capiItem = contentApiClient
           .item(path)
           .showTags("all")
           .showFields("all")
           .showReferences("all")
           .showAtoms("all")
-        println(capiItem)
-        contentApiClient
+        val fx = contentApiClient
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
-              ophanItemInProgress.append(ophanItem)
+              log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
-        Thread.sleep(1000)
-      }
-      log.info(s"[cb01a845] ophanItems = ophanItemInProgress.toArray, (${ophanItemInProgress.toArray.size})")
-      if (ophanItemInProgress.toArray.size > 0) {
-        ophanItems = ophanItemInProgress.toArray // Atomic update of ophanItems
+          .recover {
+            case NonFatal(e) =>
+              log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
+              None
+          }
+        // We do the nest two instruction to, essentially, avoid spamming CAPI
+        Await.ready(fx, Duration(200, "millis"))
+        Thread.sleep(100)
       }
     }
   }
@@ -122,14 +132,20 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         This function returns any stored CAPI Content for a path, thereby making the link between the path read from
         a OphanDeeplyReadItem and a DeeplyReadItem (from the corresponding Content).
 
-        we use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
+        We use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
+
+        Note that the path are used without starting slash
      */
-    pathToCapiContentMapping.get(path)
+    pathToCapiContentMapping.get(removeStartingSlash(path))
   }
 
+  def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
+
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
+    // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
+    // Note that we could also do it during the DeeplyReadItem to OnwardItemNx2 transformation
     for {
-      content <- getDataForPath(item.path)
+      content <- getDataForPath(removeStartingSlash(item.path))
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
       linkText <- fields.trailText
@@ -146,7 +162,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       image = fields.thumbnail,
       ageWarning = None,
       isLiveBlog = true,
-      pillar = pillar,
+      pillar = correctPillar(pillar.toLowerCase),
       designType = content.`type`.toString,
       webPublicationDate = webPublicationDate.toString(),
       headline = headline,
@@ -159,6 +175,15 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
+    if (
+      ophanItems.isEmpty || ophanItems
+        .exists(oi => !pathToCapiContentMapping.keys.toSet.contains(removeStartingSlash(oi.path)))
+    ) {
+      // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
+      // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
+      log.info(s"[cb01a845] refresh() from getReport()")
+      refresh()
+    }
     ophanItems
       .map(ophanItemToDeeplyReadItem)
       .filter(_.isDefined)

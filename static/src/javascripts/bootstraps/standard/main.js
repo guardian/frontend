@@ -26,8 +26,7 @@ import {
     isUserLoggedIn,
     init as identityInit,
 } from 'common/modules/identity/api';
-import { removeCookie, addCookie } from 'lib/cookies';
-import { getUrlVars } from 'lib/url';
+import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
@@ -41,15 +40,6 @@ import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
 
-const setAdTestCookie = (): void => {
-    const queryParams = getUrlVars();
-
-    if (queryParams.adtest === 'clear') {
-        removeCookie('adtest');
-    } else if (queryParams.adtest) {
-        addCookie('adtest', encodeURIComponent(queryParams.adtest), 10);
-    }
-};
 
 const showHiringMessage = (): void => {
     try {
@@ -205,9 +195,6 @@ const bootStandard = (): void => {
 
     // polyfill dynamic import
     initDynamicImport();
-
-    // Set adtest query if url param declares it
-    setAdTestCookie();
 
     // set a short-lived cookie to trigger server-side ad-freeness
     // if the user is genuinely ad-free, this one will be overwritten
