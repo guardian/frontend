@@ -44,7 +44,7 @@ const buildHtml = (heading, subheading, variant) => `
         <div class="cta-bar__heading">${heading}</div>
         <div class="cta-bar__subheading">${subheading}</div>
     </div>
-                    
+
     <a class="cta-bar__cta hide-until-tablet js-change-become-member-link js-acquisition-link" data-link-name="nav2 : contribute-cta" data-edition="${edition}" href="${buildUrl('contribute', variant)}">
         Contribute
         <span class="inline-arrow-right inline-icon ">
@@ -116,9 +116,20 @@ export const globalEoyHeaderTest = {
             test: () => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
-                    const heading = month === 12 ? `Support us this December` : 'Support us for 2021';
+                    const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
                     bar.innerHTML = buildHtml(heading, 'Power vital, open, independent journalism', 'variant');
                     onView('variant')
+                }
+            },
+        },
+        {
+            id: 'variant2',
+            test: () => {
+                const bar = getHeaderCtaBar();
+                if (bar) {
+                    const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
+                    bar.innerHTML = buildHtml(heading, 'Available for everyone, funded by readers', 'variant2');
+                    onView('variant2')
                 }
             },
         },
