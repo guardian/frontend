@@ -6,7 +6,7 @@ import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/a
 import { getUrlVars } from 'lib/url';
 import ophan from 'ophan/ng';
 import {getUserFromApi} from 'common/modules/identity/api';
-import {isDigitalSubscriber} from "common/modules/commercial/user-features";
+import {shouldNotBeShownSupportMessaging} from "common/modules/commercial/user-features";
 import {measureTiming} from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
@@ -46,9 +46,9 @@ const hasRequiredConsents = () =>
 const canShowPreChecks = ({
     brazeSwitch,
     apiKey,
-    isDigiSubscriber,
+    userIsGuSupporter,
     pageConfig,
-}) => Boolean(brazeSwitch && apiKey && isDigiSubscriber && !pageConfig.isPaidContent);
+}) => Boolean(brazeSwitch && apiKey && userIsGuSupporter && !pageConfig.isPaidContent);
 
 let messageConfig;
 let appboy;
@@ -63,15 +63,15 @@ const FORCE_BRAZE_ALLOWLIST = [
 const getMessageFromQueryString = () => {
     const qsArg = 'force-braze-message';
 
-    if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
-        console.log(`${qsArg} is not supported on this domain`)
-        return null;
-    }
-
     const params = getUrlVars();
     const value = params[qsArg];
 
     if (value) {
+        if (!FORCE_BRAZE_ALLOWLIST.includes(window.location.hostname)) {
+            console.log(`${qsArg} is not supported on this domain`)
+            return null;
+        }
+
         try {
             const dataFromBraze = JSON.parse(value);
 
@@ -120,14 +120,24 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
             return;
         }
 
-        appboy.subscribeToInAppMessage((message) => {
+        let subscriptionId;
+
+        const callback = (message) => {
             if (message.extras) {
                 messageConfig = message;
                 resolve(true);
             } else {
                 resolve(false);
             }
-        });
+
+            if (appboy && subscriptionId) {
+                appboy.removeSubscription(subscriptionId);
+            }
+        };
+
+        // Keep hold of the subscription ID so that we can unsubscribe in the
+        // callback, ensuring that the callback is only invoked once per page
+        subscriptionId = appboy.subscribeToInAppMessage(callback);
 
         appboy.changeUser(brazeUuid);
         appboy.openSession();
@@ -164,9 +174,13 @@ const canShow = async () => {
     if (!canShowPreChecks({
         brazeSwitch,
         apiKey,
-        isDigiSubscriber: isDigitalSubscriber(),
+        userIsGuSupporter: shouldNotBeShownSupportMessaging(),
         pageConfig: config.get('page'),
     })) {
+        // Currently all active web canvases in Braze target existing supporters,
+        // subscribers or otherwise those with a Guardian product. We can use the
+        // value of `shouldNotBeShownSupportMessaging` to identify these users,
+        // limiting the number of requests we need to initialise Braze on the page:
         return false;
     }
 
