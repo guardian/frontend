@@ -36,6 +36,7 @@ const go = () => {
         const browserId = getCookie('bwid') || undefined;
         const pageViewId = config.get('ophan.pageViewId');
         const pubData = {
+            platform: 'next-gen',
             browserId,
             pageViewId,
         };

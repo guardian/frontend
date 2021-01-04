@@ -49,7 +49,12 @@ const go = () => {
         // CCPA and TCFv2
         const browserId: ?string = getCookie('bwid') || undefined;
         const pageViewId: ?string = config.get('ophan.pageViewId');
-        const pubData: { browserId?: ?string, pageViewId?: ?string } = {
+        const pubData: {
+            browserId?: ?string,
+            platform?: ?string,
+            pageViewId?: ?string,
+        } = {
+            platform: 'next-gen',
             browserId,
             pageViewId,
         };
