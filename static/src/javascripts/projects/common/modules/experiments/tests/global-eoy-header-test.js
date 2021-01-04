@@ -15,7 +15,7 @@ const componentId = 'header_support';
 const campaignCode = 'header_support';
 const testName = 'GlobalEoyHeaderTest';
 
-type VariantName = 'variant' | 'control';
+type VariantName = 'variant' | 'variant2' | 'control';
 
 const onView = (variant: VariantName): void => submitViewEvent({
     component: {
@@ -121,6 +121,17 @@ export const globalEoyHeaderTest: ABTest = {
                     const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
                     bar.innerHTML = buildHtml(heading, 'Power vital, open, independent journalism', 'variant');
                     onView('variant')
+                }
+            },
+        },
+        {
+            id: 'variant2',
+            test: (): void => {
+                const bar = getHeaderCtaBar();
+                if (bar) {
+                    const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
+                    bar.innerHTML = buildHtml(heading, 'Available for everyone, funded by readers', 'variant2');
+                    onView('variant2')
                 }
             },
         },
