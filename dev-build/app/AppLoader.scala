@@ -54,9 +54,7 @@ trait Controllers
     with CricketControllers {
   self: BuiltInComponents =>
 
-  // Required for EmailSignupController
-  lazy val newsletterApi = wire[NewsletterApi]
-  lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+  def emailEmbedAgent: EmailEmbedAgent
 
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
