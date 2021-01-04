@@ -139,7 +139,11 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     pathToCapiContentMapping.get(removeStartingSlash(path))
   }
 
+  def correctPillar(pillar: String): String = if (pillar == "Arts") "Culture" else pillar
+
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
+    // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
+    // Note that we could also do it during the DeeplyReadItem to OnwardItemNx2 transformation
     for {
       content <- getDataForPath(removeStartingSlash(item.path))
       webPublicationDate <- content.webPublicationDate
@@ -158,7 +162,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       image = fields.thumbnail,
       ageWarning = None,
       isLiveBlog = true,
-      pillar = pillar,
+      pillar = correctPillar(pillar),
       designType = content.`type`.toString,
       webPublicationDate = webPublicationDate.toString(),
       headline = headline,
