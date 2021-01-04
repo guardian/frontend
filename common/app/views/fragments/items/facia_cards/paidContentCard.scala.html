@@ -27,7 +27,7 @@
             }
 
             @item.branding.map { branding =>
-                @cardLogo(branding, isStandardSizeCard = false, onDarkBackground = item.designType.exists(_ == Media))
+                @cardLogo(branding, isStandardSizeCard = false, onDarkBackground = item.isMediaLink)
             }
 
         </div>
