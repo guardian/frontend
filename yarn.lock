@@ -1836,6 +1836,11 @@
   resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-0.16.1.tgz#331d6bb30513c45b09e5b4807832eb4a146a27ea"
   integrity sha512-OudfWJaKpTTP0J1QckqX0NmfneXgQ5YieZ/4em2lNXGZFEfYyxHnIXrAQE5LjmIGR8eJQoIikkwWiAFt4ziHXQ==
 
+"@guardian/src-svgs@^2.8.1":
+  version "2.8.1"
+  resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-2.8.1.tgz#7c3acc72d90d0324aada4b000d3d6b3295fd37dc"
+  integrity sha512-TXEy4YnTbV+r/yOh6QnqVCY9G/kkqXbhvCt3FCM5gzDEOnhBFhuAvfLXPeyAoni7iZmXiygAy7Al8eP/2w150A==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"

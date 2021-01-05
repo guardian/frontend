@@ -20,7 +20,7 @@
     "@guardian/shimport": "^1.0.2",
     "@guardian/src-button": "^0.16.1",
     "@guardian/src-foundations": "^0.16.1",
-    "@guardian/src-svgs": "^0.16.1",
+    "@guardian/src-svgs": "^2.8.1",
     "bean": "~1.0.14",
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
