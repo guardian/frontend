@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
@@ -9,7 +7,7 @@ import { getBreakpoint } from 'lib/detect';
 // changes as the url bar slides in and out
 // http://code.google.com/p/chromium/issues/detail?id=428132
 
-const renderBlock = (state: Object): Promise<void> =>
+const renderBlock = (state) =>
     fastdom
         .mutate(() => {
             state.$el.css('height', '');
@@ -26,16 +24,13 @@ const renderBlock = (state: Object): Promise<void> =>
             }
         });
 
-const render = (state: Object): void => {
+const render = (state) => {
     state.elements.forEach(element => {
         renderBlock({ $el: $(element), isMobile: state.isMobile });
     });
 };
 
-const getState = (): Promise<{
-    elements: Array<HTMLElement>,
-    isMobile: boolean,
-}> =>
+const getState = () =>
     fastdom.measure(() => {
         const elements = Array.from(
             document.getElementsByClassName('js-is-fixed-height')
@@ -44,11 +39,11 @@ const getState = (): Promise<{
         return { elements, isMobile: getBreakpoint() === 'mobile' };
     });
 
-const onViewportChange = (): void => {
+const onViewportChange = () => {
     getState().then(render);
 };
 
-const init = (): void => {
+const init = () => {
     mediator.on('window:throttledResize', onViewportChange);
     mediator.on('window:orientationchange', onViewportChange);
 

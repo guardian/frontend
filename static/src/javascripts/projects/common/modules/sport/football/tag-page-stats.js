@@ -1,10 +1,8 @@
-// @flow
-
 import config from 'lib/config';
 import fetchJSON from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 
-export const tagPageStats = (): void => {
+export const tagPageStats = () => {
     const firstContainer = document.querySelector(
         '.js-insert-team-stats-after'
     );

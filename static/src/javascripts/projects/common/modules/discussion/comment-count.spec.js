@@ -1,4 +1,3 @@
-// @flow
 import fetchJson from 'lib/fetch-json';
 import { initCommentCount } from './comment-count';
 
@@ -18,7 +17,7 @@ jest.mock('lib/fetch-json', () =>
     )
 );
 
-const fetchJsonSpy: any = fetchJson;
+const fetchJsonSpy = fetchJson;
 
 // TODO: Investigate why these sometimes fails and re-enable
 describe.skip('Comment Count', () => {

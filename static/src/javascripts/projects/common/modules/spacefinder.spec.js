@@ -1,5 +1,3 @@
-// @flow
-
 import { _ } from 'common/modules/spacefinder';
 
 jest.mock('commercial/modules/dfp/track-ad-render', () =>
@@ -11,7 +9,7 @@ describe('spacefinder', () => {
         const rules = { minAbove: 50, minBelow: 300 };
         const element = document.createElement('div');
         const para = { top: 200, bottom: 300, element };
-        const others: Object[] = [
+        const others = [
             {
                 opponent: { top: 0, bottom: 100, element },
                 expectedResult: true,

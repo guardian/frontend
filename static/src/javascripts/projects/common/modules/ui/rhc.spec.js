@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import Chance from 'chance';
 import { addComponent } from './rhc';

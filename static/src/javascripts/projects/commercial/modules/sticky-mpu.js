@@ -1,35 +1,34 @@
-// @flow
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { Sticky } from 'common/modules/ui/sticky';
 import { register, unregister } from 'commercial/modules/messenger';
 
-const noSticky: boolean = !!(
+const noSticky = !!(
     document.documentElement &&
     document.documentElement.classList.contains('has-no-sticky')
 );
-let stickyElement: Sticky;
-let stickySlot: HTMLElement;
+let stickyElement;
+let stickySlot;
 
-const onResize = (specs, _, iframe: ?HTMLElement) => {
+const onResize = (specs, _, iframe) => {
     if (stickySlot.contains(iframe)) {
         unregister('resize', onResize);
         stickyElement.updatePosition();
     }
 };
 
-const isStickyMpuSlot = (adSlot: HTMLElement) => {
+const isStickyMpuSlot = (adSlot) => {
     const dataName = adSlot.dataset.name;
     return dataName === 'comments' || dataName === 'right';
 };
 
-const stickyCommentsMpu = (adSlot: HTMLElement) => {
+const stickyCommentsMpu = (adSlot) => {
     if (isStickyMpuSlot(adSlot)) {
         stickySlot = adSlot;
     }
 
-    const referenceElement: ?HTMLElement = document.querySelector(
+    const referenceElement = document.querySelector(
         '.js-comments'
     );
 
@@ -41,7 +40,7 @@ const stickyCommentsMpu = (adSlot: HTMLElement) => {
         .measure(() => referenceElement.offsetHeight - 600)
         .then(newHeight =>
             fastdom.mutate(() => {
-                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+                (adSlot.parentNode).style.height = `${newHeight}px`;
             })
         )
         .then(() => {
@@ -58,18 +57,18 @@ stickyCommentsMpu.whenRendered = new Promise(resolve => {
     mediator.on('page:commercial:sticky-comments-mpu', resolve);
 });
 
-const stickyMpu = (adSlot: HTMLElement) => {
+const stickyMpu = (adSlot) => {
     if (isStickyMpuSlot(adSlot)) {
         stickySlot = adSlot;
     }
 
-    const referenceElement: ?HTMLElement = document.querySelector(
+    const referenceElement = document.querySelector(
         ['.js-article__body:not([style*="display: none;"])',
         '.js-liveblog-body-content:not([style*="display: none;"])'].join(', ')
     );
 
     // Fixes overlapping ad issue on liveblogs by Setting to max ad height.
-    const stickyPixelBoundary: number = config.get('page.isLiveBlog') ? 600 : 300;
+    const stickyPixelBoundary = config.get('page.isLiveBlog') ? 600 : 300;
 
     if (
         !referenceElement ||
@@ -83,7 +82,7 @@ const stickyMpu = (adSlot: HTMLElement) => {
         .measure(() => referenceElement.offsetTop + stickyPixelBoundary)
         .then(newHeight =>
             fastdom.mutate(() => {
-                (adSlot.parentNode: any).style.height = `${newHeight}px`;
+                (adSlot.parentNode).style.height = `${newHeight}px`;
             })
         )
         .then(() => {

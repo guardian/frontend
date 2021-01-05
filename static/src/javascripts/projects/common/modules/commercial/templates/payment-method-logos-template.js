@@ -1,10 +1,9 @@
-// @flow
 import config from 'lib/config';
 import { getSync as getGeolocation } from 'lib/geolocation';
 import { applePayApiAvailable } from 'lib/detect';
 import applePayMark from 'svgs/acquisitions/apple-pay-mark.svg';
 
-export const paymentMethodLogosTemplate = (classNames: string) => {
+export const paymentMethodLogosTemplate = (classNames) => {
     const applePayLogo = applePayApiAvailable ? applePayMark.markup : '';
     const inUS = getGeolocation() === 'US';
 

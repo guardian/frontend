@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 import { participationsKey } from './ab-constants';
 import { testAndParticipationsToVariant } from './ab-utils';
@@ -6,11 +5,11 @@ import { testAndParticipationsToVariant } from './ab-utils';
 // -------
 // Reading
 // -------
-export const getParticipationsFromLocalStorage = (): Participations =>
+export const getParticipationsFromLocalStorage = () =>
 storage.local.get(participationsKey) || {};
 
 // If the given test has a variant specified in localStorage, return it.
-export const getVariantFromLocalStorage = (test: ABTest): ?Variant =>
+export const getVariantFromLocalStorage = (test) =>
     testAndParticipationsToVariant(test, getParticipationsFromLocalStorage());
 
 // -------
@@ -18,12 +17,12 @@ export const getVariantFromLocalStorage = (test: ABTest): ?Variant =>
 // -------
 
 // Wipes all localStorage participations
-export const clearParticipations = (): void => {
+export const clearParticipations = () => {
     storage.local.remove(participationsKey);
 };
 
 export const setParticipationsInLocalStorage = (
-    participations: Participations
-): void => {
+    participations
+) => {
     storage.local.set(participationsKey, participations);
 };

@@ -1,23 +1,9 @@
-// @flow
 import fetchJSON from 'lib/fetch-json';
 
-declare type TickerEndType = 'unlimited' | 'hardstop';
-declare type TickerCountType = 'money' | 'people';
 
-declare type TickerCopy = {
-    countLabel: string,
-    goalReachedPrimary: string,
-    goalReachedSecondary: string,
-}
 
-declare type TickerSettings = {
-    endType: TickerEndType,
-    countType: TickerCountType,
-    currencySymbol: string,
-    copy: TickerCopy,
-}
 
-const parseTickerSettings = (obj: Object): ?TickerSettings => {
+const parseTickerSettings = (obj) => {
   const endType = obj.endType === 'unlimited' || obj.endType ===  'hardstop' ? obj.endType : null;
   const countType = obj.countType === 'money' || obj.countType ===  'people' ? obj.countType : null;
   const copy = obj.copy && obj.copy.countLabel && obj.copy.goalReachedPrimary && obj.copy.goalReachedSecondary ? obj.copy : null;
@@ -40,19 +26,19 @@ let total;
 
 const goalReached = () => total >= goal;
 
-const getCurrencySymbol = (tickerSettings: TickerSettings): string =>
+const getCurrencySymbol = (tickerSettings) =>
     tickerSettings.countType === 'money' ? tickerSettings.currencySymbol : '';
 
 /**
  * The filled bar begins 100% to the left, and is animated rightwards.
  */
-const percentageToTranslate = (end: number) => {
+const percentageToTranslate = (end) => {
     const percentage = (total / end) * 100 - 100;
 
     return percentage >= 0 ? 0 : percentage;
 };
 
-const animateBar = (parentElement: HTMLElement, tickerType: TickerEndType) => {
+const animateBar = (parentElement, tickerType) => {
     const progressBarElement = parentElement.querySelector(
         '.js-ticker-filled-progress'
     );
@@ -82,9 +68,9 @@ const animateBar = (parentElement: HTMLElement, tickerType: TickerEndType) => {
 };
 
 const increaseCounter = (
-    parentElementSelector: string,
-    counterElement: HTMLElement,
-    tickerSettings: TickerSettings,
+    parentElementSelector,
+    counterElement,
+    tickerSettings,
 ) => {
     // Count is local to the parent element
     const newCount = count[parentElementSelector] + Math.floor(total / 100);
@@ -109,9 +95,9 @@ const increaseCounter = (
 };
 
 const populateStatusSoFar = (
-    parentElementSelector: string,
-    parentElement: HTMLElement,
-    tickerSettings: TickerSettings,
+    parentElementSelector,
+    parentElement,
+    tickerSettings,
 ) => {
     const counterElement = parentElement.querySelector(
         `.js-ticker-amounts .js-ticker-count`
@@ -136,7 +122,7 @@ const populateStatusSoFar = (
     }
 };
 
-const populateGoal = (parentElement: HTMLElement, tickerSettings: TickerSettings) => {
+const populateGoal = (parentElement, tickerSettings) => {
     const goalElement = parentElement.querySelector('.js-ticker-goal');
 
     if (goalElement) {
@@ -155,7 +141,7 @@ const populateGoal = (parentElement: HTMLElement, tickerSettings: TickerSettings
     }
 };
 
-const animate = (parentElementSelector: string, tickerSettings: TickerSettings) => {
+const animate = (parentElementSelector, tickerSettings) => {
     const parentElement = document.querySelector(parentElementSelector);
 
     if (parentElement && parentElement instanceof HTMLElement) {
@@ -185,12 +171,12 @@ const animate = (parentElementSelector: string, tickerSettings: TickerSettings) 
 const dataSuccessfullyFetched = () =>
     !(Number.isNaN(Number(total)) || Number.isNaN(Number(goal)));
 
-const getTickerUrl = (countType: TickerCountType): string =>
+const getTickerUrl = (countType) =>
     countType === 'people' ? 'https://support.theguardian.com/supporters-ticker.json' : 'https://support.theguardian.com/ticker.json';
 
 const fetchDataAndAnimate = (
-    parentElementSelector: string,
-    tickerSettings: TickerSettings,
+    parentElementSelector,
+    tickerSettings,
 ) => {
     if (dataSuccessfullyFetched()) {
         animate(parentElementSelector, tickerSettings);
@@ -208,7 +194,7 @@ const fetchDataAndAnimate = (
     }
 };
 
-const defaultSettings: TickerSettings = {
+const defaultSettings = {
     endType: 'unlimited',
     countType: 'people',
     copy: {
@@ -220,8 +206,8 @@ const defaultSettings: TickerSettings = {
 };
 
 const initTicker = (
-    parentElementSelector: string,
-    tickerSettings: ?TickerSettings
+    parentElementSelector,
+    tickerSettings
 ) => {
     fetchDataAndAnimate(
         parentElementSelector,

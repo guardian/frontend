@@ -1,9 +1,8 @@
-// @flow
 import bean from 'bean';
 import { getUrlVars } from 'lib/url';
 import { ActivityStream } from 'common/modules/discussion/activity-stream';
 
-const getActivityStream = (cb: Function): void => {
+const getActivityStream = (cb) => {
     const dataOpts = {
         userId: 'data-user-id',
         streamType: 'data-stream-type',
@@ -34,7 +33,7 @@ const getActivityStream = (cb: Function): void => {
     cb(activityStream);
 };
 
-const selectTab = (el: HTMLElement): void => {
+const selectTab = (el) => {
     const selectedTabs = Array.from(
         document.getElementsByClassName('tabs__tab--selected')
     );
@@ -48,9 +47,9 @@ const selectTab = (el: HTMLElement): void => {
     }
 };
 
-const setupActivityStreamChanger = (activityStream: ActivityStream): void => {
+const setupActivityStreamChanger = (activityStream) => {
     bean.on(document.body, 'click', '.js-activity-stream-change', e => {
-        const el: HTMLElement = (e.currentTarget: any);
+        const el = (e.currentTarget);
         const streamType = el.getAttribute('data-stream-type');
 
         e.preventDefault();
@@ -64,7 +63,7 @@ const setupActivityStreamChanger = (activityStream: ActivityStream): void => {
     });
 };
 
-const setupActivityStreamSearch = (activityStream: ActivityStream): void => {
+const setupActivityStreamSearch = (activityStream) => {
     bean.on(document.body, 'submit', '.js-activity-stream-search', e => {
         const q = e.currentTarget.elements.q.value;
         const anchor = document.querySelector(
@@ -84,7 +83,7 @@ const setupActivityStreamSearch = (activityStream: ActivityStream): void => {
     });
 };
 
-const init = (): void => {
+const init = () => {
     getActivityStream(activityStream => {
         setupActivityStreamChanger(activityStream);
         setupActivityStreamSearch(activityStream);

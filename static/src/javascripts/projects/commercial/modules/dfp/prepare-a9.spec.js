@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { isGoogleProxy } from 'lib/detect';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
@@ -47,7 +45,7 @@ jest.mock('@guardian/libs', () => ({
     loadScript: () => Promise.resolve(),
 }));
 
-const fakeUserAgent = (userAgent: string): void => {
+const fakeUserAgent = (userAgent) => {
     const userAgentObject = {};
     userAgentObject.get = () => userAgent;
     userAgentObject.configurable = true;

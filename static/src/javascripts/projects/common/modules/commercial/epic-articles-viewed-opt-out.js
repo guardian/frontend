@@ -1,5 +1,3 @@
-// @flow
-
 import {submitClickEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
@@ -7,19 +5,8 @@ import {addCookie} from "lib/cookies";
 import { storage } from '@guardian/libs';
 import reportError from "lib/report-error";
 
-type ArticlesViewedOptOutElements = {
-    checkbox: HTMLInputElement,
-    labelElement: HTMLElement,
-    optOutButton: HTMLElement,
-    optInButton: HTMLElement,
-    closeButton: HTMLElement,
-    buttons: HTMLElement,
-    header: HTMLElement,
-    body: HTMLElement,
-    note: HTMLElement,
-}
 
-const getElements = (container: HTMLElement): ?ArticlesViewedOptOutElements => {
+const getElements = (container) => {
     const checkbox = container.querySelector('#epic-article-count__dialog-checkbox');
 
     const labelElement = container.querySelector('.epic-article-count__prompt-label');
@@ -57,7 +44,7 @@ const getElements = (container: HTMLElement): ?ArticlesViewedOptOutElements => {
     }
 };
 
-const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
+const setupHandlers = (elements) => {
 
     const hideDialog = () => {
         // This is the hidden checkbox that we use to hide/unhide the dialog using css only
@@ -114,12 +101,12 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
         onArticlesViewedClick();
     });
 
-    elements.optOutButton.addEventListener('click', (event: Event) => {
+    elements.optOutButton.addEventListener('click', (event) => {
         event.preventDefault();
         onOptOutClick();
     });
 
-    elements.optInButton.addEventListener('click', (event: Event) => {
+    elements.optInButton.addEventListener('click', (event) => {
         event.preventDefault();
         onOptInClick();
     });
@@ -128,7 +115,7 @@ const setupHandlers = (elements: ArticlesViewedOptOutElements) => {
 const onEpicViewed = () => {
     // Send the view event if this is an epic with an articles-viewed count.
     // Send for both the control and the variant, so that we can measure impact on conversions.
-    const getArticleCountViewEventId = (): ?string => {
+    const getArticleCountViewEventId = () => {
         if (document.querySelector('.epic-article-count')) {
             return 'articles-viewed-opt-out_view-variant';
         } else if (document.querySelector('.epic-article-count__normal')) {
@@ -154,7 +141,7 @@ const setupArticlesViewedOptOut = () => {
     const articleCountElement = document.querySelector('.epic-article-count');
 
     if (articleCountElement) {
-        const elements: ?ArticlesViewedOptOutElements = getElements(articleCountElement);
+        const elements = getElements(articleCountElement);
 
         if (elements) {
             setupHandlers(elements);

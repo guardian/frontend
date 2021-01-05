@@ -1,5 +1,3 @@
-// @flow
-
 import bonzo from 'bonzo';
 import qwery from 'qwery';
 

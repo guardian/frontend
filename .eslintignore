@@ -33,6 +33,7 @@ coverage
 !/static/test/javascripts-legacy
 /static/test/javascripts-legacy/components
 /static/test/javascripts-legacy/helpers/raw-loader.js
+/static/src/javascripts.flow.archive
 
 # guui
 !/ui

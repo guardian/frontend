@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
@@ -14,16 +13,16 @@ import {
     getConsentFor as getConsentFor_,
 } from '@guardian/consent-management-platform';
 
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 
-// $FlowFixMe property requireActual is actually not missing Flow.
+
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
     'commercial/modules/dfp/fill-advert-slots'
 );
 
-const getBreakpoint: any = getBreakpoint_;
-const fillAdvertSlots: any = fillAdvertSlots_;
+const getBreakpoint = getBreakpoint_;
+const fillAdvertSlots = fillAdvertSlots_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
@@ -82,7 +81,7 @@ jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
 }));
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
-    // $FlowFixMe - i think typ def needs updating, but loads of types errors if you do...
+    
     storage: jest.requireActual('@guardian/libs').storage,
 }));
 jest.mock('lodash/once', () => fn => fn);

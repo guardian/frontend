@@ -1,4 +1,3 @@
-// @flow
 import { init as initDrama } from 'admin/bootstraps/drama';
 import { initABTests } from 'admin/bootstraps/abtests';
 import { initRadiator } from 'admin/bootstraps/radiator';

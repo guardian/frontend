@@ -1,6 +1,4 @@
-// @flow
-
-export const commercialPrebidSafeframe: ABTest = {
+export const commercialPrebidSafeframe = {
     id: 'CommercialPrebidSafeframe',
     start: '2018-06-29',
     expiry: '2019-10-18',
@@ -17,11 +15,11 @@ export const commercialPrebidSafeframe: ABTest = {
     variants: [
         {
             id: 'control',
-            test: (): void => {},
+            test: () => {},
         },
         {
             id: 'variant',
-            test: (): void => {},
+            test: () => {},
         },
     ],
 };

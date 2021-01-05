@@ -1,9 +1,3 @@
-// @flow
-import type {
-    SpacefinderRules,
-    SpacefinderItem,
-} from 'common/modules/spacefinder';
-
 import fastdom from 'lib/fastdom-promise';
 import { getBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
@@ -17,7 +11,7 @@ const MAX_ADS = 8; // maximum number of ads to display
 
 let SLOTCOUNTER = 0;
 let WINDOWHEIGHT;
-let firstSlot: ?HTMLElement;
+let firstSlot;
 
 const startListening = () => {
     // eslint-disable-next-line no-use-before-define
@@ -29,7 +23,7 @@ const stopListening = () => {
     mediator.off('modules:autoupdate:updates', onUpdate);
 };
 
-const getWindowHeight = (doc = document): number => {
+const getWindowHeight = (doc = document) => {
     if (doc.documentElement && doc.documentElement.clientHeight) {
         return doc.documentElement.clientHeight;
     }
@@ -37,14 +31,14 @@ const getWindowHeight = (doc = document): number => {
 };
 
 const getSpaceFillerRules = (
-    windowHeight: number,
-    update?: boolean
-): SpacefinderRules => {
+    windowHeight,
+    update
+) => {
     let prevSlot;
-    const shouldUpdate: boolean = !!update;
+    const shouldUpdate = !!update;
 
     // Only use a slot if it is double the window height from the previous slot.
-    const filterSlot = (slot: SpacefinderItem): boolean => {
+    const filterSlot = (slot) => {
         if (!prevSlot) {
             prevSlot = slot;
             return !shouldUpdate;
@@ -69,7 +63,7 @@ const getSpaceFillerRules = (
     };
 };
 
-const getSlotName = (isMobile: boolean, slotCounter: number): string => {
+const getSlotName = (isMobile, slotCounter) => {
     if (isMobile && slotCounter === 0) {
         return 'top-above-nav';
     } else if (isMobile) {
@@ -78,7 +72,7 @@ const getSlotName = (isMobile: boolean, slotCounter: number): string => {
     return `inline${slotCounter + 1}`;
 };
 
-const insertAds = (slots: HTMLElement[]): void => {
+const insertAds = (slots) => {
     const isMobile = getBreakpoint() === 'mobile';
 
     for (let i = 0; i < slots.length && SLOTCOUNTER < MAX_ADS; i += 1) {
@@ -103,7 +97,7 @@ const insertAds = (slots: HTMLElement[]): void => {
     }
 };
 
-const fill = (rules: SpacefinderRules): Promise<void> =>
+const fill = (rules) =>
     spaceFiller.fillSpace(rules, insertAds).then(result => {
         if (result && SLOTCOUNTER < MAX_ADS) {
             const el = document.querySelector(
@@ -125,7 +119,7 @@ const onUpdate = () => {
     Promise.resolve(getSpaceFillerRules(WINDOWHEIGHT, true)).then(fill);
 };
 
-export const init = (): Promise<void> => {
+export const init = () => {
     if (!commercialFeatures.liveblogAdverts) {
         return Promise.resolve();
     }

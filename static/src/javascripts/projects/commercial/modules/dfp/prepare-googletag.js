@@ -1,5 +1,3 @@
-// @flow
-
 import qwery from 'qwery';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
@@ -48,7 +46,7 @@ initMessenger(
     disableRefresh
 );
 
-const setDfpListeners = (): void => {
+const setDfpListeners = () => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
@@ -62,7 +60,7 @@ const setDfpListeners = (): void => {
     }
 };
 
-const setPageTargeting = (): void => {
+const setPageTargeting = () => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
     const targeting = getPageTargeting();
@@ -74,25 +72,25 @@ const setPageTargeting = (): void => {
 // This is specifically a separate function to close-disabled-slots. One is for
 // closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
 // encounters an error. Here, slots are closed unconditionally.
-const removeAdSlots = (): Promise<void> => {
+const removeAdSlots = () => {
     // Get all ad slots
-    const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
+    const adSlots = qwery(dfpEnv.adSlotSelector);
 
     return fastdom.mutate(() =>
-        adSlots.forEach((adSlot: Element) => adSlot.remove())
+        adSlots.forEach((adSlot) => adSlot.remove())
     );
 };
 
-const setPublisherProvidedId = (): void => {
-    const user: ?Object = getUserFromCookie();
+const setPublisherProvidedId = () => {
+    const user = getUserFromCookie();
     if (user) {
         const hashedId = sha1.hash(user.id);
         window.googletag.pubads().setPublisherProvidedId(hashedId);
     }
 };
 
-export const init = (): Promise<void> => {
-    const setupAdvertising = (): Promise<void> => {
+export const init = () => {
+    const setupAdvertising = () => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
@@ -107,7 +105,7 @@ export const init = (): Promise<void> => {
         );
 
         onConsentChange(state => {
-            let canRun: boolean = true;
+            let canRun = true;
             if (state.ccpa) {
                 // CCPA mode
                 window.googletag.cmd.push(() => {
@@ -116,7 +114,7 @@ export const init = (): Promise<void> => {
                     });
                 });
             } else {
-                let npaFlag: boolean;
+                let npaFlag;
                 if (state.tcfv2) {
                     // TCFv2 mode
                     npaFlag =

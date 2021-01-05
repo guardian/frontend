@@ -1,10 +1,8 @@
-// @flow
-
 import { initCampaign } from 'journalism/modules/render-campaign';
 import { getCampaigns } from 'journalism/modules/get-campaign';
 
 // hack to stop flow complaining about 'mockImplementation'
-const mock = (mockFn: any) => mockFn;
+const mock = (mockFn) => mockFn;
 jest.mock('journalism/modules/get-campaign');
 mock(getCampaigns).mockImplementation(() => ({
     'callout-hij': {

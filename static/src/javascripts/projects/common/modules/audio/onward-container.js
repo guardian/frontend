@@ -1,13 +1,11 @@
-// @flow
-
 import config from 'lib/config';
 import { Component } from 'common/modules/component';
 
 const createComponent = (
-    el: HTMLElement,
-    endpoint: string,
-    manipulationType: string
-): Promise<void> => {
+    el,
+    endpoint,
+    manipulationType
+) => {
     const component = new Component();
 
     component.manipulationType = manipulationType;
@@ -17,7 +15,7 @@ const createComponent = (
     return component.fetch(el, 'html');
 };
 
-const onwardAudio = (el: HTMLElement) => {
+const onwardAudio = (el) => {
     if (config.get('page.seriesId')) {
         const manipulationType = 'append';
         const endpoint = `/audio/series/${config.get('page.seriesId')}.json`;

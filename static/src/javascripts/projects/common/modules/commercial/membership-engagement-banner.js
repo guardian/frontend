@@ -1,16 +1,13 @@
-// @flow
 import config from 'lib/config';
 import { Message } from 'common/modules/ui/message';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import { getControlEngagementBannerParams } from 'common/modules/commercial/membership-engagement-banner-parameters';
 import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import {
-    type ReaderRevenueRegion,
     getReaderRevenueRegion,
     canShowBannerSync,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import bean from 'bean';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
@@ -26,9 +23,6 @@ import { getEngagementBannerTestToRun } from 'common/modules/experiments/ab';
 import memoize from 'lodash/memoize';
 import {bannerSetupArticlesViewedOptOut} from "common/modules/commercial/articles-read-tooltip";
 
-type BannerDeployLog = {
-    time: string,
-};
 
 const messageCode = 'engagement-banner';
 
@@ -47,16 +41,16 @@ const lastClosedAtKey = 'engagementBannerLastClosedAt';
  * for users in the "european-union" region.
  */
 const getTimestampOfLastBannerDeployForLocation = (
-    region: ReaderRevenueRegion
-): Promise<string> =>
+    region
+) =>
     fetchJson(`/reader-revenue/contributions-banner-deploy-log/${region === 'european-union' ? 'rest-of-world' : region}`, {
         mode: 'cors',
-    }).then((resp: BannerDeployLog) => resp && resp.time);
+    }).then((resp) => resp && resp.time);
 
 const hasBannerBeenRedeployedSinceClosed = (
-    userLastClosedBannerAt: string,
-    region: ReaderRevenueRegion
-): Promise<boolean> =>
+    userLastClosedBannerAt,
+    region
+) =>
     getTimestampOfLastBannerDeployForLocation(region)
         .then(timestamp => {
             // In order to migrate between ISO string and millisecond format support both temporarily
@@ -75,8 +69,8 @@ const hasBannerBeenRedeployedSinceClosed = (
         });
 
 const deriveBannerParams = (
-    testToRun: ?Runnable<AcquisitionsABTest>
-): Promise<EngagementBannerParams> =>
+    testToRun
+) =>
     getControlEngagementBannerParams().then(defaultParams => {
         // If something goes wrong with fetching the control params, we don't
         // want to register a test participation since they could be seeing
@@ -95,28 +89,28 @@ const deriveBannerParams = (
         return defaultParams;
     });
 
-const selectSequentiallyFrom = (array: Array<string>): string =>
+const selectSequentiallyFrom = (array) =>
     array[getVisitCount() % array.length];
 
-const hideBanner = (banner: Message) => {
+const hideBanner = (banner) => {
     banner.hide();
 
     // Store timestamp in localStorage
     userPrefs.set(lastClosedAtKey, new Date().toISOString());
 };
 
-const clearBannerHistory = (): void => {
+const clearBannerHistory = () => {
     userPrefs.remove(lastClosedAtKey);
 };
 
-const pageIsIdentity = (): boolean => {
+const pageIsIdentity = () => {
     const isIdentityPage =
         config.get('page.contentType') === 'Identity' ||
         config.get('page.section') === 'identity';
     return isIdentityPage;
 };
 
-const bannerParamsToHtml = (params: EngagementBannerParams): string => {
+const bannerParamsToHtml = (params) => {
     const messageText = Array.isArray(params.messageText)
         ? selectSequentiallyFrom(params.messageText)
         : params.messageText;
@@ -164,10 +158,10 @@ const bannerParamsToHtml = (params: EngagementBannerParams): string => {
 };
 
 const showBannerAsMessage = (
-    code: string,
-    params: EngagementBannerParams,
-    html: string
-): boolean =>
+    code,
+    params,
+    html
+) =>
     new Message(code, {
         siteMessageLinkName: 'membership message',
         siteMessageCloseBtn: 'hide',
@@ -184,7 +178,7 @@ const showBannerAsMessage = (
         },
     }).show(html);
 
-const trackBanner = (params: EngagementBannerParams): void => {
+const trackBanner = (params) => {
     ['INSERT', 'VIEW'].forEach(action => {
         submitComponentEvent({
             component: {
@@ -199,7 +193,7 @@ const trackBanner = (params: EngagementBannerParams): void => {
     });
 };
 
-const showBanner = (params: EngagementBannerParams): boolean => {
+const showBanner = (params) => {
     const html = bannerParamsToHtml(params);
     const messageShown = showBannerAsMessage(messageCode, params, html);
 
@@ -222,11 +216,11 @@ const showBanner = (params: EngagementBannerParams): boolean => {
 };
 
 const getBannerParams = memoize(
-    (): Promise<EngagementBannerParams> =>
+    () =>
         getEngagementBannerTestToRun().then(deriveBannerParams)
 );
 
-const show = (): Promise<boolean> =>
+const show = () =>
     getBannerParams()
         .then(showBanner)
         .catch(err => {
@@ -240,7 +234,7 @@ const show = (): Promise<boolean> =>
             return false;
         });
 
-const canShow = (): Promise<boolean> => {
+const canShow = () => {
     if (
         !config.get('switches.membershipEngagementBanner') ||
         isBlocked() ||
@@ -271,7 +265,7 @@ const canShow = (): Promise<boolean> => {
     });
 };
 
-const membershipEngagementBanner: Banner = {
+const membershipEngagementBanner = {
     id: messageCode,
     show,
     canShow,

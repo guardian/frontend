@@ -93,10 +93,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
      */
 
     ophanApi.getDeeplyReadContent().map { seq =>
-      // This is where the atomic update of ophanItems which faithfully reflects the state of the Ophan answer
-      ophanItems = seq.toArray
       log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
-
       seq.foreach { ophanItem =>
         log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
         val path = removeStartingSlash(ophanItem.path)
@@ -112,6 +109,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .map { res =>
             res.content.map { c =>
               log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
+              println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               pathToCapiContentMapping += (path -> c) // update the Content for a given map
             }
           }
@@ -120,10 +118,15 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
               log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
               None
           }
-        // We do the nest two instruction to, essentially, avoid spamming CAPI
+        // We do the next two instruction to, essentially, avoid spamming CAPI
         Await.ready(fx, Duration(200, "millis"))
         Thread.sleep(100)
       }
+      // We now perform the atomic update of ophanItems to faithfully reflects the state of the Ophan answer.
+      // It is done as last step of the process because by then the CAPI content has been loaded.
+      // This prevents a race condition by which new ophan items are already in `ophanItems`, but the corresponding
+      // CAPI content are not yet in `pathToCapiContentMapping`, resulting in less items appearing in `getReport()` than expected.
+      ophanItems = seq.toArray
     }
   }
 
@@ -161,7 +164,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       byline = fields.byline,
       image = fields.thumbnail,
       ageWarning = None,
-      isLiveBlog = true,
+      isLiveBlog = fields.liveBloggingNow.getOrElse(false),
       pillar = correctPillar(pillar.toLowerCase),
       designType = content.`type`.toString,
       webPublicationDate = webPublicationDate.toString(),
@@ -179,7 +182,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       ophanItems.isEmpty || ophanItems
         .exists(oi => !pathToCapiContentMapping.keys.toSet.contains(removeStartingSlash(oi.path)))
     ) {
-      // This help improving the situation if the initial akka driven refresh failed (which happens way to often)
+      // This helps improving the situation if the initial akka driven refresh failed (which happens way to often)
       // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
       log.info(s"[cb01a845] refresh() from getReport()")
       refresh()

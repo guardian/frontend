@@ -1,91 +1,27 @@
-// @flow strict
+
 
 import config from 'lib/config';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { bids } from 'commercial/modules/header-bidding/prebid/bid-config';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { priceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import type {
-    PrebidBid,
-    PrebidMediaTypes,
-    HeaderBiddingSlot,
-} from 'commercial/modules/header-bidding/types';
-import type { PrebidPriceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
 
-type EnableAnalyticsConfig = {
-    provider: string,
-    options: {
-        ajaxUrl: string,
-        pv: string,
-    },
-};
 
-type GDPRConfig = {
-    cmpApi: string,
-    timeout: number,
-    allowAuctionWithoutConsent: boolean,
-};
 
-type USPConfig = {
-    timeout: number,
-};
 
-type ConsentManagement = {
-    gdpr: GDPRConfig,
-    usp: USPConfig,
-};
 
-type UserSync =
-    | {
-          syncsPerBidder: number,
-          filterSettings: {
-              all: {
-                  bidders: string,
-                  filter: string,
-              },
-          },
-      }
-    | { syncEnabled: false };
 
-type PbjsConfig = {
-    bidderTimeout: number,
-    priceGranularity: PrebidPriceGranularity,
-    userSync: UserSync,
-    consentManagement: ConsentManagement | false,
-};
 
-type XasisBuyerTargetting = {
-    key: string,
-    val: ({
-        appnexus: {
-            buyerMemberId: string,
-        },
-    }) => string,
-};
 
-type XasisHeaderBidderConfig = {
-    adserverTargeting: Array<XasisBuyerTargetting>,
-};
 
-type BidderSettings = {
-    xhb: XasisHeaderBidderConfig,
-};
 
-type PbjsEvent = 'bidWon';
 
-type PbjsEventData = {
-    width: number,
-    height: number,
-    adUnitCode: string,
-};
 
-type PbjsEventHandler = PbjsEventData => void;
 
-const bidderTimeout: number = 1500;
+const bidderTimeout = 1500;
 
-const consentManagement: ConsentManagement = {
+const consentManagement = {
     gdpr: {
         cmpApi: 'iab',
         timeout: 200,
@@ -97,11 +33,11 @@ const consentManagement: ConsentManagement = {
 };
 
 class PrebidAdUnit {
-    code: ?string;
-    bids: ?(PrebidBid[]);
-    mediaTypes: ?PrebidMediaTypes;
+    code;
+    bids;
+    mediaTypes;
 
-    constructor(advert: Advert, slot: HeaderBiddingSlot) {
+    constructor(advert, slot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
         this.mediaTypes = { banner: { sizes: slot.sizes } };
@@ -112,17 +48,10 @@ class PrebidAdUnit {
     }
 }
 
-let requestQueue: Promise<void> = Promise.resolve();
-let initialised: boolean = false;
+let requestQueue = Promise.resolve();
+let initialised = false;
 
-const initialise = (window: {
-    pbjs: {
-        setConfig: PbjsConfig => void,
-        bidderSettings: BidderSettings,
-        enableAnalytics: ([EnableAnalyticsConfig]) => void,
-        onEvent: (PbjsEvent, PbjsEventHandler) => void,
-    },
-}): void => {
+const initialise = (window) => {
     initialised = true;
 
     const userSync = config.get('switches.prebidUserSync', false)
@@ -137,7 +66,7 @@ const initialise = (window: {
           }
         : { syncEnabled: false };
 
-    const pbjsConfig: PbjsConfig = Object.assign(
+    const pbjsConfig = Object.assign(
         {},
         {
             bidderTimeout,
@@ -172,7 +101,7 @@ const initialise = (window: {
             adserverTargeting: [
                 {
                     key: 'hb_buyer_id',
-                    val(bidResponse): string {
+                    val(bidResponse) {
                         // flowlint sketchy-null-mixed:warn
                         return bidResponse.appnexus
                             ? bidResponse.appnexus.buyerMemberId
@@ -192,7 +121,7 @@ const initialise = (window: {
         }
 
         const size = [width, height]; // eg. [300, 250]
-        const advert: ?Advert = getAdvertById(adUnitCode);
+        const advert = getAdvertById(adUnitCode);
 
         if (!advert) {
             return;
@@ -210,9 +139,9 @@ const initialise = (window: {
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
 const requestBids = (
-    advert: Advert,
-    slotFlatMap?: HeaderBiddingSlot => HeaderBiddingSlot[]
-): Promise<void> => {
+    advert,
+    slotFlatMap
+) => {
     if (!initialised) {
         return requestQueue;
     }
@@ -221,7 +150,7 @@ const requestBids = (
         return requestQueue;
     }
 
-    const adUnits: Array<PrebidAdUnit> = getHeaderBiddingAdSlots(
+    const adUnits = getHeaderBiddingAdSlots(
         advert,
         slotFlatMap
     )

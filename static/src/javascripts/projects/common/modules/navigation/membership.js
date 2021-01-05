@@ -1,5 +1,3 @@
-// @flow
-
 import {
     isPayingMember,
     accountDataUpdateWarning,
@@ -11,7 +9,6 @@ import { Message } from 'common/modules/ui/message';
 import config from 'lib/config';
 import bean from 'bean';
 import arrowRight from 'svgs/icon/arrow-right.svg';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 import { submitViewEvent } from 'common/modules/commercial/acquisitions-ophan';
@@ -33,9 +30,9 @@ const accountDataUpdateLink = accountDataUpdateWarningLink => {
     }
 };
 
-const messageCode: string = 'membership-action-required';
+const messageCode = 'membership-action-required';
 
-const bannerCanBeLoadedAgainAfterKey: string =
+const bannerCanBeLoadedAgainAfterKey =
     'mmaActionRequiredBannerCanBeShownAgainAfter';
 
 const storeBannerCanBeLoadedAgainAfter = () => {
@@ -117,7 +114,7 @@ const showAccountDataUpdateWarningMessage = accountDataUpdateWarningLink => {
     );
 };
 
-const canShow: () => Promise<boolean> = () => {
+const canShow = () => {
     const bannerCanBeLoadedAgainAfter = userPrefs.get(
         bannerCanBeLoadedAgainAfterKey
     );
@@ -131,7 +128,7 @@ const canShow: () => Promise<boolean> = () => {
     );
 };
 
-const show: () => Promise<boolean> = () => {
+const show = () => {
     if (updateLink) {
         showAccountDataUpdateWarningMessage(updateLink);
         return Promise.resolve(true);
@@ -140,13 +137,13 @@ const show: () => Promise<boolean> = () => {
     return Promise.resolve(false);
 };
 
-export const membershipBanner: Banner = {
+export const membershipBanner = {
     id: messageCode,
     show,
     canShow,
 };
 
-export const initMembership = (): void => {
+export const initMembership = () => {
     const lastOneOff = getLastOneOffContributionDate();
     const lastRecurring = getLastRecurringContributionDate();
 

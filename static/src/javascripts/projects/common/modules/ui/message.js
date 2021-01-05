@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import { noop } from 'lib/noop';
 import bean from 'bean';
@@ -8,7 +7,6 @@ import { isBreakpoint } from 'lib/detect';
 import { begin } from 'common/modules/analytics/register';
 import uniq from 'lodash/uniq';
 
-type MessagePosition = 'top' | 'bottom';
 
 /**
  * Message provides a common means of flash messaging a user in the UI.
@@ -18,26 +16,26 @@ type MessagePosition = 'top' | 'bottom';
  * @param {Object=} options
  */
 class Message {
-    id: string;
-    important: boolean;
-    permanent: boolean;
-    blocking: boolean;
-    trackDisplay: boolean;
-    type: string;
-    position: MessagePosition;
-    siteMessageComponentName: string;
-    siteMessageLinkName: string;
-    siteMessageCloseBtn: string;
-    prefs: string;
-    widthBasedMessage: boolean;
-    cssModifierClass: string;
-    customJs: Object => void;
-    customOpts: Object;
-    $siteMessage: Object;
-    $siteMessageContainer: Object;
-    $siteMessageOverlay: Object;
+    id;
+    important;
+    permanent;
+    blocking;
+    trackDisplay;
+    type;
+    position;
+    siteMessageComponentName;
+    siteMessageLinkName;
+    siteMessageCloseBtn;
+    prefs;
+    widthBasedMessage;
+    cssModifierClass;
+    customJs;
+    customOpts;
+    $siteMessage;
+    $siteMessageContainer;
+    $siteMessageOverlay;
 
-    constructor(id: string, options?: Object) {
+    constructor(id, options) {
         const opts = options || {};
         this.id = id;
         this.important = opts.important || false;
@@ -58,7 +56,7 @@ class Message {
         this.$siteMessageOverlay = $('.js-site-message-overlay');
     }
 
-    show(message: string): boolean {
+    show(message) {
         // don't let messages unknowingly overwrite each other
         if (
             !this.$siteMessageContainer.hasClass('is-hidden') &&
@@ -70,9 +68,9 @@ class Message {
 
         // Move the message to the top if needed
         if (this.position === 'top') {
-            const bodyEl: ?HTMLElement = document.body;
+            const bodyEl = document.body;
             if (!bodyEl) throw new Error('Missing <body>');
-            const bodyElFirstChild: ?Node = bodyEl.childNodes[0];
+            const bodyElFirstChild = bodyEl.childNodes[0];
             if (!bodyElFirstChild) throw new Error('<body> is empty');
 
             bodyEl.insertBefore(
@@ -161,7 +159,7 @@ class Message {
         return true;
     }
 
-    bindModalListeners(): void {
+    bindModalListeners() {
         bean.on(document, 'click', '.js-site-message-inner', e => {
             // Suppress same-level and parent handling, but allow default click behaviour.
             // This handler must come first.
@@ -176,7 +174,7 @@ class Message {
         );
     }
 
-    trapFocus(): void {
+    trapFocus() {
         const messageEl = this.$siteMessageContainer[0];
         const trapEndEl = document.createElement('div');
 
@@ -190,14 +188,14 @@ class Message {
         messageEl.focus();
     }
 
-    hide(): void {
+    hide() {
         $('#header').removeClass('js-site-message');
         this.$siteMessageContainer.addClass('is-hidden');
         this.$siteMessageOverlay.addClass('is-hidden');
         $('body, html').removeClass('is-scroll-blocked');
     }
 
-    remember(): void {
+    remember() {
         if (this.isRemembered()) {
             return;
         }
@@ -207,17 +205,17 @@ class Message {
         userPrefs.set(this.prefs, uniq(messageStates));
     }
 
-    isRemembered(): boolean {
+    isRemembered() {
         const messageStates = userPrefs.get(this.prefs) || [];
         return messageStates.includes(this.id);
     }
 
-    acknowledge(): void {
+    acknowledge() {
         this.remember();
         this.hide();
     }
 
-    updateMessageOnWidth(): void {
+    updateMessageOnWidth() {
         const narrowDataAttr = 'site-message-narrow';
         const wideDataAttr = 'site-message-wide';
 
@@ -236,7 +234,7 @@ class Message {
         }
     }
 
-    updateMessageFromData(dataAttr: string): void {
+    updateMessageFromData(dataAttr) {
         if (this.$siteMessage) {
             const message = this.$siteMessage.data(dataAttr);
             if (message && this.$siteMessage) {
@@ -246,10 +244,9 @@ class Message {
     }
 }
 
-const hasUserAcknowledgedBanner = (id: string): boolean => {
+const hasUserAcknowledgedBanner = (id) => {
     const messageStates = userPrefs.get('messages');
     return messageStates && messageStates.includes(id);
 };
 
-export type { MessagePosition };
 export { Message, hasUserAcknowledgedBanner };

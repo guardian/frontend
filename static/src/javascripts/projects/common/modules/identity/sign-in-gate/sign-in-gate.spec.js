@@ -1,4 +1,3 @@
-// @flow
 import { signInGate } from './index';
 
 jest.mock('ophan/ng', () => ({
@@ -52,17 +51,17 @@ jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(() => ''),
 }));
 
-const fakeIsInABTestSynchronous: any = require('common/modules/experiments/ab')
+const fakeIsInABTestSynchronous = require('common/modules/experiments/ab')
     .isInABTestSynchronous;
 
-const fakeLocal: any = require('@guardian/libs').storage.local;
+const fakeLocal = require('@guardian/libs').storage.local;
 
-const fakeIsUserLoggedIn: any = require('common/modules/identity/api')
+const fakeIsUserLoggedIn = require('common/modules/identity/api')
     .isUserLoggedIn;
 
-const fakeConfig: any = require('lib/config');
+const fakeConfig = require('lib/config');
 
-const fakeUserPrefs: any = require('common/modules/user-prefs');
+const fakeUserPrefs = require('common/modules/user-prefs');
 
 describe('Sign in gate test', () => {
     // making a backup of the navigator method

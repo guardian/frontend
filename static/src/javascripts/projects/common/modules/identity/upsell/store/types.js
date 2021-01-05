@@ -1,31 +1,22 @@
-// @flow
 import {
     setConsent,
     buildNewsletterUpdatePayload,
     updateNewsletter,
 } from 'common/modules/identity/api';
 
-type Consent = {
-    id: string,
-    name: string,
-    description: string,
-    isOptOut: ?boolean,
-    isChannel: ?boolean,
-    exactTargetListId: ?string,
-};
 
 class ConsentWithState {
-    consent: Consent;
-    uniqueId: string;
-    hasConsented: boolean;
-    updateInApiFn: (cs: ConsentWithState[]) => Promise<void>;
+    consent;
+    uniqueId;
+    hasConsented;
+    updateInApiFn;
 
-    constructor(consent: Consent, hasConsented: ?boolean): void {
+    constructor(consent, hasConsented) {
         this.consent = consent;
         this.hasConsented = hasConsented || false;
     }
 
-    setState(hasConsented: boolean) {
+    setState(hasConsented) {
         this.hasConsented = hasConsented;
     }
 
@@ -35,11 +26,11 @@ class ConsentWithState {
 }
 
 class UserConsentWithState extends ConsentWithState {
-    constructor(...args: any[]) {
+    constructor(...args) {
         super(...args);
         this.uniqueId = ['user', this.consent.id].join('-');
     }
-    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> =>
+    static updateInApiFn = (cs) =>
         setConsent(
             cs.map(c => ({
                 id: c.consent.id,
@@ -49,11 +40,11 @@ class UserConsentWithState extends ConsentWithState {
 }
 
 class EmailConsentWithState extends ConsentWithState {
-    constructor(...args: any[]) {
+    constructor(...args) {
         super(...args);
         this.uniqueId = ['email', this.consent.id].join('-');
     }
-    static updateInApiFn = (cs: ConsentWithState[]): Promise<void> =>
+    static updateInApiFn = (cs) =>
         Promise.all(
             cs.map(consent => {
                 if (!consent.consent.exactTargetListId) return Promise.reject();
@@ -69,5 +60,4 @@ class EmailConsentWithState extends ConsentWithState {
 
 const consentTypeList = [UserConsentWithState, EmailConsentWithState];
 
-export type { Consent, ConsentWithState };
 export { UserConsentWithState, EmailConsentWithState, consentTypeList };

@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { Loader } from 'common/modules/discussion/loader';
 

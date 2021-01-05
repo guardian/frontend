@@ -1,5 +1,3 @@
-// @flow
-
 import React from 'preact-compat';
 
 import { NewsLetterSignUps } from './NewsLetterSignUps';
@@ -7,16 +5,8 @@ import { OptOuts } from './OptOuts';
 import { Header } from '../header/Header';
 import { AccountCreationBlock } from '../account-creation/AccountCreationBlock';
 
-type Props = {
-    csrfToken: string,
-    accountToken: ?string,
-    email: string,
-    hasPassword: boolean,
-    hasSocialLinks: boolean,
-    isUserLoggedIn: boolean,
-};
 
-const Components = (props: Props): React.Component => {
+const Components = (props) => {
     let components = [<NewsLetterSignUps />, <OptOuts />];
 
     if (!props.hasPassword && !props.hasSocialLinks && props.accountToken) {
@@ -37,7 +27,7 @@ const Components = (props: Props): React.Component => {
     return <div className="identity-upsell-layout">{components}</div>;
 };
 
-export const ConfirmEmailPage = (props: Props): React.Component => (
+export const ConfirmEmailPage = (props) => (
     <div className="identity-upsell-wrapper">
         <Header title="Thank you!" subtitle="You’re now subscribed." />
         <Components {...props} />

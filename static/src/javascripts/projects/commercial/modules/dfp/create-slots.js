@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
 
@@ -146,9 +145,9 @@ const adSlotDefinitions = {
 */
 
 const createAdSlotElements = (
-    name: string,
-    attrs: Object,
-    classes: Array<string>
+    name,
+    attrs,
+    classes
 ) => {
     const adSlots = [];
 
@@ -168,7 +167,7 @@ const createAdSlotElements = (
     }
 
     // The 'main' adSlot
-    const adSlot: HTMLDivElement = document.createElement('div');
+    const adSlot = document.createElement('div');
     adSlot.id = id;
     adSlot.className = `js-ad-slot ad-slot ${classes.join(' ')}`;
     adSlot.setAttribute('data-link-name', `ad slot ${name}`);
@@ -183,9 +182,9 @@ const createAdSlotElements = (
     return adSlots;
 };
 
-export const createSlots = (type: string, options: Object = {}) => {
+export const createSlots = (type, options = {}) => {
     const attributes = {};
-    const definition: Object = adSlotDefinitions[type];
+    const definition = adSlotDefinitions[type];
     const slotName = options.name || definition.name || type;
     const classes = options.classes
         ? options.classes.split(' ').map(cn => `ad-slot--${cn}`)

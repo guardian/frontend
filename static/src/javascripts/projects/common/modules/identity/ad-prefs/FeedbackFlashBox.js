@@ -1,12 +1,7 @@
-// @flow
 import React, { Component } from 'preact-compat';
 
-type FeedbackFlashBoxProps = {
-    children: any,
-    flashing: boolean,
-};
 
-class FeedbackFlashBox extends Component<FeedbackFlashBoxProps> {
+class FeedbackFlashBox extends Component {
     render() {
         return (
             <div

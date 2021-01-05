@@ -1,4 +1,3 @@
-// @flow
 import { getCookie, removeCookie, addCookie } from 'lib/cookies';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
@@ -36,11 +35,11 @@ const CONTRIBUTIONS_REMINDER_SIGNED_UP = {
     daysToLive: 90,
 };
 
-const forcedAdFreeMode: boolean = !!window.location.hash.match(
+const forcedAdFreeMode = !!window.location.hash.match(
     /[#&]noadsaf(&.*)?$/
 );
 
-const userHasData = (): boolean => {
+const userHasData = () => {
     const cookie =
         getCookie(ACTION_REQUIRED_FOR_COOKIE) ||
         getCookie(USER_FEATURES_EXPIRY_COOKIE) ||
@@ -53,21 +52,21 @@ const userHasData = (): boolean => {
     return !!cookie;
 };
 
-const accountDataUpdateWarning = (): ?string =>
+const accountDataUpdateWarning = () =>
     getCookie(ACTION_REQUIRED_FOR_COOKIE);
 
-const adFreeDataIsPresent = (): boolean => {
+const adFreeDataIsPresent = () => {
     const cookieVal = getCookie(AD_FREE_USER_COOKIE);
     return !Number.isNaN(parseInt(cookieVal, 10));
 };
 
-const timeInDaysFromNow = (daysFromNow: number): string => {
+const timeInDaysFromNow = (daysFromNow) => {
     const tmpDate = new Date();
     tmpDate.setDate(tmpDate.getDate() + daysFromNow);
     return tmpDate.getTime().toString();
 };
 
-const persistResponse = (JsonResponse: () => void) => {
+const persistResponse = (JsonResponse) => {
     addCookie(USER_FEATURES_EXPIRY_COOKIE, timeInDaysFromNow(1));
     addCookie(PAYING_MEMBER_COOKIE, JsonResponse.contentAccess.paidMember);
     addCookie(
@@ -107,7 +106,7 @@ const persistResponse = (JsonResponse: () => void) => {
     }
 };
 
-const deleteOldData = (): void => {
+const deleteOldData = () => {
     // We expect adfree cookies to be cleaned up by the logout process, but what if the user's login simply times out?
     removeCookie(USER_FEATURES_EXPIRY_COOKIE);
     removeCookie(PAYING_MEMBER_COOKIE);
@@ -119,7 +118,7 @@ const deleteOldData = (): void => {
     removeCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 };
 
-const requestNewData = (): Promise<void> =>
+const requestNewData = () =>
     fetchJson(`${config.get('page.userAttributesApiUrl')}/me`, {
         mode: 'cors',
         credentials: 'include',
@@ -127,20 +126,20 @@ const requestNewData = (): Promise<void> =>
         .then(persistResponse)
         .catch(() => {});
 
-const datedCookieIsOld = (datedCookieName: string): boolean => {
+const datedCookieIsOld = (datedCookieName) => {
     const expiryDateFromCookie = getCookie(datedCookieName);
     const expiryTime = parseInt(expiryDateFromCookie, 10);
     const timeNow = new Date().getTime();
     return timeNow >= expiryTime;
 };
 
-const featuresDataIsMissing = (): boolean =>
+const featuresDataIsMissing = () =>
     !getCookie(USER_FEATURES_EXPIRY_COOKIE);
 
-const featuresDataIsOld = (): boolean =>
+const featuresDataIsOld = () =>
     datedCookieIsOld(USER_FEATURES_EXPIRY_COOKIE);
 
-const adFreeDataIsOld = (): boolean => {
+const adFreeDataIsOld = () => {
     const switches = config.get('switches');
     return (
         switches.adFreeStrictExpiryEnforcement &&
@@ -148,18 +147,18 @@ const adFreeDataIsOld = (): boolean => {
     );
 };
 
-const userNeedsNewFeatureData = (): boolean =>
+const userNeedsNewFeatureData = () =>
     featuresDataIsMissing() ||
     featuresDataIsOld() ||
     (adFreeDataIsPresent() && adFreeDataIsOld());
 
-const userHasDataAfterSignout = (): boolean =>
+const userHasDataAfterSignout = () =>
     !isUserLoggedIn() && userHasData();
 
 /**
  * Updates the user's data in a lazy fashion
  */
-const refresh = (): Promise<void> => {
+const refresh = () => {
     if (isUserLoggedIn() && userNeedsNewFeatureData()) {
         return requestNewData();
     } else if (userHasDataAfterSignout() && !forcedAdFreeMode) {
@@ -176,12 +175,12 @@ const supportSiteRecurringCookiePresent = () =>
  * Does our _existing_ data say the user is a paying member?
  * This data may be stale; we do not wait for userFeatures.refresh()
  */
-const isPayingMember = (): boolean =>
+const isPayingMember = () =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a paying user
     isUserLoggedIn() && getCookie(PAYING_MEMBER_COOKIE) !== 'false';
 
 // Expects milliseconds since epoch
-const getSupportFrontendOneOffContributionDate = (): number | null => {
+const getSupportFrontendOneOffContributionDate = () => {
     const supportFrontendCookie = getCookie(
         SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE
     );
@@ -195,7 +194,7 @@ const getSupportFrontendOneOffContributionDate = (): number | null => {
 };
 
 // Expects YYYY-MM-DD format
-const getAttributesOneOffContributionDate = (): number | null => {
+const getAttributesOneOffContributionDate = () => {
     const attributesCookie = getCookie(ONE_OFF_CONTRIBUTION_DATE_COOKIE);
 
     if (attributesCookie) {
@@ -208,11 +207,11 @@ const getAttributesOneOffContributionDate = (): number | null => {
 
 // number returned is Epoch time in milliseconds.
 // null value signifies no last contribution date.
-const getLastOneOffContributionDate = (): number | null =>
+const getLastOneOffContributionDate = () =>
     getSupportFrontendOneOffContributionDate() ||
     getAttributesOneOffContributionDate();
 
-const getLastRecurringContributionDate = (): number | null => {
+const getLastRecurringContributionDate = () => {
     // Check for cookies, ensure that cookies parse, and ensure parsed results are integers
     const monthlyCookie = getCookie(
         SUPPORT_RECURRING_CONTRIBUTOR_MONTHLY_COOKIE
@@ -236,7 +235,7 @@ const getLastRecurringContributionDate = (): number | null => {
     return monthlyMS || annualMS || null;
 };
 
-const getDaysSinceLastOneOffContribution = (): number | null => {
+const getDaysSinceLastOneOffContribution = () => {
     const lastContributionDate = getLastOneOffContributionDate();
     if (lastContributionDate === null) {
         return null;
@@ -245,7 +244,7 @@ const getDaysSinceLastOneOffContribution = (): number | null => {
 };
 
 // defaults to last three months
-const isRecentOneOffContributor = (askPauseDays: number = 90): boolean => {
+const isRecentOneOffContributor = (askPauseDays = 90) => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
@@ -255,8 +254,8 @@ const isRecentOneOffContributor = (askPauseDays: number = 90): boolean => {
 
 // true if the user has completed their ask-free period
 const isPostAskPauseOneOffContributor = (
-    askPauseDays: number = 90
-): boolean => {
+    askPauseDays = 90
+) => {
     const daysSinceLastContribution = getDaysSinceLastOneOffContribution();
     if (daysSinceLastContribution === null) {
         return false;
@@ -264,15 +263,15 @@ const isPostAskPauseOneOffContributor = (
     return daysSinceLastContribution > askPauseDays;
 };
 
-const isRecurringContributor = (): boolean =>
+const isRecurringContributor = () =>
     // If the user is logged in, but has no cookie yet, play it safe and assume they're a contributor
     (isUserLoggedIn() && getCookie(RECURRING_CONTRIBUTOR_COOKIE) !== 'false') ||
     supportSiteRecurringCookiePresent();
 
-const isDigitalSubscriber = (): boolean =>
+const isDigitalSubscriber = () =>
     getCookie(DIGITAL_SUBSCRIBER_COOKIE) === 'true';
 
-const shouldNotBeShownSupportMessaging = (): boolean =>
+const shouldNotBeShownSupportMessaging = () =>
     getCookie(HIDE_SUPPORT_MESSAGING_COOKIE) === 'true';
 
 /*
@@ -283,7 +282,7 @@ const shouldNotBeShownSupportMessaging = (): boolean =>
     which this function is dependent on.
 */
 
-const shouldHideSupportMessaging = (): boolean =>
+const shouldHideSupportMessaging = () =>
     shouldNotBeShownSupportMessaging() ||
     isRecentOneOffContributor() || // because members-data-api is unaware of one-off contributions so relies on cookie
     isRecurringContributor(); // guest checkout means that members-data-api isn't aware of all recurring contributions so relies on cookie
@@ -299,15 +298,15 @@ const readerRevenueRelevantCookies = [
 ];
 
 // For debug/test purposes
-const fakeOneOffContributor = (): void => {
+const fakeOneOffContributor = () => {
     addCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE, Date.now().toString());
 };
 
-const isAdFreeUser = (): boolean =>
+const isAdFreeUser = () =>
     isDigitalSubscriber() || (adFreeDataIsPresent() && !adFreeDataIsOld());
 
 // Extend the expiry of the contributions cookie by 1 year beyond the date of the contribution
-const extendContribsCookieExpiry = (): void => {
+const extendContribsCookieExpiry = () => {
     const cookie = getCookie(SUPPORT_ONE_OFF_CONTRIBUTION_COOKIE);
     if (cookie) {
         const contributionDate = parseInt(cookie, 10);
@@ -322,7 +321,7 @@ const extendContribsCookieExpiry = (): void => {
     }
 };
 
-const canShowContributionsReminderFeature = (): boolean => {
+const canShowContributionsReminderFeature = () => {
     const signedUpForReminder = !!getCookie(CONTRIBUTIONS_REMINDER_SIGNED_UP.name);
     return config.get('switches.showContributionReminder') && !signedUpForReminder;
 };

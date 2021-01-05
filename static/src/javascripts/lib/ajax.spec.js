@@ -1,4 +1,3 @@
-// @flow
 import reqwest from 'reqwest';
 import { ajax } from 'lib/ajax';
 
@@ -6,7 +5,7 @@ jest.mock('lib/raven');
 jest.mock('reqwest', () => jest.fn());
 jest.mock('lib/config');
 
-const reqwestSpy = (reqwest: any);
+const reqwestSpy = (reqwest);
 
 describe('ajax', () => {
     beforeEach(() => {

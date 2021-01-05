@@ -1,5 +1,3 @@
-// @flow
-
 import marque36icon from 'svgs/icon/marque-36.svg';
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 import arrowWhiteRight from 'svgs/icon/arrow-white-right.svg';
@@ -7,8 +5,8 @@ import { acquisitionsBannerTickerTemplate } from 'common/modules/commercial/temp
 import { paymentMethodLogosTemplate } from 'common/modules/commercial/templates/payment-method-logos-template';
 
 export const acquisitionsBannerControlTemplate = (
-    params: EngagementBannerTemplateParams
-): string =>
+    params
+) =>
     `
         <div class="engagement-banner__close">
             <div class="engagement-banner__roundel hide-until-phablet">

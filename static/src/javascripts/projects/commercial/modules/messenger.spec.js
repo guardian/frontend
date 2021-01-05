@@ -1,4 +1,3 @@
-// @flow
 import { noop } from 'lib/noop';
 import {
     register as register_,
@@ -7,9 +6,9 @@ import {
 } from 'commercial/modules/messenger';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
-const onMessage: any = testExports.onMessage;
-const register: any = register_;
-const unregister: any = unregister_;
+const onMessage = testExports.onMessage;
+const register = register_;
+const unregister = unregister_;
 
 const addEventListenerSpy = jest
     .spyOn(global, 'addEventListener')

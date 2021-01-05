@@ -1,11 +1,10 @@
-// @flow
 import mediator from 'lib/mediator';
 
 class Toggles {
-    component: ?HTMLElement;
-    controls: Array<HTMLElement>;
+    component;
+    controls;
 
-    constructor(component: ?HTMLElement = document.body): void {
+    constructor(component = document.body) {
         if (component) {
             const controls = Array.from(
                 component.querySelectorAll('[data-toggle]')
@@ -24,7 +23,7 @@ class Toggles {
         this.controls.forEach(this.prepareControl, this);
     }
 
-    toggle(control: HTMLElement): void {
+    toggle(control) {
         this.controls.forEach(c => {
             if (c === control) {
                 if (c.classList.contains('is-active')) {
@@ -38,7 +37,7 @@ class Toggles {
         });
     }
 
-    reset(omitEl: ?HTMLElement): void {
+    reset(omitEl) {
         const doNotReset = ['js-search-old', 'js-search-new'];
 
         this.controls
@@ -52,7 +51,7 @@ class Toggles {
             .forEach(this.close, this);
     }
 
-    prepareControl(control: HTMLElement): void {
+    prepareControl(control) {
         const readyClass = 'js-toggle-ready';
         const nav = document.querySelector('.js-profile-nav');
         const isSignedIn = nav && nav.classList.contains('is-signed-in');
@@ -70,7 +69,7 @@ class Toggles {
                 control.classList.add(readyClass);
                 control.addEventListener(
                     'click',
-                    (e: MouseEvent): void => {
+                    (e) => {
                         e.preventDefault();
                         this.toggle(control);
                     }
@@ -79,7 +78,7 @@ class Toggles {
         }
     }
 
-    getTarget(control: HTMLElement): ?HTMLElement {
+    getTarget(control) {
         const targetClass = control.getAttribute('data-toggle');
 
         if (targetClass) {
@@ -89,7 +88,7 @@ class Toggles {
         }
     }
 
-    open(control: HTMLElement): void {
+    open(control) {
         const target = this.getTarget(control);
 
         control.classList.add('is-active');
@@ -99,7 +98,7 @@ class Toggles {
         }
     }
 
-    close(control: HTMLElement): void {
+    close(control) {
         const target = this.getTarget(control);
 
         control.classList.remove('is-active');

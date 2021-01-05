@@ -1,4 +1,3 @@
-// @flow
 import { init, _ } from './liveblog-adverts';
 
 const { getSlotName } = _;

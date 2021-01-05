@@ -1,9 +1,7 @@
-// @flow
-
 import config from 'lib/config';
 import { services } from 'projects/atoms/services';
 
-const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
+const bootstrapAtom =(atomMaker, atomType) => {
     const atomBuilder = atomMaker[atomType].default(services);
     Array.from(
         document.querySelectorAll(`[data-atom-type='${atomType}']`)
@@ -27,12 +25,12 @@ const bootstrapAtom = <A>(atomMaker: AtomMaker<A>, atomType: AtomType) => {
 };
 
 const initCharts = () => {
-    const iframes: HTMLIFrameElement[] = ([
+    const iframes = ([
         ...document.querySelectorAll('.atom--chart > .atom__iframe'),
-    ]: any);
+    ]);
 
     window.addEventListener('message', event => {
-        const iframe: ?HTMLIFrameElement = iframes.find(i => {
+        const iframe = iframes.find(i => {
             try {
                 return i.name === event.source.name;
             } catch (e) {

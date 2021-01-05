@@ -1,4 +1,3 @@
-// @flow
 import qwery from 'qwery';
 import fakeConfig from 'lib/config';
 import fakeMediator from 'lib/mediator';
@@ -13,7 +12,7 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
 
 const fastdomMeasureSpy = jest.spyOn(fastdom, 'measure');
 
-const sharedBeforeEach = (domSnippet: string) => () => {
+const sharedBeforeEach = (domSnippet) => () => {
     jest.resetAllMocks();
     fakeMediator.removeAllListeners();
     fakeConfig.page.isImmersive = false;

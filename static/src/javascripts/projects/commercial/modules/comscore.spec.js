@@ -1,4 +1,3 @@
-// @flow
 import { loadScript } from '@guardian/libs';
 import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -9,11 +8,11 @@ jest.mock('@guardian/consent-management-platform', () => ({
     getConsentFor: jest.fn()
 }));
 
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 const SOURCEPOINT_ID = '5efefe25b8e05c06542b2a77';
 
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: {
             vendorConsents: {
@@ -21,7 +20,7 @@ const tcfv2WithConsentMock = (callback): void =>
             },
         },
     });
-const tcfv2WithoutConsentMock = (callback): void =>
+const tcfv2WithoutConsentMock = (callback) =>
     callback({
         tcfv2: {
             vendorConsents: {
@@ -29,13 +28,13 @@ const tcfv2WithoutConsentMock = (callback): void =>
             },
         },
     });
-const ccpaWithConsentMock = (callback): void =>
+const ccpaWithConsentMock = (callback) =>
     callback({
         ccpa: {
             doNotSell: false,
         },
     });
-const ccpaWithoutConsentMock = (callback): void =>
+const ccpaWithoutConsentMock = (callback) =>
     callback({
         ccpa: {
             doNotSell: true,
@@ -115,7 +114,7 @@ describe('comscore initOnConsent', () => {
         _.initOnConsent(true);
         _.initOnConsent(true);
 
-        // $FlowFixMe
+        
         expect(loadScript).toBeCalledTimes(1);
     });
 });

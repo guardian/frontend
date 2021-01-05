@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import memoize from 'lodash/memoize';
 import {
@@ -31,14 +29,14 @@ import {
 } from 'common/modules/commercial/contributions-utilities';
 
 export const getLiveblogEpicTest = memoize(
-    (): Promise<?Runnable<ABTest>> => {
+    () => {
         if (config.get('page').contentType === 'LiveBlog') {
             return getConfiguredLiveblogEpicTests().then(configuredEpicTests => {
                 configuredEpicTests.forEach(test =>
                     config.set(`switches.ab${test.id}`, true)
                 );
 
-                return firstRunnableTest<ABTest>([...hardcodedEpicTests, ...configuredEpicTests]);
+                return firstRunnableTest([...hardcodedEpicTests, ...configuredEpicTests]);
             });
         }
 
@@ -47,14 +45,14 @@ export const getLiveblogEpicTest = memoize(
 );
 
 export const getEngagementBannerTestToRun = memoize(
-    (): Promise<?Runnable<AcquisitionsABTest>> => {
+    () => {
         if (config.get('switches.engagementBannerTestsFromGoogleDocs')) {
             return getEngagementBannerTestsFromGoogleDoc().then(
                 asyncEngagementBannerTests => {
                     asyncEngagementBannerTests.forEach(test =>
                         config.set(`switches.ab${test.id}`, true)
                     );
-                    return firstRunnableTest<AcquisitionsABTest>([
+                    return firstRunnableTest([
                         ...engagementBannerTests,
                         ...asyncEngagementBannerTests,
                     ]);
@@ -62,7 +60,7 @@ export const getEngagementBannerTestToRun = memoize(
             );
         }
         return Promise.resolve(
-            firstRunnableTest<AcquisitionsABTest>(engagementBannerTests)
+            firstRunnableTest(engagementBannerTests)
         );
     }
 );
@@ -73,35 +71,33 @@ export const getEngagementBannerTestToRun = memoize(
 // We memoize this because it can't change for a given pageview, and because getParticipations()
 // and isInVariantSynchronous() depend on it and these are called in many places.
 export const getSynchronousTestsToRun = memoize(() =>
-    allRunnableTests<ABTest>(concurrentTests)
+    allRunnableTests(concurrentTests)
 );
 
-export const getAsyncTestsToRun = (): Promise<
-    $ReadOnlyArray<Runnable<ABTest>>
-> =>
+export const getAsyncTestsToRun = () =>
     Promise.all([getLiveblogEpicTest(), getEngagementBannerTestToRun()]).then(
         tests => tests.filter(Boolean)
     );
 
 // This excludes epic & banner tests
-export const getSynchronousParticipations = (): Participations =>
+export const getSynchronousParticipations = () =>
     runnableTestsToParticipations(getSynchronousTestsToRun());
 
 // This excludes epic & banner tests
 export const isInVariantSynchronous = (
-    test: ABTest,
-    variantId: string
-): boolean =>
+    test,
+    variantId
+) =>
     getSynchronousTestsToRun().some(
         t => t.id === test.id && t.variantToRun.id === variantId
     );
 
 // This excludes epic & banner tests
 // checks if the user in in a given test with any variant
-export const isInABTestSynchronous = (test: ABTest): boolean =>
+export const isInABTestSynchronous = (test) =>
     getSynchronousTestsToRun().some(t => t.id === test.id);
 
-export const runAndTrackAbTests = (): Promise<void> => {
+export const runAndTrackAbTests = () => {
     const testsToRun = getSynchronousTestsToRun();
 
     testsToRun.forEach(test => test.variantToRun.test(test));
@@ -116,7 +112,7 @@ export const runAndTrackAbTests = (): Promise<void> => {
     // subsequent pageviews so we save it to localStorage.
     // We don't persist those whose switch is gone from the backend,
     // to ensure that old tests get cleaned out and localStorage doesn't keep growing.
-    const testExclusions: Participations = testExclusionsWhoseSwitchExists({
+    const testExclusions = testExclusionsWhoseSwitchExists({
         ...getParticipationsFromLocalStorage(),
         ...getForcedParticipationsFromUrl(),
     });

@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
@@ -9,9 +8,9 @@ const RECOMMENDATION_CLASS = 'js-recommend-comment';
 const TOOLTIP_CLASS = 'js-rec-tooltip';
 
 const updateReturnUrl = (
-    links: NodeList<HTMLElement>,
-    returnLink: ?string
-): void => {
+    links,
+    returnLink
+) => {
     for (let i = 0, len = links.length; i < len; i += 1) {
         const url = links[i].getAttribute('href');
 
@@ -30,7 +29,7 @@ const updateReturnUrl = (
     }
 };
 
-const showSignInTooltip = (target: Element): Promise<void> => {
+const showSignInTooltip = (target) => {
     const tooltip = document.querySelector(`.${TOOLTIP_CLASS}`);
 
     if (!tooltip) {
@@ -46,31 +45,31 @@ const showSignInTooltip = (target: Element): Promise<void> => {
     });
 };
 
-const isOpenForRecommendations = (element: ?Element): boolean =>
+const isOpenForRecommendations = (element) =>
     !!element && !!element.querySelector('.d-discussion--recommendations-open');
 
-const setClicked = (target: Element): Promise<void> =>
+const setClicked = (target) =>
     fastdom.mutate(() => {
         target.classList.remove(RECOMMENDATION_CLASS);
         target.classList.add('d-comment__recommend--clicked');
     });
 
-const unsetClicked = (target: Element): Promise<void> =>
+const unsetClicked = (target) =>
     fastdom.mutate(() => {
         target.classList.add(RECOMMENDATION_CLASS);
         target.classList.remove('d-comment__recommend--clicked');
     });
 
-const setRecommended = (target: Element): Promise<void> =>
+const setRecommended = (target) =>
     fastdom.mutate(() => {
         target.classList.add('d-comment__recommend--recommended');
     });
 
 const handle = (
-    target: Element,
-    container: ?Element,
-    user: ?DiscussionProfile
-): Promise<void> => {
+    target,
+    container,
+    user
+) => {
     const discussionAllowAnonymousRecommendsSwitch = config.get(
         'switches.discussionAllowAnonymousRecommendsSwitch'
     );
@@ -101,7 +100,7 @@ const handle = (
     return Promise.resolve();
 };
 
-const closeTooltip = (): Promise<void> =>
+const closeTooltip = () =>
     fastdom.mutate(() => {
         const tooltip = document.querySelector(`.${TOOLTIP_CLASS}`);
 

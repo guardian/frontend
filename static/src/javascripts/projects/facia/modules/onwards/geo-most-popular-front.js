@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: geo-most-popular-front.js
  Description: replaces general most popular trails with geo based most popular on fronts.
@@ -9,9 +8,8 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
-import type bonzo from 'bonzo';
 
-const hideTabs = (parent: bonzo): void => {
+const hideTabs = (parent) => {
     $('.js-tabs-content', parent).addClass('tabs__content--no-border');
     $('.js-tabs', parent).addClass('u-h');
 };
@@ -28,16 +26,16 @@ export class GeoMostPopularFront extends Component {
         this.manipulationType = 'html';
     }
 
-    isNetworkFront: boolean;
-    isVideoFront: boolean;
-    isInternational: boolean;
-    parent: ?bonzo;
+    isNetworkFront;
+    isVideoFront;
+    isInternational;
+    parent;
 
-    prerender(): void {
+    prerender() {
         this.elem = qwery('.headline-list', this.elem)[0];
     }
 
-    go(): void {
+    go() {
         const tabSelector = this.isNetworkFront ? '.js-tab-1' : '.js-tab-2';
         this.parent = qwery('.js-popular-trails')[0];
 
@@ -58,7 +56,7 @@ export class GeoMostPopularFront extends Component {
         }
     }
 
-    ready(): void {
+    ready() {
         if (this.isNetworkFront) {
             hideTabs(this.parent);
         }

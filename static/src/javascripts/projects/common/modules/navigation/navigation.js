@@ -1,19 +1,17 @@
-// @flow
-
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { isIOS, getUserAgent } from 'lib/detect';
 import $ from 'lib/$';
 
-const jsEnableFooterNav = (): Promise<void> =>
+const jsEnableFooterNav = () =>
     fastdom.mutate(() => {
         $('.navigation-container--default')
             .removeClass('navigation-container--default')
             .addClass('navigation-container--collapsed');
     });
 
-const copyMegaNavMenu = (): Promise<void> => {
+const copyMegaNavMenu = () => {
     let megaNav;
 
     return fastdom
@@ -38,7 +36,7 @@ const copyMegaNavMenu = (): Promise<void> => {
         });
 };
 
-const replaceAllSectionsLink = (): Promise<void> =>
+const replaceAllSectionsLink = () =>
     fastdom
         .measure(() => $('.js-navigation-header .js-navigation-toggle'))
         .then(elems =>
@@ -47,7 +45,7 @@ const replaceAllSectionsLink = (): Promise<void> =>
             })
         );
 
-const addOverflowScrollTouch = (): Promise<void> =>
+const addOverflowScrollTouch = () =>
     fastdom
         .measure(() => $('.navigation__scroll'))
         .then(navScroll => {
@@ -60,7 +58,7 @@ const addOverflowScrollTouch = (): Promise<void> =>
             }
         });
 
-const enableMegaNavToggle = (): void => {
+const enableMegaNavToggle = () => {
     bean.on(document, 'click', '.js-navigation-toggle', e => {
         const target = $(`.${e.currentTarget.getAttribute('data-target-nav')}`);
 
@@ -79,7 +77,7 @@ const enableMegaNavToggle = (): void => {
     });
 };
 
-const initNavigation = (): Promise<any> => {
+const initNavigation = () => {
     enableMegaNavToggle();
 
     const modifications = [

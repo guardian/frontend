@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
 import { Toggles } from 'common/modules/ui/toggles';
@@ -11,10 +10,10 @@ import externalLink from 'svgs/icon/external-link.svg';
 import arrow from 'svgs/icon/arrow.svg';
 
 class Frame {
-    adSlot: HTMLElement;
-    params: Object;
+    adSlot;
+    params;
 
-    constructor(adSlot: HTMLElement, params: Object) {
+    constructor(adSlot, params) {
         this.adSlot = adSlot;
         this.params = params;
     }

@@ -1,12 +1,10 @@
-// @flow
-
 import $ from 'lib/$';
 import { Expandable } from 'common/modules/ui/expandable';
 
 describe('Expandable', () => {
-    const ctaOpen = ([amount]: Array<string>): string =>
+    const ctaOpen = ([amount]) =>
         `Show ${amount ? `${amount} ` : ''}fewer`;
-    const ctaShut = ([amount]: Array<string>): string =>
+    const ctaShut = ([amount]) =>
         `Show ${amount ? `${amount} ` : ''}more`;
 
     beforeEach(() => {
