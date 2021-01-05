@@ -32,7 +32,7 @@ const triggerVariant = (doc: Document, iframeId: string) => {
 export const newsletterEmbeds: ABTest = {
     id: abTestName,
     start: '2020-12-02',
-    expiry: '2021-01-04',
+    expiry: '2021-01-11',
     author: 'Josh Buckland',
     description:
         'Show a new newsletter embed design',

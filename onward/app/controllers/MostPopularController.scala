@@ -16,7 +16,7 @@ import models.{
   MostPopularGeoResponse,
   MostPopularNx2,
   OnwardCollectionResponse,
-  OnwardCollectionResponseForDCR,
+  OnwardCollectionResponseDCR,
   OnwardItemNx2,
 }
 import implicits.FaciaContentFrontendHelpers._
@@ -116,10 +116,15 @@ class MostPopularController(
       val globalPopular: Option[MostPopularNx2] = {
         val globalPopularContent = mostPopularAgent.mostPopular(edition)
         if (globalPopularContent.nonEmpty) {
-          val items = globalPopularContent
-            .map(_.faciaContent)
-            .map(pc => OnwardItemNx2.pressedContentToOnwardItemNx2(pc))
-          Some(MostPopularNx2("Across The&nbsp;Guardian", "", items))
+          Some(
+            MostPopularNx2(
+              "Across The&nbsp;Guardian",
+              "",
+              globalPopularContent
+                .map(_.faciaContent)
+                .map(OnwardItemNx2.pressedContentToOnwardItemNx2),
+            ),
+          )
         } else
           None
       }
@@ -191,7 +196,7 @@ class MostPopularController(
     val tabs = mostPopulars.map { section =>
       OnwardCollectionResponse(
         heading = section.heading,
-        trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(section.trails),
+        trails = section.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
       )
     }
     val mostCommented = mostCards.getOrElse("most_commented", None).flatMap { contentCard =>
@@ -200,7 +205,7 @@ class MostPopularController(
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
-    val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     Cached(900)(JsonComponent(response))
   }
 
@@ -216,7 +221,7 @@ class MostPopularController(
     val mostShared = mostCards.getOrElse("most_shared", None).flatMap { contentCard =>
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
-    val response = OnwardCollectionResponseForDCR(tabs, mostCommented, mostShared)
+    val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
     // Value is 1 fr the moment.
     // We do caching in Fasty and the Ophan/CAPI updates are on schedule and async
     Cached(1)(JsonComponent(response))
@@ -226,7 +231,7 @@ class MostPopularController(
     val data = MostPopularGeoResponse(
       country = countryNames.get(countryCode),
       heading = mostPopular.heading,
-      trails = OnwardItemNx2.pressedContentsToOnwardItemsNx2(mostPopular.trails),
+      trails = mostPopular.trails.map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
     )
     Cached(900)(JsonComponent(data))
   }
