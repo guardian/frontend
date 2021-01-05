@@ -68,6 +68,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-deeply-read-test",
+    "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
+    owners = Seq(Owner.withGithub("nitro-marky")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 1, 25),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-newsletter-embeds3",
     "New newsletter signup embeds for discoverability OKR",
     owners = Seq(Owner.withGithub("buck06191")),
