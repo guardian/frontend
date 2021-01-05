@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 import { addEventListener as addEventListenerSpy } from 'lib/events';
 import { init, _ } from './sticky-top-banner';
@@ -28,8 +26,8 @@ jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
         size: [0, 1],
     })),
 }));
-const registerSpy: any = require('commercial/modules/messenger').register;
-// $FlowFixMe we should not mutate native JS API prototypes
+const registerSpy = require('commercial/modules/messenger').register;
+
 Element.prototype.getBoundingClientRect = jest.fn(() => ({ height: 500 }));
 
 describe('Sticky ad banner', () => {

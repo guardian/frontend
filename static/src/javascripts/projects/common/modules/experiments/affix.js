@@ -1,26 +1,19 @@
-// @flow
-
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 
-const getPixels = (top: string): number =>
+const getPixels = (top) =>
     top !== 'auto' ? parseInt(top, 10) : 0;
 
 class Affix {
-    affixed: boolean;
-    $markerTop: bonzo;
-    $markerBottom: bonzo;
-    $container: bonzo;
-    $element: bonzo;
-    $window: bonzo;
+    affixed;
+    $markerTop;
+    $markerBottom;
+    $container;
+    $element;
+    $window;
 
-    constructor(options: {
-        element: ?HTMLElement,
-        topMarker: ?HTMLElement,
-        bottomMarker: ?HTMLElement,
-        containerElement: ?HTMLElement,
-    }): void {
+    constructor(options) {
         window.addEventListener('click', () => {
             this.checkPosition();
         });
@@ -44,7 +37,7 @@ class Affix {
         this.calculateContainerPositioning();
     }
 
-    calculateContainerPositioning(): void {
+    calculateContainerPositioning() {
         fastdom
             .mutate(() => {
                 this.$container.css('top', '0');
@@ -63,7 +56,7 @@ class Affix {
             });
     }
 
-    checkPosition(): void {
+    checkPosition() {
         const scrollTop = this.$window.scrollTop();
         const markerTopTop = this.$markerTop.offset().top;
         const markerBottomTop = this.$markerBottom.offset().top;

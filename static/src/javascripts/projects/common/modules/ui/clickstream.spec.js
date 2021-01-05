@@ -1,8 +1,6 @@
-// @flow
 import bean from 'bean';
 import mediator from 'lib/mediator';
 import { initClickstream } from 'common/modules/ui/clickstream';
-import type { Spec } from 'common/modules/ui/clickstream';
 
 jest.mock('lib/mediator');
 
@@ -44,9 +42,9 @@ describe('Clickstream', () => {
     });
 
     const buildClickspecInspector = (
-        expectedClickSpec: Spec,
-        callback: () => void
-    ) => (clickSpec: Spec) => {
+        expectedClickSpec,
+        callback
+    ) => (clickSpec) => {
         Object.keys(expectedClickSpec).forEach(key => {
             // `target` is a HTML Element and hard to match on
             if (key !== 'target') {

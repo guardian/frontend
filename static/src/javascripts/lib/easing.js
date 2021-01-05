@@ -1,5 +1,3 @@
-// @flow
-
 /* Create basic easing functions
 
    Usage:
@@ -9,12 +7,12 @@
    https://gist.github.com/gre/1650294
 */
 
-const easeIn = (power: number): Function => t => t ** power;
+const easeIn = (power) => t => t ** power;
 
-const easeOut = (power: number): Function => t =>
+const easeOut = (power) => t =>
     1 - Math.abs((t - 1) ** power);
 
-const easeInOut = (power: number): Function => t =>
+const easeInOut = (power) => t =>
     t < 0.5 ? easeIn(power)(t * 2) / 2 : easeOut(power)(t * 2 - 1) / 2 + 0.5;
 
 // #? these probably should not be generated on parse but on being called
@@ -59,7 +57,7 @@ const easingFunctions = {
     easeInOutQuint: easeInOut(5),
 };
 
-const createEasing = (type: string, duration: number): Function => {
+const createEasing = (type, duration) => {
     const startTime = new Date();
     const ease = easingFunctions[type];
 

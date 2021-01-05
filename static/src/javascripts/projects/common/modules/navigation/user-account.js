@@ -1,8 +1,7 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 
-const updateCommentLink = (commentItems): void => {
+const updateCommentLink = (commentItems) => {
     const user = getUserFromCookie();
 
     if (user) {
@@ -24,7 +23,7 @@ const updateCommentLink = (commentItems): void => {
     }
 };
 
-const showMyAccountIfNecessary = (): void => {
+const showMyAccountIfNecessary = () => {
     if (!isUserLoggedIn()) {
         return;
     }

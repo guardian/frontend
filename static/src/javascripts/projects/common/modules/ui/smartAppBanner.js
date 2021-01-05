@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { getCookie, addCookie } from 'lib/cookies';
@@ -7,7 +6,6 @@ import template from 'lodash/template';
 import { loadCssPromise } from 'lib/load-css-promise';
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import config from 'lib/config';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 
 /**
  * Rules:
@@ -48,18 +46,18 @@ const tmp =
 const tablet =
     '<img src="<%=SCREENSHOTS%>" class="app__screenshots" alt="screenshots" />';
 
-const isDevice = (): boolean => isIOS() || isAndroid();
+const isDevice = () => isIOS() || isAndroid();
 
-const validImpressionCount = (): boolean => impressions < 4;
+const validImpressionCount = () => impressions < 4;
 
-const messageCode: string = isIOS() ? 'ios' : 'android';
+const messageCode = isIOS() ? 'ios' : 'android';
 
-const canUseSmartBanner = (): boolean =>
+const canUseSmartBanner = () =>
     config.get('switches.smartAppBanner') &&
     getUserAgent.browser === 'Safari' &&
     isIOS();
 
-const canShow = (): Promise<boolean> =>
+const canShow = () =>
     new Promise(resolve => {
         const result =
             !canUseSmartBanner() &&
@@ -69,7 +67,7 @@ const canShow = (): Promise<boolean> =>
         resolve(result);
     });
 
-const show = (): Promise<boolean> =>
+const show = () =>
     loadCssPromise.then(() => {
         const msg = new Message(messageCode, { position: 'top' });
         const fullTemplate = tmp + (getBreakpoint() === 'mobile' ? '' : tablet);
@@ -89,7 +87,7 @@ const show = (): Promise<boolean> =>
         return true;
     });
 
-const smartAppBanner: Banner = {
+const smartAppBanner = {
     id: messageCode,
     show,
     canShow,

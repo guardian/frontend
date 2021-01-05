@@ -1,5 +1,3 @@
-// @flow
-
 import {
     getParticipationsFromLocalStorage,
     setParticipationsInLocalStorage,
@@ -20,7 +18,7 @@ import { NOT_IN_TEST } from 'common/modules/experiments/ab-constants';
 import { runnableTestsToParticipations } from 'common/modules/experiments/ab-utils';
 import { getConfiguredLiveblogEpicTests as getConfiguredLiveblogEpicTests_ } from 'common/modules/commercial/contributions-utilities';
 
-const getConfiguredLiveblogEpicTests: any = getConfiguredLiveblogEpicTests_;
+const getConfiguredLiveblogEpicTests = getConfiguredLiveblogEpicTests_;
 
 // This is required as loading these seems to cause an error locally (and in CI)
 // because of some implicit dependency evil that I haven't been able to figure out.

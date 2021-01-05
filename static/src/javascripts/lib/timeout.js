@@ -1,6 +1,4 @@
-// @flow
-
-const timeout = (interval: number, promise: Promise<any>): Promise<any> =>
+const timeout = (interval, promise) =>
     Promise.race([
         promise,
         new Promise((resolve, reject) => {

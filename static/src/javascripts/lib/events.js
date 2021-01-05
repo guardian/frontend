@@ -1,5 +1,3 @@
-// @flow
-
 let supportsOptions = false;
 
 try {
@@ -7,10 +5,12 @@ try {
         {},
         'passive',
         ({
+            // this is a feature test, it's ok
+            // eslint-disable-next-line getter-return
             get() {
                 supportsOptions = true;
             },
-        }: Object) // https://github.com/facebook/flow/issues/285
+        }) // https://github.com/facebook/flow/issues/285
     );
     window.addEventListener('test', null, opts);
 } catch (e) {
@@ -18,11 +18,11 @@ try {
 }
 
 const addEventListener = (
-    node: EventTarget,
-    name: string,
-    handler: (e: Event) => mixed,
-    { passive = false, capture = false, once = false }: Object = {}
-): void => {
+    node,
+    name,
+    handler,
+    { passive = false, capture = false, once = false } = {}
+) => {
     if (supportsOptions) {
         node.addEventListener(name, handler, { passive, capture, once });
     } else if (once) {

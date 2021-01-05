@@ -1,5 +1,3 @@
-// @flow
-
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
@@ -7,10 +5,10 @@ import config from 'lib/config';
 
 // TODO refactor to singleton
 class Search {
-    gcsUrl: string;
-    resultSetSize: number;
+    gcsUrl;
+    resultSetSize;
 
-    constructor(): void {
+    constructor() {
         fastdom
             .measure(() =>
                 Array.from(document.getElementsByClassName('js-search-toggle'))
@@ -59,8 +57,8 @@ class Search {
                                 }
 
                                 bean.on(toggle, 'click', e => {
-                                    const handleEsc = (event: Event): void => {
-                                        const keyboardEvent: KeyboardEvent = (event: any);
+                                    const handleEsc = (event) => {
+                                        const keyboardEvent = (event);
 
                                         if (keyboardEvent.key === 'Escape') {
                                             // eslint-disable-next-line no-use-before-define
@@ -69,8 +67,8 @@ class Search {
                                         }
                                     };
                                     const dismissSearchPopup = (
-                                        event: Event
-                                    ): void => {
+                                        event
+                                    ) => {
                                         event.preventDefault();
                                         toggle.classList.remove('is-active');
                                         popup.classList.add('is-off');
@@ -87,9 +85,9 @@ class Search {
                                         );
                                     };
                                     const maybeDismissSearchPopup = (
-                                        event: Event
-                                    ): void => {
-                                        let el: ?Element = (event.target: any);
+                                        event
+                                    ) => {
+                                        let el = (event.target);
                                         let clickedPop = false;
 
                                         while (el && !clickedPop) {
@@ -149,7 +147,7 @@ class Search {
             });
     }
 
-    load(popup: HTMLElement): void {
+    load(popup) {
         let s;
         let x;
 

@@ -1,5 +1,3 @@
-// @flow
-
 import { saveState, isOn } from 'common/modules/accessibility/main';
 
 jest.mock('common/modules/user-prefs');

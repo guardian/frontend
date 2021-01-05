@@ -1,5 +1,3 @@
-// @flow
-
 /* eslint-disable no-new */
 
 import fastdom from 'lib/fastdom-promise';
@@ -19,7 +17,7 @@ import { onwardVideo } from 'common/modules/video/onward-container';
 import { onwardAudio } from 'common/modules/audio/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 
-const initMoreInSection = (): void => {
+const initMoreInSection = () => {
     const {
         showRelatedContent,
         isPaidContent,
@@ -98,7 +96,7 @@ const initRelated = () => {
     }
 };
 
-const initOnwardVideoContainer = (): void => {
+const initOnwardVideoContainer = () => {
     const contentType = config.get('page.contentType', '');
 
     if (contentType !== 'Audio' && contentType !== 'Video') {
@@ -117,7 +115,7 @@ const initOnwardVideoContainer = (): void => {
     });
 };
 
-const initOnwardAudioContainer = (): void => {
+const initOnwardAudioContainer = () => {
     if (config.get('page.contentType') === 'Audio') {
         $('.js-audio-components-container').each(el => onwardAudio(el));
     }

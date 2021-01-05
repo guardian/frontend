@@ -1,40 +1,16 @@
-// @flow
-import config, { type Config } from 'lib/config';
-import reportError, { type ErrorLogger } from 'lib/report-error';
+import config, { } from 'lib/config';
+import reportError, { } from 'lib/report-error';
 
-declare var permutive: any;
-type PermutiveSchema = {
-    content: {
-        premium?: boolean,
-        id?: string,
-        title?: string,
-        type?: string,
-        section?: string,
-        authors?: Array<string>,
-        keywords?: Array<string>,
-        publishedAt?: string,
-        series?: string,
-        tone?: Array<string>,
-    },
-    user: {
-        edition?: string,
-        identity?: boolean,
-    },
-};
 
-type PermutiveIdentity = {
-    id: string,
-    tag: string,
-};
 
-const isEmpty = (value: any) =>
+const isEmpty = (value) =>
     value === '' ||
     value === null ||
     typeof value === 'undefined' ||
     (Array.isArray(value) && value.length === 0) ||
     (typeof value === 'object' && Object.keys(value).length === 0);
 
-const removeEmpty = <T: Config>(payload: T): T => {
+const removeEmpty =(payload) => {
     Object.keys(payload).forEach(key => {
         if (typeof payload[key] === 'object' && payload[key] !== null) {
             removeEmpty(payload[key]);
@@ -47,8 +23,8 @@ const removeEmpty = <T: Config>(payload: T): T => {
 };
 
 const generatePayload = (
-    permutiveConfig: Config = { page: {}, user: {} }
-): PermutiveSchema => {
+    permutiveConfig = { page: {}, user: {} }
+) => {
     const { page, user } = permutiveConfig;
     const {
         isPaidContent,
@@ -103,8 +79,8 @@ const generatePayload = (
 };
 
 const generatePermutiveIdentities = (
-    pageConfig: Config = {}
-): Array<PermutiveIdentity> => {
+    pageConfig = {}
+) => {
     if (
         typeof pageConfig.ophan === 'object' &&
         typeof pageConfig.ophan.browserId === 'string' &&
@@ -116,10 +92,10 @@ const generatePermutiveIdentities = (
 };
 
 const runPermutive = (
-    pageConfig: Config = {},
-    permutiveGlobal: any,
-    logger: ErrorLogger
-): void => {
+    pageConfig = {},
+    permutiveGlobal,
+    logger
+) => {
     try {
         if (!permutiveGlobal || !permutiveGlobal.addon) {
             throw new Error('Global Permutive setup error');
@@ -140,7 +116,7 @@ const runPermutive = (
 };
 
 /* eslint-disable */
-export const initPermutive = (): Promise<void> =>
+export const initPermutive = () =>
     new Promise(resolve => {
         // From here until we re-enable eslint is the Permutive code
         // that we received from them.
@@ -210,7 +186,7 @@ export const initPermutive = (): Promise<void> =>
             page: config.get('page', {}),
             ophan: config.get('ophan', {}),
         };
-        runPermutive(permutiveConfig, permutive, reportError);
+        runPermutive(permutiveConfig, window.permutive, reportError);
 
         return resolve();
     });

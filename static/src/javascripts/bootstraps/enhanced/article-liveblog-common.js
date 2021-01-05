@@ -1,4 +1,3 @@
-// @flow
 /** Bootstrap for functionality common to articles and live blogs */
 import fence from 'fence';
 import $ from 'lib/$';
@@ -8,16 +7,16 @@ import { init as initT, enhanceTweets } from 'common/modules/article/twitter';
 import { lastModified } from 'common/modules/ui/last-modified';
 import { init as selectionSharingInit } from 'common/modules/ui/selection-sharing';
 
-const initFence = (): void => {
+const initFence = () => {
     $('.fenced').each(fence.render);
 };
 
-const initTwitter = (): void => {
+const initTwitter = () => {
     initT();
     enhanceTweets();
 };
 
-const init = (): void => {
+const init = () => {
     catchErrorsWithContext([
         ['trail-a11y', shouldHideFlashingElements],
         ['trail-fence', initFence],

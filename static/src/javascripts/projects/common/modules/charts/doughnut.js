@@ -1,4 +1,3 @@
-// @flow
 /*
  * Inspired by
  * - http://www.chartjs.org/
@@ -6,20 +5,19 @@
  * - https://github.com/d3/d3-shape/blob/master/src/arc.js
  */
 import $ from 'lib/$';
-import type { bonzo } from 'bonzo';
 
-const svgEl = (type: string): bonzo =>
+const svgEl = (type) =>
     $.create(document.createElementNS('http://www.w3.org/2000/svg', type));
 
-const translate = (v: Array<number>): string => `translate(${v.toString()})`;
+const translate = (v) => `translate(${v.toString()})`;
 
 /**
  * @param {Object.<string, *>} data in the format { label: string, value: number, color: HEX }
  * @param {Object.<string, *>} o the options
  * @return {Bonzo} SVG Element
  */
-const Doughnut = (data: Object, o: Object): bonzo => {
-    const obj: Object = Object.assign(
+const Doughnut = (data, o) => {
+    const obj = Object.assign(
         {
             percentCutout: 35,
             unit: '',

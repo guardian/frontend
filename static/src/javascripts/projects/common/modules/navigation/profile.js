@@ -1,5 +1,3 @@
-// @flow
-
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { getUserFromCookie } from 'common/modules/identity/api';
@@ -16,14 +14,10 @@ const CONFIG = {
 };
 
 class Profile {
-    dom: {
-        [key: string]: ?HTMLElement,
-    };
-    opts: {
-        url: string,
-    };
+    dom;
+    opts;
 
-    constructor(options: Object): void {
+    constructor(options) {
         const opts = {
             url: 'https://profile.theguardian.com',
         };
@@ -63,7 +57,7 @@ class Profile {
         }
     }
 
-    init(): void {
+    init() {
         // setFragmentFromCookie
         const user = getUserFromCookie();
         const $container = bonzo(this.dom.container);

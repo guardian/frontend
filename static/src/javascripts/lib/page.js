@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import config from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
@@ -7,16 +5,14 @@ import { getBreakpoint } from 'lib/detect';
 // #? this should'nt really be an `any`, but the callbacks themselves are explicit
 // about the types they accept.
 // that this is required suggests maybe the approach is too generic
-type yesable = ?(arg: any) => boolean | void;
-type noable = ?() => boolean | void;
 
 // #? this is very hard to understand, what is it's purpose?
 const isit = (
-    isTrue: ?(string | boolean),
-    yes: yesable,
-    no: noable,
-    arg: any
-): boolean => {
+    isTrue,
+    yes,
+    no,
+    arg
+) => {
     if (isTrue) {
         return yes ? !!yes(arg || isTrue) : arg || !!isTrue;
     }
@@ -24,7 +20,7 @@ const isit = (
     return no ? !!no() : false;
 };
 
-const isMatch = (yes: yesable, no: noable): boolean => {
+const isMatch = (yes, no) => {
     const teams = config.referencesOfType('pa-football-team');
     const match = config.get('page.footballMatch', {});
     // the order of this is important as, on occasion,
@@ -52,7 +48,7 @@ const isMatch = (yes: yesable, no: noable): boolean => {
     );
 };
 
-const isCompetition = (yes: yesable): boolean => {
+const isCompetition = (yes) => {
     const notMobile = getBreakpoint() !== 'mobile';
     const competition = notMobile
         ? ($('.js-football-competition').attr('data-link-name') || '').replace(
@@ -64,16 +60,16 @@ const isCompetition = (yes: yesable): boolean => {
     return isit(competition, yes);
 };
 
-const isClockwatch = (yes: yesable): boolean =>
+const isClockwatch = (yes) =>
     isit(config.hasSeries('Clockwatch'), yes);
 
-const isLiveClockwatch = (yes: yesable): boolean =>
+const isLiveClockwatch = (yes) =>
     isClockwatch(() => isit(!!config.get('page.isLive'), yes));
 
-const isFootballStatsPage = (yes: yesable): boolean =>
+const isFootballStatsPage = (yes) =>
     isit(!!config.get('page.footballMatch'), yes);
 
-const belowArticleVisible = (yes: yesable, no: noable): boolean => {
+const belowArticleVisible = (yes, no) => {
     const el = $('.js-after-article')[0];
     const vis = el
         ? window.getComputedStyle(el).getPropertyValue('display') !== 'none'
@@ -82,7 +78,7 @@ const belowArticleVisible = (yes: yesable, no: noable): boolean => {
     return isit(vis, yes, no, el);
 };
 
-const keywordExists = (keywordArr: Array<string>): boolean => {
+const keywordExists = (keywordArr) => {
     const keywords = config.get('page.keywords', '').split(',');
     return keywordArr.some(kw => keywords.includes(kw));
 };

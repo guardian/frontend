@@ -1,4 +1,3 @@
-// @flow
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import bonzo from 'bonzo';
@@ -42,7 +41,7 @@ describe('Create Ad Slot', () => {
             name: 'inline1',
             htmls: [inline1Html],
         },
-    ].forEach((expectation: Object) => {
+    ].forEach((expectation) => {
         it(`should create "${expectation.type}" ad slot`, () => {
             const adSlots = createSlots(expectation.type, {
                 name: expectation.name,

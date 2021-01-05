@@ -1,19 +1,17 @@
-// @flow
-
 import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
 import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 
-const onConsentChange: any = onConsentChange_;
+const onConsentChange = onConsentChange_;
 
-const tcfv2WithConsentMock = (callback): void =>
+const tcfv2WithConsentMock = (callback) =>
     callback({
         tcfv2: { vendorConsents: { '5edf9a821dc4e95986b66df4': true } },
     });
 
-const CcpaWithConsentMock = (callback): void =>
+const CcpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
 
-const getConsentFor: any = getConsentFor_;
+const getConsentFor = getConsentFor_;
 
 jest.mock('lib/raven');
 jest.mock('commercial/modules/dfp/Advert', () =>

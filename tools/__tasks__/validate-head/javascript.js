@@ -76,22 +76,6 @@ module.exports = {
                         });
                 }),
         },
-        {
-            description: 'Run Flowtype checks',
-            task: () =>
-                getChangedFiles().then(files => {
-                    const jsFiles = files.filter(
-                        file =>
-                            file.endsWith('.js') && file.startsWith('static')
-                    );
-
-                    if (jsFiles.length) {
-                        return execa('yarn', ['flow']);
-                    }
-
-                    return Promise.resolve();
-                }),
-        },
     ],
     concurrent: true,
 };

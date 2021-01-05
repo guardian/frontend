@@ -1,5 +1,3 @@
-// @flow
-
 import { initVideoPlayer } from 'bootstraps/enhanced/video-player';
 import config from 'lib/config';
 

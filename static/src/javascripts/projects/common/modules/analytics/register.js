@@ -1,5 +1,3 @@
-// @flow
-
 /*
  *  The register module is used to measure whether a module was executed, how
  *  long it took, and whether an error was caught. The data is sent to Ophan.
@@ -11,17 +9,17 @@
 import mediator from 'lib/mediator';
 import ophan from 'ophan/ng';
 
-const register: Array<{ name: string, status: string, endTime?: string }> = [];
-const startTime: number = Date.now();
+const register = [];
+const startTime = Date.now();
 
-const begin = (name: string): void => {
+const begin = (name) => {
     register.push({
         name,
         status: 'unfinished',
     });
 };
 
-const end = (name: string): void => {
+const end = (name) => {
     register
         .filter(_ => _.name === name)
         .forEach(module => {
@@ -30,7 +28,7 @@ const end = (name: string): void => {
         });
 };
 
-const error = (name: string): void => {
+const error = (name) => {
     register
         .filter(_ => _.name === name)
         .forEach(module => {
@@ -39,13 +37,13 @@ const error = (name: string): void => {
         });
 };
 
-const sendEvent = (): void => {
+const sendEvent = () => {
     ophan.record({
         register,
     });
 };
 
-const initAnalyticsRegister = (): void => {
+const initAnalyticsRegister = () => {
     mediator.on('register:begin', begin);
     mediator.on('register:end', end);
     mediator.on('register:error', error);

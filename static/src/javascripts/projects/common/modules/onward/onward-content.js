@@ -1,22 +1,20 @@
-// @flow
-
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, error, end } from 'common/modules/analytics/register';
 import { Component } from 'common/modules/component';
 
-const getTag = (): string =>
+const getTag = () =>
     [
         ...config.get('page.nonKeywordTagIds', '').split(','),
         ...config.get('page.blogIds', '').split(','),
         ...[config.get('page.seriesId')],
     ].shift();
 
-const getShortUrl = (): string =>
+const getShortUrl = () =>
     encodeURIComponent(config.get('page.shortUrl'));
 
 class OnwardContent extends Component {
-    constructor(context: HTMLElement): void {
+    constructor(context) {
         super();
 
         begin('series-content');
@@ -27,12 +25,12 @@ class OnwardContent extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    error(): void {
+    error() {
         error('series-content');
     }
 
     // eslint-disable-next-line class-methods-use-this
-    ready(): void {
+    ready() {
         end('series-content');
         mediator.emit('modules:onward:loaded');
     }

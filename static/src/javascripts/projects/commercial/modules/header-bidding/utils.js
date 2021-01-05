@@ -1,14 +1,13 @@
-// @flow strict
+
 
 import once from 'lodash/once';
 import { getBreakpoint, isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
 import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
 import { pbTestNameMap } from 'lib/url';
-import type { HeaderBiddingSize } from './types';
 
 const SUFFIX_REGEXPS = {};
-const stripSuffix = (s: string, suffix: string): string => {
+const stripSuffix = (s, suffix) => {
     const re =
         SUFFIX_REGEXPS[suffix] ||
         (SUFFIX_REGEXPS[suffix] = new RegExp(`${suffix}$`));
@@ -16,7 +15,7 @@ const stripSuffix = (s: string, suffix: string): string => {
 };
 
 const PREFIX_REGEXPS = {};
-const stripPrefix = (s: string, prefix: string): string => {
+const stripPrefix = (s, prefix) => {
     const re =
         PREFIX_REGEXPS[prefix] ||
         (PREFIX_REGEXPS[prefix] = new RegExp(`^${prefix}`));
@@ -24,51 +23,49 @@ const stripPrefix = (s: string, prefix: string): string => {
 };
 
 const contains = (
-    sizes: HeaderBiddingSize[],
-    size: HeaderBiddingSize
-): boolean => Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
+    sizes,
+    size
+) => Boolean(sizes.find(s => s[0] === size[0] && s[1] === size[1]));
 
-export const removeFalseyValues = (o: {
-    [string]: string,
-}): { [string]: string } =>
-    Object.keys(o).reduce((m: { [string]: string }, k: string) => {
+export const removeFalseyValues = (o) =>
+    Object.keys(o).reduce((m, k) => {
         if (o[k]) {
             m[k] = o[k];
         }
         return m;
     }, {});
 
-export const stripDfpAdPrefixFrom = (s: string): string =>
+export const stripDfpAdPrefixFrom = (s) =>
     stripPrefix(s, 'dfp-ad--');
 
-export const containsMpu = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsMpu = (sizes) =>
     contains(sizes, [300, 250]);
 
-export const containsDmpu = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsDmpu = (sizes) =>
     contains(sizes, [300, 600]);
 
-export const containsLeaderboard = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsLeaderboard = (sizes) =>
     contains(sizes, [728, 90]);
 
-export const containsBillboard = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsBillboard = (sizes) =>
     contains(sizes, [970, 250]);
 
-export const containsMpuOrDmpu = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsMpuOrDmpu = (sizes) =>
     containsMpu(sizes) || containsDmpu(sizes);
 
-export const containsMobileSticky = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsMobileSticky = (sizes) =>
     contains(sizes, [320, 50]);
 
 export const containsLeaderboardOrBillboard = (
-    sizes: HeaderBiddingSize[]
-): boolean => containsLeaderboard(sizes) || containsBillboard(sizes);
+    sizes
+) => containsLeaderboard(sizes) || containsBillboard(sizes);
 
 export const getLargestSize = (
-    sizes: HeaderBiddingSize[]
-): HeaderBiddingSize | null => {
+    sizes
+) => {
     const reducer = (
-        previous: HeaderBiddingSize,
-        current: HeaderBiddingSize
+        previous,
+        current
     ) => {
         if (previous[0] >= current[0] && previous[1] >= current[1]) {
             return previous;
@@ -78,7 +75,7 @@ export const getLargestSize = (
     return sizes.length > 0 ? sizes.reduce(reducer) : null;
 };
 
-export const getBreakpointKey = (): string => {
+export const getBreakpointKey = () => {
     switch (getBreakpoint()) {
         case 'mobile':
         case 'mobileMedium':
@@ -97,45 +94,45 @@ export const getBreakpointKey = (): string => {
 };
 
 export const getRandomIntInclusive = (
-    minimum: number,
-    maximum: number
-): number => {
+    minimum,
+    maximum
+) => {
     const min = Math.ceil(minimum);
     const max = Math.floor(maximum);
     return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-export const shouldIncludeSonobi = (): boolean => isInUsOrCa();
+export const shouldIncludeSonobi = () => isInUsOrCa();
 
-export const shouldIncludeOpenx = (): boolean => !isInUsOrCa();
+export const shouldIncludeOpenx = () => !isInUsOrCa();
 
-export const shouldIncludeTrustX = (): boolean => isInUsOrCa();
+export const shouldIncludeTrustX = () => isInUsOrCa();
 
-export const shouldIncludeTripleLift = (): boolean => isInUsOrCa();
+export const shouldIncludeTripleLift = () => isInUsOrCa();
 
 export const shouldIncludeAdYouLike = (
-    slotSizes: HeaderBiddingSize[]
-): boolean => containsMpu(slotSizes);
+    slotSizes
+) => containsMpu(slotSizes);
 
 // TODO: Check is we want regional restrictions on where we load the ozoneBidAdapter
-export const shouldUseOzoneAdaptor = (): boolean =>
+export const shouldUseOzoneAdaptor = () =>
     !isInUsOrCa() && !isInAuOrNz() && config.get('switches.prebidOzone');
 
-export const shouldIncludeAppNexus = (): boolean =>
+export const shouldIncludeAppNexus = () =>
     isInAuOrNz() ||
     ((config.get('switches.prebidAppnexusUkRow') && !isInUsOrCa()) ||
         !!pbTestNameMap().and);
 
-export const shouldIncludeXaxis = (): boolean =>
+export const shouldIncludeXaxis = () =>
     // 10% of UK page views
     isInUk() &&
     (config.get('page.isDev', true) || getRandomIntInclusive(1, 10) === 1);
 
-export const shouldIncludeImproveDigital = (): boolean =>
+export const shouldIncludeImproveDigital = () =>
     isInUk() || isInRow();
 
 export const shouldIncludeMobileSticky = once(
-    (): boolean =>
+    () =>
         window.location.hash.indexOf('#mobile-sticky') !== -1 ||
         (config.get('switches.mobileStickyLeaderboard') &&
             isBreakpoint({ min: 'mobile', max: 'mobileLandscape' }) &&
@@ -144,13 +141,13 @@ export const shouldIncludeMobileSticky = once(
             !config.get('page.isHosted'))
 );
 
-export const stripMobileSuffix = (s: string): string =>
+export const stripMobileSuffix = (s) =>
     stripSuffix(stripSuffix(s, '--mobile'), 'Mobile');
 
-export const stripTrailingNumbersAbove1 = (s: string): string =>
+export const stripTrailingNumbersAbove1 = (s) =>
     stripSuffix(s, '([2-9]|\\d{2,})');
 
-export const containsWS = (sizes: HeaderBiddingSize[]): boolean =>
+export const containsWS = (sizes) =>
     contains(sizes, [160, 600]);
 
 export const shouldIncludeOnlyA9 =

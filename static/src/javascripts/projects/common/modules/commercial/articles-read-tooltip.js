@@ -1,5 +1,3 @@
-// @flow
-
 import { submitClickEvent } from "common/modules/commercial/acquisitions-ophan";
 import { ARTICLES_VIEWED_OPT_OUT_COOKIE } from "common/modules/commercial/user-features";
 import { storageKeyWeeklyArticleCount, storageKeyDailyArticleCount } from "common/modules/onward/history";
@@ -7,19 +5,8 @@ import { addCookie } from "lib/cookies";
 import { storage } from '@guardian/libs';
 import reportError from "lib/report-error";
 
-type ArticlesViewedTooltipElements = {
-    articlesRead: HTMLElement,
-    wrapper: HTMLElement,
-    optOutButton: HTMLElement,
-    optInButton: HTMLElement,
-    header: HTMLElement,
-    body: HTMLElement,
-    buttons: HTMLElement,
-    note: HTMLElement,
-    closeButton: HTMLElement
-}
 
-const getElements = (container: HTMLElement): ?ArticlesViewedTooltipElements => {
+const getElements = (container) => {
     const articlesRead = container.querySelector('.engagement-banner__articles-read');
     const wrapper = container.querySelector('.engagement-banner__articles-read-tooltip');
     const buttons = container.querySelector('.engagement-banner__articles-read-tooltip-buttons');
@@ -55,7 +42,7 @@ const getElements = (container: HTMLElement): ?ArticlesViewedTooltipElements => 
     }
 };
 
-const setupHandlers = (elements: ArticlesViewedTooltipElements) => {
+const setupHandlers = (elements) => {
 
     const showTooltip = () => {
         elements.articlesRead.classList.add('active')
@@ -120,12 +107,12 @@ const setupHandlers = (elements: ArticlesViewedTooltipElements) => {
         onArticlesReadClick();
     });
 
-    elements.optOutButton.addEventListener('click', (event: Event) => {
+    elements.optOutButton.addEventListener('click', (event) => {
         event.preventDefault();
         onOptOutClick();
     });
 
-    elements.optInButton.addEventListener('click', (event: Event) => {
+    elements.optInButton.addEventListener('click', (event) => {
         event.preventDefault();
         onOptInClick();
     });
@@ -136,7 +123,7 @@ const bannerSetupArticlesViewedOptOut = () => {
     const articlesReadTooltipWrapper = document.querySelector('.engagement-banner__articles-read-tooltip-wrapper');
 
     if (articlesReadTooltipWrapper) {
-        const elements: ?ArticlesViewedTooltipElements = getElements(articlesReadTooltipWrapper);
+        const elements = getElements(articlesReadTooltipWrapper);
 
         if (elements) {
             setupHandlers(elements);

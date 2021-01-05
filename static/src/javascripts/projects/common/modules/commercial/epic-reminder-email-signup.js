@@ -1,31 +1,17 @@
-// @flow
-
 import config from 'lib/config';
 import errorTriangle from 'svgs/icon/error-triangle.svg';
 import {submitClickEvent, submitViewEvent} from 'common/modules/commercial/acquisitions-ophan';
 import {addCookie} from "lib/cookies";
 import {CONTRIBUTIONS_REMINDER_SIGNED_UP} from "common/modules/commercial/user-features";
 
-type ReminderState = 'invalid' | 'pending' | 'success' | 'failure';
 
-type Fields = {
-    submitButton: HTMLButtonElement,
-    helpText: HTMLElement,
-    emailInput: HTMLInputElement,
-    formWrapper: HTMLElement,
-    titleField: HTMLElement,
-    thankYouText: HTMLElement,
-    closeButton: HTMLElement,
-    reminderPrompt: HTMLElement,
-    reminderToggle: HTMLInputElement,
-};
 
-const isValidEmail = (email: string) => {
+const isValidEmail = (email) => {
     const re = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
     return (email.replace(/\s+/g, '') === email) ? re.test(email) : false
 };
 
-const getFields = (): ?Fields => {
+const getFields = () => {
     const helpText = document.querySelector('.epic-reminder__email-help-text');
     const submitButton = document.querySelector(
         '.epic-reminder__submit-button'
@@ -76,7 +62,7 @@ const getFields = (): ?Fields => {
     }
 };
 
-const epicReminderEmailSignup = (fields: Fields) => {
+const epicReminderEmailSignup = (fields) => {
     const warningRed = '#c70000';
 
     submitViewEvent({
@@ -86,7 +72,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
         },
     });
 
-    const setState = (state: ReminderState) => {
+    const setState = (state) => {
         switch (state) {
             case 'invalid':
                 fields.helpText.style.color = warningRed;
@@ -126,7 +112,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
         }
     };
 
-    const sendReminderEvent = (): Promise<Response> => {
+    const sendReminderEvent = () => {
         const isProd = config.get('page.isProd');
 
         const email = fields.emailInput.value.trim() || '';
@@ -159,7 +145,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
         });
     };
 
-    fields.submitButton.addEventListener('click', (event: Event) => {
+    fields.submitButton.addEventListener('click', (event) => {
         event.preventDefault();
         sendReminderEvent()
             .then(response => {
@@ -215,7 +201,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
 
     fields.reminderPrompt.addEventListener(
         'keypress',
-        (event: KeyboardEvent) => {
+        (event) => {
             if (event.key === 'Enter') {
                 sendPromptClickEvent();
                 toggleReminderVisibility();
@@ -223,7 +209,7 @@ const epicReminderEmailSignup = (fields: Fields) => {
         }
     );
 
-    fields.closeButton.addEventListener('keypress', (event: KeyboardEvent) => {
+    fields.closeButton.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             toggleReminderVisibility();
         }

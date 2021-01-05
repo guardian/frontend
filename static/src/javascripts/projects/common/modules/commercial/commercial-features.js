@@ -1,4 +1,3 @@
-// @flow
 import defaultConfig from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 import { isAdFreeUser } from 'common/modules/commercial/user-features';
@@ -7,30 +6,30 @@ import userPrefs from 'common/modules/user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising: boolean;
-    isSecureContact: boolean;
-    stickyTopBannerAd: boolean;
-    articleBodyAdverts: boolean;
-    articleAsideAdverts: boolean;
-    carrotTrafficDriver: boolean;
-    highMerch: boolean;
-    thirdPartyTags: boolean;
-    relatedWidgetEnabled: boolean;
-    commentAdverts: boolean;
-    liveblogAdverts: boolean;
-    paidforBand: boolean;
-    asynchronous: boolean;
-    adFree: boolean;
-    comscore: boolean;
-    launchpad: boolean;
+    dfpAdvertising;
+    isSecureContact;
+    stickyTopBannerAd;
+    articleBodyAdverts;
+    articleAsideAdverts;
+    carrotTrafficDriver;
+    highMerch;
+    thirdPartyTags;
+    relatedWidgetEnabled;
+    commentAdverts;
+    liveblogAdverts;
+    paidforBand;
+    asynchronous;
+    adFree;
+    comscore;
+    launchpad;
 
-    constructor(config: any = defaultConfig) {
+    constructor(config = defaultConfig) {
         // this is used for SpeedCurve tests
-        const noadsUrl: boolean = /[#&]noads(&.*)?$/.test(window.location.hash);
-        const forceAdFree: boolean = /[#&]noadsaf(&.*)?$/.test(
+        const noadsUrl = /[#&]noads(&.*)?$/.test(window.location.hash);
+        const forceAdFree = /[#&]noadsaf(&.*)?$/.test(
             window.location.hash
         );
-        const forceAds: boolean = /[?&]forceads(&.*)?$/.test(
+        const forceAds = /[?&]forceads(&.*)?$/.test(
             window.location.search
         );
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');

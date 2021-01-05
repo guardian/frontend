@@ -1,4 +1,3 @@
-// @flow
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import qwery from 'qwery';
@@ -26,9 +25,8 @@ const DISPLAY_STATE = Object.freeze({
     hidden: 'hidden',
 });
 
-type DisplayState = $Keys<typeof DISPLAY_STATE>;
 
-const readDisplayPrefForContainer = (containerId: string): DisplayState => {
+const readDisplayPrefForContainer = (containerId) => {
     const prefs = userPrefs.get(PREF_NAME, {
         type: 'session',
     });
@@ -38,9 +36,9 @@ const readDisplayPrefForContainer = (containerId: string): DisplayState => {
 };
 
 const updateDisplayPrefForContainer = (
-    containerId: string,
-    state: DisplayState
-): void => {
+    containerId,
+    state
+) => {
     const prefs =
         userPrefs.get(PREF_NAME, {
             type: 'session',
@@ -55,7 +53,7 @@ const updateDisplayPrefForContainer = (
     });
 };
 
-const loadShowMore = (pageId: string, containerId: string): Promise<any> => {
+const loadShowMore = (pageId, containerId) => {
     const url = `/${pageId}/show-more/${containerId}.json`;
     return timeout(
         REQUEST_TIMEOUT,
@@ -65,12 +63,12 @@ const loadShowMore = (pageId: string, containerId: string): Promise<any> => {
     );
 };
 
-const itemsByArticleId = ($el: bonzo): Object =>
+const itemsByArticleId = ($el) =>
     groupBy(qwery(ITEM_SELECTOR, $el), el =>
         bonzo(el).attr(ARTICLE_ID_ATTRIBUTE)
     );
 
-const dedupShowMore = ($container: bonzo, html: string): bonzo => {
+const dedupShowMore = ($container, html) => {
     const seenArticles = itemsByArticleId($container);
     const $html = bonzo.create(html);
 
@@ -91,18 +89,18 @@ const dedupShowMore = ($container: bonzo, html: string): bonzo => {
 };
 
 class Button {
-    id: string;
-    state: DisplayState;
-    isLoaded: boolean;
-    $el: bonzo;
-    $container: bonzo;
-    $iconEl: bonzo;
-    $placeholder: bonzo;
-    $textEl: bonzo;
-    $errorMessage: ?bonzo;
-    messages: Map<DisplayState, string>;
+    id;
+    state;
+    isLoaded;
+    $el;
+    $container;
+    $iconEl;
+    $placeholder;
+    $textEl;
+    $errorMessage;
+    messages;
 
-    constructor(el: bonzo, container: bonzo) {
+    constructor(el, container) {
         this.id = container.attr('data-id');
         this.state = readDisplayPrefForContainer(this.id);
         this.$el = el;
@@ -123,7 +121,7 @@ class Button {
         ]);
     }
 
-    setState(state: DisplayState): void {
+    setState(state) {
         this.$textEl.html(this.messages.get(state));
         this.$el
             .attr(
@@ -139,7 +137,7 @@ class Button {
         this.state = state;
     }
 
-    loadShowMoreForContainer(): void {
+    loadShowMoreForContainer() {
         fastdom.mutate(() => {
             this.setState(DISPLAY_STATE.loading);
         });
@@ -179,7 +177,7 @@ class Button {
             });
     }
 
-    hideErrorMessage(): void {
+    hideErrorMessage() {
         fastdom.mutate(() => {
             if (this.$errorMessage != null) {
                 this.$errorMessage.addClass(
@@ -189,7 +187,7 @@ class Button {
         });
     }
 
-    showErrorMessage(): void {
+    showErrorMessage() {
         if (this.$errorMessage) {
             this.$errorMessage.remove();
         }
@@ -214,7 +212,7 @@ class Button {
     }
 }
 
-const showMore = (button: Button): void => {
+const showMore = (button) => {
     fastdom.mutate(() => {
         /**
          * Do not remove: it should retain context for the click stream module, which recurses upwards through
@@ -229,7 +227,7 @@ const showMore = (button: Button): void => {
     });
 };
 
-const renderToDom = (button: Button): void => {
+const renderToDom = (button) => {
     fastdom.mutate(() => {
         button.$container
             .addClass(HIDDEN_CLASS_NAME)
@@ -243,7 +241,7 @@ const renderToDom = (button: Button): void => {
     });
 };
 
-export const init = (): void => {
+export const init = () => {
     fastdom.measure(() => {
         const containers = qwery('.js-container--fc-show-more').map(bonzo);
         const buttons = containers

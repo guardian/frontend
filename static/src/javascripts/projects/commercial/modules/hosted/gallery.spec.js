@@ -1,4 +1,3 @@
-// @flow
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { noop } from 'lib/noop';
 import { init } from './gallery';
@@ -16,7 +15,7 @@ jest.mock('lib/load-css-promise', () => ({
     loadCssPromise: Promise.resolve(),
 }));
 
-let gallery: any;
+let gallery;
 
 describe('Hosted Gallery', () => {
     beforeEach(done => {
@@ -42,11 +41,11 @@ describe('Hosted Gallery', () => {
         done();
     });
 
-    const classListFor = (className: string): string =>
-        (document.querySelector(`.${className}`): any).classList.toString();
+    const classListFor = (className) =>
+        (document.querySelector(`.${className}`)).classList.toString();
 
     it('should open and close the caption on click', () => {
-        const button: any = document.querySelector(
+        const button = document.querySelector(
             '.js-gallery-caption-button'
         );
 
@@ -78,7 +77,7 @@ describe('Hosted Gallery', () => {
     });
 
     it('should open and close the onward journey on click', () => {
-        const button: any = document.querySelector(
+        const button = document.querySelector(
             '.js-hosted-gallery-oj-close'
         );
         button.click();
@@ -115,11 +114,11 @@ describe('Hosted Gallery', () => {
 
     it('should log navigation in GA when clicking through images', () => {
         gallery.initScroll.call(gallery);
-        (document.querySelector('.inline-arrow-down'): any).click();
+        (document.querySelector('.inline-arrow-down')).click();
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Click - image 2');
-        (document.querySelector('.inline-arrow-up'): any).click();
+        (document.querySelector('.inline-arrow-up')).click();
         expect(
             interactionTracking.trackNonClickInteraction
         ).toHaveBeenCalledWith('Click - image 1');

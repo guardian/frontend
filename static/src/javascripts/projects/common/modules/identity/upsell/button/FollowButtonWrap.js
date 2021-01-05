@@ -1,30 +1,17 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import envelopeRemove from 'svgs/icon/envelope-remove.svg';
 import envelopeAdd from 'svgs/icon/envelope-add.svg';
 import tick from 'svgs/icon/tick.svg';
 
-const getButtonClassNames = (...modifiers: string[]) => [
+const getButtonClassNames = (...modifiers) => [
     'manage-account__button',
     ...modifiers.map(m => `manage-account__button--${m}`),
 ];
 
-type FollowButtonWrapProps = {
-    following: boolean,
-    onFollow: () => Promise<void>,
-    onUnfollow: () => Promise<void>,
-    trackingName: ?string,
-};
 
-type FollowButtonWrapState = {
-    mousedOutOnce: boolean,
-};
 
-class FollowButtonWrap extends Component<
-    FollowButtonWrapProps,
-    FollowButtonWrapState
-> {
-    constructor(props: FollowButtonWrapProps) {
+class FollowButtonWrap extends Component {
+    constructor(props) {
         super(props);
         this.setState({
             mousedOutOnce: true,
@@ -37,7 +24,7 @@ class FollowButtonWrap extends Component<
         });
     };
 
-    updateFollowing = (to: boolean) => {
+    updateFollowing = (to) => {
         if (to) {
             this.props.onFollow();
             this.setState({
@@ -52,7 +39,7 @@ class FollowButtonWrap extends Component<
         const { following, trackingName } = this.props;
         const { mousedOutOnce } = this.state;
 
-        const followingFeedbackButton = (...classNames: string[]) => (
+        const followingFeedbackButton = (...classNames) => (
             <div
                 role="alert"
                 className={[
@@ -71,7 +58,7 @@ class FollowButtonWrap extends Component<
             </div>
         );
 
-        const unfollowButton = (...classNames: string[]) => (
+        const unfollowButton = (...classNames) => (
             <button
                 data-link-name={
                     trackingName

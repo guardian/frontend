@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
@@ -12,7 +11,6 @@ import {
     buildGoogleAnalyticsEvent,
     getGoogleAnalyticsEventAction,
 } from 'common/modules/video/ga-helper';
-import type { MediaEvent } from 'common/modules/video/ga-helper';
 import ophan from 'ophan/ng';
 
 const isDesktop = isBreakpoint({
@@ -33,15 +31,15 @@ const EVENTS = [
 const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
 const bindCustomMediaEvents = (
-    eventsMap: Object,
-    player: Object,
-    mediaId: string,
-    mediaType: string,
-    isPreroll: boolean
-): void => {
+    eventsMap,
+    player,
+    mediaId,
+    mediaType,
+    isPreroll
+) => {
     forOwn(eventsMap, (value, key) => {
         const fullEventName = `media:${value}`;
-        const mediaEvent: MediaEvent = {
+        const mediaEvent = {
             mediaId,
             mediaType,
             eventType: value,
@@ -56,10 +54,10 @@ const bindCustomMediaEvents = (
 };
 
 const addContentEvents = (
-    player: Object,
-    mediaId: any,
-    mediaType: any
-): void => {
+    player,
+    mediaId,
+    mediaType
+) => {
     const eventsMap = {
         ready: 'ready',
         play: 'play',
@@ -91,7 +89,7 @@ const addContentEvents = (
     bindCustomMediaEvents(eventsMap, player, mediaId, mediaType, false);
 };
 
-const bindGoogleAnalyticsEvents = (player: Object, canonicalUrl: string) => {
+const bindGoogleAnalyticsEvents = (player, canonicalUrl) => {
     const events = {
         play: 'metric1',
         skip: 'metric2',
@@ -126,10 +124,10 @@ const getMediaType = player => (isEmbed ? 'video' : player.guMediaType);
 const shouldAutoPlay = player =>
     isDesktop && !isRevisit(config.get('page.pageId')) && player.guAutoplay;
 
-const constructEventName = (eventName: string, player: Object): string =>
+const constructEventName = (eventName, player) =>
     `${getMediaType(player)}:${eventName}`;
 
-const ophanRecord = (id: ?string, event: Object, player: Object) => {
+const ophanRecord = (id, event, player) => {
     if (!id) return;
 
     const record = ophanEmbed => {
@@ -154,7 +152,7 @@ const ophanRecord = (id: ?string, event: Object, player: Object) => {
     }
 };
 
-const initOphanTracking = (player: Object, mediaId: string) => {
+const initOphanTracking = (player, mediaId) => {
     EVENTS.concat(QUARTILES.map(q => `content:${q}`)).forEach(eventId => {
         player.one(constructEventName(eventId, player), event => {
             ophanRecord(mediaId, event, player);
@@ -162,7 +160,7 @@ const initOphanTracking = (player: Object, mediaId: string) => {
     });
 };
 
-const bindContentEvents = (player: Object) => {
+const bindContentEvents = (player) => {
     const events = {
         end() {
             player.trigger(constructEventName('content:end', player));
@@ -206,7 +204,7 @@ const bindContentEvents = (player: Object) => {
 
 // These events are so that other libraries (e.g. Ophan) can hook into events without
 // needing to know about videojs
-const bindGlobalEvents = (player: Object) => {
+const bindGlobalEvents = (player) => {
     player.on('playing', () => {
         bean.fire(document.body, 'videoPlaying');
     });
@@ -231,7 +229,7 @@ const beaconError = err => {
     }
 };
 
-const handleInitialMediaError = (player: Object) => {
+const handleInitialMediaError = (player) => {
     const err = player.error();
     if (err !== null) {
         beaconError(err);
@@ -240,7 +238,7 @@ const handleInitialMediaError = (player: Object) => {
     return false;
 };
 
-const bindErrorHandler = (player: Object) => {
+const bindErrorHandler = (player) => {
     player.on('error', () => {
         beaconError(player.error());
         $('.vjs-big-play-button').hide();

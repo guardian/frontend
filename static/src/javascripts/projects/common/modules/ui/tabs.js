@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 
 const NAV_CLASSES = [
@@ -8,11 +6,11 @@ const NAV_CLASSES = [
     'tone-accent-border',
 ];
 
-const getTabTarget = (tab: HTMLElement): Promise<?string> =>
+const getTabTarget = (tab) =>
     fastdom.measure(() => tab.getAttribute('href'));
 
-const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
-    const tabList: HTMLElement = (tab.parentNode: any);
+const hidePane = (tab, pane) => {
+    const tabList = (tab.parentNode);
 
     return fastdom.mutate(() => {
         if (tabList) {
@@ -26,8 +24,8 @@ const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     });
 };
 
-const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
-    const tabList: HTMLElement = (tab.parentNode: any);
+const showPane = (tab, pane) => {
+    const tabList = (tab.parentNode);
 
     return fastdom.mutate(() => {
         if (tabList) {
@@ -40,8 +38,8 @@ const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     });
 };
 
-const init = (): Promise<void> => {
-    const findTabs = (): Promise<Array<HTMLElement>> =>
+const init = () => {
+    const findTabs = () =>
         fastdom.measure(() => Array.from(document.querySelectorAll('.tabs')));
 
     return findTabs().then(tabs => {
@@ -62,8 +60,8 @@ const init = (): Promise<void> => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
 
-            nav.addEventListener('click', (event: Event) => {
-                const target: HTMLElement = (event.target: any);
+            nav.addEventListener('click', (event) => {
+                const target = (event.target);
 
                 if (!target || target.nodeName !== 'A') {
                     return;

@@ -1,8 +1,6 @@
-// @flow
-import type { RegisterListeners } from 'commercial/modules/messenger';
 import config from 'lib/config';
 
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('get-page-targeting', () => config.get('page.sharedAdTargeting'));
 };
 

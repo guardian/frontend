@@ -1,5 +1,3 @@
-// @flow
-
 /*
  Module: abtest-item.js
  Description: Displays information about a single test
@@ -10,7 +8,7 @@ import bonzo from 'bonzo';
 import debounce from 'lodash/debounce';
 
 class ABTestReportItem extends Component {
-    constructor(config: Object): void {
+    constructor(config) {
         super();
 
         this.templateName = 'abtest-item-template';
@@ -29,10 +27,10 @@ class ABTestReportItem extends Component {
         }
     }
 
-    chart: Object;
-    config: Object;
+    chart;
+    config;
 
-    ready(): void {
+    ready() {
         if (this.chart) {
             const redraw = this.renderChart.bind(this);
 
@@ -42,7 +40,7 @@ class ABTestReportItem extends Component {
         }
     }
 
-    prerender(): void {
+    prerender() {
         if (this.elem && this.elem instanceof HTMLElement) {
             this.elem.className += this.config.active
                 ? ' abtest-item--active'
@@ -89,7 +87,7 @@ class ABTestReportItem extends Component {
         }
 
         if (elements.expiry) {
-            // $FlowFixMe Go home flow, you are drunk
+            
             elements.expiry.textContent =
                 Math.floor(daysTillExpiry).toString() +
                 (daysTillExpiry === 1 ? ' day' : ' days');
@@ -130,7 +128,7 @@ class ABTestReportItem extends Component {
         }
     }
 
-    renderChart(): void {
+    renderChart() {
         if (this.chart) {
             new window.google.visualization.LineChart(
                 this.getElem('chart')

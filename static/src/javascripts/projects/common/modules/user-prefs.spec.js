@@ -1,4 +1,3 @@
-// @flow
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
 
@@ -39,7 +38,7 @@ describe('userPrefs - Client-side preferences', () => {
 
         // jsdom didn't fully implement Number.isNaN :facepalm:
         /* eslint-disable no-restricted-properties */
-        // $FlowFixMe
+        
         Number.isNaN = window.isNaN;
         /* eslint-enable no-restricted-properties */
 

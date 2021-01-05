@@ -1,23 +1,16 @@
-// @flow
-
-type ObserverRecord = {
-    observer: window.IntersectionObserver,
-    registry: Array<{ callback: number => void, element: Element }>,
-};
-
-const cache: Map<number, ObserverRecord> = new Map();
+const cache = new Map();
 
 const observe = (
-    element: Element,
-    threshold: number,
-    callback: number => void
-): void => {
+    element,
+    threshold,
+    callback
+) => {
     let record = cache.get(threshold);
     if (!record) {
         record = {
             registry: [{ callback, element }],
             observer: new window.IntersectionObserver(
-                (entries: window.IntersectionObserverEntry[]) => {
+                (entries) => {
                     const record2 = cache.get(threshold);
                     if (!record2) return;
 
@@ -43,10 +36,10 @@ const observe = (
 };
 
 const unobserve = (
-    element: Element,
-    threshold: number,
-    callback: number => void
-): void => {
+    element,
+    threshold,
+    callback
+) => {
     const record = cache.get(threshold);
     if (!record) return;
 
@@ -64,7 +57,7 @@ const unobserve = (
     }
 };
 
-const viewport: ViewportService = {
+const viewport = {
     observe,
     unobserve,
 };

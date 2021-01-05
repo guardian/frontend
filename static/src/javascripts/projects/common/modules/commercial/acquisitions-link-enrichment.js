@@ -1,21 +1,20 @@
-// @flow
 import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.
 // Work needs to be done so we don't have to hard code what campaigns are running.
-const validIframeUrls: string[] = [
+const validIframeUrls = [
     'https://interactive.guim.co.uk/embed/2017/12/the-mother-load/',
     'https://interactive.guim.co.uk/embed/2018/this-wide-brown-land/',
 ];
 
-const isCurrentCampaign = (iframeSrc: string): boolean =>
+const isCurrentCampaign = (iframeSrc) =>
     validIframeUrls.some(validIframeUrl =>
         iframeSrc.startsWith(validIframeUrl)
     );
 
-const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
+const addReferrerDataToAcquisitionLink = (rawUrl) => {
     const acquisitionDataField = 'acquisitionData';
 
     let url;
@@ -51,7 +50,7 @@ const addReferrerDataToAcquisitionLink = (rawUrl: string): string => {
 
 const ACQUISITION_LINK_CLASS = 'js-acquisition-link';
 
-const enrichAcquisitionLinksOnPage = (): void => {
+const enrichAcquisitionLinksOnPage = () => {
     const links = Array.from(
         document.getElementsByClassName(ACQUISITION_LINK_CLASS)
     );
@@ -66,7 +65,7 @@ const enrichAcquisitionLinksOnPage = (): void => {
     });
 };
 
-const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
+const addReferrerDataToAcquisitionLinksInInteractiveIframes = () => {
     window.addEventListener('message', event => {
         let data;
         try {
@@ -111,7 +110,7 @@ const addReferrerDataToAcquisitionLinksInInteractiveIframes = (): void => {
     });
 };
 
-export const init = (): void => {
+export const init = () => {
     addReferrerDataToAcquisitionLinksInInteractiveIframes();
     enrichAcquisitionLinksOnPage();
 };

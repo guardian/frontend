@@ -1,24 +1,17 @@
-// @flow
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import { constructQuery } from 'lib/url';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { submitViewEventTracking } from './component-event-tracking';
 import { getVariant, isInTest, getTestforMultiTest } from './helper';
 import { withComponentId, componentName } from './component';
 import { variants } from './variants';
-import type {
-    CurrentABTest,
-    ComponentEventParams,
-    SignInGateVariant,
-} from './types';
 
 // if using multiple tests, then add them all in this array. (all the variant names in each test in the array must be unique)
 const tests = [signInGateMainVariant, signInGateMainControl];
 
-const canShow: () => Promise<boolean> = () =>
+const canShow = () =>
     new Promise(resolve => {
         // check if user is in test
         if (!tests.some(test => isInTest(test))) return resolve(false);
@@ -35,21 +28,21 @@ const canShow: () => Promise<boolean> = () =>
         return resolve(variant.canShow(test.dataLinkNames));
     });
 
-const show: () => Promise<boolean> = () =>
+const show = () =>
     new Promise(resolve => {
         // get the test the user is in
-        const test: ABTest = getTestforMultiTest(tests);
+        const test = getTestforMultiTest(tests);
 
         if (!test) return resolve(false);
 
         // get the variant
-        const variant: SignInGateVariant | void = variants.find(
+        const variant = variants.find(
             v => v.name === getVariant(test)
         );
 
         if (!variant) return resolve(false);
 
-        const abTest: CurrentABTest = {
+        const abTest = {
             name: test.dataLinkNames || test.id,
             variant: variant.name,
         };
@@ -70,7 +63,7 @@ const show: () => Promise<boolean> = () =>
         }
 
         // set the component event params to be included in the query
-        const queryParams: ComponentEventParams = {
+        const queryParams = {
             componentType: 'signingate',
             componentId: test.ophanComponentId,
             abTestName: test.dataLinkNames || test.id,
@@ -98,7 +91,7 @@ const show: () => Promise<boolean> = () =>
             constructQuery(queryParams)
         )}`;
 
-        const ophanComponentId: string = test.ophanComponentId
+        const ophanComponentId = test.ophanComponentId
             ? test.ophanComponentId
             : '';
         const ophanComponent = withComponentId(ophanComponentId);
@@ -121,7 +114,7 @@ const show: () => Promise<boolean> = () =>
         );
     });
 
-export const signInGate: Banner = {
+export const signInGate = {
     id: componentName,
     show,
     canShow,

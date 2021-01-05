@@ -1,4 +1,3 @@
-// @flow
 import { spaceFiller } from 'common/modules/article/space-filler';
 import {
     findSpace as findSpace_,
@@ -6,7 +5,6 @@ import {
 } from 'common/modules/spacefinder';
 import raven from 'lib/raven';
 import { noop } from 'lib/noop';
-import type { SpacefinderRules } from 'common/modules/spacefinder';
 
 jest.mock('lib/fastdom-promise');
 jest.mock('common/modules/spacefinder', () => ({
@@ -21,7 +19,7 @@ jest.mock('lib/raven', () => ({
     captureException: jest.fn(),
 }));
 
-const findSpace: JestMockFn<*, *> = (findSpace_: any);
+const findSpace = (findSpace_);
 
 describe('spacefiller', () => {
     const writeError = new Error('Mock writer exception');
@@ -73,7 +71,7 @@ describe('spacefiller', () => {
             minBelow: 0,
             clearContentMeta: 0,
             selectors: {},
-        }: SpacefinderRules);
+        });
 
         findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
 
@@ -95,7 +93,7 @@ describe('spacefiller', () => {
             minBelow: 0,
             clearContentMeta: 0,
             selectors: {},
-        }: SpacefinderRules);
+        });
 
         findSpace.mockReturnValueOnce(Promise.reject(new SpaceError(rules)));
 

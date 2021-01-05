@@ -1,5 +1,3 @@
-// @flow
-
 import {brazeVendorId, canShowPreChecks, hasRequiredConsents} from "./brazeBanner";
 
 jest.mock('lib/raven');
