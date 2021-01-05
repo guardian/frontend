@@ -1740,10 +1740,10 @@
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.9.1.tgz#78aaf208dfc25b4f3fb8d6cbc4991d64cf8242db"
   integrity sha512-52kRmS0u1NJSAyfHOcDiL8/zoQQ8Tii4dQcJ1ENyJ0x6Gn8CE6j+9bNLwc4AGP6Oj80FQdCBd9fx+3Yrhx1vdg==
 
-"@guardian/libs@^1.4.2":
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.4.2.tgz#76f525cf37b37ad58d17288c85008e4ab176a929"
-  integrity sha512-ZACBS1NmAjss8Q60c3SWHZ7alsS2tvjI5rQipEidW3fvWI8kdWWXck6FSM4F42vNzLdRFjAGmzEA36rG/NsZSg==
+"@guardian/libs@^1.6.2":
+  version "1.6.2"
+  resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.6.2.tgz#12036d397df6a0bca6a641f49dee6646750f9d91"
+  integrity sha512-8GDcTRcrdZcGARucW25i08NW7nYcdXaLKvrD4v6H9rhm70HOvwlxlTZdfRj3u+x2gHN63A+Iu8XaX61TLtXblw==
 
 "@guardian/shimport@^1.0.2":
   version "1.0.2"
