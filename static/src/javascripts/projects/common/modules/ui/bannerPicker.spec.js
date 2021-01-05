@@ -1,4 +1,3 @@
-// @flow
 import { init } from 'common/modules/ui/bannerPicker';
 import fakeOphan from 'ophan/ng';
 import userPrefs_ from 'common/modules/user-prefs';
@@ -13,7 +12,7 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn().mockReturnValue([]),
 }));
 
-const userPrefs: any = userPrefs_;
+const userPrefs = userPrefs_;
 
 beforeEach(() => {
     userPrefs.get.mockClear();

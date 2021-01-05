@@ -1,6 +1,3 @@
-// @flow
-
-import type {Banner} from 'common/modules/ui/bannerPicker';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import {onConsentChange} from '@guardian/consent-management-platform';
@@ -14,7 +11,7 @@ import {measureTiming} from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
-const getBrazeUuid = (): Promise<?string> =>
+const getBrazeUuid = () =>
     new Promise((resolve) => {
         getUserFromApi(user => {
             if (user && user.privateFields && user.privateFields.brazeUuid) {
@@ -25,7 +22,7 @@ const getBrazeUuid = (): Promise<?string> =>
         })
     });
 
-const hasRequiredConsents = (): Promise<boolean> =>
+const hasRequiredConsents = () =>
     new Promise((resolve) => {
         onConsentChange(({ tcfv2, ccpa, aus }) => {
             if (tcfv2) {
@@ -40,53 +37,21 @@ const hasRequiredConsents = (): Promise<boolean> =>
         })
     });
 
-type InAppMessage = {
-    extras: {
-        [string]: string,
-    },
-};
 
-type ClickAction = "NEWS_FEED" | "URI" | "NONE"
 
-type InAppMessageButtonInstance = {
-    text: string,
-    backgroundColor?: number,
-    textColor?: number,
-    borderColor?: number,
-    clickAction?: ClickAction,
-    uri?: string,
-    id?: number
-}
 
-type InAppMessageCallback = (InAppMessage) => void;
 
-type AppBoy = {
-    initialize: (string, any) => void,
-    subscribeToInAppMessage: (InAppMessageCallback) => string,
-    removeSubscription: (string) => void,
-    changeUser: (string) => void,
-    openSession: () => void,
-    logInAppMessageButtonClick: (InAppMessageButtonInstance, InAppMessage) => void,
-    logInAppMessageImpression: (InAppMessage) => void,
-    InAppMessageButton: (string, ?number, ?number, ?number, ?ClickAction, ?string, ?number) => InAppMessageButtonInstance,
-};
 
-type PreCheckArgs = {
-    brazeSwitch: boolean,
-    apiKey?: string,
-    userIsGuSupporter: boolean,
-    pageConfig: { [string]: any },
-};
 
 const canShowPreChecks = ({
     brazeSwitch,
     apiKey,
     userIsGuSupporter,
     pageConfig,
-}: PreCheckArgs) => Boolean(brazeSwitch && apiKey && userIsGuSupporter && !pageConfig.isPaidContent);
+}) => Boolean(brazeSwitch && apiKey && userIsGuSupporter && !pageConfig.isPaidContent);
 
-let messageConfig: InAppMessage;
-let appboy: ?AppBoy;
+let messageConfig;
+let appboy;
 
 const FORCE_BRAZE_ALLOWLIST = [
     'preview.gutools.co.uk',
@@ -95,7 +60,7 @@ const FORCE_BRAZE_ALLOWLIST = [
     'm.thegulocal.com',
 ];
 
-const getMessageFromQueryString = (): InAppMessage | null => {
+const getMessageFromQueryString = () => {
     const qsArg = 'force-braze-message';
 
     const params = getUrlVars();
@@ -125,7 +90,7 @@ const getMessageFromQueryString = (): InAppMessage | null => {
     return null;
 };
 
-const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<boolean> => {
+const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const sdkLoadTiming = measureTiming('braze-sdk-load');
     sdkLoadTiming.start();
 
@@ -155,9 +120,9 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
             return;
         }
 
-        let subscriptionId: ?string;
+        let subscriptionId;
 
-        const callback = (message: InAppMessage) => {
+        const callback = (message) => {
             if (message.extras) {
                 messageConfig = message;
                 resolve(true);
@@ -193,7 +158,7 @@ const getMessageFromBraze = async (apiKey: string, brazeUuid: string): Promise<b
     return canShowPromise
 };
 
-const canShow = async (): Promise<boolean> => {
+const canShow = async () => {
     const bannerTiming = measureTiming('braze-banner');
     bannerTiming.start();
 
@@ -243,7 +208,7 @@ const canShow = async (): Promise<boolean> => {
     }
 };
 
-const show = (): Promise<boolean> => import(
+const show = () => import(
     /* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components'
     )
     .then((module) => {
@@ -260,7 +225,7 @@ const show = (): Promise<boolean> => import(
             module.BrazeMessage,
             {
                 componentName: messageConfig.extras.componentName,
-                logButtonClickWithBraze: (buttonId: number) => {
+                logButtonClickWithBraze: (buttonId) => {
                     if (appboy) {
                         const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
                         appboy.logInAppMessageButtonClick(
@@ -296,7 +261,7 @@ const show = (): Promise<boolean> => import(
         return false;
     });
 
-const brazeBanner: Banner = {
+const brazeBanner = {
     id: 'brazeBanner',
     show,
     canShow,

@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { fire } from './beacon';
 

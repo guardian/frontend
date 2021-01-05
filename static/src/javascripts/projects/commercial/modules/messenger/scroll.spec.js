@@ -1,10 +1,9 @@
-// @flow
 import { _ as testExports } from 'commercial/modules/messenger/scroll';
 import { getViewport as getViewport_ } from 'lib/detect';
 
-const getViewport: any = getViewport_;
-const addScrollListener: any = testExports.addScrollListener;
-const removeScrollListener: any = testExports.removeScrollListener;
+const getViewport = getViewport_;
+const addScrollListener = testExports.addScrollListener;
+const removeScrollListener = testExports.removeScrollListener;
 const reset = testExports.reset;
 
 jest.mock('commercial/modules/messenger', () => ({
@@ -28,7 +27,7 @@ describe('Cross-frame messenger: scroll', () => {
          <div id="ad-slot-2" class="js-ad-slot"><div id="iframe2" style="height: 200px"></div></div>
      `;
 
-    const mockIframePosition = (iframe: any, top: number) => {
+    const mockIframePosition = (iframe, top) => {
         jest.spyOn(iframe, 'getBoundingClientRect').mockImplementationOnce(
             () => ({
                 left: 8,

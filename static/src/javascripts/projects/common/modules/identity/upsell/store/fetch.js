@@ -1,4 +1,3 @@
-// @flow
 import {
     getAllConsents,
     getAllNewsletters,
@@ -7,7 +6,7 @@ import {
 } from 'common/modules/identity/api';
 import { UserConsentWithState, EmailConsentWithState } from './types';
 
-const fetchSubscribedConsents = (): Promise<string[]> =>
+const fetchSubscribedConsents = () =>
     new Promise(accept => {
         getUserFromApi(user => {
             if (user && user.consents) {

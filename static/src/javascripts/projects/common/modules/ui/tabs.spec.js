@@ -1,5 +1,3 @@
-// @flow
-
 import { init as tabsInit, _ } from './tabs';
 
 const NAV_CLASSES = [
@@ -58,7 +56,7 @@ afterEach(() => {
 });
 
 test('should properly save the initialized state', () => {
-    const nav: HTMLElement = (document.querySelector('.js-tabs'): any);
+    const nav = (document.querySelector('.js-tabs'));
 
     expect(nav.getAttribute('data-tabs-initialized')).toBe(null);
 
@@ -68,9 +66,9 @@ test('should properly save the initialized state', () => {
 });
 
 test('showPane()', () => {
-    const tab: HTMLElement = (document.getElementById('tab2'): any);
-    const tabList: HTMLElement = (tab.parentNode: any);
-    const pane: HTMLElement = (document.getElementById('tab2panel'): any);
+    const tab = (document.getElementById('tab2'));
+    const tabList = (tab.parentNode);
+    const pane = (document.getElementById('tab2panel'));
 
     return _.showPane(tab, pane).then(() => {
         expect(pane.classList.contains('u-h')).toBe(false);
@@ -84,9 +82,9 @@ test('showPane()', () => {
 });
 
 test('hidePane()', () => {
-    const tab: HTMLElement = (document.getElementById('tab2'): any);
-    const tabList: HTMLElement = (tab.parentNode: any);
-    const pane: HTMLElement = (document.getElementById('tab2panel'): any);
+    const tab = (document.getElementById('tab2'));
+    const tabList = (tab.parentNode);
+    const pane = (document.getElementById('tab2panel'));
 
     return _.showPane(tab, pane).then(() =>
         _.hidePane(tab, pane).then(() => {
@@ -101,7 +99,7 @@ test('hidePane()', () => {
 });
 
 test('getTabTarget()', () => {
-    const tab: HTMLElement = (document.getElementById('tab2'): any);
+    const tab = (document.getElementById('tab2'));
 
     return _.getTabTarget(tab).then(target => {
         expect(target).toBe('#tab2panel');

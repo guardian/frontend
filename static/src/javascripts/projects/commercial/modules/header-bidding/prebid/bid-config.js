@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import config from 'lib/config';
 import { pbTestNameMap } from 'lib/url';
@@ -15,22 +15,6 @@ import { isInUk,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
 import { getLotameData } from '@guardian/commercial-core';
-import type {
-    PrebidAdYouLikeParams,
-    PrebidAppNexusParams,
-    PrebidBid,
-    PrebidBidder,
-    PrebidImproveParams,
-    PrebidIndexExchangeParams,
-    PrebidOpenXParams,
-    PrebidOzoneParams,
-    PrebidPubmaticParams,
-    HeaderBiddingSize,
-    PrebidSonobiParams,
-    PrebidTripleLiftParams,
-    PrebidTrustXParams,
-    PrebidXaxisParams,
-} from '../types';
 import {
     containsBillboard,
     containsDmpu,
@@ -58,7 +42,7 @@ import { getAppNexusDirectBidParams } from './appnexus';
 // The below line is needed for page skins to show
 getPageTargeting();
 
-const isInSafeframeTestVariant = (): boolean =>
+const isInSafeframeTestVariant = () =>
     isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
 const isArticle = config.get('page.contentType') === 'Article';
@@ -66,9 +50,9 @@ const isArticle = config.get('page.contentType') === 'Article';
 const isDesktopAndArticle = getBreakpointKey() === 'D' && isArticle;
 
 const getTrustXAdUnitId = (
-    slotId: string,
-    isDesktopArticle: boolean
-): string => {
+    slotId,
+    isDesktopArticle
+) => {
     switch (stripMobileSuffix(slotId)) {
         case 'dfp-ad--inline1':
             return '2960';
@@ -120,7 +104,7 @@ const getTrustXAdUnitId = (
     }
 };
 
-const getIndexSiteId = (): string => {
+const getIndexSiteId = () => {
     if (isInSafeframeTestVariant()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -140,7 +124,7 @@ const getIndexSiteId = (): string => {
     }
 };
 
-const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
+const getImprovePlacementId = (sizes) => {
     if (isInSafeframeTestVariant()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -227,7 +211,7 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 
 // Improve has to have single size as parameter if slot doesn't accept multiple sizes,
 // because it uses same placement ID for multiple slot sizes and has no other size information
-const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
+const getImproveSizeParam = (slotId) => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key &&
         (key.endsWith('mostpop') ||
@@ -238,7 +222,7 @@ const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
         : {};
 };
 
-const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
+const getXaxisPlacementId = (sizes) => {
     if (containsDmpu(sizes)) return 13663297;
     if (containsMpu(sizes)) return 13663304;
     if (containsBillboard(sizes)) return 13663284;
@@ -246,9 +230,9 @@ const getXaxisPlacementId = (sizes: HeaderBiddingSize[]): number => {
 };
 
 const getTripleLiftInventoryCode = (
-    slotId: string,
-    sizes: HeaderBiddingSize[]
-): string => {
+    slotId,
+    sizes
+) => {
     if (containsLeaderboard(sizes))
         return 'theguardian_topbanner_728x90_prebid';
 
@@ -263,7 +247,7 @@ const getTripleLiftInventoryCode = (
     return '';
 };
 
-const getOzoneTargeting = (): { } => {
+const getOzoneTargeting = () => {
     const lotameData = getLotameData();
     const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
     if (typeof lotameData !== 'undefined') {
@@ -277,24 +261,24 @@ const getOzoneTargeting = (): { } => {
 };
 
 // Is pbtest being used?
-const isPbTestOn = (): boolean => !isEmpty(pbTestNameMap());
+const isPbTestOn = () => !isEmpty(pbTestNameMap());
 // Helper for conditions
-const inPbTestOr = (liveClause: boolean): boolean => isPbTestOn() || liveClause;
+const inPbTestOr = (liveClause) => isPbTestOn() || liveClause;
 
 /* Bidders */
-const appNexusBidder: PrebidBidder = {
+const appNexusBidder = {
     name: 'and',
     switchName: 'prebidAppnexus',
     bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidAppNexusParams => getAppNexusDirectBidParams(sizes),
+        slotId,
+        sizes
+    ) => getAppNexusDirectBidParams(sizes),
 };
 
-const openxClientSideBidder: PrebidBidder = {
+const openxClientSideBidder = {
     name: 'oxd',
     switchName: 'prebidOpenx',
-    bidParams: (): PrebidOpenXParams => {
+    bidParams: () => {
         if (isInUsOrCa()) {
             return {
                 delDomain: 'guardian-us-d.openx.net',
@@ -318,10 +302,10 @@ const openxClientSideBidder: PrebidBidder = {
     },
 };
 
-const ozoneClientSideBidder: PrebidBidder = {
+const ozoneClientSideBidder = {
     name: 'ozone',
     switchName: 'prebidOzone',
-    bidParams: (): PrebidOzoneParams =>
+    bidParams: () =>
         Object.assign(
             {},
             (() => ({
@@ -339,10 +323,10 @@ const ozoneClientSideBidder: PrebidBidder = {
         ),
 };
 
-const sonobiBidder: PrebidBidder = {
+const sonobiBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
-    bidParams: (slotId: string): PrebidSonobiParams =>
+    bidParams: (slotId) =>
         Object.assign(
             {},
             {
@@ -355,7 +339,7 @@ const sonobiBidder: PrebidBidder = {
         ),
 };
 
-const getPubmaticPublisherId = (): string => {
+const getPubmaticPublisherId = () => {
     if (isInUsOrCa()) {
         return '157206';
     }
@@ -365,10 +349,10 @@ const getPubmaticPublisherId = (): string => {
     return '157207';
 };
 
-const pubmaticBidder: PrebidBidder = {
+const pubmaticBidder = {
     name: 'pubmatic',
     switchName: 'prebidPubmatic',
-    bidParams: (slotId: string): PrebidPubmaticParams =>
+    bidParams: (slotId) =>
         Object.assign(
             {},
             {
@@ -378,52 +362,52 @@ const pubmaticBidder: PrebidBidder = {
         ),
 };
 
-const trustXBidder: PrebidBidder = {
+const trustXBidder = {
     name: 'trustx',
     switchName: 'prebidTrustx',
-    bidParams: (slotId: string): PrebidTrustXParams => ({
+    bidParams: (slotId) => ({
         uid: getTrustXAdUnitId(slotId, isDesktopAndArticle),
     }),
 };
 
-const tripleLiftBidder: PrebidBidder = {
+const tripleLiftBidder = {
     name: 'triplelift',
     switchName: 'prebidTriplelift',
     bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidTripleLiftParams => ({
+        slotId,
+        sizes
+    ) => ({
         inventoryCode: getTripleLiftInventoryCode(slotId, sizes),
     }),
 };
 
-const improveDigitalBidder: PrebidBidder = {
+const improveDigitalBidder = {
     name: 'improvedigital',
     switchName: 'prebidImproveDigital',
     bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidImproveParams => ({
+        slotId,
+        sizes
+    ) => ({
         placementId: getImprovePlacementId(sizes),
         size: getImproveSizeParam(slotId),
     }),
 };
 
-const xaxisBidder: PrebidBidder = {
+const xaxisBidder = {
     name: 'xhb',
     switchName: 'prebidXaxis',
     bidParams: (
-        slotId: string,
-        sizes: HeaderBiddingSize[]
-    ): PrebidXaxisParams => ({
+        slotId,
+        sizes
+    ) => ({
         placementId: getXaxisPlacementId(sizes),
     }),
 };
 
-const adYouLikeBidder: PrebidBidder = {
+const adYouLikeBidder = {
     name: 'adyoulike',
     switchName: 'prebidAdYouLike',
-    bidParams: (): PrebidAdYouLikeParams => {
+    bidParams: () => {
         if (isInUk()) {
             return {
                 placement: '2b4d757e0ec349583ce704699f1467dd',
@@ -447,31 +431,29 @@ const adYouLikeBidder: PrebidBidder = {
 };
 
 // There's an IX bidder for every size that the slot can take
-const indexExchangeBidders: (
-    HeaderBiddingSize[]
-) => PrebidBidder[] = slotSizes => {
+const indexExchangeBidders = slotSizes => {
     const indexSiteId = getIndexSiteId();
     return slotSizes.map(size => ({
         name: 'ix',
         switchName: 'prebidIndexExchange',
-        bidParams: (): PrebidIndexExchangeParams => ({
+        bidParams: () => ({
             siteId: indexSiteId,
             size,
         }),
     }));
 };
 
-const biddersBeingTested: (PrebidBidder[]) => PrebidBidder[] = allBidders =>
+const biddersBeingTested = allBidders =>
     allBidders.filter(bidder => pbTestNameMap()[bidder.name]);
 
-const biddersSwitchedOn: (PrebidBidder[]) => PrebidBidder[] = allBidders => {
-    const isSwitchedOn: PrebidBidder => boolean = bidder =>
+const biddersSwitchedOn = allBidders => {
+    const isSwitchedOn = bidder =>
         config.get(`switches.${bidder.switchName}`);
     return allBidders.filter(bidder => isSwitchedOn(bidder));
 };
 
-const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
-    const otherBidders: PrebidBidder[] = [
+const currentBidders = slotSizes => {
+    const otherBidders = [
         ...(inPbTestOr(shouldIncludeSonobi()) ? [sonobiBidder] : []),
         ...(inPbTestOr(shouldIncludeTrustX()) ? [trustXBidder] : []),
         ...(inPbTestOr(shouldIncludeTripleLift()) ? [tripleLiftBidder] : []),
@@ -495,11 +477,11 @@ const currentBidders: (HeaderBiddingSize[]) => PrebidBidder[] = slotSizes => {
         : biddersSwitchedOn(allBidders);
 };
 
-export const bids: (string, HeaderBiddingSize[]) => PrebidBid[] = (
+export const bids = (
     slotId,
     slotSizes
 ) =>
-    currentBidders(slotSizes).map((bidder: PrebidBidder) => ({
+    currentBidders(slotSizes).map((bidder) => ({
         bidder: bidder.name,
         params: bidder.bidParams(slotId, slotSizes),
     }));

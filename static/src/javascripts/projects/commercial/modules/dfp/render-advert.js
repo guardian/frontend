@@ -1,16 +1,12 @@
-// @flow
-
 import qwery from 'qwery';
 import config from 'lib/config';
 import reportError from 'lib/report-error';
 import fastdom from 'lib/fastdom-promise';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
 import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
 import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
 import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
-import type { SlotRenderEndedEvent } from 'commercial/types';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -21,7 +17,7 @@ import type { SlotRenderEndedEvent } from 'commercial/types';
  *
  */
 
-const addClassIfHasClass = (newClassNames: Array<string>) =>
+const addClassIfHasClass = (newClassNames) =>
     function hasClass(classNames) {
         return function onAdvertRendered(_, advert) {
             if (
@@ -59,8 +55,8 @@ const addClassIfHasClass = (newClassNames: Array<string>) =>
 const addFluid250 = addClassIfHasClass(['ad-slot--fluid250']);
 const addFluid = addClassIfHasClass(['ad-slot--fluid']);
 
-const removeStyleFromAdIframe = (advert: Advert, style: string) => {
-    const adIframe: ?HTMLElement = advert.node.querySelector('iframe');
+const removeStyleFromAdIframe = (advert, style) => {
+    const adIframe = advert.node.querySelector('iframe');
 
     fastdom.mutate(() => {
         if (adIframe) {
@@ -69,14 +65,14 @@ const removeStyleFromAdIframe = (advert: Advert, style: string) => {
     });
 };
 
-const sizeCallbacks: { [string]: (any, any) => Promise<void> } = {};
+const sizeCallbacks = {};
 
 /**
  * DFP fluid ads should use existing fluid-250 styles in the top banner position
  * The vertical-align property found on DFP iframes affects the smoothness of
  * CSS transitions when expanding/collapsing various native style formats.
  */
-sizeCallbacks[adSizes.fluid] = (renderSlotEvent: any, advert: Advert) =>
+sizeCallbacks[adSizes.fluid] = (renderSlotEvent, advert) =>
     addFluid(['ad-slot'])(renderSlotEvent, advert).then(() =>
         removeStyleFromAdIframe(advert, 'vertical-align')
     );
@@ -206,9 +202,9 @@ const addContentClass = adSlotNode => {
  * @returns {Promise} - resolves once all necessary rendering is queued up
  */
 export const renderAdvert = (
-    advert: Advert,
-    slotRenderEndedEvent: SlotRenderEndedEvent
-): Promise<boolean> => {
+    advert,
+    slotRenderEndedEvent
+) => {
     addContentClass(advert.node);
 
     return applyCreativeTemplate(advert.node)

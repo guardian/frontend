@@ -1,5 +1,3 @@
-// @flow
-
 import dynamicImportPolyfill from 'dynamic-import-polyfill';
 
 // Provides an import function to use for dynamic imports. **Only works on
@@ -29,8 +27,8 @@ const initialiseDynamicImportLegacy = () =>
         },
     );
 
-export const init = (): void => {
-    window.guardianPolyfilledImport = (url: string) =>
+export const init = () => {
+    window.guardianPolyfilledImport = (url) =>
         Promise.reject(
             new Error(`import not polyfilled; attempted import(${url})`),
         );

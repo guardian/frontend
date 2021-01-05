@@ -1,4 +1,3 @@
-// @flow
 import config from "lib/config";
 import {
     addTrackingCodesToUrl,
@@ -15,9 +14,8 @@ const componentId = 'header_support';
 const campaignCode = 'header_support';
 const testName = 'GlobalEoyHeaderTest';
 
-type VariantName = 'variant' | 'variant2' | 'control';
 
-const onView = (variant: VariantName): void => submitViewEvent({
+const onView = (variant) => submitViewEvent({
     component: {
         componentType,
         products: [],
@@ -30,7 +28,7 @@ const onView = (variant: VariantName): void => submitViewEvent({
     }
 });
 
-const buildUrl = (rrType: 'contribute' | 'subscribe', variant: VariantName): string => addTrackingCodesToUrl({
+const buildUrl = (rrType, variant) => addTrackingCodesToUrl({
     base: addCountryGroupToSupportLink(`https://support.theguardian.com/${rrType}`),
     componentType,
     componentId,
@@ -41,12 +39,12 @@ const buildUrl = (rrType: 'contribute' | 'subscribe', variant: VariantName): str
     },
 });
 
-const buildHtml = (heading: string, subheading: string, variant: VariantName): string => `
+const buildHtml = (heading, subheading, variant) => `
     <div class="cta-bar__text hide-until-tablet">
         <div class="cta-bar__heading">${heading}</div>
         <div class="cta-bar__subheading">${subheading}</div>
     </div>
-                    
+
     <a class="cta-bar__cta hide-until-tablet js-change-become-member-link js-acquisition-link" data-link-name="nav2 : contribute-cta" data-edition="${edition}" href="${buildUrl('contribute', variant)}">
         Contribute
         <span class="inline-arrow-right inline-icon ">
@@ -89,7 +87,7 @@ const buildHtml = (heading: string, subheading: string, variant: VariantName): s
 
 const getHeaderCtaBar = () => window.document.querySelector('.new-header__cta-bar');
 
-export const globalEoyHeaderTest: ABTest = {
+export const globalEoyHeaderTest = {
     id: testName,
     start: '2020-12-02',
     expiry: '2021-02-01',
@@ -105,7 +103,7 @@ export const globalEoyHeaderTest: ABTest = {
     variants: [
         {
             id: 'control',
-            test: (): void => {
+            test: () => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
                     bar.innerHTML = buildHtml('Support The Guardian', 'Available for everyone, funded by readers', 'control');
@@ -115,7 +113,7 @@ export const globalEoyHeaderTest: ABTest = {
         },
         {
             id: 'variant',
-            test: (): void => {
+            test: () => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
                     const heading = month === 12 ? `Support us this December` : 'Support us in 2021';
@@ -126,7 +124,7 @@ export const globalEoyHeaderTest: ABTest = {
         },
         {
             id: 'variant2',
-            test: (): void => {
+            test: () => {
                 const bar = getHeaderCtaBar();
                 if (bar) {
                     const heading = month === 12 ? `Support us this December` : 'Support us in 2021';

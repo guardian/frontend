@@ -1,10 +1,8 @@
-// @flow
-
 import React from 'preact-compat';
 import { Block } from '../block/Block';
 import { OptOutsList } from '../opt-outs/OptOutsList';
 
-export const OptOuts = (): React.Component => (
+export const OptOuts = () => (
     <Block
         halfWidth
         sideBySideBackwards

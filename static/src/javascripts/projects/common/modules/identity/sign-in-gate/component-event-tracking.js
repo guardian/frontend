@@ -1,27 +1,16 @@
-// @flow
 import ophan from 'ophan/ng';
 
-type ABTestVariant = {
-    name: string,
-    variant: string,
-};
 
-type ComponentEventWithoutAction = {
-    component: OphanComponent,
-    value?: string,
-    id?: string,
-    abTest?: ABTestVariant,
-};
 
 // ophan helper methods
 export const submitComponentEventTracking = (
-    componentEvent: OphanComponentEvent
+    componentEvent
 ) => {
     ophan.record({ componentEvent });
 };
 
 export const submitViewEventTracking = (
-    componentEvent: ComponentEventWithoutAction
+    componentEvent
 ) =>
     submitComponentEventTracking({
         ...componentEvent,
@@ -29,7 +18,7 @@ export const submitViewEventTracking = (
     });
 
 export const submitClickEventTracking = (
-    componentEvent: ComponentEventWithoutAction
+    componentEvent
 ) =>
     submitComponentEventTracking({
         ...componentEvent,

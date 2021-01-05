@@ -1,5 +1,3 @@
-// @flow
-
 // DEPRECATED: please don't use this file to inject SVGs into your markup
 // Instead load the SVGs directly into your JavaScript module
 
@@ -77,7 +75,7 @@ const svgs = {
 };
 
 export const inlineSvg = (
-    name: string,
-    classes?: Array<string>,
-    title?: string
-): string => addClassesAndTitle(svgs[name].markup, classes, title);
+    name,
+    classes,
+    title
+) => addClassesAndTitle(svgs[name].markup, classes, title);

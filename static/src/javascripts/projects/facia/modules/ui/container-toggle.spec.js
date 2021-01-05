@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';

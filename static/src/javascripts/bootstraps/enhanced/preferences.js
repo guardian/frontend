@@ -1,4 +1,3 @@
-// @flow
 import React, { Component, render } from 'preact-compat';
 import {
     getPopularFiltered,
@@ -8,7 +7,7 @@ import {
     showInMegaNavEnabled,
 } from 'common/modules/onward/history';
 
-class SummaryTagsList extends Component<*, *> {
+class SummaryTagsList extends Component {
     constructor() {
         super();
         this.state = {
@@ -16,7 +15,7 @@ class SummaryTagsList extends Component<*, *> {
         };
     }
 
-    handleRemove(tag: string) {
+    handleRemove(tag) {
         deleteFromSummary(tag);
         this.setState({
             popular: getPopularFiltered({ flush: true }),
@@ -52,7 +51,7 @@ class SummaryTagsList extends Component<*, *> {
     }
 }
 
-class SummaryTagsSettings extends Component<*, *> {
+class SummaryTagsSettings extends Component {
     constructor() {
         super();
         this.state = {
@@ -91,8 +90,8 @@ class SummaryTagsSettings extends Component<*, *> {
     }
 }
 
-const init = (): void => {
-    const placeholder: ?HTMLElement = document.getElementById(
+const init = () => {
+    const placeholder = document.getElementById(
         'preferences-history-tags'
     );
 

@@ -1,29 +1,24 @@
-// @flow
-
 /**
  * This module is used to merge calls to async functions that use callbacks. Ensuring the target function is
  * called once only but the result is passed to all the call backs that require it.
  */
 
-type Status = 'init' | 'waiting' | 'complete';
 
-type Callback = (...as: any[]) => void;
 
-type TargetCallback = (f: Callback) => void;
 
 /**
  * Creates a function that will merge calls to the supplied target function
  */
-const mergeCalls = (targetFunction: TargetCallback): TargetCallback => {
-    let callbacks: Callback[];
-    let callbackArguments: any[];
-    let status: Status;
+const mergeCalls = (targetFunction) => {
+    let callbacks;
+    let callbackArguments;
+    let status;
 
-    const reset = (): void => {
+    const reset = () => {
         [callbacks, status, callbackArguments] = [[], 'init', []];
     };
 
-    const targetCallbackHandler: Callback = (...args) => {
+    const targetCallbackHandler = (...args) => {
         callbackArguments = args;
         status = 'complete';
         callbacks.forEach(callback => {
@@ -31,7 +26,7 @@ const mergeCalls = (targetFunction: TargetCallback): TargetCallback => {
         });
     };
 
-    const callMergingFunction: TargetCallback = callback => {
+    const callMergingFunction = callback => {
         if (status === 'init') {
             status = 'waiting';
             callbacks.push(callback);

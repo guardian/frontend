@@ -1,4 +1,4 @@
-// @flow strict
+
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import {
@@ -25,30 +25,12 @@ import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-type PageTargeting = {
-    sens: string,
-    url: string,
-    edition: string,
-    ct: string,
-    p: string,
-    k: string,
-    su: string,
-    bp: string,
-    x: string,
-    gdncrm: string,
-    pv: string,
-    co: string,
-    tn: string,
-    slot: string,
-    permutive: string,
-    urlkw: string,
-};
 
-let myPageTargetting: {} = {};
+let myPageTargetting = {};
 let latestCmpHasInitalised;
 let latestCMPState;
 
-const findBreakpoint = (): string => {
+const findBreakpoint = () => {
     switch (getBreakpoint(true)) {
         case 'mobile':
         case 'mobileMedium':
@@ -66,7 +48,7 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = (): string => {
+const inskinTargetting = () => {
     const vp = getViewport();
     if (!vp || vp.width < 1560) {
         return 'f';
@@ -77,32 +59,32 @@ const inskinTargetting = (): string => {
     return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
 
-const format = (keyword: string): string =>
+const format = (keyword) =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
 // flowlint sketchy-null-string:warn
-const formatTarget = (target: ?string): ?string =>
+const formatTarget = (target) =>
     target
         ? format(target)
               .replace(/&/g, 'and')
               .replace(/'/g, '')
         : null;
 
-const abParam = (): Array<string> => {
-    const abParticipations: Participations = getSynchronousParticipations();
-    const abParams: Array<string> = [];
+const abParam = () => {
+    const abParticipations = getSynchronousParticipations();
+    const abParams = [];
 
-    const pushAbParams = (testName: string, testValue: mixed): void => {
+    const pushAbParams = (testName, testValue) => {
         if (typeof testValue === 'string' && testValue !== 'notintest') {
-            const testData: string = `${testName}-${testValue}`;
+            const testData = `${testName}-${testValue}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     };
 
     Object.keys(abParticipations).forEach(
-        (testKey: string): void => {
-            const testValue: { variant: string } = abParticipations[testKey];
+        (testKey) => {
+            const testValue = abParticipations[testKey];
             pushAbParams(testKey, testValue.variant);
         }
     );
@@ -118,8 +100,8 @@ const abParam = (): Array<string> => {
     return abParams;
 };
 
-const getVisitedValue = (): string => {
-    const visitCount: number =
+const getVisitedValue = () => {
+    const visitCount =
         parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
@@ -139,9 +121,8 @@ const getVisitedValue = (): string => {
     return visitCount.toString();
 };
 
-const getReferrer = (): ?string => {
-    type MatchType = { id: string, match: string };
-    const referrerTypes: Array<MatchType> = [
+const getReferrer = () => {
+    const referrerTypes = [
         {
             id: 'facebook',
             match: 'facebook.com',
@@ -160,7 +141,7 @@ const getReferrer = (): ?string => {
         },
     ];
 
-    const matchedRef: MatchType =
+    const matchedRef =
         referrerTypes.filter(
             referrerType => detectGetReferrer().indexOf(referrerType.match) > -1
         )[0] || {};
@@ -168,12 +149,12 @@ const getReferrer = (): ?string => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): {} => {
-    const whiteList: Array<string> = ['0p19G'];
+const getWhitelistedQueryParams = () => {
+    const whiteList = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const getUrlKeywords = (pageId: string): Array<string> => {
+const getUrlKeywords = (pageId) => {
     if (pageId) {
         const segments = pageId.split('/');
         const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
@@ -182,12 +163,12 @@ const getUrlKeywords = (pageId: string): Array<string> => {
     return [];
 };
 
-const formatAppNexusTargeting = (obj: { [string]: string }): string =>
+const formatAppNexusTargeting = (obj) =>
     flattenDeep(
         Object.keys(obj)
-            .filter((key: string) => obj[key] !== '' && obj[key] !== null)
-            .map((key: string) => {
-                const value: Array<string> | string = obj[key];
+            .filter((key) => obj[key] !== '' && obj[key] !== null)
+            .map((key) => {
+                const value = obj[key];
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
@@ -195,7 +176,7 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     ).join(',');
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} =>
+    (pageTargeting) =>
         removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
@@ -218,25 +199,25 @@ const buildAppNexusTargetingObject = once(
 );
 
 const buildAppNexusTargeting = once(
-    (pageTargeting: PageTargeting): string =>
+    (pageTargeting) =>
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const getRdpValue = (ccpaState: boolean | null): string => {
+const getRdpValue = (ccpaState) => {
     if (ccpaState === null) {
         return 'na';
     }
     return ccpaState ? 't' : 'f';
 };
 
-const getTcfv2ConsentValue = (tcfv2State: boolean | null): string => {
+const getTcfv2ConsentValue = (tcfv2State) => {
     if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
         return tcfv2State ? 't' : 'f';
     }
     return 'na';
 };
 
-const getAdConsentFromState = (state): boolean => {
+const getAdConsentFromState = (state) => {
     if (state.ccpa) {
         // CCPA mode
         return !state.ccpa.doNotSell;
@@ -263,9 +244,9 @@ const rebuildPageTargeting = () => {
     // personalised ads targeting
     if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
-    const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
-    const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
-    const pageTargets: PageTargeting = Object.assign(
+    const paTargeting = { pa: adConsentState ? 't' : 'f' };
+    const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
+    const pageTargets = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
             permutive: getPermutiveSegments(),
@@ -308,7 +289,7 @@ const rebuildPageTargeting = () => {
     );
 
     // filter out empty values
-    const pageTargeting: {} = pickBy(pageTargets, target => {
+    const pageTargeting = pickBy(pageTargets, target => {
         if (Array.isArray(target)) {
             return target.length > 0;
         }
@@ -324,7 +305,7 @@ const rebuildPageTargeting = () => {
     return pageTargeting;
 }
 
-const getPageTargeting = (): { [key: string]: mixed } => {
+const getPageTargeting = () => {
 
     if (Object.keys(myPageTargetting).length !== 0) {
         // If CMP was initalised since the last time myPageTargetting was built - rebuild
@@ -343,7 +324,7 @@ const getPageTargeting = (): { [key: string]: mixed } => {
     return myPageTargetting; 
 };
 
-const resetPageTargeting = (): void => {
+const resetPageTargeting = () => {
     myPageTargetting = {};
 };
 

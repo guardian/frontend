@@ -1,4 +1,3 @@
-// @flow
 const defaults = {
     controls: true,
     textTrackDisplay: false,
@@ -23,5 +22,5 @@ const defaults = {
     notSupportedMessage: 'This video is no longer available.',
 };
 
-export default (overrides: Object = {}): Object =>
+export default (overrides = {}) =>
     Object.assign({}, defaults, overrides);

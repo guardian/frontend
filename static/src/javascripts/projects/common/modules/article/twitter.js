@@ -1,5 +1,3 @@
-// @flow
-
 /* global twttr: false */
 
 import fastdom from 'fastdom';
@@ -8,15 +6,15 @@ import { getBreakpoint, getViewport } from 'lib/detect';
 import mediator from 'lib/mediator';
 import debounce from 'lodash/debounce';
 
-const body: ?Element = document.querySelector(
+const body = document.querySelector(
     '.js-liveblog-body, .js-article__body, .js-article__body--minute-article'
 );
 
-const renderTweets = (): void => {
-    const nativeTweetElements: Element[] = Array.from(
+const renderTweets = () => {
+    const nativeTweetElements = Array.from(
         document.querySelectorAll('blockquote.twitter-tweet')
     );
-    const widgetScript: ?Element = document.getElementById('twitter-widget');
+    const widgetScript = document.getElementById('twitter-widget');
 
     if (nativeTweetElements.length) {
         if (!widgetScript) {
@@ -42,7 +40,7 @@ const renderTweets = (): void => {
     }
 };
 
-const enhanceTweets = (): void => {
+const enhanceTweets = () => {
     if (
         (getBreakpoint() === 'mobile' && !config.get('page.isMinuteArticle')) ||
         !config.get('switches.enhanceTweets')
@@ -50,10 +48,10 @@ const enhanceTweets = (): void => {
         return;
     }
 
-    const tweetElements: Element[] = Array.from(
+    const tweetElements = Array.from(
         document.querySelectorAll('blockquote.js-tweet')
     );
-    const viewportHeight: number = getViewport().height;
+    const viewportHeight = getViewport().height;
 
     tweetElements.forEach(element => {
         const rect = element.getBoundingClientRect();
@@ -68,7 +66,7 @@ const enhanceTweets = (): void => {
     });
 };
 
-const init = (): void => {
+const init = () => {
     mediator.on('window:throttledScroll', debounce(enhanceTweets, 200));
 };
 

@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 import { markTime, getMarkTime, getCurrentTime } from './user-timing';
 

@@ -1,5 +1,3 @@
-// @flow
-
 /*
    This file is intended to be downloaded and run ASAP on all pages by all
    readers.
@@ -40,8 +38,7 @@ import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
 import { initEmbedResize } from "./emailEmbeds";
 
-
-const showHiringMessage = (): void => {
+const showHiringMessage = () => {
     try {
         if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
             window.console.log(
@@ -62,16 +59,16 @@ const showHiringMessage = (): void => {
     }
 };
 
-const handleMembershipAccess = (): void => {
+const handleMembershipAccess = () => {
     const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
-    const redirect = (): void => {
+    const redirect = () => {
         window.location.assign(
             `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`
         );
     };
 
-    const updateDOM = (resp: Object): void => {
+    const updateDOM = (resp) => {
         const requireClass = 'has-membership-access-requirement';
         const requiresPaidTier = membershipAccess.includes('paid-members-only');
         // Check the users access matches the content
@@ -102,10 +99,10 @@ const handleMembershipAccess = (): void => {
     }
 };
 
-const addScrollHandler = (): void => {
-    let scrollRunning: boolean = false;
+const addScrollHandler = () => {
+    let scrollRunning = false;
 
-    const onScroll = (): void => {
+    const onScroll = () => {
         if (!scrollRunning) {
             scrollRunning = true;
             fastdom.measure(() => {
@@ -128,10 +125,10 @@ const addScrollHandler = (): void => {
     );
 };
 
-const addResizeHandler = (): void => {
+const addResizeHandler = () => {
     // Adds a global window:throttledResize event to mediator, which debounces events
     // until the user has stopped resizing the window for a reasonable amount of time.
-    const onResize = (evt): void => {
+    const onResize = (evt) => {
         mediator.emitEvent('window:throttledResize', [evt]);
     };
 
@@ -140,7 +137,7 @@ const addResizeHandler = (): void => {
     });
 };
 
-const addErrorHandler = (): void => {
+const addErrorHandler = () => {
     const oldOnError = window.onerror;
     window.onerror = (message, filename, lineno, colno, error) => {
         // Not all browsers pass the error object
@@ -160,7 +157,7 @@ const addErrorHandler = (): void => {
     });
 };
 
-const bootStandard = (): void => {
+const bootStandard = () => {
     markTime('standard start');
 
     catchErrorsWithContext([
@@ -251,7 +248,7 @@ const bootStandard = (): void => {
 
     newHeaderInit();
 
-    const isAtLeastLeftCol: boolean = isBreakpoint({ min: 'leftCol' });
+    const isAtLeastLeftCol = isBreakpoint({ min: 'leftCol' });
 
     // we only need to fix the secondary column from leftCol breakpoint up
     if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {

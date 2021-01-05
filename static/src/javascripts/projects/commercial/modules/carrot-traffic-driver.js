@@ -1,13 +1,11 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { getBreakpoint } from 'lib/detect';
-import type { SpacefinderRules } from 'common/modules/spacefinder';
 
-const defaultRules: SpacefinderRules = {
+const defaultRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -52,7 +50,7 @@ const defaultRules: SpacefinderRules = {
 };
 
 // desktop(980) and tablet(740)
-const desktopRules: SpacefinderRules = {
+const desktopRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -101,7 +99,7 @@ const desktopRules: SpacefinderRules = {
 };
 
 // mobile(320) and above
-const mobileRules: SpacefinderRules = {
+const mobileRules = {
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 500,
@@ -149,7 +147,7 @@ const mobileRules: SpacefinderRules = {
     fromBottom: true,
 };
 
-const insertSlot = (paras: HTMLElement[]): Promise<void> => {
+const insertSlot = (paras) => {
     const slots = createSlots('carrot');
     const candidates = paras.slice(1);
     return fastdom
@@ -163,7 +161,7 @@ const insertSlot = (paras: HTMLElement[]): Promise<void> => {
         .then(() => addSlot(slots[0], true));
 };
 
-const getRules = (): SpacefinderRules => {
+const getRules = () => {
     switch (getBreakpoint()) {
         case 'mobile':
         case 'mobileMedium':
@@ -178,7 +176,7 @@ const getRules = (): SpacefinderRules => {
     }
 };
 
-export const initCarrot = (): Promise<void> => {
+export const initCarrot = () => {
     if (commercialFeatures.carrotTrafficDriver) {
         return spaceFiller.fillSpace(getRules(), insertSlot, {
             waitForImages: true,

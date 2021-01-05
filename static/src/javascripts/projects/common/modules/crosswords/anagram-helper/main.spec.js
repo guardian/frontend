@@ -1,5 +1,3 @@
-// @flow
-
 import sortBy from 'lodash/sortBy';
 
 import { AnagramHelper } from './main';

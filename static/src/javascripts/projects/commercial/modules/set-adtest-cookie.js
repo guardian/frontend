@@ -1,10 +1,7 @@
-// @flow
-
 import { getUrlVars } from 'lib/url';
 import { removeCookie, addCookie } from 'lib/cookies';
 
-
-const init = (): Promise<void> => {
+const init = () => {
     const queryParams = getUrlVars();
 
     if (queryParams.adtest === 'clear') {

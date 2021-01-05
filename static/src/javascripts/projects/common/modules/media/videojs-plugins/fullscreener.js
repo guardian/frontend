@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import bonzo from 'bonzo';
 
@@ -7,7 +6,7 @@ import bonzo from 'bonzo';
     as 'this' needs to be available as it 
     represents an instance of the videojs player
 * */
-const fullscreener = function fullscreener(): void {
+const fullscreener = function fullscreener() {
     const clickbox = bonzo.create(
         '<div class="vjs-fullscreen-clickbox"></div>'
     )[0];
@@ -17,7 +16,7 @@ const fullscreener = function fullscreener(): void {
     bean.on(
         clickbox,
         'click',
-        (e: bean): void => {
+        (e) => {
             if (this.paused()) {
                 this.play();
             } else {
@@ -30,7 +29,7 @@ const fullscreener = function fullscreener(): void {
     bean.on(
         clickbox,
         'dblclick',
-        (e: bean): void => {
+        (e) => {
             e.stop();
             if (this.isFullscreen()) {
                 this.exitFullscreen();
@@ -42,7 +41,7 @@ const fullscreener = function fullscreener(): void {
 
     this.on(
         'fullscreenchange',
-        (): void => {
+        () => {
             if (this.isFullscreen()) {
                 this.trigger('player:fullscreen');
             }

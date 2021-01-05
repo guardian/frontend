@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 import timeout from 'lib/timeout';
 

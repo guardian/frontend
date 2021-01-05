@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import userPrefs from 'common/modules/user-prefs';
 import { storage } from '@guardian/libs';
@@ -11,10 +10,9 @@ import {
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { cmp } from '@guardian/consent-management-platform';
 import { submitClickEventTracking } from './component-event-tracking';
-import type { CurrentABTest, GateStatus, DismissalWindow } from './types';
 
 // Helper for setGatePageTargeting function
-const setGoogleTargeting = (canShow: GateStatus): void => {
+const setGoogleTargeting = (canShow) => {
     if (window.googletag) {
         window.googletag.cmd.push(() => {
             window.googletag
@@ -25,16 +23,16 @@ const setGoogleTargeting = (canShow: GateStatus): void => {
 };
 
 // We use this key for storing the gate dismissed count against
-const localStorageDismissedCountKey = (variant: string, name: string): string => `gate-dismissed-count-${name}-${variant}`;
+const localStorageDismissedCountKey = (variant, name) => `gate-dismissed-count-${name}-${variant}`;
 
 const retrieveDismissedCount = (
-    variant: string,
-    name: string,
-    componentName: string
-): number => {
+    variant,
+    name,
+    componentName
+) => {
     try {
         const prefs = userPrefs.get(componentName) || {};
-        const dismissed: any = prefs[localStorageDismissedCountKey(variant, name)];
+        const dismissed = prefs[localStorageDismissedCountKey(variant, name)];
 
         if (Number.isFinite(dismissed)) {
             return dismissed;
@@ -49,11 +47,11 @@ const retrieveDismissedCount = (
 export const isLoggedIn = isUserLoggedIn;
 
 // wrapper over isInABTestSynchronous
-export const isInTest: ABTest => boolean = test => isInABTestSynchronous(test);
+export const isInTest = test => isInABTestSynchronous(test);
 
 // when running multiple tests simultaneously to test the component, we need to get
 // which test the user is in, so that we can check and display the correct logic for that test
-export const getTestforMultiTest: (Array<ABTest>) => ABTest = tests =>
+export const getTestforMultiTest = tests =>
     tests.reduce((acc, test) => {
         const checkTest = getSynchronousTestsToRun().find(
             t => t.id === test.id
@@ -63,7 +61,7 @@ export const getTestforMultiTest: (Array<ABTest>) => ABTest = tests =>
     }, undefined);
 
 // get the current variant id the user is in
-export const getVariant: ABTest => string = test => {
+export const getVariant = test => {
     //  get the current test
     const currentTest = getSynchronousTestsToRun().find(t => t.id === test.id);
 
@@ -73,11 +71,7 @@ export const getVariant: ABTest => string = test => {
 
 // set in user preferences that the user has dismissed the gate, set the value to the current ISO date string
 // name is optional, but can be used to differentiate between multiple sign in gate tests
-export const setUserDismissedGate: ({
-    name?: string,
-    variant: string,
-    componentName: string,
-}) => void = ({ name = '', variant, componentName }) => {
+export const setUserDismissedGate = ({ name = '', variant, componentName }) => {
     const prefs = userPrefs.get(componentName) || {};
     prefs[`${name ? `${name}-` : ''}${variant}`] = new Date().toISOString();
     userPrefs.set(componentName, prefs);
@@ -85,31 +79,20 @@ export const setUserDismissedGate: ({
 
 // delete from user preferences that the user has previously dismissed the gate
 // name is optional, but can be used to differentiate between multiple sign in gate tests
-export const unsetUserDismissedGate: ({
-    componentName: string,
-}) => void = ({ componentName }) => {
+export const unsetUserDismissedGate = ({ componentName }) => {
     userPrefs.remove(componentName);
 };
 
 // check if the user has dismissed the gate by checking the user preferences,
 // name is optional, but can be used to differentiate between multiple sign in gate tests
-export const hasUserDismissedGate: ({
-    name?: string,
-    variant: string,
-    componentName: string,
-}) => boolean = ({ name = '', componentName, variant }) => {
+export const hasUserDismissedGate = ({ name = '', componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
 
     return !!prefs[`${name ? `${name}-` : ''}${variant}`];
 };
 
 // check if the user has dismissed the gate within a given timeframe
-export const hasUserDismissedGateInWindow: ({
-    window: DismissalWindow,
-    name?: string,
-    variant: string,
-    componentName: string,
-}) => boolean = ({ window, name = '', componentName, variant }) => {
+export const hasUserDismissedGateInWindow = ({ window, name = '', componentName, variant }) => {
     const prefs = userPrefs.get(componentName) || {};
     if (!prefs[`${name ? `${name}-` : ''}${variant}`]) {
         return false;
@@ -135,18 +118,18 @@ export const hasUserDismissedGateInWindow: ({
 
 // Test whether the user has dismissed the gate variant more than `count` times
 export const hasUserDismissedGateMoreThanCount = (
-    variant: string,
-    name: string,
-    componentName: string,
-    count: number
-): boolean => retrieveDismissedCount(variant, name, componentName) > count;
+    variant,
+    name,
+    componentName,
+    count
+) => retrieveDismissedCount(variant, name, componentName) > count;
 
 // Increment the number of times a user has dismissed this gate variant
 export const incrementUserDismissedGateCount = (
-    variant: string,
-    name: string,
-    componentName: string
-): void => {
+    variant,
+    name,
+    componentName
+) => {
     try {
         const prefs = userPrefs.get(componentName) || {};
         prefs[localStorageDismissedCountKey(variant, name)] = retrieveDismissedCount(variant, name, componentName) + 1;
@@ -158,9 +141,9 @@ export const incrementUserDismissedGateCount = (
 
 // Dynamically sets the gate custom parameter for Google ad request page targeting
 export const setGatePageTargeting = (
-    isGateDismissed: boolean,
-    canShowCheck: boolean
-): void => {
+    isGateDismissed,
+    canShowCheck
+) => {
     if (isUserLoggedIn()) {
         setGoogleTargeting('signed in');
     } else if (isGateDismissed) {
@@ -172,7 +155,7 @@ export const setGatePageTargeting = (
 
 // use the dailyArticleCount from the local storage to see how many articles the user has viewed in a day
 // in our case if this is the n-numbered article or higher the user has viewed then set the gate
-export const isNPageOrHigherPageView = (n: number = 2): boolean => {
+export const isNPageOrHigherPageView = (n = 2) => {
     // get daily read article count array from local storage
     const dailyArticleCount = storage.local.get('gu.history.dailyArticleCount') || [];
 
@@ -185,13 +168,13 @@ export const isNPageOrHigherPageView = (n: number = 2): boolean => {
 
 // use gu.location to determine is the browser is in the specified country
 // Note, use country codes specified in /static/src/javascripts/lib/geolocation.js
-export const isCountry = (countryCode: string): boolean => {
+export const isCountry = (countryCode) => {
     const geolocation = geolocationGetSync();
     return geolocation === countryCode;
 };
 
 // determine if the useragent is running iOS 9 (known to be buggy for sign in flow)
-export const isIOS9 = (): boolean => {
+export const isIOS9 = () => {
     // get the browser user agent
     const ua = navigator.userAgent;
     // check useragent if the device is an iOS device
@@ -205,7 +188,7 @@ export const isIOS9 = (): boolean => {
 
 // hide the sign in gate on article types that are not supported
 // add to the include parameter array if there are specific types that should be included/overridden
-export const isInvalidArticleType = (include: Array<string> = []): boolean => {
+export const isInvalidArticleType = (include = []) => {
     // uses guardian config object to check for these page types
     const invalidTypes = [
         'isColumn',
@@ -233,7 +216,7 @@ export const isInvalidArticleType = (include: Array<string> = []): boolean => {
 
 // hide the sign in gate on certain sections of the site, e.g info, about, help etc.
 // add to the include parameter array if there are specific types that should be included/overridden
-export const isInvalidSection = (include: Array<string> = []): boolean => {
+export const isInvalidSection = (include = []) => {
     const invalidSections = [
         'about',
         'info',
@@ -255,7 +238,7 @@ export const isInvalidSection = (include: Array<string> = []): boolean => {
 
 // hide the sign in gate for certain tags on the site
 // add to the include parameter array if there are specific tags that should be included/overridden
-export const isInvalidTag = (include: Array<String> = []): boolean => {
+export const isInvalidTag = (include = []) => {
     const invalidTags = [
         'info/newsletter-sign-up'
     ];
@@ -268,24 +251,12 @@ export const isInvalidTag = (include: Array<String> = []): boolean => {
 };
 
 // html event wrapper using bean
-export const addEventHandler: ({
-    element: HTMLElement,
-    event: string,
-    selector: string,
-    handler: Function,
-}) => void = ({ element, event, selector, handler }) => {
+export const addEventHandler = ({ element, event, selector, handler }) => {
     bean.on(element, event, selector, handler);
 };
 
 // click event wrapper using addEventHandler method
-export const addClickHandler: ({
-    element: HTMLElement,
-    selector: string,
-    component: OphanComponent,
-    abTest: CurrentABTest,
-    value: string,
-    callback?: Function,
-}) => void = ({
+export const addClickHandler = ({
     element,
     selector,
     component,
@@ -310,18 +281,14 @@ export const addClickHandler: ({
 };
 
 // shows the CMP (consent management platform) module
-export const showPrivacySettingsCMPModule: () => void = () => {
+export const showPrivacySettingsCMPModule = () => {
     if (config.get('switches.consentManagement', true)) {
         cmp.showPrivacyManager();
     }
 };
 
 // add extra css on a given selector on an opinion page
-export const addCSSOnOpinion: ({
-    element: HTMLElement,
-    selector: string,
-    css: string,
-}) => void = ({ element, selector, css }) => {
+export const addCSSOnOpinion = ({ element, selector, css }) => {
     if (config.get(`page.tones`) === 'Comment') {
         const selection = element.querySelector(selector);
         if (selection) {
@@ -331,10 +298,7 @@ export const addCSSOnOpinion: ({
 };
 
 // add the background color if the page the user is on is the opinion section
-export const addOpinionBgColour: ({
-    element: HTMLElement,
-    selector: string,
-}) => void = ({ element, selector }) => {
+export const addOpinionBgColour = ({ element, selector }) => {
     if (config.get(`page.tones`) === 'Comment') {
         const overlay = element.querySelector(selector);
         if (overlay) {
@@ -346,10 +310,7 @@ export const addOpinionBgColour: ({
 };
 
 // change the colour of the text depending the pillar that the user is on
-export const addPillarColour: ({
-    element: HTMLElement,
-    selector: string,
-}) => void = ({ element, selector }) => {
+export const addPillarColour = ({ element, selector }) => {
     // check page type/pillar to change text colour of the sign in gate
     const paragraphText = element.querySelector(selector);
     if (paragraphText) {
@@ -385,10 +346,7 @@ export const addPillarColour: ({
 
 // get the html of the whole gate, by getting the html template of the variant, and adding that
 // to the child which is hidden by the fade in
-export const setTemplate: ({
-    child: HTMLElement,
-    template: string,
-}) => string = ({ child, template }) => `
+export const setTemplate = ({ child, template }) => `
     <div class="signin-gate__first-paragraph-container">
         ${child.outerHTML}
         <div class="signin-gate__first-paragraph-overlay"></div>
@@ -397,10 +355,7 @@ export const setTemplate: ({
 `;
 
 // add opinion bg colour to gate fade
-export const addOverlayVariantCSS: ({
-    element: HTMLElement,
-    selector: string,
-}) => void = ({ element, selector }) => {
+export const addOverlayVariantCSS = ({ element, selector }) => {
     const overlay = element.querySelector(selector);
     if (overlay) {
         if (config.get(`page.tones`) === 'Comment') {
@@ -413,13 +368,7 @@ export const addOverlayVariantCSS: ({
 
 // helper method which first shows the gate based on the template supplied, adds any
 // handlers, e.g. click events etc. defined in the handler parameter function
-export const showGate: ({
-    handler: ({
-        articleBody: HTMLElement,
-        shadowArticleBody: HTMLElement,
-    }) => void,
-    template: string,
-}) => boolean = ({ handler, template }) => {
+export const showGate = ({ handler, template }) => {
     // get the whole article body, .js-article__body for non-DCR and .article-body-commercial-selector for DCR
     const articleBody =
         document.querySelector('.js-article__body') ||

@@ -1,19 +1,12 @@
-// @flow
-import type { RegisterListeners } from 'commercial/modules/messenger';
-
-type Specs = {
-    selector: string,
-};
-
-const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
+const getStyles = (specs, styleSheets) => {
     if (!specs || typeof specs.selector !== 'string') {
         return null;
     }
 
     const result = [];
     for (let i = 0; i < styleSheets.length; i += 1) {
-        const sheet: CSSStyleSheet = (styleSheets[i]: any);
-        const ownerNode: Element = (sheet.ownerNode: any);
+        const sheet = (styleSheets[i]);
+        const ownerNode = (sheet.ownerNode);
 
         if (
             ownerNode &&
@@ -36,10 +29,10 @@ const getStyles = (specs: Specs, styleSheets: StyleSheetList): ?Array<any> => {
     return result;
 };
 
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register(
         'get-styles',
-        (specs): ?Array<any> => {
+        (specs) => {
             if (specs) {
                 return getStyles(specs, document.styleSheets);
             }

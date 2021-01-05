@@ -1,4 +1,3 @@
-// @flow
 const keycodes = {
     backspace: 8,
     tab: 9,

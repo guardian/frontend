@@ -1,16 +1,15 @@
-// @flow
 import reportError from 'lib/report-error';
 import config from 'lib/config';
 
 const ERR_INVALID_COOKIE_NAME = `Cookie must not contain invalid characters (space, tab and the following characters: '()<>@,;"/[]?={}')`;
 
 // subset of https://github.com/guzzle/guzzle/pull/1131
-const isValidCookieValue = (name: string): boolean =>
+const isValidCookieValue = (name) =>
     !/[()<>@,;"\\/[\]?={} \t]/g.test(name);
 
 const getShortDomain = ({
     isCrossSubdomain = false,
-}: { isCrossSubdomain: boolean } = {}): string => {
+} = {}) => {
     const domain = document.domain || '';
 
     if (domain === 'localhost' || config.get('page.isPreview')) {
@@ -27,15 +26,15 @@ const getShortDomain = ({
 
 const getDomainAttribute = ({
     isCrossSubdomain = false,
-}: { isCrossSubdomain: boolean } = {}): string => {
+} = {}) => {
     const shortDomain = getShortDomain({ isCrossSubdomain });
     return shortDomain === 'localhost' ? '' : ` domain=${shortDomain};`;
 };
 
 const removeCookie = (
-    name: string,
-    currentDomainOnly: boolean = false
-): void => {
+    name,
+    currentDomainOnly = false
+) => {
     const expires = 'expires=Thu, 01 Jan 1970 00:00:01 GMT;';
     const path = 'path=/;';
 
@@ -48,11 +47,11 @@ const removeCookie = (
 };
 
 const addCookie = (
-    name: string,
-    value: string,
-    daysToLive: ?number,
-    isCrossSubdomain: boolean = false
-): void => {
+    name,
+    value,
+    daysToLive,
+    isCrossSubdomain = false
+) => {
     const expires = new Date();
 
     if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
@@ -77,17 +76,17 @@ const addCookie = (
     )}`;
 };
 
-const cleanUp = (names: string[]): void => {
+const cleanUp = (names) => {
     names.forEach(name => {
         removeCookie(name);
     });
 };
 
 const addForMinutes = (
-    name: string,
-    value: string,
-    minutesToLive: number
-): void => {
+    name,
+    value,
+    minutesToLive
+) => {
     const expires = new Date();
 
     if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
@@ -102,7 +101,7 @@ const addForMinutes = (
     document.cookie = `${name}=${value}; path=/; expires=${expires.toUTCString()};${getDomainAttribute()}`;
 };
 
-const addSessionCookie = (name: string, value: string): void => {
+const addSessionCookie = (name, value) => {
     if (!isValidCookieValue(name) || !isValidCookieValue(value)) {
         reportError(
             new Error(`${ERR_INVALID_COOKIE_NAME} .${name}=${value}`),
@@ -113,7 +112,7 @@ const addSessionCookie = (name: string, value: string): void => {
     document.cookie = `${name}=${value}; path=/;${getDomainAttribute()}`;
 };
 
-const getCookieValues = (name: string): string[] => {
+const getCookieValues = (name) => {
     const nameEq = `${name}=`;
     const cookies = document.cookie.split(';');
 
@@ -130,7 +129,7 @@ const getCookieValues = (name: string): string[] => {
     }, []);
 };
 
-const getCookie = (name: string): ?string => {
+const getCookie = (name) => {
     const cookieVal = getCookieValues(name);
 
     if (cookieVal.length > 0) {

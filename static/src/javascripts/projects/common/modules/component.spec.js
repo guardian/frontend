@@ -1,18 +1,16 @@
-// @flow
-
 import bean from 'bean';
 import fetchJSON_ from 'lib/fetch-json';
 
 import { Component } from './component';
 
-const fetchJSON: JestMockFn<*, *> = (fetchJSON_: any);
+const fetchJSON = (fetchJSON_);
 
 const mockResponse = {
     html: '<p>html</p>',
     other: '<p>other</p>',
 };
 
-const createComponent = (props?: Object = {}): Component => {
+const createComponent = (props = {}) => {
     const component = new Component();
     const defaults = {
         endpoint: 'whatever',
@@ -43,10 +41,10 @@ describe('Component', () => {
         }
 
         // Apologies for the typecast, but it makes things just way easier ...
-        elem = ((document.querySelector('.component'): any): HTMLElement);
+        elem = ((document.querySelector('.component')));
         subElem = ((document.querySelector(
             '.component__element'
-        ): any): HTMLElement);
+        )));
     });
 
     describe('fetch()', () => {

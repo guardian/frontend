@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
@@ -31,7 +30,7 @@ const testParams = {
 };
 
 describe('Scrollable MPU', () => {
-    let adSlot: any;
+    let adSlot;
 
     beforeEach(() => {
         if (document.body) {

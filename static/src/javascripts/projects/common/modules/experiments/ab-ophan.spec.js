@@ -1,4 +1,3 @@
-// @flow
 import {
     registerCompleteEvents,
     registerImpressionEvents,

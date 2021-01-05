@@ -1,18 +1,9 @@
-// @flow
-
 import { getUrlVars } from 'lib/url';
-
-import type {
-    ImpressionViewableEvent,
-    ImpressionViewableEventCallback,
-} from 'commercial/types';
-
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 
-const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
-    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+const setSlotAdRefresh = (event) => {
+    const advert = getAdvertById(event.slot.getSlotElementId());
     const viewabilityThresholdMs = 30000; // 30 seconds refresh
 
     if (advert && advert.shouldRefresh) {
@@ -51,7 +42,7 @@ const setSlotAdRefresh = (event: ImpressionViewableEvent): void => {
   Uses URL parameters.
 
  */
-export const onSlotViewableFunction = (): ImpressionViewableEventCallback => {
+export const onSlotViewableFunction = () => {
     const queryParams = getUrlVars();
 
     if (queryParams.adrefresh !== 'false') {

@@ -1,5 +1,3 @@
-// @flow
-
 import domready from 'domready';
 import { comready } from 'lib/comready';
 import config from 'lib/config';
@@ -38,7 +36,7 @@ Promise.all([
     // Brittle but will work
     Array.from(document.getElementsByClassName('user__question'))
         .slice(0, 1)
-        .forEach((sq: Element) => {
+        .forEach((sq) => {
             new MutationObserver(updateHeight).observe(sq, {
                 childList: true,
                 subtree: true,

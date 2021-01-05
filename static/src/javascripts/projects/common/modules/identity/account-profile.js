@@ -1,5 +1,3 @@
-// @flow
-
 /*
  *  Handle History updates and monitor for unsaved changes on account profile
  *  forms.
@@ -37,17 +35,17 @@ const messages = {
     avatarUploadFailure: 'Sorry, something went wrong. Please try again.',
 };
 
-const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
+const avatarUploadByApi = (avatarForm) => {
     const form = ((document.querySelector(
         `form${classes.avatarUploadForm}`
-    ): any): HTMLFormElement);
+    )));
     if (form) {
         const formData = new FormData(form);
 
         // disable form while submitting to prevent overlapping submissions
         const avatarUploadButton = ((document.querySelector(
             classes.avatarUploadButton
-        ): any): HTMLButtonElement);
+        )));
         avatarUploadButton.disabled = true;
 
         avatarApi.updateAvatar(formData).then(
@@ -72,16 +70,16 @@ const avatarUploadByApi = (avatarForm: HTMLFormElement): void => {
 };
 
 class AccountProfile {
-    unsavedFields: Array<HTMLElement>;
-    accountProfileForms: HTMLFormElement;
-    unsavedChangesForm: ?HTMLFormElement;
+    unsavedFields;
+    accountProfileForms;
+    unsavedChangesForm;
 
     constructor() {
         this.unsavedFields = [];
 
         this.accountProfileForms = ((document.querySelector(
             classes.forms
-        ): any): HTMLFormElement);
+        )));
 
         if (this.accountProfileForms) {
             this.bindAvatarUpload();
@@ -121,12 +119,12 @@ class AccountProfile {
      *   Handle click on form tabs, change history if necessary and render error
      *   message if form contains unsaved changes.
      */
-    handleTabsClick(event: Event) {
+    handleTabsClick(event) {
         if (
             event.target instanceof HTMLElement &&
             event.target.nodeName.toLowerCase() === 'a'
         ) {
-            const eventTarget: HTMLAnchorElement = (event.target: any);
+            const eventTarget = (event.target);
             if (eventTarget.dataset.tabsIgnore) {
                 if (eventTarget.href) window.location.assign(eventTarget.href);
                 event.preventDefault();
@@ -171,7 +169,7 @@ class AccountProfile {
             bean.on(avatarForm, 'submit', event => {
                 event.preventDefault();
 
-                avatarUploadByApi(((avatarForm: any): HTMLFormElement));
+                avatarUploadByApi(((avatarForm)));
             });
         }
     }
@@ -213,10 +211,8 @@ class AccountProfile {
     /*
      *   Register a form and form field as containing unsaved changes
      */
-    onInputChange(event: Event) {
-        const input = ((event.target: any):
-            | HTMLInputElement
-            | HTMLTextAreaElement);
+    onInputChange(event) {
+        const input = ((event.target));
         bonzo(input.form).addClass(classes.changed);
         this.unsavedChangesForm = input.form;
         if (!this.unsavedFields.some(el => el === input)) {
@@ -227,11 +223,11 @@ class AccountProfile {
     /*
      *   Bind keyup events on input fields and register parent form on element
      */
-    bindInputs(form: ?HTMLElement) {
+    bindInputs(form) {
         if (form instanceof HTMLFormElement) {
-            const inputs: Array<HTMLInputElement> = (Array.from(
+            const inputs = (Array.from(
                 form.querySelectorAll(classes.textInput)
-            ): Array<any>);
+            ));
             inputs
                 .concat(Array.from(form.querySelectorAll('select')))
                 .forEach(input => {

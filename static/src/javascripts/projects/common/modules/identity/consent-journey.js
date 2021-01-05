@@ -1,16 +1,14 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 
 import loadEnhancers from './modules/loadEnhancers';
 
-const showJourney = (journeyEl: HTMLElement): Promise<void> =>
+const showJourney = (journeyEl) =>
     fastdom.mutate(() => journeyEl.classList.remove('u-h'));
 
-const hideLoading = (loadingEl: HTMLElement): Promise<void> =>
+const hideLoading = (loadingEl) =>
     fastdom.mutate(() => loadingEl.remove());
 
-const enhanceConsentJourney = (): void => {
+const enhanceConsentJourney = () => {
     const loaders = [
         ['.identity-consent-journey', showJourney],
         ['#identityConsentsLoadingError', hideLoading],

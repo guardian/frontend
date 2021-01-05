@@ -1,19 +1,17 @@
-// @flow
-
-const isLastElement = (elementIndex: number, arrayLength: number): boolean =>
+const isLastElement = (elementIndex, arrayLength) =>
     elementIndex + 1 === arrayLength;
 
 export const appendToLastElement = (
-    array: Array<string>,
-    stringToAppend: string
-): Array<string> =>
+    array,
+    stringToAppend
+) =>
     array.map((element, index) =>
         isLastElement(index, array.length)
             ? `${element}${stringToAppend}`
             : element
     );
 
-export const throwIfEmptyArray = (name: string, array: ?(any[])): any[] => {
+export const throwIfEmptyArray = (name, array) => {
     if (Array.isArray(array) && array.length > 0) {
         return array;
     }

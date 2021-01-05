@@ -1,20 +1,18 @@
-// @flow
-
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 
 class FormstackIframe {
-    el: HTMLIFrameElement;
+    el;
 
-    constructor(el: HTMLIFrameElement): void {
+    constructor(el) {
         this.el = el;
     }
 
-    init(): void {
+    init() {
         // Setup postMessage listener for events from "modules/identity/formstack"
         window.addEventListener(
             'message',
-            (event: MessageEvent): void => {
+            (event) => {
                 if (event.origin === config.get('page.idUrl')) {
                     this.onMessage(event);
                 }
@@ -23,7 +21,7 @@ class FormstackIframe {
 
         mediator.on(
             'window:throttledResize',
-            (): void => {
+            () => {
                 this.refreshHeight();
             }
         );
@@ -32,14 +30,14 @@ class FormstackIframe {
         // which has no form, so won't instantiate the Formstack module
         this.el.addEventListener(
             'load',
-            (): void => {
+            () => {
                 this.show();
                 this.refreshHeight();
             }
         );
     }
 
-    onMessage(event: MessageEvent): void {
+    onMessage(event) {
         switch (event.data) {
             case 'ready':
                 this.show();
@@ -58,7 +56,7 @@ class FormstackIframe {
         }
     }
 
-    refreshHeight(reset?: boolean): void {
+    refreshHeight(reset) {
         if (reset) {
             // If a height is set on the iframe, the following calculation
             // will be at least that height, optionally reset first

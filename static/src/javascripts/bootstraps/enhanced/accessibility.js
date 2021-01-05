@@ -1,15 +1,11 @@
-// @flow
 import React, { Component, render } from 'preact-compat';
 
 import { saveState, isOn } from 'common/modules/accessibility/main';
 
-const DOM_ID: string = 'js-accessibility-preferences';
+const DOM_ID = 'js-accessibility-preferences';
 
-type AccessibilityState = {
-    'flashing-elements': boolean,
-};
 
-class BinaryToggle extends Component<*, *> {
+class BinaryToggle extends Component {
     render() {
         return (
             <div className="form-field">
@@ -42,15 +38,15 @@ class BinaryToggle extends Component<*, *> {
     }
 }
 
-class Accessibility extends Component<*, *> {
+class Accessibility extends Component {
     constructor() {
         super();
         this.state = ({
             'flashing-elements': isOn('flashing-elements'),
-        }: AccessibilityState);
+        });
     }
 
-    toggle(key: string): void {
+    toggle(key) {
         const newState = {};
         newState[key] = !this.state[key];
         this.setState(newState, function() {
@@ -58,7 +54,7 @@ class Accessibility extends Component<*, *> {
         });
     }
 
-    render(): Object {
+    render() {
         return (
             <form className="form">
                 <fieldset className="fieldset">
@@ -96,7 +92,7 @@ class Accessibility extends Component<*, *> {
     }
 }
 
-const init = (callback: () => void): void => {
+const init = (callback) => {
     const el = document.getElementById(DOM_ID);
 
     if (el) {

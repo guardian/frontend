@@ -1,6 +1,4 @@
-// @flow
-
-export const articlesReadTooltipMarkup = (count: number): string => `
+export const articlesReadTooltipMarkup = (count) => `
     <span class="engagement-banner__articles-read-tooltip-wrapper">
         <span class="engagement-banner__articles-read">
             ${count.toString()} ${(count === 1) ? 'article' : 'articles'}

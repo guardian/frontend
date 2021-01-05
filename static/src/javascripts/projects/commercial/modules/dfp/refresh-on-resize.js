@@ -1,4 +1,3 @@
-// @flow
 import { hasCrossedBreakpoint, breakpoints } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';

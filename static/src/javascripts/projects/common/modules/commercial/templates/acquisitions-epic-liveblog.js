@@ -1,5 +1,4 @@
-// @flow
-const ctaTemplate = (supportURL: string, ctaText?: string) =>
+const ctaTemplate = (supportURL, ctaText) =>
     `<div class="component-button--liveblog-container">
         <a class="component-button component-button--liveblog component-button--hasicon-right contributions__contribute--epic-member"
           href=${supportURL}
@@ -14,13 +13,7 @@ export const epicLiveBlogTemplate = ({
                                          supportURL,
                                          ctaText,
                                          cssClass,
-                                     }: {
-    copy: AcquisitionsEpicTemplateCopy,
-    componentName: string,
-    supportURL: string,
-    ctaText?: string,
-    cssClass?: string,
-}) =>
+                                     }) =>
     `<div class="block block--content is-epic ${cssClass || ''}" data-component="${componentName}">
         <p class="block-time published-time">
             <a href="#" itemprop="url" class="block-time__link">

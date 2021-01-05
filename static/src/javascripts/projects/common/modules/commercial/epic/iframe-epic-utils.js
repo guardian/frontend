@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { getLocalCurrencySymbolSync } from 'lib/geolocation';
 import { constructQuery as constructURLQuery } from 'lib/url';
@@ -9,14 +7,9 @@ import {
     reportEpicError,
 } from 'common/modules/commercial/epic/epic-utils';
 
-import type { EpicComponent } from 'common/modules/commercial/epic/epic-utils';
 import { submitComponentEvent } from 'common/modules/commercial/acquisitions-ophan';
 
 // origin field useful for determining that messages are being sent / received from the expected iframe.
-export type IframeEpicComponent = EpicComponent & {
-    iframe: HTMLIFrameElement,
-    origin: string,
-};
 
 // channel for messages between Optimize Epic and Guardian frontend
 const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
@@ -28,7 +21,7 @@ const OPTIMIZE_EPIC_CHANNEL = 'OPTIMIZE_EPIC';
 const EPIC_INITIALIZED = 'EPIC_INITIALIZED';
 const EPIC_HEIGHT = 'EPIC_HEIGHT';
 
-const createEpicIframe = (url: string): Error | IframeEpicComponent => {
+const createEpicIframe = (url) => {
     let origin;
     try {
         origin = new URL(url).origin;
@@ -65,12 +58,12 @@ const createEpicIframe = (url: string): Error | IframeEpicComponent => {
     };
 };
 
-const setIframeHeight = (epic: IframeEpicComponent, height: number) => {
+const setIframeHeight = (epic, height) => {
     epic.iframe.style.height = `${height}px`;
 };
 
-const setupListener = (epic: IframeEpicComponent) => {
-    window.addEventListener('message', (event: MessageEvent) => {
+const setupListener = (epic) => {
+    window.addEventListener('message', (event) => {
         if (event.origin !== epic.origin) {
             return;
         }
@@ -113,7 +106,7 @@ const setupListener = (epic: IframeEpicComponent) => {
     });
 };
 
-const addEpicDataToUrl = (url: string): string => {
+const addEpicDataToUrl = (url) => {
     const params = constructURLQuery({
         // used in acquisition tracking link
         pvid: config.get('ophan.pageViewId'),
@@ -124,7 +117,7 @@ const addEpicDataToUrl = (url: string): string => {
     return `${url}?${params}`;
 };
 
-const displayIframeEpic = (url: string): Promise<IframeEpicComponent> => {
+const displayIframeEpic = (url) => {
     const iframeEpicComponent = createEpicIframe(addEpicDataToUrl(url));
 
     if (iframeEpicComponent instanceof Error) {

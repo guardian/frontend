@@ -1,4 +1,3 @@
-// @flow
 import { _, Advert } from 'commercial/modules/dfp/Advert';
 
 const { filterClasses } = _;

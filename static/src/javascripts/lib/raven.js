@@ -1,5 +1,3 @@
-// @flow
-
 import raven from 'raven-js';
 import config from 'lib/config';
 import { adblockInUse } from 'lib/detect';
@@ -40,7 +38,7 @@ const sentryOptions = {
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
     ],
 
-    dataCallback(data: Object): Object {
+    dataCallback(data) {
         const { culprit = false } = data;
         const resp = data;
         const culpritMatches = /j.ophan.co.uk/.test(data.culprit);
@@ -54,7 +52,7 @@ const sentryOptions = {
         return resp;
     },
 
-    shouldSendCallback(data: Object): boolean {
+    shouldSendCallback(data) {
         const { isDev } = config.get('page');
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
