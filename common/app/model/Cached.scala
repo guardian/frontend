@@ -9,29 +9,28 @@ import scala.math.{max, min}
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration.Duration
 
-case class CacheTime(cacheSeconds: Int)
+case class CacheTime(cacheSeconds: Int, surrogateSeconds: Option[Int] = None)
 object CacheTime {
 
   // 3800 seems slightly arbitrary, but our CDN caches to disk if above 3700
   // https://community.fastly.com/t/why-isnt-serve-stale-working-as-expected/369
-  private def extended(cacheTime: Int) = if (LongCacheSwitch.isSwitchedOn) 3800 else cacheTime
+  private val longCacheTime = 3800
 
   object Default extends CacheTime(60)
-  object LiveBlogActive extends CacheTime(5)
+  object LiveBlogActive extends CacheTime(5, Some(60))
   object RecentlyUpdated extends CacheTime(60)
   // There is lambda which invalidates the cache on press events, so the facia cache time can be high.
-  object Facia extends CacheTime(900)
-  object ArchiveRedirect extends CacheTime(300)
-  object ShareCount extends CacheTime(600)
+  object Facia extends CacheTime(60, Some(900))
+  object ArchiveRedirect extends CacheTime(60, Some(300))
+  object ShareCount extends CacheTime(60, Some(600))
   object NotFound extends CacheTime(10) // This will be overwritten by fastly
   object DiscussionDefault extends CacheTime(60)
-  object DiscussionClosed extends CacheTime(3800)
-  object ServiceWorker extends CacheTime(600)
-  object WebAppManifest extends CacheTime(3800)
+  object DiscussionClosed extends CacheTime(60, Some(longCacheTime))
+  object ServiceWorker extends CacheTime(60, Some(600))
+  object WebAppManifest extends CacheTime(60, Some(longCacheTime))
 
-  def LastDayUpdated: CacheTime = CacheTime(extended(60))
-  def NotRecentlyUpdated: CacheTime = CacheTime(extended(300))
-  def NotRecentlyUpdatedPurgable: CacheTime = CacheTime(extended(1800))
+  def LastDayUpdated: CacheTime = CacheTime(60, Some(longCacheTime))
+  def NotRecentlyUpdated: CacheTime = CacheTime(60, Some(longCacheTime))
 }
 
 object Cached extends implicits.Dates {
@@ -63,40 +62,43 @@ object Cached extends implicits.Dates {
   }
 
   def apply(seconds: Int)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(seconds, result, request.headers.get("If-None-Match")) //FIXME could be comma separated
+    apply(CacheTime(seconds), result, request.headers.get("If-None-Match")) //FIXME could be comma separated
   }
 
   def apply(cacheTime: CacheTime)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(cacheTime.cacheSeconds, result, request.headers.get("If-None-Match"))
+    apply(cacheTime, result, request.headers.get("If-None-Match"))
   }
 
   def apply(duration: Duration)(result: CacheableResult)(implicit request: RequestHeader): Result = {
-    apply(duration.toSeconds.toInt, result, request.headers.get("If-None-Match"))
+    apply(CacheTime(duration.toSeconds.toInt), result, request.headers.get("If-None-Match"))
   }
 
   def apply(page: Page)(revalidatableResult: CacheableResult)(implicit request: RequestHeader): Result = {
-    val cacheSeconds = page.metadata.cacheTime.cacheSeconds
-    apply(cacheSeconds, revalidatableResult, request.headers.get("If-None-Match"))
+    apply(page.metadata.cacheTime, revalidatableResult, request.headers.get("If-None-Match"))
   }
 
   // Use this when you are sure your result needs caching headers, even though the result status isn't
   // conventionally cacheable. Typically we only cache 200 and 404 responses.
-  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(seconds, result, None)
+  def explicitlyCache(seconds: Int)(result: Result): Result = cacheHeaders(CacheTime(seconds), result, None)
 
-  def apply(seconds: Int, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result = {
+  def apply(cacheTime: CacheTime, cacheableResult: CacheableResult, ifNoneMatch: Option[String]): Result = {
     cacheableResult match {
       case RevalidatableResult(result, hash) if cacheableStatusCodes.contains(result.header.status) =>
         val etag = s"""W/"hash${hash.string}""""
         val newResult = if (ifNoneMatch.contains(etag)) Results.NotModified else result
-        cacheHeaders(seconds, newResult, Some(etag))
+        cacheHeaders(cacheTime, newResult, Some(etag))
       case WithoutRevalidationResult(result) if cacheableStatusCodes.contains(result.header.status) =>
-        cacheHeaders(seconds, result, None)
+        cacheHeaders(cacheTime, result, None)
       case PanicReuseExistingResult(result) =>
-        cacheHeaders(seconds, result, ifNoneMatch)
+        cacheHeaders(cacheTime, result, ifNoneMatch)
       case result: CacheableResult => result.result
     }
   }
 
+  private def cacheControl(maxAge: Int) = {
+    val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
+    s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
+  }
   /*
     NOTE, if you change these headers make sure they are compatible with our Edge Cache
 
@@ -109,19 +111,11 @@ object Cached extends implicits.Dates {
     TLDR Surrogate-Control is used by the CDN, Cache-Control by the browser - do *not* add `private` to Cache-Control
     https://docs.fastly.com/guides/tutorials/cache-control-tutorial
    */
-  private def cacheHeaders(maxAge: Int, result: Result, maybeEtag: Option[String]): Result = {
+  private def cacheHeaders(cacheTime: CacheTime, result: Result, maybeEtag: Option[String]): Result = {
     val now = DateTime.now
-    val staleWhileRevalidateSeconds = max(maxAge / 10, 1)
-    val surrogateCacheControl =
-      s"max-age=$maxAge, stale-while-revalidate=$staleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
 
-    val cacheControl = if (LongCacheSwitch.isSwitchedOn) {
-      val browserMaxAge = min(maxAge, 60)
-      val browserStaleWhileRevalidateSeconds = max(browserMaxAge / 10, 1)
-      s"max-age=$browserMaxAge, stale-while-revalidate=$browserStaleWhileRevalidateSeconds, stale-if-error=$tenDaysInSeconds"
-    } else {
-      surrogateCacheControl
-    }
+    val surrogateMaxAge =
+      cacheTime.surrogateSeconds.filter(_ => LongCacheSwitch.isSwitchedOn).getOrElse(cacheTime.cacheSeconds)
 
     val etagHeaderString: String = maybeEtag.getOrElse(
       s""""guRandomEtag${scala.util.Random.nextInt}${scala.util.Random.nextInt}"""", // setting a random tag still helps
@@ -129,9 +123,9 @@ object Cached extends implicits.Dates {
 
     result.withHeaders(
       // the cache headers used by the CDN
-      "Surrogate-Control" -> surrogateCacheControl,
+      "Surrogate-Control" -> cacheControl(surrogateMaxAge),
       // the cache headers that make their way through to the browser
-      "Cache-Control" -> cacheControl,
+      "Cache-Control" -> cacheControl(cacheTime.cacheSeconds),
       "Date" -> now.toHttpDateTimeString,
       "ETag" -> etagHeaderString,
     )
