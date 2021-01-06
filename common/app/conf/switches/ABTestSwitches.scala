@@ -62,7 +62,17 @@ trait ABTestSwitches {
     "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
     owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 6),
+    sellByDate = new LocalDate(2021, 1, 12),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
+    "ab-deeply-read-test",
+    "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
+    owners = Seq(Owner.withGithub("nitro-marky")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 1, 25),
     exposeClientSide = true,
   )
 
