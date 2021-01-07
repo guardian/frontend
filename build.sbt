@@ -10,7 +10,7 @@ val common = library("common")
     javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
       guBox,
-      apacheCommonsMath3,
+      apacheCommonsLang,
       awsCore,
       awsCloudwatch,
       awsDynamodb,
