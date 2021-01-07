@@ -1,9 +1,7 @@
 module.exports = {
-    ignorePatterns: ['**/*.js'],
-
     overrides: [
         {
-            files: ['*.ts'],
+            files: ['*.ts', '*.tsx'],
             extends: '@guardian/eslint-config-typescript',
             settings: {
                 'import/resolver': 'webpack',
