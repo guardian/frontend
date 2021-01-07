@@ -1,4 +1,4 @@
-/* eslint-disable no-nested-ternary */
+
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
 import { isIOS, isAndroid } from 'lib/detect';
@@ -501,7 +501,6 @@ export class AudioPlayer extends Component {
                 onMouseDown={this.grabbing(true)}
                 onMouseUp={this.grabbing(false)}
                 onMouseMove={this.scrub}>
-                {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
                 <audio
                     ref={this.setAudio}
                     data-media-id={this.props.mediaId}

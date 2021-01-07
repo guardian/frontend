@@ -49,14 +49,12 @@ export default class ProgressBar extends Component {
     componentDidMount() {
         const { width, left } = this.element.getBoundingClientRect();
         const position = (this.state.value * width) / 100;
-        // eslint-disable-next-line react/no-did-mount-set-state
         this.setState({ width, left, position });
     }
 
     componentDidUpdate(prevProps) {
         if (this.props.value !== prevProps.value) {
             const position = (this.props.value * this.state.width) / 100;
-            // eslint-disable-next-line react/no-did-update-set-state
             this.setState({ position });
         }
     }
