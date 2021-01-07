@@ -78,7 +78,7 @@ trait ABTestSwitches {
 
   val GlobalEoyHeaderSwitch = Switch(
     ABTests,
-    "ab-global-eoy-header-test",
+    "ab-global-eoy-header-test-r2",
     "Test reader revenue message in header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
