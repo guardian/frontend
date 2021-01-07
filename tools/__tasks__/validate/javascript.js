@@ -24,7 +24,7 @@ module.exports = {
     task: [
         {
             description: 'Static',
-            task: `eslint static/src/javascripts --ext=ts,tsx --no-error-on-unmatched-pattern ${config}`,
+            task: `eslint static/src/javascripts --ext=ts,tsx,js --no-error-on-unmatched-pattern ${config}`,
             onError: error,
         },
         {
