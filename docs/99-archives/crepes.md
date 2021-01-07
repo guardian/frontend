@@ -9,7 +9,7 @@ Quantities are in metric system, because science.
 - 100 g sugar
 - a pinch of salt
 - 3 eggs
-- 1/2 L of milk (a pint, for you bloody Brits)
+- ½ L of milk (a pint, for you bloody Brits)
 
 ## Steps
 
@@ -29,12 +29,12 @@ Then leave the bowl for 30 minutes minimum (ideally, up to 4 hours).
 
 ### The cooking
 
-You'll need a pan, or ideally a [crêpiere](http://www.amazon.co.uk/VonShef-Professional-Quality-Electric-Spreader/dp/B00AMJ2IJK/ref=sr_1_1?s=kitchen&ie=UTF8&qid=1409134365&sr=1-1&keywords=Krampouz)
+You’ll need a pan, or ideally a [crêpiere](http://www.amazon.co.uk/VonShef-Professional-Quality-Electric-Spreader/dp/B00AMJ2IJK/ref=sr_1_1?s=kitchen&ie=UTF8&qid=1409134365&sr=1-1&keywords=Krampouz)
 
 Spread batter on the crêpiere, wait a few seconds, flip, wait,
 flip back again, paint the crêpe with butter, fold.
 
-Don't eat the first crêpe (in Britanny we say: "the first one goes to the dog").
+Don't eat the first crêpe (in Britanny we say: “the first one goes to the dog”).
 
 Taste the second crêpe and decide to add sugar if it's not sweet enough,
 or milk if the crêpe seems too thick.
