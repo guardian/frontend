@@ -7,4 +7,10 @@ module.exports = {
         ecmaVersion: 6,
     },
     ignorePatterns: ['javascripts.flow.archive'],
+    overrides: [
+        {
+            files: ['*.ts', '*.tsx'],
+            extends: '@guardian/eslint-config-typescript',
+        },
+    ],
 };
