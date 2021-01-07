@@ -76,16 +76,6 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
-    ABTests,
-    "ab-newsletter-embeds3",
-    "New newsletter signup embeds for discoverability OKR",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 11),
-    exposeClientSide = true,
-  )
-
   val GlobalEoyHeaderSwitch = Switch(
     ABTests,
     "ab-global-eoy-header-test",
