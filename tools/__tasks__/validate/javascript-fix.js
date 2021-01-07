@@ -12,7 +12,7 @@ module.exports = {
         {
             description: 'Fix static/src',
             task: ctx =>
-                execa('eslint', ['static/src/**/*.js'].concat(config)).then(
+                execa('eslint', ['static/src/javascripts', '--ext=ts,tsx'].concat(config)).then(
                     handleSuccess.bind(null, ctx)
                 ),
         },

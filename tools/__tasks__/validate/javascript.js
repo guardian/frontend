@@ -22,15 +22,14 @@ const dirs = p =>
 module.exports = {
     description: 'Lint JS',
     task: [
-        ...dirs('static/src/javascripts')
-            .map(dir => ({
-                description: `App ${chalk.dim(dir)}`,
-                task: `eslint static/src/javascripts/${dir} ${config}`,
-                onError: error,
-            })),
+        {
+            description: 'Static',
+            task: `eslint static/src/javascripts --ext=ts,tsx --no-error-on-unmatched-pattern ${config}`,
+            onError: error,
+        },
         {
             description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/src --ignore-pattern . ${config}`,
+            task: `eslint tools ${config}`,
             onError: error,
         },
         {
