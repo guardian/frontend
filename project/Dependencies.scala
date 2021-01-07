@@ -62,7 +62,7 @@ object Dependencies {
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.10.0"
-  val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
+  val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
   val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
