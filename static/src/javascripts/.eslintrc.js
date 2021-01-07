@@ -4,11 +4,10 @@ module.exports = {
     overrides: [
         {
             files: ['*.ts'],
-            extends: '@guardian/eslint-config-typescript',    settings: {
+            extends: '@guardian/eslint-config-typescript',
+            settings: {
                 'import/resolver': 'webpack',
             },
         },
     ],
-
-
 };
