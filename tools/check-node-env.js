@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-/* eslint-disable global-require, import/no-extraneous-dependencies */
+
 
 const fs = require('fs');
 const path = require('path');
