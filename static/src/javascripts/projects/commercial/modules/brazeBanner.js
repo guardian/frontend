@@ -8,6 +8,11 @@ import ophan from 'ophan/ng';
 import {getUserFromApi} from 'common/modules/identity/api';
 import {shouldNotBeShownSupportMessaging} from "common/modules/commercial/user-features";
 import {measureTiming} from './measure-timing';
+import {
+    hasCurrentBrazeUser,
+    setHasCurrentBrazeUser,
+    clearHasCurrentBrazeUser,
+} from "./hasCurrentBrazeUser"
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -37,18 +42,10 @@ const hasRequiredConsents = () =>
         })
     });
 
-
-
-
-
-
-
 const canShowPreChecks = ({
-    brazeSwitch,
-    apiKey,
     userIsGuSupporter,
     pageConfig,
-}) => Boolean(brazeSwitch && apiKey && userIsGuSupporter && !pageConfig.isPaidContent);
+}) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
 
 let messageConfig;
 let appboy;
@@ -90,6 +87,14 @@ const getMessageFromQueryString = () => {
     return null;
 };
 
+const SDK_OPTIONS = {
+    enableLogging: false,
+    noCookies: true,
+    baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
+    sessionTimeoutInSeconds: 1,
+    minimumIntervalBetweenTriggerActionsInSeconds: 0,
+};
+
 const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const sdkLoadTiming = measureTiming('braze-sdk-load');
     sdkLoadTiming.start();
@@ -105,13 +110,7 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const appboyTiming = measureTiming('braze-appboy');
     appboyTiming.start();
 
-    appboy.initialize(apiKey, {
-        enableLogging: false,
-        noCookies: true,
-        baseUrl: 'https://sdk.fra-01.braze.eu/api/v3',
-        sessionTimeoutInSeconds: 1,
-        minimumIntervalBetweenTriggerActionsInSeconds: 0,
-    });
+    appboy.initialize(apiKey, SDK_OPTIONS);
 
     const canShowPromise = new Promise(resolve => {
         // Needed to keep Flow happy
@@ -139,6 +138,7 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
         // callback, ensuring that the callback is only invoked once per page
         subscriptionId = appboy.subscribeToInAppMessage(callback);
 
+        setHasCurrentBrazeUser();
         appboy.changeUser(brazeUuid);
         appboy.openSession();
     });
@@ -158,6 +158,21 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     return canShowPromise
 };
 
+const maybeWipeUserData = async (apiKey, brazeUuid) => {
+    if (!brazeUuid && hasCurrentBrazeUser()) {
+        appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+        appboy.initialize(apiKey, SDK_OPTIONS);
+
+        try {
+            appboy.wipeData();
+            clearHasCurrentBrazeUser();
+        } catch(error) {
+            reportError(error, {}, false);
+        }
+    }
+}
+
 const canShow = async () => {
     const bannerTiming = measureTiming('braze-banner');
     bannerTiming.start();
@@ -170,10 +185,20 @@ const canShow = async () => {
 
     const brazeSwitch = config.get('switches.brazeSwitch');
     const apiKey = config.get('page.brazeApiKey');
+    const isBrazeConfigured = brazeSwitch && apiKey;
+    if (!isBrazeConfigured) {
+        return false;
+    }
+
+    const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
+
+    await maybeWipeUserData(apiKey, brazeUuid);
+
+    if (!(brazeUuid && hasGivenConsent)) {
+        return false;
+    }
 
     if (!canShowPreChecks({
-        brazeSwitch,
-        apiKey,
         userIsGuSupporter: shouldNotBeShownSupportMessaging(),
         pageConfig: config.get('page'),
     })) {
@@ -181,12 +206,6 @@ const canShow = async () => {
         // subscribers or otherwise those with a Guardian product. We can use the
         // value of `shouldNotBeShownSupportMessaging` to identify these users,
         // limiting the number of requests we need to initialise Braze on the page:
-        return false;
-    }
-
-    const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
-
-    if (!(brazeUuid && hasGivenConsent)) {
         return false;
     }
 
