@@ -30,11 +30,11 @@ const triggerVariant = (doc, iframeId) => {
 
 export const newsletterEmbeds = {
     id: abTestName,
-    start: '2020-12-02',
-    expiry: '2021-01-11',
+    start: '2021-01-07',
+    expiry: '2021-02-09',
     author: 'Josh Buckland',
     description:
-        'Show a new newsletter embed design',
+        'Show a new newsletter embed design. Roll variant out to all users to look at impact.',
     audience: 1.0,
     audienceOffset: 0,
     successMeasure: 'We see increased engagement from users shown the new design',
@@ -62,19 +62,6 @@ export const newsletterEmbeds = {
                                     triggerVariant(doc, ifrm.id);
                                 }
                             }
-                        }
-                    });
-                }
-            },
-        },
-        {
-            id: 'control',
-            test: () => {
-                const iframes = ((document.querySelectorAll('.email-sub__iframe')));
-                if (iframes) {
-                    iframes.forEach((ifrm) => {
-                        if (ifrm.id !== 'footer__email-form') {
-                            trackComponentInOphan(ifrm.id, 'control');
                         }
                     });
                 }
