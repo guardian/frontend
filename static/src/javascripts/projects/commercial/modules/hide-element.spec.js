@@ -1,4 +1,4 @@
-import { hideElement } from './hide-element';
+import { hideElement } from './hide-element.js';
 
 const foolFlow = (mockFn) => ((mockFn));
 
