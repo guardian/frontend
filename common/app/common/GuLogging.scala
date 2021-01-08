@@ -2,6 +2,7 @@ package common
 
 import common.LoggingField._
 import play.api.Logger
+import play.api.Logger.logger
 import org.apache.commons.lang.exception.ExceptionUtils
 import net.logstash.logback.marker.LogstashMarker
 import net.logstash.logback.marker.Markers._
@@ -32,15 +33,15 @@ trait GuLogging {
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
   def errorLoggingF[A](context: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     Try(task) match {
-      case Success(f) => f.failed.foreach(Logger.error(context, _)); f
-      case Failure(e) => Logger.error(context, e); throw e
+      case Success(f) => f.failed.foreach(logger.error(context, _)); f
+      case Failure(e) => logger.error(context, e); throw e
     }
   }
 
   def errorLogging[A](message: String)(block: => A): A = {
     Try(block) match {
       case Success(result) => result
-      case Failure(e)      => Logger.error(message, e); throw e
+      case Failure(e)      => logger.error(message, e); throw e
     }
   }
 }
