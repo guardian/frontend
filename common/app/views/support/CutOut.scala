@@ -5,6 +5,16 @@ import model.pressed.{PressedContent, Cutout}
 
 import scala.util.{Failure, Success, Try}
 
+sealed trait Orientation
+case object Landscape extends Orientation
+case object Portrait extends Orientation
+
+object Orientation {
+  def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
+}
+
+case class CutOut(imageUrl: String, orientation: Orientation)
+
 object CutOut extends Logging {
   /* If a CutOut comes with width and height, it's proabably coming from facia-tool
      Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
@@ -22,21 +32,11 @@ object CutOut extends Logging {
       case _                       => None
     }
   }
-}
 
-object Orientation {
-  def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
-}
-
-sealed trait Orientation
-
-case object Landscape extends Orientation
-case object Portrait extends Orientation
-
-case class CutOut(imageUrl: String, orientation: Orientation) {
-  def cssClass: String =
+  def cssClass(orientation: Orientation): String = {
     orientation match {
       case Landscape => "image--landscape"
       case Portrait  => "image--portrait"
     }
+  }
 }
