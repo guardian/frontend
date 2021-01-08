@@ -3,14 +3,14 @@ package model.diagnostics
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.cloudwatch.{AmazonCloudWatchAsync, AmazonCloudWatchAsyncClient}
 import com.amazonaws.services.cloudwatch.model._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import conf.Configuration._
 import metrics.{FrontendMetric, FrontendStatisticSet}
 
 import scala.collection.JavaConverters._
 
-trait CloudWatch extends Logging {
+trait CloudWatch extends GuLogging {
 
   lazy val stageDimension = new Dimension().withName("Stage").withValue(environment.stage)
 
@@ -22,7 +22,7 @@ trait CloudWatch extends Logging {
       .build()
   }
 
-  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with Logging {
+  trait LoggingAsyncHandler extends AsyncHandler[PutMetricDataRequest, PutMetricDataResult] with GuLogging {
     def onError(exception: Exception) {
       log.info(s"CloudWatch PutMetricDataRequest error: ${exception.getMessage}}")
     }

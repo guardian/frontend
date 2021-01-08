@@ -14,7 +14,7 @@ import scala.concurrent.Future
 class LocationsController(weatherApi: WeatherApi, val controllerComponents: ControllerComponents)
     extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
 
   def findCity(query: String): Action[AnyContent] =
     Action.async { implicit request =>

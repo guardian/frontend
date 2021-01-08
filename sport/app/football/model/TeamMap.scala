@@ -16,7 +16,7 @@ case class Team(team: FootballTeam, tag: Option[Tag], shortName: Option[String])
   override lazy val id = team.id
 }
 
-object TeamMap extends Logging {
+object TeamMap extends GuLogging {
 
   val teamAgent = Box(Map.empty[String, Tag])
 

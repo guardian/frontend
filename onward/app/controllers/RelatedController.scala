@@ -23,7 +23,7 @@ class RelatedController(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val RelatedLabel: String = "Related stories"

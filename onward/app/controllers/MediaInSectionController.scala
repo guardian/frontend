@@ -19,7 +19,7 @@ class MediaInSectionController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with Paging
     with ImplicitControllerExecutionContext
     with Requests {

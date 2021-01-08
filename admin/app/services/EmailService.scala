@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration.aws.mandatoryCredentials
 
 import scala.collection.JavaConverters._
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
-class EmailService(akkaAsync: AkkaAsync) extends Logging {
+class EmailService(akkaAsync: AkkaAsync) extends GuLogging {
 
   private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
     .asyncBuilder()

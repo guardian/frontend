@@ -20,7 +20,7 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-object Environment extends Logging {
+object Environment extends GuLogging {
 
   private[this] val installVars = {
     val source = new File("/etc/gu/install_vars") match {
@@ -58,7 +58,7 @@ object Environment extends Logging {
   *     facia.stage=CODE
   *   }
   */
-object GuardianConfiguration extends Logging {
+object GuardianConfiguration extends GuLogging {
 
   import com.typesafe.config.Config
 
@@ -134,7 +134,7 @@ object GuardianConfiguration extends Logging {
 
 }
 
-class GuardianConfiguration extends Logging {
+class GuardianConfiguration extends GuLogging {
   import GuardianConfiguration._
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)

@@ -1,6 +1,6 @@
 package tools
 
-import common.Logging
+import common.GuLogging
 import com.amazonaws.services.elasticloadbalancing.AmazonElasticLoadBalancingClient
 import com.gu.Box
 
@@ -14,7 +14,7 @@ case class LoadBalancer(
     testPath: Option[String] = None,
 )
 
-object LoadBalancer extends Logging {
+object LoadBalancer extends GuLogging {
 
   import conf.Configuration.aws.credentials
 

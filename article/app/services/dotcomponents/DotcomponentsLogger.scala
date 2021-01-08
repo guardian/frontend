@@ -1,6 +1,6 @@
 package services.dotcomponents
 
-import common.Logging
+import common.GuLogging
 import common.LoggingField._
 import model.PageWithStoryPackage
 import play.api.mvc.RequestHeader
@@ -27,7 +27,7 @@ case class DotcomponentsLoggerFields(request: Option[RequestHeader]) {
 
 }
 
-case class DotcomponentsLogger(request: Option[RequestHeader]) extends Logging {
+case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging {
 
   private def customFields: List[LogField] = DotcomponentsLoggerFields(request).customFields
 

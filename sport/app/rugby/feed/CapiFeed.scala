@@ -1,6 +1,6 @@
 package rugby.feed
 
-import common.{Edition, Logging}
+import common.{Edition, GuLogging}
 import contentapi.ContentApiClient
 import model.{Content, ContentType}
 import org.joda.time.DateTimeZone
@@ -13,7 +13,7 @@ case class MatchNavigation(
     minByMin: ContentType,
 )
 
-class CapiFeed(contentApiClient: ContentApiClient) extends Logging {
+class CapiFeed(contentApiClient: ContentApiClient) extends GuLogging {
 
   def getMatchArticles(
       matches: Seq[Match],

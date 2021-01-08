@@ -3,7 +3,7 @@ package football.controllers
 import feed.CompetitionsService
 import model.Cached.RevalidatableResult
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import model.{ApplicationContext, Cached}
 import football.model.{CompetitionStage, KnockoutSpider}
 import org.joda.time.DateTime
@@ -14,7 +14,7 @@ class WallchartController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderWallchartEmbed(competitionTag: String): Action[AnyContent] = renderWallchart(competitionTag, true)

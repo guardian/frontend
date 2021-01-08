@@ -11,7 +11,7 @@ import scala.language.implicitConversions
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
-trait Logging {
+trait GuLogging {
 
   lazy implicit val log = Logger(getClass)
 

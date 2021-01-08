@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.Content
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.ContentUtils._
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.MetaData
@@ -32,7 +32,7 @@ case class HostedGalleryImage(
     credit: String = "",
 )
 
-object HostedGalleryPage extends Logging {
+object HostedGalleryPage extends GuLogging {
 
   def fromContent(content: Content): Option[HostedGalleryPage] = {
     log.info(s"Building hosted gallery ${content.id} ...")

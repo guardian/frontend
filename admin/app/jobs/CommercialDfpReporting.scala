@@ -8,13 +8,13 @@ import com.google.api.ads.admanager.axis.v202011.DateRangeType.CUSTOM_DATE
 import com.google.api.ads.admanager.axis.v202011.Dimension.{CUSTOM_CRITERIA, DATE}
 import com.google.api.ads.admanager.axis.v202011._
 import com.gu.Box
-import common.{AkkaAsync, JobScheduler, Logging}
+import common.{AkkaAsync, JobScheduler, GuLogging}
 import dfp.DfpApi
 import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object CommercialDfpReporting extends Logging {
+object CommercialDfpReporting extends GuLogging {
 
   case class DfpReportRow(value: String) {
     val fields = value.split(",").toSeq
@@ -91,7 +91,7 @@ class CommercialDfpReportingLifecycle(
     dfpApi: DfpApi,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   appLifecycle.addStopHook { () =>
     Future {

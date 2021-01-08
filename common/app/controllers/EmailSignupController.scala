@@ -3,7 +3,7 @@ package controllers
 import com.gu.identity.model.EmailNewsletter
 import com.typesafe.scalalogging.LazyLogging
 import common.EmailSubsciptionMetrics._
-import common.{ImplicitControllerExecutionContext, LinkTo, Logging}
+import common.{ImplicitControllerExecutionContext, LinkTo, GuLogging}
 import conf.Configuration
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
@@ -72,7 +72,7 @@ class EmailSignupController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
   val emailFormService = new EmailFormService(wsClient)
 
   val emailForm: Form[EmailForm] = Form(

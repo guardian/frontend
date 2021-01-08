@@ -17,7 +17,7 @@ class StoryPackageController(val contentApiClient: ContentApiClient, val control
     implicit context: ApplicationContext,
 ) extends BaseController
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private[this] def getRelatedContent(path: String): Future[Seq[RelatedContentItem]] = {

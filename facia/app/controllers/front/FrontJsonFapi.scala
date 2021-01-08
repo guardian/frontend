@@ -1,6 +1,6 @@
 package controllers.front
 
-import common.{FaciaPressMetrics, Logging}
+import common.{FaciaPressMetrics, GuLogging}
 import concurrent.{BlockingOperations, FutureSemaphore}
 import conf.Configuration
 import metrics.DurationMetric
@@ -10,7 +10,7 @@ import services.S3
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait FrontJsonFapi extends Logging {
+trait FrontJsonFapi extends GuLogging {
   lazy val stage: String = Configuration.facia.stage.toUpperCase
   val bucketLocation: String
   val parallelJsonPresses = 32

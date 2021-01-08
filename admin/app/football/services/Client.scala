@@ -8,7 +8,7 @@ import java.io.File
 
 import scala.util.{Failure, Success}
 import play.Logger
-import common.{Logging}
+import common.{GuLogging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
@@ -82,7 +82,7 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
 }
 
 trait PaFootballClient {
-  self: PaFootballClient with Logging =>
+  self: PaFootballClient with GuLogging =>
 
   implicit val executionContext: ExecutionContext
   implicit val context: ApplicationContext

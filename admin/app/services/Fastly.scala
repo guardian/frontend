@@ -1,6 +1,6 @@
 package services
 
-import common.Logging
+import common.GuLogging
 import conf.AdminConfiguration.fastly
 import com.amazonaws.services.cloudwatch.model.{Dimension, MetricDatum}
 import org.joda.time.DateTime
@@ -23,7 +23,7 @@ case class FastlyStatistic(service: String, region: String, timestamp: Long, nam
     .withValue(value.toDouble)
 }
 
-class FastlyStatisticService(wsClient: WSClient) extends Logging {
+class FastlyStatisticService(wsClient: WSClient) extends GuLogging {
 
   private case class FastlyApiStat(
       hits: Int,

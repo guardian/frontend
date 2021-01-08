@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.ItemResponse
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, NoCache}
@@ -16,7 +16,7 @@ abstract class OnwardContentCardController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with Paging
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with Requests {
 

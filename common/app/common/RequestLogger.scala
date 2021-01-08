@@ -81,7 +81,7 @@ case class RequestLoggerFields(request: Option[RequestHeader], response: Option[
 }
 
 case class RequestLogger(request: Option[RequestHeader], response: Option[Result], stopWatch: Option[StopWatch])
-    extends Logging {
+    extends GuLogging {
 
   private def allFields: List[LogField] = RequestLoggerFields(request, response, stopWatch).toList
 

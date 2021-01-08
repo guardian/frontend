@@ -3,7 +3,7 @@ package controllers.admin
 import java.io.File
 
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.Logging
+import common.GuLogging
 import model.ApplicationContext
 import play.api.data._
 import play.api.data.Forms._
@@ -18,7 +18,7 @@ class RedirectController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging {
+    with GuLogging {
 
   val redirectForm = Form(mapping("from" -> text, "to" -> text)(PageRedirect.apply)(PageRedirect.unapply))
 
