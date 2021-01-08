@@ -12,7 +12,7 @@ const month = new Date().getMonth() + 1;    // js date month begins at 0
 const componentType = 'ACQUISITIONS_HEADER';
 const componentId = 'header_support';
 const campaignCode = 'header_support';
-const testName = 'GlobalEoyHeaderTest';
+const testName = 'GlobalEoyHeaderTestR2';
 
 
 const onView = (variant) => submitViewEvent({
