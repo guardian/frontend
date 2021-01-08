@@ -75,11 +75,8 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       slightly different states at any point in time, which is ok, as they converge at each refresh.
    */
 
-  private var ophanItems: Array[OphanDeeplyReadItem] = Array.empty[OphanDeeplyReadItem]
-
-  // Note that keys in pathToCapiContentMapping are paths without starting slash
-  private val pathToCapiContentMapping: scala.collection.mutable.Map[String, Content] =
-    scala.collection.mutable.Map.empty[String, Content]
+  private var deeplyReadItems: scala.collection.mutable.Map[OphanDeeplyReadItem, Content] =
+    scala.collection.mutable.Map.empty[OphanDeeplyReadItem, Content]
 
   def removeStartingSlash(path: String): String = {
     if (path.startsWith("/")) path.stripPrefix("/") else path
@@ -135,25 +132,12 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     }
   }
 
-  def getDataForPath(path: String): Option[Content] = {
-    /*
-        This function returns any stored CAPI Content for a path, thereby making the link between the path read from
-        a OphanDeeplyReadItem and a DeeplyReadItem (from the corresponding Content).
-
-        We use this function instead of accessing mapping directly to abstract the logic away from the Map implementation
-
-        Note that the path are used without starting slash
-     */
-    pathToCapiContentMapping.get(removeStartingSlash(path))
-  }
-
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
 
-  def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem): Option[DeeplyReadItem] = {
+  def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem, content: Content): Option[DeeplyReadItem] = {
     // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
     // Note that we could also do it during the DeeplyReadItem to OnwardItemNx2 transformation
     for {
-      content <- getDataForPath(removeStartingSlash(item.path))
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
       linkText <- fields.trailText
@@ -183,18 +167,16 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   }
 
   def getReport()(implicit ec: ExecutionContext): Seq[DeeplyReadItem] = {
-    if (
-      ophanItems.isEmpty || ophanItems
-        .exists(oi => !pathToCapiContentMapping.keys.toSet.contains(removeStartingSlash(oi.path)))
-    ) {
+    if (deeplyReadItems.isEmpty) {
       // This helps improving the situation if the initial akka driven refresh failed (which happens way to often)
       // Note that is there was no data in ophanItems the report will be empty, but will at least return data at the next call
       log.info(s"[cb01a845] refresh() from getReport()")
       refresh()
     }
-    ophanItems
-      .map(ophanItemToDeeplyReadItem)
+    deeplyReadItems
+      .map(Function.tupled(ophanItemToDeeplyReadItem))
       .filter(_.isDefined)
       .map(_.get) // Note that it is safe to call .get here because we have filtered on .isDefined before
+      .toSeq
   }
 }
