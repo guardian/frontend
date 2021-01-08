@@ -1,28 +1,8 @@
 package model
 
-import com.gu.contentapi.client.model.v1.{Content => CapiContent}
-import com.gu.contentapi.client.model.{v1 => contentapi}
-import com.gu.contentapi.client.utils.DesignType
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
-import implicits.Dates.CapiRichDateTime
-import common.commercial.{AdUnitMaker, CommercialProperties}
-import common.dfp._
-import common.{Edition, LinkTo, Localisation, ManifestData, Pagination}
-import conf.Configuration
-import conf.cricketPa.CricketTeams
 import model.content._
-import model.liveblog.Blocks
-import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
-import org.apache.commons.lang3.StringUtils
-import org.joda.time.DateTime
-import com.github.nscala_time.time.Implicits._
-import play.api.libs.json._
-import play.api.libs.json.JodaWrites.JodaDateTimeWrites
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import navigation.GuardianFoundationHelper
-
-import scala.util.matching.Regex
 
 trait AtomPage extends Page {
   def atom: Atom
