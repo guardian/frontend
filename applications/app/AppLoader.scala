@@ -10,14 +10,14 @@ import conf.CachedHealthCheckLifeCycle
 import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
-import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import dev.DevAssetsController
 import http.{CommonFilters, CorsHttpErrorHandler}
 import jobs.{SiteMapJob, SiteMapLifecycle}
-import model.{ApplicationContext, ApplicationIdentity}
+import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -88,7 +88,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 
   def actorSystem: ActorSystem
 }
