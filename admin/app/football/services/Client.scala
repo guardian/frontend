@@ -7,7 +7,9 @@ import org.joda.time.LocalDate
 import java.io.File
 
 import scala.util.{Failure, Success}
-import play.Logger
+import play.api.Logger
+import play.api.Logger.logger
+
 import common.{GuLogging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
@@ -57,11 +59,11 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
       case None =>
-        Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
+        Logger.logger.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
-            Logger.info(s"writing response to testdata, $filename.xml, $str")
+            Logger.logger.info(s"writing response to testdata, $filename.xml, $str")
             writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
