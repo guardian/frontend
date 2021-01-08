@@ -41,12 +41,12 @@ data-item-visibility="@visibilityDataAttribute"
     </div>
 
     @if(item.cardTypes.showCutOut) {
-        @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+        @item.cutOut.map { cutout =>
             <div class="simple-content-card__image fc-item__avatar">
                 @image(
-                    classes = Seq("", cutOut.cssClass),
+                    classes = Seq("", CutOut.cssClass(cutout.orientation)),
                     widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
-                    maybePath = Some(imageUrl)
+                    maybePath = Some(cutout.imageUrl)
                 )
             </div>
         }
