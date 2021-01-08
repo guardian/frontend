@@ -203,7 +203,7 @@ class MoreOnMatchController(
 ) extends BaseController
     with Football
     with Requests
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with implicits.Dates {
   def interval(contentDate: LocalDate): Imports.Interval =

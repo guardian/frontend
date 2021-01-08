@@ -1,6 +1,6 @@
 package views.support
 
-import common.Logging
+import common.GuLogging
 import model.pressed.{PressedContent, Cutout}
 
 import scala.util.{Failure, Success, Try}
@@ -15,7 +15,7 @@ object Orientation {
 
 case class CutOut(imageUrl: String, orientation: Orientation)
 
-object CutOut extends Logging {
+object CutOut extends GuLogging {
   /* If a CutOut comes with width and height, it's proabably coming from facia-tool
      Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
    */

@@ -8,7 +8,7 @@ import model.RelatedContentItem
 import scala.concurrent.{ExecutionContext, Future}
 import services.OphanApi
 
-class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class MostViewedAudioAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   private val audioAgent = Box[Seq[RelatedContentItem]](Nil)
   private val podcastAgent = Box[Seq[RelatedContentItem]](Nil)

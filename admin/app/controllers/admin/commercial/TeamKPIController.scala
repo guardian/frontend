@@ -2,7 +2,7 @@ package controllers.admin.commercial
 
 import java.time.LocalDate
 
-import common.Logging
+import common.GuLogging
 import jobs.CommercialDfpReporting
 import model.{ApplicationContext, NoCache}
 import play.api.i18n.I18nSupport
@@ -13,7 +13,7 @@ import tools.{Chart, ChartFormat, ChartRow}
 class TeamKPIController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
     extends BaseController
     with I18nSupport
-    with Logging {
+    with GuLogging {
 
   def renderPrebidDashboard(): Action[AnyContent] =
     Action { implicit request =>

@@ -1,6 +1,6 @@
 package jobs
 
-import common.Logging
+import common.GuLogging
 import conf.Configuration.frontend.{dotcomPlatformEmail, webEngineersEmail}
 import conf.switches.{Switch, Switches}
 import services.EmailService
@@ -8,7 +8,7 @@ import services.EmailService
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging {
+case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLogging {
 
   def run()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(webEngineersEmail)
   def runReminder()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(dotcomPlatformEmail)

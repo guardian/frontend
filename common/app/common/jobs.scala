@@ -17,7 +17,7 @@ object JobsState {
   val outstanding = Box(Map[String, Int]().withDefaultValue(0))
 }
 
-class FunctionJob extends Job with Logging {
+class FunctionJob extends Job with GuLogging {
   import JobsState._
   def execute(context: JobExecutionContext) {
     val name = context.getJobDetail.getKey.getName
@@ -39,7 +39,7 @@ class FunctionJob extends Job with Logging {
   }
 }
 
-class JobScheduler(context: ApplicationContext) extends Logging {
+class JobScheduler(context: ApplicationContext) extends GuLogging {
   import JobsState._
 
   val scheduler = StdSchedulerFactory.getDefaultScheduler

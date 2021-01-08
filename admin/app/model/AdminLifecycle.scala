@@ -25,7 +25,7 @@ class AdminLifecycle(
     rebuildIndexJob: RebuildIndexJob,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   appLifecycle.addStopHook { () =>
     Future {

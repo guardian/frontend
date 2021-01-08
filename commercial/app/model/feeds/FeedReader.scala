@@ -1,7 +1,7 @@
 package commercial.model.feeds
 
 import commercial.CommercialMetrics
-import common.Logging
+import common.GuLogging
 import conf.switches.Switch
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.{WSClient, WSRequest, WSResponse, WSSignatureCalculator}
@@ -12,7 +12,7 @@ import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 import scala.xml.{Elem, XML}
 
-class FeedReader(wsClient: WSClient) extends Logging {
+class FeedReader(wsClient: WSClient) extends GuLogging {
 
   def read[T](
       request: FeedRequest,

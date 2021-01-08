@@ -21,7 +21,7 @@ class LeagueTableController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with CompetitionTableFilters
     with ImplicitControllerExecutionContext {
 

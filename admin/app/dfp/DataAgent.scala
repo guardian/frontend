@@ -1,13 +1,13 @@
 package dfp
 
 import com.gu.Box
-import common.Logging
+import common.GuLogging
 import concurrent.BlockingOperations
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success, Try}
 
-trait DataAgent[K, V] extends Logging with implicits.Strings {
+trait DataAgent[K, V] extends GuLogging with implicits.Strings {
 
   private val initialCache: DataCache[K, V] = DataCache(Map.empty[K, V])
   private lazy val cache = Box(initialCache)

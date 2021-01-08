@@ -8,7 +8,7 @@ import scala.util.{Failure, Success}
 import com.gu.Box
 
 /** Simple class for repeatedly updating a value on a schedule */
-abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends Logging {
+abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDuration) extends GuLogging {
 
   private lazy val agent = Box[Option[A]](None)
 
