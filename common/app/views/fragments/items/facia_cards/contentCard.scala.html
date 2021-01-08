@@ -223,12 +223,12 @@ data-test-id="facia-card"
                     @meta(item)
                 </div>
                 @if(item.cardTypes.showCutOut) {
-                    @item.cutOut.map { case cutOut@CutOut(imageUrl, _) =>
+                    @item.cutOut.map { cutout =>
                     <div class="fc-item__avatar">
                         @image(
-                            classes = Seq("fc-item__avatar__media", cutOut.cssClass),
+                            classes = Seq("fc-item__avatar__media", CutOut.cssClass(cutout.orientation)),
                             widths = FaciaWidths.cutOutFromItemClasses(item.cardTypes),
-                            maybePath = Some(imageUrl)
+                            maybePath = Some(cutout.imageUrl)
                         )
                     </div>
                     }
