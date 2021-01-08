@@ -9,7 +9,6 @@ import com.gu.facia.api.ApiError
 import conf.Configuration
 import conf.switches.Switches.FaciaPressStatusNotifications
 import play.api.Logger
-import play.api.Logger.logger
 import play.api.libs.json.Json
 
 object StatusNotificationMessage {
