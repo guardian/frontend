@@ -13,13 +13,7 @@ object Orientation {
   def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
 }
 
-case class CutOut(imageUrl: String, orientation: Orientation) {
-  def cssClass: String =
-    orientation match {
-      case Landscape => "image--landscape"
-      case Portrait  => "image--portrait"
-    }
-}
+case class CutOut(imageUrl: String, orientation: Orientation)
 
 object CutOut extends GuLogging {
   /* If a CutOut comes with width and height, it's proabably coming from facia-tool
