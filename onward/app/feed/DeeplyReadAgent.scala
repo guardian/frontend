@@ -82,7 +82,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
     if (path.startsWith("/")) path.stripPrefix("/") else path
   }
 
-  def refresh()(implicit ec: ExecutionContext): Future[Unit] = {
+  def refresh()(implicit ec: ExecutionContext): Future[Seq[Option[(OphanDeeplyReadItem, Content)]]] = {
     log.info(s"[cb01a845] Deeply Read Agent refresh()")
     /*
         Here we simply go through the OphanDeeplyReadItem we got from Ophan and for each
@@ -119,17 +119,14 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       }
       Future.sequence(deeplyReadSeq)
 
-    // We now perform the atomic update of ophanItems to faithfully reflects the state of the Ophan answer.
+    // We now perform the atomic update of deeplyReadItems to faithfully reflects the state of the Ophan answer.
     // It is done as last step of the process because by then the CAPI content has been loaded.
-    // This prevents a race condition by which new ophan items are already in `ophanItems`, but the corresponding
-    // CAPI content are not yet in `pathToCapiContentMapping`, resulting in less items appearing in `getReport()` than expected.
-    // deeplyReadFuture.map: {
-    // ophanItems = seq.toArray
-    // pathToCapiContentMapping = deeplyReadContents}
     }
     deeplyReadFuture.foreach { sequence =>
-      sequence.flatten.foreach {}
+      val mapDeeplyReadItems = sequence.filter(_.isDefined).map(_.get).toMap
+      deeplyReadItems = collection.mutable.Map(mapDeeplyReadItems.toSeq: _*)
     }
+    deeplyReadFuture
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
