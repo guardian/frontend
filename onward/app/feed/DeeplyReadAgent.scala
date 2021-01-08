@@ -92,9 +92,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         query CAPI and set the Content for the path.
      */
 
-    ophanApi.getDeeplyReadContent().map { seq =>
+    val deeplyReadFuture = ophanApi.getDeeplyReadContent().flatMap { seq =>
       log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
-      seq.foreach { ophanItem =>
+      val deeplyReadSeq = seq.map { ophanItem =>
         log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
         val path = removeStartingSlash(ophanItem.path)
         log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
@@ -104,13 +104,13 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
           .showFields("all")
           .showReferences("all")
           .showAtoms("all")
-        val fx = contentApiClient
+        val deeplyReadApiClient = contentApiClient
           .getResponse(capiItem)
           .map { res =>
             res.content.map { c =>
               log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
               println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
-              pathToCapiContentMapping += (path -> c) // update the Content for a given map
+              ophanItem -> c
             }
           }
           .recover {
@@ -118,15 +118,20 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
               log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
               None
           }
-        // We do the next two instruction to, essentially, avoid spamming CAPI
-        Await.ready(fx, Duration(200, "millis"))
-        Thread.sleep(100)
+        deeplyReadApiClient
       }
-      // We now perform the atomic update of ophanItems to faithfully reflects the state of the Ophan answer.
-      // It is done as last step of the process because by then the CAPI content has been loaded.
-      // This prevents a race condition by which new ophan items are already in `ophanItems`, but the corresponding
-      // CAPI content are not yet in `pathToCapiContentMapping`, resulting in less items appearing in `getReport()` than expected.
-      ophanItems = seq.toArray
+      Future.sequence(deeplyReadSeq)
+
+    // We now perform the atomic update of ophanItems to faithfully reflects the state of the Ophan answer.
+    // It is done as last step of the process because by then the CAPI content has been loaded.
+    // This prevents a race condition by which new ophan items are already in `ophanItems`, but the corresponding
+    // CAPI content are not yet in `pathToCapiContentMapping`, resulting in less items appearing in `getReport()` than expected.
+    // deeplyReadFuture.map: {
+    // ophanItems = seq.toArray
+    // pathToCapiContentMapping = deeplyReadContents}
+    }
+    deeplyReadFuture.foreach { sequence =>
+      sequence.flatten.foreach {}
     }
   }
 

@@ -108,7 +108,7 @@ class MostPopularController(
     }
 
   // Experimental (December 2020)
-  def renderWithDeeplyRead(path: String): Action[AnyContent] =
+  def renderWithDeeplyRead(): Action[AnyContent] =
     Action.async { implicit request =>
       val edition = Edition(request)
 
@@ -129,32 +129,27 @@ class MostPopularController(
           None
       }
 
+      val deeplyReadItems = deeplyReadAgent.getReport().map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2)
+
       // Async section specific most Popular.
-      val sectionPopular: Future[List[MostPopularNx2]] = {
-        if (path.nonEmpty) {
-          Future.successful(
-            List(
-              MostPopularNx2(
-                "Deeply read",
-                "",
-                deeplyReadAgent.getReport().map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2),
-              ),
+      val deeplyRead: Option[MostPopularNx2] = {
+        if (deeplyReadItems.isEmpty) None
+        else
+          Some(
+            MostPopularNx2(
+              "Deeply read",
+              "",
+              deeplyReadItems,
             ),
           )
-        } else { Future(Nil) }
       }
 
-      // map is not on a list, but on a Future
-      sectionPopular.map { sectionPopular =>
-        val sectionFirst = sectionPopular ++ globalPopular
-        val globalFirst = globalPopular.toList ++ sectionPopular
-        val mostPopular: List[MostPopularNx2] = if (path == "global-development") sectionFirst else globalFirst
+      val response =
+        if (globalPopular.isDefined && deeplyRead.isDefined)
+          jsonResponseNx2(globalPopular.toSeq ++ deeplyRead.toSeq, mostCards())
+        else NotFound
 
-        mostPopular match {
-          case Nil     => NotFound
-          case popular => jsonResponseNx2(popular, mostCards())
-        }
-      }
+      Future(response)
     }
 
   private val countryNames = Map(
@@ -222,9 +217,7 @@ class MostPopularController(
       OnwardItemNx2.contentCardToOnwardItemNx2(contentCard)
     }
     val response = OnwardCollectionResponseDCR(tabs, mostCommented, mostShared)
-    // Value is 1 fr the moment.
-    // We do caching in Fasty and the Ophan/CAPI updates are on schedule and async
-    Cached(1)(JsonComponent(response))
+    Cached(900)(JsonComponent(response))
   }
 
   def jsonResponse(mostPopular: MostPopular, countryCode: String)(implicit request: RequestHeader): Result = {
