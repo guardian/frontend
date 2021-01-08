@@ -18,13 +18,12 @@ import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
-import http.{CorsHttpErrorHandler, DevBuildParametersHttpRequestHandler, DevFilters}
+import http.{CorsHttpErrorHandler, DevFilters}
 import model.{AdminLifecycle, ApplicationIdentity}
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
@@ -107,6 +106,6 @@ trait AppComponents
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
-  override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
+  //override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
 }
