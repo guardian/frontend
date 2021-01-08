@@ -7,11 +7,11 @@ import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.{ArchiveController, HealthCheck}
-import dev.{DevAssetsController, DevParametersHttpRequestHandler}
+import dev.{DevAssetsController}
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.{HttpErrorHandler, HttpRequestHandler}
+import play.api.http.{HttpErrorHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -47,7 +47,7 @@ trait AppComponents extends FrontendComponents {
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
+  // override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
 
   def actorSystem: ActorSystem
 }
