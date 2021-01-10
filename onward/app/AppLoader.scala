@@ -9,11 +9,11 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, OnwardControllers}
-import dev.{DevAssetsController}
+import dev.DevAssetsController
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
-import play.api.http.{HttpErrorHandler}
+import play.api.http.HttpErrorHandler
 import play.api.{BuiltInComponentsFromContext, Environment}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
