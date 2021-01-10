@@ -2,14 +2,12 @@ package common
 
 import common.LoggingField._
 import play.api.Logger
-import play.api.Logger.logger
 import org.apache.commons.lang.exception.ExceptionUtils
 import net.logstash.logback.marker.LogstashMarker
 import net.logstash.logback.marker.Markers._
 import scala.collection.JavaConverters._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.language.implicitConversions
-import scala.util.control.NonFatal
 import scala.util.{Failure, Success, Try}
 
 trait GuLogging {
@@ -41,7 +39,7 @@ trait GuLogging {
   def errorLogging[A](message: String)(block: => A): A = {
     Try(block) match {
       case Success(result) => result
-      case Failure(e)      => logger.error(message, e); throw e
+      case Failure(e)      => Logger.logger.error(message, e); throw e
     }
   }
 }
