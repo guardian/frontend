@@ -106,6 +106,5 @@ trait AppComponents
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
-  //override lazy val httpRequestHandler = wire[DevBuildParametersHttpRequestHandler]
   override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
 }
