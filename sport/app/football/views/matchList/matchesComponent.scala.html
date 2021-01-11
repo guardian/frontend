@@ -8,18 +8,18 @@
     @football.views.html.fragments.componentStyles()
 
     @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), dateRow) =>
-        <div class="football-matches__day">
-            @competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
-                @football.views.html.matchList.matchesList(
-                    matches,
-                    competition,
-                    date,
-                    matchType = matchesList.pageType,
-                    heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
-                    link = customLink orElse (if(dateRow.isLast && matchRow.isLast)
-                            Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None)
-                )
-            }
-        </div>
+    <div class="football-matches__day">
+        @{competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
+            football.views.html.matchList.matchesList(
+                matches,
+                competition,
+                date,
+                matchType = matchesList.pageType,
+                heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
+                link = customLink orElse (if(dateRow.isLast && matchRow.isLast)
+                    Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None)
+            )
+        }}
+    </div>
     }
 </div>
