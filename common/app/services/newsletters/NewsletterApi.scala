@@ -1,7 +1,7 @@
 package services.newsletters
 
 import com.gu.identity.model.{EmailEmbed, NewsletterIllustration}
-import common.{BadConfigurationException, Logging}
+import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
 import play.api.libs.json.{JsError, JsResult, JsSuccess, JsValue, Json}
 import play.api.libs.ws.WSClient
@@ -57,7 +57,7 @@ object GroupedNewslettersResponse {
 }
 
 case class NewsletterApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-    extends Logging
+    extends GuLogging
     with implicits.WSRequests {
 
   private def ensureHostSecure(host: String): String = host.replace("http:", "https:")
