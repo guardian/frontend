@@ -8,7 +8,7 @@
 @import views.html.fragments
 @import model.pressed._
 
-@template1(trail: PressedContent, row: RowInfo) = {
+@mostPopularItem(trail: PressedContent, row: RowInfo) = {
     <li class="right-most-popular-item" data-link-name="trail | @row.rowNum">
         <a class="right-most-popular-item__url media u-cf" href="@LinkTo{@trail.header.url}">
             @trail.trailPicture.map{ imageMedia =>
@@ -44,7 +44,7 @@
         <h3 class="content__meta-heading right-most-popular__heading">most viewed @{country.map{ name => s"in $name"}}</h3>
         <ul class="right-most-popular__items u-unstyled" data-link-name="Right hand most popular geo @countryCode">
             @popular.trails.take(5).zipWithRowInfo.map{ data =>
-                @template1(data._1, data._2)
+                @mostPopularItem(data._1, data._2)
             }
         </ul>
     </div>
