@@ -1,36 +1,40 @@
 @import implicits.Football._
+@import pa._
 @import views.support.`package`.Seq2zipWithRowInfo
+@import views.support.RowInfo
 
 @(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
 
-<ul class="football-groups u-unstyled u-cf">
-    @groupStage.groupTables.zipWithRowInfo.map{ case ((round, leagueTableEntries), row) =>
-        @defining(groupStage.matchesList(competition, round)) { matches =>
-            <li class="football-group">
-                <div class="football-group__container table--hide-from-importance-3">
-                    @round.name.map{ name =>
-                        <div class="football-group__table">
-                            @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
-                                heading = round.name,
-                                headingLink = groupTag(competition.id, round),
-                                striped = true,
-                                withCrests = true
+@template1(round: Round, leagueTableEntries: Seq[LeagueTableEntry], row: RowInfo) = {
+    @defining(groupStage.matchesList(competition, round)) { matches =>
+        <li class="football-group">
+            <div class="football-group__container table--hide-from-importance-3">
+                @round.name.map{ name =>
+                    <div class="football-group__table">
+                        @football.views.html.tablesList.tableView(competition, model.Group(round, leagueTableEntries),
+                            heading = round.name,
+                            headingLink = groupTag(competition.id, round),
+                            striped = true,
+                            withCrests = true
+                        )
+                    </div>
+                    <div class="football-group__matches">
+                    @{matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
+                        competitionMatches.map { case (competition, matches) =>
+                            football.views.html.matchList.matchesList(matches, competition, date,
+                                linkToCompetition = false,
+                                heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
                             )
-                        </div>
-
-                        <div class="football-group__matches">
-                            @matches.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), info) =>
-                                @competitionMatches.map { case (competition, matches) =>
-                                    @football.views.html.matchList.matchesList(matches, competition, date,
-                                        linkToCompetition = false,
-                                        heading = if(info.isFirst) Option(("Fixtures and results", None)) else None
-                                    )
-                                }
-                            }
-                        </div>
-                    }
-                </div>
-            </li>
-        }
+                        }
+                    }}
+                    </div>
+                }
+            </div>
+        </li>
+    }
+}
+<ul class="football-groups u-unstyled u-cf">
+    @groupStage.groupTables.zipWithRowInfo.map{ data =>
+        @template1(data._1._1, data._1._2, data._2)
     }
 </ul>
