@@ -96,7 +96,8 @@ case class AudioAtomBlockElement(
     duration: Int,
     contentId: String,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object AudioAtomBlockElement {
   implicit val AudioAtomBlockElementWrites: Writes[AudioAtomBlockElement] = Json.writes[AudioAtomBlockElement]
 }
@@ -173,8 +174,9 @@ case class DocumentBlockElement(
     width: Option[Int],
     title: Option[String],
     isMandatory: Option[Boolean],
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object DocumentBlockElement {
   implicit val DocumentBlockElementWrites: Writes[DocumentBlockElement] = Json.writes[DocumentBlockElement]
 }
@@ -186,7 +188,8 @@ case class EmbedBlockElement(
     isMandatory: Boolean,
     role: Option[String],
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
   implicit val EmbedBlockElementWrites: Writes[EmbedBlockElement] = Json.writes[EmbedBlockElement]
 }
@@ -288,8 +291,9 @@ case class InstagramBlockElement(
     url: String,
     html: Option[String],
     hasCaption: Boolean,
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object InstagramBlockElement {
   implicit val InstagramBlockElementWrites: Writes[InstagramBlockElement] = Json.writes[InstagramBlockElement]
 }
@@ -302,8 +306,9 @@ case class MapBlockElement(
     title: String,
     width: Int,
     height: Int,
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object MapBlockElement {
   implicit val MapBlockElementWrites: Writes[MapBlockElement] = Json.writes[MapBlockElement]
 }
@@ -371,8 +376,9 @@ case class PullquoteBlockElement(
     html: Option[String],
     role: Role,
     attribution: Option[String],
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object PullquoteBlockElement {
   implicit val PullquoteBlockElementWrites: Writes[PullquoteBlockElement] = Json.writes[PullquoteBlockElement]
 }
@@ -422,7 +428,8 @@ case class SoundcloudBlockElement(
     isTrack: Boolean,
     isMandatory: Boolean,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object SoundcloudBlockElement {
   implicit val SoundCloudBlockElementWrites: Writes[SoundcloudBlockElement] = Json.writes[SoundcloudBlockElement]
 }
@@ -434,7 +441,8 @@ case class SpotifyBlockElement(
     title: Option[String],
     caption: Option[String],
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
   implicit val SpotifyBlockElementWrites: Writes[SpotifyBlockElement] = Json.writes[SpotifyBlockElement]
 }
@@ -461,14 +469,14 @@ object TimelineBlockElement {
 }
 
 case class TweetBlockElement(
-  html: String,
-  url: String,
-  id: String,
-  hasMedia: Boolean,
-  role: Role,
-  thirdPartyTracking: Boolean
-)
-  extends PageElement with ThirdPartyEmbeddedContent
+    html: String,
+    url: String,
+    id: String,
+    hasMedia: Boolean,
+    role: Role,
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object TweetBlockElement {
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
 }
@@ -486,7 +494,8 @@ case class VideoBlockElement(
     width: Int,
     role: Role,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object VideoBlockElement {
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
 }
@@ -500,7 +509,8 @@ case class VideoFacebookBlockElement(
     width: Int,
     role: Role,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object VideoFacebookBlockElement {
   implicit val VideoFacebookBlockElementWrites: Writes[VideoFacebookBlockElement] =
     Json.writes[VideoFacebookBlockElement]
@@ -515,7 +525,8 @@ case class VideoVimeoBlockElement(
     width: Int,
     role: Role,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object VideoVimeoBlockElement {
   implicit val VideoVimeoElementWrites: Writes[VideoVimeoBlockElement] = Json.writes[VideoVimeoBlockElement]
 }
@@ -529,23 +540,26 @@ case class VideoYoutubeBlockElement(
     width: Int,
     role: Role,
     thirdPartyTracking: Boolean,
-) extends PageElement with ThirdPartyEmbeddedContent
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object VideoYoutubeBlockElement {
   implicit val VideoYoutubeBlockElementWrites: Writes[VideoYoutubeBlockElement] = Json.writes[VideoYoutubeBlockElement]
 }
 
 case class VineBlockElement(
     html: Option[String],
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object VineBlockElement {
   implicit val VideoYoutubeBlockElementWrites: Writes[VineBlockElement] = Json.writes[VineBlockElement]
 }
 
 case class WitnessBlockElement(
     html: Option[String],
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 object WitnessBlockElement {
   implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
 }
@@ -560,8 +574,9 @@ case class YoutubeBlockElement(
     expired: Boolean,
     duration: Option[Long],
     altText: Option[String],
-    thirdPartyTracking: Boolean
-) extends PageElement with ThirdPartyEmbeddedContent
+    thirdPartyTracking: Boolean,
+) extends PageElement
+    with ThirdPartyEmbeddedContent
 /*
   The difference between `overrideImage` and `posterImage`
 
@@ -675,7 +690,12 @@ object PageElement {
           url <- data.originalUrl
         } yield {
           TweetBlockElement(
-            html, url, id, element.assets.nonEmpty, Role(data.role), containsThirdPartyTracking(element)
+            html,
+            url,
+            id,
+            element.assets.nonEmpty,
+            Role(data.role),
+            containsThirdPartyTracking(element),
           )
         }).toList
       }
@@ -856,7 +876,7 @@ object PageElement {
                 trackUrl = audio.data.trackUrl,
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
-                thirdPartyTracking = containsThirdPartyTracking(element)
+                thirdPartyTracking = containsThirdPartyTracking(element),
               ),
             )
           }
@@ -927,7 +947,7 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
-                    thirdPartyTracking = containsThirdPartyTracking(element)
+                    thirdPartyTracking = containsThirdPartyTracking(element),
                   )
                 })
               }
@@ -1047,30 +1067,33 @@ object PageElement {
         }.toList
 
       case Pullquote =>
-        element
-          .pullquoteTypeData
-          .map(d =>
-            PullquoteBlockElement(d.html, Role(d.role), d.attribution, containsThirdPartyTracking(element))
-          ).toList
+        element.pullquoteTypeData
+          .map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution, containsThirdPartyTracking(element)))
+          .toList
       case Interactive =>
         element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
-      case Table   => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
+      case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness =>
         element.witnessTypeData.map(d => WitnessBlockElement(d.html, containsThirdPartyTracking(element))).toList
       case Document =>
         element.documentTypeData
           .map(d =>
             DocumentBlockElement(
-              getEmbedUrl(d.html), d.width, d.height, d.title, d.isMandatory, containsThirdPartyTracking(element)
-            )
+              getEmbedUrl(d.html),
+              d.width,
+              d.height,
+              d.title,
+              d.isMandatory,
+              containsThirdPartyTracking(element),
+            ),
           )
           .toList
       case Instagram =>
-        element
-          .instagramTypeData
+        element.instagramTypeData
           .map(d =>
-            InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined, containsThirdPartyTracking(element))
-          ).toList
+            InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined, containsThirdPartyTracking(element)),
+          )
+          .toList
       case Vine => element.vineTypeData.map(d => VineBlockElement(d.html, containsThirdPartyTracking(element))).toList
       case Code =>
         List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
@@ -1096,16 +1119,18 @@ object PageElement {
   }
 
   private def extractSoundcloudBlockElement(
-    html: String, isMandatory: Boolean, thirdPartyTracking: Boolean
+      html: String,
+      isMandatory: Boolean,
+      thirdPartyTracking: Boolean,
   ): Option[SoundcloudBlockElement] = {
     val src = getIframeSrc(html)
     src.flatMap { s =>
       (SoundcloudHelper.getTrackIdFromUrl(s), SoundcloudHelper.getPlaylistIdFromUrl(s)) match {
-        case (Some(track), _)    =>
+        case (Some(track), _) =>
           Some(SoundcloudBlockElement(html, track, isTrack = true, isMandatory, thirdPartyTracking))
         case (_, Some(playlist)) =>
           Some(SoundcloudBlockElement(html, playlist, isTrack = false, isMandatory, thirdPartyTracking))
-        case _                   =>
+        case _ =>
           None
       }
     }
@@ -1114,7 +1139,7 @@ object PageElement {
   private def extractChartDatawrapperEmbedBlockElement(
       html: String,
       role: Option[String],
-      thirdPartyTracking: Boolean
+      thirdPartyTracking: Boolean,
   ): Option[EmbedBlockElement] = {
     // This only returns an EmbedBlockELement if referring to a charts-datawrapper.s3.amazonaws.com
     for {
@@ -1126,7 +1151,9 @@ object PageElement {
   }
 
   private def extractGenericEmbedBlockElement(
-      html: String, role: Option[String], thirdPartyTracking: Boolean
+      html: String,
+      role: Option[String],
+      thirdPartyTracking: Boolean,
   ): Option[EmbedBlockElement] = {
     // This returns a EmbedBlockELement to handle any iframe that wasn't captured by extractChartDatawrapperEmbedBlockElement
     for {
@@ -1136,7 +1163,10 @@ object PageElement {
     }
   }
 
-  private def extractSpotifyBlockElement(element: ApiBlockElement, thirdPartyTracking: Boolean): Option[SpotifyBlockElement] = {
+  private def extractSpotifyBlockElement(
+      element: ApiBlockElement,
+      thirdPartyTracking: Boolean,
+  ): Option[SpotifyBlockElement] = {
     for {
       d <- element.audioTypeData
       html <- d.html
@@ -1147,7 +1177,12 @@ object PageElement {
       if src.contains("spotify.com")
     } yield {
       SpotifyBlockElement(
-        getEmbedUrl(d.html), getIframeHeight(html), getIframeWidth(html), d.title, d.caption, thirdPartyTracking
+        getEmbedUrl(d.html),
+        getIframeHeight(html),
+        getIframeWidth(html),
+        d.title,
+        d.caption,
+        thirdPartyTracking,
       )
     }
   }
@@ -1200,7 +1235,7 @@ object PageElement {
   private def embedToPageElement(
       element: ApiBlockElement,
       campaigns: Option[JsValue],
-      calloutsUrl: Option[String]
+      calloutsUrl: Option[String],
   ): Option[PageElement] = {
     for {
       d <- element.embedTypeData
@@ -1248,15 +1283,36 @@ object PageElement {
       source match {
         case "YouTube" =>
           VideoYoutubeBlockElement(
-            caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role), thirdPartyTracking
+            caption,
+            url,
+            originalUrl,
+            getEmbedUrl(data.html),
+            height,
+            width,
+            Role(data.role),
+            thirdPartyTracking,
           )
         case "Vimeo" =>
           VideoVimeoBlockElement(
-            caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role), thirdPartyTracking
+            caption,
+            url,
+            originalUrl,
+            getEmbedUrl(data.html),
+            height,
+            width,
+            Role(data.role),
+            thirdPartyTracking,
           )
         case "Facebook" =>
           VideoFacebookBlockElement(
-            caption, url, originalUrl, getEmbedUrl(data.html), height, width, Role(data.role), thirdPartyTracking
+            caption,
+            url,
+            originalUrl,
+            getEmbedUrl(data.html),
+            height,
+            width,
+            Role(data.role),
+            thirdPartyTracking,
           )
         case _ => VideoBlockElement(caption, url, originalUrl, height, width, Role(data.role), thirdPartyTracking)
       }
@@ -1267,8 +1323,8 @@ object PageElement {
   private def containsThirdPartyTracking(element: ApiBlockElement): Boolean = {
     element.tracking.map(_.tracks) match {
       case Some(DoesNotTrack) => false
-      case None => false
-      case _ => true
+      case None               => false
+      case _                  => true
     }
   }
 
