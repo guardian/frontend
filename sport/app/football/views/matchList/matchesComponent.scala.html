@@ -25,7 +25,7 @@
 
 <div data-component="football-matches-embed" class="c-football-matches football-embed">
     @football.views.html.fragments.componentStyles()
-    @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { data =>
-        @footballMatchDay(data._1._1, data._1._2, data._2)
+    @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case (matches, row) =>
+        @footballMatchDay(matches._1, matches._2, row)
     }
 </div>
