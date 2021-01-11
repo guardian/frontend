@@ -141,7 +141,7 @@ class MatchController(
     extends BaseController
     with Football
     with Requests
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val dateFormat = DateTimeFormat.forPattern("yyyyMMMdd")

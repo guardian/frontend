@@ -22,7 +22,7 @@ class MatchesController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def scoreJson(year: String, month: String, day: String, homeTeamId: String, awayTeamId: String): Action[AnyContent] =

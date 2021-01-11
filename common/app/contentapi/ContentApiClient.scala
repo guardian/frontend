@@ -72,7 +72,7 @@ object QueryDefaults extends implicits.Collections {
   }
 }
 
-trait ApiQueryDefaults extends Logging {
+trait ApiQueryDefaults extends GuLogging {
 
   def item(id: String): ItemQuery = CapiContentApiClient.item(id)
   def search: SearchQuery = CapiContentApiClient.search
@@ -105,7 +105,7 @@ trait ApiQueryDefaults extends Logging {
 
 // This trait extends ContentApiClient with Cloudwatch metrics that monitor
 // the average response time, and the number of timeouts, from Content Api.
-trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryDefaults with Logging {
+trait MonitoredContentApiClientLogic extends CapiContentApiClient with ApiQueryDefaults with GuLogging {
 
   val httpClient: HttpClient
 

@@ -20,7 +20,7 @@ case class CricketMatchPage(theMatch: Match, matchId: String, team: CricketTeam)
 class CricketMatchController(cricketStatsJob: CricketStatsJob, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderMatchIdJson(date: String, teamId: String): Action[AnyContent] = renderMatchId(date, teamId)

@@ -3,7 +3,7 @@ package views.support
 import java.net.{URI, URISyntaxException}
 import java.util.Base64
 
-import common.Logging
+import common.GuLogging
 import conf.switches.Switches.{ImageServerSwitch}
 import conf.{Configuration}
 import layout.{BreakpointWidth, WidthsByBreakpoint}
@@ -326,7 +326,7 @@ object SeoOptimisedContentImage extends ImageProfile(width = Some(460))
 // Just degrade the image quality without adjusting the width/height
 object Naked extends ImageProfile(None, None)
 
-object ImgSrc extends Logging with implicits.Strings {
+object ImgSrc extends GuLogging with implicits.Strings {
 
   private val imageServiceHost: String = Configuration.images.host
 

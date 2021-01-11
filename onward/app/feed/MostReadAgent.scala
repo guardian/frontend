@@ -6,7 +6,7 @@ import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MostReadAgent(ophanApi: OphanApi) extends Logging {
+class MostReadAgent(ophanApi: OphanApi) extends GuLogging {
 
   private val agent = Box[Map[String, Int]](Map.empty)
 

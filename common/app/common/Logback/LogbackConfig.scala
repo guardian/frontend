@@ -76,12 +76,12 @@ class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
           )
           lb.addAppender(appender)
           lb.info("Configured Logback")
-        } getOrElse PlayLogger.info("not running using logback")
+        } getOrElse PlayLogger.logger.info("not running using logback")
       } catch {
-        case ex: Throwable => PlayLogger.info(s"Error while adding Logback Kinesis appender: $ex")
+        case ex: Throwable => PlayLogger.logger.info(s"Error while adding Logback Kinesis appender: $ex")
       }
     } else {
-      PlayLogger.info("Logging disabled")
+      PlayLogger.logger.info("Logging disabled")
     }
   }
 

@@ -1,7 +1,7 @@
 package layout.slices
 
 import model.pressed.{CollectionConfig, PressedContent}
-import common.Logging
+import common.GuLogging
 import layout.{EmailContentContainer, Front}
 import model.facia.PressedCollection
 
@@ -17,7 +17,7 @@ case object NavMediaList extends Container
 case object MostPopular extends Container
 case object Video extends Container
 
-object Container extends Logging {
+object Container extends GuLogging {
 
   /** This is THE top level resolver for containers */
   def all(adFree: Boolean = false): Map[String, Container] =

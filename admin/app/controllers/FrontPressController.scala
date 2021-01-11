@@ -1,6 +1,6 @@
 package controllers
 
-import common.{AkkaAsync, ImplicitControllerExecutionContext, Logging}
+import common.{AkkaAsync, ImplicitControllerExecutionContext, GuLogging}
 import jobs.{HighFrequency, LowFrequency, RefreshFrontsJob, StandardFrequency}
 import model.ApplicationContext
 import play.api.mvc._
@@ -8,7 +8,7 @@ import play.api.mvc._
 class FrontPressController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def press(): Action[AnyContent] =

@@ -2,7 +2,7 @@ package commercial.controllers
 
 import commercial.model.capi.CapiAgent
 import commercial.model.merchandise.TrafficDriver
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import contentapi.ContentApiClient
 import model.{Cached, ContentType}
 import play.api.mvc._
@@ -18,7 +18,7 @@ class TrafficDriverController(
 ) extends BaseController
     with ImplicitControllerExecutionContext
     with implicits.Requests
-    with Logging {
+    with GuLogging {
 
   // Request information about the article from cAPI.
   private def retrieveContent()(implicit request: Request[AnyContent]): Future[Option[ContentType]] = {

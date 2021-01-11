@@ -1,6 +1,6 @@
 package common.dfp
 
-import common.{Edition, Logging}
+import common.{Edition, GuLogging}
 import model.Tag
 import play.api.libs.json._
 
@@ -57,7 +57,7 @@ object InlineMerchandisingTargetedTagsReport {
 
 case class InlineMerchandisingTargetedTagsReport(updatedTimeStamp: String, targetedTags: InlineMerchandisingTagSet)
 
-object InlineMerchandisingTargetedTagsReportParser extends Logging {
+object InlineMerchandisingTargetedTagsReportParser extends GuLogging {
   def apply(jsonString: String): Option[InlineMerchandisingTargetedTagsReport] = {
     val json = Json.parse(jsonString)
     json.validate[InlineMerchandisingTargetedTagsReport] match {
@@ -115,7 +115,7 @@ object HighMerchandisingTargetedTagsReport {
 
 case class HighMerchandisingTargetedTagsReport(updatedTimeStamp: String, lineItems: HighMerchandisingLineItems)
 
-object HighMerchandisingTargetedTagsReportParser extends Logging {
+object HighMerchandisingTargetedTagsReportParser extends GuLogging {
   def apply(jsonString: String): Option[HighMerchandisingTargetedTagsReport] = {
     val json = Json.parse(jsonString)
     json.validate[HighMerchandisingTargetedTagsReport] match {

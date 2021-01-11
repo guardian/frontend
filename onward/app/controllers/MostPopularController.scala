@@ -36,7 +36,7 @@ class MostPopularController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
   val page = SimplePage(
     MetaData.make(

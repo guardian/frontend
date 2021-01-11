@@ -4,7 +4,7 @@ import java.net.URI
 import java.util.UUID
 
 import com.gu.googleauth.UserIdentity
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import controllers.admin.AdminAuthController
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.{WSClient, WSResponse}
@@ -19,7 +19,7 @@ class ImageDecacheController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with AdminAuthController {
   import ImageDecacheController._

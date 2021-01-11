@@ -31,7 +31,7 @@ object MostPopularRefresh {
   }
 }
 
-class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends Logging {
+class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, wsClient: WSClient) extends GuLogging {
 
   private val relatedContentsBox = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -118,7 +118,7 @@ class MostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi, w
   }
 }
 
-class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 
@@ -159,7 +159,7 @@ class GeoMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi
   }
 }
 
-class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class DayMostPopularAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   private val box = Box[Map[String, Seq[RelatedContentItem]]](Map.empty)
 

@@ -4,12 +4,12 @@ import commercial.model.Segment
 import commercial.model.capi.{Keyword, Lookup}
 import commercial.model.feeds.{FeedMetaData, ParsedFeed}
 import commercial.model.merchandise.{Masterclass, MerchandiseAgent}
-import common.Logging
+import common.GuLogging
 import contentapi.ContentApiClient
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[Masterclass] with Logging {
+class MasterclassAgent(contentApiClient: ContentApiClient) extends MerchandiseAgent[Masterclass] with GuLogging {
 
   private val lookup = new Lookup(contentApiClient)
 

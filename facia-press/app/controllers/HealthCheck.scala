@@ -1,6 +1,6 @@
 package controllers
 
-import common.Logging
+import common.GuLogging
 import play.api.mvc.{Action, AnyContent, ControllerComponents, Results}
 import conf.HealthCheckController
 import frontpress.ToolPressQueueWorker
@@ -13,7 +13,7 @@ class HealthCheck(
     val controllerComponents: ControllerComponents,
 ) extends HealthCheckController
     with Results
-    with Logging {
+    with GuLogging {
   val ConsecutiveProcessingErrorsThreshold = 5
   override def healthCheck(): Action[AnyContent] =
     Action.async {

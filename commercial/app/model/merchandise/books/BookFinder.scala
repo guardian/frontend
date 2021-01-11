@@ -6,7 +6,7 @@ import akka.util.Timeout
 import com.gu.Box
 import commercial.model.feeds.{FeedParseException, FeedReadException, FeedReader, FeedRequest}
 import commercial.model.merchandise.Book
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import conf.switches.Switches.BookLookupSwitch
 import play.api.libs.json._
@@ -17,7 +17,7 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.{Failure, Success}
 
-class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends Logging {
+class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) extends GuLogging {
 
   private implicit val bookActorExecutionContext: ExecutionContext =
     actorSystem.dispatchers.lookup("akka.actor.book-lookup")
@@ -27,7 +27,7 @@ class BookFinder(actorSystem: ActorSystem, magentoService: MagentoService) exten
   def findByIsbn(isbn: String): Option[Book] = BookAgent.get(isbn) map { _.as[Book] }
 }
 
-object BookAgent extends Logging {
+object BookAgent extends GuLogging {
 
   private lazy val cache = Box(Map.empty[String, JsValue])
 
@@ -50,7 +50,7 @@ object BookAgent extends Logging {
   }
 }
 
-class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends Logging {
+class MagentoService(actorSystem: ActorSystem, wsClient: WSClient) extends GuLogging {
 
   private case class MagentoProperties(oauth: WSSignatureCalculator, urlPrefix: String)
 

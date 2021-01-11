@@ -2,7 +2,7 @@ package utils
 
 import play.api.mvc.RequestHeader
 
-trait RemoteAddress extends common.Logging {
+trait RemoteAddress extends common.GuLogging {
   private val Ip = """(\d{1,3})\.(\d{1,3})\.(\d{1,3})\.(\d{1,3})""".r
 
   def clientIp(request: RequestHeader): Option[String] = {

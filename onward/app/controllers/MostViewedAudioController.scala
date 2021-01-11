@@ -14,7 +14,7 @@ class MostViewedAudioController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderMostViewed(): Action[AnyContent] =
