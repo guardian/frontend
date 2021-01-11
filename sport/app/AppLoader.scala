@@ -13,12 +13,11 @@ import cricket.controllers.CricketControllers
 import dev.DevAssetsController
 import feed.{CompetitionsProvider, CompetitionsService}
 import football.controllers.{FootballControllers, HealthCheck}
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import jobs.CricketStatsJob
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -84,6 +83,5 @@ trait AppComponents
   lazy val appIdentity = ApplicationIdentity("sport")
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   def actorSystem: ActorSystem
 }

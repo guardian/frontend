@@ -11,11 +11,10 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{ArticleControllers, HealthCheck}
 import dev.DevAssetsController
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import router.Routes
@@ -67,7 +66,6 @@ trait AppComponents extends FrontendComponents with ArticleControllers {
     ArticleRenderingMetrics.LocalRenderingMetric,
   )
 
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
 
   def actorSystem: ActorSystem

@@ -1,5 +1,5 @@
 import akka.actor.ActorSystem
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
@@ -11,7 +11,6 @@ import dev.DevAssetsController
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpErrorHandler
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -45,7 +44,6 @@ trait AppComponents extends FrontendComponents {
 
   lazy val appIdentity = ApplicationIdentity("archive")
 
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
 
   def actorSystem: ActorSystem

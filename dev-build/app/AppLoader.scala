@@ -18,7 +18,7 @@ import dev.DevAssetsController
 import dfp.DfpDataCacheLifecycle
 import feed._
 import football.controllers._
-import http.{CorsHttpErrorHandler, DevFilters}
+import http.DevFilters
 import model.{AdminLifecycle, ApplicationIdentity}
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
@@ -106,5 +106,4 @@ trait AppComponents
     )
 
   override lazy val httpFilters = wire[DevFilters].filters
-  override lazy val httpErrorHandler = wire[CorsHttpErrorHandler]
 }

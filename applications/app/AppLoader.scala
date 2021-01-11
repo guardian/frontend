@@ -11,13 +11,12 @@ import conf.switches.SwitchboardLifecycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient, SectionsLookUp, SectionsLookUpLifecycle}
 import controllers._
 import dev.DevAssetsController
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.{HttpErrorHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -86,7 +85,6 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     EmailSubsciptionMetrics.AllEmailSubmission,
   )
 
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
 
   def actorSystem: ActorSystem

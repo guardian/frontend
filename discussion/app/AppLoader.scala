@@ -1,6 +1,6 @@
 import akka.actor.ActorSystem
 import dev.DevAssetsController
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import app.{FrontendApplicationLoader, FrontendComponents}
 import com.softwaremill.macwire._
 import common._
@@ -12,13 +12,10 @@ import discussion.api.DiscussionApi
 import model.ApplicationIdentity
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpErrorHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.api.libs.ws.WSClient
 import router.Routes
-
-import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -48,7 +45,6 @@ trait AppComponents extends FrontendComponents with DiscussionControllers with D
 
   lazy val appIdentity = ApplicationIdentity("discussion")
 
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
   def actorSystem: ActorSystem
 }

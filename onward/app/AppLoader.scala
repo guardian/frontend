@@ -1,5 +1,5 @@
 import akka.actor.ActorSystem
-import http.{CommonFilters, CorsHttpErrorHandler}
+import http.CommonFilters
 import app.{FrontendApplicationLoader, FrontendComponents}
 import business.{StocksData, StocksDataLifecycle}
 import com.softwaremill.macwire._
@@ -13,7 +13,6 @@ import dev.DevAssetsController
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
-import play.api.http.HttpErrorHandler
 import play.api.{BuiltInComponentsFromContext, Environment}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -83,7 +82,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
 
   def actorSystem: ActorSystem
 }
