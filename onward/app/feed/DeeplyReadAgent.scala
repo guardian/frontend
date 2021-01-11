@@ -89,44 +89,45 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         query CAPI and set the Content for the path.
      */
 
-    val deeplyReadFuture = ophanApi.getDeeplyReadContent().flatMap { seq =>
-      log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
-      val deeplyReadSeq = seq.map { ophanItem =>
-        log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
-        val path = removeStartingSlash(ophanItem.path)
-        log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
-        val capiItem = contentApiClient
-          .item(path)
-          .showTags("all")
-          .showFields("all")
-          .showReferences("all")
-          .showAtoms("all")
-        val deeplyReadApiClient = contentApiClient
-          .getResponse(capiItem)
-          .map { res =>
-            res.content.map { c =>
-              log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
-              println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
-              ophanItem -> c
+    val fDeeplyReadItemsWithCapi: Future[Seq[Option[(OphanDeeplyReadItem, Content)]]] =
+      ophanApi.getDeeplyReadContent().flatMap { seq =>
+        log.info(s"[cb01a845] ophanItems updated with: ${seq.toArray.size} new items")
+        val seqCapiFutures: Seq[Future[Option[(OphanDeeplyReadItem, Content)]]] = seq.map { ophanItem =>
+          log.info(s"[cb01a845] CAPI lookup for Ophan deeply read item: ${ophanItem.toString}")
+          val path = removeStartingSlash(ophanItem.path)
+          log.info(s"[cb01a845] CAPI Lookup for path: ${path}")
+          val capiItem = contentApiClient
+            .item(path)
+            .showTags("all")
+            .showFields("all")
+            .showReferences("none")
+            .showAtoms("none")
+          val capiResponse = contentApiClient
+            .getResponse(capiItem)
+            .map { res =>
+              res.content.map { c =>
+                log.info(s"[cb01a845] In memory Update CAPI data for path: ${path}")
+                println(s"[cb01a845] In memory Update CAPI data for path: ${path}")
+                ophanItem -> c
+              }
             }
-          }
-          .recover {
-            case NonFatal(e) =>
-              log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
-              None
-          }
-        deeplyReadApiClient
-      }
-      Future.sequence(deeplyReadSeq)
+            .recover {
+              case NonFatal(e) =>
+                log.info(s"[cb01a845] Error CAPI lookup for path: ${path}. ${e.getMessage}")
+                None
+            }
+          capiResponse
+        }
+        Future.sequence(seqCapiFutures)
 
-    // We now perform the atomic update of deeplyReadItems to faithfully reflects the state of the Ophan answer.
-    // It is done as last step of the process because by then the CAPI content has been loaded.
-    }
-    deeplyReadFuture.foreach { sequence =>
+      // We now perform the atomic update of deeplyReadItems to faithfully reflects the state of the Ophan answer.
+      // It is done as last step of the process because by then the CAPI content has been loaded.
+      }
+    fDeeplyReadItemsWithCapi.foreach { sequence =>
       val mapDeeplyReadItems = sequence.filter(_.isDefined).map(_.get).toMap
       deeplyReadItems = collection.mutable.Map(mapDeeplyReadItems.toSeq: _*)
     }
-    deeplyReadFuture
+    fDeeplyReadItemsWithCapi
   }
 
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
