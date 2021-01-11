@@ -7,13 +7,11 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi._
 import controllers.{HealthCheck, RssController}
-import dev.DevParametersHttpRequestHandler
 import http.CommonFilters
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api.BuiltInComponentsFromContext
-import play.api.http.HttpRequestHandler
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services.{ConfigAgentLifecycle, OphanApi}
@@ -59,6 +57,5 @@ trait AppComponents extends FrontendComponents {
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
-  override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   def actorSystem: ActorSystem
 }
