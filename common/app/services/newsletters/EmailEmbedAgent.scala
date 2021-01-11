@@ -1,11 +1,11 @@
 package services.newsletters
 
 import com.gu.Box
-import common._
+import common.GuLogging
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class EmailEmbedAgent(newsletterApi: NewsletterApi) extends Logging {
+class EmailEmbedAgent(newsletterApi: NewsletterApi) extends GuLogging {
 
   private val agent = Box[Either[String, List[NewsletterResponse]]](Right(Nil))
 
