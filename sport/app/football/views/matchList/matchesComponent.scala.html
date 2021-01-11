@@ -1,25 +1,31 @@
+@import org.joda.time.LocalDate
 @import football.model.MatchesList
+@import model.Competition
+@import pa.FootballMatch
 @import views.support.`package`.Seq2zipWithRowInfo
+@import views.support.RowInfo
 
 @(matchesList: MatchesList, customLink: Option[(String, String)] = None)(implicit request: RequestHeader, context: model.ApplicationContext)
 
-<div data-component="football-matches-embed" class="c-football-matches football-embed">
-
-    @football.views.html.fragments.componentStyles()
-
-    @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { case ((date, competitionMatches), dateRow) =>
+@template1(date: LocalDate, competitionMatches: List[(Competition, List[FootballMatch])], dateRow: RowInfo) = {
     <div class="football-matches__day">
-        @{competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
-            football.views.html.matchList.matchesList(
-                matches,
-                competition,
-                date,
-                matchType = matchesList.pageType,
-                heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
-                link = customLink orElse (if(dateRow.isLast && matchRow.isLast)
-                    Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None)
-            )
-        }}
+    @{competitionMatches.zipWithRowInfo.map { case ((competition, matches), matchRow) =>
+        football.views.html.matchList.matchesList(
+            matches,
+            competition,
+            date,
+            matchType = matchesList.pageType,
+            heading = if(dateRow.isFirst) Some((competition.fullName, Option(competition.url))) else None,
+            link = customLink orElse (if(dateRow.isLast && matchRow.isLast)
+                Some(("View all "+matchesList.pageType, "/football/"+matchesList.pageType)) else None)
+        )
+    }}
     </div>
+}
+
+<div data-component="football-matches-embed" class="c-football-matches football-embed">
+    @football.views.html.fragments.componentStyles()
+    @matchesList.matchesGroupedByDateAndCompetition.zipWithRowInfo.map { data =>
+        @template1(data._1._1, data._1._2, data._2)
     }
 </div>
