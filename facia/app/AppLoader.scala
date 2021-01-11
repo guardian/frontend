@@ -9,7 +9,7 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import controllers.front.{FrontJsonFapiDraft, FrontJsonFapiLive}
 import controllers.{FaciaControllers, HealthCheck}
-import dev.{DevAssetsController}
+import dev.DevAssetsController
 import http.{CommonFilters, PreloadFilters}
 import model.ApplicationIdentity
 import services.ophan.SurgingContentAgentLifecycle
