@@ -1,6 +1,4 @@
-// @flow
-
-const deferToAnalytics = (afterAnalytics: () => void): void => {
+const deferToAnalytics = (afterAnalytics) => {
     afterAnalytics();
 };
 

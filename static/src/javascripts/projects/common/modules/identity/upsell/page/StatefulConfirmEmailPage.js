@@ -1,26 +1,14 @@
-// @flow
-
 import React from 'preact-compat';
 import { ConfirmEmailPage } from './ConfirmEmailPage';
 import { getUserData } from '../../api';
 
-type Props = {
-    csrfToken: string,
-    accountToken: ?string,
-    email: string,
-    hasPassword: boolean,
-    hasSocialLinks: boolean,
-};
 
-type State = {
-    isUserLoggedIn: boolean,
-};
 
-const isUserLoggedIn = (): Promise<boolean> =>
+const isUserLoggedIn = () =>
     getUserData().then(response => response.ok);
 
-export class StatefulConfirmEmailPage extends React.Component<Props, State> {
-    constructor(props: Props) {
+export class StatefulConfirmEmailPage extends React.Component {
+    constructor(props) {
         super(props);
         this.setState({ isUserLoggedIn: false });
     }

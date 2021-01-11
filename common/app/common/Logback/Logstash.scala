@@ -58,13 +58,13 @@ class Logstash(logbackOperationsPool: LogbackOperationsPool) {
     Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
       case Success(isOn) =>
         if (isOn) {
-          config(playConfig).fold(PlayLogger.info("Logstash config is missing"))(
+          config(playConfig).fold(PlayLogger.logger.info("Logstash config is missing"))(
             new LogbackConfig(logbackOperationsPool).init,
           )
         } else {
-          PlayLogger.info("Logstash logging switch is Off")
+          PlayLogger.logger.info("Logstash logging switch is Off")
         }
-      case Failure(_) => PlayLogger.error("Failed retrieving the logtash-logging switch value")
+      case Failure(_) => PlayLogger.logger.error("Failed retrieving the logtash-logging switch value")
     }
   }
 }

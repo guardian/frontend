@@ -3,7 +3,7 @@ package controllers.admin
 import java.io.File
 import java.net.URL
 
-import common.{AkkaAsync, ImplicitControllerExecutionContext, Logging}
+import common.{AkkaAsync, ImplicitControllerExecutionContext, GuLogging}
 import model.{ApplicationContext, R2PressMessage}
 import play.api.mvc._
 import services.{R2PagePressNotifier, R2PressedPageTakedownNotifier, RedirectService}
@@ -15,7 +15,7 @@ class R2PressController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def pressForm(urlMsgs: List[String] = List.empty, fileMsgs: List[String] = List.empty): Action[AnyContent] =

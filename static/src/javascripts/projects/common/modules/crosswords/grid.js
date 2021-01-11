@@ -1,26 +1,16 @@
-// @flow
 import React from 'preact-compat';
 import { gridSize, clueMapKey } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import GridCell from 'common/modules/crosswords/cell';
 import { classNames } from 'common/modules/crosswords/classNames';
-import type Crossword from 'common/modules/crosswords/crossword';
 
-export type GridProps = {
-    rows: number,
-    columns: number,
-    cells: Array<Array<Cell>>,
-    separators: SeparatorMap,
-    crossword: Crossword,
-    focussedCell: ?Position,
-};
 
 // Position at end of previous cell
 const createWordSeparator = (
-    x: number,
-    y: number,
-    direction: Direction
-): ?React$Node => {
+    x,
+    y,
+    direction
+) => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -52,10 +42,10 @@ const createWordSeparator = (
 
 // Position in-between this and previous cells
 const createHyphenSeparator = (
-    x: number,
-    y: number,
-    direction: Direction
-): ?React$Node => {
+    x,
+    y,
+    direction
+) => {
     const top = gridSize(y);
     const left = gridSize(x);
     const borderWidth = 1;
@@ -90,10 +80,10 @@ const createHyphenSeparator = (
 };
 
 const createSeparator = (
-    x: number,
-    y: number,
-    separatorDescription: ?SeparatorDescription
-): ?React$Node => {
+    x,
+    y,
+    separatorDescription
+) => {
     if (separatorDescription) {
         if (separatorDescription.separator === ',') {
             return createWordSeparator(x, y, separatorDescription.direction);
@@ -103,11 +93,11 @@ const createSeparator = (
     }
 };
 
-export const Grid = (props: GridProps): React$Node => {
-    const getSeparators = (x: number, y: number): ?SeparatorDescription =>
+export const Grid = (props) => {
+    const getSeparators = (x, y) =>
         props.separators[clueMapKey(x, y)];
 
-    const handleSelect = (x: number, y: number): void =>
+    const handleSelect = (x, y) =>
         props.crossword.onSelect(x, y);
 
     const width = gridSize(props.columns);

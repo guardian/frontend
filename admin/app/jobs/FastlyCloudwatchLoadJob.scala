@@ -1,7 +1,7 @@
 package jobs
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
-import common.Logging
+import common.GuLogging
 import metrics.SamplerMetric
 import model.diagnostics.CloudWatch
 import services.{FastlyStatistic, FastlyStatisticService}
@@ -12,7 +12,7 @@ import org.joda.time.DateTime
 
 import scala.concurrent.ExecutionContext
 
-class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) extends Logging {
+class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) extends GuLogging {
   // Samples in CloudWatch are additive so we want to limit duplicate reporting.
   // We do not want to corrupt the past either, so set a default value (the most
   // recent 15 minutes of results are unstable).

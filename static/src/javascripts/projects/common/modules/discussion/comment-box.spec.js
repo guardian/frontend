@@ -1,4 +1,3 @@
-// @flow
 import { CommentBox } from 'common/modules/discussion/comment-box';
 import { getUserFromApiWithRefreshedCookie as getUserFromApiWithRefreshedCookie_ } from 'common/modules/identity/api';
 import { postComment as postComment_ } from 'common/modules/discussion/api';
@@ -31,11 +30,8 @@ jest.mock('common/modules/discussion/api', () => ({
     postComment: jest.fn(),
 }));
 
-const getUserFromApiWithRefreshedCookie: JestMockFn<
-    *,
-    *
-> = (getUserFromApiWithRefreshedCookie_: any);
-const postComment: JestMockFn<*, *> = (postComment_: any);
+const getUserFromApiWithRefreshedCookie = (getUserFromApiWithRefreshedCookie_);
+const postComment = (postComment_);
 
 describe('Comment box', () => {
     const discussionId = '/p/3ht42';

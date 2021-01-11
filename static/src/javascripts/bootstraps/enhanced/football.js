@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import bonzo from 'bonzo';
 import $ from 'lib/$';
@@ -23,24 +22,17 @@ import { tagPageStats } from 'common/modules/sport/football/tag-page-stats';
 import { ScoreBoard } from 'common/modules/sport/score-board';
 import { replaceLocaleTimestamps } from 'common/modules/ui/relativedates';
 
-declare type Extra = {
-    content?: Element,
-    chart?: string,
-    importance?: number,
-    name?: string,
-    ready: boolean,
-};
 
 const renderNav = (
-    match: Object,
-    callback?: (resp: Object, $nav: bonzo, endpoint: string) => void
-): Promise<void> => {
+    match,
+    callback
+) => {
     const matchInfo = new MatchInfo(match, config.get('page.pageId'));
 
     return matchInfo
         .fetch()
         .then(
-            (resp: Object): void => {
+            (resp) => {
                 let $nav;
 
                 if (resp.nav && resp.nav.trim().length > 0) {
@@ -64,7 +56,7 @@ const renderNav = (
         });
 };
 
-const renderExtras = (_extras: Array<?Extra>): void => {
+const renderExtras = (_extras) => {
     const extras = [..._extras].filter(extra => extra);
     const ready =
         extras.filter(extra => extra && extra.ready === false).length === 0;
@@ -84,7 +76,7 @@ const renderExtras = (_extras: Array<?Extra>): void => {
     }
 };
 
-const renderTable = (competition: string, extras: Array<?Extra>): void => {
+const renderTable = (competition, extras) => {
     extras[2] = {
         ready: false,
     };
@@ -118,13 +110,9 @@ const renderTable = (competition: string, extras: Array<?Extra>): void => {
 };
 
 const loading = (
-    elem: HTMLElement,
-    message: string = 'Loading…',
-    link: {
-        text: string,
-        href: string,
-    }
-): void => {
+    elem,
+    message = 'Loading…',
+    link) => {
     bonzo(elem).append(
         bonzo.create(`
             <div class="loading">
@@ -137,15 +125,15 @@ const loading = (
     );
 };
 
-const loaded = (elem: HTMLElement): void => {
+const loaded = (elem) => {
     $('.loading', elem).remove();
 };
 
-const init = (): void => {
+const init = () => {
     const extras = [];
 
     isMatch(
-        (match: Object): void => {
+        (match) => {
             $('article').addClass('content--has-scores');
 
             extras[0] = {
@@ -164,7 +152,7 @@ const init = (): void => {
 
                 renderNav(
                     match,
-                    (resp, $nav, endpoint): void => {
+                    (resp, $nav, endpoint) => {
                         // Test if template is not composed of just whitspace. A content validation check, apparently.
                         if (!/^\s+$/.test(scoreBoard.template || '')) {
                             scoreBoard.endpoint = endpoint;
@@ -208,7 +196,7 @@ const init = (): void => {
                         }
 
                         // Group table & Match day
-                        isCompetition((competition: string) => {
+                        isCompetition((competition) => {
                             extras[1] = {
                                 ready: false,
                             };
@@ -251,7 +239,7 @@ const init = (): void => {
         }
     );
 
-    isCompetition((competition: string) => {
+    isCompetition((competition) => {
         const $rightHandCol = $('.js-secondary-column').dim().height;
         if ($rightHandCol === 0 || $rightHandCol > 1800) {
             renderTable(competition, extras);
@@ -273,7 +261,7 @@ const init = (): void => {
         );
         const $img = $('.media-primary');
         const $matchListContainer = $.create(
-            // $FlowFixMe
+            
             `<div class="football-matches__container"
                   data-link-name="football-matches-clockwatch"></div>
             `.css({ minHeight: $img[0] ? $img[0].offsetHeight : 0 })
@@ -288,7 +276,7 @@ const init = (): void => {
 
         $('.js-football-meta').append($matchListContainer);
 
-        const handleResponse = (success: boolean): void => {
+        const handleResponse = (success) => {
             if (
                 !success ||
                 $('.football-match', $matchListContainer[0]).length === 0
@@ -316,7 +304,7 @@ const init = (): void => {
         document.body,
         'click',
         '.js-show-more-football-matches',
-        (e: Event): void => {
+        (e) => {
             e.preventDefault();
 
             const el = e.currentTarget;

@@ -1,9 +1,8 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 
 // find a bucket message to show once you finish a quiz
-const handleCompletion = (): void => {
+const handleCompletion = () => {
     // we're only handling completion in browsers who can validate forms natively
     // others do a round trip to the server
     if (!HTMLFormElement.prototype.checkValidity) {
@@ -12,7 +11,7 @@ const handleCompletion = (): void => {
 
     // quizzes can be set to only show answers at the end, in which case we do a round trip.
     // we'll run this code only if it's an instant-reveal quiz
-    const quizzes: Element[] = Array.from(
+    const quizzes = Array.from(
         document.getElementsByClassName('js-atom-quiz--instant-reveal')
     );
 
@@ -20,9 +19,9 @@ const handleCompletion = (): void => {
         return;
     }
 
-    bean.on(document, 'click', quizzes, function onClick(e: Event): void {
-        const quiz: HTMLFormElement = (e.currentTarget: any);
-        let total: number = quiz.querySelectorAll(
+    bean.on(document, 'click', quizzes, function onClick(e) {
+        const quiz = (e.currentTarget);
+        let total = quiz.querySelectorAll(
             ':checked + .atom-quiz__answer__item--is-correct'
         ).length;
 
@@ -33,9 +32,9 @@ const handleCompletion = (): void => {
 
         do {
             // try and find a .bucket__message for your total
-            const bucketMessage: ?HTMLElement = (quiz.querySelector(
+            const bucketMessage = (quiz.querySelector(
                 `.js-atom-quiz__bucket-message--${total}`
-            ): ?any);
+            ));
 
             // if we find a message for your total show it, and exit
             if (bucketMessage) {

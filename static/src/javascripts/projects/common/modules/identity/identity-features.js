@@ -1,11 +1,9 @@
-// @flow
-
 class IdentityFeatures {
-    promptForSignIn: boolean;
+    promptForSignIn;
 
     constructor() {
         this.promptForSignIn =
-            // $FlowFixMe
+            
             navigator.credentials && window.PasswordCredential;
     }
 }

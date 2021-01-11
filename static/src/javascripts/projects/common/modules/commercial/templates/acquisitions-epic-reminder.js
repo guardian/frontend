@@ -1,14 +1,8 @@
-// @flow
 import closeCentralIcon from 'svgs/icon/close-central.svg';
 
-export type ReminderFields = {
-    reminderCTA: string,
-    reminderDate: string,
-    reminderDateAsString: string,
-};
 
 export const acquisitionsEpicReminderTemplate = (
-    reminderFields: ReminderFields
+    reminderFields
 ) => `
     <div id="epic-reminder" class="js-epic-reminder epic-reminder">
         <div class="epic-reminder__signup">

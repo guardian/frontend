@@ -1,15 +1,14 @@
-// @flow
 import { Component } from 'common/modules/component';
 import mediator from 'lib/mediator';
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
 const moreInSeriesContainerInit = (
-    el: HTMLElement,
-    mediaType: string,
-    section: string,
-    shortUrl: string,
-    series?: string
-): void => {
+    el,
+    mediaType,
+    section,
+    shortUrl,
+    series
+) => {
     const component = new Component();
     const seriesStr = series ? `/${series}` : '';
     // exclude professional network content from video pages

@@ -1,16 +1,8 @@
-// @flow strict
 
-type PrebidPriceGranularity = {
-    buckets: Array<{
-        precision?: number,
-        max: number,
-        increment: number,
-    }>,
-};
 
-export type { PrebidPriceGranularity };
 
-export const priceGranularity: PrebidPriceGranularity = {
+
+export const priceGranularity = {
     buckets: [
         {
             max: 100,

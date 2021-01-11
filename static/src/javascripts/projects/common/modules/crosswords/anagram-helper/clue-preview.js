@@ -1,15 +1,13 @@
-// @flow
 import React, { Component } from 'preact-compat';
 
-type WordSeparator = ',' | '-';
 
 // Checks a object in the form{",":[4,7]}
 const checkIfLetterHasSeparator = (
-    locations: { [k: WordSeparator]: number[] },
-    letterIndex: number
-): string => {
+    locations,
+    letterIndex
+) => {
     const spaces = locations[','];
-    const letterHasBoundary = (separators: number[]): boolean =>
+    const letterHasBoundary = (separators) =>
         separators.includes(letterIndex);
 
     if (spaces && letterHasBoundary(spaces)) {
@@ -24,7 +22,7 @@ const checkIfLetterHasSeparator = (
     return 'crossword__anagram-helper__cell';
 };
 
-class CluePreview extends Component<*, *> {
+class CluePreview extends Component {
     /**
      * Get the entries for the preview cells: first filter the user's input to
      * remove anything anything that's already been entered into the grid.
@@ -35,7 +33,7 @@ class CluePreview extends Component<*, *> {
      * If the user hasn't yet clicked 'shuffle' (this.props.hasShuffled) just
      * display the entries as they are, preserving any blank spaces.
      */
-    getEntries(): Object[] {
+    getEntries() {
         const unsolved = this.props.letters.filter(l => !l.entered);
 
         return this.props.entries.map(entry => {
@@ -66,7 +64,7 @@ class CluePreview extends Component<*, *> {
                     </strong>{' '}
                     {this.props.clue.clue}
                 </div>
-                {entries.map((entry: Object, i: number) => {
+                {entries.map((entry, i) => {
                     const classNames = checkIfLetterHasSeparator(
                         this.props.clue.separatorLocations,
                         i + 1

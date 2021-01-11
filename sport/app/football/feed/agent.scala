@@ -9,7 +9,7 @@ import model.{Competition, TeamNameBuilder}
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait Lineups extends Logging {
+trait Lineups extends GuLogging {
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
   def getLineup(theMatch: FootballMatch)(implicit executionContext: ExecutionContext): Future[LineUp] =
@@ -23,7 +23,7 @@ trait Lineups extends Logging {
       .recover(footballClient.logErrorsWithMessage(s"Failed getting line-up for match ${theMatch.id}"))
 }
 
-trait LiveMatches extends Logging {
+trait LiveMatches extends GuLogging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
@@ -46,7 +46,7 @@ trait LiveMatches extends Logging {
       .recover(footballClient.logErrorsWithMessage(s"Failed getting live matches"))
 }
 
-trait LeagueTables extends Logging {
+trait LeagueTables extends GuLogging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
@@ -67,7 +67,7 @@ trait LeagueTables extends Logging {
   }
 }
 
-trait Fixtures extends Logging {
+trait Fixtures extends GuLogging {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder
@@ -87,7 +87,7 @@ trait Fixtures extends Logging {
   }
 }
 
-trait Results extends Logging with implicits.Collections {
+trait Results extends GuLogging with implicits.Collections {
 
   def footballClient: FootballClient
   def teamNameBuilder: TeamNameBuilder

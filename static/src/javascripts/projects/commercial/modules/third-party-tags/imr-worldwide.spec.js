@@ -1,8 +1,7 @@
-// @flow
 import { imrWorldwide } from './imr-worldwide';
 
 const { shouldRun, url } = imrWorldwide;
-const onLoad: any = imrWorldwide.onLoad;
+const onLoad = imrWorldwide.onLoad;
 
 /**
  * we have to mock config like this because
@@ -29,7 +28,7 @@ jest.mock('lib/config', () => {
     };
 
     return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
+        get: (path = '', defaultValue) =>
             path
                 .replace(/\[(.+?)]/g, '.$1')
                 .split('.')

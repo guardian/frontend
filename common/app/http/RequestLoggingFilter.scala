@@ -1,7 +1,7 @@
 package http
 
 import akka.stream.Materializer
-import common.{Logging, RequestLogger, StopWatch}
+import common.{GuLogging, RequestLogger, StopWatch}
 import play.api.mvc.{Filter, RequestHeader, Result}
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -9,7 +9,7 @@ import scala.util.{Failure, Success}
 
 class RequestLoggingFilter(implicit val mat: Materializer, executionContext: ExecutionContext)
     extends Filter
-    with Logging {
+    with GuLogging {
 
   override def apply(next: RequestHeader => Future[Result])(rh: RequestHeader): Future[Result] = {
 

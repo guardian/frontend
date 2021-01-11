@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import bean from 'bean';
@@ -14,14 +12,14 @@ import ophan from 'ophan/ng';
 const gaTracker = config.get('googleAnalytics.trackers.editorial');
 const isEmbed = !!window.guardian.isEmbed;
 
-const getCanonicalUrl = (dataset: Object): string =>
+const getCanonicalUrl = (dataset) =>
     dataset.canonicalUrl ||
     // we need to look up the embedPath for main media videos
     dataset.embedPath ||
     // the fallback to window.location.pathname should only happen for main media on fronts
     window.location.pathname;
 
-const bindTrackingEvents = (el: HTMLMediaElement): void => {
+const bindTrackingEvents = (el) => {
     const mediaType = el.tagName.toLowerCase();
     const dataset = el.dataset;
     const { mediaId } = dataset;
@@ -87,15 +85,15 @@ const bindTrackingEvents = (el: HTMLMediaElement): void => {
     });
     bean.on(el, 'play pause', () => {
         // synthetic click on data-component="main video"
-        const figure: HTMLElement = (el.parentNode &&
+        const figure = (el.parentNode &&
             el.parentNode.parentNode &&
-            el.parentNode.parentNode.parentNode: any);
+            el.parentNode.parentNode.parentNode);
 
         figure.click();
     });
 };
 
-const initPlayer = (): void => {
+const initPlayer = () => {
     fastdom.measure(() => {
         $('.js-gu-media--enhance').each(el => {
             bindTrackingEvents(el);
@@ -105,7 +103,7 @@ const initPlayer = (): void => {
     });
 };
 
-const initWithRaven = (): void => {
+const initWithRaven = () => {
     raven.wrap(
         {
             tags: {
@@ -118,6 +116,6 @@ const initWithRaven = (): void => {
     )();
 };
 
-export const initVideoPlayer = (): void => {
+export const initVideoPlayer = () => {
     initWithRaven();
 };

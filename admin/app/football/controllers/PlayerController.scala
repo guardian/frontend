@@ -5,7 +5,7 @@ import play.api.mvc._
 import football.services.PaFootballClient
 import pa.{PlayerAppearances, PlayerProfile, StatsSummary}
 import implicits.Requests
-import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import org.joda.time.LocalDate
 import football.model.PA
 
@@ -22,7 +22,7 @@ class PlayerController(val wsClient: WSClient, val controllerComponents: Control
     with ImplicitControllerExecutionContext
     with PaFootballClient
     with Requests
-    with Logging {
+    with GuLogging {
 
   def playerIndex: Action[AnyContent] =
     Action.async { implicit request =>

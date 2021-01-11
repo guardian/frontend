@@ -1,11 +1,10 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 const timeout = 2000;
 
-class ConfirmButton extends Component<*, *> {
-    constructor(props: {}) {
+class ConfirmButton extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             confirming: false,

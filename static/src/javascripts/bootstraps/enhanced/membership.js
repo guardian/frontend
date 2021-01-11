@@ -1,6 +1,5 @@
-// @flow
 import { deleteOldData } from 'common/modules/commercial/user-features';
 
-export const init = (): void => {
+export const init = () => {
     deleteOldData();
 };

@@ -1,11 +1,9 @@
-// @flow
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import userPrefs from 'common/modules/user-prefs';
 
-type ToggleState = 'hidden' | 'displayed';
 
 const prefName = 'container-states';
 const toggleText = {
@@ -20,10 +18,10 @@ const btnTmpl = ({ text, dataLink }) => `
 `;
 
 export class ContainerToggle {
-    $container: bonzo;
-    state: ToggleState;
-    $button: bonzo;
-    constructor(container: Element) {
+    $container;
+    state;
+    $button;
+    constructor(container) {
         this.$container = bonzo(container);
         this.$button = bonzo(
             bonzo.create(
@@ -36,11 +34,11 @@ export class ContainerToggle {
         this.state = 'displayed';
     }
 
-    buttonText(): bonzo {
+    buttonText() {
         return $('.fc-container__toggle__text', this.$button);
     }
 
-    updatePref(id: string): void {
+    updatePref(id) {
         // update user prefs
         let prefs = userPrefs.get(prefName);
         const prefValue = id;
@@ -56,7 +54,7 @@ export class ContainerToggle {
         userPrefs.set(prefName, prefs);
     }
 
-    setState(newState: ToggleState): void {
+    setState(newState) {
         this.state = newState;
 
         fastdom.mutate(() => {
@@ -73,7 +71,7 @@ export class ContainerToggle {
         });
     }
 
-    readPrefs(id: string): void {
+    readPrefs(id) {
         // update user prefs
         const prefs = userPrefs.get(prefName);
         if (prefs && prefs[id]) {
@@ -81,7 +79,7 @@ export class ContainerToggle {
         }
     }
 
-    addToggle(): void {
+    addToggle() {
         // append toggle button
         const id = this.$container.attr('data-id');
         const $containerHeader = $('.js-container__header', this.$container[0]);

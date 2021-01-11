@@ -1,24 +1,17 @@
-// @flow
 /*
     Module: expandable.js
     Description: Used to make a list of items expand and contract
 */
 
-type Options = {
-    dom: HTMLElement,
-    expanded?: boolean,
-    showCount?: boolean,
-    buttonAfterEl?: HTMLElement,
-};
 
 class Expandable {
-    opts: Options;
-    dom: Element;
-    cta: Element;
-    expanded: boolean;
-    showCount: boolean;
+    opts;
+    dom;
+    cta;
+    expanded;
+    showCount;
 
-    constructor(options: Options) {
+    constructor(options) {
         this.opts = options;
         this.dom = options.dom;
         this.expanded = options.expanded !== false;
@@ -26,7 +19,7 @@ class Expandable {
         this.showCount = options.showCount !== false;
     }
 
-    renderState(): void {
+    renderState() {
         if (this.expanded) {
             this.dom.classList.remove('shut');
         } else {
@@ -34,11 +27,11 @@ class Expandable {
         }
     }
 
-    getCount(): number {
+    getCount() {
         return parseInt(this.dom.getAttribute('data-count') || '0', 10);
     }
 
-    updateCallToAction(): void {
+    updateCallToAction() {
         const text = `Show ${this.showCount ? `${this.getCount()} ` : ''}${
             this.expanded ? 'fewer' : 'more'
         }`;
@@ -50,17 +43,17 @@ class Expandable {
         this.cta.setAttribute('data-is-ajax', '1');
     }
 
-    toggleExpanded(): void {
+    toggleExpanded() {
         this.expanded = !this.expanded;
         this.renderState();
         this.updateCallToAction();
     }
 
-    isOpen(): boolean {
+    isOpen() {
         return !this.dom.classList.contains('shut');
     }
 
-    renderCallToAction(): void {
+    renderCallToAction() {
         this.cta.addEventListener('click', () => {
             this.toggleExpanded();
         });
@@ -73,7 +66,7 @@ class Expandable {
         this.updateCallToAction();
     }
 
-    scrollToCallToAction(): void {
+    scrollToCallToAction() {
         // feels a bit hacky but need to give the transition time to finish before scrolling
         if (!this.expanded) {
             window.setTimeout(() => {
@@ -82,7 +75,7 @@ class Expandable {
         }
     }
 
-    init(): void {
+    init() {
         if (
             this.dom.classList.contains('expandable-initialised') ||
             !this.dom.innerHTML ||
@@ -96,7 +89,7 @@ class Expandable {
         this.renderState();
     }
 
-    toggle(): void {
+    toggle() {
         this.toggleExpanded();
     }
 }

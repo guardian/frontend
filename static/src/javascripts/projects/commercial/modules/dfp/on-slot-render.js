@@ -1,12 +1,8 @@
-// @flow
-import type { SlotRenderEndedEvent } from 'commercial/types';
-
 import once from 'lodash/once';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
 import { fire } from 'common/modules/analytics/beacon';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { renderAdvert } from 'commercial/modules/dfp/render-advert';
 import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
@@ -20,9 +16,9 @@ const recordFirstAdRendered = once(() => {
 });
 
 const reportEmptyResponse = (
-    adSlotId: string,
-    event: SlotRenderEndedEvent
-): void => {
+    adSlotId,
+    event
+) => {
     // This empty slot could be caused by a targeting problem,
     // let's report these and diagnose the problem in sentry.
     // Keep the sample rate low, otherwise we'll get rate-limited (report-error will also sample down)
@@ -55,15 +51,15 @@ const outstreamSizes = [
     adSizes.outstreamGoogleDesktop.toString(),
 ];
 
-export const onSlotRender = (event: SlotRenderEndedEvent): void => {
+export const onSlotRender = (event) => {
     recordFirstAdRendered();
 
-    const advert: ?Advert = getAdvertById(event.slot.getSlotElementId());
+    const advert = getAdvertById(event.slot.getSlotElementId());
     if (!advert) {
         return;
     }
 
-    const emitRenderEvents = (isRendered: boolean) => {
+    const emitRenderEvents = (isRendered) => {
         advert.stopRendering(isRendered);
         mediator.emit('modules:commercial:dfp:rendered', event);
     };

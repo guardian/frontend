@@ -4,7 +4,7 @@ import java.lang.System.currentTimeMillis
 import java.util.concurrent.TimeUnit.MILLISECONDS
 
 import commercial.model.feeds.{FeedMetaData, MissingFeedException, ParsedFeed, SwitchOffException}
-import common.Logging
+import common.GuLogging
 import conf.switches.Switches.JobsFeedParseSwitch
 import commercial.model.merchandise.Job
 
@@ -13,7 +13,7 @@ import scala.concurrent.duration.Duration
 import scala.util.control.NonFatal
 import scala.xml.{Elem, XML}
 
-object JobsFeed extends Logging {
+object JobsFeed extends GuLogging {
 
   def parse(xml: Elem): Seq[Job] =
     for {

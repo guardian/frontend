@@ -1,6 +1,4 @@
-// @flow
 import mediator from 'lib/mediator';
-import type { CurrentABTest } from '../../types';
 import { withComponentId, componentName } from '../../component';
 import {
     addOpinionBgColour,
@@ -14,10 +12,7 @@ import {
 // signInUrl - parameter which holds the link to the sign in/register page with the tracking parameters added
 // guUrl - url of the STAGE frontend site, e.g. in DEV stage it would be https://m.thegulocal.com,
 //         and for PROD it would be https://theguardian.com
-const htmlTemplate: ({
-    signInUrl: string,
-    guUrl: string,
-}) => string = ({ signInUrl, guUrl }) => `
+const htmlTemplate = ({ signInUrl, guUrl }) => `
 <div class="signin-gate">
     <div class="signin-gate__content">
         <div class="signin-gate__header">
@@ -58,12 +53,7 @@ const htmlTemplate: ({
 // method which runs if the canShow method from the test returns true, used to display the gate and logic associated with it
 // it returns a boolean, since the sign in gate is based on a `Banner` type who's show method returns a Promise<boolean>
 // in our case it returns true if the design ran successfully, and false if there were any problems encountered
-export const designShow: ({
-    abTest: CurrentABTest,
-    guUrl: string,
-    signInUrl: string,
-    ophanComponentId: string,
-}) => boolean = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
+export const designShow = ({ abTest, guUrl, signInUrl, ophanComponentId }) =>
     showGate({
         template: htmlTemplate({
             signInUrl,
@@ -76,7 +66,7 @@ export const designShow: ({
                 selector: '.signin-gate__first-paragraph-overlay',
             });
 
-            const ophanComponent: OphanComponent = withComponentId(
+            const ophanComponent = withComponentId(
                 ophanComponentId
             );
 

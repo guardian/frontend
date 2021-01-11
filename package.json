@@ -13,7 +13,7 @@
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.7",
-    "@guardian/braze-components": "0.0.16",
+    "@guardian/braze-components": "0.0.17",
     "@guardian/commercial-core": "^0.9.0",
     "@guardian/consent-management-platform": "6.9.1",
     "@guardian/libs": "^1.4.2",
@@ -65,7 +65,6 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
-    "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
     "amphtml-validator": "^1.0.21",
@@ -91,8 +90,6 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-import-resolver-webpack": "^0.10.0",
-    "eslint-plugin-flow-header": "^0.2.0",
-    "eslint-plugin-flowtype": "^2.49.0",
     "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jasmine": "^2.10.1",
@@ -101,8 +98,6 @@
     "eslint-plugin-react": "^7.8.2",
     "execa": "^0.8.0",
     "figures": "^2.0.0",
-    "flow-bin": "^0.89.0",
-    "flow-typed": "^2.5.1",
     "glob": "^7.1.2",
     "gzip-size": "^3.0.0",
     "hasha": "^3.0.0",
@@ -181,7 +176,6 @@
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
-    "flow": "flow",
     "test": "jest"
   },
   "prettier": {
@@ -190,6 +184,6 @@
     "bracketSpacing": true,
     "tabWidth": 4,
     "jsxBracketSameLine": true,
-    "parser": "flow"
+    "parser": "babel"
   }
 }

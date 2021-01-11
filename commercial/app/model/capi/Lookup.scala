@@ -2,14 +2,14 @@ package commercial.model.capi
 
 import com.gu.contentapi.client.model.v1.Tag
 import common.Edition.defaultEdition
-import common.Logging
+import common.GuLogging
 import contentapi.ContentApiClient
 import model.{Content, ContentType, ImageElement}
 import utils.ShortUrls
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.Strings {
+class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicits.Strings {
 
   def content(contentId: String)(implicit executionContext: ExecutionContext): Future[Option[ContentType]] = {
     val response =

@@ -1,15 +1,6 @@
-// @flow
-import type { Campaign } from './campaigns';
+export const messageCode = 'email-sign-in-banner';
 
-export type Params = {
-    signInLink: string,
-    emailPrefsLink: string,
-    campaign: Campaign,
-};
-
-export const messageCode: string = 'email-sign-in-banner';
-
-export const make = (params: Params): string =>
+export const make = (params) =>
     `<div class="site-message--email-sign-in-banner-slide">
         <h3 class="site-message--email-sign-in-banner-title">
             Enjoying ${params.campaign.name}?

@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import {
@@ -21,7 +20,7 @@ const originalAssign = window.location.assign;
 
 describe('url', () => {
     beforeEach(() => {
-        window.location.assign = (url: string) => {
+        window.location.assign = (url) => {
             jsdom.reconfigure({
                 url,
             });

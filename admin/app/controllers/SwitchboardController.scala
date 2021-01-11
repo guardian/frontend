@@ -13,7 +13,7 @@ import model.{ApplicationContext, NoCache}
 class SwitchboardController(akkaAsync: AkkaAsync, val controllerComponents: ControllerComponents)(implicit
     context: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   val SwitchPattern = """([a-z\d-]+)=(on|off)""".r

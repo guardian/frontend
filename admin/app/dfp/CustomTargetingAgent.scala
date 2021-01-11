@@ -2,7 +2,7 @@ package dfp
 
 import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
 import com.google.api.ads.admanager.axis.v202011.{CustomTargetingKey, CustomTargetingValue}
-import common.Logging
+import common.GuLogging
 import common.dfp.{GuCustomTargeting, GuCustomTargetingValue}
 import concurrent.BlockingOperations
 
@@ -10,7 +10,7 @@ import scala.util.Try
 
 class CustomTargetingAgent(val blockingOperations: BlockingOperations)
     extends DataAgent[Long, GuCustomTargeting]
-    with Logging {
+    with GuLogging {
 
   def loadFreshData(): Try[Map[Long, GuCustomTargeting]] =
     Try {

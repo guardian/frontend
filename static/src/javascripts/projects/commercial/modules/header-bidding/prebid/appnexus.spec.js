@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { isInUsOrCa as isInUsOrCa_,
     isInAuOrNz as isInAuOrNz_} from 'common/modules/commercial/geo-utils';
@@ -10,7 +9,6 @@ import {
 import {
     getBreakpointKey as getBreakpointKey_
 } from '../utils';
-import type { HeaderBiddingSize } from '../types';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -23,7 +21,7 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('../utils', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
+    
     const original = jest.requireActual('../utils');
     return {
         ...original,
@@ -52,9 +50,9 @@ const {
     getAppNexusDirectPlacementId,
 } = _;
 
-const getBreakpointKey: any = getBreakpointKey_;
-const isInAuOrNz: any = isInAuOrNz_;
-const isInUsOrCa: any = isInUsOrCa_;
+const getBreakpointKey = getBreakpointKey_;
+const isInAuOrNz = isInAuOrNz_;
+const isInUsOrCa = isInUsOrCa_;
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -129,7 +127,7 @@ describe('getAppNexusDirectPlacementId', () => {
         window.OzoneLotameData = undefined;
     });
 
-    const prebidSizes: Array<Array<HeaderBiddingSize>> = [
+    const prebidSizes = [
         [[300, 250]],
         [[300, 600]],
         [[970, 250]],
@@ -175,8 +173,8 @@ describe('getAppNexusPlacementId', () => {
         window.OzoneLotameData = undefined;
     });
 
-    const generateTestIds = (): Array<string> => {
-        const prebidSizes: Array<Array<HeaderBiddingSize>> = [
+    const generateTestIds = () => {
+        const prebidSizes = [
             [[300, 250]],
             [[300, 600]],
             [[970, 250]],

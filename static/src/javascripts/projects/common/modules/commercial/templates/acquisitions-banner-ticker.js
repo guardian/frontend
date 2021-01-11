@@ -1,5 +1,3 @@
-// @flow
-
 import { getLocalCurrencySymbolSync } from 'lib/geolocation';
 
 export const acquisitionsBannerTickerTemplate = `

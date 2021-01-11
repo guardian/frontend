@@ -36,7 +36,7 @@ class MostPopularController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
   val page = SimplePage(
     MetaData.make(
@@ -118,7 +118,7 @@ class MostPopularController(
         if (globalPopularContent.nonEmpty) {
           Some(
             MostPopularNx2(
-              "Across The&nbsp;Guardian",
+              "Most Popular",
               "",
               globalPopularContent
                 .map(_.faciaContent)

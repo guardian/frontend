@@ -62,23 +62,23 @@ trait ABTestSwitches {
     "Tests an additional 'curated' onwards container below the article body that is relevant to the article's pillar.",
     owners = Seq(Owner.withGithub("rcrphillips")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 6),
+    sellByDate = new LocalDate(2021, 1, 12),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-newsletter-embeds3",
-    "New newsletter signup embeds for discoverability OKR",
-    owners = Seq(Owner.withGithub("buck06191")),
+    "ab-deeply-read-test",
+    "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
+    owners = Seq(Owner.withGithub("nitro-marky")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 11),
+    sellByDate = new LocalDate(2021, 1, 25),
     exposeClientSide = true,
   )
 
   val GlobalEoyHeaderSwitch = Switch(
     ABTests,
-    "ab-global-eoy-header-test",
+    "ab-global-eoy-header-test-r2",
     "Test reader revenue message in header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,

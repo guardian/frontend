@@ -1,5 +1,3 @@
-// @flow
-
 import { shouldRefreshCookie } from './cookierefresh.js';
 
 jest.mock('lib/raven');

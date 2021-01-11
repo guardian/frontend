@@ -1,4 +1,3 @@
-// @flow
 import qwery from 'qwery';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
@@ -10,15 +9,15 @@ import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.h
 import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
-    isUpdating: boolean;
-    adSlot: HTMLElement;
-    params: Object;
-    layer2: ?Array<Element>;
-    video: ?HTMLVideoElement;
-    hasVideo: boolean;
-    inView: boolean;
+    isUpdating;
+    adSlot;
+    params;
+    layer2;
+    video;
+    hasVideo;
+    inView;
 
-    constructor(adSlot: HTMLElement, params: Object) {
+    constructor(adSlot, params) {
         const isSmallScreen = isBreakpoint({
             max: 'phablet',
         });

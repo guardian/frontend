@@ -1,7 +1,5 @@
-// @flow
-
 export default {
-    wrap(fn: () => mixed): () => mixed {
+    wrap(fn) {
         return fn;
     },
     captureException() {},

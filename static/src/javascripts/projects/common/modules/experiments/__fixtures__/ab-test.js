@@ -1,16 +1,15 @@
-// @flow
-export const genVariant = (id: string, canRun: ?boolean): Variant => ({
+export const genVariant = (id, canRun) => ({
     id,
     test: () => undefined,
     ...(canRun != null ? { canRun: () => !!canRun } : {}),
 });
 
 export const genAbTest = (
-    id: string,
-    canRun: ?boolean,
-    expiry: ?string,
-    variants: ?(Variant[])
-): ABTest => ({
+    id,
+    canRun,
+    expiry,
+    variants
+) => ({
     id,
     audienceCriteria: 'n/a',
     audienceOffset: 0,
@@ -29,9 +28,9 @@ export const genAbTest = (
 });
 
 export const genRunnableAbTestWhereControlIsRunnable = (
-    id: string,
-    canRun: ?boolean
-): Runnable<ABTest> => {
+    id,
+    canRun
+) => {
     const abTest = genAbTest(id, canRun);
     return {
         ...abTest,
@@ -40,9 +39,9 @@ export const genRunnableAbTestWhereControlIsRunnable = (
 };
 
 export const genRunnableAbTestWhereVariantIsRunnable = (
-    id: string,
-    canRun: ?boolean
-): Runnable<ABTest> => {
+    id,
+    canRun
+) => {
     const abTest = genAbTest(id, canRun);
     return {
         ...abTest,

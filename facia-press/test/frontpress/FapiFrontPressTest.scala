@@ -5,7 +5,7 @@ import com.gu.contentapi.client.model.v1.ItemResponse
 import com.gu.contentapi.client.{ContentApiClient => CapiContentApiClient}
 import com.gu.contentatom.thrift.{Atom, AtomData, AtomDataAliases}
 import com.gu.facia.api.models.Collection
-import common.Logging
+import common.GuLogging
 import model.pressed.EnrichedContent
 import org.mockito.Mockito._
 import org.scalatest.mockito.MockitoSugar
@@ -15,7 +15,7 @@ import play.api.libs.ws.{WSClient, WSRequest, WSResponse}
 
 import scala.concurrent.Future
 
-class FapiFrontPressTest extends AsyncFlatSpec with Matchers with MockitoSugar with Logging {
+class FapiFrontPressTest extends AsyncFlatSpec with Matchers with MockitoSugar with GuLogging {
   "EnrichedContent.enrichSnap" should "enrich with snap HTML" in {
     val embedUri = "http://www.example.com/snap"
     val beforeEnrichment = EnrichedContent.empty

@@ -1,25 +1,14 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 import mediator from 'lib/mediator';
 
-import type { ReportedError } from 'lib/report-error';
-import type { Spec } from 'common/modules/ui/clickstream';
-import type {
-    ComponentEventWithoutAction,
-} from 'common/modules/commercial/acquisitions-ophan';
 
-export type EpicComponent = {
-    html: HTMLDivElement,
-    componentEvent?: ComponentEventWithoutAction,
-};
 
-const reportEpicError = (error: ReportedError): void => {
+const reportEpicError = (error) => {
     reportError(error, { feature: 'epic' }, false);
 };
 
-const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
+const insertAtSubmeta = (epic) =>
     fastdom
         .measure(() => document.querySelector('.submeta'))
         .then(element => {
@@ -32,9 +21,9 @@ const insertAtSubmeta = (epic: EpicComponent): Promise<EpicComponent> =>
             return Promise.reject(error);
         });
 
-const awaitEpicButtonClicked = (): Promise<void> =>
+const awaitEpicButtonClicked = () =>
     new Promise(resolve => {
-        mediator.on('module:clickstream:click', (clickSpec: Spec | boolean) => {
+        mediator.on('module:clickstream:click', (clickSpec) => {
             if (clickSpec === true || clickSpec === false) {
                 return;
             }

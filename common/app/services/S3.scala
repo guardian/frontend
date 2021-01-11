@@ -10,7 +10,7 @@ import com.amazonaws.services.s3.{AmazonS3, AmazonS3Client}
 import com.amazonaws.services.s3.model.CannedAccessControlList.{Private, PublicRead}
 import com.amazonaws.services.s3.model._
 import com.amazonaws.util.StringInputStream
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import model.PressedPageType
 import org.joda.time.{DateTime, DateTimeZone}
@@ -19,7 +19,7 @@ import sun.misc.BASE64Encoder
 
 import scala.io.{Codec, Source}
 
-trait S3 extends Logging {
+trait S3 extends GuLogging {
 
   lazy val bucket = Configuration.aws.frontendStoreBucket
 

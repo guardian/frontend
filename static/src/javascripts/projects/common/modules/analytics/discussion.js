@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import config from 'lib/config';
@@ -8,7 +6,7 @@ import mediator from 'lib/mediator';
 
 let seen = false;
 
-const sendToGA = (label: string, customDimensions: Object = {}): void => {
+const sendToGA = (label, customDimensions = {}) => {
     const tracker = config.get('googleAnalytics.trackers.editorial');
 
     window.ga(
@@ -26,26 +24,26 @@ const sendToGA = (label: string, customDimensions: Object = {}): void => {
     );
 };
 
-const jumpedToComments = (): void => {
+const jumpedToComments = () => {
     if (!seen) {
         seen = true;
     }
 };
 
-const commentPermalink = (): void => {
+const commentPermalink = () => {
     if (!seen) {
         seen = true;
     }
 };
 
-const scrolledToComments = (): void => {
+const scrolledToComments = () => {
     if (!seen) {
         sendToGA('scroll to comments');
         seen = true;
     }
 };
 
-const areCommentsVisible = (): boolean => {
+const areCommentsVisible = () => {
     const comments = $('#comments').offset();
     const scrollTop = window.pageYOffset;
     const viewport = bonzo.viewport().height;
@@ -61,7 +59,7 @@ const areCommentsVisible = (): boolean => {
 };
 
 // Convenience functions
-const areCommentsSeen = (): void => {
+const areCommentsSeen = () => {
     const scroll = () => {
         if (!seen && areCommentsVisible()) {
             scrolledToComments();
@@ -74,7 +72,7 @@ const areCommentsSeen = (): void => {
     }
 };
 
-const initDiscussionAnalytics = (): void => {
+const initDiscussionAnalytics = () => {
     mediator.on('discussion:seen:comment-permalink', commentPermalink);
     mediator.on('discussion:seen:comments-anchor', jumpedToComments);
 

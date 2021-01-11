@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: audience-item.js
  Description: Displays information about how the test users are divided.
@@ -7,7 +6,7 @@ import { Component } from 'common/modules/component';
 import bonzo from 'bonzo';
 
 class AudienceItem extends Component {
-    constructor(config: Object): void {
+    constructor(config) {
         super();
 
         this.templateName = 'audience-item-template';
@@ -21,9 +20,9 @@ class AudienceItem extends Component {
         );
     }
 
-    config: Object;
+    config;
 
-    prerender(): void {
+    prerender() {
         const testEl = this.getElem('test');
         const testLabel = this.getElem('test-label');
         const captionTest = this.getElem('caption-test');

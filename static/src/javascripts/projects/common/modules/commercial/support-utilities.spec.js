@@ -1,5 +1,3 @@
-// @flow
-
 import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
 import { setGeolocation } from 'lib/geolocation';
 

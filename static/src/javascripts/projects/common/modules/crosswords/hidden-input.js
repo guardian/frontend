@@ -1,12 +1,11 @@
-// @flow
 import React, { Component, findDOMNode } from 'preact-compat';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';
 import { isBreakpoint } from 'lib/detect';
 
-class HiddenInput extends Component<*, *> {
-    constructor(props: Object) {
+class HiddenInput extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             value: this.props.value,
@@ -34,23 +33,23 @@ class HiddenInput extends Component<*, *> {
         }
     }
 
-    onClick(event: SyntheticInputEvent<HTMLInputElement>) {
+    onClick(event) {
         this.props.crossword.onClickHiddenInput(event);
     }
 
-    onKeyDown(event: SyntheticInputEvent<HTMLInputElement>) {
+    onKeyDown(event) {
         this.props.crossword.onKeyDown(event);
     }
 
-    onBlur(event: SyntheticInputEvent<HTMLInputElement>) {
+    onBlur(event) {
         this.props.crossword.goToReturnPosition(event);
     }
 
-    touchStart(event: SyntheticInputEvent<HTMLInputElement>) {
+    touchStart(event) {
         this.props.crossword.onClickHiddenInput(event);
     }
 
-    handleChange(event: SyntheticInputEvent<HTMLInputElement>) {
+    handleChange(event) {
         this.props.crossword.insertCharacter(event.target.value);
         this.setState({
             value: '',

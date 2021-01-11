@@ -1,5 +1,3 @@
-// @flow
-
 import {brazeVendorId, canShowPreChecks, hasRequiredConsents} from "./brazeBanner";
 
 jest.mock('lib/raven');
@@ -17,37 +15,9 @@ afterEach(() => {
 });
 
 describe('canShowPreChecks', () => {
-    describe('when the switch is off', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                brazeSwitch: false,
-                apiKey: 'abcde',
-                userIsGuSupporter: true,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
-    describe('when the api key is empty', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: '',
-                userIsGuSupporter: true,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
     describe('when not a supporter', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
                 userIsGuSupporter: false,
                 pageConfig: {isPaidContent: false},
             })
@@ -59,8 +29,6 @@ describe('canShowPreChecks', () => {
     describe('when viewing paid content', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
                 userIsGuSupporter: true,
                 pageConfig: {isPaidContent: true},
             })
@@ -72,8 +40,6 @@ describe('canShowPreChecks', () => {
     describe('when all checks pass', () => {
         it('returns true', () => {
             const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
                 userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })

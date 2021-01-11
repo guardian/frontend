@@ -1,13 +1,13 @@
 package services
 
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import implicits.R2PressNotification.pressMessageFormatter
 import model.R2PressMessage
 import play.api.libs.json.Json
 
 import scala.concurrent.ExecutionContext
 
-object R2PagePressNotifier extends Logging {
+object R2PagePressNotifier extends GuLogging {
 
   def enqueue(akkaAsync: AkkaAsync)(message: R2PressMessage)(implicit executionContext: ExecutionContext): String = {
     try {

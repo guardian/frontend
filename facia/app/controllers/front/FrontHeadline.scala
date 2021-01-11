@@ -1,12 +1,12 @@
 package controllers.front
 
-import common.Logging
+import common.GuLogging
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.facia.PressedCollection
 import model.{Cached, PressedPage}
 import play.api.mvc.Results
 
-object FrontHeadline extends Results with Logging {
+object FrontHeadline extends Results with GuLogging {
 
   val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(
     NotFound("Could not extract headline from front"),

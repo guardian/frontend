@@ -4,7 +4,7 @@ import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
 import com.gu.contentatom.renderer.ArticleConfiguration
-import common.{Edition, LinkTo, Logging}
+import common.{Edition, LinkTo, GuLogging}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
@@ -779,7 +779,7 @@ case class CommercialMPUForFronts()(implicit val request: RequestHeader) extends
       Option(element.nextElementSibling()).exists(_.hasClass("fc-container--thrasher"))
 
     def isMostViewedContainer(element: Element): Boolean =
-      Option(element.id()).contains("most-viewed") || Option(element.id()).exists(_.contains("popular-in"))
+      Option(element.id()).exists(_.contains("most-viewed")) || Option(element.id()).exists(_.contains("popular-in"))
 
     val sliceSlot = views.html.fragments.items.facia_cards.sliceSlot
 
@@ -880,7 +880,7 @@ case class AffiliateLinksCleaner(
     tags: List[String],
     publishedDate: Option[DateTime],
 ) extends HtmlCleaner
-    with Logging {
+    with GuLogging {
 
   override def clean(document: Document): Document = {
     if (

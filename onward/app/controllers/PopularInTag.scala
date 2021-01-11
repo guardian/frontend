@@ -20,7 +20,7 @@ class PopularInTag(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   import implicits.Requests._

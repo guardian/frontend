@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: participation-item.js
  Description: Displays opt-in link for a variant
@@ -6,7 +5,7 @@
 import { Component } from 'common/modules/component';
 
 class ParticipationItem extends Component {
-    constructor(config: Object): void {
+    constructor(config) {
         super();
 
         this.templateName = 'participation-item-template';
@@ -23,9 +22,9 @@ class ParticipationItem extends Component {
         );
     }
 
-    config: Object;
+    config;
 
-    prerender(): void {
+    prerender() {
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'
             : document.location.origin;

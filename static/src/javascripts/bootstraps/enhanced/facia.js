@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
@@ -18,19 +17,19 @@ import partial from 'lodash/partial';
 import { videoContainerInit } from 'common/modules/video/video-container';
 import { addContributionsBanner } from 'journalism/modules/audio-series-add-contributions';
 
-const showSnaps = (): void => {
+const showSnaps = () => {
     initSnaps();
     mediator.on('modules:container:rendered', initSnaps);
 };
 
-const showContainerShowMore = (): void => {
+const showContainerShowMore = () => {
     mediator.addListeners({
         'modules:container:rendered': initShowMore,
         'page:front:ready': initShowMore,
     });
 };
 
-const showContainerToggle = (): void => {
+const showContainerToggle = () => {
     const containerToggleAdd = context => {
         $('.js-container--toggle', $(context || document)[0]).each(
             container => {
@@ -48,7 +47,7 @@ const showContainerToggle = (): void => {
     });
 };
 
-const upgradeMostPopularToGeo = (): void => {
+const upgradeMostPopularToGeo = () => {
     if (config.get('switches.geoMostPopular')) {
         if (config.get('switches.extendedMostPopularFronts')) {
             new GeoMostPopularFrontExtended().go();
@@ -58,7 +57,7 @@ const upgradeMostPopularToGeo = (): void => {
     }
 };
 
-const showWeather = (): void => {
+const showWeather = () => {
     if (config.get('switches.weather')) {
         mediator.on('page:front:ready', () => {
             Weather.init();
@@ -66,7 +65,7 @@ const showWeather = (): void => {
     }
 };
 
-const showLiveblogUpdates = (): void => {
+const showLiveblogUpdates = () => {
     if (
         isBreakpoint({
             min: 'desktop',
@@ -78,24 +77,24 @@ const showLiveblogUpdates = (): void => {
     }
 };
 
-const upgradeVideoPlaylists = (): void => {
+const upgradeVideoPlaylists = () => {
     $('.js-video-playlist').each(el => {
         videoContainerInit(el);
     });
 };
 
-const finished = (): void => {
+const finished = () => {
     mediator.emit('page:front:ready');
 };
 
-const addContributionBannerToAudioSeries = (): void => {
+const addContributionBannerToAudioSeries = () => {
     const isFlagshipPage = $('#flagship-audio').length > 0;
     if (isFlagshipPage) {
         addContributionsBanner();
     }
 };
 
-const init = (): void => {
+const init = () => {
     catchErrorsWithContext([
         ['f-accessibility', shouldHideFlashingElements],
         ['f-snaps', showSnaps],

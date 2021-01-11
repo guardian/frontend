@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { cmp } from '@guardian/consent-management-platform';
 import { cmpBannerCandidate } from './cmp-ui';

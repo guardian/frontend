@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import {
     onConsentChange,
@@ -13,7 +11,7 @@ import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
-const loadPrebid: () => void = () => {
+const loadPrebid = () => {
     if (
         dfpEnv.hbImpl.prebid &&
         commercialFeatures.dfpAdvertising &&
@@ -31,9 +29,9 @@ const loadPrebid: () => void = () => {
     }
 };
 
-const setupPrebid: () => Promise<void> = () => {
+const setupPrebid = () => {
     onConsentChange(state => {
-        const canRun: boolean = getConsentFor('prebid', state);
+        const canRun = getConsentFor('prebid', state);
         if (canRun) {
             loadPrebid();
         }
@@ -42,9 +40,9 @@ const setupPrebid: () => Promise<void> = () => {
     return Promise.resolve();
 };
 
-export const setupPrebidOnce: () => Promise<void> = once(setupPrebid);
+export const setupPrebidOnce = once(setupPrebid);
 
-export const init = (): Promise<void> => {
+export const init = () => {
     setupPrebidOnce();
     return Promise.resolve();
 };

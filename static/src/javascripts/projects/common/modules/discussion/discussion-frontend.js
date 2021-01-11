@@ -1,18 +1,15 @@
-// @flow
-
 import config from 'lib/config';
 import fastdom from 'fastdom';
 import { integerCommas } from 'lib/formatters';
 import { loadScript } from '@guardian/libs';
 import mediator from 'lib/mediator';
 import reportError from 'lib/report-error';
-import type { Loader } from './loader';
 
 const loadDiscussionFrontend = (
-    loader: Loader,
-    opts: Object
-): Promise<void> => {
-    const updateCommentCount = (element: HTMLElement, value: number): void => {
+    loader,
+    opts
+) => {
+    const updateCommentCount = (element, value) => {
         const formatted = integerCommas(value);
 
         if (formatted) {
@@ -23,7 +20,7 @@ const loadDiscussionFrontend = (
     };
 
     /* emitter is a different mediator instance than lib/mediator */
-    const onDiscussionFrontendLoad = (emitter: mediator): void => {
+    const onDiscussionFrontendLoad = (emitter) => {
         emitter.on('error', (feature, error) => {
             reportError(error, { feature: `discussion-${feature}` }, false);
         });
@@ -32,7 +29,7 @@ const loadDiscussionFrontend = (
            located in https://github.com/guardian/discussion-frontend */
         emitter.once(
             'comment-count',
-            (value: number): void => {
+            (value) => {
                 if (value === 0) {
                     loader.setState('empty');
                 } else {
@@ -55,11 +52,11 @@ const loadDiscussionFrontend = (
         );
     };
 
-    const error = (err: Error): void => {
+    const error = (err) => {
         reportError(err, { feature: 'discussion' });
     };
 
-    const init = (frontend: (opts: Object) => Promise<any>): void => {
+    const init = (frontend) => {
         frontend(opts)
             .then(onDiscussionFrontendLoad)
             .catch(error);

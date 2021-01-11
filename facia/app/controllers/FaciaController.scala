@@ -26,7 +26,7 @@ import scala.concurrent.Future.successful
 
 trait FaciaController
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with implicits.Collections
     with implicits.Requests {
@@ -420,7 +420,7 @@ X4fw/fFcAzZ4mizXr/msHGHtXU9lc/TS2yKMWjunSwQOxDIKnxueU8LMkdduYrve
 /bSPgXHAMlJ/Oz8df4e/8hz1FISnD4Y4morh/oPg0yemFfMya7GplzqWd27moE/R
 aQIDAQAB
 -----END PUBLIC KEY-----"""
-      Ok(rsakey)
+      Ok(rsakey).as("text/plain")
     }
   }
 

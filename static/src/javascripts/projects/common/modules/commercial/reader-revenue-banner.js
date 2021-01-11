@@ -1,18 +1,15 @@
-// @flow
-
-import type { Banner } from 'common/modules/ui/bannerPicker';
-import { fetchBannerData, renderBanner, type BannerDataResponse } from 'common/modules/commercial/contributions-service';
+import { fetchBannerData, renderBanner, } from 'common/modules/commercial/contributions-service';
 import config from "lib/config";
 import reportError from "lib/report-error";
 
 
 const messageCode = 'reader-revenue-banner';
 
-let data: ?BannerDataResponse = null;
+let data = null;
 
 const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
-const canShow = (): Promise<boolean> => {
+const canShow = () => {
     const forceBanner = window.location.search.includes('force-remote-banner=true');
     const enabled = config.get('switches.remoteBanner') || forceBanner;
 
@@ -21,7 +18,7 @@ const canShow = (): Promise<boolean> => {
     }
 
     return fetchBannerData()
-        .then((response: ?BannerDataResponse)  => {
+        .then((response)  => {
             if (response) {
                 data = response;
                 return true;
@@ -35,7 +32,7 @@ const canShow = (): Promise<boolean> => {
 };
 
 
-export const readerRevenueBanner: Banner = {
+export const readerRevenueBanner = {
     id: messageCode,
     show,
     canShow,

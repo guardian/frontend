@@ -1,15 +1,11 @@
-// @flow
-
-export type Config = { [string]: any };
-
 // This should be the only module accessing the window config object directly
 // because this is the one that gets imported to all other modules
 // eslint-disable-next-line guardian-frontend/global-config
-const config: Config = window.guardian.config;
+const config = window.guardian.config;
 
 // allows you to safely get items from config using a query of
 // dot or bracket notation, with optional default fallback
-const get = (path: string = '', defaultValue: any): any => {
+const get = (path = '', defaultValue) => {
     const value = path
         .replace(/\[(.+?)\]/g, '.$1')
         .split('.')
@@ -27,7 +23,7 @@ const get = (path: string = '', defaultValue: any): any => {
 // set(s, x) is the function that takes any value x into the config
 // object following the path described by S, making sure that path
 // actually leads somewhere.
-const set = (path: string, value: any): void => {
+const set = (path, value) => {
     const pathSegments = path.split('.');
     const last = pathSegments.pop();
     pathSegments.reduce((obj, subpath) => {
@@ -39,22 +35,22 @@ const set = (path: string, value: any): void => {
     }, config)[last] = value;
 };
 
-const hasTone = (name: string): boolean =>
+const hasTone = (name) =>
     (config.page.tones || '').includes(name);
 
-const hasSeries = (name: string): boolean =>
+const hasSeries = (name) =>
     (config.page.series || '').includes(name);
 
-const referencesOfType = (name: string): Array<string> =>
+const referencesOfType = (name) =>
     (config.page.references || [])
         .filter(reference => typeof reference[name] !== 'undefined')
         .map(reference => reference[name]);
 
-const referenceOfType = (name: string): string => referencesOfType(name)[0];
+const referenceOfType = (name) => referencesOfType(name)[0];
 
 // the date nicely formatted and padded for use as part of a url
 // looks like    2012/04/31
-const webPublicationDateAsUrlPart = (): ?string => {
+const webPublicationDateAsUrlPart = () => {
     const webPublicationDate = config.page.webPublicationDate;
 
     if (webPublicationDate) {
@@ -71,7 +67,7 @@ const webPublicationDateAsUrlPart = (): ?string => {
 };
 
 // returns 2014/apr/22
-const dateFromSlug = (): ?string => {
+const dateFromSlug = () => {
     const s = config.page.pageId.match(/\d{4}\/\w{3}\/\d{2}/);
     return s ? s[0] : null;
 };

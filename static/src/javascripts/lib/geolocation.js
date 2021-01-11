@@ -1,4 +1,3 @@
-// @flow
 import fetchJSON from 'lib/fetch-json';
 import config from 'lib/config';
 import { storage } from '@guardian/libs';
@@ -11,9 +10,9 @@ const editionToGeolocationMap = {
 };
 const daysBeforeGeolocationRefresh = 10;
 
-const getFromStorage = (): string => storage.local.get(storageKey);
+const getFromStorage = () => storage.local.get(storageKey);
 
-const get = (): Promise<string> =>
+const get = () =>
     new Promise((resolve, reject) => {
         const geolocationFromStorage = getFromStorage();
 
@@ -34,7 +33,7 @@ const get = (): Promise<string> =>
             .catch(reject);
     });
 
-const setGeolocation = (geolocation: string): void => {
+const setGeolocation = (geolocation) => {
     const currentDate = new Date();
     storage.local.set(
         storageKey,
@@ -45,14 +44,14 @@ const setGeolocation = (geolocation: string): void => {
     );
 };
 
-const init = (): void => {
+const init = () => {
     get().then(setGeolocation);
 };
 
-const editionToGeolocation = (editionKey: string = 'UK'): string =>
+const editionToGeolocation = (editionKey = 'UK') =>
     editionToGeolocationMap[editionKey];
 
-const getSync = (): string => {
+const getSync = () => {
     const geolocationFromStorage = getFromStorage();
     return (
         geolocationFromStorage ||
@@ -60,23 +59,7 @@ const getSync = (): string => {
     );
 };
 
-export type CountryGroupId =
-    | 'GBPCountries'
-    | 'UnitedStates'
-    | 'AUDCountries'
-    | 'EURCountries'
-    | 'International'
-    | 'NZDCountries'
-    | 'Canada';
 
-export type SupportInternationalisationId =
-    | 'uk'
-    | 'us'
-    | 'au'
-    | 'eu'
-    | 'int'
-    | 'nz'
-    | 'ca';
 
 /*
   Note: supportInternationalizationId should match an existing
@@ -85,20 +68,10 @@ export type SupportInternationalisationId =
   should match the list in support-internationalisation.
  */
 
-export type IsoCurrency = 'GBP' | 'USD' | 'AUD' | 'EUR' | 'NZD' | 'CAD';
 
-export type CountryGroup = {
-    name: string,
-    currency: IsoCurrency,
-    countries: string[],
-    supportInternationalisationId: SupportInternationalisationId,
-};
 
-type CountryGroups = {
-    [CountryGroupId]: CountryGroup,
-};
 
-const countryGroups: CountryGroups = {
+const countryGroups = {
     GBPCountries: {
         name: 'United Kingdom',
         currency: 'GBP',
@@ -380,7 +353,7 @@ const countryGroups: CountryGroups = {
 
 // These are the different 'country groups' we accept when taking payment.
 // See https://github.com/guardian/support-internationalisation/blob/master/src/main/scala/com/gu/i18n/CountryGroup.scala for more context.
-const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
+const countryCodeToCountryGroupId = (countryCode) => {
     const availableCountryGroups = Object.keys(countryGroups);
     let response = null;
     availableCountryGroups.forEach(countryGroup => {
@@ -392,8 +365,8 @@ const countryCodeToCountryGroupId = (countryCode: string): CountryGroupId => {
 };
 
 const countryCodeToSupportInternationalisationId = (
-    countryCode: string
-): SupportInternationalisationId =>
+    countryCode
+) =>
     countryGroups[countryCodeToCountryGroupId(countryCode)]
         .supportInternationalisationId;
 
@@ -409,11 +382,11 @@ const extendedCurrencySymbol = {
 
 const defaultCurrencySymbol = '£';
 
-const getLocalCurrencySymbolSync = (): string =>
+const getLocalCurrencySymbolSync = () =>
     extendedCurrencySymbol[countryCodeToCountryGroupId(getSync())] ||
     defaultCurrencySymbol;
 
-const getLocalCurrencySymbol = (geolocation: ?string): string =>
+const getLocalCurrencySymbol = (geolocation) =>
     geolocation
         ? extendedCurrencySymbol[countryCodeToCountryGroupId(geolocation)] ||
           defaultCurrencySymbol
@@ -480,7 +453,7 @@ const countryNames = {
     PA: 'Panama',
 };
 
-const getCountryName = (geolocation: ?string): ?string =>
+const getCountryName = (geolocation) =>
     geolocation ? countryNames[geolocation] : undefined;
 
 export {
