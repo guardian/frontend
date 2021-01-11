@@ -34,9 +34,7 @@
     }
 }
 <ul class="football-groups u-unstyled u-cf">
-    @groupStage.groupTables.zipWithRowInfo.map{ data =>
-        @defining(data._1, data._2) { case(groupTable, row) =>
-            @footballGroup(groupTable._1, groupTable._2, row)
-        }
+    @groupStage.groupTables.zipWithRowInfo.map{ case (groupTable, row) =>
+        @footballGroup(groupTable._1, groupTable._2, row)
     }
 </ul>
