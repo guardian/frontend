@@ -2,8 +2,8 @@
 
 @(date: Option[LiveBlogDate])
 
-@date.map { case LiveBlogDate(referenceDate, hhmm, ampm, gmt) =>
-    <time datetime="@referenceDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@ampm <span class="timezone">@gmt</span></time>
-    <span class="block-time__absolute">@hhmm</span>
+@date.map { dat =>
+    <time datetime="@dat.fullDate" data-relativeformat="med" class=" js-timestamp" itemprop="datePublished">@dat.ampm <span class="timezone">@dat.gmt</span></time>
+    <span class="block-time__absolute">@dat.hhmm</span>
 }
 
