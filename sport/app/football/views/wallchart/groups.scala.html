@@ -5,7 +5,7 @@
 
 @(competition: model.Competition, groupStage: _root_.football.model.Groups)(implicit request: RequestHeader)
 
-@template1(round: Round, leagueTableEntries: Seq[LeagueTableEntry], row: RowInfo) = {
+@footballGroup(round: Round, leagueTableEntries: Seq[LeagueTableEntry], row: RowInfo) = {
     @defining(groupStage.matchesList(competition, round)) { matches =>
         <li class="football-group">
             <div class="football-group__container table--hide-from-importance-3">
@@ -35,6 +35,6 @@
 }
 <ul class="football-groups u-unstyled u-cf">
     @groupStage.groupTables.zipWithRowInfo.map{ data =>
-        @template1(data._1._1, data._1._2, data._2)
+        @footballGroup(data._1._1, data._1._2, data._2)
     }
 </ul>
