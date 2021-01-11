@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import model.{ApplicationContext, CacheTime, Cached}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
 import services.FacebookGraphApi
@@ -10,7 +10,7 @@ class ShareCountController(
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def fetch(path: String): Action[AnyContent] =

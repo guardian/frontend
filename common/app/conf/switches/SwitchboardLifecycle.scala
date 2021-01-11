@@ -10,7 +10,7 @@ import scala.concurrent.{Future, ExecutionContext}
 class SwitchboardLifecycle(appLifecycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
     ec: ExecutionContext,
 ) extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   appLifecycle.addStopHook { () =>
     Future {

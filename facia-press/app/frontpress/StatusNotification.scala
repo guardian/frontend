@@ -26,10 +26,10 @@ object StatusNotification {
 
   object KinesisLoggingAsyncHandler extends AsyncHandler[PutRecordRequest, PutRecordResult] {
     def onError(exception: Exception) {
-      Logger.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
+      Logger.logger.error(s"Kinesis PutRecord request error: ${exception.getMessage}}")
     }
     def onSuccess(request: PutRecordRequest, result: PutRecordResult) {
-      Logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
+      Logger.logger.info(s"Kinesis status notification sent to stream:${request.getStreamName}")
     }
   }
 
@@ -74,7 +74,7 @@ object StatusNotification {
               .withData(ByteBuffer.wrap(Json.toJson(message).toString.getBytes("UTF-8"))),
             KinesisLoggingAsyncHandler,
           )
-        case None => Logger.info("Kinesis status notification not configured.")
+        case None => Logger.logger.info("Kinesis status notification not configured.")
       }
     }
   }

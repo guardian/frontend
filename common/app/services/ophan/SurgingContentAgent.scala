@@ -11,7 +11,7 @@ import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
-object SurgingContentAgent extends SurgeLookupService with Logging {
+object SurgingContentAgent extends SurgeLookupService with GuLogging {
 
   private val agent = Box[SurgingContent](SurgingContent())
 

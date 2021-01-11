@@ -13,7 +13,7 @@ class SectionsLookUpLifecycle(
     sectionsLookUp: SectionsLookUp,
 )(implicit ec: ExecutionContext)
     extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   appLifecycle.addStopHook { () =>
     Future {

@@ -63,7 +63,7 @@ object DeeplyReadItem {
   }
 }
 
-class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   /*
       This (DeeplyReadAgent) agent is similar in purpose and interface as the ones we already have at the

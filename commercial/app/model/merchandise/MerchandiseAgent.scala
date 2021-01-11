@@ -2,12 +2,12 @@ package commercial.model.merchandise
 
 import com.gu.Box
 import commercial.model.Segment
-import common.Logging
+import common.GuLogging
 
 import scala.concurrent.Future
 import scala.util.Random
 
-trait MerchandiseAgent[T] extends Logging {
+trait MerchandiseAgent[T] extends GuLogging {
 
   private lazy val agent = Box[Seq[T]](Nil)
 

@@ -2,7 +2,7 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.Blocks
-import common.{LinkTo, Logging}
+import common.{LinkTo, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
@@ -21,7 +21,7 @@ import model.dotcomrendering.PageType
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
 
-class DotcomRenderingService extends Logging with ResultWithPreconnectPreload {
+class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",

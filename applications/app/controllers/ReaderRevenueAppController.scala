@@ -1,6 +1,6 @@
 package controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model._
 import play.api.mvc._
 import services.S3
@@ -13,7 +13,7 @@ import model.readerRevenue._
 class ReaderRevenueAppController(val controllerComponents: ControllerComponents)(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
 
   private[this] def getBannerDeployLog(strRegion: String, bannerType: BannerType): Option[String] = {
     ReaderRevenueRegion.fromName(strRegion).fold(Option.empty[String]) { region: ReaderRevenueRegion =>

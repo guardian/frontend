@@ -1,7 +1,7 @@
 package dfp
 
 import common.dfp._
-import common.Logging
+import common.GuLogging
 import org.joda.time.DateTime
 import play.api.libs.json.Json.{toJson, _}
 import tools.Store
@@ -14,7 +14,7 @@ class DfpDataCacheJob(
     customTargetingAgent: CustomTargetingAgent,
     placementAgent: PlacementAgent,
     dfpApi: DfpApi,
-) extends Logging {
+) extends GuLogging {
 
   case class LineItemLoadSummary(validLineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem])
 

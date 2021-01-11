@@ -4,7 +4,7 @@ import java.lang.System._
 
 import com.gu.Box
 import commercial.model.feeds._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import commercial.model.merchandise.LiveEvent
 import play.api.libs.json.JsValue
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.util.control.NonFatal
 
-class LiveEventAgent(wsClient: WSClient) extends Logging {
+class LiveEventAgent(wsClient: WSClient) extends GuLogging {
 
   private lazy val liveEventAgent = Box[Seq[LiveEvent]](Seq.empty)
 

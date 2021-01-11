@@ -45,7 +45,7 @@ class QuizController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
 
   def submit(quizId: String, path: String): Action[AnyContent] =
     Action.async { implicit request =>

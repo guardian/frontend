@@ -2,7 +2,7 @@ package common.Assets
 
 import java.nio.charset.Charset
 
-import common.{Logging, RelativePathEscaper}
+import common.{GuLogging, RelativePathEscaper}
 import conf.Configuration
 import model.ApplicationContext
 import org.apache.commons.io.IOUtils
@@ -16,7 +16,7 @@ import scala.util.{Failure, Success, Try}
 
 // turns an unhashed name into a name that's hashed if it needs to be
 class Assets(base: String, mapResource: String, useHashedBundles: Boolean = Configuration.assets.useHashedBundles)
-    extends Logging {
+    extends GuLogging {
 
   lazy val lookup: Map[String, String] = Get(assetMap(mapResource))
 

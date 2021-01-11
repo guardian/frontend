@@ -1,6 +1,6 @@
 package commercial.controllers
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.Cached
 import model.Cached.RevalidatableResult
 import play.api.mvc._
@@ -9,7 +9,7 @@ class PiggybackPixelController(val controllerComponents: ControllerComponents)
     extends BaseController
     with ImplicitControllerExecutionContext
     with implicits.Requests
-    with Logging {
+    with GuLogging {
 
   def resize(): Action[AnyContent] =
     Action { implicit request =>

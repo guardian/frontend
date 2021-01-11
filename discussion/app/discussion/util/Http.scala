@@ -3,13 +3,13 @@ package discussion.util
 import common.LoggingField.LogField
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.libs.json.{JsValue, Json}
-import common.{Logging, StopWatch}
+import common.{GuLogging, StopWatch}
 import discussion.api.{NotFoundException, OtherException}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 
-trait Http extends Logging {
+trait Http extends GuLogging {
 
   val wsClient: WSClient
 

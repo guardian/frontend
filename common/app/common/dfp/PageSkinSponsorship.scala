@@ -1,6 +1,6 @@
 package common.dfp
 
-import common.{Edition, Logging}
+import common.{Edition, GuLogging}
 import play.api.libs.json._
 
 /** A PageSkinSponsorship
@@ -42,7 +42,7 @@ object PageSkin {
   def isValidAdUnit(adUnitPath: String): Boolean = validAdUnitSuffixes.exists(suffix => adUnitPath endsWith suffix)
 }
 
-object PageSkinSponsorshipReportParser extends Logging {
+object PageSkinSponsorshipReportParser extends GuLogging {
 
   def apply(jsonString: String): Option[PageSkinSponsorshipReport] = {
 

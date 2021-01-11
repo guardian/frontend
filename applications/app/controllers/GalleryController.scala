@@ -16,7 +16,7 @@ class GalleryController(contentApiClient: ContentApiClient, val controllerCompon
     context: ApplicationContext,
 ) extends BaseController
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderJson(path: String): Action[AnyContent] = render(path)

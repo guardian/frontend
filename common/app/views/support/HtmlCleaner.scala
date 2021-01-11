@@ -4,7 +4,7 @@ import java.net.URI
 import java.util.regex.{Matcher, Pattern}
 
 import com.gu.contentatom.renderer.ArticleConfiguration
-import common.{Edition, LinkTo, Logging}
+import common.{Edition, LinkTo, GuLogging}
 import conf.Configuration.affiliateLinks._
 import conf.Configuration.site.host
 import conf.switches.Switches
@@ -880,7 +880,7 @@ case class AffiliateLinksCleaner(
     tags: List[String],
     publishedDate: Option[DateTime],
 ) extends HtmlCleaner
-    with Logging {
+    with GuLogging {
 
   override def clean(document: Document): Document = {
     if (

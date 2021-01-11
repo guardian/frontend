@@ -68,7 +68,7 @@ private[conf] case class HealthCheckResult(
       .getOrElse("Never expires")
 }
 
-private[conf] trait HealthCheckFetcher extends Logging {
+private[conf] trait HealthCheckFetcher extends GuLogging {
 
   val wsClient: WSClient
 
@@ -167,7 +167,7 @@ abstract class CachedHealthCheck(policy: HealthCheckPolicy, preconditionMaybe: O
     extends HealthCheckController
     with Results
     with ImplicitControllerExecutionContext
-    with Logging {
+    with GuLogging {
 
   val controllerComponents: ControllerComponents
 

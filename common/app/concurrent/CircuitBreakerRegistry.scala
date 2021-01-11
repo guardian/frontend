@@ -2,12 +2,12 @@ package concurrent
 
 import akka.actor.ActorSystem
 import akka.pattern.CircuitBreaker
-import common.Logging
+import common.GuLogging
 
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.duration._
 
-object CircuitBreakerRegistry extends Logging {
+object CircuitBreakerRegistry extends GuLogging {
 
   def withConfig(
       name: String,

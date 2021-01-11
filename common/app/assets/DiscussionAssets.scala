@@ -4,7 +4,7 @@ import java.net.URI
 
 import app.LifecycleComponent
 import com.gu.Box
-import common.{GuardianConfiguration, JobScheduler, Logging}
+import common.{GuardianConfiguration, JobScheduler, GuLogging}
 import conf.switches.Switches
 import play.api.libs.ws.{WSClient, WSResponse}
 
@@ -29,7 +29,7 @@ class DiscussionExternalAssetsLifecycle(
     jobs: JobScheduler,
 )(implicit executionContext: ExecutionContext)
     extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   def refresh(): Future[Map[String, String]] = {
     config.discussion.frontendAssetsMap match {

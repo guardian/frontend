@@ -4,13 +4,13 @@ package dfp
 // https://developers.google.com/ad-manager/api/pqlreference
 import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
 import com.google.api.ads.admanager.axis.v202011._
-import common.Logging
+import common.GuLogging
 import common.dfp._
 import org.joda.time.DateTime
 
 case class DfpLineItems(validItems: Seq[GuLineItem], invalidItems: Seq[GuLineItem])
 
-class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends Logging {
+class DfpApi(dataMapper: DataMapper, dataValidation: DataValidation) extends GuLogging {
   import dfp.DfpApi._
 
   private def readLineItems(

@@ -20,7 +20,7 @@ import scala.util.{Failure, Success}
 
 case class CollectionConfigWithId(id: String, config: CollectionConfig)
 
-object ConfigAgent extends Logging {
+object ConfigAgent extends GuLogging {
   implicit lazy val alterTimeout: Timeout = Configuration.faciatool.configBeforePressTimeout.millis
   private lazy val configAgent = Box[Option[ConfigJson]](None)
 
