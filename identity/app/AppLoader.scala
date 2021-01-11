@@ -18,7 +18,6 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFComponents}
 import router.Routes
-import services.newsletters.EmailEmbedLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
   def buildComponents(context: Context): FrontendComponents =
@@ -43,7 +42,6 @@ trait AppLifecycleComponents {
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[EmailEmbedLifecycle],
   )
 
   def actorSystem: ActorSystem

@@ -1,6 +1,7 @@
-@import services.newsletters.NewsletterResponse
-@(listName: String, emailNewsletter: NewsletterResponse, resultHtml: Html)(implicit request: RequestHeader)
-
+@import com.gu.identity.model.EmailNewsletter
+@(listName: String,
+        emailNewsletter: EmailNewsletter,
+        resultHtml: Html)(implicit request: RequestHeader)
 @emailEmbedData = @{emailNewsletter.emailEmbed}
 @wrapperClass = @{
     "newsletter-embed newsletter-embed--result"
