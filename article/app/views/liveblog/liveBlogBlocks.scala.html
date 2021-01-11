@@ -51,9 +51,9 @@
         <div class="block-elements@if(block.contributors.isEmpty){ block-elements--no-byline}" itemprop="articleBody">
         @BodyProcessor(article, block.bodyHtml)
         </div>
-        @block.republishedDate(timezone).map { case LiveBlogDate(republishedDate, _, ampm, gmt) =>
+        @block.republishedDate(timezone).map { date =>
         <p class="block-time updated-time">Updated
-            <time datetime="@republishedDate">at @ampm @gmt</time>
+            <time datetime="@date.fullDate">at @date.ampm @date.gmt</time>
         </p>
         }
         @views.html.fragments.share.blockLevelSharing(
