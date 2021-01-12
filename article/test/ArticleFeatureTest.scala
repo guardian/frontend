@@ -162,7 +162,7 @@ import scala.collection.JavaConverters._
 
         Then("I should see the publication date of the article")
         $(".content__dateline-wpd").toString should be("Mon 6 Aug 2012 20.30 BST")
-        $("time").attribute("datetime") should be("2012-08-06T20:30:00+0100")
+        $("time").attributes("datetime").toString should be("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -213,8 +213,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.id should be("dfp-ad--right")
-        adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid")
+        adSlotRight.attributes("id").toString should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").toString should be("1,1|2,2|300,250|300,274|300,600|fluid")
       }
 
       Given("I am on an article entitled '10 of the best things to do in Tallinn'")
@@ -225,8 +225,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.id should be("dfp-ad--right")
-        adSlotRight.attribute("data-mobile") should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
+        adSlotRight.attributes("id").toString should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").toString should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
       }
 
       Given(
@@ -238,8 +238,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should not be sticky")
-        adSlotRight.id should be("dfp-ad--right")
-        adSlotRight.attribute("class") should not include ("js-sticky-mpu")
+        adSlotRight.attributes("id").toString should be("dfp-ad--right")
+        adSlotRight.attributes("class").toString should not include ("js-sticky-mpu")
       }
     }
 
@@ -256,11 +256,11 @@ import scala.collection.JavaConverters._
         val inBodyImage = el(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.$("[itemprop=contentUrl]").attribute("src") should
+        inBodyImage.$("[itemprop=contentUrl]").attributes("src").toString should
           include("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
-        inBodyImage.$("[itemprop=description]").text should
+        inBodyImage.$("[itemprop=description]").toString should
           be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
@@ -275,13 +275,13 @@ import scala.collection.JavaConverters._
         And("The review is marked up with the correct schema")
         val review = el("article[itemtype='http://schema.org/Review']")
 
-        review.$("[articleprop=reviewRating]").text should be("4 / 5 stars")
-        review.$("[articleprop=ratingValue]").text should be("4")
+        review.$("[articleprop=reviewRating]").toString should be("4 / 5 stars")
+        review.$("[articleprop=ratingValue]").toString should be("4")
 
         val reviewed = review.el("[itemprop=itemReviewed]")
 
         reviewed.attribute("itemtype") should be("http://schema.org/Movie")
-        reviewed.$("[itemprop=sameAs]").attribute("href") should be("http://www.imdb.com/title/tt3205376/")
+        reviewed.$("[itemprop=sameAs]").attributes("href").toString should be("http://www.imdb.com/title/tt3205376/")
       }
     }
 
@@ -357,17 +357,19 @@ import scala.collection.JavaConverters._
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.attribute("data-name") should be("top-above-nav")
-        adPlaceholder.attribute("data-tablet") should be("1,1|2,2|728,90|88,71|fluid")
-        adPlaceholder.attribute("data-desktop") should be("1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid")
+        adPlaceholder.attributes("data-name").toString should be("top-above-nav")
+        adPlaceholder.attributes("data-tablet").toString should be("1,1|2,2|728,90|88,71|fluid")
+        adPlaceholder.attributes("data-desktop").toString should be(
+          "1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid",
+        )
 
         And("the placeholder has the correct class name")
-        adPlaceholder.attribute("class") should include(
+        adPlaceholder.attributes("class").toString should include(
           "js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop",
         )
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.attribute("data-link-name") should be("ad slot top-above-nav")
+        adPlaceholder.attributes("data-link-name").toString should be("ad slot top-above-nav")
       }
     }
 
@@ -377,7 +379,7 @@ import scala.collection.JavaConverters._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        $("meta[name=thumbnail]").attribute("content") should include(
+        $("meta[name=thumbnail]").attributes("content").toString should include(
           "sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg",
         )
       }
@@ -408,7 +410,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the first image of the tweet")
-        el(".tweet").$("img").attribute("src") should include("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
+        el(".tweet").$("img").attributes("src").toString should include("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
       }
     }
 
