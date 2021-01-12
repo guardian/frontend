@@ -1,0 +1,28 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
+version: v1.19.0
+ignore: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  SNYK-JS-LODASH-567746:
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-block-scoping > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@emotion/styled > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - emotion > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash:
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-modules-umd > @babel/helper-module-transforms > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@emotion/core > @emotion/css > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-parameters > @babel/helper-call-delegate > @babel/traverse > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/automat-modules > @emotion/core > @emotion/css > babel-plugin-emotion > @babel/helper-module-imports > @babel/types > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/generator > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-split-export-declaration > @babel/types > lodash':
+        patched: '2021-01-12T15:55:50.725Z'
+    - '@guardian/atom-renderer > @babel/preset-env > @babel/plugin-transform-exponentiation-operator > @babel/helper-builder-binary-assignment-operator-visitor > @babel/helper-explode-assignable-expression > @babel/traverse > @babel/helper-function-name > @babel/template > @babel/types > lodash':
+        patched: '2021-01-12T15:55:50.725Z'

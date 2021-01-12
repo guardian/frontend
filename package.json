@@ -5,7 +5,9 @@
   "engines": {
     "yarn": ">=1.13.0"
   },
-  "files": ["static/src/**/*"],
+  "files": [
+    "static/src/**/*"
+  ],
   "dependencies": {
     "@braze/web-sdk-core": "3.1.0",
     "@emotion/core": "^10.0.27",
@@ -33,7 +35,7 @@
     "emotion-theming": "^10.0.27",
     "fastdom": "1.0.9",
     "fence": "guardian/fence#0.2.11",
-    "lodash": "^4.17.13",
+    "lodash": "^4.17.20",
     "object-fit-videos": "^1.0.3",
     "ophan-tracker-js": "1.3.23",
     "preact": "^8.2.9",
@@ -48,11 +50,12 @@
     "video.js": "~5.3",
     "videojs-contrib-ads": "3.1.3",
     "videojs-embed": "guardian/videojs-embed#v0.3.3",
-    "videojs-ima": "googleads/videojs-ima#0.3.0",
+    "videojs-ima": "0.4.0",
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
     "web-vitals": "^0.2.4",
-    "wolfy87-eventemitter": "~5.2.4"
+    "wolfy87-eventemitter": "~5.2.4",
+    "snyk": "^1.437.3"
   },
   "devDependencies": {
     "@babel/cli": "^7.11.6",
@@ -171,13 +174,15 @@
     "testEnvironment": "jest-environment-jsdom-global",
     "testURL": "http://testurl.theguardian.com",
     "transformIgnorePatterns": [
-      "/node_modules/(?!@guardian\/).+\\.js$"
+      "/node_modules/(?!@guardian/).+\\.js$"
     ]
   },
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
-    "test": "jest"
+    "test": "jest",
+    "snyk-protect": "snyk protect",
+    "prepare": "yarn run snyk-protect"
   },
   "prettier": {
     "trailingComma": "es5",
@@ -186,5 +191,6 @@
     "tabWidth": 4,
     "jsxBracketSameLine": true,
     "parser": "babel"
-  }
+  },
+  "snyk": true
 }
