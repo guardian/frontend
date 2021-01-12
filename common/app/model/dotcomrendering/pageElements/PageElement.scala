@@ -1,10 +1,10 @@
 package model.dotcomrendering.pageElements
 
 import java.net.URLEncoder
-
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
 import com.gu.contentapi.client.model.v1.{
   ElementType,
+  EmbedTracking,
   SponsorshipType,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
@@ -695,7 +695,7 @@ object PageElement {
             id,
             element.assets.nonEmpty,
             Role(data.role),
-            containsThirdPartyTracking(element),
+            containsThirdPartyTracking(element.tracking),
           )
         }).toList
       }
@@ -876,7 +876,7 @@ object PageElement {
                 trackUrl = audio.data.trackUrl,
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
-                thirdPartyTracking = containsThirdPartyTracking(element),
+                thirdPartyTracking = containsThirdPartyTracking(element.tracking),
               ),
             )
           }
@@ -947,7 +947,7 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
-                    thirdPartyTracking = containsThirdPartyTracking(element),
+                    thirdPartyTracking = containsThirdPartyTracking(element.tracking),
                   )
                 })
               }
@@ -1062,19 +1062,23 @@ object PageElement {
             height <- getIframeHeight(html)
             caption = mapElem.caption.getOrElse("")
             title = mapElem.title.getOrElse("")
-            thirdPartyTracking = containsThirdPartyTracking(element)
+            thirdPartyTracking = containsThirdPartyTracking(element.tracking)
           } yield MapBlockElement(embedUrl, originalUrl, source, caption, title, width, height, thirdPartyTracking)
         }.toList
 
       case Pullquote =>
         element.pullquoteTypeData
-          .map(d => PullquoteBlockElement(d.html, Role(d.role), d.attribution, containsThirdPartyTracking(element)))
+          .map(d =>
+            PullquoteBlockElement(d.html, Role(d.role), d.attribution, containsThirdPartyTracking(element.tracking)),
+          )
           .toList
       case Interactive =>
         element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness =>
-        element.witnessTypeData.map(d => WitnessBlockElement(d.html, containsThirdPartyTracking(element))).toList
+        element.witnessTypeData
+          .map(d => WitnessBlockElement(d.html, containsThirdPartyTracking(element.tracking)))
+          .toList
       case Document =>
         element.documentTypeData
           .map(d =>
@@ -1084,17 +1088,23 @@ object PageElement {
               d.height,
               d.title,
               d.isMandatory,
-              containsThirdPartyTracking(element),
+              containsThirdPartyTracking(element.tracking),
             ),
           )
           .toList
       case Instagram =>
         element.instagramTypeData
           .map(d =>
-            InstagramBlockElement(d.originalUrl, d.html, d.caption.isDefined, containsThirdPartyTracking(element)),
+            InstagramBlockElement(
+              d.originalUrl,
+              d.html,
+              d.caption.isDefined,
+              containsThirdPartyTracking(element.tracking),
+            ),
           )
           .toList
-      case Vine => element.vineTypeData.map(d => VineBlockElement(d.html, containsThirdPartyTracking(element))).toList
+      case Vine =>
+        element.vineTypeData.map(d => VineBlockElement(d.html, containsThirdPartyTracking(element.tracking))).toList
       case Code =>
         List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
       case Form                      => List(FormBlockElement(None))
@@ -1192,7 +1202,7 @@ object PageElement {
       d <- element.audioTypeData
       html <- d.html
       mandatory = true
-      thirdPartyTracking = containsThirdPartyTracking(element)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
       /*
         comment id: 2e5ac4fd-e7f1-4c04-bdcd-ceadd2dc5d4c
@@ -1241,7 +1251,7 @@ object PageElement {
       d <- element.embedTypeData
       html <- d.html
       mandatory = d.isMandatory.getOrElse(false)
-      thirdPartyTracking = containsThirdPartyTracking(element)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
       extractSoundcloudBlockElement(html, mandatory, thirdPartyTracking).getOrElse {
         CalloutExtraction.extractCallout(html: String, campaigns, calloutsUrl).getOrElse {
@@ -1278,7 +1288,7 @@ object PageElement {
       height <- data.height
       width <- data.width
       url = data.url.getOrElse(originalUrl)
-      thirdPartyTracking = containsThirdPartyTracking(element)
+      thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
       source match {
         case "YouTube" =>
@@ -1320,8 +1330,8 @@ object PageElement {
 
   }
 
-  private def containsThirdPartyTracking(element: ApiBlockElement): Boolean = {
-    element.tracking.map(_.tracks) match {
+  private[pageElements] def containsThirdPartyTracking(embedTracking: Option[EmbedTracking]): Boolean = {
+    embedTracking.map(_.tracks) match {
       case Some(DoesNotTrack) => false
       case None               => false
       case _                  => true
