@@ -72,7 +72,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the names of the authors")
-        el("[itemprop=author]").html().toString.trim should be("Ben Arnold")
+        el("[itemprop=author]").html().toString.trim should include("Ben Arnold")
         $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
@@ -173,7 +173,9 @@ import scala.collection.JavaConverters._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").asScala.toList.mkString should be("Thu 8 Nov 2012 00.01 GMT")
+        $(".content__dateline time").asScala.toList.map(x => x.textContent()).mkString should be(
+          "Thu 8 Nov 2012 00.01 GMT",
+        )
       }
 
       Given("I am on an article published on '2012-11-08'")
