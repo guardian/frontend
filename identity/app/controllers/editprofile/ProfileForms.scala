@@ -5,6 +5,7 @@ import form._
 import idapiclient.responses.Error
 import model.IdentityPage
 import play.api.data.Form
+import play.api.data.FormBinding.Implicits.formBinding
 import play.api.i18n.MessagesProvider
 import play.api.mvc.Request
 
