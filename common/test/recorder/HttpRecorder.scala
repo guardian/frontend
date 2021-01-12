@@ -13,8 +13,7 @@ import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ahc.{AhcWSResponse, StandaloneAhcWSResponse}
 import play.shaded.ahc.org.asynchttpclient.{Response => AHCResponse}
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
-// import play.shaded.ahc.org.asynchttpclient.cookie.Cookie
-import play.api.mvc.Cookie
+import play.shaded.ahc.io.netty.handler.codec.http.cookie.Cookie
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -136,5 +135,7 @@ trait DefaultHttpRecorder extends HttpRecorder[WSResponse] {
     def getHeaders: HttpHeaders = throw new NotImplementedError()
     def getLocalAddress: SocketAddress = throw new NotImplementedError()
     def getRemoteAddress: SocketAddress = throw new NotImplementedError()
+    def getHeader(x1: CharSequence): String = throw new NotImplementedError()
+    def getHeaders(x1: CharSequence): java.util.List[String] = throw new NotImplementedError()
   }
 }
