@@ -17,7 +17,7 @@ import org.scalatest._
 
         And(s"the ${sponsorshipType.replace("-", " ")} badge should be displayed")
         $(".js-sponsored-front") should have size 1
-        $(s".facia-container--$sponsorshipType").attribute("data-sponsorship") should be(sponsorshipType)
+        $(s".facia-container--$sponsorshipType").attributes("data-sponsorship").toString should be(sponsorshipType)
       }
 
       /**
