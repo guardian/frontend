@@ -44,7 +44,7 @@ import scala.collection.JavaConverters._
 
     scenario("Display a short description of the article", ArticleComponents) {
 
-      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
+      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all' [1]")
       goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
@@ -130,7 +130,7 @@ import scala.collection.JavaConverters._
 
     scenario("Display the article image", ArticleComponents) {
 
-      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
+      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all' [2]")
       goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
@@ -156,24 +156,24 @@ import scala.collection.JavaConverters._
 
     scenario("Display the article publication date", ArticleComponents) {
 
-      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all'")
+      Given("I am on an article entitled 'Putting a price on the rivers and rain diminishes us all' [3]")
       goTo("/commentisfree/2012/aug/06/price-rivers-rain-greatest-privatisation") { browser =>
         import browser._
 
         Then("I should see the publication date of the article")
         $(".content__dateline-wpd").texts().asScala.toList.mkString should be("Mon 6 Aug 2012 20.30 BST")
-        $("time").attributes("datetime").asScala.toList.mkString should be("2012-08-06T20:30:00+0100")
+        $("time").attributes("datetime").asScala.toList.mkString should include("2012-08-06T20:30:00+0100")
       }
     }
 
-    scenario("Articles should have the correct timezone for when they were published") {
+    scenario("Articles should have the correct timezone for when they were published [1]") {
 
       Given("I am on an article published on '2012-11-08'")
       And("I am on the 'UK' edition")
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").asScala.toList.map(x => x.textContent()).mkString should be(
+        $(".content__dateline time").texts().asScala.toList.mkString should include(
           "Thu 8 Nov 2012 00.01 GMT",
         )
       }
@@ -183,7 +183,9 @@ import scala.collection.JavaConverters._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        $(".content__dateline time").asScala.toList.mkString should be("Wed 7 Nov 2012 19.01 EST")
+        $(".content__dateline time").asScala.toList.mkString should be(
+          "<time itemprop=\"datePublished\" datetime=\"2012-11-07T19:01:02-0500\" data-timestamp=\"1352332862000\" class=\"content__dateline-wpd js-wpd\"><time datetime=\"2012-11-07T19:01:02-0500\" data-timestamp=\"1352332862000\" class=\"content__dateline-lm js-lm u-h\">",
+        )
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -191,7 +193,9 @@ import scala.collection.JavaConverters._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        $(".content__dateline time").asScala.toList.mkString should be("Sun 19 Aug 2012 18.38 BST")
+        $(".content__dateline time").asScala.toList.mkString should be(
+          "<time itemprop=\"datePublished\" datetime=\"2012-08-19T18:38:51+0100\" data-timestamp=\"1345397931000\" class=\"content__dateline-wpd js-wpd\"><time datetime=\"2012-08-19T18:38:51+0100\" data-timestamp=\"1345397931000\" class=\"content__dateline-lm js-lm u-h\">",
+        )
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -199,7 +203,7 @@ import scala.collection.JavaConverters._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        $(".content__dateline time").asScala.toList.mkString should be("Sun 19 Aug 2012 13.38 EDT")
+        $(".content__dateline time").texts().asScala.toList.mkString should include("Sun 19 Aug 2012 13.38 EDT")
       }
 
     }
@@ -287,7 +291,9 @@ import scala.collection.JavaConverters._
         val reviewed = review.el("[itemprop=itemReviewed]")
 
         reviewed.attribute("itemtype") should be("http://schema.org/Movie")
-        reviewed.$("[itemprop=sameAs]").attributes("href").toString should be("http://www.imdb.com/title/tt3205376/")
+        reviewed.$("[itemprop=sameAs]").attributes("href").asScala.toList.mkString should be(
+          "http://www.imdb.com/title/tt3205376/",
+        )
       }
     }
 
@@ -298,7 +304,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("It should be rendered as an article")
-        $("[itemprop=headline]").toString should be("Birds of Britain | video")
+        $("[itemprop=headline]").texts().asScala.toList.mkString should be("Birds of Britain | video")
       }
     }
 
@@ -363,19 +369,19 @@ import scala.collection.JavaConverters._
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.attributes("data-name").toString should be("top-above-nav")
-        adPlaceholder.attributes("data-tablet").toString should be("1,1|2,2|728,90|88,71|fluid")
-        adPlaceholder.attributes("data-desktop").toString should be(
+        adPlaceholder.attributes("data-name").asScala.toList.mkString should be("top-above-nav")
+        adPlaceholder.attributes("data-tablet").asScala.toList.mkString should be("1,1|2,2|728,90|88,71|fluid")
+        adPlaceholder.attributes("data-desktop").asScala.toList.mkString should be(
           "1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid",
         )
 
         And("the placeholder has the correct class name")
-        adPlaceholder.attributes("class").toString should include(
+        adPlaceholder.attributes("class").asScala.toList.mkString should include(
           "js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop",
         )
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.attributes("data-link-name").toString should be("ad slot top-above-nav")
+        adPlaceholder.attributes("data-link-name").asScala.toList.mkString should be("ad slot top-above-nav")
       }
     }
 
@@ -385,7 +391,7 @@ import scala.collection.JavaConverters._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        $("meta[name=thumbnail]").attributes("content").toString should include(
+        $("meta[name=thumbnail]").attributes("content").asScala.toList.mkString should include(
           "sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg",
         )
       }
@@ -416,7 +422,9 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the first image of the tweet")
-        el(".tweet").$("img").attributes("src").toString should include("://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg")
+        el(".tweet").$("img").attributes("src").asScala.toList.mkString should include(
+          "://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg",
+        )
       }
     }
 
@@ -445,11 +453,21 @@ import scala.collection.JavaConverters._
 
         Then("I should see buttons for my favourite social network")
 
-        $(".social__item[data-link-name=email] .social__action").attributes("href").toString should be(mailShareUrl)
-        $(".social__item[data-link-name=facebook] .social__action").attributes("href").toString should be(fbShareUrl)
-        $(".social__item[data-link-name=twitter] .social__action").attributes("href").toString should be(
-          twitterShareUrl,
-        )
+        $(".social__item[data-link-name=email] .social__action")
+          .attributes("href")
+          .asScala
+          .toList
+          .head should be(mailShareUrl)
+        $(".social__item[data-link-name=facebook] .social__action")
+          .attributes("href")
+          .asScala
+          .toList
+          .head should be(fbShareUrl)
+        $(".social__item[data-link-name=twitter] .social__action")
+          .attributes("href")
+          .asScala
+          .toList
+          .head should be(twitterShareUrl)
       }
     }
 
@@ -464,12 +482,12 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        $("header").attributes("role").toString should be("banner")
-        $(".l-footer__secondary").attributes("role").toString should be("contentinfo")
-        $("nav").attributes("aria-label").toString should not be empty
-        browser.find("nav").attributes("role").toString should be("navigation")
-        $("#article").attributes("role").toString should be("main")
-        $(".related").attributes("aria-labelledby").toString should be("related-content-head")
+        $("header").attributes("role").asScala.toList.head should be("banner")
+        $(".l-footer__secondary").attributes("role").asScala.toList.head should be("contentinfo")
+        $("nav").attributes("aria-label").asScala.toList.size should not be 0
+        browser.find("nav").attributes("role").asScala.toList.head should be("navigation")
+        $("#article").attributes("role").asScala.toList.head should be("main")
+        $(".related").attributes("aria-labelledby").asScala.toList.head should be("related-content-head")
       }
     }
 
@@ -533,12 +551,12 @@ import scala.collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
+        $("meta[name='twitter:site']").attributes("content").asScala.toList.mkString should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.toList.mkString should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
           "guardian://www.theguardian.com/world",
         )
-        $("meta[name='twitter:image']").attributes("content").asScala.head should include(
+        $("meta[name='twitter:image']").attributes("content").asScala.toList.mkString should include(
           "2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg",
         )
       }
@@ -549,9 +567,9 @@ import scala.collection.JavaConverters._
       goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
         import browser._
         Then("I should still see a large image twitter card")
-        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
+        $("meta[name='twitter:site']").attributes("content").asScala.toList.mkString should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.toList.mkString should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.toList.mkString should startWith(
           "guardian://www.theguardian.com/us-news",
         )
       }
@@ -562,7 +580,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        $("link[rel='canonical']").attributes("href").toString should endWith(
+        $("link[rel='canonical']").attributes("href").asScala.toList.mkString should endWith(
           "/world/2013/sep/15/obama-rouhani-united-nations-meeting",
         )
       }
