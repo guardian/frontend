@@ -84,7 +84,7 @@ object NSImage1 {
 sealed trait PageElement
 
 trait ThirdPartyEmbeddedContent {
-  def thirdPartyTracking: Boolean
+  def isThirdPartyTracking: Boolean
 }
 
 case class AudioAtomBlockElement(
@@ -95,7 +95,7 @@ case class AudioAtomBlockElement(
     trackUrl: String,
     duration: Int,
     contentId: String,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object AudioAtomBlockElement {
@@ -174,7 +174,7 @@ case class DocumentBlockElement(
     width: Option[Int],
     title: Option[String],
     isMandatory: Option[Boolean],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object DocumentBlockElement {
@@ -187,7 +187,7 @@ case class EmbedBlockElement(
     alt: Option[String],
     isMandatory: Boolean,
     role: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object EmbedBlockElement {
@@ -291,7 +291,7 @@ case class InstagramBlockElement(
     url: String,
     html: Option[String],
     hasCaption: Boolean,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object InstagramBlockElement {
@@ -306,7 +306,7 @@ case class MapBlockElement(
     title: String,
     width: Int,
     height: Int,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object MapBlockElement {
@@ -376,7 +376,7 @@ case class PullquoteBlockElement(
     html: Option[String],
     role: Role,
     attribution: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object PullquoteBlockElement {
@@ -427,7 +427,7 @@ case class SoundcloudBlockElement(
     id: String,
     isTrack: Boolean,
     isMandatory: Boolean,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SoundcloudBlockElement {
@@ -440,7 +440,7 @@ case class SpotifyBlockElement(
     width: Option[Int],
     title: Option[String],
     caption: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object SpotifyBlockElement {
@@ -474,7 +474,7 @@ case class TweetBlockElement(
     id: String,
     hasMedia: Boolean,
     role: Role,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object TweetBlockElement {
@@ -493,7 +493,7 @@ case class VideoBlockElement(
     height: Int,
     width: Int,
     role: Role,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoBlockElement {
@@ -508,7 +508,7 @@ case class VideoFacebookBlockElement(
     height: Int,
     width: Int,
     role: Role,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoFacebookBlockElement {
@@ -524,7 +524,7 @@ case class VideoVimeoBlockElement(
     height: Int,
     width: Int,
     role: Role,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoVimeoBlockElement {
@@ -539,7 +539,7 @@ case class VideoYoutubeBlockElement(
     height: Int,
     width: Int,
     role: Role,
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VideoYoutubeBlockElement {
@@ -548,7 +548,7 @@ object VideoYoutubeBlockElement {
 
 case class VineBlockElement(
     html: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VineBlockElement {
@@ -557,7 +557,7 @@ object VineBlockElement {
 
 case class WitnessBlockElement(
     html: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object WitnessBlockElement {
@@ -574,7 +574,7 @@ case class YoutubeBlockElement(
     expired: Boolean,
     duration: Option[Long],
     altText: Option[String],
-    thirdPartyTracking: Boolean,
+    isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 /*
@@ -876,7 +876,7 @@ object PageElement {
                 trackUrl = audio.data.trackUrl,
                 duration = audio.data.duration,
                 contentId = audio.data.contentId,
-                thirdPartyTracking = containsThirdPartyTracking(element.tracking),
+                isThirdPartyTracking = containsThirdPartyTracking(element.tracking),
               ),
             )
           }
@@ -947,7 +947,7 @@ object PageElement {
                     expired = mediaAtom.expired.getOrElse(false),
                     duration = mediaAtom.duration, // Duration in seconds
                     altText = if (isMainBlock) altText else None,
-                    thirdPartyTracking = containsThirdPartyTracking(element.tracking),
+                    isThirdPartyTracking = containsThirdPartyTracking(element.tracking),
                   )
                 })
               }
