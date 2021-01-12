@@ -439,9 +439,11 @@ import scala.collection.JavaConverters._
 
         Then("I should see buttons for my favourite social network")
 
-        $(".social__item[data-link-name=email] .social__action").attribute("href") should be(mailShareUrl)
-        $(".social__item[data-link-name=facebook] .social__action").attribute("href") should be(fbShareUrl)
-        $(".social__item[data-link-name=twitter] .social__action").attribute("href") should be(twitterShareUrl)
+        $(".social__item[data-link-name=email] .social__action").attributes("href").toString should be(mailShareUrl)
+        $(".social__item[data-link-name=facebook] .social__action").attributes("href").toString should be(fbShareUrl)
+        $(".social__item[data-link-name=twitter] .social__action").attributes("href").toString should be(
+          twitterShareUrl,
+        )
       }
     }
 
@@ -456,12 +458,12 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the main ARIA roles described")
-        $("header").attribute("role") should be("banner")
-        $(".l-footer__secondary").attribute("role") should be("contentinfo")
-        $("nav").attribute("aria-label") should not be empty
-        browser.find("nav").attribute("role") should be("navigation")
-        $("#article").attribute("role") should be("main")
-        $(".related").attribute("aria-labelledby") should be("related-content-head")
+        $("header").attributes("role").toString should be("banner")
+        $(".l-footer__secondary").attributes("role").toString should be("contentinfo")
+        $("nav").attributes("aria-label").toString should not be empty
+        browser.find("nav").attributes("role").toString should be("navigation")
+        $("#article").attributes("role").toString should be("main")
+        $(".related").attributes("aria-labelledby").toString should be("related-content-head")
       }
     }
 
@@ -554,7 +556,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        $("link[rel='canonical']").attribute("href") should endWith(
+        $("link[rel='canonical']").attributes("href").toString should endWith(
           "/world/2013/sep/15/obama-rouhani-united-nations-meeting",
         )
       }
@@ -567,7 +569,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".content").attribute("class") should include("tone-comment")
+        $(".content").attributes("class").toString should include("tone-comment")
       }
     }
   }
