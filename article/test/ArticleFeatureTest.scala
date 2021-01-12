@@ -37,7 +37,7 @@ import scala.collection.JavaConverters._
         And("The article is marked up with the correct schema")
         val article = el("article[itemtype='http://schema.org/NewsArticle']")
 
-        article.el("[itemprop=headline]").text should
+        article.el("[itemprop=headline]").toString should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
@@ -72,7 +72,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the names of the authors")
-        el("[itemprop=author]").text should be("Ben Arnold")
+        el("[itemprop=author]").toString should be("Ben Arnold")
         $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
@@ -161,7 +161,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the publication date of the article")
-        $(".content__dateline-wpd").text should be("Mon 6 Aug 2012 20.30 BST")
+        $(".content__dateline-wpd").toString should be("Mon 6 Aug 2012 20.30 BST")
         $("time").attribute("datetime") should be("2012-08-06T20:30:00+0100")
       }
     }
@@ -173,7 +173,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").text should be("Thu 8 Nov 2012 00.01 GMT")
+        $(".content__dateline time").toString should be("Thu 8 Nov 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-08'")
@@ -181,7 +181,7 @@ import scala.collection.JavaConverters._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        $(".content__dateline time").text should be("Wed 7 Nov 2012 19.01 EST")
+        $(".content__dateline time").toString should be("Wed 7 Nov 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -189,7 +189,7 @@ import scala.collection.JavaConverters._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        $(".content__dateline time").text should be("Sun 19 Aug 2012 18.38 BST")
+        $(".content__dateline time").toString should be("Sun 19 Aug 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -197,7 +197,7 @@ import scala.collection.JavaConverters._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        $(".content__dateline time").text should be("Sun 19 Aug 2012 13.38 EDT")
+        $(".content__dateline time").toString should be("Sun 19 Aug 2012 13.38 EDT")
       }
 
     }
@@ -292,7 +292,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("It should be rendered as an article")
-        $("[itemprop=headline]").text should be("Birds of Britain | video")
+        $("[itemprop=headline]").toString should be("Birds of Britain | video")
       }
     }
 
