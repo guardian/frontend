@@ -52,7 +52,7 @@ class RedirectController(
           val rnd = Math.random().toString.replace(".", "")
           val tmpName = s"/tmp/$rnd${theFile.filename}"
           val tmpFile = new File(tmpName)
-          theFile.ref.moveTo(tmpFile)
+          theFile.ref.moveFileTo(tmpFile)
           tmpFile
         }
       }
