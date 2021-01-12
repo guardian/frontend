@@ -9,11 +9,11 @@ import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
 import controllers.{HealthCheck, OnwardControllers}
-import dev.DevAssetsController
+import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
 import play.api.ApplicationLoader.Context
-import play.api.http.HttpErrorHandler
+import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.{BuiltInComponentsFromContext, Environment}
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
@@ -83,6 +83,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
+  override lazy val httpRequestHandler: HttpRequestHandler = wire[DevParametersHttpRequestHandler]
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
 
   def actorSystem: ActorSystem
