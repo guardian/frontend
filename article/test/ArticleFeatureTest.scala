@@ -37,7 +37,7 @@ import scala.collection.JavaConverters._
         And("The article is marked up with the correct schema")
         val article = el("article[itemtype='http://schema.org/NewsArticle']")
 
-        article.el("[itemprop=headline]").toString should
+        article.el("[itemprop=headline]").html().toString.trim should
           be("Liu Xiang pulls up in opening race at second consecutive Olympics")
       }
     }
@@ -72,7 +72,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the names of the authors")
-        el("[itemprop=author]").toString should be("Ben Arnold")
+        el("[itemprop=author]").html().toString.trim should be("Ben Arnold")
         $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
@@ -101,12 +101,12 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("Keywords should be exposed")
-        el("meta[name=keywords]").attribute("content").toString should be(
+        el("meta[name=keywords]").attribute("content") should be(
           "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
         )
 
         And("News Keywords should be exposed")
-        el("meta[name=news_keywords]").attribute("content").toString should be(
+        el("meta[name=news_keywords]").attribute("content") should be(
           "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
         )
       }
@@ -161,8 +161,8 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the publication date of the article")
-        $(".content__dateline-wpd").toString should be("Mon 6 Aug 2012 20.30 BST")
-        $("time").attributes("datetime").toString should be("2012-08-06T20:30:00+0100")
+        $(".content__dateline-wpd").texts().asScala.toList.mkString should be("Mon 6 Aug 2012 20.30 BST")
+        $("time").attributes("datetime").asScala.toList.mkString should be("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -173,7 +173,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").toString should be("Thu 8 Nov 2012 00.01 GMT")
+        $(".content__dateline time").asScala.toList.mkString should be("Thu 8 Nov 2012 00.01 GMT")
       }
 
       Given("I am on an article published on '2012-11-08'")
@@ -181,7 +181,7 @@ import scala.collection.JavaConverters._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        $(".content__dateline time").toString should be("Wed 7 Nov 2012 19.01 EST")
+        $(".content__dateline time").asScala.toList.mkString should be("Wed 7 Nov 2012 19.01 EST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -189,7 +189,7 @@ import scala.collection.JavaConverters._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        $(".content__dateline time").toString should be("Sun 19 Aug 2012 18.38 BST")
+        $(".content__dateline time").asScala.toList.mkString should be("Sun 19 Aug 2012 18.38 BST")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -197,7 +197,7 @@ import scala.collection.JavaConverters._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        $(".content__dateline time").toString should be("Sun 19 Aug 2012 13.38 EDT")
+        $(".content__dateline time").asScala.toList.mkString should be("Sun 19 Aug 2012 13.38 EDT")
       }
 
     }
@@ -213,8 +213,10 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.attributes("id").toString should be("dfp-ad--right")
-        adSlotRight.attributes("data-mobile").toString should be("1,1|2,2|300,250|300,274|300,600|fluid")
+        adSlotRight.attributes("id").asScala.toList.mkString should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").asScala.toList.mkString should be(
+          "1,1|2,2|300,250|300,274|300,600|fluid",
+        )
       }
 
       Given("I am on an article entitled '10 of the best things to do in Tallinn'")
@@ -225,8 +227,10 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.attributes("id").toString should be("dfp-ad--right")
-        adSlotRight.attributes("data-mobile").toString should be("1,1|2,2|300,250|300,274|300,600|fluid|300,1050")
+        adSlotRight.attributes("id").asScala.toList.mkString should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").asScala.toList.mkString should be(
+          "1,1|2,2|300,250|300,274|300,600|fluid|300,1050",
+        )
       }
 
       Given(
@@ -238,8 +242,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should not be sticky")
-        adSlotRight.attributes("id").toString should be("dfp-ad--right")
-        adSlotRight.attributes("class").toString should not include ("js-sticky-mpu")
+        adSlotRight.attributes("id").asScala.toList.mkString should be("dfp-ad--right")
+        adSlotRight.attributes("class").asScala.toList.mkString should not include ("js-sticky-mpu")
       }
     }
 
@@ -256,11 +260,11 @@ import scala.collection.JavaConverters._
         val inBodyImage = el(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.$("[itemprop=contentUrl]").attributes("src").toString should
+        inBodyImage.$("[itemprop=contentUrl]").attributes("src").asScala.toList.mkString should
           include("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
-        inBodyImage.$("[itemprop=description]").toString should
+        inBodyImage.$("[itemprop=description]").texts().asScala.toList.mkString should
           be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
@@ -275,8 +279,8 @@ import scala.collection.JavaConverters._
         And("The review is marked up with the correct schema")
         val review = el("article[itemtype='http://schema.org/Review']")
 
-        review.$("[articleprop=reviewRating]").toString should be("4 / 5 stars")
-        review.$("[articleprop=ratingValue]").toString should be("4")
+        review.$("[articleprop=reviewRating]").texts().asScala.toList.mkString should be("4 / 5 stars")
+        review.$("[articleprop=ratingValue]").texts().asScala.toList.mkString should be("4")
 
         val reviewed = review.el("[itemprop=itemReviewed]")
 
