@@ -9,22 +9,22 @@ import org.scalatest.Matchers
 trait MatchListFeatureTools extends Matchers {
   protected def assertTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
     val matchesStr = matches.asScala.map(matchEl =>
-      matchEl.find(".football-team__name").text + " - " + matchEl.find(".football-team__score").text,
+      matchEl.find(".football-team__name").toString + " - " + matchEl.find(".football-team__score").toString,
     )
     assert(
       matches.asScala.exists { matchEl =>
-        matchEl.find(".football-team__name").text == team && matchEl.find(".football-team__score").text == score
+        matchEl.find(".football-team__name").toString == team && matchEl.find(".football-team__score").toString == score
       },
       s"$matchesStr did not contain $team - $score",
     )
   }
   protected def assertNotTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
     val matchesStr = matches.asScala.map(matchEl =>
-      matchEl.find(".football-team__name").text + " - " + matchEl.find(".football-team__score").text,
+      matchEl.find(".football-team__name").toString + " - " + matchEl.find(".football-team__score").toString,
     )
     assert(
       !matches.asScala.exists { matchEl =>
-        matchEl.find(".football-team__name").text == team && matchEl.find(".football-team__score").text == score
+        matchEl.find(".football-team__name").toString == team && matchEl.find(".football-team__score").toString == score
       },
       s"$matchesStr erroneously contained $team - $score",
     )
