@@ -13,7 +13,8 @@ import play.api.libs.ws.WSResponse
 import play.api.libs.ws.ahc.{AhcWSResponse, StandaloneAhcWSResponse}
 import play.shaded.ahc.org.asynchttpclient.{Response => AHCResponse}
 import play.shaded.ahc.io.netty.handler.codec.http.HttpHeaders
-import play.shaded.ahc.org.asynchttpclient.cookie.Cookie
+// import play.shaded.ahc.org.asynchttpclient.cookie.Cookie
+import play.api.mvc.Cookie
 import play.shaded.ahc.org.asynchttpclient.uri.Uri
 
 import scala.concurrent.{ExecutionContext, Future}
