@@ -16,7 +16,7 @@ import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.{ApplicationContext, ApplicationIdentity}
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
-import play.api.BuiltInComponentsFromContext
+import play.api.{BuiltInComponentsFromContext, OptionalDevContext}
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
