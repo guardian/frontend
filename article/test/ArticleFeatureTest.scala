@@ -90,7 +90,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").attribute("src") should include("2017/10/06/Jonathan-Freedland,-L.png")
+        $(".byline-img img").attributes("src").toString should include("2017/10/06/Jonathan-Freedland,-L.png")
       }
     }
 
@@ -101,12 +101,12 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("Keywords should be exposed")
-        el("meta[name=keywords]").attribute("content") should be(
+        el("meta[name=keywords]").attribute("content").toString should be(
           "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
         )
 
         And("News Keywords should be exposed")
-        el("meta[name=news_keywords]").attribute("content") should be(
+        el("meta[name=news_keywords]").attribute("content").toString should be(
           "Television,Television & radio,Culture,Proms 2012,Classical music,Proms,Music",
         )
       }
@@ -137,7 +137,7 @@ import scala.collection.JavaConverters._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        el("[itemprop='contentUrl']").attribute("src") should
+        el("[itemprop='contentUrl']").attributes("src").mkString("") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image url")
