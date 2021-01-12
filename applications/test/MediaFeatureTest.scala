@@ -32,13 +32,13 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
     scenario("Include Guardian byline") {
       goTo("/film/video/2013/aug/14/chloe-grace-moretz-kick-ass-2-video") { browser =>
         import browser._
-        el(".byline").text should be("Ben Child and Henry Barnes, theguardian.com")
+        el(".byline").toString should be("Ben Child and Henry Barnes, theguardian.com")
       }
     }
 
     scenario("Include non Guardian byline") {
       goTo("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
-        browser.$(".byline").text should be("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
+        browser.$(".byline").toString should be("Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd")
       }
     }
 
@@ -53,7 +53,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
         media.el("[itemprop=duration]").attribute("content") should be("PT66S")
         media.el("[itemprop=width]").attribute("content") should be("480")
         media.el("[itemprop=height]").attribute("content") should be("360")
-        media.el("[itemprop=headline]").text should be(
+        media.el("[itemprop=headline]").toString should be(
           "Qatar Airways flight escorted by RAF jet after bomb hoax - video",
         )
       }
