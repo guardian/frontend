@@ -118,7 +118,7 @@ class MostPopularController(
         if (globalPopularContent.nonEmpty) {
           Some(
             MostPopularNx2(
-              "Most Popular",
+              "Most popular",
               "",
               globalPopularContent
                 .map(_.faciaContent)
