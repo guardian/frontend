@@ -137,7 +137,7 @@ import scala.collection.JavaConverters._
         ImageServerSwitch.switchOn()
 
         Then("I should see the article's image")
-        el("[itemprop='contentUrl']").attributes("src").mkString("") should
+        el("[itemprop='contentUrl']").attribute("src") should
           include("Gunnerside-village-Swaled")
 
         And("I should see the image url")
