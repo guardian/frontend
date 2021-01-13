@@ -1,5 +1,6 @@
 package test
 
+import collection.JavaConverters._
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
 @DoNotDiscover class MostPopularFeatureTest
@@ -28,7 +29,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see a list of 'world' content")
-        $(".zone-world").$("h2").toString should be("Most viewed in World news")
+        $(".zone-world").$("h2").texts().asScala.toList.mkString should be("Most viewed in World news")
         And("it should contain world news")
         $(".zone-world li").size should be > 0
       }
@@ -37,7 +38,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/most-read/us-news") { browser =>
         import browser._
         Then("I should see a list of 'US news' content, with the heading correctly capitalized")
-        $(".zone-us-news").$("h2").toString should be("Most viewed in US news")
+        $(".zone-us-news").$("h2").texts().asScala.toList.mkString should be("Most viewed in US news")
         And("it should contain US news")
         $(".zone-us-news li").size should be > 0
 
