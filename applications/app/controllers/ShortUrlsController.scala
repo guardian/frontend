@@ -31,7 +31,7 @@ class ShortUrlsController(
         response.content
           .map(_.id)
           .map { id =>
-            Redirect(LinkTo(s"/$id"), queryString = queryString, status = MOVED_PERMANENTLY)
+            Redirect(LinkTo(s"/$id"), queryStringParams = queryString, status = MOVED_PERMANENTLY)
           }
           .getOrElse(NotFound)
       }
