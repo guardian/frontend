@@ -199,7 +199,7 @@ import scala.collection.JavaConverters._
       US("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 13.38 BST'")
-        $(".content__dateline time").texts().asScala.mkString should include("Sun 19 Aug 2012 13.38 EDT")
+        $(".content__dateline time").texts().asScala.head should include("Sun 19 Aug 2012 13.38 EDT")
       }
 
     }
@@ -215,8 +215,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.attributes("id").asScala.mkString should be("dfp-ad--right")
-        adSlotRight.attributes("data-mobile").asScala.mkString should be(
+        adSlotRight.attributes("id").asScala.head should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").asScala.head should be(
           "1,1|2,2|300,250|300,274|300,600|fluid",
         )
       }
@@ -229,8 +229,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should have the correct sizes")
-        adSlotRight.attributes("id").asScala.mkString should be("dfp-ad--right")
-        adSlotRight.attributes("data-mobile").asScala.mkString should be(
+        adSlotRight.attributes("id").asScala.head should be("dfp-ad--right")
+        adSlotRight.attributes("data-mobile").asScala.head should be(
           "1,1|2,2|300,250|300,274|300,600|fluid|300,1050",
         )
       }
@@ -244,8 +244,8 @@ import scala.collection.JavaConverters._
         val adSlotRight = $(".ad-slot--right")
 
         Then("The article-aside MPU should not be sticky")
-        adSlotRight.attributes("id").asScala.mkString should be("dfp-ad--right")
-        adSlotRight.attributes("class").asScala.mkString should not include ("js-sticky-mpu")
+        adSlotRight.attributes("id").asScala.head should be("dfp-ad--right")
+        adSlotRight.attributes("class").asScala.head should not include ("js-sticky-mpu")
       }
     }
 
@@ -262,11 +262,11 @@ import scala.collection.JavaConverters._
         val inBodyImage = el(".content__article-body .element-image")
 
         ImageServerSwitch.switchOn()
-        inBodyImage.$("[itemprop=contentUrl]").attributes("src").asScala.mkString should
+        inBodyImage.$("[itemprop=contentUrl]").attributes("src").asScala.head should
           include("sys-images/Travel/Late_offers/pictures/2012/10/11/1349951383662/Shops-in-Rainbow-Row-Char-001.jpg")
 
         And("I should see the image caption")
-        inBodyImage.$("[itemprop=description]").texts().asScala.mkString should
+        inBodyImage.$("[itemprop=description]").texts().asScala.head should
           be("""Shops in Rainbow Row, Charleston. Photograph: Getty Images""")
       }
     }
@@ -281,13 +281,13 @@ import scala.collection.JavaConverters._
         And("The review is marked up with the correct schema")
         val review = el("article[itemtype='http://schema.org/Review']")
 
-        review.$("[articleprop=reviewRating]").texts().asScala.mkString should be("4 / 5 stars")
-        review.$("[articleprop=ratingValue]").texts().asScala.mkString should be("4")
+        review.$("[articleprop=reviewRating]").texts().asScala.head should be("4 / 5 stars")
+        review.$("[articleprop=ratingValue]").texts().asScala.head should be("4")
 
         val reviewed = review.el("[itemprop=itemReviewed]")
 
         reviewed.attribute("itemtype") should be("http://schema.org/Movie")
-        reviewed.$("[itemprop=sameAs]").attributes("href").asScala.mkString should be(
+        reviewed.$("[itemprop=sameAs]").attributes("href").asScala.head should be(
           "http://www.imdb.com/title/tt3205376/",
         )
       }
@@ -300,7 +300,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("It should be rendered as an article")
-        $("[itemprop=headline]").texts().asScala.mkString should be("Birds of Britain | video")
+        $("[itemprop=headline]").texts().asScala.head should be("Birds of Britain | video")
       }
     }
 
