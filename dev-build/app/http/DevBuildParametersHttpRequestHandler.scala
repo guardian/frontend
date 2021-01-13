@@ -17,8 +17,8 @@ class DevBuildParametersHttpRequestHandler(
     filters: HttpFilters,
     context: ApplicationContext,
 ) extends DevParametersHttpRequestHandler(
-      optionalDevContext,
-      webCommands,
+      optionalDevContext = optionalDevContext,
+      webCommands = webCommands,
       router = router,
       errorHandler = errorHandler,
       configuration = configuration,
