@@ -10,7 +10,7 @@ import play.api.{Logger => PlayLogger}
 
 class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
 
-  lazy implicit val log = PlayLogger(getClass)
+  lazy val log = PlayLogger(getClass)
 
   lazy val loggingContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
