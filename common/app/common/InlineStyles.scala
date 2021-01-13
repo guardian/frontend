@@ -63,6 +63,8 @@ object CSSRule {
 
 object InlineStyles {
 
+  lazy implicit val log = Logger(getClass)
+
   /**
     * Attempt to inline the rules from the <style> tags in a page.
     *
@@ -106,7 +108,7 @@ object InlineStyles {
         val source = new InputSource(new StringReader(element.html))
         val cssParser = new CSSOMParser(new SACParserCSS3())
         Retry(3)(cssParser.parseStyleSheet(source, null, null)) { (exception, attemptNumber) =>
-          Logger.logger.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
+          log.error(s"Attempt $attemptNumber to parse stylesheet failed", exception)
         } match {
           case Failure(_) => (inline, head :+ element.html)
           case Success(sheet) =>

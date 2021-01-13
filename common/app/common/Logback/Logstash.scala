@@ -29,6 +29,8 @@ class LogstashLifecycle(playConfig: PlayConfiguration, logbackOperationsPool: Lo
 
 class Logstash(logbackOperationsPool: LogbackOperationsPool) {
 
+  lazy implicit val log = PlayLogger(getClass)
+
   def customFields(playConfig: PlayConfiguration): Map[String, String] =
     Map(
       "stack" -> "frontend",
@@ -58,13 +60,13 @@ class Logstash(logbackOperationsPool: LogbackOperationsPool) {
     Switches.LogstashLogging.isGuaranteedSwitchedOn.onComplete {
       case Success(isOn) =>
         if (isOn) {
-          config(playConfig).fold(PlayLogger.logger.info("Logstash config is missing"))(
+          config(playConfig).fold(log.info("Logstash config is missing"))(
             new LogbackConfig(logbackOperationsPool).init,
           )
         } else {
-          PlayLogger.logger.info("Logstash logging switch is Off")
+          log.info("Logstash logging switch is Off")
         }
-      case Failure(_) => PlayLogger.logger.error("Failed retrieving the logtash-logging switch value")
+      case Failure(_) => log.error("Failed retrieving the logtash-logging switch value")
     }
   }
 }
