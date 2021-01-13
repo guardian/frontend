@@ -1,17 +1,15 @@
 package feed
 
-import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
-import services.{OphanApi, OphanDeeplyReadItem}
-import play.api.libs.json._
 import common._
+import contentapi.ContentApiClient
 import models._
+import play.api.libs.json._
+import services.{OphanApi, OphanDeeplyReadItem}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
-import scala.concurrent.duration.Duration
-import scala.concurrent.{Await, Future}
+import scala.util.{Failure, Success}
 
 /*
   The class DeeplyReadItem is the one that define the answer to the deeply-read.json
@@ -123,10 +121,13 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       // We now perform the atomic update of deeplyReadItems to faithfully reflects the state of the Ophan answer.
       // It is done as last step of the process because by then the CAPI content has been loaded.
       }
-    fDeeplyReadItemsWithCapi.foreach { sequence =>
-      val mapDeeplyReadItems = sequence.filter(_.isDefined).map(_.get).toMap
-      deeplyReadItems = collection.mutable.Map(mapDeeplyReadItems.toSeq: _*)
-    }
+    fDeeplyReadItemsWithCapi.onComplete({
+      case Success(sequence) =>
+        val mapDeeplyReadItems = sequence.filter(_.isDefined).map(_.get).toMap
+        deeplyReadItems = collection.mutable.Map(mapDeeplyReadItems.toSeq: _*)
+      case Failure(exception) =>
+        log.logger.warn("Failed to fetch deeply read items from Ophan with: " + exception.getMessage)
+    })
     fDeeplyReadItemsWithCapi
   }
 
