@@ -12,7 +12,7 @@ import tools.MatchListFeatureTools
 
   feature("Live Matches") {
 
-    scenario("Visit the live matches") {
+    scenario("Visit the live matches [1]") {
 
       Given("I visit the live matches page")
 

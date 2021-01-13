@@ -15,7 +15,7 @@ import tools.MatchListFeatureTools
 
     scenario("Visit the results page") {
 
-      Given("I visit the results page")
+      Given("I visit the results page [1]")
 
       goTo("/football/results") { browser =>
         import browser._
@@ -40,14 +40,12 @@ import tools.MatchListFeatureTools
         $(".football-team__form").size() should be(0)
 
         Then("I should see match comments")
-        $(".football-match__comments").texts.asScala.exists(_.contains("Bolton win 4-2 on penalties")) should equal(
-          true,
-        )
+        $(".football-match__comments").texts.asScala.head should be("Bolton win 4-2 on penalties")
       }
     }
 
     scenario("Next results") {
-      Given("I am on the results page")
+      Given("I am on the results page [2]")
       goTo("/football/results") { browser =>
         import browser._
 
@@ -63,7 +61,7 @@ import tools.MatchListFeatureTools
 
     scenario("Competition results filter") { // filter has been removed and will be re-implemented differently
 
-      Given("I am on the the results page")
+      Given("I am on the the results page [3]")
       goTo("/football/results") { browser =>
         import browser._
 
@@ -85,7 +83,7 @@ import tools.MatchListFeatureTools
     }
 
     scenario("Link tracking") {
-      Given("I visit the results page")
+      Given("I visit the results page [4]")
       goTo("/football/results") { browser =>
         import browser._
         Then("any links I click should be tracked")

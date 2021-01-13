@@ -7,55 +7,45 @@ import collection.JavaConverters._
 import org.scalatest.Matchers
 
 trait MatchListFeatureTools extends Matchers {
+
+  private def getTeamName(matchEl: FluentWebElement): String =
+    matchEl.find(".football-team__name").texts().asScala.toList.mkString.trim
+
+  private def getTeamScore(matchEl: FluentWebElement): String =
+    matchEl.find(".football-team__score").texts().asScala.toList.mkString.trim
+
   protected def assertTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
-    val matchesStr = matches.asScala.map(matchEl =>
-      matchEl.find(".football-team__name").toString + " - " + matchEl.find(".football-team__score").toString,
-    )
     assert(
-      matches.asScala.exists { matchEl =>
-        matchEl.find(".football-team__name").toString == team && matchEl.find(".football-team__score").toString == score
-      },
-      s"$matchesStr did not contain $team - $score",
+      matches.asScala.exists { matchEl => getTeamName(matchEl) == team && getTeamScore(matchEl) == score },
     )
   }
   protected def assertNotTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
-    val matchesStr = matches.asScala.map(matchEl =>
-      matchEl.find(".football-team__name").toString + " - " + matchEl.find(".football-team__score").toString,
-    )
     assert(
-      !matches.asScala.exists { matchEl =>
-        matchEl.find(".football-team__name").toString == team && matchEl.find(".football-team__score").toString == score
-      },
-      s"$matchesStr erroneously contained $team - $score",
+      !matches.asScala.exists { matchEl => getTeamName(matchEl) == team && getTeamScore(matchEl) == score },
     )
   }
 
   protected def assertFixture(matches: FluentList[FluentWebElement], team1: String, team2: String): Unit = {
-    val matchesStr = matches.asScala.map(matchEl => matchEl.find(".football-team__name").texts)
     assert(
       matches.asScala.exists { matchEl =>
         val texts = matchEl.find(".football-team__name").texts
         texts.size should equal(2)
         texts.contains(team1) && texts.contains(team2)
       },
-      s"$matchesStr did not contain $team1 v $team2",
     )
   }
   protected def assertNotFixture(matches: FluentList[FluentWebElement], team1: String, team2: String): Unit = {
-    val matchesStr = matches.asScala.map(matchEl => matchEl.find(".football-team__name").texts)
     assert(
       !matches.asScala.exists { matchEl =>
         val texts = matchEl.find(".football-team__name").texts
         texts.size should equal(2)
         texts.contains(team1) && texts.contains(team2)
       },
-      s"$matchesStr did erroneously contained $team1 v $team2",
     )
   }
   protected def scrollToElementAndClick(selector: String, browser: TestBrowser): Unit = {
     val element = browser.$(selector).first
     val builder = new Actions(browser.webDriver)
-
     builder.moveToElement(element.getElement)
     builder.click()
     builder.build().perform()
