@@ -7,7 +7,6 @@ import org.jsoup.nodes.Document
 import com.steadystate.css.parser.{CSSOMParser, SACParserCSS3}
 import org.w3c.css.sac.InputSource
 import org.w3c.dom.css.{CSSRuleList, CSSRule => W3CSSRule}
-import play.api.Logger
 import play.twirl.api.Html
 
 import scala.collection.JavaConverters._
@@ -61,9 +60,7 @@ object CSSRule {
     styles.map { case (k, v) => s"$k: $v" }.mkString("; ")
 }
 
-object InlineStyles {
-
-  lazy implicit val log = Logger(getClass)
+object InlineStyles extends GuLogging {
 
   /**
     * Attempt to inline the rules from the <style> tags in a page.
