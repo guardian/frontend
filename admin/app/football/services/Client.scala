@@ -8,7 +8,6 @@ import java.io.File
 
 import scala.util.{Failure, Success}
 import play.api.Logger
-import play.api.Logger.logger
 
 import common.{GuLogging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
@@ -38,6 +37,8 @@ private case class RealClient(wsClient: WSClient)(implicit context: ExecutionCon
 }
 private case class TestClient(wsClient: WSClient, environment: Environment) extends Client {
 
+  lazy val log = Logger(getClass)
+
   override def GET(urlString: String): Future[Response] = ???
 
   override def get(suffix: String)(implicit context: ExecutionContext): Future[String] = {
@@ -59,11 +60,11 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
       case None =>
-        Logger.logger.warn(s"Missing fixture for API response: $suffix ($filename)")
+        log.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
-            Logger.logger.info(s"writing response to testdata, $filename.xml, $str")
+            log.info(s"writing response to testdata, $filename.xml, $str")
             writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
