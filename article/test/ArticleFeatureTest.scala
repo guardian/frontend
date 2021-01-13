@@ -183,9 +183,7 @@ import scala.collection.JavaConverters._
       US("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Wednesday 7 November 2012 19.01 GMT'")
-        $(".content__dateline time").asScala.mkString should be(
-          "<time itemprop=\"datePublished\" datetime=\"2012-11-07T19:01:02-0500\" data-timestamp=\"1352332862000\" class=\"content__dateline-wpd js-wpd\"><time datetime=\"2012-11-07T19:01:02-0500\" data-timestamp=\"1352332862000\" class=\"content__dateline-lm js-lm u-h\">",
-        )
+        $(".content__dateline time").asScala.map(_.html()).mkString should include("Wed 7 Nov 2012")
       }
 
       Given("I am on an article published on '2012-08-19'")
@@ -193,9 +191,7 @@ import scala.collection.JavaConverters._
       goTo("/business/2012/aug/19/shell-spending-security-nigeria-leak") { browser =>
         import browser._
         Then("the date should be 'Sunday 19 August 2012 18.38 BST'")
-        $(".content__dateline time").asScala.mkString should be(
-          "<time itemprop=\"datePublished\" datetime=\"2012-08-19T18:38:51+0100\" data-timestamp=\"1345397931000\" class=\"content__dateline-wpd js-wpd\"><time datetime=\"2012-08-19T18:38:51+0100\" data-timestamp=\"1345397931000\" class=\"content__dateline-lm js-lm u-h\">",
-        )
+        $(".content__dateline time").asScala.map(_.html()).mkString should include("Sun 19 Aug 2012")
       }
 
       Given("I am on an article published on '2012-08-19'")
