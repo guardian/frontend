@@ -72,7 +72,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the names of the authors")
-        el("[itemprop=author]").html().toString.trim should include("Ben Arnold")
+        el("[itemprop=author]").html().toString should include("Ben Arnold")
         $("[itemprop=author]").last.text should be("Phelim O'Neill")
 
         And("I should see a link to the author's page")
@@ -90,7 +90,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see a large byline image")
-        $(".byline-img img").attributes("src").toString should include("2017/10/06/Jonathan-Freedland,-L.png")
+        $(".byline-img img").attributes("src").asScala.head should include("2017/10/06/Jonathan-Freedland,-L.png")
       }
     }
 
@@ -369,19 +369,19 @@ import scala.collection.JavaConverters._
         val adPlaceholder = $(".ad-slot--top-banner-ad")
 
         And("the placeholder has the correct data attributes")
-        adPlaceholder.attributes("data-name").asScala.mkString should be("top-above-nav")
-        adPlaceholder.attributes("data-tablet").asScala.mkString should be("1,1|2,2|728,90|88,71|fluid")
-        adPlaceholder.attributes("data-desktop").asScala.mkString should be(
+        adPlaceholder.attributes("data-name").asScala.head should be("top-above-nav")
+        adPlaceholder.attributes("data-tablet").asScala.head should be("1,1|2,2|728,90|88,71|fluid")
+        adPlaceholder.attributes("data-desktop").asScala.head should be(
           "1,1|2,2|728,90|940,230|900,250|970,250|88,71|fluid",
         )
 
         And("the placeholder has the correct class name")
-        adPlaceholder.attributes("class").asScala.mkString should include(
+        adPlaceholder.attributes("class").asScala.head should include(
           "js-ad-slot ad-slot ad-slot--top-above-nav ad-slot--top-banner-ad ad-slot--top-banner-ad-desktop",
         )
 
         And("the placeholder has the correct analytics name")
-        adPlaceholder.attributes("data-link-name").asScala.mkString should be("ad slot top-above-nav")
+        adPlaceholder.attributes("data-link-name").asScala.head should be("ad slot top-above-nav")
       }
     }
 
@@ -391,7 +391,7 @@ import scala.collection.JavaConverters._
         Then("the main picture should be hidden")
         $("[itemprop='associatedMedia primaryImageOfPage']") should have size 0
 
-        $("meta[name=thumbnail]").attributes("content").asScala.mkString should include(
+        $("meta[name=thumbnail]").attributes("content").asScala.head should include(
           "sys-images/Guardian/Pix/pictures/2013/3/26/1364302888446/Jeremy-Hunt-005.jpg",
         )
       }
@@ -422,7 +422,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the first image of the tweet")
-        el(".tweet").$("img").attributes("src").asScala.mkString should include(
+        el(".tweet").$("img").attributes("src").asScala.head should include(
           "://pbs.twimg.com/media/CNBYttRWIAAHueY.jpg",
         )
       }
@@ -543,12 +543,12 @@ import scala.collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting") { browser =>
         import browser._
         Then("I should see twitter cards")
-        $("meta[name='twitter:site']").attributes("content").asScala.mkString should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").asScala.mkString should be("summary_large_image")
+        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
         $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
           "guardian://www.theguardian.com/world",
         )
-        $("meta[name='twitter:image']").attributes("content").asScala.mkString should include(
+        $("meta[name='twitter:image']").attributes("content").asScala.head should include(
           "2013/9/15/1379275549160/Irans-President-Hassan-Ro-010.jpg",
         )
       }
@@ -559,9 +559,9 @@ import scala.collection.JavaConverters._
       goTo("/us-news/live/2016/nov/11/donald-trump-news-us-politics-live") { browser =>
         import browser._
         Then("I should still see a large image twitter card")
-        $("meta[name='twitter:site']").attributes("content").asScala.mkString should be("@guardian")
-        $("meta[name='twitter:card']").attributes("content").asScala.mkString should be("summary_large_image")
-        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.mkString should startWith(
+        $("meta[name='twitter:site']").attributes("content").asScala.head should be("@guardian")
+        $("meta[name='twitter:card']").attributes("content").asScala.head should be("summary_large_image")
+        $("meta[name='twitter:app:url:googleplay']").attributes("content").asScala.head should startWith(
           "guardian://www.theguardian.com/us-news",
         )
       }
@@ -572,7 +572,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2013/sep/15/obama-rouhani-united-nations-meeting?view=mobile") { browser =>
         import browser._
         Then("There should be a canonical url")
-        $("link[rel='canonical']").attributes("href").asScala.mkString should endWith(
+        $("link[rel='canonical']").attributes("href").asScala.head should endWith(
           "/world/2013/sep/15/obama-rouhani-united-nations-meeting",
         )
       }
@@ -585,7 +585,7 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the comment tonal treatmemt")
-        $(".content").attributes("class").toString should include("tone-comment")
+        $(".content").attributes("class").asScala.head should include("tone-comment")
       }
     }
   }
