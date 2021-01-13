@@ -1,13 +1,10 @@
 import config from 'lib/config';
-import { isInUsOrCa as isInUsOrCa_,
-    isInAuOrNz as isInAuOrNz_} from 'common/modules/commercial/geo-utils';
 import {
-    _,
-    getAppNexusDirectBidParams,
-} from './appnexus';
-import {
-    getBreakpointKey as getBreakpointKey_
-} from '../utils';
+    isInUsOrCa as isInUsOrCa_,
+    isInAuOrNz as isInAuOrNz_,
+} from 'common/modules/commercial/geo-utils';
+import { _, getAppNexusDirectBidParams } from './appnexus';
+import { getBreakpointKey as getBreakpointKey_ } from '../utils';
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
@@ -20,7 +17,6 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('../utils', () => {
-    
     const original = jest.requireActual('../utils');
     return {
         ...original,
@@ -29,8 +25,8 @@ jest.mock('../utils', () => {
 });
 
 jest.mock('common/modules/commercial/geo-utils', () => ({
-        isInAuOrNz: jest.fn(),
-        isInUsOrCa: jest.fn(),
+    isInAuOrNz: jest.fn(),
+    isInUsOrCa: jest.fn(),
 }));
 
 jest.mock('lib/cookies', () => ({
