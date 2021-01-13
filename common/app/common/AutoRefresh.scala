@@ -24,18 +24,16 @@ abstract class AutoRefresh[A](initialDelay: FiniteDuration, interval: FiniteDura
       a <- get
     } yield Future.successful(a)).getOrElse(refresh())
 
+  class Task(implicit executionContext: ExecutionContext) extends Runnable {
+    def run() {
+      refresh().map { data => agent.send(Some(data)) }
+    }
+  }
+
   final def start()(implicit actorSystem: ActorSystem, executionContext: ExecutionContext): Unit = {
     log.info(s"Starting refresh cycle after $initialDelay repeatedly over $interval delay")
-
-    subscription = Some(actorSystem.scheduler.schedule(initialDelay, interval) {
-      refresh() onComplete {
-        case Success(a) =>
-          log.debug(s"Updated AutoRefresh: $a")
-          agent.send(Some(a))
-        case Failure(error) =>
-          log.warn("Failed to update AutoRefresh", error)
-      }
-    })
+    val cancellable = actorSystem.scheduler.scheduleWithFixedDelay(initialDelay, interval) { new Task() }
+    subscription = Some(cancellable)
   }
 
   final def stop(): Unit = subscription foreach { _.cancel() }
