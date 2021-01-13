@@ -1,4 +1,3 @@
-
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
@@ -19,7 +18,7 @@ import {
 } from '@guardian/commercial-core';
 import config from 'lib/config';
 
-const addScripts = (tags) => {
+const addScripts = tags => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
