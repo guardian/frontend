@@ -126,7 +126,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
         val mapDeeplyReadItems = sequence.filter(_.isDefined).map(_.get).toMap
         deeplyReadItems = collection.mutable.Map(mapDeeplyReadItems.toSeq: _*)
       case Failure(exception) =>
-        log.logger.warn("Failed to fetch deeply read items from Ophan with: " + exception.getMessage)
+        log.logger.warn("[cb01a845] Failed to fetch deeply read items from Ophan with: " + exception.getMessage)
     })
     fDeeplyReadItemsWithCapi
   }
