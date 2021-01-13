@@ -161,8 +161,8 @@ import scala.collection.JavaConverters._
         import browser._
 
         Then("I should see the publication date of the article")
-        $(".content__dateline-wpd").texts().asScala.mkString should be("Mon 6 Aug 2012 20.30 BST")
-        $("time").attributes("datetime").asScala.mkString should include("2012-08-06T20:30:00+0100")
+        $(".content__dateline-wpd").texts().asScala.head should be("Mon 6 Aug 2012 20.30 BST")
+        $("time").attributes("datetime").asScala.head should include("2012-08-06T20:30:00+0100")
       }
     }
 
@@ -173,7 +173,7 @@ import scala.collection.JavaConverters._
       goTo("/world/2012/nov/08/syria-arms-embargo-rebel") { browser =>
         import browser._
         Then("the date should be 'Thursday 8 November 2012 00.01 GMT'")
-        $(".content__dateline time").texts().asScala.mkString should include(
+        $(".content__dateline time").texts().asScala.head should include(
           "Thu 8 Nov 2012 00.01 GMT",
         )
       }
