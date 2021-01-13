@@ -24,7 +24,6 @@ import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
@@ -33,6 +32,8 @@ import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
 import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
+import play.api.OptionalDevContext
+import play.core.WebCommands
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -86,6 +87,9 @@ trait AppComponents
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+
+  override lazy val optionalDevContext = new OptionalDevContext(devContext)
+  override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
