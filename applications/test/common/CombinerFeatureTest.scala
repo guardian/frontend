@@ -28,7 +28,7 @@ import collection.JavaConverters._
         import browser._
         val trails = $(".fromage, .fc-slice__item, .linkslist__item")
         Then("I should see content tagged with both the section and the tag")
-        $("[data-test-id=header-title]").text.toLowerCase should be("science + apple")
+        $("[data-test-id=header-title]").texts().asScala.head.toLowerCase should be("science + apple")
         trails.asScala.length should be > 10
       }
     }

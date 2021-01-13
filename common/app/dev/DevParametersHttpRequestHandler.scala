@@ -6,14 +6,18 @@ import play.api.mvc.{Handler, RequestHeader}
 import common.CanonicalLink
 import model.ApplicationContext
 import play.api.Mode.Prod
+import play.api.OptionalDevContext
+import play.core.WebCommands
 
 class DevParametersHttpRequestHandler(
+    optionalDevContext: OptionalDevContext,
+    webCommands: WebCommands,
     router: Router,
     errorHandler: HttpErrorHandler,
     configuration: HttpConfiguration,
     filters: HttpFilters,
     context: ApplicationContext,
-) extends DefaultHttpRequestHandler(router, errorHandler, configuration, filters)
+) extends DefaultHttpRequestHandler(webCommands, optionalDevContext, router, errorHandler, configuration, filters)
     with implicits.Requests {
 
   /*
