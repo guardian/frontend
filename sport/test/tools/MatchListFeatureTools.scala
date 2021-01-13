@@ -9,10 +9,10 @@ import org.scalatest.Matchers
 trait MatchListFeatureTools extends Matchers {
 
   private def getTeamName(matchEl: FluentWebElement): String =
-    matchEl.find(".football-team__name").texts().asScala.toList.mkString.trim
+    matchEl.find(".football-team__name").texts().asScala.mkString.trim
 
   private def getTeamScore(matchEl: FluentWebElement): String =
-    matchEl.find(".football-team__score").texts().asScala.toList.mkString.trim
+    matchEl.find(".football-team__score").texts().asScala.mkString.trim
 
   protected def assertTeamWithScore(matches: FluentList[FluentWebElement], team: String, score: String): Unit = {
     assert(

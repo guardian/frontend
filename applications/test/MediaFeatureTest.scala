@@ -41,7 +41,7 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
     scenario("Include non Guardian byline") {
       goTo("/lifeandstyle/australia-food-blog/video/2014/feb/03/chia-mango-sorbet-video-recipe") { browser =>
-        browser.$(".byline").texts().asScala.toList.mkString should be(
+        browser.$(".byline").texts().asScala.mkString should be(
           "Guy Turland and Mark Alston, Source: Bondi Harvest Pty Ltd",
         )
       }

@@ -15,7 +15,7 @@ import org.scalatest.{DoNotDiscover, Matchers, FlatSpec}
 
   it should "render a picture" in goTo("/artanddesign/picture/2013/oct/08/photography") { browser =>
     import browser._
-    $("[itemprop='headline']").texts().asScala.toList.mkString should be("Early erotica - a picture from the past")
+    $("[itemprop='headline']").texts().asScala.mkString should be("Early erotica - a picture from the past")
     el(".media-primary img").attribute("src") should include("French-Nude-in-Body-Stock")
   }
 }
