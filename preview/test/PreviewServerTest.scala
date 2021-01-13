@@ -19,6 +19,6 @@ class PreviewTestSuite
   "Preview Server" should "be able to serve an article" in goTo(
     "/business/2020/oct/07/tesco-hit-by-533m-covid-costs-but-sales-jump-during-pandemic",
   ) { browser =>
-    browser.$("body").texts().asScala.mkString should include("The UK’s biggest retailer reported")
+    browser.$("body").first().text() should include("The UK’s biggest retailer reported")
   }
 }
