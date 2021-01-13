@@ -33,7 +33,6 @@ import akka.actor.ActorSystem
 import concurrent.BlockingOperations
 import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
 import play.api.OptionalDevContext
-import play.core.WebCommands
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
