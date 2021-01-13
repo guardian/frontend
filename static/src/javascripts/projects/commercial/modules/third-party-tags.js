@@ -13,7 +13,6 @@ import {
     ias,
     permutive,
     twitter,
-    lotame,
     fbPixel,
     remarketing,
     inizio,
@@ -91,11 +90,6 @@ const loadOther = () => {
             shouldRun: config.get('switches.facebookTrackingPixel', false),
         }),
         twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
-        lotame({
-            shouldRun:
-                config.get('switches.lotame', false) &&
-                !(isInUsOrCa() || isInAuOrNz()),
-        }),
     ].filter(_ => _.shouldRun);
 
     const performanceServices = [

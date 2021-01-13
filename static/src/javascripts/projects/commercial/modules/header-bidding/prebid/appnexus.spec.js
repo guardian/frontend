@@ -118,13 +118,11 @@ describe('getAppNexusInvCode', () => {
 describe('getAppNexusDirectPlacementId', () => {
     beforeEach(() => {
         resetConfig();
-        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
     });
 
     const prebidSizes = [
@@ -164,13 +162,11 @@ describe('getAppNexusPlacementId', () => {
         resetConfig();
         isInAuOrNz.mockReturnValue(false);
         isInUsOrCa.mockReturnValue(false);
-        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
     });
 
     const generateTestIds = () => {
@@ -235,25 +231,6 @@ describe('getAppNexusServerSideBidParams', () => {
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
-    });
-
-    test('should include OzoneLotameData if available', () => {
-        getBreakpointKey.mockReturnValue('M');
-        window.OzoneLotameData = { some: 'lotamedata' };
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
-            lotame: { some: 'lotamedata' },
-        });
-    });
-
-    test('should excude lotame if data is unavailable', () => {
-        getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
-        });
     });
 });
 

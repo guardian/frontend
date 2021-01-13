@@ -132,8 +132,7 @@ export const getAppNexusServerSideBidParams = (
         {
             placementId: getAppNexusPlacementId(sizes),
             keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        },
-        window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+        }
     );
 
 export const _ = {

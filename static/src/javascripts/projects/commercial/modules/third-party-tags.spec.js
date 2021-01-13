@@ -147,7 +147,7 @@ describe('third party tags', () => {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
-            name: 'lotame',
+            name: 'inizio',
         };
         const fakeThirdPartyPerformanceTag = {
             shouldRun: true,

@@ -14,7 +14,6 @@ import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow } from 'common/modules/commercial/geo-utils';
-import { getLotameData } from '@guardian/commercial-core';
 import {
     containsBillboard,
     containsDmpu,
@@ -248,15 +247,9 @@ const getTripleLiftInventoryCode = (
 };
 
 const getOzoneTargeting = () => {
-    const lotameData = getLotameData();
-    const appNexusTargetingObject = buildAppNexusTargetingObject(getPageTargeting());
-    if (typeof lotameData !== 'undefined') {
-        return {
-            ...appNexusTargetingObject,
-            'lotameSegs': lotameData.ozoneLotameData,
-            'lotamePid': lotameData.ozoneLotameProfileId,
-        }
-    }
+    const appNexusTargetingObject = buildAppNexusTargetingObject(
+        getPageTargeting()
+    );
     return appNexusTargetingObject;
 };
 
