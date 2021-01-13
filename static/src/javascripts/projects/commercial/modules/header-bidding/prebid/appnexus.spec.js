@@ -4,7 +4,6 @@ import { isInUsOrCa as isInUsOrCa_,
 import {
     _,
     getAppNexusDirectBidParams,
-    getAppNexusServerSideBidParams,
 } from './appnexus';
 import {
     getBreakpointKey as getBreakpointKey_

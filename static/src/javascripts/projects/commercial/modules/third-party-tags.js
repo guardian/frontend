@@ -18,7 +18,6 @@ import {
     inizio,
 } from '@guardian/commercial-core';
 import config from 'lib/config';
-import { isInAuOrNz, isInUsOrCa } from 'common/modules/commercial/geo-utils';
 
 const addScripts = (tags) => {
     const ref = document.scripts[0];
