@@ -77,7 +77,7 @@ object ArticlePageChecks {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
-            List("audio", "chart", "explainer", "guide", "interactive", "media", "profile", "qanda", "timeline")
+            List("audio", "chart", "explainer", "guide", "media", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
         }
         case _ => true
