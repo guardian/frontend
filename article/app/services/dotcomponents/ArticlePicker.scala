@@ -90,9 +90,19 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement  => false
-        case _: ImageBlockElement => false
-        case _                    => true
+        case _: TextBlockElement    => false
+        case _: ImageBlockElement   => false
+        case _: VideoBlockElement   => false
+        case _: GuVideoBlockElement => false
+        case _: EmbedBlockElement   => false
+        case ContentAtomBlockElement(_, atomtype) => {
+          // ContentAtomBlockElement was expanded to include atomtype.
+          // To support an atom type, just add it to supportedAtomTypes
+          val supportedAtomTypes =
+            List("media")
+          !supportedAtomTypes.contains(atomtype)
+        }
+        case _ => true
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
@@ -114,6 +124,7 @@ object ArticlePageChecks {
     "us-news/series/counted-us-police-killings",
     "australia-news/series/healthcare-in-detention",
     "society/series/this-is-the-nhs",
+    "artanddesign/series/guardian-print-shop",
   )
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
