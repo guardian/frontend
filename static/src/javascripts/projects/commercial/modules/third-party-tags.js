@@ -1,4 +1,3 @@
-
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
@@ -13,15 +12,13 @@ import {
     ias,
     permutive,
     twitter,
-    lotame,
     fbPixel,
     remarketing,
     inizio,
 } from '@guardian/commercial-core';
 import config from 'lib/config';
-import { isInAuOrNz, isInUsOrCa } from 'common/modules/commercial/geo-utils';
 
-const addScripts = (tags) => {
+const addScripts = tags => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
@@ -91,11 +88,6 @@ const loadOther = () => {
             shouldRun: config.get('switches.facebookTrackingPixel', false),
         }),
         twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
-        lotame({
-            shouldRun:
-                config.get('switches.lotame', false) &&
-                !(isInUsOrCa() || isInAuOrNz()),
-        }),
     ].filter(_ => _.shouldRun);
 
     const performanceServices = [
