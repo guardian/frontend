@@ -114,7 +114,6 @@ object ArticlePageChecks {
     "us-news/series/counted-us-police-killings",
     "australia-news/series/healthcare-in-detention",
     "society/series/this-is-the-nhs",
-    "artanddesign/series/guardian-print-shop",
   )
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
