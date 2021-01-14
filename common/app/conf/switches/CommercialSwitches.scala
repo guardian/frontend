@@ -287,16 +287,6 @@ trait CommercialSwitches {
     exposeClientSide = true,
   )
 
-  val LotameSwitch: Switch = Switch(
-    group = Commercial,
-    name = "lotame",
-    description = "When this is switched on the Lotame script will be included in the commercial bootstrap",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val AffiliateLinks: Switch = Switch(
     group = Commercial,
     name = "affiliate-links",

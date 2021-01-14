@@ -1,6 +1,6 @@
 import {
     getConsentFor as getConsentFor_,
-    onConsentChange as onConsentChange_
+    onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
@@ -11,13 +11,13 @@ jest.mock('lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
-    getConsentFor: jest.fn()
+    getConsentFor: jest.fn(),
 }));
 
 const onConsentChange = onConsentChange_;
 const getConsentFor = getConsentFor_;
 
-const tcfv2AllConsentMock = (callback) =>
+const tcfv2AllConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -36,7 +36,7 @@ const tcfv2AllConsentMock = (callback) =>
         },
     });
 
-const tcfv2WithConsentMock = (callback) =>
+const tcfv2WithConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -55,7 +55,7 @@ const tcfv2WithConsentMock = (callback) =>
         },
     });
 
-const tcfv2WithoutConsentMock = (callback) =>
+const tcfv2WithoutConsentMock = callback =>
     callback({
         tcfv2: {
             consents: {
@@ -114,7 +114,7 @@ describe('third party tags', () => {
     it('should not run if disabled in commercial features', done => {
         commercialFeatures.thirdPartyTags = false;
         init()
-            .then((enabled) => {
+            .then(enabled => {
                 expect(enabled).toBe(false);
                 done();
             })
@@ -127,7 +127,7 @@ describe('third party tags', () => {
         commercialFeatures.thirdPartyTags = true;
         commercialFeatures.adFree = false;
         init()
-            .then((enabled) => {
+            .then(enabled => {
                 expect(enabled).toBe(true);
                 done();
             })
@@ -147,7 +147,7 @@ describe('third party tags', () => {
             shouldRun: true,
             url: '//fakeThirdPartyAdvertisingTag2.js',
             onLoad: jest.fn(),
-            name: 'lotame',
+            name: 'inizio',
         };
         const fakeThirdPartyPerformanceTag = {
             shouldRun: true,
