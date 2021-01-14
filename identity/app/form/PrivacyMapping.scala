@@ -16,7 +16,6 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
-      "allowThirdPartyProfiling" -> optional(boolean),
       "consents" -> list(
         mapping(
           "actor" -> text,
@@ -33,24 +32,17 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
     PrivacyFormData(userDO)
 
   protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
-    "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling",
+    "consents" -> "consents",
   )
 }
 
 /**
   * Form specific DTO representing marketing consent subset of User model
   */
-case class PrivacyFormData(allowThirdPartyProfiling: Option[Boolean], consents: List[Consent]) extends UserFormData {
+case class PrivacyFormData(consents: List[Consent]) extends UserFormData {
 
   def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
-    UserUpdateDTO(
-      statusFields = Some(
-        oldUserDO.statusFields.copy(
-          allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false)),
-        ),
-      ),
-      consents = Some(consents),
-    )
+    UserUpdateDTO(consents = Some(consents))
 }
 
 object PrivacyFormData extends SafeLogging {
@@ -63,7 +55,6 @@ object PrivacyFormData extends SafeLogging {
     */
   def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
-      allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
       consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO),
     )
   }
