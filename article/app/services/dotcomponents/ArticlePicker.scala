@@ -90,13 +90,13 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement    => false
-        case _: ImageBlockElement   => false
-        case _: VideoBlockElement   => false
-        case _: GuVideoBlockElement => false
-        case _: EmbedBlockElement   => false
+        case _: TextBlockElement                 => false
+        case _: ImageBlockElement                => false
+        case _: VideoBlockElement                => false
+        case _: GuVideoBlockElement              => false
+        case _: EmbedBlockElement                => false
         case ContentAtomBlockElement(_, "media") => false
-        case _ => true
+        case _                                   => true
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
