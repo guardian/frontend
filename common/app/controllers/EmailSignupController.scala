@@ -108,7 +108,7 @@ class EmailSignupController(
             Cached(1.day)(RevalidatableResult.Ok(views.html.emailFragmentFooter(emailLandingPage, listName)))
           case Right(None) =>
             logNewsletterNotFoundError(listName)
-            Cached(15.minute)(WithoutRevalidationResult(NotFound))
+            Cached(15.minute)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
             logApiError(e)
             Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
@@ -134,7 +134,7 @@ class EmailSignupController(
             )
           case Right(None) =>
             logNewsletterNotFoundError(listId.toString)
-            Cached(15.minute)(WithoutRevalidationResult(NotFound))
+            Cached(15.minute)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
             logApiError(e)
             Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
@@ -159,7 +159,7 @@ class EmailSignupController(
             )
           case Right(None) =>
             logNewsletterNotFoundError(listName)
-            Cached(15.minute)(WithoutRevalidationResult(NotFound))
+            Cached(15.minute)(WithoutRevalidationResult(NoContent))
           case Left(e) =>
             logApiError(e)
             Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
@@ -176,7 +176,7 @@ class EmailSignupController(
           RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, InvalidEmail))
         case "error" =>
           RevalidatableResult.Ok(views.html.emailSubscriptionResultFooter(emailLandingPage, OtherError))
-        case _ => WithoutRevalidationResult(NotFound)
+        case _ => WithoutRevalidationResult(NoContent)
       })
     }
 
@@ -192,7 +192,7 @@ class EmailSignupController(
           )
         case Right(None) =>
           logNewsletterNotFoundError(listName)
-          Cached(15.minute)(WithoutRevalidationResult(NotFound))
+          Cached(15.minute)(WithoutRevalidationResult(NoContent))
         case Left(e) =>
           logApiError(e)
           Cached(15.minute)(WithoutRevalidationResult(InternalServerError))
@@ -210,7 +210,7 @@ class EmailSignupController(
           RevalidatableResult.Ok(
             views.html.emailSubscriptionNonsuccessResult(emailLandingPage, OtherError),
           )
-        case _ => WithoutRevalidationResult(NotFound)
+        case _ => WithoutRevalidationResult(NoContent)
       })
     }
 
