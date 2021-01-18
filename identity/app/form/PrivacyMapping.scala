@@ -31,19 +31,12 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
   protected def toUserFormData(userDO: User): PrivacyFormData =
     PrivacyFormData(userDO)
 
-  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
-    "consents" -> "consents",
-  )
 }
 
 /**
   * Form specific DTO representing marketing consent subset of User model
   */
-case class PrivacyFormData(consents: List[Consent]) extends UserFormData {
-
-  def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
-    UserUpdateDTO(consents = Some(consents))
-}
+case class PrivacyFormData(consents: List[Consent]) extends UserFormData
 
 object PrivacyFormData extends SafeLogging {
 
