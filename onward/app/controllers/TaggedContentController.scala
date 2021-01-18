@@ -17,7 +17,7 @@ class TaggedContentController(
     val controllerComponents: ControllerComponents,
 ) extends BaseController
     with Related
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   def renderJson(tag: String): Action[AnyContent] =

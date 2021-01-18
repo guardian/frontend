@@ -6,7 +6,7 @@ import sbt._
 import sbt.Keys._
 import com.gu.riffraff.artifact.RiffRaffArtifact
 import com.gu.riffraff.artifact.RiffRaffArtifact.autoImport._
-import Dependencies._
+import com.gu.Dependencies._
 import play.sbt.{PlayAkkaHttpServer, PlayNettyServer, PlayScala}
 import com.typesafe.sbt.SbtNativePackager.Universal
 import com.typesafe.sbt.packager.Keys.packageName

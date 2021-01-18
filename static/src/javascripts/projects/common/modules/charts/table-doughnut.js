@@ -1,11 +1,10 @@
-// @flow
 import bonzo from 'bonzo';
 import $ from 'lib/$';
 import { Doughnut } from 'common/modules/charts/doughnut';
 
 const TableDoughnut = () => {};
 
-TableDoughnut.prototype.render = (el: Element) => {
+TableDoughnut.prototype.render = (el) => {
     const width = el.scrollWidth || el.getAttribute('data-chart-width');
     const headings = $('th', el);
 

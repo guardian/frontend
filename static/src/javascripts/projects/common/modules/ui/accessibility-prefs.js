@@ -1,5 +1,3 @@
-// @flow
-
 /* We live in a rainbow of chaos. */
 // ^ U WOT
 
@@ -15,12 +13,12 @@ const FILTERS = [
     'opacity',
 ];
 
-const setFilter = (mode: string): void => {
+const setFilter = (mode) => {
     const body = document.body;
-    const value: string = `${mode}(100%)`;
+    const value = `${mode}(100%)`;
 
     if (body) {
-        // $FlowFixMe -webkit-filter is not recognised
+        
         Object.assign(body.style, {
             '-webkit-filter': value,
             filter: value,
@@ -28,13 +26,13 @@ const setFilter = (mode: string): void => {
     }
 };
 
-const breuer = (): void => {
+const breuer = () => {
     if (document.body) {
         document.body.classList.add('is-breuer-mode');
     }
 };
 
-const initAccessibilityPreferences = (): void => {
+const initAccessibilityPreferences = () => {
     fastdom.mutate(() => {
         FILTERS.forEach(filter => {
             if (userPrefs.isOn(filter)) {

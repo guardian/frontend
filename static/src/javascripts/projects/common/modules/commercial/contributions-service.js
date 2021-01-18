@@ -1,5 +1,3 @@
-// @flow
-
 import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
 import { onConsentChange } from '@guardian/consent-management-platform'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
@@ -28,26 +26,8 @@ import {
 } from 'common/modules/commercial/user-features';
 import userPrefs from "common/modules/user-prefs";
 
-type ServiceModule = {
-    url: string,
-    name: string,
-    props: {}
-};
 
-type Meta = {
-    abTestName: string,
-    abTestVariant: string,
-    campaignCode: string,
-    componentType: OphanComponentType,
-    products?: OphanProduct[]
-}
 
-export type BannerDataResponse = {
-    data: {
-        module: ServiceModule,
-        meta: Meta
-    }
-}
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -96,13 +76,13 @@ const removeArticleCountsFromLocalStorage = () => {
 const REQUIRED_CONSENTS_FOR_ARTICLE_COUNT = [1, 3, 7];
 
 /* eslint-disable guardian-frontend/exports-last */
-export const getArticleCountConsent = (): Promise<boolean> => {
+export const getArticleCountConsent = () => {
     if (hasOptedOutOfArticleCount()) {
         return Promise.resolve(false);
     }
     return new Promise((resolve) => {
-        onConsentChange(({ ccpa, tcfv2 }) => {
-            if (ccpa) {
+        onConsentChange(({ ccpa, tcfv2 , aus}) => {
+            if (ccpa || aus) {
                 resolve(true);
             } else if (tcfv2) {
                 const hasRequiredConsents = REQUIRED_CONSENTS_FOR_ARTICLE_COUNT.every(
@@ -159,6 +139,25 @@ const buildEpicPayload = async () => {
     };
 };
 
+export const NO_RR_BANNER_TIMESTAMP_KEY = 'gu.noRRBannerTimestamp';   // timestamp of when we were last told not to show a RR banner
+const twentyMins = 20*60000;
+
+export const withinLocalNoBannerCachePeriod = () => {
+    const item = window.localStorage.getItem(NO_RR_BANNER_TIMESTAMP_KEY);
+    if (item && !Number.isNaN(parseInt(item, 10))) {
+        const withinCachePeriod = (parseInt(item, 10) + twentyMins) > Date.now();
+        if (!withinCachePeriod) {
+            // Expired
+            window.localStorage.removeItem(NO_RR_BANNER_TIMESTAMP_KEY);
+        }
+        return withinCachePeriod;
+    }
+    return false;
+};
+
+export const setLocalNoBannerCachePeriod = () =>
+    window.localStorage.setItem(NO_RR_BANNER_TIMESTAMP_KEY, `${Date.now()}`);
+
 const buildBannerPayload = async () => {
     const page = config.get('page');
 
@@ -199,7 +198,7 @@ const checkResponseOk = response => {
     );
 };
 
-const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
+const getForcedVariant = (type) => {
     if (URLSearchParams) {
         const params = new URLSearchParams(window.location.search);
         const value = params.get(`force-${type}`);
@@ -212,7 +211,7 @@ const getForcedVariant = (type: 'epic' | 'banner'): string | null => {
 };
 
 // TODO: add this to the client library
-const getStickyBottomBanner = (payload: {}) => {
+const getStickyBottomBanner = (payload) => {
     const isProd = config.get('page.isProd');
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
@@ -227,14 +226,14 @@ const getStickyBottomBanner = (payload: {}) => {
     });
 };
 
-const getEpicUrl = (contentType: string): string => {
+const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
         `https://contributions.code.dev-guardianapis.com/${path}` :
         `https://contributions.guardianapis.com/${path}`
 };
 
-const renderEpic = async (module, meta): Promise<void> => {
+const renderEpic = async (module, meta) => {
     const component = await window.guardianPolyfilledImport(module.url);
 
     const {
@@ -266,30 +265,39 @@ const renderEpic = async (module, meta): Promise<void> => {
     );
 };
 
-export const fetchBannerData: () => Promise<?BannerDataResponse> = () => {
-    const asyncPayload = buildBannerPayload();
+export const fetchBannerData = async () => {
+    const payload = await buildBannerPayload();
 
-    return asyncPayload
-        .then(payload => getStickyBottomBanner(payload))
-        .then(json => {
-            if (!json.data) {
-                return null;
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return Promise.resolve(null);
+    }
+
+    if (payload.targeting.engagementBannerLastClosedAt &&
+        payload.targeting.subscriptionBannerLastClosedAt &&
+        withinLocalNoBannerCachePeriod()
+    ) {
+        return Promise.resolve(null);
+    }
+
+    return getStickyBottomBanner(payload).then(json => {
+        if (!json.data) {
+            if (payload.targeting.engagementBannerLastClosedAt && payload.targeting.subscriptionBannerLastClosedAt) {
+                setLocalNoBannerCachePeriod();
             }
+            return null;
+        }
 
-            return (json: BannerDataResponse);
-        });
+        return (json);
+    });
 };
 
-export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response) => {
-    const { module, meta } : {
-        module: ServiceModule,
-        meta: Meta
-    } = response.data;
+export const renderBanner = (response) => {
+    const { module, meta } = response.data;
     if (!module) {
         return Promise.resolve(false);
     }
 
-    // $FlowFixMe
+    
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
@@ -349,7 +357,7 @@ export const renderBanner: (BannerDataResponse) => Promise<boolean> = (response)
         });
 };
 
-export const fetchAndRenderEpic = async (): Promise<void> => {
+export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
     // Liveblog epics are still selected and rendered natively

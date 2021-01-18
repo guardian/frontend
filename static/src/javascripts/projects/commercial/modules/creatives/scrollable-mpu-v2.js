@@ -1,11 +1,9 @@
-// @flow
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import { isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import type { bonzo } from 'bonzo';
 
 /**
  * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
@@ -18,21 +16,8 @@ const hasScrollEnabled = !isAndroid();
  * https://www.google.com/dfp/59666047#delivery/CreateCreativeTemplate/creativeTemplateId=10037607
  */
 
-type ScrollableMpuParams = {
-    id: string,
-    backgroundImage: string,
-    backgroundImagePType: string,
-    layer1Image: string,
-    mobileImage: string,
-    destination: string,
-    trackingPixel: string,
-    researchPixel: string,
-    cacheBuster: string,
-    viewabilityTracker: string,
-    clickMacro: string,
-};
 
-const scrollableMpuTpl = (params: Object) => `
+const scrollableMpuTpl = (params) => `
 <a id="${params.id}" class="creative--scrollable-mpu"
     href="${params.clickMacro}${params.destination}"
     target="_new">
@@ -46,12 +31,12 @@ const scrollableMpuTpl = (params: Object) => `
 `;
 
 class ScrollableMpu {
-    adSlot: HTMLElement;
-    params: ScrollableMpuParams;
-    $scrollableImage: ?bonzo;
-    $scrollableMpu: ?bonzo;
+    adSlot;
+    params;
+    $scrollableImage;
+    $scrollableMpu;
 
-    constructor(adSlot: HTMLElement, params: Object) {
+    constructor(adSlot, params) {
         this.adSlot = adSlot;
         this.params = params;
         this.$scrollableImage = null;
@@ -95,7 +80,7 @@ class ScrollableMpu {
         }
     }
 
-    create(): Promise<?boolean> {
+    create() {
         const templateOptions = {
             id: `scrollable-mpu-${Math.floor(Math.random() * 10000).toString(
                 16

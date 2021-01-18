@@ -1,4 +1,3 @@
-// @flow
 import { push, reset } from './show-errors';
 
 beforeAll(() => {

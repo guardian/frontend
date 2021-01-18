@@ -1,4 +1,3 @@
-// @flow
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
@@ -8,7 +7,7 @@ import { getControlEngagementBannerParams as getControlEngagementBannerParams_ }
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
+const getControlEngagementBannerParams = getControlEngagementBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
@@ -95,19 +94,19 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => ({ 'united-kingdom': '2018-07-24T17:05:46+0000' })),
 }));
 
-const FakeMessage: any = require('common/modules/ui/message').Message;
+const FakeMessage = require('common/modules/ui/message').Message;
 
-const fakeConstructQuery: any = require('lib/url').constructQuery;
-const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
+const fakeConstructQuery = require('lib/url').constructQuery;
+const fakeIsBlocked = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
-const fakeGet: any = require('@guardian/libs').storage.local.get;
-const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
+const fakeGet = require('@guardian/libs').storage.local.get;
+const fakeShouldHideReaderRevenue = require('common/modules/commercial/contributions-utilities')
     .pageShouldHideReaderRevenue;
-const fakeCanShowBannerSync: any = require('common/modules/commercial/contributions-utilities')
+const fakeCanShowBannerSync = require('common/modules/commercial/contributions-utilities')
     .canShowBannerSync;
 
-const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
-const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
+const fetchJsonMock = (fetchJson);
+const fakeUserPrefs = (userPrefs.get);
 
 beforeEach(() => {
     FakeMessage.mockReset();
@@ -240,7 +239,7 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
-            (pageShouldHideReaderRevenue: any).mockImplementationOnce(
+            (pageShouldHideReaderRevenue).mockImplementationOnce(
                 () => true
             );
 

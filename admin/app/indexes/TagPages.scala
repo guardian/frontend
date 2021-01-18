@@ -1,6 +1,6 @@
 package indexes
 
-import common.Logging
+import common.GuLogging
 import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
 import model.{TagDefinition, TagIndex}
@@ -85,7 +85,7 @@ object TagPages {
   )
 }
 
-class TagPages(implicit executionContext: ExecutionContext) extends Logging {
+class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
 
   def alphaIndexKey(s: String): String = {
     val badCharacters = """[^a-z0-9]+""".r

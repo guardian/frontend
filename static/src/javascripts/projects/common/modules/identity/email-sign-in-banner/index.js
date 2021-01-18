@@ -1,31 +1,28 @@
-// @flow
-
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import ophan from 'ophan/ng';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import {createAuthenticationComponentEventParams} from "common/modules/identity/auth-component-event-params";
 import { make as makeTemplate, messageCode } from './template';
 import { getEmailCampaignFromUrl, getEmailCampaignFromUtm } from './campaigns';
 
-const displayEventKey: string = `${messageCode} : display`;
+const displayEventKey = `${messageCode} : display`;
 const userPrefsStoreKey = 'emailbanner.referrerEmail';
 
 const emailPrefsLink = `https://${config.get('page.host')}/email-newsletters`;
 
 const signInLink = `${config.get('page.idUrl')}/signin?returnUrl=${config.get(emailPrefsLink)}&${createAuthenticationComponentEventParams('email_sign_in_banner')}`;
 
-const isSecondEmailPageview = (): boolean => {
+const isSecondEmailPageview = () => {
     const prefs = userPrefs.get(userPrefsStoreKey) || {};
     return prefs.pv && prefs.pv >= 2;
 };
 
-const isInExperiment = (): boolean =>
+const isInExperiment = () =>
     config.get('switches.idEmailSignInUpsell', false);
 
-const trackInteraction = (interaction: string): void => {
+const trackInteraction = (interaction) => {
     ophan.record({
         component: `${messageCode}`,
         value: interaction,
@@ -33,7 +30,7 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const canShow: () => Promise<boolean> = () => {
+const canShow = () => {
     const can = Promise.resolve(
         !hasUserAcknowledgedBanner(messageCode) &&
             isInExperiment() &&
@@ -42,7 +39,7 @@ const canShow: () => Promise<boolean> = () => {
     return can;
 };
 
-const sideEffects: () => void = () => {
+const sideEffects = () => {
     const cmp = getEmailCampaignFromUrl();
     const existing = userPrefs.get(userPrefsStoreKey);
     if (cmp && !existing) {
@@ -64,7 +61,7 @@ const sideEffects: () => void = () => {
     }
 };
 
-const show: () => Promise<boolean> = () => {
+const show = () => {
     trackInteraction(displayEventKey);
     const store = userPrefs.get(userPrefsStoreKey) || {};
     if (!store || !store.utm) {
@@ -97,7 +94,7 @@ const show: () => Promise<boolean> = () => {
 
 sideEffects();
 
-export const emailSignInBanner: Banner = {
+export const emailSignInBanner = {
     id: messageCode,
     show,
     canShow,

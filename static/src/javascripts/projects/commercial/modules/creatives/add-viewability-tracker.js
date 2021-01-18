@@ -1,14 +1,13 @@
-// @flow
 export const addViewabilityTracker = (
-    adSlot: Node,
-    creativeId: string,
-    viewabilityTracker: string
-): void => {
+    adSlot,
+    creativeId,
+    viewabilityTracker
+) => {
     /*
       we need to ensure that any scripts in the viewabilityTracker are parsed
       and executed; this can be done with a Range and ContextualFragment
     */
-    const range: Range = document.createRange();
+    const range = document.createRange();
     range.setStart(adSlot, 0);
     range.setEnd(adSlot, 0);
     adSlot.appendChild(

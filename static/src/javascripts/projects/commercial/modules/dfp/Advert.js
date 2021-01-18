@@ -1,12 +1,8 @@
-// @flow
-import type { AdSize, AdSizes } from 'commercial/types';
-
 import { breakpoints } from 'lib/detect';
 import { getCurrentTime } from 'lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 
-type Resolver = (x: boolean) => void;
 
 /** A breakpoint can have various sizes assigned to it. You can assign either on
  * set of sizes or multiple.
@@ -14,14 +10,14 @@ type Resolver = (x: boolean) => void;
  * One size       - `data-mobile="300,50"`
  * Multiple sizes - `data-mobile="300,50|320,50"`
  */
-const createSizeMapping = (attr: string): Array<AdSize> =>
+const createSizeMapping = (attr) =>
     attr
         .split('|')
         .map(size =>
             size === 'fluid' ? 'fluid' : size.split(',').map(Number)
         );
 
-const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
+const getAdBreakpointSizes = (advertNode) =>
     breakpoints.reduce((sizes, breakpoint) => {
         const data = advertNode.getAttribute(
             `data-${breakpointNameToAttribute(breakpoint.name)}`
@@ -33,37 +29,29 @@ const getAdBreakpointSizes = (advertNode: HTMLElement): AdSizes =>
     }, {});
 
 class Advert {
-    id: string;
-    node: HTMLElement;
-    sizes: AdSizes;
-    size: ?AdSize;
-    slot: any;
-    isEmpty: ?boolean;
-    isLoading: boolean;
-    isRendering: boolean;
-    isLoaded: boolean;
-    isRendered: boolean;
-    shouldRefresh: boolean;
-    maxViewPercentage: number;
-    whenLoaded: Promise<boolean>;
-    whenLoadedResolver: Resolver;
-    whenRendered: Promise<boolean>;
-    whenRenderedResolver: Resolver;
-    whenSlotReady: Promise<void>;
-    extraNodeClasses: Array<string>;
-    timings: {
-        createTime: ?number,
-        startLoading: ?number,
-        stopLoading: ?number,
-        startRendering: ?number,
-        stopRendering: ?number,
-        loadingMethod: ?number,
-        lazyWaitComplete: ?number,
-    };
-    hasPrebidSize: boolean;
+    id;
+    node;
+    sizes;
+    size;
+    slot;
+    isEmpty;
+    isLoading;
+    isRendering;
+    isLoaded;
+    isRendered;
+    shouldRefresh;
+    maxViewPercentage;
+    whenLoaded;
+    whenLoadedResolver;
+    whenRendered;
+    whenRenderedResolver;
+    whenSlotReady;
+    extraNodeClasses;
+    timings;
+    hasPrebidSize;
 
-    constructor(adSlotNode: HTMLElement) {
-        const sizes: AdSizes = getAdBreakpointSizes(adSlotNode);
+    constructor(adSlotNode) {
+        const sizes = getAdBreakpointSizes(adSlotNode);
         const slotDefinition = defineSlot(adSlotNode, sizes);
 
         this.id = adSlotNode.id;
@@ -93,7 +81,7 @@ class Advert {
         this.whenLoaded = new Promise(resolve => {
             this.whenLoadedResolver = resolve;
         }).then(
-            (isLoaded: boolean): boolean => {
+            (isLoaded) => {
                 this.isLoaded = isLoaded;
                 return isLoaded;
             }
@@ -102,7 +90,7 @@ class Advert {
         this.whenRendered = new Promise(resolve => {
             this.whenRenderedResolver = resolve;
         }).then(
-            (isRendered: boolean): boolean => {
+            (isRendered) => {
                 this.isRendered = isRendered;
                 return isRendered;
             }
@@ -116,7 +104,7 @@ class Advert {
         this.timings.startLoading = getCurrentTime();
     }
 
-    stopLoading(isLoaded: boolean) {
+    stopLoading(isLoaded) {
         this.isLoading = false;
         if (this.whenLoadedResolver) {
             this.whenLoadedResolver(isLoaded);
@@ -129,7 +117,7 @@ class Advert {
         this.timings.startRendering = getCurrentTime();
     }
 
-    stopRendering(isRendered: boolean) {
+    stopRendering(isRendered) {
         this.isRendering = false;
         if (this.whenRenderedResolver) {
             this.whenRenderedResolver(isRendered);
@@ -137,13 +125,13 @@ class Advert {
     }
 
     static filterClasses = (
-        oldClasses: Array<string>,
-        newClasses: Array<string>
-    ): Array<string> =>
+        oldClasses,
+        newClasses
+    ) =>
         oldClasses.filter(oldClass => !newClasses.includes(oldClass));
 
-    updateExtraSlotClasses(...newClasses: Array<string>): void {
-        const classesToRemove: Array<string> = Advert.filterClasses(
+    updateExtraSlotClasses(...newClasses) {
+        const classesToRemove = Advert.filterClasses(
             this.extraNodeClasses,
             newClasses
         );

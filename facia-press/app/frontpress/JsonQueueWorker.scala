@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import com.gu.contentapi.client.model.ContentApiError
-import common.{JsonMessageQueue, Logging, Message}
+import common.{JsonMessageQueue, GuLogging, Message}
 import org.joda.time.DateTime
 import play.api.libs.json.Reads
 
@@ -60,7 +60,7 @@ object JsonQueueWorker {
   *
   * @tparam A The job
   */
-abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends Logging {
+abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends GuLogging {
   import JsonQueueWorker._
 
   val queue: JsonMessageQueue[A]

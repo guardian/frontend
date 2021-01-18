@@ -1,9 +1,8 @@
 package model
 
-import com.gu.contentapi.client.model.v1.AssetType
 import org.joda.time.Duration
 import com.gu.contentapi.client.model.v1.{AssetType, ElementType, Element => ApiElement}
-import org.apache.commons.math3.fraction.Fraction
+import org.apache.commons.lang3.math.Fraction
 import play.api.libs.json.{Json, Writes}
 
 object ElementProperties {
@@ -74,12 +73,12 @@ final case class ImageMedia(allImages: Seq[ImageAsset]) {
   // auto-cropped.. this is a temporary solution until the new media service is in use and we can properly
   // distinguish crops by their intended usage
   lazy val largestEditorialCrop: Option[ImageAsset] = {
-    val autoCropRatio = new Fraction(4, 3)
+    val autoCropRatio = Fraction.getFraction(4, 3)
     // if all crops are 4:3 then we can assume the original was 4:3 as we only generate 4:3 auto-crops
     // otherwise the original must have been a different aspect ratio
-    if (imageCrops.exists(img => new Fraction(img.width, img.height) != autoCropRatio)) {
+    if (imageCrops.exists(img => Fraction.getFraction(img.width, img.height) != autoCropRatio)) {
       imageCrops.find { img =>
-        !(new Fraction(img.width, img.height) == autoCropRatio && (img.width == 1024 || img.width == 2048))
+        !(Fraction.getFraction(img.width, img.height) == autoCropRatio && (img.width == 1024 || img.width == 2048))
       }
     } else {
       largestImage

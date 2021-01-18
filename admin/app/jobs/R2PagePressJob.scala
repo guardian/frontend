@@ -18,7 +18,7 @@ import services.RedirectService.ArchiveRedirect
 import scala.concurrent.{ExecutionContext, Future}
 
 class R2PagePressJob(wsClient: WSClient, redirects: RedirectService)(implicit executionContext: ExecutionContext)
-    extends Logging {
+    extends GuLogging {
   private lazy val waitTimeSeconds = Configuration.r2Press.pressQueueWaitTimeInSeconds
   private lazy val maxMessages = Configuration.r2Press.pressQueueMaxMessages
   private lazy val credentials = Configuration.aws.mandatoryCredentials

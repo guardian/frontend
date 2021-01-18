@@ -1,5 +1,3 @@
-// @flow
-
 /**
     Formstack - composer integration
 
@@ -18,18 +16,12 @@ import config from 'lib/config';
 import { getUserOrSignIn } from 'common/modules/identity/api';
 
 const postMessage = (
-    type: string,
-    value: string | number,
-    x?: number,
-    y?: number
-): void => {
-    const message: {
-        type: string,
-        value: string | number,
-        href: string,
-        x?: number,
-        y?: number,
-    } = {
+    type,
+    value,
+    x,
+    y
+) => {
+    const message = {
         type,
         value,
         href: window.location.href,
@@ -46,7 +38,7 @@ const postMessage = (
     window.top.postMessage(JSON.stringify(message), '*');
 };
 
-const sendHeight = (): void => {
+const sendHeight = () => {
     const body = document.body;
     const html = document.documentElement;
 
@@ -65,12 +57,12 @@ const sendHeight = (): void => {
 
 // TODO: Remove repitition with common/modules/identity/formstack
 class FormstackEmbedIframe {
-    el: HTMLElement;
-    form: HTMLFormElement;
-    formId: string;
-    config: Object;
+    el;
+    form;
+    formId;
+    config;
 
-    constructor(el: HTMLElement, formstackId: string): void {
+    constructor(el, formstackId) {
         this.el = el;
         this.formId = formstackId.split('-')[0];
 
@@ -123,7 +115,7 @@ class FormstackEmbedIframe {
         this.config = Object.assign({}, defaultConfig, config);
     }
 
-    init(): void {
+    init() {
         // User object required to populate fields
         const user = getUserOrSignIn('signin_from_formstack');
 
@@ -143,10 +135,10 @@ class FormstackEmbedIframe {
         sendHeight();
     }
 
-    dom(user: Object): void {
-        const form: HTMLFormElement = (document.getElementById(
+    dom(user) {
+        const form = (document.getElementById(
             this.config.fsSelectors.form
-        ): any);
+        ));
 
         if (!form) {
             return;
@@ -236,7 +228,7 @@ class FormstackEmbedIframe {
         );
     }
 
-    submit(event: Event): void {
+    submit(event) {
         const triggerKeyUp = el => {
             const e = document.createEvent('HTMLEvents');
             e.initEvent('keyup', false, true);

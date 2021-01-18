@@ -1,5 +1,3 @@
-// @flow
-
 import { getCampaigns } from 'journalism/modules/get-campaign';
 import config from 'lib/config';
 

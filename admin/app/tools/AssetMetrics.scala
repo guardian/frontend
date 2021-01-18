@@ -3,7 +3,7 @@ package tools
 import awswrappers.cloudwatch._
 import com.amazonaws.services.cloudwatch.model._
 import com.gu.Box
-import common.Logging
+import common.GuLogging
 import org.joda.time.DateTime
 import tools.CloudWatch._
 
@@ -76,7 +76,7 @@ object AssetMetrics {
     metrics(dimension = gzipped, yLabel = "Size").map(_.sortBy(m => (-m.change, m.name)))
 }
 
-object AssetMetricsCache extends Logging {
+object AssetMetricsCache extends GuLogging {
 
   sealed trait ReportType
   object ReportTypes {

@@ -18,16 +18,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-contributions-banner-articles-viewed-opt-out",
-    "show number of articles viewed in contributions banner, along with tooltip allowing opting out",
-    owners = Seq(Owner.withGithub("paulbrown1982")),
-    safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 27),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-acquisitions-epic-always-ask-if-tagged",
     "This guarantees that any on any article that is tagged with a tag that is on the allowed list of tags as set by the tagging tool, the epic will be displayed",
     owners = Seq(Owner.withGithub("jranks123")),
@@ -52,7 +42,7 @@ trait ABTestSwitches {
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
@@ -62,7 +52,7 @@ trait ABTestSwitches {
     "Show sign in gate to 90% of users on 3rd article view, variant/full audience",
     owners = Seq(Owner.withGithub("coldlink")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
@@ -72,27 +62,27 @@ trait ABTestSwitches {
     "Compare 6 different gate design changes",
     owners = Seq(Owner.withGithub("vlbee")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 12, 1),
     exposeClientSide = true,
   )
 
   Switch(
     ABTests,
-    "ab-curated-container-test",
-    "Tests an additional 'curated' onwards container below the article body.",
-    owners = Seq(Owner.withGithub("nicl")),
+    "ab-deeply-read-test",
+    "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
+    owners = Seq(Owner.withGithub("nitro-marky")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 11, 2),
+    sellByDate = new LocalDate(2021, 1, 25),
     exposeClientSide = true,
   )
 
-  Switch(
+  val GlobalEoyHeaderSwitch = Switch(
     ABTests,
-    "ab-liveblog-epic-design-test-r1b",
-    "Test designs for the liveblog epic",
+    "ab-global-eoy-header-test-r2",
+    "Test reader revenue message in header",
     owners = Seq(Owner.withGithub("tomrf1")),
     safeState = Off,
-    sellByDate = new LocalDate(2020, 12, 1),
+    sellByDate = new LocalDate(2021, 2, 1),
     exposeClientSide = true,
   )
 }

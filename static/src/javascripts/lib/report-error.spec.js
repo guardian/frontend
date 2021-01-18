@@ -1,5 +1,3 @@
-// @flow
-
 import reportError from './report-error';
 
 jest.mock('raven-js', () => ({
@@ -12,7 +10,7 @@ jest.mock('raven-js', () => ({
     captureException: jest.fn(),
 }));
 
-const fakeRaven: any = require('raven-js');
+const fakeRaven = require('raven-js');
 
 describe('report-error', () => {
     const error = new Error('Something broke.');

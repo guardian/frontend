@@ -1,4 +1,3 @@
-// @flow
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
 
@@ -6,12 +5,12 @@ import fastdom from 'fastdom';
  * @todo: check if browser natively supports "position: sticky"
  */
 class Sticky {
-    element: HTMLElement;
-    opts: Object;
-    offsetFromParent: number;
-    lastMessage: string;
+    element;
+    opts;
+    offsetFromParent;
+    lastMessage;
 
-    constructor(element: HTMLElement, options: Object = {}): void {
+    constructor(element, options = {}) {
         this.element = element;
 
         this.opts = Object.assign(
@@ -25,7 +24,7 @@ class Sticky {
         );
     }
 
-    init(): void {
+    init() {
         const parentElement = this.element.parentElement;
 
         if (!parentElement) {
@@ -42,7 +41,7 @@ class Sticky {
         fastdom.measure(this.updatePosition, this);
     }
 
-    updatePosition(): void {
+    updatePosition() {
         const parentElement = this.element.parentElement;
 
         if (!parentElement) {
@@ -95,7 +94,7 @@ class Sticky {
         }
     }
 
-    emitMessage(message: string): void {
+    emitMessage(message) {
         mediator.emit(`modules:${this.element.id}:${message}`);
     }
 }

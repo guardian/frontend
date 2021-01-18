@@ -1,10 +1,9 @@
-// @flow
 import { storage } from '@guardian/libs';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 
-const getUserSegments = (adConsentState: boolean | null): Array<any> => {
+const getUserSegments = (adConsentState) => {
     if (storage.local.isAvailable() && adConsentState !== false) {
         const userSegmentsData = storage.local.get(userSegmentsKey);
 
@@ -24,7 +23,7 @@ const getUserSegments = (adConsentState: boolean | null): Array<any> => {
     return [];
 };
 
-const requestUserSegmentsFromId = (): void => {
+const requestUserSegmentsFromId = () => {
     if (
         storage.local.isAvailable() &&
         storage.local.get(userSegmentsKey) === null &&

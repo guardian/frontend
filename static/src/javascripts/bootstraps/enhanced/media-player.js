@@ -1,5 +1,3 @@
-// @flow
-
 import videojs from 'videojs';
 import 'videojs-ima';
 import 'videojs-embed';
@@ -23,11 +21,11 @@ import { Component } from 'common/modules/component';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 
-const initLoadingSpinner = (player: any): void => {
+const initLoadingSpinner = (player) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
 };
 
-const upgradeVideoPlayerAccessibility = (player: any): void => {
+const upgradeVideoPlayerAccessibility = (player) => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
@@ -46,7 +44,7 @@ const upgradeVideoPlayerAccessibility = (player: any): void => {
     );
 };
 
-const createVideoPlayer = (el: HTMLElement, options: Object): any => {
+const createVideoPlayer = (el, options) => {
     const player = videojs(el, options);
 
     const duration = parseInt(el.getAttribute('data-duration'), 10);
@@ -63,7 +61,7 @@ const createVideoPlayer = (el: HTMLElement, options: Object): any => {
     return player;
 };
 
-const initEndSlate = (player: any, endSlatePath: string): void => {
+const initEndSlate = (player, endSlatePath) => {
     const endSlate = new Component();
     const endStateClass = 'vjs-has-ended';
 
@@ -82,7 +80,7 @@ const initEndSlate = (player: any, endSlatePath: string): void => {
     });
 };
 
-const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
+const enhanceVideo = (el, autoplay) => {
     const mediaType = el.tagName.toLowerCase();
     const dataset = el.dataset;
     const { mediaId, endSlate, embedPath } = dataset;
@@ -233,7 +231,7 @@ const enhanceVideo = (el: HTMLMediaElement, autoplay: boolean): any => {
     return player;
 };
 
-const initPlayButtons = (root: ?HTMLElement): void => {
+const initPlayButtons = (root) => {
     fastdom.measure(() => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
@@ -266,7 +264,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
     });
 };
 
-const initPlayer = (): void => {
+const initPlayer = () => {
     videojs.plugin('fullscreener', fullscreener);
 
     fastdom.measure(() => {
@@ -276,7 +274,7 @@ const initPlayer = (): void => {
     });
 };
 
-const initWithRaven = (): void => {
+const initWithRaven = () => {
     raven.wrap(
         {
             tags: {
@@ -289,7 +287,7 @@ const initWithRaven = (): void => {
     )();
 };
 
-export const initMediaPlayer = (): void => {
+export const initMediaPlayer = () => {
     initWithRaven();
 
     // Setup play buttons

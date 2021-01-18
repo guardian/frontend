@@ -10,7 +10,7 @@ import java.net.URI
 // TODO 'Convention dictates that Left is used for failure and Right is used for success.'
 // We got this the other way around, it not an error, but we should fix it.
 // Assuming that 'I can serve this to the user' is the least error state.
-object ModelOrResult extends Results with Logging {
+object ModelOrResult extends Results with GuLogging {
 
   def apply[T](item: Option[T], response: ItemResponse, maybeSection: Option[ApiSection] = None)(implicit
       request: RequestHeader,
@@ -22,7 +22,7 @@ object ModelOrResult extends Results with Logging {
 }
 
 // Content API owns the URL space, if they say this belongs on a different URL then we follow
-private object ItemOrRedirect extends ItemResponses with Logging {
+private object ItemOrRedirect extends ItemResponses with GuLogging {
 
   def apply[T](item: T, response: ItemResponse, maybeSection: Option[ApiSection])(implicit
       request: RequestHeader,
@@ -70,7 +70,7 @@ private object ItemOrRedirect extends ItemResponses with Logging {
 
 // http://wiki.nginx.org/X-accel
 // this might have ended up at the wrong server if it has a 'funny' url
-object InternalRedirect extends implicits.Requests with Logging {
+object InternalRedirect extends implicits.Requests with GuLogging {
 
   lazy val ShortUrl = """^(/p/.*)$""".r
 

@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: audience.js
  Description: Displays information about how the test users are divided.
@@ -7,7 +6,7 @@ import { Component } from 'common/modules/component';
 import { AudienceItem } from 'admin/modules/abtests/audience-item';
 
 class Audience extends Component {
-    constructor(config: Object): void {
+    constructor(config) {
         super();
 
         this.templateName = 'audience-template';
@@ -21,9 +20,9 @@ class Audience extends Component {
         );
     }
 
-    config: Object;
+    config;
 
-    prerender(): void {
+    prerender() {
         const testsContainer = this.getElem('tests');
 
         this.config.tests.forEach(test => {

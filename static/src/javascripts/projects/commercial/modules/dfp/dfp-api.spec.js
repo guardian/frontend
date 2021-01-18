@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
 import config from 'lib/config';
@@ -9,18 +8,21 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
-import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_} from '@guardian/consent-management-platform';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
 
-const onConsentChange: any = onConsentChange_;
-const getConsentFor: any = getConsentFor_;
+const onConsentChange = onConsentChange_;
+const getConsentFor = getConsentFor_;
 
-// $FlowFixMe property requireActual is actually not missing Flow.
+
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
     'commercial/modules/dfp/fill-advert-slots'
 );
 
-const getBreakpoint: any = getBreakpoint_;
-const fillAdvertSlots: any = fillAdvertSlots_;
+const getBreakpoint = getBreakpoint_;
+const fillAdvertSlots = fillAdvertSlots_;
 
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
@@ -79,8 +81,8 @@ jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
 }));
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
-    // $FlowFixMe - i think typ def needs updating, but loads of types errors if you do...
-    storage: jest.requireActual('@guardian/libs').storage
+    
+    storage: jest.requireActual('@guardian/libs').storage,
 }));
 jest.mock('lodash/once', () => fn => fn);
 jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
@@ -98,7 +100,11 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),
-    getConsentFor: jest.fn()
+    getConsentFor: jest.fn(),
+    cmp: {
+        hasInitialised: jest.fn(),
+        willShowPrivacySync: jest.fn(),
+    },
 }));
 
 let $style;
@@ -179,6 +185,23 @@ const tcfv2MixedConsent = {
         vendorConsents: {
             '5f1aada6b8e05c306c0597d7': true, // Googletag
         },
+    },
+};
+
+const ausNotRejected = {
+    aus: {
+        rejectedCategories: [],
+    },
+};
+
+const ausRejected = {
+    aus: {
+        rejectedCategories: [
+            {
+                _id: '5f859c3420e4ec3e476c7006',
+                name: 'Advertising',
+            },
+        ],
     },
 };
 
@@ -526,6 +549,30 @@ describe('DFP', () => {
             );
             getConsentFor.mockReturnValue(false);
             prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(1);
+            });
+        });
+    });
+    describe('NPA flag in AUS', () => {
+        it('when AUS has not retracted advertising consent', () => {
+            onConsentChange.mockImplementation(callback =>
+                callback(ausNotRejected)
+            );
+            getConsentFor.mockReturnValue(true);
+            return prepareGoogletag().then(() => {
+                expect(
+                    window.googletag.pubads().setRequestNonPersonalizedAds
+                ).toHaveBeenCalledWith(0);
+            });
+        });
+        it('when AUS has retracted advertising consent', () => {
+            onConsentChange.mockImplementation(callback =>
+                callback(ausRejected)
+            );
+            getConsentFor.mockReturnValue(false);
+            return prepareGoogletag().then(() => {
                 expect(
                     window.googletag.pubads().setRequestNonPersonalizedAds
                 ).toHaveBeenCalledWith(1);

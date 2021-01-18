@@ -1,6 +1,6 @@
 package rugby.feed
 
-import common.Logging
+import common.GuLogging
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.libs.ws.WSClient
 import rugby.model._
@@ -53,7 +53,7 @@ object WorldCupPAIDs {
   val worldCupGroupIDs = worldCup2019GroupIDs
 }
 
-class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
+class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with GuLogging {
 
   import WorldCupPAIDs._
 
@@ -66,7 +66,7 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
   }
 }
 
-class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
+class PARugbyClient(wsClient: WSClient) extends RugbyClient with GuLogging {
 
   val apiKey = conf.SportConfiguration.pa.rugbyKey.getOrElse("")
   val basePath = conf.SportConfiguration.pa.rugbyEndpoint.getOrElse("")

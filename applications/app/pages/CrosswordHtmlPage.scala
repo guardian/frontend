@@ -16,7 +16,6 @@ import crosswords.{
 }
 import views.html.fragments._
 import crosswords._
-import experiments.{ActiveExperiments, OldTLSSupportDeprecation}
 import views.html.fragments.commercial.pageSkin
 import views.html.fragments.page.body.{bodyTag, breakingNewsDiv, mainContent, skipToMainContent}
 import views.html.fragments.page.head.stylesheets.{criticalStyleInline, criticalStyleLink, styles}
@@ -59,7 +58,6 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
         inlineJSBlocking(),
       ),
       bodyTag(classes = defaultBodyClasses)(
-        tlsWarning() when ActiveExperiments.isParticipating(OldTLSSupportDeprecation),
         skipToMainContent(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),

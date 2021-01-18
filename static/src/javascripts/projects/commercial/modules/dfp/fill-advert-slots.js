@@ -1,5 +1,3 @@
-// @flow
-
 import qwery from 'qwery';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { Advert } from 'commercial/modules/dfp/Advert';
@@ -19,11 +17,11 @@ import config from 'lib/config';
 //  article-body-adverts
 //  liveblog-adverts
 //  high-merch
-const fillAdvertSlots = (): Promise<void> => {
+const fillAdvertSlots = () => {
     // This module has the following strict dependencies. These dependencies must be
     // fulfilled before fillAdvertSlots can execute reliably. The bootstrap (commercial.js)
     // initiates these dependencies, to speed up the init process. Bootstrap also captures the module performance.
-    const dependencies: Promise<void>[] = [
+    const dependencies = [
         setupPrebidOnce(),
         closeDisabledSlots(),
     ];

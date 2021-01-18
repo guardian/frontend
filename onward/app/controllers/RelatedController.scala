@@ -6,8 +6,8 @@ import contentapi.ContentApiClient
 import feed.MostReadAgent
 import model.Cached.RevalidatableResult
 import model._
-import models.OnwardCollection._
 import models.OnwardCollectionResponse
+import models.OnwardItemNx2
 import play.api.libs.json._
 import play.api.mvc._
 import services._
@@ -23,7 +23,7 @@ class RelatedController(
     extends BaseController
     with Related
     with Containers
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val RelatedLabel: String = "Related stories"
@@ -60,7 +60,7 @@ class RelatedController(
       if (request.forceDCR) {
         val data = OnwardCollectionResponse(
           heading = containerTitle,
-          trails = trailsToItems(trails.map(_.faciaContent)),
+          trails = trails.map(_.faciaContent).map(OnwardItemNx2.pressedContentToOnwardItemNx2).take(10),
         )
 
         JsonComponent(data)

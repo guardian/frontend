@@ -1,9 +1,8 @@
-// @flow
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 
-const loadNextVideo = (): Promise<void> => {
+const loadNextVideo = () => {
     const placeholders = document.querySelectorAll('.js-autoplay-placeholder');
 
     if (placeholders.length) {

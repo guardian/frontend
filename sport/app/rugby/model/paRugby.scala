@@ -1,6 +1,6 @@
 package rugby.feed
 
-import common.Logging
+import common.GuLogging
 import org.joda.time.DateTime
 import play.api.libs.json.{JsError, JsResult, JsSuccess, Json}
 import rugby.model.Stage.Stage
@@ -123,7 +123,7 @@ case class PAMatchesResponse(
     items: List[PAMatch],
 )
 
-object PAMatchesResponse extends Logging {
+object PAMatchesResponse extends GuLogging {
 
   def fromJSON(json: String): Try[PAMatchesResponse] = {
     val jsvalue = Json.parse(json)

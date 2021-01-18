@@ -1,5 +1,3 @@
-// @flow
-
 import domready from 'domready';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';

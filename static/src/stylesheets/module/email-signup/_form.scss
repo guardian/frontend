@@ -26,7 +26,7 @@
     .email-sub__label {
         @include fs-textSans(5);
         line-height: 41px;
-        color: rgba($brightness-7, .5);
+        color: $brightness-20;
         left: $gs-gutter;
         position: absolute;
         pointer-events: none;
@@ -84,8 +84,7 @@
 }
 
 .label__icon svg {
-    fill: $form-label-colour;
-    opacity: .65;
+    fill: $brightness-20;
 }
 
 .email-sub__text-input {

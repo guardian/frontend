@@ -5,7 +5,7 @@ import common._
 import contentapi.ContentApiClient
 import implicits.{AmpFormat, EmailFormat, HtmlFormat, JsonFormat}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms, PageType}
+import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingDataModelFunctions, PageType}
 import model.{ContentType, _}
 import pages.{ArticleEmailHtmlPage, ArticleHtmlPage}
 import play.api.libs.json.Json
@@ -26,7 +26,7 @@ class ArticleController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)
@@ -34,7 +34,7 @@ class ArticleController(
   private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
   override def canRender(i: ItemResponse): Boolean = i.content.exists(isSupported)
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] =
-    mapModel(path, Canonical)((article, blocks) => render(path, article, blocks))
+    mapModel(path, GenericFallback)((article, blocks) => render(path, article, blocks))
 
   def renderJson(path: String): Action[AnyContent] = {
     Action.async { implicit request =>
@@ -90,7 +90,7 @@ class ArticleController(
 
   private def getGuuiJson(article: ArticlePage, blocks: Blocks)(implicit request: RequestHeader): String = {
     val pageType: PageType = PageType(article, request, context)
-    DotcomRenderingDataModel.toJson(DotcomRenderingTransforms.fromArticle(article, request, blocks, pageType))
+    DotcomRenderingDataModel.toJson(DotcomRenderingDataModelFunctions.fromArticle(article, request, blocks, pageType))
   }
 
   private def render(path: String, article: ArticlePage, blocks: Blocks)(implicit

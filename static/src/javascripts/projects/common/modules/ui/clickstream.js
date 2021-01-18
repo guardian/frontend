@@ -1,33 +1,15 @@
-// @flow
 // #? Clean up unused `data-` attributes
 import bean from 'bean';
 import mediator from 'lib/mediator';
 
-type Options = {
-    location?: Location,
-    filter?: string[],
-};
 
-export type Spec = {
-    el?: Element,
-    tag?: string,
-    tags: string[],
-    target: Element,
-    samePage?: boolean,
-    sameHost?: boolean,
-    validTarget?: boolean,
-    linkContext?: boolean,
-    linkContextPath?: string,
-    linkContextName?: string,
-    customEventProperties?: Object,
-};
 
 let location;
 let filters;
 
 const filterSource = element => filters.filter(f => f === element);
 
-const compareHosts = (url?: string = ''): boolean => {
+const compareHosts = (url = '') => {
     if (url.startsWith('mailto:')) {
         return false;
     }
@@ -36,11 +18,11 @@ const compareHosts = (url?: string = ''): boolean => {
 
     // Lack of a urlHost implies a relative url.
     // For absolute urls we are protocol-agnostic,
-    // e.g. we should treat https://gu.com/foo -> http://gu.com/bar as a same-host link.
+    // e.g. we should treat https://www.theguardian.com/foo -> http://www.theguardian.com/bar as a same-host link.
     return !urlHost || urlHost[1] === location.hostname;
 };
 
-const getClickSpec = (spec: Spec, forceValid: ?boolean): Spec | boolean => {
+const getClickSpec = (spec, forceValid) => {
     if (!spec.el) {
         return false;
     }
@@ -92,12 +74,12 @@ const getClickSpec = (spec: Spec, forceValid: ?boolean): Spec | boolean => {
         spec.linkContextName = el.getAttribute('data-link-context-name') || '';
     }
 
-    spec.el = (el.parentNode: any);
+    spec.el = (el.parentNode);
 
     return getClickSpec(spec);
 };
 
-const initClickstream = (opts?: Options = {}) => {
+const initClickstream = (opts = {}) => {
     // Allow a fake window.location to be passed in for testing
     location = opts.location || window.location;
     filters = opts.filter || [];
@@ -106,11 +88,11 @@ const initClickstream = (opts?: Options = {}) => {
     bean.add(
         document.body,
         'click',
-        (event: Event): void => {
+        (event) => {
             const clickSpec = getClickSpec({
-                el: (event.target: any),
+                el: (event.target),
                 tags: [],
-                target: (event.target: any),
+                target: (event.target),
             });
 
             mediator.emit('module:clickstream:click', clickSpec);

@@ -1,5 +1,3 @@
-// @flow
-
 import {brazeVendorId, canShowPreChecks, hasRequiredConsents} from "./brazeBanner";
 
 jest.mock('lib/raven');
@@ -17,38 +15,10 @@ afterEach(() => {
 });
 
 describe('canShowPreChecks', () => {
-    describe('when the switch is off', () => {
+    describe('when not a supporter', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
-                brazeSwitch: false,
-                apiKey: 'abcde',
-                isDigiSubscriber: true,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
-    describe('when the api key is empty', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: '',
-                isDigiSubscriber: true,
-                pageConfig: {isPaidContent: false},
-            })
-
-            expect(result).toBe(false);
-        });
-    });
-
-    describe('when not a digital subscriber', () => {
-        it('returns false', () => {
-            const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
-                isDigiSubscriber: false,
+                userIsGuSupporter: false,
                 pageConfig: {isPaidContent: false},
             })
 
@@ -59,9 +29,7 @@ describe('canShowPreChecks', () => {
     describe('when viewing paid content', () => {
         it('returns false', () => {
             const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: true},
             })
 
@@ -72,9 +40,7 @@ describe('canShowPreChecks', () => {
     describe('when all checks pass', () => {
         it('returns true', () => {
             const result = canShowPreChecks({
-                brazeSwitch: true,
-                apiKey: 'abcde',
-                isDigiSubscriber: true,
+                userIsGuSupporter: true,
                 pageConfig: {isPaidContent: false},
             })
 

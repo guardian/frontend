@@ -153,13 +153,28 @@ class ContentTest
     Content(membershipArticle).metadata.requiresMembershipAccess should be(true)
   }
 
-  it should "returns the correct shortUrlId" in {
+  /*
+    Date: 02nd Dec 2020
+    Some tests (those with hardcoded short urls), come in two versions "gu.com" and "www.theguardian.com", this is due to a CAPI migration.
+    See (id: 288767d7-ba82-4d67-8fb3-9139e67b0f2e) , for details.
+   */
+
+  it should "returns the correct shortUrlId (gu.com)" in {
 
     def contentWithShortUrl(shortUrl: String): ContentType =
       Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
 
     contentWithShortUrl("http://gu.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
     contentWithShortUrl("https://gu.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
+  }
+
+  it should "returns the correct shortUrlId (www.theguardian.com)" in {
+
+    def contentWithShortUrl(shortUrl: String): ContentType =
+      Content(article.copy(fields = Some(ContentFields(shortUrl = Some(shortUrl)))))
+
+    contentWithShortUrl("http://www.theguardian.com/p/3r1b5").fields.shortUrlId should be("/p/3r1b5")
+    contentWithShortUrl("https://www.theguardian.com/p/4t2c6").fields.shortUrlId should be("/p/4t2c6")
   }
 
   val dateBeforeCutoff = Some(

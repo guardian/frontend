@@ -102,55 +102,6 @@ import scala.concurrent.Future
 
     "using any journey" should {
 
-      "have a js fallback" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("consents : navigation : submit-force")
-        contentAsString(result) should include("noscript")
-        contentAsString(result) should include("identity-forms-loading--hide-text")
-      }
-
-      "send a csrf token and a return url" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("name=\"csrfToken\"")
-        contentAsString(result) should include("name=\"returnUrl\"")
-      }
-
-      "have a normal submit button" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("consents : navigation : submit\"")
-      }
-
-      "contain the legal age disclaimer" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("older than 13 years")
-      }
-
-      "show an alert modal for non rp'd users" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include("identity-consent-journey--with-alert")
-      }
-
-      "not show an alert modal for rp'd users" in new ConsentsJourneyFixture {
-        override val user = User(
-          "test@example.com",
-          userId,
-          statusFields = StatusFields(userEmailValidated = Some(true), hasRepermissioned = Some(true)),
-        )
-        override val testAuth = ScGuU("abc")
-        override val authenticatedUser = AuthenticatedUser(user, testAuth, true)
-        when(authService.fullyAuthenticatedUser(MockitoMatchers.any[RequestHeader])) thenReturn Some(authenticatedUser)
-        when(api.me(testAuth)) thenReturn Future.successful(Right(user))
-
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should not include ("identity-consent-journey--with-alert")
-      }
-
       "set a repermission flag on submit" in new ConsentsJourneyFixture {
         val updatedUser = user.copy(
           statusFields = StatusFields(hasRepermissioned = Some(true)),
@@ -171,16 +122,6 @@ import scala.concurrent.Future
         verify(api).saveUser(MockitoMatchers.eq(userId), userUpdateCapture.capture(), MockitoMatchers.eq(testAuth))
         val userUpdate = userUpdateCapture.getValue
         userUpdate.statusFields.get.hasRepermissioned should equal(Some(true))
-      }
-
-    }
-
-    "using displayConsentsJourney" should {
-
-      "have consent checkboxes" in new ConsentsJourneyFixture {
-        val result = controller.displayConsentsJourney(None).apply(FakeCSRFRequest(csrfAddToken))
-        status(result) should be(200)
-        contentAsString(result) should include(xml.Utility.escape(Supporter.latestWording.wording))
       }
 
     }

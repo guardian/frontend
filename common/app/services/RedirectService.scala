@@ -5,7 +5,7 @@ import java.net.URL
 import com.gu.scanamo.error.MissingProperty
 import com.gu.scanamo.syntax._
 import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 
 import scala.concurrent.{ExecutionContext, Future}
@@ -60,7 +60,7 @@ object RedirectService {
   case class ArchiveRedirect(source: String, location: String) extends Destination
 }
 
-class RedirectService(implicit executionContext: ExecutionContext) extends Logging {
+class RedirectService(implicit executionContext: ExecutionContext) extends GuLogging {
   import RedirectService._
 
   // protocol fixed to http so that lookups to dynamo find existing

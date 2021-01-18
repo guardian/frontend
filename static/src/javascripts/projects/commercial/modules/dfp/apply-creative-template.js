@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import reportError from 'lib/report-error';
 
@@ -10,7 +8,7 @@ import { FabricExpandableVideoV2 } from 'commercial/modules/creatives/fabric-exp
 import { FabricVideo } from 'commercial/modules/creatives/fabric-video';
 import { ScrollableMpu } from 'commercial/modules/creatives/scrollable-mpu-v2';
 
-const creativeLookup: Object = {
+const creativeLookup = {
     frame: Frame,
     'fabric-v1': FabricV1,
     'fabric-expanding-v1': FabricExpandingV1,
@@ -20,10 +18,10 @@ const creativeLookup: Object = {
 };
 
 const renderCreativeTemplate = (
-    adSlot: Element,
-    iFrame: HTMLIFrameElement
-): Promise<boolean> => {
-    const fetchCreativeConfig = (): ?string => {
+    adSlot,
+    iFrame
+) => {
+    const fetchCreativeConfig = () => {
         try {
             const breakoutScript = iFrame.contentDocument.body
                 ? iFrame.contentDocument.body.querySelector(
@@ -36,7 +34,7 @@ const renderCreativeTemplate = (
         }
     };
 
-    const mergeViewabilityTracker = (json: Object): Object => {
+    const mergeViewabilityTracker = (json) => {
         const viewabilityTrackerDiv = iFrame.contentDocument.getElementById(
             'viewabilityTracker'
         );
@@ -51,18 +49,18 @@ const renderCreativeTemplate = (
         return json;
     };
 
-    const renderCreative = (config: Object): Promise<boolean> =>
+    const renderCreative = (config) =>
         new Promise(resolve => {
             const Creative = creativeLookup[config.name];
             resolve(new Creative(adSlot, config.params, config.opts).create());
         });
 
-    const hideIframe = (): Promise<any> =>
+    const hideIframe = () =>
         fastdom.mutate(() => {
             iFrame.style.display = 'none';
         });
 
-    const creativeConfig: ?string = fetchCreativeConfig();
+    const creativeConfig = fetchCreativeConfig();
 
     if (creativeConfig) {
         return hideIframe()
@@ -83,20 +81,20 @@ const renderCreativeTemplate = (
     return Promise.resolve(true);
 };
 
-const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
+const getAdvertIframe = (adSlot) =>
     new Promise((resolve, reject) => {
         // DFP will sometimes return empty iframes, denoted with a '__hidden__' parameter embedded in its ID.
         // We need to be sure only to select the ad content frame.
-        const contentFrame: ?HTMLIFrameElement = (adSlot.querySelector(
+        const contentFrame = (adSlot.querySelector(
             'iframe:not([id*="__hidden__"])'
-        ): any);
+        ));
 
         if (!contentFrame) {
             reject();
         } else if (
             // According to Flow, readyState exists on the Document, not the HTMLIFrameElement
             // Is this different for old IE?
-            // $FlowFixMe
+            
             contentFrame.readyState &&
             contentFrame.readyState !== 'complete'
         ) {
@@ -104,7 +102,7 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
             const getIeIframe = e => {
                 const updatedIFrame = e.srcElement;
 
-                // $FlowFixMe
+                
                 if (updatedIFrame && updatedIFrame.readyState === 'complete') {
                     updatedIFrame.removeEventListener(
                         'readystatechange',
@@ -124,8 +122,8 @@ const getAdvertIframe = (adSlot: Element): Promise<HTMLIFrameElement> =>
  * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
  * This looks for any such data and, if we find it, renders the appropriate component.
  */
-const applyCreativeTemplate = (adSlot: Element): Promise<boolean> =>
-    getAdvertIframe(adSlot).then((iframe: HTMLIFrameElement) =>
+const applyCreativeTemplate = (adSlot) =>
+    getAdvertIframe(adSlot).then((iframe) =>
         renderCreativeTemplate(adSlot, iframe)
     );
 

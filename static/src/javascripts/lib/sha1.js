@@ -1,5 +1,3 @@
-// @flow
-
 /* eslint no-bitwise: 0, no-plusplus: 0, default-case: 0 */
 
 /**
@@ -14,7 +12,7 @@ const Sha1 = {
      * @param   {string} msg - (Unicode) string to be hashed.
      * @returns {string} Hash of msg as hex character string.
      */
-    hash(content: string) {
+    hash(content) {
         let msg = content;
 
         // convert string to UTF-8, as SHA only deals with byte-streams
@@ -119,7 +117,7 @@ const Sha1 = {
      * Function 'f' [§4.1.1].
      * @private
      */
-    f(s: number, x: number, y: number, z: number) {
+    f(s, x, y, z) {
         switch (s) {
             case 0:
                 return (x & y) ^ (~x & z); // Ch()
@@ -136,7 +134,7 @@ const Sha1 = {
      * Rotates left (circular left shift) value x by n positions [§3.2.5].
      * @private
      */
-    ROTL(x: number, n: number) {
+    ROTL(x, n) {
         return (x << n) | (x >>> (32 - n));
     },
 
@@ -144,7 +142,7 @@ const Sha1 = {
      * Hexadecimal representation of a number.
      * @private
      */
-    toHexStr(n: number) {
+    toHexStr(n) {
         // note can't use toString(16) as it is implementation-dependant,
         // and in IE returns signed numbers when used on full words
         let s = '';

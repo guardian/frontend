@@ -1,5 +1,3 @@
-// @flow
-
 import { getCookie as getCookie_ } from 'lib/cookies';
 import config from 'lib/config';
 import { buildConfiguredEpicTestFromJson, replaceArticlesViewed } from './contributions-utilities';
@@ -7,7 +5,7 @@ import { buildConfiguredEpicTestFromJson, replaceArticlesViewed } from './contri
 jest.mock('lib/raven');
 jest.mock('ophan/ng', () => null);
 
-const getCookie: any = getCookie_;
+const getCookie = getCookie_;
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -52,7 +50,7 @@ const rawTest = {
 
 describe('buildConfiguredEpicTestFromJson', () => {
     it('Parses and constructs an epic test', () => {
-        const test: InitEpicABTest = buildConfiguredEpicTestFromJson(rawTest);
+        const test = buildConfiguredEpicTestFromJson(rawTest);
         expect(test.id).toBe('my_test');
         expect(test.useLocalViewLog).toBe(false);
         expect(test.userCohort).toBe('AllNonSupporters');
@@ -63,7 +61,7 @@ describe('buildConfiguredEpicTestFromJson', () => {
             count: 0,
         });
 
-        const variant: InitEpicABTestVariant = test.variants[0];
+        const variant = test.variants[0];
         expect(variant.id).toBe('Control');
         expect(variant.countryGroups).toEqual(['UnitedStates', 'Australia']);
         expect(variant.tagIds).toEqual(['football/football']);

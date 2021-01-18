@@ -1,17 +1,9 @@
-// @flow
-
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 import fetchJson from 'lib/fetch-json';
 import { constructQuery } from 'lib/url';
 import range from 'lodash/range';
 
-declare type DiscussionResponse = {
-    commentsHtml: string,
-    lastPage: number,
-    paginationHtml: string,
-    postedCommentHtml: string,
-};
 
 /* This size effectively determines how many calls this module needs to make.
    Number of ajax calls = number of comments / comments per page */
@@ -21,9 +13,9 @@ const MAX_COMMENT_COUNT = 1000;
 
 // A basic Promise queue based on: http://talks.joneisen.me/presentation-javascript-concurrency-patterns/refactoru-9-23-2014.slide#25
 const runConcurrently = (
-    workFunction: (num: number) => Promise<any>,
-    items: Array<number>
-): Promise<void> =>
+    workFunction,
+    items
+) =>
     new Promise(resolve => {
         const queue = items;
         let workers = 0;
@@ -54,20 +46,15 @@ const runConcurrently = (
     });
 
 class WholeDiscussion {
-    commentsThread: bonzo;
-    discussion: Array<Object>;
-    discussionContainer: bonzo;
-    discussionId: number;
-    lastPage: number;
-    params: {
-        commentsClosed: boolean,
-        displayThreaded: boolean,
-        maxResponses: number,
-        orderBy: 'newest' | 'oldest',
-    };
-    postedCommentHtml: string;
+    commentsThread;
+    discussion;
+    discussionContainer;
+    discussionId;
+    lastPage;
+    params;
+    postedCommentHtml;
 
-    constructor(options: Object): void {
+    constructor(options) {
         this.discussionId = options.discussionId;
         this.discussion = [];
         this.params = {
@@ -78,7 +65,7 @@ class WholeDiscussion {
         };
     }
 
-    firstPageLoaded(resp: Object): Array<number> {
+    firstPageLoaded(resp) {
         // Add the first page of comments to the discussion object.
         this.storeCommentPage(resp, 1);
 
@@ -103,7 +90,7 @@ class WholeDiscussion {
 
     /* Caches a bonzo object/array of comments, so that they can be
        re-assembled when the load is complete. */
-    storeCommentPage(response: Object, page: number): void {
+    storeCommentPage(response, page) {
         const container = $(
             '.d-thread--comments',
             bonzo.create(response.commentsHtml)
@@ -117,9 +104,9 @@ class WholeDiscussion {
         this.discussion[page] = comments;
     }
 
-    loadPage(pageNumber: number): Promise<Object> {
+    loadPage(pageNumber) {
         // Always load in oldest order, to ensure pages are consistent whilst new comments are posted.
-        const queryParams: Object = {
+        const queryParams = {
             orderBy: 'oldest',
             page: pageNumber,
             pageSize: COMMENTS_PER_PAGE,
@@ -140,17 +127,17 @@ class WholeDiscussion {
         });
     }
 
-    loadPageAndStore(pageNumber: number): Promise<void> {
+    loadPageAndStore(pageNumber) {
         return this.loadPage(pageNumber).then(response => {
             this.storeCommentPage(response, pageNumber);
         });
     }
 
-    loadRemainingPages(pages: Array<number>): Promise<void> {
+    loadRemainingPages(pages) {
         return runConcurrently(this.loadPageAndStore.bind(this), pages);
     }
 
-    makeDiscussionResponseObject(): DiscussionResponse {
+    makeDiscussionResponseObject() {
         if (this.params.orderBy === 'newest') {
             this.discussion.reverse();
         }
@@ -169,7 +156,7 @@ class WholeDiscussion {
     }
 
     // Always load the first page, to retrieve the number of comments in the discussion.
-    loadAllComments(): Promise<DiscussionResponse> {
+    loadAllComments() {
         return this.loadPage(1)
             .then(resp => this.firstPageLoaded(resp))
             .then(pages => this.loadRemainingPages(pages))

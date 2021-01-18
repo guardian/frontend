@@ -1,22 +1,24 @@
 package controllers.front
 
-import common.Logging
+import common.GuLogging
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model.facia.PressedCollection
 import model.{Cached, PressedPage}
 import play.api.mvc.Results
 
-object FrontHeadline extends Results with Logging {
+object FrontHeadline extends Results with GuLogging {
 
   val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(
     NotFound("Could not extract headline from front"),
   )
 
   private[this] def headline(collection: PressedCollection): Option[String] = {
-    for {
-      content <- collection.curatedPlusBackfillDeduplicated.headOption
+    val headlines = for {
+      content <- collection.curatedPlusBackfillDeduplicated
       if content.properties.webTitle != ""
     } yield content.properties.webTitle
+
+    headlines.headOption
   }
 
   def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {

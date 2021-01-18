@@ -6,7 +6,7 @@ import commercial.model.merchandise.jobs.Industries
 import app.LifecycleComponent
 import commercial.model.feeds._
 import common.LoggingField._
-import common.{AkkaAsync, JobScheduler, Logging}
+import common.{AkkaAsync, JobScheduler, GuLogging}
 import metrics.MetricUploader
 import play.api.inject.ApplicationLifecycle
 
@@ -25,7 +25,7 @@ class CommercialLifecycle(
     feedsParser: FeedsParser,
     industries: Industries,
 ) extends LifecycleComponent
-    with Logging {
+    with GuLogging {
 
   // This class does work that should be kept separate from the EC used to serve requests
   implicit private val ec = ExecutionContext.fromExecutorService(

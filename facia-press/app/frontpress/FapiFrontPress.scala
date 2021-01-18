@@ -111,7 +111,7 @@ case class EmailExtraCollections(
     breaking: List[PressedCollectionVisibility],
 )
 
-trait EmailFrontPress extends Logging {
+trait EmailFrontPress extends GuLogging {
 
   implicit def fapiClient: ApiClient
   def generatePressedVersions(
@@ -186,7 +186,7 @@ trait EmailFrontPress extends Logging {
 
 }
 
-trait FapiFrontPress extends EmailFrontPress with Logging {
+trait FapiFrontPress extends EmailFrontPress with GuLogging {
 
   val dependentFrontPaths: Map[String, Seq[String]] = Map(
     "uk" -> Seq("email/uk/daily"),
@@ -529,7 +529,7 @@ trait FapiFrontPress extends EmailFrontPress with Logging {
   }
 }
 
-object Enrichment extends Logging {
+object Enrichment extends GuLogging {
   def enrichSnap(
       embedUri: Option[String],
       beforeEnrichment: EnrichedContent,

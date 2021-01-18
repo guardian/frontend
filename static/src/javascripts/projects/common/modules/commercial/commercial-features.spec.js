@@ -1,4 +1,3 @@
-// @flow
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
@@ -11,18 +10,12 @@ import {
     isAdFreeUser as isAdFreeUser_,
 } from 'common/modules/commercial/user-features';
 
-const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
-const isRecentOneOffContributor: JestMockFn<
-    *,
-    *
-> = (isRecentOneOffContributor_: any);
-const shouldHideSupportMessaging: JestMockFn<
-    *,
-    *
-> = (shouldHideSupportMessaging_: any);
-const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
-const getBreakpoint: any = getBreakpoint_;
-const isUserLoggedIn: any = isUserLoggedIn_;
+const isPayingMember = (isPayingMember_);
+const isRecentOneOffContributor = (isRecentOneOffContributor_);
+const shouldHideSupportMessaging = (shouldHideSupportMessaging_);
+const isAdFreeUser = (isAdFreeUser_);
+const getBreakpoint = getBreakpoint_;
+const isUserLoggedIn = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 

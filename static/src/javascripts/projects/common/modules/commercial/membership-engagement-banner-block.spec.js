@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import { isBlocked } from './membership-engagement-banner-block';
 

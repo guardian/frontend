@@ -1,19 +1,8 @@
-// @flow
 import React from 'preact-compat';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import arrowUp from 'svgs/icon/arrow-up.svg';
 
-type ExpanderButtonText = {
-    more: string,
-    less: string,
-};
 
-type ExpanderButtonProps = {
-    isExpanded: boolean,
-    onToggle: (state: boolean) => void,
-    linkName: ?string,
-    text: ?ExpanderButtonText,
-};
 
 const defaultExpanderButtonText = {
     more: 'More',
@@ -25,7 +14,7 @@ const FollowCardExpanderButton = ({
     onToggle,
     linkName,
     text,
-}: ExpanderButtonProps) =>
+}) =>
     isExpanded ? (
         <button
             data-link-name={linkName ? `${linkName} : shrink` : null}

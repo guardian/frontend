@@ -1,14 +1,14 @@
-// @flow strict
+
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import { bonzo } from 'bonzo';
 
-const minArticleHeight: number = 1300;
+const minArticleHeight = 1300;
 
-const getAllowedSizesForImmersive = (availableSpace: number): string => {
+const getAllowedSizesForImmersive = (availableSpace) => {
     // filter ad slot sizes based on the available height
+    // mark: 01303e88-ef1f-462d-9b6e-242419435cec
     if (availableSpace > 600) {
         return '1,1|2,2|300,250|300,274|300,600|fluid';
     } else if (availableSpace > 274) {
@@ -19,17 +19,17 @@ const getAllowedSizesForImmersive = (availableSpace: number): string => {
     return '1,1|2,2';
 };
 
-export const init = (): Promise<boolean> => {
-    const $col: bonzo = $('.js-secondary-column');
+export const init = () => {
+    const $col = $('.js-secondary-column');
 
     // article aside ads are added server-side if the container doesn't exist then stop.
     if (!$col.length || $col.css('display') === 'none') {
         return Promise.resolve(false);
     }
 
-    const $mainCol: bonzo = $('.js-content-main-column');
-    const $adSlot: bonzo = $('.js-ad-slot', $col);
-    const $immersiveEls: bonzo = $('.element--immersive', $mainCol);
+    const $mainCol = $('.js-content-main-column');
+    const $adSlot = $('.js-ad-slot', $col);
+    const $immersiveEls = $('.element--immersive', $mainCol);
 
     if (!$adSlot.length || !$mainCol.length) {
         return Promise.resolve(false);
@@ -37,12 +37,12 @@ export const init = (): Promise<boolean> => {
 
     return fastdom
         .measure(
-            (): [number, number] => [
+            () => [
                 $mainCol.dim().height,
                 $immersiveEls.offset().top - $mainCol.offset().top,
             ]
         )
-        .then(([mainColHeight, immersiveOffset]: [number, number]) => {
+        .then(([mainColHeight, immersiveOffset]) => {
             // we do all the adjustments server-side if the page has a ShowcaseMainElement!
             if (config.get('page.hasShowcaseMainElement', false)) {
                 return $adSlot[0];
@@ -62,7 +62,6 @@ export const init = (): Promise<boolean> => {
             }
             // most articles are long enough to fit a DMPU. However, the occasional shorter article
             // will need the slot sizes to be adjusted, and the sticky behaviour removed.
-            // mark: 01303e88-ef1f-462d-9b6e-242419435cec
             if (mainColHeight < minArticleHeight) {
                 return fastdom.mutate(() => {
                     $adSlot.removeClass('right-sticky js-sticky-mpu is-sticky');
@@ -75,7 +74,7 @@ export const init = (): Promise<boolean> => {
             }
             return $adSlot[0];
         })
-        .then((adSlot: Element) => {
+        .then((adSlot) => {
             mediator.emit('page:defaultcommercial:right', adSlot);
             return true;
         });

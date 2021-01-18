@@ -1,4 +1,3 @@
-// @flow strict
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
@@ -9,26 +8,30 @@ import {
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { ias, permutive, twitter, lotame, fbPixel, remarketing, inizio } from '@guardian/commercial-core';
+import {
+    ias,
+    permutive,
+    twitter,
+    fbPixel,
+    remarketing,
+    inizio,
+} from '@guardian/commercial-core';
 import config from 'lib/config';
-import { isInAuOrNz, isInUsOrCa } from "common/modules/commercial/geo-utils";
 
-const addScripts = (tags: Array<ThirdPartyTag>): void => {
+const addScripts = tags => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
     tags.forEach(tag => {
-        if (tag.loaded === true) {
-            return;
-        }
-        if (tag.beforeLoad) {
-            tag.beforeLoad();
-        }
+        if (tag.loaded === true) return;
+
+        if (tag.beforeLoad) tag.beforeLoad();
+
+        // Tag is either an image, a snippet or a script.
         if (tag.useImage === true && typeof tag.url !== 'undefined') {
             new Image().src = tag.url;
-        }
-        if (tag.insertSnippet) {
+        } else if (tag.insertSnippet) {
             tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
@@ -60,9 +63,9 @@ const addScripts = (tags: Array<ThirdPartyTag>): void => {
 };
 
 const insertScripts = (
-    advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag> // performanceServices always run
-): void => {
+    advertisingServices,
+    performanceServices // performanceServices always run
+) => {
     addScripts(performanceServices);
     onConsentChange(state => {
         const consentedAdvertisingServices = advertisingServices.filter(
@@ -75,18 +78,19 @@ const insertScripts = (
     });
 };
 
-const loadOther = (): void => {
-    const advertisingServices: Array<ThirdPartyTag> = [
+const loadOther = () => {
+    const advertisingServices = [
         remarketing({ shouldRun: config.get('switches.remarketing', false) }),
         permutive({ shouldRun: config.get('switches.permutive', false) }),
         ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
         inizio({ shouldRun: config.get('switches.inizio', false) }),
-        fbPixel({ shouldRun: config.get('switches.facebookTrackingPixel', false)}),
-        twitter({ shouldRun: config.get('switches.twitterUwt', false)}),
-        lotame({ shouldRun:  config.get('switches.lotame', false) && !(isInUsOrCa() || isInAuOrNz())}),
+        fbPixel({
+            shouldRun: config.get('switches.facebookTrackingPixel', false),
+        }),
+        twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
     ].filter(_ => _.shouldRun);
 
-    const performanceServices: Array<ThirdPartyTag> = [
+    const performanceServices = [
         imrWorldwide, // only in AU & NZ
         imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
@@ -94,7 +98,7 @@ const loadOther = (): void => {
     insertScripts(advertisingServices, performanceServices);
 };
 
-const init = (): Promise<boolean> => {
+const init = () => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
     }

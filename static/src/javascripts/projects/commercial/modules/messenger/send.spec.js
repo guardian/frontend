@@ -1,4 +1,3 @@
-// @flow
 import { postMessage } from 'commercial/modules/messenger/post-message';
 import { send } from './send';
 

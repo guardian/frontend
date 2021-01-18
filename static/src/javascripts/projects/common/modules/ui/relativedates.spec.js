@@ -1,5 +1,3 @@
-// @flow
-
 import {
     init as relativeDatesInit,
     makeRelativeDate,

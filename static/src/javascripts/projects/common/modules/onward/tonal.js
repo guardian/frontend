@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { begin, error, end } from 'common/modules/analytics/register';
@@ -20,23 +19,23 @@ const tones = {
 };
 
 class TonalComponent extends Component {
-    static getTone(): string {
+    static getTone() {
         return config
             .get('page.tones', '')
             .split(',')[0]
             .toLowerCase();
     }
 
-    static ready(): void {
+    static ready() {
         mediator.emit('modules:tonal:loaded');
         end('tonal-content');
     }
 
-    static error(): void {
+    static error() {
         error('tonal-content');
     }
 
-    constructor(): void {
+    constructor() {
         super();
 
         begin('tonal-content');
@@ -49,14 +48,14 @@ class TonalComponent extends Component {
         }
     }
 
-    getEndpoint(): string {
+    getEndpoint() {
         const endpoint = tones[this.edition][TonalComponent.getTone()];
         return `/container/${endpoint}.json`;
     }
 
-    edition: string;
+    edition;
 
-    isSupported(): boolean {
+    isSupported() {
         return TonalComponent.getTone() in tones[this.edition];
     }
 }

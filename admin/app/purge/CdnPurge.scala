@@ -1,6 +1,6 @@
 package purge
 
-import common.Logging
+import common.GuLogging
 import conf.AdminConfiguration.fastly
 import conf.Configuration.environment
 import implicits.Dates
@@ -13,7 +13,7 @@ sealed trait FastlyService { def serviceId: String }
 case object GuardianHost extends FastlyService { val serviceId = fastly.serviceId }
 case object AjaxHost extends FastlyService { val serviceId = fastly.ajaxServiceId }
 
-object CdnPurge extends Dates with Logging {
+object CdnPurge extends Dates with GuLogging {
 
   // Performs soft purge which will still serve stale if there is an error
   def soft(

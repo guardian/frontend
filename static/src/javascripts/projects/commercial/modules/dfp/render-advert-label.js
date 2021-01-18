@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import crossIcon from 'svgs/icon/cross.svg';
 
@@ -11,8 +10,8 @@ const shouldRenderLabel = adSlotNode =>
         adSlotNode.getElementsByClassName('ad-slot__label').length
     );
 
-const createAdCloseDiv = (): HTMLButtonElement => {
-    const closeDiv: HTMLButtonElement = document.createElement('button');
+const createAdCloseDiv = () => {
+    const closeDiv = document.createElement('button');
     closeDiv.className = 'ad-slot__close-button';
     closeDiv.innerHTML = crossIcon.markup;
     closeDiv.onclick = function onclickMobileStickyCloser() {
@@ -22,15 +21,15 @@ const createAdCloseDiv = (): HTMLButtonElement => {
     return closeDiv;
 };
 
-const createAdLabel = (): HTMLDivElement => {
-    const adLabel: HTMLDivElement = document.createElement('div');
+const createAdLabel = () => {
+    const adLabel = document.createElement('div');
     adLabel.className = 'ad-slot__label';
     adLabel.innerHTML = 'Advertisement';
     adLabel.appendChild(createAdCloseDiv());
     return adLabel;
 };
 
-export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
+export const renderAdvertLabel = (adSlotNode) =>
     fastdom.measure(() => {
         if (shouldRenderLabel(adSlotNode)) {
             return fastdom.mutate(() => {
@@ -39,7 +38,7 @@ export const renderAdvertLabel = (adSlotNode: HTMLElement): Promise<null> =>
         }
     });
 
-export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
+export const renderStickyAdLabel = (adSlotNode) =>
     fastdom.mutate(() => {
         const adSlotLabel = document.createElement('div');
         adSlotLabel.classList.add('ad-slot__label');
@@ -49,8 +48,8 @@ export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<null> =>
     });
 
 export const renderStickyScrollForMoreLabel = (
-    adSlotNode: HTMLElement
-): Promise<null> =>
+    adSlotNode
+) =>
     fastdom.mutate(() => {
         const scrollForMoreLabel = document.createElement('div');
         scrollForMoreLabel.classList.add('ad-slot__scroll');

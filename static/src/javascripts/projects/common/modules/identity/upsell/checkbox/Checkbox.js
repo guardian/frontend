@@ -1,18 +1,8 @@
-// @flow
 import React from 'preact-compat';
 
-type CheckboxHtmlProps = {
-    checked: ?boolean,
-    onChange: (ev: Event) => void,
-};
 
-type CheckboxProps = {
-    title: string,
-    uniqueId: string,
-    checkboxHtmlProps: CheckboxHtmlProps,
-};
 
-const Checkbox = ({ title, uniqueId, checkboxHtmlProps }: CheckboxProps) => (
+const Checkbox = ({ title, uniqueId, checkboxHtmlProps }) => (
     <label
         data-link-name={`upsell-consent : checkbox : ${uniqueId} : ${
             checkboxHtmlProps.checked ? 'untick' : 'tick'

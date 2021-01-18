@@ -40,10 +40,6 @@ class EmailVerificationControllerTest
   val signinService = mock[PlaySigninService]
   val newsletterService = spy(new NewsletterService(api, idRequestParser, idUrlBuilder))
 
-  when(api.resendEmailValidationEmail(any[Auth], any[TrackingData], any[Option[String]])) thenReturn Future.successful(
-    Right({}),
-  )
-
   val userId: String = "123"
   val user = User("test@example.com", userId, statusFields = StatusFields(userEmailValidated = Some(true)))
   val testAuth = ScGuU("abc")
@@ -81,101 +77,23 @@ class EmailVerificationControllerTest
 
   "Given resendEmailValidationEmail is called" - Fake {
 
-    "should render the proper view" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
-      val result = controller.resendEmailValidationEmail()(testRequest)
-      contentAsString(result) should include("you must confirm this is your email address")
-      contentAsString(result) should not include ("Exit and go to The Guardian home page")
-    }
+    "Given completeRegistration is called" - Fake {
 
-  }
-
-  "Given completeRegistration is called" - Fake {
-
-    "should render the proper view" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
-      val result = controller.completeRegistration()(testRequest)
-      contentAsString(result) should include("Please check your inbox")
-      contentAsString(result) should include("Exit and go to The Guardian home page")
-    }
-
-    "should link to the return url" in {
-      when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]]))
-        .thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
-      val result = controller.completeRegistration()(testRequest)
-      contentAsString(result) should include("test-string-test")
-      contentAsString(result) should include("Exit and continue")
-    }
-  }
-
-  "Given the verify method is called" - Fake {
-    val token = "myToken"
-
-    "when the api call succeeds" - {
-      val expiry = new DateTime(1595243635000L)
-      val cookieResponse = CookiesResponse(expiry, List(CookieResponse("key", "value")))
-      val playCookie = Cookie("key", "value")
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Right(cookieResponse)))
-
-      "should redirect to default consent journey" in {
-        reset(signinService)
-        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
-        val result = controller.verify(token)(testRequest)
-        status(result) should be(SEE_OTHER)
-        redirectLocation(result).get should include("/consents?")
-        cookies(result).get("key").get.value shouldBe "value"
+      "should render the proper view" in {
+        when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]])).thenReturn(None)
+        when(api.decryptEmailToken(anyString())).thenReturn(Future.successful(Right("an email address")))
+        val result = controller.completeRegistration()(TestRequest("/foo?encryptedEmail=someEncryptedString"))
+        contentAsString(result) should include("Please verify your email to complete your registration")
       }
 
-      "should redirect to original returnUrl if it was already a consent journey" in {
-        reset(signinService)
-        when(signinService.getCookies(cookieResponse, rememberMe = true)).thenReturn(List(playCookie))
+      "should link to the return url if encrypted email parameter is not present" in {
         when(returnUrlVerifier.getVerifiedReturnUrl(any[Request[_]]))
-          .thenReturn(Some("https://profile.theguardian.com/consents"))
-        val result = controller.verify(token)(testRequest)
-        status(result) should be(SEE_OTHER)
-        redirectLocation(result).get should include("/consents")
-        cookies(result).get("key").get.value shouldBe "value"
+          .thenReturn(Some("https://jobs.theguardian.com/test-string-test"))
+        val result = controller.completeRegistration()(testRequest)
+        contentAsString(result) should include("test-string-test")
+        contentAsString(result) should include("Exit and continue to The Guardian")
       }
     }
-
-    "when the api call returns already validated error" - {
-      val err = Error("User Already Validated", "This user account has already been validated")
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token)(testRequest)
-
-      "should redirect to default consent journey" in {
-        status(result) should be(SEE_OTHER)
-        redirectLocation(result).get should include("/consents?")
-      }
-    }
-
-    "when the api call returns token expired error" - {
-      val err = Error("Token expired", "The activation token is no longer valid")
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token)(testRequest)
-
-      "should display the validation completed page" in {
-        status(result) should be(OK)
-        contentAsString(result) should include("Your email confirmation link has expired")
-        contentAsString(result) should include("Resend my verification email")
-        contentAsString(result) should not include (EmailValidatedMessage)
-        contentAsString(result) should not include ("Sorry, this email confirmation link is not recognised.")
-      }
-    }
-
-    "when the api call returns invalid token error" - {
-      val err = Error("Invalid json", "This request contains invalid json")
-      when(api.validateEmail(eql(token), any())).thenReturn(Future.successful(Left(List(err))))
-      val result = controller.verify(token)(testRequest)
-
-      "should display the validation completed page" in {
-        status(result) should be(OK)
-        contentAsString(result) should include("Sorry, this email confirmation link is not recognised.")
-        contentAsString(result) should include("Resend my verification email")
-        contentAsString(result) should not include (EmailValidatedMessage)
-        contentAsString(result) should not include ("Your email confirmation link has expired")
-      }
-    }
-
   }
+
 }

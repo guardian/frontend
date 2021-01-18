@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
@@ -21,7 +20,7 @@ const inputs = {
     dummy: 'name',
 };
 
-const hideInputAndShowPreview = (el: ?Node): void => {
+const hideInputAndShowPreview = (el) => {
     fastdom.mutate(() => {
         $(`.${classes.textInput}`, el).addClass('is-hidden');
         $(`.${classes.signupButton}`, el).removeClass(classes.styleSignup);
@@ -29,13 +28,13 @@ const hideInputAndShowPreview = (el: ?Node): void => {
     });
 };
 
-const validate = (form: ?HTMLFormElement): boolean => {
+const validate = (form) => {
     // simplistic email address validation
     const emailAddress = $(`.${classes.textInput}`, form).val();
     return typeof emailAddress === 'string' && emailAddress.indexOf('@') > -1;
 };
 
-const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
+const addSubscriptionMessage = (buttonEl) => {
     const meta = $.ancestor(buttonEl, classes.wrapper);
     fastdom.mutate(() => {
         $(buttonEl.form).addClass('is-hidden');
@@ -44,19 +43,19 @@ const addSubscriptionMessage = (buttonEl: HTMLButtonElement): void => {
     });
 };
 
-const modifyDataLinkName = (modifier: string) => (el: HTMLButtonElement) : void => {
+const modifyDataLinkName = (modifier) => (el) => {
     const firstStageName = el.getAttribute('data-link-name') || "undefined-data-link-name"
     el.setAttribute('data-link-name', firstStageName + modifier)
 }
 
-const modifyLinkNamesForSecondStage = (el: HTMLButtonElement) => modifyDataLinkName('-second-stage')(el)
+const modifyLinkNamesForSecondStage = (el) => modifyDataLinkName('-second-stage')(el)
 
-const modifyLinkNamesForSignedInUser = (el: HTMLButtonElement) => modifyDataLinkName('-signed-in')(el)
+const modifyLinkNamesForSignedInUser = (el) => modifyDataLinkName('-signed-in')(el)
 
 const submitForm = (
-    form: ?HTMLFormElement,
-    buttonEl: HTMLButtonElement
-): Promise<void> => {
+    form,
+    buttonEl
+) => {
     const dummyEmail = encodeURIComponent(
         $(`input[name="${inputs.dummy}"]`, form).val()
     ); // Used as a 'bot-bait', see https://stackoverflow.com/a/34623588/2823715
@@ -89,7 +88,7 @@ const submitForm = (
     });
 };
 
-const createSubscriptionFormEventHandlers = (buttonEl: HTMLButtonElement): void => {
+const createSubscriptionFormEventHandlers = (buttonEl) => {
     bean.on(buttonEl, 'click', event => {
         event.preventDefault();
         const form = buttonEl.form;
@@ -104,7 +103,7 @@ const modifyFormForSignedIn = (el) => {
     createSubscriptionFormEventHandlers(el);
 }
 
-const showSignupForm = (buttonEl: HTMLButtonElement): void => {
+const showSignupForm = (buttonEl) => {
     const form = buttonEl.form;
     const meta = $.ancestor(buttonEl, 'js-newsletter-meta');
     fastdom.mutate(() => {
@@ -118,14 +117,14 @@ const showSignupForm = (buttonEl: HTMLButtonElement): void => {
     });
 };
 
-const updatePageForLoggedIn = (emailAddress: string, el: ?Node): void => {
+const updatePageForLoggedIn = (emailAddress, el) => {
     fastdom.mutate(() => {
         hideInputAndShowPreview(el);
         $(`.${classes.textInput}`, el).val(emailAddress);
     });
 };
 
-const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
+const showSecondStageSignup = (buttonEl) => {
     fastdom.mutate(() => {
         buttonEl.setAttribute('type', 'button');
         bean.on(buttonEl, 'click', () => {
@@ -134,7 +133,7 @@ const showSecondStageSignup = (buttonEl: HTMLButtonElement): void => {
     });
 };
 
-const enhanceNewsletters = (): void => {
+const enhanceNewsletters = () => {
     if (getUserFromCookie() !== null) {
         // email address is not stored in the cookie, gotta go to the Api
         getUserFromApi(userFromId => {
@@ -149,7 +148,7 @@ const enhanceNewsletters = (): void => {
     }
 };
 
-const init = (): void => {
+const init = () => {
     enhanceNewsletters();
 };
 

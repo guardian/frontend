@@ -4,7 +4,7 @@ import java.net.{URI, URLEncoder}
 import java.util.concurrent.TimeoutException
 
 import akka.actor.{ActorSystem, Scheduler}
-import common.{Logging, ResourcesHelper}
+import common.{GuLogging, ResourcesHelper}
 import conf.Configuration
 import play.api.libs.json.{JsValue, Json}
 import play.api.libs.ws.WSClient
@@ -24,7 +24,7 @@ import akka.pattern.after
 class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: ActorSystem)(implicit
     ec: ExecutionContext,
 ) extends ResourcesHelper
-    with Logging {
+    with GuLogging {
 
   // NOTE: If you change the API Key, you must also update the weatherapi fastly configuration, as it is enforced there
   lazy val weatherApiKey: String = Configuration.weather.apiKey.getOrElse(
@@ -112,7 +112,7 @@ class WeatherApi(wsClient: WSClient, context: ApplicationContext, actorSystem: A
     })
 }
 
-object WeatherApi extends Logging {
+object WeatherApi extends GuLogging {
 
   def retryWeatherRequest(
       request: () => Future[JsValue],

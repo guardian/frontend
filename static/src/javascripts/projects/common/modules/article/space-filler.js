@@ -1,16 +1,15 @@
-// @flow
 import raven from 'lib/raven';
 import fastdom from 'lib/fastdom-promise';
 import { findSpace, SpaceError } from 'common/modules/spacefinder';
 
-const onError = (e: Error): boolean => {
+const onError = (e) => {
     // e.g. if writer fails
     raven.captureException(e);
     return false;
 };
 
 class SpaceFiller {
-    queue: Promise<any>;
+    queue;
 
     constructor() {
         this.queue = Promise.resolve();
@@ -23,14 +22,14 @@ class SpaceFiller {
      * seek a slot for a new component until all the other component writes have finished.
      */
     fillSpace(
-        rules: Object,
-        writer: (HTMLElement[]) => any,
-        options: ?Object
-    ): Promise<any> {
-        const onSpacesFound = (paragraphs: HTMLElement[]): Promise<any> =>
+        rules,
+        writer,
+        options
+    ) {
+        const onSpacesFound = (paragraphs) =>
             fastdom.mutate(() => writer(paragraphs));
 
-        const onNoSpacesFound = (ex: Error): boolean => {
+        const onNoSpacesFound = (ex) => {
             if (ex instanceof SpaceError) {
                 return false;
             }

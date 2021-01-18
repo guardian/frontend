@@ -1,4 +1,3 @@
-// @flow
 import { getSync as getSync_ } from 'lib/geolocation';
 import {
     getBreakpoint as getBreakpoint_,
@@ -23,9 +22,9 @@ import {
     shouldIncludeMobileSticky,
 } from './utils';
 
-const getSync: any = getSync_;
-const getBreakpoint: any = getBreakpoint_;
-const isBreakpoint: any = isBreakpoint_;
+const getSync = getSync_;
+const getBreakpoint = getBreakpoint_;
+const isBreakpoint = isBreakpoint_;
 
 jest.mock('lodash/once', () => a => a);
 
@@ -66,7 +65,7 @@ describe('Utils', () => {
     });
 
     test('stripPrefix correctly strips valid cases', () => {
-        const validStrips: Array<Array<string>> = [
+        const validStrips = [
             ['dfp-ad--slot', 'slot'],
             ['slot', 'slot'],
             ['dfp-ad--', ''],
@@ -101,7 +100,7 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    // $FlowFixMe
+    
     test.each([
         ['AU','on', true],
         ['AU','off', true],

@@ -1,13 +1,7 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial/modules/messenger';
 
-type Specs = {
-    width?: string,
-    height?: string,
-};
 
-const normalise = (length: string): string => {
+const normalise = (length) => {
     const lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
     const defaultUnit = 'px';
     const matches = String(length).match(lengthRegexp);
@@ -17,15 +11,15 @@ const normalise = (length: string): string => {
     return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const isLiveBlogInlineAdSlot = (adSlot: ?HTMLElement): boolean =>
+const isLiveBlogInlineAdSlot = (adSlot) =>
     !!adSlot && adSlot.classList.contains('ad-slot--liveblog-inline');
 
 const resize = (
-    specs: Specs,
-    iframe: HTMLElement,
-    iframeContainer: ?HTMLElement,
-    adSlot: HTMLElement
-): ?Promise<any> => {
+    specs,
+    iframe,
+    iframeContainer,
+    adSlot
+) => {
     if (
         !specs ||
         !('height' in specs || 'width' in specs) ||
@@ -55,7 +49,7 @@ const resize = (
 };
 
 // When an outstream resizes we want it to revert to its original styling
-const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
+const removeAnyOutstreamClass = (adSlot) => {
     fastdom.mutate(() => {
         if (adSlot) {
             adSlot.classList.remove('ad-slot--outstream');
@@ -63,7 +57,7 @@ const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
     });
 };
 
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');

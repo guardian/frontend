@@ -45,7 +45,7 @@ installIfNecessary('semver', 'chalk').then(([semver, chalk]) => {
         console.log(`${chalk.red('✗')} Node ${foundNodeVersion}`);
         console.log(
             chalk.dim(
-                `Frontend requires Node v${nvmrcVersion}.\nIf you're using NVM, you can 'nvm use'...`
+                `Frontend requires Node ${nvmrcVersion}.\nIf you're using NVM, you can 'nvm use'...`
             )
         );
         process.exit(1);

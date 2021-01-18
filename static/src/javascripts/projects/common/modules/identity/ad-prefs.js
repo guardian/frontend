@@ -1,5 +1,3 @@
-// @flow
-
 import React, { Component, render } from 'preact-compat';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
 import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
@@ -10,28 +8,12 @@ import {
     setAdConsentState,
     getAllAdConsentsWithState,
 } from 'common/modules/commercial/ad-prefs.lib';
-import type {
-    AdConsent,
-    AdConsentWithState,
-} from 'common/modules/commercial/ad-prefs.lib';
 
-type AdPrefsWrapperProps = {
-    getAdConsentState: (consent: AdConsent) => ?boolean,
-    setAdConsentState: (consent: AdConsent, state: boolean) => void,
-    initialConsentsWithState: AdConsentWithState[],
-};
 
-const rootSelector: string = '.js-manage-account__ad-prefs';
+const rootSelector = '.js-manage-account__ad-prefs';
 
-class AdPrefsWrapper extends Component<
-    AdPrefsWrapperProps,
-    {
-        consentsWithState: AdConsentWithState[],
-        changesPending: boolean,
-        flashing: boolean,
-    }
-> {
-    constructor(props: AdPrefsWrapperProps): void {
+class AdPrefsWrapper extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             changesPending: false,
@@ -40,7 +22,7 @@ class AdPrefsWrapper extends Component<
         };
     }
 
-    onUpdate(consentId: number, state: ?boolean): void {
+    onUpdate(consentId, state) {
         const consentsWithState = [...this.state.consentsWithState];
         const changesPending =
             this.props.getAdConsentState(
@@ -57,7 +39,7 @@ class AdPrefsWrapper extends Component<
         });
     }
 
-    onSubmit(event: SyntheticInputEvent<HTMLFormElement>): void {
+    onSubmit(event) {
         event.preventDefault();
         this.state.consentsWithState.forEach(consentWithState => {
             if (typeof consentWithState.state === 'boolean') {
@@ -73,8 +55,8 @@ class AdPrefsWrapper extends Component<
         });
     }
 
-    FeedbackFlashBoxRef: ?FeedbackFlashBox;
-    SubmitButtonRef: ?HTMLElement;
+    FeedbackFlashBoxRef;
+    SubmitButtonRef;
 
     render() {
         return (
@@ -88,7 +70,7 @@ class AdPrefsWrapper extends Component<
                                 consent={consentWithState.consent}
                                 state={consentWithState.state}
                                 key={consentWithState.consent.cookie}
-                                onUpdate={(state: ?boolean) => {
+                                onUpdate={(state) => {
                                     this.onUpdate(index, state);
                                 }}
                             />
@@ -116,10 +98,10 @@ class AdPrefsWrapper extends Component<
     }
 }
 
-const enhanceAdPrefs = (): void => {
+const enhanceAdPrefs = () => {
     fastdom
         .measure(() => Array.from(document.querySelectorAll(rootSelector)))
-        .then((wrapperEls: HTMLElement[]) => {
+        .then((wrapperEls) => {
             wrapperEls.forEach(_ => {
                 fastdom.mutate(() => {
                     render(

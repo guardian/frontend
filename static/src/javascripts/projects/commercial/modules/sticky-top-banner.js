@@ -1,6 +1,3 @@
-// @flow
-import type { Advert } from 'commercial/modules/dfp/Advert';
-
 import { addEventListener } from 'lib/events';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
@@ -11,20 +8,20 @@ import { register, unregister } from 'commercial/modules/messenger';
 
 const topSlotId = 'dfp-ad--top-above-nav';
 let updateQueued = false;
-let header: ?HTMLElement;
-let headerHeight: number;
-let topSlot: ?HTMLElement;
-let topSlotHeight: number;
-let topSlotStyles: CSSStyleDeclaration;
-let stickyBanner: ?HTMLElement;
-let scrollY: number;
+let header;
+let headerHeight;
+let topSlot;
+let topSlotHeight;
+let topSlotStyles;
+let stickyBanner;
+let scrollY;
 
 // Because the top banner is not in the document flow, resizing it requires
 // that we also make space for it. This is done by adjusting the top margin
 // of the header.
 // This is also the best place to adjust the scrolling position in case the
 // user has scrolled past the header.
-const resizeStickyBanner = (newHeight: number): Promise<number> => {
+const resizeStickyBanner = (newHeight) => {
     if (topSlotHeight === newHeight) {
         return Promise.resolve(-1);
     }
@@ -48,7 +45,7 @@ const resizeStickyBanner = (newHeight: number): Promise<number> => {
 // Sudden changes in the layout can be jarring to the user, so we animate
 // them for a better experience. We only do this if the slot is in view
 // though.
-const setupAnimation = (): Promise<any> =>
+const setupAnimation = () =>
     fastdom.mutate(() => {
         if (stickyBanner && header) {
             if (scrollY <= headerHeight) {
@@ -61,7 +58,7 @@ const setupAnimation = (): Promise<any> =>
         }
     });
 
-const onScroll = (): Promise<any> => {
+const onScroll = () => {
     scrollY = window.pageYOffset;
     if (!updateQueued) {
         updateQueued = true;
@@ -85,7 +82,7 @@ const onScroll = (): Promise<any> => {
     return Promise.resolve();
 };
 
-const update = (newHeight: number): Promise<any> =>
+const update = (newHeight) =>
     fastdom
         .measure(() => {
             topSlotStyles = topSlotStyles || window.getComputedStyle(topSlot);
@@ -97,7 +94,7 @@ const update = (newHeight: number): Promise<any> =>
         })
         .then(resizeStickyBanner);
 
-const onResize = (specs: any, _: any, iframe: ?Element): void => {
+const onResize = (specs, _, iframe) => {
     if (topSlot && topSlot.contains(iframe)) {
         update(specs.height);
         unregister('resize', onResize);
@@ -108,22 +105,22 @@ const onResize = (specs: any, _: any, iframe: ?Element): void => {
 // its container
 // We also listen for scroll events if we need to, to snap the slot in
 // place when it reaches the end of the header.
-const setupListeners = (): void => {
+const setupListeners = () => {
     register('resize', onResize);
     addEventListener(window, 'scroll', onScroll, {
         passive: true,
     });
 };
 
-const getAdvertSizeByIndex = (advert: ?Advert, index: number): ?number => {
+const getAdvertSizeByIndex = (advert, index) => {
     if (advert && advert.size && typeof advert.size !== 'string') {
         return advert.size[index];
     }
 };
 
-const onFirstRender = (): void => {
+const onFirstRender = () => {
     /* eslint-disable no-use-before-define */
-    // $FlowFixMe
+    
     _.whenFirstRendered = trackAdRender(topSlotId).then(isRendered => {
         if (isRendered) {
             const advert = getAdvertById(topSlotId);
@@ -160,7 +157,7 @@ const onFirstRender = (): void => {
     /* eslint-enable no-use-before-define */
 };
 
-const initState = (): Promise<any> =>
+const initState = () =>
     fastdom
         .measure(() => {
             if (header) {
@@ -173,7 +170,7 @@ const initState = (): Promise<any> =>
             Promise.all([resizeStickyBanner(currentHeight), onScroll()])
         );
 
-const init = (): Promise<void> => {
+const init = () => {
     if (!commercialFeatures.stickyTopBannerAd) {
         return Promise.resolve();
     }
@@ -186,7 +183,7 @@ const init = (): Promise<void> => {
         })
     ) {
         header = document.getElementById('header');
-        stickyBanner = (topSlot.parentNode: any);
+        stickyBanner = (topSlot.parentNode);
 
         // First, let's assign some default values so that everything
         // is in good order before we start animating changes in height

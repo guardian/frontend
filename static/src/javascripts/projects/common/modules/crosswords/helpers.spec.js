@@ -1,5 +1,3 @@
-// @flow
-
 import {
     isAcross,
     otherDirection,
@@ -21,7 +19,7 @@ import {
     getClearableCellsForClue,
 } from 'common/modules/crosswords/helpers';
 
-const stubCellWithValue = (value: string): Cell => ({
+const stubCellWithValue = (value) => ({
     number: 1,
     isHighlighted: false,
     isEditable: false,
@@ -30,7 +28,7 @@ const stubCellWithValue = (value: string): Cell => ({
     value,
 });
 
-const stubClue = (options: Object): Clue =>
+const stubClue = (options) =>
     Object.assign(
         {
             id: '',

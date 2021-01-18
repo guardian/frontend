@@ -1,5 +1,3 @@
-// @flow
-
 import { addCookie, removeCookie } from 'lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
@@ -24,8 +22,8 @@ import { isBlocked } from 'common/modules/commercial/membership-engagement-banne
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const clearCommonReaderRevenueStateAndReload = (
-    asExistingSupporter: boolean
-): void => {
+    asExistingSupporter
+) => {
     if (pageShouldHideReaderRevenue()) {
         alert(
             'This page has "Prevent membership/contribution appeals" ticked in Composer. Please try a different page'
@@ -69,12 +67,12 @@ const clearCommonReaderRevenueStateAndReload = (
     }
 };
 
-const showMeTheEpic = (asExistingSupporter: boolean = false): void => {
+const showMeTheEpic = (asExistingSupporter = false) => {
     // Clearing out the epic view log happens before all reloads
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
+const showMeTheBanner = (asExistingSupporter = false) => {
     if (!config.get('switches.membershipEngagementBanner')) {
         alert(
             'Membership engagement banner switch is turned off on the dotcom switchboard'
@@ -96,7 +94,7 @@ const showMeTheBanner = (asExistingSupporter: boolean = false): void => {
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
+const showMeTheDoubleBanner = (asExistingSupporter = false) => {
     addCookie('GU_geo_continent', 'EU');
     showMeTheBanner(asExistingSupporter);
 };
@@ -105,17 +103,17 @@ const showMeTheDoubleBanner = (asExistingSupporter: boolean = false): void => {
 // they want to display. So we don't clear out the banner history since
 // we don't necessarily want the banner popping up if someone's working
 // with the epic.
-const showNextVariant = (asExistingSupporter: boolean = false): void => {
+const showNextVariant = (asExistingSupporter = false) => {
     incrementMvtCookie();
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const showPreviousVariant = (asExistingSupporter: boolean = false): void => {
+const showPreviousVariant = (asExistingSupporter = false) => {
     decrementMvtCookie();
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
 };
 
-const changeGeolocation = (asExistingSupporter: boolean = false): void => {
+const changeGeolocation = (asExistingSupporter = false) => {
     const geo = window.prompt(
         `Enter two-letter geolocation code (e.g. GB, US, AU). Current is ${geolocationGetSync()}.`
     );
@@ -127,7 +125,7 @@ const changeGeolocation = (asExistingSupporter: boolean = false): void => {
     }
 };
 
-export const init = (): void => {
+export const init = () => {
     // Expose functions so they can be called on the console and within bookmarklets
     window.guardian.readerRevenue = {
         showMeTheEpic,

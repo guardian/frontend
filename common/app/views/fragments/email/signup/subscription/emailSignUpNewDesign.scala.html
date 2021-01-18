@@ -1,7 +1,6 @@
-@import com.gu.identity.model.EmailEmbed
+@import services.newsletters.NewsletterResponse
 @(  componentClass: String,
-    listName:String,
-    emailEmbedData: EmailEmbed)(implicit request: RequestHeader)
+    emailNewsletter: NewsletterResponse)(implicit request: RequestHeader)
 
 @import common.LinkTo
 
@@ -12,6 +11,8 @@
 @wrapperClass = @{ "newsletter-embed" + " newsletter-embed--" + componentClass  }
 @formClass = @{ "newsletter-embed__form" + " newsletter-embed__form--" + componentClass }
 
+@emailEmbedData = @{emailNewsletter.emailEmbed}
+@listName = @{emailNewsletter.id}
 @imageAltText = @{s"${emailEmbedData.name} profile image"}
 
 
@@ -48,7 +49,7 @@
             data-link-name="@componentClass | @listName">
                 Sign up
             </button>
-            <a class="newsletter-embed__privacy-policy" href="#privacy-policy">
+            <a class="newsletter-embed__privacy-policy" href="https://www.theguardian.com/info/privacy" target="_blank">
                 Read our privacy policy here
             </a>
         </div>
@@ -56,11 +57,12 @@
 }
 
 
-<div class="@wrapperClass" style="background-color: @emailEmbedData.hexCode">
-    @if(emailEmbedData.imageUrl.nonEmpty){
+<div class="@wrapperClass js-ab-embed-new-design hide-element" style="background-color: @emailEmbedData.hexCode">
+    @image = @{emailNewsletter.illustration.flatMap(_.circle)}
+    @if(image){
         <aside class="newsletter-embed__image">
             <img
-            src="@emailEmbedData.imageUrl"
+            src="@image"
             alt="@imageAltText"/>
         </aside>
     }

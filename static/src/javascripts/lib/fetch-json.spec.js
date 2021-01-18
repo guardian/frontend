@@ -1,5 +1,3 @@
-// @flow
-
 import Chance from 'chance';
 import config from 'lib/config';
 import fetchJson from './fetch-json';
@@ -7,7 +5,7 @@ import fetchJson from './fetch-json';
 const chance = new Chance();
 
 jest.mock('lib/fetch', () => jest.fn());
-const fetchSpy: any = require('lib/fetch');
+const fetchSpy = require('lib/fetch');
 
 describe('Fetch JSON util', () => {
     beforeAll(() => {

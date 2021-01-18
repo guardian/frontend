@@ -20,7 +20,7 @@ import scala.util.{Failure, Success, Try}
 
 class BadConfigurationException(msg: String) extends RuntimeException(msg)
 
-object Environment extends Logging {
+object Environment extends GuLogging {
 
   private[this] val installVars = {
     val source = new File("/etc/gu/install_vars") match {
@@ -58,7 +58,7 @@ object Environment extends Logging {
   *     facia.stage=CODE
   *   }
   */
-object GuardianConfiguration extends Logging {
+object GuardianConfiguration extends GuLogging {
 
   import com.typesafe.config.Config
 
@@ -134,7 +134,7 @@ object GuardianConfiguration extends Logging {
 
 }
 
-class GuardianConfiguration extends Logging {
+class GuardianConfiguration extends GuLogging {
   import GuardianConfiguration._
 
   case class OAuthCredentials(oauthClientId: String, oauthSecret: String, oauthCallback: String)
@@ -147,11 +147,6 @@ class GuardianConfiguration extends Logging {
   object business {
     lazy val stocksEndpoint =
       configuration.getMandatoryStringProperty("business_data.url") // Decommissioned, see marker: 7dde429f00b1
-  }
-
-  object feedback {
-    lazy val feedpipeEndpoint = configuration.getMandatoryStringProperty("feedback.feedpipeEndpoint")
-    lazy val feedbackHelpConfig = configuration.getMandatoryStringProperty("feedback.helpconfig")
   }
 
   object rendering {
@@ -734,6 +729,11 @@ class GuardianConfiguration extends Logging {
 
   object braze {
     lazy val apiKey = configuration.getStringProperty("braze.apikey").getOrElse("")
+  }
+
+  object newsletterApi {
+    lazy val host = configuration.getStringProperty("newsletterApi.host")
+    lazy val origin = configuration.getStringProperty("newsletterApi.origin")
   }
 
 }

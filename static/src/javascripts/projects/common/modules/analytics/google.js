@@ -1,5 +1,3 @@
-// @flow
-
 import { getCLS, getFID, getLCP } from 'web-vitals';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
@@ -8,27 +6,24 @@ const trackerName = config.get('googleAnalytics.trackers.editorial');
 
 const send = `${trackerName}.send`;
 
-const getTextContent = (el: HTMLElement): string =>
+const getTextContent = (el) =>
     (el.textContent || '').trim();
 
-const trackNonClickInteraction = (actionName: string): void => {
+const trackNonClickInteraction = (actionName) => {
     window.ga(send, 'event', 'Interaction', actionName, {
         nonInteraction: true, // to avoid affecting bounce rate
     });
 };
 
-const trackSamePageLinkClick = (target: HTMLElement, tag: string): void => {
+const trackSamePageLinkClick = (target, tag) => {
     window.ga(send, 'event', 'click', 'in page', tag, {
         nonInteraction: true, // to avoid affecting bounce rate
         dimension13: getTextContent(target),
     });
 };
 
-const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
-    const data: {
-        dimension13: string,
-        dimension48?: string,
-    } = {
+const trackExternalLinkClick = (target, tag) => {
+    const data = {
         dimension13: getTextContent(target),
     };
 
@@ -41,7 +36,7 @@ const trackExternalLinkClick = (target: HTMLElement, tag: string): void => {
     window.ga(send, 'event', 'click', 'external', tag, data);
 };
 
-const trackSponsorLogoLinkClick = (target: Object): void => {
+const trackSponsorLogoLinkClick = (target) => {
     const sponsorName = target.dataset.sponsor;
 
     window.ga(send, 'event', 'click', 'sponsor logo', sponsorName, {
@@ -49,14 +44,14 @@ const trackSponsorLogoLinkClick = (target: Object): void => {
     });
 };
 
-const trackNativeAdLinkClick = (slotName: string, tag: string): void => {
+const trackNativeAdLinkClick = (slotName, tag) => {
     window.ga(send, 'event', 'click', 'native ad', tag, {
         nonInteraction: true,
         dimension25: slotName,
     });
 };
 
-const sendPerformanceEvent = (event: Object): void => {
+const sendPerformanceEvent = (event) => {
     const boostGaUserTimingFidelityMetrics = {
         standardStart: 'metric18',
         standardEnd: 'metric19',
@@ -109,13 +104,13 @@ const sendPerformanceEvent = (event: Object): void => {
    Tracks into Behaviour > Site Speed > User Timings in GA
 */
 const trackPerformance = (
-    timingCategory: string,
-    timingVar: any,
-    timingLabel: string
-): void => {
+    timingCategory,
+    timingVar,
+    timingLabel
+) => {
     if (window.performance && window.performance.now && window.ga) {
         const timingEvents = config.get('googleAnalytics.timingEvents', []);
-        const sendDeferredEventQueue = (): void => {
+        const sendDeferredEventQueue = () => {
             timingEvents.map(sendPerformanceEvent);
             mediator.off('modules:ga:ready', sendDeferredEventQueue);
         };
@@ -137,13 +132,8 @@ const trackPerformance = (
 };
 
 // This matches DCR implementation
-type coreVitalsArgs = {
-    name: string;
-    delta: number;
-    id: string;
-};
 // https://www.npmjs.com/package/web-vitals#using-analyticsjs
-const sendCoreVital = ({ name, delta, id }: coreVitalsArgs): void => {
+const sendCoreVital = ({ name, delta, id }) => {
     const { ga } = window;
 
     if (!ga) {

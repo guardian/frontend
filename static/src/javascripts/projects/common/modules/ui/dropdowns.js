@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 
@@ -6,33 +5,33 @@ const containerSelector = '.dropdown';
 const buttonCN = 'dropdown__button';
 const contentCN = 'dropdown__content';
 
-const updateAria = (container: Element): void => {
-    const v: boolean = container.classList.contains('dropdown--active');
+const updateAria = (container) => {
+    const v = container.classList.contains('dropdown--active');
     const content = Array.from(container.getElementsByClassName(contentCN));
     const button = Array.from(container.getElementsByClassName(buttonCN));
-    content.forEach((c: Element) => {
+    content.forEach((c) => {
         c.setAttribute('aria-hidden', (!v).toString());
     });
 
-    [...content, ...button].forEach((c: Element) => {
+    [...content, ...button].forEach((c) => {
         c.setAttribute('aria-expanded', v.toString());
     });
 };
 
-const init = (): void => {
-    bean.on(document.body, 'click', `.${buttonCN}`, (e: Event) => {
-        const container = (e.currentTarget: any).closest(containerSelector);
+const init = () => {
+    bean.on(document.body, 'click', `.${buttonCN}`, (e) => {
+        const container = (e.currentTarget).closest(containerSelector);
 
         if (container) {
             fastdom
                 .measure(() => {
-                    const documentElement: ?HTMLElement =
+                    const documentElement =
                         document.documentElement;
                     const content = container.querySelector(`.${contentCN}`);
-                    const isActive: boolean = container.classList.contains(
+                    const isActive = container.classList.contains(
                         'dropdown--active'
                     );
-                    const isAnimated: boolean =
+                    const isAnimated =
                         container.classList.contains('dropdown--animated') &&
                         (documentElement !== null &&
                             documentElement !== undefined &&

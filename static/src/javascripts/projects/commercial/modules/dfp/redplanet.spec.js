@@ -1,5 +1,3 @@
-// @flow
-
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     getConsentFor as getConsentFor_,
@@ -9,19 +7,19 @@ import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
 import config from 'lib/config';
 import { init, resetModule } from './redplanet';
 
-const isInAuOrNz: any = isInAuOrNz_;
+const isInAuOrNz = isInAuOrNz_;
 
-const tcfv2WithConsentMock = (callback): void =>
+const AusWithConsentMock = (callback) =>
     callback({
-        tcfv2: { vendorConsents: { '5f199c302425a33f3f090f51': true } },
+        aus: { personalisedAdvertising: true },
     });
 
-const tcfv2WithoutConsentMock = (callback): void =>
+const AusWithoutConsentMock = (callback) =>
     callback({
-        tcfv2: { vendorConsents: { '5f199c302425a33f3f090f51': false } },
+        aus: { personalisedAdvertising: true },
     });
 
-const onConsentChange: any = onConsentChange_;
+const onConsentChange = onConsentChange_;
 
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
@@ -60,10 +58,10 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-const CcpaWithConsentMock = (callback): void =>
+const CcpaWithConsentMock = (callback) =>
     callback({ ccpa: { doNotSell: false } });
 
-const getConsentFor: any = getConsentFor_;
+const getConsentFor = getConsentFor_;
 
 window.launchpad = jest.fn().mockImplementationOnce(() => jest.fn());
 
@@ -84,7 +82,7 @@ describe('init', () => {
         config.set('page.section', 'uk');
         config.set('page.sectionName', 'Politics');
         config.set('page.contentType', 'Article');
-        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        onConsentChange.mockImplementation(AusWithConsentMock);
         getConsentFor.mockReturnValue(true);
 
         await init();
@@ -120,7 +118,7 @@ describe('init', () => {
     it('should initialise redplanet when TCFv2 consent has been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        onConsentChange.mockImplementation(AusWithConsentMock);
         getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).toBeCalled();
@@ -129,7 +127,7 @@ describe('init', () => {
     it('should not initialise redplanet when TCFv2 consent has not been given', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(true);
-        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        onConsentChange.mockImplementation(AusWithoutConsentMock);
         getConsentFor.mockReturnValue(false);
         await init();
         expect(window.launchpad).not.toBeCalled();
@@ -141,14 +139,14 @@ describe('init', () => {
         onConsentChange.mockImplementation(CcpaWithConsentMock);
         getConsentFor.mockReturnValue(true);
         expect(await init).toThrow(
-            `Error running Redplanet with CCPA (US CMP) present. It should only run in Australia on TCFv2 mode`
+            `Error running Redplanet without AUS consent. It should only run in Australia on AUS mode`
         );
     });
 
     it('should not initialise redplanet when launchpad conditions are false', async () => {
         commercialFeatures.launchpad = false;
         isInAuOrNz.mockReturnValue(true);
-        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        onConsentChange.mockImplementation(AusWithConsentMock);
         getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).not.toBeCalled();
@@ -157,7 +155,7 @@ describe('init', () => {
     it('should not initialise redplanet when user not in AUS regions', async () => {
         commercialFeatures.launchpad = true;
         isInAuOrNz.mockReturnValue(false);
-        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+        onConsentChange.mockImplementation(AusWithConsentMock);
         getConsentFor.mockReturnValue(true);
         await init();
         expect(window.launchpad).not.toBeCalled();

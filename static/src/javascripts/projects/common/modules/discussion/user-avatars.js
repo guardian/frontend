@@ -1,11 +1,9 @@
-// @flow
-
 import avatarApi from 'common/modules/avatar/api';
 import bonzo from 'bonzo';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 
-const avatarify = (container: HTMLElement): void => {
+const avatarify = (container) => {
     const updating = bonzo(bonzo.create('<div class="is-updating"></div>'));
     const avatar = bonzo(
         bonzo.create('<img class="user-avatar__image" alt="" />')
@@ -13,7 +11,7 @@ const avatarify = (container: HTMLElement): void => {
     const avatarUserId = container.dataset.userid;
     const userId = config.get('user.id', null);
 
-    const updateCleanup = (upd: bonzo, avat: bonzo) => {
+    const updateCleanup = (upd, avat) => {
         upd.remove();
         avat.appendTo(container);
     };
@@ -40,7 +38,7 @@ const avatarify = (container: HTMLElement): void => {
     }
 };
 
-const initUserAvatars = (): Promise<void> =>
+const initUserAvatars = () =>
     fastdom
         .measure(() => document.getElementsByClassName('user-avatar'))
         .then(avatars => {

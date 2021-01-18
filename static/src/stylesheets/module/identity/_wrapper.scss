@@ -74,8 +74,18 @@
         max-width: gs-span(16);
     }
 
-    a.u-underline {
+    a.u-underline, span.u-underline {
         color: $brand-main;
+    }
+
+    button.resend-link {
+        background: 0;
+        border: 0;
+        padding: 0;
+    }
+
+    button.resend-link:focus {
+        outline: none;
     }
 }
 

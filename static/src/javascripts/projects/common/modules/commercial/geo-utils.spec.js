@@ -1,4 +1,3 @@
-// @flow
 import {isInUk,
     isInUsa,
     isInCanada,

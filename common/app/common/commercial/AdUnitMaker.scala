@@ -1,9 +1,9 @@
 package common.commercial
 
-import common.Logging
+import common.GuLogging
 import conf.Configuration.commercial.{dfpAccountId, dfpAdUnitGuRoot}
 
-object AdUnitMaker extends Logging {
+object AdUnitMaker extends GuLogging {
 
   def make(pageId: String, adUnitSuffix: String): String = {
 

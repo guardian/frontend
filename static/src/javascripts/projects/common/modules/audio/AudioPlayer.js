@@ -1,12 +1,6 @@
-// @flow
 /* eslint-disable no-nested-ternary */
 import React, { Component } from 'react';
 import styled from '@emotion/styled';
-import palette from '@guardian/dotcom-rendering/packages/pasteup/palette';
-import {
-    leftCol,
-    wide,
-} from '@guardian/dotcom-rendering/packages/pasteup/breakpoints';
 import { isIOS, isAndroid } from 'lib/detect';
 
 import pauseBtn from 'svgs/journalism/audio-player/pause.svg';
@@ -21,7 +15,52 @@ import { registerOphanListeners } from './utils';
 
 import Time from './Time';
 
-// $FlowFixMe
+// these used to be installed from @guardian/dotcom-rendering
+// but should really come from @guardian/src-foundations
+const leftCol = '@media (min-width: 1140px)';
+const wide = '@media (min-width: 1300px)';
+const palette = {
+    red: {
+        light: '#ff4e36',
+        medium: '#c70000',
+        dark: '#ad0006',
+    },
+    orange: {
+        light: '#f5be2c',
+        medium: '#ff7f0f',
+        dark: '#ed6300',
+    },
+    blue: {
+        light: '#00b2ff',
+        medium: '#0084c6',
+        dark: '#005689',
+    },
+    gold: {
+        light: '#eacca0',
+        medium: '#ab8958',
+        dark: '#6b5840',
+    },
+    pink: {
+        light: '#ffabdb',
+        medium: '#bb3b80',
+        dark: '#7d0068',
+    },
+    yellow: {
+        medium: '#ffe500',
+        dark: '#edd600',
+    },
+    neutral: {
+        header: '#e9eff1',
+        '1': '#121212',
+        '2': '#333333',
+        '3': '#767676',
+        '4': '#999999',
+        '5': '#dcdcdc',
+        '6': '#ececec',
+        '7': '#f6f6f6',
+    },
+};
+
 const AudioGrid = styled('div')({
     display: 'grid',
     backgroundColor: palette.neutral[1],
@@ -250,27 +289,10 @@ const Volume = styled('div')({
     },
 });
 
-type Props = {
-    sourceUrl: string,
-    mediaId: string,
-    duration: string,
-};
 
-type State = {
-    playing: boolean,
-    muted: boolean,
-    currentTime: number,
-    duration: number,
-    currentOffsetPx: number,
-    hasBeenPlayed: boolean,
-    waveX: number,
-    waveWidthPx: number,
-    hovering: boolean,
-    grabbing: boolean,
-};
 
-export class AudioPlayer extends Component<Props, State> {
-    constructor(props: Props) {
+export class AudioPlayer extends Component {
+    constructor(props) {
         super(props);
         this.state = {
             playing: false,
@@ -319,7 +341,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    setAudio = (el: ?HTMLAudioElement) => {
+    setAudio = (el) => {
         if (el) {
             this.audio = el;
         }
@@ -331,7 +353,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    setGeometry = (el: ?HTMLElement) => {
+    setGeometry = (el) => {
         if (el) {
             const css = getComputedStyle(el);
             const rect = el.getBoundingClientRect();
@@ -369,9 +391,9 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.pause();
     };
 
-    audio: HTMLAudioElement;
-    wave: Element;
-    waveBuffered: Element;
+    audio;
+    wave;
+    waveBuffered;
 
     ready = () => {
         this.setState({ duration: this.audio.duration });
@@ -395,7 +417,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    seek = (e: any) => {
+    seek = (e) => {
         if (!this.state.grabbing) {
             const currentOffsetPx = e.nativeEvent.offsetX;
             const currentTime =
@@ -407,7 +429,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    updatePlayerTime = (currTime: number) => {
+    updatePlayerTime = (currTime) => {
         this.audio.currentTime = currTime;
 
         const currentOffsetPx =
@@ -442,11 +464,11 @@ export class AudioPlayer extends Component<Props, State> {
         this.audio.volume = 1;
     };
 
-    hovering = (hovering: boolean) => () => {
+    hovering = (hovering) => () => {
         this.setState({ hovering });
     };
 
-    grabbing = (grabbing: boolean) => () => {
+    grabbing = (grabbing) => () => {
         if (this.state.hovering || !grabbing) {
             this.setState({ grabbing }, () => {
                 if (!this.state.grabbing) {
@@ -456,7 +478,7 @@ export class AudioPlayer extends Component<Props, State> {
         }
     };
 
-    scrub = (e: any) => {
+    scrub = (e) => {
         if (this.state.grabbing) {
             const currentOffsetPx = Math.min(
                 this.state.waveWidthPx,

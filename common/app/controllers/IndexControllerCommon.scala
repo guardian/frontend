@@ -17,7 +17,7 @@ trait IndexControllerCommon
     extends BaseController
     with Index
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with Paging
     with ImplicitControllerExecutionContext {
   private val TagPattern = """^([\w\d-]+)/([\w\d-]+)$""".r

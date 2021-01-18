@@ -1,12 +1,11 @@
-// @flow
 import qwery from 'qwery';
 import fastdom from 'lib/fastdom-promise';
 import once from 'lodash/once';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const mpuCandidateClass: string = 'fc-slice__item--mpu-candidate';
-const mpuCandidateSelector: string = `.${mpuCandidateClass}`;
+const mpuCandidateClass = 'fc-slice__item--mpu-candidate';
+const mpuCandidateSelector = `.${mpuCandidateClass}`;
 
 const shouldRemoveMpuWhenAdFree = mpuCandidate =>
     mpuCandidate.className.toLowerCase().includes(mpuCandidateClass);
@@ -22,24 +21,24 @@ const shouldRemoveFaciaContainerWhenAdFree = faciaContainer => {
 };
 
 const adFreeSlotRemove = once(
-    (): Promise<void> => {
+    () => {
         if (!commercialFeatures.adFree) {
             return Promise.resolve();
         }
 
         const bodyEl = document.body;
 
-        const adSlotsToRemove: Array<Element> = qwery(dfpEnv.adSlotSelector);
+        const adSlotsToRemove = qwery(dfpEnv.adSlotSelector);
 
-        const mpusToRemove: Array<Element> = qwery(mpuCandidateSelector).filter(
+        const mpusToRemove = qwery(mpuCandidateSelector).filter(
             shouldRemoveMpuWhenAdFree
         );
 
-        const commercialFaciaContainersToRemove: Array<Element> = qwery(
+        const commercialFaciaContainersToRemove = qwery(
             '.fc-container'
         ).filter(shouldRemoveFaciaContainerWhenAdFree);
 
-        const commercialThrashers: Array<Element> = qwery(
+        const commercialThrashers = qwery(
             '.commercial-thrasher'
         );
 
@@ -54,14 +53,14 @@ const adFreeSlotRemove = once(
                     bodyEl.classList.remove('has-active-pageskin');
                 }
             }
-            adSlotsToRemove.forEach((adSlot: Element) => adSlot.remove());
-            mpusToRemove.forEach((mpu: Element) =>
+            adSlotsToRemove.forEach((adSlot) => adSlot.remove());
+            mpusToRemove.forEach((mpu) =>
                 mpu.classList.add('fc-slice__item--no-mpu')
             );
             commercialFaciaContainersToRemove.forEach(
-                (faciaContainer: Element) => faciaContainer.classList.add('u-h')
+                (faciaContainer) => faciaContainer.classList.add('u-h')
             );
-            commercialThrashers.forEach((thrasher: Element) => {
+            commercialThrashers.forEach((thrasher) => {
                 const closestFaciaContainer = thrasher.closest(
                     '.fc-container--thrasher'
                 );

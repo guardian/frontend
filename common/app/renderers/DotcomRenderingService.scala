@@ -2,12 +2,12 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.Blocks
-import common.{LinkTo, Logging}
+import common.{LinkTo, GuLogging}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
 import model.Cached.RevalidatableResult
-import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingTransforms}
+import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingDataModelFunctions}
 import model.{Cached, NoCache, PageWithStoryPackage}
 import play.api.libs.ws.{WSClient, WSResponse}
 import play.api.mvc.{RequestHeader, Result}
@@ -18,7 +18,10 @@ import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomrendering.PageType
 
-class DotcomRenderingService extends Logging {
+import http.ResultWithPreconnectPreload
+import http.HttpPreconnections
+
+class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
   private[this] val circuitBreaker = CircuitBreakerRegistry.withConfig(
     name = "dotcom-rendering-client",
@@ -56,7 +59,7 @@ class DotcomRenderingService extends Logging {
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingTransforms.fromArticle(page, request, blocks, pageType)
+    val dataModel = DotcomRenderingDataModelFunctions.fromArticle(page, request, blocks, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     def handler(response: WSResponse): Result = {
@@ -127,7 +130,7 @@ class DotcomRenderingService extends Logging {
       blocks: Blocks,
       pageType: PageType,
   )(implicit request: RequestHeader): Future[Result] = {
-    val dataModel = DotcomRenderingTransforms.fromArticle(page, request, blocks, pageType)
+    val dataModel = DotcomRenderingDataModelFunctions.fromArticle(page, request, blocks, pageType)
     val json = DotcomRenderingDataModel.toJson(dataModel)
 
     def handler(response: WSResponse): Result = {
@@ -135,6 +138,7 @@ class DotcomRenderingService extends Logging {
         case 200 =>
           Cached(page)(RevalidatableResult.Ok(Html(response.body)))
             .withHeaders("X-GU-Dotcomponents" -> "true")
+            .withPreconnect(HttpPreconnections.defaultUrls)
         case 400 =>
           // if DCR returns a 400 it's because *we* failed, so frontend should return a 500
           NoCache(play.api.mvc.Results.InternalServerError("Remote renderer validation error (400)"))

@@ -1,26 +1,10 @@
-// @flow
-
 import React, { Component } from 'preact-compat';
-import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import { getConsentWording } from './wordings';
-import type { ConsentWording, CheckboxWording } from './wordings';
 
-type ConsentRadioButtonProps = {
-    value: string,
-    checked: boolean,
-    wording: CheckboxWording,
-    consent: AdConsent,
-    onToggle: () => void,
-};
 
-type ConsentBoxProps = {
-    consent: AdConsent,
-    state: ?boolean,
-    onUpdate: (state: ?boolean) => void,
-};
 
-class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
-    handleChange(event: SyntheticInputEvent<HTMLInputElement>): void {
+class ConsentRadioButton extends Component {
+    handleChange(event) {
         if (event.target.checked) {
             this.props.onToggle();
         }
@@ -60,9 +44,9 @@ class ConsentRadioButton extends Component<ConsentRadioButtonProps, {}> {
     }
 }
 
-class ConsentBox extends Component<ConsentBoxProps, {}> {
+class ConsentBox extends Component {
     render() {
-        const wording: ConsentWording = getConsentWording(this.props.consent);
+        const wording = getConsentWording(this.props.consent);
 
         return (
             <fieldset>

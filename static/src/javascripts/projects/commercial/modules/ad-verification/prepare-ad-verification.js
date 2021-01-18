@@ -1,14 +1,14 @@
-// @flow strict
+
 import config from 'lib/config';
 import { loadScript } from '@guardian/libs';
 
-const errorHandler = (error: Error) => {
+const errorHandler = (error) => {
     // Looks like some plugins block ad-verification
     // Avoid barraging Sentry with errors from these pageviews
     console.log('Failed to load Confiant:', error);
 };
 
-export const init = (): Promise<void> => {
+export const init = () => {
     const host = 'confiant-integrations.global.ssl.fastly.net';
 
     if (config.get('switches.confiantAdVerification')) {

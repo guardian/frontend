@@ -61,8 +61,7 @@ You need a Mac or Linux PC (Ubuntu).
 
 1. All being well, you should be able to [run the app](#running-the-app)
 
-Manual
-------
+## Manual
 
 ### Configuration
 
@@ -134,7 +133,7 @@ $ brew install node@10.22
 Install additional dependencies:
 
 ```bash
-$ make install
+$ make install compile
 ```
 
 The frontend application should now be ready to run.
@@ -159,7 +158,13 @@ $ make sbt
 ```
 
 Wait for SBT to be up and running. This may take 15 mins or so to start the first time - you'll know
-it's done when you get a prompt. If it is your first time, compile the project.
+it's done when you get a prompt. If it is your first time, clean and compile the project.
+
+```
+clean
+```
+
+Then, when it's finished
 
 ```
 compile

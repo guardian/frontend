@@ -2,14 +2,14 @@ package services
 
 import com.amazonaws.services.sns.{AmazonSNSAsync, AmazonSNSAsyncClient}
 import com.amazonaws.services.sns.model.PublishRequest
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration
 import awswrappers.sns._
 
 import scala.concurrent.ExecutionContext
 import scala.util.{Failure, Success}
 
-trait Notification extends Logging {
+trait Notification extends GuLogging {
 
   val topic: String
 

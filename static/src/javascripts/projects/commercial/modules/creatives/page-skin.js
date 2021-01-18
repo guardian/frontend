@@ -1,20 +1,19 @@
-// @flow
 import config from 'lib/config';
 import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const pageSkin = (): void => {
+const pageSkin = () => {
     const bodyEl = document.body;
-    const hasPageSkin: boolean = config.get('page.hasPageSkin');
+    const hasPageSkin = config.get('page.hasPageSkin');
     const isInAUEdition = config.get('page.edition', '').toLowerCase() === 'au';
     const adLabelHeight = 24;
-    let topPosition: number = 0;
-    let truskinRendered: boolean = false;
-    let pageskinRendered: boolean = false;
+    let topPosition = 0;
+    let truskinRendered = false;
+    let pageskinRendered = false;
 
-    const togglePageSkinActiveClass = (): void => {
+    const togglePageSkinActiveClass = () => {
         if (bodyEl) {
             fastdom.mutate(() => {
                 bodyEl.classList.toggle(
@@ -25,7 +24,7 @@ const pageSkin = (): void => {
         }
     };
 
-    const togglePageSkin = (): void => {
+    const togglePageSkin = () => {
         if (
             hasPageSkin &&
             hasCrossedBreakpoint(true) &&
@@ -35,13 +34,13 @@ const pageSkin = (): void => {
         }
     };
 
-    const moveBackgroundVerticalPosition = (verticalPos: number): void => {
+    const moveBackgroundVerticalPosition = (verticalPos) => {
         if (bodyEl) {
             bodyEl.style.backgroundPosition = `50% ${verticalPos}px`;
         }
     };
 
-    const initTopPositionOnce = (): void => {
+    const initTopPositionOnce = () => {
         if (topPosition === 0) {
             const navHeader = document.getElementsByClassName('new-header')[0];
             if (navHeader) {
@@ -52,7 +51,7 @@ const pageSkin = (): void => {
         }
     };
 
-    const shrinkElement = (element: HTMLElement): void => {
+    const shrinkElement = (element) => {
         const frontContainer = document.querySelector('.fc-container__inner');
         if (frontContainer) {
             element.style.cssText = `max-width: ${
@@ -61,7 +60,7 @@ const pageSkin = (): void => {
         }
     };
 
-    const repositionTruskin = (): void => {
+    const repositionTruskin = () => {
         const header = document.querySelector('.new-header');
         const footer = document.querySelector('.l-footer');
         const topBannerAd = document.querySelector('.ad-slot--top-banner-ad');
@@ -101,7 +100,7 @@ const pageSkin = (): void => {
         }
     };
 
-    const repositionPageSkin = (): void => {
+    const repositionPageSkin = () => {
         initTopPositionOnce();
         if (window.pageYOffset === 0) {
             moveBackgroundVerticalPosition(topPosition);
@@ -113,7 +112,7 @@ const pageSkin = (): void => {
         }
     };
 
-    const repositionSkins = (): void => {
+    const repositionSkins = () => {
         if (truskinRendered && hasPageSkin) {
             repositionTruskin();
         }

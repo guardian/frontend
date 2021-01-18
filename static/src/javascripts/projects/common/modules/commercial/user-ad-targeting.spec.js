@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 import {
     getUserFromApi as getUserFromApi_,
@@ -9,8 +8,8 @@ import {
     requestUserSegmentsFromId,
 } from 'common/modules/commercial/user-ad-targeting';
 
-const getUserFromApi: any = getUserFromApi_;
-const getUserFromCookie: any = getUserFromCookie_;
+const getUserFromApi = getUserFromApi_;
+const getUserFromCookie = getUserFromCookie_;
 
 jest.mock('common/modules/identity/api', () => ({
     getUserFromCookie: jest.fn(),

@@ -23,6 +23,7 @@ import play.twirl.api.Html
 import navigation.GuardianFoundationHelper
 
 import scala.util.matching.Regex
+import utils.ShortUrls
 
 object Commercial {
 
@@ -110,7 +111,8 @@ final case class Fields(
     lang: Option[String],
     showAffiliateLinks: Option[Boolean],
 ) {
-  lazy val shortUrlId = shortUrl.replaceFirst("^[a-zA-Z]+://gu.com", "") //removing scheme://gu.com
+
+  lazy val shortUrlId = ShortUrls.shortUrlToShortIdWithStartingForwardSlash(shortUrl)
   lazy val isRightToLeftLang: Boolean = lang.contains("ar")
 
   def javascriptConfig: Map[String, JsValue] = {

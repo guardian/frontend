@@ -13,9 +13,11 @@
     var pillar = '@{navMenu.currentPillar.map(_.title).getOrElse("")}';
 }
 
+// This is to prevent console errors from code calling window.ga for sessions where we have not loaded the tracking script
+// (where the user has not given their consent for GA tracking)
+window.ga = function() {};
 
-(function() {
-
+window.guardian.googleAnalytics.initialiseGa = function() {
     // Remove spaces from content type and convert it to lower case
     function convertContentType(contentType) {
         var result = contentType;
@@ -59,6 +61,9 @@
     }
     var isLoggedIn = (!!identityId).toString();
 
+    // If we have stubbed window.ga = function() {};, remove the stub before Google attempts
+    // to initialise it properly (it will not get initialised if the stub already exists)
+    delete window.ga;
     @***************************************************************************************
     * Standard copy 'n paste Google Analytics code                                         *
     ***************************************************************************************@
@@ -70,6 +75,7 @@
     @***************************************************************************************
     * Code that is customised by us                                                        *
     ***************************************************************************************@
+    window.guardian.config.page.gaIsInitalised = true;
     @for(tracker <- Seq(GoogleAnalyticsAccount.editorialProd, GoogleAnalyticsAccount.editorialTest)) {
         ga('create', '@tracker.trackingId', 'auto', '@tracker.trackerName', {
             'sampleRate': @{ if (context.environment.mode == Dev) 100 else tracker.samplePercentage },
@@ -161,7 +167,7 @@
     // Mediator will be intialised if we need to use this, otherwise just use GA straight away
     guardian.app && guardian.app.mediator && guardian.app.mediator.emit('modules:ga:ready');
 
-})();
+};
 </script>
 
 @*

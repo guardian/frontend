@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import {
     init,
@@ -59,7 +58,7 @@ describe('Next video autoplay', () => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'
-                ): any).classList.toString()
+                )).classList.toString()
             ).toEqual(expect.stringContaining('js-autoplay-start'));
             done();
         });
@@ -67,12 +66,12 @@ describe('Next video autoplay', () => {
 
     it('should hide end slate information when cancel button is clicked', done => {
         addCancelListener();
-        (document.querySelector('.js-autoplay-cancel'): any).click();
+        (document.querySelector('.js-autoplay-cancel')).click();
         fastdom.measure(() => {
             expect(
                 (document.querySelector(
                     '.js-hosted-next-autoplay'
-                ): any).classList.toString()
+                )).classList.toString()
             ).toEqual(expect.stringContaining('hosted-slide-out'));
             done();
         });

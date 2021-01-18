@@ -1,6 +1,4 @@
-// @flow
-
-const loadCssPromise: Promise<any> = new Promise(resolve => {
+const loadCssPromise = new Promise(resolve => {
     if (window.guardian.css.loaded) {
         // CSS has loaded, go
         resolve();

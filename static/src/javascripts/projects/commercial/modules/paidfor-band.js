@@ -1,9 +1,7 @@
-// @flow
-
 import { Sticky } from 'common/modules/ui/sticky';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-export const init = (): Promise<boolean> => {
+export const init = () => {
     if (!commercialFeatures.paidforBand) {
         return Promise.resolve(false);
     }

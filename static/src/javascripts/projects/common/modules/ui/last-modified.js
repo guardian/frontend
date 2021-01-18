@@ -1,8 +1,6 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 
-const lastModified = (): void => {
+const lastModified = () => {
     fastdom
         .measure(() => ({
             lastModifiedElm: document.querySelector('.js-lm'),

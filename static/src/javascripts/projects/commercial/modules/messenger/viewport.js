@@ -1,7 +1,5 @@
-// @flow
 import { getViewport } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial/modules/messenger';
 
 let w = window;
 let iframes = {};
@@ -10,20 +8,20 @@ let taskQueued = false;
 
 const lastViewportRead = () => fastdom.measure(() => getViewport());
 
-const reset = (window_: WindowProxy): void => {
+const reset = (window_) => {
     w = window_ || window;
     taskQueued = false;
     iframes = {};
     iframeCounter = 0;
 };
 
-const sendViewportDimensions = (iframeId, viewport): void => {
+const sendViewportDimensions = (iframeId, viewport) => {
     if (iframes[iframeId] && iframes[iframeId].respond) {
         iframes[iframeId].respond(null, viewport);
     }
 };
 
-const onResize = (): ?Promise<any> => {
+const onResize = () => {
     if (!taskQueued) {
         taskQueued = true;
 
@@ -36,7 +34,7 @@ const onResize = (): ?Promise<any> => {
     }
 };
 
-const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
+const addResizeListener = (iframe, respond) => {
     if (iframeCounter === 0) {
         w.addEventListener('resize', onResize);
     }
@@ -51,7 +49,7 @@ const addResizeListener = (iframe: Element, respond: any): Promise<any> => {
     });
 };
 
-const removeResizeListener = (iframe: Element): void => {
+const removeResizeListener = (iframe) => {
     if (iframes[iframe.id]) {
         iframes[iframe.id] = false;
         iframeCounter -= 1;
@@ -62,7 +60,7 @@ const removeResizeListener = (iframe: Element): void => {
     }
 };
 
-const onMessage = (respond: any, start: any, iframe: ?Element): void => {
+const onMessage = (respond, start, iframe) => {
     if (!iframe) return;
     if (start) {
         addResizeListener(iframe, respond);
@@ -70,7 +68,7 @@ const onMessage = (respond: any, start: any, iframe: ?Element): void => {
         removeResizeListener(iframe);
     }
 };
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('viewport', onMessage, {
         persist: true,
     });

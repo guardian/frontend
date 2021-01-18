@@ -3,7 +3,6 @@
 
 @(
     title: String,
-    subheading: Option[String],
     description: Option[String],
     behaviour: SwitchBehaviour,
     field: Field,
@@ -33,16 +32,10 @@
         @if(boldTitle) {
             <h3 class="manage-account__switch-title">
                 @title
-                @if(subheading) {
-                    <em>@subheading</em>
-                }
             </h3>
         } else {
             <p class="manage-account__switch-copy">
                 @title
-                @if(subheading) {
-                    <em>@subheading</em>
-                }
             </p>
         }
         @if(description) {

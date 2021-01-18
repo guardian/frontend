@@ -1,7 +1,4 @@
-// @flow
-import type { RegisterListeners } from 'commercial/modules/messenger';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import type { Advert } from 'commercial/modules/dfp/Advert';
 
 // This message is intended to be used with a DFP creative wrapper.
 // For reference, the wrapper will post a message, with an iFrameId, like so:
@@ -28,16 +25,16 @@ self.addEventListener('message', function onMessage(evt) {
 </script>
 */
 
-const findAdvert = (adSlot: HTMLElement): any =>
-    dfpEnv.adverts.find((advert: Advert) => advert.node.isSameNode(adSlot));
+const findAdvert = (adSlot) =>
+    dfpEnv.adverts.find((advert) => advert.node.isSameNode(adSlot));
 
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('disable-refresh', (specs, ret, iframe) => {
         if (iframe) {
             const adSlot = iframe.closest('.js-ad-slot');
 
             if (adSlot instanceof HTMLElement) {
-                const advert: ?Advert = findAdvert(adSlot);
+                const advert = findAdvert(adSlot);
                 if (advert) {
                     advert.shouldRefresh = false;
                 }

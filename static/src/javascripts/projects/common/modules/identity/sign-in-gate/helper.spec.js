@@ -1,9 +1,9 @@
-// @flow
 import {
     hasUserDismissedGateInWindow,
     hasUserDismissedGateMoreThanCount,
     incrementUserDismissedGateCount,
     isCountry,
+    isInvalidTag,
 } from './helper';
 
 jest.mock('bean', () => ({
@@ -59,8 +59,9 @@ jest.mock('./component-event-tracking', () => ({
     get: jest.fn(() => undefined),
 }));
 
-const fakeUserPrefs: any = require('common/modules/user-prefs');
-const fakeLocal: any = require('@guardian/libs').storage.local;
+const fakeUserPrefs = require('common/modules/user-prefs');
+const fakeLocal = require('@guardian/libs').storage.local;
+const fakeConfig = require('lib/config');
 
 describe('Sign In Gate Helper functions', () => {
     describe('hasUserDismissedGateInWindow', () => {
@@ -213,6 +214,18 @@ describe('Sign In Gate Helper functions', () => {
 
         test('geolocation is false if not set', () => {
             expect(isCountry('US')).toBe(false);
+        });
+    });
+
+    describe("isInvalidTag('tag')", () => {
+        test("'info/newsletter-sign-up' article is invalid", () => {
+            fakeConfig.get.mockReturnValueOnce("info/newsletter-sign-up,us-news/us-news,society/homelessness,society/housing");
+            expect(isInvalidTag()).toBe(true);
+        });
+
+        test("non-Newsletters article is not invalid", () => {
+            fakeConfig.get.mockReturnValueOnce("us-news/us-news,society/homelessness,society/housing");
+            expect(isInvalidTag()).toBe(false);
         });
     });
 });

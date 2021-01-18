@@ -1,4 +1,3 @@
-// @flow
 import { init } from 'commercial/modules/hosted/about';
 
 describe('Hosted About Popup', () => {
@@ -12,7 +11,7 @@ describe('Hosted About Popup', () => {
         if (document.body) {
             document.body.innerHTML = '';
         }
-        const overlay: any = document.querySelector('.js-survey-overlay');
+        const overlay = document.querySelector('.js-survey-overlay');
         if (overlay) overlay.parentNode.removeChild(overlay);
     });
 
@@ -26,7 +25,7 @@ describe('Hosted About Popup', () => {
                 expect(
                     (document.querySelector(
                         '.js-survey-overlay'
-                    ): any).classList.toString()
+                    )).classList.toString()
                 ).toEqual(expect.stringContaining('u-h'));
             })
             .then(done)
@@ -36,11 +35,11 @@ describe('Hosted About Popup', () => {
     it('should show popup after clicking on the button', done => {
         init()
             .then(() => {
-                (document.querySelector('.js-hosted-about'): any).click();
+                (document.querySelector('.js-hosted-about')).click();
                 expect(
                     (document.querySelector(
                         '.js-survey-overlay'
-                    ): any).classList.toString()
+                    )).classList.toString()
                 ).not.toEqual(expect.stringContaining('u-h'));
             })
             .then(done)

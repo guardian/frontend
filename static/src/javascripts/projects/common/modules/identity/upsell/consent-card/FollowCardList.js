@@ -1,4 +1,3 @@
-// @flow
 import React from 'preact-compat';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
@@ -8,11 +7,10 @@ import {
     getUserConsent,
 } from 'common/modules/identity/upsell/store/consents';
 import { LegalTextBlock } from 'common/modules/identity/upsell/block/LegalTextBlock';
-import type { ConsentWithState } from '../store/types';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 import { FollowCardExpanderButton } from '../button/FollowCardExpanderButton';
 
-const getConsents = (): Promise<(?ConsentWithState)[]> =>
+const getConsents = () =>
     Promise.all([
         getUserConsent('supporter'),
         getNewsletterConsent('the-long-read'),
@@ -26,20 +24,11 @@ const getConsents = (): Promise<(?ConsentWithState)[]> =>
         getNewsletterConsent('lab-notes'),
     ]);
 
-type Props = {
-    cutoff: number,
-};
 
-type State = {
-    consents: ConsentWithState[],
-    isLoading: boolean,
-    isExpanded: boolean,
-    errors: string[],
-};
 
 // TODO: seperate this into a stateless component and a stateful wrapper.
-class FollowCardList extends React.Component<Props, State> {
-    constructor(props: Props) {
+class FollowCardList extends React.Component {
+    constructor(props) {
         super(props);
         this.setState({
             consents: [],
@@ -58,7 +47,7 @@ class FollowCardList extends React.Component<Props, State> {
         );
     }
 
-    updateConsentState(consent: ConsentWithState) {
+    updateConsentState(consent) {
         this.setState(state => ({
             errors: [],
             consents: state.consents.map(original =>
@@ -76,7 +65,7 @@ class FollowCardList extends React.Component<Props, State> {
         });
     }
 
-    updateExpandState = (isExpanded: boolean) => {
+    updateExpandState = (isExpanded) => {
         this.setState({
             isExpanded,
         });

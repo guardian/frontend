@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import bean from 'bean';
 import bonzo from 'bonzo';
@@ -21,20 +19,16 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import userPrefs from 'common/modules/user-prefs';
 import { inlineSvg } from 'common/views/svgs';
 
-type CommentType = {
-    id: string,
-    body: string,
-};
 
-const PREF_RELATIVE_TIMESTAMPS: string = 'discussion.enableRelativeTimestamps';
+const PREF_RELATIVE_TIMESTAMPS = 'discussion.enableRelativeTimestamps';
 
-const shouldMakeTimestampsRelative = (): boolean =>
+const shouldMakeTimestampsRelative = () =>
     userPrefs.get(PREF_RELATIVE_TIMESTAMPS) !== null
         ? userPrefs.get(PREF_RELATIVE_TIMESTAMPS)
         : true;
 
 class Comments extends Component {
-    constructor(options: Object): void {
+    constructor(options) {
         super();
 
         this.componentClass = 'd-comments';
@@ -67,11 +61,11 @@ class Comments extends Component {
         this.setOptions(options);
     }
 
-    getMoreReplies(event: Event): void {
+    getMoreReplies(event) {
         event.preventDefault();
 
-        const target: HTMLElement = (event.target: any);
-        const currentTarget: HTMLElement = (event.currentTarget: any);
+        const target = (event.target);
+        const currentTarget = (event.currentTarget);
         const li = currentTarget.closest(this.getClass('showReplies'));
 
         if (li) {
@@ -113,13 +107,13 @@ class Comments extends Component {
         }
     }
 
-    comments: ?Comments;
-    topLevelComments: ?qwery;
-    user: ?DiscussionProfile;
-    postedCommentEl: ?string;
-    wholeDiscussionErrors: ?boolean;
+    comments;
+    topLevelComments;
+    user;
+    postedCommentEl;
+    wholeDiscussionErrors;
 
-    addMoreRepliesButtons(comms: Array<HTMLElement>): void {
+    addMoreRepliesButtons(comms) {
         const comments = comms || this.topLevelComments;
 
         comments.forEach(elem => {
@@ -154,7 +148,7 @@ class Comments extends Component {
         });
     }
 
-    fetchComments(options: Object = {}): Promise<mixed> {
+    fetchComments(options = {}) {
         const { discussionId } = this.options || {};
         const url = `/discussion/${
             options.comment
@@ -169,7 +163,7 @@ class Comments extends Component {
             orderBy = 'mostRecommended';
         }
 
-        const queryParams: Object = {
+        const queryParams = {
             orderBy,
             pageSize:
                 options.pagesize || (this.options && this.options.pagesize),
@@ -225,10 +219,10 @@ class Comments extends Component {
         return promise.then(resp => this.renderComments(resp));
     }
 
-    handlePickClick(e: Event): void {
+    handlePickClick(e) {
         e.preventDefault();
 
-        const target: HTMLElement = (e.target: any);
+        const target = (e.target);
         const commentId = target.getAttribute('data-comment-id');
         const $thisButton = $(target);
         const highlighted = $thisButton[0].getAttribute(
@@ -249,7 +243,7 @@ class Comments extends Component {
         }
     }
 
-    pickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+    pickComment(commentId, $thisButton) {
         const comment = qwery(`#comment-${commentId}`, this.elem);
 
         return pickComment(commentId).then(() => {
@@ -259,18 +253,18 @@ class Comments extends Component {
         });
     }
 
-    ready(): void {
+    ready() {
         this.topLevelComments = qwery(
             this.getClass('topLevelComment'),
             this.elem
         );
         this.comments = qwery(this.getClass('comment'), this.elem);
 
-        this.on('click', this.getClass('showRepliesButton'), (event: Event) =>
+        this.on('click', this.getClass('showRepliesButton'), (event) =>
             this.getMoreReplies(event)
         );
 
-        this.on('click', this.getClass('commentReport'), (event: Event) =>
+        this.on('click', this.getClass('commentReport'), (event) =>
             this.reportComment(event)
         );
 
@@ -292,7 +286,7 @@ class Comments extends Component {
         });
     }
 
-    showHiddenComments(e?: Event): void {
+    showHiddenComments(e) {
         if (e) {
             e.preventDefault();
         }
@@ -306,7 +300,7 @@ class Comments extends Component {
         }
     }
 
-    unPickComment(commentId: string, $thisButton: bonzo): Promise<void> {
+    unPickComment(commentId, $thisButton) {
         const comment = qwery(`#comment-${commentId}`);
 
         return unPickComment(commentId).then(() => {
@@ -316,7 +310,7 @@ class Comments extends Component {
         });
     }
 
-    isReadOnly(): boolean {
+    isReadOnly() {
         return !!(
             this.elem &&
             this.elem instanceof HTMLElement &&
@@ -324,7 +318,7 @@ class Comments extends Component {
         );
     }
 
-    addComment(comment: CommentType, parent?: HTMLElement): void {
+    addComment(comment, parent) {
         const commentElem = bonzo.create(this.postedCommentEl)[0];
         const $commentElem = bonzo(commentElem);
         const replyButton =
@@ -332,14 +326,14 @@ class Comments extends Component {
             commentElem.getElementsByClassName(
                 this.getClass('commentReply', true)
             )[0];
-        const map: Object = {
+        const map = {
             username: 'd-comment__author',
             timestamp: 'js-timestamp',
             body: 'd-comment__body',
             report: 'd-comment__action--report',
             avatar: 'd-comment__avatar',
         };
-        const vals: Object = {
+        const vals = {
             username: this.user && this.user.displayName,
             timestamp: 'Just now',
             body: `<p>${comment.body.replace(/\n+/g, '</p><p>')}</p>`,
@@ -390,10 +384,10 @@ class Comments extends Component {
         window.location.replace(`#comment-${comment.id}`);
     }
 
-    replyToComment(e: Event): void {
+    replyToComment(e) {
         e.preventDefault();
 
-        const replyLink: HTMLElement = (e.currentTarget: any);
+        const replyLink = (e.currentTarget);
         const replyToId = replyLink.getAttribute('data-comment-id');
 
         if (!replyToId) {
@@ -464,7 +458,7 @@ class Comments extends Component {
 
         commentBox.render(parentCommentEl);
 
-        commentBox.on('post:success', (comment: CommentType) => {
+        commentBox.on('post:success', (comment) => {
             let responses = qwery('.d-thread--responses', parentCommentEl)[0];
 
             if (!responses) {
@@ -480,26 +474,26 @@ class Comments extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    reportComment(e: Event): void {
+    reportComment(e) {
         e.preventDefault();
 
-        const currentTarget: HTMLElement = (e.currentTarget: any);
+        const currentTarget = (e.currentTarget);
         const commentId = currentTarget.getAttribute('data-comment-id');
-        const submitHandler = (form: HTMLFormElement) => {
+        const submitHandler = (form) => {
             form.removeAttribute('hidden');
 
-            bean.one(form, 'submit', (submitEvent: Event) => {
+            bean.one(form, 'submit', (submitEvent) => {
                 submitEvent.preventDefault();
-                const category: HTMLInputElement = (form.querySelector(
+                const category = (form.querySelector(
                     '[name="category"]'
-                ): any);
-                const comment: HTMLInputElement = (form.querySelector(
+                ));
+                const comment = (form.querySelector(
                     '[name="comment"]'
-                ): any);
-                const reportCommentSuccess = (formEL: HTMLElement): void => {
+                ));
+                const reportCommentSuccess = (formEL) => {
                     formEL.setAttribute('hidden', '');
                 };
-                const reportCommentFailure = (): void => {
+                const reportCommentFailure = () => {
                     const commentClose = document.querySelector(
                         '.d-report-comment__close'
                     );
@@ -519,9 +513,9 @@ class Comments extends Component {
                 };
 
                 if (commentId && category.value !== '0') {
-                    const email: HTMLInputElement = (form.querySelector(
+                    const email = (form.querySelector(
                         '[name="email"]'
-                    ): any);
+                    ));
 
                     reportComment(commentId, {
                         emailAddress: email.value,
@@ -546,12 +540,12 @@ class Comments extends Component {
         }
     }
 
-    addUser(user: DiscussionProfile): void {
+    addUser(user) {
         this.user = user;
 
         // Determine user staff status
         if (this.user && this.user.badge) {
-            // $FlowFixMe
+            
             this.user.isStaff = this.user.badge.some(e => e.name === 'Staff');
         }
 
@@ -578,13 +572,13 @@ class Comments extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    relativeDates(): void {
+    relativeDates() {
         if (shouldMakeTimestampsRelative()) {
             initRelativeDates();
         }
     }
 
-    isAllPageSizeActive(): boolean {
+    isAllPageSizeActive() {
         return !!(
             config.get('switches.discussionAllPageSize') &&
             (this.options && this.options.pagesize === 'All') &&
@@ -593,7 +587,7 @@ class Comments extends Component {
     }
 
     // Similar to above, but tells the loader that the fallback size should be used.
-    shouldShowPageSizeMessage(): boolean {
+    shouldShowPageSizeMessage() {
         return !!(
             config.get('switches.discussionAllPageSize') &&
             (this.options && this.options.pagesize === 'All') &&
@@ -601,11 +595,7 @@ class Comments extends Component {
         );
     }
 
-    renderComments(resp: {
-        commentsHtml: string,
-        paginationHtml: string,
-        postedCommentHtml: string,
-    }): void {
+    renderComments(resp) {
         const contentEl = bonzo.create(resp.commentsHtml);
         const comments = qwery(this.getClass('comment'), contentEl);
 

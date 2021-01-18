@@ -1,14 +1,9 @@
-// @flow
 import React from 'preact-compat';
 import circlesLeft from './circles-left.svg';
 import circlesRight from './circles-right.svg';
 
-type HeaderProps = {
-    title: string,
-    subtitle: string,
-};
 
-const Header = ({ title, subtitle }: HeaderProps) => (
+const Header = ({ title, subtitle }) => (
     <div className="identity-upsell-subheader">
         <div className="identity-upsell-layout identity-upsell-layout--padding">
             <header className="identity-upsell-title identity-upsell-title--hero">

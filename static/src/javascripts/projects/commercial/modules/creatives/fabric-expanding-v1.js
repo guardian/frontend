@@ -1,4 +1,3 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
@@ -16,19 +15,19 @@ import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewabil
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {
-    adSlot: any;
-    params: any;
-    isClosed: any;
-    initialExpandCounter: any;
-    closedHeight: any;
-    openedHeight: any;
+    adSlot;
+    params;
+    isClosed;
+    initialExpandCounter;
+    closedHeight;
+    openedHeight;
 
-    $button: any;
-    $ad: any;
+    $button;
+    $ad;
 
-    static hasScrollEnabled: boolean;
+    static hasScrollEnabled;
 
-    constructor(adSlot: any, params: any) {
+    constructor(adSlot, params) {
         this.adSlot = adSlot;
         this.params = params;
         this.isClosed = true;
@@ -144,7 +143,7 @@ class FabricExpandingV1 {
         }
     }
 
-    buildVideo(customClass: string) {
+    buildVideo(customClass) {
         const videoAspectRatio = 16 / 9;
         const videoHeight = isBreakpoint({
             max: 'phablet',
@@ -182,7 +181,7 @@ class FabricExpandingV1 {
         return template(fabricExpandingVideoHtml)(viewModel);
     }
 
-    stopVideo(delay: number = 0) {
+    stopVideo(delay = 0) {
         const videoSelector = isBreakpoint({
             min: 'tablet',
         })

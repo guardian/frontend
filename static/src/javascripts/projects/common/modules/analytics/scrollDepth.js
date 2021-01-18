@@ -1,11 +1,9 @@
-// @flow
-
 import mediator from 'lib/mediator';
 import debounce from 'lodash/debounce';
 
-const timeSince = (time: number): number => new Date().getTime() - time;
+const timeSince = (time) => new Date().getTime() - time;
 
-const getPercentageInViewPort = (el: HTMLElement): ?number => {
+const getPercentageInViewPort = (el) => {
     if (document.body) {
         const height = window.innerHeight || document.body.clientHeight;
         const rect = el.getBoundingClientRect();
@@ -23,11 +21,11 @@ const getPercentageInViewPort = (el: HTMLElement): ?number => {
 };
 
 class ScrollDepth {
-    opts: Object;
-    data: Object;
-    timeoutId: number;
+    opts;
+    data;
+    timeoutId;
 
-    constructor(options: Object): void {
+    constructor(options) {
         this.opts = Object.assign(
             {},
             {
@@ -52,7 +50,7 @@ class ScrollDepth {
         this.init();
     }
 
-    setData(type: string): boolean {
+    setData(type) {
         const el = this.opts[`${type}El`];
 
         if (!el) {
@@ -76,7 +74,7 @@ class ScrollDepth {
         return false;
     }
 
-    hasDataChanged(): void {
+    hasDataChanged() {
         const page = this.setData('page');
         const content = this.opts.isContent ? this.setData('content') : false;
 
@@ -85,7 +83,7 @@ class ScrollDepth {
         }
     }
 
-    assertScrolling(): void {
+    assertScrolling() {
         if (typeof this.timeoutId === 'number') {
             window.clearTimeout(this.timeoutId);
         }
@@ -95,11 +93,11 @@ class ScrollDepth {
         }, 1000);
     }
 
-    log(): void {
+    log() {
         mediator.emit('scrolldepth:data', this.data);
     }
 
-    init(): void {
+    init() {
         mediator.on(
             'window:throttledScroll',
             debounce(() => {

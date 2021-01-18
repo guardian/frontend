@@ -1,4 +1,3 @@
-// @flow
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
@@ -12,7 +11,7 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
     value: {},
 });
 
-const mockHeight = (height: number) => {
+const mockHeight = (height) => {
     jest.spyOn(fastdom, 'measure').mockReturnValue(Promise.resolve(height));
 };
 
@@ -21,7 +20,7 @@ describe('Sticky MPU', () => {
         <div class="content__article-body js-article__body"><div>
     `;
 
-    const adSlotRight: string =
+    const adSlotRight =
         '<div id="dfp-ad--right" class="js-ad-slot ad-slot ad-slot--right" data-name="right" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
 
     beforeEach(() => {
@@ -45,16 +44,16 @@ describe('Sticky MPU', () => {
 
     it('should resize the parent container', done => {
         mockHeight(8000);
-        const targetSlot: HTMLElement = (document.querySelector(
+        const targetSlot = (document.querySelector(
             '.js-ad-slot'
-        ): any);
+        ));
         targetSlot.dataset = {
             name: targetSlot.getAttribute('data-name') || '',
         };
         mediator.once('page:commercial:sticky-mpu', () => {
-            const container: HTMLElement = (document.querySelector(
+            const container = (document.querySelector(
                 '.aside-slot-container'
-            ): any);
+            ));
             expect(container.style.height).toBe('8000px');
             done();
         });
@@ -67,7 +66,7 @@ describe('Sticky Comments MPU', () => {
         <div class="js-comments"><div>
     `;
 
-    const adSlotComments: string =
+    const adSlotComments =
         '<div id="dfp-ad--comments" class="js-ad-slot ad-slot ad-slot--comments" data-name="comments" data-mobile="1,1|2,2|300,250|300,274|300,600|fluid"></div>';
 
     beforeEach(() => {
@@ -91,16 +90,16 @@ describe('Sticky Comments MPU', () => {
 
     it('should resize the parent container', done => {
         mockHeight(10000);
-        const targetSlot: HTMLElement = (document.querySelector(
+        const targetSlot = (document.querySelector(
             '.js-ad-slot'
-        ): any);
+        ));
         targetSlot.dataset = {
             name: targetSlot.getAttribute('data-name') || '',
         };
         mediator.once('page:commercial:sticky-comments-mpu', () => {
-            const container: HTMLElement = (document.querySelector(
+            const container = (document.querySelector(
                 '.aside-slot-container'
-            ): any);
+            ));
             expect(container.style.height).toBe('10000px');
             done();
         });

@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable no-underscore-dangle */
 
 import bean from 'bean';
@@ -13,26 +12,26 @@ class ComponentError {
 }
 
 class Component {
-    useBem: boolean;
-    templateName: ?string;
-    componentClass: ?string;
-    endpoint: ?string | ?(() => string);
-    classes: ?Object;
-    elem: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement);
-    template: ?string;
-    rendered: boolean;
-    destroyed: boolean;
-    elems: ?Object;
-    options: Object;
-    defaultOptions: Object;
-    responseDataKey: string;
-    autoupdated: boolean;
-    updateEvery: number;
-    fetchData: ?string;
-    manipulationType: string;
-    t: ?TimeoutID;
+    useBem;
+    templateName;
+    componentClass;
+    endpoint;
+    classes;
+    elem;
+    template;
+    rendered;
+    destroyed;
+    elems;
+    options;
+    defaultOptions;
+    responseDataKey;
+    autoupdated;
+    updateEvery;
+    fetchData;
+    manipulationType;
+    t;
 
-    constructor(): void {
+    constructor() {
         this.useBem = false;
         this.templateName = null;
         this.componentClass = null;
@@ -53,7 +52,7 @@ class Component {
         this.t = null;
     }
 
-    attachTo(elem: HTMLElement): void {
+    attachTo(elem) {
         this.checkAttached();
 
         this.elem = elem;
@@ -61,7 +60,7 @@ class Component {
         this._ready();
     }
 
-    render(parent: HTMLElement | ?Node = document.body): Component {
+    render(parent = document.body) {
         this.checkAttached();
         let template = this.template;
 
@@ -88,13 +87,13 @@ class Component {
     /**
      * Throws an error if this is already attached to the DOM
      */
-    checkAttached(): void {
+    checkAttached() {
         if (this.rendered) {
             throw new ComponentError('Already rendered');
         }
     }
 
-    fetch(parent: HTMLElement | Node, key?: string): Promise<void> {
+    fetch(parent, key) {
         this.checkAttached();
 
         if (key) {
@@ -114,7 +113,7 @@ class Component {
             .catch(err => this.error(err));
     }
 
-    _fetch(): Promise<Object> {
+    _fetch() {
         let endpoint =
             typeof this.endpoint === 'function'
                 ? this.endpoint()
@@ -143,7 +142,7 @@ class Component {
         });
     }
 
-    _ready(elem?: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement)): void {
+    _ready(elem) {
         if (!this.destroyed) {
             this.rendered = true;
             this._autoupdate();
@@ -151,7 +150,7 @@ class Component {
         }
     }
 
-    _prerender(): void {
+    _prerender() {
         this.elems = {};
         this.prerender();
     }
@@ -159,12 +158,12 @@ class Component {
     /**
      * Check if we should auto update, if so, do so
      */
-    _autoupdate(): void {
+    _autoupdate() {
         const setAutoUpdate = () => {
             // eslint-disable-next-line no-use-before-define
             this.t = setTimeout(() => update(), this.updateEvery * 1000);
         };
-        const update = (): void => {
+        const update = () => {
             this._fetch()
                 .then(resp => {
                     this.autoupdate(
@@ -191,7 +190,7 @@ class Component {
      * we would lose if rendered then manipulated
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    prerender(): void {}
+    prerender() {}
 
     /**
      * Once the render / decorate methods have been called
@@ -199,7 +198,7 @@ class Component {
      * This function is made to be overridden
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    ready(elem: ?(HTMLElement | HTMLAnchorElement | HTMLInputElement)): void {}
+    ready(elem) {}
 
     /**
      * Once the render / decorate methods have been called
@@ -207,16 +206,16 @@ class Component {
      * This function is made to be overridden
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    error(type: string, message?: string): void {}
+    error(type, message) {}
 
     /**
      * This is called whenever a fetch occurs. This includes
      * explicit fetch calls and autoupdate.
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    fetched(resp: Object): void {}
+    fetched(resp) {}
 
-    autoupdate(elem: HTMLElement): void {
+    autoupdate(elem) {
         const oldElem = this.elem;
         this.elem = elem;
 
@@ -228,13 +227,13 @@ class Component {
      * Once we're done with it, remove event bindings etc
      */
     // eslint-disable-next-line class-methods-use-this, no-unused-vars
-    dispose(): void {}
+    dispose() {}
 
     on(
-        eventType: string,
-        elem: string | ((arg: any) => void),
-        handler?: (arg: any) => void
-    ): Component {
+        eventType,
+        elem,
+        handler
+    ) {
         if (typeof elem === 'function') {
             const eventHandler = elem;
             bean.on(this.elem, eventType, eventHandler.bind(this));
@@ -246,11 +245,11 @@ class Component {
         return this;
     }
 
-    emit(eventName: string, args?: mixed): void {
+    emit(eventName, args) {
         bean.fire(this.elem, eventName, args);
     }
 
-    getElem(elemName: string): ?(HTMLElement | HTMLInputElement) {
+    getElem(elemName) {
         if (this.elems && this.elems[elemName]) {
             return this.elems[elemName];
         }
@@ -264,7 +263,7 @@ class Component {
         return elem;
     }
 
-    getClass(elemName: string, sansDot: boolean = false): string {
+    getClass(elemName, sansDot = false) {
         let className;
 
         if (this.useBem && this.componentClass) {
@@ -276,7 +275,7 @@ class Component {
         return (sansDot ? '' : '.') + className;
     }
 
-    setState(state: string, elemName: ?string): void {
+    setState(state, elemName) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         const $elem = bonzo(elem);
 
@@ -288,7 +287,7 @@ class Component {
         }
     }
 
-    removeState(state: string, elemName: ?string): void {
+    removeState(state, elemName) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         const $elem = bonzo(elem);
 
@@ -300,7 +299,7 @@ class Component {
         }
     }
 
-    toggleState(state: string, elemName: ?string): void {
+    toggleState(state, elemName) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         const $elem = bonzo(elem);
 
@@ -312,7 +311,7 @@ class Component {
         }
     }
 
-    hasState(state: string, elemName: ?string): boolean {
+    hasState(state, elemName) {
         const elem = elemName ? this.getElem(elemName) : this.elem;
         const $elem = bonzo(elem);
 
@@ -326,7 +325,7 @@ class Component {
         return false;
     }
 
-    setOptions(options: Object): void {
+    setOptions(options) {
         this.options = Object.assign(
             {},
             this.defaultOptions,
@@ -338,7 +337,7 @@ class Component {
     /**
      * Removes all event listeners and removes the DOM elem
      */
-    destroy(): void {
+    destroy() {
         if (this.elem) {
             bonzo(this.elem).remove();
             delete this.elem;

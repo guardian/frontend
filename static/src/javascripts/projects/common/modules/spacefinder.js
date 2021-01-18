@@ -1,5 +1,3 @@
-// @flow
-
 // total_hours_spent_maintaining_this = 72
 
 import qwery from 'qwery';
@@ -8,82 +6,27 @@ import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import memoize from 'lodash/memoize';
 
-type SpacefinderOptions = {
-    waitForLinks?: boolean,
-    waitForImages?: boolean,
-    waitForInteractives?: boolean,
-};
 
-export type SpacefinderItem = {
-    top: number,
-    bottom: number,
-    element: HTMLElement,
-};
 
-type RuleSpacing = {
-    minAbove: number,
-    minBelow: number,
-};
 
-type ElementDimensionMap = {
-    [name: string]: SpacefinderItem[],
-};
 
-type Measurements = {
-    bodyTop: number,
-    bodyHeight: number,
-    candidates: SpacefinderItem[],
-    contentMeta: ?SpacefinderItem,
-    opponents: ?ElementDimensionMap,
-};
 
-export type SpacefinderRules = {
-    bodySelector: string,
-    body?: Node,
-    slotSelector: string,
-    // minimum from slot to top of page
-    absoluteMinAbove?: number,
-    // minimum from para to top of article
-    minAbove: number,
-    // minimum from (top of) para to bottom of article
-    minBelow: number,
-    // vertical px to clear the content meta element (byline etc) by. 0 to ignore
-    clearContentMeta: number,
-    // custom rules using selectors.
-    selectors: {
-        // The  selected should be 'minBelow' pixels below the candidate SpacefinderItem
-        // and 'minAbove' pixels above the candidate SpacefinderItem
-        [selector: string]: RuleSpacing,
-    },
-    // will run each slot through this fn to check if it must be counted in
-    filter?: (x: SpacefinderItem) => boolean,
-    // will remove slots before this one
-    startAt?: ?HTMLElement,
-    // will remove slots from this one on
-    stopAt?: ?HTMLElement,
-    // will reverse the order of slots (this is useful for lazy loaded content)
-    fromBottom?: boolean,
-};
 
-type ExcludedItem = SpacefinderItem | HTMLElement;
 
-export type SpacefinderExclusions = {
-    [ruleName: string]: ExcludedItem[],
-};
 
 // maximum time (in ms) to wait for images to be loaded and rich links
 // to be upgraded
 const LOADING_TIMEOUT = 5000;
 
-const defaultOptions: SpacefinderOptions = {
+const defaultOptions = {
     waitForImages: true,
     waitForLinks: true,
     waitForInteractives: false,
 };
 
-const isIframe = (node: Element): boolean => node instanceof HTMLIFrameElement;
+const isIframe = (node) => node instanceof HTMLIFrameElement;
 
-const isIframeLoaded = (iframe: HTMLIFrameElement): boolean => {
+const isIframeLoaded = (iframe) => {
     try {
         return (
             iframe.contentWindow &&
@@ -95,15 +38,15 @@ const isIframeLoaded = (iframe: HTMLIFrameElement): boolean => {
     }
 };
 
-const expire = (resolve: () => void): void => {
+const expire = (resolve) => {
     window.setTimeout(resolve, LOADING_TIMEOUT);
 };
 
-const getFuncId = (rules: SpacefinderRules): string =>
+const getFuncId = (rules) =>
     rules.bodySelector || 'document';
 
-const onImagesLoaded = memoize((rules: SpacefinderRules): Promise<void> => {
-    const notLoaded: HTMLImageElement[] = qwery('img', rules.body).filter(
+const onImagesLoaded = memoize((rules) => {
+    const notLoaded = qwery('img', rules.body).filter(
         img => !img.complete
     );
 
@@ -123,7 +66,7 @@ const onImagesLoaded = memoize((rules: SpacefinderRules): Promise<void> => {
 }, getFuncId);
 
 const onRichLinksUpgraded = memoize(
-    (rules: SpacefinderRules): Promise<void> =>
+    (rules) =>
         qwery('.element-rich-link--not-upgraded', rules.body).length === 0
             ? Promise.resolve()
             : new Promise(resolve => {
@@ -133,15 +76,15 @@ const onRichLinksUpgraded = memoize(
 );
 
 const onInteractivesLoaded = memoize(
-    (rules: SpacefinderRules): Promise<void> => {
-        const notLoaded: Element[] = qwery(
+    (rules) => {
+        const notLoaded = qwery(
             '.element-interactive',
             rules.body
         ).filter(
-            (interactive: Element): boolean => {
-                const iframe: HTMLIFrameElement[] = (Array.from(
+            (interactive) => {
+                const iframe = (Array.from(
                     interactive.children
-                ).filter(isIframe): any[]);
+                ).filter(isIframe));
                 return !(iframe.length && isIframeLoaded(iframe[0]));
             }
         );
@@ -150,25 +93,25 @@ const onInteractivesLoaded = memoize(
             ? Promise.resolve()
             : Promise.all(
                   notLoaded.map(
-                      (interactive: Element): Promise<void> =>
+                      (interactive) =>
                           new Promise(resolve => {
                               new MutationObserver(
                                   (
-                                      records: MutationRecord[],
-                                      instance: MutationObserver
-                                  ): void => {
+                                      records,
+                                      instance
+                                  ) => {
                                       if (
                                           !records.length ||
                                           !records[0].addedNodes.length ||
                                           !isIframe(
-                                              (records[0].addedNodes[0]: any)
+                                              (records[0].addedNodes[0])
                                           )
                                       ) {
                                           return;
                                       }
 
                                       const iframe = records[0].addedNodes[0];
-                                      if (isIframeLoaded((iframe: any))) {
+                                      if (isIframeLoaded((iframe))) {
                                           instance.disconnect();
                                           resolve();
                                       } else {
@@ -191,11 +134,11 @@ const onInteractivesLoaded = memoize(
     getFuncId
 );
 
-const filter = <T>(
-    list: T[],
-    filterElement: (el: T) => boolean,
-    exclusions: any[]
-): T[] => {
+const filter =(
+    list,
+    filterElement,
+    exclusions
+) => {
     const filtered = [];
     list.forEach(element => {
         if (filterElement(element)) {
@@ -209,10 +152,10 @@ const filter = <T>(
 
 // test one element vs another for the given rules
 const testCandidate = (
-    rule: RuleSpacing,
-    challenger: SpacefinderItem,
-    opponent: SpacefinderItem
-): boolean => {
+    rule,
+    challenger,
+    opponent
+) => {
     const isMinAbove = challenger.top - opponent.bottom >= rule.minAbove;
     const isMinBelow = opponent.top - challenger.top >= rule.minBelow;
 
@@ -221,17 +164,17 @@ const testCandidate = (
 
 // test one element vs an array of other elements for the given rules
 const testCandidates = (
-    rules: RuleSpacing,
-    challenger: SpacefinderItem,
-    opponents: SpacefinderItem[]
-): boolean => opponents.every(testCandidate.bind(undefined, rules, challenger));
+    rules,
+    challenger,
+    opponents
+) => opponents.every(testCandidate.bind(undefined, rules, challenger));
 
 const enforceRules = (
-    measurements: Measurements,
-    rules: SpacefinderRules,
-    exclusions: SpacefinderExclusions
-): SpacefinderItem[] => {
-    let candidates: SpacefinderItem[] = measurements.candidates;
+    measurements,
+    rules,
+    exclusions
+) => {
+    let candidates = measurements.candidates;
 
     // enforce absoluteMinAbove rule
     exclusions.absoluteMinAbove = [];
@@ -297,10 +240,10 @@ const enforceRules = (
 };
 
 class SpaceError extends Error {
-    name: string;
-    message: string;
+    name;
+    message;
 
-    constructor(rules: SpacefinderRules) {
+    constructor(rules) {
         super();
         this.name = 'SpaceError';
         this.message = `There is no space left matching rules from ${
@@ -310,9 +253,9 @@ class SpaceError extends Error {
 }
 
 const getReady = (
-    rules: SpacefinderRules,
-    options: SpacefinderOptions
-): Promise<SpacefinderRules> =>
+    rules,
+    options
+) =>
     Promise.race([
         new Promise(expire),
         Promise.all([
@@ -323,10 +266,10 @@ const getReady = (
     ]).then(() => rules);
 
 const getCandidates = (
-    rules: SpacefinderRules,
-    exclusions: SpacefinderExclusions
-): HTMLElement[] => {
-    let candidates: HTMLElement[] = qwery(
+    rules,
+    exclusions
+) => {
+    let candidates = qwery(
         rules.bodySelector + rules.slotSelector
     );
     if (rules.fromBottom) {
@@ -363,7 +306,7 @@ const getCandidates = (
     return candidates;
 };
 
-const getDimensions = (el: HTMLElement): SpacefinderItem =>
+const getDimensions = (el) =>
     Object.freeze({
         top: el.offsetTop,
         bottom: el.offsetTop + el.offsetHeight,
@@ -372,9 +315,9 @@ const getDimensions = (el: HTMLElement): SpacefinderItem =>
 
 const getMeasurements = (
     rules,
-    candidates: HTMLElement[]
-): Promise<Measurements> => {
-    const contentMeta: ?HTMLElement = rules.clearContentMeta
+    candidates
+) => {
+    const contentMeta = rules.clearContentMeta
         ? document.querySelector('.js-content-meta')
         : null;
     const opponents = rules.selectors
@@ -387,14 +330,14 @@ const getMeasurements = (
     return fastdom.measure(() => {
         const bodyDims =
             rules.body instanceof Element && rules.body.getBoundingClientRect();
-        const candidatesWithDims: SpacefinderItem[] = candidates.map(
+        const candidatesWithDims = candidates.map(
             getDimensions
         );
-        const contentMetaWithDims: ?SpacefinderItem =
+        const contentMetaWithDims =
             rules.clearContentMeta && contentMeta
                 ? getDimensions(contentMeta)
                 : null;
-        const opponentsWithDims: ?ElementDimensionMap = opponents
+        const opponentsWithDims = opponents
             ? opponents.reduce((result, selectorAndElements) => {
                   result[selectorAndElements[0]] = selectorAndElements[1].map(
                       getDimensions
@@ -414,9 +357,9 @@ const getMeasurements = (
 };
 
 const returnCandidates = (
-    rules: SpacefinderRules,
-    candidates: SpacefinderItem[]
-): HTMLElement[] => {
+    rules,
+    candidates
+) => {
     if (!candidates.length) {
         throw new SpaceError(rules);
     }
@@ -426,15 +369,15 @@ const returnCandidates = (
 // Rather than calling this directly, use spaceFiller to inject content into the page.
 // SpaceFiller will safely queue up all the various asynchronous DOM actions to avoid any race conditions.
 const findSpace = (
-    rules: SpacefinderRules,
-    options: ?SpacefinderOptions,
-    excluded: ?SpacefinderExclusions
-): Promise<HTMLElement[]> => {
+    rules,
+    options,
+    excluded
+) => {
     rules.body =
         (rules.bodySelector && document.querySelector(rules.bodySelector)) ||
         document;
 
-    const exclusions: SpacefinderExclusions = excluded || {};
+    const exclusions = excluded || {};
 
     return getReady(rules, options || defaultOptions)
         .then(() => getCandidates(rules, exclusions))

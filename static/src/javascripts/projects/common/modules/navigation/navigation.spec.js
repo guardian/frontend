@@ -1,4 +1,3 @@
-// @flow
 import {
     initNavigation,
 } from 'common/modules/navigation/navigation';

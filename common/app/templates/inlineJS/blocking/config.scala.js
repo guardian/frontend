@@ -30,6 +30,9 @@ window.guardian = {
         active: undefined,
         onDetect: []
     },
+    googleAnalytics: {
+        initialiseGa: undefined
+    },
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };
 

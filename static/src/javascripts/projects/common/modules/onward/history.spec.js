@@ -1,4 +1,3 @@
-// @flow
 import Chance from 'chance';
 import {
     logHistory,
@@ -37,7 +36,7 @@ jest.mock('lib/url', () => ({
 
 jest.mock('fastdom');
 
-const getCookie: any = getCookie_;
+const getCookie = getCookie_;
 
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),

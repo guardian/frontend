@@ -1,4 +1,3 @@
-// @flow
 import { storage } from '@guardian/libs';
 
 const storagePrefix = 'gu.prefs.';
@@ -6,66 +5,63 @@ const defaultOptions = {
     type: 'local',
 };
 
-type StorageOptions = {
-    type: 'local' | 'session',
-};
 
 const set = (
-    name: string,
-    value: any,
-    { type }: StorageOptions = defaultOptions
-): void => {
+    name,
+    value,
+    { type } = defaultOptions
+) => {
     storage[type].set(storagePrefix + name, value);
 };
 
-const get = (name: string, { type }: StorageOptions = defaultOptions): any =>
+const get = (name, { type } = defaultOptions) =>
     storage[type].get(storagePrefix + name);
 
 const remove = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): void => {
+    name,
+    { type } = defaultOptions
+) => {
     storage[type].remove(storagePrefix + name);
 };
 
 const switchOn = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): void => {
+    name,
+    { type } = defaultOptions
+) => {
     storage[type].set(`${storagePrefix}switch.${name}`, true);
 };
 
 const switchOff = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): void => {
+    name,
+    { type } = defaultOptions
+) => {
     storage[type].set(`${storagePrefix}switch.${name}`, false);
 };
 
 const removeSwitch = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): void => {
+    name,
+    { type } = defaultOptions
+) => {
     storage[type].remove(`${storagePrefix}switch.${name}`);
 };
 
 const isOn = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === true;
+    name,
+    { type } = defaultOptions
+) => storage[type].get(`${storagePrefix}switch.${name}`) === true;
 
 const isOff = (
-    name: string,
-    { type }: StorageOptions = defaultOptions
-): boolean => storage[type].get(`${storagePrefix}switch.${name}`) === false;
+    name,
+    { type } = defaultOptions
+) => storage[type].get(`${storagePrefix}switch.${name}`) === false;
 
 // Note 'false' !== Number.isNaN so we have to type coerce
 // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number/isNaN
-const isNumeric = (str: string): boolean => !Number.isNaN(Number(str));
+const isNumeric = (str) => !Number.isNaN(Number(str));
 
-const isBoolean = (str: string): boolean => str === 'true' || str === 'false';
+const isBoolean = (str) => str === 'true' || str === 'false';
 
-const setPrefs = (loc: { hash: string }): void => {
+const setPrefs = (loc) => {
     const qs = loc.hash.substr(1).split('&');
     let i;
     let j;

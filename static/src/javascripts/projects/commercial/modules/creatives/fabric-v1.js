@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
 import template from 'lodash/template';
@@ -22,14 +21,14 @@ let scrollBgTpl;
 // This is a hasty clone of fluid250.js
 
 class FabricV1 {
-    adSlot: Element;
-    params: Object;
+    adSlot;
+    params;
 
-    scrollingBg: ?HTMLElement;
-    layer2: ?HTMLElement;
-    scrollType: string;
+    scrollingBg;
+    layer2;
+    scrollType;
 
-    constructor(adSlot: Element, params: Object) {
+    constructor(adSlot, params) {
         this.adSlot = adSlot;
         this.params = params;
     }

@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 
@@ -11,11 +9,11 @@ import {
 
 const { getSlots } = _;
 
-const getBreakpointKey: any = getBreakpointKey_;
-const shouldIncludeMobileSticky: any = shouldIncludeMobileSticky_;
+const getBreakpointKey = getBreakpointKey_;
+const shouldIncludeMobileSticky = shouldIncludeMobileSticky_;
 
 jest.mock('./utils', () => {
-    // $FlowFixMe property requireActual is actually not missing Flow.
+    
     const original = jest.requireActual('./utils');
     return {
         ...original,

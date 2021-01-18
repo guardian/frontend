@@ -1,4 +1,3 @@
-// @flow
 import template from 'lodash/template';
 import { storage } from '@guardian/libs';
 import $ from 'lib/$';
@@ -75,7 +74,7 @@ const applyCss = () => {
     $('head').append(el);
 };
 
-const appendOverlay = (): Promise<void> => {
+const appendOverlay = () => {
     const extractData = ({ id, variants, description, expiry }) => ({
         id,
         variants,

@@ -1,4 +1,4 @@
-// @flow strict
+
 
 import config from 'lib/config';
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
@@ -9,7 +9,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { isGoogleProxy } from 'lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
-const setupA9: () => Promise<void> = () => {
+const setupA9 = () => {
     // There are two articles that InfoSec would like to avoid loading scripts on
     if (commercialFeatures.isSecureContact) {
         return Promise.resolve();
@@ -34,9 +34,9 @@ const setupA9: () => Promise<void> = () => {
     return moduleLoadResult;
 };
 
-const setupA9Once: () => Promise<void> = once(setupA9);
+const setupA9Once = once(setupA9);
 
-export const init = (): Promise<void> => {
+export const init = () => {
     onConsentChange(state => {
         if (getConsentFor('a9', state)) {
             setupA9Once();

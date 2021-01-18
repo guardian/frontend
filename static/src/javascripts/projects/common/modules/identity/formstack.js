@@ -1,16 +1,14 @@
-// @flow
-
 import config from 'lib/config';
 import { getUserOrSignIn } from 'common/modules/identity/api';
 
 // TODO: Remove repitition with common/modules/identity/formstack-iframe-embed
 class Formstack {
-    el: HTMLElement;
-    form: HTMLFormElement;
-    formId: string;
-    config: Object;
+    el;
+    form;
+    formId;
+    config;
 
-    constructor(el: HTMLElement, formstackId: string): void {
+    constructor(el, formstackId) {
         this.el = el;
         this.formId = formstackId.split('-')[0];
 
@@ -63,13 +61,13 @@ class Formstack {
         this.config = Object.assign({}, defaultConfig, config);
     }
 
-    postMessage(message: string): void {
+    postMessage(message) {
         const domain = this.config.page.idUrl;
 
         window.top.postMessage(message, domain);
     }
 
-    init(): void {
+    init() {
         // User object required to populate fields
         let user = getUserOrSignIn('signin_from_formstack');
 
@@ -89,10 +87,10 @@ class Formstack {
         this.postMessage('ready');
     }
 
-    dom(user: Object): void {
-        const form: HTMLFormElement = (document.getElementById(
+    dom(user) {
+        const form = (document.getElementById(
             this.config.fsSelectors.form
-        ): any);
+        ));
 
         if (!form) {
             return;
@@ -168,7 +166,7 @@ class Formstack {
         });
     }
 
-    submit(): void {
+    submit() {
         const triggerKeyUp = el => {
             const e = document.createEvent('HTMLEvents');
             e.initEvent('keyup', false, true);

@@ -1,4 +1,3 @@
-// @flow
 import { dateDiffDays } from 'lib/time-utils';
 
 describe('calculating the difference between 2 dates', () => {

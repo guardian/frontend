@@ -1,4 +1,3 @@
-// @flow
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
@@ -7,7 +6,7 @@ import loadEnhancers from 'common/modules/identity/modules/loadEnhancers';
 import { AccountCreationCompleteConsentsFlow } from 'common/modules/identity/upsell/account-creation/AccountCreationCompleteConsentsFlow';
 import { StatefulConfirmEmailPage } from './page/StatefulConfirmEmailPage';
 
-const trackInteraction = (interaction: string): void => {
+const trackInteraction = (interaction) => {
     ophan.record({
         component: 'set-password',
         value: interaction,
@@ -15,7 +14,7 @@ const trackInteraction = (interaction: string): void => {
     trackNonClickInteraction(interaction);
 };
 
-const bindAccountCreation = (el): void => {
+const bindAccountCreation = (el) => {
     trackInteraction('set-password : display');
     fastdom.mutate(() => {
         render(
@@ -29,15 +28,8 @@ const bindAccountCreation = (el): void => {
     });
 };
 
-type Prefill = {
-    csrfToken: string,
-    accountToken: ?string,
-    email: string,
-    hasPassword: boolean,
-    hasSocialLinks: boolean,
-};
 
-const getPrefill = (el: HTMLElement): Prefill => ({
+const getPrefill = (el) => ({
     csrfToken: el.dataset.csrfToken,
     accountToken: el.dataset.accountToken,
     email: el.dataset.email,
@@ -45,7 +37,7 @@ const getPrefill = (el: HTMLElement): Prefill => ({
     hasSocialLinks: el.dataset.hasSocialLinks === 'true',
 });
 
-const bindBlockList = (el): void => {
+const bindBlockList = (el) => {
     fastdom
         .measure(() => getPrefill(el))
         .then(prefill =>
@@ -64,7 +56,7 @@ const bindBlockList = (el): void => {
         );
 };
 
-const enhanceUpsell = (): void => {
+const enhanceUpsell = () => {
     loadEnhancers([
         ['.js-identity-upsell-account-creation', bindAccountCreation],
         ['.js-identity-block-list', bindBlockList],

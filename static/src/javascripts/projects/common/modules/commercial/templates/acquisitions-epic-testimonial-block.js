@@ -1,8 +1,7 @@
-// @flow
 import quoteSvg from 'svgs/icon/garnett-quote.svg';
 
 export const acquisitionsTestimonialBlockTemplate = (
-    params: AcquisitionsEpicTestimonialCopy
+    params
 ) =>
     `<div class="epic__testimonial-container">
         <div class="epic__testimonial-quote">

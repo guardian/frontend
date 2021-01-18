@@ -1,5 +1,3 @@
-// @flow
-
 import bean from 'bean';
 import bonzo from 'bonzo';
 import qwery from 'qwery';
@@ -26,7 +24,7 @@ import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';
 
 class Loader extends Component {
-    constructor(): void {
+    constructor() {
         super();
 
         this.classes = {};
@@ -38,7 +36,7 @@ class Loader extends Component {
         begin('discussion');
     }
 
-    getUser(): void {
+    getUser() {
         if (getUserFromCookie()) {
             getUser().then(resp => {
                 this.user = resp.userProfile;
@@ -56,7 +54,7 @@ class Loader extends Component {
         }
     }
 
-    getDiscussionId(): ?string {
+    getDiscussionId() {
         if (this.elem && this.elem instanceof HTMLElement) {
             return this.elem.getAttribute('data-discussion-key');
         }
@@ -64,7 +62,7 @@ class Loader extends Component {
         return undefined;
     }
 
-    getDiscussionClosed(): boolean {
+    getDiscussionClosed() {
         return !!(
             this.elem &&
             this.elem instanceof HTMLElement &&
@@ -73,7 +71,7 @@ class Loader extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getCommentIdFromHash(): ?number {
+    getCommentIdFromHash() {
         const reg = /#comment-(\d+)/;
         const matches = reg.exec(window.location.hash);
 
@@ -81,17 +79,17 @@ class Loader extends Component {
     }
 
     // eslint-disable-next-line class-methods-use-this
-    setCommentHash(id: string): void {
+    setCommentHash(id) {
         window.location.replace(`#comment-${id}`);
     }
 
-    $topCommentsContainer: bonzo;
-    comments: ?Comments;
-    topCommentCount: number;
-    user: ?DiscussionProfile;
-    username: ?string;
+    $topCommentsContainer;
+    comments;
+    topCommentCount;
+    user;
+    username;
 
-    commentPosted(comment: Object): void {
+    commentPosted(comment) {
         this.removeState('truncated');
 
         if (this.comments) {
@@ -99,7 +97,7 @@ class Loader extends Component {
         }
     }
 
-    initState(): void {
+    initState() {
         if (this.getDiscussionClosed()) {
             this.setState('closed');
         } else if (this.comments && this.comments.isReadOnly()) {
@@ -119,7 +117,7 @@ class Loader extends Component {
         }
     }
 
-    isCommentable(): boolean {
+    isCommentable() {
         // not readonly, not closed and user is signed in
         const userCanPost =
             this.user &&
@@ -135,7 +133,7 @@ class Loader extends Component {
         );
     }
 
-    ready(): void {
+    ready() {
         this.$topCommentsContainer = $('.js-discussion-top-comments');
 
         this.initTopComments();
@@ -172,9 +170,9 @@ class Loader extends Component {
         end('discussion');
     }
 
-    initRecommend(): void {
-        this.on('click', '.js-recommend-comment', (e: Event) => {
-            const target: HTMLElement = (e.currentTarget: any);
+    initRecommend() {
+        this.on('click', '.js-recommend-comment', (e) => {
+            const target = (e.currentTarget);
 
             if (this.user && this.elem instanceof HTMLElement) {
                 upvoteHandle(target, this.elem, this.user);
@@ -186,7 +184,7 @@ class Loader extends Component {
         });
     }
 
-    initToolbar(): void {
+    initToolbar() {
         const $orderLabel = $('.js-comment-order');
         const $threadingLabel = $('.js-comment-threading');
 
@@ -196,14 +194,14 @@ class Loader extends Component {
         this.on(
             'click',
             '.js-comment-order-dropdown .popup__action',
-            (e: Event) => {
+            (e) => {
                 bean.fire(
                     qwery('.js-comment-order-dropdown [data-toggle]')[0],
                     'click'
                 );
 
                 if (this.comments) {
-                    // $FlowFixMe
+                    
                     this.comments.options.order = bonzo(e.currentTarget).data(
                         'order'
                     );
@@ -223,14 +221,14 @@ class Loader extends Component {
         this.on(
             'click',
             '.js-comment-threading-dropdown .popup__action',
-            (e: Event) => {
+            (e) => {
                 bean.fire(
                     qwery('.js-comment-threading-dropdown [data-toggle]')[0],
                     'click'
                 );
 
                 if (this.comments) {
-                    // $FlowFixMe
+                    
                     this.comments.options.threading = bonzo(
                         e.currentTarget
                     ).data('threading');
@@ -251,7 +249,7 @@ class Loader extends Component {
 
         if (config.get('page.section') === 'crosswords') {
             const $timestampsLabel = $('.js-timestamps');
-            const updateLabelText = (prefValue?: boolean) => {
+            const updateLabelText = (prefValue) => {
                 $timestampsLabel.text(prefValue ? 'Relative' : 'Absolute');
             };
 
@@ -270,7 +268,7 @@ class Loader extends Component {
             this.on(
                 'click',
                 '.js-timestamps-dropdown .popup__action',
-                (e: Event) => {
+                (e) => {
                     const format = bonzo(e.currentTarget).data('timestamp');
 
                     bean.fire(
@@ -291,7 +289,7 @@ class Loader extends Component {
         }
     }
 
-    initPageSizeDropdown(pageSize: number | string): void {
+    initPageSizeDropdown(pageSize) {
         const $pagesizeLabel = $('.js-comment-pagesize');
 
         $pagesizeLabel.text(pageSize);
@@ -299,7 +297,7 @@ class Loader extends Component {
         this.on(
             'click',
             '.js-comment-pagesize-dropdown .popup__action',
-            (e: Event) => {
+            (e) => {
                 const selectedPageSize = bonzo(e.currentTarget).data(
                     'pagesize'
                 );
@@ -320,7 +318,7 @@ class Loader extends Component {
         );
     }
 
-    initMainComments(): void {
+    initMainComments() {
         const commentId = this.getCommentIdFromHash();
         const order =
             userPrefs.get('discussion.order') ||
@@ -360,7 +358,7 @@ class Loader extends Component {
         );
 
         if (this.comments) {
-            this.comments.on('rendered', (paginationHtml: string) => {
+            this.comments.on('rendered', (paginationHtml) => {
                 const newPagination = bonzo.create(paginationHtml);
                 const toolbarEl = qwery('.js-discussion-toolbar', this.elem)[0];
                 const container = $(
@@ -427,10 +425,10 @@ class Loader extends Component {
         this.getUser();
     }
 
-    initTopComments(): Promise<void> {
+    initTopComments() {
         const discussionId = this.getDiscussionId();
 
-        this.on('click', '.js-jump-to-comment', (e: Event) => {
+        this.on('click', '.js-jump-to-comment', (e) => {
             e.preventDefault();
             const commentId = bonzo(e.currentTarget).data('comment-id');
             this.gotoComment(commentId);
@@ -462,7 +460,7 @@ class Loader extends Component {
             .catch(() => this.logError('Top comments'));
     }
 
-    logError(commentType: string, error?: Error): void {
+    logError(commentType, error) {
         let reportMsg = `${commentType} failed to load: `;
 
         if (error && error.message) {
@@ -477,9 +475,9 @@ class Loader extends Component {
         });
     }
 
-    initPagination(): void {
-        this.on('click', '.js-discussion-change-page', (e: Event) => {
-            const target: HTMLElement = (e.currentTarget: any);
+    initPagination() {
+        this.on('click', '.js-discussion-change-page', (e) => {
+            const target = (e.currentTarget);
             const page = parseInt(target.getAttribute('data-page'), 10);
 
             e.preventDefault();
@@ -489,7 +487,7 @@ class Loader extends Component {
         });
     }
 
-    gotoComment(id: string, fromRequest?: boolean): void {
+    gotoComment(id, fromRequest) {
         const comment = $(`#comment-${id}`, this.elem);
 
         if (comment.length > 0) {
@@ -539,7 +537,7 @@ class Loader extends Component {
         }
     }
 
-    gotoPage(page: number): void {
+    gotoPage(page) {
         scrollToElement(qwery('.js-discussion-toolbar'), 100);
 
         if (this.comments) {
@@ -550,12 +548,8 @@ class Loader extends Component {
     }
 
     loadComments(
-        options?: {
-            comment?: ?(string | number),
-            shouldTruncate?: boolean,
-            page?: number,
-        } = {}
-    ): Promise<void> {
+        options = {}
+    ) {
         const opts = Object.assign({}, options);
 
         this.setState('loading');
@@ -597,7 +591,7 @@ class Loader extends Component {
         });
     }
 
-    removeTruncation(): void {
+    removeTruncation() {
         // When the pagesize is 'All', the full page is not yet loaded, so load the comments.
         if (this.comments && this.comments.isAllPageSizeActive()) {
             this.loadComments();
@@ -606,7 +600,7 @@ class Loader extends Component {
         }
     }
 
-    renderCommentBox(elem: HTMLElement): void {
+    renderCommentBox(elem) {
         new CommentBox({
             discussionId: this.getDiscussionId(),
             premod:
@@ -624,7 +618,7 @@ class Loader extends Component {
             .on('post:success', comment => this.commentPosted(comment));
     }
 
-    renderCommentBar(): void {
+    renderCommentBar() {
         if (this.isCommentable()) {
             this.renderCommentBox(qwery('.js-discussion-comment-box--top')[0]);
             this.renderCommentBox(
@@ -633,7 +627,7 @@ class Loader extends Component {
         }
     }
 
-    renderCommentCount(): void {
+    renderCommentCount() {
         loadDiscussionFrontend(this, {
             apiHost: config.get('page.discussionApiUrl'),
             avatarImagesHost: config.get('page.avatarImagesUrl'),

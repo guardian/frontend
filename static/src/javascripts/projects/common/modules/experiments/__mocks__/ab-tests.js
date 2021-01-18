@@ -1,4 +1,3 @@
-// @flow
 import { genAbTest, genVariant } from '../__fixtures__/ab-test';
 
 export const concurrentTests = [

@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 
 import config from 'lib/config';
@@ -25,38 +24,27 @@ const loadYoutubeJs = () => {
     loadScript(scriptSrc, {});
 };
 
-const addVideoStartedClass = (el: ?HTMLElement) => {
+const addVideoStartedClass = (el) => {
     if (el) {
         el.classList.add('youtube__video-started');
     }
 };
 
-type Handlers = {
-    onPlayerReady: (event: Object) => void,
-    onPlayerStateChange: (event: Object) => void,
-};
 
-interface AdsConfig {
-    adTagParameters?: {
-        iu: any,
-        cust_params: string,
-        cmpGdpr: number,
-        cmpVcd: string,
-        cmpGvcd: string,
-    };
-    disableAds?: boolean;
-    nonPersonalizedAd?: boolean;
-    restrictedDataProcessor?: boolean;
-}
 
 let tcfState = null;
 let ccpaState = null;
 let tcfData = {};
-onConsentChange(state => {
-    if (state.ccpa) {
-        ccpaState = state.doNotSell;
-    } else {
-        tcfData = state.tcfv2;
+onConsentChange((consentState) => {
+    if (consentState.ccpa) {
+        ccpaState = consentState.doNotSell;
+    }
+    else if (consentState.aus) {
+        ccpaState = !consentState.aus.personalisedAdvertising;
+    }
+
+    else {
+        tcfData = consentState.tcfv2;
         tcfState = tcfData
             ? Object.values(tcfData.consents).every(Boolean)
             : false
@@ -65,12 +53,12 @@ onConsentChange(state => {
 
 const onPlayerStateChangeEvent = (
     event,
-    handlers: Handlers,
-    el: ?HTMLElement
+    handlers,
+    el
 ) => {
     if (el && config.get('page.isDev')) {
         const states = window.YT.PlayerState;
-        const state: ?string = Object.keys(states).find(
+        const state = Object.keys(states).find(
             key => states[key] === event.data
         );
         if (state) {
@@ -104,7 +92,7 @@ const onPlayerStateChangeEvent = (
     }
 };
 
-const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
+const onPlayerReadyEvent = (event, handlers, el) => {
     fastdom.mutate(() => {
         if (el) {
             el.classList.add('youtube__video-ready');
@@ -124,10 +112,10 @@ const onPlayerReadyEvent = (event, handlers: Handlers, el: ?HTMLElement) => {
 };
 
 const createAdsConfig = (
-    adFree: boolean,
-    tcfStateFlag: boolean | null,
-    ccpaStateFlag: boolean | null
-): AdsConfig => {
+    adFree,
+    tcfStateFlag,
+    ccpaStateFlag
+) => {
     if (adFree) {
         return { disableAds: true };
     }
@@ -135,7 +123,7 @@ const createAdsConfig = (
     const custParams = getPageTargeting();
     custParams.permutive = getPermutivePFPSegments();
 
-    const adsConfig: AdsConfig = {
+    const adsConfig = {
         adTagParameters: {
             iu: config.get('page.adUnit'),
             cust_params: encodeURIComponent(constructQuery(custParams)),
@@ -155,9 +143,9 @@ const createAdsConfig = (
 };
 
 const setupPlayer = (
-    elt: HTMLElement,
-    videoId: string,
-    channelId?: string,
+    elt,
+    videoId,
+    channelId,
     onReady,
     onStateChange,
     onError,
@@ -208,11 +196,11 @@ const getPlayerIframe = videoId =>
     document.getElementById(`youtube-${videoId}`);
 
 export const initYoutubePlayer = (
-    el: HTMLElement,
-    handlers: Handlers,
-    videoId: string,
-    channelId?: string
-): Promise<void> => {
+    el,
+    handlers,
+    videoId,
+    channelId
+) => {
     loadYoutubeJs();
     return promise.then(() => {
         const onPlayerStateChange = event => {
@@ -234,7 +222,7 @@ export const initYoutubePlayer = (
 
         const gaTracker = config.get('googleAnalytics.trackers.editorial');
 
-        const onAdStart = (): void => {
+        const onAdStart = () => {
             window.ga(
                 `${gaTracker}.send`,
                 'event',
@@ -242,7 +230,7 @@ export const initYoutubePlayer = (
             );
         };
 
-        const onAdEnd = (): void => {
+        const onAdEnd = () => {
             window.ga(
                 `${gaTracker}.send`,
                 'event',

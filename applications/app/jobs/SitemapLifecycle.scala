@@ -23,7 +23,7 @@ class SiteMapLifecycle(jobs: JobScheduler, akkaAsync: AkkaAsync, siteMapJob: Sit
   }
 }
 
-class SiteMapJob(contentApiClient: ContentApiClient) extends Logging {
+class SiteMapJob(contentApiClient: ContentApiClient) extends GuLogging {
   case class SiteMapContent(news: xml.NodeSeq, video: xml.NodeSeq)
 
   private val newsSiteMap = new NewsSiteMap(contentApiClient)

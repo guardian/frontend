@@ -1,39 +1,37 @@
-// @flow
 import { fetchNewsletters, fetchUserConsents } from './fetch';
-import { consentTypeList, UserConsentWithState } from './types';
-import type { ConsentWithState } from './types';
+import { consentTypeList } from './types';
 
-const getAllUserConsents = (): Promise<UserConsentWithState[]> =>
+const getAllUserConsents = () =>
     fetchUserConsents;
 
-const getUserConsent = (consentId: string): Promise<?UserConsentWithState> =>
+const getUserConsent = (consentId) =>
     fetchUserConsents.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
 const getUserConsents = (
-    consentIds: string[]
-): Promise<UserConsentWithState[]> =>
+    consentIds
+) =>
     fetchUserConsents.then(consents =>
         consents.filter(consent => consentIds.includes(consent.consent.id))
     );
 
-const getAllNewsletterConsents = (): Promise<ConsentWithState[]> =>
+const getAllNewsletterConsents = () =>
     fetchNewsletters;
 
-const getNewsletterConsent = (consentId: string): Promise<?ConsentWithState> =>
+const getNewsletterConsent = (consentId) =>
     fetchNewsletters.then(cs =>
         cs.find(consent => consent.consent.id === consentId)
     );
 
 const getNewsLetterConsents = (
-    consentIds: string[]
-): Promise<UserConsentWithState[]> =>
+    consentIds
+) =>
     fetchNewsletters.then(consents =>
         consents.filter(consent => consentIds.includes(consent.consent.id))
     );
 
-const setConsentsInApi = (consents: ConsentWithState[]): Promise<any> => {
+const setConsentsInApi = (consents) => {
     /*
     This function takes n consents then will split
     them into all consent types, then will use the send

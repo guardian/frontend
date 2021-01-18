@@ -2,7 +2,7 @@ package navigation.helpers
 
 import org.scalatest.{WordSpec, Matchers}
 import test.TestRequest
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupportGifting}
 import navigation.UrlHelpers
 import navigation.UrlHelpers.{AmpFooter, AmpHeader, Footer, Header}
 
@@ -32,9 +32,19 @@ class UrlHelpersTest extends WordSpec with Matchers {
         UrlHelpers.getComponentId(SupportSubscribe, Footer)(TestRequest()) should be(Some("footer_support_subscribe"))
       }
 
+      "return footer_support_gifting when called with SupportGifting, Footer" in {
+        UrlHelpers.getComponentId(SupportGifting, Footer)(TestRequest()) should be(Some("footer_support_gifting"))
+      }
+
       "return amp_footer_support_subscribe when called with SupportSubscribe, AmpFooter" in {
         UrlHelpers.getComponentId(SupportSubscribe, AmpFooter)(TestRequest()) should be(
           Some("amp_footer_support_subscribe"),
+        )
+      }
+
+      "return amp_footer_support_gifting when called with SupportGifting, AmpFooter" in {
+        UrlHelpers.getComponentId(SupportGifting, AmpFooter)(TestRequest()) should be(
+          Some("amp_footer_support_gifting"),
         )
       }
     }

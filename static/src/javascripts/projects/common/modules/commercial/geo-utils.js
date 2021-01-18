@@ -1,27 +1,26 @@
-// @flow
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 
 // cache the users location so we only have to look it up once
 let geo;
-const currentGeoLocation = ((): string => {
+const currentGeoLocation = (() => {
     geo = geo || geolocationGetSync();
     return geo;
 });
 
-export const isInUk = (): boolean => currentGeoLocation() === 'GB';
+export const isInUk = () => currentGeoLocation() === 'GB';
 
-export const isInUsa = (): boolean => currentGeoLocation() === 'US';
+export const isInUsa = () => currentGeoLocation() === 'US';
 
-export const isInCanada = (): boolean => currentGeoLocation() === 'CA';
+export const isInCanada = () => currentGeoLocation() === 'CA';
 
-export const isInAustralia = (): boolean => currentGeoLocation() === 'AU';
+export const isInAustralia = () => currentGeoLocation() === 'AU';
 
-export const isInNewZealand = (): boolean => currentGeoLocation() === 'NZ';
+export const isInNewZealand = () => currentGeoLocation() === 'NZ';
 
-export const isInUsOrCa = (): boolean => isInUsa() || isInCanada();
+export const isInUsOrCa = () => isInUsa() || isInCanada();
 
-export const isInAuOrNz = (): boolean => isInAustralia() || isInNewZealand();
+export const isInAuOrNz = () => isInAustralia() || isInNewZealand();
 
-export const isInRow = (): boolean => !isInUk() && !isInUsOrCa() && !isInAuOrNz();
+export const isInRow = () => !isInUk() && !isInUsOrCa() && !isInAuOrNz();
 
 export const _ = { resetModule: () => { geo = undefined } };

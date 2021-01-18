@@ -1,19 +1,17 @@
-// @flow
-
 import loadEnhancers from './modules/loadEnhancers';
 
-const bindAjaxFormEventOverride = (formEl: HTMLFormElement): void => {
-    formEl.addEventListener('submit', (ev: Event) => {
+const bindAjaxFormEventOverride = (formEl) => {
+    formEl.addEventListener('submit', (ev) => {
         ev.preventDefault();
     });
 };
 
-const enhanceFormAjax = (): void => {
+const enhanceFormAjax = () => {
     const loaders = [
         ['.js-manage-account__ajaxForm', bindAjaxFormEventOverride],
         [
             '.js-manage-account__ajaxForm-submit',
-            (el: HTMLElement) => el.remove(),
+            (el) => el.remove(),
         ],
     ];
     loadEnhancers(loaders);

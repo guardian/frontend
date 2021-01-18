@@ -4,7 +4,7 @@ import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents, RequestHeader, Result => PlayResult}
 import play.api.libs.ws.WSClient
 import play.twirl.api.Html
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import football.services.PaFootballClient
 import football.model.PA
 import model.{ApplicationContext, Cached, NoCache}
@@ -26,7 +26,7 @@ class FrontsController(
     extends BaseController
     with ImplicitControllerExecutionContext
     with PaFootballClient
-    with Logging {
+    with GuLogging {
 
   val SNAP_TYPE = "json.html"
   val SNAP_CSS = "football"

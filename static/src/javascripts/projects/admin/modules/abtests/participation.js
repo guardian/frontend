@@ -1,4 +1,3 @@
-// @flow
 /*
  Module: participation.js
  Description: Displays opt-in and opt-out links for a test
@@ -7,7 +6,7 @@ import { Component } from 'common/modules/component';
 import { ParticipationItem } from 'admin/modules/abtests/participation-item';
 
 class Participation extends Component {
-    constructor(config: Object): void {
+    constructor(config) {
         super();
 
         this.templateName = 'participation-template';
@@ -21,15 +20,15 @@ class Participation extends Component {
         );
     }
 
-    config: Object;
+    config;
 
-    prerender(): void {
+    prerender() {
         const test = this.config.test;
         const origin = /gutools.co.uk$/.test(document.location.origin)
             ? 'http://www.theguardian.com'
             : document.location.origin;
         const examplePath = `${test.examplePath || '/uk'}#ab-${test.id}`;
-        const optOutEl = ((this.getElem('opt-out'): any): HTMLAnchorElement);
+        const optOutEl = ((this.getElem('opt-out')));
 
         optOutEl.href = `${origin}${examplePath}=notintest`;
 

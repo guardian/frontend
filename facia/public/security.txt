@@ -1,4 +1,4 @@
-Contact: appsec@theguardian.com
+Contact: mailto:appsec@theguardian.com
 Encryption: https://www.theguardian.com/pgp/PublicKeys/Guardian%20Application-Security.pub.txt
 Canonical: https://www.theguardian.com/.well-known/security.txt
 Hiring: https://workforus.theguardian.com/index.php/search-jobs-and-apply/?search_paths%5B%5D=&query=information+security&submit=Search+Jobs

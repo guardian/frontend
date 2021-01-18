@@ -1,4 +1,3 @@
-// @flow
 import { handle, closeTooltip } from 'common/modules/discussion/upvote';
 import { recommendComment as recommendComment_ } from 'common/modules/discussion/api';
 import config from 'lib/config';
@@ -8,7 +7,7 @@ jest.mock('common/modules/discussion/api', () => ({
     recommendComment: jest.fn(),
 }));
 
-const recommendComment: any = recommendComment_;
+const recommendComment = recommendComment_;
 
 const fakeUser = {
     userId: 'fakeUserId',

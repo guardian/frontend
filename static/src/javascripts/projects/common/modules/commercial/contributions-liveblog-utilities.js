@@ -1,24 +1,15 @@
-// @flow
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import {submitInsertEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
-import type {ComponentEventWithoutAction} from "common/modules/commercial/acquisitions-ophan";
 
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 
-type TimeData = {
-    blockHref: string,
-    datetime: string,
-    title: string,
-    date: string,
-    time: string,
-};
 
-const buildComponentEventWithoutAction = (variant: EpicVariant, parentTest: EpicABTest): ComponentEventWithoutAction => ({
+const buildComponentEventWithoutAction = (variant, parentTest) => ({
     component: {
         componentType: parentTest.componentType,
         campaignCode: variant.campaignCode,
@@ -30,7 +21,7 @@ const buildComponentEventWithoutAction = (variant: EpicVariant, parentTest: Epic
     },
 });
 
-const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
+const getLiveblogEntryTimeData = (el) => {
     const timeEl = el.querySelector('time');
     const absoluteTimeEl = el.querySelector('.block-time__absolute');
 
@@ -48,7 +39,7 @@ const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
     }
 };
 
-const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
+const getBlocksToInsertEpicAfter = () => {
     const blocks = document.getElementsByClassName('block');
     const blocksToInsertManualEpicAfter = document.getElementsByClassName(
         INSERT_EPIC_AFTER_CLASS
@@ -74,9 +65,9 @@ const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
 };
 
 const setEpicLiveblogEntryTimeData = (
-    el: Element,
-    timeData: TimeData
-): void => {
+    el,
+    timeData
+) => {
     const epicTimeEl = el.querySelector('time');
     const epicAbsoluteTimeEl = el.querySelector('.block-time__absolute');
 
@@ -94,10 +85,10 @@ const setEpicLiveblogEntryTimeData = (
 };
 
 const setupViewTracking = (
-    el: HTMLElement,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): void => {
+    el,
+    variant,
+    parentTest
+) => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(el, window, {
         top: 18,
@@ -110,10 +101,10 @@ const setupViewTracking = (
 };
 
 const addEpicToBlocks = (
-    epicHtml: string,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): Promise<void> => {
+    epicHtml,
+    variant,
+    parentTest
+) => {
     const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el => [
         el,
         getLiveblogEntryTimeData(el),
@@ -138,10 +129,10 @@ const addEpicToBlocks = (
 };
 
 export const setupEpicInLiveblog = (
-    epicHtml: string,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): void => {
+    epicHtml,
+    variant,
+    parentTest
+) => {
     addEpicToBlocks(epicHtml, variant, parentTest);
 
     if (!isAutoUpdateHandlerBound) {

@@ -1,11 +1,10 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import { gridSize } from 'common/modules/crosswords/helpers';
 import { constants } from 'common/modules/crosswords/constants';
 import { classNames } from 'common/modules/crosswords/classNames';
 
-class Cell extends Component<*, *> {
-    onClick(event: Event) {
+class Cell extends Component {
+    onClick(event) {
         event.preventDefault();
         this.props.handleSelect(this.props.x, this.props.y);
     }

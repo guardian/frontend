@@ -1,5 +1,3 @@
-// @flow
-
 import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
@@ -26,12 +24,12 @@ jest.mock('commercial/modules/dfp/load-advert', () => ({
     loadAdvert: jest.fn(),
 }));
 
-const getAdvertById: any = getAdvertById_;
+const getAdvertById = getAdvertById_;
 
 describe('enableLazyLoad', () => {
     const windowIntersectionObserver = window.IntersectionObserver;
 
-    const testAdvert: any = {
+    const testAdvert = {
         id: 'test-advert',
         sizes: { desktop: [[300, 250]] },
         isRendered: false,

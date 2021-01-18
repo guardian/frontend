@@ -1,6 +1,6 @@
 package services.breakingnews
 
-import common.{Logging}
+import common.{GuLogging}
 import conf.Configuration
 import play.api.libs.json._
 import play.api.{Environment, Mode}
@@ -14,7 +14,7 @@ class S3BreakingNews(environment: Environment) extends S3 {
   def getKeyForPath(path: String): String = s"$location/$path.json"
 }
 
-class BreakingNewsApi(s3: S3BreakingNews) extends Logging {
+class BreakingNewsApi(s3: S3BreakingNews) extends GuLogging {
 
   val breakingNewskey = s3.getKeyForPath("breaking-news")
 

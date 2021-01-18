@@ -1,6 +1,4 @@
-// @flow
-
-export const urlify = (str: string): string => {
+export const urlify = (str) => {
     const reOutsideTags = '(?![^<]*>|[^<>]*</)';
     const reUrl = '\\b((https?://|www.)\\S+)\\b';
     const regexp = new RegExp(reUrl + reOutsideTags, 'g');

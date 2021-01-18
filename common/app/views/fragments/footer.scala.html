@@ -9,7 +9,7 @@
 @import navigation.UrlHelpers.{getReaderRevenueUrl, Footer, AmpFooter}
 @import common.editions.{Au, Uk, Us, International}
 @import model.Page
-@import conf.switches.Switches.{ EmailInlineInFooterSwitch, UsHeaderAndFooterSubscribeLinkSwitch }
+@import conf.switches.Switches.{ EmailInlineInFooterSwitch }
 @import com.gu.identity.model.EmailNewsletters
 @import model.NoCache
 @import views.support.{RenderClasses}
@@ -174,16 +174,14 @@
             @fragments.inlineSvg("arrow-right", "icon")
         </a>
 
-        @if(editionId != "us" || UsHeaderAndFooterSubscribeLinkSwitch.isSwitchedOn) {
-            <a class="cta-bar__cta js-subscribe js-acquisition-link"
-            data-link-name="footer : subscribe-cta"
-            data-edition="@{
-                editionId
-            }"
-            href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
-                Subscribe
-                @fragments.inlineSvg("arrow-right", "icon")
-            </a>
-        }
+        <a class="cta-bar__cta js-subscribe js-acquisition-link"
+        data-link-name="footer : subscribe-cta"
+        data-edition="@{
+            editionId
+        }"
+        href="@getReaderRevenueUrl(SupportSubscribe, Footer)">
+            Subscribe
+            @fragments.inlineSvg("arrow-right", "icon")
+        </a>
     </div>
 }

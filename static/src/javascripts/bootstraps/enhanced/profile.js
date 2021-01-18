@@ -1,5 +1,3 @@
-// @flow
-
 import { catchErrorsWithContext } from 'lib/robust';
 import { forgottenEmail, passwordToggle } from 'common/modules/identity/forms';
 import { Formstack } from 'common/modules/identity/formstack';
@@ -19,7 +17,7 @@ import { init as initTabs } from 'common/modules/ui/tabs';
 import { enhanceAdPrefs } from 'common/modules/identity/ad-prefs';
 import { enhanceUpsell } from 'common/modules/identity/upsell/upsell';
 
-const initFormstack = (): void => {
+const initFormstack = () => {
     const attr = 'data-formstack-id';
     const forms = Array.from(document.querySelectorAll(`[${attr}]`));
     const iframes = Array.from(
@@ -39,19 +37,19 @@ const initFormstack = (): void => {
 
     // Load old js if necessary
     iframes.forEach(el => {
-        const iframe: HTMLIFrameElement = (el: any);
+        const iframe = (el);
 
         new FormstackIframe(iframe).init();
     });
 };
 
-const initAccountProfile = (): void => {
+const initAccountProfile = () => {
     // eslint-disable-next-line no-new
     new AccountProfile();
 };
 
-const initProfile = (): void => {
-    const modules: Array<Array<string | Function>> = [
+const initProfile = () => {
+    const modules = [
         ['init-form-stack', initFormstack],
         ['forgotten-email', forgottenEmail],
         ['password-toggle', passwordToggle],

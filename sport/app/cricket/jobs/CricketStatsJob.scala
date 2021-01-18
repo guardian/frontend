@@ -1,7 +1,7 @@
 package jobs
 
 import com.gu.Box
-import common.Logging
+import common.GuLogging
 import conf.cricketPa.{CricketFeedException, CricketTeam, CricketTeams, PaFeed}
 import cricketModel.Match
 import org.joda.time.{DateTimeZone, Days, LocalDate}
@@ -9,7 +9,7 @@ import org.joda.time.format.DateTimeFormat
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class CricketStatsJob(paFeed: PaFeed) extends Logging {
+class CricketStatsJob(paFeed: PaFeed) extends GuLogging {
 
   private val cricketStatsAgents = CricketTeams.teams.map(Team => (Team, Box[Map[String, Match]](Map.empty)))
 

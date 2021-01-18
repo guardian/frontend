@@ -1,23 +1,22 @@
 {
-  "name": "frontend",
+  "name": "@guardian/frontend",
   "version": "0.1.0",
   "private": true,
   "engines": {
     "yarn": ">=1.13.0"
   },
+  "files": ["static/src/**/*"],
   "dependencies": {
-    "@babel/runtime": "^7.11.2",
-    "@braze/web-sdk-core": "^3.0.0",
+    "@braze/web-sdk-core": "3.1.0",
     "@emotion/core": "^10.0.27",
     "@emotion/styled": "^10.0.27",
     "@guardian/atom-renderer": "1.2.2",
     "@guardian/automat-contributions": "^0.3.6",
     "@guardian/automat-modules": "^0.3.7",
-    "@guardian/braze-components": "0.0.12",
+    "@guardian/braze-components": "0.0.17",
     "@guardian/commercial-core": "^0.9.0",
-    "@guardian/consent-management-platform": "6.5.2",
-    "@guardian/dotcom-rendering": "git://github.com/guardian/dotcom-rendering.git#version-1-alpha",
-    "@guardian/libs": "^1.3.0",
+    "@guardian/consent-management-platform": "6.9.1",
+    "@guardian/libs": "^1.4.2",
     "@guardian/shimport": "^1.0.2",
     "@guardian/src-button": "^0.16.1",
     "@guardian/src-foundations": "^0.16.1",
@@ -26,7 +25,6 @@
     "bonzo": "~2.0.0",
     "bootstrap-sass": "^3.4.1",
     "classnames": "~2.2.0",
-    "core-js": "^2.5.3",
     "curl": "cujojs/curl#0.8.9",
     "domready": "^1.0.8",
     "dynamic-import-polyfill": "^0.1.1",
@@ -37,7 +35,7 @@
     "fence": "guardian/fence#0.2.11",
     "lodash": "^4.17.13",
     "object-fit-videos": "^1.0.3",
-    "ophan-tracker-js": "1.3.22",
+    "ophan-tracker-js": "1.3.23",
     "preact": "^8.2.9",
     "preact-compat": "^3.18.4",
     "prebid.js": "https://github.com/guardian/Prebid.js#681fbb",
@@ -47,7 +45,6 @@
     "react": "^16.8.3",
     "react-dom": "16.7.0",
     "reqwest": "2.0.5",
-    "tcp-ping": "^0.1.1",
     "video.js": "~5.3",
     "videojs-contrib-ads": "3.1.3",
     "videojs-embed": "guardian/videojs-embed#v0.3.3",
@@ -55,7 +52,6 @@
     "videojs-persistvolume": "guardian/videojs-persistvolume#0.1.4",
     "videojs-playlist": "guardian/videojs-playlist#0.1.4",
     "web-vitals": "^0.2.4",
-    "webshot": "^0.18.0",
     "wolfy87-eventemitter": "~5.2.4"
   },
   "devDependencies": {
@@ -66,9 +62,9 @@
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-runtime": "^7.11.5",
     "@babel/preset-env": "^7.11.5",
-    "@babel/preset-flow": "^7.10.4",
     "@babel/preset-react": "^7.10.4",
     "@babel/register": "^7.11.5",
+    "@babel/runtime": "^7.11.2",
     "amphtml-validator": "^1.0.21",
     "any-observable": "^0.2.0",
     "autoprefixer": "^9.1.5",
@@ -85,6 +81,7 @@
     "chance": "^1.0.11",
     "chokidar": "^1.7.0",
     "circular-dependency-plugin": "^5.0.1",
+    "core-js": "^2.5.3",
     "cp-file": "^7.0.0",
     "cpy": "^7.3.0",
     "cssstats": "^3.1.0",
@@ -92,8 +89,6 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-import-resolver-webpack": "^0.10.0",
-    "eslint-plugin-flow-header": "^0.2.0",
-    "eslint-plugin-flowtype": "^2.49.0",
     "eslint-plugin-guardian-frontend": "file:tools/eslint-plugin-guardian-frontend",
     "eslint-plugin-import": "^2.12.0",
     "eslint-plugin-jasmine": "^2.10.1",
@@ -102,8 +97,6 @@
     "eslint-plugin-react": "^7.8.2",
     "execa": "^0.8.0",
     "figures": "^2.0.0",
-    "flow-bin": "^0.89.0",
-    "flow-typed": "^2.5.1",
     "glob": "^7.1.2",
     "gzip-size": "^3.0.0",
     "hasha": "^3.0.0",
@@ -138,12 +131,14 @@
     "split": "^1.0.0",
     "stream-to-observable": "^0.2.0",
     "svgo": "^0.7.2",
+    "tcp-ping": "^0.1.1",
     "uglify-js": "^2.7.4",
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^4.44.2",
     "webpack-bundle-analyzer": "^3.3.2",
     "webpack-merge": "^4.1.0",
     "webpack-visualizer-plugin": "^0.1.11",
+    "webshot": "^0.18.0",
     "yargs": "^11.0.0"
   },
   "optionalDependencies": {
@@ -182,7 +177,6 @@
   "scripts": {
     "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
-    "flow": "flow",
     "test": "jest"
   },
   "prettier": {
@@ -191,6 +185,6 @@
     "bracketSpacing": true,
     "tabWidth": 4,
     "jsxBracketSameLine": true,
-    "parser": "flow"
+    "parser": "babel"
   }
 }
