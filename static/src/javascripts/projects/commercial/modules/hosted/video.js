@@ -10,7 +10,7 @@ import {
     canAutoplay,
     triggerEndSlate,
 } from 'commercial/modules/hosted/next-video-autoplay';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
+import loadingTmpl from 'common/views/ui/loading.html';
 
 const initLoadingSpinner = (player, loadingTemplate) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTemplate;
