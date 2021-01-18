@@ -1161,7 +1161,7 @@ object PageElement {
             case _       => None
           }
 
-        }).toList.filter(x => x.isDefined).map(x => x.get)
+        }).toList.flatten
       }
 
       case Document =>
