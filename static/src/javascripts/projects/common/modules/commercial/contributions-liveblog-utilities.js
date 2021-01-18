@@ -134,6 +134,7 @@ export const setupRemoteEpicInLiveblog = (
     props,
 ) => {
     const blocks = getBlocksToInsertEpicAfter();
+    // Only insert 1 epic. The existing code will be cleaned up in a follow-up PR
     if (blocks[0]) {
         const epic = $.create('<div class="block"/>');
         epic.insertAfter(blocks[0]);
