@@ -578,6 +578,7 @@ object WitnessBlockElementAssetsElement {
 
 sealed trait WitnessTypeData
 case class WitnessTypeDataImage(
+    `type`: String,
     url: Option[String],
     originalUrl: Option[String],
     witnessEmbedType: Option[String],
@@ -599,6 +600,7 @@ object WitnessTypeDataImage {
   implicit val w3Writes: Writes[WitnessTypeDataImage] = Json.writes[WitnessTypeDataImage]
 }
 case class WitnessTypeDataVideo(
+    `type`: String,
     url: Option[String],
     originalUrl: Option[String],
     witnessEmbedType: Option[String],
@@ -1213,6 +1215,7 @@ object PageElement {
     WitnessBlockElement(
       assets = makeWitnessAssets(element),
       witnessTypeData = WitnessTypeDataImage(
+        `type` = "image",
         url = wtd.url,
         originalUrl = wtd.originalUrl,
         witnessEmbedType = wtd.witnessEmbedType,
@@ -1238,6 +1241,7 @@ object PageElement {
     WitnessBlockElement(
       assets = makeWitnessAssets(element),
       witnessTypeData = WitnessTypeDataVideo(
+        `type` = "video",
         url = wtd.url,
         originalUrl = wtd.originalUrl,
         witnessEmbedType = wtd.witnessEmbedType,
