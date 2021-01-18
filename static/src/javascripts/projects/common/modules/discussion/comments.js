@@ -107,11 +107,7 @@ class Comments extends Component {
         }
     }
 
-    comments;
-    topLevelComments;
-    user;
-    postedCommentEl;
-    wholeDiscussionErrors;
+
 
     addMoreRepliesButtons(comms) {
         const comments = comms || this.topLevelComments;
@@ -545,7 +541,7 @@ class Comments extends Component {
 
         // Determine user staff status
         if (this.user && this.user.badge) {
-            
+
             this.user.isStaff = this.user.badge.some(e => e.name === 'Staff');
         }
 

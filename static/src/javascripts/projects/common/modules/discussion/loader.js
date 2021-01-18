@@ -83,11 +83,7 @@ class Loader extends Component {
         window.location.replace(`#comment-${id}`);
     }
 
-    $topCommentsContainer;
-    comments;
-    topCommentCount;
-    user;
-    username;
+
 
     commentPosted(comment) {
         this.removeState('truncated');
@@ -201,7 +197,7 @@ class Loader extends Component {
                 );
 
                 if (this.comments) {
-                    
+
                     this.comments.options.order = bonzo(e.currentTarget).data(
                         'order'
                     );
@@ -228,7 +224,7 @@ class Loader extends Component {
                 );
 
                 if (this.comments) {
-                    
+
                     this.comments.options.threading = bonzo(
                         e.currentTarget
                     ).data('threading');

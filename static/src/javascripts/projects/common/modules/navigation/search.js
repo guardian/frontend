@@ -5,8 +5,7 @@ import config from 'lib/config';
 
 // TODO refactor to singleton
 class Search {
-    gcsUrl;
-    resultSetSize;
+
 
     constructor() {
         fastdom

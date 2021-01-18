@@ -9,13 +9,7 @@ import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.h
 import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
-    isUpdating;
-    adSlot;
-    params;
-    layer2;
-    video;
-    hasVideo;
-    inView;
+
 
     constructor(adSlot, params) {
         const isSmallScreen = isBreakpoint({

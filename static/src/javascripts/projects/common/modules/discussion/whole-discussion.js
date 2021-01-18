@@ -46,13 +46,7 @@ const runConcurrently = (
     });
 
 class WholeDiscussion {
-    commentsThread;
-    discussion;
-    discussionContainer;
-    discussionId;
-    lastPage;
-    params;
-    postedCommentHtml;
+
 
     constructor(options) {
         this.discussionId = options.discussionId;

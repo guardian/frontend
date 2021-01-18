@@ -14,8 +14,7 @@ const CONFIG = {
 };
 
 class Profile {
-    dom;
-    opts;
+
 
     constructor(options) {
         const opts = {

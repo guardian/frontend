@@ -21,12 +21,7 @@ let scrollBgTpl;
 // This is a hasty clone of fluid250.js
 
 class FabricV1 {
-    adSlot;
-    params;
 
-    scrollingBg;
-    layer2;
-    scrollType;
 
     constructor(adSlot, params) {
         this.adSlot = adSlot;

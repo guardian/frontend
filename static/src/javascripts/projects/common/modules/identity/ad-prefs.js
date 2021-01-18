@@ -55,8 +55,7 @@ class AdPrefsWrapper extends Component {
         });
     }
 
-    FeedbackFlashBoxRef;
-    SubmitButtonRef;
+
 
     render() {
         return (

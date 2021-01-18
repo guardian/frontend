@@ -15,15 +15,7 @@ import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewabil
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {
-    adSlot;
-    params;
-    isClosed;
-    initialExpandCounter;
-    closedHeight;
-    openedHeight;
 
-    $button;
-    $ad;
 
     static hasScrollEnabled;
 

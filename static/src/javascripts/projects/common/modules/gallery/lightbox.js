@@ -37,34 +37,7 @@ class Endslate extends Component {
 }
 
 class GalleryLightbox {
-    showEndslate;
-    useSwipe;
-    swipeThreshold;
-    lightboxEl;
-    $lightboxEl;
-    $indexEl;
-    $countEl;
-    $contentEl;
-    nextBtn;
-    prevBtn;
-    closeBtn;
-    infoBtn;
-    $swipeContainer;
-    resize;
-    toggleInfo;
-    fsm;
-    states;
-    images;
-    swipeContainerWidth;
-    $slides;
-    index;
-    $images;
-    galleryJson;
-    bodyScrollPosition;
-    endslateEl;
-    endslate;
-    startIndex;
-    handleKeyEvents;
+
 
     constructor() {
         // CONFIG
@@ -215,7 +188,7 @@ class GalleryLightbox {
 
             // Flow doesn't accept the WebKit-specific TouchEvent.scale
             // https://developer.apple.com/documentation/webkitjs/touchevent/1632169-scale
-            
+
             if (e.touches.length > 1 || (e.scale && e.scale !== 1)) {
                 return;
             }

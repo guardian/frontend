@@ -38,10 +38,7 @@ test('should be initially hidden in the article body', () => {
 test('should be visible when text is selected in the article body', () => {
     // required mocks (not present in jsdom at time of writing)
     class MockRange {
-        startContainer;
-        endContainer;
-        startOffset;
-        endOffset;
+
 
         constructor() {
             this.startContainer = null;
@@ -72,8 +69,7 @@ test('should be visible when text is selected in the article body', () => {
     }
 
     class MockSelection {
-        ranges;
-        rangeCount;
+
 
         constructor(range) {
             this.ranges = [range];
@@ -99,7 +95,7 @@ test('should be visible when text is selected in the article body', () => {
     // feels like overkill. It may be that JSDOM implements Range in the future
     // though, which we can then sub in (see:
     // https://github.com/tmpvar/jsdom/issues/317).
-    
+
     document.createRange = jest.fn(() => new MockRange());
 
     if (document.body) {
