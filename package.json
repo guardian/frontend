@@ -175,7 +175,6 @@
     ]
   },
   "scripts": {
-    "postinstall": "./tools/sync-githooks.js",
     "eslint-fix": "eslint --color --fix",
     "test": "jest"
   },
