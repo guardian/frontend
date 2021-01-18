@@ -89,16 +89,7 @@ const dedupShowMore = ($container, html) => {
 };
 
 class Button {
-    id;
-    state;
-    isLoaded;
-    $el;
-    $container;
-    $iconEl;
-    $placeholder;
-    $textEl;
-    $errorMessage;
-    messages;
+
 
     constructor(el, container) {
         this.id = container.attr('data-id');

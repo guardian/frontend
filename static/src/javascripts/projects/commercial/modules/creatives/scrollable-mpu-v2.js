@@ -31,10 +31,7 @@ const scrollableMpuTpl = (params) => `
 `;
 
 class ScrollableMpu {
-    adSlot;
-    params;
-    $scrollableImage;
-    $scrollableMpu;
+
 
     constructor(adSlot, params) {
         this.adSlot = adSlot;

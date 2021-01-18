@@ -17,7 +17,7 @@ export class GeoMostPopularFrontExtended extends Component {
         this.manipulationType = 'html';
     }
 
-    parent;
+
 
     prerender() {
         const isInternational = config.get('page.pageId') === 'international';

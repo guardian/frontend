@@ -163,12 +163,11 @@ class CommentBox extends Component {
     // eslint-disable-next-line class-methods-use-this
     getUserData() {
         // User will always exists at this point.
-        
+
         return getUserFromCookie();
     }
 
-    errors;
-    errorMessages;
+
 
     clearErrors() {
         const messages = this.getElem('messages');
@@ -576,7 +575,7 @@ class CommentBox extends Component {
         const comment = {
             body: body.value,
         };
-        
+
         const callback = this[methodName].bind(this);
 
         this.clearErrors();

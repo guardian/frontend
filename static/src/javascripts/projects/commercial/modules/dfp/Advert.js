@@ -29,26 +29,7 @@ const getAdBreakpointSizes = (advertNode) =>
     }, {});
 
 class Advert {
-    id;
-    node;
-    sizes;
-    size;
-    slot;
-    isEmpty;
-    isLoading;
-    isRendering;
-    isLoaded;
-    isRendered;
-    shouldRefresh;
-    maxViewPercentage;
-    whenLoaded;
-    whenLoadedResolver;
-    whenRendered;
-    whenRenderedResolver;
-    whenSlotReady;
-    extraNodeClasses;
-    timings;
-    hasPrebidSize;
+
 
     constructor(adSlotNode) {
         const sizes = getAdBreakpointSizes(adSlotNode);

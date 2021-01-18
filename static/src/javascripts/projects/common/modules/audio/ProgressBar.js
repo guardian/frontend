@@ -61,7 +61,7 @@ export default class ProgressBar extends Component {
         }
     }
 
-    onChange;
+
 
     getElement = (el) => {
         if (el) {
@@ -69,7 +69,7 @@ export default class ProgressBar extends Component {
         }
     };
 
-    element;
+
 
     start = (e) => {
         const position = e.clientX - this.state.left;

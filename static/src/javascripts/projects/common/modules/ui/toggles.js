@@ -1,8 +1,7 @@
 import mediator from 'lib/mediator';
 
 class Toggles {
-    component;
-    controls;
+
 
     constructor(component = document.body) {
         if (component) {

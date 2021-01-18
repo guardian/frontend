@@ -6,9 +6,7 @@ import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 
 class A9AdUnit {
-    slotID;
-    slotName;
-    sizes;
+
 
     constructor(advert, slot) {
         this.slotID = advert.id;

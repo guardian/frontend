@@ -16,12 +16,7 @@ const keyCodeMap = {
 
 
 export class SearchTool {
-    apiUrl;
-    $list;
-    $input;
-    oldQuery;
-    newQuery;
-    inputTmp;
+
 
     constructor(options) {
         const container = options.container;

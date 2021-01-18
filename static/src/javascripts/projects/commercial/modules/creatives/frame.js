@@ -10,8 +10,7 @@ import externalLink from 'svgs/icon/external-link.svg';
 import arrow from 'svgs/icon/arrow.svg';
 
 class Frame {
-    adSlot;
-    params;
+
 
     constructor(adSlot, params) {
         this.adSlot = adSlot;
