@@ -17,6 +17,7 @@ import { trackNonClickInteraction } from 'common/modules/analytics/google';
 import fetchJson from 'lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
 import { getCookie } from 'lib/cookies';
+import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 
 import {
     getLastOneOffContributionDate,
@@ -229,8 +230,41 @@ const getStickyBottomBanner = (payload) => {
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
-        `https://contributions.code.dev-guardianapis.com/${path}` :
+        // `https://contributions.code.dev-guardianapis.com/${path}` :
+        `http://localhost:8082/${path}` :
         `https://contributions.guardianapis.com/${path}`
+};
+
+const renderLiveblogEpic = async (module, meta) => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
+
+    emitBeginEvent(campaignId);
+
+    const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
+
+    if (element) {
+        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+        setupOphanView(
+            element,
+            abTestName,
+            abTestVariant,
+            campaignCode,
+            campaignId,
+            componentType,
+            products,
+            abTestVariant.showTicker,
+            abTestVariant.tickerSettings,
+        );
+    }
 };
 
 const renderEpic = async (module, meta) => {
@@ -360,8 +394,7 @@ export const renderBanner = (response) => {
 export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    // Liveblog epics are still selected and rendered natively
-    if (page.contentType === 'Article') {
+    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
         try {
             const payload = await buildEpicPayload();
 
@@ -372,7 +405,12 @@ export const fetchAndRenderEpic = async () => {
 
             if (json && json.data) {
                 const {module, meta} = json.data;
-                await renderEpic(module, meta);
+
+                if (page.contentType === 'Article') {
+                    await renderEpic(module, meta);
+                } else if (page.contentType === 'LiveBlog') {
+                    await renderLiveblogEpic(module, meta);
+                }
             }
 
         } catch (error) {

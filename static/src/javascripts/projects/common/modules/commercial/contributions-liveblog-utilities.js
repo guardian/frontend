@@ -4,6 +4,7 @@ import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
 import {submitInsertEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
+import { mountDynamic } from "@guardian/automat-modules";
 
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
@@ -126,6 +127,20 @@ const addEpicToBlocks = (
             setupViewTracking(el, variant, parentTest);
         });
     });
+};
+
+export const setupRemoteEpicInLiveblog = (
+    Component,
+    props,
+) => {
+    const blocks = getBlocksToInsertEpicAfter();
+    if (blocks[0]) {
+        const epic = $.create('<div class="block"/>');
+        epic.insertAfter(blocks[0]);
+        mountDynamic(epic[0], Component, props, true);
+
+        return epic[0];
+    }
 };
 
 export const setupEpicInLiveblog = (
