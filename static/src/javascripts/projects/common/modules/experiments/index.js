@@ -3,8 +3,8 @@ import { storage } from '@guardian/libs';
 import $ from 'lib/$';
 import bean from 'bean';
 import config from 'lib/config';
-import overlay from 'raw-loader!common/views/experiments/overlay.html';
-import styles from 'raw-loader!common/views/experiments/styles.css';
+import overlay from 'common/views/experiments/overlay.html';
+import styles from 'common/views/experiments/styles.css';
 import {
     concurrentTests,
     engagementBannerTests,
