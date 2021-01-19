@@ -83,7 +83,6 @@ class IdApiTest
       |            "usernameLowerCase": "testusername"
       |        },
       |        "statusFields": {
-      |            "allowThirdPartyProfiling": true,
       |            "userEmailValidated": false
       |        }
       |    }

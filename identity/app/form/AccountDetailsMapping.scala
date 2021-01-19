@@ -27,24 +27,6 @@ class AccountDetailsMapping
 
   protected def toUserFormData(user: User) = AccountFormData(user)
 
-  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
-    ("privateFields.title", "title"),
-    ("privateFields.firstName", "firstName"),
-    ("privateFields.secondName", "secondName"),
-    ("privateFields.address1", "address.line1"),
-    ("privateFields.address2", "address.line2"),
-    ("privateFields.address3", "address.line3"),
-    ("privateFields.address4", "address.line4"),
-    ("privateFields.postcode", "address.postcode"),
-    ("privateFields.country", "address.country"),
-    ("privateFields.billingAddress1", "billingAddress.line1"),
-    ("privateFields.billingAddress2", "billingAddress.line2"),
-    ("privateFields.billingAddress3", "billingAddress.line3"),
-    ("privateFields.billingAddress4", "billingAddress.line4"),
-    ("privateFields.billingPostcode", "billingAddress.postcode"),
-    ("privateFields.billingCountry", "billingAddress.country"),
-    ("privateFields.telephoneNumber", "telephoneNumber"),
-  )
 }
 
 case class AccountFormData(
@@ -56,38 +38,7 @@ case class AccountFormData(
     billingAddress: Option[AddressFormData],
     telephoneNumber: Option[TelephoneNumberFormData],
     deleteTelephone: Boolean = false,
-) extends UserFormData {
-
-  def toUserUpdateDTO(currentUser: User): UserUpdateDTO =
-    UserUpdateDTO(
-      primaryEmailAddress = toUpdate(primaryEmailAddress, Some(currentUser.primaryEmailAddress)),
-      privateFields = Some(
-        PrivateFields(
-          title = toUpdate(title, currentUser.privateFields.title),
-          firstName = toUpdate(firstName, currentUser.privateFields.firstName),
-          secondName = toUpdate(secondName, currentUser.privateFields.secondName),
-          address1 = toUpdate(address.address1, currentUser.privateFields.address1),
-          address2 = toUpdate(address.address2, currentUser.privateFields.address2),
-          address3 = toUpdate(address.address3, currentUser.privateFields.address3),
-          address4 = toUpdate(address.address4, currentUser.privateFields.address4),
-          postcode = toUpdate(address.postcode, currentUser.privateFields.postcode),
-          country = toUpdate(address.country, currentUser.privateFields.country),
-          billingAddress1 =
-            billingAddress.flatMap(x => toUpdate(x.address1, currentUser.privateFields.billingAddress1)),
-          billingAddress2 =
-            billingAddress.flatMap(x => toUpdate(x.address2, currentUser.privateFields.billingAddress2)),
-          billingAddress3 =
-            billingAddress.flatMap(x => toUpdate(x.address3, currentUser.privateFields.billingAddress3)),
-          billingAddress4 =
-            billingAddress.flatMap(x => toUpdate(x.address4, currentUser.privateFields.billingAddress4)),
-          billingPostcode =
-            billingAddress.flatMap(x => toUpdate(x.postcode, currentUser.privateFields.billingPostcode)),
-          billingCountry = billingAddress.flatMap(x => toUpdate(x.country, currentUser.privateFields.billingCountry)),
-          telephoneNumber = telephoneNumber.flatMap(_.telephoneNumber),
-        ),
-      ),
-    )
-}
+) extends UserFormData
 
 object AccountFormData {
 
