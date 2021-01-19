@@ -240,8 +240,6 @@ const enforceRules = (
 };
 
 class SpaceError extends Error {
-    name;
-    message;
 
     constructor(rules) {
         super();

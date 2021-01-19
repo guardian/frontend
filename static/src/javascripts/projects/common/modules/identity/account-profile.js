@@ -70,9 +70,7 @@ const avatarUploadByApi = (avatarForm) => {
 };
 
 class AccountProfile {
-    unsavedFields;
-    accountProfileForms;
-    unsavedChangesForm;
+
 
     constructor() {
         this.unsavedFields = [];

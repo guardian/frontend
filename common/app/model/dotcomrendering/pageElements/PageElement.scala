@@ -6,6 +6,7 @@ import com.gu.contentapi.client.model.v1.{
   ElementType,
   EmbedTracking,
   SponsorshipType,
+  WitnessElementFields,
   BlockElement => ApiBlockElement,
   Sponsorship => ApiSponsorship,
 }
@@ -558,13 +559,83 @@ object VineBlockElement {
   implicit val VideoYoutubeBlockElementWrites: Writes[VineBlockElement] = Json.writes[VineBlockElement]
 }
 
-case class WitnessBlockElement(
+case class WitnessBlockElementAssetsElementTypeData(name: Option[String])
+object WitnessBlockElementAssetsElementTypeData {
+  implicit val w1Writes: Writes[WitnessBlockElementAssetsElementTypeData] =
+    Json.writes[WitnessBlockElementAssetsElementTypeData]
+}
+
+case class WitnessBlockElementAssetsElement(
+    `type`: String,
+    mimeType: Option[String],
+    file: Option[String],
+    typeData: Option[WitnessBlockElementAssetsElementTypeData],
+)
+object WitnessBlockElementAssetsElement {
+  implicit val w2Writes: Writes[WitnessBlockElementAssetsElement] =
+    Json.writes[WitnessBlockElementAssetsElement]
+}
+
+sealed trait WitnessTypeData
+case class WitnessTypeDataImage(
+    `type`: String,
+    url: Option[String],
+    originalUrl: Option[String],
+    witnessEmbedType: Option[String],
+    mediaId: Option[String],
+    source: Option[String],
+    title: Option[String],
+    authorName: Option[String],
+    authorUsername: Option[String],
+    authorWitnessProfileUrl: Option[String],
+    authorGuardianProfileUrl: Option[String],
+    caption: Option[String],
+    alt: Option[String],
     html: Option[String],
+    apiUrl: Option[String],
+    photographer: Option[String],
+    dateCreated: Option[String],
+) extends WitnessTypeData
+object WitnessTypeDataImage {
+  implicit val w3Writes: Writes[WitnessTypeDataImage] = Json.writes[WitnessTypeDataImage]
+}
+case class WitnessTypeDataVideo(
+    `type`: String,
+    url: Option[String],
+    originalUrl: Option[String],
+    witnessEmbedType: Option[String],
+    source: Option[String],
+    title: Option[String],
+    description: Option[String],
+    authorName: Option[String],
+    authorUsername: Option[String],
+    authorWitnessProfileUrl: Option[String],
+    authorGuardianProfileUrl: Option[String],
+    width: Option[Int],
+    height: Option[Int],
+    html: Option[String],
+    apiUrl: Option[String],
+    dateCreated: Option[String],
+    youtubeUrl: Option[String],
+    youtubeSource: Option[String],
+    youtubeTitle: Option[String],
+    youtubeDescription: Option[String],
+    youtubeAuthorName: Option[String],
+    youtubeHtml: Option[String],
+) extends WitnessTypeData
+object WitnessTypeDataVideo {
+  implicit val w3Writes: Writes[WitnessTypeDataVideo] = Json.writes[WitnessTypeDataVideo]
+}
+
+case class WitnessBlockElement(
+    assets: Seq[WitnessBlockElementAssetsElement],
+    witnessTypeData: WitnessTypeData,
     isThirdPartyTracking: Boolean,
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object WitnessBlockElement {
-  implicit val WitnessBlockElementWrites: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
+  implicit val w4Writes: Writes[WitnessTypeData] = Json.writes[WitnessTypeData]
+  implicit val w5Writes: Writes[WitnessBlockElement] = Json.writes[WitnessBlockElement]
 }
 
 case class YoutubeBlockElement(
@@ -638,6 +709,7 @@ object PageElement {
       case _: VideoVimeoBlockElement      => true
       case _: VideoYoutubeBlockElement    => true
       case _: YoutubeBlockElement         => true
+      case _: WitnessBlockElement         => true
 
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
@@ -1080,10 +1152,20 @@ object PageElement {
       case Interactive =>
         element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
-      case Witness =>
-        element.witnessTypeData
-          .map(d => WitnessBlockElement(d.html, containsThirdPartyTracking(element.tracking)))
-          .toList
+      case Witness => {
+        (for {
+          wtd <- element.witnessTypeData
+          embedType <- wtd.witnessEmbedType
+        } yield {
+          embedType match {
+            case "image" => Some(makeWitnessBlockElementImage(element, wtd))
+            case "video" => Some(makeWitnessBlockElementVideo(element, wtd))
+            case _       => None
+          }
+
+        }).toList.flatten
+      }
+
       case Document =>
         element.documentTypeData
           .map(d =>
@@ -1116,6 +1198,74 @@ object PageElement {
       case EnumUnknownElementType(f) => List(UnknownBlockElement(None))
       case _                         => Nil
     }
+  }
+
+  private def makeWitnessAssets(element: ApiBlockElement): Seq[WitnessBlockElementAssetsElement] = {
+    element.assets.map(i =>
+      WitnessBlockElementAssetsElement(
+        i.`type`.toString(),
+        i.mimeType,
+        i.file,
+        i.typeData.map(x => WitnessBlockElementAssetsElementTypeData(x.name)),
+      ),
+    )
+  }
+
+  private def makeWitnessBlockElementImage(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+    WitnessBlockElement(
+      assets = makeWitnessAssets(element),
+      witnessTypeData = WitnessTypeDataImage(
+        `type` = "image",
+        url = wtd.url,
+        originalUrl = wtd.originalUrl,
+        witnessEmbedType = wtd.witnessEmbedType,
+        mediaId = wtd.mediaId,
+        source = wtd.source,
+        title = wtd.title,
+        authorName = wtd.authorName,
+        authorUsername = wtd.authorUsername,
+        authorWitnessProfileUrl = wtd.authorWitnessProfileUrl,
+        authorGuardianProfileUrl = wtd.authorGuardianProfileUrl,
+        caption = wtd.caption,
+        alt = wtd.alt,
+        html = wtd.html,
+        apiUrl = wtd.apiUrl,
+        photographer = wtd.photographer,
+        dateCreated = wtd.dateCreated.map(date => date.iso8601),
+      ),
+      containsThirdPartyTracking(element.tracking),
+    )
+  }
+
+  private def makeWitnessBlockElementVideo(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+    WitnessBlockElement(
+      assets = makeWitnessAssets(element),
+      witnessTypeData = WitnessTypeDataVideo(
+        `type` = "video",
+        url = wtd.url,
+        originalUrl = wtd.originalUrl,
+        witnessEmbedType = wtd.witnessEmbedType,
+        source = wtd.source,
+        title = wtd.title,
+        description = wtd.description,
+        authorName = wtd.authorName,
+        authorUsername = wtd.authorUsername,
+        authorWitnessProfileUrl = wtd.authorWitnessProfileUrl,
+        authorGuardianProfileUrl = wtd.authorGuardianProfileUrl,
+        width = wtd.width,
+        height = wtd.height,
+        html = wtd.html,
+        apiUrl = wtd.apiUrl,
+        dateCreated = wtd.dateCreated.map(date => date.iso8601),
+        youtubeUrl = wtd.youtubeUrl,
+        youtubeSource = wtd.youtubeSource,
+        youtubeTitle = wtd.youtubeTitle,
+        youtubeDescription = wtd.youtubeDescription,
+        youtubeAuthorName = wtd.youtubeAuthorName,
+        youtubeHtml = wtd.youtubeHtml,
+      ),
+      containsThirdPartyTracking(element.tracking),
+    )
   }
 
   private[this] def getIframeSrc(html: String): Option[String] = {

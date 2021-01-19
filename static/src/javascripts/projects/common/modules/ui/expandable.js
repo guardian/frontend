@@ -5,11 +5,7 @@
 
 
 class Expandable {
-    opts;
-    dom;
-    cta;
-    expanded;
-    showCount;
+
 
     constructor(options) {
         this.opts = options;

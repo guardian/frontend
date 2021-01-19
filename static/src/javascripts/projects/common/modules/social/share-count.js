@@ -6,8 +6,8 @@ import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';
 import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
-import shareCountTemplate from 'raw-loader!common/views/content/share-count.html';
-import shareCountImmersiveTemplate from 'raw-loader!common/views/content/share-count-immersive.html';
+import shareCountTemplate from 'common/views/content/share-count.html';
+import shareCountImmersiveTemplate from 'common/views/content/share-count-immersive.html';
 
 const $shareCountEls = $('.js-sharecount');
 const tooltip = 'Facebook: <%=facebook%>';

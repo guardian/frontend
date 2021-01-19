@@ -11,11 +11,11 @@ import throttle from 'lodash/throttle';
 import { supportsPushState, pushUrl, back as urlBack } from 'lib/url';
 import { Component } from 'common/modules/component';
 import { inlineSvg } from 'common/views/svgs';
-import blockSharingTpl from 'raw-loader!common/views/content/block-sharing.html';
-import buttonTpl from 'raw-loader!common/views/content/button.html';
-import endslateTpl from 'raw-loader!common/views/content/endslate.html';
-import loaderTpl from 'raw-loader!common/views/content/loader.html';
-import shareButtonTpl from 'raw-loader!common/views/content/share-button.html';
+import blockSharingTpl from 'common/views/content/block-sharing.html';
+import buttonTpl from 'common/views/content/button.html';
+import endslateTpl from 'common/views/content/endslate.html';
+import loaderTpl from 'common/views/content/loader.html';
+import shareButtonTpl from 'common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
 import fetch from 'lib/fetch';
 
@@ -37,34 +37,7 @@ class Endslate extends Component {
 }
 
 class GalleryLightbox {
-    showEndslate;
-    useSwipe;
-    swipeThreshold;
-    lightboxEl;
-    $lightboxEl;
-    $indexEl;
-    $countEl;
-    $contentEl;
-    nextBtn;
-    prevBtn;
-    closeBtn;
-    infoBtn;
-    $swipeContainer;
-    resize;
-    toggleInfo;
-    fsm;
-    states;
-    images;
-    swipeContainerWidth;
-    $slides;
-    index;
-    $images;
-    galleryJson;
-    bodyScrollPosition;
-    endslateEl;
-    endslate;
-    startIndex;
-    handleKeyEvents;
+
 
     constructor() {
         // CONFIG
@@ -215,7 +188,7 @@ class GalleryLightbox {
 
             // Flow doesn't accept the WebKit-specific TouchEvent.scale
             // https://developer.apple.com/documentation/webkitjs/touchevent/1632169-scale
-            
+
             if (e.touches.length > 1 || (e.scale && e.scale !== 1)) {
                 return;
             }

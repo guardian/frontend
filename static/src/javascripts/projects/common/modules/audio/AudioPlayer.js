@@ -391,9 +391,7 @@ export class AudioPlayer extends Component {
         this.audio.pause();
     };
 
-    audio;
-    wave;
-    waveBuffered;
+
 
     ready = () => {
         this.setState({ duration: this.audio.duration });

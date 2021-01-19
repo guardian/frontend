@@ -5,10 +5,7 @@ import fastdom from 'fastdom';
  * @todo: check if browser natively supports "position: sticky"
  */
 class Sticky {
-    element;
-    opts;
-    offsetFromParent;
-    lastMessage;
+
 
     constructor(element, options = {}) {
         this.element = element;

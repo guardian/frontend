@@ -33,9 +33,7 @@ const consentManagement = {
 };
 
 class PrebidAdUnit {
-    code;
-    bids;
-    mediaTypes;
+
 
     constructor(advert, slot) {
         this.code = advert.id;

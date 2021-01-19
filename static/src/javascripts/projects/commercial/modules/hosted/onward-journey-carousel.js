@@ -3,12 +3,7 @@ import fastdom from 'fastdom';
 import $ from 'lib/$';
 
 class HostedCarousel {
-    $carousel;
-    $nextItem;
-    $prevItem;
-    $dots;
-    pageCount;
-    index;
+
 
     moveCarouselBy(direction) {
         this.moveCarouselTo(this.index + direction);

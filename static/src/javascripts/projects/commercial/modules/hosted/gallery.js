@@ -12,32 +12,7 @@ import interactionTracking from 'common/modules/analytics/interaction-tracking';
 import { loadCssPromise } from 'lib/load-css-promise';
 
 class HostedGallery {
-    useSwipe;
-    swipeThreshold;
-    swipeContainerWidth;
-    index;
-    imageRatios;
-    $galleryEl;
-    $galleryFrame;
-    $header;
-    $imagesContainer;
-    $captionContainer;
-    $captions;
-    $scrollEl;
-    $images;
-    $progress;
-    $border;
-    prevBtn;
-    nextBtn;
-    infoBtn;
-    $counter;
-    $ctaFloat;
-    $ojFloat;
-    $meta;
-    ojClose;
-    resize;
-    resizer;
-    fsm;
+
     constructor() {
         // CONFIG
         const breakpoint = getBreakpoint();
@@ -86,7 +61,7 @@ class HostedGallery {
                 initial: 'image',
                 onChangeState() {},
                 context: this,
-                
+
                 states: this.states,
             });
 

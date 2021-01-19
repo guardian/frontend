@@ -5,8 +5,8 @@ import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
 import mediator from 'lib/mediator';
 import { storage } from '@guardian/libs';
 import template from 'lodash/template';
-import fabricExpandingV1Html from 'raw-loader!commercial/views/creatives/fabric-expanding-v1.html';
-import fabricExpandingVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expanding-video.html';
+import fabricExpandingV1Html from 'commercial/views/creatives/fabric-expanding-v1.html';
+import fabricExpandingVideoHtml from 'commercial/views/creatives/fabric-expanding-video.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import bindAll from 'lodash/bindAll';
@@ -15,15 +15,7 @@ import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewabil
 
 // Forked from expandable-v3.js
 class FabricExpandingV1 {
-    adSlot;
-    params;
-    isClosed;
-    initialExpandCounter;
-    closedHeight;
-    openedHeight;
 
-    $button;
-    $ad;
 
     static hasScrollEnabled;
 

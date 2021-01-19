@@ -6,22 +6,7 @@ import userPrefs from 'common/modules/user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising;
-    isSecureContact;
-    stickyTopBannerAd;
-    articleBodyAdverts;
-    articleAsideAdverts;
-    carrotTrafficDriver;
-    highMerch;
-    thirdPartyTags;
-    relatedWidgetEnabled;
-    commentAdverts;
-    liveblogAdverts;
-    paidforBand;
-    asynchronous;
-    adFree;
-    comscore;
-    launchpad;
+
 
     constructor(config = defaultConfig) {
         // this is used for SpeedCurve tests

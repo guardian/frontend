@@ -21,28 +21,10 @@ import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-ur
 import {
     concurrentTests,
     engagementBannerTests,
-    epicTests as hardcodedEpicTests,
 } from 'common/modules/experiments/ab-tests';
 import {
     getEngagementBannerTestsFromGoogleDoc,
-    getConfiguredLiveblogEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
-
-export const getLiveblogEpicTest = memoize(
-    () => {
-        if (config.get('page').contentType === 'LiveBlog') {
-            return getConfiguredLiveblogEpicTests().then(configuredEpicTests => {
-                configuredEpicTests.forEach(test =>
-                    config.set(`switches.ab${test.id}`, true)
-                );
-
-                return firstRunnableTest([...hardcodedEpicTests, ...configuredEpicTests]);
-            });
-        }
-
-        return Promise.resolve(null);
-    }
-);
 
 export const getEngagementBannerTestToRun = memoize(
     () => {
@@ -75,7 +57,7 @@ export const getSynchronousTestsToRun = memoize(() =>
 );
 
 export const getAsyncTestsToRun = () =>
-    Promise.all([getLiveblogEpicTest(), getEngagementBannerTestToRun()]).then(
+    Promise.all([getEngagementBannerTestToRun()]).then(
         tests => tests.filter(Boolean)
     );
 
