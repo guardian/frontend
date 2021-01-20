@@ -20,8 +20,6 @@ import {
     buildAppNexusTargetingObject,
     getPageTargeting,
 } from 'common/modules/commercial/build-page-targeting';
-import { commercialPrebidSafeframe } from 'common/modules/experiments/tests/commercial-prebid-safeframe';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 import { isInUk,
     isInUsOrCa,
     isInAuOrNz,
@@ -69,9 +67,6 @@ import { getAppNexusDirectBidParams } from './appnexus';
 
 // The below line is needed for page skins to show
 getPageTargeting();
-
-const isInSafeframeTestVariant = (): boolean =>
-    isInVariantSynchronous(commercialPrebidSafeframe, 'variant');
 
 const isArticle = config.get('page.contentType') === 'Article';
 
@@ -133,53 +128,13 @@ const getTrustXAdUnitId = (
 };
 
 const getIndexSiteId = (): string => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                return '287246';
-            case 'T':
-                return '287247';
-            case 'M':
-                return '287248';
-            default:
-                return '-1';
-        }
-    } else {
-        const site = config
-            .get('page.pbIndexSites', [])
-            .find(s => s.bp === getBreakpointKey());
-        return site && site.id ? site.id.toString() : '';
-    }
+    const site = config
+        .get('page.pbIndexSites', [])
+        .find(s => s.bp === getBreakpointKey());
+    return site && site.id ? site.id.toString() : '';
 };
 
 const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
-    if (isInSafeframeTestVariant()) {
-        switch (getBreakpointKey()) {
-            case 'D':
-                if (containsDmpu(sizes)) {
-                    return 1116408;
-                }
-                if (containsMpu(sizes)) {
-                    return 1116407;
-                }
-                if (containsLeaderboardOrBillboard(sizes)) {
-                    return 1116409;
-                }
-                return -1;
-            case 'T':
-                if (containsMpu(sizes)) {
-                    return 1116410;
-                }
-                if (containsLeaderboard(sizes)) {
-                    return 1116411;
-                }
-                return -1;
-            case 'M':
-                return 1116412;
-            default:
-                return -1;
-        }
-    }
     if (isInUk()) {
         switch (getBreakpointKey()) {
             case 'D':
@@ -363,7 +318,7 @@ const sonobiBidder: PrebidBidder = {
                 appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
                 pageViewId: config.get('ophan.pageViewId'),
             },
-            isInSafeframeTestVariant() ? { render: 'safeframe' } : {}
+            {}
         ),
 };
 
