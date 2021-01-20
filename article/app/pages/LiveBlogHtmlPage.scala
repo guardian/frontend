@@ -18,11 +18,11 @@ object LiveBlogHtmlPage extends HtmlPage[LiveBlogPage] {
       next = page.currentPage.pagination
         .flatMap(_.older)
         .map(_.suffix)
-        .map(suffix => s"${page.article.content.metadata.id}$suffix"),
+        .map(suffix => LinkTo(s"${page.article.content.metadata.id}$suffix")),
       prev = page.currentPage.pagination
         .flatMap(_.newer)
         .map(_.suffix)
-        .map(suffix => s"${page.article.content.metadata.id}$suffix"),
+        .map(suffix => LinkTo(s"${page.article.content.metadata.id}$suffix")),
       organisation = Html(Organisation().toString()),
       posting = Html(
         LiveBlogPosting(
