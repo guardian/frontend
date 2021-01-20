@@ -273,8 +273,7 @@ const sonobiBidder = {
                 dom_id: slotId,
                 appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
                 pageViewId: config.get('ophan.pageViewId'),
-            },
-             {}
+            }
         ),
 };
 
