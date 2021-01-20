@@ -1719,10 +1719,10 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@0.0.17":
-  version "0.0.17"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.17.tgz#178e4740ab722873b9d0e6dd9d836f1e153d5ada"
-  integrity sha512-xB+cAwaM/iSJwyC/rM1cjEkFX5Gx4JlFNS9HghFqHJb6u+k7B9oFdwQS6GhH7evZxbh2F3klTVpHT6lUD+vCUg==
+"@guardian/braze-components@0.0.19":
+  version "0.0.19"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.19.tgz#edca8e113c09e556c492c425a12b04724e13912b"
+  integrity sha512-fDWFc7YSeS2CEcH7ZiZO6RKwclFvB5uy+aAvKER4rFGqRwaK2eBcF8i7SMHDbWNjfafpdrTu9Rdug7nxnj1kbg==
   dependencies:
     "@guardian/src-button" "2.7.1"
     "@guardian/src-foundations" "2.7.1"
