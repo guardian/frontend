@@ -19,17 +19,17 @@ class PAFeedTest extends AsyncFlatSpec with Matchers {
     id = "3000315",
     homeTeam = Team(
       id = "10406409",
-      name = "Wellington"
+      name = "Wellington",
     ),
     awayTeam = Team(
       id = "10406409",
-      name = "Wellington"
+      name = "Wellington",
     ),
     venue = None,
     competitionName = "New Zealand Mitre 10 Cup",
     status = Status.Result,
     event = WorldCup2019,
-    stage = Stage.Group
+    stage = Stage.Group,
   )
 
   // Note, this is lightweight; detailed testing of deserialisation
@@ -55,16 +55,16 @@ object StubClient extends RugbyClient {
   }
 
   private[this] val store = Map(
-    s"events/${WorldCupPAIDs.worldCup2019SeasonID}" -> loadJSON("rugby/feed/pa-events.json")
+    s"events/${WorldCupPAIDs.worldCup2019SeasonID}" -> loadJSON("rugby/feed/pa-events.json"),
   )
 
-  private[this] def toFut[A](t: Try[A]): Future[A] = t match {
-    case Success(value) => Future.successful(value)
-    case Failure(exception) => Future.failed(exception)
-  }
+  private[this] def toFut[A](t: Try[A]): Future[A] =
+    t match {
+      case Success(value)     => Future.successful(value)
+      case Failure(exception) => Future.failed(exception)
+    }
 
-  override def getEvents(seasonID: Int)
-    (implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
+  override def getEvents(seasonID: Int)(implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
 
     store.get(s"events/$seasonID") match {
       case Some(json) =>

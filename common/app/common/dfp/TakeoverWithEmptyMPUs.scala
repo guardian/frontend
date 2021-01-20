@@ -15,10 +15,7 @@ import play.api.libs.json._
 import services.S3
 import java.net.{MalformedURLException, URL}
 
-case class TakeoverWithEmptyMPUs(url: String,
-                                 editions: Seq[Edition],
-                                 startTime: DateTime,
-                                 endTime: DateTime)
+case class TakeoverWithEmptyMPUs(url: String, editions: Seq[Edition], startTime: DateTime, endTime: DateTime)
 
 object TakeoverWithEmptyMPUs {
 
@@ -32,7 +29,7 @@ object TakeoverWithEmptyMPUs {
         "url" -> takeover.url,
         "editions" -> takeover.editions,
         "startTime" -> timeJsonFormatter.print(takeover.startTime),
-        "endTime" -> timeJsonFormatter.print(takeover.endTime)
+        "endTime" -> timeJsonFormatter.print(takeover.endTime),
       )
     }
   }
@@ -41,9 +38,9 @@ object TakeoverWithEmptyMPUs {
     try {
       val uri = new URL(s)
       uri.getPath.trim match {
-        case "" => Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us")
+        case ""  => Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us")
         case "/" => Invalid("Must be at least one directory deep. eg: http://www.theguardian.com/us")
-        case _ => Valid
+        case _   => Valid
       }
     } catch {
       case _: MalformedURLException => Invalid("Must be a valid URL. eg: http://www.theguardian.com/us")
@@ -55,7 +52,7 @@ object TakeoverWithEmptyMPUs {
       (JsPath \ "editions").read[Seq[Edition]] and
       (JsPath \ "startTime").read[String].map(timeJsonFormatter.parseDateTime) and
       (JsPath \ "endTime").read[String].map(timeJsonFormatter.parseDateTime)
-    )(TakeoverWithEmptyMPUs.apply _)
+  )(TakeoverWithEmptyMPUs.apply _)
 
   implicit val editionFormatter = new Formatter[Edition] {
     override def bind(key: String, data: Map[String, String]): Either[Seq[FormError], Edition] = {
@@ -73,15 +70,15 @@ object TakeoverWithEmptyMPUs {
       "url" -> nonEmptyText.verifying(mustBeAtLeastOneDirectoryDeep),
       "editions" -> seq(of[Edition]),
       "startTime" -> jodaDate("yyyy-MM-dd'T'HH:mm", DateTimeZone.UTC),
-      "endTime" -> jodaDate("yyyy-MM-dd'T'HH:mm", DateTimeZone.UTC)
-    )(TakeoverWithEmptyMPUs.apply)(TakeoverWithEmptyMPUs.unapply)
+      "endTime" -> jodaDate("yyyy-MM-dd'T'HH:mm", DateTimeZone.UTC),
+    )(TakeoverWithEmptyMPUs.apply)(TakeoverWithEmptyMPUs.unapply),
   )
 
   def fetch(): Seq[TakeoverWithEmptyMPUs] = {
     val takeovers = S3.get(takeoversWithEmptyMPUsKey) map {
       Json.parse(_).as[Seq[TakeoverWithEmptyMPUs]]
     } getOrElse Nil
-    takeovers filter {t => mustBeAtLeastOneDirectoryDeep(t.url) == Valid}
+    takeovers filter { t => mustBeAtLeastOneDirectoryDeep(t.url) == Valid }
   }
 
   def fetchSorted(): Seq[TakeoverWithEmptyMPUs] = {

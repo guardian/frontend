@@ -3,12 +3,12 @@ package metrics
 import com.amazonaws.services.cloudwatch.model.StandardUnit
 import org.scalatest.{FlatSpec, Matchers}
 
-class DurationMetricTest extends FlatSpec with Matchers{
+class DurationMetricTest extends FlatSpec with Matchers {
 
   "DurationMetric" should "start off empty" in {
     val durationMetric: DurationMetric = DurationMetric("TestMetric", StandardUnit.Count)
 
-    durationMetric.getAndResetDataPoints should be (List())
+    durationMetric.getAndResetDataPoints should be(List())
   }
 
   it should "record some metrics" in {
@@ -20,8 +20,8 @@ class DurationMetricTest extends FlatSpec with Matchers{
 
     val storedDatapoints = durationMetric.getAndResetDataPoints
 
-    storedDatapoints.length should be (3)
-    storedDatapoints.forall(_.value == 1000) should be (true)
+    storedDatapoints.length should be(3)
+    storedDatapoints.forall(_.value == 1000) should be(true)
 
     durationMetric.getAndResetDataPoints.length should be(0)
   }
@@ -41,7 +41,7 @@ class DurationMetricTest extends FlatSpec with Matchers{
     List(metricOne, metricTwo, metricThree, metricFour).map(durationMetric.record)
 
     val dataPoints = durationMetric.getAndResetDataPoints
-    dataPoints.length should be (7)
-    dataPoints.splitAt(4)._1 should be (allMetrics)
+    dataPoints.length should be(7)
+    dataPoints.splitAt(4)._1 should be(allMetrics)
   }
 }

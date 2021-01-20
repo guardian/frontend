@@ -12,23 +12,24 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.xml.{Elem, NodeSeq}
 
 class NewsSiteMap(contentApiClient: ContentApiClient) {
-  private case class UrlSet(urls: Seq[Url]){
+  private case class UrlSet(urls: Seq[Url]) {
     def xml(): Elem = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
               xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
               xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-        { urls.map(_.xml()) }
+        {urls.map(_.xml())}
       </urlset>
     }
   }
 
   private case class Url(
-    location: String,
-    keywords: String,
-    title: String,
-    genres: String,
-    webPublicationDate: DateTime,
-    imageUrl: String) {
+      location: String,
+      keywords: String,
+      title: String,
+      genres: String,
+      webPublicationDate: DateTime,
+      imageUrl: String,
+  ) {
 
     def xml(): Elem = {
       <url>
@@ -55,7 +56,8 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
 
     val date = DateTime.now(DateTimeZone.UTC).minusDays(2)
 
-    val query = contentApiClient.search(Edition.defaultEdition)
+    val query = contentApiClient
+      .search(Edition.defaultEdition)
       .pageSize(200)
       .tag("-tone/sponsoredfeatures,-type/crossword,-extra/extra,-tone/advertisement-features")
       .orderBy("newest")
@@ -79,15 +81,19 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
         item <- resp.results.map(Content.apply)
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
-        val sectionTag = item.content.seriesTag.toList.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag.toList
+          .filter(tag => !keywordTags.contains(tag.properties.sectionName))
+          .map(_.metadata.webTitle)
         val keywords = (keywordTags ++ sectionTag).mkString(", ")
 
-        val genres = item.tags.tones.flatMap(_.metadata.webTitle match {
-          case "Blogposts" => Some("Blog")
-          case "Reviews" => Some("Opinion")
-          case "Comment" => Some("OpEd")
-          case _ => None
-        }).mkString(", ")
+        val genres = item.tags.tones
+          .flatMap(_.metadata.webTitle match {
+            case "Blogposts" => Some("Blog")
+            case "Reviews"   => Some("Opinion")
+            case "Comment"   => Some("OpEd")
+            case _           => None
+          })
+          .mkString(", ")
 
         val imageUrl = item.elements.mainPicture
           .flatMap(element => Item1200.bestSrcFor(element.images))
@@ -99,7 +105,8 @@ class NewsSiteMap(contentApiClient: ContentApiClient) {
           title = item.trail.headline,
           genres = genres,
           webPublicationDate = item.trail.webPublicationDate,
-          imageUrl = imageUrl)
+          imageUrl = imageUrl,
+        )
       }
 
       UrlSet(urls take 1000).xml()

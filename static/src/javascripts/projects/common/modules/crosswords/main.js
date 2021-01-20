@@ -1,14 +1,12 @@
-// @flow
-
 import React, { render } from 'preact-compat';
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import Crossword from 'common/modules/crosswords/crossword';
 
-const initCrosswords = (): void => {
+const initCrosswords = () => {
     fastdom
-        .read(() => document.getElementsByClassName('js-crossword'))
+        .measure(() => document.getElementsByClassName('js-crossword'))
         .then(elements => {
             Array.from(elements).forEach(element => {
                 const data = element.getAttribute('data-crossword-data');

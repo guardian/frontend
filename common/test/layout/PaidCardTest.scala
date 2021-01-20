@@ -6,10 +6,11 @@ import org.scalatest.{FlatSpec, Matchers, OptionValues}
 
 class PaidCardTest extends FlatSpec with Matchers with OptionValues {
 
-  private def mkKicker(): ItemKicker = FreeHtmlKicker(
-    properties = KickerProperties(kickerText = Some("kicker!!!")),
-    body = "kicker!!!"
-  )
+  private def mkKicker(): ItemKicker =
+    FreeHtmlKicker(
+      properties = KickerProperties(kickerText = Some("kicker!!!")),
+      body = "kicker!!!",
+    )
 
   "fromPressedContent" should "populate kicker" in {
     val pressedContent = mkPressedContent(1, kicker = Some(mkKicker()))

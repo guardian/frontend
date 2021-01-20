@@ -1,5 +1,3 @@
-// @flow
-
 /*
    This file is intended to be downloaded and run ASAP on all pages by all
    readers.
@@ -18,39 +16,29 @@
 import fastdom from 'fastdom';
 import raven from 'lib/raven';
 import userPrefs from 'common/modules/user-prefs';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import fetchJSON from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { initCheckMediator } from 'common/modules/check-mediator';
 import { addEventListener } from 'lib/events';
 import {
     isUserLoggedIn,
     init as identityInit,
 } from 'common/modules/identity/api';
-import { removeCookie, addCookie } from 'lib/cookies';
-import { getUrlVars } from 'lib/url';
+import { addCookie } from 'lib/cookies';
 import { catchErrorsWithContext } from 'lib/robust';
 import { markTime } from 'lib/user-timing';
 import { isBreakpoint } from 'lib/detect';
 import config from 'lib/config';
+import { init as initDynamicImport } from 'lib/dynamic-import-init';
 import { newHeaderInit } from 'common/modules/navigation/new-header';
 import { fixSecondaryColumn } from 'common/modules/fix-secondary-column';
 import { trackPerformance } from 'common/modules/analytics/google';
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { initAtoms } from './atoms';
+import { initEmbedResize } from "./emailEmbeds";
 
-const setAdTestCookie = (): void => {
-    const queryParams = getUrlVars();
-
-    if (queryParams.adtest === 'clear') {
-        removeCookie('adtest');
-    } else if (queryParams.adtest) {
-        addCookie('adtest', encodeURIComponent(queryParams.adtest), 10);
-    }
-};
-
-const showHiringMessage = (): void => {
+const showHiringMessage = () => {
     try {
         if (!config.get('page.isDev') && config.get('switches.weAreHiring')) {
             window.console.log(
@@ -71,16 +59,16 @@ const showHiringMessage = (): void => {
     }
 };
 
-const handleMembershipAccess = (): void => {
+const handleMembershipAccess = () => {
     const { membershipUrl, membershipAccess, contentId } = config.get('page');
 
-    const redirect = (): void => {
+    const redirect = () => {
         window.location.assign(
             `${membershipUrl}/membership-content?referringContent=${contentId}&membershipAccess=${membershipAccess}`
         );
     };
 
-    const updateDOM = (resp: Object): void => {
+    const updateDOM = (resp) => {
         const requireClass = 'has-membership-access-requirement';
         const requiresPaidTier = membershipAccess.includes('paid-members-only');
         // Check the users access matches the content
@@ -92,7 +80,7 @@ const handleMembershipAccess = (): void => {
             const { body } = document;
 
             if (body) {
-                fastdom.write(() => body.classList.remove(requireClass));
+                fastdom.mutate(() => body.classList.remove(requireClass));
             }
         } else {
             redirect();
@@ -111,13 +99,13 @@ const handleMembershipAccess = (): void => {
     }
 };
 
-const addScrollHandler = (): void => {
-    let scrollRunning: boolean = false;
+const addScrollHandler = () => {
+    let scrollRunning = false;
 
-    const onScroll = (): void => {
+    const onScroll = () => {
         if (!scrollRunning) {
             scrollRunning = true;
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 mediator.emitEvent('window:throttledScroll');
                 scrollRunning = false;
             });
@@ -137,10 +125,10 @@ const addScrollHandler = (): void => {
     );
 };
 
-const addResizeHandler = (): void => {
+const addResizeHandler = () => {
     // Adds a global window:throttledResize event to mediator, which debounces events
     // until the user has stopped resizing the window for a reasonable amount of time.
-    const onResize = (evt): void => {
+    const onResize = (evt) => {
         mediator.emitEvent('window:throttledResize', [evt]);
     };
 
@@ -149,7 +137,7 @@ const addResizeHandler = (): void => {
     });
 };
 
-const addErrorHandler = (): void => {
+const addErrorHandler = () => {
     const oldOnError = window.onerror;
     window.onerror = (message, filename, lineno, colno, error) => {
         // Not all browsers pass the error object
@@ -169,7 +157,7 @@ const addErrorHandler = (): void => {
     });
 };
 
-const bootStandard = (): void => {
+const bootStandard = () => {
     markTime('standard start');
 
     catchErrorsWithContext([
@@ -193,7 +181,7 @@ const bootStandard = (): void => {
         Adds a global window:throttledScroll event to mediator, which throttles
         scroll events until there's a spare animationFrame.
         Callbacks of all listeners to window:throttledScroll are run in a
-        fastdom.read, meaning they can all perform DOM reads for free
+        fastdom.measure, meaning they can all perform DOM reads for free
         (after the first one that needs layout triggers it).
         However, this means it's VITAL that all writes in callbacks are
         delegated to fastdom.
@@ -202,8 +190,8 @@ const bootStandard = (): void => {
     addScrollHandler();
     addResizeHandler();
 
-    // Set adtest query if url param declares it
-    setAdTestCookie();
+    // polyfill dynamic import
+    initDynamicImport();
 
     // set a short-lived cookie to trigger server-side ad-freeness
     // if the user is genuinely ad-free, this one will be overwritten
@@ -227,8 +215,8 @@ const bootStandard = (): void => {
     // set local storage: gu.alreadyVisited
     if (window.guardian.isEnhanced) {
         const key = 'gu.alreadyVisited';
-        const alreadyVisited = storage.get(key) || 0;
-        storage.set(key, alreadyVisited + 1);
+        const alreadyVisited = parseInt(storage.local.getRaw(key), 10) || 0;
+        storage.local.setRaw(key, alreadyVisited + 1);
     }
 
     if (
@@ -242,9 +230,6 @@ const bootStandard = (): void => {
             sw.postMessage({ ias });
         });
     }
-
-    // initilaise the email/outbrain check mediator
-    initCheckMediator();
 
     ophan.setEventEmitter(mediator);
 
@@ -263,7 +248,7 @@ const bootStandard = (): void => {
 
     newHeaderInit();
 
-    const isAtLeastLeftCol: boolean = isBreakpoint({ min: 'leftCol' });
+    const isAtLeastLeftCol = isBreakpoint({ min: 'leftCol' });
 
     // we only need to fix the secondary column from leftCol breakpoint up
     if (config.get('page.hasShowcaseMainElement') && isAtLeastLeftCol) {
@@ -271,6 +256,8 @@ const bootStandard = (): void => {
     }
 
     initAtoms();
+
+    initEmbedResize();
 
     showHiringMessage();
 

@@ -31,9 +31,12 @@ object FaciaContentConvert {
       embedType = None,
       embedUri = None,
       embedCss = None,
-      brandingByEdition = EditionBranding.fromContent(content).map { editionBranding =>
-        editionBranding.edition.id -> editionBranding.branding
-      }.toMap
+      brandingByEdition = EditionBranding
+        .fromContent(content)
+        .map { editionBranding =>
+          editionBranding.edition.id -> editionBranding.branding
+        }
+        .toMap,
     )
 
     PressedContent.make(curated)

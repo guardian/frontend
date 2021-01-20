@@ -16,18 +16,20 @@ import jobs.{SiteMapJob, SiteMapLifecycle}
 import model.{ApplicationContext, ApplicationIdentity}
 import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
-import play.api.BuiltInComponentsFromContext
+import play.api.{BuiltInComponentsFromContext, OptionalDevContext}
 import play.api.http.{HttpErrorHandler, HttpRequestHandler}
 import play.api.libs.ws.WSClient
 import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import services._
 import router.Routes
+import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
 
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait ApplicationsServices {
@@ -40,6 +42,8 @@ trait ApplicationsServices {
   lazy val ophanApi = wire[OphanApi]
   lazy val facebookGraphApiClient = wire[FacebookGraphApiClient]
   lazy val facebookGraphApi = wire[FacebookGraphApi]
+  lazy val newsletterApi = wire[NewsletterApi]
+  lazy val emailEmbedAgent = wire[EmailEmbedAgent]
 }
 
 trait AppComponents extends FrontendComponents with ApplicationsControllers with ApplicationsServices {
@@ -65,6 +69,7 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     wire[TargetingLifecycle],
     wire[DiscussionExternalAssetsLifecycle],
     wire[SkimLinksCacheLifeCycle],
+    wire[EmailEmbedLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -82,9 +87,8 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
     EmailSubsciptionMetrics.APIHTTPError,
     EmailSubsciptionMetrics.APINetworkError,
     EmailSubsciptionMetrics.ListIDError,
-    EmailSubsciptionMetrics.AllEmailSubmission
+    EmailSubsciptionMetrics.AllEmailSubmission,
   )
-
 
   override lazy val httpErrorHandler: HttpErrorHandler = wire[CorsHttpErrorHandler]
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters
@@ -92,4 +96,3 @@ trait AppComponents extends FrontendComponents with ApplicationsControllers with
 
   def actorSystem: ActorSystem
 }
-

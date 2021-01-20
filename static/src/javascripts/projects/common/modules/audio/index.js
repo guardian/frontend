@@ -1,24 +1,50 @@
-// @flow
-
+import React, { Component } from 'react';
+import { render } from 'react-dom';
 import {
-    Component,
-    React,
-    render,
-} from '@guardian/dotcom-rendering/packages/guui';
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
+import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import config from 'lib/config';
 import { AudioPlayer } from './AudioPlayer';
 import { sendToOphan, registerOphanListeners } from './utils';
 
-type Props = {
-    source: string,
-    mediaId: string,
-    duration: string,
-};
 
-class AudioContainer extends Component<Props, *> {
+
+class AudioContainer extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            acastConsent: false,
+        };
+    }
+
+    componentDidMount() {
+        onConsentChange(consentState => {
+            const acast = getConsentFor('acast', consentState);
+            this.setState({
+                acastConsent: acast,
+            });
+        });
+    }
+
     render() {
+        const acastEnabled = config.get('switches.acast');
+        const isPodcast = config.get('page.isPodcast');
+        const sourceUrl =
+            acastEnabled &&
+            isPodcast &&
+            this.state.acastConsent &&
+            !isAdFreeUser()
+                ? this.props.source.replace(
+                      'https://',
+                      'https://flex.acast.com/'
+                  )
+                : this.props.source;
+
         return (
             <AudioPlayer
-                sourceUrl={this.props.source}
+                sourceUrl={sourceUrl}
                 mediaId={this.props.mediaId}
                 duration={this.props.duration}
             />
@@ -36,8 +62,8 @@ const getPillar = pillarClass => {
 const supportsCSSGrid =
     window.CSS && window.CSS.supports && window.CSS.supports('display', 'grid');
 
-const init = (): void => {
-    const placeholder: ?HTMLElement = document.getElementById(
+const init = () => {
+    const placeholder = document.getElementById(
         'audio-component-container'
     );
     const article = document.getElementsByTagName('article')[0];

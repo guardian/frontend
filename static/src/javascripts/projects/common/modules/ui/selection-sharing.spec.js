@@ -1,5 +1,3 @@
-// @flow
-
 import $ from 'lib/$';
 import {
     init as selectionSharingInit,
@@ -40,10 +38,7 @@ test('should be initially hidden in the article body', () => {
 test('should be visible when text is selected in the article body', () => {
     // required mocks (not present in jsdom at time of writing)
     class MockRange {
-        startContainer: ?Text;
-        endContainer: ?Text;
-        startOffset: number;
-        endOffset: number;
+
 
         constructor() {
             this.startContainer = null;
@@ -74,10 +69,9 @@ test('should be visible when text is selected in the article body', () => {
     }
 
     class MockSelection {
-        ranges: Array<Range>;
-        rangeCount: number;
 
-        constructor(range: Range) {
+
+        constructor(range) {
             this.ranges = [range];
             this.rangeCount = 1;
         }
@@ -101,7 +95,7 @@ test('should be visible when text is selected in the article body', () => {
     // feels like overkill. It may be that JSDOM implements Range in the future
     // though, which we can then sub in (see:
     // https://github.com/tmpvar/jsdom/issues/317).
-    // $FlowFixMe
+
     document.createRange = jest.fn(() => new MockRange());
 
     if (document.body) {

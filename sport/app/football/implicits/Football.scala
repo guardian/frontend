@@ -36,29 +36,33 @@ trait Football extends Collections {
 
   implicit class MatchHelpers(m: FootballMatch) {
 
-    lazy val statusSummary = StatusSummary(s"${m.homeTeam.name} v ${m.awayTeam.name}",
-      MatchStatus(m.matchStatus).toString, m.homeTeam.score, m.awayTeam.score)
+    lazy val statusSummary = StatusSummary(
+      s"${m.homeTeam.name} v ${m.awayTeam.name}",
+      MatchStatus(m.matchStatus).toString,
+      m.homeTeam.score,
+      m.awayTeam.score,
+    )
 
     def isOn(date: LocalDate): Boolean = m.date.isAfter(date) && m.date.isBefore(date.plusDays(1))
 
     //results and fixtures do not actually have a status field in the API
     lazy val matchStatus = m match {
-      case f: Fixture => "Fixture"
+      case f: Fixture   => "Fixture"
       case l: LiveMatch => l.status
-      case r: Result => "FT"
-      case m: MatchDay => m.matchStatus
+      case r: Result    => "FT"
+      case m: MatchDay  => m.matchStatus
     }
 
     lazy val isFixture = m match {
-      case f: Fixture => true
+      case f: Fixture  => true
       case m: MatchDay => m.matchStatus == "-" // yeah really even though its not in the docs
-      case _ => false
+      case _           => false
     }
 
     lazy val isResult = m match {
-      case r: Result => true
+      case r: Result   => true
       case m: MatchDay => m.result
-      case _ => false
+      case _           => false
     }
 
     lazy val hasStarted = m.isLive || m.isResult
@@ -82,7 +86,7 @@ trait Football extends Collections {
     lazy val isGhostTeam = ghostTeamIds.contains(t.id)
 
     lazy val knockoutName = {
-      if (isGhostTeam) ghostTeamNameMappings.foldLeft(t.name){ case (name, (from, to)) => name.replace(from, to)}
+      if (isGhostTeam) ghostTeamNameMappings.foldLeft(t.name) { case (name, (from, to)) => name.replace(from, to) }
       else t.name
     }
 
@@ -90,16 +94,56 @@ trait Football extends Collections {
     // PA knockout placeholder teams
     // e.g. "Winner Group A", "Wnr Gp G/R-Up Gp H", "Loser SF1"
     private val ghostTeamIds = List(
-      "8158", "8159", "8162", "8163", "8160", "8161", "8164", "8165",
-      "8166", "8167", "8172", "8173", "8170", "8171", "8174", "8175",
-      "8204", "8206", "8200", "8202", "8205", "8207", "8201", "8203",
-      "42624", "42625", "42626", "42627", "8176", "8177", "7357", "7358",
+      "8158",
+      "8159",
+      "8162",
+      "8163",
+      "8160",
+      "8161",
+      "8164",
+      "8165",
+      "8166",
+      "8167",
+      "8172",
+      "8173",
+      "8170",
+      "8171",
+      "8174",
+      "8175",
+      "8204",
+      "8206",
+      "8200",
+      "8202",
+      "8205",
+      "8207",
+      "8201",
+      "8203",
+      "42624",
+      "42625",
+      "42626",
+      "42627",
+      "8176",
+      "8177",
+      "7357",
+      "7358",
       // womens world cup 2019 (assumed the same for future women's world cups)
       // round of 16 (TODO)
-      "64635", "64636", "64637", "64638", "64639", "64640", "64641", "64642", // quarter final
-      "64643", "64644", "64645", "64646",//semi final
-      "64647", "64648", // 3rd place playoff
-      "64649", "64650" // final
+      "64635",
+      "64636",
+      "64637",
+      "64638",
+      "64639",
+      "64640",
+      "64641",
+      "64642", // quarter final
+      "64643",
+      "64644",
+      "64645",
+      "64646", //semi final
+      "64647",
+      "64648", // 3rd place playoff
+      "64649",
+      "64650", // final
     )
 
     private val ghostTeamNameMappings = List(
@@ -108,11 +152,11 @@ trait Football extends Collections {
       "Wnr Gp" -> "W",
       "R-Up Gp" -> "RU",
       "Winner Group" -> "Winner",
-      "Runner-up Group" -> "Runner-up"
+      "Runner-up Group" -> "Runner-up",
     )
   }
 
- // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
+  // "700" is for world-cup 2014 - remove that entry when it is done (leave the impls for other tournaments)
 
   val roundLinks = Map[String, Round => Option[String]]()
   def groupTag(competitionId: String, round: Round): Option[String] = roundLinks.get(competitionId).flatMap(_(round))
@@ -124,4 +168,3 @@ object Football extends Football {
     Hours.hoursBetween(DateTime.now, theMatch.date).getHours
 
 }
-

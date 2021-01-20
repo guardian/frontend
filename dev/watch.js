@@ -24,9 +24,8 @@ const wpNotification = ora({
 wpNotification.start();
 
 const webpack = require('webpack');
-const webpackBundler = webpack(require('../webpack.config.dev.js'));
 
-webpackBundler.watch(
+const watchArguments = [
     {
         ignored: /node_modules/,
     },
@@ -61,8 +60,16 @@ webpackBundler.watch(
 
         // announce the changes
         return browserSync.reload();
-    }
-);
+    },
+];
+
+const mainWebpackBundler = webpack(require('../webpack.config.dev.js'));
+
+mainWebpackBundler.watch(...watchArguments);
+
+const dcrWebpackBundler = webpack(require('../webpack.config.dcr.dev.js'));
+
+dcrWebpackBundler.watch(...watchArguments);
 
 // ********************************** Sass **********************************
 

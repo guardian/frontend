@@ -1,4 +1,3 @@
-// @flow
 import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
 import bonzo from 'bonzo';
 

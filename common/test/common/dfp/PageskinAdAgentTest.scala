@@ -8,40 +8,69 @@ import common.editions.{Au, Uk, Us}
 import conf.Configuration.commercial.dfpAdUnitGuRoot
 import model.MetaData
 import org.scalatest.{FlatSpec, Matchers}
+import play.api.test.FakeRequest
+import play.api.test.Helpers.GET
 
 class PageskinAdAgentTest extends FlatSpec with Matchers {
   val keywordParamSet: Set[AdTargetParam] = KeywordParam.fromItemId("sport-keyword").toSet
   val commercialProperties = CommercialProperties(
     editionBrandings = Set.empty,
     editionAdTargetings = Set(EditionAdTargeting(defaultEdition, Some(keywordParamSet))),
-    prebidIndexSites = None
+    prebidIndexSites = None,
   )
 
+  val requestAU = FakeRequest(GET, "/au?_edition=au")
+  val requestUS = FakeRequest(GET, "/us?_edition=us")
+  val requestUK = FakeRequest(GET, "/uk?_edition=uk")
+  val requestWithAdTestParam = FakeRequest(GET, "/uk?_edition=uk&adtest=6")
   val colourSeriesCommercial = CommercialProperties(
     editionBrandings = Set.empty,
     prebidIndexSites = None,
-    editionAdTargetings = Set( EditionAdTargeting( defaultEdition, // Uk
-                                                   Some(
-                                                     SeriesParam.from(
-                                                       // This is how we create a new Tag in the code.
-                                                       Tag.apply(
-                                                         id = "new-view-series",
-                                                         `type` =  TagType.Series,
-                                                         webTitle = "Some colour serie",
-                                                         webUrl = "http://www.example.com",
-                                                         apiUrl = "http://api.example.com"
-                                                       ) ).toSet
-                                                   ) )
-    )
+    editionAdTargetings = Set(
+      EditionAdTargeting(
+        defaultEdition, // Uk
+        Some(
+          SeriesParam
+            .from(
+              // This is how we create a new Tag in the code.
+              Tag.apply(
+                id = "new-view-series",
+                `type` = TagType.Series,
+                webTitle = "Some colour serie",
+                webUrl = "http://www.example.com",
+                apiUrl = "http://api.example.com",
+              ),
+            )
+            .toSet,
+        ),
+      ),
+    ),
   )
 
   val pressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true)
-  val colourSeriesMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = false, commercial = Some( colourSeriesCommercial ))
+  val colourSeriesMeta = MetaData.make(
+    "",
+    None,
+    "The title",
+    None,
+    isFront = true,
+    isPressedPage = false,
+    commercial = Some(colourSeriesCommercial),
+  )
 
-  val sportIndexFrontMeta = MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
+  val sportIndexFrontMeta =
+    MetaData.make("", None, "The title", None, isFront = true, commercial = Some(commercialProperties))
   val articleMeta = MetaData.make("", None, "The title", None)
 
-  val keywordPressedFrontMeta = MetaData.make("", None, "The title", None, isFront = true, isPressedPage = true, commercial = Some(commercialProperties))
+  val keywordPressedFrontMeta = MetaData.make(
+    "",
+    None,
+    "The title",
+    None,
+    isFront = true,
+    isPressedPage = true,
+    commercial = Some(commercialProperties),
+  )
 
   val examplePageSponsorships = Seq(
     PageSkinSponsorship(
@@ -53,7 +82,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
-      series = Seq.empty
+      series = Seq.empty,
     ),
     PageSkinSponsorship(
       "lineItemName2",
@@ -64,7 +93,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
-      series = Seq.empty
+      series = Seq.empty,
     ),
     PageSkinSponsorship(
       "lineItemName3",
@@ -75,7 +104,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
-      series = Seq.empty
+      series = Seq.empty,
     ),
     PageSkinSponsorship(
       "lineItemName4",
@@ -86,7 +115,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = true,
       adTestValue = Some("6"),
       keywords = Seq.empty,
-      series = Seq.empty
+      series = Seq.empty,
     ),
     PageSkinSponsorship(
       "lineItemName5",
@@ -97,7 +126,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq("sport-keyword"),
-      series = Seq.empty
+      series = Seq.empty,
     ),
     PageSkinSponsorship(
       // Modeled after a real test example:
@@ -110,8 +139,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
       targetsAdTest = false,
       adTestValue = None,
       keywords = Seq.empty,
-      series = Seq("new-view-series")
-    )
+      series = Seq("new-view-series"),
+    ),
   )
 
   // WARNING: Despite being called 'TestPageskinAgent',
@@ -130,49 +159,93 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
   }
 
   "isPageSkinned" should "be true for a front with a pageskin in given edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Uk) should be(true)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/business/front",
+      pressedFrontMeta,
+      requestUK,
+    ) should be(true)
   }
 
   it should "be true for a series front" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/fake-series-adunit/new-view-series", colourSeriesMeta, Uk ) should be(true)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/fake-series-adunit/new-view-series",
+      colourSeriesMeta,
+      requestUK,
+    ) should be(true)
   }
 
   it should "be false for a front with a pageskin in another edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/business/front", pressedFrontMeta, Au) should be(false)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/business/front",
+      pressedFrontMeta,
+      requestAU,
+    ) should be(false)
   }
 
   it should "be false for a front without a pageskin" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/culture/front", pressedFrontMeta, defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/culture/front",
+      pressedFrontMeta,
+      requestUK,
+    ) should be(
+      false,
+    )
   }
 
   it should "be false for a front with a pageskin in no edition" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, defaultEdition) should be(false)
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/music/front", pressedFrontMeta, Us) should be(false)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/music/front",
+      pressedFrontMeta,
+      requestUK,
+    ) should be(false)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/music/front",
+      pressedFrontMeta,
+      requestUK,
+    ) should be(false)
   }
 
   it should "be false for a content (non-front) page" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport", articleMeta, defaultEdition) should be(false)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/sport",
+      articleMeta,
+      requestUK,
+    ) should be(false)
   }
 
   it should "be true for an index front (tag page)" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/sport-index", sportIndexFrontMeta, defaultEdition) should be(true)
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/sport-index",
+      sportIndexFrontMeta,
+      requestUK,
+    ) should be(
+      true,
+    )
   }
 
-  "non production DfpAgent" should "should recognise adtest targetted line items" in {
-    NotProductionTestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta,
-      defaultEdition) should be(
-      true)
+  "non production DfpAgent" should "should recognise adtest targetted line items only if the request includes the same adtest param" in {
+    NotProductionTestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/testSport/front",
+      pressedFrontMeta,
+      requestWithAdTestParam,
+    ) should be(true)
   }
 
-  "production DfpAgent" should "should recognise adtest targetted line items" in {
-    TestPageskinAdAgent.hasPageSkin(s"$dfpAdUnitGuRoot/testSport/front", pressedFrontMeta, defaultEdition) should be(true)
+  "production DfpAgent" should "should recognise adtest targetted line items only if the request includes the same adtest param" in {
+    TestPageskinAdAgent.hasPageSkin(
+      s"$dfpAdUnitGuRoot/testSport/front",
+      pressedFrontMeta,
+      requestWithAdTestParam,
+    ) should be(
+      true,
+    )
   }
 
   "findSponsorships" should "find keyword-targeted sponsorship when keyword page has been overwritten by a pressed front" in {
     TestPageskinAdAgent.findSponsorships(
       adUnitPath = "/123456/root/technology/subsection/ng",
       metaData = keywordPressedFrontMeta,
-      edition = Uk
+      edition = Uk,
     ) shouldBe Seq(
       PageSkinSponsorship(
         lineItemName = "lineItemName5",
@@ -183,8 +256,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
         targetsAdTest = false,
         adTestValue = None,
         keywords = Seq("sport-keyword"),
-        series = Nil
-      )
+        series = Nil,
+      ),
     )
   }
 
@@ -192,7 +265,7 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
     NotProductionTestPageskinAdAgent.findSponsorships(
       adUnitPath = "/123456/root/testSport/front/ng",
       metaData = keywordPressedFrontMeta,
-      edition = Uk
+      edition = Uk,
     ) shouldBe Seq(
       PageSkinSponsorship(
         lineItemName = "lineItemName4",
@@ -203,8 +276,8 @@ class PageskinAdAgentTest extends FlatSpec with Matchers {
         targetsAdTest = true,
         adTestValue = Some("6"),
         keywords = Nil,
-        series = Nil
-      )
+        series = Nil,
+      ),
     )
   }
 }

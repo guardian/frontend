@@ -1,25 +1,19 @@
-// @flow
 import qwery from 'qwery';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 
 class HostedCarousel {
-    $carousel: Object;
-    $nextItem: Object;
-    $prevItem: Object;
-    $dots: Object;
-    pageCount: number;
-    index: number;
 
-    moveCarouselBy(direction: number) {
+
+    moveCarouselBy(direction) {
         this.moveCarouselTo(this.index + direction);
     }
 
-    moveCarouselTo(index: number) {
+    moveCarouselTo(index) {
         const pageNo = Math.min(Math.max(index, 0), this.pageCount - 1);
         this.index = pageNo;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             const translate = `translate(-${pageNo}00%, 0)`;
             this.$carousel.css({
                 '-webkit-transform': translate,
@@ -65,7 +59,7 @@ class HostedCarousel {
     }
 }
 
-export const initHostedCarousel = (): Promise<any> => {
+export const initHostedCarousel = () => {
     if (qwery('.js-carousel-pages').length) {
         new HostedCarousel().bindButtons();
     }

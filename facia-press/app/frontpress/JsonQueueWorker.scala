@@ -4,7 +4,7 @@ import java.util.concurrent.atomic.AtomicInteger
 
 import com.amazonaws.services.sqs.model.ReceiveMessageRequest
 import com.gu.contentapi.client.model.ContentApiError
-import common.{JsonMessageQueue, Logging, Message}
+import common.{JsonMessageQueue, GuLogging, Message}
 import org.joda.time.DateTime
 import play.api.libs.json.Reads
 
@@ -47,6 +47,7 @@ final private[frontpress] class DateTimeRecorder {
 }
 
 object JsonQueueWorker {
+
   /** The maximum allowed long poll time on SQS:
     * http://docs.aws.amazon.com/AWSSimpleQueueService/latest/SQSDeveloperGuide/sqs-long-polling.html
     */
@@ -59,7 +60,7 @@ object JsonQueueWorker {
   *
   * @tparam A The job
   */
-abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends Logging {
+abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionContext) extends GuLogging {
   import JsonQueueWorker._
 
   val queue: JsonMessageQueue[A]
@@ -87,8 +88,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
             /** Ultimately, we ought to be able to recover from processing the same message twice anyway, as the nature
               * of SQS means you could get the same message delivered twice.
               */
-            queue.delete(receipt).failed.foreach {
-              error => log.error(s"Error deleting message $id from queue", error)
+            queue.delete(receipt).failed.foreach { error =>
+              log.error(s"Error deleting message $id from queue", error)
             }
 
             consecutiveProcessingErrors.recordSuccess()
@@ -98,8 +99,8 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
               log.warn(s"JsonQueueWorker getAndProcess retrying $message", error)
               queue.retryMessageAfter(message.handle, 5)
             } else if (deleteOnFailure) {
-              queue.delete(receipt).failed.foreach {
-                e => log.error(s"Error deleting message $id from queue", e)
+              queue.delete(receipt).failed.foreach { e =>
+                log.error(s"Error deleting message $id from queue", e)
               }
             }
             log.error(s"Error processing message $id", error)
@@ -116,7 +117,10 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
 
     getRequest.failed.foreach {
       case error: ContentApiError =>
-        log.error(s"Encountered content api error receiving message from queue: ${error.httpMessage} status: ${error.httpStatus}", error)
+        log.error(
+          s"Encountered content api error receiving message from queue: ${error.httpMessage} status: ${error.httpStatus}",
+          error,
+        )
       case error: Throwable => log.error("Encountered error receiving message from queue", error)
     }
 
@@ -126,7 +130,7 @@ abstract class JsonQueueWorker[A: Reads]()(implicit executionContext: ExecutionC
   final private def next() {
     getAndProcess onComplete {
       case _ if started => next()
-      case _ => log.info("Stopping worker...")
+      case _            => log.info("Stopping worker...")
     }
   }
 

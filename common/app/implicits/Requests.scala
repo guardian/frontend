@@ -1,6 +1,12 @@
 package implicits
 
-import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory, USWestCoastTerritory}
+import com.gu.facia.client.models.{
+  EU27Territory,
+  NZTerritory,
+  TargetedTerritory,
+  USEastCoastTerritory,
+  USWestCoastTerritory,
+}
 import conf.Configuration
 import play.api.mvc.RequestHeader
 
@@ -25,7 +31,8 @@ trait Requests {
     TerritoryHeader(EU27Territory, "EU-27"),
     TerritoryHeader(NZTerritory, "NZ"),
     TerritoryHeader(USEastCoastTerritory, "US-East-Coast"),
-    TerritoryHeader(USWestCoastTerritory, "US-West-Coast"))
+    TerritoryHeader(USWestCoastTerritory, "US-West-Coast"),
+  )
 
   implicit class RichRequestHeader(r: RequestHeader) {
 
@@ -37,7 +44,8 @@ trait Requests {
 
     def getBooleanParameter(name: String): Option[Boolean] = getParameter(name).map(_.toBoolean)
 
-    def getRequestFormat: RequestFormat = if (isJson) JsonFormat else if (isEmail) EmailFormat else if (isAmp) AmpFormat else HtmlFormat
+    def getRequestFormat: RequestFormat =
+      if (isJson) JsonFormat else if (isEmail) EmailFormat else if (isAmp) AmpFormat else HtmlFormat
 
     lazy val isJson: Boolean = r.getQueryString("callback").isDefined || r.path.endsWith(".json")
 
@@ -45,15 +53,19 @@ trait Requests {
 
     lazy val isEmailTxt: Boolean = r.path.endsWith(EMAIL_TXT_SUFFIX)
 
-    lazy val isLazyLoad: Boolean = r.getQueryString("lazy-load").isDefined && !r.getQueryString("lazy-load").contains("false")
+    lazy val isLazyLoad: Boolean =
+      r.getQueryString("lazy-load").isDefined && !r.getQueryString("lazy-load").contains("false")
 
     lazy val isRss: Boolean = r.path.endsWith("/rss")
 
     lazy val isAmp: Boolean = r.getQueryString("amp").isDefined || (!r.host.isEmpty && r.host == Configuration.amp.host)
 
-    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(EMAIL_SUFFIX) || isEmailJson || isEmailTxt
+    lazy val isEmail: Boolean = r.getQueryString("format").exists(_.contains("email")) || r.path.endsWith(
+      EMAIL_SUFFIX,
+    ) || isEmailJson || isEmailTxt
 
-    lazy val isHeadlineText: Boolean = r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
+    lazy val isHeadlineText: Boolean =
+      r.getQueryString("format").contains("email-headline") || r.path.endsWith(HEADLINE_SUFFIX)
 
     lazy val isModified = isJson || isRss || isEmail || isHeadlineText
 
@@ -63,7 +75,8 @@ trait Requests {
 
     lazy val hasParameters: Boolean = r.queryString.nonEmpty
 
-    lazy val isHealthcheck: Boolean = r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck") || r.path == "/_healthcheck"
+    lazy val isHealthcheck: Boolean =
+      r.headers.keys.exists(_ equalsIgnoreCase "X-Gu-Management-Healthcheck") || r.path == "/_healthcheck"
 
     lazy val rawQueryStringOption: Option[String] = if (r.rawQueryString.nonEmpty) Some(r.rawQueryString) else None
 
@@ -80,14 +93,20 @@ trait Requests {
 
     // the X-GU-Territory header is used by the facia app to determine whether or not to render containers
     // targeted only at a specific region e.g. a new zealand-only container
-    lazy val territories: List[TargetedTerritory] = r.headers.get(GUHeaders.TERRITORY_HEADER).map { r =>
-      territoryHeaders.filter(th => r.contains(th.headerString)).map(_.territory)
-    }.getOrElse(List())
+    lazy val territories: List[TargetedTerritory] = r.headers
+      .get(GUHeaders.TERRITORY_HEADER)
+      .map { r =>
+        territoryHeaders.filter(th => r.contains(th.headerString)).map(_.territory)
+      }
+      .getOrElse(List())
 
     // dotcom-rendering (DCR) parameters
     lazy val forceDCROff: Boolean = r.getQueryString("dcr").contains("false")
-    lazy val forceDCR: Boolean = r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
+    lazy val forceDCR: Boolean =
+      r.getQueryString("dcr").isDefined && !forceDCROff // don't check for .contains(true) so people can be lazy
 
+    // slot machine
+    lazy val slotMachineFlags = r.getQueryString("slot-machine-flags").getOrElse("")
   }
 
 }

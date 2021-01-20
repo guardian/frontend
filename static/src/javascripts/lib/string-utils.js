@@ -1,22 +1,20 @@
-// @flow
-
 // Split by delimiter, but ensure any whitespace in the string is discarded
 // and that there are no empty strings in the output array.
-export const splitAndTrim = (str: string, delim: string): Array<string> =>
+export const splitAndTrim = (str, delim) =>
     str
         .split(delim)
         .map(s => s.trim())
         .filter(Boolean);
 
 export const optionalSplitAndTrim = (
-    str: string,
-    delim: string
-): Array<string> => (str ? splitAndTrim(str, delim) : []);
+    str,
+    delim
+) => (str ? splitAndTrim(str, delim) : []);
 
-export const optionalStringToBoolean = (str: ?string): boolean =>
+export const optionalStringToBoolean = (str) =>
     typeof str === 'string' ? str.toLowerCase().trim() === 'true' : false;
 
-export const throwIfEmptyString = (name: string, str: ?string): string => {
+export const throwIfEmptyString = (name, str) => {
     if (typeof str === 'string' && str.trim().length > 0) {
         return str;
     }
@@ -24,5 +22,5 @@ export const throwIfEmptyString = (name: string, str: ?string): string => {
     throw new Error(`${name} is empty`);
 };
 
-export const filterEmptyString = (str: ?string): ?string =>
+export const filterEmptyString = (str) =>
     str && str.trim().length > 0 ? str.trim() : undefined;

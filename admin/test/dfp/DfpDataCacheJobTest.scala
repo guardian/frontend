@@ -7,16 +7,22 @@ import org.scalatest.mockito.MockitoSugar
 import test._
 
 class DfpDataCacheJobTest
-  extends FlatSpec
-  with Matchers
-  with SingleServerSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with MockitoSugar
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with SingleServerSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with MockitoSugar
+    with WithTestContentApiClient {
 
-  val dfpDataCacheJob = new DfpDataCacheJob(mock[AdUnitAgent], mock[CustomFieldAgent], mock[CustomTargetingAgent], mock[PlacementAgent], mock[DfpApi])
+  val dfpDataCacheJob = new DfpDataCacheJob(
+    mock[AdUnitAgent],
+    mock[CustomFieldAgent],
+    mock[CustomTargetingAgent],
+    mock[PlacementAgent],
+    mock[DfpApi],
+  )
 
   private def lineItem(id: Long, name: String, completed: Boolean = false): GuLineItem = {
     GuLineItem(
@@ -36,31 +42,34 @@ class DfpDataCacheJobTest
         adUnitsExcluded = Nil,
         geoTargetsIncluded = Nil,
         geoTargetsExcluded = Nil,
-        customTargetSets = Nil
+        customTargetSets = Nil,
       ),
-      lastModified = DateTime.now.withTimeAtStartOfDay
+      lastModified = DateTime.now.withTimeAtStartOfDay,
     )
   }
 
   private val cachedLineItems = DfpLineItems(
     validItems = Seq(lineItem(1, "a-cache"), lineItem(2, "b-cache"), lineItem(3, "c-cache")),
-    invalidItems = Seq.empty)
+    invalidItems = Seq.empty,
+  )
 
   private val allReadyOrDeliveringLineItems = DfpLineItems(Seq.empty, Seq.empty)
 
   "loadLineItems" should "dedupe line items that have changed in an unknown way" in {
-    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
-      validItems = Seq(
-        lineItem(1, "a-fresh"),
-        lineItem(2, "b-fresh"),
-        lineItem(3, "c-fresh")
-      ),
-      invalidItems = Seq.empty)
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
+      DfpLineItems(
+        validItems = Seq(
+          lineItem(1, "a-fresh"),
+          lineItem(2, "b-fresh"),
+          lineItem(3, "c-fresh"),
+        ),
+        invalidItems = Seq.empty,
+      )
 
     val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
-      allReadyOrDeliveringLineItems
+      allReadyOrDeliveringLineItems,
     )
 
     lineItems.validLineItems.size shouldBe 3
@@ -69,18 +78,20 @@ class DfpDataCacheJobTest
   }
 
   it should "dedupe line items that have changed in a known way" in {
-    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
-      validItems = Seq(
-        lineItem(1, "d"),
-        lineItem(2, "e"),
-        lineItem(4, "f")
-      ),
-      invalidItems = Seq.empty)
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
+      DfpLineItems(
+        validItems = Seq(
+          lineItem(1, "d"),
+          lineItem(2, "e"),
+          lineItem(4, "f"),
+        ),
+        invalidItems = Seq.empty,
+      )
 
     val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
-      allReadyOrDeliveringLineItems
+      allReadyOrDeliveringLineItems,
     )
 
     lineItems.validLineItems.size shouldBe 4
@@ -88,29 +99,28 @@ class DfpDataCacheJobTest
       lineItem(1, "d"),
       lineItem(2, "e"),
       lineItem(3, "c-cache"),
-      lineItem(4, "f")
+      lineItem(4, "f"),
     )
   }
 
   it should "omit line items whose state has changed to no longer be ready or delivering" in {
-    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems = DfpLineItems(
-      validItems = Seq(
-        lineItem(1, "a", completed = true),
-        lineItem(2, "e"),
-        lineItem(4, "f")
-      ),
-      invalidItems = Seq.empty)
+    def lineItemsModifiedSince(threshold: DateTime): DfpLineItems =
+      DfpLineItems(
+        validItems = Seq(
+          lineItem(1, "a", completed = true),
+          lineItem(2, "e"),
+          lineItem(4, "f"),
+        ),
+        invalidItems = Seq.empty,
+      )
 
     val lineItems = dfpDataCacheJob.loadLineItems(
       cachedLineItems,
       lineItemsModifiedSince,
-      allReadyOrDeliveringLineItems
+      allReadyOrDeliveringLineItems,
     )
 
     lineItems.validLineItems.size shouldBe 3
-    lineItems.validLineItems shouldBe Seq(
-      lineItem(2, "e"),
-      lineItem(3, "c-cache"),
-      lineItem(4, "f"))
+    lineItems.validLineItems shouldBe Seq(lineItem(2, "e"), lineItem(3, "c-cache"), lineItem(4, "f"))
   }
 }

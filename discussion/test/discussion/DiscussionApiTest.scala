@@ -12,15 +12,17 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 @DoNotDiscover class DiscussionApiTest
-  extends FreeSpec
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestExecutionContext
-  with WithTestWsClient {
+    extends FreeSpec
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestExecutionContext
+    with WithTestWsClient {
 
   class UrlValidatorDiscussionAPI(expectedUrl: String, val wsClient: WSClient = wsClient) extends DiscussionApiLike {
-    override protected def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
+    override protected def GET(url: String, headers: (String, String)*)(implicit
+        executionContext: ExecutionContext,
+    ): Future[WSResponse] = {
       assert(expectedUrl === url)
       Future(null)(executionContext) // Don't care what is returned for this test
     }
@@ -28,7 +30,7 @@ import scala.language.postfixOps
     protected val apiRoot: String = ""
   }
 
-  def urlValidator(expectedUrl: String) : DiscussionApiLike = new UrlValidatorDiscussionAPI(expectedUrl)
+  def urlValidator(expectedUrl: String): DiscussionApiLike = new UrlValidatorDiscussionAPI(expectedUrl)
 
   def waitFor(f: Future[_], timeout: Duration = 2 seconds): Future[_] = Await.ready(f, timeout)
 
@@ -39,32 +41,47 @@ import scala.language.postfixOps
   "Should do get request on correct URL for comment" in {
     val id = 15724322
     val displayThreaded = "true"
-    waitFor(urlValidator(s"/comment/$id?displayResponses=true&displayThreaded=$displayThreaded&api-key=dotcom").commentFor(id, Some(displayThreaded)))
+    waitFor(
+      urlValidator(s"/comment/$id?displayResponses=true&displayThreaded=$displayThreaded&api-key=dotcom")
+        .commentFor(id, Some(displayThreaded)),
+    )
   }
 
   "Should do GET request on correct URL for topComments " in {
-    val expectedUrl: String = "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true&maxResponses=5&api-key=dotcom"
+    val expectedUrl: String =
+      "/discussion/p/3tycg/topcomments?pageSize=50&page=1&orderBy=newest&showSwitches=true&maxResponses=5&api-key=dotcom"
 
-    waitFor(urlValidator(expectedUrl).commentsFor(DiscussionKey("p/3tycg"), DiscussionParams(
-      orderBy = "newest",
-      page = "1",
-      pageSize = "50",
-      topComments = true,
-      maxResponses = Some("5"),
-      displayThreaded = true
-    )))
+    waitFor(
+      urlValidator(expectedUrl).commentsFor(
+        DiscussionKey("p/3tycg"),
+        DiscussionParams(
+          orderBy = "newest",
+          page = "1",
+          pageSize = "50",
+          topComments = true,
+          maxResponses = Some("5"),
+          displayThreaded = true,
+        ),
+      ),
+    )
   }
 
   "Should do GET request on correct URL for comments " in {
-    val expectedUrl: String = "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&displayThreaded=false&showSwitches=true&api-key=dotcom"
+    val expectedUrl: String =
+      "/discussion/p/3tycg?pageSize=50&page=1&orderBy=newest&displayThreaded=false&showSwitches=true&api-key=dotcom"
 
-    waitFor(urlValidator(expectedUrl).commentsFor(DiscussionKey("p/3tycg"), DiscussionParams(
-      orderBy = "newest",
-      page = "1",
-      pageSize = "50",
-      maxResponses = None,
-      displayThreaded = false
-    )))
+    waitFor(
+      urlValidator(expectedUrl).commentsFor(
+        DiscussionKey("p/3tycg"),
+        DiscussionParams(
+          orderBy = "newest",
+          page = "1",
+          pageSize = "50",
+          maxResponses = None,
+          displayThreaded = false,
+        ),
+      ),
+    )
   }
 
   "Should do GET request on correct URL for comment context" in {
@@ -74,9 +91,10 @@ import scala.language.postfixOps
       orderBy = "newest",
       page = "1",
       pageSize = "50",
-      displayThreaded = false
+      displayThreaded = false,
     )
-    val expectedUrl = s"/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}&displayThreaded=${params.displayThreaded}&api-key=dotcom"
+    val expectedUrl =
+      s"/comment/$id/context?pageSize=${params.pageSize}&orderBy=${params.orderBy}&displayThreaded=${params.displayThreaded}&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).commentContext(id, params))
 
   }
@@ -89,7 +107,8 @@ import scala.language.postfixOps
     val userId = "10000001"
     val orderBy = "newest"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted=true&api-key=dotcom"
+    val expectedUrl =
+      s"/profile/$userId/comments?pageSize=10&page=$page&orderBy=$orderBy&showSwitches=true&displayHighlighted=true&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileComments(userId = userId, page = page, orderBy = orderBy, picks = true))
   }
 
@@ -111,7 +130,8 @@ import scala.language.postfixOps
   "Should do GET request on correct URL for profile discussions" in {
     val userId = "10000001"
     val page = "1"
-    val expectedUrl = s"/profile/$userId/discussions?pageSize=10&page=$page&orderBy=newest&showSwitches=true&api-key=dotcom"
+    val expectedUrl =
+      s"/profile/$userId/discussions?pageSize=10&page=$page&orderBy=newest&showSwitches=true&api-key=dotcom"
     waitFor(urlValidator(expectedUrl).profileDiscussions(userId = userId, page = page))
   }
 

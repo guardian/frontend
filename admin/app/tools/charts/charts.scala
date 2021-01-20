@@ -18,7 +18,8 @@ class ChartTable(private val labels: Seq[String]) {
 
   lazy val columns: Int = labels.length
 
-  private val datapoints: MutableMap[String, ChartColumn] = MutableMap.empty[String, ChartColumn].withDefaultValue(ChartColumn(Nil))
+  private val datapoints: MutableMap[String, ChartColumn] =
+    MutableMap.empty[String, ChartColumn].withDefaultValue(ChartColumn(Nil))
 
   def column(label: String): ChartColumn = datapoints(label)
   def allColumns: Seq[ChartColumn] = datapoints.values.toSeq
@@ -100,29 +101,33 @@ object ChartFormat {
   val SingleLineGreen = ChartFormat(colours = Seq("#00CC33"))
   val SingleLineRed = ChartFormat(colours = Seq("#FF0000"))
   val DoubleLineBlueRed = ChartFormat(colours = Seq("#0033CC", "#FF0000"))
-  val MultiLine = ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass =  "charts charts-full")
+  val MultiLine =
+    ChartFormat(colours = Seq("#FF6600", "#99CC33", "#CC0066", "#660099", "#0099FF"), cssClass = "charts charts-full")
 
   def apply(colour: String*): ChartFormat = ChartFormat(colour)
 }
 
 class AwsLineChart(
-  override val name: String,
-  override val labels: Seq[String],
-  override val format: ChartFormat,
-  val charts: GetMetricStatisticsResult*) extends Chart[String] {
+    override val name: String,
+    override val labels: Seq[String],
+    override val format: ChartFormat,
+    val charts: GetMetricStatisticsResult*,
+) extends Chart[String] {
 
   override def dataset: Seq[ChartRow[String]] = {
     val dataColumns = labels.tail
     val table = new ChartTable(dataColumns)
 
-    (dataColumns, charts.toList).zipped.map( (column, chart) => {
+    (dataColumns, charts.toList).zipped.map((column, chart) => {
       table.addColumn(column, ChartColumn(chart.getDatapoints.asScala))
     })
 
     table.asChartRow(toLabel, toValue)
   }
 
-  protected def toValue(dataPoint: Datapoint): Double = Option(dataPoint.getAverage).orElse(Option(dataPoint.getSum))
+  protected def toValue(dataPoint: Datapoint): Double =
+    Option(dataPoint.getAverage)
+      .orElse(Option(dataPoint.getSum))
       .getOrElse(throw new IllegalStateException(s"Don't know how to get a value for $dataPoint"))
 
   protected def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("HH:mm")
@@ -132,22 +137,30 @@ class AwsLineChart(
   def formatRowKey(key: String): String = s"'$key'"
 }
 
-class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, labels, format, charts:_*) {
+class AwsDailyLineChart(name: String, labels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*)
+    extends AwsLineChart(name, labels, format, charts: _*) {
   override def toLabel(date: DateTime): String = date.withZone(format.timezone).toString("dd/MM")
 }
 
-class AwsDualYLineChart(name: String, labels: (String, String, String), format: ChartFormat, chartOne: GetMetricStatisticsResult, chartTwo: GetMetricStatisticsResult) extends AwsLineChart(name, Seq(labels._1, labels._2, labels._3), format, chartOne, chartTwo) {
+class AwsDualYLineChart(
+    name: String,
+    labels: (String, String, String),
+    format: ChartFormat,
+    chartOne: GetMetricStatisticsResult,
+    chartTwo: GetMetricStatisticsResult,
+) extends AwsLineChart(name, Seq(labels._1, labels._2, labels._3), format, chartOne, chartTwo) {
   override def dualY: Boolean = true
 }
 
-class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*) extends AwsLineChart(name, ablabels, format, charts:_*) {
+class ABDataChart(name: String, ablabels: Seq[String], format: ChartFormat, charts: GetMetricStatisticsResult*)
+    extends AwsLineChart(name, ablabels, format, charts: _*) {
 
   private val dataColumns: Seq[(String, ChartColumn)] = {
 
     // Do not consider any metrics that have less than three data points.
-    (ablabels.tail, charts.toList).zipped.map( (column, chart) =>
-      (column, ChartColumn(chart.getDatapoints.asScala))
-    ).filter{ case (label, column)  => column.values.length > 3 }
+    (ablabels.tail, charts.toList).zipped
+      .map((column, chart) => (column, ChartColumn(chart.getDatapoints.asScala)))
+      .filter { case (label, column) => column.values.length > 3 }
   }
 
   override def dataset: Seq[ChartRow[String]] = {
@@ -174,23 +187,24 @@ object FormattedChart {
 
   case class Cell(v: String)
 
-  implicit val cellReads   = Json.writes[Cell]
-  implicit val rowReads    = Json.writes[Row]
+  implicit val cellReads = Json.writes[Cell]
+  implicit val rowReads = Json.writes[Row]
   implicit val columnReads = Json.writes[Column]
-  implicit val tableReads  = Json.writes[DataTable]
+  implicit val tableReads = Json.writes[DataTable]
 }
 
 // A variation of Chart that can be easily serialised into a Google Visualization DataTable Json object.
 // Useful for charts that need columns with type labels like Date and DateTime.
 case class FormattedChart(
-  name: String,
-  columns: Seq[FormattedChart.Column],
-  rows: Seq[FormattedChart.Row],
-  format: ChartFormat) {
+    name: String,
+    columns: Seq[FormattedChart.Column],
+    rows: Seq[FormattedChart.Row],
+    format: ChartFormat,
+) {
 
   lazy val id = UUID.randomUUID().toString
   lazy val labels: Seq[String] = columns.map(_.label)
-  lazy val lastValue: Option[String] = rows.lastOption.flatMap {_.c.lastOption.map(_.v.take(6)) }
+  lazy val lastValue: Option[String] = rows.lastOption.flatMap { _.c.lastOption.map(_.v.take(6)) }
 
   def asJson(): JsValue = Json.toJson(FormattedChart.DataTable(columns, rows))
 }

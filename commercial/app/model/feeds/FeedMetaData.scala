@@ -2,7 +2,6 @@ package commercial.model.feeds
 
 import commercial.model.feeds.ResponseEncoding.utf8
 import conf.switches.{Switch, Switches}
-import commercial.model.merchandise.soulmates.SoulmatesAgent
 
 import scala.concurrent.duration.{Duration, _}
 
@@ -29,18 +28,6 @@ case class JobsFeedMetaData(override val url: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
-
-case class SoulmatesFeedMetaData(baseUrl: String, agent: SoulmatesAgent) extends FeedMetaData {
-
-  val name = s"soulmates/${agent.groupName}"
-  val url = s"$baseUrl/${agent.feed.path}"
-
-  override val fetchSwitch = Switches.SoulmatesFeedSwitch
-  override val parseSwitch = Switches.SoulmatesFeedSwitch
-
-  override val responseEncoding = utf8
-}
-
 case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
 
   val name = "bestsellers"
@@ -52,17 +39,18 @@ case class BestsellersFeedMetaData(domain: String) extends FeedMetaData {
   override val responseEncoding = utf8
 }
 
-case class EventsFeedMetaData(feedName: String,
-                              accessToken: String,
-                              additionalParameters: Map[String, String] = Map.empty)
-  extends FeedMetaData {
+case class EventsFeedMetaData(
+    feedName: String,
+    accessToken: String,
+    additionalParameters: Map[String, String] = Map.empty,
+) extends FeedMetaData {
 
   val name = feedName
   val url = "https://www.eventbriteapi.com/v3/users/me/owned_events/"
   override val parameters = Map(
     "token" -> accessToken,
     "status" -> "live",
-    "expand" -> "ticket_classes,venue"
+    "expand" -> "ticket_classes,venue",
   ) ++ additionalParameters
 
   override val timeout = 20.seconds

@@ -41,17 +41,19 @@ class InlineStylesTest extends FlatSpec with Matchers {
         |<h1>Hello</h1>
         |<h2>Goodbye</h2>
         |</body>
-        |</html>""".stripMargin
+        |</html>""".stripMargin,
     )
 
     val (toInline, head) = InlineStyles.styles(document)
 
-    toInline should be(Seq(
-      CSSRule("h1", ListMap("color" -> "red")),
-      CSSRule("h2", ListMap("color" -> "blue !important", "border" -> "10px dashed aquamarine")),
-      CSSRule("h1", ListMap("color" -> "green", "border" -> "1px solid black")),
-      CSSRule("h2", ListMap("color" -> "yellow", "border" -> "1px solid orange"))
-    ))
+    toInline should be(
+      Seq(
+        CSSRule("h1", ListMap("color" -> "red")),
+        CSSRule("h2", ListMap("color" -> "blue !important", "border" -> "10px dashed aquamarine")),
+        CSSRule("h1", ListMap("color" -> "green", "border" -> "1px solid black")),
+        CSSRule("h2", ListMap("color" -> "yellow", "border" -> "1px solid orange")),
+      ),
+    )
 
     head should be(Seq("a:hover { color: blue }"))
   }
@@ -60,16 +62,21 @@ class InlineStylesTest extends FlatSpec with Matchers {
     val toAdd = CSSRule("h2", ListMap("color" -> "blue", "border" -> "10px dashed aquamarine"))
     val existing = "color: red !important; border: 5px dashed yellow"
     val toAdd2 = CSSRule("td", ListMap("padding-right" -> "0px"))
-    val existing2 = "margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px"
+    val existing2 =
+      "margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px"
 
     InlineStyles.mergeStyles(toAdd, existing) should be("color: red !important; border: 10px dashed aquamarine")
-    InlineStyles.mergeStyles(toAdd2, existing2) should be("margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px; padding-right: 0px")
+    InlineStyles.mergeStyles(toAdd2, existing2) should be(
+      "margin: 0; hyphens: none; vertical-align: top; color: rgb(34, 34, 34); font-family: Helvetica, Arial, sans-serif; line-height: 19px; -moz-hyphens: none; position: relative; padding: 10px 20px 0px 0px; text-align: left; word-break: break-word; border-collapse: collapse !important; font-weight: normal; -webkit-hyphens: none; font-size: 14px; padding-right: 0px",
+    )
   }
 
   it should "preserve properties with base64 strings" in {
     val styles = "font-family: Arial; background: red url(data:image/png;base64,ABCDEF)"
 
-    CSSRule.styleMapFromString(styles) should be(ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"))
+    CSSRule.styleMapFromString(styles) should be(
+      ListMap("font-family" -> "Arial", "background" -> "red url(data:image/png;base64,ABCDEF)"),
+    )
   }
 
   it should "work with urls in values" in {
@@ -85,7 +92,9 @@ class InlineStylesTest extends FlatSpec with Matchers {
   it should "make !important styles appear last while otherwise preserving the existing ordering" in {
     val styleString = "padding-top: 10px !important; color: red; margin: 5px !important; padding: 5px;"
 
-    InlineStyles.sortStyles(styleString) should be("color: red; padding: 5px; padding-top: 10px !important; margin: 5px !important")
+    InlineStyles.sortStyles(styleString) should be(
+      "color: red; padding: 5px; padding-top: 10px !important; margin: 5px !important",
+    )
   }
 
   it should "inline styles correctly" in {

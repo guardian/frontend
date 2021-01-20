@@ -12,11 +12,14 @@ object GoogleBotMetric {
   val Googlebot404Count = CountMetric("googlebot-404s", "Googlebot 404s")
 }
 
-class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
-  appLifecycle.addStopHook{ () => Future{
-    jobs.deschedule("ArchiveSystemMetricsJob")
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      jobs.deschedule("ArchiveSystemMetricsJob")
+    }
+  }
 
   private def report() {
     CloudWatch.putMetrics("ArchiveMetrics", List(GoogleBotMetric.Googlebot404Count), List.empty)
@@ -25,7 +28,7 @@ class ArchiveMetrics(appLifecycle: ApplicationLifecycle, jobs: JobScheduler)(imp
   override def start(): Unit = {
     jobs.deschedule("ArchiveSystemMetricsJob")
 
-    jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?"){
+    jobs.schedule("ArchiveSystemMetricsJob", "0 * * * * ?") {
       report()
     }
   }

@@ -5,7 +5,7 @@ import java.util.concurrent.TimeoutException
 import com.amazonaws.handlers.AsyncHandler
 import com.amazonaws.services.simpleemail._
 import com.amazonaws.services.simpleemail.model.{Destination => EmailDestination, _}
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration.aws.mandatoryCredentials
 
 import scala.collection.JavaConverters._
@@ -14,7 +14,7 @@ import scala.concurrent.{ExecutionContext, Future, Promise}
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 
-class EmailService(akkaAsync: AkkaAsync) extends Logging {
+class EmailService(akkaAsync: AkkaAsync) extends GuLogging {
 
   private lazy val client: AmazonSimpleEmailServiceAsync = AmazonSimpleEmailServiceAsyncClient
     .asyncBuilder()
@@ -22,17 +22,17 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
     .withRegion(conf.Configuration.aws.region)
     .build()
 
-  val sendAsync = client.sendAsyncEmail(akkaAsync)_
+  val sendAsync = client.sendAsyncEmail(akkaAsync) _
 
   def shutdown(): Unit = client.shutdown()
 
   def send(
-    from: String,
-    to: Seq[String],
-    cc: Seq[String] = Nil,
-    subject: String,
-    textBody: Option[String] = None,
-    htmlBody: Option[String] = None
+      from: String,
+      to: Seq[String],
+      cc: Seq[String] = Nil,
+      subject: String,
+      textBody: Option[String] = None,
+      htmlBody: Option[String] = None,
   )(implicit executionContext: ExecutionContext): Future[SendEmailResult] = {
 
     log.info(s"Sending email from $from to $to about $subject")
@@ -62,8 +62,8 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
     val futureResponse = sendAsync(request)
 
-    futureResponse.foreach {
-      response => log.info(s"Sent message ID ${response.getMessageId}")
+    futureResponse.foreach { response =>
+      log.info(s"Sent message ID ${response.getMessageId}")
     }
 
     futureResponse.failed.foreach {
@@ -72,7 +72,6 @@ class EmailService(akkaAsync: AkkaAsync) extends Logging {
 
     futureResponse
   }
-
 
   private implicit class RichEmailClient(client: AmazonSimpleEmailServiceAsync) {
 

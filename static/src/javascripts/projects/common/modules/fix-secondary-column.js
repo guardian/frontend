@@ -1,19 +1,15 @@
-// @flow strict
+
 
 import fastdom from 'lib/fastdom-promise';
 
-type Rect = {
-    top: number,
-    height: number,
-};
 
-const calcShowcaseOffset = (showcaseRect: Rect, mainColRect: Rect): number => {
+const calcShowcaseOffset = (showcaseRect, mainColRect) => {
     const headlineHeight = showcaseRect.top - mainColRect.top;
     const showcaseHeight = showcaseRect.height;
     return headlineHeight + showcaseHeight;
 };
 
-export const fixSecondaryColumn = (): void => {
+export const fixSecondaryColumn = () => {
     const secondaryCol = document.querySelector('.js-secondary-column');
     const mainCol = document.querySelector('.js-content-main-column');
     const showcase = document.querySelector('.media-primary--showcase');
@@ -23,13 +19,13 @@ export const fixSecondaryColumn = (): void => {
     }
 
     fastdom
-        .read(() => {
+        .measure(() => {
             const mainColDim = mainCol.getBoundingClientRect();
             const showcaseDim = showcase.getBoundingClientRect();
             return calcShowcaseOffset(showcaseDim, mainColDim);
         })
         .then(offset =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 secondaryCol.style.paddingTop = `${offset}px`;
             })
         );

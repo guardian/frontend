@@ -46,14 +46,6 @@ module.exports = {
             'bootstraps',
             'youtube-embed.js'
         ),
-        'dotcom-rendering-commercial': path.join(
-            __dirname,
-            'static',
-            'src',
-            'javascripts',
-            'bootstraps',
-            'dotcom-rendering-commercial.js'
-        ),
     },
     output: {
         path: path.join(__dirname, 'static', 'target', 'javascripts'),
@@ -79,6 +71,7 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
         },
+        symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
     },
     resolveLoader: {
         modules: [
@@ -99,16 +92,34 @@ module.exports = {
     module: {
         rules: [
             {
-                test: /\.js$/,
-                // TODO: @guardian/dotcom-rendering is not properly published or pre-transpiled, so we have to
-                // transpile it as part of the frontend build step for now
-                exclude: /(node_modules(?!\/@guardian\/dotcom-rendering)|vendor\/)/,
+                test: /(\.js)|(\.mjs)$/,
+                exclude: [
+                    {
+                        test: /node_modules/,
+                        exclude: [
+                            /@guardian\/(?!(automat-modules|automat-contributions|atom-renderer))/,
+                            /dynamic-import-polyfill/,
+                        ],
+                    },
+                    path.resolve(__dirname, 'static/vendor'),
+                ],
                 loader: 'babel-loader',
             },
             {
                 test: /\.svg$/,
                 exclude: /(node_modules)/,
                 loader: 'svg-loader',
+            },
+            {
+                test: /\.(html|css)$/,
+                exclude: /(node_modules)/,
+                loader: 'raw-loader',
+            },
+            {
+                include: path.resolve(__dirname, 'node_modules/preact-x'),
+                resolve: {
+                    alias: { preact: 'preact-x' },
+                },
             },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This

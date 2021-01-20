@@ -7,11 +7,18 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{Future, ExecutionContext}
 
-class FaciaPressLifecycle(appLifecycle: ApplicationLifecycle, frontPressCron: FrontPressCron, toolPressQueueWorker: ToolPressQueueWorker)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class FaciaPressLifecycle(
+    appLifecycle: ApplicationLifecycle,
+    frontPressCron: FrontPressCron,
+    toolPressQueueWorker: ToolPressQueueWorker,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
-  appLifecycle.addStopHook { () => Future {
-    toolPressQueueWorker.stop()
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      toolPressQueueWorker.stop()
+    }
+  }
 
   override def start(): Unit = {
     toolPressQueueWorker.start

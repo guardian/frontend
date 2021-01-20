@@ -1,6 +1,6 @@
-// @flow
+import React from 'react';
+import styled from '@emotion/styled';
 
-import { React, styled } from '@guardian/dotcom-rendering/packages/guui';
 
 const Scrubber = styled('div')(({ left }) => ({
     backgroundColor: '#ffe500',
@@ -12,13 +12,8 @@ const Scrubber = styled('div')(({ left }) => ({
     width: '5px',
 }));
 
-type Props = {
-    min: number,
-    max: number,
-    value: number,
-};
 
-export default function Slider({ min, max, value }: Props) {
+export default function Slider({ min, max, value }) {
     return (
         <Scrubber
             left={value}

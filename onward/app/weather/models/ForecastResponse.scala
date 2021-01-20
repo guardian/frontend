@@ -14,7 +14,7 @@ object ForecastResponse {
       ISODateTimeFormat
         .dateTimeNoMillis()
         .withOffsetParsed()
-        .parseDateTime(forecastResponse.DateTime)
+        .parseDateTime(forecastResponse.DateTime),
     ).toOption
     ForecastResponse(
       dateTime,
@@ -24,23 +24,25 @@ object ForecastResponse {
         case "C" => Temperatures.fromCelsius(forecastResponse.Temperature.Value)
         case "F" => Temperatures.fromFahrenheit(forecastResponse.Temperature.Value)
         case _ =>
-          throw new RuntimeException("Temperature of neither celsius nor fahrenheit from " +
-            s"Accuweather! $forecastResponse")
-      }
+          throw new RuntimeException(
+            "Temperature of neither celsius nor fahrenheit from " +
+              s"Accuweather! $forecastResponse",
+          )
+      },
     )
   }
 }
 
 case class ForecastResponse(
-  dateTime: Option[DateTime],
-  weatherIcon: Int,
-  weatherText: String,
-  temperature: Temperatures
+    dateTime: Option[DateTime],
+    weatherIcon: Int,
+    weatherText: String,
+    temperature: Temperatures,
 ) {
   def temperatureForEdition(edition: Edition): String = {
     edition match {
       case Us => s"${temperature.imperial.round}°F"
-      case _ => s"${temperature.metric.round}°C"
+      case _  => s"${temperature.metric.round}°C"
     }
   }
 

@@ -1,3 +1,5 @@
+@import navigation.AuthenticationComponentEvent._
+
 @(page: model.Page, formstackForm: _root_.formstack.FormstackForm)(implicit request: RequestHeader)
 
 <!DOCTYPE html>
@@ -393,7 +395,7 @@ a {
                 if (user) {
                     return user;
                 } else {
-                    window.location.href = '/signin?returnUrl=' + document.location.href;
+                    window.location.href = '/signin?returnUrl=' + document.location.href + '&@createAuthenticationComponentEventParams(SigninFromFormStack)';
                 }
             };
 

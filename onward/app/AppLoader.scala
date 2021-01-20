@@ -8,7 +8,7 @@ import common.Logback.{LogbackOperationsPool, LogstashLifecycle}
 import conf.switches.SwitchboardLifecycle
 import conf.CachedHealthCheckLifeCycle
 import contentapi.{CapiHttpClient, ContentApiClient, HttpClient}
-import controllers.{HealthCheck, OnwardControllers, TechFeedbackController}
+import controllers.{HealthCheck, OnwardControllers}
 import dev.{DevAssetsController, DevParametersHttpRequestHandler}
 import feed._
 import model.{ApplicationContext, ApplicationIdentity}
@@ -27,7 +27,8 @@ import _root_.commercial.targeting.TargetingLifecycle
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait OnwardServices {
@@ -44,6 +45,7 @@ trait OnwardServices {
   lazy val geoMostPopularAgent = wire[GeoMostPopularAgent]
   lazy val dayMostPopularAgent = wire[DayMostPopularAgent]
   lazy val mostPopularAgent = wire[MostPopularAgent]
+  lazy val deeplyReadAgent = wire[DeeplyReadAgent]
   lazy val mostReadAgent = wire[MostReadAgent]
   lazy val mostPopularSocialAutoRefresh = wire[MostPopularSocialAutoRefresh]
   lazy val mostViewedAudioAgent = wire[MostViewedAudioAgent]
@@ -57,7 +59,6 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
-  lazy val feedbackController = wire[TechFeedbackController]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   override lazy val lifecycleComponents = List(
@@ -68,7 +69,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
     wire[MostPopularFacebookAutoRefreshLifecycle],
     wire[SwitchboardLifecycle],
     wire[CachedHealthCheckLifeCycle],
-    wire[TargetingLifecycle]
+    wire[TargetingLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -78,7 +79,7 @@ trait AppComponents extends FrontendComponents with OnwardControllers with Onwar
   val applicationMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
-    ContentApiMetrics.ContentApiRequestsMetric
+    ContentApiMetrics.ContentApiRequestsMetric,
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters

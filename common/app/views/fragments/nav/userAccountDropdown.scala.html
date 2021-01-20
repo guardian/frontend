@@ -1,6 +1,7 @@
 @()(implicit request: RequestHeader)
 
 @import conf.Configuration
+@import navigation.AuthenticationComponentEvent._
 @import views.support.DropdownMenus.accountDropdownMenu
 
 <div class="new-header__user-account-container">
@@ -8,12 +9,12 @@
 
     <a class="top-bar__item js-navigation-sign-in my-account"
         data-link-name="nav2 : topbar : signin"
-        href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN">
+        href="@Configuration.id.url/signin?INTCMP=DOTCOM_NEWHEADER_SIGNIN&@createAuthenticationComponentEventParams(SigninHeaderId)">
         @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
         Sign in
     </a>
 
-    <input 
+    <input
         type="checkbox"
         id="my-account-toggle"
         aria-controls="my-account-dropdown"
@@ -24,7 +25,7 @@
 
     <label class="top-bar__item popup__toggle js-navigation-account-actions js-user-account-trigger is-hidden"
         for="my-account-toggle"
-        data-link-name="nav2 : topbar: my account"        
+        data-link-name="nav2 : topbar: my account"
         tabindex="0">
             @fragments.inlineSvg("profile", "icon", List("top-bar__item__icon"))
             My account

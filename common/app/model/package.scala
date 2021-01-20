@@ -14,7 +14,9 @@ object `package` {
     lazy val isAudio: Boolean = content.tags exists { _.id == "type/audio" }
     lazy val isMedia: Boolean = isGallery || isVideo || isAudio
     lazy val isPoll: Boolean = content.tags exists { _.id == "type/poll" }
-    lazy val isImageContent: Boolean = content.tags exists { tag => List("type/cartoon", "type/picture", "type/graphic").contains(tag.id) }
+    lazy val isImageContent: Boolean = content.tags exists { tag =>
+      List("type/cartoon", "type/picture", "type/graphic").contains(tag.id)
+    }
     lazy val isInteractive: Boolean = content.tags exists { _.id == "type/interactive" }
     lazy val isLiveBlog: Boolean = content.tags.exists(t => Tags.liveMappings.contains(t.id))
     lazy val isComment = content.tags.exists(t => Tags.commentMappings.contains(t.id))
@@ -36,7 +38,7 @@ object `package` {
 
     val parts = pageId.split("/").toList match {
       case edition :: rest if editions.contains(edition) => rest
-      case uneditionalised => uneditionalised
+      case uneditionalised                               => uneditionalised
     }
 
     val path = parts.mkString("/")

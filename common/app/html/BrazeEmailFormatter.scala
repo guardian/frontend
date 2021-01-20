@@ -1,7 +1,7 @@
 package html
 
 import java.net.URL
-import common.Logging
+import common.GuLogging
 import model.EmailAddons
 import org.jsoup.Jsoup
 import org.jsoup.nodes._
@@ -9,7 +9,7 @@ import play.twirl.api.Html
 import scala.collection.JavaConverters._
 import scala.util.Try
 
-object BrazeEmailFormatter extends Logging {
+object BrazeEmailFormatter extends GuLogging {
 
   def apply(html: Html): Html = {
     val documentBody = Jsoup.parse(html.toString)
@@ -22,12 +22,12 @@ object BrazeEmailFormatter extends Logging {
 
   private def setLinks(element: Element): Element = {
     Option(element.attr("href"))
-      .collect { case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
-        val startQuery = Try(new URL(url))
-          .toOption
-          .flatMap(uri => Option(uri.getQuery))
-          .fold("?")(_ => "&")
-        s"$url$startQuery##braze_utm##"
+      .collect {
+        case url if url.nonEmpty && element.nodeName() == "a" && !url.contains(EmailAddons.unsubscribePlaceholder) =>
+          val startQuery = Try(new URL(url)).toOption
+            .flatMap(uri => Option(uri.getQuery))
+            .fold("?")(_ => "&")
+          s"$url$startQuery##braze_utm##"
       }
       .foreach { newHref =>
         element.attr("href", newHref)

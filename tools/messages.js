@@ -108,7 +108,7 @@ switch (process.argv[2]) {
 
     case 'pasteup': {
         notify(
-            'You will need to release a new version of pasteup to NPM once you’ve merged this branch to master.\n\nTo begin a new release, run `make pasteup`.',
+            'You will need to release a new version of pasteup to NPM once you’ve merged this branch to main.\n\nTo begin a new release, run `make pasteup`.',
             {
                 heading: 'Pasteup files have changed',
             },

@@ -1,12 +1,12 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.utils.v201902.StatementBuilder
-import com.google.api.ads.admanager.axis.v201902.{LineItemCreativeAssociationStatus, ThirdPartyCreative}
-import common.Logging
+import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
+import com.google.api.ads.admanager.axis.v202011.{LineItemCreativeAssociationStatus, ThirdPartyCreative}
+import common.GuLogging
 
 import scala.util.matching.Regex
 
-package object rubicon extends Logging {
+package object rubicon extends GuLogging {
 
   def withDfpSession[T](networkId: String)(block: SessionWrapper => Seq[T]): Seq[T] = {
     val results = for {
@@ -22,8 +22,8 @@ package object rubicon extends Logging {
     def licaStmtBuilder(lineItemIds: Seq[Long]) = {
       val lineItems = lineItemIds.mkString(",")
       new StatementBuilder()
-      .where(s"status = :status AND lineItemId IN ($lineItems)")
-      .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
+        .where(s"status = :status AND lineItemId IN ($lineItems)")
+        .withBindVariableValue("status", LineItemCreativeAssociationStatus._ACTIVE)
     }
 
     def creativeStmtBuilder(creativeIds: Seq[Long]) =

@@ -10,6 +10,6 @@ case class FilterExemptions(additionalUrls: String*) {
     FilterExemption("/oauth2callback"),
     FilterExemption("/assets"),
     FilterExemption("/favicon.ico"),
-    FilterExemption("/_healthcheck")
-  ) ++ additionalUrls.map { url => FilterExemption(url)}
+    FilterExemption("/_healthcheck"),
+  ) ++ additionalUrls.map { url => FilterExemption(url) }
 }

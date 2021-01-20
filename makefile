@@ -11,6 +11,8 @@ help:
 list: # PRIVATE
 	@node tools/messages.js describeMakefile --all
 
+# Add phony targets
+.PHONY: sbt
 
 
 # *********************** SETUP ***********************
@@ -18,12 +20,11 @@ list: # PRIVATE
 # Install all 3rd party dependencies.
 install: check-node-env
 	@yarn -s install
+	@./tools/sync-githooks.js
 
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
 	@rm -rf node_modules
-	@rm -rf ui/node_modules
-	@rm -rf dev/eslint-plugin-guardian-frontend/node_modules
 	@rm -rf tools/amp-validation/node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
@@ -41,6 +42,9 @@ check-node-env: # PRIVATE
 # Uses port 3000 insead of 9000.
 watch: compile-watch
 	@./dev/watch.js
+
+sbt: # PRIVATE
+	./sbt
 
 # *********************** ASSETS ***********************
 

@@ -12,6 +12,7 @@ class IdentityConfiguration(conf: GuardianConfiguration) extends IdConfig with S
   val oauthUrl: String = conf.id.oauthUrl
   val url: String = conf.id.url
   val membersDataApiUrl: String = conf.id.membersDataApiUrl
+  val discussionApiUrl: String = conf.discussion.apiRoot
 }
 
 trait IdConfig {

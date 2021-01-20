@@ -1,4 +1,3 @@
-// @flow
 import qwery from 'qwery';
 import { addEventListener } from 'lib/events';
 import fastdom from 'lib/fastdom-promise';
@@ -6,19 +5,13 @@ import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
+import fabricVideoStr from 'commercial/views/creatives/fabric-video.html';
 import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
-    isUpdating: boolean;
-    adSlot: HTMLElement;
-    params: Object;
-    layer2: ?Array<Element>;
-    video: ?HTMLVideoElement;
-    hasVideo: boolean;
-    inView: boolean;
 
-    constructor(adSlot: HTMLElement, params: Object) {
+
+    constructor(adSlot, params) {
         const isSmallScreen = isBreakpoint({
             max: 'phablet',
         });
@@ -65,7 +58,7 @@ class FabricVideo {
         this.inView = rect.top >= 0 && rect.bottom < viewportHeight;
         if (!this.isUpdating) {
             this.isUpdating = true;
-            fastdom.write(this.updateView, this);
+            fastdom.mutate(this.updateView, this);
         }
     }
 
@@ -115,7 +108,7 @@ class FabricVideo {
         const fabricVideoTpl = template(fabricVideoStr);
 
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (this.params.Trackingpixel) {
                     addTrackingPixel(
                         this.params.Trackingpixel + this.params.cacheBuster
@@ -177,7 +170,7 @@ class FabricVideo {
                     this.video.onended = this.onVideoEnded;
                 }
 
-                fastdom.read(this.onScroll, this);
+                fastdom.measure(this.onScroll, this);
 
                 return true;
             });

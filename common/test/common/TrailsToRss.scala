@@ -31,29 +31,39 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "TrailsToRss" should "not strip valid Unicode characters from XML" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
-    (rss \\ "item" \\ "title" )(1).text should be("hello …")
+    (rss \\ "item" \\ "title")(1).text should be("hello …")
   }
 
   it should "strip invalid Unicode characters from XML" in {
-    isWellFormedXML(TrailsToRss(Option("foo"), Seq(
-      testTrail("h", customTitle = Some("\u0000LOL"))
-    ))(request)) shouldBe true
+    isWellFormedXML(
+      TrailsToRss(
+        Option("foo"),
+        Seq(
+          testTrail("h", customTitle = Some("\u0000LOL")),
+        ),
+      )(request),
+    ) shouldBe true
   }
 
   "TrailsToRss" should "escape special XML characters" in {
-    isWellFormedXML(TrailsToRss(Option("foo"), Seq(
-      testTrail("c", customTitle = Some("TV & Radio")),
-      testTrail("d", customTitle = Some("Scala < Haskell")),
-      testTrail("e", customTitle = Some("Scala > JavaScript")),
-      testTrail("f", customTitle = Some("Let's get a pizza")),
-      testTrail("g", customTitle = Some(""" "No, let's not." """))
-    ))(request)) shouldBe true
+    isWellFormedXML(
+      TrailsToRss(
+        Option("foo"),
+        Seq(
+          testTrail("c", customTitle = Some("TV & Radio")),
+          testTrail("d", customTitle = Some("Scala < Haskell")),
+          testTrail("e", customTitle = Some("Scala > JavaScript")),
+          testTrail("f", customTitle = Some("Let's get a pizza")),
+          testTrail("g", customTitle = Some(""" "No, let's not." """)),
+        ),
+      )(request),
+    ) shouldBe true
   }
 
   "TrailsToRss" should "should include published date and byline" in {
     val rss = XML.loadString(TrailsToRss(Option("foo"), trails)(request))
-    (rss \\ "item" \\ "creator" ).filter(_.prefix == "dc").head.text should be("Chadders")
-    (rss \\ "item" \\ "pubDate" ).size should be(2)
+    (rss \\ "item" \\ "creator").filter(_.prefix == "dc").head.text should be("Chadders")
+    (rss \\ "item" \\ "pubDate").size should be(2)
   }
 
   def isWellFormedXML(s: String): Boolean =
@@ -74,9 +84,7 @@ class TrailsToRssTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       webPublicationDate = Some(offsetDate.toCapiDateTime),
       elements = None,
       webTitle = customTitle getOrElse "hello …",
-      fields = Some(ContentFields(
-        liveBloggingNow = Some(true),
-        byline = Some("Chadders")))
+      fields = Some(ContentFields(liveBloggingNow = Some(true), byline = Some("Chadders"))),
     )
     model.Content(contentItem).trail
   }

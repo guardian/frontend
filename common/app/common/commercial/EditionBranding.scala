@@ -24,35 +24,38 @@ object EditionBranding {
     implicit val brandingTypeReads: Reads[BrandingType] = {
       (__ \ "name").read[String] map {
         case PaidContent.name => PaidContent
-        case Foundation.name => Foundation
-        case _ => Sponsored
+        case Foundation.name  => Foundation
+        case _                => Sponsored
       }
     }
 
     val brandingReads: Reads[Branding] = (
       (JsPath \ "brandingType").read[BrandingType] and
-      (JsPath \ "sponsorName").read[String] and
-      (JsPath \ "logo").read[Logo] and
-      (JsPath \ "logoForDarkBackground").readNullable[Logo] and
-      // the 'about this' link has become required so this is to avoid breaking a lot of pressed fronts
-      (JsPath \ "aboutThisLink").readNullable[String].map(_.getOrElse("")) and
-      (JsPath \ "hostedCampaignColour").readNullable[String]
-      ) (Branding.apply _)
+        (JsPath \ "sponsorName").read[String] and
+        (JsPath \ "logo").read[Logo] and
+        (JsPath \ "logoForDarkBackground").readNullable[Logo] and
+        // the 'about this' link has become required so this is to avoid breaking a lot of pressed fronts
+        (JsPath \ "aboutThisLink").readNullable[String].map(_.getOrElse("")) and
+        (JsPath \ "hostedCampaignColour").readNullable[String]
+    )(Branding.apply _)
 
     Format(brandingReads, Json.writes[Branding])
   }
 
   implicit val editionBrandingFormat = Json.format[EditionBranding]
 
-  def fromContent(item: Content): Set[EditionBranding] = Edition.all.toSet[Edition] map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(item))
-  }
+  def fromContent(item: Content): Set[EditionBranding] =
+    Edition.all.toSet[Edition] map { edition =>
+      EditionBranding(edition, BrandingFinder.findBranding(edition.id)(item))
+    }
 
-  def fromSection(section: Section): Set[EditionBranding] = Edition.all.toSet[Edition] map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(section))
-  }
+  def fromSection(section: Section): Set[EditionBranding] =
+    Edition.all.toSet[Edition] map { edition =>
+      EditionBranding(edition, BrandingFinder.findBranding(edition.id)(section))
+    }
 
-  def fromTag(tag: Tag): Set[EditionBranding] = Edition.all.toSet[Edition] map { edition =>
-    EditionBranding(edition, BrandingFinder.findBranding(edition.id)(tag))
-  }
+  def fromTag(tag: Tag): Set[EditionBranding] =
+    Edition.all.toSet[Edition] map { edition =>
+      EditionBranding(edition, BrandingFinder.findBranding(edition.id)(tag))
+    }
 }

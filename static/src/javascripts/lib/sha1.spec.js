@@ -1,5 +1,3 @@
-// @flow
-
 import sha1 from './sha1';
 
 const TABLE = [

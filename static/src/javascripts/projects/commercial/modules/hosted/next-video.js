@@ -1,9 +1,8 @@
-// @flow
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import fastdom from 'lib/fastdom-promise';
 
-const loadNextVideo = (): Promise<void> => {
+const loadNextVideo = () => {
     const placeholders = document.querySelectorAll('.js-autoplay-placeholder');
 
     if (placeholders.length) {
@@ -15,7 +14,7 @@ const loadNextVideo = (): Promise<void> => {
                 mode: 'cors',
             }
         ).then(json =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 let i;
                 for (i = 0; i < placeholders.length; i += 1) {
                     placeholders[i].innerHTML = json.html;

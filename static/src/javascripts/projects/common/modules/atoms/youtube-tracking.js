@@ -1,14 +1,12 @@
-// @flow
 import mediator from 'lib/mediator';
 import config from 'lib/config';
 import ophan from 'ophan/ng';
 import { buildGoogleAnalyticsEvent } from 'common/modules/video/ga-helper';
-import type { MediaEvent } from 'common/modules/video/ga-helper';
 
-const buildEventId = (event: string, videoId: string): string =>
+const buildEventId = (event, videoId) =>
     `${event}:${videoId}`;
 
-const initYoutubeEvents = (videoId: string): void => {
+const initYoutubeEvents = (videoId) => {
     const gaTracker = config.get('googleAnalytics.trackers.editorial');
     const eventAction = 'video content';
     const events = {
@@ -28,7 +26,7 @@ const initYoutubeEvents = (videoId: string): void => {
             dimension20: 'gu-video-youtube',
         },
     };
-    const ophanRecord = (event: MediaEvent): void => {
+    const ophanRecord = (event) => {
         const eventObject = {
             video: {
                 id: `gu-video-youtube-${event.mediaId}`,
@@ -40,7 +38,7 @@ const initYoutubeEvents = (videoId: string): void => {
 
     ['play', '25', '50', '75', 'end'].forEach(event => {
         mediator.once(buildEventId(event, videoId), id => {
-            const mediaEvent: MediaEvent = {
+            const mediaEvent = {
                 mediaId: videoId,
                 mediaType: 'video',
                 eventType: event,
@@ -70,7 +68,7 @@ const initYoutubeEvents = (videoId: string): void => {
     });
 };
 
-const trackYoutubeEvent = (event: string, id: string): void => {
+const trackYoutubeEvent = (event, id) => {
     mediator.emit(buildEventId(event, id), id);
 };
 

@@ -9,18 +9,20 @@ class TagIndexPageTest extends FlatSpec with Matchers with ResourcesHelper {
   val cuba = TagDefinition(
     "Cuba",
     "travel/cuba",
-    Some(SectionDefinition(
-      "Travel",
-      "travel"
-    )),
-    false
+    Some(
+      SectionDefinition(
+        "Travel",
+        "travel",
+      ),
+    ),
+    false,
   )
 
   val crownProsecutionService = TagDefinition(
     "Crown Prosecution Service",
     "law/crown-prosecution-service",
     None,
-    false
+    false,
   )
 
   "hasDuplicateWebTitle" should "return true for tags whose web title occurs for another tag" in {

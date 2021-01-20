@@ -18,14 +18,14 @@ Examples:
 
 - [https://www.theguardian.com/uk/culture]()
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/facia/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/facia/conf/routes)
 
 [Architectural diagram](02-fronts-architecture.md)
 
 # Article
 Article app serves all Guardian [articles](https://www.theguardian.com/world/2016/jul/18/european-leaders-urge-turkey-to-respect-rule-of-law-after-failed-coup), [live blogs](https://www.theguardian.com/sport/live/2016/jul/18/county-cricket-hampshire-v-surrey-and-more-live) or minute emails.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/article/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/article/conf/routes)
 
 # Applications
 Applications app is responsible to serve:
@@ -52,7 +52,7 @@ Applications app is responsible to serve:
 
 - ...
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/applications/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/applications/conf/routes)
 
 # Onward
 Onward app serves related content like:
@@ -65,7 +65,7 @@ Onward app serves related content like:
 
 - Series content
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/onward/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/onward/conf/routes)
 
 # Discussion
 Discussion app is responsible to serve all content related to article comments:
@@ -76,12 +76,12 @@ Discussion app is responsible to serve all content related to article comments:
 
 - Report abuse
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/discussion/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/discussion/conf/routes)
 
 # Commercial
-Commercial app serves all commercial components (Travel offers, Masterclasses, Soulmates, Money, Book, Live events or Hosted content).
+Commercial app serves all commercial components (Travel offers, Masterclasses, Money, Book, Live events or Hosted content).
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/commercial/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/commercial/conf/routes)
 
 # Facia-Press
 Facia-press's only task is to press fronts.
@@ -95,7 +95,7 @@ Pressing tasks are also scheduled via a cron job to be triggered on a regular ba
 
 It is also possible to run a pressing task by manually sending a request to one of the supported endpoints.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/facia-press/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/facia-press/conf/routes)
 
 [Architectural diagram](02-fronts-architecture.md)
 
@@ -104,44 +104,44 @@ Identity app is responsible for all account related endpoints (sign-in, register
 
 Parts of Identity, including sign-in and registration are now served by a separate stack in: [identity-frontend](https://github.com/guardian/identity-frontend). Old sign-in and registration pages are still within this repo, to be deprecated.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/identity/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/identity/conf/routes)
 
 # Sport
 Sport app serves match results, league tables, upcoming matches, teams and competitions for Football, Cricket and Rugby.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/sport/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/sport/conf/routes)
 
 
 # Rss
 Rss app is rendering the RSS version for all Guardian content.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/rss/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/rss/conf/routes)
 
 # Admin
 Admin app hosts a set of dashboards and tools used by Guardian developers to monitor, manage and troubleshoot the Guardian website.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/admin/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/admin/conf/routes)
 
 - Create breaking-news alerts
 
 - [Get all breaking-news alert](http://api.nextgen.guardianapps.co.uk/news-alert/alerts)
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/sport/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/sport/conf/routes)
 
 # Archive
 In case none of the other apps can serve a given request, it is finally passed to the Archive app which checks if there is any redirect setup for this url or any old static content attached to it.
 
 If yes the Archive app returns this old static content or redirect, otherwise a 404 is eventually served to the client.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/archive/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/archive/conf/routes)
 
 # Diagnostics
 Diagnostics app is used internally to gather data and analytics from the Guardian frontend client side.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/diagnostics/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/diagnostics/conf/routes)
 
 # Preview
 Preview is a standalone version of the guardian website (ie: an aggregation of all the other apps) used in the editorial tool to preview draft article before they are live.
 It allows us to have a fully functional version of the website without the overhead of maintaining an entire new stack.
 
-[All supported routes](https://github.com/guardian/frontend/blob/master/preview/conf/routes)
+[All supported routes](https://github.com/guardian/frontend/blob/main/preview/conf/routes)

@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 import mediator from 'lib/mediator';
 import fetchJSON from 'lib/fetch-json';
@@ -8,7 +6,7 @@ import { begin, error, end } from 'common/modules/analytics/register';
 import { Expandable } from 'common/modules/ui/expandable';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const buildExpandable = (el: HTMLElement): void => {
+const buildExpandable = (el) => {
     new Expandable({
         dom: el,
         expanded: false,
@@ -16,13 +14,15 @@ const buildExpandable = (el: HTMLElement): void => {
     }).init();
 };
 
-const popularInTagOverride = (): ?string | false => {
+const popularInTagOverride = () => {
     /* whitelist of tags to override related story component with a
        popular-in-tag component */
     if (!config.get('page.keywordIds')) {
         return false;
     }
 
+    // This list also exists in DCR https://github.com/guardian/dotcom-rendering/blob/88a9693e7ee23e3e7e140ba680b12a19288e96f6/src/web/components/Onwards/Onwards.tsx
+    // If you change this list then you should also update ^
     // order matters here (first match wins)
     const whitelistedTags = [
         // sport tags
@@ -55,7 +55,7 @@ const popularInTagOverride = (): ?string | false => {
         'football/liverpool',
     ];
 
-    const intersect = (a: Array<string>, b: Array<string>): Array<string> =>
+    const intersect = (a, b) =>
         [...new Set(a)].filter(_ => new Set(b).has(_));
     const pageTags = config.get('page.keywordIds', '').split(',');
     // if this is an advertisement feature, use the page's keyword (there'll only be one)
@@ -68,7 +68,7 @@ const popularInTagOverride = (): ?string | false => {
     }
 };
 
-const related = (opts: Object): void => {
+const related = (opts) => {
     let relatedUrl;
     let popularInTag;
     let componentName;
@@ -111,7 +111,7 @@ const related = (opts: Object): void => {
 
             fetchJSON(relatedUrl, { mode: 'cors' })
                 .then(resp =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         container.innerHTML = resp.html;
                         container.classList.add('lazyloaded');
                     })

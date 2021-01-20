@@ -3,9 +3,7 @@ package commercial.model.merchandise.events
 import play.api.data.validation.ValidationError
 import play.api.libs.json._
 
-case class LiveEventMembershipInfo(id: String,
-                                   url: String,
-                                   mainImageUrl: String)
+case class LiveEventMembershipInfo(id: String, url: String, mainImageUrl: String)
 
 object LiveEventMembershipInfo {
   implicit val format = Json.format[LiveEventMembershipInfo]
@@ -15,7 +13,7 @@ object LiveEventMembershipInfo {
     override def reads(json: JsValue): JsResult[Seq[LiveEventMembershipInfo]] = {
       json match {
         case JsArray(jsValues) => JsSuccess(jsValues.flatMap(_.asOpt[LiveEventMembershipInfo]))
-        case _ => JsError(JsonValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))
+        case _                 => JsError(JsonValidationError("error.expected.jsarray containing LiveEventMembershipInfo"))
       }
     }
   }

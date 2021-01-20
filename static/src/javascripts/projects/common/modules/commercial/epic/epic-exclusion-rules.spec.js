@@ -1,5 +1,3 @@
-// @flow
-
 import { isArticleWorthAnEpicImpression } from './epic-exclusion-rules.js';
 
 describe('isArticleWorthAnEpicImpression', () => {

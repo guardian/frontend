@@ -1,5 +1,3 @@
-// @flow
-
 import bean from 'bean';
 import bonzo from 'bonzo';
 import qwery from 'qwery';
@@ -16,14 +14,8 @@ import { init as initRelativeDates } from 'common/modules/ui/relativedates';
 import { initNotificationCounter } from 'common/modules/ui/notification-counter';
 import { checkElemsForVideos } from 'common/modules/atoms/youtube';
 
-type autoUpdateOptions = {
-    toastOffsetTop: number,
-    minUpdateDelay: number,
-    maxUpdateDelay: number,
-    backoffMultiplier: number,
-};
 
-const autoUpdate = (opts?: autoUpdateOptions): void => {
+const autoUpdate = (opts) => {
     const options = Object.assign(
         {
             toastOffsetTop: 12,
@@ -44,7 +36,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     let unreadBlocksNo = 0;
     let updateTimeoutId;
 
-    const updateDelay = (delay: number): void => {
+    const updateDelay = (delay) => {
         let newDelay;
 
         if (pageVisible()) {
@@ -56,13 +48,13 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         currentUpdateDelay = newDelay;
     };
 
-    const scrolledPastTopBlock = (): boolean =>
+    const scrolledPastTopBlock = () =>
         $liveblogBody.offset().top < window.pageYOffset;
 
     const isLivePage = !window.location.search.includes('?page=');
 
-    const revealInjectedElements = (): void => {
-        fastdom.write(() => {
+    const revealInjectedElements = () => {
+        fastdom.mutate(() => {
             $('.autoupdate--hidden', $liveblogBody)
                 .addClass('autoupdate--highlight')
                 .removeClass('autoupdate--hidden');
@@ -70,8 +62,8 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         });
     };
 
-    const toastButtonRefresh = (): void => {
-        fastdom.write(() => {
+    const toastButtonRefresh = () => {
+        fastdom.mutate(() => {
             if (unreadBlocksNo > 0) {
                 const updateText =
                     unreadBlocksNo > 1 ? ' new updates' : ' new update';
@@ -87,12 +79,12 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         });
     };
 
-    const injectNewBlocks = (newBlocks: string): void => {
+    const injectNewBlocks = (newBlocks) => {
         // Clean up blocks before insertion
         const resultHtml = $.create(`<div>${newBlocks}</div>`)[0];
         let elementsToAdd;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             bonzo(resultHtml.children).addClass('autoupdate--hidden');
             elementsToAdd = Array.from(resultHtml.children);
 
@@ -107,7 +99,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         });
     };
 
-    const displayNewBlocks = (): void => {
+    const displayNewBlocks = () => {
         if (pageVisible()) {
             revealInjectedElements();
         }
@@ -116,7 +108,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         toastButtonRefresh();
     };
 
-    const checkForUpdates = (): Promise<void> => {
+    const checkForUpdates = () => {
         if (updateTimeoutId !== undefined) {
             clearTimeout(updateTimeoutId);
         }
@@ -130,7 +122,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         const endpoint = `${window.location.pathname}.json${params}`;
 
         // #? One day this should be in Promise.finally()
-        const setUpdateDelay = (): void => {
+        const setUpdateDelay = () => {
             if (count === 0 || currentUpdateDelay > 0) {
                 updateDelay(currentUpdateDelay);
 
@@ -178,14 +170,14 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
             });
     };
 
-    const setUpListeners = (): void => {
+    const setUpListeners = () => {
         bean.on(document.body, 'click', '.toast__button', () => {
             if (isLivePage) {
-                fastdom.read(() => {
+                fastdom.measure(() => {
                     scrollToElement(qwery('.blocks')[0], 300, 'easeOutQuad');
 
                     fastdom
-                        .write(() => {
+                        .mutate(() => {
                             $toastButton.addClass('loading');
                         })
                         .then(() => {
@@ -200,7 +192,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
         mediator.on('modules:toast__tofix:unfixed', () => {
             if (isLivePage && unreadBlocksNo > 0) {
                 fastdom
-                    .write(() => {
+                    .mutate(() => {
                         $toastButton.addClass('loading');
                     })
                     .then(() => {
@@ -232,7 +224,7 @@ const autoUpdate = (opts?: autoUpdateOptions): void => {
     initPageVisibility();
     setUpListeners();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         // Enables the animations for injected blocks
         $liveblogBody.addClass('autoupdate--has-animation');
     });

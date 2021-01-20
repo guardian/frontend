@@ -1,5 +1,3 @@
-// @flow
-
 import bonzo from 'bonzo';
 import debounce from 'lodash/debounce';
 import fastdom from 'lib/fastdom-promise';
@@ -8,7 +6,7 @@ import mediator from 'lib/mediator';
 let items = [];
 const scroll = { top: 0, bottom: 0 };
 
-const doProximityLoading = (): void => {
+const doProximityLoading = () => {
     scroll.top = window.pageYOffset;
     scroll.bottom = scroll.top + bonzo.viewport().height;
     items = items.filter(item => {
@@ -27,7 +25,7 @@ const doProximityLoading = (): void => {
 
 const doProximityLoadingDebounced = debounce(doProximityLoading, 2000);
 
-const addItem = (conditionFn: () => boolean, loadFn: () => void): void => {
+const addItem = (conditionFn, loadFn) => {
     // calls `loadFn` when `conditionFn` is true
     const item = { conditionFn, loadFn };
 
@@ -41,12 +39,12 @@ const addItem = (conditionFn: () => boolean, loadFn: () => void): void => {
 };
 
 const addProximityLoader = (
-    el: HTMLElement,
-    distanceThreshold: number,
-    loadFn: () => void
-): void => {
+    el,
+    distanceThreshold,
+    loadFn
+) => {
     // calls `loadFn` when screen is within `distanceThreshold` of `el`
-    fastdom.read(() => {
+    fastdom.measure(() => {
         const $el = bonzo(el);
         const conditionFn = () => {
             const elOffset = $el.offset();

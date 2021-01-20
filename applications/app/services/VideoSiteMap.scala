@@ -3,7 +3,7 @@ package services
 import common.Edition
 import conf.Configuration
 import contentapi.ContentApiClient
-import implicits.Dates.{ DateTime2ToCommonDateFormats, jodaToJavaInstant }
+import implicits.Dates.{DateTime2ToCommonDateFormats, jodaToJavaInstant}
 import model.{Content, Video}
 import org.joda.time.{DateTime, DateTimeZone}
 import views.support.Naked
@@ -13,25 +13,26 @@ import scala.xml.{Elem, NodeSeq}
 
 class VideoSiteMap(contentApiClient: ContentApiClient) {
 
-  private case class UrlSet(urls: Seq[Url]){
+  private case class UrlSet(urls: Seq[Url]) {
     def xml(): Elem = {
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
               xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-        { urls.map(_.xml()) }
+        {urls.map(_.xml())}
       </urlset>
     }
   }
 
   private case class Url(
-    location: String,
-    thumbnail_loc: Option[String],
-    content_loc: Option[String],
-    title: String,
-    description: Option[String],
-    duration: Int,
-    publication: DateTime,
-    tags: Seq[String],
-    category: String) {
+      location: String,
+      thumbnail_loc: Option[String],
+      content_loc: Option[String],
+      title: String,
+      description: Option[String],
+      duration: Int,
+      publication: DateTime,
+      tags: Seq[String],
+      category: String,
+  ) {
 
     def xml(): Elem = {
       <url>
@@ -55,7 +56,8 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
 
     val date = DateTime.now(DateTimeZone.UTC).minusDays(2)
 
-    val query = contentApiClient.search(Edition.defaultEdition)
+    val query = contentApiClient
+      .search(Edition.defaultEdition)
       .pageSize(200)
       .tag("type/video,-tone/sponsoredfeatures,-tone/advertisement-features")
       .orderBy("newest")
@@ -76,18 +78,21 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
     responses.map { paginatedResults =>
       val urls = for {
         resp <- paginatedResults
-        item <- resp.results.map(Content.apply).collect({ case video:Video => video })
+        item <- resp.results.map(Content.apply).collect({ case video: Video => video })
       } yield {
         val keywordTags = item.tags.keywords.map(_.metadata.webTitle)
-        val sectionTag = item.content.seriesTag.filter(tag => !keywordTags.contains(tag.properties.sectionName)).map(_.metadata.webTitle)
+        val sectionTag = item.content.seriesTag
+          .filter(tag => !keywordTags.contains(tag.properties.sectionName))
+          .map(_.metadata.webTitle)
 
-
-        val imageUrl: String = item.elements.mainPicture.flatMap(_.images.largestEditorialCrop.flatMap(_.url))
+        val imageUrl: String = item.elements.mainPicture
+          .flatMap(_.images.largestEditorialCrop.flatMap(_.url))
           .getOrElse(Configuration.images.fallbackLogo)
 
-        val contentLocation: Option[String] = item.elements.mainVideo.flatMap(_.videos.encodings.find(_.format == "video/mp4")).map { encoding =>
-          encoding.url
-        }
+        val contentLocation: Option[String] =
+          item.elements.mainVideo.flatMap(_.videos.encodings.find(_.format == "video/mp4")).map { encoding =>
+            encoding.url
+          }
 
         Url(
           location = item.metadata.webUrl,
@@ -98,7 +103,8 @@ class VideoSiteMap(contentApiClient: ContentApiClient) {
           duration = item.elements.mainVideo.map(_.videos.duration).getOrElse(0),
           publication = item.trail.webPublicationDate,
           tags = keywordTags ++ sectionTag,
-          category = item.metadata.sectionId)
+          category = item.metadata.sectionId,
+        )
       }
 
       UrlSet(urls take 1000).xml()

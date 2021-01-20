@@ -48,10 +48,8 @@ POST        /ajax/clear                                                         
 
 # Development endpoints
 GET         /dev/switchboard                                                                        controllers.admin.SwitchboardController.renderSwitchboard()
-GET         /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.renderSwitchboard()
 
 POST        /dev/switchboard                                                                        controllers.admin.SwitchboardController.save()
-POST        /dev/switchboard-plista                                                                 controllers.admin.SwitchboardPlistaController.save()
 
 # Analytics
 GET         /analytics/abtests                                                                      controllers.admin.AnalyticsController.abtests()
@@ -62,7 +60,7 @@ GET         /reader-revenue                                                     
 GET         /reader-revenue/contributions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
 GET         /reader-revenue/subscriptions-banner                                                    controllers.admin.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
 POST        /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                     controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
-POST        /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world>                     controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
+POST        /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world|european-union>                     controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
 
 # Commercial
 GET         /commercial                                                                             controllers.admin.CommercialController.renderCommercialMenu()

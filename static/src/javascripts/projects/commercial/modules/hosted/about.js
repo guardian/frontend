@@ -1,11 +1,9 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
 
-const template = (): string => `
+const template = () => `
         <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">
             <div class="survey-container">
                 <h3 class="survey-text__header">
@@ -33,7 +31,7 @@ const template = (): string => `
 
 export const init = () =>
     fastdom
-        .write(() => {
+        .mutate(() => {
             $(document.body).append(template());
         })
         .then(() => {
@@ -45,13 +43,13 @@ export const init = () =>
             aboutBtns.forEach(btn => {
                 btn.addEventListener(
                     'click',
-                    (e: Event): mixed => {
+                    (e) => {
                         e.preventDefault();
-                        fastdom.write(() => overlay.classList.remove('u-h'));
+                        fastdom.mutate(() => overlay.classList.remove('u-h'));
                     }
                 );
             });
             closeBtn.addEventListener('click', () => {
-                fastdom.write(() => overlay.classList.add('u-h'));
+                fastdom.mutate(() => overlay.classList.add('u-h'));
             });
         });

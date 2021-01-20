@@ -3,18 +3,18 @@ package com.gu
 import sbt._
 
 object Dependencies {
-  val identityLibVersion = "3.193"
+  val identityLibVersion = "3.239"
   val awsVersion = "1.11.240"
-  val capiVersion = "15.6"
-  val faciaVersion = "3.0.20"
+  val capiVersion = "17.6"
+  val faciaVersion = "3.2.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val playJsonExtensionsVersion = "0.10.0"
-  val guBox = "com.gu" %% "box" %  "0.1.0"
+  val guBox = "com.gu" %% "box" % "0.1.0"
   val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
-  val apacheCommonsMath3 = "org.apache.commons" % "commons-math3" % "3.6.1"
+  val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
   val awsDynamodb = "com.amazonaws" % "aws-java-sdk-dynamodb" % awsVersion
@@ -32,7 +32,7 @@ object Dependencies {
   val commonsIo = "commons-io" % "commons-io" % "2.5"
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
-  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.8.0"
+  val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.12.0"
   val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
@@ -62,29 +62,36 @@ object Dependencies {
   val jerseyClient = "com.sun.jersey" % "jersey-client" % jerseyVersion
   val w3cSac = "org.w3c.css" % "sac" % "1.3"
   val libPhoneNumber = "com.googlecode.libphonenumber" % "libphonenumber" % "8.10.0"
-  val logback = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
+
+  val logback2 = "net.logstash.logback" % "logstash-logback-encoder" % "4.6"
+  // logback2  to prevent "error: reference to logback is ambiguous;"
+
   val kinesisLogbackAppender = "com.gu" % "kinesis-logback-appender" % "1.4.0"
   val targetingClient = "com.gu" %% "targeting-client-play26" % "0.14.7"
-  val scanamo = "com.gu" %% "scanamo" % "0.9.5"
+  val scanamo = "com.gu" %% "scanamo" % "1.0.0-M8"
   val enumeratumPlayJson = "com.beachape" %% "enumeratum-play-json" % "1.5.12"
   val commercialShared = "com.gu" %% "commercial-shared" % "6.1.6"
   val playJson = "com.typesafe.play" %% "play-json" % playJsonVersion
   val playJsonExtensions = "ai.x" %% "play-json-extensions" % playJsonExtensionsVersion
   val playJsonJoda = "com.typesafe.play" %% "play-json-joda" % playJsonVersion
   val playIteratees = "com.typesafe.play" %% "play-iteratees" % "2.6.1"
-  val atomRenderer = "com.gu" %% "atom-renderer" % "1.1.1"
+  val atomRenderer = "com.gu" %% "atom-renderer" % "1.2.0"
   val supportInternationalisation = "com.gu" %% "support-internationalisation" % "0.9"
   val capiAws = "com.gu" %% "content-api-client-aws" % "0.5"
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
-  val jsonSchema = "com.eclipsesource"  %% "play-json-schema-validator" % "0.9.5-M4"
+  val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
-  // Fixing transient dependency issue
-  // AWS SDK (1.11.181), which kinesis-logback-appender depends on, brings com.fasterxml.jackson.core and com.fasterxml.jackson.dataformat libs in version 2.6.9
-  // play-json comes with com.fasterxml.core 2.8.9 (without jackson.dataformat) which will evict jackson.core 2.6.9
-  // This lead to incompatible version of jackson.core and jackson.dataformat to be present in the class path
-  // This forces jackson.dataformat to the same version as the one brough by play-json
-  // This line could be remove as soon as the AWS SDK is updated to use the same version coming with play-json
-  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % "2.8.9"
+  // sbt-native-packager does not seem respect the latestRevision conflict manager when building the
+  // classpath in the executable shell file for the service. The classpath output is different to the
+  // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
+  // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
+  val jacksonVersion = "2.11.0"
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
+  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+  val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
+  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"

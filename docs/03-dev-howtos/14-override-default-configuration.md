@@ -23,4 +23,4 @@ Tired of pointing your `facia.stage` at `CODE`?  Have you ever longed to change 
 
 ## Notes
 
-* You can see all configuration keys by looking at the [GuardianConfiguration class](https://github.com/guardian/frontend/blob/master/common/app/common/configuration.scala#L125)
+* You can see all configuration keys by looking at the [GuardianConfiguration class](https://github.com/guardian/frontend/blob/main/common/app/common/configuration.scala#L125)

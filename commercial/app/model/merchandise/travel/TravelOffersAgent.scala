@@ -13,14 +13,17 @@ class TravelOffersAgent(contentApiClient: ContentApiClient) extends MerchandiseA
   def offersTargetedAt(segment: Segment): Seq[TravelOffer] = {
     val defaultOffers = available.sortBy(_.position).take(4)
     getTargetedMerchandise(segment, defaultOffers)(offer =>
-      Keyword.idSuffixesIntersect(segment.context.keywords, offer.keywordIdSuffixes))
+      Keyword.idSuffixesIntersect(segment.context.keywords, offer.keywordIdSuffixes),
+    )
   }
 
   def specificTravelOffers(offerIdStrings: Seq[String]): Seq[TravelOffer] = {
     offerIdStrings flatMap (offerId => available find (_.id == offerId))
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[TravelOffer]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[TravelOffer]] = {
 
     val parsedFeed: Future[ParsedFeed[TravelOffer]] = TravelOffersApi.parseOffers(feedMetaData, feedContent)
 

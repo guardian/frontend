@@ -1,4 +1,3 @@
-// @flow
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import config from 'lib/config';
 import userPrefs from 'common/modules/user-prefs';
@@ -11,18 +10,12 @@ import {
     isAdFreeUser as isAdFreeUser_,
 } from 'common/modules/commercial/user-features';
 
-const isPayingMember: JestMockFn<*, *> = (isPayingMember_: any);
-const isRecentOneOffContributor: JestMockFn<
-    *,
-    *
-> = (isRecentOneOffContributor_: any);
-const shouldHideSupportMessaging: JestMockFn<
-    *,
-    *
-> = (shouldHideSupportMessaging_: any);
-const isAdFreeUser: JestMockFn<*, *> = (isAdFreeUser_: any);
-const getBreakpoint: any = getBreakpoint_;
-const isUserLoggedIn: any = isUserLoggedIn_;
+const isPayingMember = (isPayingMember_);
+const isRecentOneOffContributor = (isRecentOneOffContributor_);
+const shouldHideSupportMessaging = (shouldHideSupportMessaging_);
+const isAdFreeUser = (isAdFreeUser_);
+const getBreakpoint = getBreakpoint_;
+const isUserLoggedIn = isUserLoggedIn_;
 
 const CommercialFeatures = commercialFeatures.constructor;
 
@@ -58,7 +51,6 @@ describe('Commercial features', () => {
         });
 
         config.set('switches', {
-            outbrain: true,
             commercial: true,
             enableDiscussionSwitch: true,
         });
@@ -144,21 +136,6 @@ describe('Commercial features', () => {
             isAdFreeUser.mockReturnValue(true);
             const features = new CommercialFeatures();
             expect(features.articleBodyAdverts).toBe(false);
-        });
-    });
-
-    describe('Video prerolls', () => {
-        it('Runs by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.videoPreRolls).toBe(true);
-        });
-    });
-
-    describe('Video prerolls under ad-free', () => {
-        it('are disabled', () => {
-            isAdFreeUser.mockReturnValue(true);
-            const features = new CommercialFeatures();
-            expect(features.videoPreRolls).toBe(false);
         });
     });
 
@@ -280,75 +257,6 @@ describe('Commercial features', () => {
         });
     });
 
-    describe('Outbrain / Plista', () => {
-        // These are the 'promoted links from around the web' widgets
-        it('Runs by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(true);
-        });
-
-        it('Is disabled under perf tests', () => {
-            window.location.hash = '#noads';
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled in sensitive content', () => {
-            config.set('page.shouldHideAdverts', true);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled when related content is hidden', () => {
-            config.set('page.showRelatedContent', false);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled when user is logged in and page is commentable', () => {
-            isUserLoggedIn.mockReturnValue(true);
-            config.set('page.commentable', true);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-    });
-
-    describe('Outbrain / Plista under ad-free', () => {
-        beforeEach(() => {
-            isAdFreeUser.mockReturnValue(true);
-        });
-
-        // happy time!
-        it('Does not run by default', () => {
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled under perf tests', () => {
-            window.location.hash = '#noads';
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled in sensitive content', () => {
-            config.set('page.shouldHideAdverts', true);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled when related content is hidden', () => {
-            config.set('page.showRelatedContent', false);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-
-        it('Is disabled when user is logged in and page is commentable', () => {
-            config.set('page.commentable', true);
-            const features = new CommercialFeatures();
-            expect(features.outbrain).toBe(false);
-        });
-    });
-
     describe('Comment adverts', () => {
         beforeEach(() => {
             config.set('page.commentable', true);
@@ -442,6 +350,56 @@ describe('Commercial features', () => {
                 const features = new CommercialFeatures();
                 expect(features.commentAdverts).toBe(false);
             });
+        });
+    });
+
+    describe('comscore ', () => {
+        beforeEach(() => {
+            config.set('switches.comscore', true);
+        });
+
+        it('Runs if switch is on', () => {
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(true);
+        });
+
+        it('Does not run if switch is off', () => {
+            config.set('switches.comscore', false);
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on identity pages', () => {
+            config.set('page.contentType', 'Identity');
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on identity section', () => {
+            // This is needed for identity pages in the profile subdomain
+            config.set('page.section', 'identity');
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on the secure contact interactive', () => {
+            config.set(
+                'page.pageId',
+                'help/ng-interactive/2017/mar/17/contact-the-guardian-securely'
+            );
+
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
+        });
+
+        it('Does not run on secure contact help page', () => {
+            config.set(
+                'page.pageId',
+                'help/2016/sep/19/how-to-contact-the-guardian-securely'
+            );
+
+            const features = new CommercialFeatures();
+            expect(features.comscore).toBe(false);
         });
     });
 });

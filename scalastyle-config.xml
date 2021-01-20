@@ -1,9 +1,0 @@
-<scalastyle>
-    <name>Scalastyle standard configuration</name>
-    <check level="warning" class="org.scalastyle.scalariform.CyclomaticComplexityChecker" enabled="true">
-        <parameters>
-            <parameter name="maximum"><![CDATA[35]]></parameter>
-        </parameters>
-    </check>
-    <check level="error" class="org.scalastyle.scalariform.PublicMethodsHaveTypeChecker" enabled="true"></check>
-</scalastyle>

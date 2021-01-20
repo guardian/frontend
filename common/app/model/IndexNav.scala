@@ -10,12 +10,13 @@ object IndexNav {
     val sectionRoot = SectionLink(tagType, tagType, navTitle, s"/index/$tagType")
 
     get match {
-      case Some(listings) => NavItem(
-        sectionRoot,
-        listings.pages map { page =>
-          SectionLink(tagType, page.title.toLowerCase, page.title, s"/index/$tagType/${page.id}")
-        }
-      )
+      case Some(listings) =>
+        NavItem(
+          sectionRoot,
+          listings.pages map { page =>
+            SectionLink(tagType, page.title.toLowerCase, page.title, s"/index/$tagType/${page.id}")
+          },
+        )
 
       case None => NavItem(sectionRoot, Nil)
     }

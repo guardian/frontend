@@ -6,19 +6,20 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class CompetitionListControllerTest
-  extends FlatSpec
-  with ConfiguredTestSuite
-  with Matchers
-  with FootballTestData
-  with WithTestExecutionContext
-  with WithTestFootballClient
-  with WithMaterializer
-  with WithTestApplicationContext
-  with BeforeAndAfterAll
-  with WithTestWsClient {
+    extends FlatSpec
+    with ConfiguredTestSuite
+    with Matchers
+    with FootballTestData
+    with WithTestExecutionContext
+    with WithTestFootballClient
+    with WithMaterializer
+    with WithTestApplicationContext
+    with BeforeAndAfterAll
+    with WithTestWsClient {
 
   val url = "/football/competitionsService"
-  lazy val competitionListController = new CompetitionListController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
+  lazy val competitionListController =
+    new CompetitionListController(testCompetitionsService, play.api.test.Helpers.stubControllerComponents())
 
   "Competition List Controller" should "200 when content type is competition list" in {
     val result = competitionListController.renderCompetitionList()(TestRequest())

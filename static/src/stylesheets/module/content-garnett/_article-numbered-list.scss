@@ -22,7 +22,7 @@
         }
 
         // Thumnail sized image has rounded corners
-        .element--thumbnail img {
+        .element-image.element--thumbnail img {
             border-radius: 50%;
             overflow: hidden;
         }

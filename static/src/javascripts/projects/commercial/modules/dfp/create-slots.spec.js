@@ -1,4 +1,3 @@
-// @flow
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import bonzo from 'bonzo';
@@ -26,8 +25,6 @@ const inline1Html = `
 </div>
 `;
 
-jest.mock('lib/config', () => ({ page: { edition: 'UK' } }));
-
 describe('Create Ad Slot', () => {
     it('should exist', () => {
         expect(createSlots).toBeDefined();
@@ -44,7 +41,7 @@ describe('Create Ad Slot', () => {
             name: 'inline1',
             htmls: [inline1Html],
         },
-    ].forEach((expectation: Object) => {
+    ].forEach((expectation) => {
         it(`should create "${expectation.type}" ad slot`, () => {
             const adSlots = createSlots(expectation.type, {
                 name: expectation.name,

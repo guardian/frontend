@@ -3,46 +3,6 @@ package layout.slices
 import conf.Configuration
 import model.pressed.PressedContent
 
-object TagContainers {
-
-  import ContainerDefinition.{ofSlices => slices}
-
-  def allTagPageSlices(n: Int): ContainerDefinition = n match {
-    case 1 => slices(FullMedia100)
-    case 2 => slices(HalfHalf2)
-    case 3 => slices(TTT)
-    case _ => slices(QuarterQuarterQuarterQuarter,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlTl,
-      TlTlMpu)
-  }
-
-  val tagPage = slices(
-    HalfQQ,
-    QuarterQuarterQuarterQuarter,
-    TlTlTl,
-    TlTlMpu
-  )
-
-  val contributorTagPage =  slices(
-    HalfQl4Ql4,
-    TlTlTl,
-    TlTlTl,
-    TlTlMpu
-  )
-
-  val keywordPage = slices(
-    TTT,
-    TlTlTl,
-    TlTlTl,
-    TlTlMpu
-  )
-}
-
 object FixedContainers {
   import ContainerDefinition.{ofSlices => slices}
 
@@ -82,8 +42,7 @@ object FixedContainers {
     ("fixed/small/slow-IV", fixedSmallSlowIV),
     ("fixed/small/slow-V-half", slices(Hl4Half)),
     ("fixed/small/slow-V-third", fixedSmallSlowVThird),
-    ("fixed/small/slow-V-mpu", slices(Seq(TTlMpu),
-      slicesWithoutMpu = Seq(QuarterQuarterQuarterQuarter))),
+    ("fixed/small/slow-V-mpu", slices(Seq(TTlMpu), slicesWithoutMpu = Seq(QuarterQuarterQuarterQuarter))),
     ("fixed/small/fast-VIII", slices(QuarterQuarterQlQl)),
     ("fixed/medium/slow-VI", fixedMediumSlowVI),
     ("fixed/medium/slow-VII", fixedMediumSlowVII),
@@ -91,28 +50,27 @@ object FixedContainers {
     ("fixed/medium/fast-XI", fixedMediumFastXI),
     ("fixed/medium/fast-XII", fixedMediumFastXII),
     ("fixed/large/slow-XIV", slices(ThreeQuarterQuarter, QuarterQuarterQuarterQuarter, Ql2Ql2Ql2Ql2)),
-    ("fixed/thrasher", thrasher)
-  ) ++ (if (Configuration.faciatool.showTestContainers) Map(
-    ("all-items/not-for-production", slices(FullMedia100, FullMedia75, FullMedia50, HalfHalf, QuarterThreeQuarter, ThreeQuarterQuarter, Hl4Half, HalfQuarterQl2Ql4, TTTL4, Ql3Ql3Ql3Ql3))
-  ) else Map.empty)
+    ("fixed/thrasher", thrasher),
+  ) ++ (if (Configuration.faciatool.showTestContainers)
+          Map(
+            (
+              "all-items/not-for-production",
+              slices(
+                FullMedia100,
+                FullMedia75,
+                FullMedia50,
+                HalfHalf,
+                QuarterThreeQuarter,
+                ThreeQuarterQuarter,
+                Hl4Half,
+                HalfQuarterQl2Ql4,
+                TTTL4,
+                Ql3Ql3Ql3Ql3,
+              ),
+            ),
+          )
+        else Map.empty)
 
   def unapply(collectionType: Option[String]): Option[ContainerDefinition] =
     collectionType.flatMap(all.lift)
-}
-
-object DynamicContainers {
-  val all: Map[String, DynamicContainer] = Map(
-    ("dynamic/fast", DynamicFast),
-    ("dynamic/slow", DynamicSlow),
-    ("dynamic/package", DynamicPackage),
-    ("dynamic/slow-mpu", DynamicSlowMPU(omitMPU = false, adFree = false))
-  )
-
-  def apply(collectionType: Option[String], items: Seq[PressedContent]): Option[ContainerDefinition] = {
-    for {
-      typ <- collectionType
-      dynamicContainer <- all.get(typ)
-      definition <- dynamicContainer.containerDefinitionFor(items.map(Story.fromFaciaContent))
-    } yield definition
-  }
 }

@@ -34,7 +34,7 @@ object Industries {
     (259, "Science"),
     (294, "Travel & transport"),
     (343, "Skilled Trade"),
-    (350, "Social Enterprise")
+    (350, "Social Enterprise"),
   )
 }
 
@@ -43,15 +43,15 @@ class Industries(contentApiClient: ContentApiClient) {
   private val lookup = new Lookup(contentApiClient)
   private lazy val industryKeywordIds = Box(Map.empty[Int, Seq[String]])
 
-
-  def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] = Future.sequence {
-    Industries.sectorIdIndustryMap map {
-      case (id, name) =>
-        lookup.keyword(name) flatMap {
-          keywords => industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
-        }
+  def refresh()(implicit executionContext: ExecutionContext): Future[Iterable[Map[Int, Seq[String]]]] =
+    Future.sequence {
+      Industries.sectorIdIndustryMap map {
+        case (id, name) =>
+          lookup.keyword(name) flatMap { keywords =>
+            industryKeywordIds.alter(_.updated(id, keywords.map(_.id)))
+          }
+      }
     }
-  }
 
   def forIndustry(id: Int): Seq[String] = industryKeywordIds().getOrElse(id, Nil)
 }

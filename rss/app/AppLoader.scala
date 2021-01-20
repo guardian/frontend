@@ -20,7 +20,8 @@ import services.{ConfigAgentLifecycle, OphanApi}
 import router.Routes
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait AppComponents extends FrontendComponents {
@@ -43,7 +44,7 @@ trait AppComponents extends FrontendComponents {
     wire[SurgingContentAgentLifecycle],
     wire[SectionsLookUpLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -54,7 +55,7 @@ trait AppComponents extends FrontendComponents {
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.ContentApiErrorMetric,
-    ContentApiMetrics.ContentApiRequestsMetric
+    ContentApiMetrics.ContentApiRequestsMetric,
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[CommonFilters].filters

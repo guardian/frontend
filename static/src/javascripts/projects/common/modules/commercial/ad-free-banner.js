@@ -1,6 +1,4 @@
-// @flow
 import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
-import type { Banner } from 'common/modules/ui/bannerPicker';
 import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
 import config from 'lib/config';
@@ -9,21 +7,21 @@ import { isAdFreeUser } from 'common/modules/commercial/user-features';
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');
 
-const isInExperiment = (): boolean =>
+const isInExperiment = () =>
     config.get('switches.scAdFreeBanner', false);
 
-const hideBanner = (banner: Message) => {
+const hideBanner = (banner) => {
     banner.acknowledge();
 };
 
-const canShow: () => Promise<boolean> = () =>
+const canShow = () =>
     Promise.resolve(
         !hasUserAcknowledgedBanner(messageCode) &&
             isAdFreeUser() &&
             isInExperiment()
     );
 
-const show = (): Promise<boolean> => {
+const show = () => {
     new Message(messageCode, {
         siteMessageLinkName: messageCode,
         siteMessageCloseBtn: 'hide',
@@ -52,7 +50,7 @@ const show = (): Promise<boolean> => {
     return Promise.resolve(true);
 };
 
-const adFreeBanner: Banner = {
+const adFreeBanner = {
     id: messageCode,
     show,
     canShow,

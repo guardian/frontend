@@ -3,12 +3,12 @@ package model
 import play.api.libs.json.{Json, Writes}
 import play.api.mvc.RequestHeader
 import play.twirl.api.Html
-import views.{BodyCleaner, MainCleaner}
+import views.{BodyProcessor, MainCleaner}
 
 case class ContentFields(fields: Fields, cleanedMainBlockHtml: String, cleanedBodyHtml: String)
 object ContentFields {
   def apply(article: Article)(implicit request: RequestHeader, context: ApplicationContext): ContentFields =
-    new ContentFields(article.fields, MainCleaner.apply(article).body, BodyCleaner.apply(article).body)
+    new ContentFields(article.fields, MainCleaner.apply(article).body, BodyProcessor.apply(article).body)
 
   implicit val contentFieldsWrites: Writes[ContentFields] = Json.writes[ContentFields]
 }

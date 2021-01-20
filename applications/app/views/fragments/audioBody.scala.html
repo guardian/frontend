@@ -5,6 +5,8 @@
 @import views.support.TrailCssClasses.toneClass
 @import views.support.{RenderClasses}
 
+@import views.support.ImgSrc
+@import views.support.ImageProfile
 @(page: MediaPage, audio: Audio)(implicit request: RequestHeader, context: model.ApplicationContext)
 
 @trackingCode(target: String) = {@if(page.media.tags.isPodcast){podcast:subscribe:}@target:@page.media.metadata.webTitle}
@@ -42,7 +44,7 @@
                 data-component="main audio"
                 id="audio-component-container"
                 data-media-id="@audio.elements.mainAudio.map(_.properties.id)"
-                data-source="@audio.downloadUrl.map(Audio.acastUrl(_, isAdFree))"
+                data-source="@audio.downloadUrl"
                 data-download-url="@audio.downloadUrl.getOrElse("#")"
                 data-duration="@audio.duration"
                 >
@@ -53,7 +55,7 @@
             ; image <- podcast.image
             ) {
                 <div class="podcast__cover">
-                    <a href="@LinkTo {/@series.id}"><img src="@image" class="podcast__cover-image" alt></a>
+                    <a href="@LinkTo {/@series.id}"><img src="@ImgSrc(image, ImageProfile(width = Some(440)))" class="podcast__cover-image" alt></a>
                 </div>
             }
 
@@ -110,6 +112,16 @@
                                 @fragments.inlineSvg("spotify", "journalism/audio", List("podcast__meta-icon", "podcast__section-icon"))
                                 Spotify
                             </a>
+                        </li>
+                    }
+                    @audio.seriesFeedUrl.map { seriesFeedUrl =>
+                        <li class="podcast__meta-item podcast__meta-item--feed">
+                           <a class="podcast__meta__item-link podcast__section-link"
+                               href="@seriesFeedUrl"
+                               data-link-name="@trackingCode("feed")"
+                               >
+                               RSS Feed
+                           </a>
                         </li>
                     }
                     @audio.downloadUrl.map { downloadUrl =>

@@ -1,5 +1,3 @@
-// @flow
-
 import domready from 'domready';
 import { comready } from 'lib/comready';
 import config from 'lib/config';
@@ -14,7 +12,7 @@ __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
 const updateHeight = () => {
     fastdom
-        .read(
+        .measure(
             () =>
                 document.documentElement &&
                 document.documentElement.getBoundingClientRect().height
@@ -38,7 +36,7 @@ Promise.all([
     // Brittle but will work
     Array.from(document.getElementsByClassName('user__question'))
         .slice(0, 1)
-        .forEach((sq: Element) => {
+        .forEach((sq) => {
             new MutationObserver(updateHeight).observe(sq, {
                 childList: true,
                 subtree: true,

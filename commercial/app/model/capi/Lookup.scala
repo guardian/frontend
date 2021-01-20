@@ -2,20 +2,22 @@ package commercial.model.capi
 
 import com.gu.contentapi.client.model.v1.Tag
 import common.Edition.defaultEdition
-import common.Logging
+import common.GuLogging
 import contentapi.ContentApiClient
 import model.{Content, ContentType, ImageElement}
+import utils.ShortUrls
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.Strings {
+class Lookup(contentApiClient: ContentApiClient) extends GuLogging with implicits.Strings {
 
   def content(contentId: String)(implicit executionContext: ExecutionContext): Future[Option[ContentType]] = {
-    val response = try {
-      contentApiClient.getResponse(contentApiClient.item(contentId, defaultEdition))
-    } catch {
-      case e: Exception => Future.failed(e)
-    }
+    val response =
+      try {
+        contentApiClient.getResponse(contentApiClient.item(contentId, defaultEdition))
+      } catch {
+        case e: Exception => Future.failed(e)
+      }
     response map {
       _.content map (Content(_))
     } recover {
@@ -25,20 +27,26 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
     }
   }
 
-  def contentByShortUrls(shortUrls: Seq[String])(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
+  def contentByShortUrls(
+      shortUrls: Seq[String],
+  )(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
     if (shortUrls.nonEmpty) {
-      val shortIds = shortUrls map (_.replaceFirst("^[a-zA-Z]+://gu.com/","")) mkString ","
+      val shortIds = shortUrls.map(ShortUrls.shortUrlToShortId).mkString(",")
       contentApiClient.getResponse(contentApiClient.search(defaultEdition).ids(shortIds)) map {
         _.results map (Content(_))
       }
     } else Future.successful(Nil)
   }
 
-  def latestContentByKeyword(keywordId: String, maxItemCount: Int)(implicit executionContext: ExecutionContext): Future[Seq[ContentType]] = {
-    contentApiClient.getResponse(contentApiClient.item(keywordId.stringDecoded, defaultEdition)
-      .pageSize(maxItemCount)
-      .showTags("type,series,paid-content")
-      .orderBy("newest")
+  def latestContentByKeyword(keywordId: String, maxItemCount: Int)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Seq[ContentType]] = {
+    contentApiClient.getResponse(
+      contentApiClient
+        .item(keywordId.stringDecoded, defaultEdition)
+        .pageSize(maxItemCount)
+        .showTags("type,series,paid-content")
+        .orderBy("newest"),
     ) map {
       _.results.getOrElse(Nil) map (Content(_))
     } recover {
@@ -53,7 +61,9 @@ class Lookup(contentApiClient: ContentApiClient) extends Logging with implicits.
     content(contentId) map (_ flatMap (_.elements.mainPicture))
   }
 
-  def keyword(term: String, section: Option[String] = None)(implicit executionContext: ExecutionContext): Future[Seq[Tag]] = {
+  def keyword(term: String, section: Option[String] = None)(implicit
+      executionContext: ExecutionContext,
+  ): Future[Seq[Tag]] = {
     val baseQuery = contentApiClient.tags.q(term).tagType("keyword").pageSize(50)
     val query = section.foldLeft(baseQuery)((acc, sectionName) => acc section sectionName)
 

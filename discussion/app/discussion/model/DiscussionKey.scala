@@ -14,15 +14,16 @@ object DiscussionKey {
     def bind(key: String, value: String): Either[String, DiscussionKey]
 
     def unbind(key: String, discussionKey: DiscussionKey): String
-  } = new PathBindable[DiscussionKey] {
-    override def bind(key: String, value: String): Either[String, DiscussionKey] = {
-      for {
-        keyAsString <- stringBinder.bind(key, value).right
-      } yield DiscussionKey(keyAsString)
-    }
+  } =
+    new PathBindable[DiscussionKey] {
+      override def bind(key: String, value: String): Either[String, DiscussionKey] = {
+        for {
+          keyAsString <- stringBinder.bind(key, value).right
+        } yield DiscussionKey(keyAsString)
+      }
 
-    override def unbind(key: String, discussionKey: DiscussionKey): String = {
-      stringBinder.unbind(key, discussionKey.keyAsString)
+      override def unbind(key: String, discussionKey: DiscussionKey): String = {
+        stringBinder.unbind(key, discussionKey.keyAsString)
+      }
     }
-  }
 }

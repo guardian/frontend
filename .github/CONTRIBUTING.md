@@ -22,7 +22,7 @@ We welcome code submissions from other teams. Here's the rules of engagement.
 - The philosophy here is about communication, taking responsibility for your changes, and fast, incremental delivery.
 - Speak to the team before you decide to do anything major. We can probably help design the change to maximise it's chances of being accepted.
 - We have three environments - DEV (your machine), CODE and PROD.
-- Pull requests made to master assume the change is ready to be pushed in PROD (code, ux, design, qa).
+- Pull requests made to `main` assume the change is ready to be pushed in PROD (code, ux, design, qa).
 - Many small requests will be reviewed/merged quicker than a giant lists of changes. Use a switch if you do not want the public to see what you are releasing (Eg, [here](https://github.com/guardian/frontend-admin/commit/28c6860ea11a43225c9bbd475131900c7955b6f7) and [here](https://github.com/guardian/frontend/commit/86bd496e47023e086e71f6ceb1596531c2186853)).
 
 # Submission
@@ -41,7 +41,7 @@ This is applicable to [GMG employees](http://www.gmgplc.co.uk/).
     - Include information about how you plan to measure success (e.g. links to analytics reports)
     - If this change is not measurable be very clear about that fact.
 - A member of the team will review the changes. Once they are satisfied they will approve the pull request.
-- If there are no broken or ongoing builds in Teamcity, merge your branch and then ensure the master branch is built successfully: both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [integration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
+- If there are no broken or ongoing builds in Teamcity, merge your branch and then ensure the `main` branch is built successfully: both [builds](http://teamcity.gudev.gnl:8111/project.html?projectId=project35&tab=projectOverview) and [integration tests](http://teamcity.gudev.gnl:8111/project.html?projectId=project41&tab=projectOverview).
 - Your build will continuously deploy straight to `PROD`
 - Pay close attention to our [monitoring](https://frontend.gutools.co.uk).
 
@@ -57,12 +57,12 @@ Firstly, thanks for helping make our service better! Secondly, we'll try and mak
 
 Here's some wise words from [@gklopper](https://github.com/gklopper).
 
-We only merge to master when the software is ready to go live. This will be different for each thing we do, it might be as simple as showing the person next to you that the typo has been fixed, or you might spend an afternoon with Design or Dotcom Platform looking over your shoulder.
+We only merge to `main` when the software is ready to go live. This will be different for each thing we do, it might be as simple as showing the person next to you that the typo has been fixed, or you might spend an afternoon with Design or Dotcom Platform looking over your shoulder.
 
 If in doubt ask the team, **the team is your conscience**.
 
 Once deployed to `PROD` check that your software is doing what you expected.
 
-If it is a bit late in the day or it is nearly lunch and you do not want to deploy to PROD immediately then do not merge to master.
+If it is a bit late in the day or it is nearly lunch and you do not want to deploy to PROD immediately then do not merge to `main`.
 
 After a few days it's polite to report back to the team how the feature is being used by the audience.

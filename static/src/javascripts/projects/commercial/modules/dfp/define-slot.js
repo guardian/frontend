@@ -1,12 +1,9 @@
-// @flow
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 import { breakpoints } from 'lib/detect';
 import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
-import { getOutbrainComplianceTargeting } from 'commercial/modules/third-party-tags/outbrain';
-import type { Slot } from 'commercial/types';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -15,7 +12,6 @@ const adUnit = once(() => {
         : config.get('page.adUnit');
 });
 
-type SizeMappingArray = Array<Object>;
 
 /**
  * Builds and assigns the correct size map for a slot based on the breakpoints
@@ -27,7 +23,7 @@ type SizeMappingArray = Array<Object>;
  * If it has been defined, then we add that size to the size mapping.
  *
  */
-const buildSizeMapping = (sizes: Object): SizeMappingArray => {
+const buildSizeMapping = (sizes) => {
     const mapping = window.googletag.sizeMapping();
 
     breakpoints
@@ -39,7 +35,7 @@ const buildSizeMapping = (sizes: Object): SizeMappingArray => {
     return mapping.build();
 };
 
-const getSizeOpts = (sizesByBreakpoint: Object): Object => {
+const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
     const sizes = uniqBy(
@@ -53,20 +49,7 @@ const getSizeOpts = (sizesByBreakpoint: Object): Object => {
     };
 };
 
-// The high-merch slot targeting requires Promise-based data about the page.
-const setHighMerchSlotTargeting = (slot, slotTarget): Promise<any> => {
-    if (!['merchandising-high', 'merchandising'].includes(slotTarget)) {
-        return Promise.resolve();
-    }
-
-    return getOutbrainComplianceTargeting().then(keyValues => {
-        keyValues.forEach((value, key) => {
-            slot.setTargeting(key, value);
-        });
-    });
-};
-
-const adomikClassify = (): string => {
+const adomikClassify = () => {
     const rand = Math.random();
 
     switch (true) {
@@ -79,11 +62,11 @@ const adomikClassify = (): string => {
     }
 };
 
-const isEligibleForOutstream = (slotTarget: ?string): boolean =>
+const isEligibleForOutstream = (slotTarget) =>
     typeof slotTarget === 'string' &&
     (slotTarget === 'inline1' || slotTarget === 'top-above-nav');
 
-const allowSafeFrameToExpand = (slot: Slot): Slot => {
+const allowSafeFrameToExpand = (slot) => {
     slot.setSafeFrameConfig({
         allowOverlayExpansion: false,
         allowPushExpansion: true,
@@ -92,18 +75,17 @@ const allowSafeFrameToExpand = (slot: Slot): Slot => {
     return slot;
 };
 
-const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
+const defineSlot = (adSlotNode, sizes) => {
     const slotTarget = adSlotNode.getAttribute('data-name');
     const sizeOpts = getSizeOpts(sizes);
     const id = adSlotNode.id;
     let slot;
-    let slotReady;
+    let slotReady = Promise.resolve();
 
     if (adSlotNode.getAttribute('data-out-of-page')) {
         slot = window.googletag
             .defineOutOfPageSlot(adUnit(), id)
             .defineSizeMapping(sizeOpts.sizeMapping);
-        slotReady = Promise.resolve();
     } else {
         slot = window.googletag
             .defineSlot(adUnit(), sizeOpts.sizes, id)
@@ -111,7 +93,6 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
         if (isEligibleForOutstream(slotTarget)) {
             allowSafeFrameToExpand(slot);
         }
-        slotReady = setHighMerchSlotTargeting(slot, slotTarget);
     }
 
     /*
@@ -204,11 +185,8 @@ const defineSlot = (adSlotNode: Element, sizes: Object): Object => {
                 timeoutId = setTimeout(resolve, iasTimeoutDuration);
             });
 
-        slotReady = slotReady.then(() =>
-            Promise.race([iasTimeout(), iasDataPromise])
-        );
+        slotReady = Promise.race([iasTimeout(), iasDataPromise]);
     }
-
     const isBn = config.get('page.isbn');
 
     if (slotTarget === 'im' && isBn) {

@@ -1,4 +1,3 @@
-// @flow
 import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
 
@@ -6,12 +5,9 @@ import fastdom from 'fastdom';
  * @todo: check if browser natively supports "position: sticky"
  */
 class Sticky {
-    element: HTMLElement;
-    opts: Object;
-    offsetFromParent: number;
-    lastMessage: string;
 
-    constructor(element: HTMLElement, options: Object = {}): void {
+
+    constructor(element, options = {}) {
         this.element = element;
 
         this.opts = Object.assign(
@@ -25,24 +21,24 @@ class Sticky {
         );
     }
 
-    init(): void {
+    init() {
         const parentElement = this.element.parentElement;
 
         if (!parentElement) {
             return;
         }
 
-        fastdom.read(() => {
+        fastdom.measure(() => {
             this.offsetFromParent =
                 this.element.getBoundingClientRect().top -
                 parentElement.getBoundingClientRect().top;
         }, this);
         mediator.on('window:throttledScroll', this.updatePosition.bind(this));
         // kick off an initial position update
-        fastdom.read(this.updatePosition, this);
+        fastdom.measure(this.updatePosition, this);
     }
 
-    updatePosition(): void {
+    updatePosition() {
         const parentElement = this.element.parentElement;
 
         if (!parentElement) {
@@ -84,7 +80,7 @@ class Sticky {
         }
 
         if (css) {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (stick) {
                     this.element.classList.add('is-sticky');
                 } else {
@@ -95,7 +91,7 @@ class Sticky {
         }
     }
 
-    emitMessage(message: string): void {
+    emitMessage(message) {
         mediator.emit(`modules:${this.element.id}:${message}`);
     }
 }

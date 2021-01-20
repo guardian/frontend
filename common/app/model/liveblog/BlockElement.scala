@@ -1,7 +1,12 @@
 package model.liveblog
 
 import com.gu.contentapi.client.model.v1.ElementType.{Map => _, _}
-import com.gu.contentapi.client.model.v1.{ElementType, SponsorshipType, BlockElement => ApiBlockElement, Sponsorship => ApiSponsorship}
+import com.gu.contentapi.client.model.v1.{
+  ElementType,
+  SponsorshipType,
+  BlockElement => ApiBlockElement,
+  Sponsorship => ApiSponsorship,
+}
 import model.{AudioAsset, ImageAsset, ImageMedia, VideoAsset}
 import play.api.libs.json._
 
@@ -9,12 +14,34 @@ sealed trait BlockElement
 case class TextBlockElement(html: Option[String]) extends BlockElement
 case class TweetBlockElement(html: Option[String]) extends BlockElement
 case class PullquoteBlockElement(html: Option[String]) extends BlockElement
-case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean]) extends BlockElement
-case class AudioBlockElement(assets: Seq[AudioAsset]) extends BlockElement
-case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String]) extends BlockElement
+case class ImageBlockElement(media: ImageMedia, data: Map[String, String], displayCredit: Option[Boolean])
+    extends BlockElement
+case class AudioBlockElement(element: ApiBlockElement, assets: Seq[AudioAsset]) extends BlockElement
+/*
+
+  date: 21st July 2020
+  author: Pascal
+
+  I have modified the AudioBlockElement to carry the original ApiBlockElement.
+
+  This, because the model.liveblog.BlockElement classes are considered by the DCR article picker
+  which decides whether or not the BlockElement is supported, but in the case of the AudioBlockElement
+  some instances of it are supported and others are not. Having access to the ApiBlockElement
+  helps with that decision.
+
+  There will be a moment in few weeks when all the variations of the AudioBlockElement will be supported by DCR, and
+  the article picker will not need to segregate between variations of the AudioBlockElement. At this point
+  the AudioBlockElement can lose the element attribute.
+
+  mark: 783a70d0-f6f2-43ab-a302-f4a12ba03aa0
+
+ */
+
+case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, data: Map[String, String])
+    extends BlockElement
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
-case class ContentAtomBlockElement(atomId: String) extends BlockElement
+case class ContentAtomBlockElement(atomId: String, atomtype: String) extends BlockElement
 case class InteractiveBlockElement(html: Option[String]) extends BlockElement
 case class CommentBlockElement(html: Option[String]) extends BlockElement
 case class TableBlockElement(html: Option[String]) extends BlockElement
@@ -26,15 +53,15 @@ case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
 
 case class MembershipBlockElement(
-  originalUrl: Option[String],
-  linkText: Option[String],
-  linkPrefix: Option[String],
-  title: Option[String],
-  venue: Option[String],
-  location: Option[String],
-  identifier: Option[String],
-  image: Option[String],
-  price: Option[String]
+    originalUrl: Option[String],
+    linkText: Option[String],
+    linkPrefix: Option[String],
+    title: Option[String],
+    venue: Option[String],
+    location: Option[String],
+    identifier: Option[String],
+    image: Option[String],
+    price: Option[String],
 ) extends BlockElement
 
 // these don't appear to have typeData on the capi models so we just have empty html
@@ -42,17 +69,17 @@ case class CodeBlockElement(html: Option[String]) extends BlockElement
 case class FormBlockElement(html: Option[String]) extends BlockElement
 
 case class RichLinkBlockElement(
-  url: Option[String],
-  text: Option[String],
-  prefix: Option[String],
-  sponsorship: Option[Sponsorship]
+    url: Option[String],
+    text: Option[String],
+    prefix: Option[String],
+    sponsorship: Option[Sponsorship],
 ) extends BlockElement
 
-case class Sponsorship (
-  sponsorName: String,
-  sponsorLogo: String,
-  sponsorLink: String,
-  sponsorshipType: SponsorshipType
+case class Sponsorship(
+    sponsorName: String,
+    sponsorLogo: String,
+    sponsorLink: String,
+    sponsorshipType: SponsorshipType,
 )
 
 object Sponsorship {
@@ -61,7 +88,7 @@ object Sponsorship {
       sponsorship.sponsorName,
       sponsorship.sponsorLogo,
       sponsorship.sponsorLink,
-      sponsorship.sponsorshipType
+      sponsorship.sponsorshipType,
     )
   }
 }
@@ -76,60 +103,70 @@ object BlockElement {
 
       case Tweet => Some(TweetBlockElement(element.tweetTypeData.flatMap(_.html)))
 
-      case RichLink => Some(RichLinkBlockElement(
-        element.richLinkTypeData.flatMap(_.originalUrl),
-        element.richLinkTypeData.flatMap(_.linkText),
-        element.richLinkTypeData.flatMap(_.linkPrefix),
-        element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_))
-      ))
+      case RichLink =>
+        Some(
+          RichLinkBlockElement(
+            element.richLinkTypeData.flatMap(_.originalUrl),
+            element.richLinkTypeData.flatMap(_.linkText),
+            element.richLinkTypeData.flatMap(_.linkPrefix),
+            element.richLinkTypeData.flatMap(_.sponsorship).map(Sponsorship(_)),
+          ),
+        )
 
-      case Image => Some(ImageBlockElement(
-        ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
-        imageDataFor(element),
-        element.imageTypeData.flatMap(_.displayCredit)
-      ))
+      case Image =>
+        Some(
+          ImageBlockElement(
+            ImageMedia(element.assets.zipWithIndex.map { case (a, i) => ImageAsset.make(a, i) }),
+            imageDataFor(element),
+            element.imageTypeData.flatMap(_.displayCredit),
+          ),
+        )
 
-      case Audio => Some(AudioBlockElement(element.assets.map(AudioAsset.make)))
+      case Audio => Some(AudioBlockElement(element, element.assets.map(AudioAsset.make)))
 
       case Video =>
         if (element.assets.nonEmpty) {
-          Some(GuVideoBlockElement(
-            element.assets.map(VideoAsset.make),
-            ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
-              case (a, i) => ImageAsset.make(a, i)
-            }),
-            videoDataFor(element))
+          Some(
+            GuVideoBlockElement(
+              element.assets.map(VideoAsset.make),
+              ImageMedia(element.assets.filter(_.mimeType.exists(_.startsWith("image"))).zipWithIndex.map {
+                case (a, i) => ImageAsset.make(a, i)
+              }),
+              videoDataFor(element),
+            ),
           )
-        }
-        else Some(VideoBlockElement(videoDataFor(element)))
+        } else Some(VideoBlockElement(videoDataFor(element)))
 
-      case Membership => element.membershipTypeData.map(m => MembershipBlockElement(
-        m.originalUrl,
-        m.linkText,
-        m.linkPrefix,
-        m.title,
-        m.venue,
-        m.location,
-        m.identifier,
-        m.image,
-        m.price
-      ))
+      case Membership =>
+        element.membershipTypeData.map(m =>
+          MembershipBlockElement(
+            m.originalUrl,
+            m.linkText,
+            m.linkPrefix,
+            m.title,
+            m.venue,
+            m.location,
+            m.identifier,
+            m.image,
+            m.price,
+          ),
+        )
 
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId))
+      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType))
 
-      case Pullquote => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
-      case Interactive => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html))
-      case Comment => element.commentTypeData.map(d => CommentBlockElement(d.html))
-      case Table => element.tableTypeData.map(d => TableBlockElement(d.html))
-      case Witness => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
-      case Document => element.documentTypeData.map(d => DocumentBlockElement(d.html))
-      case Instagram => element.instagramTypeData.map(d => InstagramBlockElement(d.html))
-      case Vine => element.vineTypeData.map(d => VineBlockElement(d.html))
+      case Pullquote       => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
+      case Interactive     => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html))
+      case Comment         => element.commentTypeData.map(d => CommentBlockElement(d.html))
+      case Table           => element.tableTypeData.map(d => TableBlockElement(d.html))
+      case Witness         => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
+      case Document        => element.documentTypeData.map(d => DocumentBlockElement(d.html))
+      case Instagram       => element.instagramTypeData.map(d => InstagramBlockElement(d.html))
+      case Vine            => element.vineTypeData.map(d => VineBlockElement(d.html))
       case ElementType.Map => element.mapTypeData.map(d => MapBlockElement(d.html))
-      case Code => Some(CodeBlockElement(None))
-      case Form => Some(FormBlockElement(None))
+      case Code            => Some(CodeBlockElement(None))
+      case Form            => Some(FormBlockElement(None))
 
       case EnumUnknownElementType(f) => Some(UnknownBlockElement(None))
 
@@ -137,26 +174,33 @@ object BlockElement {
   }
 
   private def imageDataFor(element: ApiBlockElement): Map[String, String] = {
-    element.imageTypeData.map { d => Map(
-      "copyright" -> d.copyright,
-      "alt" -> d.alt,
-      "caption" -> d.caption,
-      "credit" -> d.credit
-    ) collect { case (k, Some(v)) => (k, v) }
+    element.imageTypeData.map { d =>
+      Map(
+        "copyright" -> d.copyright,
+        "alt" -> d.alt,
+        "caption" -> d.caption,
+        "credit" -> d.credit,
+      ) collect { case (k, Some(v)) => (k, v) }
     } getOrElse Map()
   }
 
   private def videoDataFor(element: ApiBlockElement): Map[String, String] = {
-    element.videoTypeData.map { d => Map(
-      "caption" -> d.caption,
-      "url" -> d.url
-    ) collect { case (k, Some (v) ) => (k, v) }
+    element.videoTypeData.map { d =>
+      Map(
+        "caption" -> d.caption,
+        "url" -> d.url,
+      ) collect { case (k, Some(v)) => (k, v) }
     } getOrElse Map()
   }
 
   implicit val textBlockElementWrites: Writes[TextBlockElement] = Json.writes[TextBlockElement]
   implicit val ImageBlockElementWrites: Writes[ImageBlockElement] = Json.writes[ImageBlockElement]
-  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = Json.writes[AudioBlockElement]
+  implicit val AudioBlockElementWrites: Writes[AudioBlockElement] = new Writes[AudioBlockElement] {
+    def writes(audio: AudioBlockElement): JsObject =
+      Json.obj(
+        "assets" -> audio.assets,
+      )
+  }
   implicit val GuVideoBlockElementWrites: Writes[GuVideoBlockElement] = Json.writes[GuVideoBlockElement]
   implicit val VideoBlockElementWrites: Writes[VideoBlockElement] = Json.writes[VideoBlockElement]
   implicit val TweetBlockElementWrites: Writes[TweetBlockElement] = Json.writes[TweetBlockElement]
@@ -177,11 +221,13 @@ object BlockElement {
   implicit val UnknownBlockElementWrites: Writes[UnknownBlockElement] = Json.writes[UnknownBlockElement]
 
   implicit val SponsorshipWrites: Writes[Sponsorship] = new Writes[Sponsorship] {
-    def writes(sponsorship: Sponsorship): JsObject = Json.obj(
-      "sponsorName" -> sponsorship.sponsorName,
-      "sponsorLogo" -> sponsorship.sponsorLogo,
-      "sponsorLink" -> sponsorship.sponsorLink,
-      "sponsorshipType" -> sponsorship.sponsorshipType.name)
+    def writes(sponsorship: Sponsorship): JsObject =
+      Json.obj(
+        "sponsorName" -> sponsorship.sponsorName,
+        "sponsorLogo" -> sponsorship.sponsorLogo,
+        "sponsorLink" -> sponsorship.sponsorLink,
+        "sponsorshipType" -> sponsorship.sponsorshipType.name,
+      )
   }
 
   implicit val RichLinkBlockElementWrites: Writes[RichLinkBlockElement] = Json.writes[RichLinkBlockElement]

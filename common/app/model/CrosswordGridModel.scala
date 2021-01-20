@@ -1,6 +1,11 @@
 package crosswords
 
-import com.gu.contentapi.client.model.v1.{CrosswordEntry, CrosswordDimensions, Crossword, CrosswordPosition => ApiCrosswordPosition}
+import com.gu.contentapi.client.model.v1.{
+  CrosswordEntry,
+  CrosswordDimensions,
+  Crossword,
+  CrosswordPosition => ApiCrosswordPosition,
+}
 import model.{Entry, CrosswordPosition}
 import Function.const
 
@@ -9,7 +14,8 @@ trait CrosswordGridDataOrdering {
 }
 
 trait CrosswordGridColumnNotation {
-  val columnsByLetters = (('A' to 'Z').toList.zip(Stream from 0) map { case(letter, number) => (number, letter)}).toMap
+  val columnsByLetters =
+    (('A' to 'Z').toList.zip(Stream from 0) map { case (letter, number) => (number, letter) }).toMap
 }
 
 case class Cell(number: Option[Int])
@@ -43,4 +49,3 @@ case class Grid(columns: Int, rows: Int, cells: Map[CrosswordPosition, Cell]) {
     }
   }
 }
-

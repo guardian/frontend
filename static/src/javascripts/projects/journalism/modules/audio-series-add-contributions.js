@@ -1,8 +1,6 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
-import audioContribBanner from 'raw-loader!journalism/views/audioSeriesContributions.html';
+import audioContribBanner from 'journalism/views/audioSeriesContributions.html';
 import { supportContributeURL } from 'common/modules/commercial/support-utilities';
 
 const renderContributionsBanner = el => {
@@ -10,7 +8,7 @@ const renderContributionsBanner = el => {
         supportContributeURL: supportContributeURL(),
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         el.insertAdjacentHTML('afterend', banner);
     });
 };

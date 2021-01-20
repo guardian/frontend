@@ -8,8 +8,9 @@ trait PublicAssets extends BaseController with ImplicitControllerExecutionContex
 
   def assets: Assets
 
-  def at(file: String, relativePath: String = ""): NoCache[AnyContent] = model.NoCache {
-    assets.at("/public", relativePath + file)
-  }
+  def at(file: String, relativePath: String = ""): NoCache[AnyContent] =
+    model.NoCache {
+      assets.at("/public", relativePath + file)
+    }
 
 }

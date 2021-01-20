@@ -1,9 +1,8 @@
-// @flow strict
+
 import config from 'lib/config';
 import { isBreakpoint } from 'lib/detect';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
-import type { SpacefinderItem } from 'common/modules/spacefinder';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
@@ -13,13 +12,7 @@ import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
 
-type AdSize = {
-    width: number,
-    height: number,
-    toString: (_: void) => string,
-};
 
-type Sizes = { desktop: Array<AdSize> };
 
 const isPaidContent = config.get('page.isPaidContent', false);
 
@@ -29,12 +22,12 @@ const adSlotClassSelectorSizes = {
 };
 
 const insertAdAtPara = (
-    para: Node,
-    name: string,
-    type: string,
-    classes: ?string,
-    sizes: ?Sizes
-): Promise<void> => {
+    para,
+    name,
+    type,
+    classes,
+    sizes
+) => {
     const ads = createSlots(type, {
         name,
         classes,
@@ -42,7 +35,7 @@ const insertAdAtPara = (
     });
 
     return fastdom
-        .write(() =>
+        .mutate(() =>
             ads.forEach(ad => {
                 if (para.parentNode) {
                     para.parentNode.insertBefore(ad, para);
@@ -59,9 +52,9 @@ const insertAdAtPara = (
 let previousAllowedCandidate;
 
 // this facilitates a second filtering, now taking into account the candidates' position/size relative to the other candidates
-const filterNearbyCandidates = (maximumAdHeight: number) => (
-    candidate: SpacefinderItem
-): boolean => {
+const filterNearbyCandidates = (maximumAdHeight) => (
+    candidate
+) => {
     if (
         !previousAllowedCandidate ||
         Math.abs(candidate.top - previousAllowedCandidate.top) -
@@ -74,19 +67,16 @@ const filterNearbyCandidates = (maximumAdHeight: number) => (
     return false;
 };
 
-const getBodySelector = (): string =>
-    !config.get('isDotcomRendering', false)
-        ? '.js-article__body'
-        : '.article-body-commercial-selector';
+const isDotcomRendering = config.get('isDotcomRendering', false);
+const articleBodySelector = isDotcomRendering ? '.article-body-commercial-selector' : '.js-article__body';
 
-const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
+const addDesktopInlineAds = (isInline1) => {
     const isImmersive = config.get('page.isImmersive');
-
     const defaultRules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: isImmersive ? 700 : 300,
-        minBelow: 700,
+        minBelow: isDotcomRendering ? 300 : 700,
         selectors: {
             ' > h2': {
                 minAbove: 5,
@@ -111,10 +101,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
     // For any other inline
     const relaxedRules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: isPaidContent ? 1600 : 1000,
-        minBelow: 800,
+        minBelow: isDotcomRendering ? 300 : 800,
         selectors: {
             ' .ad-slot': adSlotClassSelectorSizes,
             ' figure.element--immersive': {
@@ -127,10 +117,10 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
 
     const rules = isInline1 ? defaultRules : relaxedRules;
 
-    const insertAds = (paras: HTMLElement[]): Promise<number> => {
-        const slots: Array<Promise<void>> = paras
+    const insertAds = (paras) => {
+        const slots = paras
             .slice(0, isInline1 ? 1 : paras.length)
-            .map((para: Node, i: number) => {
+            .map((para, i) => {
                 const inlineId = i + (isInline1 ? 1 : 2);
 
                 return insertAdAtPara(
@@ -154,9 +144,9 @@ const addDesktopInlineAds = (isInline1: boolean): Promise<number> => {
     });
 };
 
-const addMobileInlineAds = (): Promise<number> => {
+const addMobileInlineAds = () => {
     const rules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: 200,
         minBelow: 200,
@@ -175,8 +165,8 @@ const addMobileInlineAds = (): Promise<number> => {
         filter: filterNearbyCandidates(adSizes.mpu.height),
     };
 
-    const insertAds = (paras: HTMLElement[]): Promise<number> => {
-        const slots: Array<Promise<void>> = paras.map((para: Node, i: number) =>
+    const insertAds = (paras) => {
+        const slots = paras.map((para, i) =>
             insertAdAtPara(
                 para,
                 i === 0 ? 'top-above-nav' : `inline${i}`,
@@ -196,7 +186,7 @@ const addMobileInlineAds = (): Promise<number> => {
     });
 };
 
-const addInlineAds = (): Promise<number> => {
+const addInlineAds = () => {
     const isMobile = isBreakpoint({
         max: 'mobileLandscape',
     });
@@ -210,9 +200,9 @@ const addInlineAds = (): Promise<number> => {
     return addDesktopInlineAds(true).then(() => addDesktopInlineAds(false));
 };
 
-const attemptToAddInlineMerchAd = (): Promise<boolean> => {
+const attemptToAddInlineMerchAd = () => {
     const rules = {
-        bodySelector: getBodySelector(),
+        bodySelector: articleBodySelector,
         slotSelector: ' > p',
         minAbove: 300,
         minBelow: 0,
@@ -252,7 +242,7 @@ const attemptToAddInlineMerchAd = (): Promise<boolean> => {
     );
 };
 
-const doInit = (): Promise<boolean> => {
+const doInit = () => {
     if (!commercialFeatures.articleBodyAdverts) {
         return Promise.resolve(false);
     }
@@ -260,7 +250,7 @@ const doInit = (): Promise<boolean> => {
     const im = config.get('page.hasInlineMerchandise')
         ? attemptToAddInlineMerchAd()
         : Promise.resolve(false);
-    im.then((inlineMerchAdded: boolean) =>
+    im.then((inlineMerchAdded) =>
         inlineMerchAdded ? trackAdRender('dfp-ad--im') : Promise.resolve()
     )
         .then(addInlineAds)
@@ -269,11 +259,11 @@ const doInit = (): Promise<boolean> => {
     return im;
 };
 
-export const init = (): Promise<boolean> => {
+export const init = () => {
     // Also init when the main article is redisplayed
     // For instance by the signin gate.
-    mediator.on('page:article:redisplayed', () => {
-        doInit();
-    });
+    mediator.on('page:article:redisplayed', doInit);
+    // DCR doesn't have mediator, so listen for CustomEvent
+    document.addEventListener('dcr:page:article:redisplayed', doInit);
     return doInit();
 };

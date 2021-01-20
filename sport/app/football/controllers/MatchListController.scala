@@ -19,16 +19,16 @@ trait MatchListController extends BaseController with Requests {
     datePattern.parseDateTime(s"$year$month$day").toLocalDate
 
   protected def renderMatchList(
-    page: FootballPage,
-    matchesList: MatchesList,
-    filters: Map[String, Seq[CompetitionFilter]]
+      page: FootballPage,
+      matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
       if (request.isJson)
         JsonComponent(
           "html" -> football.views.html.matchList.matchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse(""))
+          "previous" -> Html(matchesList.previousPage.getOrElse("")),
         )
       else
         RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))
@@ -36,16 +36,16 @@ trait MatchListController extends BaseController with Requests {
   }
 
   protected def renderMoreMatches(
-    page: FootballPage,
-    matchesList: MatchesList,
-    filters: Map[String, Seq[CompetitionFilter]]
+      page: FootballPage,
+      matchesList: MatchesList,
+      filters: Map[String, Seq[CompetitionFilter]],
   )(implicit request: RequestHeader, context: ApplicationContext) = {
     Cached(10) {
-      if(request.isJson)
+      if (request.isJson)
         JsonComponent(
           "html" -> football.views.html.matchList.moreMatchesComponent(matchesList),
           "next" -> Html(matchesList.nextPage.getOrElse("")),
-          "previous" -> Html(matchesList.previousPage.getOrElse(""))
+          "previous" -> Html(matchesList.previousPage.getOrElse("")),
         )
       else
         RevalidatableResult.Ok(football.views.html.matchList.matchesPage(page, matchesList, filters))

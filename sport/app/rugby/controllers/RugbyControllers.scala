@@ -1,4 +1,3 @@
-
 package rugby.controllers
 
 import com.softwaremill.macwire._

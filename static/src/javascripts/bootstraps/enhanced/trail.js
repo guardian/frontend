@@ -1,5 +1,3 @@
-// @flow
-
 /* eslint-disable no-new */
 
 import fastdom from 'lib/fastdom-promise';
@@ -19,7 +17,7 @@ import { onwardVideo } from 'common/modules/video/onward-container';
 import { onwardAudio } from 'common/modules/audio/onward-container';
 import { moreInSeriesContainerInit } from 'common/modules/video/more-in-series-container';
 
-const initMoreInSection = (): void => {
+const initMoreInSection = () => {
     const {
         showRelatedContent,
         isPaidContent,
@@ -53,7 +51,7 @@ const insertOrProximity = (selector, insert) => {
         insert();
     } else {
         fastdom
-            .read(() => document.querySelector(selector))
+            .measure(() => document.querySelector(selector))
             .then(el => {
                 if (el) {
                     addProximityLoader(el, 1500, insert);
@@ -98,7 +96,7 @@ const initRelated = () => {
     }
 };
 
-const initOnwardVideoContainer = (): void => {
+const initOnwardVideoContainer = () => {
     const contentType = config.get('page.contentType', '');
 
     if (contentType !== 'Audio' && contentType !== 'Video') {
@@ -117,7 +115,7 @@ const initOnwardVideoContainer = (): void => {
     });
 };
 
-const initOnwardAudioContainer = (): void => {
+const initOnwardAudioContainer = () => {
     if (config.get('page.contentType') === 'Audio') {
         $('.js-audio-components-container').each(el => onwardAudio(el));
     }
@@ -132,7 +130,7 @@ const initOnwardContent = () => {
             new OnwardContent(qwery('.js-onward'));
         } else if (config.get('page.tones', '') !== '') {
             fastdom
-                .read(() => Array.from(document.querySelectorAll('.js-onward')))
+                .measure(() => Array.from(document.querySelectorAll('.js-onward')))
                 .then(els => {
                     els.forEach(c => {
                         new TonalComponent().fetch(c, 'html');
@@ -151,7 +149,7 @@ const initDiscussion = () => {
         config.get('page.commentable')
     ) {
         fastdom
-            .read(() => document.querySelector('.discussion'))
+            .measure(() => document.querySelector('.discussion'))
             .then(el => {
                 if (el) {
                     new DiscussionLoader().attachTo(el);
@@ -163,9 +161,9 @@ const initDiscussion = () => {
 const repositionComments = () => {
     if (!isUserLoggedIn()) {
         fastdom
-            .read(() => $('.js-comments'))
+            .measure(() => $('.js-comments'))
             .then($comments =>
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     $comments.appendTo(qwery('.js-repositioned-comments'));
                     if (window.location.hash === '#comments') {
                         const top = $comments.offset().top;

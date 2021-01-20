@@ -15,11 +15,11 @@ trait ContentApiHttpRecorder extends HttpRecorder[ContentApiResponse] {
         ContentApiResponse(b, 200, "")
       } else {
         val statusCode = response.message match {
-          case "requested page is beyond the number of available pages" =>  400
+          case "requested page is beyond the number of available pages"                         => 400
           case "Content API does not support paging this far. Please change page or page-size." => 400
-          case "The requested resource could not be found." =>              404
-          case "The requested resource has expired for rights reason." =>   410
-          case _ =>                                                         500
+          case "The requested resource could not be found."                                     => 404
+          case "The requested resource has expired for rights reason."                          => 410
+          case _                                                                                => 500
         }
         ContentApiResponse(b, statusCode, response.message)
       }

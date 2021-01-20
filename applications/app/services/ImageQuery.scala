@@ -13,17 +13,24 @@ trait ImageQuery extends ConciergeRepository {
 
   val contentApiClient: ContentApiClient
 
-  def image(edition: Edition, path: String)(implicit request: RequestHeader, context: ApplicationContext): Future[Either[ImageContentPage, PlayResult]] = {
+  def image(edition: Edition, path: String)(implicit
+      request: RequestHeader,
+      context: ApplicationContext,
+  ): Future[Either[ImageContentPage, PlayResult]] = {
     log.info(s"Fetching image content: $path for edition ${edition.id}")
-    val response = contentApiClient.getResponse(contentApiClient.item(path, edition)
-      .showFields("all")
+    val response = contentApiClient.getResponse(
+      contentApiClient
+        .item(path, edition)
+        .showFields("all"),
     ) map { response: ItemResponse =>
-        val mainContent = response.content.filter(_.isImageContent).map(Content(_))
-        mainContent.map {
+      val mainContent = response.content.filter(_.isImageContent).map(Content(_))
+      mainContent
+        .map {
           case content: ImageContent => Left(ImageContentPage(content, StoryPackages(content.metadata.id, response)))
-          case _ => Right(NotFound)
-        }.getOrElse(Right(NotFound))
-      }
+          case _                     => Right(NotFound)
+        }
+        .getOrElse(Right(NotFound))
+    }
 
     response recover convertApiExceptions
   }

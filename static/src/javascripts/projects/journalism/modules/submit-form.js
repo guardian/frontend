@@ -1,24 +1,23 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import fetch from 'lib/fetch';
 import config from 'lib/config';
 
 const targetUrl = config.get('page.calloutsUrl');
 const isNamed = element => element.name > '';
-const isCheckbox = (element: HTMLInputElement) => element.type === 'checkbox';
-const isFile = (element: HTMLInputElement) => element.type === 'file';
+const isCheckbox = (element) => element.type === 'checkbox';
+const isFile = (element) => element.type === 'file';
 
 /* --------- DOM MANIPULATION ---------*/
 
 const enableButton = cForm => {
-    const button: HTMLButtonElement = cForm.getElementsByTagName('button')[0];
+    const button = cForm.getElementsByTagName('button')[0];
     button.disabled = false;
     button.textContent = 'Share with the Guardian';
 };
 
 const showConfirmation = cForm => {
     const calloutWrapper = cForm.closest('.element-campaign');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         calloutWrapper.classList.add('success');
     });
 };
@@ -26,17 +25,17 @@ const showConfirmation = cForm => {
 const showWaiting = cForm => {
     const button = cForm.querySelector('button');
     const errorField = cForm.querySelector('.error_box');
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         button.textContent = 'Sending...';
         button.disabled = true;
         errorField.innerHTML = '';
     });
 };
 
-const showError = (cForm: HTMLElement, msg: string) => {
+const showError = (cForm, msg) => {
     const errorField = cForm.querySelector('.error_box');
     if (errorField) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             errorField.innerHTML = `<p class="error">${msg}</p>`;
         });
     }
@@ -78,7 +77,7 @@ const getValueFromInput = (element, data) => {
     return element.value;
 };
 
-export const formatData = (elements: any): Promise<any> =>
+export const formatData = (elements) =>
     [].reduce.call(
         elements,
         async (promise, element) => {
@@ -93,7 +92,7 @@ export const formatData = (elements: any): Promise<any> =>
         Promise.resolve({})
     );
 
-export const submitForm = async (e: any) => {
+export const submitForm = async (e) => {
     e.preventDefault();
     const cForm = e.target;
     const data = await formatData(cForm.elements);

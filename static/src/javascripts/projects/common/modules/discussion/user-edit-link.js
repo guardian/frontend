@@ -1,13 +1,11 @@
-// @flow
-
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 
-const addEditLink = (containerEl: HTMLElement): void => {
-    const myUserId: ?string = config.get('user.id');
-    const pageUserId: string = containerEl.dataset.userid;
+const addEditLink = (containerEl) => {
+    const myUserId = config.get('user.id');
+    const pageUserId = containerEl.dataset.userid;
 
-    const parentNode: ?Element = containerEl.parentElement;
+    const parentNode = containerEl.parentElement;
 
     if (parentNode && myUserId && myUserId === pageUserId) {
         const linkEl = document.createElement('a');
@@ -20,15 +18,15 @@ const addEditLink = (containerEl: HTMLElement): void => {
         holderEl.appendChild(linkEl);
         holderEl.classList.add('user-profile__edit-link');
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             containerEl.insertAdjacentElement('afterend', holderEl);
         });
     }
 };
 
-const initUserEditLink = (): Promise<void> =>
+const initUserEditLink = () =>
     fastdom
-        .read(() =>
+        .measure(() =>
             Array.from(document.getElementsByClassName('user-profile__name'))
         )
         .then(names => {

@@ -11,7 +11,7 @@ object AdSize {
     def writes(size: AdSize): JsValue = {
       Json.obj(
         "width" -> size.width,
-        "height" -> size.height
+        "height" -> size.height,
       )
     }
   }
@@ -19,7 +19,7 @@ object AdSize {
   implicit val reads: Reads[AdSize] = (
     (JsPath \ "width").read[Int] and
       (JsPath \ "height").read[Int]
-    )(AdSize.apply _)
+  )(AdSize.apply _)
 
   val invisibleSize = AdSize(1, 1)
 

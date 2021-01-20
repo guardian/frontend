@@ -58,10 +58,7 @@ import test.ConfiguredTestSuite
     }
   }
 
-
   private def fakeTeam(colour: String): LineUpTeam =
     LineUpTeam("", "", colour, Official("", ""), "", 0, 0, 0, 0, 0, 0, 0, Seq.empty)
 
 }
-
-

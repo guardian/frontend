@@ -1,5 +1,3 @@
-// @flow
-
 // es7 polyfills not provided by pollyfill.io
 import 'core-js/modules/es7.object.get-own-property-descriptors';
 
@@ -7,8 +5,12 @@ import domready from 'domready';
 import { bootStandard } from 'bootstraps/standard/main';
 import config from 'lib/config';
 import { markTime } from 'lib/user-timing';
-import { capturePerfTimings } from 'lib/capture-perf-timings';
+import { captureOphanInfo } from 'lib/capture-ophan-info';
 import reportError from 'lib/report-error';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import { getLocale } from '@guardian/libs';
+import { getCookie } from 'lib/cookies';
+import { trackPerformance } from 'common/modules/analytics/google';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -18,15 +20,44 @@ __webpack_public_path__ = `${config.get('page.assetsPath')}javascripts/`;
 
 // Debug preact in DEV
 if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line no-unused-expressions
     import(/* webpackChunkName: "preact-debug" */ 'preact/debug');
 }
 
 // kick off the app
 const go = () => {
-    domready(() => {
+    domready(async () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
+
+        // Start CMP
+        // CCPA and TCFv2
+        const browserId = getCookie('bwid') || undefined;
+        const pageViewId = config.get('ophan.pageViewId');
+        const pubData = {
+            platform: 'next-gen',
+            browserId,
+            pageViewId,
+        };
+
+        // keep this in sync with CONSENT_TIMING in src/web/components/App.tsx in frontend
+        // mark: CONSENT_TIMING
+        let recordedConsentTime = false;
+        onConsentChange(() => {
+            if (!recordedConsentTime) {
+                recordedConsentTime = true;
+                cmp.willShowPrivacyMessage().then(willShow => {
+                    trackPerformance(
+                        'consent',
+                        'acquired',
+                        willShow ? 'new' : 'existing'
+                    );
+                });
+            }
+        });
+
+        cmp.init({ pubData, country: await getLocale() });
 
         // 2. once standard is done, next is commercial
         if (process.env.NODE_ENV !== 'production') {
@@ -93,9 +124,9 @@ const go = () => {
             }),
         ]).then(() => {
             if (document.readyState === 'complete') {
-                capturePerfTimings();
+                captureOphanInfo();
             } else {
-                window.addEventListener('load', capturePerfTimings);
+                window.addEventListener('load', captureOphanInfo);
             }
         });
     });

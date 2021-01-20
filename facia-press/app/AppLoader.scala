@@ -19,7 +19,8 @@ import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait AppComponents extends FrontendComponents {
@@ -42,7 +43,7 @@ trait AppComponents extends FrontendComponents {
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[FaciaPressLifecycle],
-    wire[TargetingLifecycle]
+    wire[TargetingLifecycle],
   )
 
   lazy val router: Router = wire[Routes]
@@ -60,7 +61,7 @@ trait AppComponents extends FrontendComponents {
     FaciaPressMetrics.AuPressLatencyMetric,
     FaciaPressMetrics.AllFrontsPressLatencyMetric,
     FaciaPressMetrics.FrontPressContentSize,
-    FaciaPressMetrics.FrontDecodingLatency
+    FaciaPressMetrics.FrontDecodingLatency,
   )
 
   override lazy val httpFilters: Seq[EssentialFilter] = Nil

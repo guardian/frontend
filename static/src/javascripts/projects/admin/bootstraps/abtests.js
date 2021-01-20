@@ -1,14 +1,16 @@
-// @flow
 import { ABTestReportItem as ReportItem } from 'admin/modules/abtests/abtest-report-item';
 import { Audience } from 'admin/modules/abtests/audience';
-import { concurrentTests } from 'common/modules/experiments/ab-tests';
+import {
+    concurrentTests,
+    epicTests,
+} from 'common/modules/experiments/ab-tests';
 import { isExpired } from 'lib/time-utils';
 
 const renderTests = (
-    tests: $ReadOnlyArray<ABTest>,
-    active: boolean,
-    elem: ?Element
-): Array<any> => {
+    tests,
+    active,
+    elem
+) => {
     const items = tests.map(
         test =>
             new ReportItem({
@@ -22,9 +24,11 @@ const renderTests = (
     return items;
 };
 
-const initABTests = (): void => {
+const initABTests = () => {
+    const tests = [].concat(concurrentTests, epicTests);
+
     renderTests(
-        concurrentTests.filter(test => !isExpired(test.expiry)),
+        tests.filter(test => !isExpired(test.expiry)),
         true,
         document.querySelector('.abtests-report__data')
     );
@@ -46,7 +50,7 @@ const initABTests = (): void => {
     const expiredTitle = document.querySelector('.abtests-expired-title a');
 
     if (expiredTitle) {
-        expiredTitle.addEventListener('click', (e: Event) => {
+        expiredTitle.addEventListener('click', (e) => {
             e.preventDefault();
 
             /**
@@ -54,7 +58,7 @@ const initABTests = (): void => {
                  flow won't allow typecasting of EventTarget
                  so typecasting as any
             * */
-            const target = (e.target: any);
+            const target = (e.target);
 
             if (target.textContent === 'show') {
                 target.textContent = 'hide';

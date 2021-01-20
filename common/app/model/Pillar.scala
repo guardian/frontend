@@ -16,4 +16,3 @@ object Pillar {
     lazy val nameOrDefault: String = orDefault.name.toLowerCase
   }
 }
-

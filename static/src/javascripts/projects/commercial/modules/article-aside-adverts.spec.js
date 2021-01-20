@@ -1,4 +1,3 @@
-// @flow
 import qwery from 'qwery';
 import fakeConfig from 'lib/config';
 import fakeMediator from 'lib/mediator';
@@ -11,9 +10,9 @@ jest.mock('common/modules/commercial/commercial-features', () => ({
     },
 }));
 
-const fastdomReadSpy = jest.spyOn(fastdom, 'read');
+const fastdomMeasureSpy = jest.spyOn(fastdom, 'measure');
 
-const sharedBeforeEach = (domSnippet: string) => () => {
+const sharedBeforeEach = (domSnippet) => () => {
     jest.resetAllMocks();
     fakeMediator.removeAllListeners();
     fakeConfig.page.isImmersive = false;
@@ -61,7 +60,7 @@ describe('Standard Article Aside Adverts', () => {
     });
 
     it('should have the correct size mappings and classes', done => {
-        fastdomReadSpy.mockReturnValue(Promise.resolve([2000, 0]));
+        fastdomMeasureSpy.mockReturnValue(Promise.resolve([2000, 0]));
         fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
@@ -73,7 +72,7 @@ describe('Standard Article Aside Adverts', () => {
     });
 
     it('should mutate the ad slot in short articles', done => {
-        fastdomReadSpy.mockReturnValue(Promise.resolve([10, 0]));
+        fastdomMeasureSpy.mockReturnValue(Promise.resolve([10, 0]));
         fakeMediator.once('page:defaultcommercial:right', adSlot => {
             expect(adSlot.classList).not.toContain('js-sticky-mpu');
             expect(adSlot.getAttribute('data-mobile')).toBe(
@@ -107,7 +106,7 @@ describe('Immersive Article Aside Adverts', () => {
     });
 
     it('should remove sticky and return all slot sizes when there is enough space', done => {
-        fastdomReadSpy.mockReturnValueOnce(Promise.resolve([900001, 10000]));
+        fastdomMeasureSpy.mockReturnValueOnce(Promise.resolve([900001, 10000]));
         fakeConfig.page.isImmersive = true;
 
         fakeMediator.once('page:defaultcommercial:right', adSlot => {
@@ -125,7 +124,7 @@ describe('Immersive Article Aside Adverts', () => {
     });
 
     it('should remove sticky and return sizes that will fit when there is limited space', done => {
-        fastdomReadSpy.mockReturnValueOnce(Promise.resolve([900002, 260]));
+        fastdomMeasureSpy.mockReturnValueOnce(Promise.resolve([900002, 260]));
         fakeConfig.page.isImmersive = true;
 
         fakeMediator.once('page:defaultcommercial:right', adSlot => {
@@ -156,7 +155,7 @@ describe('Immersive Article (no immersive elements) Aside Adverts', () => {
     afterEach(sharedAfterEach);
 
     it('should have the correct size mappings and classes (leaves it untouched)', done => {
-        fastdomReadSpy.mockReturnValue(Promise.resolve([900000, 0]));
+        fastdomMeasureSpy.mockReturnValue(Promise.resolve([900000, 0]));
         fakeConfig.page.isImmersive = true;
 
         fakeMediator.once('page:defaultcommercial:right', adSlot => {

@@ -10,7 +10,8 @@ object Crypto {
   private def secretKeyWithSha256(privateKey: String, algorithm: String) = {
     val messageDigest = MessageDigest.getInstance("SHA-256")
     messageDigest.update(privateKey.getBytes("utf-8"))
-    val maxAllowedKeyLength = Cipher.getMaxAllowedKeyLength(algorithm) / 8 // max allowed length in bits / (8 bits to a byte)
+    val maxAllowedKeyLength =
+      Cipher.getMaxAllowedKeyLength(algorithm) / 8 // max allowed length in bits / (8 bits to a byte)
     val raw = messageDigest.digest().slice(0, maxAllowedKeyLength)
     new SecretKeySpec(raw, algorithm)
   }
@@ -34,4 +35,3 @@ object Crypto {
     new String(cipher.doFinal(payload), "utf-8")
   }
 }
-

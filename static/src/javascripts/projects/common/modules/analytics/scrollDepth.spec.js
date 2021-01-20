@@ -1,11 +1,9 @@
-// @flow
-
 import mediator from 'lib/mediator';
 import { ScrollDepth } from 'common/modules/analytics/scrollDepth';
 
 jest.mock(
     'lodash/debounce',
-    (): Function => fn => {
+    () => fn => {
         fn();
     }
 );

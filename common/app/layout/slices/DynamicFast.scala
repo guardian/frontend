@@ -19,10 +19,12 @@ object DynamicFast extends DynamicContainer {
           bigs.length match {
             case 1 => HalfQl4Ql4
             case _ =>
-              if (firstSlice.exists(_.layout.columns.exists({
-                case SingleItem(_, itemClasses) => itemClasses.mobile != Standard
-                case _ => false
-              }))) {
+              if (
+                firstSlice.exists(_.layout.columns.exists({
+                  case SingleItem(_, itemClasses) => itemClasses.mobile != Standard
+                  case _                          => false
+                }))
+              ) {
                 HalfQuarterQl2Ql4B
               } else {
                 HalfQuarterQl2Ql4
@@ -35,7 +37,7 @@ object DynamicFast extends DynamicContainer {
             case 3 => QuarterQuarterQuarterQl
             case _ => QuarterQuarterQuarterQuarter
           }
-        }
+        },
       )
     }
   }

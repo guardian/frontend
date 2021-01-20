@@ -1,4 +1,4 @@
-// @flow strict
+
 import config from 'lib/config';
 import { getCookie } from 'lib/cookies';
 import {
@@ -7,43 +7,30 @@ import {
     getViewport,
 } from 'lib/detect';
 import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { getUrlVars } from 'lib/url';
-import { getKruxSegments } from 'common/modules/commercial/krux';
-import { getPermutiveSegments } from 'common/modules/commercial/permutive';
+import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import { cmp, onConsentChange } from '@guardian/consent-management-platform';
+import {
+    getPermutiveSegments,
+    clearPermutiveSegments,
+} from 'common/modules/commercial/permutive';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getSynchronousParticipations } from 'common/modules/experiments/ab';
-import { removeFalseyValues } from 'commercial/modules/prebid/utils';
+import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
 
-type PageTargeting = {
-    sens: string,
-    url: string,
-    edition: string,
-    ct: string,
-    p: string,
-    k: string,
-    su: string,
-    bp: string,
-    x: string,
-    gdncrm: string,
-    pv: string,
-    co: string,
-    tn: string,
-    slot: string,
-    permutive: string,
-};
 
-let myPageTargetting: {} = {};
-let latestConsentState;
+let myPageTargetting = {};
+let latestCmpHasInitalised;
+let latestCMPState;
 
-const findBreakpoint = (): string => {
+const findBreakpoint = () => {
     switch (getBreakpoint(true)) {
         case 'mobile':
         case 'mobileMedium':
@@ -61,38 +48,43 @@ const findBreakpoint = (): string => {
     }
 };
 
-const inskinTargetting = (): string => {
+const inskinTargetting = () => {
     const vp = getViewport();
-    if (vp && vp.width >= 1560) return 't';
-    return 'f';
+    if (!vp || vp.width < 1560) {
+        return 'f';
+    }
+
+    // Don’t show inskin if we cannot tell if a privacy message will be shown
+    if (!cmp.hasInitialised()) return 'f';
+    return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
 
-const format = (keyword: string): string =>
+const format = (keyword) =>
     keyword.replace(/[+\s]+/g, '-').toLowerCase();
 
 // flowlint sketchy-null-string:warn
-const formatTarget = (target: ?string): ?string =>
+const formatTarget = (target) =>
     target
         ? format(target)
               .replace(/&/g, 'and')
               .replace(/'/g, '')
         : null;
 
-const abParam = (): Array<string> => {
-    const abParticipations: Participations = getSynchronousParticipations();
-    const abParams: Array<string> = [];
+const abParam = () => {
+    const abParticipations = getSynchronousParticipations();
+    const abParams = [];
 
-    const pushAbParams = (testName: string, testValue: mixed): void => {
+    const pushAbParams = (testName, testValue) => {
         if (typeof testValue === 'string' && testValue !== 'notintest') {
-            const testData: string = `${testName}-${testValue}`;
+            const testData = `${testName}-${testValue}`;
             // DFP key-value pairs accept value strings up to 40 characters long
             abParams.push(testData.substring(0, 40));
         }
     };
 
     Object.keys(abParticipations).forEach(
-        (testKey: string): void => {
-            const testValue: { variant: string } = abParticipations[testKey];
+        (testKey) => {
+            const testValue = abParticipations[testKey];
             pushAbParams(testKey, testValue.variant);
         }
     );
@@ -108,8 +100,9 @@ const abParam = (): Array<string> => {
     return abParams;
 };
 
-const getVisitedValue = (): string => {
-    const visitCount: number = local.get('gu.alreadyVisited') || 0;
+const getVisitedValue = () => {
+    const visitCount =
+        parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 
     if (visitCount <= 5) {
         return visitCount.toString();
@@ -128,9 +121,8 @@ const getVisitedValue = (): string => {
     return visitCount.toString();
 };
 
-const getReferrer = (): ?string => {
-    type MatchType = { id: string, match: string };
-    const referrerTypes: Array<MatchType> = [
+const getReferrer = () => {
+    const referrerTypes = [
         {
             id: 'facebook',
             match: 'facebook.com',
@@ -149,7 +141,7 @@ const getReferrer = (): ?string => {
         },
     ];
 
-    const matchedRef: MatchType =
+    const matchedRef =
         referrerTypes.filter(
             referrerType => detectGetReferrer().indexOf(referrerType.match) > -1
         )[0] || {};
@@ -157,17 +149,26 @@ const getReferrer = (): ?string => {
     return matchedRef.id;
 };
 
-const getWhitelistedQueryParams = (): {} => {
-    const whiteList: Array<string> = ['0p19G'];
+const getWhitelistedQueryParams = () => {
+    const whiteList = ['0p19G'];
     return pick(getUrlVars(), whiteList);
 };
 
-const formatAppNexusTargeting = (obj: { [string]: string }): string =>
+const getUrlKeywords = (pageId) => {
+    if (pageId) {
+        const segments = pageId.split('/');
+        const lastPathname = segments.pop() || segments.pop(); // This handles a trailing slash
+        return lastPathname.split('-');
+    }
+    return [];
+};
+
+const formatAppNexusTargeting = (obj) =>
     flattenDeep(
         Object.keys(obj)
-            .filter((key: string) => obj[key] !== '' && obj[key] !== null)
-            .map((key: string) => {
-                const value: Array<string> | string = obj[key];
+            .filter((key) => obj[key] !== '' && obj[key] !== null)
+            .map((key) => {
+                const value = obj[key];
                 return Array.isArray(value)
                     ? value.map(nestedValue => `${key}=${nestedValue}`)
                     : `${key}=${value}`;
@@ -175,7 +176,7 @@ const formatAppNexusTargeting = (obj: { [string]: string }): string =>
     ).join(',');
 
 const buildAppNexusTargetingObject = once(
-    (pageTargeting: PageTargeting): {} =>
+    (pageTargeting) =>
         removeFalseyValues({
             sens: pageTargeting.sens,
             pt1: pageTargeting.url,
@@ -198,22 +199,56 @@ const buildAppNexusTargetingObject = once(
 );
 
 const buildAppNexusTargeting = once(
-    (pageTargeting: PageTargeting): string =>
+    (pageTargeting) =>
         formatAppNexusTargeting(buildAppNexusTargetingObject(pageTargeting))
 );
 
-const buildPageTargetting = (
-    adConsentState: boolean | null
-): { [key: string]: mixed } => {
+const getRdpValue = (ccpaState) => {
+    if (ccpaState === null) {
+        return 'na';
+    }
+    return ccpaState ? 't' : 'f';
+};
+
+const getTcfv2ConsentValue = (tcfv2State) => {
+    if (getPrivacyFramework().tcfv2 && tcfv2State !== null) {
+        return tcfv2State ? 't' : 'f';
+    }
+    return 'na';
+};
+
+const getAdConsentFromState = (state) => {
+    if (state.ccpa) {
+        // CCPA mode
+        return !state.ccpa.doNotSell;
+    } else if (state.tcfv2) {
+        // TCFv2 mode
+        return state.tcfv2.consents
+            ? Object.keys(state.tcfv2.consents).length > 0 &&
+              Object.values(state.tcfv2.consents).every(Boolean)
+            : false;
+    } else if (state.aus) {
+        // AUS mode
+        return state.aus.personalisedAdvertising;
+    } 
+    // Unknown mode
+    return false;
+}
+
+const rebuildPageTargeting = () => {
+    latestCmpHasInitalised = cmp.hasInitialised();
+    const adConsentState = getAdConsentFromState(latestCMPState);
+    const ccpaState = latestCMPState.ccpa ? latestCMPState.ccpa.doNotSell : null;
+    const tcfv2EventStatus = latestCMPState.tcfv2 ? latestCMPState.tcfv2.eventStatus : 'na';
     const page = config.get('page');
     // personalised ads targeting
+    if (adConsentState === false) clearPermutiveSegments();
     // flowlint-next-line sketchy-null-bool:off
-    const paTargeting: {} = { pa: adConsentState ? 't' : 'f' };
-    const adFreeTargeting: {} = commercialFeatures.adFree ? { af: 't' } : {};
-    const pageTargets: PageTargeting = Object.assign(
+    const paTargeting = { pa: adConsentState ? 't' : 'f' };
+    const adFreeTargeting = commercialFeatures.adFree ? { af: 't' } : {};
+    const pageTargets = Object.assign(
         {
             sens: page.isSensitive ? 't' : 'f',
-            x: getKruxSegments(adConsentState),
             permutive: getPermutiveSegments(),
             pv: config.get('ophan.pageViewId'),
             bp: findBreakpoint(),
@@ -237,15 +272,15 @@ const buildPageTargetting = (
                 config.get('isDotcomRendering', false) ||
                 config.get('page.dcrCouldRender', false)
                     ? 't'
-                    : 'f', // Indicates whether the page is DCR eligible. This happens when the page
+                    : 'f',
+            // Indicates whether the page is DCR eligible. This happens when the page
             // was DCR eligible and was actually rendered by DCR or
-            // was DCR eligible but rendered by frontend for a user not in the
-            // DotcomRenderingAdvertisements experiment
-            //
-            // This is introduced (Nov 2019) to be used as part of correctly
-            // validating ad performance on DCR (against DCR eligible pages)
-            // and can be decomissioned after Pascal and D&I no longer need the flag.
+            // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
+            urlkw: getUrlKeywords(page.pageId),
+            rdp: getRdpValue(ccpaState),
+            consent_tcfv2: getTcfv2ConsentValue(adConsentState),
+            cmp_interaction: tcfv2EventStatus || 'na',
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -254,7 +289,7 @@ const buildPageTargetting = (
     );
 
     // filter out empty values
-    const pageTargeting: {} = pickBy(pageTargets, target => {
+    const pageTargeting = pickBy(pageTargets, target => {
         if (Array.isArray(target)) {
             return target.length > 0;
         }
@@ -268,27 +303,29 @@ const buildPageTargetting = (
     page.pageAdTargeting = pageTargeting;
 
     return pageTargeting;
-};
+}
 
-const getPageTargeting = (): { [key: string]: mixed } => {
-    if (Object.keys(myPageTargetting).length !== 0) return myPageTargetting;
+const getPageTargeting = () => {
 
-    onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
-
-        if (consentState !== latestConsentState) {
-            myPageTargetting = buildPageTargetting(consentState);
-            latestConsentState = consentState;
+    if (Object.keys(myPageTargetting).length !== 0) {
+        // If CMP was initalised since the last time myPageTargetting was built - rebuild
+        if (latestCmpHasInitalised !== cmp.hasInitialised()) {
+            myPageTargetting = rebuildPageTargeting();
         }
+        return myPageTargetting;
+    }
+    
+    // First call binds to onConsentChange and returns {}
+    onConsentChange((state)=>{
+    // On every consent change we rebuildPageTageting
+        latestCMPState = state;
+        myPageTargetting = rebuildPageTargeting();
     });
-
-    return myPageTargetting;
+    return myPageTargetting; 
 };
 
-const resetPageTargeting = (): void => {
+const resetPageTargeting = () => {
     myPageTargetting = {};
-    latestConsentState = undefined;
 };
 
 export {

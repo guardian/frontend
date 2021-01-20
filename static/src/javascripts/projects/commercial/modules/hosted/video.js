@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'fastdom';
 import deferToAnalytics from 'lib/defer-to-analytics';
 import reportError from 'lib/report-error';
@@ -11,17 +10,17 @@ import {
     canAutoplay,
     triggerEndSlate,
 } from 'commercial/modules/hosted/next-video-autoplay';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
+import loadingTmpl from 'common/views/ui/loading.html';
 
-const initLoadingSpinner = (player: Object, loadingTemplate: string): void => {
+const initLoadingSpinner = (player, loadingTemplate) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTemplate;
 };
 
-const upgradeVideoPlayerAccessibility = (player: Object): void => {
+const upgradeVideoPlayerAccessibility = (player) => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     const playerEl = player.el();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         Array.from(playerEl.querySelectorAll('.vjs-tech')).forEach(el => {
             el.setAttribute('aria-hidden', 'true');
         });
@@ -67,7 +66,7 @@ const upgradeVideoPlayerAccessibility = (player: Object): void => {
     });
 };
 
-const onPlayerError = (player: Object): void => {
+const onPlayerError = (player) => {
     const err = player.error();
     if (err && 'message' in err && 'code' in err) {
         reportError(
@@ -82,10 +81,10 @@ const onPlayerError = (player: Object): void => {
 };
 
 const onPlayerReady = (
-    player: any,
-    mediaId: string,
-    loadingTemplate: string
-): void => {
+    player,
+    mediaId,
+    loadingTemplate
+) => {
     const vol = player.volume();
     initLoadingSpinner(player, loadingTemplate);
     upgradeVideoPlayerAccessibility(player);
@@ -109,13 +108,8 @@ const onPlayerReady = (
 
 // #? Should we have some type aliases for HostedPlayer, Videojs?
 const setupVideo = (
-    video: HTMLElement,
-    videojsInstance: (
-        el: string | HTMLElement,
-        options: ?Object,
-        callback?: () => void
-    ) => Object
-): void => {
+    video,
+    videojsInstance) => {
     const mediaId = video.getAttribute('data-media-id');
     const player = videojsInstance(video, videojsOptions());
 
@@ -140,7 +134,7 @@ const setupVideo = (
     });
 };
 
-export const initHostedVideo = (): Promise<void> => {
+export const initHostedVideo = () => {
     const videoEl = document.querySelectorAll('.vjs-hosted__video');
     const youtubeIframe = document.querySelectorAll('.js-hosted-youtube-video');
 

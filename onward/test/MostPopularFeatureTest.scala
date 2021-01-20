@@ -1,8 +1,13 @@
 package test
 
+import collection.JavaConverters._
 import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
 
-@DoNotDiscover class MostPopularFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with ConfiguredTestSuite {
+@DoNotDiscover class MostPopularFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite {
 
   feature("Most popular") {
 
@@ -24,17 +29,16 @@ import org.scalatest.{DoNotDiscover, Matchers, GivenWhenThen, FeatureSpec}
       goTo("/most-read/world") { browser =>
         import browser._
         Then("I should see a list of 'world' content")
-        $(".zone-world").$("h2").text should be("Most viewed in World news")
+        $(".zone-world").$("h2").first().text() should be("Most viewed in World news")
         And("it should contain world news")
         $(".zone-world li").size should be > 0
-
       }
 
       Given("I am on a page in the 'US news' section")
       goTo("/most-read/us-news") { browser =>
         import browser._
         Then("I should see a list of 'US news' content, with the heading correctly capitalized")
-        $(".zone-us-news").$("h2").text should be("Most viewed in US news")
+        $(".zone-us-news").$("h2").first().text() should be("Most viewed in US news")
         And("it should contain US news")
         $(".zone-us-news li").size should be > 0
 

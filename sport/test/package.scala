@@ -15,26 +15,28 @@ import scala.concurrent.{ExecutionContext, Future}
 import scala.concurrent.duration._
 import scala.io.Codec.UTF8
 
-class SportTestSuite extends Suites (
-  new CompetitionListControllerTest,
-  new FixturesControllerTest,
-  new LeagueTableControllerTest,
-  new MatchControllerTest,
-  new MoreOnMatchFeatureTest,
-  new RichListTest,
-  new CompetitionStageTest,
-  new FixturesListTest,
-  new MatchDayListTest,
-  new ResultsListTest,
-  new TeamColoursTest,
-  new CompetitionAgentTest,
-  new FixturesFeatureTest,
-  new LeagueTablesFeatureTest,
-  new LiveMatchesFeatureTest,
-  new MatchFeatureTest,
-  new ResultsFeatureTest,
-  new FixturesAndResultsTest
-) with SingleServerSuite {
+class SportTestSuite
+    extends Suites(
+      new CompetitionListControllerTest,
+      new FixturesControllerTest,
+      new LeagueTableControllerTest,
+      new MatchControllerTest,
+      new MoreOnMatchFeatureTest,
+      new RichListTest,
+      new CompetitionStageTest,
+      new FixturesListTest,
+      new MatchDayListTest,
+      new ResultsListTest,
+      new TeamColoursTest,
+      new CompetitionAgentTest,
+      new FixturesFeatureTest,
+      new LeagueTablesFeatureTest,
+      new LiveMatchesFeatureTest,
+      new MatchFeatureTest,
+      new ResultsFeatureTest,
+      new FixturesAndResultsTest,
+    )
+    with SingleServerSuite {
   override lazy val port: Int = 19013
 }
 
@@ -47,13 +49,14 @@ trait WithTestFootballClient {
     override def GET(url: String): Future[PaResponse] = {
       FootballHttpRecorder
         .load(url.replace(SportConfiguration.pa.footballKey, "apikey")) {
-        wsClient.url(url)
-          .withRequestTimeout(10.seconds)
-          .get()
-          .map { wsResponse =>
-            pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
-          }
-      }(testExecutionContext)
+          wsClient
+            .url(url)
+            .withRequestTimeout(10.seconds)
+            .get()
+            .map { wsResponse =>
+              pa.Response(wsResponse.status, wsResponse.body, wsResponse.statusText)
+            }
+        }(testExecutionContext)
     }
   }
 
@@ -69,7 +72,8 @@ class TestHttp(wsClient: WSClient)(implicit executionContext: ExecutionContext) 
   def GET(url: String): Future[PaResponse] = {
     val sanitisedUrl = url.replace(SportConfiguration.pa.footballKey, "apikey")
     FootballHttpRecorder.load(sanitisedUrl) {
-      wsClient.url(url)
+      wsClient
+        .url(url)
         .withRequestTimeout(10.seconds)
         .get()
         .map { wsResponse =>

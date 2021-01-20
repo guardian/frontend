@@ -1,8 +1,5 @@
-// @flow
-import type { GuAdSize } from 'commercial/types';
-
-const getAdSize = (width: number, height: number): GuAdSize => {
-    const toString = (): string =>
+const getAdSize = (width, height) => {
+    const toString = () =>
         width === height && height === 0 ? 'fluid' : `${width},${height}`;
 
     return Object.freeze({
@@ -12,7 +9,18 @@ const getAdSize = (width: number, height: number): GuAdSize => {
     });
 };
 
-const adSizes: Object = {
+/*
+
+    mark: 1b109a4a-791c-4214-acd2-2720d7d9f96f
+
+    The ad sizes which are hardcoded here are also hardcoded in the source code of 
+    dotcom-rendering. 
+
+    If/when this file is modified, please make sure that updates, if any, are reported to DCR.
+
+ */
+
+const adSizes = {
     // standard ad sizes
     billboard: getAdSize(970, 250),
     leaderboard: getAdSize(728, 90),

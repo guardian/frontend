@@ -1,5 +1,3 @@
-// @flow
-
 /*  Auto scrolling with easing
 
     Usage:
@@ -15,32 +13,32 @@ import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 
 const scrollTo = (
-    offset: number,
-    duration: number = 0,
-    easeFn?: string = 'easeOutQuad',
-    container: ?HTMLElement = document.body
-): void => {
+    offset,
+    duration = 0,
+    easeFn = 'easeOutQuad',
+    container = document.body
+) => {
     const $container = bonzo(container);
     const from = $container.scrollTop();
     const distance = offset - from;
     const ease = createEasing(easeFn, duration);
     const scrollFn = () => {
-        fastdom.write(() => $container.scrollTop(from + ease() * distance));
+        fastdom.mutate(() => $container.scrollTop(from + ease() * distance));
     };
     const interval = setInterval(scrollFn, 15);
 
     setTimeout(() => {
         clearInterval(interval);
-        fastdom.write(() => $container.scrollTop(offset));
+        fastdom.mutate(() => $container.scrollTop(offset));
     }, duration);
 };
 
 const scrollToElement = (
-    element: HTMLElement | string,
-    duration?: number = 0,
-    easeFn?: string,
-    container: ?HTMLElement
-): void => {
+    element,
+    duration = 0,
+    easeFn,
+    container
+) => {
     const top = bonzo(element).offset().top;
     scrollTo(top, duration, easeFn, container);
 };

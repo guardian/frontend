@@ -5,30 +5,37 @@ import play.api.test._
 import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
-
-@DoNotDiscover class LiveBlogControllerTest extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+@DoNotDiscover class LiveBlogControllerTest
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val liveBlogUrl = "global/middle-east-live/2013/sep/09/syria-crisis-russia-kerry-us-live"
 
   lazy val liveBlogController = new LiveBlogController(
     testContentApiClient,
     play.api.test.Helpers.stubControllerComponents(),
-    wsClient
+    wsClient,
   )
 
   it should "return the latest blocks of a live blog" in {
     val lastUpdateBlock = "block-56d03169e4b074a9f6b35baa"
-    val fakeRequest = FakeRequest(GET, s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock")
-      .withHeaders("host" -> "localhost:9000")
+    val fakeRequest = FakeRequest(
+      GET,
+      s"/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live.json?lastUpdate=$lastUpdateBlock",
+    ).withHeaders("host" -> "localhost:9000")
 
-    val result = liveBlogController.renderJson("/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live", Some(lastUpdateBlock), None, Some(true))(fakeRequest)
+    val result = liveBlogController.renderJson(
+      "/football/live/2016/feb/26/fifa-election-who-will-succeed-sepp-blatter-president-live",
+      Some(lastUpdateBlock),
+      None,
+      Some(true),
+    )(fakeRequest)
     status(result) should be(200)
 
     val content = contentAsString(result)

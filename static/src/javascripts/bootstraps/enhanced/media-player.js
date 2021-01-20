@@ -1,5 +1,3 @@
-// @flow
-
 import videojs from 'videojs';
 import 'videojs-ima';
 import 'videojs-embed';
@@ -17,21 +15,17 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
-import { loadScript } from 'lib/load-script';
+import loadingTmpl from 'common/views/ui/loading.html';
 import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
-import { videoAdUrl } from 'common/modules/commercial/video-ad-url';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { Component } from 'common/modules/component';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
-import { skipAd } from 'common/modules/media/videojs-plugins/skip-ad';
 
-const initLoadingSpinner = (player: any): void => {
+const initLoadingSpinner = (player) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTmpl;
 };
 
-const upgradeVideoPlayerAccessibility = (player: any): void => {
+const upgradeVideoPlayerAccessibility = (player) => {
     // Set the video tech element to aria-hidden, and label the buttons in the videojs control bar.
     $('.vjs-tech', player.el()).attr('aria-hidden', true);
 
@@ -50,7 +44,7 @@ const upgradeVideoPlayerAccessibility = (player: any): void => {
     );
 };
 
-const createVideoPlayer = (el: HTMLElement, options: Object): any => {
+const createVideoPlayer = (el, options) => {
     const player = videojs(el, options);
 
     const duration = parseInt(el.getAttribute('data-duration'), 10);
@@ -62,24 +56,12 @@ const createVideoPlayer = (el: HTMLElement, options: Object): any => {
         }
         // we have some special autoplay rules, so do not want to depend on 'default' autoplay
         player.guAutoplay = $(el).attr('data-auto-play') === 'true';
-
-        // need to explicitly set the dimensions for the ima plugin.
-        player.height(
-            bonzo(player.el())
-                .parent()
-                .dim().height
-        );
-        player.width(
-            bonzo(player.el())
-                .parent()
-                .dim().width
-        );
     });
 
     return player;
 };
 
-const initEndSlate = (player: any, endSlatePath: string): void => {
+const initEndSlate = (player, endSlatePath) => {
     const endSlate = new Component();
     const endStateClass = 'vjs-has-ended';
 
@@ -98,11 +80,7 @@ const initEndSlate = (player: any, endSlatePath: string): void => {
     });
 };
 
-const enhanceVideo = (
-    el: HTMLMediaElement,
-    autoplay: boolean,
-    shouldPreroll: boolean = false
-): any => {
+const enhanceVideo = (el, autoplay) => {
     const mediaType = el.tagName.toLowerCase();
     const dataset = el.dataset;
     const { mediaId, endSlate, embedPath } = dataset;
@@ -115,8 +93,6 @@ const enhanceVideo = (
 
     let mouseMoveIdle;
     let playerSetupComplete;
-    let withPreroll;
-    let blockVideoAds;
 
     el.classList.add('vjs');
 
@@ -145,7 +121,6 @@ const enhanceVideo = (
     );
 
     events.addContentEvents(player, mediaId, mediaType);
-    events.addPrerollEvents(player, mediaId, mediaType);
     events.bindGoogleAnalyticsEvents(player, gaEventLabel);
 
     getVideoInfo(el).then(videoInfo => {
@@ -177,12 +152,6 @@ const enhanceVideo = (
                         player.controlBar.dispose();
                     });
                 } else {
-                    blockVideoAds =
-                        videoInfo.shouldHideAdverts ||
-                        commercialFeatures.adFree;
-
-                    withPreroll = shouldPreroll && !blockVideoAds;
-
                     // Location of this is important.
                     events.bindErrorHandler(player);
                     player.guMediaType = mediaType;
@@ -193,9 +162,6 @@ const enhanceVideo = (
                                 events.initOphanTracking(player, mediaId);
                                 events.bindGlobalEvents(player);
                                 events.bindContentEvents(player);
-                                if (withPreroll) {
-                                    events.bindPrerollEvents(player);
-                                }
                             });
 
                             initLoadingSpinner(player);
@@ -213,7 +179,6 @@ const enhanceVideo = (
                                 namespace: 'gu.vjs',
                             });
 
-                            // preroll for videos only
                             if (mediaType === 'video') {
                                 player.fullscreener();
 
@@ -225,59 +190,24 @@ const enhanceVideo = (
                                 ) {
                                     initEndSlate(player, endSlate);
                                 }
-
-                                if (withPreroll) {
-                                    raven.wrap(
-                                        {
-                                            tags: {
-                                                feature: 'media',
-                                            },
-                                        },
-                                        () => {
-                                            player.ima({
-                                                id: mediaId,
-                                                adTagUrl: videoAdUrl(),
-                                                prerollTimeout: 1000,
-                                                // We set this sightly higher so contrib-ads never timeouts before ima.
-                                                contribAdsSettings: {
-                                                    timeout: 2000,
-                                                },
-                                            });
-                                            player.on('adstart', () => {
-                                                player.skipAd(mediaType, 15);
-                                            });
-                                            player.ima.requestAds();
-
-                                            // Video analytics event.
-                                            player.trigger(
-                                                events.constructEventName(
-                                                    'preroll:request',
-                                                    player
-                                                )
-                                            );
-                                            resolve();
-                                        }
-                                    )();
-                                } else {
-                                    resolve();
-                                }
                             } else {
                                 player.playlist({
                                     mediaType: 'audio',
                                     continuous: false,
                                 });
-                                resolve();
                             }
+
+                            resolve();
 
                             // built in vjs-user-active is buggy so using custom implementation
                             player.on('mousemove', () => {
                                 clearTimeout(mouseMoveIdle);
-                                fastdom.write(() => {
+                                fastdom.mutate(() => {
                                     player.addClass('vjs-mousemoved');
                                 });
 
                                 mouseMoveIdle = setTimeout(() => {
-                                    fastdom.write(() => {
+                                    fastdom.mutate(() => {
                                         player.removeClass('vjs-mousemoved');
                                     });
                                 }, 500);
@@ -301,8 +231,8 @@ const enhanceVideo = (
     return player;
 };
 
-const initPlayButtons = (root: ?HTMLElement): void => {
-    fastdom.read(() => {
+const initPlayButtons = (root) => {
+    fastdom.measure(() => {
         $('.js-video-play-button', root).each(el => {
             const $el = bonzo(el);
             bean.on(el, 'click', () => {
@@ -312,7 +242,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
                 const placeholder = $('.js-video-placeholder', container);
                 const player = $('.js-video-player', container);
 
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     placeholder
                         .removeClass('media__placeholder--active')
                         .addClass('media__placeholder--hidden');
@@ -325,7 +255,7 @@ const initPlayButtons = (root: ?HTMLElement): void => {
                     enhanceVideo($('video', player).get(0), true);
                 });
             });
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 $el.removeClass('media__placeholder--hidden').addClass(
                     'media__placeholder--active'
                 );
@@ -334,18 +264,17 @@ const initPlayButtons = (root: ?HTMLElement): void => {
     });
 };
 
-const initPlayer = (withPreroll: boolean): void => {
-    videojs.plugin('skipAd', skipAd);
+const initPlayer = () => {
     videojs.plugin('fullscreener', fullscreener);
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.js-gu-media--enhance').each(el => {
-            enhanceVideo(el, false, withPreroll);
+            enhanceVideo(el, false);
         });
     });
 };
 
-const initWithRaven = (withPreroll: boolean = false): void => {
+const initWithRaven = () => {
     raven.wrap(
         {
             tags: {
@@ -353,40 +282,13 @@ const initWithRaven = (withPreroll: boolean = false): void => {
             },
         },
         () => {
-            initPlayer(withPreroll);
+            initPlayer();
         }
     )();
 };
 
-export const initMediaPlayer = (): void => {
-    // The `hasMultipleVideosInPage` flag is temporary until the # will be fixed
-    const shouldPreroll =
-        commercialFeatures.videoPreRolls &&
-        !config.get('page.hasMultipleVideosInPage') &&
-        !config.get('page.hasYouTubeAtom') &&
-        !config.get('page.isFront') &&
-        !config.get('page.isPaidContent') &&
-        !config.get('page.sponsorshipType') &&
-        config.get('page.contentType') !== 'Audio';
-
-    if (shouldPreroll) {
-        loadScript('//imasdk.googleapis.com/js/sdkloader/ima3.js')
-            .then(() => {
-                initWithRaven(true);
-            })
-            .catch(e => {
-                raven.captureException(e, {
-                    tags: {
-                        feature: 'media',
-                        action: 'ads',
-                        ignored: true,
-                    },
-                });
-                initWithRaven();
-            });
-    } else {
-        initWithRaven();
-    }
+export const initMediaPlayer = () => {
+    initWithRaven();
 
     // Setup play buttons
     initPlayButtons(document.body);

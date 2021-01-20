@@ -1,7 +1,7 @@
 package jobs
 
 import com.gu.facia.api.models.{CommercialPriority, EditorialPriority, EmailPriority, TrainingPriority}
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 import conf.Configuration
 import services.{ConfigAgent, FrontPressNotification}
 
@@ -18,7 +18,7 @@ object HighFrequency extends FrontType {
 
 case class CronUpdate(path: String, frontType: FrontType)
 
-object RefreshFrontsJob extends Logging {
+object RefreshFrontsJob extends GuLogging {
   def getAllCronUpdates: Seq[CronUpdate] = {
     ConfigAgent.getPathIds.map(path => CronUpdate(path, getFrontType(path)))
   }
@@ -28,11 +28,11 @@ object RefreshFrontsJob extends Logging {
       HighFrequency
     else
       ConfigAgent.getFrontPriorityFromConfig(path) match {
-        case Some(EditorialPriority) => StandardFrequency
+        case Some(EditorialPriority)  => StandardFrequency
         case Some(CommercialPriority) => LowFrequency
-        case Some(TrainingPriority) => LowFrequency
-        case Some(EmailPriority) => StandardFrequency
-        case None => LowFrequency
+        case Some(TrainingPriority)   => LowFrequency
+        case Some(EmailPriority)      => StandardFrequency
+        case None                     => LowFrequency
       }
   }
 
@@ -57,7 +57,9 @@ object RefreshFrontsJob extends Logging {
       log.info("Putting press jobs on Facia Cron (MANUAL REQUEST)")
       for (update <- getAllCronUpdates)
         yield {
-        log.info(s"Pressing $update")
-        FrontPressNotification.sendWithoutSubject(akkaAsync)(update.path)}})
+          log.info(s"Pressing $update")
+          FrontPressNotification.sendWithoutSubject(akkaAsync)(update.path)
+        }
+    })
   }
 }

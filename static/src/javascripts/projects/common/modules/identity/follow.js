@@ -1,14 +1,13 @@
-// @flow
 import React, { render } from 'preact-compat';
 import fastdom from 'lib/fastdom-promise';
 import { FollowButtonWrap } from './upsell/button/FollowButtonWrap';
 import loadEnhancers from './modules/loadEnhancers';
 
-const bindFollow = (el): void => {
+const bindFollow = (el) => {
     fastdom
-        .read(() => el.querySelector('.identity-follow__button-target'))
-        .then((wrapperEl: HTMLElement) => {
-            fastdom.write(() => {
+        .measure(() => el.querySelector('.identity-follow__button-target'))
+        .then((wrapperEl) => {
+            fastdom.mutate(() => {
                 render(
                     <FollowButtonWrap
                         following
@@ -25,7 +24,7 @@ const bindFollow = (el): void => {
         });
 };
 
-const enhanceFollow = (): void => {
+const enhanceFollow = () => {
     loadEnhancers([['.identity-follow', bindFollow]]);
 };
 

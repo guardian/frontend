@@ -1,19 +1,20 @@
 package commercial.controllers
 
-import common.Logging
+import common.GuLogging
 import conf.Configuration.commercial.prebidAnalyticsStream
 import conf.switches.Switches
 import play.api.mvc._
 
 import scala.concurrent.ExecutionContext
 
-class PrebidAnalyticsController(val controllerComponents: ControllerComponents) extends BaseController with Logging {
+class PrebidAnalyticsController(val controllerComponents: ControllerComponents) extends BaseController with GuLogging {
 
   private implicit val ec: ExecutionContext = controllerComponents.executionContext
 
-  def insert(): Action[String] = Action(parse.text) { implicit request =>
-    val stream = Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log) _
+  def insert(): Action[String] =
+    Action(parse.text) { implicit request =>
+      val stream = Analytics.storeJsonBody(Switches.prebidAnalytics, prebidAnalyticsStream, log) _
 
-    stream(request.body)
-  }
+      stream(request.body)
+    }
 }

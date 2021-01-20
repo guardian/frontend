@@ -1,15 +1,7 @@
-// @flow
-
-type pagePropertiesRelevantToEpic = {|
-    section?: string,
-    toneIds?: string[],
-    keywordIds?: string[],
-|};
-
 // Data has shown that pages with these properties generate significantly
 // less money than others, so we don't want to waste an epic impression on them.
 // Especially since that epic impression deprives us of Outbrain money.
-export const defaultExclusionRules: pagePropertiesRelevantToEpic[] = [
+export const defaultExclusionRules = [
     // e.g. https://www.theguardian.com/football/2019/mar/27/gordon-taylor-departure-pfa-chief-executive
     { section: 'football' },
 
@@ -33,8 +25,8 @@ export const defaultExclusionRules: pagePropertiesRelevantToEpic[] = [
 ];
 
 export const isArticleWorthAnEpicImpression = (
-    page: Object,
-    exclusionRules: pagePropertiesRelevantToEpic[]
+    page,
+    exclusionRules
 ) =>
     !exclusionRules.some(propertiesToExclude => {
         const sectionsMatch = propertiesToExclude.section

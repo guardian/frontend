@@ -7,13 +7,14 @@ import org.joda.time.LocalDate
 import java.io.File
 
 import scala.util.{Failure, Success}
-import play.Logger
-import common.{Logging}
+import play.api.Logger
+import play.api.Logger.logger
+
+import common.{GuLogging}
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA
 import model.ApplicationContext
-
 
 trait Client extends PaClient with Http {
 
@@ -58,11 +59,11 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
         val xml = scala.io.Source.fromFile(file, "UTF-8").getLines().mkString
         Future(xml)(context)
       case None =>
-        Logger.warn(s"Missing fixture for API response: $suffix ($filename)")
+        Logger.logger.warn(s"Missing fixture for API response: $suffix ($filename)")
         val response = realClient.get(realApiCallPath)(context)
         response.onComplete {
           case Success(str) => {
-            Logger.info(s"writing response to testdata, $filename.xml, $str")
+            Logger.logger.info(s"writing response to testdata, $filename.xml, $str")
             writeToFile(s"${environment.rootPath}/admin/test/football/testdata/$filename.xml", str)
           }
           case Failure(writeError) => throw writeError
@@ -75,33 +76,36 @@ private case class TestClient(wsClient: WSClient, environment: Environment) exte
     val file = new File(path)
     file.getParentFile().mkdirs()
     val writer = new java.io.PrintWriter(file)
-    try writer.write(contents) finally writer.close()
+    try writer.write(contents)
+    finally writer.close()
   }
 
   override def apiKey: String = "KEY"
 }
 
 trait PaFootballClient {
-  self: PaFootballClient with Logging =>
+  self: PaFootballClient with GuLogging =>
 
   implicit val executionContext: ExecutionContext
   implicit val context: ApplicationContext
   val wsClient: WSClient
 
-  lazy val client: Client = if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
+  lazy val client: Client =
+    if (context.environment.mode == Mode.Test) TestClient(wsClient, context.environment) else RealClient(wsClient)
 
-  def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] = for {
-    competitions <- client.competitions.map(PA.filterCompetitions)
-    competitionTeams <- Future.traverse(competitions) {
-      comp => client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
-        case e: PaClientErrorsException =>
-          // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
-          log.error(s"PA Client error when fetching teams for competition $comp: ", e)
-          List()
+  def fetchCompetitionsAndTeams: Future[(List[Season], List[Team])] =
+    for {
+      competitions <- client.competitions.map(PA.filterCompetitions)
+      competitionTeams <- Future.traverse(competitions) { comp =>
+        client.teams(comp.competitionId, comp.startDate, comp.endDate).recover {
+          case e: PaClientErrorsException =>
+            // 'No data' is returned as an error by PA API. Therefore we ignore exception and return an empty list
+            log.error(s"PA Client error when fetching teams for competition $comp: ", e)
+            List()
+        }
       }
+      allTeams = competitionTeams.flatten.distinct
+    } yield {
+      (competitions, allTeams)
     }
-    allTeams = competitionTeams.flatten.distinct
-  } yield {
-    (competitions, allTeams)
-  }
 }

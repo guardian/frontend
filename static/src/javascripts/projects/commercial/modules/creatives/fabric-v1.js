@@ -1,13 +1,12 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
 import template from 'lodash/template';
 import mediator from 'lib/mediator';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricV1Html from 'raw-loader!commercial/views/creatives/fabric-v1.html';
-import iframeVideoStr from 'raw-loader!commercial/views/creatives/iframe-video.html';
-import scrollBgStr from 'raw-loader!commercial/views/creatives/scrollbg.html';
+import fabricV1Html from 'commercial/views/creatives/fabric-v1.html';
+import iframeVideoStr from 'commercial/views/creatives/iframe-video.html';
+import scrollBgStr from 'commercial/views/creatives/scrollbg.html';
 
 const hasBackgroundFixedSupport = !isAndroid();
 const isIE10OrLess =
@@ -22,14 +21,9 @@ let scrollBgTpl;
 // This is a hasty clone of fluid250.js
 
 class FabricV1 {
-    adSlot: Element;
-    params: Object;
 
-    scrollingBg: ?HTMLElement;
-    layer2: ?HTMLElement;
-    scrollType: string;
 
-    constructor(adSlot: Element, params: Object) {
+    constructor(adSlot, params) {
         this.adSlot = adSlot;
         this.params = params;
     }
@@ -75,7 +69,7 @@ class FabricV1 {
 
         if (templateOptions.scrollbg) {
             // update bg position
-            fastdom.read(this.updateBgPosition, this);
+            fastdom.measure(this.updateBgPosition, this);
             mediator.on(
                 'window:throttledScroll',
                 this.updateBgPosition.bind(this)
@@ -99,7 +93,7 @@ class FabricV1 {
             );
         }
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             this.adSlot.insertAdjacentHTML(
                 'beforeend',
                 fabricV1Tpl({
@@ -167,7 +161,7 @@ class FabricV1 {
         if (this.scrollType === 'parallax') {
             const scrollAmount =
                 Math.ceil(this.adSlot.getBoundingClientRect().top * 0.3) + 20;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.scrollingBg) {
                     this.scrollingBg.style.backgroundPosition = `50% ${scrollAmount}%`;
                     this.scrollingBg.classList.add('ad-scrolling-bg-parallax');
@@ -179,7 +173,7 @@ class FabricV1 {
                 ((window.innerHeight - adRect.bottom + adRect.height / 2) /
                     window.innerHeight) *
                 100;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.scrollingBg) {
                     this.scrollingBg.style.backgroundPosition = `50% ${vPos}%`;
                 }
@@ -197,7 +191,7 @@ class FabricV1 {
         ) {
             inViewB =
                 getViewport().height > this.adSlot.getBoundingClientRect().top;
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (this.layer2) {
                     this.layer2.classList.add(
                         `ad-scrolling-text-hide${

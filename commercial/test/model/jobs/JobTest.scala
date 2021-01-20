@@ -28,7 +28,17 @@ import test.ConfiguredTestSuite
     val job1 =
       Job(1, "title", "desc", None, "recruiter", None, "logo", Seq(124, 111, 101), "Unpaid Voluntary Work")
     val job2 =
-      Job(2, "title", "desc", None, "recruiter", None, "logo", Seq(124, 111, 101), "Unpaid Voluntary Work Without Bonus")
+      Job(
+        2,
+        "title",
+        "desc",
+        None,
+        "recruiter",
+        None,
+        "logo",
+        Seq(124, 111, 101),
+        "Unpaid Voluntary Work Without Bonus",
+      )
 
     job1.shortSalaryDescription should be("Unpaid Voluntary Work")
     job2.shortSalaryDescription should be("Unpaid Voluntary Work …")

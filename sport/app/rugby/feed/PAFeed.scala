@@ -1,6 +1,6 @@
 package rugby.feed
 
-import common.Logging
+import common.GuLogging
 import play.api.libs.json.{JsBoolean, Json}
 import play.api.libs.ws.WSClient
 import rugby.model._
@@ -53,7 +53,7 @@ object WorldCupPAIDs {
   val worldCupGroupIDs = worldCup2019GroupIDs
 }
 
-class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
+class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with GuLogging {
 
   import WorldCupPAIDs._
 
@@ -66,13 +66,12 @@ class PARugbyFeed(rugbyClient: RugbyClient) extends RugbyFeed with Logging {
   }
 }
 
-class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
+class PARugbyClient(wsClient: WSClient) extends RugbyClient with GuLogging {
 
   val apiKey = conf.SportConfiguration.pa.rugbyKey.getOrElse("")
   val basePath = conf.SportConfiguration.pa.rugbyEndpoint.getOrElse("")
 
-  override def getEvents(seasonID: Int)
-    (implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
+  override def getEvents(seasonID: Int)(implicit executionContext: ExecutionContext): Future[List[PAMatch]] = {
 
     val resp = request(wsClient, s"/event?season=$seasonID", Map.empty)
     val matches = resp.map(jsons => jsons.map(json => PAMatchesResponse.fromJSON(json).get))
@@ -81,14 +80,15 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
   }
 
   private[this] def request(
-    client: WSClient,
-    path: String,
-    params: Map[String, String]
+      client: WSClient,
+      path: String,
+      params: Map[String, String],
   )(implicit executionContext: ExecutionContext): Future[List[String]] = {
     val limit = 20
     val headers = Map("apikey" -> apiKey, "Accept" -> "application/json")
 
-    val request = client.url(basePath + path)
+    val request = client
+      .url(basePath + path)
       .addHttpHeaders(headers.toSeq: _*)
       .addQueryStringParameters(params.toSeq: _*)
 
@@ -96,11 +96,13 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
 
     def req(offset: Int): Future[(Boolean, String)] = {
       val pageParams = params + ("offset" -> offset.toString) + ("limit" -> limit.toString)
-      val request = client.url(basePath + path)
+      val request = client
+        .url(basePath + path)
         .addHttpHeaders(headers.toSeq: _*)
         .addQueryStringParameters(pageParams.toSeq: _*)
 
-      val resp = request.get()
+      val resp = request
+        .get()
         .map(resp => {
           resp.status match {
             case 200 => {
@@ -121,15 +123,15 @@ class PARugbyClient(wsClient: WSClient) extends RugbyClient with Logging {
   }
 
   private[this] def cycle[A](
-    offset: Int,
-    limit: Int,
-    acc: List[A],
-    req: (Int) => Future[(Boolean, A)]
+      offset: Int,
+      limit: Int,
+      acc: List[A],
+      req: (Int) => Future[(Boolean, A)],
   )(implicit executionContext: ExecutionContext): Future[List[A]] = {
 
     req(offset).flatMap({
       case (hasNext, res) if hasNext => cycle(offset + limit, limit, res :: acc, req)
-      case (_, res) => Future.successful(res :: acc)
+      case (_, res)                  => Future.successful(res :: acc)
     })
   }
 }

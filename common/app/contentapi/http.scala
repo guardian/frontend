@@ -7,7 +7,7 @@ import com.amazonaws.DefaultRequest
 import com.amazonaws.auth.{AWS4Signer, AWSCredentials}
 import com.amazonaws.http.HttpMethodName
 import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric, ContentApiRequestsMetric}
-import common.{ContentApiMetrics, Logging}
+import common.{ContentApiMetrics, GuLogging}
 import conf.Configuration
 import conf.Configuration.contentApi.capiPreviewCredentials
 import play.api.libs.ws.WSClient
@@ -31,7 +31,8 @@ trait HttpClient {
 }
 
 class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-  extends HttpClient with Logging {
+    extends HttpClient
+    with GuLogging {
 
   import java.lang.System.currentTimeMillis
 
@@ -56,12 +57,12 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 
     // record metrics
 
-    response.foreach((f)=>{ ContentApiRequestsMetric.increment() })
+    response.foreach((f) => { ContentApiRequestsMetric.increment() })
 
     response.foreach {
       case r if r.status == 404 => ContentApi404Metric.increment()
       case r if r.status == 200 => ContentApiMetrics.HttpLatencyTimingMetric.recordDuration(currentTimeMillis - start)
-      case _ =>
+      case _                    =>
     }
 
     response.failed.foreach {
@@ -89,13 +90,14 @@ class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionCon
 private object RequestDebugInfo {
   import java.net.URLEncoder.encode
 
-  private lazy val host: String = Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
+  private lazy val host: String =
+    Try(InetAddress.getLocalHost.getCanonicalHostName).getOrElse("unable-to-determine-host")
   private lazy val stage: String = Configuration.environment.stage
   private lazy val project: String = Configuration.environment.app
 
   lazy val debugParams = Seq(
     s"ngw-host=${encode(host, "UTF-8")}",
     s"ngw-stage=${encode(stage, "UTF-8")}",
-    s"ngw-project=${encode(project, "UTF-8")}"
+    s"ngw-project=${encode(project, "UTF-8")}",
   ).mkString("&")
 }

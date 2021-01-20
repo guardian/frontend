@@ -1,12 +1,12 @@
-// @flow strict
+
 import fastdom from 'lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { shouldIncludeMobileSticky } from 'commercial/modules/prebid/utils';
+import { shouldIncludeMobileSticky } from 'commercial/modules/header-bidding/utils';
 import config from 'lib/config';
 
 const createAdWrapperClassic = () => {
-    const wrapper: HTMLElement = document.createElement('div');
+    const wrapper = document.createElement('div');
     wrapper.className = 'mobilesticky-container';
     const adSlot = createSlots('mobile-sticky', {})[0];
     wrapper.appendChild(adSlot);
@@ -29,11 +29,11 @@ const createAdWrapper = () => {
     return createAdWrapperDCR();
 };
 
-export const init = (): Promise<void> => {
+export const init = () => {
     if (shouldIncludeMobileSticky()) {
         const mobileStickyWrapper = createAdWrapper();
         return fastdom
-            .write(() => {
+            .mutate(() => {
                 if (document.body && mobileStickyWrapper)
                     document.body.appendChild(mobileStickyWrapper);
             })

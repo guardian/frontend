@@ -1,10 +1,13 @@
-// @flow
-
 import bean from 'bean';
 import bonzo from 'bonzo';
+import config from 'lib/config';
 import mediator from 'lib/mediator';
 import { Component } from 'common/modules/component';
-import { postComment, previewComment } from 'common/modules/discussion/api';
+import {
+    getUser,
+    postComment,
+    previewComment,
+} from 'common/modules/discussion/api';
 import {
     getUserFromCookie,
     reset,
@@ -15,14 +18,36 @@ import { avatarify } from 'common/modules/discussion/user-avatars';
 import { init as initValidationEmail } from 'common/modules/identity/validation-email';
 import { urlify } from './urlify';
 
-type commentType = {
-    body: string,
-    id?: number,
-    replyTo?: Object,
-};
 
 class CommentBox extends Component {
-    constructor(options: Object): void {
+    static async refreshUsernameHtml() {
+        reset();
+
+        const discussionUserResponse = await getUser();
+
+        if (!discussionUserResponse || !discussionUserResponse.userProfile) {
+            return;
+        }
+
+        const discussionUser =
+            discussionUserResponse.userProfile;
+
+        const displayName = discussionUser.displayName;
+        const menuHeaderUsername = document.querySelector('.js-profile-info');
+        const discussionHeaderUsername = document.querySelector(
+            '._author_tywwu_16'
+        );
+
+        if (menuHeaderUsername && displayName) {
+            menuHeaderUsername.innerHTML = displayName;
+        }
+
+        if (discussionHeaderUsername && displayName) {
+            discussionHeaderUsername.innerHTML = displayName;
+        }
+    }
+
+    constructor(options) {
         super();
 
         this.useBem = true;
@@ -62,6 +87,9 @@ class CommentBox extends Component {
                 'Sorry, your comment was not published as you are no longer signed in. Please sign in and try again.',
             'READ-ONLY-MODE':
                 'Sorry your comment can not currently be published as commenting is undergoing maintenance but will be back shortly. Please try again in a moment.',
+            USERNAME_MISSING: `You must <a href="${config.get(
+                'page.mmaUrl'
+            )}/public-settings">set a username</a> before commenting. (<a href="/help/2020/feb/10/why-am-i-unable-to-post-a-comment">Learn more</a>).`,
 
             /* Custom error codes */
             /* CORS blocked by HTTP/1.0 proxy */
@@ -95,7 +123,7 @@ class CommentBox extends Component {
         );
     }
 
-    onboardingPreviewSuccess(comment: commentType, resp: Object): void {
+    onboardingPreviewSuccess(comment, resp) {
         const onboardingPreviewBody = this.getElem('onboarding-preview-body');
 
         if (onboardingPreviewBody) {
@@ -103,7 +131,7 @@ class CommentBox extends Component {
         }
     }
 
-    getDiscussionId(): string {
+    getDiscussionId() {
         const { discussionId } = this.options;
         let discussionKey =
             this.elem &&
@@ -117,8 +145,8 @@ class CommentBox extends Component {
         return discussionId || discussionKey || '';
     }
 
-    setFormState(disabled?: boolean = false): void {
-        const commentBody = ((this.getElem('body'): any): HTMLInputElement);
+    setFormState(disabled = false) {
+        const commentBody = ((this.getElem('body')));
         const submitButton = this.getElem('submit');
 
         if (submitButton && (disabled || commentBody.value.length === 0)) {
@@ -128,21 +156,20 @@ class CommentBox extends Component {
         }
     }
 
-    setExpanded(): void {
+    setExpanded() {
         this.setState('expanded');
     }
 
     // eslint-disable-next-line class-methods-use-this
-    getUserData(): Object {
+    getUserData() {
         // User will always exists at this point.
-        // $FlowFixMe
+
         return getUserFromCookie();
     }
 
-    errors: Array<string>;
-    errorMessages: Object;
 
-    clearErrors(): void {
+
+    clearErrors() {
         const messages = this.getElem('messages');
 
         if (messages) {
@@ -153,25 +180,7 @@ class CommentBox extends Component {
         this.removeState('invalid');
     }
 
-    refreshUsernameHtml(): void {
-        reset();
-
-        const displayName = this.getUserData().displayName;
-        const menuHeaderUsername = document.querySelector('.js-profile-info');
-        const discussionHeaderUsername = document.querySelector(
-            '._author_tywwu_16'
-        );
-
-        if (menuHeaderUsername && displayName) {
-            menuHeaderUsername.innerHTML = displayName;
-        }
-
-        if (discussionHeaderUsername && displayName) {
-            discussionHeaderUsername.innerHTML = displayName;
-        }
-    }
-
-    previewCommentSuccess(comment: commentType, resp: Object): void {
+    previewCommentSuccess(comment, resp) {
         const previewBody = this.getElem('preview-body');
 
         if (previewBody) {
@@ -181,7 +190,7 @@ class CommentBox extends Component {
         this.setState('preview-visible');
     }
 
-    fail(xhr: Object): void {
+    fail(xhr) {
         let response;
 
         // if our API is down, it returns HTML
@@ -207,14 +216,14 @@ class CommentBox extends Component {
         }
     }
 
-    postCommentSuccess(comment: commentType, resp: Object): commentType {
-        this.refreshUsernameHtml();
+    postCommentSuccess(comment, resp) {
+        CommentBox.refreshUsernameHtml();
 
         if (this.options.newCommenter) {
             this.options.newCommenter = false;
         }
 
-        const body = ((this.getElem('body'): any): HTMLInputElement);
+        const body = ((this.getElem('body')));
 
         comment.id = parseInt(resp.message, 10);
         body.value = '';
@@ -227,7 +236,7 @@ class CommentBox extends Component {
         return comment;
     }
 
-    error(type: string, message?: string): void {
+    error(type, message) {
         const messages = this.getElem('messages');
 
         this.setState('invalid');
@@ -247,7 +256,7 @@ class CommentBox extends Component {
         this.errors.push(type);
     }
 
-    postComment(): Promise<any> {
+    postComment() {
         const commentBody = this.getElem('body');
         const { value } =
             (commentBody &&
@@ -255,23 +264,23 @@ class CommentBox extends Component {
                 commentBody) ||
             {};
 
-        const comment: commentType = {
+        const comment = {
             body: value,
         };
 
         this.clearErrors();
 
-        const postCommentToDAPI = (): Promise<any> => {
+        const postCommentToDAPI = () => {
             this.removeState('onboarding-visible');
             comment.body = urlify(comment.body);
             this.setFormState(true);
 
             return postComment(this.getDiscussionId(), comment)
-                .then((resp: Object) => this.postCommentSuccess(comment, resp))
-                .catch((err: Object) => this.fail(err));
+                .then((resp) => this.postCommentSuccess(comment, resp))
+                .catch((err) => this.fail(err));
         };
 
-        const updateUsernameSuccess = (resp: Object): void => {
+        const updateUsernameSuccess = (resp) => {
             const onbordingUsername = this.getElem('onboarding-username');
 
             mediator.emit(
@@ -288,7 +297,7 @@ class CommentBox extends Component {
             postCommentToDAPI();
         };
 
-        const updateUsernameFailure = (errorResponse: Object): void => {
+        const updateUsernameFailure = (errorResponse) => {
             const usernameField = this.getElem('onboarding-username-input');
             const errorMessage = this.getElem(
                 'onboarding-username-error-message'
@@ -312,7 +321,7 @@ class CommentBox extends Component {
             }
         };
 
-        const validEmailCommentSubmission = (): Promise<any> => {
+        const validEmailCommentSubmission = () => {
             if (comment.body === '') {
                 this.error('EMPTY_COMMENT_BODY');
             }
@@ -336,7 +345,7 @@ class CommentBox extends Component {
                 if (this.options.newCommenter && !this.options.hasUsername) {
                     const userNameInput = ((this.getElem(
                         'onboarding-username-input'
-                    ): any): HTMLInputElement);
+                    )));
                     return updateUsername(userNameInput.value).then(
                         updateUsernameSuccess,
                         updateUsernameFailure
@@ -367,18 +376,18 @@ class CommentBox extends Component {
         return validEmailCommentSubmission();
     }
 
-    invalidEmailError(): void {
+    invalidEmailError() {
         this.removeState('onboarding-visible');
         this.error('EMAIL_NOT_VALIDATED');
         initValidationEmail();
     }
 
-    submitPostComment(e: Event): void {
+    submitPostComment(e) {
         e.preventDefault();
         this.postComment();
     }
 
-    ready(): void {
+    ready() {
         if (this.getDiscussionId() === null) {
             throw new Error(
                 'CommentBox: You need to set the "data-discussion-key" on your element'
@@ -390,17 +399,17 @@ class CommentBox extends Component {
         this.setFormState();
 
         if (this.options.newCommenter) {
-            bean.on(document.body, 'submit', [this.elem], (event: Event) =>
+            bean.on(document.body, 'submit', [this.elem], (event) =>
                 this.showOnboarding(event)
             );
             bean.on(
                 document.body,
                 'click',
                 this.getClass('onboarding-cancel'),
-                (event: Event) => this.hideOnboarding(event)
+                (event) => this.hideOnboarding(event)
             );
         } else {
-            bean.on(document.body, 'submit', [this.elem], (event: Event) =>
+            bean.on(document.body, 'submit', [this.elem], (event) =>
                 this.submitPostComment(event)
             );
         }
@@ -450,12 +459,12 @@ class CommentBox extends Component {
         }
     }
 
-    hideOnboarding(e: Event): void {
+    hideOnboarding(e) {
         e.preventDefault();
         this.removeState('onboarding-visible');
     }
 
-    showOnboarding(e: Event): void {
+    showOnboarding(e) {
         e.preventDefault();
 
         // Check if new commenter as they may have already commented on this article
@@ -482,7 +491,7 @@ class CommentBox extends Component {
         }
     }
 
-    prerender(): void {
+    prerender() {
         if (!this.options.premod) {
             const premod = this.getElem('premod');
 
@@ -492,11 +501,6 @@ class CommentBox extends Component {
         }
 
         const userData = this.getUserData();
-        const authorEl = this.getElem('author');
-
-        if (authorEl) {
-            authorEl.innerHTML = userData.displayName;
-        }
 
         if (this.options.state === 'response') {
             const submit = this.getElem('submit');
@@ -556,22 +560,22 @@ class CommentBox extends Component {
         }
     }
 
-    verificationEmailSuccess(): void {
+    verificationEmailSuccess() {
         this.clearErrors();
         this.error('EMAIL_VERIFIED');
     }
 
-    verificationEmailFail(): void {
+    verificationEmailFail() {
         this.clearErrors();
         this.error('EMAIL_VERIFIED_FAIL');
     }
 
-    previewComment(methodName: string): void {
-        const body = ((this.getElem('body'): any): HTMLInputElement);
-        const comment: commentType = {
+    previewComment(methodName) {
+        const body = ((this.getElem('body')));
+        const comment = {
             body: body.value,
         };
-        // $FlowFixMe
+
         const callback = this[methodName].bind(this);
 
         this.clearErrors();
@@ -597,16 +601,16 @@ class CommentBox extends Component {
 
         if (this.errors.length === 0) {
             previewComment(comment)
-                .then((resp: Object) => callback(comment, resp))
-                .catch((err: Object) => this.fail(err));
+                .then((resp) => callback(comment, resp))
+                .catch((err) => this.fail(err));
         }
     }
 
-    cancelComment(): void {
+    cancelComment() {
         if (this.options.state === 'response') {
             this.destroy();
         } else {
-            const body = ((this.getElem('body'): any): HTMLInputElement);
+            const body = ((this.getElem('body')));
 
             this.resetPreviewComment();
             body.value = '';
@@ -615,7 +619,7 @@ class CommentBox extends Component {
         }
     }
 
-    resetPreviewComment(): void {
+    resetPreviewComment() {
         const previewBody = this.getElem('preview-body');
 
         this.removeState('preview-visible');
@@ -625,22 +629,22 @@ class CommentBox extends Component {
         }
     }
 
-    formatComment(formatStyle: string): void {
-        const commentBody = ((this.getElem('body'): any): HTMLInputElement);
+    formatComment(formatStyle) {
+        const commentBody = ((this.getElem('body')));
         const cursorPositionStart = commentBody.selectionStart;
         let selectedText = commentBody.value.substring(
             commentBody.selectionStart,
             commentBody.selectionEnd
         );
 
-        const selectNewText = (newText: string): void => {
+        const selectNewText = (newText) => {
             commentBody.setSelectionRange(
                 cursorPositionStart,
                 cursorPositionStart + newText.length
             );
         };
 
-        const formatSelection = (startTag: string, endTag: string): void => {
+        const formatSelection = (startTag, endTag) => {
             const newText = startTag + selectedText + endTag;
 
             commentBody.value =
@@ -651,7 +655,7 @@ class CommentBox extends Component {
             selectNewText(newText);
         };
 
-        const formatSelectionLink = (): void => {
+        const formatSelectionLink = () => {
             let href;
             let linkURL;
 

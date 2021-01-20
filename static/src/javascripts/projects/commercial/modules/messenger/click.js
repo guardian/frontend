@@ -1,12 +1,10 @@
-// @flow
 import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
-import type { RegisterListeners } from 'commercial/modules/messenger';
 
-const sendClick = (adSlot: Element, linkName: string): void => {
+const sendClick = (adSlot, linkName) => {
     trackNativeAdLinkClick(adSlot.id, linkName);
 };
 
-const init = (register: RegisterListeners): void => {
+const init = (register) => {
     register('click', (linkName, ret, iframe = {}) =>
         sendClick(
             iframe.closest('.js-ad-slot') || {

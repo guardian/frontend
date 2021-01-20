@@ -21,12 +21,15 @@ trait FaciaPressDeduplicationTestData {
       webUrl = "",
       apiUrl = "",
       elements = None,
-      fields = Some(ContentFields(liveBloggingNow = Some(true)))
+      fields = Some(ContentFields(liveBloggingNow = Some(true))),
     )
     FaciaContentConvert.contentToFaciaContent(content)
   }
 
-  def collectionFromCuratedAndBackfilled(curated: List[PressedContent], backfilled: List[PressedContent]): PressedCollection = {
+  def collectionFromCuratedAndBackfilled(
+      curated: List[PressedContent],
+      backfilled: List[PressedContent],
+  ): PressedCollection = {
     PressedCollection(
       id = "collection/id/1",
       displayName = "",
@@ -46,7 +49,7 @@ trait FaciaPressDeduplicationTestData {
       showLatestUpdate = false,
       config = CollectionConfig.empty,
       hasMore = false,
-      targetedTerritory = None
+      targetedTerritory = None,
     )
   }
 
@@ -63,8 +66,8 @@ trait FaciaPressDeduplicationTestData {
     List(
       "link20",
       "link22",
-      "link23"
-    ).map(id => pressedContentFromId(id))
+      "link23",
+    ).map(id => pressedContentFromId(id)),
   )
 
   // -----------------------------------------------------
@@ -82,8 +85,8 @@ trait FaciaPressDeduplicationTestData {
       "link20",
       "link22",
       "link23",
-      "link24"
-    ).map(id => pressedContentFromId(id))
+      "link24",
+    ).map(id => pressedContentFromId(id)),
   )
 
   // -----------------------------------------------------
@@ -101,7 +104,7 @@ trait FaciaPressDeduplicationTestData {
       "link23",
       "link25",
       "link26",
-    ).map(id => pressedContentFromId(id))
+    ).map(id => pressedContentFromId(id)),
   )
 
   // -----------------------------------------------------
@@ -111,8 +114,8 @@ trait FaciaPressDeduplicationTestData {
   // -----------------------------------------------------
   val collection3 = collection1.copy(
     config = collection1.config.copy(
-      collectionType = "news/most-popular"
-    )
+      collectionType = "news/most-popular",
+    ),
   )
 
 }

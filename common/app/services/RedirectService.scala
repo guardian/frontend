@@ -1,24 +1,21 @@
 package services
 
-import java.awt.JobAttributes.DestinationType
 import java.net.URL
 
 import com.gu.scanamo.error.MissingProperty
 import com.gu.scanamo.syntax._
-import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync}
-import common.Logging
+import com.gu.scanamo.{DynamoFormat, Scanamo, ScanamoAsync, Table}
+import common.GuLogging
 import conf.Configuration
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.Try
-
 
 object RedirectService {
   sealed trait Destination {
     def source: String
     def location: String
   }
-
 
   // NOTE: This code is copied from ArchiveController in the interest of not endlessly expanding the common
   // library. Changes made here should be reflected there - function is currently called 'normalise'
@@ -27,16 +24,16 @@ object RedirectService {
   val R1ArtifactUrl = """^/(.*)/[0|1]?,[\d]*,(-?\d+),[\d]*(.*)""".r
   val ShortUrl = """^(/p/[\w\d]+).*$""".r
 
+  def normalisePath(path: String): String =
+    path match {
+      case R1ArtifactUrl(p, artifactOrContextId, _) =>
+        s"/$p/0,,$artifactOrContextId,.html"
+      case ShortUrl(p) => p
+      case _           => path
+    }
 
-  def normalisePath(path: String): String = path match {
-    case R1ArtifactUrl(p, artifactOrContextId, _) =>
-      s"/$p/0,,$artifactOrContextId,.html"
-    case ShortUrl(p) => p
-    case _ => path
-  }
-
-  def normaliseURL(url: String):Option[String] = {
-    Try(new URL(url)).toOption.map{url=>
+  def normaliseURL(url: String): Option[String] = {
+    Try(new URL(url)).toOption.map { url =>
       val host = url.getHost
       val path = url.getPath
       val normalisedPath = normalisePath(path)
@@ -44,16 +41,15 @@ object RedirectService {
     }
   }
 
-
   implicit val destinationFormat = DynamoFormat.xmap[Destination, Map[String, String]] {
     // map -> destination (i.e. reads)
     case m if m.contains("destination") => Right(PermanentRedirect(m("source"), m("destination")))
-    case m if m.contains("archive") => Right(ArchiveRedirect(m("source"), m("archive")))
-    case _ => Left(MissingProperty)
+    case m if m.contains("archive")     => Right(ArchiveRedirect(m("source"), m("archive")))
+    case _                              => Left(MissingProperty)
   } {
     // destination -> map (i.e. writes)
     case PermanentRedirect(source, destination) => Map("source" -> source, "destination" -> destination)
-    case ArchiveRedirect(source, archive) => Map("source" -> source, "archive" -> archive)
+    case ArchiveRedirect(source, archive)       => Map("source" -> source, "archive" -> archive)
   }
 
   // This is a permanent 3XX redirect - it could be guardian/non-guardian address
@@ -64,8 +60,7 @@ object RedirectService {
   case class ArchiveRedirect(source: String, location: String) extends Destination
 }
 
-
-class RedirectService(implicit executionContext: ExecutionContext) extends Logging {
+class RedirectService(implicit executionContext: ExecutionContext) extends GuLogging {
   import RedirectService._
 
   // protocol fixed to http so that lookups to dynamo find existing
@@ -73,10 +68,9 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
   private val expectedSourceHost = "http://www.theguardian.com"
   private val CombinerTags = """^(/[\w\d-/]+)\+([\w\d-/]+)$""".r
   private lazy val tableName = if (Configuration.environment.isProd) "redirects" else "redirects-CODE"
+  private lazy val table = Table[Destination](tableName)
 
-
-
-  def destinationForCombiner(source: String, tag1: String, tag2: String) : Future[Option[Destination]] = {
+  def destinationForCombiner(source: String, tag1: String, tag2: String): Future[Option[Destination]] = {
     // for paths such as /lifeandstyle/restaurants+lifeandstyle/wine/rss, we want to look up
     // /lifeandstyle/food and /lifeandstyle/wine individually - so the second tag needs cleaning
     // look up each tag to check if there is a redirect set for it
@@ -85,17 +79,19 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
       d2 <- lookupRedirectDestination(tag2)
     } yield (d1.map(_.location), d2.map(_.location))
     // if redirects exist, generate a new combiner url including the redirects
-    newDestinations.map{ destinations => {
-      val tag1RedirectLocation = destinations._1.getOrElse(tag1)
-      val tag2RedirectTag = destinations._2.map(_.replace("https://www.theguardian.com/", "")).getOrElse(tag2)
+    newDestinations.map { destinations =>
+      {
+        val tag1RedirectLocation = destinations._1.getOrElse(tag1)
+        val tag2RedirectTag = destinations._2.map(_.replace("https://www.theguardian.com/", "")).getOrElse(tag2)
 
-      val destination = s"$tag1RedirectLocation+$tag2RedirectTag"
-      if (destination != source) {
-        Some(PermanentRedirect(source, destination))
-      } else {
-        None
+        val destination = s"$tag1RedirectLocation+$tag2RedirectTag"
+        if (destination != source) {
+          Some(PermanentRedirect(source, destination))
+        } else {
+          None
+        }
       }
-    }}
+    }
   }
 
   def isRss(source: String): Boolean = source.endsWith("/rss")
@@ -107,15 +103,15 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
     val destination = sourceNoRss match {
       case CombinerTags(tag1, tag2) =>
         destinationForCombiner(sourceNoRss, tag1, tag2)
-          .flatMap{
+          .flatMap {
             case Some(d) => Future.successful(Some(d))
-            case None => lookupRedirectDestination(sourceNoRss)
+            case None    => lookupRedirectDestination(sourceNoRss)
           }
       case _ => lookupRedirectDestination(sourceNoRss)
     }
-    destination.map(_.map{
+    destination.map(_.map {
       case PermanentRedirect(redirectSource, location) =>
-        val newLocation = if (isRss(source)) location+"/rss" else location
+        val newLocation = if (isRss(source)) location + "/rss" else location
         PermanentRedirect(redirectSource, newLocation)
       case otherRedirect => otherRedirect
     })
@@ -124,10 +120,10 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
   def lookupRedirectDestination(source: String): Future[Option[Destination]] = {
     val fullUrl = if (source.head == '/') expectedSourceHost + source else s"$expectedSourceHost/$source"
     ScanamoAsync
-      .get[Destination](DynamoDB.asyncClient)(tableName)('source -> fullUrl)
+      .exec(DynamoDB.asyncClient)(table.get('source -> fullUrl))
       .map({
         case Some(Right(destination)) => Some(destination)
-        case _ => None
+        case _                        => None
       })
   }
 
@@ -136,7 +132,7 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
 
     source match {
       case FullURL(_, path) => Some(expectedSourceHost + normalisePath(path))
-      case _ => None
+      case _                => None
     }
   }
 
@@ -145,21 +141,21 @@ class RedirectService(implicit executionContext: ExecutionContext) extends Loggi
 
     destination match {
       case PermanentRedirect(_, location) => pathOnly.map(PermanentRedirect(_, location))
-      case ArchiveRedirect(_, location) => pathOnly.map(ArchiveRedirect(_, location))
+      case ArchiveRedirect(_, location)   => pathOnly.map(ArchiveRedirect(_, location))
     }
   }
 
   def set(destination: Destination): Boolean =
     normaliseDestination(destination).exists { dest =>
       log.info(s"Setting redirect in: $tableName to: ${dest.source} -> ${dest.location}")
-      Scanamo.put(DynamoDB.syncClient)(tableName)(dest)
+      Scanamo.exec(DynamoDB.syncClient)(table.put(dest))
       true
     }
 
   def remove(source: String): Boolean =
     normaliseSource(source).exists { src =>
       log.info(s"Removing redirect in: $tableName to: $src")
-      Scanamo.delete(DynamoDB.syncClient)(tableName)('source -> src)
+      Scanamo.exec(DynamoDB.syncClient)(table.delete('source -> src))
       true
     }
 }

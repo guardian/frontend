@@ -31,7 +31,7 @@
     <body
         id="top"
         class="@RenderClasses(Map(
-            ("has-page-skin", page.metadata.hasPageSkin(edition)),
+            ("has-page-skin", page.metadata.hasPageSkin(request)),
             ("has-membership-access-requirement", page.metadata.requiresMembershipAccess),
             ("childrens-books-site", page.metadata.sectionId == "childrens-books-site"),
             ("has-super-sticky-banner", false),
@@ -42,7 +42,7 @@
 
         <a class="u-h skip" href="#maincontent" data-link-name="skip : main content">Skip to main content</a>
 
-        @if(page.metadata.hasPageSkinOrAdTestPageSkin(edition)) {
+        @if(page.metadata.hasPageSkin(request)) {
             @fragments.commercial.pageSkin()
         }
 

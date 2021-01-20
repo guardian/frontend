@@ -1,6 +1,4 @@
-// @flow
-
-export const commercialPrebidSafeframe: ABTest = {
+export const commercialPrebidSafeframe = {
     id: 'CommercialPrebidSafeframe',
     start: '2018-06-29',
     expiry: '2019-10-18',
@@ -12,15 +10,16 @@ export const commercialPrebidSafeframe: ABTest = {
     audienceCriteria: 'n/a',
     dataLinkNames: 'n/a',
     idealOutcome: 'No difference between safeframe and standard',
+    showForSensitive: false,
     canRun: () => true,
     variants: [
         {
             id: 'control',
-            test: (): void => {},
+            test: () => {},
         },
         {
             id: 'variant',
-            test: (): void => {},
+            test: () => {},
         },
     ],
 };

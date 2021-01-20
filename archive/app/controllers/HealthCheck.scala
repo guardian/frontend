@@ -6,6 +6,8 @@ import play.api.mvc.ControllerComponents
 
 import scala.concurrent.ExecutionContext
 
-class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit executionContext: ExecutionContext) extends AllGoodCachedHealthCheck(
-  NeverExpiresSingleHealthCheck(routes.ArchiveController.lookup("/Adzip/adzip-fb.html").url)
-)(wsClient, executionContext)
+class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
+    executionContext: ExecutionContext,
+) extends AllGoodCachedHealthCheck(
+      NeverExpiresSingleHealthCheck(routes.ArchiveController.lookup("/Adzip/adzip-fb.html").url),
+    )(wsClient, executionContext)

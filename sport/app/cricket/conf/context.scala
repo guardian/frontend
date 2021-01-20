@@ -10,15 +10,18 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future}
 
 class CricketLifecycle(
-  appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  cricketStatsJob: CricketStatsJob
-)(implicit ec: ExecutionContext) extends LifecycleComponent {
+    appLifeCycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    cricketStatsJob: CricketStatsJob,
+)(implicit ec: ExecutionContext)
+    extends LifecycleComponent {
 
-  appLifeCycle.addStopHook { () => Future {
-    descheduleJobs()
-  }}
+  appLifeCycle.addStopHook { () =>
+    Future {
+      descheduleJobs()
+    }
+  }
 
   private def scheduleJobs() {
     jobs.scheduleEvery("CricketAgentRefreshCurrentMatches", 5.minutes) {

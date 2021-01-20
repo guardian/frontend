@@ -230,23 +230,7 @@ $identity-header-height: 48px;
         margin-bottom: $gs-baseline*2;
     }
 }
-.user-profile__about {
-    @include fs-textSans(2);
-    clear: both;
-    margin-top: $gs-baseline;
 
-    @include mq(tablet) {
-        margin-left: $gs-gutter*3.5;
-        max-width: gs-span(6);
-        clear: none;
-        margin-top: 0;
-    }
-
-    @include mq(desktop) {
-        margin-top: $gs-baseline/2;
-        float: right;
-    }
-}
 .user-profile__name {
     @include fs-headline(4);
 

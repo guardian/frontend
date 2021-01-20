@@ -15,7 +15,7 @@ trait IdentityConfigurationComponents extends I18nComponents {
 
   lazy val identityKeys: IdentityKeys = environment.mode match {
     case Mode.Prod if conf.Configuration.environment.isNonProd => new PreProductionKeys
-    case Mode.Prod => new ProductionKeys
-    case _ => new PreProductionKeys
+    case Mode.Prod                                             => new ProductionKeys
+    case _                                                     => new PreProductionKeys
   }
 }

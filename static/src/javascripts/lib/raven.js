@@ -1,5 +1,3 @@
-// @flow
-
 import raven from 'raven-js';
 import config from 'lib/config';
 import { adblockInUse } from 'lib/detect';
@@ -33,12 +31,14 @@ const sentryOptions = {
         'Network request failed',
         'This video is no longer available.',
         'UnknownError',
+        'TypeError: Failed to fetch',
+        'TypeError: NetworkError when attempting to fetch resource',
 
         // weatherapi/city.json frequently 404s and lib/fetch-json throws an error
         'Fetch error while requesting https://api.nextgen.guardianapps.co.uk/weatherapi/city.json:',
     ],
 
-    dataCallback(data: Object): Object {
+    dataCallback(data) {
         const { culprit = false } = data;
         const resp = data;
         const culpritMatches = /j.ophan.co.uk/.test(data.culprit);
@@ -52,12 +52,12 @@ const sentryOptions = {
         return resp;
     },
 
-    shouldSendCallback(data: Object): boolean {
+    shouldSendCallback(data) {
         const { isDev } = config.get('page');
         const isIgnored =
             typeof data.tags.ignored !== 'undefined' && data.tags.ignored;
         const { enableSentryReporting } = config.get('switches');
-        const isInSample = Math.random() < 0.01; // 1%
+        const isInSample = Math.random() < 0.008; // 0.8%
 
         if (isDev && !isIgnored) {
             // Some environments don't support or don't always expose the console Object

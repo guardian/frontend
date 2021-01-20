@@ -1,11 +1,8 @@
-// @flow
-
 import fastdom from 'fastdom';
-import { Advert } from 'commercial/modules/dfp/Advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
 const removeFromDfpEnv = advert => {
-    const removeAdvert = (adverts: Array<Advert>): Array<Advert> =>
+    const removeAdvert = (adverts) =>
         adverts.filter(_ => _ !== advert);
 
     dfpEnv.adverts = removeAdvert(dfpEnv.adverts);
@@ -17,8 +14,8 @@ const removeFromDfpEnv = advert => {
     });
 };
 
-const emptyAdvert = (advert: Advert): void => {
-    fastdom.write(() => {
+const emptyAdvert = (advert) => {
+    fastdom.mutate(() => {
         window.googletag.destroySlots([advert.slot]);
         advert.node.remove();
         removeFromDfpEnv(advert);

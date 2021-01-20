@@ -1,4 +1,3 @@
-// @flow
 import $ from 'lib/$';
 import bean from 'bean';
 import fastdom from 'fastdom';
@@ -7,23 +6,23 @@ const deleteButtonElm = $('#deleteButton')[0];
 const deleteFormElm = $('#deleteForm')[0];
 const deleteLoaderElm = $('#deleteLoader')[0];
 
-const disableDeleteButton = (): void => {
+const disableDeleteButton = () => {
     if (deleteButtonElm) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             deleteButtonElm.disabled = true;
         });
     }
 };
 
-const showLoader = (): void => {
+const showLoader = () => {
     if (deleteLoaderElm) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             deleteLoaderElm.classList.remove('is-hidden');
         });
     }
 };
 
-const setupLoadingAnimation = (): void => {
+const setupLoadingAnimation = () => {
     if (deleteFormElm && deleteLoaderElm) {
         bean.on(deleteFormElm, 'submit', () => {
             disableDeleteButton();

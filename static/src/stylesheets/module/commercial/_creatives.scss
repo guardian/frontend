@@ -653,6 +653,9 @@
     }
 }
 
+// In DCR, these styles are injected via JS via:
+// static/src/javascripts/projects/commercial/modules/messenger/background.js
+// mark: 0bf74539-5466-4907-ae7b-c0d8fc41112d
 .creative__background-parent {
     contain: size layout style;
     position: absolute;
@@ -704,6 +707,16 @@
         margin-top: 24px;
         position: fixed;
     }
+}
+
+.creative__background-parent-interscroller::before {
+    content: '';
+    width: 100%;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    z-index: 1;
+    border-bottom: 1px solid $brightness-86;
 }
 
 .ad-slot__label.sticky {

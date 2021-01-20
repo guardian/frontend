@@ -1,11 +1,9 @@
-// @flow
-
 import { _ as testExports } from 'commercial/modules/messenger/viewport';
 import { getViewport as getViewport_ } from 'lib/detect';
 
-const getViewport: any = getViewport_;
+const getViewport = getViewport_;
 
-const addResizeListener: any = testExports.addResizeListener;
+const addResizeListener = testExports.addResizeListener;
 const reset = testExports.reset;
 
 jest.mock('lib/detect', () => ({

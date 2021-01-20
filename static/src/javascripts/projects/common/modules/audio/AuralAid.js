@@ -1,5 +1,6 @@
-// @flow
-import { React, styled } from '@guardian/dotcom-rendering/packages/guui';
+import React from 'react';
+import styled from '@emotion/styled';
+
 
 const VisuallyHidden = styled('span')({
     height: '1px',
@@ -9,10 +10,7 @@ const VisuallyHidden = styled('span')({
     width: '1px',
 });
 
-type Props = {
-    text: string,
-};
 
-export default function({ text }: Props) {
+export default function({ text }) {
     return <VisuallyHidden>{text}</VisuallyHidden>;
 }

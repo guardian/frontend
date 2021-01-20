@@ -58,7 +58,7 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
 
       I've left the commented code in below so we can reinstate it as and when we can figure out how to make it
       work properly again :(
-      */
+       */
 
       Given("I visit the 'Cycling' tag page")
 
@@ -68,8 +68,8 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         val cardsOnFirstPage = browser.find("[data-test-id=facia-card]")
         val dataIdsOnFirstPage = cardsOnFirstPage.asScala.map(_.attribute("data-id")).toSet
         cardsOnFirstPage.size should be > 10
-        findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=2")
-        findByRel($("link"), "prev") should be (None)
+        findByRel($("link"), "next").head.attribute("href") should endWith("/sport/cycling?page=2")
+        findByRel($("link"), "prev") should be(None)
 
 //        Then("I should be able to navigate to the 'next' page")
 //        el(".pagination").$("[rel=next]").click()
@@ -99,15 +99,16 @@ import org.fluentlenium.core.domain.{FluentWebElement, FluentList}
         val cardsOnNextPage = browser.find("[data-test-id=facia-card]")
         cardsOnNextPage.size should be > 10
 
-        findByRel($("link"), "next").head.attribute("href") should endWith ("/sport/cycling?page=3")
-        findByRel($("link"), "prev").head.attribute("href") should endWith ("/sport/cycling")
+        findByRel($("link"), "next").head.attribute("href") should endWith("/sport/cycling?page=3")
+        findByRel($("link"), "prev").head.attribute("href") should endWith("/sport/cycling")
 
         And("The title should reflect the page number")
-        browser.window.title should include ("| Page 2 of")
+        browser.window.title should include("| Page 2 of")
       }
     }
   }
 
   //I'm not having a happy time with the selectors on links...
-  private def findByRel(elements: FluentList[FluentWebElement], rel: String) = elements.asScala.find(_.attribute("rel") == rel)
+  private def findByRel(elements: FluentList[FluentWebElement], rel: String) =
+    elements.asScala.find(_.attribute("rel") == rel)
 }

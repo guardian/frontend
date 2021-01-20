@@ -12,10 +12,9 @@ trait JsonBodyParser extends Logging {
 
   def extractErrorFromResponse(json: JValue, statusCode: Int): List[Error]
 
-  def extract[T]
-      (extractJsonObj: JValue => JValue = identity)
-      (httpResponseResponse: Response[HttpResponse])
-      (implicit successType: Manifest[T]): Response[T] = {
+  def extract[T](
+      extractJsonObj: JValue => JValue = identity,
+  )(httpResponseResponse: Response[HttpResponse])(implicit successType: Manifest[T]): Response[T] = {
 
     httpResponseResponse.right.flatMap { httpResponse =>
       try {
@@ -44,11 +43,22 @@ trait JsonBodyParser extends Logging {
       } catch {
         case e: MappingException => {
           logger.error("JSON mapping exception", e)
-          Left(List(Error("JSON mapping exception", "The api returned some json that did not match the expected format:" + successType.runtimeClass.getName, 500, Some(successType.runtimeClass.getName))))
+          Left(
+            List(
+              Error(
+                "JSON mapping exception",
+                "The api returned some json that did not match the expected format:" + successType.runtimeClass.getName,
+                500,
+                Some(successType.runtimeClass.getName),
+              ),
+            ),
+          )
         }
         case e: ParseException => {
           logger.error("JSON parse exception", e)
-          Left(List(Error("JSON parsing exception", "The api returned a response that was not valid json:" + e.getMessage)))
+          Left(
+            List(Error("JSON parsing exception", "The api returned a response that was not valid json:" + e.getMessage)),
+          )
         }
       }
     }

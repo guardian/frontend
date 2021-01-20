@@ -97,8 +97,8 @@ object Fixtures {
       | """.stripMargin
 
   val jobs = List(
-
-    Job(1058606,
+    Job(
+      1058606,
       "Area Management Training Programme (Graduate Area Manager)",
       "We're only looking for outstanding individuals for the Aldi Management Programme.",
       Some("Rotherham/Sheffield"),
@@ -106,10 +106,10 @@ object Fixtures {
       Some("http://jobs.theguardian.com/employer/196643/"),
       "http://jobs.theguardian.com/getasset/?uiAssetID=833D7672-6B21-4D81-BCE1-9CEF11CCEA21",
       Seq(149, 158, 245),
-      "Unpaid Voluntary Work"
+      "Unpaid Voluntary Work",
     ),
-
-    Job(4365671,
+    Job(
+      4365671,
       "Female Youth Work Volunteer in sports",
       "The Active Women's project helps young women access sports activities in their local area in Southampton. Volunteers will support the running of these sessions, as well as supporting the young women in accessing the sessions.",
       Some("Rotherham/Sheffield"),
@@ -117,10 +117,10 @@ object Fixtures {
       Some("http://jobs.theguardian.com/employer/196645/"),
       "http://jobs.theguardian.com/getasset/?uiAssetID=1D428A1F-65B4-4ADE-8CA3-91F2AE7423E3",
       Seq(111, 112, 115, 219, 222, 600118, 600119),
-      "Unpaid Voluntary Work"
+      "Unpaid Voluntary Work",
     ),
-
-    Job(4411510,
+    Job(
+      4411510,
       "Air Traffic Controller",
       "Control some of the world’s most modern aircraft using radar & communications equipment",
       Some("Rotherham/Sheffield"),
@@ -128,9 +128,8 @@ object Fixtures {
       Some("http://jobs.theguardian.com/employer/196646/"),
       "http://jobs.theguardian.com/getasset/?uiAssetID=14357B35-BBA3-4F96-ADF3-F9ABC82C894C",
       Seq(166, 308),
-      "Unpaid Voluntary Work"
-    )
-
+      "Unpaid Voluntary Work",
+    ),
   )
 
 }

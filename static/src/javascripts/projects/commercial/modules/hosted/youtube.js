@@ -1,4 +1,4 @@
-// @flow strict
+
 import {
     init as initNextVideoAutoPlay,
     canAutoplay as canAutoplayNextVideo,
@@ -17,30 +17,16 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 
 // https://developers.google.com/youtube/iframe_api_reference
-type YouTubePlayer = {
-    getCurrentTime: () => number,
-    getDuration: () => number,
-    fullscreener: () => void,
-    playVideo: () => void,
-    pauseVideo: () => void,
-    stopVideo: () => void,
-};
 
-type Page = {
-    isDev: boolean,
-    contentType: string,
-    host: string,
-    productionOffice: string,
-};
 
 const EVENTSFIRED = [];
 
-const isDesktop: boolean = isBreakpoint({ min: 'desktop' });
+const isDesktop = isBreakpoint({ min: 'desktop' });
 
 const shouldAutoplay = (
-    page: Page,
-    switches: { hostedVideoAutoplay: ?boolean }
-): boolean => {
+    page,
+    switches
+) => {
     const flashingElementsAllowed = () => isOn('flashing-elements');
     const isVideoArticle = () => page.contentType.toLowerCase() === 'video';
     const isUSContent = () => page.productionOffice.toLowerCase() === 'us';
@@ -59,10 +45,10 @@ const shouldAutoplay = (
 };
 
 const sendPercentageCompleteEvents = (
-    atomId: string,
-    youtubePlayer: YouTubePlayer,
-    playerTotalTime: number
-): void => {
+    atomId,
+    youtubePlayer,
+    playerTotalTime
+) => {
     const quartile = playerTotalTime / 4;
     const playbackEvents = {
         '25': quartile,
@@ -83,7 +69,7 @@ const sendPercentageCompleteEvents = (
     });
 };
 
-export const initHostedYoutube = (el: HTMLElement): void => {
+export const initHostedYoutube = (el) => {
     const atomId = el.getAttribute('data-media-id') || null;
     const duration = Number(el.getAttribute('data-duration')) || null;
 
@@ -101,7 +87,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
     initYoutubePlayer(
         el,
         {
-            onPlayerStateChange(event: { data: mixed, target: YouTubePlayer }) {
+            onPlayerStateChange(event) {
                 const player = event.target;
 
                 // show end slate when movie finishes
@@ -137,7 +123,7 @@ export const initHostedYoutube = (el: HTMLElement): void => {
                     window.clearInterval(playTimer);
                 }
             },
-            onPlayerReady(event: { target: YouTubePlayer }) {
+            onPlayerReady(event) {
                 if (
                     shouldAutoplay(
                         config.get('page', {}),

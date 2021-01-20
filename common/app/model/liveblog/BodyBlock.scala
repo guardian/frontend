@@ -4,7 +4,6 @@ import java.util.Locale
 
 import com.gu.contentapi.client.model.v1.{Block, BlockAttributes => ApiBlockAttributes, Blocks => ApiBlocks}
 import implicits.Dates.CapiRichDateTime
-import model.dotcomrendering.pageElements.PageElement
 import model.liveblog.BodyBlock._
 import org.joda.time.format.{DateTimeFormat, ISODateTimeFormat}
 import org.joda.time.{DateTime, DateTimeZone}
@@ -22,14 +21,16 @@ object Blocks {
 
     val mainBlock: Option[BodyBlock] = blocks.main.map(BodyBlock.make)
     val bodyBlocks: Seq[BodyBlock] = orderBlocks(blocks.body.toSeq.flatMap(BodyBlock.make))
-    val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks.map { map =>
-      map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
-    }.getOrElse(Map())
+    val reqBlocks: Map[String, Seq[BodyBlock]] = blocks.requestedBodyBlocks
+      .map { map =>
+        map.toMap.mapValues(blocks => orderBlocks(BodyBlock.make(blocks)))
+      }
+      .getOrElse(Map())
     Blocks(
       totalBodyBlocks = blocks.totalBodyBlocks.getOrElse(bodyBlocks.length),
       body = bodyBlocks,
       main = mainBlock,
-      requestedBodyBlocks = reqBlocks
+      requestedBodyBlocks = reqBlocks,
     )
   }
 
@@ -38,10 +39,10 @@ object Blocks {
 }
 
 case class Blocks(
-  totalBodyBlocks: Int,
-  body: Seq[BodyBlock],
-  main: Option[BodyBlock],
-  requestedBodyBlocks: Map[String, Seq[BodyBlock]]
+    totalBodyBlocks: Int,
+    body: Seq[BodyBlock],
+    main: Option[BodyBlock],
+    requestedBodyBlocks: Map[String, Seq[BodyBlock]],
 )
 
 object BodyBlock {
@@ -51,45 +52,44 @@ object BodyBlock {
   }
 
   def make(bodyBlock: Block): BodyBlock =
-      BodyBlock(bodyBlock.id,
-        bodyBlock.bodyHtml,
-        bodyBlock.bodyTextSummary,
-        bodyBlock.title,
-        BlockAttributes.make(bodyBlock.attributes),
-        bodyBlock.published,
-        bodyBlock.createdDate.map(_.toJoda),
-        bodyBlock.firstPublishedDate.map(_.toJoda),
-        bodyBlock.publishedDate.map(_.toJoda),
-        bodyBlock.lastModifiedDate.map(_.toJoda),
-        bodyBlock.contributors,
-        bodyBlock.elements.flatMap(BlockElement.make),
-      )
-
+    BodyBlock(
+      bodyBlock.id,
+      bodyBlock.bodyHtml,
+      bodyBlock.bodyTextSummary,
+      bodyBlock.title,
+      BlockAttributes.make(bodyBlock.attributes),
+      bodyBlock.published,
+      bodyBlock.createdDate.map(_.toJoda),
+      bodyBlock.firstPublishedDate.map(_.toJoda),
+      bodyBlock.publishedDate.map(_.toJoda),
+      bodyBlock.lastModifiedDate.map(_.toJoda),
+      bodyBlock.contributors,
+      bodyBlock.elements.flatMap(BlockElement.make),
+    )
 
   sealed trait EventType
   case object KeyEvent extends EventType
   case object SummaryEvent extends EventType
   case object UnclassifiedEvent extends EventType
 
-  implicit val dateWrites =  play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
+  implicit val dateWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
   implicit val blockElementWrites = BlockElement.blockElementWrites
-  implicit val pageElementsWrites = PageElement.blockElementWrites
   implicit val bodyBlockWrites: Writes[BodyBlock] = Json.writes[BodyBlock]
 }
 
 case class BodyBlock(
-  id: String,
-  bodyHtml: String,
-  bodyTextSummary: String,
-  title: Option[String],
-  attributes: BlockAttributes,
-  published: Boolean,
-  createdDate: Option[DateTime],
-  firstPublishedDate: Option[DateTime],
-  publishedDate: Option[DateTime],
-  lastModifiedDate: Option[DateTime],
-  contributors: Seq[String],
-  elements: Seq[BlockElement],
+    id: String,
+    bodyHtml: String,
+    bodyTextSummary: String,
+    title: Option[String],
+    attributes: BlockAttributes,
+    published: Boolean,
+    createdDate: Option[DateTime],
+    firstPublishedDate: Option[DateTime],
+    publishedDate: Option[DateTime],
+    lastModifiedDate: Option[DateTime],
+    contributors: Seq[String],
+    elements: Seq[BlockElement],
 ) {
   lazy val eventType: EventType =
     if (attributes.keyEvent) KeyEvent
@@ -97,8 +97,8 @@ case class BodyBlock(
     else UnclassifiedEvent
 
   lazy val eventClass = eventType match {
-    case SummaryEvent => " is-summary"
-    case KeyEvent => " is-key-event"
+    case SummaryEvent      => " is-summary"
+    case KeyEvent          => " is-key-event"
     case UnclassifiedEvent => ""
   }
 
@@ -113,7 +113,8 @@ case class BodyBlock(
     }
   }.map(LiveBlogDate.apply(_, timezone))
 
-  def publishedCreatedDate(timezone: DateTimeZone): Option[LiveBlogDate] = firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
+  def publishedCreatedDate(timezone: DateTimeZone): Option[LiveBlogDate] =
+    firstPublishedDate.orElse(createdDate).map(LiveBlogDate.apply(_, timezone))
 
   def publishedCreatedTimestamp(): Option[Long] = firstPublishedDate.orElse(createdDate).map(_.getMillis())
 
@@ -124,7 +125,7 @@ case class BodyBlock(
 object LiveBlogDate {
   def apply(dateTime: DateTime, timezone: DateTimeZone): LiveBlogDate = {
     val fullDate = ISODateTimeFormat.dateTime().withZone(DateTimeZone.UTC).print(dateTime)
-    val useFormat = useFormatZone(timezone)_
+    val useFormat = useFormatZone(timezone) _
     val hhmm = useFormat("HH:mm", dateTime)
     val ampm = useFormat("h.mma", dateTime).toLowerCase(Locale.ENGLISH)
     val gmt = useFormat("z", dateTime)
@@ -139,10 +140,13 @@ case class LiveBlogDate(fullDate: String, hhmm: String, ampm: String, gmt: Strin
 
 object BlockAttributes {
   def make(blockAttributes: ApiBlockAttributes): BlockAttributes =
-    new BlockAttributes(blockAttributes.keyEvent.getOrElse(false), blockAttributes.summary.getOrElse(false), blockAttributes.membershipPlaceholder.map(mp => MembershipPlaceholder(mp.campaignCode)))
+    new BlockAttributes(
+      blockAttributes.keyEvent.getOrElse(false),
+      blockAttributes.summary.getOrElse(false),
+      blockAttributes.membershipPlaceholder.map(mp => MembershipPlaceholder(mp.campaignCode)),
+    )
 
   implicit val blockAttributes: Writes[BlockAttributes] = Json.writes[BlockAttributes]
-
 
 }
 

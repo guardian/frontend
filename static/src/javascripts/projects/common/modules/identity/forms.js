@@ -1,8 +1,7 @@
-// @flow
 import bean from 'bean';
 import bonzo from 'bonzo';
 
-export const forgottenEmail = (): void => {
+export const forgottenEmail = () => {
     let hashEmail;
     let input;
 
@@ -18,7 +17,7 @@ export const forgottenEmail = (): void => {
     }
 };
 
-export const passwordToggle = (): void => {
+export const passwordToggle = () => {
     if (document.body) {
         const form = document.body.querySelector('.js-register-form');
         if (form) {

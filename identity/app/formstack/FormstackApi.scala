@@ -19,9 +19,14 @@ class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
     s"$formstackUrl/form/$formId.json"
   }
 
-  def checkForm(formstackForm: FormstackForm)(implicit executionContext: ExecutionContext): Future[Response[FormstackForm]] = {
+  def checkForm(
+      formstackForm: FormstackForm,
+  )(implicit executionContext: ExecutionContext): Future[Response[FormstackForm]] = {
 
-    httpClient.GET(formstackUrl(formstackForm.formId), Seq("oauth_token" -> Configuration.formstack.identityOauthToken)) map {
+    httpClient.GET(
+      formstackUrl(formstackForm.formId),
+      Seq("oauth_token" -> Configuration.formstack.identityOauthToken),
+    ) map {
       case FormstackHttpResponse(body, statusCode, _) => {
         statusCode match {
           case 200 => {
@@ -35,7 +40,9 @@ class FormstackApi(httpClient: WsFormstackHttp) extends SafeLogging {
                 logger.trace(s"Formstack reference $formId was good")
                 Right(formstackForm)
               } else {
-                logger.warn(s"Form, '$formId' is valid but not enabled (request formId vs response formId: ${formstackForm.formId} - $formId, inactive: $inactive)")
+                logger.warn(
+                  s"Form, '$formId' is valid but not enabled (request formId vs response formId: ${formstackForm.formId} - $formId, inactive: $inactive)",
+                )
                 Left(List(Error("Invalid form", "This is not a valid form", 404)))
               }
             }).getOrElse {

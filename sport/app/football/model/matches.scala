@@ -24,17 +24,20 @@ trait MatchesList extends Football with RichList with implicits.Collections {
 
   // ordering for the displayed matches
   def timeComesFirstInList(d: DateTime, other: DateTime): Boolean
-  def dateComesFirstInList(d: LocalDate, other: LocalDate): Boolean = timeComesFirstInList(d.toDateTimeAtStartOfDay, other.toDateTimeAtStartOfDay)
+  def dateComesFirstInList(d: LocalDate, other: LocalDate): Boolean =
+    timeComesFirstInList(d.toDateTimeAtStartOfDay, other.toDateTimeAtStartOfDay)
 
   private lazy val allRelevantMatches: List[(FootballMatch, Competition)] = {
     val matchesWithCompetition = for {
       competition <- competitions
-      matches = competition
-        .matches
-        .filter(fMatch => filterMatches(fMatch, competition))
+      matches =
+        competition.matches
+          .filter(fMatch => filterMatches(fMatch, competition))
       fMatch <- matches
     } yield (fMatch, competition)
-    matchesWithCompetition.sortWith { case ((fMatch1, _), (fMatch2, _)) => timeComesFirstInList(fMatch1.date, fMatch2.date) }
+    matchesWithCompetition.sortWith {
+      case ((fMatch1, _), (fMatch2, _)) => timeComesFirstInList(fMatch1.date, fMatch2.date)
+    }
   }
   lazy val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
   // the subset of football matches to display for the given date
@@ -42,20 +45,30 @@ trait MatchesList extends Football with RichList with implicits.Collections {
     val startDate = date
     val matchDates = allRelevantMatches.map { case (fMatch, _) => fMatch.date.toLocalDate }.distinct
     val eligibleDates = matchDates.safeDropWhile(dateComesFirstInList(_, startDate)).take(daysToDisplay)
-    allRelevantMatches.filter { case (fMatch, _) =>
-      eligibleDates.contains(fMatch.date.toLocalDate)
+    allRelevantMatches.filter {
+      case (fMatch, _) =>
+        eligibleDates.contains(fMatch.date.toLocalDate)
     }
   }
   lazy val matchesGroupedByDate = relevantMatches.segmentBy(key = _._1.date.toLocalDate)
-  def matchesGroupedByDateAndCompetition: Seq[(LocalDate, List[(Competition, List[FootballMatch])])] = matchesGroupedByDate.map { case (d, ms) =>
-    val competitionsWithMatches = ms.groupBy(_._2).mapValues(_.map {
-      case (matches, _) => matches
-    }).toList.sortWith { case ((comp1, matches1), (comp2, matches2)) =>
-      val competitionOrder = competitions.map(_.id).toList
-      competitionOrder.indexOfOpt(comp1.id).getOrElse(competitionOrder.size) < competitionOrder.indexOfOpt(comp2.id).getOrElse(competitionOrder.size)
+  def matchesGroupedByDateAndCompetition: Seq[(LocalDate, List[(Competition, List[FootballMatch])])] =
+    matchesGroupedByDate.map {
+      case (d, ms) =>
+        val competitionsWithMatches = ms
+          .groupBy(_._2)
+          .mapValues(_.map {
+            case (matches, _) => matches
+          })
+          .toList
+          .sortWith {
+            case ((comp1, matches1), (comp2, matches2)) =>
+              val competitionOrder = competitions.map(_.id).toList
+              competitionOrder.indexOfOpt(comp1.id).getOrElse(competitionOrder.size) < competitionOrder
+                .indexOfOpt(comp2.id)
+                .getOrElse(competitionOrder.size)
+          }
+        (d, competitionsWithMatches)
     }
-    (d, competitionsWithMatches)
-  }
 
   lazy val nextPage: Option[String] = {
     val nextMatchDate = matchDates.safeDropWhile(dateComesFirstInList(_, date)).drop(daysToDisplay).headOption
@@ -68,11 +81,11 @@ trait MatchesList extends Football with RichList with implicits.Collections {
 
   def getPageTitle: String = {
     pageType match {
-      case "live" => "Live football scores"
-      case "matches" => "Football scores"
+      case "live"     => "Live football scores"
+      case "matches"  => "Football scores"
       case "fixtures" => "Football fixtures"
-      case "results" => "Football results"
-      case _ => pageType
+      case "results"  => "Football results"
+      case _          => pageType
     }
   }
 }
@@ -109,13 +122,17 @@ case class FixturesList(date: LocalDate, competitions: Seq[Competition]) extends
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture
 }
-case class CompetitionFixturesList(date: LocalDate, competitions: Seq[Competition], competitionId: String) extends Fixtures with CompetitionList {
+case class CompetitionFixturesList(date: LocalDate, competitions: Seq[Competition], competitionId: String)
+    extends Fixtures
+    with CompetitionList {
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isFixture
 }
 
-case class TeamFixturesList(date: LocalDate, competitions: Seq[Competition], teamId: String, daysToDisplay: Int = 20) extends Fixtures with TeamList {
+case class TeamFixturesList(date: LocalDate, competitions: Seq[Competition], teamId: String, daysToDisplay: Int = 20)
+    extends Fixtures
+    with TeamList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isFixture && fMatch.hasTeam(teamId)
 }
@@ -125,14 +142,22 @@ case class ResultsList(date: LocalDate, competitions: Seq[Competition]) extends 
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.isResult
 }
-case class CompetitionResultsList(date: LocalDate, competitions: Seq[Competition], competitionId: String) extends Results with CompetitionList {
+case class CompetitionResultsList(date: LocalDate, competitions: Seq[Competition], competitionId: String)
+    extends Results
+    with CompetitionList {
   override val baseUrl: String = competition.fold("/football/results")(_.url + "/results")
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     competition.id == competitionId && fMatch.isResult
 }
 
-case class TeamResultsList(date: LocalDate, competitions: Seq[Competition], teamId: String, teamUrl:Option[String] = None) extends Results with TeamList {
+case class TeamResultsList(
+    date: LocalDate,
+    competitions: Seq[Competition],
+    teamId: String,
+    teamUrl: Option[String] = None,
+) extends Results
+    with TeamList {
   override val baseUrl: String = teamUrl.fold("/football/results")(url => s"$url/results")
   override val daysToDisplay = 20
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
@@ -143,11 +168,14 @@ case class MatchDayList(competitions: Seq[Competition], date: LocalDate) extends
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.date.toLocalDate == date
 }
-case class CompetitionMatchDayList(competitions: Seq[Competition], competitionId: String, date: LocalDate) extends MatchDays with CompetitionList {
+case class CompetitionMatchDayList(competitions: Seq[Competition], competitionId: String, date: LocalDate)
+    extends MatchDays
+    with CompetitionList {
   override def filterMatches(fMatch: FootballMatch, competition: Competition): Boolean =
     fMatch.date.toLocalDate == date && competition.id == competitionId
 }
-case class CompetitionRoundMatchesList(competitions: Seq[Competition], competition: Competition, round: Round) extends MatchDays {
+case class CompetitionRoundMatchesList(competitions: Seq[Competition], competition: Competition, round: Round)
+    extends MatchDays {
   override val daysToDisplay = 1000
   override lazy val date = competition.startDate.getOrElse(LocalDate.now)
   override def filterMatches(fMatch: FootballMatch, matchCompetition: Competition): Boolean =

@@ -11,12 +11,13 @@ class EventbriteMasterclassFeedParsingTest extends FlatSpec with Matchers {
     val eventBriteFeed: JsValue = Json.parse(Fixtures.rawEventBriteFeed)
     val response = eventBriteFeed.as[Response]
 
-    response.pagination.pageCount should be (2)
-    response.pagination.pageNumber should be (1)
+    response.pagination.pageCount should be(2)
+    response.pagination.pageNumber should be(1)
 
-    response.events.size should be (50)
+    response.events.size should be(50)
 
-    val singleMasterclass = Masterclass.fromEvent(response.events.filter(_.name == "Self-editing skills for novelists").head).get
-    singleMasterclass.tickets.size should be (2)
+    val singleMasterclass =
+      Masterclass.fromEvent(response.events.filter(_.name == "Self-editing skills for novelists").head).get
+    singleMasterclass.tickets.size should be(2)
   }
 }

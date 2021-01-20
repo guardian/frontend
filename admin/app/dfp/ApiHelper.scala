@@ -1,10 +1,10 @@
 package dfp
 
-import com.google.api.ads.admanager.axis.v201902._
-import common.Logging
+import com.google.api.ads.admanager.axis.v202011._
+import common.GuLogging
 import org.joda.time.{DateTime => JodaDateTime, DateTimeZone}
 
-private[dfp] object ApiHelper extends Logging {
+private[dfp] object ApiHelper extends GuLogging {
 
   def isPageSkin(dfpLineItem: LineItem): Boolean = {
 
@@ -17,8 +17,8 @@ private[dfp] object ApiHelper extends Logging {
       }
     }
 
-    ( dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET ) &&
-      hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
+    (dfpLineItem.getRoadblockingType == RoadblockingType.CREATIVE_SET) &&
+    hasA1x1Pixel(dfpLineItem.getCreativePlaceholders)
   }
 
   def toJodaTime(time: DateTime): JodaDateTime = {
@@ -30,7 +30,7 @@ private[dfp] object ApiHelper extends Logging {
       time.getHour,
       time.getMinute,
       time.getSecond,
-      DateTimeZone.forID(time.getTimeZoneId)
+      DateTimeZone.forID(time.getTimeZoneId),
     )
   }
 

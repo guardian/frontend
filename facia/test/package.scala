@@ -23,9 +23,11 @@ object `package` {
 
   // need a front api that stores S3 locally so it can run without deps in the unit tests
   class TestFrontJsonFapi(override val blockingOperations: BlockingOperations)
-    extends FrontJsonFapiLive(blockingOperations) {
+      extends FrontJsonFapiLive(blockingOperations) {
 
-    override def get(path: String, pageType: PressedPageType)(implicit executionContext: ExecutionContext): Future[Option[PressedPage]] = {
+    override def get(path: String, pageType: PressedPageType)(implicit
+        executionContext: ExecutionContext,
+    ): Future[Option[PressedPage]] = {
       recorder.load(path, Map()) {
         super.get(path, pageType)
       }
@@ -35,7 +37,8 @@ object `package` {
       override lazy val baseDir = new File(System.getProperty("user.dir"), "data/pressedPage")
 
       //No transformation for now as we only store content that's there.
-      override def toResponse(b: Array[Byte]): Option[PressedPage] = Json.parse(new String(b, UTF8.charSet)).asOpt[PressedPage]
+      override def toResponse(b: Array[Byte]): Option[PressedPage] =
+        Json.parse(new String(b, UTF8.charSet)).asOpt[PressedPage]
 
       override def fromResponse(maybeResponse: Option[PressedPage]): Array[Byte] = {
         val response = maybeResponse getOrElse {
@@ -48,14 +51,16 @@ object `package` {
 
 }
 
-class FaciaTestSuite extends Suites (
-  new model.FaciaPageTest,
-  new controllers.front.FaciaDefaultsTest,
-  new layout.slices.DynamicFastTest,
-  new layout.slices.DynamicSlowTest,
-  new layout.slices.StoryTest,
-  new FaciaControllerTest,
-  new metadata.FaciaMetaDataTest
-) with SingleServerSuite {
+class FaciaTestSuite
+    extends Suites(
+      new model.FaciaPageTest,
+      new controllers.front.FaciaDefaultsTest,
+      new layout.slices.DynamicFastTest,
+      new layout.slices.DynamicSlowTest,
+      new layout.slices.StoryTest,
+      new FaciaControllerTest,
+      new metadata.FaciaMetaDataTest,
+    )
+    with SingleServerSuite {
   override lazy val port: Int = 19009
 }

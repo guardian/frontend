@@ -13,18 +13,20 @@ import scala.concurrent.Future
 class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationContext {
 
   trait PackageTestScope {
-    val article = model.Content(Content(
-      id = "/content",
-      sectionId = None,
-      sectionName = None,
-      webPublicationDate = None,
-      webTitle = "webTitle",
-      webUrl = "webUrl",
-      apiUrl = "apiUrl",
-      tags = Nil,
-      elements = None,
-      fields = None
-    ))
+    val article = model.Content(
+      Content(
+        id = "/content",
+        sectionId = None,
+        sectionName = None,
+        webPublicationDate = None,
+        webTitle = "webTitle",
+        webUrl = "webUrl",
+        apiUrl = "apiUrl",
+        tags = Nil,
+        elements = None,
+        fields = None,
+      ),
+    )
     val contentPage = SimpleContentPage(article)
   }
 
@@ -33,25 +35,29 @@ class CommonPackageTest extends FlatSpec with Matchers with WithTestApplicationC
     val result = Future.successful(common.renderEmail(html, contentPage)(TestRequest(), testApplicationContext))
     status(result) shouldBe 200
     assertThrows[JsonParseException](contentAsJson(result))
-    contentAsString(result) should include ("<html")
+    contentAsString(result) should include("<html")
   }
 
   "renderEmail" should "render an email json result page" in new PackageTestScope {
     val html = Html("")
-    val result = Future.successful(common.renderEmail(html, contentPage)(TestRequest("/content/email.emailjson"), testApplicationContext))
+    val result = Future.successful(
+      common.renderEmail(html, contentPage)(TestRequest("/content/email.emailjson"), testApplicationContext),
+    )
 
     val jsonResult: JsValue = contentAsJson(result)
-    val (key, value) = jsonResult.as[Map[String,String]].head
+    val (key, value) = jsonResult.as[Map[String, String]].head
     key shouldBe "body"
-    value should include ("<html")
+    value should include("<html")
   }
 
   "renderEmail" should "render an email txt result page" in new PackageTestScope {
     val html = Html("")
-    val result = Future.successful(common.renderEmail(html, contentPage)(TestRequest("/content/email.emailtxt"), testApplicationContext))
+    val result = Future.successful(
+      common.renderEmail(html, contentPage)(TestRequest("/content/email.emailtxt"), testApplicationContext),
+    )
 
     val jsonResult: JsValue = contentAsJson(result)
-    val (key, value) = jsonResult.as[Map[String,String]].head
+    val (key, value) = jsonResult.as[Map[String, String]].head
     key shouldBe "body"
     value should not include "<html"
   }

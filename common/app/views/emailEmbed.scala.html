@@ -3,6 +3,7 @@
 @import conf.switches.Switches._
 @import common.InlineJs
 @import templates.inlineJS.blocking.js._
+@import templates.inlineJS.nonBlocking.js.emailIframeTracking
 @import play.api.Mode.Dev
 @import conf.Static
 @import views.support.RenderClasses
@@ -25,9 +26,17 @@
     }
     </script>
 
+    <script>
+        @InlineJs(emailIframeTracking().body, "emailIframeTracking.js")
+    </script>
+
 </head>
 <html>
     <body>
         @body
     </body>
+    <script src="https://interactive.guim.co.uk/libs/iframe-messenger/iframeMessenger.js"></script>
+    <script>
+        iframeMessenger.enableAutoResize();
+    </script>
 </html>

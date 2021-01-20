@@ -88,6 +88,29 @@ $gu-cta-height: 42px;
     }
 }
 
+.component-button--liveblog {
+    border: 1px solid $brightness-86;
+    &:hover, &:focus {
+        background: $brightness-97;
+    }
+
+    font-style: normal;
+    margin-top: 0;
+}
+
+.component-button--liveblog-container a.component-button--liveblog-subscribe {
+    @include fs-textSans(5);
+    font-style: normal;
+    color: $brightness-7;
+    text-decoration: underline;
+    margin-left: 8px;
+}
+
+.component-button--reminder-prompt {
+    background-color: transparent;
+    border-color: $brightness-7;
+}
+
 .component-button--disabled,
 .component-button[disabled],
 .component-button[data-disabled] {

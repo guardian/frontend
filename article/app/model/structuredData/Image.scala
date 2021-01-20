@@ -12,7 +12,7 @@ object Image {
       "@type" -> "ImageObject",
       "url" -> JsString(Item700.bestSrcFor(picture.images).getOrElse("")),
       "height" -> asset.fold(0)(_.height),
-      "width" -> asset.fold(0)(_.width)
+      "width" -> asset.fold(0)(_.width),
     )
   }
 

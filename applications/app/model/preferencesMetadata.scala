@@ -7,5 +7,6 @@ class PreferencesMetaData extends StandalonePage {
     id = "preferences",
     section = Some(SectionId.fromId("Index")),
     webTitle = "Preferences",
-    javascriptConfigOverrides = Map("isPreferencesPage" -> JsBoolean(true)))
+    javascriptConfigOverrides = Map("isPreferencesPage" -> JsBoolean(true)),
+  )
 }

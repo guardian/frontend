@@ -1,18 +1,16 @@
-// @flow
 class StorageMock {
-    storage: any;
-    available: ?boolean;
+
 
     constructor() {
         this.storage = {};
         this.available = true;
     }
 
-    isAvailable(): ?boolean {
+    isAvailable() {
         return this.available;
     }
 
-    get(key: string): any {
+    get(key) {
         if (!this.available) {
             return;
         }
@@ -46,7 +44,7 @@ class StorageMock {
         return data.value;
     }
 
-    set(key: string, value: any, options: Object = {}): any {
+    set(key, value, options = {}) {
         if (!this.available) {
             return;
         }
@@ -59,13 +57,13 @@ class StorageMock {
         return this.storage;
     }
 
-    getRaw(key: string): ?string {
+    getRaw(key) {
         if (this.available) {
             return this.storage[key];
         }
     }
 
-    remove(key: string): any {
+    remove(key) {
         if (this.available) {
             delete this.storage[key];
             return this.storage;

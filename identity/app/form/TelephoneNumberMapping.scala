@@ -13,21 +13,22 @@ import play.api.i18n.{Messages, MessagesProvider}
 
 trait TelephoneNumberMapping {
 
-  def telephoneNumberMapping(implicit messagesProvider: MessagesProvider): Mapping[TelephoneNumberFormData] = mapping(
-    "countryCode" -> optional(text),
-    "localNumber" -> optional(text)
-  )(TelephoneNumberFormData.apply)(TelephoneNumberFormData.unapply) verifying (
-    Messages("error.telephoneNumber"),
-    data => data.isValid
-  )
+  def telephoneNumberMapping(implicit messagesProvider: MessagesProvider): Mapping[TelephoneNumberFormData] =
+    mapping(
+      "countryCode" -> optional(text),
+      "localNumber" -> optional(text),
+    )(TelephoneNumberFormData.apply)(TelephoneNumberFormData.unapply) verifying (
+      Messages("error.telephoneNumber"),
+      data => data.isValid
+    )
 
 }
 
-case class TelephoneNumberFormData(countryCode: Option[String], localNumber: Option[String]){
+case class TelephoneNumberFormData(countryCode: Option[String], localNumber: Option[String]) {
 
   lazy val telephoneNumber: Option[TelephoneNumber] = (countryCode, localNumber) match {
     case (Some(cc), Some(ln)) => Some(TelephoneNumber(Some(cc), Some(ln)))
-    case _ => None
+    case _                    => None
 
   }
   lazy val isValid: Boolean = {
@@ -40,18 +41,20 @@ case class TelephoneNumberFormData(countryCode: Option[String], localNumber: Opt
           phoneUtil.isValidNumber(parsed)
         } match {
           case Success(result) => result
-          case Failure(t) => false
+          case Failure(t)      => false
         }
       case (Some(cc), None) => false
       case (None, Some(ln)) => false
-      case _ => true
+      case _                => true
     }
 
   }
 }
 
 object TelephoneNumberFormData {
-  def apply(telephoneNumber: TelephoneNumber): TelephoneNumberFormData = TelephoneNumberFormData(
-    telephoneNumber.countryCode, telephoneNumber.localNumber
-  )
+  def apply(telephoneNumber: TelephoneNumber): TelephoneNumberFormData =
+    TelephoneNumberFormData(
+      telephoneNumber.countryCode,
+      telephoneNumber.localNumber,
+    )
 }

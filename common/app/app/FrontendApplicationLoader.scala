@@ -9,7 +9,7 @@ import play.api.mvc.{ControllerComponents, EssentialFilter}
 import play.api.routing.Router
 import play.filters.csrf.CSRFComponents
 import controllers.AssetsComponents
-import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator}
+import play.api.{Application, ApplicationLoader, BuiltInComponents, LoggerConfigurator, OptionalDevContext}
 
 trait FrontendApplicationLoader extends ApplicationLoader {
 
@@ -26,12 +26,12 @@ trait FrontendApplicationLoader extends ApplicationLoader {
 }
 
 trait FrontendComponents
-  extends LifecycleComponents
-  with HttpFiltersComponent
-  with BuiltInComponents
-  with AhcWSComponents
-  with CSRFComponents
-  with AssetsComponents {
+    extends LifecycleComponents
+    with HttpFiltersComponent
+    with BuiltInComponents
+    with AhcWSComponents
+    with CSRFComponents
+    with AssetsComponents {
   self: BuiltInComponents =>
 
   lazy val prefix = "/"
@@ -43,6 +43,8 @@ trait FrontendComponents
   lazy val appMetrics = ApplicationMetrics()
   lazy val guardianConf = new GuardianConfiguration
   lazy val mode = environment.mode
+  lazy val optionalDevContext = new OptionalDevContext(devContext)
+  override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
   // here are the attributes you must provide for your app to start
   def appIdentity: ApplicationIdentity

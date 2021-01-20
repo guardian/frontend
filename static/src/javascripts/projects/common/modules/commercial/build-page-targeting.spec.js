@@ -1,5 +1,4 @@
-// @flow
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
@@ -11,25 +10,29 @@ import { getCookie as getCookie_ } from 'lib/cookies';
 import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
+    getViewport as getViewport_,
 } from 'lib/detect';
 import { getSync as getSync_ } from 'lib/geolocation';
+import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFramework';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
-import { getKruxSegments as getKruxSegments_ } from 'common/modules/commercial/krux';
-import { onIabConsentNotification as onIabConsentNotification_ } from '@guardian/consent-management-platform';
+import {
+    cmp as cmp_,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
 
-const getCookie: any = getCookie_;
-const getUserSegments: any = getUserSegments_;
-const getSynchronousParticipations: any = getSynchronousParticipations_;
-const getKruxSegments: any = getKruxSegments_;
-const getReferrer: any = getReferrer_;
-const getBreakpoint: any = getBreakpoint_;
-const isUserLoggedIn: any = isUserLoggedIn_;
-const getSync: any = getSync_;
-const onIabConsentNotification: any = onIabConsentNotification_;
+const getCookie = getCookie_;
+const getUserSegments = getUserSegments_;
+const getSynchronousParticipations = getSynchronousParticipations_;
+const getReferrer = getReferrer_;
+const getBreakpoint = getBreakpoint_;
+const getViewport = getViewport_;
+const isUserLoggedIn = isUserLoggedIn_;
+const getSync = getSync_;
+const getPrivacyFramework = getPrivacyFramework_;
+const cmp = cmp_;
 
-jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
@@ -43,6 +46,9 @@ jest.mock('lib/detect', () => ({
 jest.mock('lib/geolocation', () => ({
     getSync: jest.fn(),
 }));
+jest.mock('lib/getPrivacyFramework', () => ({
+    getPrivacyFramework: jest.fn(),
+}));
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
@@ -52,25 +58,54 @@ jest.mock('common/modules/commercial/user-ad-targeting', () => ({
 jest.mock('common/modules/experiments/ab', () => ({
     getSynchronousParticipations: jest.fn(),
 }));
-jest.mock('common/modules/commercial/krux', () => ({
-    getKruxSegments: jest.fn(),
-}));
 jest.mock('lodash/once', () => fn => fn);
 jest.mock('common/modules/commercial/commercial-features', () => ({
     commercialFeatures() {},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
-    onIabConsentNotification: jest.fn(),
+    onConsentChange: jest.fn(),
+    cmp: {
+        hasInitialised: jest.fn(),
+        willShowPrivacyMessageSync: jest.fn(),
+    },
 }));
 
-const trueConsentMock = (callback): void =>
+// TCFv1
+const tcfWithConsentMock = (callback) =>
     callback({ '1': true, '2': true, '3': true, '4': true, '5': true });
-const falseConsentMock = (callback): void =>
-    callback({ '1': false, '2': false, '3': false, '4': false, '5': false });
-const nullConsentMock = (callback): void =>
-    callback({ '1': null, '2': null, '3': null, '4': null, '5': null });
-const mixedConsentMock = (callback): void =>
-    callback({ '1': false, '2': true, '3': true, '4': false, '5': true });
+const tcfMixedConsentMock = (callback) =>
+    callback({
+        '1': false,
+        '2': true,
+        '3': true,
+        '4': false,
+        '5': true,
+    });
+
+// CCPA
+const ccpaWithConsentMock = (callback) =>
+    callback({ ccpa: { doNotSell: false } });
+const ccpaWithoutConsentMock = (callback) =>
+    callback({ ccpa: { doNotSell: true } });
+
+// TCFv2
+const tcfv2WithConsentMock = (callback) =>
+    callback({
+        tcfv2: {
+            consents: { '1': true, '2': true },
+            eventStatus: 'useractioncomplete',
+        },
+    });
+const tcfv2WithoutConsentMock = (callback) =>
+    callback({ tcfv2: { consents: {}, eventStatus: 'cmpuishown' } });
+const tcfv2NullConsentMock = (callback) => callback({ tcfv2: {} });
+const tcfv2MixedConsentMock = (callback) =>
+    callback({
+        tcfv2: {
+            consents: { '1': false, '2': true },
+            eventStatus: 'useractioncomplete',
+        },
+    });
 
 describe('Build Page Targeting', () => {
     beforeEach(() => {
@@ -111,7 +146,7 @@ describe('Build Page Targeting', () => {
         // Reset mocking to default values.
         getCookie.mockReturnValue('ng101');
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(nullConsentMock);
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
 
         getBreakpoint.mockReturnValue('mobile');
         getReferrer.mockReturnValue('');
@@ -125,11 +160,11 @@ describe('Build Page Targeting', () => {
                 variant: 'variantName',
             },
         });
-        getKruxSegments.mockReturnValue(['E012712', 'E012390', 'E012478']);
 
-        local.set('gu.alreadyVisited', 0);
+        storage.local.setRaw('gu.alreadyVisited', 0);
 
         getSync.mockReturnValue('US');
+        getPrivacyFramework.mockReturnValue({ ccpa: true });
 
         expect.hasAssertions();
     });
@@ -166,20 +201,82 @@ describe('Build Page Targeting', () => {
     });
 
     it('should set correct personalized ad (pa) param', () => {
-        onIabConsentNotification.mockImplementation(trueConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
         expect(getPageTargeting().pa).toBe('t');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(falseConsentMock);
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(nullConsentMock);
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
         expect(getPageTargeting().pa).toBe('f');
 
         _.resetPageTargeting();
-        onIabConsentNotification.mockImplementation(mixedConsentMock);
+        onConsentChange.mockImplementation(tcfv2MixedConsentMock);
         expect(getPageTargeting().pa).toBe('f');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(ccpaWithConsentMock);
+        expect(getPageTargeting().pa).toBe('t');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+        expect(getPageTargeting().pa).toBe('f');
+    });
+
+    it('Should correctly set the RDP flag (rdp) param', () => {
+        onConsentChange.mockImplementation(tcfWithConsentMock);
+        expect(getPageTargeting().rdp).toBe('na');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+        expect(getPageTargeting().rdp).toBe('na');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(tcfv2NullConsentMock);
+        expect(getPageTargeting().rdp).toBe('na');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(tcfMixedConsentMock);
+        expect(getPageTargeting().rdp).toBe('na');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(ccpaWithConsentMock);
+        expect(getPageTargeting().rdp).toBe('f');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+        expect(getPageTargeting().rdp).toBe('t');
+    });
+
+    it('Should correctly set the TCFv2 (consent_tcfv2, cmp_interaction) params', () => {
+        _.resetPageTargeting();
+        getPrivacyFramework.mockReturnValue({ tcfv2: true });
+
+        onConsentChange.mockImplementation(tcfv2WithConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('t');
+        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(tcfv2WithoutConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('f');
+        expect(getPageTargeting().cmp_interaction).toBe('cmpuishown');
+
+        _.resetPageTargeting();
+        onConsentChange.mockImplementation(tcfv2MixedConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('f');
+        expect(getPageTargeting().cmp_interaction).toBe('useractioncomplete');
+
+        _.resetPageTargeting();
+        getPrivacyFramework.mockReturnValue({ tcfv1: true });
+        onConsentChange.mockImplementation(tcfWithConsentMock);
+
+        expect(getPageTargeting().consent_tcfv2).toBe('na');
+        expect(getPageTargeting().cmp_interaction).toBe('na');
     });
 
     it('should set correct edition param', () => {
@@ -202,10 +299,6 @@ describe('Build Page Targeting', () => {
         expect(getPageTargeting().ab).toEqual(['MtMaster-variantName']);
     });
 
-    it('should set correct krux params', () => {
-        expect(getPageTargeting().x).toEqual(['E012712', 'E012390', 'E012478']);
-    });
-
     it('should set Observer flag for Observer content', () => {
         expect(getPageTargeting().ob).toEqual('t');
     });
@@ -222,7 +315,6 @@ describe('Build Page Targeting', () => {
         config.page = {};
         config.ophan = { pageViewId: '123456' };
         getUserSegments.mockReturnValue([]);
-        getKruxSegments.mockReturnValue([]);
 
         expect(getPageTargeting()).toEqual({
             sens: 'f',
@@ -237,6 +329,9 @@ describe('Build Page Targeting', () => {
             cc: 'US',
             rp: 'dotcom-platform',
             dcre: 'f',
+            rdp: 'na',
+            consent_tcfv2: 'na',
+            cmp_interaction: 'na',
         });
     });
 
@@ -291,22 +386,22 @@ describe('Build Page Targeting', () => {
 
     describe('Already visited frequency', () => {
         it('can pass a value of five or less', () => {
-            local.set('gu.alreadyVisited', 5);
+            storage.local.setRaw('gu.alreadyVisited', 5);
             expect(getPageTargeting().fr).toEqual('5');
         });
 
         it('between five and thirty, includes it in a bucket in the form "x-y"', () => {
-            local.set('gu.alreadyVisited', 18);
+            storage.local.setRaw('gu.alreadyVisited', 18);
             expect(getPageTargeting().fr).toEqual('16-19');
         });
 
         it('over thirty, includes it in the bucket "30plus"', () => {
-            local.set('gu.alreadyVisited', 300);
+            storage.local.setRaw('gu.alreadyVisited', 300);
             expect(getPageTargeting().fr).toEqual('30plus');
         });
 
         it('passes a value of 0 if the value is not stored', () => {
-            local.remove('gu.alreadyVisited');
+            storage.local.remove('gu.alreadyVisited');
             expect(getPageTargeting().fr).toEqual('0');
         });
     });
@@ -343,6 +438,79 @@ describe('Build Page Targeting', () => {
         it('should set ref empty string if referrer does not match', () => {
             getReferrer.mockReturnValue('https://theguardian.com');
             expect(getPageTargeting().ref).toEqual(undefined);
+        });
+    });
+
+    describe('URL Keywords', () => {
+        it('should return correct keywords from pageId', () => {
+            expect(getPageTargeting().urlkw).toEqual(['footballweekly']);
+        });
+
+        it('should extract multiple url keywords correctly', () => {
+            config.page.pageId =
+                'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london';
+            expect(getPageTargeting().urlkw).toEqual([
+                'harry',
+                'potter',
+                'cursed',
+                'child',
+                'review',
+                'palace',
+                'theatre',
+                'london',
+            ]);
+        });
+
+        it('should get correct keywords when trailing slash is present', () => {
+            config.page.pageId =
+                'stage/2016/jul/26/harry-potter-cursed-child-review-palace-theatre-london/';
+            expect(getPageTargeting().urlkw).toEqual([
+                'harry',
+                'potter',
+                'cursed',
+                'child',
+                'review',
+                'palace',
+                'theatre',
+                'london',
+            ]);
+        });
+    });
+
+    describe('inskin targetting', () => {
+        it('should not allow inskin if cmp has not initialised', () => {
+            cmp.hasInitialised.mockReturnValue(false);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        it('should not allow inskin if cmp will show a banner', () => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(true);
+            getViewport.mockReturnValue({ width: 1920, height: 1080 });
+            expect(getPageTargeting().inskin).toBe('f');
+        });
+
+        
+        it.each([
+            ['f', 1280],
+            ['f', 1440],
+            ['f', 1559],
+            ['t', 1560],
+            ['t', 1561],
+            ['t', 1920],
+            ['t', 2560],
+        ])("should return '%s' if viewport width is %s", (expected, width) => {
+            cmp.hasInitialised.mockReturnValue(true);
+            cmp.willShowPrivacyMessageSync.mockReturnValue(false);
+            getViewport.mockReturnValue({ width, height: 800 });
+            expect(getPageTargeting().inskin).toBe(expected);
+        });
+
+        it("should return 'f' if vp does not have a width", () => {
+            getViewport.mockReturnValue(undefined);
+            expect(getPageTargeting().inskin).toBe('f');
         });
     });
 });

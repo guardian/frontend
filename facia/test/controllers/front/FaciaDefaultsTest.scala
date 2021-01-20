@@ -7,7 +7,7 @@ import test.ConfiguredTestSuite
 @DoNotDiscover class FaciaDefaultsTest extends FlatSpec with Matchers with ConfiguredTestSuite {
 
   "FaciaDefaults" should "parse correctly" in {
-    Json.parse(FaciaDefaults.defaultJson).isInstanceOf[JsValue] should be (true)
+    Json.parse(FaciaDefaults.defaultJson).isInstanceOf[JsValue] should be(true)
   }
 
 }

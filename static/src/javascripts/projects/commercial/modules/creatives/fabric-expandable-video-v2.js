@@ -1,16 +1,15 @@
-// @flow
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import $ from 'lib/$';
 import template from 'lodash/template';
-import fabricExpandableVideoHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2.html';
-import fabricExpandableCtaHtml from 'raw-loader!commercial/views/creatives/fabric-expandable-video-v2-cta.html';
+import fabricExpandableVideoHtml from 'commercial/views/creatives/fabric-expandable-video-v2.html';
+import fabricExpandableCtaHtml from 'commercial/views/creatives/fabric-expandable-video-v2-cta.html';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import closeCentral from 'svgs/icon/close-central.svg';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
 
-const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
+const FabricExpandableVideoV2 = (adSlot, params) => {
     let isClosed = true;
     const closedHeight = 250;
     const openedHeight = 500;
@@ -108,7 +107,7 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
         };
 
         bean.on(adSlot, 'click', '.ad-exp__open', () => {
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 open(isClosed);
             });
         });
@@ -118,13 +117,13 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
             'click',
             '.video-container__cta, .creative__cta',
             () => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     open(false);
                 });
             }
         );
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             $ad.css('height', closedHeight);
             $('.ad-exp-collapse__slide', $fabricExpandableVideo).css(
                 'height',
@@ -147,11 +146,11 @@ const FabricExpandableVideoV2 = (adSlot: Element, params: Object) => {
             adSlot.classList.add('ad-slot--fabric');
             if (
                 adSlot.parentNode &&
-                ((adSlot.parentNode: any): Element).classList.contains(
+                ((adSlot.parentNode)).classList.contains(
                     'top-banner-ad-container'
                 )
             ) {
-                ((adSlot.parentNode: any): Element).classList.add(
+                ((adSlot.parentNode)).classList.add(
                     'top-banner-ad-container--fabric'
                 );
             }

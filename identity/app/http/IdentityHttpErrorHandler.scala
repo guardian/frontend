@@ -11,11 +11,13 @@ import utils.SafeLogging
 import scala.concurrent.Future
 
 class IdentityHttpErrorHandler(
-  config: Configuration,
-  sourceMapper: Option[SourceMapper],
-  environment: Environment,
-  router: => Router
-) extends DefaultHttpErrorHandler(environment, config, sourceMapper, Some(router)) with Results with SafeLogging {
+    config: Configuration,
+    sourceMapper: Option[SourceMapper],
+    environment: Environment,
+    router: => Router,
+) extends DefaultHttpErrorHandler(environment, config, sourceMapper, Some(router))
+    with Results
+    with SafeLogging {
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
     logger.error("Serving error page", exception)
@@ -26,7 +28,7 @@ class IdentityHttpErrorHandler(
     }
   }
 
-  override def onClientError(request : RequestHeader, statusCode: Int, message: String) : Future[Result] = {
+  override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] = {
     def notFound = {
       logger.info(s"Serving 404, no handler found for ${request.path}")
       if (environment.mode == Mode.Prod) {
@@ -46,9 +48,9 @@ class IdentityHttpErrorHandler(
     }
 
     statusCode match {
-      case NOT_FOUND => notFound
+      case NOT_FOUND   => notFound
       case BAD_REQUEST => badRequest
-      case _ => super.onClientError(request, statusCode, message)
+      case _           => super.onClientError(request, statusCode, message)
     }
   }
 }

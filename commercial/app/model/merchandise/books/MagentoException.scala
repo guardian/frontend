@@ -1,11 +1,11 @@
 package commercial.model.merchandise.books
 
-import common.Logging
+import common.GuLogging
 import play.api.libs.json.{JsError, JsSuccess, JsValue}
 
 case class MagentoException(code: Int, message: String)
 
-object MagentoException extends Logging {
+object MagentoException extends GuLogging {
 
   def apply(json: JsValue): Option[MagentoException] = {
     val error = (json \ "messages" \ "error")(0)

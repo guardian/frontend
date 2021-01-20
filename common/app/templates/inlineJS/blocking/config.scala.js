@@ -14,10 +14,14 @@ var isModernBrowser =
         || "XDomainRequest" in window
     );
 
+// nomodule check defines window.guardian if we are in a legacy browser and sets supportsModules to false
+var supportsModules = !(window.guardian && window.guardian.supportsModules === false);
+
 window.guardian = {
     isModernBrowser : isModernBrowser,
     isEnhanced:
         window.shouldEnhance && isModernBrowser,
+    supportsModules: supportsModules,
     css: {
         loaded: false
     },
@@ -25,6 +29,9 @@ window.guardian = {
     adBlockers: {
         active: undefined,
         onDetect: []
+    },
+    googleAnalytics: {
+        initialiseGa: undefined
     },
     config: @JavaScript(templates.js.javaScriptConfig(page).body)
 };

@@ -16,7 +16,8 @@ import scala.util.control.NonFatal
 object Analytics extends Results {
 
   def storeJsonBody[A](switch: Switch, streamName: => String, log: Logger)(
-    analytics: String)(implicit ec: ExecutionContext, request: Request[A]): Result = {
+      analytics: String,
+  )(implicit ec: ExecutionContext, request: Request[A]): Result = {
     if (switch.isSwitchedOn) {
       if (isProd) {
         val result = Firehose.stream(streamName)(analytics)

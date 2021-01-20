@@ -12,11 +12,11 @@ class PreviewErrorHandler(
     env: Environment,
     config: Configuration,
     sourceMapper: Option[SourceMapper],
-    router: => Router
-  ) extends DefaultHttpErrorHandler(env, config, sourceMapper, Some(router)) {
+    router: => Router,
+) extends DefaultHttpErrorHandler(env, config, sourceMapper, Some(router)) {
 
   override def onServerError(request: RequestHeader, exception: Throwable): Future[Result] = {
-    exception match  {
+    exception match {
       case ContentApiError(statusCode, statusMessage, _) if statusCode == 404 =>
         Future.successful(NotFound(views.html.not_found(request.path)))
       case _ =>

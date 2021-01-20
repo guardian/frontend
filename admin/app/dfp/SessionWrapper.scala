@@ -2,11 +2,11 @@ package dfp
 
 import com.google.api.ads.common.lib.auth.OfflineCredentials
 import com.google.api.ads.common.lib.auth.OfflineCredentials.Api
-import com.google.api.ads.admanager.axis.utils.v201902.{ReportDownloader, StatementBuilder}
-import com.google.api.ads.admanager.axis.v201902._
+import com.google.api.ads.admanager.axis.utils.v202011.{ReportDownloader, StatementBuilder}
+import com.google.api.ads.admanager.axis.v202011._
 import com.google.api.ads.admanager.lib.client.AdManagerSession
 import com.google.common.io.CharSource
-import common.Logging
+import common.GuLogging
 import conf.{AdminConfiguration, Configuration}
 import dfp.Reader.read
 import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logAroundReadSingle}
@@ -199,32 +199,34 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
   }
 }
 
-object SessionWrapper extends Logging {
+object SessionWrapper extends GuLogging {
 
   def apply(networkId: Option[String] = None): Option[SessionWrapper] = {
-    val dfpSession = try {
-      for {
-        clientId <- AdminConfiguration.dfpApi.clientId
-        clientSecret <- AdminConfiguration.dfpApi.clientSecret
-        refreshToken <- AdminConfiguration.dfpApi.refreshToken
-        appName <- AdminConfiguration.dfpApi.appName
-      } yield {
-        val credential = new OfflineCredentials.Builder()
-                         .forApi(Api.AD_MANAGER)
-                         .withClientSecrets(clientId, clientSecret)
-                         .withRefreshToken(refreshToken)
-                         .build().generateCredential()
-        new AdManagerSession.Builder()
-        .withOAuth2Credential(credential)
-        .withApplicationName(appName)
-        .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
-        .build()
+    val dfpSession =
+      try {
+        for {
+          clientId <- AdminConfiguration.dfpApi.clientId
+          clientSecret <- AdminConfiguration.dfpApi.clientSecret
+          refreshToken <- AdminConfiguration.dfpApi.refreshToken
+          appName <- AdminConfiguration.dfpApi.appName
+        } yield {
+          val credential = new OfflineCredentials.Builder()
+            .forApi(Api.AD_MANAGER)
+            .withClientSecrets(clientId, clientSecret)
+            .withRefreshToken(refreshToken)
+            .build()
+            .generateCredential()
+          new AdManagerSession.Builder()
+            .withOAuth2Credential(credential)
+            .withApplicationName(appName)
+            .withNetworkCode(networkId.getOrElse(Configuration.commercial.dfpAccountId))
+            .build()
+        }
+      } catch {
+        case NonFatal(e) =>
+          log.error(s"Building DFP session failed.", e)
+          None
       }
-    } catch {
-      case NonFatal(e) =>
-        log.error(s"Building DFP session failed.", e)
-        None
-    }
 
     dfpSession map (new SessionWrapper(_))
   }

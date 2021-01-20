@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'fastdom';
 import reportError from 'lib/report-error';
 import $ from 'lib/$';
@@ -8,19 +6,19 @@ import config from 'lib/config';
 import { integerCommas } from 'lib/formatters';
 import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
-import shareCountTemplate from 'raw-loader!common/views/content/share-count.html';
-import shareCountImmersiveTemplate from 'raw-loader!common/views/content/share-count-immersive.html';
+import shareCountTemplate from 'common/views/content/share-count.html';
+import shareCountImmersiveTemplate from 'common/views/content/share-count-immersive.html';
 
 const $shareCountEls = $('.js-sharecount');
-const tooltip: string = 'Facebook: <%=facebook%>';
-const counts: Object = {
+const tooltip = 'Facebook: <%=facebook%>';
+const counts = {
     facebook: 'n/a',
 };
-let shareCount: number = 0;
+let shareCount = 0;
 let $fullValueEls;
 let $shortValueEls;
 
-const incrementShareCount = (amount: number): void => {
+const incrementShareCount = (amount) => {
     if (amount !== 0) {
         shareCount += amount;
 
@@ -31,18 +29,18 @@ const incrementShareCount = (amount: number): void => {
                 ? `${Math.round(displayCount / 1000)}k`
                 : displayCount;
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $fullValueEls.text(formattedDisplayCount);
             $shortValueEls.text(shortDisplayCount);
         });
     }
 };
 
-const updateTooltip = (): void => {
+const updateTooltip = () => {
     $shareCountEls.attr('title', template(tooltip)(counts));
 };
 
-const addToShareCount = (val: number): void => {
+const addToShareCount = (val) => {
     const shareSvg = inlineSvg('share');
     const shareTemplate = $shareCountEls.hasClass('js-sharecount-immersive')
         ? shareCountImmersiveTemplate
@@ -62,7 +60,7 @@ const addToShareCount = (val: number): void => {
     incrementShareCount(val);
 };
 
-const fetch = (): void => {
+const fetch = () => {
     const url = `${config.get('page.ajaxUrl')}/sharecount/${config.get(
         'page.pageId'
     )}.json`;
@@ -72,12 +70,14 @@ const fetch = (): void => {
     }).then(res => {
         const count = res.share_count || 0;
         counts.facebook = count;
-        addToShareCount(count);
-        updateTooltip();
+        if (count > 0) {
+            addToShareCount(count);
+            updateTooltip();
+        }
     });
 };
 
-const loadShareCounts = (): void => {
+const loadShareCounts = () => {
     /* asking for social counts in preview "leaks" upcoming URLs to social sites.
        when they then crawl them they get 404s which affects later sharing.
       don't call counts in preview */

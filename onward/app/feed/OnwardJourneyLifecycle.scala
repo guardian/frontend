@@ -5,24 +5,29 @@ import app.LifecycleComponent
 import common.{AkkaAsync, JobScheduler}
 import play.api.inject.ApplicationLifecycle
 import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.duration._
 
 class OnwardJourneyLifecycle(
-  appLifecycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync,
-  mostReadAgent: MostReadAgent,
-  geoMostPopularAgent: GeoMostPopularAgent,
-  dayMostPopularAgent: DayMostPopularAgent,
-  mostPopularAgent: MostPopularAgent,
-  mostViewedAudioAgent: MostViewedAudioAgent,
-  mostViewedGalleryAgent: MostViewedGalleryAgent,
-  mostViewedVideoAgent: MostViewedVideoAgent) extends LifecycleComponent {
+    appLifecycle: ApplicationLifecycle,
+    jobs: JobScheduler,
+    akkaAsync: AkkaAsync,
+    mostReadAgent: MostReadAgent,
+    geoMostPopularAgent: GeoMostPopularAgent,
+    dayMostPopularAgent: DayMostPopularAgent,
+    mostPopularAgent: MostPopularAgent,
+    deeplyReadAgent: DeeplyReadAgent,
+    mostViewedAudioAgent: MostViewedAudioAgent,
+    mostViewedGalleryAgent: MostViewedGalleryAgent,
+    mostViewedVideoAgent: MostViewedVideoAgent,
+) extends LifecycleComponent {
 
   implicit val capiClientExecutionContext = ExecutionContext.fromExecutorService(Executors.newSingleThreadExecutor())
 
-  appLifecycle.addStopHook { () => Future {
-    descheduleAll()
-  }}
+  appLifecycle.addStopHook { () =>
+    Future {
+      descheduleAll()
+    }
+  }
 
   private def descheduleAll(): Unit = {
     jobs.deschedule("OnwardJourneyAgentsHighFrequencyRefreshJob")
@@ -37,6 +42,7 @@ class OnwardJourneyLifecycle(
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsHighFrequencyRefreshJob", 5) {
       mostPopularAgent.refresh()
       geoMostPopularAgent.refresh()
+      deeplyReadAgent.refresh()
     }
 
     jobs.scheduleEveryNMinutes("OnwardJourneyAgentsMediumFrequencyRefreshJob", 30) {
@@ -58,6 +64,7 @@ class OnwardJourneyLifecycle(
       mostViewedGalleryAgent.refresh()
       mostViewedVideoAgent.refresh()
       mostReadAgent.refresh()
+      deeplyReadAgent.refresh()
     }
   }
 }

@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable guardian-frontend/no-direct-access-config */
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
@@ -10,7 +9,7 @@ jest.mock('lib/config');
 jest.mock('common/modules/user-prefs');
 jest.mock('lib/fetch-json', () => jest.fn());
 
-const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
+const fetchJsonMock = (fetchJson);
 
 describe('Weather component', () => {
     beforeEach(() => {

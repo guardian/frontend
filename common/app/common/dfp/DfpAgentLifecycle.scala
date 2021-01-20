@@ -6,14 +6,15 @@ import play.api.inject.ApplicationLifecycle
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class DfpAgentLifecycle(
-  appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends LifecycleComponent {
+class DfpAgentLifecycle(appLifeCycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+    ec: ExecutionContext,
+) extends LifecycleComponent {
 
-  appLifeCycle.addStopHook { () => Future {
-    jobs.deschedule("DfpDataRefreshJob")
-  }}
+  appLifeCycle.addStopHook { () =>
+    Future {
+      jobs.deschedule("DfpDataRefreshJob")
+    }
+  }
 
   def refreshDfpAgent(): Unit = DfpAgent.refresh()
 
@@ -30,10 +31,9 @@ class DfpAgentLifecycle(
   }
 }
 
-class FaciaDfpAgentLifecycle(
-  appLifeCycle: ApplicationLifecycle,
-  jobs: JobScheduler,
-  akkaAsync: AkkaAsync)(implicit ec: ExecutionContext) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
+class FaciaDfpAgentLifecycle(appLifeCycle: ApplicationLifecycle, jobs: JobScheduler, akkaAsync: AkkaAsync)(implicit
+    ec: ExecutionContext,
+) extends DfpAgentLifecycle(appLifeCycle, jobs, akkaAsync) {
 
   override def refreshDfpAgent(): Unit = {
     DfpAgent.refresh()

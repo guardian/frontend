@@ -19,18 +19,20 @@ trait PagePaths {
 }
 
 case class SimplePagePaths(path: String) extends PagePaths {
-  override def pathFor(page: Int): String = if (page <= 1) {
-    s"$path"
-  } else {
-    s"$path?page=$page"
-  }
+  override def pathFor(page: Int): String =
+    if (page <= 1) {
+      s"$path"
+    } else {
+      s"$path?page=$page"
+    }
 }
 
 /** If a front, page 1 should link to the all page, not the front */
 case class AllPagePaths(path: String) extends PagePaths {
-  override def pathFor(page: Int): String = if (page <= 1) {
-    s"$path/all"
-  } else {
-    s"$path?page=$page"
-  }
+  override def pathFor(page: Int): String =
+    if (page <= 1) {
+      s"$path/all"
+    } else {
+      s"$path?page=$page"
+    }
 }

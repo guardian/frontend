@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 
 import { initHostedCarousel } from './onward-journey-carousel';
@@ -12,21 +11,21 @@ describe('Hosted onward journey carousel', () => {
                             <span class="prev-oj-item"></span>
                             <span class="next-oj-item"></span>
                         </div>
-                    
+
                         <div class="js-carousel-pages">
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                             <div class="carousel-page"></div>
                         </div>
-                    
+
                         <div>
                             <div class="js-carousel-dot highlighted"></div>
                             <div class="js-carousel-dot "></div>
                             <div class="js-carousel-dot "></div>
                             <div class="js-carousel-dot "></div>
                         </div>
-                    
+
                     </div>
                 `;
         }
@@ -43,25 +42,25 @@ describe('Hosted onward journey carousel', () => {
     });
 
     const clickAndExpectNthPage = (
-        clickOn: string,
-        expectedPage: number
-    ): any => {
-        (document.querySelector(`.${clickOn}`): any).click();
-        return fastdom.read(() => {
+        clickOn,
+        expectedPage
+    ) => {
+        (document.querySelector(`.${clickOn}`)).click();
+        return fastdom.measure(() => {
             const transform = (1 - expectedPage) * 100;
 
             expect(
                 (document.querySelector(
                     '.js-carousel-pages'
-                ): any).getAttribute('style')
+                )).getAttribute('style')
             ).toEqual(
-                `-webkit-transform: translate(${transform || '-000'}%, 0);`
+                `transform: translate(${transform || '-000'}%, 0);`
             );
 
             [1, 2, 3, 4].forEach(i => {
                 const cssClasses = (document.querySelector(
                     `.js-carousel-dot:nth-child(${i})`
-                ): any).classList.toString();
+                )).classList.toString();
                 if (i === expectedPage) {
                     expect(cssClasses).toEqual(
                         expect.stringContaining('highlighted')

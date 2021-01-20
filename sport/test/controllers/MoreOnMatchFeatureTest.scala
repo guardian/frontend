@@ -6,18 +6,22 @@ import play.api.test.Helpers._
 import play.api.test.FakeRequest
 
 @DoNotDiscover class MoreOnMatchFeatureTest
-  extends FeatureSpec
-  with GivenWhenThen
-  with Matchers
-  with ConfiguredTestSuite
-  with FootballTestData
-  with WithTestFootballClient
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient {
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with ConfiguredTestSuite
+    with FootballTestData
+    with WithTestFootballClient
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient {
 
-  lazy val moreOnMatchController = new MoreOnMatchController(testCompetitionsService, testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val moreOnMatchController = new MoreOnMatchController(
+    testCompetitionsService,
+    testContentApiClient,
+    play.api.test.Helpers.stubControllerComponents(),
+  )
 
   feature("Match Nav") {
 
@@ -26,7 +30,9 @@ import play.api.test.FakeRequest
       Given("I visit a match page")
 
       {
-        val request = FakeRequest("GET", "/football/api/match-nav/2012/12/01/1006/65?callback=call").withHeaders("host" -> "localhost:9000")
+        val request = FakeRequest("GET", "/football/api/match-nav/2012/12/01/1006/65?callback=call").withHeaders(
+          "host" -> "localhost:9000",
+        )
 
         val result = moreOnMatchController.matchNav("2012", "12", "01", "1006", "65")(request)
 
@@ -47,7 +53,9 @@ import play.api.test.FakeRequest
       Given("I visit a non-existant match page")
 
       {
-        val request = FakeRequest("GET", "football/api/match-nav/2010/01/01/1/2?callback=call").withHeaders("host" -> "localhost:9000")
+        val request = FakeRequest("GET", "football/api/match-nav/2010/01/01/1/2?callback=call").withHeaders(
+          "host" -> "localhost:9000",
+        )
 
         val result = moreOnMatchController.matchNav("2010", "01", "01", "1", "2")(request)
 
@@ -63,7 +71,8 @@ import play.api.test.FakeRequest
       Given("I visit a match page")
 
       {
-        val request = FakeRequest("GET", "/football/api/match-nav/1010?callback=call").withHeaders("host" -> "localhost:9000")
+        val request =
+          FakeRequest("GET", "/football/api/match-nav/1010?callback=call").withHeaders("host" -> "localhost:9000")
 
         val result = moreOnMatchController.moreOn("1010")(request)
 
@@ -84,7 +93,8 @@ import play.api.test.FakeRequest
       Given("I visit a non-existant match page")
 
       {
-        val request = FakeRequest("GET", "/football/api/match-nav/bad-id?callback=call").withHeaders("host" -> "localhost:9000")
+        val request =
+          FakeRequest("GET", "/football/api/match-nav/bad-id?callback=call").withHeaders("host" -> "localhost:9000")
 
         val result = moreOnMatchController.moreOn("bad-id")(request)
 

@@ -1,14 +1,14 @@
-// @flow
-
 import qwery from 'qwery';
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
-import { loadScript } from 'lib/load-script';
+import { loadScript, storage } from '@guardian/libs';
 import raven from 'lib/raven';
 import sha1 from 'lib/sha1';
-import { session } from 'lib/storage';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { onIabConsentNotification } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
@@ -24,6 +24,7 @@ import { init as background } from 'commercial/modules/messenger/background';
 import { init as sendClick } from 'commercial/modules/messenger/click';
 import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
 import { init as initGetPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
+import { init as initGetPageUrl } from 'commercial/modules/messenger/get-page-url';
 import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
 import { init as hide } from 'commercial/modules/messenger/hide';
 import { init as resize } from 'commercial/modules/messenger/resize';
@@ -35,6 +36,7 @@ initMessenger(
     type,
     getStyles,
     initGetPageTargeting,
+    initGetPageUrl,
     resize,
     hide,
     scroll,
@@ -44,7 +46,7 @@ initMessenger(
     disableRefresh
 );
 
-const setDfpListeners = (): void => {
+const setDfpListeners = () => {
     const pubads = window.googletag.pubads();
     pubads.addEventListener('slotRenderEnded', raven.wrap(onSlotRender));
     pubads.addEventListener('slotOnload', raven.wrap(onSlotLoad));
@@ -52,13 +54,13 @@ const setDfpListeners = (): void => {
     pubads.addEventListener('impressionViewable', onSlotViewableFunction());
 
     pubads.addEventListener('slotVisibilityChanged', onSlotVisibilityChanged);
-    if (session.isAvailable()) {
-        const pageViews = session.get('gu.commercial.pageViews') || 0;
-        session.set('gu.commercial.pageViews', pageViews + 1);
+    if (storage.session.isAvailable()) {
+        const pageViews = storage.session.get('gu.commercial.pageViews') || 0;
+        storage.session.set('gu.commercial.pageViews', pageViews + 1);
     }
 };
 
-const setPageTargeting = (): void => {
+const setPageTargeting = () => {
     const pubads = window.googletag.pubads();
     // because commercialFeatures may export itself as {} in the event of an exception during construction
     const targeting = getPageTargeting();
@@ -70,25 +72,25 @@ const setPageTargeting = (): void => {
 // This is specifically a separate function to close-disabled-slots. One is for
 // closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
 // encounters an error. Here, slots are closed unconditionally.
-const removeAdSlots = (): Promise<void> => {
+const removeAdSlots = () => {
     // Get all ad slots
-    const adSlots: Array<Element> = qwery(dfpEnv.adSlotSelector);
+    const adSlots = qwery(dfpEnv.adSlotSelector);
 
-    return fastdom.write(() =>
-        adSlots.forEach((adSlot: Element) => adSlot.remove())
+    return fastdom.mutate(() =>
+        adSlots.forEach((adSlot) => adSlot.remove())
     );
 };
 
-const setPublisherProvidedId = (): void => {
-    const user: ?Object = getUserFromCookie();
+const setPublisherProvidedId = () => {
+    const user = getUserFromCookie();
     if (user) {
         const hashedId = sha1.hash(user.id);
         window.googletag.pubads().setPublisherProvidedId(hashedId);
     }
 };
 
-export const init = (): Promise<void> => {
-    const setupAdvertising = (): Promise<void> => {
+export const init = () => {
+    const setupAdvertising = () => {
         // note: fillAdvertSlots isn't synchronous like most buffered cmds, it's a promise. It's put in here to ensure
         // it strictly follows preceding prepare-googletag work (and the module itself ensures dependencies are
         // fulfilled), but don't assume fillAdvertSlots is complete when queueing subsequent work using cmd.push
@@ -102,18 +104,47 @@ export const init = (): Promise<void> => {
             }
         );
 
-        onIabConsentNotification(state => {
-            const npaFlag = Object.values(state).includes(false);
-
-            window.googletag.cmd.push(() => {
-                window.googletag
-                    .pubads()
-                    .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
-            });
+        onConsentChange(state => {
+            let canRun = true;
+            if (state.ccpa) {
+                // CCPA mode
+                window.googletag.cmd.push(() => {
+                    window.googletag.pubads().setPrivacySettings({
+                        restrictDataProcessing: state.ccpa.doNotSell,
+                    });
+                });
+            } else {
+                let npaFlag;
+                if (state.tcfv2) {
+                    // TCFv2 mode
+                    npaFlag =
+                        Object.keys(state.tcfv2.consents).length === 0 ||
+                        Object.values(state.tcfv2.consents).includes(false);
+                    canRun = getConsentFor('googletag', state);
+                } else if (state.aus) {
+                    // AUS mode
+                    // canRun stays true, set NPA flag if consent is retracted
+                    npaFlag = !getConsentFor('googletag', state);
+                }
+                window.googletag.cmd.push(() => {
+                    window.googletag
+                        .pubads()
+                        .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
+                });
+            }
+            // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
+            // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
+            if (canRun) {
+                loadScript(
+                    config.get(
+                        'libs.googletag',
+                        '//www.googletagservices.com/tag/js/gpt.js'
+                    ),
+                    { async: false }
+                );
+            }
         });
-
-        // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
-        return loadScript(config.get('libs.googletag'), { async: false });
+        return Promise.resolve();
     };
 
     if (commercialFeatures.dfpAdvertising) {

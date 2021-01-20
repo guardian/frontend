@@ -3,7 +3,7 @@ Testing Reader Revenue Components
 
 ## tl;dr
 
-- Check out these functions! https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
+- Check out these functions! https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
 - Check out this page! http://reader-revenue-bookmarklets.s3-website-eu-west-1.amazonaws.com/
 
 ## Components
@@ -60,7 +60,7 @@ We have some helper functions, exposed on `window.guardian.readerRevenue`, which
 All of these accept no arguments and return nothing.
 They will ensure that all cookies and localStorage items are set up correctly, and reload the page.
 
-See here for code and additional comments: https://github.com/guardian/frontend/blob/master/static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
+See here for code and additional comments: https://github.com/guardian/frontend/blob/main/static/src/javascripts/projects/common/modules/commercial/reader-revenue-dev-utils.js
 
 ## Bookmarklets
 You can call those functions from the console if you like. But if you want to use them as handy bookmarklets, go here: http://reader-revenue-bookmarklets.s3-website-eu-west-1.amazonaws.com/

@@ -9,14 +9,14 @@ import play.api.libs.json._
 import play.api.test.Helpers._
 
 @DoNotDiscover class IndexMetaDataTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
   val articleUrl = "money/pensions"
   val crosswordsUrl = "crosswords"
@@ -25,7 +25,7 @@ import play.api.test.Helpers._
   lazy val indexController = new IndexController(
     testContentApiClient,
     sectionsLookUp,
-    play.api.test.Helpers.stubControllerComponents()
+    play.api.test.Helpers.stubControllerComponents(),
   )
 
   it should "Include organisation metadata" in {

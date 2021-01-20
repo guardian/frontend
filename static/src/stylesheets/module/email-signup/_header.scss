@@ -48,12 +48,22 @@
 
 // FOOTER MODS
 .email-sub__header--footer {
+    margin: 5px 0;
+
     .email-sub__heading {
         @include fs-textSans(5);
         font-weight: 700;
         color: $brightness-100;
         margin: ($gs-baseline / 2) 0;
     }
+
+    .email-sub__description {
+        @include fs-textSans(3);
+    }
+}
+
+.email-sub__header--is-hidden {
+    display: none;
 }
 
 // PLAIN MODS

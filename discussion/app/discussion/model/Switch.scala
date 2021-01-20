@@ -4,9 +4,9 @@ package model
 import play.api.libs.json.{JsObject, JsValue}
 
 case class Switch(
-  name: String,
-  description: String,
-  state: Boolean
+    name: String,
+    description: String,
+    state: Boolean,
 )
 
 object Switch {
@@ -15,7 +15,7 @@ object Switch {
     Switch(
       name = (json \ "name").as[String].toLowerCase,
       description = (json \ "description").as[String],
-      state = if((json \ "state").as[String] == "On") true else false
+      state = if ((json \ "state").as[String] == "On") true else false,
     )
   }
 }

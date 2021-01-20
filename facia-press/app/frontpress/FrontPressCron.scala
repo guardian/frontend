@@ -10,14 +10,16 @@ import services.ConfigAgent
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit executionContext: ExecutionContext) extends JsonQueueWorker[SNSNotification] {
+class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorker: ToolPressQueueWorker)(implicit
+    executionContext: ExecutionContext,
+) extends JsonQueueWorker[SNSNotification] {
   override val deleteOnFailure: Boolean = true
 
   def shouldRetryPress(message: common.Message[SNSNotification]): Boolean = {
     ConfigAgent.getFrontPriorityFromConfig(message.get.Message) match {
       case Some(TrainingPriority) => false
-      case Some(_) => true
-      case None => false
+      case Some(_)                => true
+      case None                   => false
     }
   }
 
@@ -26,7 +28,7 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
 
     JsonMessageQueue[SNSNotification](
       AmazonSQSAsyncClient.asyncBuilder.withCredentials(credentials).withRegion(conf.Configuration.aws.region).build(),
-      queueUrl
+      queueUrl,
     )
   }) getOrElse {
     throw new RuntimeException("Required property 'frontpress.sqs.cron_queue_url' not set")
@@ -41,8 +43,8 @@ class FrontPressCron(liveFapiFrontPress: LiveFapiFrontPress, toolPressQueueWorke
         .pressByPathId(path, message.id.get)
         .map(Function.const(()))
 
-      pressFuture.foreach {
-        _ => FrontPressCronSuccess.increment()
+      pressFuture.foreach { _ =>
+        FrontPressCronSuccess.increment()
       }
 
       pressFuture

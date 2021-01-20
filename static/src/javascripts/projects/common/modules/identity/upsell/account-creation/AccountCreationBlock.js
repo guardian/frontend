@@ -1,21 +1,10 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import { AccountCreationForm } from './AccountCreationForm';
 import { AccountActionableBenefits, AccountBenefits } from './AccountBenefits';
 import { Block } from '../block/Block';
 
-type AccountCreationBlockProps = {
-    csrfToken: string,
-    accountToken: string,
-    email: string,
-};
 
-class AccountCreationBlock extends Component<
-    AccountCreationBlockProps,
-    {
-        hasCreatedAccount?: boolean,
-    }
-> {
+class AccountCreationBlock extends Component {
     onAccountCreated = () => {
         this.setState({
             hasCreatedAccount: true,

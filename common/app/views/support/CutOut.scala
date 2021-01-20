@@ -1,11 +1,21 @@
 package views.support
 
-import common.Logging
+import common.GuLogging
 import model.pressed.{PressedContent, Cutout}
 
 import scala.util.{Failure, Success, Try}
 
-object CutOut extends Logging {
+sealed trait Orientation
+case object Landscape extends Orientation
+case object Portrait extends Orientation
+
+object Orientation {
+  def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
+}
+
+case class CutOut(imageUrl: String, orientation: Orientation)
+
+object CutOut extends GuLogging {
   /* If a CutOut comes with width and height, it's proabably coming from facia-tool
      Otherwise, it is probably coming from Content API Content type via tags (This gives no src and width)
    */
@@ -16,24 +26,17 @@ object CutOut extends Logging {
           case Success((w, h)) => Option(CutOut(src, Orientation.fromDimensions(w, h)))
           case Failure(t) =>
             log.warn(s"Could not convert width and height to INT: $t")
-            None}
+            None
+        }
       case Some(Cutout(src, _, _)) => Option(CutOut(src, Landscape))
-      case _ => None}
+      case _                       => None
+    }
   }
-}
 
-object Orientation {
-  def fromDimensions(width: Int, height: Int): Orientation = if (width >= height) Landscape else Portrait
-}
-
-sealed trait Orientation
-
-case object Landscape extends Orientation
-case object Portrait extends Orientation
-
-case class CutOut(imageUrl: String, orientation: Orientation) {
-  def cssClass: String = orientation match {
-    case Landscape => "image--landscape"
-    case Portrait => "image--portrait"
+  def cssClass(orientation: Orientation): String = {
+    orientation match {
+      case Landscape => "image--landscape"
+      case Portrait  => "image--portrait"
+    }
   }
 }

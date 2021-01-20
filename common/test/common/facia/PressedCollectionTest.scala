@@ -8,7 +8,8 @@ class PressedCollectionTest extends FlatSpec with Matchers {
     val withoutTrailText = pressedCollection.withoutTrailTextOnTail
 
     withoutTrailText.curatedPlusBackfillDeduplicated shouldBe
-      pressedCollection.curatedPlusBackfillDeduplicated.head :: pressedCollection.curatedPlusBackfillDeduplicated.tail.map(_.withoutTrailText)
+      pressedCollection.curatedPlusBackfillDeduplicated.head :: pressedCollection.curatedPlusBackfillDeduplicated.tail
+        .map(_.withoutTrailText)
   }
 
   "withoutTrailTextOnTail" should "remove trail text from backfill content, leaving the backfill head" in {
@@ -16,7 +17,8 @@ class PressedCollectionTest extends FlatSpec with Matchers {
     val withoutTrailText = pressedCollection.withoutTrailTextOnTail
 
     withoutTrailText.curatedPlusBackfillDeduplicated shouldBe
-      pressedCollection.curatedPlusBackfillDeduplicated.head :: pressedCollection.curatedPlusBackfillDeduplicated.tail.map(_.withoutTrailText)
+      pressedCollection.curatedPlusBackfillDeduplicated.head :: pressedCollection.curatedPlusBackfillDeduplicated.tail
+        .map(_.withoutTrailText)
   }
 
   "withoutTrailTextOnTail" should "execute on empty curated and backfill" in {

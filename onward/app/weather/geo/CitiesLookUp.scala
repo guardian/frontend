@@ -20,16 +20,16 @@ object CitiesCsvLine {
   def unapply(line: String): Option[CitiesCsvLine] = {
     line.split(",", -1) match {
       case Array(
-        locationId,
-        country,
-        region,
-        city,
-        postalCode,
-        latitude,
-        longitude,
-        metroCode,
-        areaCode
-      ) =>
+            locationId,
+            country,
+            region,
+            city,
+            postalCode,
+            latitude,
+            longitude,
+            metroCode,
+            areaCode,
+          ) =>
         Try {
           CitiesCsvLine(
             locationId.toInt,
@@ -40,7 +40,7 @@ object CitiesCsvLine {
             latitude.toDouble,
             longitude.toDouble,
             metroCode.withoutQuotes,
-            areaCode.withoutQuotes
+            areaCode.withoutQuotes,
           )
         }.toOption
 
@@ -50,19 +50,19 @@ object CitiesCsvLine {
 }
 
 case class CitiesCsvLine(
-  locId: Int,
-  country: String,
-  region: String,
-  city: String,
-  postalCode: String,
-  latitude: Double,
-  longitude: Double,
-  metroCode: String,
-  areaCode: String
+    locId: Int,
+    country: String,
+    region: String,
+    city: String,
+    postalCode: String,
+    latitude: Double,
+    longitude: Double,
+    metroCode: String,
+    areaCode: String,
 )
 
 object CitiesLookUp extends ResourcesHelper {
-  private [geo] def getGeoIPCityInputStream: BufferedSource = {
+  private[geo] def getGeoIPCityInputStream: BufferedSource = {
     Source.fromInputStream(getInputStream("GeoIPCity-534-Location.csv").get, "iso-8859-1")
   }
 
@@ -73,14 +73,19 @@ object CitiesLookUp extends ResourcesHelper {
 
   def loadCache(): Map[CityRef, LatitudeLongitude] = {
     // first two lines are Copyright info and field names
-    getCsvLines.filter({ csvLine =>
-      !csvLine.country.isEmpty && !csvLine.city.isEmpty
-    }).map({ csvLine =>
-
-      CityRef.makeFixedCase(csvLine.city, csvLine.region, csvLine.country) -> LatitudeLongitude(csvLine.latitude, csvLine.longitude)
-    }).foldLeft(Map.empty[CityRef, LatitudeLongitude]) {
-      case (acc, kv) => acc + kv
-    }
+    getCsvLines
+      .filter({ csvLine =>
+        !csvLine.country.isEmpty && !csvLine.city.isEmpty
+      })
+      .map({ csvLine =>
+        CityRef.makeFixedCase(csvLine.city, csvLine.region, csvLine.country) -> LatitudeLongitude(
+          csvLine.latitude,
+          csvLine.longitude,
+        )
+      })
+      .foldLeft(Map.empty[CityRef, LatitudeLongitude]) {
+        case (acc, kv) => acc + kv
+      }
   }
 
   private[geo] val cache = loadCache()

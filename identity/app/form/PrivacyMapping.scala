@@ -16,7 +16,6 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
 
   def formMapping(implicit messagesProvider: MessagesProvider): Mapping[PrivacyFormData] =
     mapping(
-      "allowThirdPartyProfiling" -> optional(boolean),
       "consents" -> list(
         mapping(
           "actor" -> text,
@@ -24,35 +23,23 @@ class PrivacyMapping extends UserFormMapping[PrivacyFormData] {
           "version" -> number,
           "consented" -> boolean,
           "timestamp" -> jodaDate(dateTimeFormatISO8601),
-          "privacyPolicyVersion" -> number
-        )(Consent.apply)(Consent.unapply) // NOTE: Consent here is DO from identity-model
-      )
+          "privacyPolicyVersion" -> number,
+        )(Consent.apply)(Consent.unapply), // NOTE: Consent here is DO from identity-model
+      ),
     )(PrivacyFormData.apply)(PrivacyFormData.unapply)
 
   protected def toUserFormData(userDO: User): PrivacyFormData =
     PrivacyFormData(userDO)
 
-  protected lazy val idapiErrorContextToFormFieldKeyMap = Map(
-    "statusFields.allowThirdPartyProfiling" -> "allowThirdPartyProfiling"
-  )
 }
 
 /**
   * Form specific DTO representing marketing consent subset of User model
   */
-case class PrivacyFormData(
-    allowThirdPartyProfiling: Option[Boolean],
-    consents: List[Consent]) extends UserFormData{
-
-  def toUserUpdateDTO(oldUserDO: User): UserUpdateDTO =
-    UserUpdateDTO(
-      statusFields = Some(oldUserDO.statusFields.copy(
-        allowThirdPartyProfiling = Some(allowThirdPartyProfiling.getOrElse(false))
-      )),
-      consents = Some(consents))
-}
+case class PrivacyFormData(consents: List[Consent]) extends UserFormData
 
 object PrivacyFormData extends SafeLogging {
+
   /**
     * Converts User DO from IDAPI to form processing DTO PrivacyFromData
     *
@@ -61,8 +48,7 @@ object PrivacyFormData extends SafeLogging {
     */
   def apply(userDO: User): PrivacyFormData = {
     PrivacyFormData(
-      allowThirdPartyProfiling = userDO.statusFields.allowThirdPartyProfiling,
-      consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO)
+      consents = if (userDO.consents.isEmpty) defaultConsents else onlyValidConsents(userDO),
     )
   }
 
@@ -77,14 +63,15 @@ object PrivacyFormData extends SafeLogging {
     * @return list of valid consents
     */
   private def onlyValidConsents(userDO: User): List[Consent] = {
-    def consentExistsInModel(consent:Consent): Boolean =
+    def consentExistsInModel(consent: Consent): Boolean =
       Try(Consent.wording(consent.id, consent.version)).isSuccess
 
     val newUserConsents = Consent.addNewDefaults(userDO.consents)
     val (validConsents, invalidConsents) = newUserConsents.partition(consentExistsInModel)
 
     invalidConsents.foreach(consent =>
-      logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"))
+      logger.error(s"User ${userDO.id} has invalid consent! Remove consent from Mongo DB: $consent"),
+    )
 
     validConsents
   }

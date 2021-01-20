@@ -1,13 +1,7 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
-import type { RegisterListeners } from 'commercial/modules/messenger';
 
-type Specs = {
-    width?: string,
-    height?: string,
-};
 
-const normalise = (length: string): string => {
+const normalise = (length) => {
     const lengthRegexp = /^(\d+)(%|px|em|ex|ch|rem|vh|vw|vmin|vmax)?/;
     const defaultUnit = 'px';
     const matches = String(length).match(lengthRegexp);
@@ -17,15 +11,15 @@ const normalise = (length: string): string => {
     return matches[1] + (matches[2] === undefined ? defaultUnit : matches[2]);
 };
 
-const isLiveBlogInlineAdSlot = (adSlot: ?HTMLElement): boolean =>
+const isLiveBlogInlineAdSlot = (adSlot) =>
     !!adSlot && adSlot.classList.contains('ad-slot--liveblog-inline');
 
 const resize = (
-    specs: Specs,
-    iframe: HTMLElement,
-    iframeContainer: ?HTMLElement,
-    adSlot: HTMLElement
-): ?Promise<any> => {
+    specs,
+    iframe,
+    iframeContainer,
+    adSlot
+) => {
     if (
         !specs ||
         !('height' in specs || 'width' in specs) ||
@@ -45,8 +39,7 @@ const resize = (
         styles.height = normalise(specs.height);
     }
 
-    return fastdom.write(() => {
-        Object.assign(adSlot.style, styles);
+    return fastdom.mutate(() => {
         Object.assign(iframe.style, styles);
 
         if (iframeContainer) {
@@ -56,30 +49,18 @@ const resize = (
 };
 
 // When an outstream resizes we want it to revert to its original styling
-const removeAnyOutstreamClass = (adSlot: ?HTMLElement) => {
-    fastdom.write(() => {
+const removeAnyOutstreamClass = (adSlot) => {
+    fastdom.mutate(() => {
         if (adSlot) {
             adSlot.classList.remove('ad-slot--outstream');
         }
     });
 };
 
-const init = (register: RegisterListeners) => {
+const init = (register) => {
     register('resize', (specs, ret, iframe) => {
         if (iframe && specs) {
             const adSlot = iframe && iframe.closest('.js-ad-slot');
-
-            if (
-                adSlot &&
-                (adSlot.classList.contains('ad-slot--mostpop') ||
-                    adSlot.classList.contains('ad-slot--right') ||
-                    adSlot.classList.contains('ad-slot--offset-right'))
-            ) {
-                // We ignore resize events (sent mainly by apnx)
-                // for the mostpop (Most popular) slot
-                // See https://trello.com/c/TtuGq6Iy
-                return null;
-            }
             removeAnyOutstreamClass(adSlot);
             const iframeContainer =
                 iframe && iframe.closest('.ad-slot__content');

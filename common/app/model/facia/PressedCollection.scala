@@ -11,25 +11,25 @@ import org.joda.time.DateTime
 import services.CollectionConfigWithId
 
 case class PressedCollection(
-  id: String,
-  displayName: String,
-  curated: List[PressedContent],
-  backfill: List[PressedContent],
-  treats: List[PressedContent],
-  lastUpdated: Option[DateTime],
-  href: Option[String],
-  description: Option[String],
-  collectionType: String,
-  groups: Option[List[String]],
-  uneditable: Boolean,
-  showTags: Boolean,
-  showSections: Boolean,
-  hideKickers: Boolean,
-  showDateHeader: Boolean,
-  showLatestUpdate: Boolean,
-  config: CollectionConfig,
-  hasMore: Boolean,
-  targetedTerritory: Option[TargetedTerritory]
+    id: String,
+    displayName: String,
+    curated: List[PressedContent],
+    backfill: List[PressedContent],
+    treats: List[PressedContent],
+    lastUpdated: Option[DateTime],
+    href: Option[String],
+    description: Option[String],
+    collectionType: String,
+    groups: Option[List[String]],
+    uneditable: Boolean,
+    showTags: Boolean,
+    showSections: Boolean,
+    hideKickers: Boolean,
+    showDateHeader: Boolean,
+    showLatestUpdate: Boolean,
+    config: CollectionConfig,
+    hasMore: Boolean,
+    targetedTerritory: Option[TargetedTerritory],
 ) {
 
   lazy val isEmpty: Boolean = curated.isEmpty && backfill.isEmpty && treats.isEmpty
@@ -38,15 +38,17 @@ case class PressedCollection(
     copy(
       curated = curated.filterNot(_.isPaidFor),
       backfill = backfill.filterNot(_.isPaidFor),
-      treats = treats.filterNot(_.isPaidFor)
+      treats = treats.filterNot(_.isPaidFor),
     )
   }
 
-  def withoutTrailTextOnTail: PressedCollection = (curated, backfill) match {
-    case (curatedHead :: tail, _) => copy(curated = curatedHead :: tail.map(_.withoutTrailText), backfill = backfill.map(_.withoutTrailText))
-    case (_, backfillHead :: tail) => copy(backfill = backfillHead :: tail.map(_.withoutTrailText))
-    case _ => this
-  }
+  def withoutTrailTextOnTail: PressedCollection =
+    (curated, backfill) match {
+      case (curatedHead :: tail, _) =>
+        copy(curated = curatedHead :: tail.map(_.withoutTrailText), backfill = backfill.map(_.withoutTrailText))
+      case (_, backfillHead :: tail) => copy(backfill = backfillHead :: tail.map(_.withoutTrailText))
+      case _                         => this
+    }
 
   def totalSize: Int = curated.size + backfill.size
 
@@ -73,7 +75,7 @@ case class PressedCollection(
   def branding(edition: Edition): Option[ContainerBranding] = {
     ContainerBrandingFinder.findBranding(
       isConfiguredForBranding = config.metadata.exists(_.contains(Branded)),
-      optBrandings = curatedPlusBackfillDeduplicated.map(_.branding(edition)).toSet
+      optBrandings = curatedPlusBackfillDeduplicated.map(_.branding(edition)).toSet,
     )
   }
 }
@@ -84,7 +86,7 @@ object PressedCollection {
       collection: com.gu.facia.api.models.Collection,
       curated: List[PressedContent],
       backfill: List[PressedContent],
-      treats: List[PressedContent]
+      treats: List[PressedContent],
   ): PressedCollection =
     PressedCollection(
       collection.id,
@@ -105,6 +107,6 @@ object PressedCollection {
       collection.collectionConfig.showLatestUpdate,
       CollectionConfig.make(collection.collectionConfig),
       hasMore = false,
-      collection.collectionConfig.targetedTerritory
+      collection.collectionConfig.targetedTerritory,
     )
 }

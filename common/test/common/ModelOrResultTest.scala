@@ -21,21 +21,24 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
 
   implicit val request: RequestHeader = TestRequest()
 
-  val testContent = Content(id = "the/id",
+  val testContent = Content(
+    id = "the/id",
     sectionId = None,
     sectionName = None,
     webPublicationDate = Some(offsetDate.toCapiDateTime),
     webTitle = "the title",
     webUrl = "http://www.guardian.co.uk/canonical",
     apiUrl = "http://foo.bar",
-    elements = None)
+    elements = None,
+  )
 
   val articleTag = Tag(
     id = "type/article",
     `type` = TagType.Type,
     webTitle = "the title",
     webUrl = "http://foo.bar",
-    apiUrl = "http://foo.bar")
+    apiUrl = "http://foo.bar",
+  )
 
   val galleryTag = articleTag.copy(id = "type/gallery")
   val videoTag = articleTag.copy(id = "type/video")
@@ -51,7 +54,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     webTitle = "Water",
     webUrl = "http://foo.bar",
     apiUrl = "http://foo.bar",
-    editions = Nil
+    editions = Nil,
   )
 
   // FML ٩(ఠ益ఠ)۶
@@ -64,7 +67,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     currentPage = None,
     pages = None,
     orderBy = None,
-    content =  None,
+    content = None,
     tag = None,
     edition = None,
     section = None,
@@ -76,12 +79,13 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     mostViewed = Some(Nil),
     leadContent = Some(Nil),
     packages = Some(Nil),
-    viewpoints = Some(Nil))
+    viewpoints = Some(Nil),
+  )
 
   "ModelOrNotFound" should "return the model if it exists" in {
     ModelOrResult(
       item = Some(TestModel),
-      response = stubResponse
+      response = stubResponse,
     ) should be(Left(TestModel))
   }
 
@@ -89,7 +93,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     val notFound = Future {
       ModelOrResult(
         item = None,
-        response = stubResponse.copy(content = Some(testArticle))
+        response = stubResponse.copy(content = Some(testArticle)),
       ).right.get
     }
 
@@ -101,7 +105,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     val notFound = Future {
       ModelOrResult(
         item = None,
-        response = stubResponse.copy(content = Some(testVideo))
+        response = stubResponse.copy(content = Some(testVideo)),
       ).right.get
     }
 
@@ -110,9 +114,10 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
   }
 
   it should "internal redirect to a gallery if it has shown up at the wrong server" in {
-    val notFound = Future { ModelOrResult(
+    val notFound = Future {
+      ModelOrResult(
         item = None,
-        response = stubResponse.copy(content = Some(testGallery))
+        response = stubResponse.copy(content = Some(testGallery)),
       ).right.get
     }
 
@@ -121,9 +126,10 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
   }
 
   it should "internal redirect to a audio if it has shown up at the wrong server" in {
-    val notFound = Future { ModelOrResult(
-      item = None,
-      response = stubResponse.copy(content = Some(testAudio))
+    val notFound = Future {
+      ModelOrResult(
+        item = None,
+        response = stubResponse.copy(content = Some(testAudio)),
       ).right.get
     }
 
@@ -135,7 +141,7 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     val notFound = Future {
       ModelOrResult(
         item = None,
-        response = stubResponse.copy(content = Some(testContent))
+        response = stubResponse.copy(content = Some(testContent)),
       ).right.get
     }
 
@@ -146,19 +152,21 @@ class ModelOrResultTest extends FlatSpec with Matchers with WithTestExecutionCon
     val notFound = Future {
       ModelOrResult(
         item = None,
-        response = stubResponse.copy(tag = Some(articleTag))
+        response = stubResponse.copy(tag = Some(articleTag)),
       ).right.get
     }
 
     status(notFound) should be(200)
-    headers(notFound).apply("X-Accel-Redirect") should be("/facia/type/article") //Back to facia in case it is overridden
+    headers(notFound).apply("X-Accel-Redirect") should be(
+      "/facia/type/article",
+    ) //Back to facia in case it is overridden
   }
 
   it should "internal redirect to a section if it has shown up at the wrong server" in {
     val notFound = Future {
       ModelOrResult(
         item = None,
-        response = stubResponse.copy(section = Some(testSection))
+        response = stubResponse.copy(section = Some(testSection)),
       ).right.get
     }
 

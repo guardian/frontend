@@ -10,7 +10,7 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val RenderInArticleAudioAtomSwitch = Switch(
@@ -20,7 +20,7 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val AudioOnwardJourneySwitch = Switch(
@@ -30,7 +30,7 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val FlagshipEmailContainerSwitch = Switch(
@@ -40,7 +40,7 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FlagshipEmailContainerDynamicImageSwitch = Switch(
@@ -50,7 +50,7 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val FlagshipFrontContainerSwitch = Switch(
@@ -60,6 +60,6 @@ trait JournalismSwitches {
     owners = Seq(Owner.withName("journalism team")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 }

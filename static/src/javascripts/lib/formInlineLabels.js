@@ -1,26 +1,25 @@
-// @flow
 import bean from 'bean';
 import $ from 'lib/$';
 import fastdom from 'fastdom';
 
 const updateClass = (
-    type: string,
-    $el: Object,
-    cssClass: string,
-    testFunc?: Function
-): Function => () => {
+    type,
+    $el,
+    cssClass,
+    testFunc
+) => () => {
     // If we pass a boolean for test, then check if we should update the class
     const shouldUpdateClass = testFunc !== undefined ? testFunc() : true;
 
     if (shouldUpdateClass) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $el[type === 'add' ? 'addClass' : 'removeClass'](cssClass);
         });
     }
 };
 
 export default {
-    init(el: string, opts: Object) {
+    init(el, opts) {
         const $el = $(el);
         const $input = $(opts.textInputClass, el);
         const $label = $(opts.labelClass, el);

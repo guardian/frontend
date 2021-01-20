@@ -1,20 +1,14 @@
-// @flow
-
 import debounce from 'lodash/debounce';
 import ophan from 'ophan/ng';
 import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
-import { signInWithSavedCredentials } from 'common/modules/identity/credentials-api-sign-in';
 import { showMyAccountIfNecessary } from './user-account';
+import { showGiftingCTA } from './gifting';
 
-type MenuAndTriggerEls = {
-    menu: HTMLElement,
-    trigger: HTMLElement,
-};
 
 const enhanced = {};
 const clickstreamListeners = {};
@@ -23,15 +17,15 @@ const MY_ACCOUNT_ID = 'my-account-toggle';
 const MENU_TOGGLE_ID = 'main-menu-toggle';
 const EDITION_PICKER_TOGGLE_ID = 'edition-picker-toggle';
 
-const getMenu = (): ?HTMLElement =>
+const getMenu = () =>
     document.getElementsByClassName('js-main-menu')[0];
 
-const getSectionToggleMenuItem = (section: HTMLElement): ?HTMLElement => {
+const getSectionToggleMenuItem = (section) => {
     const children = Array.from(section.children);
     return children.find(child => child.classList.contains('menu-item__title'));
 };
 
-const closeMenuSection = (section: HTMLElement): void => {
+const closeMenuSection = (section) => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -39,7 +33,7 @@ const closeMenuSection = (section: HTMLElement): void => {
     }
 };
 
-const closeAllMenuSections = (exclude?: Node): void => {
+const closeAllMenuSections = (exclude) => {
     const sections = Array.from(
         document.querySelectorAll('.js-navigation-item')
     );
@@ -51,7 +45,7 @@ const closeAllMenuSections = (exclude?: Node): void => {
     });
 };
 
-const openMenuSection = (section: HTMLElement, options?: Object = {}): void => {
+const openMenuSection = (section, options = {}) => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -66,7 +60,7 @@ const openMenuSection = (section: HTMLElement, options?: Object = {}): void => {
     closeAllMenuSections(section);
 };
 
-const isMenuSectionClosed = (section: HTMLElement): boolean => {
+const isMenuSectionClosed = (section) => {
     const toggle = getSectionToggleMenuItem(section);
 
     if (toggle) {
@@ -76,7 +70,7 @@ const isMenuSectionClosed = (section: HTMLElement): boolean => {
     return true;
 };
 
-const toggleMenuSection = (section: HTMLElement): void => {
+const toggleMenuSection = (section) => {
     if (isMenuSectionClosed(section)) {
         openMenuSection(section);
     } else {
@@ -84,22 +78,22 @@ const toggleMenuSection = (section: HTMLElement): void => {
     }
 };
 
-const removeClickstreamListener = (menuId: string): void => {
+const removeClickstreamListener = (menuId) => {
     const clickHandler = clickstreamListeners[menuId];
     mediator.off('module:clickstream:click', clickHandler);
     delete clickstreamListeners[menuId];
 };
 
 const registerClickstreamListener = (
-    menuId: string,
-    clickHandler: () => void
+    menuId,
+    clickHandler
 ) => {
     removeClickstreamListener(menuId);
     mediator.on('module:clickstream:click', clickHandler);
     clickstreamListeners[menuId] = clickHandler;
 };
 
-const toggleMenu = (): void => {
+const toggleMenu = () => {
     const documentElement = document.documentElement;
     const openClass = 'new-header--open';
     const globalOpenClass = 'nav-is-open';
@@ -113,7 +107,7 @@ const toggleMenu = (): void => {
         return;
     }
 
-    const resetItemOrder = (): void => {
+    const resetItemOrder = () => {
         const items = Array.from(
             document.querySelectorAll('.js-navigation-item')
         );
@@ -124,7 +118,7 @@ const toggleMenu = (): void => {
         });
     };
 
-    const focusFirstMenuSection = (): void => {
+    const focusFirstMenuSection = () => {
         const firstSection = document.querySelector('.js-navigation-button');
 
         if (firstSection) {
@@ -135,12 +129,12 @@ const toggleMenu = (): void => {
     const update = () => {
         const expandedAttr = isOpen ? 'false' : 'true';
         const hiddenAttr = isOpen ? 'true' : 'false';
-        const haveToCalcTogglePosition = (): boolean =>
+        const haveToCalcTogglePosition = () =>
             isBreakpoint({
                 min: 'tablet',
                 max: 'desktop',
             });
-        const enhanceMenuMargin = (): Promise<void> => {
+        const enhanceMenuMargin = () => {
             const body = document.body;
 
             if (!body || !haveToCalcTogglePosition()) {
@@ -148,20 +142,20 @@ const toggleMenu = (): void => {
             }
 
             return fastdom
-                .read(() => {
+                .measure(() => {
                     const docRect = body.getBoundingClientRect();
                     const rect = menuToggle.getBoundingClientRect();
                     return docRect.right - rect.right + rect.width / 2;
                 })
                 .then(marginRight =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         menu.style.marginRight = `${marginRight}px`;
                     })
                 );
         };
         const debouncedMenuEnhancement = debounce(enhanceMenuMargin, 200);
-        const removeEnhancedMenuMargin = (): Promise<void> =>
-            fastdom.write(() => {
+        const removeEnhancedMenuMargin = () =>
+            fastdom.mutate(() => {
                 menu.style.marginRight = '';
             });
 
@@ -233,16 +227,16 @@ const toggleMenu = (): void => {
         }
     };
 
-    fastdom.write(update);
+    fastdom.mutate(update);
 };
 
-const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
+const toggleDropdown = (menuAndTriggerEls) => {
     const documentElement = document.documentElement;
     const globalOpenClass = 'dropdown--open';
     const openClass = 'dropdown-menu--open';
 
     fastdom
-        .read(() => menuAndTriggerEls)
+        .measure(() => menuAndTriggerEls)
         .then(els => {
             const { menu, trigger } = els;
 
@@ -254,7 +248,7 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
             const expandedAttr = isOpen ? 'false' : 'true';
             const hiddenAttr = isOpen ? 'true' : 'false';
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 if (trigger) {
                     trigger.setAttribute('aria-expanded', expandedAttr);
                 }
@@ -289,9 +283,9 @@ const toggleDropdown = (menuAndTriggerEls: MenuAndTriggerEls): void => {
         });
 };
 
-const returnFocusToButton = (btnId: string): void => {
+const returnFocusToButton = (btnId) => {
     fastdom
-        .read(() => document.getElementById(btnId))
+        .measure(() => document.getElementById(btnId))
         .then(btn => {
             if (btn) {
                 btn.focus();
@@ -309,12 +303,12 @@ const returnFocusToButton = (btnId: string): void => {
 };
 
 const genericToggleMenu = (
-    menuClassName: string,
-    triggerClassName: string
-): void => {
-    const menu: ?HTMLElement = document.querySelector(menuClassName);
+    menuClassName,
+    triggerClassName
+) => {
+    const menu = document.querySelector(menuClassName);
 
-    const trigger: ?HTMLElement = document.querySelector(triggerClassName);
+    const trigger = document.querySelector(triggerClassName);
 
     if (menu && trigger) {
         toggleDropdown({
@@ -343,19 +337,19 @@ const buttonClickHandlers = {
 };
 
 const menuKeyHandlers = {
-    [MENU_TOGGLE_ID]: (event: KeyboardEvent): void => {
+    [MENU_TOGGLE_ID]: (event) => {
         if (event.key === 'Escape') {
             toggleMenu();
             returnFocusToButton(MENU_TOGGLE_ID);
         }
     },
-    [EDITION_PICKER_TOGGLE_ID]: (event: KeyboardEvent): void => {
+    [EDITION_PICKER_TOGGLE_ID]: (event) => {
         if (event.key === 'Escape') {
             toggleEditionPicker();
             returnFocusToButton(EDITION_PICKER_TOGGLE_ID);
         }
     },
-    [MY_ACCOUNT_ID]: (event: KeyboardEvent): void => {
+    [MY_ACCOUNT_ID]: (event) => {
         if (event.key === 'Escape') {
             toggleMyAccountMenu();
             returnFocusToButton(MY_ACCOUNT_ID);
@@ -363,13 +357,13 @@ const menuKeyHandlers = {
     },
 };
 
-const enhanceCheckbox = (checkbox: HTMLElement): void => {
-    fastdom.read(() => {
+const enhanceCheckbox = (checkbox) => {
+    fastdom.measure(() => {
         const button = document.createElement('button');
         const checkboxId = checkbox.id;
         const checkboxControls = checkbox.getAttribute('aria-controls');
         const dataLinkName = checkbox.getAttribute('data-link-name');
-        const label: ?HTMLElement = document.querySelector(
+        const label = document.querySelector(
             `label[for='${checkboxId}']`
         );
 
@@ -424,20 +418,20 @@ const enhanceCheckbox = (checkbox: HTMLElement): void => {
             enhanced[button.id] = true;
         };
 
-        fastdom.write(enhance);
+        fastdom.mutate(enhance);
     });
 };
 
-const enhanceMenuToggles = (): void => {
-    const checkboxs: Array<HTMLInputElement> = (Array.from(
+const enhanceMenuToggles = () => {
+    const checkboxs = (Array.from(
         document.getElementsByClassName('js-enhance-checkbox')
-    ): Array<any>);
+    ));
 
     checkboxs.forEach(checkbox => {
         if (!enhanced[checkbox.id] && !checkbox.checked) {
             enhanceCheckbox(checkbox);
         } else {
-            const closeMenuHandler = (): void => {
+            const closeMenuHandler = () => {
                 enhanceCheckbox(checkbox);
                 checkbox.removeEventListener('click', closeMenuHandler);
             };
@@ -447,11 +441,11 @@ const enhanceMenuToggles = (): void => {
     });
 };
 
-const getRecentSearch = (): ?string => local.get(SEARCH_STORAGE_KEY);
+const getRecentSearch = () => storage.local.get(SEARCH_STORAGE_KEY);
 
-const clearRecentSearch = (): void => local.remove(SEARCH_STORAGE_KEY);
+const clearRecentSearch = () => storage.local.remove(SEARCH_STORAGE_KEY);
 
-const trackRecentSearch = (): void => {
+const trackRecentSearch = () => {
     const recent = getRecentSearch();
 
     if (recent) {
@@ -464,11 +458,11 @@ const trackRecentSearch = (): void => {
     }
 };
 
-const saveSearchTerm = (term: string) => local.set(SEARCH_STORAGE_KEY, term);
+const saveSearchTerm = (term) => storage.local.set(SEARCH_STORAGE_KEY, term);
 
-const showMoreButton = (): void => {
+const showMoreButton = () => {
     fastdom
-        .read(() => {
+        .measure(() => {
             const moreButton = document.querySelector('.js-show-more-button');
             const subnav = document.querySelector('.js-expand-subnav');
             const subnavList = document.querySelector(
@@ -486,17 +480,13 @@ const showMoreButton = (): void => {
             }
         })
         .then(
-            (els: {
-                moreButton: ?HTMLElement,
-                lastChildRect: ClientRect,
-                subnavRect: ClientRect,
-            }) => {
+            (els) => {
                 if (els) {
                     const { moreButton, lastChildRect, subnavRect } = els;
 
                     // +1 to compensate for the border top on the subnav
                     if (subnavRect.top + 1 === lastChildRect.top) {
-                        fastdom.write(() => {
+                        fastdom.mutate(() => {
                             if (moreButton) {
                                 moreButton.classList.add('is-hidden');
                             }
@@ -507,12 +497,12 @@ const showMoreButton = (): void => {
         );
 };
 
-const toggleSubnavSections = (moreButton: HTMLElement): void => {
+const toggleSubnavSections = (moreButton) => {
     fastdom
-        .read(() => document.querySelector('.js-expand-subnav'))
+        .measure(() => document.querySelector('.js-expand-subnav'))
         .then(subnav => {
             if (subnav) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     const isOpen = subnav.classList.contains(
                         'subnav--expanded'
                     );
@@ -525,7 +515,7 @@ const toggleSubnavSections = (moreButton: HTMLElement): void => {
         });
 };
 
-const addEventHandler = (): void => {
+const addEventHandler = () => {
     const menu = getMenu();
     const search = menu && menu.querySelector('.js-menu-search');
     const toggleWithMoreButton = document.querySelector(
@@ -533,12 +523,12 @@ const addEventHandler = (): void => {
     );
 
     if (menu) {
-        menu.addEventListener('click', (event: Event) => {
+        menu.addEventListener('click', (event) => {
             const selector = '.js-navigation-toggle';
-            const target: HTMLElement = (event.target: any);
+            const target = (event.target);
 
             if (target.matches(selector)) {
-                const parent: HTMLElement = (target.parentNode: any);
+                const parent = (target.parentNode);
 
                 if (parent) {
                     event.preventDefault();
@@ -550,8 +540,8 @@ const addEventHandler = (): void => {
     }
 
     if (search) {
-        search.addEventListener('submit', (event: Event) => {
-            const target = (event.target: any).querySelector(
+        search.addEventListener('submit', (event) => {
+            const target = (event.target).querySelector(
                 '.js-menu-search-term'
             );
 
@@ -569,40 +559,12 @@ const addEventHandler = (): void => {
     }
 };
 
-const bindCredentialsApiSignIn = (): void => {
-    fastdom
-        .read(() => ({
-            signInLinks: Array.from(
-                document.querySelectorAll('.js-navigation-sign-in')
-            ),
-        }))
-        .then(({ signInLinks }) => {
-            signInLinks.forEach(signInLink => {
-                signInLink.addEventListener(
-                    'click',
-                    e => {
-                        e.preventDefault();
-                        signInWithSavedCredentials().then(wasSignedIn => {
-                            if (!wasSignedIn) {
-                                window.location =
-                                    signInLink.getAttribute('href') ||
-                                    '/signin';
-                            }
-                            return showMyAccountIfNecessary();
-                        });
-                    },
-                    false
-                );
-            });
-        });
-};
-
-export const newHeaderInit = (): void => {
+export const newHeaderInit = () => {
     enhanceMenuToggles();
     showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
-    bindCredentialsApiSignIn();
+    showGiftingCTA();
     closeAllMenuSections();
     trackRecentSearch();
 };

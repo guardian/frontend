@@ -13,20 +13,21 @@ trait Related extends ConciergeRepository {
   def mostReadAgent: MostReadAgent
 
   def related(edition: Edition, path: String, excludeTags: Seq[String] = Nil): Future[RelatedContent] = {
-
     if (RelatedContentSwitch.isSwitchedOff) {
       Future.successful(RelatedContent(Nil))
     } else {
 
       // doesn't like "tag" being an empty string - need to explicitly pass a None
       val tags: Option[String] = excludeTags.toList match {
-        case Nil => None
+        case Nil       => None
         case excluding => Some(excluding.map(t => s"-$t").mkString(","))
       }
 
-      val response = contentApiClient.getResponse(contentApiClient.item(path, edition)
-        .tag(tags)
-        .showRelated(true)
+      val response = contentApiClient.getResponse(
+        contentApiClient
+          .item(path, edition)
+          .tag(tags)
+          .showRelated(true),
       )
 
       val trails = response.map { response =>
@@ -45,17 +46,19 @@ trait Related extends ConciergeRepository {
     val tags = (tag +: excludeTags.map(t => s"-$t")).mkString(",")
 
     val response = contentApiClient.getResponse(
-      contentApiClient.search(edition)
+      contentApiClient
+        .search(edition)
         .tag(tags)
-        .pageSize(50)
+        .pageSize(50),
     )
 
     val trails: Future[RelatedContent] = response.map { response =>
       val items = response.results.map { item =>
         RelatedContentItem(item)
       }
-      RelatedContent(items.sortBy(content =>
-        - mostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10))
+      RelatedContent(
+        items.sortBy(content => -mostReadAgent.getViewCount(content.content.metadata.id).getOrElse(0)).take(10),
+      )
     }
 
     trails

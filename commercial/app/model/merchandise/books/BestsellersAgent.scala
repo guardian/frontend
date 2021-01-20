@@ -23,7 +23,9 @@ class BestsellersAgent(bookFinder: BookFinder) extends MerchandiseAgent[Book] {
     bestsellers.filter(_.jacketUrl.nonEmpty).sortBy(_.position).take(10)
   }
 
-  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit executionContext: ExecutionContext): Future[ParsedFeed[Book]] = {
+  def refresh(feedMetaData: FeedMetaData, feedContent: => Option[String])(implicit
+      executionContext: ExecutionContext,
+  ): Future[ParsedFeed[Book]] = {
     val parsedFeed = MagentoBestsellersFeed.loadBestsellers(feedMetaData, feedContent)
 
     for (feed <- parsedFeed) {

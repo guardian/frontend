@@ -1,12 +1,12 @@
 @(theMatch: cricketModel.Match, matchUrl: String)(implicit request: RequestHeader)
 @import common.LinkTo
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 <div class="sport-summary sport-summary--cricket" itemscope itemtype="http://schema.org/SportsEvent">
 
     <h2 class="u-h">
         <time class="u-h" datetime="@theMatch.gameDate.toString("yyyy-MM-dd'T'HH:mm:ss'Z'")" data-timestamp="@theMatch.gameDate.getMillis">
-        @Format(theMatch.gameDate, "d MMM y")
+        @GuDateFormatLegacy(theMatch.gameDate, "d MMM y")
         </time>
         @theMatch.competitionName, @theMatch.venueName
     </h2>

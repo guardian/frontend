@@ -14,9 +14,13 @@ object PhoneNumbers {
     */
   val countryCodes = {
     val m = ru.runtimeMirror(phoneNumberUtil.getClass.getClassLoader)
-    val countryCallingCodeToRegionCodeMapSymb = ru.typeOf[PhoneNumberUtil].decl(ru.TermName("countryCallingCodeToRegionCodeMap")).asTerm
+    val countryCallingCodeToRegionCodeMapSymb =
+      ru.typeOf[PhoneNumberUtil].decl(ru.TermName("countryCallingCodeToRegionCodeMap")).asTerm
     val im = m.reflect(phoneNumberUtil)
-    val countryCallingCodeToRegionCodeMap = im.reflectField(countryCallingCodeToRegionCodeMapSymb).get.asInstanceOf[java.util.HashMap[java.lang.Integer,java.util.List[java.lang.String]]]
+    val countryCallingCodeToRegionCodeMap = im
+      .reflectField(countryCallingCodeToRegionCodeMapSymb)
+      .get
+      .asInstanceOf[java.util.HashMap[java.lang.Integer, java.util.List[java.lang.String]]]
     countryCallingCodeToRegionCodeMap.keySet().asScala.toList.sorted
   }
 

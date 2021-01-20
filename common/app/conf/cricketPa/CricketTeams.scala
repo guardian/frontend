@@ -22,7 +22,7 @@ object CricketTeams {
     CricketTeam("sport/new-zealand-cricket-team", "110c70b5-c05f-3be7-6670-baecd50a8c6b"),
     CricketTeam("sport/sri-lanka-cricket-team", "0cbc23be-e7cc-9574-611a-06561460eb8b"),
     CricketTeam("sport/afghanistan-cricket-team", "8fa4bd05-1313-eaa4-3a2d-a5ba198c17da"),
-    CricketTeam("sport/bangladesh-cricket-team", "3d5e10fc-5a3f-1f06-6f1b-f86f4a7e8c10")
+    CricketTeam("sport/bangladesh-cricket-team", "3d5e10fc-5a3f-1f06-6f1b-f86f4a7e8c10"),
   )
 
   val teamTagIds: Seq[String] = teams.map(_.tagId)

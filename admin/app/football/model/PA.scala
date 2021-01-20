@@ -3,7 +3,6 @@ package football.model
 import pa.{Team, Season}
 import implicits.Collections
 
-
 object PA extends Collections {
 
   val competitionNames = Map[String, String](
@@ -28,21 +27,42 @@ object PA extends Collections {
     ("700", "World Cup"),
     ("721", "International friendlies"),
     ("870", "Women's World Cup"),
-    ("961", "Women's Super League")
+    ("961", "Women's Super League"),
   )
   def competitionName(season: Season): String = competitionNames.getOrElse(season.id, season.name)
 
   val approvedCompetitions = List(
-    "100", "500", "510", "300", "301", "101", "102",
-    "103", "400", "120", "121", "122", "123", "320",
-    "321", "700", "721", "750", "650", "620", "625",
-    "635", "870", "961"
+    "100",
+    "500",
+    "510",
+    "300",
+    "301",
+    "101",
+    "102",
+    "103",
+    "400",
+    "120",
+    "121",
+    "122",
+    "123",
+    "320",
+    "321",
+    "700",
+    "721",
+    "750",
+    "650",
+    "620",
+    "625",
+    "635",
+    "870",
+    "961",
   )
 
   def filterCompetitions(competitions: List[Season]): List[Season] = {
     competitions
       .filter(comp => approvedCompetitions.contains(comp.competitionId))
-      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis).reverse
+      .sortBy(_.startDate.toDateTimeAtStartOfDay.getMillis)
+      .reverse
       .distinctBy(_.competitionId)
       .sortBy(_.competitionId)
   }
@@ -89,6 +109,7 @@ object PA extends Collections {
       Team("26364", "Atalanta"),
       Team("26313", "Athletic Bilbao"),
       Team("26305", "Atletico Madrid"),
+      Team("63838", "Atlético Madrid Women"),
       Team("48179", "Atromitos"),
       Team("13022", "Auchinleck Talbot"),
       Team("32656", "Augsburg"),
@@ -100,6 +121,7 @@ object PA extends Collections {
       Team("26453", "BK Hacken"),
       Team("40423", "Bala Town"),
       Team("26300", "Barcelona"),
+      Team("62804", "Barcelona Women"),
       Team("134", "Barnet"),
       Team("21", "Barnsley"),
       Team("6889", "Basingstoke"),
@@ -108,6 +130,7 @@ object PA extends Collections {
       Team("7808", "Bath City"),
       Team("26256", "Bayer Leverkusen"),
       Team("26247", "Bayern Munich"),
+      Team("64498", "Bayern Munich Women"),
       Team("6262", "Belarus"),
       Team("997", "Belgium"),
       Team("26274", "Benfica"),
@@ -326,6 +349,7 @@ object PA extends Collections {
       Team("6740", "Gibraltar"),
       Team("77", "Gillingham"),
       Team("12997", "Girvan"),
+      Team("46073", "Glasgow City FC"),
       Team("7137", "Glasgow Univ"),
       Team("308", "Glentoran"),
       Team("35475", "Gloucester"),
@@ -438,6 +462,7 @@ object PA extends Collections {
       Team("10", "Luton"),
       Team("7365", "Luxembourg"),
       Team("26345", "Lyon"),
+      Team("62787", "Lyon Women"),
       Team("41220", "MSK Zilina"),
       Team("8420", "Maccabi Haifa"),
       Team("43368", "Maccabi Tel-Aviv"),
@@ -511,6 +536,7 @@ object PA extends Collections {
       Team("37701", "Panama"),
       Team("51508", "Pandurii Targu-Jiu"),
       Team("8109", "Paraguay"),
+      Team("60908", "Paris Saint-Germain Women"),
       Team("26358", "Parma"),
       Team("113", "Partick"),
       Team("6935", "Partizan Belgrade"),
@@ -697,6 +723,7 @@ object PA extends Collections {
       Team("27375", "Wigtown & Bladnoch"),
       Team("702", "Woking"),
       Team("26257", "Wolfsburg"),
+      Team("62786", "Wolfsburg Women"),
       Team("44", "Wolverhampton"),
       Team("6907", "Worcester"),
       Team("7085", "Workington"),
@@ -708,7 +735,7 @@ object PA extends Collections {
       Team("33035", "Zeljeznicar Sarajevo"),
       Team("38276", "Zenit St Petersburg"),
       Team("38228", "Zrinjski Mostar"),
-      Team("32471", "Zulte-Waregem")
+      Team("32471", "Zulte-Waregem"),
     )
   }
 }

@@ -1,4 +1,3 @@
-// @flow
 /* eslint-disable no-new */
 import config from 'lib/config';
 import qwery from 'qwery';

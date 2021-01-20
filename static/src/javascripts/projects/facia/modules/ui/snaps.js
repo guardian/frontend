@@ -1,5 +1,3 @@
-// @flow
-
 import bean from 'bean';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
@@ -34,15 +32,11 @@ const bindIframeMsgReceiverOnce = once(() => {
     });
 });
 
-const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
+const setSnapPoint = (el, isResize) => {
     let width;
     const $el = bonzo(el);
     const prefix = 'facia-snap-point--';
-    const breakpoints: Array<{
-        width: number,
-        name: string,
-        action?: string | boolean,
-    }> = [
+    const breakpoints = [
         {
             width: 0,
             name: 'tiny',
@@ -69,11 +63,11 @@ const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
         },
     ];
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         width = el.offsetWidth;
     });
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         breakpoints
             .map((breakpoint, i, arr) => {
                 const isAdd =
@@ -97,14 +91,14 @@ const setSnapPoint = (el: HTMLElement, isResize: boolean): void => {
     });
 };
 
-const addCss = (el: HTMLElement, isResize: boolean = false): void => {
+const addCss = (el, isResize = false) => {
     setSnapPoint(el, isResize);
     if ($(el).hasClass('facia-snap--football')) {
         resizeForFootballSnaps(el);
     }
 };
 
-const injectIframe = (el: HTMLElement): void => {
+const injectIframe = (el) => {
     const spec = bonzo(el).offset();
     const minIframeHeight = Math.ceil((spec.width || 0) / 2);
     const maxIframeHeight = 400;
@@ -124,14 +118,14 @@ const injectIframe = (el: HTMLElement): void => {
     snapIframes.push(iframe);
     bindIframeMsgReceiverOnce();
 
-    fastdom.write(() => {
+    fastdom.mutate(() => {
         bonzo(el)
             .empty()
             .append(containerEl);
     });
 };
 
-const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
+const fetchFragment = (el, asJson = false) => {
     const url = el.getAttribute('data-snap-uri');
 
     if (!url) {
@@ -151,7 +145,7 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
         })
         .then(resp => {
             $.create(resp).each(html => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     bonzo(el).html(html);
                 });
             });
@@ -164,9 +158,9 @@ const fetchFragment = (el: HTMLElement, asJson: boolean = false): void => {
         });
 };
 
-const initStandardSnap = (el: HTMLElement): void => {
+const initStandardSnap = (el) => {
     addProximityLoader(el, 1500, () => {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             bonzo(el).addClass('facia-snap-embed');
         });
         addCss(el);
@@ -196,7 +190,7 @@ const initStandardSnap = (el: HTMLElement): void => {
     });
 };
 
-const initInlinedSnap = (el: HTMLElement): void => {
+const initInlinedSnap = (el) => {
     addCss(el);
     if (!isIOS) {
         mediator.on('window:throttledResize', () => {
@@ -205,7 +199,7 @@ const initInlinedSnap = (el: HTMLElement): void => {
     }
 };
 
-const init = (): void => {
+const init = () => {
     // First, init any existing inlined embeds already on the page.
     const inlinedSnaps = Array.from(
         document.querySelectorAll('.facia-snap-embed')

@@ -2,7 +2,7 @@ package implicits
 
 import language.higherKinds
 import scala.collection.generic.CanBuildFrom
-import collection.mutable.{ HashSet => MutableHashSet }
+import collection.mutable.{HashSet => MutableHashSet}
 
 trait Collections {
 

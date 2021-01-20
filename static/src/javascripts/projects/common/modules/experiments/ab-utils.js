@@ -1,21 +1,19 @@
-// @flow
-
 import config from 'lib/config';
 import toPairs from 'lodash/toPairs';
 import fromPairs from 'lodash/fromPairs';
 import { NOT_IN_TEST, notInTestVariant } from './ab-constants';
 
-export const testSwitchExists = (testId: string): boolean =>
+export const testSwitchExists = (testId) =>
     config.get(`switches.ab${testId}`, 'NOT_FOUND') !== 'NOT_FOUND';
 
-export const isTestSwitchedOn = (testId: string): boolean =>
+export const isTestSwitchedOn = (testId) =>
     config.get(`switches.ab${testId}`, false);
 
 export const runnableTestsToParticipations = (
-    runnableTests: $ReadOnlyArray<Runnable<ABTest>>
-): Participations =>
+    runnableTests
+) =>
     runnableTests.reduce(
-        (participations: Participations, { id: testId, variantToRun }) => ({
+        (participations, { id: testId, variantToRun }) => ({
             ...participations,
             ...{ [testId]: { variant: variantToRun.id } },
         }),
@@ -23,9 +21,9 @@ export const runnableTestsToParticipations = (
     );
 
 export const testExclusionsWhoseSwitchExists = (
-    participations: Participations
-): Participations => {
-    const pairs: Array<[string, { variant: string }]> = toPairs(
+    participations
+) => {
+    const pairs = toPairs(
         participations
     ).filter(
         ([testId, { variant: variantId }]) =>
@@ -37,9 +35,9 @@ export const testExclusionsWhoseSwitchExists = (
 // If the given test has a 'notintest' participation, return the notintest variant.
 // Or else, if the given test has a normal variant participation, return that variant.
 export const testAndParticipationsToVariant = (
-    test: ABTest,
-    participations: Participations
-): ?Variant => {
+    test,
+    participations
+) => {
     const participation = participations[test.id];
     if (participation) {
         // We need to return something concrete here to ensure

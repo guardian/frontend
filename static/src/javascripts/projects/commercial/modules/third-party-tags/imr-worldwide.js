@@ -1,8 +1,7 @@
-// @flow
 import config from 'lib/config';
+import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 // NOLCMB is a global function defined by the IMR worldwide library
-declare var NOLCMB: Object;
 
 const guMetadata = {
     books: 'P5033A084-E9BF-453A-91D3-C558751D9A85',
@@ -75,7 +74,7 @@ const onLoad = () => {
         apn: 'theguardian',
     };
 
-    const nSdkInstance = NOLCMB.getInstance(nolggGlobalParams.apid);
+    const nSdkInstance = window.NOLCMB.getInstance(nolggGlobalParams.apid);
     nSdkInstance.ggInitialize(nolggGlobalParams);
 
     const dcrStaticMetadata = {
@@ -87,8 +86,8 @@ const onLoad = () => {
     nSdkInstance.ggPM('staticstart', dcrStaticMetadata);
 };
 
-export const imrWorldwide: ThirdPartyTag = {
-    shouldRun: config.get('switches.imrWorldwide'),
+export const imrWorldwide = {
+    shouldRun: config.get('switches.imrWorldwide') && isInAuOrNz(),
     url: '//secure-dcr.imrworldwide.com/novms/js/2/ggcmb510.js',
     onLoad,
 };

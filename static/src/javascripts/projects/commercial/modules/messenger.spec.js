@@ -1,16 +1,14 @@
-// @flow
 import { noop } from 'lib/noop';
 import {
     register as register_,
     unregister as unregister_,
     _ as testExports,
 } from 'commercial/modules/messenger';
-import dfpOrigin from 'commercial/modules/messenger/dfp-origin';
 import { postMessage } from 'commercial/modules/messenger/post-message';
 
-const onMessage: any = testExports.onMessage;
-const register: any = register_;
-const unregister: any = unregister_;
+const onMessage = testExports.onMessage;
+const register = register_;
+const unregister = unregister_;
 
 const addEventListenerSpy = jest
     .spyOn(global, 'addEventListener')
@@ -19,6 +17,7 @@ const removeEventListenerSpy = jest
     .spyOn(global, 'removeEventListener')
     .mockImplementation(() => {});
 const jsonParseSpy = jest.spyOn(JSON, 'parse');
+const mockOrigin = "someorigin.com";
 
 jest.mock('commercial/modules/messenger/post-message', () => ({
     postMessage: jest.fn(),
@@ -62,39 +61,13 @@ describe('Cross-frame messenger', () => {
         expect(removeEventListenerSpy).toHaveBeenCalled();
     });
 
-    it('should only respond when origin is whitelisted', done => {
-        const payload = {
-            type: 'abc',
-            value: '',
-            id: 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee',
-        };
-        jsonParseSpy.mockImplementationOnce(() => payload);
-
-        register('abc', noop);
-
-        Promise.resolve()
-            .then(() => onMessage({ origin: 'http://google.com', source: '' }))
-            .then(() => {
-                expect(postMessage).not.toHaveBeenCalled();
-                return onMessage({ origin: dfpOrigin, source: '' });
-            })
-            .then(() => {
-                expect(postMessage).toHaveBeenCalled();
-            })
-            .then(done)
-            .catch(done.fail)
-            .then(() => {
-                unregister('abc', noop);
-            });
-    });
-
     it('should not respond when sending malformed JSON', done => {
         jsonParseSpy.mockImplementation(() => {
             throw new Error();
         });
 
         Promise.resolve()
-            .then(() => onMessage({ origin: dfpOrigin, data: '{', source: '' }))
+            .then(() => onMessage({ origin: mockOrigin, data: '{', source: '' }))
             .then(() => {
                 expect(postMessage).not.toHaveBeenCalled();
             })
@@ -112,7 +85,7 @@ describe('Cross-frame messenger', () => {
         Promise.all(
             payloads.map(data => {
                 jsonParseSpy.mockReturnValueOnce(data);
-                return onMessage({ origin: dfpOrigin, data: '', source: '' });
+                return onMessage({ origin: mockOrigin, data: '', source: '' });
             })
         ).then(() => {
             expect(postMessage).not.toHaveBeenCalled();
@@ -133,7 +106,7 @@ describe('Cross-frame messenger', () => {
         Promise.resolve()
             .then(() =>
                 onMessage({
-                    origin: dfpOrigin,
+                    origin: mockOrigin,
                     data: JSON.stringify(payload),
                     source: 'source',
                 })
@@ -149,7 +122,6 @@ describe('Cross-frame messenger', () => {
                         result: null,
                     },
                     'source',
-                    dfpOrigin
                 );
             })
             .then(done)
@@ -169,7 +141,7 @@ describe('Cross-frame messenger', () => {
         register('this', routines.thrower);
         Promise.resolve()
             .then(() =>
-                onMessage({ origin: dfpOrigin, data: '', source: 'source' })
+                onMessage({ origin: mockOrigin, data: '', source: 'source' })
             )
             .then(() => {
                 expect(postMessage).toHaveBeenCalledWith(
@@ -183,7 +155,6 @@ describe('Cross-frame messenger', () => {
                         result: null,
                     },
                     'source',
-                    dfpOrigin
                 );
             })
             .then(done)
@@ -204,7 +175,7 @@ describe('Cross-frame messenger', () => {
         Promise.resolve()
             .then(() =>
                 onMessage({
-                    origin: dfpOrigin,
+                    origin: mockOrigin,
                     data: '',
                     source: 'sauce',
                 })
@@ -217,7 +188,6 @@ describe('Cross-frame messenger', () => {
                         result: 'hello johnny!',
                     },
                     'sauce',
-                    dfpOrigin
                 );
             })
             .then(done)
@@ -239,7 +209,7 @@ describe('Cross-frame messenger', () => {
 
         Promise.resolve()
             .then(() =>
-                onMessage({ origin: dfpOrigin, data: '', source: 'sorcery' })
+                onMessage({ origin: mockOrigin, data: '', source: 'sorcery' })
             )
             .then(() => {
                 expect(postMessage).toHaveBeenCalledWith(
@@ -249,7 +219,6 @@ describe('Cross-frame messenger', () => {
                         result: 4,
                     },
                     'sorcery',
-                    dfpOrigin
                 );
             })
             .then(done)
@@ -267,7 +236,7 @@ describe('Cross-frame messenger', () => {
         };
         jsonParseSpy.mockImplementationOnce(() => payload);
         register('resize', routines.rubicon);
-        onMessage({ origin: dfpOrigin, data: '', source: 'saucy' })
+        onMessage({ origin: mockOrigin, data: '', source: 'saucy' })
             .then(() => {
                 expect(postMessage).toHaveBeenCalledWith(
                     {
@@ -276,7 +245,6 @@ describe('Cross-frame messenger', () => {
                         result: 'rubicon',
                     },
                     'saucy',
-                    dfpOrigin
                 );
             })
             .then(done)

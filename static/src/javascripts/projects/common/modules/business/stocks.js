@@ -1,12 +1,11 @@
-// @flow
 import $ from 'lib/$';
 import config from 'lib/config';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import template from 'lodash/template';
 import { inlineSvg } from 'common/views/svgs';
-import stockValueTemplate from 'raw-loader!common/views/business/stock-value.html';
-import stocksTemplate from 'raw-loader!common/views/business/stocks.html';
+import stockValueTemplate from 'common/views/business/stock-value.html';
+import stocksTemplate from 'common/views/business/stocks.html';
 
 const isBusinessFront = () =>
     ['uk/business', 'us/business', 'au/business'].indexOf(
@@ -62,7 +61,14 @@ const renderData = data => {
 export default () => {
     const $container = $('.js-container--first .js-container__header');
 
-    if (isBusinessFront() && $container) {
+    // Pascal, 23rd March 2020
+    // Marker: 7dde429f00b1
+    // This code is being decommissioned because the end point we are currently using to retrieve the
+    // live data has ceased to be maintained and the business has decided not to move forward with trying
+    // to replace it. I keep the entire frontend and backend logic in place, and just prevent the call
+    // for data retrieval to be made. If one day we get a new data end point, then it will be easy to
+    // display the widget again (this might include updating the code to meet new data schemas).
+    if (false && isBusinessFront() && $container) {
         getStocksData().then(data => {
             if (data && data.stocks && data.stocks.length > 0) {
                 $container.append(renderData(data));

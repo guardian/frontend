@@ -9,9 +9,9 @@ GET            /reader-revenue                                                  
 GET            /reader-revenue/contributions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderContributionsBannerAdmin()
 GET            /reader-revenue/subscriptions-banner                                                                              controllers.admin.ReaderRevenueAdminController.renderSubscriptionsBannerAdmin()
 POST           /reader-revenue/redeploy-contributions-banner/$region<united-kingdom|united-states|australia|rest-of-world>       controllers.admin.ReaderRevenueAdminController.redeployContributionsBanner(region)
-POST           /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world>       controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
+POST           /reader-revenue/redeploy-subscriptions-banner/$region<united-kingdom|united-states|australia|rest-of-world|european-union>       controllers.admin.ReaderRevenueAdminController.redeploySubscriptionsBanner(region)
 GET            /reader-revenue/contributions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>     controllers.ReaderRevenueAppController.contributionsBannerDeployLog(region: String)
-GET            /reader-revenue/subscriptions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world>     controllers.ReaderRevenueAppController.subscriptionsBannerDeployLog(region: String)
+GET            /reader-revenue/subscriptions-banner-deploy-log/$region<united-kingdom|united-states|australia|rest-of-world|european-union>     controllers.ReaderRevenueAppController.subscriptionsBannerDeployLog(region: String)
 
 GET            /email-newsletters                                                                                                controllers.SignupPageController.renderNewslettersPage()
 
@@ -39,12 +39,18 @@ GET            /crosswords/accessible/$crosswordType<cryptic|quick|quiptic|prize
 GET            /crosswords/search                                                                                                controllers.CrosswordSearchController.search()
 GET            /crosswords/lookup                                                                                                controllers.CrosswordSearchController.lookup()
 
-# Email signup paths
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/$listId<[0-9]+>                                  controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
-GET            /email/form/$emailType<footer|plain|plaindark|plaintone>/:listName                                        controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
-GET            /email/$result<success|invalid|error>                                                                             controllers.EmailSignupController.subscriptionResult(result: String)
-POST           /email                                                                                                            controllers.EmailSignupController.submit()
-OPTIONS        /email                                                                                                            controllers.EmailSignupController.options()
+# Email paths
+GET        /email/form/$emailType<plain|plaindark|plaintone>/$listId<[0-9]+>         controllers.EmailSignupController.renderForm(emailType: String, listId: Int)
+GET        /email/form/$emailType<plain|plaindark|plaintone>/:listName               controllers.EmailSignupController.renderFormFromName(emailType: String, listName: String)
+GET        /email/form/footer/:listName                                              controllers.EmailSignupController.renderFooterForm(listName: String)
+## Submission results (Only accessed server side)
+GET        /email/$result<success|invalid|error>/footer                         controllers.EmailSignupController.subscriptionResultFooter(result: String)
+GET        /email/success/:listName                                             controllers.EmailSignupController.subscriptionSuccessResult(listName: String)
+GET        /email/$result<invalid|error>                                        controllers.EmailSignupController.subscriptionNonsuccessResult(result: String)
+## Submission endpoints
+POST       /email/footer                                                        controllers.EmailSignupController.submitFooter()
+POST       /email                                                               controllers.EmailSignupController.submit()
+OPTIONS    /email                                                               controllers.EmailSignupController.options()
 
 # Business data
 GET            /business-data/stocks.json                                                                                        controllers.StocksController.stocks
@@ -117,10 +123,6 @@ GET            /embed/card/*path.json                                           
 GET            /embed/card/*path                                                                                                 controllers.RichLinkController.renderHtml(path)
 GET            /embed/contentcard/*path.json                                                                                     controllers.RecommendedContentCardController.render(path)
 GET            /embed/contentcard/*path                                                                                          controllers.RecommendedContentCardController.renderHtml(path)
-
-# User tech feedback
-POST           /info/tech-feedback/send                                                                                          controllers.TechFeedbackController.submitFeedback(path = "")
-GET            /info/tech-feedback                                                                                               controllers.TechFeedbackController.techFeedback(path = "")
 
 # Sport
 GET            /sport/cricket/match/:matchDate/:teamId.json                                                                      cricket.controllers.CricketMatchController.renderMatchIdJson(matchDate, teamId)
@@ -201,8 +203,6 @@ GET            /config                                                          
 GET            /config/parameter/*key                                                                                            controllers.AppConfigController.findParameter(key: String)
 GET            /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.renderSwitchboard()
 POST           /dev/switchboard                                                                                                  controllers.admin.SwitchboardController.save()
-GET            /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.renderSwitchboard()
-POST           /dev/switchboard-plista                                                                                           controllers.admin.SwitchboardPlistaController.save()
 GET            /metrics/loadbalancers                                                                                            controllers.admin.MetricsController.renderLoadBalancers()
 GET            /metrics/googlebot/404                                                                                            controllers.admin.MetricsController.renderGooglebot404s()
 GET            /metrics/fastly                                                                                                   controllers.admin.FastlyController.renderFastly()
@@ -263,7 +263,6 @@ GET            /admin/football/api/squad/:teamId                                
 # Commercial
 GET            /commercial/travel/api/offers.json                                                                                commercial.controllers.TravelOffersController.getTravel
 GET            /commercial/jobs/api/jobs.json                                                                                    commercial.controllers.JobsController.getJobs
-GET            /commercial/api/soulmates.json                                                                                    commercial.controllers.SoulmatesController.getSoulmates
 GET            /commercial/books/api/book.json                                                                                   commercial.controllers.BookOffersController.getBook
 GET            /commercial/books/api/books.json                                                                                  commercial.controllers.BookOffersController.getBooks
 GET            /commercial/api/capi-single.json                                                                                  commercial.controllers.ContentApiOffersController.nativeJson
@@ -277,12 +276,12 @@ GET            /advertiser-content/:campaignName/:pageName/autoplay.json        
 GET            /commercial/anx/anxresize.js                                                                                      commercial.controllers.PiggybackPixelController.resize
 GET            /commercial/cmp/vendorlist.json                                            commercial.controllers.CmpDataController.renderVendorlist()
 GET            /commercial/cmp/shortvendorlist.json                                      commercial.controllers.CmpDataController.renderShortVendorlist()
+GET            /commercial/amp-iframe.html                                                                                       commercial.controllers.AmpIframeHtmlController.renderAmpIframeHtml()
 
 GET            /ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderTextFile()
 GET            /app-ads.txt                                                                                                          commercial.controllers.AdsDotTextViewController.renderAppTextFile()
 GET            /commercial/prebid/revenue                                                                                        controllers.admin.commercial.TeamKPIController.renderPrebidDashboard()
 POST           /commercial/api/hb                                                                                                commercial.controllers.PrebidAnalyticsController.insert()
-POST           /commercial/api/pv                                                                                                commercial.controllers.PageViewAnalyticsController.insert()
 GET            /commercial/ias-passback/:size                                                                                    commercial.controllers.PassbackController.renderIasPassback(size)
 
 # Commercial Admin
@@ -370,6 +369,11 @@ GET            /$shortCode<p/[\w]+>                                             
 GET            /$shortCode<p/[\w]+>/:campaignCode                                                                                controllers.ShortUrlsController.fetchCampaignAndRedirectShortCode(shortCode, campaignCode)
 POST           /atom/quiz/:id/*path                                                                                              controllers.QuizController.submit(id,path)
 GET            /atom/youtube/:id.json                                                                                            controllers.YoutubeController.getAtomId(id: String)
+
+# Nx1Config
+# mark: 2QJfZo - keep these in sync with other instances https://git.io/JkRox
+GET            /switches.json                                                       controllers.Nx1ConfigController.switches
+GET            /tests.json                                                          controllers.Nx1ConfigController.tests
 
 # Newspaper pages
 GET            /theguardian                                                                                                      controllers.NewspaperController.latestGuardianNewspaper()
@@ -462,4 +466,3 @@ GET     /*path/email/headline.txt                                               
 GET     /*path/email.emailjson                                                                                                   controllers.ArticleController.renderEmail(path)
 GET     /*path/email.emailtxt                                                                                                    controllers.ArticleController.renderEmail(path)
 GET     /*path                                                                                                                   controllers.ArticleController.renderArticle(path)
-

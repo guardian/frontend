@@ -1,6 +1,6 @@
 @(latestUpdate: org.joda.time.DateTime)(implicit requestHeader: RequestHeader)
 
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 <div class="js-container--insert-updates">
     <span class="fc-container__updated">
@@ -9,7 +9,7 @@
               datetime="@latestUpdate.toString("yyyy-MM-dd'T'HH:mm:ssZ")"
               data-relativeformat="long"
               data-timestamp="@latestUpdate.getMillis">
-            <span class="fc-timestamp__text">@Format(latestUpdate, "E, h:ma")</span>
+            <span class="fc-timestamp__text">@GuDateFormatLegacy(latestUpdate, "E, h:ma")</span>
         </time>
     </span>
 </div>

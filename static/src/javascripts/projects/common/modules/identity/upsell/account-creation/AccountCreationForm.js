@@ -1,33 +1,19 @@
-// @flow
 import React, { Component } from 'preact-compat';
 import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
 
-type AccountCreationFormProps = {
-    csrfToken: string,
-    accountToken: string,
-    email: string,
-    onAccountCreated: () => {},
-};
 
-class AccountCreationForm extends Component<
-    AccountCreationFormProps,
-    {
-        password?: string,
-        isLoading?: boolean,
-        errors: string[],
-    }
-> {
-    constructor(props: AccountCreationFormProps) {
+class AccountCreationForm extends Component {
+    constructor(props) {
         super(props);
         this.setState({
             errors: [],
         });
     }
 
-    onSubmit = (ev: Event) => {
+    onSubmit = (ev) => {
         ev.preventDefault();
         this.setState({
             isLoading: true,
@@ -72,7 +58,7 @@ class AccountCreationForm extends Component<
         });
     };
 
-    handlePasswordChange = (ev: Event) => {
+    handlePasswordChange = (ev) => {
         if (!(ev.target instanceof HTMLInputElement)) {
             return;
         }
@@ -152,5 +138,4 @@ class AccountCreationForm extends Component<
     }
 }
 
-export type { AccountCreationFormProps };
 export { AccountCreationForm };

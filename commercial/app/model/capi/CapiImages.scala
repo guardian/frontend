@@ -26,20 +26,24 @@ object CapiImages {
       case _ => Standard
     }
 
-    val breakpointWidths = FaciaWidths.mediaFromItemClasses(ItemClasses(
-      mobile = Standard,
-      tablet = imageType,
-      desktop = Some(imageType)
-    )).breakpoints
+    val breakpointWidths = FaciaWidths
+      .mediaFromItemClasses(
+        ItemClasses(
+          mobile = Standard,
+          tablet = imageType,
+          desktop = Some(imageType),
+        ),
+      )
+      .breakpoints
 
     val sources = breakpointWidths.map { breakpointWidth =>
       ImageSource(
         breakpointWidth.breakpoint.minWidth.getOrElse("0").toString,
         breakpointWidth.width.toString,
-        SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-          imageData, hidpi = true)),
-        SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None,
-          imageData))
+        SrcSet.asSrcSetString(
+          ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None, imageData, hidpi = true),
+        ),
+        SrcSet.asSrcSetString(ImgSrc.srcsetForBreakpoint(breakpointWidth, breakpointWidths, None, imageData)),
       )
     }
 
@@ -49,19 +53,19 @@ object CapiImages {
 }
 
 // Holds the source element data for the images.
-case class ImageSource (
-                         minWidth: String,
-                         sizes: String,
-                         hidpiSrcset: String,
-                         lodpiSrcset: String
-                       )
+case class ImageSource(
+    minWidth: String,
+    sizes: String,
+    hidpiSrcset: String,
+    lodpiSrcset: String,
+)
 
 object ImageSource {
   implicit val writesImageSource: Writes[ImageSource] = Json.writes[ImageSource]
 }
 
 // Holds all source element data, and the backup image src for older browsers.
-case class ImageInfo (sources: Seq[ImageSource], backupSrc: Option[String])
+case class ImageInfo(sources: Seq[ImageSource], backupSrc: Option[String])
 
 object ImageInfo {
   implicit val writesImageInfo: Writes[ImageInfo] = Json.writes[ImageInfo]

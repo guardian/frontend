@@ -6,16 +6,17 @@ import play.api.test.Helpers._
 import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers}
 
 @DoNotDiscover class TopStoriesControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient {
 
-  lazy val topStoriesController = new TopStoriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
+  lazy val topStoriesController =
+    new TopStoriesController(testContentApiClient, play.api.test.Helpers.stubControllerComponents())
 
   "Top Stories" should "should return 200" in {
     val result = topStoriesController.renderTopStories()(TestRequest())

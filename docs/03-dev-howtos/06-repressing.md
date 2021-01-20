@@ -8,16 +8,16 @@ Tests are failing because of mis pressed data committed. In the Teamcity PR buil
 
 - `FaciaMetaDataTest.should Include item list metadata`
 - `FaciaMetaDataTest.should Include organisation metadata `
-- `FaciaControllerTest.should render fronts in mf2 format` 
-- `FaciaControllerTest.should render fronts in mf2 format (no section provided)` 
-- `FaciaControllerTest.should render fronts with content that has been pre-fetched from facia-press` 
+- `FaciaControllerTest.should render fronts in mf2 format`
+- `FaciaControllerTest.should render fronts in mf2 format (no section provided)`
+- `FaciaControllerTest.should render fronts with content that has been pre-fetched from facia-press`
 
 ### Repressing fronts locally.
 
 #### Prerequisites
 
 * Check your `facia.stage` property in your `frontend.conf` file is pointing at DEV (*not* PROD!)
-* Check you are using your own switches file and not the `PROD` or `CODE` one. 
+* Check you are using your own switches file and not the `PROD` or `CODE` one.
 	* To do this, create your own properties file in the the S3 bucket named `aws-frontend-store`. Add it to your `frontend.conf` like this: `switches.key=DEV/config/switches-nbaltazar.properties`
 * Ensure you have the test AWS SQS queues in your `frontend.conf` properties
 	* Add two properties: `frontpress.sqs.tool_queue_url` and `frontpress.sqs.cron_queue_url`
@@ -58,8 +58,8 @@ If you just ship new facia without pressing things will break until the presser 
 * Turn off continuous integration of `Preview` and `CODE facia` (via riff-raff)
 * Block deploys: Add a restriction to [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions)
 * Let team know what you're doing
-* Email core central prod to let them know preview fronts may error 
-* Merge to Master
+* Email core central prod to let them know preview fronts may error
+* Merge to `main`
 
 #### CODE: get the field into the pressed json
 
@@ -67,7 +67,7 @@ If you just ship new facia without pressing things will break until the presser 
 * Set the `facia-press` AWS auto scaling group desired value to 2
 * `SSH` into the facia presser instance and post to http://localhost:9000/press/draft/all (have patience, it takes a couple of mins) to repress all the draft fronts (`curl -v -X POST -H 'Content-Length: 0' http://localhost:9000/press/draft/all`)
 	* The reason we SSH in and hit localhost instead of `curl`ing the ELB is because the curl request times out before the response.
-* Back in CODE `frontend.gutools` go to `/press` and click `Standard Frequency Fronts For Press`, then wait a while for the most used CODE fronts to press 
+* Back in CODE `frontend.gutools` go to `/press` and click `Standard Frequency Fronts For Press`, then wait a while for the most used CODE fronts to press
 	* Monitor the SQS queue size to know when it's done (`frontend-CODE-FrontPressCronJobQueue-*`)
 * Check that code facia still works (e.g. /uk and click around to some other fronts)
 	* If you want to debug, go to a facia press load balancer: `http://<frontend-faciapre-elb>/pressed/live/uk/money` to see the JSON format
@@ -95,7 +95,7 @@ If you just ship new facia without pressing things will break until the presser 
 * Change your local machine back to DEV facia bucket!
 * Unblock deploys (remove the restriction in [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions))
 * Let Central Prod know things are hunky-dory
-* Celebrate! 🎉 
+* Celebrate! 🎉
 
 ### Removing a field
 

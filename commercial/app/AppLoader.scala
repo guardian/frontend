@@ -28,7 +28,8 @@ import router.Routes
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait CommercialServices {
@@ -64,7 +65,7 @@ trait AppComponents extends FrontendComponents with CommercialControllers with C
     wire[CommercialLifecycle],
     wire[SwitchboardLifecycle],
     wire[CloudWatchMetricsLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]

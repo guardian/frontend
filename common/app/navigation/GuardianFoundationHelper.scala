@@ -8,7 +8,7 @@ object GuardianFoundationHelper {
     "the-guardian-foundation",
     "newswise",
     "gnmeducationcentre",
-    "gnm-archive"
+    "gnm-archive",
   )
 
   def sectionIdIsGuardianFoundation(id: String): Boolean = {
@@ -21,7 +21,7 @@ object GuardianFoundationHelper {
 
   def urlIsGuardianFoundation(url: String): Boolean = {
     val urlMetadata = new URI(url)
-    foundationSectionIds.map( s => s"/${s}" ).exists(fragment => urlMetadata.getPath.startsWith(fragment))
+    foundationSectionIds.map(s => s"/${s}").exists(fragment => urlMetadata.getPath.startsWith(fragment))
   }
 
 }

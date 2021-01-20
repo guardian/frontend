@@ -1,6 +1,12 @@
 package utils
 
-import com.gu.facia.client.models.{EU27Territory, NZTerritory, TargetedTerritory, USEastCoastTerritory, USWestCoastTerritory}
+import com.gu.facia.client.models.{
+  EU27Territory,
+  NZTerritory,
+  TargetedTerritory,
+  USEastCoastTerritory,
+  USWestCoastTerritory,
+}
 import model.PressedPage
 import model.facia.PressedCollection
 import model.pressed.CollectionConfig
@@ -8,7 +14,7 @@ import model.pressed.CollectionConfig
 object TargetedCollections {
   // remove all collections with a targeted territory that is not allowed
   def filterCollections(faciaPage: PressedPage, allowedTerritories: List[TargetedTerritory]): PressedPage = {
-    faciaPage.copy(collections = faciaPage.collections.filter{c =>
+    faciaPage.copy(collections = faciaPage.collections.filter { c =>
       c.targetedTerritory.forall(t => allowedTerritories.contains(t))
     })
   }
@@ -17,15 +23,19 @@ object TargetedCollections {
     NZTerritory -> "New Zealand",
     EU27Territory -> "EU-27 Countries",
     USEastCoastTerritory -> "US East Coast",
-    USWestCoastTerritory -> "US West Coast"
+    USWestCoastTerritory -> "US West Coast",
   )
 
   def markDisplayName(collection: PressedCollection): PressedCollection = {
-    collection.targetedTerritory.map { t =>
-      collection.copy(
-        displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} only)",
-        config = collection.config.copy(displayName = collection.config.displayName.map(dn => s"$dn (${prettyTerritoryLookup(t)} only)")))
-    }.getOrElse(collection)
+    collection.targetedTerritory
+      .map { t =>
+        collection.copy(
+          displayName = s"${collection.displayName} (${prettyTerritoryLookup(t)} only)",
+          config = collection.config
+            .copy(displayName = collection.config.displayName.map(dn => s"$dn (${prettyTerritoryLookup(t)} only)")),
+        )
+      }
+      .getOrElse(collection)
   }
 
   def markCollections(faciaPage: PressedPage): PressedPage = {
@@ -36,10 +46,11 @@ object TargetedCollections {
     faciaPage.collections.exists(c => c.targetedTerritory.isDefined)
 
   def processTargetedCollections(
-    faciaPage: PressedPage,
-    allowedContainerTerritories: List[TargetedTerritory],
-    isPreview: Boolean,
-    targetedCollections: Boolean): PressedPage = {
+      faciaPage: PressedPage,
+      allowedContainerTerritories: List[TargetedTerritory],
+      isPreview: Boolean,
+      targetedCollections: Boolean,
+  ): PressedPage = {
     if (targetedCollections) {
       if (isPreview) {
         markCollections(faciaPage)

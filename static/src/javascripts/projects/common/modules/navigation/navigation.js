@@ -1,27 +1,25 @@
-// @flow
-
 import bean from 'bean';
 import fastdom from 'lib/fastdom-promise';
 import mediator from 'lib/mediator';
 import { isIOS, getUserAgent } from 'lib/detect';
 import $ from 'lib/$';
 
-const jsEnableFooterNav = (): Promise<void> =>
-    fastdom.write(() => {
+const jsEnableFooterNav = () =>
+    fastdom.mutate(() => {
         $('.navigation-container--default')
             .removeClass('navigation-container--default')
             .addClass('navigation-container--collapsed');
     });
 
-const copyMegaNavMenu = (): Promise<void> => {
+const copyMegaNavMenu = () => {
     let megaNav;
 
     return fastdom
-        .read(() => $('.js-mega-nav'))
+        .measure(() => $('.js-mega-nav'))
         .then(elem => {
             megaNav = elem;
 
-            return fastdom.read(() => $('.js-mega-nav-placeholder'));
+            return fastdom.measure(() => $('.js-mega-nav-placeholder'));
         })
         .then(placeholder => {
             const megaNavCopy = $.create(megaNav.html());
@@ -31,28 +29,28 @@ const copyMegaNavMenu = (): Promise<void> => {
             );
 
             if (placeholder) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     placeholder.append(megaNavCopy);
                 });
             }
         });
 };
 
-const replaceAllSectionsLink = (): Promise<void> =>
+const replaceAllSectionsLink = () =>
     fastdom
-        .read(() => $('.js-navigation-header .js-navigation-toggle'))
+        .measure(() => $('.js-navigation-header .js-navigation-toggle'))
         .then(elems =>
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 elems.attr('href', '#nav-allsections');
             })
         );
 
-const addOverflowScrollTouch = (): Promise<void> =>
+const addOverflowScrollTouch = () =>
     fastdom
-        .read(() => $('.navigation__scroll'))
+        .measure(() => $('.navigation__scroll'))
         .then(navScroll => {
             if (navScroll) {
-                return fastdom.write(() => {
+                return fastdom.mutate(() => {
                     navScroll.css({
                         '-webkit-overflow-scrolling': 'touch',
                     });
@@ -60,13 +58,13 @@ const addOverflowScrollTouch = (): Promise<void> =>
             }
         });
 
-const enableMegaNavToggle = (): void => {
+const enableMegaNavToggle = () => {
     bean.on(document, 'click', '.js-navigation-toggle', e => {
         const target = $(`.${e.currentTarget.getAttribute('data-target-nav')}`);
 
         e.preventDefault();
 
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             target.toggleClass(
                 'navigation-container--expanded navigation-container--collapsed'
             );
@@ -79,33 +77,8 @@ const enableMegaNavToggle = (): void => {
     });
 };
 
-const getDiscountCodePath = (path: string): string => {
-    const firstPart = path.split('/')[1];
-    if (firstPart === 'us' || firstPart === 'us-news') {
-        return 'us';
-    } else if (firstPart === 'uk' || firstPart === 'uk-news') {
-        return 'uk';
-    } else if (firstPart === 'au' || firstPart === 'australia-news') {
-        return 'au';
-    }
-    return '';
-};
-
-const localiseDiscountCodeLinks = (): void => {
-    const path = window.location.pathname;
-    const discountCodeLinks = Array.from(
-        document.getElementsByClassName('js-discount-code-link')
-    );
-    console.log(discountCodeLinks);
-    discountCodeLinks.map((link: any) => {
-        link.href += getDiscountCodePath(path);
-        return true;
-    });
-};
-
-const initNavigation = (): Promise<any> => {
+const initNavigation = () => {
     enableMegaNavToggle();
-    localiseDiscountCodeLinks();
 
     const modifications = [
         jsEnableFooterNav(),
@@ -125,4 +98,4 @@ const initNavigation = (): Promise<any> => {
     return Promise.all(modifications);
 };
 
-export { initNavigation, getDiscountCodePath };
+export { initNavigation };

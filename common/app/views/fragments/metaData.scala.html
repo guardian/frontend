@@ -26,12 +26,10 @@
 <link rel="dns-prefetch" href="//j.ophan.co.uk" />
 <link rel="dns-prefetch" href="//ophan.theguardian.com" />
 <link rel="dns-prefetch" href="@Configuration.debug.beaconUrl" />
-<link rel="dns-prefetch" href="//www.google-analytics.com" />
 
 <link rel="preconnect" href="@Configuration.assets.path" />
 <link rel="preconnect" href="@Configuration.images.host" />
 <link rel="preconnect" href="//interactive.guim.co.uk" />
-<link rel="preconnect" href="//www.google-analytics.com" />
 
 
 @if(ComscoreSwitch.isSwitchedOn) {
@@ -181,3 +179,9 @@
 @page.metadata.iosId("google").map { iosId =>
     <link rel="alternate" href="ios-app://409128287/gnmguardian/@iosId" />
 }
+
+@*
+As a European publisher, we need to include snippets and thumbnails in our search previews - https://search.google.com/search-console/settings/eucd?resource_id=https%3A%2F%2Fwww.theguardian.com%2F
+https://developers.google.com/search/reference/robots_meta_tag
+*@
+<meta name="robots" content="max-image-preview:large">

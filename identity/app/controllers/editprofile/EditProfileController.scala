@@ -1,6 +1,3 @@
-
-
-
 package controllers.editprofile
 
 import actions.AuthenticatedActions
@@ -26,14 +23,10 @@ class EditProfileController(
     override implicit val profileFormsMapping: ProfileFormsMapping,
     override implicit val context: ApplicationContext,
     val httpConfiguration: HttpConfiguration,
-    val controllerComponents: ControllerComponents)
-
-    extends EditProfileControllerComponents
-    with EditProfileFormHandling
+    val controllerComponents: ControllerComponents,
+) extends EditProfileControllerComponents
     with EmailsTab
     with AccountTab
     with PublicTab
     with SupporterTabs
     with ConsentsJourney
-
-

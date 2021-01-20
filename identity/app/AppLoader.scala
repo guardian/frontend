@@ -18,10 +18,11 @@ import play.api.mvc.EssentialFilter
 import play.api.routing.Router
 import play.filters.csrf.{CSRFAddToken, CSRFCheck, CSRFComponents}
 import router.Routes
-
+import services.newsletters.EmailEmbedLifecycle
 
 class AppLoader extends FrontendApplicationLoader {
-  def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait Controllers extends IdentityControllers {
@@ -41,18 +42,19 @@ trait AppLifecycleComponents {
     wire[IdentityLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
+    wire[EmailEmbedLifecycle],
   )
 
   def actorSystem: ActorSystem
 }
 
 trait AppComponents
-  extends FrontendComponents
-  with Controllers
-  with AppLifecycleComponents
-  with IdentityConfigurationComponents
-  with CSRFComponents {
+    extends FrontendComponents
+    with Controllers
+    with AppLifecycleComponents
+    with IdentityConfigurationComponents
+    with CSRFComponents {
 
   lazy val router: Router = wire[Routes]
 

@@ -1,7 +1,7 @@
 @(model: MinutePage)(implicit request: RequestHeader, context: _root_.model.ApplicationContext)
 
 @import common.LinkTo
-@import views.BodyCleaner
+@import views.BodyProcessor
 @import views.support.Commercial.isPaidContent
 @import views.support.TrailCssClasses.toneClass
 
@@ -28,7 +28,7 @@
 
                         <div class="js-article__body--minute-article u-cf from-content-api" itemprop="{articleBody}">
                         <div class="gs-container gs-container--minute-article">
-                        @BodyCleaner(article)
+                        @BodyProcessor(article)
                         </div>
                         </div>
                     </div>

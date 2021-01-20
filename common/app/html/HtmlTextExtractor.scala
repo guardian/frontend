@@ -14,14 +14,12 @@ object HtmlTextExtractor {
     val documentBody = Jsoup.parseBodyFragment(html.toString).body()
     documentBody.setBaseUri("https://www.theguardian.com")
 
-    val text = filterImagesAndFlattenNodes(documentBody)
-      .collect {
-        case node if node.nodeName() == "a" => node.absUrl("href").trim() + "\n"
-        case node: TextNode if node.parent().nodeName() == "span" => node.text().trim + " "
-        case node: TextNode if node.text().trim.nonEmpty => node.text().trim + "\n"
-        case node if newLineNodeNames.contains(node.nodeName()) => "\n"
-      }
-      .mkString
+    val text = filterImagesAndFlattenNodes(documentBody).collect {
+      case node if node.nodeName() == "a"                       => node.absUrl("href").trim() + "\n"
+      case node: TextNode if node.parent().nodeName() == "span" => node.text().trim + " "
+      case node: TextNode if node.text().trim.nonEmpty          => node.text().trim + "\n"
+      case node if newLineNodeNames.contains(node.nodeName())   => "\n"
+    }.mkString
 
     removeWhitespace(text)
 

@@ -10,14 +10,14 @@ import scala.concurrent.ExecutionContext
 
 case class Data()
 
-class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionContext) extends LifecycleComponent{
+class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionContext) extends LifecycleComponent {
 
   /**
     * Pushes Navigation data from NavLinks.scala into S3
     */
   override def start(): Unit = {
 
-    if(Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")){
+    if (Configuration.environment.stage.equalsIgnoreCase("DEVINFRA")) {
       return
     }
 
@@ -30,10 +30,9 @@ class StoreNavigationLifecycleComponent(implicit executionContext: ExecutionCont
     S3.putPrivate(
       key = s"${Configuration.environment.stage}/navigation.json",
       value = nav.toString(),
-      contentType = "application/json"
+      contentType = "application/json",
     )
 
   }
-
 
 }

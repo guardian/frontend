@@ -28,9 +28,15 @@ import play.api.{BuiltInComponents, BuiltInComponentsFromContext}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
+import services.newsletters.EmailEmbedLifecycle
 import services.{ConfigAgentLifecycle, OphanApi, SkimLinksCacheLifeCycle}
 
-trait PreviewLifecycleComponents extends SportServices with CommercialServices with FapiServices with OnwardServices {
+trait PreviewLifecycleComponents
+    extends SportServices
+    with CommercialServices
+    with FapiServices
+    with OnwardServices
+    with ApplicationsServices {
   self: FrontendComponents =>
 
   //Override conflicting members
@@ -39,26 +45,28 @@ trait PreviewLifecycleComponents extends SportServices with CommercialServices w
   override lazy val ophanApi = wire[OphanApi]
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
-  def standaloneLifecycleComponents: List[LifecycleComponent] = List(
-    wire[LogstashLifecycle],
-    wire[CommercialLifecycle],
-    wire[OnwardJourneyLifecycle],
-    wire[ConfigAgentLifecycle],
-    wire[FaciaDfpAgentLifecycle],
-    wire[SwitchboardLifecycle],
-    wire[FootballLifecycle],
-    wire[CricketLifecycle],
-    wire[RugbyLifecycle],
-    wire[TargetingLifecycle],
-    wire[SkimLinksCacheLifeCycle],
-    wire[CloudWatchMetricsLifecycle]
-  )
+  def standaloneLifecycleComponents: List[LifecycleComponent] =
+    List(
+      wire[LogstashLifecycle],
+      wire[CommercialLifecycle],
+      wire[OnwardJourneyLifecycle],
+      wire[ConfigAgentLifecycle],
+      wire[FaciaDfpAgentLifecycle],
+      wire[SwitchboardLifecycle],
+      wire[FootballLifecycle],
+      wire[CricketLifecycle],
+      wire[RugbyLifecycle],
+      wire[TargetingLifecycle],
+      wire[SkimLinksCacheLifeCycle],
+      wire[CloudWatchMetricsLifecycle],
+      wire[EmailEmbedLifecycle],
+    )
 
   def actorSystem: ActorSystem
 }
 
 trait PreviewControllerComponents
-  extends ApplicationsControllers
+    extends ApplicationsControllers
     with ArticleControllers
     with CommercialControllers
     with FaciaControllers
@@ -66,7 +74,8 @@ trait PreviewControllerComponents
     with FootballControllers
     with CricketControllers
     with FrontendComponents
-    with RugbyControllers {
+    with RugbyControllers
+    with ApplicationsServices {
   self: BuiltInComponents =>
 
   def wsClient: WSClient
@@ -81,23 +90,25 @@ trait PreviewControllerComponents
 }
 
 trait AppComponents
-  extends FrontendComponents
+    extends FrontendComponents
     with PreviewControllerComponents
     with PreviewLifecycleComponents
     with OnwardServices
     with ApplicationsServices {
 
-  override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) { override val signer = Some(PreviewSigner()) }
+  override lazy val capiHttpClient: HttpClient = new CapiHttpClient(wsClient) {
+    override val signer = Some(PreviewSigner())
+  }
   override lazy val contentApiClient = wire[PreviewContentApi]
   override lazy val ophanApi = wire[OphanApi]
 
-  lazy val remoteRender = wire[renderers.RemoteRenderer]
+  lazy val remoteRender = wire[renderers.DotcomRenderingService]
 
   override lazy val appMetrics = ApplicationMetrics(
     ContentApiMetrics.HttpLatencyTimingMetric,
     ContentApiMetrics.HttpTimeoutCountMetric,
     ContentApiMetrics.ContentApiErrorMetric,
-    ContentApiMetrics.ContentApiRequestsMetric
+    ContentApiMetrics.ContentApiRequestsMetric,
   )
 
   lazy val healthCheck = wire[HealthCheck]
@@ -106,13 +117,14 @@ trait AppComponents
   lazy val router: Router = wire[Routes]
   override def appIdentity: ApplicationIdentity = ApplicationIdentity("preview")
 
-  override def lifecycleComponents: List[LifecycleComponent] = standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
+  override def lifecycleComponents: List[LifecycleComponent] =
+    standaloneLifecycleComponents :+ wire[CachedHealthCheckLifeCycle]
 
   override lazy val httpFilters: Seq[EssentialFilter] = wire[PreviewFilters].filters
   override lazy val httpErrorHandler: HttpErrorHandler = wire[PreviewErrorHandler]
 }
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
-

@@ -1,26 +1,14 @@
-// @flow
-
 import bonzo from 'bonzo';
 import mediator from 'lib/mediator';
 import fastdom from 'lib/fastdom-promise';
 
-const getPixels = (top: string): number =>
+const getPixels = (top) =>
     top !== 'auto' ? parseInt(top, 10) : 0;
 
 class Affix {
-    affixed: boolean;
-    $markerTop: bonzo;
-    $markerBottom: bonzo;
-    $container: bonzo;
-    $element: bonzo;
-    $window: bonzo;
 
-    constructor(options: {
-        element: ?HTMLElement,
-        topMarker: ?HTMLElement,
-        bottomMarker: ?HTMLElement,
-        containerElement: ?HTMLElement,
-    }): void {
+
+    constructor(options) {
         window.addEventListener('click', () => {
             this.checkPosition();
         });
@@ -44,26 +32,26 @@ class Affix {
         this.calculateContainerPositioning();
     }
 
-    calculateContainerPositioning(): void {
+    calculateContainerPositioning() {
         fastdom
-            .write(() => {
+            .mutate(() => {
                 this.$container.css('top', '0');
             })
             .then(() =>
-                fastdom.read(
+                fastdom.measure(
                     () =>
                         this.$markerTop.offset().top -
                         this.$container.offset().top
                 )
             )
             .then(containerTop => {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.css('top', `${containerTop}px`);
                 });
             });
     }
 
-    checkPosition(): void {
+    checkPosition() {
         const scrollTop = this.$window.scrollTop();
         const markerTopTop = this.$markerTop.offset().top;
         const markerBottomTop = this.$markerBottom.offset().top;
@@ -80,7 +68,7 @@ class Affix {
 
             // Lock the affix container to the bottom marker.
             if (bottomCheck) {
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.removeClass(affixBottomClass);
                 });
                 this.calculateContainerPositioning();
@@ -94,13 +82,13 @@ class Affix {
                     markerTopTop -
                     elHeight +
                     oldContainerStyling;
-                fastdom.write(() => {
+                fastdom.mutate(() => {
                     this.$container.css('top', `${topStyle}px`);
                     this.$container.addClass(affixBottomClass);
                 });
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 if (affix) {
                     this.$element.addClass(affixClass);
                 } else {

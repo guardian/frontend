@@ -9,10 +9,10 @@ package object crosswords {
         direction <- crosswordEntry.direction
         position <- crosswordEntry.position
       } yield {
-        for {i <- 0 until length} yield {
+        for { i <- 0 until length } yield {
           direction match {
             case "across" => position.copy(x = position.x + i)
-            case "down" => position.copy(y = position.y + i)
+            case "down"   => position.copy(y = position.y + i)
           }
         }
       }

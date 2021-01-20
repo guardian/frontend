@@ -9,7 +9,7 @@ import play.api.test.Helpers._
 
 import scala.concurrent.Future
 
-object MetaDataMatcher extends Matchers  {
+object MetaDataMatcher extends Matchers {
 
   lazy val appId = "409128287"
   val iosDomain = "ios-app://"

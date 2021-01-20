@@ -1,11 +1,11 @@
 @()(implicit request: RequestHeader, context: model.ApplicationContext)
 @import conf.AdminConfiguration.pa
 @import org.joda.time.DateTime
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 @admin_main("Cricket Troubleshooter", isAuthed = true) {
 
-@defining((Format(DateTime.now(), "yyyy-MM-dd"), Format(DateTime.now().minusYears(1), "yyyy-MM-dd"), "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075")){ case (today, lastYear, englandTeam) =>
+@defining((GuDateFormatLegacy(DateTime.now(), "yyyy-MM-dd"), GuDateFormatLegacy(DateTime.now().minusYears(1), "yyyy-MM-dd"), "a359844f-fc07-9cfa-d4cc-9a9ac0d5d075")){ case (today, lastYear, englandTeam) =>
 
     <h1>Cricket Troubleshooter</h1>
 

@@ -1,10 +1,9 @@
-// @flow
 import config from 'lib/config';
 import fastdom from 'lib/fastdom-promise';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-export const init = (): Promise<void> => {
+export const init = () => {
     if (commercialFeatures.highMerch) {
         const anchorSelector = config.get('page.commentable')
             ? '#comments + *'
@@ -21,7 +20,7 @@ export const init = (): Promise<void> => {
             container.appendChild(slot);
         });
 
-        return fastdom.write(() => {
+        return fastdom.mutate(() => {
             if (anchor && anchor.parentNode) {
                 anchor.parentNode.insertBefore(container, anchor);
             }

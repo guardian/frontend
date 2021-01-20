@@ -1,10 +1,4 @@
-// @flow
-type Campaign = {
-    name: string,
-    utm: string,
-};
-
-const campaigns: Campaign[] = [
+const campaigns = [
     {
         name: 'Guardian Today UK',
         utm: 'GU Today main NEW H categories',
@@ -15,15 +9,14 @@ const campaigns: Campaign[] = [
     },
 ];
 
-const getEmailCampaignFromUtm = (utm: string): ?Campaign =>
-    campaigns.find((campaign: Campaign) => campaign.utm === utm);
+const getEmailCampaignFromUtm = (utm) =>
+    campaigns.find((campaign) => campaign.utm === utm);
 
-const getEmailCampaignFromUrl = (): ?Campaign => {
+const getEmailCampaignFromUrl = () => {
     const emailCampaignInUrl = (new window.URLSearchParams(
         window.location.search
     ).getAll('utm_campaign') || [''])[0];
     return getEmailCampaignFromUtm(emailCampaignInUrl);
 };
 
-export type { Campaign };
 export { campaigns, getEmailCampaignFromUtm, getEmailCampaignFromUrl };

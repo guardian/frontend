@@ -9,8 +9,8 @@ object LocationName {
 }
 
 case class LocationName(
-  ID: String,
-  LocalizedName: String
+    ID: String,
+    LocalizedName: String,
 )
 
 object LocationResponse {
@@ -18,9 +18,9 @@ object LocationResponse {
 }
 
 case class LocationResponse(
-  Key: String,
-  LocalizedName: String,
-  Country: LocationName,
-  AdministrativeArea: LocationName,
-  Type: String
+    Key: String,
+    LocalizedName: String,
+    Country: LocationName,
+    AdministrativeArea: LocationName,
+    Type: String,
 )

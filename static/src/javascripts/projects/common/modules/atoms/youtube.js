@@ -1,6 +1,4 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
-import bonzo from 'bonzo';
 import fetchJson from 'lib/fetch-json';
 import reportError from 'lib/report-error';
 import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
@@ -16,52 +14,25 @@ import debounce from 'lodash/debounce';
 import { isOn as accessibilityIsOn } from 'common/modules/accessibility/main';
 import { getUrlVars } from 'lib/url';
 
-declare class YoutubePlayer extends EventTarget {
-    playVideo: () => void;
-    getVideoUrl: () => string;
-    pauseVideo: () => void;
-    getCurrentTime: () => number;
-    getDuration: () => number;
-    getPlayerState: () => -1 | 0 | 1 | 2 | 3 | 4 | 5;
-}
 
-declare class YoutubePlayerEvent {
-    data: -1 | 0 | 1 | 2 | 3 | 4 | 5;
-    target: YoutubePlayer;
-}
 
-interface AtomPlayer {
-    iframe: HTMLIFrameElement;
-    atomId: string;
-    youtubeId: string;
-    youtubePlayer: YoutubePlayer;
-    pendingTrackingCalls: Array<number>;
-    paused: boolean;
-    // Media that has ended is neither playing nor paused. For the Ophan
-    // attention time metric we only care if it is playing or not.
-    playing: boolean;
-    overlay?: HTMLElement;
-    endSlate?: Component;
-    duration?: number;
-    progressTracker?: ?IntervalID;
-}
 
-const players: {
-    [string]: AtomPlayer,
-} = {};
+
+
+const players = {};
 
 const iframes = [];
 
 document.addEventListener('focusout', () => {
     iframes.forEach(iframe => {
         fastdom
-            .read(() => {
+            .measure(() => {
                 if (document.activeElement === iframe) {
                     return $('.vjs-big-play-button', iframe.parentElement);
                 }
             })
-            .then(($playButton: ?bonzo) => {
-                fastdom.write(() => {
+            .then(($playButton) => {
+                fastdom.mutate(() => {
                     if ($playButton) {
                         $playButton.addClass('youtube-play-btn-focussed');
                     }
@@ -72,9 +43,9 @@ document.addEventListener('focusout', () => {
 
 document.addEventListener('focusin', () => {
     fastdom
-        .read(() => $('.vjs-big-play-button'))
-        .then(($playButton: ?bonzo) => {
-            fastdom.write(() => {
+        .measure(() => $('.vjs-big-play-button'))
+        .then(($playButton) => {
+            fastdom.mutate(() => {
                 if ($playButton) {
                     $playButton.removeClass('youtube-play-btn-focussed');
                 }
@@ -82,7 +53,7 @@ document.addEventListener('focusin', () => {
         });
 });
 
-const recordPlayerProgress = (uniqueAtomId: string): void => {
+const recordPlayerProgress = (uniqueAtomId) => {
     const player = players[uniqueAtomId];
 
     if (!player) {
@@ -110,13 +81,13 @@ const recordPlayerProgress = (uniqueAtomId: string): void => {
     }
 };
 
-const killProgressTracker = (atomId: string): void => {
+const killProgressTracker = (atomId) => {
     if (players[atomId] && players[atomId].progressTracker) {
         clearInterval(players[atomId].progressTracker);
     }
 };
 
-const setProgressTracker = (atomId: string): IntervalID => {
+const setProgressTracker = (atomId) => {
     players[atomId].progressTracker = setInterval(
         recordPlayerProgress.bind(null, atomId),
         1000
@@ -124,7 +95,7 @@ const setProgressTracker = (atomId: string): IntervalID => {
     return players[atomId].progressTracker;
 };
 
-const handlePlay = (uniqueAtomId: string, player: AtomPlayer): void => {
+const handlePlay = (uniqueAtomId, player) => {
     const { atomId, iframe, overlay, endSlate, paused } = player;
 
     killProgressTracker(uniqueAtomId);
@@ -152,7 +123,7 @@ const handlePlay = (uniqueAtomId: string, player: AtomPlayer): void => {
     }
 };
 
-const getYoutubeIdFromUrl = (url: string): string => {
+const getYoutubeIdFromUrl = (url) => {
     const youtubeIdKey = 'v';
     const splitUrl = url.split('?');
 
@@ -165,7 +136,7 @@ const getYoutubeIdFromUrl = (url: string): string => {
     return queryParams[youtubeIdKey] || '';
 };
 
-const onPlayerPlaying = (uniqueAtomId: string): void => {
+const onPlayerPlaying = (uniqueAtomId) => {
     const player = players[uniqueAtomId];
 
     if (!player) {
@@ -214,7 +185,7 @@ const onPlayerPlaying = (uniqueAtomId: string): void => {
     }
 };
 
-const onPlayerPaused = (atomId: string): void => {
+const onPlayerPaused = (atomId) => {
     const player = players[atomId];
 
     player.playing = false;
@@ -223,7 +194,7 @@ const onPlayerPaused = (atomId: string): void => {
     killProgressTracker(atomId);
 };
 
-const onPlayerEnded = (atomId: string): void => {
+const onPlayerEnded = (atomId) => {
     const player = players[atomId];
 
     player.playing = false;
@@ -247,41 +218,83 @@ const STATES = {
     PAUSED: onPlayerPaused,
 };
 
-const shouldAutoplay = (atomId: string): boolean => {
-    const isAutoplayBlockingPlatform = () => isIOS() || isAndroid();
+const getIFrameBehaviourConfig = (
+    iframe
+) => {
+    const isAutoplayBlockingPlatform = isIOS() || isAndroid();
 
-    const isInternalReferrer = (): boolean => {
+    const isInternalReferrer = (() => {
         if (config.get('page.isDev')) {
             return document.referrer.indexOf(window.location.origin) === 0;
         }
 
         return document.referrer.indexOf(config.get('page.host')) === 0;
-    };
+    })();
 
-    const isMainVideo = (): boolean =>
-        (players[atomId].iframe &&
-            !!players[atomId].iframe.closest(
-                'figure[data-component="main video"]'
-            )) ||
+    const isMainVideo =
+        (iframe && !!iframe.closest('figure[data-component="main video"]')) ||
         false;
 
-    const flashingElementsAllowed = (): boolean =>
-        accessibilityIsOn('flashing-elements');
+    const flashingElementsAllowed = accessibilityIsOn('flashing-elements');
 
-    const isVideoArticle = (): boolean =>
+    const isVideoArticle =
         config.get('page.contentType', '').toLowerCase() === 'video';
 
-    const isFront = () => config.get('page.isFront');
+    const isFront = config.get('page.isFront', false);
+    const isUSContent =
+        config.get('page.productionOffice', '').toLowerCase() === 'us';
 
-    return (
-        ((isVideoArticle() && isInternalReferrer() && isMainVideo()) ||
-            isFront()) &&
-        !isAutoplayBlockingPlatform() &&
-        flashingElementsAllowed()
-    );
+    const isPaidContent = config.get('page.isPaidContent');
+
+    return {
+        isAutoplayBlockingPlatform,
+        isInternalReferrer,
+        isMainVideo,
+        flashingElementsAllowed,
+        isVideoArticle,
+        isFront,
+        isUSContent,
+        isPaidContent,
+    };
 };
 
-const getEndSlate = (overlay: HTMLElement): ?Component => {
+const getIFrameBehaviour = (
+    iframeConfig
+) => {
+    const {
+        isAutoplayBlockingPlatform,
+        isInternalReferrer,
+        isMainVideo,
+        flashingElementsAllowed,
+        isVideoArticle,
+        isFront,
+        isUSContent,
+        isPaidContent,
+    } = iframeConfig;
+
+    const isUsPaidContentVideo =
+        isUSContent &&
+        isPaidContent &&
+        ((isVideoArticle && isMainVideo) || isFront) &&
+        flashingElementsAllowed;
+
+    if (isUsPaidContentVideo) {
+        return {
+            autoplay: isUsPaidContentVideo,
+            mutedOnStart: isUsPaidContentVideo && isAndroid(),
+        };
+    }
+    return {
+        autoplay:
+            ((isVideoArticle && isInternalReferrer && isMainVideo) ||
+                isFront) &&
+            !isAutoplayBlockingPlatform &&
+            flashingElementsAllowed,
+        mutedOnStart: false,
+    };
+};
+
+const getEndSlate = (overlay) => {
     const overlayParent = overlay.parentNode;
 
     if (overlayParent instanceof HTMLElement) {
@@ -298,7 +311,7 @@ const getEndSlate = (overlay: HTMLElement): ?Component => {
     }
 };
 
-const updateImmersiveButtonPos = (): void => {
+const updateImmersiveButtonPos = () => {
     const player = document.querySelector(
         '.immersive-main-media__media .youtube-media-atom'
     );
@@ -317,16 +330,24 @@ const updateImmersiveButtonPos = (): void => {
     }
 };
 
+const muteIFrame = (iframe) => {
+    // Mute iFrame in order to autoplay on android mobile devices
+
+    const iframeSrc = new URL(iframe.src);
+    iframeSrc.searchParams.set('mute', '1');
+    iframe.setAttribute('src', iframeSrc.toString());
+};
+
 const onPlayerReady = (
-    atomId: string,
-    uniqueAtomId: string,
-    iframeId: string,
-    overlay: ?HTMLElement,
-    event: YoutubePlayerEvent
-): void => {
+    atomId,
+    uniqueAtomId,
+    iframeId,
+    overlay,
+    event
+) => {
     const iframe = ((document.getElementById(
         iframeId
-    ): any): HTMLIFrameElement);
+    )));
 
     if (!iframe) {
         return;
@@ -349,7 +370,12 @@ const onPlayerReady = (
         pendingTrackingCalls: [25, 50, 75],
     };
 
-    if (shouldAutoplay(uniqueAtomId)) {
+    const iFrameBehaviourConfig = getIFrameBehaviourConfig(iframe);
+    const iFrameBehaviour = getIFrameBehaviour(iFrameBehaviourConfig);
+    if (iFrameBehaviour.mutedOnStart) {
+        muteIFrame(iframe);
+    }
+    if (iFrameBehaviour.autoplay) {
         event.target.playVideo();
     }
 
@@ -358,7 +384,6 @@ const onPlayerReady = (
 
         if (
             !!config.get('page.section') &&
-            !config.get('switches.youtubeRelatedVideos') &&
             isBreakpoint({
                 min: 'desktop',
             })
@@ -381,12 +406,12 @@ const onPlayerReady = (
     }
 };
 
-const isAnyPlayerPlaying = (): boolean =>
+const isAnyPlayerPlaying = () =>
     Object.keys(players)
         .map(key => players[key])
-        .filter((p: AtomPlayer): boolean => p.playing).length > 0;
+        .filter((p) => p.playing).length > 0;
 
-const triggerVideoStateEvent = (isPlaying: boolean): void => {
+const triggerVideoStateEvent = (isPlaying) => {
     if (isPlaying) {
         const videoPlaying = new Event('videoPlaying');
         document.dispatchEvent(videoPlaying);
@@ -398,9 +423,9 @@ const triggerVideoStateEvent = (isPlaying: boolean): void => {
 };
 
 const onPlayerStateChange = (
-    atomId: string,
-    event: YoutubePlayerEvent
-): void => {
+    atomId,
+    event
+) => {
     const stateId = event.data;
 
     const stateKey = Object.keys(STATES).find(
@@ -413,13 +438,13 @@ const onPlayerStateChange = (
     }
 };
 
-const getUniqueAtomId = (atomId: string): string =>
+const getUniqueAtomId = (atomId) =>
     `${atomId}/${Math.random()
         .toString(36)
         .substr(2, 9)}`;
 
-const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
-    fastdom.read(() => {
+const initYoutubePlayerForElem = (el) => {
+    fastdom.measure(() => {
         if (!el) return;
 
         const iframe = el.querySelector('.youtube-media-atom__iframe');
@@ -449,7 +474,7 @@ const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
         initYoutubePlayer(
             iframe,
             {
-                onPlayerReady: (event: YoutubePlayerEvent) => {
+                onPlayerReady: (event) => {
                     onPlayerReady(
                         atomId,
                         uniqueAtomId,
@@ -458,7 +483,7 @@ const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
                         event
                     );
                 },
-                onPlayerStateChange: (event: YoutubePlayerEvent) => {
+                onPlayerStateChange: (event) => {
                     onPlayerStateChange(uniqueAtomId, event);
                 },
             },
@@ -468,10 +493,10 @@ const initYoutubePlayerForElem = (el: ?HTMLElement): void => {
     });
 };
 
-const checkElemForVideo = (elem: ?HTMLElement): void => {
+const checkElemForVideo = (elem) => {
     if (!elem) return;
 
-    fastdom.read(() => {
+    fastdom.measure(() => {
         $('.youtube-media-atom:not(.no-player)', elem).each(el => {
             const overlay = el.querySelector('.youtube-media-atom__overlay');
 
@@ -486,7 +511,7 @@ const checkElemForVideo = (elem: ?HTMLElement): void => {
     });
 };
 
-export const checkElemsForVideos = (elems: ?Array<HTMLElement>): void => {
+export const checkElemsForVideos = (elems) => {
     if (elems && elems.length) {
         elems.forEach(checkElemForVideo);
     } else {
@@ -494,9 +519,15 @@ export const checkElemsForVideos = (elems: ?Array<HTMLElement>): void => {
     }
 };
 
-export const onVideoContainerNavigation = (atomId: string): void => {
+export const onVideoContainerNavigation = (atomId) => {
     const player = players[atomId];
     if (player) {
         player.youtubePlayer.pauseVideo();
     }
+};
+
+export const _ = {
+    muteIFrame,
+    getIFrameBehaviour,
+    getIFrameBehaviourConfig,
 };

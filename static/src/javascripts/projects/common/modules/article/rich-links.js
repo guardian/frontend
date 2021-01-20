@@ -1,7 +1,3 @@
-// @flow
-
-import type { SpacefinderRules } from 'common/modules/spacefinder';
-
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import { isBreakpoint, getBreakpoint } from 'lib/detect';
@@ -11,7 +7,7 @@ import reportError from 'lib/report-error';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-const richLinkTag = ({ href }: { href: string }): string =>
+const richLinkTag = ({ href }) =>
     `<aside class=" element element-rich-link element-rich-link--tag
                     element--thumbnail element-rich-link--not-upgraded"
             data-component="rich-link-tag"
@@ -20,11 +16,11 @@ const richLinkTag = ({ href }: { href: string }): string =>
         <p><a href="${href}">${href}</a></p>
     </aside>`;
 
-const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
+const hideIfPaidForAndAdFree = (el) => {
     if (!commercialFeatures.adFree) {
         return Promise.resolve();
     }
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         [...el.children]
             .filter(child =>
                 child.classList.toString().includes('rich-link--paidfor')
@@ -33,8 +29,8 @@ const hideIfPaidForAndAdFree = (el: Element): Promise<void> => {
     });
 };
 
-const elementIsBelowViewport = (el: Element): Promise<boolean> =>
-    fastdom.read(() => {
+const elementIsBelowViewport = (el) =>
+    fastdom.measure(() => {
         const rect = el.getBoundingClientRect();
         const height =
             window.innerHeight ||
@@ -44,8 +40,8 @@ const elementIsBelowViewport = (el: Element): Promise<boolean> =>
         return rect.top > height;
     });
 
-const doUpgrade = (el: Element, resp: Object): Promise<void> =>
-    fastdom.write(() => {
+const doUpgrade = (el, resp) =>
+    fastdom.mutate(() => {
         el.innerHTML = resp.html;
         el.classList.remove('element-rich-link--not-upgraded');
         el.classList.add('element-rich-link--upgraded');
@@ -57,15 +53,15 @@ const doUpgrade = (el: Element, resp: Object): Promise<void> =>
         mediator.emit('rich-link:loaded', el);
     });
 
-const upgradeRichLink = (el: Element): Promise<void> => {
-    const link: HTMLAnchorElement = (el.querySelector('a'): any);
+const upgradeRichLink = (el) => {
+    const link = (el.querySelector('a'));
 
     if (!link) return Promise.resolve();
 
-    const href: string = link.href;
-    const host: string = config.get('page.host');
-    const matches: ?(string[]) = href.split(host);
-    const isOnMobile: boolean = isBreakpoint({
+    const href = link.href;
+    const host = config.get('page.host');
+    const matches = href.split(host);
+    const isOnMobile = isBreakpoint({
         max: 'mobileLandscape',
     });
 
@@ -98,7 +94,7 @@ const upgradeRichLink = (el: Element): Promise<void> => {
     return Promise.resolve();
 };
 
-const getSpacefinderRules = (): SpacefinderRules => ({
+const getSpacefinderRules = () => ({
     bodySelector: '.js-article__body',
     slotSelector: ' > p',
     minAbove: 200,
@@ -126,38 +122,38 @@ const getSpacefinderRules = (): SpacefinderRules => ({
                 ? 200
                 : 0,
             minBelow: 0,
-        },
-        '.js-article__body--type-numbered-list > h2': {
-            minAbove: 100,
-            minBelow: 200,
-        },
+        }
     },
 });
 
 // Tag-targeted rich links can be absolute
-const testIfDuplicate = (richLinkHref: string): boolean =>
+const testIfDuplicate = (richLinkHref) =>
     richLinkHref.includes(config.get('page.richLink'));
 
-const insertTagRichLink = (): Promise<void> => {
-    let insertedEl: ?Element;
+const insertTagRichLink = () => {
+    let insertedEl;
 
-    const richLinkHrefs: string[] = Array.from(
+    const richLinkHrefs = Array.from(
         document.querySelectorAll('.element-rich-link a')
-    ).map((el: any) => (el: HTMLAnchorElement).href);
+    ).map((el) => (el).href);
 
-    const isDuplicate: boolean = richLinkHrefs.some(testIfDuplicate);
-    const isSensitive: boolean =
+    const isDuplicate = richLinkHrefs.some(testIfDuplicate);
+    const isSensitive =
         config.get('page.shouldHideAdverts') ||
         !config.get('page.showRelatedContent');
+    // Richlinks are just generally unhappy in numbered list articles
+    // Example https://theguardian.com/environment/2020/jun/19/why-you-should-go-animal-free-arguments-in-favour-of-meat-eating-debunked-plant-based
+    const isNumberedListArticle = document.querySelectorAll('.js-article__body--type-numbered-list').length > 0;
 
     if (
         config.get('page.richLink') &&
         !config.get('page.richLink').includes(config.get('page.pageId')) &&
         !isSensitive &&
-        !isDuplicate
+        !isDuplicate &&
+        !isNumberedListArticle
     ) {
         return spaceFiller
-            .fillSpace(getSpacefinderRules(), (paras: HTMLElement[]) => {
+            .fillSpace(getSpacefinderRules(), (paras) => {
                 const html = richLinkTag({
                     href: config.get('page.richLink'),
                 });
@@ -175,7 +171,7 @@ const insertTagRichLink = (): Promise<void> => {
     return Promise.resolve();
 };
 
-const upgradeRichLinks = (): void => {
+const upgradeRichLinks = () => {
     Array.from(
         document.getElementsByClassName('element-rich-link--not-upgraded')
     ).forEach(upgradeRichLink);

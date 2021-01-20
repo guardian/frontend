@@ -17,7 +17,7 @@ object Video {
       showControlsAtStart = true,
       overrideIsRatioHd = None,
       embedPath = blog.content.mainVideoCanonicalPath,
-      path = blog.content.mainVideoCanonicalPath
+      path = blog.content.mainVideoCanonicalPath,
     )
 
     implicit val dateToTimestampWrites = play.api.libs.json.JodaWrites.JodaDateTimeNumberWrites
@@ -29,8 +29,8 @@ object Video {
         "uploadDate" -> blog.trail.webPublicationDate,
         "thumbnail" -> player.poster,
         "thumbnailUrl" -> player.poster,
-        "description" -> Html(video.videos.caption.getOrElse("")).toString()
-      )
+        "description" -> Html(video.videos.caption.getOrElse("")).toString(),
+      ),
     )
 
   }

@@ -1,4 +1,3 @@
-// @flow
 /* global jsdom */
 
 import {
@@ -13,9 +12,8 @@ import {
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
 import { ajax as ajax_ } from 'lib/ajax';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 
-jest.mock('lib/storage');
 jest.mock('lib/config');
 jest.mock('lib/ajax', () => ({
     ajax: jest.fn(),
@@ -31,8 +29,8 @@ jest.mock('common/modules/async-call-merger', () => ({
     },
 }));
 
-const getCookieStub: any = getCookie_;
-const ajax: any = ajax_;
+const getCookieStub = getCookie_;
+const ajax = ajax_;
 
 const originalAssign = window.location.assign;
 
@@ -48,7 +46,7 @@ describe('Identity API', () => {
                 '.MC0CFBsFwIEITO91EGONK4puyO2ZgGQcAhUAqRa7PVDCoAjrbnJNYYvMFec4fAY'
         );
 
-        window.location.assign = (url: string) => {
+        window.location.assign = (url) => {
             jsdom.reconfigure({
                 url,
             });
@@ -119,19 +117,19 @@ describe('Identity API', () => {
         window.location.assign(returnUrl);
 
         getCookieStub.mockImplementationOnce(() => null);
-        getUserOrSignIn();
+        getUserOrSignIn('email_sign_in_banner');
 
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);
     });
 
     it('should not redirect to sign in when user is already signed in', () => {
-        const user = getUserOrSignIn();
+        const user = getUserOrSignIn('email_sign_in_banner');
         const displayName = user && user.displayName;
 
         expect(displayName).toBe('Amélie Jôse');
@@ -142,12 +140,12 @@ describe('Identity API', () => {
         const returnUrl = 'http://www.theguardian.com/foo';
 
         getCookieStub.mockImplementationOnce(() => null);
-        getUserOrSignIn(returnUrl);
+        getUserOrSignIn('email_sign_in_banner', returnUrl);
 
         expect(window.location.href).toBe(
             `${config.page.idUrl}/signin?returnUrl=${encodeURIComponent(
                 returnUrl
-            )}`
+            )}&componentEventParams=componentType%3Didentityauthentication%26componentId%3Demail_sign_in_banner`
         );
 
         window.location.assign(origHref);
@@ -157,11 +155,11 @@ describe('Identity API', () => {
         getCookieStub
             .mockImplementationOnce(() => null) // GU_U
             .mockImplementationOnce(() => null); // GU_SO
-        local.set('gu.id.nextFbCheck', 'blah|blah');
+            storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
 
-        local.remove('gu.id.nextFbCheck');
+        storage.local.remove('gu.id.nextFbCheck');
     });
 
     it('should not attempt to autosigin a user who is not currently signed in, has not previously signed out, before the facebook check overlaps', () => {
@@ -201,11 +199,11 @@ describe('Identity API', () => {
         getCookieStub
             .mockImplementationOnce(() => null) // GU_U
             .mockImplementationOnce(() => timeStampInSeconds.toString()); // GU_SO
-        local.set('gu.id.nextFbCheck', 'blah|blah');
+            storage.local.set('gu.id.nextFbCheck', 'blah|blah');
 
         expect(shouldAutoSigninInUser()).toBe(false);
 
-        local.remove('gu.id.nextFbCheck');
+        storage.local.remove('gu.id.nextFbCheck');
     });
 
     it('should not attempt to autosignin a user who has signed out within the last 24 hours', () => {

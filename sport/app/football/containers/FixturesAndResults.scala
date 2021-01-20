@@ -19,7 +19,7 @@ class CompetitionAndGroupFinder(competitions: Competitions) {
   def windowed(group: Group, teamId: String): Group = {
     group.entries.around(1, 10)(_.team.id == teamId) match {
       case Some(windowedItems) => group.copy(entries = windowedItems)
-      case None => group
+      case None                => group
     }
   }
 
@@ -27,8 +27,9 @@ class CompetitionAndGroupFinder(competitions: Competitions) {
     for {
       competition <- competitions.mostPertinentCompetitionForTeam(teamId)
       table = Table(competition)
-      group <- table.groups.find(_.entries.exists(_.team.id == teamId)) orElse
-        table.groups.headOption
+      group <-
+        table.groups.find(_.entries.exists(_.team.id == teamId)) orElse
+          table.groups.headOption
     } yield CompetitionAndGroup(competition, windowed(group, teamId))
   }
 }
@@ -40,15 +41,19 @@ class FixturesAndResults(competitions: Competitions) extends Football {
   lazy val competitionAndGroupFinder = new CompetitionAndGroupFinder(competitions)
   lazy val teamNameBuilder = new TeamNameBuilder(competitions)
 
-  def makeContainer(tagId: String)(implicit request: RequestHeader, context: ApplicationContext): Option[FaciaContainer] = {
+  def makeContainer(
+      tagId: String,
+  )(implicit request: RequestHeader, context: ApplicationContext): Option[FaciaContainer] = {
 
     (for {
       teamId <- TeamMap.findTeamIdByUrlName(tagId)
       teamName <- teamNameBuilder.withId(teamId)
     } yield {
-      val relevantMatches = competitions.matches.filter({ theMatch =>
-        theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
-      }).toList
+      val relevantMatches = competitions.matches
+        .filter({ theMatch =>
+          theMatch.homeTeam.id == teamId || theMatch.awayTeam.id == teamId
+        })
+        .toList
 
       val container = FixedContainers.footballTeamFixtures
 
@@ -61,38 +66,47 @@ class FixturesAndResults(competitions: Competitions) extends Football {
       val maybeCompetitionAndGroup = competitionAndGroupFinder.bestForTeam(teamId).filter(_ => leagueTableExists)
 
       val now = LocalDate.now(Edition.defaultEdition.timezone)
-      val fixturesComponent = if(fixtureExists)  {
-        Some(matchesComponent(
-          TeamFixturesList(now, competitions.competitions, teamId, 2),
-          Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures")
-        ))
+      val fixturesComponent = if (fixtureExists) {
+        Some(
+          matchesComponent(
+            TeamFixturesList(now, competitions.competitions, teamId, 2),
+            Some(s"Show more $teamName fixtures", s"/football/$tagId/fixtures"),
+          ),
+        )
       } else None
-      val resultsComponent = if(resultExists) {
-         Some(matchesComponent(
-          TeamResultsList(now, competitions.competitions, teamId),
-          Some(s"Show more $teamName results", s"/football/$tagId/results")
-        ))
+      val resultsComponent = if (resultExists) {
+        Some(
+          matchesComponent(
+            TeamResultsList(now, competitions.competitions, teamId),
+            Some(s"Show more $teamName results", s"/football/$tagId/results"),
+          ),
+        )
       } else None
 
-      if(Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty) {
+      if (Seq(maybeCompetitionAndGroup, fixturesComponent, resultsComponent).flatten.nonEmpty) {
         val blobs = Seq(
-          Some(HtmlAndClasses(
-            1,
-            fixturesComponent getOrElse Html("No upcoming fixtures"),
-            if (fixturesComponent.isDefined) cssClasses else missingComponentClasses
-          )),
-          Some(HtmlAndClasses(
-            2,
-            resultsComponent getOrElse Html("No recent results"),
-            if (resultsComponent.isDefined) cssClasses else missingComponentClasses
-          )),
-          maybeCompetitionAndGroup map { case CompetitionAndGroup(competition, group) =>
+          Some(
             HtmlAndClasses(
-              3,
-              tablesComponent(competition, group, competition.fullName, highlightTeamId = Some(teamId), false),
-              cssClasses
-            )
-          }
+              1,
+              fixturesComponent getOrElse Html("No upcoming fixtures"),
+              if (fixturesComponent.isDefined) cssClasses else missingComponentClasses,
+            ),
+          ),
+          Some(
+            HtmlAndClasses(
+              2,
+              resultsComponent getOrElse Html("No recent results"),
+              if (resultsComponent.isDefined) cssClasses else missingComponentClasses,
+            ),
+          ),
+          maybeCompetitionAndGroup map {
+            case CompetitionAndGroup(competition, group) =>
+              HtmlAndClasses(
+                3,
+                tablesComponent(competition, group, competition.fullName, highlightTeamId = Some(teamId), false),
+                cssClasses,
+              )
+          },
         ).flatten
 
         val layout = ContainerLayout.forHtmlBlobs(container.slices, blobs)
@@ -116,7 +130,7 @@ class FixturesAndResults(competitions: Competitions) extends Football {
           dateLinkPath = None,
           useShowMore = false,
           hasShowMoreEnabled = true,
-          isThrasher = false
+          isThrasher = false,
         )
         Some(faciaContainer)
       } else None

@@ -1,18 +1,17 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import { getUserFromCookie, isUserLoggedIn } from 'common/modules/identity/api';
 
-const updateCommentLink = (commentItems): void => {
+const updateCommentLink = (commentItems) => {
     const user = getUserFromCookie();
 
     if (user) {
         commentItems.forEach(commentItem => {
             fastdom
-                .read(() =>
+                .measure(() =>
                     commentItem.querySelector('.js-add-comment-activity-link')
                 )
                 .then(commentLink =>
-                    fastdom.write(() => {
+                    fastdom.mutate(() => {
                         commentItem.classList.remove('u-h');
                         commentLink.setAttribute(
                             'href',
@@ -24,13 +23,13 @@ const updateCommentLink = (commentItems): void => {
     }
 };
 
-const showMyAccountIfNecessary = (): void => {
+const showMyAccountIfNecessary = () => {
     if (!isUserLoggedIn()) {
         return;
     }
 
     fastdom
-        .read(() => ({
+        .measure(() => ({
             signIns: Array.from(
                 document.querySelectorAll('.js-navigation-sign-in')
             ),
@@ -44,7 +43,7 @@ const showMyAccountIfNecessary = (): void => {
         .then(els => {
             const { signIns, accountActionsLists, commentItems } = els;
             return fastdom
-                .write(() => {
+                .mutate(() => {
                     signIns.forEach(signIn => {
                         signIn.remove();
                     });

@@ -12,6 +12,7 @@ case class TimestampCleaner(article: model.Article) extends HtmlCleaner {
 }
 
 case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
+
   /**
     * Associate child classes (keys) with those to add to the parent (values).
     */
@@ -21,7 +22,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "block-title" -> "has-title",
     "quoted" -> "block--minute-article--quote",
     "element--inline" -> "block--minute-article--background-image block--minute-article--image",
-    "element--thumbnail" -> "block--minute-article--bottom-image block--minute-article--image"
+    "element--thumbnail" -> "block--minute-article--bottom-image block--minute-article--image",
   )
 
   /**
@@ -31,7 +32,7 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
     "element--thumbnail",
     "caption--img",
     "fig--narrow-caption",
-    "fig--has-shares"
+    "fig--has-shares",
   )
 
   override def clean(document: Document): Document = {
@@ -56,17 +57,27 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         if (heading.text() == "Summary" || heading.text() == "Key event") {
           heading.remove()
         } else {
-          heading.html(regexCleaner(Option(heading.first()), headingNumRegEx, "<span class=\"block--minute-article--counter\">$1 </span>"))
+          heading.html(
+            regexCleaner(
+              Option(heading.first()),
+              headingNumRegEx,
+              "<span class=\"block--minute-article--counter\">$1 </span>",
+            ),
+          )
         }
 
         // Add relevant classes
-        ParentClasses.foldLeft(Set(): Set[String]) { case (classes, (childClass, parentClass)) =>
-          if (allElements.asScala.exists(_.hasClass(childClass))) classes + parentClass
-          else classes
+        ParentClasses.foldLeft(Set(): Set[String]) {
+          case (classes, (childClass, parentClass)) =>
+            if (allElements.asScala.exists(_.hasClass(childClass))) classes + parentClass
+            else classes
         } foreach block.addClass
 
         // Check if the heading has a number and is an embed or quote
-        if ((block.hasClass("block--minute-article--embed") || block.hasClass("block--minute-article--quote")) && headingHasNumber) {
+        if (
+          (block.hasClass("block--minute-article--embed") || block
+            .hasClass("block--minute-article--quote")) && headingHasNumber
+        ) {
           block.addClass("block--minute-article--shorty")
         }
 
@@ -82,11 +93,13 @@ case class MinuteCleaner(article: model.Article) extends HtmlCleaner {
         // Inline (fullscreen) image mark-up
         // Move the picture element out of thumbnail anchor and responsive image
         block.getElementsByClass("element--inline").asScala.headOption.map { figure =>
-          figure.getElementsByClass("u-responsive-ratio").asScala.headOption.map { outer => {
-            figure.insertChildren(0, outer)
-            outer.getElementsByClass("gu-image").asScala.headOption.map(image => image.addClass("js-is-fixed-height"))
-            outer.addClass("element--inline__image-wrapper")
-          }}
+          figure.getElementsByClass("u-responsive-ratio").asScala.headOption.map { outer =>
+            {
+              figure.insertChildren(0, outer)
+              outer.getElementsByClass("gu-image").asScala.headOption.map(image => image.addClass("js-is-fixed-height"))
+              outer.addClass("element--inline__image-wrapper")
+            }
+          }
           figure.getElementsByClass("article__img-container").asScala.headOption.map(container => container.remove())
         }
 

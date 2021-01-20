@@ -1,4 +1,3 @@
-// @flow
 import bonzo from 'bonzo';
 import { makeRelativeDate } from 'common/modules/ui/relativedates';
 import $ from 'lib/$';
@@ -6,11 +5,11 @@ import { getViewport } from 'lib/detect';
 import fastdomPromise from 'lib/fastdom-promise';
 import fetchJson from 'lib/fetch-json';
 import mediator from 'lib/mediator';
-import { session } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
-import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
+import blockTemplate from 'facia/views/liveblog-block.html';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;
@@ -25,26 +24,18 @@ const sessionStorageKey = 'gu.liveblog.block-dates';
 const viewportHeightPx = getViewport().height;
 const maxBlockCount = 3;
 
-type Block = {
-    id: string,
-    title: string,
-    publishedDateTime: number,
-    lastUpdatedDateTime: number,
-    body: string,
-    isNew: boolean, // This is not pulled in from the response, but mutated in this module
-};
 
-const blockRelativeTime = (block: Block): string => {
+const blockRelativeTime = (block) => {
     const pubDate = (block || {}).publishedDateTime;
     const relDate = pubDate ? makeRelativeDate(new Date(pubDate)) : false;
     return relDate || '';
 };
 
 const renderBlock = (
-    articleId: string,
-    block: Block,
-    index: number
-): string => {
+    articleId,
+    block,
+    index
+) => {
     let relTime = blockRelativeTime(block);
 
     if (relTime.match(/yesterday/i)) {
@@ -66,22 +57,22 @@ const renderBlock = (
     });
 };
 
-const timeoutPromise = (delay: number): Promise<void> =>
+const timeoutPromise = (delay) =>
     new Promise(resolve => setTimeout(resolve, delay));
 
 const maybeAnimateBlocks = (
-    el: Element,
-    container: Element,
-    immediate?: boolean
-): Promise<boolean> =>
+    el,
+    container,
+    immediate
+) =>
     fastdomPromise
-        .read(() => el.getBoundingClientRect().top)
+        .measure(() => el.getBoundingClientRect().top)
         .then(vPosition => {
             const isVisible = vPosition > 0 && vPosition < viewportHeightPx;
 
             if (isVisible) {
                 timeoutPromise(immediate ? 0 : animateDelayMs).then(() =>
-                    fastdomPromise.write(() =>
+                    fastdomPromise.mutate(() =>
                         el.classList.remove(
                             'fc-item__liveblog-blocks__inner--offset'
                         )
@@ -93,7 +84,7 @@ const maybeAnimateBlocks = (
             return false;
         });
 
-const animateBlocks = (el: Element, container: Element): void => {
+const animateBlocks = (el, container) => {
     maybeAnimateBlocks(el, container).then(didAnimate => {
         if (!didAnimate) {
             const animateOnScroll = debounce(() => {
@@ -113,27 +104,27 @@ const animateBlocks = (el: Element, container: Element): void => {
         }
     });
 
-    fastdomPromise.write(() => {
+    fastdomPromise.mutate(() => {
         container.classList.remove('fc-item__liveblog-blocks--hidden');
         container.classList.add('fc-item__liveblog-blocks--visible');
     });
 };
 
 const applyUpdate = (
-    container: Element,
-    content: Array<Element>
-): Promise<void> =>
-    fastdomPromise.write(() => {
+    container,
+    content
+) =>
+    fastdomPromise.mutate(() => {
         bonzo(container)
             .empty()
             .append(content);
     });
 
 const startUpdate = (
-    container: Element,
-    content: Array<Element>,
-    shouldTransitionOut: boolean
-): Promise<void> => {
+    container,
+    content,
+    shouldTransitionOut
+) => {
     if (shouldTransitionOut) {
         container.classList.remove('fc-item__liveblog-blocks--visible');
         container.classList.add('fc-item__liveblog-blocks--hidden');
@@ -151,22 +142,22 @@ const startUpdate = (
 };
 
 const completeUpdate = (
-    container: Element,
-    content: Array<Element>,
-    shouldTransitionIn: boolean
-): void => {
+    container,
+    content,
+    shouldTransitionIn
+) => {
     if (shouldTransitionIn) {
         animateBlocks(content[0], container);
     }
 };
 
-const isDynamic = (element: Element): boolean =>
+const isDynamic = (element) =>
     element.classList.contains(dynamicClass);
 
 const calculateBlockCount = (
-    hasNewBlock: boolean,
-    isInDynamicContainer: boolean
-): number => {
+    hasNewBlock,
+    isInDynamicContainer
+) => {
     if (isInDynamicContainer) {
         return maxBlockCount;
     } else if (hasNewBlock) {
@@ -176,11 +167,11 @@ const calculateBlockCount = (
 };
 
 const showBlocks = (
-    articleId: string,
-    targets: Array<Element>,
-    blocks: Array<Block>,
-    oldBlockDate: number
-): void => {
+    articleId,
+    targets,
+    blocks,
+    oldBlockDate
+) => {
     const fakeUpdate = isUndefined(oldBlockDate);
 
     targets.forEach(element => {
@@ -221,7 +212,7 @@ const showBlocks = (
     });
 };
 
-const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
+const sanitizeBlocks = (blocks) =>
     blocks.filter(
         block =>
             block.id &&
@@ -230,10 +221,10 @@ const sanitizeBlocks = (blocks: Array<Block>): Array<Block> =>
             block.body.length >= 10
     );
 
-const showUpdatesFromLiveBlog = (): Promise<void> =>
+const showUpdatesFromLiveBlog = () =>
     fastdomPromise
-        .read(() => {
-            const elementsById: Map<string, Array<Element>> = new Map();
+        .measure(() => {
+            const elementsById = new Map();
 
             // For each liveblock block
             $(selector).each(element => {
@@ -252,7 +243,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
             let oldBlockDates;
 
             if (elementsById.size) {
-                oldBlockDates = session.get(sessionStorageKey) || {};
+                oldBlockDates = storage.session.get(sessionStorageKey) || {};
 
                 elementsById.forEach((elements, articleId) => {
                     fetchJson(`/${articleId}.json?rendered=false`, {
@@ -271,7 +262,7 @@ const showUpdatesFromLiveBlog = (): Promise<void> =>
                                 );
                                 oldBlockDates[articleId] =
                                     blocks[0].publishedDateTime;
-                                session.set(sessionStorageKey, oldBlockDates);
+                                storage.session.set(sessionStorageKey, oldBlockDates);
                             }
                         })
                         .catch(() => {});

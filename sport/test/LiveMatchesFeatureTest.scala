@@ -3,7 +3,12 @@ package test
 import org.scalatest.{DoNotDiscover, FeatureSpec, GivenWhenThen, Matchers}
 import tools.MatchListFeatureTools
 
-@DoNotDiscover class LiveMatchesFeatureTest extends FeatureSpec with GivenWhenThen with Matchers with MatchListFeatureTools with ConfiguredTestSuite {
+@DoNotDiscover class LiveMatchesFeatureTest
+    extends FeatureSpec
+    with GivenWhenThen
+    with Matchers
+    with MatchListFeatureTools
+    with ConfiguredTestSuite {
 
   feature("Live Matches") {
 

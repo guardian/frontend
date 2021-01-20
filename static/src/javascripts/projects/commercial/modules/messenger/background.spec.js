@@ -1,4 +1,3 @@
-// @flow
 import { _ } from './background';
 
 const { setBackground, getStylesFromSpec } = _;
@@ -46,9 +45,9 @@ describe('Cross-frame messenger: setBackground', () => {
         const fakeAdSlot = document.getElementById('slot01') || fallback;
 
         return setBackground(adSpec, fakeAdSlot).then(() => {
-            const creative: Object =
+            const creative =
                 document.querySelector('.creative__background') || {};
-            const parent: Object =
+            const parent =
                 document.querySelector('.creative__background-parent') || {};
             expect(creative.toString()).toEqual('[object HTMLDivElement]');
             expect(parent.toString()).toEqual('[object HTMLDivElement]');
@@ -59,7 +58,7 @@ describe('Cross-frame messenger: setBackground', () => {
 
 describe('Cross-frame messenger: getStylesFromSpec', () => {
     it('should return an object of valid styles', () => {
-        const specStyles: Object = getStylesFromSpec(adSpec);
+        const specStyles = getStylesFromSpec(adSpec);
         expect(specStyles.scrollType).toBeUndefined();
         expect(specStyles.backgroundColor).toBe('ffffff');
         expect(specStyles.backgroundImage).toBe('image');

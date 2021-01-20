@@ -1,9 +1,9 @@
 package model.diagnostics.analytics
 
-import common.Logging
+import common.GuLogging
 import model.diagnostics.CloudWatch
 
-object UploadJob extends Logging {
+object UploadJob extends GuLogging {
   def run() {
 
     log.info("Uploading analytics count metrics")

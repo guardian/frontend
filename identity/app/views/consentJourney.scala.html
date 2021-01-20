@@ -2,7 +2,6 @@
 @import conf.Configuration
 @import views.support.RenderClasses
 @import model.{ApplicationContext, IdentityPage}
-@import com.gu.identity.model.EmailNewsletters
 @import services.EmailPrefsData
 @import form.IdFormHelpers.nonInputFields
 @import views.support.`package`.Seq2zipWithRowInfo
@@ -13,6 +12,7 @@
 @import controllers.editprofile.ProfileForms
 @import _root_.utils.ConsentsJourneyType._
 
+@import com.gu.identity.model.EmailNewsletter
 @(
     user: com.gu.identity.model.User,
     forms: ProfileForms,
@@ -22,7 +22,7 @@
     idUrlBuilder: services.IdentityUrlBuilder,
     emailPrefsForm: Form[EmailPrefsData],
     emailSubscriptions: List[String],
-    availableLists: EmailNewsletters,
+    availableLists: List[EmailNewsletter],
     consentHint: Option[String] = None,
     skin: Option[String] = None)(implicit request: RequestHeader, messages: play.api.i18n.Messages, context: model.ApplicationContext)
 

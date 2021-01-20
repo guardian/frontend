@@ -1,6 +1,5 @@
 package commercial.model.merchandise.books
 
-
 import commercial.model.merchandise.Book
 import org.scalatest.{DoNotDiscover, FlatSpec, Matchers}
 import play.api.libs.json.Json
@@ -28,21 +27,26 @@ import test.ConfiguredTestSuite
       |"regular_price_with_tax":"5.0915",
       |"regular_price_without_tax":"5.0915",
       |"final_price_with_tax":"5.0914",
-      |"final_price_without_tax":5.0914}""".stripMargin)
+      |"final_price_without_tax":5.0914}""".stripMargin,
+  )
 
   "Book" should "create a Book from json" in {
-    json.validate[Book].asOpt shouldBe Some(Book(
-      title = "In a People House",
-      author = Some("Dr Seuss"),
-      isbn = "9780001712768",
-      price = Some(5.0915),
-      offerPrice = Some(5.0914),
-      description = None,
-      jacketUrl = Some("http://guardianbookshop.staging.lab.co.uk/image/9df78eab33525d08d6e5fb8d27136e95/media2/73e70a25faab42aa1b411b8b59382416.jpg"),
-      buyUrl = Some("http://guardianbookshop.staging.lab.co.uk/index.php/in-a-people-house.html"),
-      position = Some(222),
-      category = Some("Picture books"),
-      keywordIdSuffixes = Nil
-    ))
+    json.validate[Book].asOpt shouldBe Some(
+      Book(
+        title = "In a People House",
+        author = Some("Dr Seuss"),
+        isbn = "9780001712768",
+        price = Some(5.0915),
+        offerPrice = Some(5.0914),
+        description = None,
+        jacketUrl = Some(
+          "http://guardianbookshop.staging.lab.co.uk/image/9df78eab33525d08d6e5fb8d27136e95/media2/73e70a25faab42aa1b411b8b59382416.jpg",
+        ),
+        buyUrl = Some("http://guardianbookshop.staging.lab.co.uk/index.php/in-a-people-house.html"),
+        position = Some(222),
+        category = Some("Picture books"),
+        keywordIdSuffixes = Nil,
+      ),
+    )
   }
 }

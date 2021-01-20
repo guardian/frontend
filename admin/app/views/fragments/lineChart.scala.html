@@ -4,26 +4,30 @@
 <div id="@chart.id" class="chart @chart.format.cssClass"></div>
 
 <script type="text/javascript">
-    new google.visualization.LineChart(document.getElementById('@chart.id'))
-        .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
-            title: '@chart.name',
-            colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
-            @if(chart.labels.size == 2){
-                legend: "none",
-                vAxis: {title: '@chart.labels(1)'},
-            } else {
-                legend: { position: "in" },
-                @if(chart.dualY){
-                    series: {
-                        0: {targetAxisIndex: 0},
-                        1: {targetAxisIndex: 1}
-                    },
+    function drawChart() {
+        new google.visualization.LineChart(document.getElementById('@chart.id'))
+            .draw(google.visualization.arrayToDataTable(@Html(chart.asDataset)), {
+                title: '@chart.name',
+                colors: [@Html(chart.format.colours.map(c => s"'$c'").mkString(","))],
+                @if(chart.labels.size == 2){
+                    legend: "none",
+                    vAxis: {title: '@chart.labels(1)'},
+                } else {
+                    legend: { position: "in" },
+                    @if(chart.dualY){
+                        series: {
+                            0: {targetAxisIndex: 0},
+                            1: {targetAxisIndex: 1}
+                        },
+                    }
                 }
-            }
-            chartArea: { width: "85%" },
-            titleTextStyle: {color: '#999'},
-            axisTitlesPosition: 'in',
-            fontName : 'Georgia',
-            smoothLine: true
-    });
+                chartArea: { width: "85%" },
+                titleTextStyle: {color: '#999'},
+                axisTitlesPosition: 'in',
+                fontName : 'Georgia',
+                smoothLine: true
+        });
+    }
+
+    google.charts.setOnLoadCallback(drawChart);
 </script>

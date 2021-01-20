@@ -12,22 +12,24 @@ import scala.concurrent.duration._
 import play.api.libs.ws.{WSClient, WSResponse}
 
 @DoNotDiscover class DiscussionApiPluginIntegrationTest
-  extends FlatSpecLike
-  with Matchers
-  with BeforeAndAfterAll
-  with ConfiguredTestSuite
-  with WithMaterializer
-  with WithTestExecutionContext
-  with WithTestWsClient {
+    extends FlatSpecLike
+    with Matchers
+    with BeforeAndAfterAll
+    with ConfiguredTestSuite
+    with WithMaterializer
+    with WithTestExecutionContext
+    with WithTestWsClient {
 
   class TestPlugin(val wsClient: WSClient) extends DiscussionApiLike {
 
-    override def GET(url: String, headers: (String, String)*)(implicit executionContext: ExecutionContext): Future[WSResponse] = {
-      headersReceived = Map(headers:_*)
+    override def GET(url: String, headers: (String, String)*)(implicit
+        executionContext: ExecutionContext,
+    ): Future[WSResponse] = {
+      headersReceived = Map(headers: _*)
       wsClient.url(testUrl).withRequestTimeout(1.millisecond).get()
     }
 
-    var headersReceived: Map[String,String] = Map.empty
+    var headersReceived: Map[String, String] = Map.empty
     val testUrl = "http://test-url"
 
     override protected val apiRoot = Configuration.discussion.apiRoot
@@ -42,6 +44,6 @@ import play.api.libs.ws.{WSClient, WSResponse}
 
     Await.ready(responseFuture, 2 seconds)
 
-    testPlugin.headersReceived.get("GU-Client") should be (Some("nextgen-dev"))
+    testPlugin.headersReceived.get("GU-Client") should be(Some("nextgen-dev"))
   }
 }

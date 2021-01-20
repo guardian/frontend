@@ -1,19 +1,10 @@
-// @flow
-
-type MediaEvent = {
-    mediaId: string,
-    mediaType: string,
-    eventType: string,
-    isPreroll: boolean,
-};
-
 const buildGoogleAnalyticsEvent = (
-    mediaEvent: MediaEvent,
-    metrics: Object,
-    canonicalUrl: string,
-    player: string,
-    eventAction: MediaEvent => string,
-    videoId: string
+    mediaEvent,
+    metrics,
+    canonicalUrl,
+    player,
+    eventAction,
+    videoId
 ) => {
     const category = 'media';
     const playerName = player;
@@ -33,7 +24,7 @@ const buildGoogleAnalyticsEvent = (
     return fieldsObject;
 };
 
-const getGoogleAnalyticsEventAction = (mediaEvent: MediaEvent) => {
+const getGoogleAnalyticsEventAction = (mediaEvent) => {
     let action = `${mediaEvent.mediaType} `;
     if (mediaEvent.isPreroll) {
         action += 'preroll';
@@ -43,5 +34,25 @@ const getGoogleAnalyticsEventAction = (mediaEvent: MediaEvent) => {
     return action;
 };
 
-export type { MediaEvent };
-export { buildGoogleAnalyticsEvent, getGoogleAnalyticsEventAction };
+
+
+const buildPfpEvent = (
+    pfpEventType,
+    videoId
+) => {
+    const pfpEventMetric = pfpEventType === 'adStart' ? 24 : 25;
+    return {
+        eventCategory: 'media',
+        eventAction: 'video preroll',
+        eventLabel: videoId,
+        dimension19: videoId,
+        dimension20: 'gu-video-youtube',
+        [`metric${pfpEventMetric}`]: 1,
+    };
+};
+
+export {
+    buildGoogleAnalyticsEvent,
+    getGoogleAnalyticsEventAction,
+    buildPfpEvent,
+};

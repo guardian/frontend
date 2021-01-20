@@ -1,4 +1,3 @@
-// @flow
 import { genAbTest, genVariant } from '../__fixtures__/ab-test';
 
 export const concurrentTests = [
@@ -15,3 +14,5 @@ export const engagementBannerTests = [
     genAbTest('BannerTest'),
     genAbTest('BannerTest2'),
 ];
+
+export const priorityEpicTest = genAbTest('PriorityEpicTest');

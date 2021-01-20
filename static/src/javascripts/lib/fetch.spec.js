@@ -1,11 +1,9 @@
-// @flow
-
 import fetch from 'lib/fetch';
 import reqwest_ from 'reqwest';
 
 jest.mock('reqwest', () => jest.fn());
 
-const reqwest: JestMockFn<*, *> = (reqwest_: any);
+const reqwest = (reqwest_);
 
 describe('Fetch util', () => {
     afterEach(() => {

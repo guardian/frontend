@@ -1,15 +1,8 @@
-// @flow
 import React from 'preact-compat';
 import { FollowButtonWrap } from 'common/modules/identity/upsell/button/FollowButtonWrap';
-import type { Consent } from '../store/types';
 
-export type FollowCardProps = {
-    consent: Consent,
-    onChange: boolean => void,
-    hasConsented: boolean,
-};
 
-const FollowCard = (props: FollowCardProps) => {
+const FollowCard = (props) => {
     const { hasConsented } = props;
     const { name, description } = props.consent;
     return (

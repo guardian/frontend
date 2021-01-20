@@ -1,4 +1,4 @@
-// @flow strict
+
 import $ from 'lib/$';
 import config from 'lib/config';
 import mediator from 'lib/mediator';
@@ -10,13 +10,13 @@ import { commercialFeatures } from 'common/modules/commercial/commercial-feature
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { getBreakpoint } from 'lib/detect';
 
-import type { Advert } from 'commercial/modules/dfp/Advert';
-import type bonzo from 'bonzo';
+
 
 const createCommentSlots = (
-    canBeDmpu: boolean
-): Array<HTMLDivElement | HTMLSpanElement> => {
+    canBeDmpu
+) => {
     const sizes = canBeDmpu
         ? { desktop: [adSizes.halfPage, adSizes.skyscraper] }
         : {};
@@ -29,15 +29,15 @@ const createCommentSlots = (
 };
 
 const insertCommentAd = (
-    $commentMainColumn: bonzo,
-    $adSlotContainer: bonzo,
-    canBeDmpu: boolean
-): Promise<void> => {
+    $commentMainColumn,
+    $adSlotContainer,
+    canBeDmpu
+) => {
     const commentSlots = createCommentSlots(canBeDmpu);
 
     return (
         fastdom
-            .write(() => {
+            .mutate(() => {
                 $commentMainColumn.addClass('discussion__ad-wrapper');
                 if (
                     !config.get('page.isLiveBlog') &&
@@ -52,24 +52,24 @@ const insertCommentAd = (
                 return commentSlots[0];
             })
             // Add only the fist slot (DFP slot) to GTP
-            .then((adSlot: HTMLElement) => {
+            .then((adSlot) => {
                 addSlot(adSlot, false);
                 Promise.resolve(mediator.emit('page:commercial:comments'));
             })
     );
 };
 
-const containsDMPU = (ad: Advert): boolean =>
+const containsDMPU = (ad) =>
     ad.sizes.desktop.some(
         (el => el[0] === 300 && el[1] === 600) ||
             (el => el[0] === 160 && el[1] === 600)
     );
 
-const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
+const maybeUpgradeSlot = (ad, $adSlot) => {
     if (!containsDMPU(ad)) {
         ad.sizes.desktop.push([300, 600], [160, 600]);
         ad.slot.defineSizeMapping([[[0, 0], ad.sizes.desktop]]);
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             $adSlot[0].setAttribute(
                 'data-desktop',
                 '1,1|2,2|300,250|300,274|fluid|300,600|160,600'
@@ -80,10 +80,10 @@ const maybeUpgradeSlot = (ad: Advert, $adSlot: bonzo): Advert => {
 };
 
 const runSecondStage = (
-    $commentMainColumn: bonzo,
-    $adSlotContainer: bonzo
-): void => {
-    const $adSlot: bonzo = $('.js-ad-slot', $adSlotContainer);
+    $commentMainColumn,
+    $adSlotContainer
+) => {
+    const $adSlot = $('.js-ad-slot', $adSlotContainer);
     const commentAdvert = getAdvertById('dfp-ad--comments');
 
     if (commentAdvert && $adSlot.length) {
@@ -97,24 +97,24 @@ const runSecondStage = (
     }
 };
 
-export const initCommentAdverts = (): Promise<boolean> => {
-    const $adSlotContainer: bonzo = $('.js-discussion__ad-slot');
-
-    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length) {
+export const initCommentAdverts = () => {
+    const $adSlotContainer = $('.js-discussion__ad-slot');
+    const isMobile = getBreakpoint() === 'mobile';
+    if (!commercialFeatures.commentAdverts || !$adSlotContainer.length || isMobile) {
         return Promise.resolve(false);
     }
 
     mediator.once(
         'modules:comments:renderComments:rendered',
-        (): void => {
-            const isLoggedIn: boolean = isUserLoggedIn();
-            const $commentMainColumn: bonzo = $(
+        () => {
+            const isLoggedIn = isUserLoggedIn();
+            const $commentMainColumn = $(
                 '.js-comments .content__main-column'
             );
 
             fastdom
-                .read(() => $commentMainColumn.dim().height)
-                .then((mainColHeight: number) => {
+                .measure(() => $commentMainColumn.dim().height)
+                .then((mainColHeight) => {
                     // always insert an MPU/DMPU if the user is logged in, since the
                     // containers are reordered, and comments are further from most-pop
                     if (

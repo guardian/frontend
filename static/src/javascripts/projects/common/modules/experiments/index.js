@@ -1,11 +1,10 @@
-// @flow
 import template from 'lodash/template';
-import { local as storage } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import $ from 'lib/$';
 import bean from 'bean';
 import config from 'lib/config';
-import overlay from 'raw-loader!common/views/experiments/overlay.html';
-import styles from 'raw-loader!common/views/experiments/styles.css';
+import overlay from 'common/views/experiments/overlay.html';
+import styles from 'common/views/experiments/styles.css';
 import {
     concurrentTests,
     engagementBannerTests,
@@ -18,7 +17,6 @@ import {
 } from 'common/modules/experiments/ab-local-storage';
 import {
     getEngagementBannerTestsFromGoogleDoc,
-    getConfiguredEpicTests,
 } from 'common/modules/commercial/contributions-utilities';
 
 const selectRadios = () => {
@@ -49,7 +47,7 @@ const bindEvents = () => {
     });
 
     bean.on($('.js-experiments-clear-ab')[0], 'click', () => {
-        storage.set('gu.experiments.ab', JSON.stringify([]));
+        storage.local.set('gu.experiments.ab', []);
         selectRadios();
     });
 
@@ -76,7 +74,7 @@ const applyCss = () => {
     $('head').append(el);
 };
 
-const appendOverlay = (): Promise<void> => {
+const appendOverlay = () => {
     const extractData = ({ id, variants, description, expiry }) => ({
         id,
         variants,
@@ -85,7 +83,6 @@ const appendOverlay = (): Promise<void> => {
         isExpired: isExpired(expiry),
     });
     return Promise.all([
-        getConfiguredEpicTests(),
         getEngagementBannerTestsFromGoogleDoc(),
     ]).then(([asyncEpicTests, asyncBannerTests]) => {
         const data = {

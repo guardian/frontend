@@ -13,7 +13,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = On,
     sellByDate = never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val SentryReporting = Switch(
@@ -23,7 +23,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("rich-nguyen")),
     safeState = Off,
     never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ComscoreSwitch = Switch(
@@ -33,7 +33,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("cb372")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = true,
   )
 
   val ScrollDepthSwitch = Switch(
@@ -43,7 +43,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val ThirdPartyEmbedTracking = Switch(
@@ -53,7 +53,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("johnduffell")),
     safeState = Off,
     never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val LogstashLogging = Switch(
@@ -63,7 +63,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("tbonnin")),
     safeState = Off,
     sellByDate = never,
-    exposeClientSide = false
+    exposeClientSide = false,
   )
 
   val BoostGAUserTimingFidelity = Switch(
@@ -73,7 +73,7 @@ trait MonitoringSwitches {
     owners = Seq(Owner.withGithub("sndrs")),
     safeState = Off,
     never,
-    exposeClientSide = true
+    exposeClientSide = true,
   )
 
   val LogRemovedAmpElements = Switch(
@@ -83,7 +83,17 @@ trait MonitoringSwitches {
     Seq(Owner.withGithub("aware")),
     Off,
     never,
-    false
+    false,
+  )
+
+  val CompareVariantDecisions = Switch(
+    SwitchGroup.Monitoring,
+    "compare-variant-decision",
+    "forward contributions variant (ab test) decision to evaluate new service",
+    Seq(Owner.withEmail("slot.machine.dev@theguardian.com")),
+    Off,
+    never,
+    exposeClientSide = true,
   )
 
 }

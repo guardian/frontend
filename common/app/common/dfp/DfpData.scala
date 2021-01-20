@@ -22,40 +22,44 @@ case class Other(get: String) extends GuLineItemType {
   val asString: String = get
 }
 
-
 object GuLineItemType {
 
-  def fromDFPLineItemType(dfpLineItemType: String): GuLineItemType = dfpLineItemType.toLowerCase match {
-    case Sponsorship.asString => Sponsorship
-    case otherLineItemType => Other(otherLineItemType)
-  }
+  def fromDFPLineItemType(dfpLineItemType: String): GuLineItemType =
+    dfpLineItemType.toLowerCase match {
+      case Sponsorship.asString => Sponsorship
+      case otherLineItemType    => Other(otherLineItemType)
+    }
 
   implicit val guLineItemWrites = new Writes[GuLineItemType] {
     def writes(lineItemType: GuLineItemType): JsValue = {
       lineItemType match {
-        case Sponsorship => JsString("sponsorship")
-        case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)}}}
+        case Sponsorship                 => JsString("sponsorship")
+        case Other(lineItemTypeAsString) => JsString(lineItemTypeAsString)
+      }
+    }
+  }
 
   implicit val guLineItemTypeReads: Reads[GuLineItemType] =
     JsPath.read[String].map {
       case "sponsorship" => Sponsorship
-      case otherType => Other(otherType)}
+      case otherType     => Other(otherType)
+    }
 }
 
 case class GuCustomTargeting(
-                              keyId: Long,
-                              name: String,
-                              displayName: String,
-                              values: Seq[GuCustomTargetingValue]
-                            ) {
-  val readableValues: Seq[GuCustomTargetingValue] = values.filter( _.displayName.nonEmpty)
+    keyId: Long,
+    name: String,
+    displayName: String,
+    values: Seq[GuCustomTargetingValue],
+) {
+  val readableValues: Seq[GuCustomTargetingValue] = values.filter(_.displayName.nonEmpty)
 }
 
 case class GuCustomTargetingValue(
-                                   id: Long,
-                                   name: String,
-                                   displayName: String
-                                 )
+    id: Long,
+    name: String,
+    displayName: String,
+)
 
 object GuCustomTargetingValue {
   implicit val format = Json.format[GuCustomTargetingValue]
@@ -105,16 +109,15 @@ case class CustomTargetSet(op: String, targets: Seq[CustomTarget]) {
   val inlineMerchandisingTargetedSeries = filterTags(tag => tag.isSeriesTag)(_.isInlineMerchandisingSlot)
   val inlineMerchandisingTargetedContributors = filterTags(tag => tag.isContributorTag)(_.isInlineMerchandisingSlot)
 
-  val highMerchandisingTargets = filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
+  val highMerchandisingTargets =
+    filterTags(tag => tag.isKeywordTag || tag.isSeriesTag || tag.isContributorTag)(_.isHighMerchandisingSlot)
 }
 
 object CustomTargetSet {
 
   implicit val customTargetSetFormats: Format[CustomTargetSet] = Json.format[CustomTargetSet]
 
-
 }
-
 
 case class GeoTarget(id: Long, parentId: Option[Int], locationType: String, name: String) {
 
@@ -133,14 +136,16 @@ object GeoTarget {
 
 }
 
-case class GuCustomField(id: Long,
-                         name: String,
-                         description: String,
-                         isActive: Boolean,
-                         entityType: String,
-                         dataType: String,
-                         visibility: String,
-                         options: List[GuCustomFieldOption])
+case class GuCustomField(
+    id: Long,
+    name: String,
+    description: String,
+    isActive: Boolean,
+    entityType: String,
+    dataType: String,
+    visibility: String,
+    options: List[GuCustomFieldOption],
+)
 
 case class GuCustomFieldOption(id: Long, name: String)
 
@@ -170,18 +175,23 @@ object GuAdUnit {
   val ARCHIVED = "ARCHIVED"
 }
 
-case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
-                       adUnitsExcluded: Seq[GuAdUnit],
-                       geoTargetsIncluded: Seq[GeoTarget],
-                       geoTargetsExcluded: Seq[GeoTarget],
-                       customTargetSets: Seq[CustomTargetSet]) {
+case class GuTargeting(
+    adUnitsIncluded: Seq[GuAdUnit],
+    adUnitsExcluded: Seq[GuAdUnit],
+    geoTargetsIncluded: Seq[GeoTarget],
+    geoTargetsExcluded: Seq[GeoTarget],
+    customTargetSets: Seq[CustomTargetSet],
+) {
 
-  private val tagValues = ( ( customTargetSets: Seq[CustomTargetSet],
-                              tagFilter: CustomTarget => Boolean )
-                             => customTargetSets.flatMap( _.targets ).filter( tagFilter ).flatMap( _.values ) )
+  private val tagValues = (
+      (
+          customTargetSets: Seq[CustomTargetSet],
+          tagFilter: CustomTarget => Boolean,
+      ) => customTargetSets.flatMap(_.targets).filter(tagFilter).flatMap(_.values),
+  )
 
-  val serieValues: Seq[String] = tagValues( customTargetSets, _.isSeriesTag )
-  val keywordValues: Seq[String] = tagValues( customTargetSets, _.isKeywordTag )
+  val serieValues: Seq[String] = tagValues(customTargetSets, _.isSeriesTag)
+  val keywordValues: Seq[String] = tagValues(customTargetSets, _.isKeywordTag)
 
   val adTestValue: Option[String] = {
     val testValues = for {
@@ -205,8 +215,8 @@ case class GuTargeting(adUnitsIncluded: Seq[GuAdUnit],
     adUnitsIncluded.exists { adUnit =>
       val path = adUnit.path
       path.length == 3 &&
-        path(1) == sectionId &&
-        path(2) == "front"
+      path(1) == sectionId &&
+      path(2) == "front"
     }
   }
 }
@@ -215,28 +225,33 @@ object GuTargeting {
   implicit val guTargetingFormats: Format[GuTargeting] = Json.format[GuTargeting]
 }
 
-case class GuLineItem(id: Long,
-                      orderId: Long,
-                      name: String,
-                      lineItemType: GuLineItemType,
-                      startTime: DateTime,
-                      endTime: Option[DateTime],
-                      isPageSkin: Boolean,
-                      sponsor: Option[String],
-                      status: String,
-                      costType: String,
-                      creativePlaceholders: Seq[GuCreativePlaceholder],
-                      targeting: GuTargeting,
-                      lastModified: DateTime) {
+case class GuLineItem(
+    id: Long,
+    orderId: Long,
+    name: String,
+    lineItemType: GuLineItemType,
+    startTime: DateTime,
+    endTime: Option[DateTime],
+    isPageSkin: Boolean,
+    sponsor: Option[String],
+    status: String,
+    costType: String,
+    creativePlaceholders: Seq[GuCreativePlaceholder],
+    targeting: GuTargeting,
+    lastModified: DateTime,
+) {
 
   val isCurrent = startTime.isBeforeNow && (endTime.isEmpty || endTime.exists(_.isAfterNow))
   val isExpired = endTime.exists(_.isBeforeNow)
   val isExpiredRecently = isExpired && endTime.exists(_.isAfter(now.minusWeeks(1)))
   val isExpiringSoon = !isExpired && endTime.exists(_.isBefore(now.plusMonths(1)))
 
-  val inlineMerchandisingTargetedKeywords: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
-  val inlineMerchandisingTargetedSeries: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
-  val inlineMerchandisingTargetedContributors: Seq[String] = targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
+  val inlineMerchandisingTargetedKeywords: Seq[String] =
+    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedKeywords).distinct
+  val inlineMerchandisingTargetedSeries: Seq[String] =
+    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedSeries).distinct
+  val inlineMerchandisingTargetedContributors: Seq[String] =
+    targeting.customTargetSets.flatMap(_.inlineMerchandisingTargetedContributors).distinct
 
   val highMerchandisingTargets: Seq[String] = targeting.customTargetSets.flatMap(_.highMerchandisingTargets).distinct
 
@@ -266,7 +281,7 @@ case class GuLineItem(id: Long,
     placeholder.nonEmpty && (
       targeting.targetsSectionFrontDirectly("business") ||
       placeholder.exists(_.targetsSectionFrontDirectly("business"))
-      ) &&
+    ) &&
     targeting.geoTargetsIncluded.exists { geoTarget =>
       geoTarget.targetsUk || geoTarget.targetsUs || geoTarget.targetsAustralia
     } &&
@@ -296,25 +311,25 @@ object GuLineItem {
         "costType" -> lineItem.costType,
         "creativePlaceholders" -> lineItem.creativePlaceholders,
         "targeting" -> lineItem.targeting,
-        "lastModified" -> timeFormatter.print(lineItem.lastModified)
+        "lastModified" -> timeFormatter.print(lineItem.lastModified),
       )
     }
   }
 
   implicit val lineItemReads: Reads[GuLineItem] = (
     (JsPath \ "id").read[Long] and
-    (JsPath \ "orderId").read[Long] and
-    (JsPath \ "name").read[String] and
-    (JsPath \ "lineItemType").read[GuLineItemType] and
-    (JsPath \ "startTime").read[String].map(timeFormatter.parseDateTime) and
-    (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
-    (JsPath \ "isPageSkin").read[Boolean] and
-    (JsPath \ "sponsor").readNullable[String] and
-    (JsPath \ "status").read[String] and
-    (JsPath \ "costType").read[String] and
-    (JsPath \ "creativePlaceholders").read[Seq[GuCreativePlaceholder]] and
-    (JsPath \ "targeting").read[GuTargeting] and
-    (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
+      (JsPath \ "orderId").read[Long] and
+      (JsPath \ "name").read[String] and
+      (JsPath \ "lineItemType").read[GuLineItemType] and
+      (JsPath \ "startTime").read[String].map(timeFormatter.parseDateTime) and
+      (JsPath \ "endTime").readNullable[String].map(_.map(timeFormatter.parseDateTime)) and
+      (JsPath \ "isPageSkin").read[Boolean] and
+      (JsPath \ "sponsor").readNullable[String] and
+      (JsPath \ "status").read[String] and
+      (JsPath \ "costType").read[String] and
+      (JsPath \ "creativePlaceholders").read[Seq[GuCreativePlaceholder]] and
+      (JsPath \ "targeting").read[GuTargeting] and
+      (JsPath \ "lastModified").read[String].map(timeFormatter.parseDateTime)
   )(GuLineItem.apply _)
 
   def asMap(lineItems: Seq[GuLineItem]): Map[Long, GuLineItem] = lineItems.map(item => item.id -> item).toMap
@@ -332,11 +347,12 @@ object GuCreativePlaceholder {
   implicit val guCreativePlaceholderFormats: Format[GuCreativePlaceholder] = Json.format[GuCreativePlaceholder]
 }
 
-
-case class GuCreativeTemplateParameter(parameterType: String,
-                                       label: String,
-                                       isRequired: Boolean,
-                                       description: Option[String])
+case class GuCreativeTemplateParameter(
+    parameterType: String,
+    label: String,
+    isRequired: Boolean,
+    description: Option[String],
+)
 
 object GuCreativeTemplateParameter {
 
@@ -346,7 +362,7 @@ object GuCreativeTemplateParameter {
         "type" -> param.parameterType,
         "label" -> param.label,
         "isRequired" -> param.isRequired,
-        "description" -> param.description
+        "description" -> param.description,
       )
     }
   }
@@ -356,17 +372,17 @@ object GuCreativeTemplateParameter {
       (JsPath \ "label").read[String] and
       (JsPath \ "isRequired").read[Boolean] and
       (JsPath \ "description").readNullable[String]
-    )(GuCreativeTemplateParameter.apply _)
+  )(GuCreativeTemplateParameter.apply _)
 }
 
 case class GuCreative(
-  id: Long,
-  name: String,
-  lastModified: DateTime,
-  args: Map[String, String],
-  templateId: Option[Long],
-  snippet: Option[String],
-  previewUrl: Option[String]
+    id: Long,
+    name: String,
+    lastModified: DateTime,
+    args: Map[String, String],
+    templateId: Option[Long],
+    snippet: Option[String],
+    previewUrl: Option[String],
 )
 
 object GuCreative {
@@ -385,15 +401,17 @@ object GuCreative {
   implicit val guCreativeFormats: Format[GuCreative] = Json.format[GuCreative]
 }
 
-case class GuCreativeTemplate(id: Long,
-                              name: String,
-                              description: String,
-                              parameters: Seq[GuCreativeTemplateParameter],
-                              snippet: String,
-                              isNative: Boolean,
-                              creatives: Seq[GuCreative]) {
+case class GuCreativeTemplate(
+    id: Long,
+    name: String,
+    description: String,
+    parameters: Seq[GuCreativeTemplateParameter],
+    snippet: String,
+    isNative: Boolean,
+    creatives: Seq[GuCreative],
+) {
 
-  lazy val examplePreviewUrl: Option[String] = creatives flatMap {_.previewUrl} headOption
+  lazy val examplePreviewUrl: Option[String] = creatives flatMap { _.previewUrl } headOption
 
   lazy val isForApps: Boolean = name.startsWith("apps - ") || name.startsWith("as ") || name.startsWith("qc ")
 }
@@ -404,20 +422,17 @@ object GuCreativeTemplate extends implicits.Collections {
 }
 
 case class GuAdvertiser(
-  id: Long,
-  name: String
+    id: Long,
+    name: String,
 )
 
 case class GuOrder(
-  id: Long,
-  name: String,
-  advertiserId: Long
+    id: Long,
+    name: String,
+    advertiserId: Long,
 )
 
-case class LineItemReport(
-  timestamp: String,
-  lineItems: Seq[GuLineItem],
-  invalidLineItems: Seq[GuLineItem]) {
+case class LineItemReport(timestamp: String, lineItems: Seq[GuLineItem], invalidLineItems: Seq[GuLineItem]) {
 
   lazy val (adTestLineItems, nonAdTestLineItems) = lineItems partition {
     _.targeting.hasAdTestTargetting

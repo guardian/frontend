@@ -1,7 +1,12 @@
 package services
 
 import com.amazonaws.regions.{Region, Regions}
-import com.amazonaws.services.dynamodbv2.{AmazonDynamoDB, AmazonDynamoDBAsync, AmazonDynamoDBAsyncClient, AmazonDynamoDBClient}
+import com.amazonaws.services.dynamodbv2.{
+  AmazonDynamoDB,
+  AmazonDynamoDBAsync,
+  AmazonDynamoDBAsyncClient,
+  AmazonDynamoDBClient,
+}
 import conf.Configuration
 
 object DynamoDB {

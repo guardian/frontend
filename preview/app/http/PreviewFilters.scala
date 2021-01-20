@@ -11,16 +11,18 @@ import play.api.mvc.{Filter, RequestHeader, Result}
 import scala.concurrent.{ExecutionContext, Future}
 
 class PreviewFilters(
-  httpConfiguration: HttpConfiguration,
-  healthCheck: HealthCheck
+    httpConfiguration: HttpConfiguration,
+    healthCheck: HealthCheck,
 )(implicit mat: Materializer, applicationContext: ApplicationContext, executionContext: ExecutionContext)
-  extends HttpFilters {
+    extends HttpFilters {
 
   private val exemptionsUrls = healthCheck.healthChecks.map(_.path) ++ Seq("/2015-06-24-manifest.json")
-  private val filterExemptions = new FilterExemptions(exemptionsUrls:_*)
-  val previewAuthFilter = new AuthFilterWithExemptions(
-    filterExemptions.loginExemption,
-    filterExemptions.exemptions)(mat, applicationContext, httpConfiguration)
+  private val filterExemptions = new FilterExemptions(exemptionsUrls: _*)
+  val previewAuthFilter = new AuthFilterWithExemptions(filterExemptions.loginExemption, filterExemptions.exemptions)(
+    mat,
+    applicationContext,
+    httpConfiguration,
+  )
 
   val filters = previewAuthFilter :: new NoCacheFilter :: Filters.common
 }

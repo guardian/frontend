@@ -13,31 +13,33 @@ import test._
 import scala.concurrent.Future
 
 @DoNotDiscover class IndexPageTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestContentApiClient
-  with WithTestApplicationContext
-  with ScalaFutures {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestContentApiClient
+    with WithTestApplicationContext
+    with ScalaFutures {
 
   private val pageSize = 10
   private def getIndexPage(path: String, edition: Edition = Uk): Future[Option[IndexPage]] = {
-    testContentApiClient.getResponse(
-      testContentApiClient.item(s"/$path", Uk).pageSize(pageSize).orderBy("newest")
-    ).map { item =>
-      item.section.map(section =>
-        IndexPage(
-          page = Section.make(section),
-          contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
-          tags = Tags(Nil),
-          date = DateTime.now,
-          tzOverride = None
-        )
+    testContentApiClient
+      .getResponse(
+        testContentApiClient.item(s"/$path", Uk).pageSize(pageSize).orderBy("newest"),
       )
-    }
+      .map { item =>
+        item.section.map(section =>
+          IndexPage(
+            page = Section.make(section),
+            contents = item.results.getOrElse(Nil).map(IndexPageItem(_)),
+            tags = Tags(Nil),
+            date = DateTime.now,
+            tzOverride = None,
+          ),
+        )
+      }
   }
 
   "Given a page Index, correct containers" should "be created" in {

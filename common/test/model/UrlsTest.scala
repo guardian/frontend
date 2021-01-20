@@ -15,7 +15,8 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   "Urls" should "be created relative for articles" in {
 
-    val content = ApiContent(id = "foo/2012/jan/07/bar",
+    val content = ApiContent(
+      id = "foo/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(offsetDate.toCapiDateTime),
@@ -23,7 +24,7 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       webUrl = "http://www.guardian.co.uk/foo/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/2012/jan/07/bar",
       tags = List(tag("type/article")),
-      elements = None
+      elements = None,
     )
 
     SupportedUrl(content) should be("/foo/2012/jan/07/bar")
@@ -33,7 +34,8 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
 
   they should "be created relative for galleries" in {
 
-    val content = ApiContent(id = "foo/gallery/2012/jan/07/bar",
+    val content = ApiContent(
+      id = "foo/gallery/2012/jan/07/bar",
       sectionId = None,
       sectionName = None,
       webPublicationDate = Some(offsetDate.toCapiDateTime),
@@ -41,7 +43,7 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       webUrl = "http://www.guardian.co.uk/foo/gallery/2012/jan/07/bar",
       apiUrl = "http://content.guardianapis.com/foo/gallery/2012/jan/07/bar",
       tags = List(tag("type/gallery")),
-      elements = None
+      elements = None,
     )
 
     SupportedUrl(content) should be("/foo/gallery/2012/jan/07/bar")
@@ -53,7 +55,12 @@ class UrlsTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
     Tag.make(tag("foo/bar")).metadata.url should be("/foo/bar")
   }
 
-  private def tag(id: String, name: String = "") = ApiTag(
-    id = id, `type` = TagType.Type, webTitle = name, webUrl = "", apiUrl = ""
-  )
+  private def tag(id: String, name: String = "") =
+    ApiTag(
+      id = id,
+      `type` = TagType.Type,
+      webTitle = name,
+      webUrl = "",
+      apiUrl = "",
+    )
 }

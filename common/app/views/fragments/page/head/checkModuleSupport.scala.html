@@ -1,0 +1,10 @@
+@*
+Check for module support so that we can polyfill appropriately
+nomodule support is exactly the same as type="module"
+https://caniuse.com/#feat=es6-module
+*@
+<script nomodule>
+    window.guardian = {
+        supportsModules: false
+    };
+</script>

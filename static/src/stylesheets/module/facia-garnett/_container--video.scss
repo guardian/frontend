@@ -270,6 +270,12 @@ $video-width-desktop: 700px;
         width: $video-width-desktop;
         margin: 0;
     }
+
+    @include mq($until: tablet) {
+        .video-container-overlay-link {
+            z-index: 3;
+        }
+    }
 }
 
 .video-playlist__item--first {

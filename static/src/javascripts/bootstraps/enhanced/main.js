@@ -1,4 +1,3 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 import qwery from 'qwery';
 import raven from 'lib/raven';
@@ -11,8 +10,9 @@ import { initSport } from 'bootstraps/enhanced/sport';
 import { trackPerformance } from 'common/modules/analytics/google';
 import { init as geolocationInit } from 'lib/geolocation';
 import { init as initAcquisitionsLinkEnrichment } from 'common/modules/commercial/acquisitions-link-enrichment';
+import {fetchAndRenderEpic} from "common/modules/commercial/contributions-service";
 
-const bootEnhanced = (): void => {
+const bootEnhanced = () => {
     const bootstrapContext = (featureName, bootstrap) => {
         raven.context(
             {
@@ -41,9 +41,7 @@ const bootEnhanced = (): void => {
 
         //
         // A/B tests
-        //
-
-        [
+                [
             'ab-tests',
             () => {
                 catchErrorsWithContext([
@@ -58,6 +56,8 @@ const bootEnhanced = (): void => {
         ],
 
         ['enrich-acquisition-links', initAcquisitionsLinkEnrichment],
+
+        ['remote-epics', fetchAndRenderEpic ]
     ]);
 
     /** common sets up many things that subsequent modules may need.
@@ -172,15 +172,8 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            // Old VideoJS player
             fastdom
-                .read(() =>
-                    qwery(
-                        `${
-                            config.get('switches.videojs') ? 'video, ' : ''
-                        } audio`
-                    )
-                )
+                .measure(() => qwery('audio'))
                 .then(els => {
                     if (els.length) {
                         require.ensure(
@@ -198,25 +191,23 @@ const bootEnhanced = (): void => {
                 });
 
             // Native video player enhancements
-            if (!config.get('switches.videojs')) {
-                fastdom
-                    .read(() => qwery('video'))
-                    .then(els => {
-                        if (els.length) {
-                            require.ensure(
-                                [],
-                                require => {
-                                    bootstrapContext(
-                                        'video-player',
-                                        require('bootstraps/enhanced/video-player')
-                                            .initVideoPlayer
-                                    );
-                                },
-                                'video-player'
-                            );
-                        }
-                    });
-            }
+            fastdom
+                .measure(() => qwery('video'))
+                .then(els => {
+                    if (els.length) {
+                        require.ensure(
+                            [],
+                            require => {
+                                bootstrapContext(
+                                    'video-player',
+                                    require('bootstraps/enhanced/video-player')
+                                        .initVideoPlayer
+                                );
+                            },
+                            'video-player'
+                        );
+                    }
+                });
 
             if (config.get('page.contentType') === 'Gallery') {
                 require.ensure(
@@ -345,7 +336,7 @@ const bootEnhanced = (): void => {
                 );
             }
 
-            fastdom.read(() => {
+            fastdom.measure(() => {
                 if ($('.youtube-media-atom').length > 0) {
                     require.ensure(
                         [],

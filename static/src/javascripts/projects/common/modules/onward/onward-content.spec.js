@@ -1,5 +1,3 @@
-// @flow
-
 import config from 'lib/config';
 
 import { OnwardContent } from './onward-content';
@@ -10,13 +8,13 @@ jest.mock('ophan/ng', () => ({
 
 jest.mock('lib/config');
 
-const getShortUrl = (): string =>
+const getShortUrl = () =>
     encodeURIComponent(config.get('page.shortUrl'));
 
 describe('Onward Content', () => {
     beforeEach(() => {
         config.page = {
-            shortUrl: 'http://gu.com/p/42zeg',
+            shortUrl: 'http://www.theguardian.com/p/42zeg',
             blogIds: 'global-development/poverty-matters',
             seriesId: 'global-development/series/modern-day-slavery-in-focus',
         };

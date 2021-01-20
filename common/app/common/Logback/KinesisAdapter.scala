@@ -15,7 +15,7 @@ import scala.concurrent.duration._
 import scala.concurrent.Future
 
 // LogbackOperationsPool must be wired as a singleton
-class LogbackOperationsPool(val actorSystem: ActorSystem)  {
+class LogbackOperationsPool(val actorSystem: ActorSystem) {
   val logbackOperations: MessageDispatcher = actorSystem.dispatchers.lookup("akka.logback-operations")
 }
 
@@ -27,13 +27,22 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
     logbackOperations.actorSystem.scheduler,
     maxFailures = 1,
     callTimeout = 1.seconds,
-    resetTimeout = 10.seconds
+    resetTimeout = 10.seconds,
   )(logbackOperations.logbackOperations)
 
-  override protected def createClient(credentials: AWSCredentialsProvider, configuration: ClientConfiguration, executor: ThreadPoolExecutor): AmazonKinesisAsyncClient = {
+  override protected def createClient(
+      credentials: AWSCredentialsProvider,
+      configuration: ClientConfiguration,
+      executor: ThreadPoolExecutor,
+  ): AmazonKinesisAsyncClient = {
     configuration.setMaxErrorRetry(0)
     configuration.setRetryPolicy(
-      new RetryPolicy(PredefinedRetryPolicies.NO_RETRY_POLICY.getRetryCondition, PredefinedRetryPolicies.DEFAULT_BACKOFF_STRATEGY, 0, true)
+      new RetryPolicy(
+        PredefinedRetryPolicies.NO_RETRY_POLICY.getRetryCondition,
+        PredefinedRetryPolicies.DEFAULT_BACKOFF_STRATEGY,
+        0,
+        true,
+      ),
     )
     new AmazonKinesisAsyncClient(credentials, configuration, executor)
   }
@@ -42,10 +51,10 @@ class SafeBlockingKinesisAppender(logbackOperations: LogbackOperationsPool) exte
     breaker.withCircuitBreaker {
       Future {
         super.putMessage(message)
-      }(logbackOperations.logbackOperations) // the logbackOperations thread pool is passed explicitly here so blocking on putMessage doesn't affect the logging thread.
+      }(
+        logbackOperations.logbackOperations,
+      ) // the logbackOperations thread pool is passed explicitly here so blocking on putMessage doesn't affect the logging thread.
     }
     ()
   }
 }
-
-

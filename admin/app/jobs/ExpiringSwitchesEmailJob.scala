@@ -1,6 +1,6 @@
 package jobs
 
-import common.Logging
+import common.GuLogging
 import conf.Configuration.frontend.{dotcomPlatformEmail, webEngineersEmail}
 import conf.switches.{Switch, Switches}
 import services.EmailService
@@ -8,7 +8,7 @@ import services.EmailService
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging {
+case class ExpiringSwitchesEmailJob(emailService: EmailService) extends GuLogging {
 
   def run()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(webEngineersEmail)
   def runReminder()(implicit executionContext: ExecutionContext): Future[Unit] = runJob(dotcomPlatformEmail)
@@ -30,10 +30,11 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging 
           from = baseRecipients,
           to = recipients,
           subject = "Expiring Feature Switches",
-          htmlBody = Some(htmlBody))
+          htmlBody = Some(htmlBody),
+        )
 
-        eventualResult.foreach {
-          result => log.info(s"Message sent successfully with ID: ${result.getMessageId}")
+        eventualResult.foreach { result =>
+          log.info(s"Message sent successfully with ID: ${result.getMessageId}")
         }
 
         eventualResult.failed.foreach {
@@ -48,7 +49,7 @@ case class ExpiringSwitchesEmailJob(emailService: EmailService) extends Logging 
     }).getOrElse(
       Future {
         log.warn("Recipient not configured")
-      }
+      },
     )
   }
 }
@@ -64,14 +65,15 @@ case class ExpiringSwitches(switches: Seq[Switch]) {
     val expiringTodaySwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(0))
     val expiringTomorrowSwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(1))
     val expiringInTwoDaysSwitches = switches.filter(Switch.expiry(_).daysToExpiry.contains(2))
-    val otherSwitches = switches.filter(Switch.expiry(_).daysToExpiry.exists(expiration => expiration > 2 && expiration < 8))
+    val otherSwitches =
+      switches.filter(Switch.expiry(_).daysToExpiry.exists(expiration => expiration > 2 && expiration < 8))
 
     Seq(
       ExpiringSwitchesGroup(expiredSwitches, "already expired"),
       ExpiringSwitchesGroup(expiringTodaySwitches, "expiring today at 23:59 (London time)"),
       ExpiringSwitchesGroup(expiringTomorrowSwitches, "expiring tomorrow"),
       ExpiringSwitchesGroup(expiringInTwoDaysSwitches, "expiring in 2 days"),
-      ExpiringSwitchesGroup(otherSwitches, "expiring within a week")
+      ExpiringSwitchesGroup(otherSwitches, "expiring within a week"),
     )
   }
 }

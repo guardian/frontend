@@ -9,7 +9,8 @@ import scala.concurrent.duration._
 import scala.concurrent.{ExecutionContext, Future, blocking}
 import scala.language.postfixOps
 
-class IndexListingsLifecycle(implicit actorSystem: ActorSystem, executionContext: ExecutionContext) extends LifecycleComponent {
+class IndexListingsLifecycle(implicit actorSystem: ActorSystem, executionContext: ExecutionContext)
+    extends LifecycleComponent {
   override def start(): Unit = {
     KeywordSectionIndexAutoRefresh.start()
     KeywordAlphaIndexAutoRefresh.start()
@@ -18,25 +19,28 @@ class IndexListingsLifecycle(implicit actorSystem: ActorSystem, executionContext
 }
 
 object KeywordSectionIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
-    blocking {
-      TagIndexesS3.getListingOrDie("keywords_by_section")
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] =
+    Future {
+      blocking {
+        TagIndexesS3.getListingOrDie("keywords_by_section")
+      }
     }
-  }
 }
 
 object KeywordAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
-    blocking {
-      TagIndexesS3.getListingOrDie("keywords")
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] =
+    Future {
+      blocking {
+        TagIndexesS3.getListingOrDie("keywords")
+      }
     }
-  }
 }
 
 object ContributorAlphaIndexAutoRefresh extends AutoRefresh[TagIndexListings](0 seconds, 5 minutes) {
-  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] = Future {
-    blocking {
-      TagIndexesS3.getListingOrDie("contributors")
+  override protected def refresh()(implicit executionContext: ExecutionContext): Future[TagIndexListings] =
+    Future {
+      blocking {
+        TagIndexesS3.getListingOrDie("contributors")
+      }
     }
-  }
 }

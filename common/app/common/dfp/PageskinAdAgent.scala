@@ -4,6 +4,7 @@ import com.gu.commercial.display.AdTargetParam.toMap
 import com.gu.commercial.display.{AdTargetParamValue, MultipleValues}
 import common.Edition
 import model.MetaData
+import play.api.mvc.RequestHeader
 
 trait PageskinAdAgent {
 
@@ -15,16 +16,17 @@ trait PageskinAdAgent {
   // - pageskins that target through ad unit (for pressed fronts)
   // - pageskins that target through a keyword (for index page fronts)
   private[dfp] def findSponsorships(
-    adUnitPath: String,
-    metaData: MetaData,
-    edition: Edition
+      adUnitPath: String,
+      metaData: MetaData,
+      edition: Edition,
   ): Seq[PageSkinSponsorship] = {
 
     val nextGenSuffix = "/ng"
 
     def containsAdUnit(adUnits: Seq[String], adUnit: String): Boolean =
-      adUnits.map { _.stripSuffix(nextGenSuffix) }
-      .exists { adUnitPath.stripSuffix(nextGenSuffix).endsWith }
+      adUnits
+        .map { _.stripSuffix(nextGenSuffix) }
+        .exists { adUnitPath.stripSuffix(nextGenSuffix).endsWith }
 
     def hasMatchingAdUnit(sponsorship: PageSkinSponsorship): Boolean =
       containsAdUnit(sponsorship.adUnits, adUnitPath)
@@ -42,10 +44,10 @@ trait PageskinAdAgent {
         map.get(key) match {
           case Some(values: MultipleValues) => values.values.toSeq
           case _                            => Seq.empty
-      }
+        }
 
       val keywordTargeting = targetingMapValues(targetingMap, "k")
-      val seriesTargeting  = targetingMapValues(targetingMap, "se")
+      val seriesTargeting = targetingMapValues(targetingMap, "se")
 
       candidates filter { sponsorship =>
         sponsorship.keywords.intersect(keywordTargeting).nonEmpty ||
@@ -55,16 +57,18 @@ trait PageskinAdAgent {
   }
 
   // The ad unit is considered to have a page skin if it has a corresponding sponsorship.
-  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
+  // If the sponsorship is targetting an adtest we also consider that the request URL includes the same adtest param
+  def hasPageSkin(fullAdUnitPath: String, metaData: MetaData, request: RequestHeader): Boolean = {
     if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
-    } else false
-  }
-
-  // True if there is any candidate sponsorship for this ad unit. Used to decide when to render the out-of-page ad slot.
-  def hasPageSkinOrAdTestPageSkin(fullAdUnitPath: String, metaData: MetaData, edition: Edition): Boolean = {
-    if (metaData.isFront) {
-      findSponsorships(fullAdUnitPath, metaData, edition).nonEmpty
+      val adTestParam = request.getQueryString("adtest")
+      val edition = Edition(request)
+      findSponsorships(fullAdUnitPath, metaData, edition) exists (sponsorship =>
+        if (sponsorship.targetsAdTest) {
+          sponsorship.adTestValue == adTestParam
+        } else {
+          true
+        },
+      )
     } else false
   }
 }

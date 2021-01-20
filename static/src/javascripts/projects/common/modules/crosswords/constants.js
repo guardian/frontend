@@ -1,5 +1,3 @@
-// @flow
-
 const constants = {
     cellSize: 31,
     borderSize: 1,

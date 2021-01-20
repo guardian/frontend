@@ -1,34 +1,16 @@
-// @flow
-import config, { type Config } from 'lib/config';
-import reportError, { type ErrorLogger } from 'lib/report-error';
+import config, { } from 'lib/config';
+import reportError, { } from 'lib/report-error';
 
-declare var permutive: any;
-type PermutiveSchema = {
-    content: {
-        premium?: boolean,
-        id?: string,
-        title?: string,
-        type?: string,
-        section?: string,
-        authors?: Array<string>,
-        keywords?: Array<string>,
-        publishedAt?: string,
-        series?: string,
-    },
-    user: {
-        edition?: string,
-        identity?: boolean,
-    },
-};
 
-const isEmpty = (value: any) =>
+
+const isEmpty = (value) =>
     value === '' ||
     value === null ||
     typeof value === 'undefined' ||
     (Array.isArray(value) && value.length === 0) ||
     (typeof value === 'object' && Object.keys(value).length === 0);
 
-const removeEmpty = <T: Config>(payload: T): T => {
+const removeEmpty =(payload) => {
     Object.keys(payload).forEach(key => {
         if (typeof payload[key] === 'object' && payload[key] !== null) {
             removeEmpty(payload[key]);
@@ -41,8 +23,8 @@ const removeEmpty = <T: Config>(payload: T): T => {
 };
 
 const generatePayload = (
-    permutiveConfig: Config = { page: {}, user: {} }
-): PermutiveSchema => {
+    permutiveConfig = { page: {}, user: {} }
+) => {
     const { page, user } = permutiveConfig;
     const {
         isPaidContent,
@@ -55,6 +37,7 @@ const generatePayload = (
         webPublicationDate,
         series,
         edition,
+        toneIds,
     } = page;
 
     const safeAuthors = (author && typeof author === 'string'
@@ -69,6 +52,10 @@ const generatePayload = (
         webPublicationDate && typeof webPublicationDate === 'number'
             ? new Date(webPublicationDate).toISOString()
             : '';
+    const safeToneIds = (toneIds && typeof toneIds === 'string'
+        ? toneIds.split(',')
+        : []
+    ).map(str => str.trim());
     const cleanPayload = removeEmpty({
         content: {
             premium: isPaidContent,
@@ -80,6 +67,7 @@ const generatePayload = (
             keywords: safeKeywords,
             publishedAt: safePublishedAt,
             series,
+            tone: safeToneIds,
         },
         user: {
             edition,
@@ -90,18 +78,35 @@ const generatePayload = (
     return cleanPayload;
 };
 
+const generatePermutiveIdentities = (
+    pageConfig = {}
+) => {
+    if (
+        typeof pageConfig.ophan === 'object' &&
+        typeof pageConfig.ophan.browserId === 'string' &&
+        pageConfig.ophan.browserId.length > 0
+    ) {
+        return [{ tag: 'ophan', id: pageConfig.ophan.browserId }];
+    }
+    return [];
+};
+
 const runPermutive = (
-    pageConfig: Config = {},
-    permutiveGlobal: any,
-    logger: ErrorLogger
-): void => {
+    pageConfig = {},
+    permutiveGlobal,
+    logger
+) => {
     try {
         if (!permutiveGlobal || !permutiveGlobal.addon) {
             throw new Error('Global Permutive setup error');
         }
 
-        const payload = generatePayload(pageConfig);
+        const permutiveIdentities = generatePermutiveIdentities(pageConfig);
+        if (permutiveIdentities.length > 0) {
+            permutiveGlobal.identify(permutiveIdentities);
+        }
 
+        const payload = generatePayload(pageConfig);
         permutiveGlobal.addon('web', {
             page: payload,
         });
@@ -111,7 +116,7 @@ const runPermutive = (
 };
 
 /* eslint-disable */
-export const initPermutive = (): Promise<void> =>
+export const initPermutive = () =>
     new Promise(resolve => {
         // From here until we re-enable eslint is the Permutive code
         // that we received from them.
@@ -179,8 +184,9 @@ export const initPermutive = (): Promise<void> =>
         const permutiveConfig = {
             user: config.get('user', {}),
             page: config.get('page', {}),
+            ophan: config.get('ophan', {}),
         };
-        runPermutive(permutiveConfig, permutive, reportError);
+        runPermutive(permutiveConfig, window.permutive, reportError);
 
         return resolve();
     });
@@ -189,5 +195,6 @@ export const _ = {
     isEmpty,
     removeEmpty,
     generatePayload,
+    generatePermutiveIdentities,
     runPermutive,
 };

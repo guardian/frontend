@@ -22,7 +22,7 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
                     @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
                 }
 
@@ -54,7 +54,7 @@
         <div class="content__header tonal__header">
 
             <div class="u-cf">
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
                     @fragments.contentAgeNotice(ageNotice, ariaHidden = true)
                 }
 
@@ -70,7 +70,7 @@
                     }
                 </h1>
 
-                @if(article.content.tags.tags.exists(_.id == "tone/news")) {
+                @if(article.content.tags.tags.exists(_.id == "tone/news") || article.content.tags.tags.exists(_.id == "tone/comment")) {
                     @fragments.contentAgeNotice(ageNotice, isHidden = true)
                 }
 

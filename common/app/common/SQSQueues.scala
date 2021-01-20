@@ -42,7 +42,9 @@ object SQSQueues {
       asFuture[SendMessageRequest, SendMessageResult](client.sendMessageAsync(request, _))
 
     def changeMessageVisibilityFuture(request: ChangeMessageVisibilityRequest): Future[ChangeMessageVisibilityResult] =
-      asFuture[ChangeMessageVisibilityRequest, ChangeMessageVisibilityResult](client.changeMessageVisibilityAsync(request, _))
+      asFuture[ChangeMessageVisibilityRequest, ChangeMessageVisibilityResult](
+        client.changeMessageVisibilityAsync(request, _),
+      )
   }
 }
 
@@ -69,17 +71,20 @@ class MessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executi
   }
 
   protected def deleteMessage(handle: ReceiptHandle): Future[Unit] = {
-    client.deleteMessageFuture(new DeleteMessageRequest()
-      .withQueueUrl(queueUrl)
-      .withReceiptHandle(handle.get)
-    ).map(_ => ())
+    client
+      .deleteMessageFuture(
+        new DeleteMessageRequest()
+          .withQueueUrl(queueUrl)
+          .withReceiptHandle(handle.get),
+      )
+      .map(_ => ())
   }
 
 }
 
 /** Utility class for SQS queues that pass simple string messages */
 case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext)
-  extends MessageQueue[A](client, queueUrl)(executionContext) {
+    extends MessageQueue[A](client, queueUrl)(executionContext) {
 
   def receive(request: ReceiveMessageRequest): Future[Seq[Message[String]]] = {
     receiveMessages(request) map { messages =>
@@ -87,7 +92,7 @@ case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
         Message(
           MessageId(message.getMessageId),
           message.getBody,
-          ReceiptHandle(message.getReceiptHandle)
+          ReceiptHandle(message.getReceiptHandle),
         )
       }
     }
@@ -97,8 +102,8 @@ case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
     receive(request.withMaxNumberOfMessages(1)) map { messages =>
       messages.toList match {
         case message :: Nil => Some(message)
-        case Nil => None
-        case _ => throw new RuntimeException(s"Asked for 1 message from queue but got ${messages.length}")
+        case Nil            => None
+        case _              => throw new RuntimeException(s"Asked for 1 message from queue but got ${messages.length}")
       }
     }
   }
@@ -109,7 +114,7 @@ case class TextMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
 
 /** Utility class for SQS queues that use JSON to serialize their messages */
 case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implicit executionContext: ExecutionContext)
-                                      extends MessageQueue[A](client, queueUrl)(executionContext) {
+    extends MessageQueue[A](client, queueUrl)(executionContext) {
 
   def send(a: A)(implicit writes: Writes[A]): Future[SendMessageResult] =
     sendMessage(new SendMessageRequest().withQueueUrl(queueUrl).withMessageBody(Json.stringify(Json.toJson(a))))
@@ -120,9 +125,11 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
         Message(
           MessageId(message.getMessageId),
           Json.fromJson[A](Json.parse(message.getBody)) getOrElse {
-            throw new RuntimeException(s"Couldn't parse JSON for message with ID ${message.getMessageId}: '${message.getBody}'")
+            throw new RuntimeException(
+              s"Couldn't parse JSON for message with ID ${message.getMessageId}: '${message.getBody}'",
+            )
           },
-          ReceiptHandle(message.getReceiptHandle)
+          ReceiptHandle(message.getReceiptHandle),
         )
       }
     }
@@ -132,8 +139,8 @@ case class JsonMessageQueue[A](client: AmazonSQSAsync, queueUrl: String)(implici
     receive(request.withMaxNumberOfMessages(1)) map { messages =>
       messages.toList match {
         case message :: Nil => Some(message)
-        case Nil => None
-        case _ => throw new RuntimeException(s"Asked for 1 message from queue but got ${messages.length}")
+        case Nil            => None
+        case _              => throw new RuntimeException(s"Asked for 1 message from queue but got ${messages.length}")
       }
     }
   }

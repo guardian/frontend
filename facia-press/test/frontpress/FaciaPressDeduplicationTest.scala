@@ -9,7 +9,7 @@ class FaciaPressDeduplicationTest extends FlatSpec with Matchers with FaciaPress
     PressedCollectionVisibility(collection0, 0),
     PressedCollectionVisibility(collection1, 0),
     PressedCollectionVisibility(collection2, 0),
-    PressedCollectionVisibility(collection3, 0)
+    PressedCollectionVisibility(collection3, 0),
   )
   // Note that the integer (0) passed as second argument of PressedCollectionVisibility.apply is irrelevant. We use
   // it because the current version of PressedCollectionDeduplication.deduplication still takes PressedCollectionVisibility

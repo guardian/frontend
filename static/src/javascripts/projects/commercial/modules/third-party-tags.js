@@ -1,46 +1,60 @@
-// @flow strict
 /* A regionalised container for all the commercial tags. */
 
 import fastdom from 'lib/fastdom-promise';
+import {
+    onConsentChange,
+    getConsentFor,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
 import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import { remarketing } from 'commercial/modules/third-party-tags/remarketing';
-import { simpleReach } from 'commercial/modules/third-party-tags/simple-reach';
-import { krux } from 'common/modules/commercial/krux';
-import { ias } from 'commercial/modules/third-party-tags/ias';
-import { inizio } from 'commercial/modules/third-party-tags/inizio';
-import { fbPixel } from 'commercial/modules/third-party-tags/facebook-pixel';
-import { permutive } from 'commercial/modules/third-party-tags/permutive';
-import { init as initPlistaOutbrainRenderer } from 'commercial/modules/third-party-tags/plista-outbrain-renderer';
-import { twitterUwt } from 'commercial/modules/third-party-tags/twitter-uwt';
 import {
-    onIabConsentNotification,
-    onGuConsentNotification,
-} from '@guardian/consent-management-platform';
+    ias,
+    permutive,
+    twitter,
+    fbPixel,
+    remarketing,
+    inizio,
+} from '@guardian/commercial-core';
+import config from 'lib/config';
 
-let advertisingScriptsInserted: boolean = false;
-let performanceScriptsInserted: boolean = false;
-
-const addScripts = (services: Array<ThirdPartyTag>): void => {
+const addScripts = tags => {
     const ref = document.scripts[0];
     const frag = document.createDocumentFragment();
     let hasScriptsToInsert = false;
 
-    services.forEach(service => {
-        if (service.useImage === true) {
-            new Image().src = service.url;
+    tags.forEach(tag => {
+        if (tag.loaded === true) return;
+
+        if (tag.beforeLoad) tag.beforeLoad();
+
+        // Tag is either an image, a snippet or a script.
+        if (tag.useImage === true && typeof tag.url !== 'undefined') {
+            new Image().src = tag.url;
+        } else if (tag.insertSnippet) {
+            tag.insertSnippet();
         } else {
             hasScriptsToInsert = true;
             const script = document.createElement('script');
-            script.src = service.url;
-            script.onload = service.onLoad;
+            if (typeof tag.url !== 'undefined') {
+                script.src = tag.url;
+            }
+            script.onload = tag.onLoad;
+            if (tag.async === true) {
+                script.setAttribute('async', '');
+            }
+            if (tag.attrs) {
+                tag.attrs.forEach(attr => {
+                    script.setAttribute(attr.name, attr.value);
+                });
+            }
             frag.appendChild(script);
         }
+        tag.loaded = true;
     });
 
     if (hasScriptsToInsert) {
-        fastdom.write(() => {
+        fastdom.mutate(() => {
             if (ref && ref.parentNode) {
                 ref.parentNode.insertBefore(frag, ref);
             }
@@ -49,60 +63,44 @@ const addScripts = (services: Array<ThirdPartyTag>): void => {
 };
 
 const insertScripts = (
-    advertisingServices: Array<ThirdPartyTag>,
-    performanceServices: Array<ThirdPartyTag>
-): void => {
-    onGuConsentNotification('performance', state => {
-        if (!performanceScriptsInserted && state) {
-            addScripts(performanceServices);
-            performanceScriptsInserted = true;
-        }
-    });
+    advertisingServices,
+    performanceServices // performanceServices always run
+) => {
+    addScripts(performanceServices);
+    onConsentChange(state => {
+        const consentedAdvertisingServices = advertisingServices.filter(
+            script => getConsentFor(script.name, state)
+        );
 
-    onIabConsentNotification(state => {
-        const consentState =
-            state[1] && state[2] && state[3] && state[4] && state[5];
-
-        if (!advertisingScriptsInserted && consentState) {
-            addScripts(advertisingServices);
-            advertisingScriptsInserted = true;
+        if (consentedAdvertisingServices.length > 0) {
+            addScripts(consentedAdvertisingServices);
         }
     });
 };
 
-const loadOther = (): void => {
-    const advertisingServices: Array<ThirdPartyTag> = [
-        remarketing(),
-        simpleReach,
-        krux,
-        permutive,
-        ias,
-        inizio,
-        fbPixel(),
-        twitterUwt(),
+const loadOther = () => {
+    const advertisingServices = [
+        remarketing({ shouldRun: config.get('switches.remarketing', false) }),
+        permutive({ shouldRun: config.get('switches.permutive', false) }),
+        ias({ shouldRun: config.get('switches.iasAdTargeting', false) }),
+        inizio({ shouldRun: config.get('switches.inizio', false) }),
+        fbPixel({
+            shouldRun: config.get('switches.facebookTrackingPixel', false),
+        }),
+        twitter({ shouldRun: config.get('switches.twitterUwt', false) }),
     ].filter(_ => _.shouldRun);
 
-    const performanceServices: Array<ThirdPartyTag> = [
-        imrWorldwide,
-        imrWorldwideLegacy,
+    const performanceServices = [
+        imrWorldwide, // only in AU & NZ
+        imrWorldwideLegacy, // only in AU & NZ
     ].filter(_ => _.shouldRun);
 
     insertScripts(advertisingServices, performanceServices);
 };
 
-const init = (): Promise<boolean> => {
+const init = () => {
     if (!commercialFeatures.thirdPartyTags) {
         return Promise.resolve(false);
-    }
-
-    // Section 1
-    // Outbrain/Plista needs to be loaded before the first ad as it is checking
-    // for the presence of high relevance component on page
-    // I'm leaving this to check adFree state because while the thirdPartyTags
-    // check above is now sensitive to ad-free, it could be changed independently
-    // in the future - even by accident.  Justin.
-    if (!commercialFeatures.adFree) {
-        initPlistaOutbrainRenderer();
     }
 
     loadOther();
@@ -114,8 +112,4 @@ export { init };
 export const _ = {
     insertScripts,
     loadOther,
-    reset: () => {
-        advertisingScriptsInserted = false;
-        performanceScriptsInserted = false;
-    },
 };

@@ -1,22 +1,28 @@
-// @flow
 import { logView } from 'common/modules/commercial/acquisitions-view-log';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
 import { elementInView } from 'lib/element-inview';
 import fastdom from 'lib/fastdom-promise';
+import {submitInsertEvent, submitViewEvent} from "common/modules/commercial/acquisitions-ophan";
+import { mountDynamic } from "@guardian/automat-modules";
 
 let isAutoUpdateHandlerBound = false;
 const INSERT_EPIC_AFTER_CLASS = 'js-insert-epic-after';
 
-type TimeData = {
-    blockHref: string,
-    datetime: string,
-    title: string,
-    date: string,
-    time: string,
-};
 
-const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
+const buildComponentEventWithoutAction = (variant, parentTest) => ({
+    component: {
+        componentType: parentTest.componentType,
+        campaignCode: variant.campaignCode,
+        id: variant.campaignCode,
+    },
+    abTest: {
+        name: parentTest.id,
+        variant: variant.id,
+    },
+});
+
+const getLiveblogEntryTimeData = (el) => {
     const timeEl = el.querySelector('time');
     const absoluteTimeEl = el.querySelector('.block-time__absolute');
 
@@ -34,7 +40,7 @@ const getLiveblogEntryTimeData = (el: Element): ?TimeData => {
     }
 };
 
-const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
+const getBlocksToInsertEpicAfter = () => {
     const blocks = document.getElementsByClassName('block');
     const blocksToInsertManualEpicAfter = document.getElementsByClassName(
         INSERT_EPIC_AFTER_CLASS
@@ -60,9 +66,9 @@ const getBlocksToInsertEpicAfter = (): Array<HTMLElement> => {
 };
 
 const setEpicLiveblogEntryTimeData = (
-    el: Element,
-    timeData: TimeData
-): void => {
+    el,
+    timeData
+) => {
     const epicTimeEl = el.querySelector('time');
     const epicAbsoluteTimeEl = el.querySelector('.block-time__absolute');
 
@@ -80,10 +86,10 @@ const setEpicLiveblogEntryTimeData = (
 };
 
 const setupViewTracking = (
-    el: HTMLElement,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): void => {
+    el,
+    variant,
+    parentTest
+) => {
     // top offset of 18 ensures view only counts when half of element is on screen
     const inView = elementInView(el, window, {
         top: 18,
@@ -91,24 +97,21 @@ const setupViewTracking = (
 
     inView.on('firstview', () => {
         logView(variant.id);
-        mediator.emit(parentTest.viewEvent, {
-            componentType: parentTest.componentType,
-            campaignCode: variant.campaignCode,
-        });
+        submitViewEvent(buildComponentEventWithoutAction(variant, parentTest));
     });
 };
 
 const addEpicToBlocks = (
-    epicHtml: string,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): Promise<void> => {
+    epicHtml,
+    variant,
+    parentTest
+) => {
     const elementsWithTimeData = getBlocksToInsertEpicAfter().map(el => [
         el,
         getLiveblogEntryTimeData(el),
     ]);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         elementsWithTimeData.forEach(([el, timeData]) => {
             if (!timeData) {
                 return;
@@ -116,7 +119,9 @@ const addEpicToBlocks = (
 
             const $epic = $.create(epicHtml);
             $epic.insertAfter(el);
-            mediator.emit(parentTest.insertEvent);
+
+            submitInsertEvent(buildComponentEventWithoutAction(variant, parentTest));
+
             $(el).removeClass(INSERT_EPIC_AFTER_CLASS);
             setEpicLiveblogEntryTimeData($epic[0], timeData);
             setupViewTracking(el, variant, parentTest);
@@ -124,11 +129,26 @@ const addEpicToBlocks = (
     });
 };
 
+export const setupRemoteEpicInLiveblog = (
+    Component,
+    props,
+) => {
+    const blocks = getBlocksToInsertEpicAfter();
+    // Only insert 1 epic. The existing code will be cleaned up in a follow-up PR
+    if (blocks[0]) {
+        const epic = $.create('<div class="block"/>');
+        epic.insertAfter(blocks[0]);
+        mountDynamic(epic[0], Component, props, true);
+
+        return epic[0];
+    }
+};
+
 export const setupEpicInLiveblog = (
-    epicHtml: string,
-    variant: EpicVariant,
-    parentTest: EpicABTest
-): void => {
+    epicHtml,
+    variant,
+    parentTest
+) => {
     addEpicToBlocks(epicHtml, variant, parentTest);
 
     if (!isAutoUpdateHandlerBound) {

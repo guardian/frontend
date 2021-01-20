@@ -1,16 +1,15 @@
-// @flow
-
 /* global escape:true */
 import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
-import { local } from 'lib/storage';
+import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
 import fetch from 'lib/fetch-json';
 import qs from 'qs';
 import reqwest from 'reqwest';
+import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
 let userFromCookieCache = null;
 
@@ -20,37 +19,17 @@ const fbCheckKey = 'gu.id.nextFbCheck';
 let idApiRoot = null;
 let profileRoot = null;
 
-type PasswordCredential = {
-    id: string,
-    password: string,
-};
 
-export type SettableConsent = {
-    id: string,
-    consented: boolean,
-};
 
-export type Newsletter = {
-    id: string,
-    subscribed: boolean,
-};
 
-export type IdentityUser = {
-    id: number,
-    primaryEmailAddress: string,
-    displayName: string,
-    accountCreatedDate: string,
-    emailVerified: string,
-    rawResponse: ?string,
-};
 
-export const init = (): void => {
+export const init = () => {
     idApiRoot = config.get('page.idApiUrl');
     mediator.emit('module:identity:api:loaded');
     profileRoot = config.get('page.idUrl');
 };
 
-export const decodeBase64 = (str: string): string =>
+export const decodeBase64 = (str) =>
     decodeURIComponent(
         escape(
             window.atob(
@@ -62,7 +41,7 @@ export const decodeBase64 = (str: string): string =>
         )
     );
 
-export const getUserFromCookie = (): ?IdentityUser => {
+export const getUserFromCookie = () => {
     if (userFromCookieCache === null) {
         const cookieData = getCookieByName(cookieName);
         let userData = null;
@@ -86,7 +65,7 @@ export const getUserFromCookie = (): ?IdentityUser => {
     return userFromCookieCache;
 };
 
-export const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
+export const updateNewsletter = (newsletter) =>
     reqwest({
         url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
         method: 'PATCH',
@@ -98,9 +77,9 @@ export const updateNewsletter = (newsletter: Newsletter): Promise<void> =>
     });
 
 export const buildNewsletterUpdatePayload = (
-    action: string = 'none',
-    newsletterId: string
-): Newsletter => {
+    action = 'none',
+    newsletterId
+) => {
     const newsletter = {};
     switch (action) {
         case 'add':
@@ -117,7 +96,7 @@ export const buildNewsletterUpdatePayload = (
     return newsletter;
 };
 
-export const isUserLoggedIn = (): boolean => getUserFromCookie() !== null;
+export const isUserLoggedIn = () => getUserFromCookie() !== null;
 
 export const getUserFromApi = mergeCalls(mergingCallback => {
     const apiRoot = idApiRoot || '';
@@ -139,14 +118,14 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
     }
 });
 
-export const reset = (): void => {
+export const reset = () => {
     getUserFromApi.reset();
     userFromCookieCache = null;
 };
 
-export const getCookie = (): ?string => getCookieByName(cookieName);
+export const getCookie = () => getCookieByName(cookieName);
 
-export const getUrl = (): string => config.get('page.idUrl');
+export const getUrl = () => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
@@ -161,11 +140,11 @@ export const getUserFromApiWithRefreshedCookie = () => {
     return request;
 };
 
-export const redirectTo = (url: string): void => {
+export const redirectTo = (url) => {
     window.location.assign(url);
 };
 
-export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
+export const getUserOrSignIn = (componentId, paramUrl) => {
     let returnUrl = paramUrl;
 
     if (isUserLoggedIn()) {
@@ -173,11 +152,16 @@ export const getUserOrSignIn = (paramUrl: ?string): ?Object => {
     }
 
     returnUrl = encodeURIComponent(returnUrl || document.location.href);
-    const url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+    let url = `${getUrl() || ''}/signin?returnUrl=${returnUrl}`;
+
+    if (componentId) {
+        url += `&${createAuthenticationComponentEventParams(componentId)}`
+    }
+
     redirectTo(url);
 };
 
-export const hasUserSignedOutInTheLast24Hours = (): boolean => {
+export const hasUserSignedOutInTheLast24Hours = () => {
     const cookieData = getCookieByName(signOutCookieName);
 
     if (cookieData) {
@@ -189,15 +173,15 @@ export const hasUserSignedOutInTheLast24Hours = (): boolean => {
     return false;
 };
 
-export const shouldAutoSigninInUser = (): boolean => {
+export const shouldAutoSigninInUser = () => {
     const signedInUser = !!getCookieByName(cookieName);
-    const checkFacebook = !!local.get(fbCheckKey);
+    const checkFacebook = !!storage.local.get(fbCheckKey);
     return (
         !signedInUser && !checkFacebook && !hasUserSignedOutInTheLast24Hours()
     );
 };
 
-export const getUserEmailSignUps = (): Promise<any> => {
+export const getUserEmailSignUps = () => {
     const user = getUserFromCookie();
 
     if (user) {
@@ -215,7 +199,7 @@ export const getUserEmailSignUps = (): Promise<any> => {
     return Promise.resolve(null);
 };
 
-export const sendValidationEmail = (): any => {
+export const sendValidationEmail = () => {
     const defaultReturnEndpoint = '/email-prefs';
     const endpoint = '/user/send-validation-email';
     const returnUrl = getUrlVars().returnUrl
@@ -235,7 +219,7 @@ export const sendValidationEmail = (): any => {
     return request;
 };
 
-export const updateUsername = (username: string): any => {
+export const updateUsername = (username) => {
     const endpoint = '/user/me';
     const data = {
         publicFields: {
@@ -294,7 +278,7 @@ export const getSubscribedNewsletters = () => {
         .catch(() => []);
 };
 
-export const setConsent = (consents: SettableConsent[]): Promise<void> =>
+export const setConsent = (consents) =>
     new Promise((success, error) => {
         reqwest({
             url: `${idApiRoot || ''}/users/me/consents`,
@@ -308,21 +292,31 @@ export const setConsent = (consents: SettableConsent[]): Promise<void> =>
             success,
         });
     });
-export const ajaxSignIn = (credentials: PasswordCredential) => {
+export const ajaxSignIn = (credentials) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
+    const body = {
+        email: credentials.id,
+        password: credentials.password,
+    };
+
+    if (
+        window.guardian &&
+        window.guardian.ophan &&
+        window.guardian.ophan.viewId
+    ) {
+        body.componentEventParams = createAuthenticationComponentEvent('guardian_smartlock', window.guardian.ophan.viewId);
+    }
+
     return fetch(url, {
         mode: 'cors',
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: qs.stringify({
-            email: credentials.id,
-            password: credentials.password,
-        }),
+        body: qs.stringify(body),
         credentials: 'include',
     });
 };
 
-export const getUserData = (): Promise<Response> =>
+export const getUserData = () =>
     fetch(`${idApiRoot || ''}/user/me`, {
         method: 'GET',
         mode: 'cors',

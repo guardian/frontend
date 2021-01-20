@@ -10,19 +10,18 @@ object Switch {
 
   def switchJsBehaviour(behaviour: SwitchBehaviour): String = {
     behaviour match {
-      case ConsentSwitch => "js-manage-account__consentCheckbox"
+      case ConsentSwitch    => "js-manage-account__consentCheckbox"
       case NewsletterSwitch => "js-manage-account__newsletterCheckbox"
-      case _ => ""
+      case _                => ""
     }
   }
 
   def switchBehaviour(behaviour: SwitchBehaviour): String = {
     behaviour match {
-      case ConsentSwitch => "consent"
+      case ConsentSwitch    => "consent"
       case NewsletterSwitch => "newsletter"
-      case _ => ""
+      case _                => ""
     }
   }
 
 }
-

@@ -16,14 +16,16 @@ object Tag {
     val javascriptConfigOverrides: Map[String, JsValue] = Map(
       ("keywords", JsString(tag.webTitle)),
       ("keywordIds", JsString(tag.id)),
-      ("references", JsArray(tag.references.map(ref => Reference.toJavaScript(ref.id))))
+      ("references", JsArray(tag.references.map(ref => Reference.toJavaScript(ref.id)))),
     )
 
     def optionalMapEntry(key: String, o: Option[String]): Map[String, String] =
       o.map(value => Map(key -> value)).getOrElse(Map())
 
     val openGraphDescription: Option[String] = tag.bio.orElse(tag.description)
-    val openGraphImage = tag.bylineImageUrl.map(ImgSrc(_, Item140)).map { s: String => if (s.startsWith("//")) s"http:$s" else s }
+    val openGraphImage = tag.bylineImageUrl
+      .map(ImgSrc(_, Item140))
+      .map { s: String => if (s.startsWith("//")) s"http:$s" else s }
       .orElse(tag.footballBadgeUrl)
 
     val openGraphPropertiesOverrides: Map[String, String] =
@@ -46,26 +48,27 @@ object Tag {
       rssPath = Some(s"/${tag.id}/rss"),
       iosType = tag.sectionId match {
         case "crosswords" => None
-        case _ => Some("list")
+        case _            => Some("list")
       },
       javascriptConfigOverrides = javascriptConfigOverrides,
       opengraphPropertiesOverrides = openGraphPropertiesOverrides,
       twitterPropertiesOverrides = Map("twitter:card" -> "summary"),
       commercial = tag.commercial,
-      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(tag.sectionId)
+      isFoundation = GuardianFoundationHelper.sectionIdIsGuardianFoundation(tag.sectionId),
     )
   }
 
   def make(tag: ApiTag, pagination: Option[Pagination] = None): Tag = {
-    val richLinkId = tag.references.find(_.`type` == "rich-link")
+    val richLinkId = tag.references
+      .find(_.`type` == "rich-link")
       .map(_.id.stripPrefix("rich-link/"))
-      .filter(_.matches( """https?://www\.theguardian\.com/.*"""))
+      .filter(_.matches("""https?://www\.theguardian\.com/.*"""))
       .map(_.stripPrefix("https://www.theguardian.com"))
 
     Tag(
       properties = TagProperties.make(tag),
       pagination = pagination,
-      richLinkId = richLinkId
+      richLinkId = richLinkId,
     )
   }
 
@@ -79,17 +82,17 @@ object Podcast {
   implicit val podcastWrites: Writes[Podcast] = Json.writes[Podcast]
 }
 case class Podcast(
-  subscriptionUrl: Option[String],
-  googlePodcastsUrl: Option[String],
-  spotifyUrl: Option[String],
-  image: Option[String]
+    subscriptionUrl: Option[String],
+    googlePodcastsUrl: Option[String],
+    spotifyUrl: Option[String],
+    image: Option[String],
 )
 
 object Reference {
   def make(reference: ApiReference): Reference = {
     Reference(
       id = reference.id,
-      `type` = reference.`type`
+      `type` = reference.`type`,
     )
   }
 
@@ -118,8 +121,8 @@ object Reference {
 }
 
 case class Reference(
-  id: String,
-  `type`: String
+    id: String,
+    `type`: String,
 )
 
 object TagProperties {
@@ -142,7 +145,7 @@ object TagProperties {
       podcast = tag.podcast.map(Podcast.make),
       references = tag.references.map(Reference.make),
       paidContentType = tag.paidContentType,
-      commercial = Some(CommercialProperties.fromTag(tag))
+      commercial = Some(CommercialProperties.fromTag(tag)),
     )
   }
 
@@ -150,34 +153,34 @@ object TagProperties {
 }
 
 case class TagProperties(
-  id: String,
-  url: String,
-  tagType: String,
-  sectionId: String,
-  sectionName: String,
-  webTitle: String,
-  webUrl: String,
-  twitterHandle: Option[String],
-  bio: Option[String],
-  description: Option[String],
-  emailAddress: Option[String],
-  contributorLargeImagePath: Option[String],
-  bylineImageUrl: Option[String],
-  podcast: Option[Podcast],
-  references: Seq[Reference],
-  paidContentType: Option[String],
-  commercial: Option[CommercialProperties]
+    id: String,
+    url: String,
+    tagType: String,
+    sectionId: String,
+    sectionName: String,
+    webTitle: String,
+    webUrl: String,
+    twitterHandle: Option[String],
+    bio: Option[String],
+    description: Option[String],
+    emailAddress: Option[String],
+    contributorLargeImagePath: Option[String],
+    bylineImageUrl: Option[String],
+    podcast: Option[Podcast],
+    references: Seq[Reference],
+    paidContentType: Option[String],
+    commercial: Option[CommercialProperties],
 ) {
- val footballBadgeUrl = references.find(_.`type` == "pa-football-team")
-      .map(_.id.split("/").drop(1).mkString("/"))
-      .map(teamId => s"${Configuration.staticSport.path}/football/crests/120/$teamId.png")
+  val footballBadgeUrl = references
+    .find(_.`type` == "pa-football-team")
+    .map(_.id.split("/").drop(1).mkString("/"))
+    .map(teamId => s"${Configuration.staticSport.path}/football/crests/120/$teamId.png")
 }
 
-case class Tag (
-  properties: TagProperties,
-  pagination: Option[Pagination],
-  richLinkId: Option[String]
-
+case class Tag(
+    properties: TagProperties,
+    pagination: Option[Pagination],
+    richLinkId: Option[String],
 ) extends StandalonePage {
 
   override val metadata: MetaData = Tag.makeMetadata(properties, pagination)

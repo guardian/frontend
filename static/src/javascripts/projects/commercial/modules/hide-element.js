@@ -1,5 +1,4 @@
-// @flow
 import fastdom from 'lib/fastdom-promise';
 
-export const hideElement = <T: Element>(element: T): Promise<T> =>
-    fastdom.write(() => element.classList.add('u-h'));
+export const hideElement =(element) =>
+    fastdom.mutate(() => element.classList.add('u-h'));

@@ -14,12 +14,14 @@ class FrontHeadlineTest extends FunSuite with Matchers {
 
   test("renderEmailHeadline extracts headline from pressed page") {
     val pressedPage = FixtureBuilder.mkPressedPage(
-      List(FixtureBuilder.mkPressedCollection(
-        id = "1",
-        curated = (1 to 4).map(FixtureBuilder.mkContent),
-        backfill = (5 to 8).map(FixtureBuilder.mkContent),
-        maxItemsToDisplay = Some(8))
-      )
+      List(
+        FixtureBuilder.mkPressedCollection(
+          id = "1",
+          curated = (1 to 4).map(FixtureBuilder.mkContent),
+          backfill = (5 to 8).map(FixtureBuilder.mkContent),
+          maxItemsToDisplay = Some(8),
+        ),
+      ),
     )
 
     val RevalidatableResult(result, _) = FrontHeadline.renderEmailHeadline(pressedPage)

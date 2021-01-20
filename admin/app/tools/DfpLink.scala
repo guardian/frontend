@@ -28,12 +28,13 @@ object SiteLink {
 
   def contributorTagPage(contributor: String): String = s"${site.host}/profile/$contributor"
 
-  def page(pageId: String):String = s"${site.host}/$pageId"
+  def page(pageId: String): String = s"${site.host}/$pageId"
 }
 
 object CapiLink {
 
-  private def tagPage(tagType: String, tagName: String): String = s"https://content.guardianapis.com/tags?type=$tagType&q=$tagName"
+  private def tagPage(tagType: String, tagName: String): String =
+    s"https://content.guardianapis.com/tags?type=$tagType&q=$tagName"
 
   def keywordPage(keyword: String): String = tagPage("keyword", keyword)
 

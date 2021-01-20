@@ -14,19 +14,19 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
 
   "slicesFor" should "return None for a non-descending list of groups" in {
     forAll { xs: Seq[Int] =>
-      whenever (!xs.isDescending) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
+      whenever(!xs.isDescending) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
     }
   }
 
   it should "return None for a list of groups that contains a group number greater than 3" in {
     forAll { xs: Seq[Int] =>
-      whenever (xs.exists(_ > 3)) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
+      whenever(xs.exists(_ > 3)) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
     }
   }
 
   it should "return None for a list of groups that contains a group number less than 0" in {
     forAll { xs: Seq[Int] =>
-      whenever (xs.exists(_ < 0)) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
+      whenever(xs.exists(_ < 0)) { slicesFor(xs.map(Story.unboosted)) shouldBe None }
     }
   }
 
@@ -60,15 +60,19 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
         val smallerStories = stories.dropWhile(_.group >= 2)
 
         val overFlows = (if (byGroup.contains(3)) {
-          byGroup(3).drop(1) ++ byGroup.getOrElse(2, Seq.empty)
-        } else {
-          byGroup.getOrElse(2, Seq.empty).drop(2)
-        }).map(_.copy(group = 1))
+                           byGroup(3).drop(1) ++ byGroup.getOrElse(2, Seq.empty)
+                         } else {
+                           byGroup.getOrElse(2, Seq.empty).drop(2)
+                         }).map(_.copy(group = 1))
 
-        slicesFor(stories).value.lift(1).map(xs => Seq(xs match {
-          case HalfQuarterQl2Ql4B => HalfQuarterQl2Ql4
-          case other => other
-        })) shouldEqual slicesFor(overFlows ++ smallerStories)
+        slicesFor(stories).value
+          .lift(1)
+          .map(xs =>
+            Seq(xs match {
+              case HalfQuarterQl2Ql4B => HalfQuarterQl2Ql4
+              case other              => other
+            }),
+          ) shouldEqual slicesFor(overFlows ++ smallerStories)
       }
     }
   }
@@ -76,7 +80,7 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
   it should "for 0 huge and n >= 2 very big, with 1st boosted, return ThreeQuarterQuarter as the optional 1st slice" in {
     forAll(storySeqGen(2)) { stories: Seq[Story] =>
       slicesFor(
-        Story(2, isBoosted = true) +: Story.unboosted(2) +: stories
+        Story(2, isBoosted = true) +: Story.unboosted(2) +: stories,
       ).value.headOption.value shouldEqual ThreeQuarterQuarter
     }
   }
@@ -84,7 +88,7 @@ trait DynamicContainerTest extends FlatSpec with Matchers with GeneratorDrivenPr
   it should "for 0 huge and n >= 2 very big, with 2nd boosted, return QuarterThreeQuarter as the optional 1st slice" in {
     forAll(storySeqGen(1)) { stories: Seq[Story] =>
       slicesFor(
-        Story.unboosted(2) +: Story(2, isBoosted = true) +: stories
+        Story.unboosted(2) +: Story(2, isBoosted = true) +: stories,
       ).value.headOption.value shouldEqual QuarterThreeQuarter
     }
   }

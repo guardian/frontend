@@ -6,12 +6,12 @@ import layout.slices.Story._
 /** Used for calculating the final slice -- any stories that are not standard are considered 'bigs' for the standard
   * slice
   */
-private [slices] case class BigsAndStandards(
-  bigs: Seq[Story],
-  standards: Seq[Story]
+private[slices] case class BigsAndStandards(
+    bigs: Seq[Story],
+    standards: Seq[Story],
 )
 
-private [slices] trait DynamicContainer {
+private[slices] trait DynamicContainer {
   protected def standardSlices(stories: Seq[Story], firstSlice: Option[Slice]): Seq[Slice]
 
   protected def optionalFirstSlice(stories: Seq[Story]): Option[(Slice, Seq[Story])] = {
@@ -46,14 +46,15 @@ private [slices] trait DynamicContainer {
       bigs = byGroup.getOrElse(3, Seq.empty) ++
         byGroup.getOrElse(2, Seq.empty) ++
         byGroup.getOrElse(1, Seq.empty),
-      standards = byGroup.getOrElse(0, Seq.empty)
+      standards = byGroup.getOrElse(0, Seq.empty),
     )
   }
 
   final def slicesFor(stories: Seq[Story]): Option[Seq[Slice]] = {
     if (stories.nonEmpty && stories.isDescending && stories.forall(story => story.group >= 0 && story.group <= 3)) {
-      optionalFirstSlice(stories) map { case (firstSlice, remaining) =>
-        Some(firstSlice +: standardSlices(remaining, Some(firstSlice)))
+      optionalFirstSlice(stories) map {
+        case (firstSlice, remaining) =>
+          Some(firstSlice +: standardSlices(remaining, Some(firstSlice)))
       } getOrElse {
         Some(standardSlices(stories, None))
       }
@@ -68,7 +69,7 @@ private [slices] trait DynamicContainer {
         slices,
         slicesWithoutMPU = slices,
         mobileShowMore = DesktopBehaviour,
-        Set.empty
+        Set.empty,
       )
     }
   }

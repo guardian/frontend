@@ -1,6 +1,6 @@
 package views.support
 
-import org.jsoup.nodes.{ Element, Document }
+import org.jsoup.nodes.{Element, Document}
 import scala.collection.JavaConverters._
 
 object WitnessCleaner extends HtmlCleaner {

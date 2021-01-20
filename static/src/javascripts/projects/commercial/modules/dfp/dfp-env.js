@@ -1,32 +1,16 @@
-// @flow
-
-import type { Advert } from 'commercial/modules/dfp/Advert';
 import { getUrlVars } from 'lib/url';
 import config from 'lib/config';
 
-export type DfpEnv = {
-    renderStartTime: number,
-    adSlotSelector: string,
-    externalDemand: string,
-    lazyLoadEnabled: boolean,
-    lazyLoadObserve: boolean,
-    creativeIDs: Array<number>,
-    advertIds: { [k: string]: number },
-    advertsToLoad: Array<Advert>,
-    advertsToRefresh: Array<Advert>,
-    adverts: Array<Advert>,
-    shouldLazyLoad: () => boolean,
-};
 
-export const dfpEnv: DfpEnv = {
+export const dfpEnv = {
     /* renderStartTime: integer. Point in time when DFP kicks in */
     renderStartTime: -1,
 
     /* adSlotSelector: string. A CSS selector to query ad slots in the DOM */
     adSlotSelector: '.js-ad-slot',
 
-    /* externalDemand: string. Set to 'prebid' for header-bidding connections, or 'none'. */
-    externalDemand: config.get('page.hbImpl'),
+    /* hbImpl: Returns an object {'prebid': boolean, 'a9': boolean} to indicate which header bidding implementations are switched on */
+    hbImpl: config.get('page.hbImpl'),
 
     /* lazyLoadEnabled: boolean. Set to true when adverts are lazy-loaded */
     lazyLoadEnabled: false,

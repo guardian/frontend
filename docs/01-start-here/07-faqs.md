@@ -12,7 +12,7 @@ If your class only appears on the component you expected, you can be fairly conf
 
 ## What are the make commands on Frontend?
 
-Run `make` without any arguments or look in the [makefile](https://github.com/guardian/frontend/blob/master/makefile)
+Run `make` without any arguments or look in the [makefile](https://github.com/guardian/frontend/blob/main/makefile)
 
 ## How do I run JS, bundled and hashed, as I would see it on the live site?
 
@@ -24,7 +24,7 @@ You'll need to [setup nginx](https://github.com/guardian/frontend/blob/2e00099b6
 
 ## How do I link a badge to a secret tag?
 
-Sometimes we want to create a badge for a story, but don't want the world to know what that story is until it is released. We therefore need to encrypt the tag name that the badge is being applied to. This all happens in [Badges.scala](https://github.com/guardian/frontend/blob/master/common/app/model/Badges.scala).
+Sometimes we want to create a badge for a story, but don't want the world to know what that story is until it is released. We therefore need to encrypt the tag name that the badge is being applied to. This all happens in [Badges.scala](https://github.com/guardian/frontend/blob/main/common/app/model/Badges.scala).
 
 To link a badge to a secret tag:
 

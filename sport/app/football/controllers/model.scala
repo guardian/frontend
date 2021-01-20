@@ -18,18 +18,20 @@ case class MatchesPage(
     previousPage: Option[String],
     pageType: String,
     filters: Map[String, Seq[CompetitionFilter]] = Map.empty,
-    comp: Option[Competition]) extends Football {
+    comp: Option[Competition],
+) extends Football {
 
   lazy val isLive = days.flatMap(_.competitions.flatMap(_.matches)).exists(_.isLive)
   lazy val urlBase = comp.map(c => c.url).getOrElse("/football")
 }
 
 class FootballPage(
-  id: String,
-  section: String,
-  webTitle: String,
-  pagination: Option[Pagination] = None,
-  description: Option[String] = None) extends StandalonePage {
+    id: String,
+    section: String,
+    webTitle: String,
+    pagination: Option[Pagination] = None,
+    description: Option[String] = None,
+) extends StandalonePage {
 
   override val metadata: MetaData = MetaData
     .make(
@@ -37,15 +39,15 @@ class FootballPage(
       section = Some(SectionId.fromId(section)),
       webTitle = webTitle,
       pagination = pagination,
-      description = description
+      description = description,
     )
     .copy(
       commercial = Some(
         CommercialProperties(
           editionAdTargetings = EditionAdTargeting.forFrontUnknownToCapi(id),
           editionBrandings = Set.empty,
-          prebidIndexSites = PrebidIndexSite.forFrontUnknownToCapi(id)
-        )
-      )
+          prebidIndexSites = PrebidIndexSite.forFrontUnknownToCapi(id),
+        ),
+      ),
     )
 }

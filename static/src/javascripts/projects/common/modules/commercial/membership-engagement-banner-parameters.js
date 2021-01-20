@@ -1,4 +1,3 @@
-// @flow
 import { acquisitionsBannerControlTemplate } from 'common/modules/commercial/templates/acquisitions-banner-control';
 import { getEngagementBannerControlFromGoogleDoc } from 'common/modules/commercial/contributions-google-docs';
 import config from 'lib/config';
@@ -9,15 +8,15 @@ import {
     addCountryGroupToSupportLink,
 } from './support-utilities';
 
-const fallbackCopy: string = `<strong>The Guardian is editorially independent &ndash;
+const fallbackCopy = `<strong>The Guardian is editorially independent &ndash;
     our journalism is free from the influence of billionaire owners or politicians.
     No one edits our editor. No one steers our opinion.</strong> And unlike many others, we haven’t put
     up a paywall as we want to keep our journalism open and accessible. But the revenue we get from
     advertising is falling, so we increasingly need our readers to fund our independent, investigative reporting.`;
 
 const getAcquisitionsBannerParams = (
-    rowsFromGoogleDoc: any
-): EngagementBannerParams => {
+    rowsFromGoogleDoc
+) => {
     const firstRow = rowsFromGoogleDoc && rowsFromGoogleDoc[0];
 
     if (
@@ -50,12 +49,12 @@ const getAcquisitionsBannerParams = (
         products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
         isHardcodedFallback: false,
         template: acquisitionsBannerControlTemplate,
-        minArticlesBeforeShowingBanner: 3,
+        minArticlesBeforeShowingBanner: 2,
         userCohort: 'AllNonSupporters',
     };
 };
 
-export const getControlEngagementBannerParams = (): Promise<EngagementBannerParams> =>
+export const getControlEngagementBannerParams = () =>
     getEngagementBannerControlFromGoogleDoc()
         .then(rows => getAcquisitionsBannerParams(rows))
         .catch(err => {
@@ -82,7 +81,7 @@ export const getControlEngagementBannerParams = (): Promise<EngagementBannerPara
                 products: ['CONTRIBUTION', 'RECURRING_CONTRIBUTION'],
                 isHardcodedFallback: true,
                 template: acquisitionsBannerControlTemplate,
-                minArticlesBeforeShowingBanner: 3,
+                minArticlesBeforeShowingBanner: 2,
                 userCohort: 'AllNonSupporters',
             };
         });

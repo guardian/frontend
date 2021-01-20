@@ -11,16 +11,18 @@ import play.core.SourceMapper
 import scala.concurrent.{ExecutionContext, Future}
 
 class CorsHttpErrorHandler(
-  environment: Environment,
-  configuration: PlayConfiguration,
-  sourceMapper: Option[SourceMapper],
-  router: => Router
-)(implicit ec: ExecutionContext) extends DefaultHttpErrorHandler(
-  environment = environment,
-  configuration = configuration,
-  sourceMapper = sourceMapper,
-  router = Some(router)
-) with Results {
+    environment: Environment,
+    configuration: PlayConfiguration,
+    sourceMapper: Option[SourceMapper],
+    router: => Router,
+)(implicit ec: ExecutionContext)
+    extends DefaultHttpErrorHandler(
+      environment = environment,
+      configuration = configuration,
+      sourceMapper = sourceMapper,
+      router = Some(router),
+    )
+    with Results {
 
   private val varyFields = List("Origin", "Accept")
   private val defaultVaryFields = varyFields.mkString(",")
@@ -39,8 +41,9 @@ class CorsHttpErrorHandler(
     }
   }
 
-  override def onClientError(request : RequestHeader, statusCode: Int, message: String) : Future[Result] = statusCode match {
-    case NOT_FOUND | BAD_REQUEST => super.onClientError(request, statusCode, message).map(Cors(_)(request))
-    case _ => super.onClientError(request, statusCode, message)
-  }
+  override def onClientError(request: RequestHeader, statusCode: Int, message: String): Future[Result] =
+    statusCode match {
+      case NOT_FOUND | BAD_REQUEST => super.onClientError(request, statusCode, message).map(Cors(_)(request))
+      case _                       => super.onClientError(request, statusCode, message)
+    }
 }

@@ -2,7 +2,7 @@ package conf.audio
 import conf.switches.Switch
 
 import scala.concurrent.duration._
-import java.time.{ Duration,  ZonedDateTime, ZoneId, ZoneOffset, DayOfWeek }
+import java.time.{Duration, ZonedDateTime, ZoneId, ZoneOffset, DayOfWeek}
 
 trait FlagshipContainer {
 
@@ -16,7 +16,8 @@ trait FlagshipContainer {
   //The container should appear at 03:15 on Monday, and disappear at 03:15 on Saturday
   private val threeHoursFifteenMinutes = Duration.ofHours(3) plus Duration.ofMinutes(15)
   private val weekend = Set(DayOfWeek.SATURDAY, DayOfWeek.SUNDAY)
-  private def isWeekend(dateTime: ZonedDateTime): Boolean = weekend(dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek())
+  private def isWeekend(dateTime: ZonedDateTime): Boolean =
+    weekend(dateTime.minus(threeHoursFifteenMinutes).getDayOfWeek())
 
   protected val switch: Switch
 

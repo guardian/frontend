@@ -23,9 +23,9 @@ class RequestLoggerTest extends FlatSpec with Matchers {
       ("X-GU-header2", "value2"),
       ("Host", "someHost"),
       ("Referer", "someReferer"),
-      ("NotSupported", "value")
+      ("NotSupported", "value"),
     )
-    val req = FakeRequest("GET", "/some/path").withHeaders(headers:_*)
+    val req = FakeRequest("GET", "/some/path").withHeaders(headers: _*)
     val fields = RequestLoggerFields(request = Some(req), response = None, stopWatch = None)
     val expectedFields: List[LogField] = List(
       "req.method" -> "GET",
@@ -35,7 +35,7 @@ class RequestLoggerTest extends FlatSpec with Matchers {
       "req.header.Host" -> "someHost",
       "req.header.Referer" -> "someReferer",
       "action.controller" -> "unknown",
-      "action.method" -> "unknown"
+      "action.method" -> "unknown",
     )
     val notExpectedFields: List[LogField] = List("NotSupported" -> "value")
     expectedFields.forall(fields.toList.contains) should be(true)
@@ -45,7 +45,7 @@ class RequestLoggerTest extends FlatSpec with Matchers {
   "RequestLogger with response" should "log expected fields" in {
     val fields = RequestLoggerFields(request = None, response = Some(Ok), stopWatch = None)
     val expectedFields: List[LogField] = List(
-      "resp.status" -> 200
+      "resp.status" -> 200,
     )
     expectedFields.forall(fields.toList.contains) should be(true)
   }

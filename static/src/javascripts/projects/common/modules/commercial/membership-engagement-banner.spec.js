@@ -1,4 +1,3 @@
-// @flow
 import fakeMediator from 'lib/mediator';
 import fakeConfig from 'lib/config';
 import fakeOphan from 'ophan/ng';
@@ -8,16 +7,18 @@ import { getControlEngagementBannerParams as getControlEngagementBannerParams_ }
 import { membershipEngagementBanner } from 'common/modules/commercial/membership-engagement-banner';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
-const getControlEngagementBannerParams: any = getControlEngagementBannerParams_;
+const getControlEngagementBannerParams = getControlEngagementBannerParams_;
 
 jest.mock('lib/raven');
 jest.mock('lib/mediator');
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(() => 10), // gu.alreadyVisited
-        set: jest.fn(),
-        isAvailable: jest.fn(),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(() => 10), // gu.alreadyVisited
+            set: jest.fn(),
+            isAvailable: jest.fn(),
+        },
+    }
 }));
 jest.mock('lib/url', () => ({
     constructQuery: jest.fn(() => ''),
@@ -56,7 +57,7 @@ jest.mock(
         getControlEngagementBannerParams: jest.fn(() =>
             Promise.resolve({
                 products: ['CONTRIBUTION'],
-                linkUrl: 'fake-link-url',
+                linkUrl: 'https://support.theguardian.com/contribute',
             })
         ),
     })
@@ -93,19 +94,19 @@ jest.mock('common/modules/user-prefs', () => ({
     get: jest.fn(() => ({ 'united-kingdom': '2018-07-24T17:05:46+0000' })),
 }));
 
-const FakeMessage: any = require('common/modules/ui/message').Message;
+const FakeMessage = require('common/modules/ui/message').Message;
 
-const fakeConstructQuery: any = require('lib/url').constructQuery;
-const fakeIsBlocked: any = require('common/modules/commercial/membership-engagement-banner-block')
+const fakeConstructQuery = require('lib/url').constructQuery;
+const fakeIsBlocked = require('common/modules/commercial/membership-engagement-banner-block')
     .isBlocked;
-const fakeGet: any = require('lib/storage').local.get;
-const fakeShouldHideReaderRevenue: any = require('common/modules/commercial/contributions-utilities')
+const fakeGet = require('@guardian/libs').storage.local.get;
+const fakeShouldHideReaderRevenue = require('common/modules/commercial/contributions-utilities')
     .pageShouldHideReaderRevenue;
-const fakeCanShowBannerSync: any = require('common/modules/commercial/contributions-utilities')
+const fakeCanShowBannerSync = require('common/modules/commercial/contributions-utilities')
     .canShowBannerSync;
 
-const fetchJsonMock: JestMockFn<*, *> = (fetchJson: any);
-const fakeUserPrefs: JestMockFn<*, *> = (userPrefs.get: any);
+const fetchJsonMock = (fetchJson);
+const fakeUserPrefs = (userPrefs.get);
 
 beforeEach(() => {
     FakeMessage.mockReset();
@@ -200,7 +201,7 @@ describe('Membership engagement banner', () => {
                 Promise.resolve({
                     products: ['CONTRIBUTION'],
                     campaignCode: 'fake-campaign-code',
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                 })
             );
             emitSpy = jest.spyOn(fakeMediator, 'emit');
@@ -238,7 +239,7 @@ describe('Membership engagement banner', () => {
 
     describe('If user already member', () => {
         it('should not show any messages even to engaged readers', () => {
-            (pageShouldHideReaderRevenue: any).mockImplementationOnce(
+            (pageShouldHideReaderRevenue).mockImplementationOnce(
                 () => true
             );
 
@@ -252,7 +253,7 @@ describe('Membership engagement banner', () => {
         beforeEach(() => {
             getControlEngagementBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                 })
             );
         });
@@ -281,7 +282,7 @@ describe('Membership engagement banner', () => {
             getControlEngagementBannerParams.mockImplementationOnce(() =>
                 Promise.resolve({
                     messageText: 'fake-message-text',
-                    linkUrl: 'fake-link-url',
+                    linkUrl: 'https://support.theguardian.com/contribute',
                     buttonCaption: 'fake-button-caption',
                 })
             );
@@ -314,7 +315,7 @@ describe('Membership engagement banner', () => {
                 .show()
                 .then(() =>
                     expect(FakeMessage.prototype.show.mock.calls[0][0]).toMatch(
-                        /fake-link-url\?fake-query-parameters/
+                        /https:\/\/support\.theguardian\.com\/contribute\?fake-query-parameters/
                     )
                 ));
 

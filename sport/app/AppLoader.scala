@@ -33,7 +33,8 @@ import services.ophan.SurgingContentAgentLifecycle
 import scala.concurrent.ExecutionContext
 
 class AppLoader extends FrontendApplicationLoader {
-  override def buildComponents(context: Context): FrontendComponents = new BuiltInComponentsFromContext(context) with AppComponents
+  override def buildComponents(context: Context): FrontendComponents =
+    new BuiltInComponentsFromContext(context) with AppComponents
 }
 
 trait SportServices {
@@ -56,11 +57,12 @@ trait SportServices {
   lazy val ophanApi = wire[OphanApi]
 }
 
-trait AppComponents extends FrontendComponents
-  with FootballControllers
-  with CricketControllers
-  with RugbyControllers
-  with SportServices {
+trait AppComponents
+    extends FrontendComponents
+    with FootballControllers
+    with CricketControllers
+    with RugbyControllers
+    with SportServices {
 
   lazy val healthCheck = wire[HealthCheck]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -74,7 +76,7 @@ trait AppComponents extends FrontendComponents
     wire[FootballLifecycle],
     wire[CricketLifecycle],
     wire[RugbyLifecycle],
-    wire[CachedHealthCheckLifeCycle]
+    wire[CachedHealthCheckLifeCycle],
   )
 
   lazy val router: Router = wire[Routes]

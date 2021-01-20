@@ -1,4 +1,3 @@
-// @flow
 import config from 'lib/config';
 
 export const getCampaigns = () => {

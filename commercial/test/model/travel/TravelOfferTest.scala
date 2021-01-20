@@ -64,7 +64,8 @@ class TravelOfferTest extends FlatSpec with Matchers {
     TravelOffer.fromXml(xml) shouldBe TravelOffer(
       id = "a08878776d1429a5109064d64b5fda05",
       title = "New Zealand - Land of the Long White Cloud",
-      offerUrl = "https://holidays.theguardian.com/collection/new-zealand---land-of-the-long-white-cloud-a08878776d1429a5109064d64b5fda05",
+      offerUrl =
+        "https://holidays.theguardian.com/collection/new-zealand---land-of-the-long-white-cloud-a08878776d1429a5109064d64b5fda05",
       imageUrl = "https://holidays.theguardian.com/tourimg.php?a=img&img=92b6c4fcb13dab1da639805c87aea979",
       fromPrice = Some(3999.0),
       earliestDeparture = DateTime.parse("2016-10-14"),
@@ -73,7 +74,7 @@ class TravelOfferTest extends FlatSpec with Matchers {
       category = Some("Escorted tours"),
       tags = Nil,
       duration = Some(21),
-      position = -1
+      position = -1,
     )
   }
 }

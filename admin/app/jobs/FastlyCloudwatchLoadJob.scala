@@ -1,7 +1,7 @@
 package jobs
 
 import com.amazonaws.services.cloudwatch.model.StandardUnit
-import common.Logging
+import common.GuLogging
 import metrics.SamplerMetric
 import model.diagnostics.CloudWatch
 import services.{FastlyStatistic, FastlyStatisticService}
@@ -12,26 +12,26 @@ import org.joda.time.DateTime
 
 import scala.concurrent.ExecutionContext
 
-class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) extends Logging {
+class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) extends GuLogging {
   // Samples in CloudWatch are additive so we want to limit duplicate reporting.
   // We do not want to corrupt the past either, so set a default value (the most
   // recent 15 minutes of results are unstable).
 
   // This key is (service, name, region)
-  val latestTimestampsSent = mutable.Map[(String, String, String), Long]().
-    withDefaultValue(DateTime.now().minusMinutes(15).getMillis())
+  val latestTimestampsSent =
+    mutable.Map[(String, String, String), Long]().withDefaultValue(DateTime.now().minusMinutes(15).getMillis())
 
   // Be very explicit about which metrics we want. It is not necessary to cloudwatch everything.
   val allFastlyMetrics: List[SamplerMetric] = List(
-    SamplerMetric( "usa-hits", StandardUnit.Count),
-    SamplerMetric( "usa-miss", StandardUnit.Count),
-    SamplerMetric( "usa-errors", StandardUnit.Count),
-    SamplerMetric( "europe-hits", StandardUnit.Count),
-    SamplerMetric( "europe-miss", StandardUnit.Count),
-    SamplerMetric( "europe-errors", StandardUnit.Count),
-    SamplerMetric( "ausnz-hits", StandardUnit.Count),
-    SamplerMetric( "ausnz-miss", StandardUnit.Count),
-    SamplerMetric( "ausnz-errors", StandardUnit.Count)
+    SamplerMetric("usa-hits", StandardUnit.Count),
+    SamplerMetric("usa-miss", StandardUnit.Count),
+    SamplerMetric("usa-errors", StandardUnit.Count),
+    SamplerMetric("europe-hits", StandardUnit.Count),
+    SamplerMetric("europe-miss", StandardUnit.Count),
+    SamplerMetric("europe-errors", StandardUnit.Count),
+    SamplerMetric("ausnz-hits", StandardUnit.Count),
+    SamplerMetric("ausnz-miss", StandardUnit.Count),
+    SamplerMetric("ausnz-errors", StandardUnit.Count),
   )
 
   private def updateMetricFromStatistic(stat: FastlyStatistic): Unit = {
@@ -44,11 +44,9 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
     }
   }
 
-
   def run()(implicit executionContext: ExecutionContext) {
     log.info("Loading statistics from Fastly to CloudWatch.")
     fastlyStatisticService.fetch().map { statistics =>
-
       val fresh: List[FastlyStatistic] = statistics filter { statistic =>
         latestTimestampsSent(statistic.key) < statistic.timestamp
       }
@@ -64,8 +62,9 @@ class FastlyCloudwatchLoadJob(fastlyStatisticService: FastlyStatisticService) ex
 
       val groups = fresh groupBy { _.key }
       val timestampsSent = groups mapValues { _ map { _.timestamp } }
-      timestampsSent mapValues { _.max } foreach { case (key, value) =>
-        latestTimestampsSent.update(key, value)
+      timestampsSent mapValues { _.max } foreach {
+        case (key, value) =>
+          latestTimestampsSent.update(key, value)
       }
     }
   }

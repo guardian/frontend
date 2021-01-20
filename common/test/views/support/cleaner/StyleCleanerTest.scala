@@ -19,7 +19,7 @@ class StyleCleanerTest extends FlatSpec with Matchers {
       </html>.toString()
 
     val cleanedStyles = html.cleanWith(styleCleaner).getElementsByAttribute("style")
-    cleanedStyles.size should be (0)
+    cleanedStyles.size should be(0)
   }
 
   it should "do nothing if no style attribute" in {
@@ -32,7 +32,7 @@ class StyleCleanerTest extends FlatSpec with Matchers {
     </html>.toString()
 
     val cleanedHtml = originalHtml.cleanWith(styleCleaner)
-    ignoreWhiteSpaces(cleanedHtml.html()) should be (ignoreWhiteSpaces(originalHtml))
+    ignoreWhiteSpaces(cleanedHtml.html()) should be(ignoreWhiteSpaces(originalHtml))
   }
 
 }

@@ -1,9 +1,8 @@
-// @flow
 import config from 'lib/config';
 
-const clean = (str: string): string => str.trim().toLowerCase();
+const clean = (str) => str.trim().toLowerCase();
 
-export const campaignsFor = (id: string): Array<Object> => {
+export const campaignsFor = (id) => {
     try {
         return config
             .get('page.campaigns', [])
@@ -17,5 +16,5 @@ export const campaignsFor = (id: string): Array<Object> => {
     }
 };
 
-export const isAbTestTargeted = (test: AcquisitionsABTest): boolean =>
+export const isAbTestTargeted = (test) =>
     campaignsFor(test.campaignId).length > 0;

@@ -11,15 +11,15 @@ trait Switchable {
   def isSwitchedOff: Boolean = !isSwitchedOn
 
   /**
-   * @return a single url-safe word that can be used to construct urls
-   * for this switch.
-   */
+    * @return a single url-safe word that can be used to construct urls
+    * for this switch.
+    */
   def name: String
 
   /**
-   * @return a sentence that describes, in websys understandable terms, the
-   * effect of switching this switch
-   */
+    * @return a sentence that describes, in websys understandable terms, the
+    * effect of switching this switch
+    */
   def description: String
 }
 
@@ -29,7 +29,6 @@ case class DefaultSwitch(name: String, description: String, initiallyOn: Boolean
   def isSwitchedOn: Boolean = isOn.get
 
   def switchOn(): Unit = isOn set true
-
 
   def switchOff(): Unit = isOn set false
 

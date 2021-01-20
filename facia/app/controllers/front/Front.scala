@@ -2,10 +2,10 @@ package controllers.front
 
 import common._
 
-class Front extends Logging {
+class Front extends GuLogging {
 
   def idFromEditionKey(section: String): String = {
-    val editions = Edition.all.map {_.id.toLowerCase}
+    val editions = Edition.all.map { _.id.toLowerCase }
     val sectionId = section.split("/").last
     if (editions.contains(sectionId)) "" else sectionId
   }

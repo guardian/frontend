@@ -4,7 +4,7 @@
 @import layout.ContentWidths.BodyMedia
 @import views.support.RenderClasses
 
-@(quiz: model.content.Quiz, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: model.ShareLinkMeta)(implicit request: RequestHeader)
+@(quiz: model.content.QuizAtom, maybeResults: Option[QuizResults], showResults: Boolean, sharelinks: model.ShareLinkMeta)(implicit request: RequestHeader)
 
 <form action="@postUrl(quiz)" method="POST" class="@RenderClasses(Map(
     ("atom-quiz", true),

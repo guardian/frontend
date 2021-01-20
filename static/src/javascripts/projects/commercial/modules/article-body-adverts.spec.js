@@ -1,4 +1,3 @@
-// @flow
 import { init } from 'commercial/modules/article-body-adverts';
 import config from 'lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
@@ -9,11 +8,11 @@ import {
     isBreakpoint as isBreakpoint_,
 } from 'lib/detect';
 
-const getViewport: any = getViewport_;
-const getBreakpoint: any = getBreakpoint_;
-const isBreakpoint: any = isBreakpoint_;
+const getViewport = getViewport_;
+const getBreakpoint = getBreakpoint_;
+const isBreakpoint = isBreakpoint_;
 
-jest.mock('commercial/modules/dfp/track-ad-render', () => (id: string) => {
+jest.mock('commercial/modules/dfp/track-ad-render', () => (id) => {
     const ads = {
         'dfp-ad--im': true,
     };
@@ -40,7 +39,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: () => false,
 }));
 
-const spaceFillerStub: JestMockFn<*, *> = (spaceFiller.fillSpace: any);
+const spaceFillerStub = (spaceFiller.fillSpace);
 
 describe('Article Body Adverts', () => {
     beforeEach(() => {

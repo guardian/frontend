@@ -6,21 +6,21 @@ import org.scalatest.{BeforeAndAfterAll, DoNotDiscover, FlatSpec, Matchers, Priv
 import conf.Configuration.interactive.cdnPath
 
 @DoNotDiscover class InteractiveControllerTest
-  extends FlatSpec
-  with Matchers
-  with ConfiguredTestSuite
-  with BeforeAndAfterAll
-  with WithMaterializer
-  with WithTestWsClient
-  with WithTestApplicationContext
-  with WithTestContentApiClient
-  with PrivateMethodTester {
+    extends FlatSpec
+    with Matchers
+    with ConfiguredTestSuite
+    with BeforeAndAfterAll
+    with WithMaterializer
+    with WithTestWsClient
+    with WithTestApplicationContext
+    with WithTestContentApiClient
+    with PrivateMethodTester {
 
   val url = "lifeandstyle/ng-interactive/2016/mar/12/stephen-collins-cats-cartoon"
   lazy val interactiveController = new InteractiveController(
     testContentApiClient,
     wsClient,
-    play.api.test.Helpers.stubControllerComponents()
+    play.api.test.Helpers.stubControllerComponents(),
   )
   val getWebWorkerPath = PrivateMethod[String]('getWebWorkerPath)
 
@@ -34,7 +34,9 @@ import conf.Configuration.interactive.cdnPath
     val timestamp = Some("1477559425")
     val file = "interactive-worker.js"
     val workerPath = interactiveController invokePrivate getWebWorkerPath(path, file, timestamp)
-    workerPath should be (s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/1477559425/interactive-worker.js")
+    workerPath should be(
+      s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/1477559425/interactive-worker.js",
+    )
   }
 
   "Interactive service worker path" should "work when no timestamp is present" in {
@@ -42,7 +44,9 @@ import conf.Configuration.interactive.cdnPath
     val timestamp = None
     val file = "interactive-service-worker.js"
     val workerPath = interactiveController invokePrivate getWebWorkerPath(path, file, timestamp)
-    workerPath should be (s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/interactive-service-worker.js")
+    workerPath should be(
+      s"$cdnPath/service-workers/live/lifeandstyle/ng-interactive/2016/interactive-service-worker.js",
+    )
   }
 
 }

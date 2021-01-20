@@ -13,7 +13,7 @@ object CardStylePicker {
     val tags = content.tags.map(_.id)
     extractCampaigns(tags) match {
       case Nil => CardStyle(content, TrailMetaData.empty)
-      case _ => SpecialReport
+      case _   => SpecialReport
     }
   }
 
@@ -21,7 +21,7 @@ object CardStylePicker {
     val tags = FaciaContentUtils.tags(content).map(_.id)
     extractCampaigns(tags) match {
       case Nil => FaciaContentUtils.cardStyle(content)
-      case _ => SpecialReport
+      case _   => SpecialReport
     }
   }
 

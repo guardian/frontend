@@ -1,12 +1,12 @@
 package common.commercial
 
 import com.redis.RedisClient
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
 
-object ClientSideLogging extends Logging {
+object ClientSideLogging extends GuLogging {
 
   val reportFormat = DateTimeFormat.forPattern("ddMMYYYY-HH:mm:ss").withZoneUTC()
 
@@ -28,7 +28,7 @@ object ClientSideLogging extends Logging {
   }
 
   def cleanUpReports(dateTime: DateTime): Unit = {
-    redisClient.map( client => {
+    redisClient.map(client => {
       val timeKey = ClientSideLogging.reportsKeyFromDate(dateTime)
       val pageViewIds = client.smembers[String](timeKey).map(_.flatten).getOrElse(List())
       val dataKeys = pageViewIds.map(ClientSideLogging.dataKeyFromId)
@@ -40,8 +40,7 @@ object ClientSideLogging extends Logging {
   def redisClient: Option[RedisClient] = {
     try {
       Configuration.redis.endpoint.map(new RedisClient(_, 6379))
-    }
-    catch {
+    } catch {
       case e: Exception =>
         log.logger.error(e.getMessage)
         None

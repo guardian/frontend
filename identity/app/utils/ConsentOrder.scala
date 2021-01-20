@@ -17,7 +17,7 @@ object ConsentOrder {
       "phone_optout",
       "sms",
       "market_research_optout",
-      "profiling_optout"
+      "profiling_optout",
     )
 
   /**
@@ -45,7 +45,7 @@ object ConsentOrder {
     def moveToFront(hint: String, consents: List[Consent]): List[Consent] = {
       consents.span(consent => consent.id != hint) match {
         case (as, h :: bs) => h :: as ++ bs
-        case _ => consents
+        case _             => consents
       }
     }
 

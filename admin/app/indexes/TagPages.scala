@@ -1,6 +1,6 @@
 package indexes
 
-import common.Logging
+import common.GuLogging
 import common.Maps._
 import com.gu.contentapi.client.model.v1.Tag
 import model.{TagDefinition, TagIndex}
@@ -11,6 +11,7 @@ import scala.concurrent.ExecutionContext
 import scala.util.Try
 
 object TagPages {
+
   /** To be curated by Peter Martin */
   val validSections = Map(
     ("artanddesign", "Art and design"),
@@ -75,16 +76,16 @@ object TagPages {
     ("voluntary-sector-network", "Voluntary Sector Network"),
     ("weather", "Weather"),
     ("women-in-leadership", "Women in Leadership"),
-    ("world", "World news")
+    ("world", "World news"),
   )
 
   val publications = Map(
     ("theguardian", "The Guardian"),
-    ("theobserver", "The Observer")
+    ("theobserver", "The Observer"),
   )
 }
 
-class TagPages(implicit executionContext: ExecutionContext) extends Logging {
+class TagPages(implicit executionContext: ExecutionContext) extends GuLogging {
 
   def alphaIndexKey(s: String): String = {
     val badCharacters = """[^a-z0-9]+""".r
@@ -113,14 +114,16 @@ class TagPages(implicit executionContext: ExecutionContext) extends Logging {
   def nameOrder(tag: Tag): (Option[String], Option[String], String) =
     (tag.lastName, tag.firstName, tag.webTitle)
 
-  def toPages[A: Ordering](tagsByKey: Map[String, Set[Tag]])
-                          (titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndex] =
-    tagsByKey.toSeq.sortBy(_._1) map { case (id, tagSet) =>
-      TagIndex(
-        id,
-        titleFromKey(id),
-        tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag)
-      )
+  def toPages[A: Ordering](
+      tagsByKey: Map[String, Set[Tag]],
+  )(titleFromKey: String => String, sortKey: Tag => A): Seq[TagIndex] =
+    tagsByKey.toSeq.sortBy(_._1) map {
+      case (id, tagSet) =>
+        TagIndex(
+          id,
+          titleFromKey(id),
+          tagSet.toSeq.sortBy(sortKey).map(TagDefinition.fromContentApiTag),
+        )
     }
 
   val invalidSectionsFilter = Enumeratee.filter[Tag](_.sectionId.exists(TagPages.validSections.contains))
@@ -137,4 +140,3 @@ class TagPages(implicit executionContext: ExecutionContext) extends Logging {
   val byPublication = publicationsFilter &>> mappedByKey(tag => tagHeadKey(tag.id).getOrElse("publication"))
 
 }
-

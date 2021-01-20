@@ -1,14 +1,8 @@
-// @flow
 import $ from 'lib/$';
 import bonzo from 'bonzo';
 
-type RelativeDateOptions = {
-    notAfter?: number,
-    format?: string,
-    showTime?: boolean,
-};
 
-const dayOfWeek = (day): string =>
+const dayOfWeek = (day) =>
     [
         'Sunday',
         'Monday',
@@ -19,7 +13,7 @@ const dayOfWeek = (day): string =>
         'Saturday',
     ][day];
 
-const monthAbbr = (month): string =>
+const monthAbbr = (month) =>
     [
         'Jan',
         'Feb',
@@ -35,43 +29,43 @@ const monthAbbr = (month): string =>
         'Dec',
     ][month];
 
-const pad = (n): number | string => (n < 10 ? `0${n}` : n);
+const pad = (n) => (n < 10 ? `0${n}` : n);
 
-const isToday = (date): boolean => {
+const isToday = (date) => {
     const today = new Date();
     return date && date.toDateString() === today.toDateString();
 };
 
-const isWithin24Hours = (date): boolean => {
+const isWithin24Hours = (date) => {
     const today = new Date();
     return date && date.valueOf() > today.valueOf() - 24 * 60 * 60 * 1000;
 };
 
-const isWithinSeconds = (date: Date, seconds: number): boolean => {
+const isWithinSeconds = (date, seconds) => {
     const today = new Date();
     return date && date.valueOf() > today.valueOf() - (seconds || 0) * 1000;
 };
 
-const isYesterday = (relative): boolean => {
+const isYesterday = (relative) => {
     const today = new Date();
     const yesterday = new Date();
     yesterday.setDate(today.getDate() - 1);
     return relative.toDateString() === yesterday.toDateString();
 };
 
-const isWithinPastWeek = (date): boolean => {
+const isWithinPastWeek = (date) => {
     const weekAgo = new Date().valueOf() - 7 * 24 * 60 * 60 * 1000;
     return date.valueOf() >= weekAgo;
 };
 
-const isValidDate = (date): boolean => {
+const isValidDate = (date) => {
     if (Object.prototype.toString.call(date) !== '[object Date]') {
         return false;
     }
     return !Number.isNaN(date.getTime());
 };
 
-const getSuffix = (type, format, value): string => {
+const getSuffix = (type, format, value) => {
     let strs;
 
     const units = {
@@ -107,13 +101,13 @@ const getSuffix = (type, format, value): string => {
     return '';
 };
 
-const withTime = (date): string =>
+const withTime = (date) =>
     ` ${date.getHours()}:${pad(date.getMinutes())}`;
 
 const makeRelativeDate = (
-    epoch: number,
-    opts: RelativeDateOptions = {}
-): false | string => {
+    epoch,
+    opts = {}
+) => {
     let minutes;
     let hours;
     let days;
@@ -165,11 +159,11 @@ const makeRelativeDate = (
     );
 };
 
-const findValidTimestamps = (): bonzo =>
+const findValidTimestamps = () =>
     // `.blocktime time` used in blog html
     $('.js-timestamp, .js-item__timestamp');
 
-const replaceLocaleTimestamps = (html: ?Element): void => {
+const replaceLocaleTimestamps = (html) => {
     const cls = 'js-locale-timestamp';
     const context = html || document;
 
@@ -188,7 +182,7 @@ const replaceLocaleTimestamps = (html: ?Element): void => {
     });
 };
 
-const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
+const replaceValidTimestamps = (opts = {}) => {
     findValidTimestamps().each(el => {
         let targetEl;
         const $el = bonzo(el);
@@ -220,7 +214,7 @@ const replaceValidTimestamps = (opts: RelativeDateOptions = {}): void => {
     });
 };
 
-const init = (opts: RelativeDateOptions = {}): void => {
+const init = (opts = {}) => {
     replaceValidTimestamps(opts);
     replaceLocaleTimestamps();
 };

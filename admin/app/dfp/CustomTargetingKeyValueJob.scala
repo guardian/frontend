@@ -9,11 +9,12 @@ import scala.concurrent.{ExecutionContext, Future}
 // key value mappings. In contrast, the CustomTargetingAgent is used to resolve key/value ids to string names.
 class CustomTargetingKeyValueJob(customTargetingAgent: CustomTargetingAgent) {
 
-  def run()(implicit executionContext: ExecutionContext): Future[Unit] = Future {
-    val customTargeting = customTargetingAgent.get.data.values
+  def run()(implicit executionContext: ExecutionContext): Future[Unit] =
+    Future {
+      val customTargeting = customTargetingAgent.get.data.values
 
-    if (customTargeting.nonEmpty) {
-      Store.putDfpCustomTargetingKeyValues(Json.stringify(Json.toJson(customTargeting)))
+      if (customTargeting.nonEmpty) {
+        Store.putDfpCustomTargetingKeyValues(Json.stringify(Json.toJson(customTargeting)))
+      }
     }
-  }
 }

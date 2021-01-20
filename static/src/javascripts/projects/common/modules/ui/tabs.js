@@ -1,5 +1,3 @@
-// @flow
-
 import fastdom from 'lib/fastdom-promise';
 
 const NAV_CLASSES = [
@@ -8,13 +6,13 @@ const NAV_CLASSES = [
     'tone-accent-border',
 ];
 
-const getTabTarget = (tab: HTMLElement): Promise<?string> =>
-    fastdom.read(() => tab.getAttribute('href'));
+const getTabTarget = (tab) =>
+    fastdom.measure(() => tab.getAttribute('href'));
 
-const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
-    const tabList: HTMLElement = (tab.parentNode: any);
+const hidePane = (tab, pane) => {
+    const tabList = (tab.parentNode);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'false');
             NAV_CLASSES.forEach(className =>
@@ -26,10 +24,10 @@ const hidePane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     });
 };
 
-const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
-    const tabList: HTMLElement = (tab.parentNode: any);
+const showPane = (tab, pane) => {
+    const tabList = (tab.parentNode);
 
-    return fastdom.write(() => {
+    return fastdom.mutate(() => {
         if (tabList) {
             tabList.setAttribute('aria-selected', 'true');
             NAV_CLASSES.forEach(className => tabList.classList.add(className));
@@ -40,9 +38,9 @@ const showPane = (tab: HTMLElement, pane: HTMLElement): Promise<void> => {
     });
 };
 
-const init = (): Promise<void> => {
-    const findTabs = (): Promise<Array<HTMLElement>> =>
-        fastdom.read(() => Array.from(document.querySelectorAll('.tabs')));
+const init = () => {
+    const findTabs = () =>
+        fastdom.measure(() => Array.from(document.querySelectorAll('.tabs')));
 
     return findTabs().then(tabs => {
         tabs.forEach(tab => {
@@ -58,12 +56,12 @@ const init = (): Promise<void> => {
                 return;
             }
 
-            fastdom.write(() => {
+            fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
 
-            nav.addEventListener('click', (event: Event) => {
-                const target: HTMLElement = (event.target: any);
+            nav.addEventListener('click', (event) => {
+                const target = (event.target);
 
                 if (!target || target.nodeName !== 'A') {
                     return;
@@ -98,7 +96,7 @@ const init = (): Promise<void> => {
                 }
             });
 
-            return fastdom.write(() => {
+            return fastdom.mutate(() => {
                 nav.setAttribute('data-tabs-initialized', 'true');
             });
         });

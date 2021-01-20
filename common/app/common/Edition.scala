@@ -28,10 +28,9 @@ abstract class Edition(
       "film",
       "lifeandstyle",
       "travel",
-      "tv-and-radio"
-    )
-
-  ) {
+      "tv-and-radio",
+    ),
+) {
   val homePagePath: String = s"/$networkFrontId"
 
   def isEditionalised(id: String): Boolean = editionalisedSections.contains(id)
@@ -48,10 +47,10 @@ object Edition {
     editions.Uk,
     editions.Us,
     editions.Au,
-    editions.International
+    editions.International,
   )
 
-  lazy val editionFronts = Edition.all.map {e => "/" + e.id.toLowerCase}
+  lazy val editionFronts = Edition.all.map { e => "/" + e.id.toLowerCase }
 
   def isEditionFront(implicit request: RequestHeader): Boolean = editionFronts.contains(request.path)
 
@@ -67,9 +66,9 @@ object Edition {
     val editionFromCookie = request.cookies.get("GU_EDITION").map(_.value)
 
     editionFromParameter
-     .orElse(editionFromHeader)
-     .orElse(editionFromCookie)
-     .getOrElse(defaultEdition.id)
+      .orElse(editionFromHeader)
+      .orElse(editionFromCookie)
+      .getOrElse(defaultEdition.id)
   }
 
   def apply(request: RequestHeader): Edition = {
@@ -78,8 +77,8 @@ object Edition {
   }
 
   def others(implicit request: RequestHeader): Seq[Edition] = {
-      val currentEdition = Edition(request)
-      others(currentEdition)
+    val currentEdition = Edition(request)
+    others(currentEdition)
   }
 
   def others(edition: Edition): Seq[Edition] = all.filterNot(_ == edition)
@@ -117,14 +116,14 @@ object Editionalise {
 
   import Edition.defaultEdition
 
-
   //TODO - understand RSS
 
   def apply(id: String, edition: Edition): String = {
     if (edition.isEditionalised(id)) id match {
-        case "" => edition.homePagePath.replaceFirst("/", "")
-        case _ => s"${edition.id.toLowerCase}/$id"
-    } else if (defaultEdition.isEditionalised(id)) {
+      case "" => edition.homePagePath.replaceFirst("/", "")
+      case _  => s"${edition.id.toLowerCase}/$id"
+    }
+    else if (defaultEdition.isEditionalised(id)) {
       s"${defaultEdition.id.toLowerCase}/$id"
     } else {
       id

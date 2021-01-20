@@ -1,6 +1,5 @@
+@import model.GUDateTimeFormatNew
 @(crosswordPage: crosswords.CrosswordPageWithContent)(implicit requestHeader: RequestHeader)
-@import views.support.GUDateTimeFormat
-
 <div class="crossword__meta">
     @crosswordPage.crossword.creator.map { creator =>
 
@@ -15,7 +14,7 @@
     <div class="content__dateline content__dateline-crossword">
         <time itemprop="datePublished" datetime="@crosswordPage.crossword.date.toString("yyyy-MM-dd'T'HH:mm:ssZ"))"
         data-timestamp="@crosswordPage.crossword.date.getMillis" class="content__dateline-wpd js-wpd">
-            @GUDateTimeFormat.formatDateForDisplay(crosswordPage.crossword.date, requestHeader) <span class="content__dateline-time">@GUDateTimeFormat.formatTimeForDisplay(crosswordPage.crossword.date, requestHeader)</span>
+            @GUDateTimeFormatNew.formatDateForDisplay(crosswordPage.crossword.date, requestHeader) <span class="content__dateline-time">@GUDateTimeFormatNew.formatTimeForDisplay(crosswordPage.crossword.date, requestHeader)</span>
         </time>
     </div>
 </div>

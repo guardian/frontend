@@ -14,7 +14,7 @@ class HeaderLoggingFilter(implicit val mat: Materializer) extends Filter with Sa
     }
 
     val kvs: Set[(String, String)] = keys flatMap { key =>
-      rh.headers.getAll(key) map { value => key -> value}
+      rh.headers.getAll(key) map { value => key -> value }
     }
 
     val header = kvs map { case (k, v) => s"$k=$v" } mkString "&"

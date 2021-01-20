@@ -1,21 +1,22 @@
-// @flow
 import { breakingNews } from 'common/modules/onward/breaking-news';
 
 jest.mock('lib/raven');
-jest.mock('lib/storage', () => ({
-    local: {
-        get: jest.fn(key => {
-            if (key === 'gu.breaking-news.hidden') {
-                return {
-                    alert_1: false,
-                    alert_2: false,
-                    alert_3: false,
-                };
-            }
-        }),
-        set: jest.fn(),
-        isAvailable: jest.fn().mockReturnValue(true),
-    },
+jest.mock('@guardian/libs', () => ({
+    storage: {
+        local: {
+            get: jest.fn(key => {
+                if (key === 'gu.breaking-news.hidden') {
+                    return {
+                        alert_1: false,
+                        alert_2: false,
+                        alert_3: false,
+                    };
+                }
+            }),
+            set: jest.fn(),
+            isAvailable: jest.fn().mockReturnValue(true),
+        },
+    }
 }));
 /**
  * we have to mock config like this because
@@ -33,7 +34,7 @@ jest.mock('lib/config', () => {
     };
 
     return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
+        get: (path = '', defaultValue) =>
             path
                 .replace(/\[(.+?)\]/g, '.$1')
                 .split('.')
@@ -85,13 +86,13 @@ jest.mock('common/modules/ui/relativedates', () => ({
 jest.mock('lodash/template', () => jest.fn());
 jest.useFakeTimers();
 
-const isAvailableMock: any = require('lib/storage').local.isAvailable;
-const getMock: any = require('lib/storage').local.get;
-const setMock: any = require('lib/storage').local.set;
-const fakeFetchJson: any = require('lib/fetch-json');
-const isWithinSecondsMock: any = require('common/modules/ui/relativedates')
+const isAvailableMock = require('@guardian/libs').storage.local.isAvailable;
+const getMock = require('@guardian/libs').storage.local.get;
+const setMock = require('@guardian/libs').storage.local.set;
+const fakeFetchJson = require('lib/fetch-json');
+const isWithinSecondsMock = require('common/modules/ui/relativedates')
     .isWithinSeconds;
-const fakeTemplate: any = require('lodash/template');
+const fakeTemplate = require('lodash/template');
 
 const BREAKING_NEWS_DELAY = 3000;
 

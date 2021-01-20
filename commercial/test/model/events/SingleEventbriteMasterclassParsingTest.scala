@@ -18,14 +18,23 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPriceRange should be (Some("£400.00"))
-    masterclass.ratioTicketsLeft should be (Some(0.5))
-    masterclass.guardianUrl should be ("http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course")
-    masterclass.readableDate should be ("20 April 2013")
-    masterclass.capacity should be (18)
-    masterclass.url should be ("https://www.eventurl.com")
+    masterclass.displayPriceRange should be(Some("£400.00"))
+    masterclass.ratioTicketsLeft should be(Some(0.5))
+    masterclass.guardianUrl should be(
+      "http://www.theguardian.com/guardian-masterclasses/how-to-use-twitter-effectively-david-schneider-david-levin-social-media-course",
+    )
+    masterclass.readableDate should be("20 April 2013")
+    masterclass.capacity should be(18)
+    masterclass.url should be("https://www.eventurl.com")
     masterclass.venue should be {
-      Venue(Some("The Guardian"), Some("Kings Place"), Some("90 York Way"), Some("London"), Some("United Kingdom"), Some("N1 9GU"))
+      Venue(
+        Some("The Guardian"),
+        Some("Kings Place"),
+        Some("90 York Way"),
+        Some("London"),
+        Some("United Kingdom"),
+        Some("N1 9GU"),
+      )
     }
     masterclass.venue.description should be("The Guardian, London")
   }
@@ -35,8 +44,8 @@ class SingleEventbriteMasterclassParsingTest extends FlatSpec with Matchers with
 
     masterclass.name should be("Travel writing weekend")
     masterclass shouldBe 'open
-    masterclass.displayPriceRange should be (Some("£400.00 to £2,600.00"))
-    masterclass.ratioTicketsLeft should be (Some(0.5))
+    masterclass.displayPriceRange should be(Some("£400.00 to £2,600.00"))
+    masterclass.ratioTicketsLeft should be(Some(0.5))
   }
 
   "Generated masterclass object" should "have a description text that is truncated to 250 chars" in {

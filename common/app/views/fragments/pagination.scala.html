@@ -1,5 +1,5 @@
 @import common.{PagePaths, Pagination}
-@import views.support.Format
+@import views.support.GuDateFormatLegacy
 
 @(title: String,
   pagination: Pagination,
@@ -39,7 +39,7 @@
 @if(pagination.lastPage > 1) {
     @if(showFull) {
     <div class="pagination pagination--full u-cf">
-        <span class="pagination__legend hide-on-mobile-inline">About @Format(pagination.totalContent) results for @Html(title)</span>
+        <span class="pagination__legend hide-on-mobile-inline">About @GuDateFormatLegacy(pagination.totalContent) results for @Html(title)</span>
     } else {
     <div class="pagination u-cf">
     }

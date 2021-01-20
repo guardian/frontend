@@ -1,10 +1,10 @@
 package commercial.model.hosted
 
 import com.gu.contentapi.client.model.v1.Content
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.HostedPage
 
-object HostedTrails extends Logging {
+object HostedTrails extends GuLogging {
 
   private def publishedDateTime(item: Content): Long = item.webPublicationDate.map(_.dateTime).getOrElse(0L)
 
@@ -20,7 +20,6 @@ object HostedTrails extends Logging {
     val (givenItemIfExists, otherItems) = results partition (_.id == itemId)
 
     val trails = givenItemIfExists.headOption map { givenItem =>
-
       val pubDateTime = publishedDateTime(givenItem)
 
       val (publishedBefore, publishedAfter) = otherItems.partition { item =>
@@ -45,7 +44,7 @@ object HostedTrails extends Logging {
       def mkString(ss: Seq[AnyRef]) = ss.mkString("'", "', '", "'")
       val content = mkString(results.map(item => (item.id, item.webPublicationDate.map(_.iso8601).getOrElse(""))))
       s"Tried to make $trailCount trails for item '$itemId' from content: $content.  " +
-      s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
+        s"Actually made ${trails.size} trails: ${mkString(trails.map(_.id))}"
     }
 
     trails

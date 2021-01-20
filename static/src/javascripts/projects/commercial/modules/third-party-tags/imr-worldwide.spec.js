@@ -1,8 +1,7 @@
-// @flow
 import { imrWorldwide } from './imr-worldwide';
 
 const { shouldRun, url } = imrWorldwide;
-const onLoad: any = imrWorldwide.onLoad;
+const onLoad = imrWorldwide.onLoad;
 
 /**
  * we have to mock config like this because
@@ -29,13 +28,21 @@ jest.mock('lib/config', () => {
     };
 
     return Object.assign({}, defaultConfig, {
-        get: (path: string = '', defaultValue: any) =>
+        get: (path = '', defaultValue) =>
             path
-                .replace(/\[(.+?)\]/g, '.$1')
+                .replace(/\[(.+?)]/g, '.$1')
                 .split('.')
                 .reduce((o, key) => o[key], defaultConfig) || defaultValue,
     });
 });
+
+jest.mock('common/modules/commercial/geo-utils', () => ({
+        isInAuOrNz: jest.fn().mockReturnValue(true)
+}));
+
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
 
 const nSdkInstance = {
     ggInitialize: jest.fn(),
@@ -46,7 +53,15 @@ window.NOLCMB = {
     getInstance: jest.fn(() => nSdkInstance),
 };
 
-describe('third party tag IMR worldwide', () => {
+describe('third party tag IMR in AUS', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+    });
+
+    afterAll(() => {
+        jest.clearAllMocks();
+    });
+
     it('should exist and have the correct exports', () => {
         expect(shouldRun).toBe(true);
         expect(url).toBe(

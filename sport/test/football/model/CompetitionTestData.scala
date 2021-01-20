@@ -18,36 +18,90 @@ trait CompetitionTestData {
   val `final` = Round("2", Some("Final"))
   val knockoutRounds = List(quarterFinals, semiFinals, thirdPlacePlayoff, `final`)
 
-  private val _matchDay = MatchDay("1234", today.toDateTimeAtStartOfDay, None, Stage("1"), Round("1", None), "1", true, false, true, false, true, "KO", None, teams(0), teams(1), None, None, None)
-  private val _fixture = Fixture("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
-  private val _result = Result("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", false, None, teams(0), teams(1), None, None, None)
+  private val _matchDay = MatchDay(
+    "1234",
+    today.toDateTimeAtStartOfDay,
+    None,
+    Stage("1"),
+    Round("1", None),
+    "1",
+    true,
+    false,
+    true,
+    false,
+    true,
+    "KO",
+    None,
+    teams(0),
+    teams(1),
+    None,
+    None,
+    None,
+  )
+  private val _fixture =
+    Fixture("1234", today.toDateTimeAtStartOfDay, Stage("1"), Round("1", None), "1", teams(0), teams(1), None, None)
+  private val _result = Result(
+    "1234",
+    today.toDateTimeAtStartOfDay,
+    Stage("1"),
+    Round("1", None),
+    "1",
+    false,
+    None,
+    teams(0),
+    teams(1),
+    None,
+    None,
+    None,
+  )
 
-  private def liveMatch(date: DateTime, stage: Stage, round: Round, leg: String, homeTeam: MatchDayTeam = _matchDay.homeTeam, awayTeam: MatchDayTeam = _matchDay.awayTeam): MatchDay =
+  private def liveMatch(
+      date: DateTime,
+      stage: Stage,
+      round: Round,
+      leg: String,
+      homeTeam: MatchDayTeam = _matchDay.homeTeam,
+      awayTeam: MatchDayTeam = _matchDay.awayTeam,
+  ): MatchDay =
     _matchDay.copy(
       date = date,
       stage = stage,
       round = round,
       leg = leg,
       homeTeam = homeTeam,
-      awayTeam = awayTeam
+      awayTeam = awayTeam,
     )
-  private def fixture(date: DateTime, stage: Stage, round: Round, leg: String, homeTeam: MatchDayTeam = _fixture.homeTeam, awayTeam: MatchDayTeam = _fixture.awayTeam): Fixture =
+  private def fixture(
+      date: DateTime,
+      stage: Stage,
+      round: Round,
+      leg: String,
+      homeTeam: MatchDayTeam = _fixture.homeTeam,
+      awayTeam: MatchDayTeam = _fixture.awayTeam,
+  ): Fixture =
     _fixture.copy(
       date = date,
       stage = stage,
       round = round,
       leg = leg,
       homeTeam = homeTeam,
-      awayTeam = awayTeam
+      awayTeam = awayTeam,
     )
-  private def result(date: DateTime, stage: Stage, round: Round, leg: String, homeTeam: MatchDayTeam = _result.homeTeam, awayTeam: MatchDayTeam = _result.awayTeam): Result =
+  private def result(
+      date: DateTime,
+      stage: Stage,
+      round: Round,
+      leg: String,
+      homeTeam: MatchDayTeam = _result.homeTeam,
+      awayTeam: MatchDayTeam = _result.awayTeam,
+  ): Result =
     _result.copy(
       date = date,
       stage = stage,
       round = round,
       leg = leg,
       homeTeam = homeTeam,
-      awayTeam = awayTeam
+      awayTeam = awayTeam,
     )
 
   val pastLeagueMatches = {
@@ -58,7 +112,7 @@ trait CompetitionTestData {
       result(now.minusDays(9), stage, round, "1"),
       result(now.minusDays(9), stage, round, "1"),
       result(now.minusDays(8), stage, round, "1"),
-      result(now.minusDays(7), stage, round, "1")
+      result(now.minusDays(7), stage, round, "1"),
     )
   }
   val currentLeagueMatches = {
@@ -69,7 +123,7 @@ trait CompetitionTestData {
       result(now.minusHours(9), stage, round, "1"),
       liveMatch(now.minusMinutes(10), stage, round, "1"),
       fixture(now.plusHours(5), stage, round, "1"),
-      fixture(now.plusDays(1), stage, round, "1")
+      fixture(now.plusDays(1), stage, round, "1"),
     )
   }
   def futureLeagueMatches(stage: Stage): List[Fixture] = {
@@ -79,7 +133,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(8), stage, round, "1"),
       fixture(now.plusDays(9), stage, round, "1"),
       fixture(now.plusDays(9), stage, round, "1"),
-      fixture(now.plusDays(10), stage, round, "1")
+      fixture(now.plusDays(10), stage, round, "1"),
     )
   }
 
@@ -93,7 +147,7 @@ trait CompetitionTestData {
       result(now.minusDays(10), stage, Round("1", Some("Group A")), "1", teams(8), teams(12)),
       result(now.minusDays(9), stage, Round("2", Some("Group B")), "1", teams(9), teams(13)),
       result(now.minusDays(9), stage, Round("3", Some("Group C")), "1", teams(10), teams(14)),
-      result(now.minusDays(8), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
+      result(now.minusDays(8), stage, Round("4", Some("Group D")), "1", teams(11), teams(15)),
     )
   }
   val currentGroupMatches: List[FootballMatch with Product with Serializable] = {
@@ -106,7 +160,7 @@ trait CompetitionTestData {
       liveMatch(now.minusMinutes(10), stage, Round("1", Some("Group A")), "1", teams(8), teams(12)),
       fixture(now.plusDays(1), stage, Round("2", Some("Group B")), "1", teams(9), teams(13)),
       fixture(now.plusDays(1), stage, Round("3", Some("Group C")), "1", teams(10), teams(14)),
-      fixture(now.plusDays(2), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
+      fixture(now.plusDays(2), stage, Round("4", Some("Group D")), "1", teams(11), teams(15)),
     )
   }
   def futureGroupMatches(stage: Stage): List[Fixture] = {
@@ -118,7 +172,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(2), stage, Round("1", Some("Group A")), "1", teams(8), teams(12)),
       fixture(now.plusDays(2), stage, Round("2", Some("Group B")), "1", teams(9), teams(13)),
       fixture(now.plusDays(3), stage, Round("3", Some("Group C")), "1", teams(10), teams(14)),
-      fixture(now.plusDays(4), stage, Round("4", Some("Group D")), "1", teams(11), teams(15))
+      fixture(now.plusDays(4), stage, Round("4", Some("Group D")), "1", teams(11), teams(15)),
     )
   }
 
@@ -131,7 +185,7 @@ trait CompetitionTestData {
       result(now.minusDays(5), stage, semiFinals, "1", teams(4), teams(6)),
       result(now.minusDays(5), stage, semiFinals, "1", teams(0), teams(2)),
       result(now.minusDays(3), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
-      result(now.minusDays(1), stage, `final`, "1", teams(0), teams(4))
+      result(now.minusDays(1), stage, `final`, "1", teams(0), teams(4)),
     )
   }
   def currentKnockoutMatches(stage: Stage): List[FootballMatch] = {
@@ -143,7 +197,7 @@ trait CompetitionTestData {
       liveMatch(now.minusHours(1), stage, semiFinals, "1", teams(0), teams(2)),
       liveMatch(now.minusHours(1), stage, semiFinals, "1", teams(4), teams(6)),
       fixture(now.plusDays(1), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
-      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4))
+      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4)),
     )
   }
   def betweenRoundsKnockoutMatches(stage: Stage): List[FootballMatch] = {
@@ -155,7 +209,7 @@ trait CompetitionTestData {
       result(now.minusHours(4), stage, semiFinals, "1", teams(0), teams(2)),
       result(now.minusHours(3), stage, semiFinals, "1", teams(4), teams(6)),
       fixture(now.plusDays(1), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
-      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4))
+      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4)),
     )
   }
   def futureKnockoutMatches(stage: Stage): List[Fixture] = {
@@ -167,7 +221,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(3), stage, semiFinals, "1", teams(0), teams(2)),
       fixture(now.plusDays(3), stage, semiFinals, "1", teams(4), teams(6)),
       fixture(now.plusDays(5), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
-      fixture(now.plusDays(7), stage, `final`, "1", teams(0), teams(4))
+      fixture(now.plusDays(7), stage, `final`, "1", teams(0), teams(4)),
     )
   }
 
@@ -186,7 +240,7 @@ trait CompetitionTestData {
       fixture(now.plusDays(1), stage, semiFinals, "2", teams(2), teams(0)),
       fixture(now.plusDays(1), stage, semiFinals, "2", teams(6), teams(4)),
       fixture(now.plusDays(2), stage, thirdPlacePlayoff, "1", teams(2), teams(6)),
-      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4))
+      fixture(now.plusDays(3), stage, `final`, "1", teams(0), teams(4)),
     )
   }
 
@@ -199,7 +253,7 @@ trait CompetitionTestData {
       result(now.minusHours(9), stage, round, leg),
       liveMatch(now.minusMinutes(10), stage, round, leg),
       fixture(now.plusHours(5), stage, round, leg),
-      fixture(now.plusDays(1), stage, round, leg)
+      fixture(now.plusDays(1), stage, round, leg),
     )
   }
 
@@ -214,18 +268,33 @@ trait CompetitionTestData {
       nation = "English",
       startDate = Some(today.minusDays(50)),
       showInTeamsList = false,
-      tableDividers = Nil
+      tableDividers = Nil,
     )
   }
 
-
-  def makeLeagueTable(stage: Stage, round: Int => Round): Seq[LeagueTableEntry] = teams.zipWithIndex.map { case (matchDayTeam, index) =>
-    val leagueTeam = LeagueTeam(matchDayTeam.id, matchDayTeam.name, index, LeagueStats(4, 5, 2, 1, 5, 5), LeagueStats(4, 5, 2, 1, 5, 5), LeagueStats(4, 5, 2, 1, 5, 5), 0, 20 - index)
-    LeagueTableEntry(stage.stageNumber, round(index), leagueTeam)
-  }
+  def makeLeagueTable(stage: Stage, round: Int => Round): Seq[LeagueTableEntry] =
+    teams.zipWithIndex.map {
+      case (matchDayTeam, index) =>
+        val leagueTeam = LeagueTeam(
+          matchDayTeam.id,
+          matchDayTeam.name,
+          index,
+          LeagueStats(4, 5, 2, 1, 5, 5),
+          LeagueStats(4, 5, 2, 1, 5, 5),
+          LeagueStats(4, 5, 2, 1, 5, 5),
+          0,
+          20 - index,
+        )
+        LeagueTableEntry(stage.stageNumber, round(index), leagueTeam)
+    }
   def leagueTable(stage: Stage, round: Round): Seq[LeagueTableEntry] = makeLeagueTable(stage, _ => round)
   def groupTables(stage: Stage): Seq[LeagueTableEntry] = {
-    val groups = List(Round("1", Some("Group A")), Round("2", Some("Group B")), Round("3", Some("Group C")), Round("4", Some("Group D")))
+    val groups = List(
+      Round("1", Some("Group A")),
+      Round("2", Some("Group B")),
+      Round("3", Some("Group C")),
+      Round("4", Some("Group D")),
+    )
     makeLeagueTable(stage, i => groups(i % 4))
   }
 
@@ -234,36 +303,36 @@ trait CompetitionTestData {
   // Premier League
   val league = testCompetition(
     leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
-    matches = currentLeagueMatches.sortBy(_.date)
+    matches = currentLeagueMatches.sortBy(_.date),
   )
   // FA-cup
   val tournament = testCompetition(
     leagueTable = Nil,
-    matches = currentKnockoutMatches(Stage("1")).sortBy(_.date)
+    matches = currentKnockoutMatches(Stage("1")).sortBy(_.date),
   )
   // Championship league / playoffs
   val leagueWithPlayoffs = testCompetition(
     leagueTable = leagueTable(Stage("1"), Round("1", Some("League"))),
-    matches = (pastLeagueMatches ++ futureKnockoutMatches(Stage("2"))).sortBy(_.date)
+    matches = (pastLeagueMatches ++ futureKnockoutMatches(Stage("2"))).sortBy(_.date),
   )
   // World-cup
   val groupsThenKnockout = testCompetition(
     leagueTable = groupTables(Stage("1")),
-    matches = (pastGroupMatches ++ currentKnockoutMatches(Stage("2"))).sortBy(_.date)
+    matches = (pastGroupMatches ++ currentKnockoutMatches(Stage("2"))).sortBy(_.date),
   )
   // Champions' league league
   val groupsThenKnockoutWithLegs = testCompetition(
     leagueTable = groupTables(Stage("1")),
-    matches = (pastGroupMatches ++ currentKnockoutMatchesWithLegs(Stage("2"))).sortBy(_.date)
+    matches = (pastGroupMatches ++ currentKnockoutMatchesWithLegs(Stage("2"))).sortBy(_.date),
   )
   // World cup qualifiers
   val groupStage = testCompetition(
     leagueTable = groupTables(Stage("1")),
-    matches = currentGroupMatches.sortBy(_.date)
+    matches = currentGroupMatches.sortBy(_.date),
   )
   // International friendlies
   val stageless = testCompetition(
     leagueTable = Nil,
-    matches = currentMatchesWithoutAnyStage.sortBy(_.date)
+    matches = currentMatchesWithoutAnyStage.sortBy(_.date),
   )
 }

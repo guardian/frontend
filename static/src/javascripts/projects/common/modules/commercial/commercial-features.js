@@ -1,4 +1,3 @@
-// @flow
 import defaultConfig from 'lib/config';
 import { getBreakpoint } from 'lib/detect';
 import { isAdFreeUser } from 'common/modules/commercial/user-features';
@@ -7,29 +6,15 @@ import userPrefs from 'common/modules/user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising: boolean;
-    shouldBlockAnalytics: boolean;
-    stickyTopBannerAd: boolean;
-    articleBodyAdverts: boolean;
-    articleAsideAdverts: boolean;
-    carrotTrafficDriver: boolean;
-    videoPreRolls: boolean;
-    highMerch: boolean;
-    thirdPartyTags: boolean;
-    outbrain: boolean;
-    commentAdverts: boolean;
-    liveblogAdverts: boolean;
-    paidforBand: boolean;
-    asynchronous: boolean;
-    adFree: boolean;
 
-    constructor(config: any = defaultConfig) {
+
+    constructor(config = defaultConfig) {
         // this is used for SpeedCurve tests
-        const noadsUrl: boolean = /[#&]noads(&.*)?$/.test(window.location.hash);
-        const forceAdFree: boolean = /[#&]noadsaf(&.*)?$/.test(
+        const noadsUrl = /[#&]noads(&.*)?$/.test(window.location.hash);
+        const forceAdFree = /[#&]noadsaf(&.*)?$/.test(
             window.location.hash
         );
-        const forceAds: boolean = /[?&]forceads(&.*)?$/.test(
+        const forceAds = /[?&]forceads(&.*)?$/.test(
             window.location.search
         );
         const externalAdvertising = !noadsUrl && !userPrefs.isOff('adverts');
@@ -53,7 +38,7 @@ class CommercialFeatures {
             config.get('page.showNewRecipeDesign') &&
             config.get('tests.abNewRecipeDesign');
 
-        const isSecureContact = [
+        this.isSecureContact = [
             'help/ng-interactive/2017/mar/17/contact-the-guardian-securely',
             'help/2016/sep/19/how-to-contact-the-guardian-securely',
         ].includes(config.get('page.pageId', ''));
@@ -68,8 +53,6 @@ class CommercialFeatures {
                 !sensitiveContent &&
                 !isIdentityPage &&
                 !this.adFree);
-
-        this.shouldBlockAnalytics = isSecureContact;
 
         this.stickyTopBannerAd =
             !this.adFree &&
@@ -91,8 +74,6 @@ class CommercialFeatures {
             config.get('switches.carrotTrafficDriver', false) &&
             !config.get('page.isPaidContent');
 
-        this.videoPreRolls = this.dfpAdvertising && !this.adFree;
-
         this.highMerch =
             this.dfpAdvertising &&
             !this.adFree &&
@@ -100,18 +81,25 @@ class CommercialFeatures {
             !isHosted &&
             !isInteractive &&
             !config.get('page.isFront') &&
+            !config.get('isDotcomRendering', false) &&
             !newRecipeDesign;
 
         this.thirdPartyTags =
             !this.adFree &&
             externalAdvertising &&
             !isIdentityPage &&
-            !isSecureContact;
+            !this.isSecureContact;
 
-        this.outbrain =
+        this.launchpad =
+            !this.adFree &&
+            externalAdvertising &&
+            !isIdentityPage &&
+            !this.isSecureContact &&
+            config.get('switches.redplanetForAus', false);
+
+        this.relatedWidgetEnabled =
             this.dfpAdvertising &&
             !this.adFree &&
-            switches.outbrain &&
             !noadsUrl &&
             !sensitiveContent &&
             isArticle &&
@@ -131,6 +119,11 @@ class CommercialFeatures {
             isLiveBlog && this.dfpAdvertising && !this.adFree;
 
         this.paidforBand = config.get('page.isPaidContent') && !supportsSticky;
+
+        this.comscore =
+            config.get('switches.comscore', false) &&
+            !isIdentityPage &&
+            !this.isSecureContact;
     }
 }
 

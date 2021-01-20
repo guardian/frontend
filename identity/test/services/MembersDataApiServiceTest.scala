@@ -12,10 +12,7 @@ import play.api.mvc.{Cookie, Cookies}
 import play.api.libs.json.Json
 import scala.concurrent.Future
 
-class MembersDataApiServiceTest
-  extends AsyncFlatSpec
-  with EitherValues
-  with MockitoSugar {
+class MembersDataApiServiceTest extends AsyncFlatSpec with EitherValues with MockitoSugar {
 
   val mdapiApiRoot = "https://mdapimock.com"
   val testUserId = "10000001"
@@ -59,7 +56,12 @@ class MembersDataApiServiceTest
     """.stripMargin
 
   private val config = mock[IdentityConfiguration]
-  private val cookies = Cookies(Seq(Cookie("Cookie1", "hash", None, "/", None, false, true, None), Cookie("Cookie2", "hash", None, "/", None, false, true, None)))
+  private val cookies = Cookies(
+    Seq(
+      Cookie("Cookie1", "hash", None, "/", None, false, true, None),
+      Cookie("Cookie2", "hash", None, "/", None, false, true, None),
+    ),
+  )
 
   private val wsMock = mock[WSClient]
   private val wsRequestMock = mock[WSRequest]

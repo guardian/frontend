@@ -100,10 +100,12 @@
 .crossword__clues__gradient {
     position: absolute;
     bottom: 0;
-    width: 100%;
+    left: 0;
+    right: 0;
     height: 120px;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0), #ffffff);
     display: none;
+    pointer-events: none;
 
     @include mq($from: tablet, $until: leftCol) {
         display: block;

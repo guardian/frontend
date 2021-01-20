@@ -1,24 +1,38 @@
 package controllers.front
 
-import common.Logging
+import common.GuLogging
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
+import model.facia.PressedCollection
 import model.{Cached, PressedPage}
 import play.api.mvc.Results
 
-object FrontHeadline extends Results with Logging {
+object FrontHeadline extends Results with GuLogging {
 
-  val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(NotFound("Could not extract headline from front"))
+  val headlineNotFound: Cached.CacheableResult = WithoutRevalidationResult(
+    NotFound("Could not extract headline from front"),
+  )
 
-  def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
-    val webTitle = for {
-      topCollection <- faciaPage.collections.headOption
-      topCurated <- topCollection.curatedPlusBackfillDeduplicated.headOption
-    } yield RevalidatableResult.Ok(topCurated.properties.webTitle)
+  private[this] def headline(collection: PressedCollection): Option[String] = {
+    val headlines = for {
+      content <- collection.curatedPlusBackfillDeduplicated
+      if content.properties.webTitle != ""
+    } yield content.properties.webTitle
 
-    webTitle.getOrElse {
-      log.warn(s"headline not found for ${faciaPage.id}")
-      headlineNotFound
-    }
+    headlines.headOption
   }
 
+  def renderEmailHeadline(faciaPage: PressedPage): Cached.CacheableResult = {
+    val headlineOpt = faciaPage.collections.view
+      .map(headline)
+      .find(_.isDefined)
+      .flatten
+
+    headlineOpt match {
+      case Some(headlinestr) => RevalidatableResult.Ok(headlinestr)
+      case None => {
+        log.warn(s"headline not found for ${faciaPage.id}")
+        headlineNotFound
+      }
+    }
+  }
 }
