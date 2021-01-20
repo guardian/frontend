@@ -242,10 +242,10 @@ const getImprovePlacementId = (sizes: HeaderBiddingSize[]): number => {
 const getImproveSizeParam = (slotId: string): { w?: number, h?: number } => {
     const key = stripTrailingNumbersAbove1(stripMobileSuffix(slotId));
     return key &&
-    (key.endsWith('mostpop') ||
-        key.endsWith('comments') ||
-        key.endsWith('inline1') ||
-        (key.endsWith('inline') && !isDesktopAndArticle))
+        (key.endsWith('mostpop') ||
+            key.endsWith('comments') ||
+            key.endsWith('inline1') ||
+            (key.endsWith('inline') && !isDesktopAndArticle))
         ? { w: 300, h: 250 }
         : {};
 };
