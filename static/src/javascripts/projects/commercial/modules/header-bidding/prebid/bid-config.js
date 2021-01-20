@@ -266,15 +266,12 @@ const sonobiBidder = {
     name: 'sonobi',
     switchName: 'prebidSonobi',
     bidParams: slotId =>
-        Object.assign(
-            {},
-            {
-                ad_unit: config.get('page.adUnit'),
-                dom_id: slotId,
-                appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
-                pageViewId: config.get('ophan.pageViewId'),
-            }
-        ),
+        ({
+                   ad_unit: config.get('page.adUnit'),
+                   dom_id: slotId,
+                   appNexusTargeting: buildAppNexusTargeting(getPageTargeting()),
+                   pageViewId: config.get('ophan.pageViewId'),
+               })
 };
 
 const getPubmaticPublisherId = () => {
