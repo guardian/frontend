@@ -267,7 +267,6 @@ describe('indexExchangeBidders', () => {
     test('should return an IX bidder for every size that the slot can take', () => {
         const slotSizes = [[300, 250], [300, 600]];
         const bidders = indexExchangeBidders(slotSizes);
-        console.log(bidders);
         expect(bidders).toEqual([
             expect.objectContaining({
                 name: 'ix',
