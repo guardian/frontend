@@ -1,5 +1,6 @@
 package pages
 
+import common.LinkTo
 import html.HtmlPage
 import html.HtmlPageHelpers._
 import model.structuredData.{LiveBlogPosting, Organisation}
