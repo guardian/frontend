@@ -19,8 +19,4 @@ object ApplicationsDotcomRenderingInterface {
       case (_, false) => Legacy
     }
   }
-
-  def getHtmlFromDCR(): String = {
-    "Experiment: NGInteractiveDCR (2)"
-  }
 }
