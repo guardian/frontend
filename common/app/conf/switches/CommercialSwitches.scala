@@ -217,66 +217,6 @@ trait CommercialSwitches {
     exposeClientSide = false,
   )
 
-  val MembershipEngagementBanner = Switch(
-    Commercial,
-    "membership-engagement-banner",
-    "Main switch for the membership engagement banner.",
-    owners = Seq(Owner.withGithub("justinpinner")),
-    safeState = On,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val UseConfiguredEpicTests = Switch(
-    Commercial,
-    "use-configured-epic-tests",
-    "Fetches epic tests a file created by the Epic Test tool. These take priority over hardcoded epic tests.",
-    owners = Seq(Owner.withGithub("tomrf1")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val EngagementBannerTestsFromGoogleDocs = Switch(
-    Commercial,
-    "engagement-banner-tests-from-google-docs",
-    "Fetches engagement banner tests from Google Docs. These take priority over hardcoded banner tests.",
-    owners = Seq(Owner.withGithub("joelochlann")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockUK = Switch(
-    Commercial,
-    "membership-engagement-banner-block-uk",
-    "If this switch is turned on, the engagement banner will NOT show up on UK fronts for readers in the UK",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockUS = Switch(
-    Commercial,
-    "membership-engagement-banner-block-us",
-    "If this switch is turned on, the engagement banner will NOT show up on US fronts for readers in the US",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
-  val MembershipEngagementBannerBlockAU = Switch(
-    Commercial,
-    "membership-engagement-banner-block-au",
-    "If this switch is turned on, the engagement banner will NOT show up on AU fronts for readers in AU",
-    owners = Seq(Owner.withGithub("desbo")),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
-
   val AdblockAsk = Switch(
     Commercial,
     "ab-adblock-ask",
