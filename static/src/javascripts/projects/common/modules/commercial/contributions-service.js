@@ -228,8 +228,7 @@ const getStickyBottomBanner = (payload) => {
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
-        // `https://contributions.code.dev-guardianapis.com/${path}` :
-        `http://localhost:8082/${path}` :
+        `https://contributions.code.dev-guardianapis.com/${path}` :
         `https://contributions.guardianapis.com/${path}`
 };
 
