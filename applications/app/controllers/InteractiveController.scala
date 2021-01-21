@@ -112,7 +112,7 @@ class InteractiveController(
           case Right(other) => RenderOtherStatus(other)
         }
       }
-      case Election2020Hack => renderInteractivePageElection2020_v2(path)
+      case Election2020AmpElectionTracker => renderInteractivePageElection2020_v2(path)
       case DotcomRendering => {
         val remoteRenderer = DotcomRenderingService()
         val range = ArticleBlocks
