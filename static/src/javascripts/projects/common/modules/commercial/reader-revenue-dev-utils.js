@@ -18,7 +18,6 @@ import {
 import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
-import { isBlocked } from 'common/modules/commercial/membership-engagement-banner-block';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 
 const clearCommonReaderRevenueStateAndReload = (
@@ -77,11 +76,6 @@ const showMeTheBanner = (asExistingSupporter = false) => {
         alert(
             'Membership engagement banner switch is turned off on the dotcom switchboard'
         );
-        return;
-    }
-
-    if (isBlocked()) {
-        alert('Banner is blocked by a switch in the dotcom switchboard');
         return;
     }
 

@@ -3,8 +3,6 @@ import { onConsentChange } from '@guardian/consent-management-platform'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
-    emitBeginEvent,
-    setupClickHandling,
     submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
@@ -230,7 +228,8 @@ const getStickyBottomBanner = (payload) => {
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
-        `https://contributions.code.dev-guardianapis.com/${path}` :
+        // `https://contributions.code.dev-guardianapis.com/${path}` :
+        `http://localhost:8082/${path}` :
         `https://contributions.guardianapis.com/${path}`
 };
 
@@ -246,8 +245,6 @@ const renderLiveblogEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-
     const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
 
     if (element) {
@@ -260,8 +257,6 @@ const renderLiveblogEpic = async (module, meta) => {
             campaignId,
             componentType,
             products,
-            abTestVariant.showTicker,
-            abTestVariant.tickerSettings,
         );
     }
 };
@@ -278,9 +273,6 @@ const renderEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
@@ -293,8 +285,6 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
-        abTestVariant.showTicker,
-        abTestVariant.tickerSettings,
     );
 };
 
