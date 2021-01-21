@@ -105,6 +105,7 @@ class InteractiveController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
+    // See comment id: DF38D2B4-614D for why we have two rendering.
     ApplicationsInteractiveRendering.getRenderingTier(path) match {
       case Regular => {
         lookup(path) map {
@@ -112,36 +113,21 @@ class InteractiveController(
           case Right(other) => RenderOtherStatus(other)
         }
       }
-      case USElection2020AmpPage => renderInteractivePageElection2020_v2(path)
-      case DotcomRendering => {
-        val remoteRenderer = DotcomRenderingService()
-        val range = ArticleBlocks
-
-        val path2 = "world/2013/jun/09/edward-snowden-nsa-whistleblower-surveillance"
-        capiLookup
-          .lookup(path2, Some(range))
-          .map(responseToModelOrResult)
-          .recover(convertApiExceptions) // Future[Either[(ArticlePage, Blocks), Result]]
-          .flatMap { e =>
-            e match {
-              case Left((article, blocks)) => {
-                val pageType: PageType = PageType(article, request, context)
-                remoteRenderer.getAMPArticle(wsClient, article, blocks, pageType)
-              }
-              case Right(other) => Future.successful(Ok("case: ade30b6a-de4a-469d-8ad8-701996e5be06"))
-            }
-          }
-
-        // val html: String = ApplicationsDotcomRenderingInterface.getHtmlFromDCR()
-        // Future.successful(Ok(html))
-      }
+      case USElection2020AmpPage => renderInteractivePageUSPresidentialElection2020_v2(path)
     }
   }
 
   // ---------------------------------------------
-  // Election2020
+  // US Presidential Election 2020
 
-  def renderInteractivePageElection2020(i: InteractivePage): Future[Result] = {
+  /*
+    The two following functions implement the rendering of the US Election 2020 Election Tracker Amp Page.
+    Only the second version is used, but both are kept for historical interest. Notably, the first version has the code
+    needed to expand that logic to all interactives (if we wanted to do that one day, before DCR takes that kind of
+    rendering over).
+   */
+
+  def renderInteractivePageUSPresidentialElection2020_v1(i: InteractivePage): Future[Result] = {
     /*
       This version takes the interactive page, extract the atom id and then make
       another CAPI query (using a derived id) to retrieve the AMP version
@@ -165,7 +151,7 @@ class InteractiveController(
     }
   }
 
-  def renderInteractivePageElection2020_v2(path: String): Future[Result] = {
+  def renderInteractivePageUSPresidentialElection2020_v2(path: String): Future[Result] = {
     /*
       This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
      */
@@ -179,24 +165,6 @@ class InteractiveController(
         }
         case None => Ok("error: 6a0a6be4-e702-4b51-8f26-01f9921c6b74")
       }
-    }
-  }
-
-  // ---------------------------------------------
-  // [applications] on DCR experiment
-
-  private def isSupported(c: ApiContent) = c.isArticle || c.isLiveBlog || c.isSudoku
-
-  private def responseToModelOrResult(
-      response: ItemResponse,
-  )(implicit request: RequestHeader): Either[(ArticlePage, Blocks), Result] = {
-    val supportedContent: Option[ContentType] = response.content.filter(isSupported).map(Content(_))
-    val blocks = response.content.flatMap(_.blocks).getOrElse(Blocks())
-
-    ModelOrResult(supportedContent, response) match {
-      case Left(article: Article) => Left((ArticlePage(article, StoryPackages(article.metadata.id, response)), blocks))
-      case Right(r)               => Right(r)
-      case _                      => Right(NotFound)
     }
   }
 }

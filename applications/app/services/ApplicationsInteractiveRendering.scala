@@ -9,6 +9,7 @@ object USElection2020AmpPage extends RenderingTier
 /*
   Author: Pascal
   Date: 21st Jan 2020
+  CommentID: DF38D2B4-614D
 
   This object was introduced in late 2020, to handle the routing between regular rendering of interactives
   versus the code that had been written to handle the US Presidential Election Tracker amp page.
