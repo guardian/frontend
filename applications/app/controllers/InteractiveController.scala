@@ -105,7 +105,7 @@ class InteractiveController(
   override def canRender(i: ItemResponse): Boolean = i.content.exists(_.isInteractive)
 
   override def renderItem(path: String)(implicit request: RequestHeader): Future[Result] = {
-    ApplicationsDotcomRenderingInterface.getRenderingTier(path) match {
+    ApplicationsInteractiveRendering.getRenderingTier(path) match {
       case Legacy => {
         lookup(path) map {
           case Left(model)  => render(model)

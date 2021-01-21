@@ -8,7 +8,7 @@ object Legacy extends RenderingTier
 object Election2020Hack extends RenderingTier
 object DotcomRendering extends RenderingTier
 
-object ApplicationsDotcomRenderingInterface {
+object ApplicationsInteractiveRendering {
   def getRenderingTier(path: String)(implicit request: RequestHeader): RenderingTier = {
     val isSpecialElection = ApplicationsSpecial2020Election.pathIsSpecialHanding(path)
     val isAmp = request.host.contains("amp")
