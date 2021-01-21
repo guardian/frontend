@@ -627,6 +627,25 @@ object WitnessTypeDataVideo {
   implicit val w3Writes: Writes[WitnessTypeDataVideo] = Json.writes[WitnessTypeDataVideo]
 }
 
+case class WitnessTypeDataText(
+    `type`: String,
+    url: Option[String],
+    originalUrl: Option[String],
+    witnessEmbedType: Option[String],
+    source: Option[String],
+    title: Option[String],
+    description: Option[String],
+    authorName: Option[String],
+    authorUsername: Option[String],
+    authorWitnessProfileUrl: Option[String],
+    authorGuardianProfileUrl: Option[String],
+    apiUrl: Option[String],
+    dateCreated: Option[String],
+) extends WitnessTypeData
+object WitnessTypeDataText {
+  implicit val WitnessTypeDataTextWrites: Writes[WitnessTypeDataText] = Json.writes[WitnessTypeDataText]
+}
+
 case class WitnessBlockElement(
     assets: Seq[WitnessBlockElementAssetsElement],
     witnessTypeData: WitnessTypeData,
@@ -1160,6 +1179,7 @@ object PageElement {
           embedType match {
             case "image" => Some(makeWitnessBlockElementImage(element, wtd))
             case "video" => Some(makeWitnessBlockElementVideo(element, wtd))
+            case "text"  => Some(makeWitnessBlockElementText(element, wtd))
             case _       => None
           }
 
@@ -1263,6 +1283,28 @@ object PageElement {
         youtubeDescription = wtd.youtubeDescription,
         youtubeAuthorName = wtd.youtubeAuthorName,
         youtubeHtml = wtd.youtubeHtml,
+      ),
+      containsThirdPartyTracking(element.tracking),
+    )
+  }
+
+  private def makeWitnessBlockElementText(element: ApiBlockElement, wtd: WitnessElementFields): WitnessBlockElement = {
+    WitnessBlockElement(
+      assets = makeWitnessAssets(element),
+      witnessTypeData = WitnessTypeDataText(
+        `type` = "text",
+        url = wtd.url,
+        originalUrl = wtd.originalUrl,
+        witnessEmbedType = wtd.witnessEmbedType,
+        source = wtd.source,
+        title = wtd.title,
+        description = wtd.description,
+        authorName = wtd.authorName,
+        authorUsername = wtd.authorUsername,
+        authorWitnessProfileUrl = wtd.authorWitnessProfileUrl,
+        authorGuardianProfileUrl = wtd.authorGuardianProfileUrl,
+        apiUrl = wtd.apiUrl,
+        dateCreated = wtd.dateCreated.map(date => date.iso8601),
       ),
       containsThirdPartyTracking(element.tracking),
     )
