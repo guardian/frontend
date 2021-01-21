@@ -15,8 +15,8 @@ import model.dotcomrendering.PageType
 import org.apache.commons.lang.StringEscapeUtils
 import pages.InteractiveHtmlPage
 import renderers.DotcomRenderingService
-import services.ApplicationsSpecial2020Election
-import services.ApplicationsSpecial2020Election.pathToAmpAtomId
+import services.ApplicationsUSElection2020AmpPages
+import services.ApplicationsUSElection2020AmpPages.pathToAmpAtomId
 
 import scala.concurrent.duration._
 import scala.concurrent.Future
@@ -149,7 +149,7 @@ class InteractiveController(
     val atomIdOpt = i.item.content.atoms.flatMap(atoms => atoms.interactives.headOption.map(atom => atom.id))
     atomIdOpt match {
       case Some(atomId) => {
-        val capiLookupString = ApplicationsSpecial2020Election.defaultAtomIdToAmpAtomId(atomId)
+        val capiLookupString = ApplicationsUSElection2020AmpPages.defaultAtomIdToAmpAtomId(atomId)
         val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
         response.map { response =>
           response.interactive match {
@@ -169,7 +169,7 @@ class InteractiveController(
     /*
       This version retrieve the AMP version directly but rely on an predefined map between paths and amp page ids
      */
-    val capiLookupString = ApplicationsSpecial2020Election.pathToAmpAtomId(path)
+    val capiLookupString = ApplicationsUSElection2020AmpPages.pathToAmpAtomId(path)
     val response: Future[ItemResponse] = lookupWithoutModelConvertion(capiLookupString)
     response.map { response =>
       response.interactive match {

@@ -16,7 +16,7 @@ import views.html.fragments.page.{devTakeShot, htmlTag}
 import views.html.fragments._
 import views.html.stacked
 import html.HtmlPageHelpers.ContentCSSFile
-import services.ApplicationsSpecial2020Election
+import services.ApplicationsUSElection2020AmpPages
 
 object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
 
@@ -50,7 +50,7 @@ object InteractiveHtmlPage extends HtmlPage[InteractivePage] {
       ),
     )
 
-    val ampTag = ApplicationsSpecial2020Election.ampTagHtml(request.path)
+    val ampTag = ApplicationsUSElection2020AmpPages.ampTagHtml(request.path)
 
     htmlTag(
       headTag(

@@ -9,7 +9,7 @@ import scala.util.matching.Regex
 // something that DCR doesn't yet know how to do. It's essentially the hack version of
 // ApplicationsDotcomRenderingInterface , which is not ready ; a (slower) work in progress.
 
-object ApplicationsSpecial2020Election {
+object ApplicationsUSElection2020AmpPages {
 
   val specialPathsToCapiIdsMap = Map(
     "/world/ng-interactive/2020/oct/20/covid-vaccine-tracker-when-will-a-coronavirus-vaccine-be-ready" -> "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page",
@@ -86,7 +86,7 @@ object ApplicationsSpecial2020Election {
   }
 
   def ampTagHtml(path: String)(implicit request: RequestHeader): Html = {
-    if (ApplicationsSpecial2020Election.pathIsSpecialHanding(path)) {
+    if (ApplicationsUSElection2020AmpPages.pathIsSpecialHanding(path)) {
       Html(
         s"""<link rel="amphtml" href="https://amp.theguardian.com${ensureStartingForwardSlash(path)}">""",
       )
