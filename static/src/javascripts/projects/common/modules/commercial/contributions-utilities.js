@@ -8,11 +8,6 @@ import {
 import config from 'lib/config';
 import { storage } from '@guardian/libs';
 import { elementInView } from 'lib/element-inview';
-import { awaitEpicButtonClicked } from 'common/modules/commercial/epic/epic-utils';
-import {
-    bannerMultipleTestsGoogleDocUrl,
-    getGoogleDoc,
-} from 'common/modules/commercial/contributions-google-docs';
 
 const getVisitCount = () => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 

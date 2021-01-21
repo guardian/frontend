@@ -5,10 +5,6 @@ import {
     readerRevenueRelevantCookies,
 } from 'common/modules/commercial/user-features';
 import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
-import {
-    clearBannerHistory,
-    minArticlesBeforeShowingBanner,
-} from 'common/modules/commercial/membership-engagement-banner';
 import { storage } from '@guardian/libs';
 import {
     initMvtCookie,
@@ -19,6 +15,10 @@ import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
 import config from 'lib/config';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
+import userPrefs from 'common/modules/user-prefs';
+
+const lastClosedAtKey = 'engagementBannerLastClosedAt';
+const minArticlesBeforeShowingBanner = 2;
 
 const clearCommonReaderRevenueStateAndReload = (
     asExistingSupporter
@@ -69,6 +69,10 @@ const clearCommonReaderRevenueStateAndReload = (
 const showMeTheEpic = (asExistingSupporter = false) => {
     // Clearing out the epic view log happens before all reloads
     clearCommonReaderRevenueStateAndReload(asExistingSupporter);
+};
+
+const clearBannerHistory = () => {
+    userPrefs.remove(lastClosedAtKey);
 };
 
 const showMeTheBanner = (asExistingSupporter = false) => {
