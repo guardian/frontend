@@ -9,7 +9,6 @@ import conf.switches.SwitchGroup.Commercial
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
-    NGInteractiveDCR,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
@@ -24,15 +23,6 @@ object DotcomRendering
       participationGroup = Perc10A, // Also see ArticlePicker.scala - our main filter mechanism is by page features
       // Friday 20th Nov 2020: we are now showing DCR to users not participating (see: cea453f4-9b71-435e-8a11-35ef690c7821)
       // This means that 90% of the audience is being exposed to DCR
-    )
-
-object NGInteractiveDCR
-    extends Experiment(
-      name = "ng-interactive-dcr",
-      description = "Use DCR to render (ng)-interactives",
-      owners = Seq(Owner.withGithub("shtukas")),
-      sellByDate = new LocalDate(2021, 6, 1),
-      participationGroup = Perc0B,
     )
 
 object NewsletterEmbedDesign
