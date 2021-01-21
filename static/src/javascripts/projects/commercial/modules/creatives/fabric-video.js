@@ -5,7 +5,7 @@ import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/template';
 import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
 import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricVideoStr from 'raw-loader!commercial/views/creatives/fabric-video.html';
+import fabricVideoStr from 'commercial/views/creatives/fabric-video.html';
 import objectFitVideos from 'object-fit-videos';
 
 class FabricVideo {
