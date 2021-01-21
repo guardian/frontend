@@ -111,6 +111,11 @@ module.exports = {
                 loader: 'svg-loader',
             },
             {
+                test: /\.(html|css)$/,
+                exclude: /(node_modules)/,
+                loader: 'raw-loader',
+            },
+            {
                 include: path.resolve(__dirname, 'node_modules/preact-x'),
                 resolve: {
                     alias: { preact: 'preact-x' },

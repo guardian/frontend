@@ -9,7 +9,7 @@ import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import isUndefined from 'lodash/isUndefined';
 import debounce from 'lodash/debounce';
-import blockTemplate from 'raw-loader!facia/views/liveblog-block.html';
+import blockTemplate from 'facia/views/liveblog-block.html';
 
 const animateDelayMs = 2000;
 const animateAfterScrollDelayMs = 500;

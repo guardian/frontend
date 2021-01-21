@@ -28,16 +28,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-commercial-prebid-safeframe",
-    "Test the impact of serving prebid ads in safeframes",
-    owners = Seq(Owner.withGithub("jeteve")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 20),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sign-in-gate-main-control",
     "Control audience for the sign in gate to 9% audience. Will never see the sign in gate.",
     owners = Seq(Owner.withGithub("coldlink")),
@@ -62,7 +52,7 @@ trait ABTestSwitches {
     "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
     owners = Seq(Owner.withGithub("nitro-marky")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 25),
+    sellByDate = new LocalDate(2021, 1, 29),
     exposeClientSide = true,
   )
 
