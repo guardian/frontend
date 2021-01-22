@@ -5,11 +5,11 @@ import {
 } from '@guardian/consent-management-platform';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from './dfp-env';
 import once from 'lodash/once';
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
+import prebid from '../header-bidding/prebid/prebid';
 import { isGoogleProxy } from '../../../../lib/detect';
-import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
+import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
 
 const loadPrebid = () => {
     if (

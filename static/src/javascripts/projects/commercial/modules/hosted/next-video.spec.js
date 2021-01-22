@@ -1,4 +1,4 @@
-import { load } from 'commercial/modules/hosted/next-video';
+import { load } from './next-video';
 import fetchJson from '../../../../lib/fetch-json';
 import config from '../../../../lib/config';
 

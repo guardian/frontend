@@ -3,13 +3,13 @@ import $ from '../../../lib/$';
 import config from '../../../lib/config';
 import mediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { adSizes } from 'commercial/modules/ad-sizes';
+import { addSlot } from './dfp/add-slot';
+import { adSizes } from './ad-sizes';
 import { isUserLoggedIn } from '../../common/modules/identity/api';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
-import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import { refreshAdvert } from 'commercial/modules/dfp/load-advert';
+import { createSlots } from './dfp/create-slots';
+import { getAdvertById } from './dfp/get-advert-by-id';
+import { refreshAdvert } from './dfp/load-advert';
 import { getBreakpoint } from '../../../lib/detect';
 
 

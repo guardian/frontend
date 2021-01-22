@@ -1,5 +1,5 @@
 import config from '../../../../lib/config';
-import { Advert } from 'commercial/modules/dfp/Advert';
+import { Advert } from '../dfp/Advert';
 
 import { getHeaderBiddingAdSlots, _ } from './slot-config';
 import {

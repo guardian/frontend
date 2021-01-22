@@ -1,21 +1,21 @@
 import config from '../../../../../lib/config';
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
+import prebid from './prebid';
 import 'prebid.js/build/dist/prebid';
-import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
+import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
 
 const getAdvertById = getAdvertById_;
 
 jest.mock('../../../../../lib/raven');
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('../../dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
+jest.mock('./bid-config', () => ({
     bids: jest.fn(),
 }));
 
-jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+jest.mock('../../dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 

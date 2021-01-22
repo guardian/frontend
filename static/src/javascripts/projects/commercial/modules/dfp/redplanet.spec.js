@@ -25,7 +25,7 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('./Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 

@@ -19,7 +19,7 @@ import { isUserLoggedIn } from '../identity/api';
 import { getUserSegments } from './user-ad-targeting';
 import { commercialFeatures } from './commercial-features';
 import { getSynchronousParticipations } from '../experiments/ab';
-import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
+import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';

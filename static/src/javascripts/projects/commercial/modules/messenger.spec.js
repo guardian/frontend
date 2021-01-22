@@ -3,8 +3,8 @@ import {
     register as register_,
     unregister as unregister_,
     _ as testExports,
-} from 'commercial/modules/messenger';
-import { postMessage } from 'commercial/modules/messenger/post-message';
+} from './messenger';
+import { postMessage } from './messenger/post-message';
 
 const onMessage = testExports.onMessage;
 const register = register_;
@@ -19,7 +19,7 @@ const removeEventListenerSpy = jest
 const jsonParseSpy = jest.spyOn(JSON, 'parse');
 const mockOrigin = "someorigin.com";
 
-jest.mock('commercial/modules/messenger/post-message', () => ({
+jest.mock('./messenger/post-message', () => ({
     postMessage: jest.fn(),
 }));
 

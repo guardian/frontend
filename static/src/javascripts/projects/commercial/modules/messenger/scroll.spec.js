@@ -1,4 +1,4 @@
-import { _ as testExports } from 'commercial/modules/messenger/scroll';
+import { _ as testExports } from './scroll';
 import { getViewport as getViewport_ } from '../../../../lib/detect';
 
 const getViewport = getViewport_;
@@ -6,7 +6,7 @@ const addScrollListener = testExports.addScrollListener;
 const removeScrollListener = testExports.removeScrollListener;
 const reset = testExports.reset;
 
-jest.mock('commercial/modules/messenger', () => ({
+jest.mock('../messenger', () => ({
     register: jest.fn(),
 }));
 

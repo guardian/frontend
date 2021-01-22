@@ -4,7 +4,7 @@ import fastdom from '../../../../lib/fastdom-promise';
 import {
     renderStickyAdLabel,
     renderStickyScrollForMoreLabel,
-} from 'commercial/modules/dfp/render-advert-label';
+} from '../dfp/render-advert-label';
 
 
 

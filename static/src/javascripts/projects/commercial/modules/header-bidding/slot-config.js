@@ -3,7 +3,7 @@ import {
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
     shouldIncludeMobileSticky,
-} from 'commercial/modules/header-bidding/utils';
+} from './utils';
 
 import config from '../../../../lib/config';
 

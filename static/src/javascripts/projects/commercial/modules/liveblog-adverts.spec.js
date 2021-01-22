@@ -17,7 +17,7 @@ jest.mock('../../common/modules/commercial/commercial-features', () => ({
     },
 }));
 
-jest.mock('commercial/modules/dfp/add-slot', () => ({
+jest.mock('./dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
 

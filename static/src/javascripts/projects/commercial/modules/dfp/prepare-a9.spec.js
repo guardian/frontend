@@ -1,7 +1,7 @@
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
-import a9 from 'commercial/modules/header-bidding/a9/a9';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import a9 from '../header-bidding/a9/a9';
+import { dfpEnv } from './dfp-env';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { _ } from './prepare-a9';
 
@@ -13,11 +13,11 @@ jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
-jest.mock('commercial/modules/header-bidding/a9/a9', () => ({
+jest.mock('../header-bidding/a9/a9', () => ({
     initialise: jest.fn(),
 }));
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('./Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
@@ -27,11 +27,11 @@ jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),
 }));
 
-jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
+jest.mock('../header-bidding/prebid/bid-config', () => ({
     isInVariant: jest.fn(),
 }));
 
-jest.mock('commercial/modules/header-bidding/utils', () => ({
+jest.mock('../header-bidding/utils', () => ({
     isInUsRegion: () => true,
 }));
 

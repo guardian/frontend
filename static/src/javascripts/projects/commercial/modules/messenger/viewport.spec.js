@@ -1,4 +1,4 @@
-import { _ as testExports } from 'commercial/modules/messenger/viewport';
+import { _ as testExports } from './viewport';
 import { getViewport as getViewport_ } from '../../../../lib/detect';
 
 const getViewport = getViewport_;
@@ -10,7 +10,7 @@ jest.mock('../../../../lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 
-jest.mock('commercial/modules/messenger', () => ({
+jest.mock('../messenger', () => ({
     register: jest.fn(),
 }));
 

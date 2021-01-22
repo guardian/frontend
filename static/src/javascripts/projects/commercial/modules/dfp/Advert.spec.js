@@ -1,4 +1,4 @@
-import { _, Advert } from 'commercial/modules/dfp/Advert';
+import { _, Advert } from './Advert';
 
 const { filterClasses } = _;
 

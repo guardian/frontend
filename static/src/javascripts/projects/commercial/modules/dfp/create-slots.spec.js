@@ -1,5 +1,5 @@
-import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { adSizes } from 'commercial/modules/ad-sizes';
+import { createSlots } from './create-slots';
+import { adSizes } from '../ad-sizes';
 import bonzo from 'bonzo';
 
 const imHtml = `

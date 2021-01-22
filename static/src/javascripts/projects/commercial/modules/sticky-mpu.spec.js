@@ -1,6 +1,6 @@
 import mediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
-import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
+import { stickyMpu, stickyCommentsMpu } from './sticky-mpu';
 
 jest.mock('../../../lib/raven');
 

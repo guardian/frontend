@@ -5,7 +5,7 @@ import {
     addCancelListener,
     triggerAutoplay,
     triggerEndSlate,
-} from 'commercial/modules/hosted/next-video-autoplay';
+} from './next-video-autoplay';
 import { isOn } from '../../../common/modules/accessibility/main';
 import { initYoutubePlayer } from '../../../common/modules/atoms/youtube-player';
 import {

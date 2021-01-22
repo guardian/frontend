@@ -2,12 +2,12 @@ import once from 'lodash/once';
 import mediator from '../../../../lib/mediator';
 import reportError from '../../../../lib/report-error';
 import { fire } from '../../../common/modules/analytics/beacon';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { renderAdvert } from 'commercial/modules/dfp/render-advert';
-import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { dfpEnv } from './dfp-env';
+import { renderAdvert } from './render-advert';
+import { emptyAdvert } from './empty-advert';
+import { getAdvertById } from './get-advert-by-id';
 import config from '../../../../lib/config';
-import { adSizes } from 'commercial/modules/ad-sizes';
+import { adSizes } from '../ad-sizes';
 import { markTime } from '../../../../lib/user-timing';
 
 const recordFirstAdRendered = once(() => {

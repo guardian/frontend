@@ -1,4 +1,4 @@
-import { init } from 'commercial/modules/article-body-adverts';
+import { init } from './article-body-adverts';
 import config from '../../../lib/config';
 import { spaceFiller } from '../../common/modules/article/space-filler';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
@@ -12,13 +12,13 @@ const getViewport = getViewport_;
 const getBreakpoint = getBreakpoint_;
 const isBreakpoint = isBreakpoint_;
 
-jest.mock('commercial/modules/dfp/track-ad-render', () => (id) => {
+jest.mock('./dfp/track-ad-render', () => (id) => {
     const ads = {
         'dfp-ad--im': true,
     };
     return Promise.resolve(ads[id]);
 });
-jest.mock('commercial/modules/dfp/add-slot', () => ({
+jest.mock('./dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
 jest.mock('../../common/modules/commercial/commercial-features', () => ({
