@@ -1,9 +1,12 @@
-
-
+import {
+    isInAuOrNz,
+    isInRow,
+    isInUk,
+    isInUsOrCa,
+} from 'common/modules/commercial/geo-utils';
 import once from 'lodash/once';
-import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import config from '../../../../lib/config';
-import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
+import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
 
 const SUFFIX_REGEXPS = {};

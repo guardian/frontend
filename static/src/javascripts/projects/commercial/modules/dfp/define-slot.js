@@ -1,9 +1,9 @@
-import { getUrlVars } from '../../../../lib/url';
-import config from '../../../../lib/config';
-import { breakpoints } from '../../../../lib/detect';
-import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
+import uniqBy from 'lodash/uniqBy';
+import config from '../../../../lib/config';
+import { breakpoints } from '../../../../lib/detect';
+import { getUrlVars } from '../../../../lib/url';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();

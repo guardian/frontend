@@ -1,5 +1,5 @@
+import { mountDynamic } from '@guardian/automat-modules';
 import $ from '../../../../lib/$';
-import { mountDynamic } from "@guardian/automat-modules";
 
 const getBlockToInsertEpicAfter = () => {
     const blocks = document.getElementsByClassName('block');

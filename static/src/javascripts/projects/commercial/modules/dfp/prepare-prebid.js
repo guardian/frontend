@@ -1,15 +1,15 @@
-import config from '../../../../lib/config';
 import {
-    onConsentChange,
     getConsentFor,
+    onConsentChange,
 } from '@guardian/consent-management-platform';
-import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
-import { dfpEnv } from './dfp-env';
 import once from 'lodash/once';
-import prebid from '../header-bidding/prebid/prebid';
+import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
+import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import prebid from '../header-bidding/prebid/prebid';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
+import { dfpEnv } from './dfp-env';
 
 const loadPrebid = () => {
     if (

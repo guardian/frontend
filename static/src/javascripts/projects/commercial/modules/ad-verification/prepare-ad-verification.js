@@ -1,6 +1,5 @@
-
-import config from '../../../../lib/config';
 import { loadScript } from '@guardian/libs';
+import config from '../../../../lib/config';
 
 const errorHandler = (error) => {
     // Looks like some plugins block ad-verification

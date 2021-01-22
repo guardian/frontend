@@ -1,30 +1,25 @@
-
-import config from '../../../../lib/config';
-import { getCookie } from '../../../../lib/cookies';
-import {
-    getReferrer as detectGetReferrer,
-    getBreakpoint,
-    getViewport,
-} from '../../../../lib/detect';
-import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
-import { storage } from '@guardian/libs';
-import { getUrlVars } from '../../../../lib/url';
-import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import {
-    getPermutiveSegments,
-    clearPermutiveSegments,
-} from './permutive';
-import { isUserLoggedIn } from '../identity/api';
-import { getUserSegments } from './user-ad-targeting';
-import { commercialFeatures } from './commercial-features';
-import { getSynchronousParticipations } from '../experiments/ab';
-import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
+import { storage } from '@guardian/libs';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
-
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import {
+    getBreakpoint,
+    getReferrer as detectGetReferrer,
+    getViewport,
+} from '../../../../lib/detect';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
+import { getUrlVars } from '../../../../lib/url';
+import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
+import { getSynchronousParticipations } from '../experiments/ab';
+import { isUserLoggedIn } from '../identity/api';
+import { commercialFeatures } from './commercial-features';
+import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
+import { getUserSegments } from './user-ad-targeting';
 
 let myPageTargetting = {};
 let latestCmpHasInitalised;

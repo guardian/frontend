@@ -1,4 +1,3 @@
-
 import {
     init as initNextVideoAutoPlay,
     canAutoplay as canAutoplayNextVideo,

@@ -1,23 +1,9 @@
-
-
 import config from '../../../../../lib/config';
 import { dfpEnv } from '../../dfp/dfp-env';
 import { bids } from './bid-config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
-
-
-
-
-
-
-
-
-
-
-
-
 
 const bidderTimeout = 1500;
 

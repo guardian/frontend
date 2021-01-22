@@ -5,11 +5,7 @@ import events from '../../../common/modules/video/events';
 import videojsOptions from '../../../common/modules/video/videojs-options';
 import { fullscreener } from '../../../common/modules/media/videojs-plugins/fullscreener';
 import { initHostedYoutube } from './youtube';
-import {
-    init,
-    canAutoplay,
-    triggerEndSlate,
-} from './next-video-autoplay';
+import { init, canAutoplay, triggerEndSlate } from './next-video-autoplay';
 import loadingTmpl from '../../../common/views/ui/loading.html';
 
 const initLoadingSpinner = (player, loadingTemplate) => {

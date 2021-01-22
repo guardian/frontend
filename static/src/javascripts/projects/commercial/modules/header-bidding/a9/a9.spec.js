@@ -1,5 +1,8 @@
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
 import a9, { _ } from './a9';
-import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
 
 const onConsentChange = onConsentChange_;
 

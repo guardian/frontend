@@ -1,4 +1,5 @@
-import {isInUk,
+import {
+    isInUk,
     isInUsa,
     isInCanada,
     isInAustralia,
@@ -6,7 +7,8 @@ import {isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow,
-    _} from "common/modules/commercial/geo-utils";
+    _,
+} from 'common/modules/commercial/geo-utils';
 
 let mockCountryCode;
 jest.mock('../../../../lib/geolocation', () => ({

@@ -1,10 +1,10 @@
-import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import {
     getConsentFor as getConsentFor_,
-    onConsentChange as onConsentChange_
+    onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import config from '../../../../lib/config';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
 
 const isInAuOrNz = isInAuOrNz_;

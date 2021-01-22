@@ -1,24 +1,17 @@
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import { loadScript, storage } from '@guardian/libs';
 import qwery from 'qwery';
 import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
-import { loadScript, storage } from '@guardian/libs';
 import raven from '../../../../lib/raven';
 import sha1 from '../../../../lib/sha1';
-import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import { adFreeSlotRemove } from '../ad-free-slot-remove';
-import { dfpEnv } from './dfp-env';
-import { fillAdvertSlots } from './fill-advert-slots';
 import { getUserFromCookie } from '../../../common/modules/identity/api';
-import { onSlotLoad } from './on-slot-load';
-import { onSlotRender } from './on-slot-render';
-import { onSlotViewableFunction } from './on-slot-viewable';
-import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
-import { refreshOnResize } from './refresh-on-resize';
+import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
 import { init as sendClick } from '../messenger/click';
@@ -31,6 +24,13 @@ import { init as resize } from '../messenger/resize';
 import { init as scroll } from '../messenger/scroll';
 import { init as type } from '../messenger/type';
 import { init as viewport } from '../messenger/viewport';
+import { dfpEnv } from './dfp-env';
+import { fillAdvertSlots } from './fill-advert-slots';
+import { onSlotLoad } from './on-slot-load';
+import { onSlotRender } from './on-slot-render';
+import { onSlotViewableFunction } from './on-slot-viewable';
+import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
+import { refreshOnResize } from './refresh-on-resize';
 
 initMessenger(
     type,

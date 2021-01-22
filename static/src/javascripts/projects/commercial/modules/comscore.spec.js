@@ -1,5 +1,8 @@
 import { loadScript } from '@guardian/libs';
-import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
 import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 

@@ -1,13 +1,13 @@
 /* global jsdom */
 
+import {
+    isInAuOrNz as isInAuOrNz_,
+    isInRow as isInRow_,
+    isInUk as isInUk_,
+    isInUsOrCa as isInUsOrCa_,
+} from 'common/modules/commercial/geo-utils';
 import config from '../../../../../lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from '../../../../common/modules/experiments/ab';
-import {isInUk as isInUk_,
-    isInUsOrCa as isInUsOrCa_,
-    isInAuOrNz as isInAuOrNz_,
-    isInRow as isInRow_} from "common/modules/commercial/geo-utils";
-import { _, bids } from './bid-config';
-
 import {
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
@@ -21,12 +21,13 @@ import {
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
+    shouldIncludeSonobi as shouldIncludeSonobi_,
+    shouldIncludeTripleLift as shouldIncludeTripleLift_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
-    shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
-    shouldIncludeTripleLift as shouldIncludeTripleLift_,
 } from '../utils';
+import { bids, _ } from './bid-config';
 
 const containsBillboard = containsBillboard_;
 const containsDmpu = containsDmpu_;

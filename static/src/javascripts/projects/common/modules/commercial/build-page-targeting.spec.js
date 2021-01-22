@@ -1,26 +1,22 @@
-import { storage } from '@guardian/libs';
-
-import { commercialFeatures } from './commercial-features';
-import {
-    getPageTargeting,
-    _,
-} from './build-page-targeting';
-import config from '../../../../lib/config';
-import { getCookie as getCookie_ } from '../../../../lib/cookies';
-import {
-    getReferrer as getReferrer_,
-    getBreakpoint as getBreakpoint_,
-    getViewport as getViewport_,
-} from '../../../../lib/detect';
-import { getSync as getSync_ } from '../../../../lib/geolocation';
-import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
-import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
-import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
-import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
 import {
     cmp as cmp_,
     onConsentChange,
 } from '@guardian/consent-management-platform';
+import { storage } from '@guardian/libs';
+import config from '../../../../lib/config';
+import { getCookie as getCookie_ } from '../../../../lib/cookies';
+import {
+    getBreakpoint as getBreakpoint_,
+    getReferrer as getReferrer_,
+    getViewport as getViewport_,
+} from '../../../../lib/detect';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
+import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
+import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
+import { getPageTargeting, _ } from './build-page-targeting';
+import { commercialFeatures } from './commercial-features';
+import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 
 const getCookie = getCookie_;
 const getUserSegments = getUserSegments_;

@@ -1,5 +1,3 @@
-
-
 import config from '../../../../../lib/config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { dfpEnv } from '../../dfp/dfp-env';

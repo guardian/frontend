@@ -1,13 +1,14 @@
-
-
-import config from '../../../../lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
 import once from 'lodash/once';
-import a9 from '../header-bidding/a9/a9';
-import { dfpEnv } from './dfp-env';
+import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import a9 from '../header-bidding/a9/a9';
 import { shouldIncludeOnlyA9 } from '../header-bidding/utils';
+import { dfpEnv } from './dfp-env';
 
 const setupA9 = () => {
     // There are two articles that InfoSec would like to avoid loading scripts on

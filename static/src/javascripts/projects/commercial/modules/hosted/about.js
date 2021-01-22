@@ -1,7 +1,7 @@
-import fastdom from '../../../../lib/fastdom-promise';
-import $ from '../../../../lib/$';
-import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
+import crossIcon from 'svgs/icon/cross.svg';
+import $ from '../../../../lib/$';
+import fastdom from '../../../../lib/fastdom-promise';
 
 const template = () => `
         <div class="survey-overlay-simple js-survey-overlay u-h" data-link-name="hosted page about overlay" role="dialog" aria-label="about hosted content">

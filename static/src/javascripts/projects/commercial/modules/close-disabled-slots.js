@@ -1,6 +1,6 @@
+import once from 'lodash/once';
 import qwery from 'qwery';
 import fastdom from '../../../lib/fastdom-promise';
-import once from 'lodash/once';
 import { dfpEnv } from './dfp/dfp-env';
 
 const shouldDisableAdSlot = adSlot =>

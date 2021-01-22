@@ -1,7 +1,8 @@
-
-
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
 import config from '../../../../lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 

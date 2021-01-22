@@ -1,17 +1,17 @@
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
 import $ from '../../../../lib/$';
-import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
 import config from '../../../../lib/config';
-import { init as prepareGoogletag } from './prepare-googletag';
+import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { dfpEnv } from './dfp-env';
+import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
 import { getAdverts } from './get-adverts';
 import { getCreativeIDs } from './get-creative-ids';
-import { dfpEnv } from './dfp-env';
-import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { loadAdvert } from './load-advert';
-import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
-import {
-    onConsentChange as onConsentChange_,
-    getConsentFor as getConsentFor_,
-} from '@guardian/consent-management-platform';
+import { init as prepareGoogletag } from './prepare-googletag';
 
 const onConsentChange = onConsentChange_;
 const getConsentFor = getConsentFor_;

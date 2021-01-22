@@ -1,12 +1,17 @@
-import fastdom from '../../../../lib/fastdom-promise';
-import { isEnhanced, isAndroid, getUserAgent, getViewport } from '../../../../lib/detect';
 import template from 'lodash/template';
+import {
+    getUserAgent,
+    getViewport,
+    isAndroid,
+    isEnhanced,
+} from '../../../../lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
 import mediator from '../../../../lib/mediator';
-import { addTrackingPixel } from './add-tracking-pixel';
-import { addViewabilityTracker } from './add-viewability-tracker';
 import fabricV1Html from '../../views/creatives/fabric-v1.html';
 import iframeVideoStr from '../../views/creatives/iframe-video.html';
 import scrollBgStr from '../../views/creatives/scrollbg.html';
+import { addTrackingPixel } from './add-tracking-pixel';
+import { addViewabilityTracker } from './add-viewability-tracker';
 
 const hasBackgroundFixedSupport = !isAndroid();
 const isIE10OrLess =

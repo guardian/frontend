@@ -1,15 +1,15 @@
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
-import $ from '../../../../lib/$';
+import throttle from 'lodash/throttle';
 import qwery from 'qwery';
+import $ from '../../../../lib/$';
 import config from '../../../../lib/config';
-import { pushUrl } from '../../../../lib/url';
 import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import FiniteStateMachine from '../../../../lib/fsm';
-import mediator from '../../../../lib/mediator';
-import throttle from 'lodash/throttle';
-import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 import { loadCssPromise } from '../../../../lib/load-css-promise';
+import mediator from '../../../../lib/mediator';
+import { pushUrl } from '../../../../lib/url';
+import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 
 class HostedGallery {
 

@@ -1,7 +1,7 @@
-import config from '../../../../../lib/config';
-import prebid from './prebid';
 import 'prebid.js/build/dist/prebid';
+import config from '../../../../../lib/config';
 import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
+import prebid from './prebid';
 
 const getAdvertById = getAdvertById_;
 

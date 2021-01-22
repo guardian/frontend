@@ -1,12 +1,12 @@
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
 import config from '../../../../lib/config';
 import { isGoogleProxy } from '../../../../lib/detect';
-import prebid from '../header-bidding/prebid/prebid';
-import {
-    onConsentChange as onConsentChange_,
-    getConsentFor as getConsentFor_,
-} from '@guardian/consent-management-platform';
-import { dfpEnv } from './dfp-env';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import prebid from '../header-bidding/prebid/prebid';
+import { dfpEnv } from './dfp-env';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;

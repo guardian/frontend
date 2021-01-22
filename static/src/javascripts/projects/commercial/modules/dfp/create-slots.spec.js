@@ -1,6 +1,6 @@
-import { createSlots } from './create-slots';
-import { adSizes } from '../ad-sizes';
 import bonzo from 'bonzo';
+import { adSizes } from '../ad-sizes';
+import { createSlots } from './create-slots';
 
 const imHtml = `
 <div id="dfp-ad--im"

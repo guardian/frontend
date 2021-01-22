@@ -1,7 +1,7 @@
-import { Message, hasUserAcknowledgedBanner } from '../ui/message';
-import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
+import checkIcon from 'svgs/icon/tick.svg';
 import config from '../../../../lib/config';
+import { hasUserAcknowledgedBanner, Message } from '../ui/message';
 import { isAdFreeUser } from './user-features';
 
 const messageCode = 'ad-free-banner';
