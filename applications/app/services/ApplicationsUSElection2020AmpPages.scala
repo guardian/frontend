@@ -55,24 +55,6 @@ object ApplicationsUSElection2020AmpPages {
     specialPaths.contains(path1) || pathIsElectionTracker(path1)
   }
 
-  def defaultAtomIdToAmpAtomId(atomId: String): String = {
-    /*
-        This function transforms an atom id
-          "interactives/2020/07/interactive-vaccine-tracker/default"
-
-        into the corresponding amp capi query path
-          "atom/interactive/interactives/2020/07/interactive-vaccine-tracker/amp-page"
-
-        Update: 21st Jan 2020. For the limited purpose of providing an election tracker amp page, we have used
-
-        pathToAmpAtomId(path: String): String // (below)
-
-        but if one day we want to expand the idea to more interactives, then defaultAtomIdToAmpAtomId will be the one to use.
-
-     */
-    (Array("atom", "interactive") ++ atomId.split("/").dropRight(1) ++ Array("amp-page")).mkString("/")
-  }
-
   def pathToAmpAtomId(path: String): String = {
     /*
         This version is a more limited, but much more robust version, of `defaultAtomIdToAmpAtomId`
