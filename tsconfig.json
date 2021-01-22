@@ -1,0 +1,19 @@
+{
+  // Change this to match your project
+  "include": ["static/src/javascripts/**/*"],
+  "compilerOptions": {
+    "allowJs": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "strictNullChecks": true,
+    "baseUrl": "./static/src/javascripts/",
+    "paths": {
+        "admin/*": ["./projects/admin/*"],
+        "common/*": ["./projects/common/*"],
+        "facia/*": ["./projects/facia/*"],
+        "membership/*": ["./projects/membership/*"],
+        "commercial/*": ["./projects/commercial/*"],
+        "journalism/*": ["./projects/journalism/*"],
+    },
+  }
+}
