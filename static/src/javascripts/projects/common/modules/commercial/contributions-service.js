@@ -3,8 +3,6 @@ import { onConsentChange } from '@guardian/consent-management-platform'
 import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
     setupOphanView,
-    emitBeginEvent,
-    setupClickHandling,
     submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
@@ -246,8 +244,6 @@ const renderLiveblogEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-
     const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
 
     if (element) {
@@ -260,8 +256,6 @@ const renderLiveblogEpic = async (module, meta) => {
             campaignId,
             componentType,
             products,
-            abTestVariant.showTicker,
-            abTestVariant.tickerSettings,
         );
     }
 };
@@ -278,9 +272,6 @@ const renderEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
@@ -293,8 +284,6 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
-        abTestVariant.showTicker,
-        abTestVariant.tickerSettings,
     );
 };
 

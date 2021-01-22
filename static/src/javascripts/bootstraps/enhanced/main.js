@@ -351,20 +351,6 @@ const bootEnhanced = () => {
                 }
             });
 
-            if (window.location.hash.includes('experiments')) {
-                require.ensure(
-                    [],
-                    require => {
-                        bootstrapContext(
-                            'experiments',
-                            require('common/modules/experiments')
-                                .showExperiments
-                        );
-                    },
-                    'experiments'
-                );
-            }
-
             if (config.get('page.contentType') === 'Audio') {
                 require.ensure(
                     [],

@@ -9,7 +9,3 @@ export const concurrentTests = [
     signInGateDesignOpt,
     globalEoyHeaderTest,
 ];
-
-export const epicTests = [];
-
-export const engagementBannerTests = [];

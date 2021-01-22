@@ -1,8 +1,6 @@
-import config from 'lib/config';
 import memoize from 'lodash/memoize';
 import {
     allRunnableTests,
-    firstRunnableTest,
 } from 'common/modules/experiments/ab-core';
 import {
     runnableTestsToParticipations,
@@ -20,32 +18,7 @@ import {
 import { getForcedParticipationsFromUrl } from 'common/modules/experiments/ab-url';
 import {
     concurrentTests,
-    engagementBannerTests,
 } from 'common/modules/experiments/ab-tests';
-import {
-    getEngagementBannerTestsFromGoogleDoc,
-} from 'common/modules/commercial/contributions-utilities';
-
-export const getEngagementBannerTestToRun = memoize(
-    () => {
-        if (config.get('switches.engagementBannerTestsFromGoogleDocs')) {
-            return getEngagementBannerTestsFromGoogleDoc().then(
-                asyncEngagementBannerTests => {
-                    asyncEngagementBannerTests.forEach(test =>
-                        config.set(`switches.ab${test.id}`, true)
-                    );
-                    return firstRunnableTest([
-                        ...engagementBannerTests,
-                        ...asyncEngagementBannerTests,
-                    ]);
-                }
-            );
-        }
-        return Promise.resolve(
-            firstRunnableTest(engagementBannerTests)
-        );
-    }
-);
 
 // These are the tests which will actually take effect on this pageview.
 // Note that this is a subset of the potentially runnable tests,
@@ -57,7 +30,7 @@ export const getSynchronousTestsToRun = memoize(() =>
 );
 
 export const getAsyncTestsToRun = () =>
-    Promise.all([getEngagementBannerTestToRun()]).then(
+    Promise.all([]).then(
         tests => tests.filter(Boolean)
     );
 
