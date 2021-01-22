@@ -11,7 +11,7 @@ jest.mock('commercial/modules/creatives/add-viewability-tracker', () => ({
     addViewabilityTracker: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     isAndroid: jest.fn(),
 }));
 

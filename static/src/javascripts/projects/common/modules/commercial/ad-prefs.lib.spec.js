@@ -1,4 +1,4 @@
-import { getCookie as getCookie_, addCookie as addCookie_ } from 'lib/cookies';
+import { getCookie as getCookie_, addCookie as addCookie_ } from '../../../../lib/cookies';
 import { setAdConsentState, getAdConsentState } from './ad-prefs.lib';
 
 const getCookie = getCookie_;
@@ -9,7 +9,7 @@ const testConsent = {
     cookie: 'GU_AD_CONSENT_TEST',
 };
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(() => null),
     addCookie: jest.fn(() => null),
 }));

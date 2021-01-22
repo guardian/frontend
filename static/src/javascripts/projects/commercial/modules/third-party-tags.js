@@ -1,6 +1,6 @@
 /* A regionalised container for all the commercial tags. */
 
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../lib/fastdom-promise';
 import {
     onConsentChange,
     getConsentFor,
@@ -16,7 +16,7 @@ import {
     remarketing,
     inizio,
 } from '@guardian/commercial-core';
-import config from 'lib/config';
+import config from '../../../lib/config';
 
 const addScripts = tags => {
     const ref = document.scripts[0];

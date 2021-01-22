@@ -1,20 +1,20 @@
 import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
 import { onConsentChange } from '@guardian/consent-management-platform'
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
 import {
     setupOphanView,
     submitOphanInsert,
     getVisitCount,
 } from 'common/modules/commercial/contributions-utilities';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import config from 'lib/config';
+import reportError from '../../../../lib/report-error';
+import fastdom from '../../../../lib/fastdom-promise';
+import config from '../../../../lib/config';
 import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
 import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
 import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import fetchJson from 'lib/fetch-json';
+import fetchJson from '../../../../lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
-import { getCookie } from 'lib/cookies';
+import { getCookie } from '../../../../lib/cookies';
 import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
 
 import {

@@ -1,4 +1,4 @@
-import { addCookie, getCookie } from 'lib/cookies';
+import { addCookie, getCookie } from '../../../../lib/cookies';
 import { onConsentSet } from 'common/modules/analytics/send-privacy-prefs';
 
 

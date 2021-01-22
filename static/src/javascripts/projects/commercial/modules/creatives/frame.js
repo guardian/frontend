@@ -1,4 +1,4 @@
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../../lib/fastdom-promise';
 import template from 'lodash/template';
 import { Toggles } from 'common/modules/ui/toggles';
 import { addClassesAndTitle } from 'common/views/svg';

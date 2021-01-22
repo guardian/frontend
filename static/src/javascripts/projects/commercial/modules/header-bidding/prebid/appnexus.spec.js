@@ -1,4 +1,4 @@
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import {
     isInUsOrCa as isInUsOrCa_,
     isInAuOrNz as isInAuOrNz_,
@@ -29,7 +29,7 @@ jest.mock('common/modules/commercial/geo-utils', () => ({
     isInUsOrCa: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 

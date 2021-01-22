@@ -9,7 +9,7 @@ import {isInUk,
     _} from "common/modules/commercial/geo-utils";
 
 let mockCountryCode;
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(() => mockCountryCode),
 }));
 

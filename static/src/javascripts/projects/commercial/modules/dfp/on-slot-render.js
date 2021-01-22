@@ -1,14 +1,14 @@
 import once from 'lodash/once';
-import mediator from 'lib/mediator';
-import reportError from 'lib/report-error';
+import mediator from '../../../../lib/mediator';
+import reportError from '../../../../lib/report-error';
 import { fire } from 'common/modules/analytics/beacon';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { renderAdvert } from 'commercial/modules/dfp/render-advert';
 import { emptyAdvert } from 'commercial/modules/dfp/empty-advert';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { adSizes } from 'commercial/modules/ad-sizes';
-import { markTime } from 'lib/user-timing';
+import { markTime } from '../../../../lib/user-timing';
 
 const recordFirstAdRendered = once(() => {
     markTime('Commercial: First Ad Rendered');

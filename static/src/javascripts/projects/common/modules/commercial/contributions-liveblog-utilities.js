@@ -1,4 +1,4 @@
-import $ from 'lib/$';
+import $ from '../../../../lib/$';
 import { mountDynamic } from "@guardian/automat-modules";
 
 const getBlockToInsertEpicAfter = () => {

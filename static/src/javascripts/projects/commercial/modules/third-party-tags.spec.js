@@ -7,7 +7,7 @@ import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
 
-jest.mock('lib/raven');
+jest.mock('../../../lib/raven');
 
 jest.mock('@guardian/consent-management-platform', () => ({
     onConsentChange: jest.fn(),

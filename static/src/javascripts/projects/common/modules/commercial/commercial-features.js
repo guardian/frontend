@@ -1,5 +1,5 @@
-import defaultConfig from 'lib/config';
-import { getBreakpoint } from 'lib/detect';
+import defaultConfig from '../../../../lib/config';
+import { getBreakpoint } from '../../../../lib/detect';
 import { isAdFreeUser } from 'common/modules/commercial/user-features';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import userPrefs from 'common/modules/user-prefs';

@@ -2,7 +2,7 @@ import { init, _ } from './liveblog-adverts';
 
 const { getSlotName } = _;
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
     hasPushStateSupport: jest.fn(),
 }));

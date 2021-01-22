@@ -1,4 +1,4 @@
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../../lib/fastdom-promise';
 import {
     init,
     canAutoplay,

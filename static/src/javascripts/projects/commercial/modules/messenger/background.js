@@ -1,6 +1,6 @@
-import config from 'lib/config';
-import { addEventListener } from 'lib/events';
-import fastdom from 'lib/fastdom-promise';
+import config from '../../../../lib/config';
+import { addEventListener } from '../../../../lib/events';
+import fastdom from '../../../../lib/fastdom-promise';
 import {
     renderStickyAdLabel,
     renderStickyScrollForMoreLabel,

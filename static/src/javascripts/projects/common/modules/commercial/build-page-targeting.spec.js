@@ -5,15 +5,15 @@ import {
     getPageTargeting,
     _,
 } from 'common/modules/commercial/build-page-targeting';
-import config from 'lib/config';
-import { getCookie as getCookie_ } from 'lib/cookies';
+import config from '../../../../lib/config';
+import { getCookie as getCookie_ } from '../../../../lib/cookies';
 import {
     getReferrer as getReferrer_,
     getBreakpoint as getBreakpoint_,
     getViewport as getViewport_,
-} from 'lib/detect';
-import { getSync as getSync_ } from 'lib/geolocation';
-import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFramework';
+} from '../../../../lib/detect';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
+import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
 import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
@@ -33,20 +33,20 @@ const getSync = getSync_;
 const getPrivacyFramework = getPrivacyFramework_;
 const cmp = cmp_;
 
-jest.mock('lib/config');
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/config');
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getViewport: jest.fn(),
     getBreakpoint: jest.fn(),
     getReferrer: jest.fn(),
     hasPushStateSupport: jest.fn(),
 }));
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(),
 }));
-jest.mock('lib/getPrivacyFramework', () => ({
+jest.mock('../../../../lib/getPrivacyFramework', () => ({
     getPrivacyFramework: jest.fn(),
 }));
 jest.mock('common/modules/identity/api', () => ({

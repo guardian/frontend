@@ -1,10 +1,10 @@
 
 
 import once from 'lodash/once';
-import { getBreakpoint, isBreakpoint } from 'lib/detect';
-import config from 'lib/config';
+import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import config from '../../../../lib/config';
 import { isInAuOrNz, isInRow, isInUk, isInUsOrCa } from "common/modules/commercial/geo-utils";
-import { pbTestNameMap } from 'lib/url';
+import { pbTestNameMap } from '../../../../lib/url';
 
 const SUFFIX_REGEXPS = {};
 const stripSuffix = (s, suffix) => {

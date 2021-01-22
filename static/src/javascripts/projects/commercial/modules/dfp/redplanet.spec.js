@@ -4,7 +4,7 @@ import {
     onConsentChange as onConsentChange_
 } from '@guardian/consent-management-platform';
 import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { init, resetModule } from './redplanet';
 
 const isInAuOrNz = isInAuOrNz_;
@@ -35,11 +35,11 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
-jest.mock('lib/launchpad', () => jest.fn());
+jest.mock('../../../../lib/launchpad', () => jest.fn());
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),

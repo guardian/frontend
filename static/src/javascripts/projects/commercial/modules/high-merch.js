@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
+import config from '../../../lib/config';
+import fastdom from '../../../lib/fastdom-promise';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 

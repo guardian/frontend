@@ -1,4 +1,4 @@
-import { noop } from 'lib/noop';
+import { noop } from '../../../lib/noop';
 import {
     register as register_,
     unregister as unregister_,
@@ -23,7 +23,7 @@ jest.mock('commercial/modules/messenger/post-message', () => ({
     postMessage: jest.fn(),
 }));
 
-jest.mock('lib/report-error', () => jest.fn());
+jest.mock('../../../lib/report-error', () => jest.fn());
 
 describe('Cross-frame messenger', () => {
     const routines = {

@@ -1,6 +1,6 @@
 
 
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
@@ -41,7 +41,7 @@ const setupRedplanet = () => {
 
         if (!initialised && canRun) {
             initialised = true;
-            return import('lib/launchpad.js').then(() => {
+            return import('../../../../lib/launchpad.js').then(() => {
                 initialise();
                 return Promise.resolve();
             });

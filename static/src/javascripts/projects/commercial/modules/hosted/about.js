@@ -1,5 +1,5 @@
-import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
+import fastdom from '../../../../lib/fastdom-promise';
+import $ from '../../../../lib/$';
 import crossIcon from 'svgs/icon/cross.svg';
 import paidContent from 'svgs/commercial/paid-content.svg';
 

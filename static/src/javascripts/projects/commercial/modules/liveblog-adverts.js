@@ -1,6 +1,6 @@
-import fastdom from 'lib/fastdom-promise';
-import { getBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import fastdom from '../../../lib/fastdom-promise';
+import { getBreakpoint } from '../../../lib/detect';
+import mediator from '../../../lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';

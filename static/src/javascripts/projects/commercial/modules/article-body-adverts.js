@@ -1,8 +1,8 @@
 
-import config from 'lib/config';
-import { isBreakpoint } from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
+import config from '../../../lib/config';
+import { isBreakpoint } from '../../../lib/detect';
+import fastdom from '../../../lib/fastdom-promise';
+import mediator from '../../../lib/mediator';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { adSizes } from 'commercial/modules/ad-sizes';
 import { addSlot } from 'commercial/modules/dfp/add-slot';

@@ -1,6 +1,6 @@
-import $ from 'lib/$';
-import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
-import config from 'lib/config';
+import $ from '../../../../lib/$';
+import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
+import config from '../../../../lib/config';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
 import { getAdverts } from 'commercial/modules/dfp/get-adverts';
 import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
@@ -27,7 +27,7 @@ const fillAdvertSlots = fillAdvertSlots_;
 jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));
-jest.mock('lib/raven');
+jest.mock('../../../../lib/raven');
 jest.mock('common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
@@ -35,7 +35,7 @@ jest.mock('common/modules/identity/api', () => ({
 }));
 jest.mock('ophan/ng', () => null);
 jest.mock('common/modules/analytics/beacon', () => {});
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),

@@ -8,8 +8,8 @@ import { setupPrebidOnce } from 'commercial/modules/dfp/prepare-prebid';
 import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 
-import { getBreakpoint } from 'lib/detect';
-import config from 'lib/config';
+import { getBreakpoint } from '../../../../lib/detect';
+import config from '../../../../lib/config';
 
 // Pre-rendered ad slots that were rendered on the page by the server are collected here.
 // For dynamic ad slots that are created at js-runtime, see:

@@ -1,8 +1,8 @@
 
-import $ from 'lib/$';
-import config from 'lib/config';
-import mediator from 'lib/mediator';
-import fastdom from 'lib/fastdom-promise';
+import $ from '../../../lib/$';
+import config from '../../../lib/config';
+import mediator from '../../../lib/mediator';
+import fastdom from '../../../lib/fastdom-promise';
 
 const minArticleHeight = 1300;
 

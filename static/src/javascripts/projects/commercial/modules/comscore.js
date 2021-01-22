@@ -1,6 +1,6 @@
 
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import config from 'lib/config';
+import config from '../../../lib/config';
 import { loadScript } from '@guardian/libs';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 

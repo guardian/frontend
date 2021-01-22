@@ -1,4 +1,4 @@
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { Advert } from 'commercial/modules/dfp/Advert';
 
 import { getHeaderBiddingAdSlots, _ } from './slot-config';
@@ -28,7 +28,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     ),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
@@ -37,7 +37,7 @@ jest.mock('lib/detect', () => ({
     breakpoints: [],
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 

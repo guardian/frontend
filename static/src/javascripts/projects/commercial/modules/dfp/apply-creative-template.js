@@ -1,5 +1,5 @@
-import fastdom from 'lib/fastdom-promise';
-import reportError from 'lib/report-error';
+import fastdom from '../../../../lib/fastdom-promise';
+import reportError from '../../../../lib/report-error';
 
 import { Frame } from 'commercial/modules/creatives/frame';
 import { FabricV1 } from 'commercial/modules/creatives/fabric-v1';

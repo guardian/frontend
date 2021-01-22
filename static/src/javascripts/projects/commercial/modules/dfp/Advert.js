@@ -1,5 +1,5 @@
-import { breakpoints } from 'lib/detect';
-import { getCurrentTime } from 'lib/user-timing';
+import { breakpoints } from '../../../../lib/detect';
+import { getCurrentTime } from '../../../../lib/user-timing';
 import { defineSlot } from 'commercial/modules/dfp/define-slot';
 import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
 

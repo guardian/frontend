@@ -5,9 +5,9 @@ import {
     submitInsertEvent,
     submitViewEvent,
 } from 'common/modules/commercial/acquisitions-ophan';
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { storage } from '@guardian/libs';
-import { elementInView } from 'lib/element-inview';
+import { elementInView } from '../../../../lib/element-inview';
 
 const getVisitCount = () => parseInt(storage.local.getRaw('gu.alreadyVisited'), 10) || 0;
 

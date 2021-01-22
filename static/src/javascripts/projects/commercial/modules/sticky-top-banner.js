@@ -1,6 +1,6 @@
-import { addEventListener } from 'lib/events';
-import { isBreakpoint } from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
+import { addEventListener } from '../../../lib/events';
+import { isBreakpoint } from '../../../lib/detect';
+import fastdom from '../../../lib/fastdom-promise';
 import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';

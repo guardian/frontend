@@ -1,5 +1,5 @@
 import qwery from 'qwery';
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../lib/fastdom-promise';
 import once from 'lodash/once';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 

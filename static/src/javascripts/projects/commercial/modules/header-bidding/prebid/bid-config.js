@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import { pbTestNameMap } from 'lib/url';
+import config from '../../../../../lib/config';
+import { pbTestNameMap } from '../../../../../lib/url';
 import isEmpty from 'lodash/isEmpty';
 import {
     buildAppNexusTargeting,

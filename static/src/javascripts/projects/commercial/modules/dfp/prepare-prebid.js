@@ -1,4 +1,4 @@
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import {
     onConsentChange,
     getConsentFor,
@@ -8,7 +8,7 @@ import { getPageTargeting } from 'common/modules/commercial/build-page-targeting
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
-import { isGoogleProxy } from 'lib/detect';
+import { isGoogleProxy } from '../../../../lib/detect';
 import { shouldIncludeOnlyA9 } from 'commercial/modules/header-bidding/utils';
 
 const loadPrebid = () => {

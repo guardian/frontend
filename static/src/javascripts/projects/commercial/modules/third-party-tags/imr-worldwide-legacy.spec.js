@@ -15,7 +15,7 @@ jest.mock('common/modules/experiments/ab', () => ({
  * loading imr-worldwide-legacy has side affects
  * that are dependent on config.
  * */
-jest.mock('lib/config', () => {
+jest.mock('../../../../lib/config', () => {
     const defaultConfig = {
         switches: {
             imrWorldwide: true,

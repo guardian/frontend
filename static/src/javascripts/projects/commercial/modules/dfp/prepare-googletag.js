@@ -1,9 +1,9 @@
 import qwery from 'qwery';
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
+import config from '../../../../lib/config';
+import fastdom from '../../../../lib/fastdom-promise';
 import { loadScript, storage } from '@guardian/libs';
-import raven from 'lib/raven';
-import sha1 from 'lib/sha1';
+import raven from '../../../../lib/raven';
+import sha1 from '../../../../lib/sha1';
 import {
     onConsentChange,
     getConsentFor,

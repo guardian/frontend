@@ -7,7 +7,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/config', () => ({
+jest.mock('../../../../lib/config', () => ({
     get: jest.fn(() => false),
 }));
 

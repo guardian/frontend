@@ -1,6 +1,6 @@
-import config from 'lib/config';
-import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import config from '../../../../lib/config';
+import { isBreakpoint, hasCrossedBreakpoint } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
 import fastdom from 'fastdom';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 

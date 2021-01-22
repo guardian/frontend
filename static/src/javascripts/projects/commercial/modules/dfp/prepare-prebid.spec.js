@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import { isGoogleProxy } from 'lib/detect';
+import config from '../../../../lib/config';
+import { isGoogleProxy } from '../../../../lib/detect';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import {
     onConsentChange as onConsentChange_,

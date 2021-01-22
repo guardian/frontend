@@ -1,8 +1,8 @@
 import bean from 'bean';
-import fastdom from 'lib/fastdom-promise';
-import $ from 'lib/$';
-import { getViewport, isBreakpoint, isIOS, isAndroid } from 'lib/detect';
-import mediator from 'lib/mediator';
+import fastdom from '../../../../lib/fastdom-promise';
+import $ from '../../../../lib/$';
+import { getViewport, isBreakpoint, isIOS, isAndroid } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
 import { storage } from '@guardian/libs';
 import template from 'lodash/template';
 import fabricExpandingV1Html from 'commercial/views/creatives/fabric-expanding-v1.html';

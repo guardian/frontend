@@ -1,4 +1,4 @@
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../../lib/fastdom-promise';
 import crossIcon from 'svgs/icon/cross.svg';
 
 const shouldRenderLabel = adSlotNode =>

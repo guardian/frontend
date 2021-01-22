@@ -1,12 +1,12 @@
 import { init } from 'commercial/modules/article-body-adverts';
-import config from 'lib/config';
+import config from '../../../lib/config';
 import { spaceFiller } from 'common/modules/article/space-filler';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     getViewport as getViewport_,
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
-} from 'lib/detect';
+} from '../../../lib/detect';
 
 const getViewport = getViewport_;
 const getBreakpoint = getBreakpoint_;
@@ -29,12 +29,12 @@ jest.mock('common/modules/article/space-filler', () => ({
         fillSpace: jest.fn(),
     },
 }));
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
     getViewport: jest.fn(),
 }));
-jest.mock('lib/config', () => ({ page: {}, get: () => false }));
+jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: () => false,
 }));

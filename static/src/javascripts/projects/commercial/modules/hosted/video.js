@@ -1,6 +1,6 @@
 import fastdom from 'fastdom';
-import deferToAnalytics from 'lib/defer-to-analytics';
-import reportError from 'lib/report-error';
+import deferToAnalytics from '../../../../lib/defer-to-analytics';
+import reportError from '../../../../lib/report-error';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';

@@ -1,5 +1,5 @@
 
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { loadScript } from '@guardian/libs';
 
 const errorHandler = (error) => {

@@ -1,15 +1,15 @@
 
-import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
 import {
     getReferrer as detectGetReferrer,
     getBreakpoint,
     getViewport,
-} from 'lib/detect';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
+} from '../../../../lib/detect';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
 import { storage } from '@guardian/libs';
-import { getUrlVars } from 'lib/url';
-import { getPrivacyFramework } from 'lib/getPrivacyFramework';
+import { getUrlVars } from '../../../../lib/url';
+import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,

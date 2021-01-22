@@ -1,4 +1,4 @@
-import config from 'lib/config';
+import config from '../../../../lib/config';
 import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
 
 // NOLCMB is a global function defined by the IMR worldwide library

@@ -1,13 +1,13 @@
-import $ from 'lib/$';
-import fakeMediator from 'lib/mediator';
-import fastdom from 'lib/fastdom-promise';
+import $ from '../../../lib/$';
+import fakeMediator from '../../../lib/mediator';
+import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
 import { refreshAdvert as refreshAdvert_ } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
-import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
+import { getBreakpoint as getBreakpoint_ } from '../../../lib/detect';
 
 // Workaround to fix issue where dataset is missing from jsdom, and solve the
 // 'cannot set property [...] which has only a getter' TypeError
@@ -16,8 +16,8 @@ Object.defineProperty(HTMLElement.prototype, 'dataset', {
     value: {},
 });
 
-jest.mock('lib/mediator');
-jest.mock('lib/config', () => ({ page: {}, get: () => false }));
+jest.mock('../../../lib/mediator');
+jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
 
 jest.mock('commercial/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
@@ -31,7 +31,7 @@ jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
 }));
 

@@ -12,9 +12,9 @@ import {
     trackYoutubeEvent,
     initYoutubeEvents,
 } from 'common/modules/atoms/youtube-tracking';
-import config from 'lib/config';
-import { isBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
+import config from '../../../../lib/config';
+import { isBreakpoint } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
 
 // https://developers.google.com/youtube/iframe_api_reference
 

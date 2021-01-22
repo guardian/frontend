@@ -1,10 +1,10 @@
 import Chance from 'chance';
-import { addEventListener as addEventListenerSpy } from 'lib/events';
+import { addEventListener as addEventListenerSpy } from '../../../lib/events';
 import { init, _ } from './sticky-top-banner';
 
 const { resizeStickyBanner, update, onScroll } = _;
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../lib/detect', () => ({
     isBreakpoint: jest.fn(() => true),
 }));
 jest.mock('commercial/modules/messenger', () => ({
@@ -13,7 +13,7 @@ jest.mock('commercial/modules/messenger', () => ({
 jest.mock('commercial/modules/dfp/track-ad-render', () => ({
     trackAdRender: () => Promise.resolve(true),
 }));
-jest.mock('lib/events', () => ({
+jest.mock('../../../lib/events', () => ({
     addEventListener: jest.fn(),
 }));
 jest.mock('common/modules/commercial/commercial-features', () => ({

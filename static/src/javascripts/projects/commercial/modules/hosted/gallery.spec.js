@@ -1,9 +1,9 @@
 import interactionTracking from 'common/modules/analytics/interaction-tracking';
-import { noop } from 'lib/noop';
+import { noop } from '../../../../lib/noop';
 import { init } from './gallery';
 import { galleryHtml } from './gallery-html';
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     hasPushStateSupport: jest.fn(),
     getBreakpoint: jest.fn(),
     hasTouchScreen: jest.fn(),
@@ -11,7 +11,7 @@ jest.mock('lib/detect', () => ({
 jest.mock('common/modules/analytics/interaction-tracking', () => ({
     trackNonClickInteraction: jest.fn(() => Promise.resolve()),
 }));
-jest.mock('lib/load-css-promise', () => ({
+jest.mock('../../../../lib/load-css-promise', () => ({
     loadCssPromise: Promise.resolve(),
 }));
 

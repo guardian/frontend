@@ -9,7 +9,7 @@ const onLoad = imrWorldwide.onLoad;
  * that are dependent on config.
  * */
 
-jest.mock('lib/config', () => {
+jest.mock('../../../../lib/config', () => {
     const defaultConfig = {
         switches: {
             imrWorldwide: true,

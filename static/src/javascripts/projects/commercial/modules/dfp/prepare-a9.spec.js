@@ -1,5 +1,5 @@
-import config from 'lib/config';
-import { isGoogleProxy } from 'lib/detect';
+import config from '../../../../lib/config';
+import { isGoogleProxy } from '../../../../lib/detect';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
@@ -21,7 +21,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('lib/a9-apstag', () => jest.fn());
+jest.mock('../../../../lib/a9-apstag', () => jest.fn());
 
 jest.mock('common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),

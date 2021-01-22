@@ -1,9 +1,9 @@
-import { getSync as getSync_ } from 'lib/geolocation';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
 import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
-} from 'lib/detect';
-import config from 'lib/config';
+} from '../../../../lib/detect';
+import config from '../../../../lib/config';
 import { _} from "common/modules/commercial/geo-utils";
 import {
     getLargestSize,
@@ -28,11 +28,11 @@ const isBreakpoint = isBreakpoint_;
 
 jest.mock('lodash/once', () => a => a);
 
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
     hasPushStateSupport: jest.fn(() => true),
     isBreakpoint: jest.fn(),

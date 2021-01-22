@@ -1,4 +1,4 @@
-import { addCookie, removeCookie } from 'lib/cookies';
+import { addCookie, removeCookie } from '../../../../lib/cookies';
 import { isUserLoggedIn } from 'common/modules/identity/api';
 import {
     fakeOneOffContributor,
@@ -11,7 +11,7 @@ import {
     decrementMvtCookie,
     incrementMvtCookie,
 } from 'common/modules/analytics/mvt-cookie';
-import { setGeolocation, getSync as geolocationGetSync } from 'lib/geolocation';
+import { setGeolocation, getSync as geolocationGetSync } from '../../../../lib/geolocation';
 import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
 import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
 import userPrefs from 'common/modules/user-prefs';

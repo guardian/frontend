@@ -1,5 +1,5 @@
 import { _ as testExports } from 'commercial/modules/messenger/scroll';
-import { getViewport as getViewport_ } from 'lib/detect';
+import { getViewport as getViewport_ } from '../../../../lib/detect';
 
 const getViewport = getViewport_;
 const addScrollListener = testExports.addScrollListener;
@@ -10,7 +10,7 @@ jest.mock('commercial/modules/messenger', () => ({
     register: jest.fn(),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 

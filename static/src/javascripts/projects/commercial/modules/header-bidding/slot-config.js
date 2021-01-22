@@ -5,7 +5,7 @@ import {
     shouldIncludeMobileSticky,
 } from 'commercial/modules/header-bidding/utils';
 
-import config from 'lib/config';
+import config from '../../../../lib/config';
 
 
 const slotKeyMatchesAd = (pbs, ad) =>

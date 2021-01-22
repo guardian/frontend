@@ -1,6 +1,6 @@
 
 
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 

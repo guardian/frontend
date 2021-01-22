@@ -1,11 +1,11 @@
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
 
 const getAdvertById = getAdvertById_;
 
-jest.mock('lib/raven');
+jest.mock('../../../../../lib/raven');
 
 jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))

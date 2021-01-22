@@ -1,6 +1,6 @@
 /* global jsdom */
 
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
 import {isInUk as isInUk_,
     isInUsOrCa as isInUsOrCa_,
@@ -75,7 +75,7 @@ jest.mock('common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
