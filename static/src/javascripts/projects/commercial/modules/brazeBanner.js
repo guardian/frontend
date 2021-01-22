@@ -2,10 +2,10 @@ import config from '../../../lib/config';
 import reportError from '../../../lib/report-error';
 import {onConsentChange} from '@guardian/consent-management-platform';
 import {mountDynamic} from "@guardian/automat-modules";
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
+import {submitViewEvent, submitComponentEvent} from '../../common/modules/commercial/acquisitions-ophan';
 import { getUrlVars } from '../../../lib/url';
 import ophan from 'ophan/ng';
-import {getUserFromApi} from 'common/modules/identity/api';
+import {getUserFromApi} from '../../common/modules/identity/api';
 import {shouldNotBeShownSupportMessaging} from "common/modules/commercial/user-features";
 import {measureTiming} from './measure-timing';
 import {

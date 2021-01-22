@@ -1,16 +1,16 @@
 import fastdom from 'fastdom';
 import deferToAnalytics from '../../../../lib/defer-to-analytics';
 import reportError from '../../../../lib/report-error';
-import events from 'common/modules/video/events';
-import videojsOptions from 'common/modules/video/videojs-options';
-import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
+import events from '../../../common/modules/video/events';
+import videojsOptions from '../../../common/modules/video/videojs-options';
+import { fullscreener } from '../../../common/modules/media/videojs-plugins/fullscreener';
 import { initHostedYoutube } from 'commercial/modules/hosted/youtube';
 import {
     init,
     canAutoplay,
     triggerEndSlate,
 } from 'commercial/modules/hosted/next-video-autoplay';
-import loadingTmpl from 'common/views/ui/loading.html';
+import loadingTmpl from '../../../common/views/ui/loading.html';
 
 const initLoadingSpinner = (player, loadingTemplate) => {
     player.loadingSpinner.contentEl().innerHTML = loadingTemplate;

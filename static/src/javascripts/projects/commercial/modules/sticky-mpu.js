@@ -1,7 +1,7 @@
 import config from '../../../lib/config';
 import mediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
-import { Sticky } from 'common/modules/ui/sticky';
+import { Sticky } from '../../common/modules/ui/sticky';
 import { register, unregister } from 'commercial/modules/messenger';
 
 const noSticky = !!(

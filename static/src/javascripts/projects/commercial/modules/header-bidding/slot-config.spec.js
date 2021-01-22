@@ -22,7 +22,7 @@ jest.mock('./utils', () => {
     };
 });
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),

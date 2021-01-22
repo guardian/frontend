@@ -2,8 +2,8 @@ import $ from '../../../lib/$';
 import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../../common/modules/identity/api';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { initCommentAdverts, _ } from 'commercial/modules/comment-adverts';
 import { refreshAdvert as refreshAdvert_ } from 'commercial/modules/dfp/load-advert';
 import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
@@ -35,13 +35,13 @@ jest.mock('../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         commentAdverts: true,
     },
 }));
 
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../../common/modules/identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
 

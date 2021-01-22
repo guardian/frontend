@@ -5,7 +5,7 @@ import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googlet
 import { getAdverts } from 'commercial/modules/dfp/get-adverts';
 import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
 import {
@@ -28,13 +28,13 @@ jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));
 jest.mock('../../../../lib/raven');
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../../../common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
     getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
-jest.mock('common/modules/analytics/beacon', () => {});
+jest.mock('../../../common/modules/analytics/beacon', () => {});
 jest.mock('../../../../lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     isBreakpoint: jest.fn(),
@@ -66,12 +66,12 @@ jest.mock('../../../../lib/detect', () => ({
     ],
     isGoogleProxy: jest.fn(() => false),
 }));
-jest.mock('common/modules/analytics/google', () => () => {});
+jest.mock('../../../common/modules/analytics/google', () => () => {});
 jest.mock('commercial/modules/dfp/display-lazy-ads', () => ({
     displayLazyAds: jest.fn(),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         dfpAdvertising: true,
     },
@@ -88,11 +88,11 @@ jest.mock('lodash/once', () => fn => fn);
 jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
     refreshOnResize: jest.fn(),
 }));
-jest.mock('common/modules/analytics/beacon', () => ({ fire: jest.fn() }));
+jest.mock('../../../common/modules/analytics/beacon', () => ({ fire: jest.fn() }));
 jest.mock('commercial/modules/sticky-mpu', () => ({
     stickyMpu: jest.fn(),
 }));
-jest.mock('common/modules/onward/geo-most-popular', () => ({
+jest.mock('../../../common/modules/onward/geo-most-popular', () => ({
     geoMostPopular: { render: jest.fn() },
 }));
 jest.mock('commercial/modules/dfp/load-advert', () => ({

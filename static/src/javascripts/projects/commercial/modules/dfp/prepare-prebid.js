@@ -3,8 +3,8 @@ import {
     onConsentChange,
     getConsentFor,
 } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 import once from 'lodash/once';
 import prebid from 'commercial/modules/header-bidding/prebid/prebid';

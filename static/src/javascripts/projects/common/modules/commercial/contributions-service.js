@@ -5,24 +5,24 @@ import {
     setupOphanView,
     submitOphanInsert,
     getVisitCount,
-} from 'common/modules/commercial/contributions-utilities';
+} from './contributions-utilities';
 import reportError from '../../../../lib/report-error';
 import fastdom from '../../../../lib/fastdom-promise';
 import config from '../../../../lib/config';
-import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
+import { getMvtValue } from '../analytics/mvt-cookie';
+import {submitViewEvent, submitComponentEvent} from './acquisitions-ophan';
+import { trackNonClickInteraction } from '../analytics/google';
 import fetchJson from '../../../../lib/fetch-json';
 import { mountDynamic } from "@guardian/automat-modules";
 import { getCookie } from '../../../../lib/cookies';
-import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
+import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
 
 import {
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
     ARTICLES_VIEWED_OPT_OUT_COOKIE,
-} from 'common/modules/commercial/user-features';
+} from './user-features';
 import userPrefs from "common/modules/user-prefs";
 
 

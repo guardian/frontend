@@ -1,5 +1,5 @@
 import config from '../../../../lib/config';
-import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 // nol_t is a global function defined by the IMR worldwide library
 

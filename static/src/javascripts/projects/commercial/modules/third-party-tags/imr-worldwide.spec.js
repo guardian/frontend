@@ -36,11 +36,11 @@ jest.mock('../../../../lib/config', () => {
     });
 });
 
-jest.mock('common/modules/commercial/geo-utils', () => ({
+jest.mock('../../../common/modules/commercial/geo-utils', () => ({
         isInAuOrNz: jest.fn().mockReturnValue(true)
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 

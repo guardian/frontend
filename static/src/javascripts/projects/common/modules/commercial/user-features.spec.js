@@ -1,6 +1,6 @@
 import { addCookie, removeCookie, getCookie } from '../../../../lib/cookies';
 import fetchJson from '../../../../lib/fetch-json';
-import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
 import config from '../../../../lib/config';
 import {
     refresh,

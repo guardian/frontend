@@ -2,7 +2,7 @@ import {
     getConsentFor as getConsentFor_,
     onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './third-party-tags';
 
 const { insertScripts, loadOther } = _;
@@ -90,7 +90,7 @@ afterEach(() => {
 
 jest.mock('ophan/ng', () => null);
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         thirdPartyTags: true,
     },

@@ -1,7 +1,7 @@
 import { getCookie, removeCookie, addCookie } from '../../../../lib/cookies';
 import config from '../../../../lib/config';
 import fetchJson from '../../../../lib/fetch-json';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { isUserLoggedIn } from '../identity/api';
 import { dateDiffDays } from '../../../../lib/time-utils';
 
 // Persistence keys

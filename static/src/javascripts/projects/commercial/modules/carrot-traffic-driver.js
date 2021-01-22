@@ -1,8 +1,8 @@
 import fastdom from '../../../lib/fastdom-promise';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { spaceFiller } from 'common/modules/article/space-filler';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { spaceFiller } from '../../common/modules/article/space-filler';
 import { getBreakpoint } from '../../../lib/detect';
 
 const defaultRules = {

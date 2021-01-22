@@ -1,7 +1,7 @@
 /* global jsdom */
 
 import config from '../../../../../lib/config';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from '../../../../common/modules/experiments/ab';
 import {isInUk as isInUk_,
     isInUsOrCa as isInUsOrCa_,
     isInAuOrNz as isInAuOrNz_,
@@ -61,7 +61,7 @@ const {
     indexExchangeBidders,
 } = _;
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
     buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
     getPageTargeting: () => 'bla',
@@ -69,9 +69,9 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 
 jest.mock('../utils');
 
-jest.mock('common/modules/commercial/geo-utils');
+jest.mock('../../../../common/modules/commercial/geo-utils');
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 

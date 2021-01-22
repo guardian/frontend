@@ -1,4 +1,4 @@
-import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
+import { addCountryGroupToSupportLink } from './support-utilities';
 import { setGeolocation } from '../../../../lib/geolocation';
 
 describe('addCountryGroupToSupportLink', () => {

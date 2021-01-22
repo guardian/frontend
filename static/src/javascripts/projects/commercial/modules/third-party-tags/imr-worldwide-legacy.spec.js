@@ -2,11 +2,11 @@ import { imrWorldwideLegacy } from './imr-worldwide-legacy';
 
 const { shouldRun, url, onLoad } = imrWorldwideLegacy;
 
-jest.mock('common/modules/commercial/geo-utils', () => ({
+jest.mock('../../../common/modules/commercial/geo-utils', () => ({
     isInAuOrNz: jest.fn().mockReturnValue(true)
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 

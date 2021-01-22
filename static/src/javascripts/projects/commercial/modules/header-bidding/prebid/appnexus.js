@@ -2,9 +2,9 @@ import config from '../../../../../lib/config';
 import {
     getPageTargeting,
     buildAppNexusTargetingObject,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 
-import { isInUsOrCa, isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import { isInUsOrCa, isInAuOrNz } from '../../../../common/modules/commercial/geo-utils';
 
 import {
     getLargestSize,

@@ -8,7 +8,7 @@ import { getBreakpoint, hasTouchScreen } from '../../../../lib/detect';
 import FiniteStateMachine from '../../../../lib/fsm';
 import mediator from '../../../../lib/mediator';
 import throttle from 'lodash/throttle';
-import interactionTracking from 'common/modules/analytics/interaction-tracking';
+import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 import { loadCssPromise } from '../../../../lib/load-css-promise';
 
 class HostedGallery {

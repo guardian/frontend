@@ -14,11 +14,11 @@ import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import {
     getPermutiveSegments,
     clearPermutiveSegments,
-} from 'common/modules/commercial/permutive';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getSynchronousParticipations } from 'common/modules/experiments/ab';
+} from './permutive';
+import { isUserLoggedIn } from '../identity/api';
+import { getUserSegments } from './user-ad-targeting';
+import { commercialFeatures } from './commercial-features';
+import { getSynchronousParticipations } from '../experiments/ab';
 import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';

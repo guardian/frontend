@@ -1,7 +1,7 @@
 import { init } from 'commercial/modules/article-body-adverts';
 import config from '../../../lib/config';
-import { spaceFiller } from 'common/modules/article/space-filler';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { spaceFiller } from '../../common/modules/article/space-filler';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import {
     getViewport as getViewport_,
     getBreakpoint as getBreakpoint_,
@@ -21,10 +21,10 @@ jest.mock('commercial/modules/dfp/track-ad-render', () => (id) => {
 jest.mock('commercial/modules/dfp/add-slot', () => ({
     addSlot: jest.fn(),
 }));
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
-jest.mock('common/modules/article/space-filler', () => ({
+jest.mock('../../common/modules/article/space-filler', () => ({
     spaceFiller: {
         fillSpace: jest.fn(),
     },
@@ -35,7 +35,7 @@ jest.mock('../../../lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 jest.mock('../../../lib/config', () => ({ page: {}, get: () => false }));
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: () => false,
 }));
 

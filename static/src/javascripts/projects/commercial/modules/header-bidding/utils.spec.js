@@ -38,7 +38,7 @@ jest.mock('../../../../lib/detect', () => ({
     isBreakpoint: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab-tests');
+jest.mock('../../../common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {

@@ -5,13 +5,13 @@ import {
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
     getPageTargeting,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 import {
     isInUk,
     isInUsOrCa,
     isInAuOrNz,
     isInRow,
-} from 'common/modules/commercial/geo-utils';
+} from '../../../../common/modules/commercial/geo-utils';
 import {
     containsBillboard,
     containsDmpu,

@@ -7,11 +7,11 @@ jest.mock('../../../lib/detect', () => ({
     hasPushStateSupport: jest.fn(),
 }));
 
-jest.mock('common/modules/article/space-filler', () => ({
+jest.mock('../../common/modules/article/space-filler', () => ({
     fillSpace: jest.fn(),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         liveblogAdverts: true,
     },

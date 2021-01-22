@@ -1,10 +1,10 @@
 import {
     logView,
-} from 'common/modules/commercial/acquisitions-view-log';
+} from './acquisitions-view-log';
 import {
     submitInsertEvent,
     submitViewEvent,
-} from 'common/modules/commercial/acquisitions-ophan';
+} from './acquisitions-ophan';
 import config from '../../../../lib/config';
 import { storage } from '@guardian/libs';
 import { elementInView } from '../../../../lib/element-inview';

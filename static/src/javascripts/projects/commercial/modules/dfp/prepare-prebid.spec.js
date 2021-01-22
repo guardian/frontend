@@ -6,14 +6,14 @@ import {
     getConsentFor as getConsentFor_,
 } from '@guardian/consent-management-platform';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { _ } from './prepare-prebid';
 
 const { setupPrebid } = _;
 const onConsentChange = onConsentChange_;
 const getConsentFor = getConsentFor_;
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
@@ -25,7 +25,7 @@ jest.mock('commercial/modules/dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
     getPageTargeting: jest.fn(),
 }));
 

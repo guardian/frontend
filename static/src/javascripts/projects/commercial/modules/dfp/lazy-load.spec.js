@@ -3,7 +3,7 @@ import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-adve
 import { loadAdvert } from 'commercial/modules/dfp/load-advert';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 

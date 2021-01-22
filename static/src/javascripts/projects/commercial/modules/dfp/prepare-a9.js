@@ -2,7 +2,7 @@
 
 import config from '../../../../lib/config';
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import once from 'lodash/once';
 import a9 from 'commercial/modules/header-bidding/a9/a9';
 import { dfpEnv } from 'commercial/modules/dfp/dfp-env';

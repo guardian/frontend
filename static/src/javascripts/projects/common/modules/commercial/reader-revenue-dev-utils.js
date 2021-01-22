@@ -1,20 +1,20 @@
 import { addCookie, removeCookie } from '../../../../lib/cookies';
-import { isUserLoggedIn } from 'common/modules/identity/api';
+import { isUserLoggedIn } from '../identity/api';
 import {
     fakeOneOffContributor,
     readerRevenueRelevantCookies,
-} from 'common/modules/commercial/user-features';
-import { clearViewLog as clearEpicViewLog } from 'common/modules/commercial/acquisitions-view-log';
+} from './user-features';
+import { clearViewLog as clearEpicViewLog } from './acquisitions-view-log';
 import { storage } from '@guardian/libs';
 import {
     initMvtCookie,
     decrementMvtCookie,
     incrementMvtCookie,
-} from 'common/modules/analytics/mvt-cookie';
+} from '../analytics/mvt-cookie';
 import { setGeolocation, getSync as geolocationGetSync } from '../../../../lib/geolocation';
-import { clearParticipations } from 'common/modules/experiments/ab-local-storage';
-import { pageShouldHideReaderRevenue } from 'common/modules/commercial/contributions-utilities';
-import userPrefs from 'common/modules/user-prefs';
+import { clearParticipations } from '../experiments/ab-local-storage';
+import { pageShouldHideReaderRevenue } from './contributions-utilities';
+import userPrefs from '../user-prefs';
 
 const lastClosedAtKey = 'engagementBannerLastClosedAt';
 const minArticlesBeforeShowingBanner = 2;

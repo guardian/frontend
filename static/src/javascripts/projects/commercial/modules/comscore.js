@@ -2,7 +2,7 @@
 import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
 import config from '../../../lib/config';
 import { loadScript } from '@guardian/libs';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 
 
 const comscoreSrc = '//sb.scorecardresearch.com/cs/6035250/beacon.js';

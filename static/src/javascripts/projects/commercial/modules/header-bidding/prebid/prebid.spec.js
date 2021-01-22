@@ -19,7 +19,7 @@ jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),

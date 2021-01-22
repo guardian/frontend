@@ -6,12 +6,12 @@ import {
     triggerAutoplay,
     triggerEndSlate,
 } from 'commercial/modules/hosted/next-video-autoplay';
-import { isOn } from 'common/modules/accessibility/main';
-import { initYoutubePlayer } from 'common/modules/atoms/youtube-player';
+import { isOn } from '../../../common/modules/accessibility/main';
+import { initYoutubePlayer } from '../../../common/modules/atoms/youtube-player';
 import {
     trackYoutubeEvent,
     initYoutubeEvents,
-} from 'common/modules/atoms/youtube-tracking';
+} from '../../../common/modules/atoms/youtube-tracking';
 import config from '../../../../lib/config';
 import { isBreakpoint } from '../../../../lib/detect';
 import mediator from '../../../../lib/mediator';

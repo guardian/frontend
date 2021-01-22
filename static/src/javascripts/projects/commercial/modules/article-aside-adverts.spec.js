@@ -4,7 +4,7 @@ import fakeMediator from '../../../lib/mediator';
 import fastdom from '../../../lib/fastdom-promise';
 import { init } from 'commercial/modules/article-aside-adverts';
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         articleAsideAdverts: true,
     },

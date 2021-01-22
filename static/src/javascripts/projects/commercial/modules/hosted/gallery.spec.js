@@ -1,4 +1,4 @@
-import interactionTracking from 'common/modules/analytics/interaction-tracking';
+import interactionTracking from '../../../common/modules/analytics/interaction-tracking';
 import { noop } from '../../../../lib/noop';
 import { init } from './gallery';
 import { galleryHtml } from './gallery-html';
@@ -8,7 +8,7 @@ jest.mock('../../../../lib/detect', () => ({
     getBreakpoint: jest.fn(),
     hasTouchScreen: jest.fn(),
 }));
-jest.mock('common/modules/analytics/interaction-tracking', () => ({
+jest.mock('../../../common/modules/analytics/interaction-tracking', () => ({
     trackNonClickInteraction: jest.fn(() => Promise.resolve()),
 }));
 jest.mock('../../../../lib/load-css-promise', () => ({

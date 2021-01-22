@@ -2,9 +2,9 @@ import fastdom from '../../../lib/fastdom-promise';
 import { getBreakpoint } from '../../../lib/detect';
 import mediator from '../../../lib/mediator';
 import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { createSlots } from 'commercial/modules/dfp/create-slots';
-import { spaceFiller } from 'common/modules/article/space-filler';
+import { spaceFiller } from '../../common/modules/article/space-filler';
 
 const OFFSET = 1.5; // ratio of the screen height from which ads are loaded
 const MAX_ADS = 8; // maximum number of ads to display

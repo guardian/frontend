@@ -6,7 +6,7 @@ import {
     addCancelListener,
 } from 'commercial/modules/hosted/next-video-autoplay';
 
-jest.mock('common/modules/analytics/google', () => {});
+jest.mock('../../../common/modules/analytics/google', () => {});
 jest.mock('commercial/modules/hosted/next-video', () => ({
     init: () => Promise.resolve(),
     load: () => Promise.resolve(),
