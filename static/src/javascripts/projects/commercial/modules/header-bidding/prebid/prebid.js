@@ -1,23 +1,9 @@
-
-
-import config from 'lib/config';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { bids } from 'commercial/modules/header-bidding/prebid/bid-config';
-import { getHeaderBiddingAdSlots } from 'commercial/modules/header-bidding/slot-config';
-import { priceGranularity } from 'commercial/modules/header-bidding/prebid/price-config';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
-
-
-
-
-
-
-
-
-
-
-
-
+import config from '../../../../../lib/config';
+import { dfpEnv } from '../../dfp/dfp-env';
+import { bids } from './bid-config';
+import { getHeaderBiddingAdSlots } from '../slot-config';
+import { priceGranularity } from './price-config';
+import { getAdvertById } from '../../dfp/get-advert-by-id';
 
 const bidderTimeout = 1500;
 

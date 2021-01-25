@@ -1,41 +1,41 @@
-import $ from 'lib/$';
-import { getBreakpoint as getBreakpoint_ } from 'lib/detect';
-import config from 'lib/config';
-import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
-import { getAdverts } from 'commercial/modules/dfp/get-adverts';
-import { getCreativeIDs } from 'commercial/modules/dfp/get-creative-ids';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { loadAdvert } from 'commercial/modules/dfp/load-advert';
-import { fillAdvertSlots as fillAdvertSlots_ } from 'commercial/modules/dfp/fill-advert-slots';
 import {
-    onConsentChange as onConsentChange_,
     getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
+import $ from '../../../../lib/$';
+import config from '../../../../lib/config';
+import { getBreakpoint as getBreakpoint_ } from '../../../../lib/detect';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { dfpEnv } from './dfp-env';
+import { fillAdvertSlots as fillAdvertSlots_ } from './fill-advert-slots';
+import { getAdverts } from './get-adverts';
+import { getCreativeIDs } from './get-creative-ids';
+import { loadAdvert } from './load-advert';
+import { init as prepareGoogletag } from './prepare-googletag';
 
 const onConsentChange = onConsentChange_;
 const getConsentFor = getConsentFor_;
 
 
 const { fillAdvertSlots: actualFillAdvertSlots } = jest.requireActual(
-    'commercial/modules/dfp/fill-advert-slots'
+    './fill-advert-slots'
 );
 
 const getBreakpoint = getBreakpoint_;
 const fillAdvertSlots = fillAdvertSlots_;
 
-jest.mock('commercial/modules/dfp/fill-advert-slots', () => ({
+jest.mock('./fill-advert-slots', () => ({
     fillAdvertSlots: jest.fn(),
 }));
-jest.mock('lib/raven');
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../../../../lib/raven');
+jest.mock('../../../common/modules/identity/api', () => ({
     isUserLoggedIn: () => true,
     getUserFromCookie: jest.fn(),
     getUrl: jest.fn(),
 }));
 jest.mock('ophan/ng', () => null);
-jest.mock('common/modules/analytics/beacon', () => {});
-jest.mock('lib/detect', () => ({
+jest.mock('../../../common/modules/analytics/beacon', () => {});
+jest.mock('../../../../lib/detect', () => ({
     hasCrossedBreakpoint: jest.fn(),
     isBreakpoint: jest.fn(),
     getBreakpoint: jest.fn(),
@@ -66,17 +66,17 @@ jest.mock('lib/detect', () => ({
     ],
     isGoogleProxy: jest.fn(() => false),
 }));
-jest.mock('common/modules/analytics/google', () => () => {});
-jest.mock('commercial/modules/dfp/display-lazy-ads', () => ({
+jest.mock('../../../common/modules/analytics/google', () => () => {});
+jest.mock('./display-lazy-ads', () => ({
     displayLazyAds: jest.fn(),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         dfpAdvertising: true,
     },
 }));
-jest.mock('commercial/modules/dfp/apply-creative-template', () => ({
+jest.mock('./apply-creative-template', () => ({
     applyCreativeTemplate: () => Promise.resolve(true),
 }));
 jest.mock('@guardian/libs', () => ({
@@ -85,17 +85,17 @@ jest.mock('@guardian/libs', () => ({
     storage: jest.requireActual('@guardian/libs').storage,
 }));
 jest.mock('lodash/once', () => fn => fn);
-jest.mock('commercial/modules/dfp/refresh-on-resize', () => ({
+jest.mock('./refresh-on-resize', () => ({
     refreshOnResize: jest.fn(),
 }));
-jest.mock('common/modules/analytics/beacon', () => ({ fire: jest.fn() }));
-jest.mock('commercial/modules/sticky-mpu', () => ({
+jest.mock('../../../common/modules/analytics/beacon', () => ({ fire: jest.fn() }));
+jest.mock('../sticky-mpu', () => ({
     stickyMpu: jest.fn(),
 }));
-jest.mock('common/modules/onward/geo-most-popular', () => ({
+jest.mock('../../../common/modules/onward/geo-most-popular', () => ({
     geoMostPopular: { render: jest.fn() },
 }));
-jest.mock('commercial/modules/dfp/load-advert', () => ({
+jest.mock('./load-advert', () => ({
     loadAdvert: jest.fn(),
 }));
 jest.mock('@guardian/consent-management-platform', () => ({

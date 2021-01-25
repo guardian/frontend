@@ -1,6 +1,6 @@
-import { addEventListener } from 'lib/events';
-import { getViewport } from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
+import { addEventListener } from '../../../../lib/events';
+import { getViewport } from '../../../../lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
 
 // An intersection observer will allow us to efficiently send slot
 // coordinates for only those that are in the viewport.

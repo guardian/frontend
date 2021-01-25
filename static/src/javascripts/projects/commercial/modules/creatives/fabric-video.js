@@ -1,12 +1,17 @@
-import qwery from 'qwery';
-import { addEventListener } from 'lib/events';
-import fastdom from 'lib/fastdom-promise';
-import { isIOS, isAndroid, isBreakpoint, getViewport } from 'lib/detect';
 import template from 'lodash/template';
-import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricVideoStr from 'commercial/views/creatives/fabric-video.html';
 import objectFitVideos from 'object-fit-videos';
+import qwery from 'qwery';
+import {
+    getViewport,
+    isAndroid,
+    isBreakpoint,
+    isIOS,
+} from '../../../../lib/detect';
+import { addEventListener } from '../../../../lib/events';
+import fastdom from '../../../../lib/fastdom-promise';
+import fabricVideoStr from '../../views/creatives/fabric-video.html';
+import { addTrackingPixel } from './add-tracking-pixel';
+import { addViewabilityTracker } from './add-viewability-tracker';
 
 class FabricVideo {
 

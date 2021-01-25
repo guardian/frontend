@@ -1,6 +1,6 @@
 import ophan from 'ophan/ng';
-import config from 'lib/config';
-import { constructQuery as constructURLQuery } from 'lib/url';
+import config from '../../../../lib/config';
+import { constructQuery as constructURLQuery } from '../../../../lib/url';
 
 export const submitComponentEvent = (componentEvent) => {
     ophan.record({ componentEvent });

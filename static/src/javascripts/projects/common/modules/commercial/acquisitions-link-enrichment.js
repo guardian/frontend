@@ -1,5 +1,5 @@
-import { addReferrerData } from 'common/modules/commercial/acquisitions-ophan';
-import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
+import { addReferrerData } from './acquisitions-ophan';
+import { addCountryGroupToSupportLink } from './support-utilities';
 
 // Currently the only acquisition components on the site are
 // from the Mother Load campaign and the Wide Brown Land campaign.

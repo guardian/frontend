@@ -1,10 +1,10 @@
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import {
     getConsentFor as getConsentFor_,
-    onConsentChange as onConsentChange_
+    onConsentChange as onConsentChange_,
 } from '@guardian/consent-management-platform';
-import { isInAuOrNz as isInAuOrNz_ } from 'common/modules/commercial/geo-utils';
-import config from 'lib/config';
+import config from '../../../../lib/config';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { isInAuOrNz as isInAuOrNz_ } from '../../../common/modules/commercial/geo-utils';
 import { init, resetModule } from './redplanet';
 
 const isInAuOrNz = isInAuOrNz_;
@@ -21,27 +21,27 @@ const AusWithoutConsentMock = (callback) =>
 
 const onConsentChange = onConsentChange_;
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('./Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('common/modules/commercial/geo-utils');
+jest.mock('../../../common/modules/commercial/geo-utils');
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
-jest.mock('lib/launchpad', () => jest.fn());
+jest.mock('../../../../lib/launchpad', () => jest.fn());
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../common/modules/commercial/build-page-targeting', () => ({
     buildPageTargeting: jest.fn(),
 }));
 
@@ -54,7 +54,7 @@ jest.mock('@guardian/consent-management-platform', () => ({
     getConsentFor: jest.fn()
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 

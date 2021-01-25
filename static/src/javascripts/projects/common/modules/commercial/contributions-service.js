@@ -1,32 +1,32 @@
-import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
-import { onConsentChange } from '@guardian/consent-management-platform'
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
+    getEpicMeta,
+    getViewLog,
+    getWeeklyArticleHistory,
+} from '@guardian/automat-contributions';
+import { mountDynamic } from '@guardian/automat-modules';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import userPrefs from 'common/modules/user-prefs';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import fastdom from '../../../../lib/fastdom-promise';
+import fetchJson from '../../../../lib/fetch-json';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import reportError from '../../../../lib/report-error';
+import { trackNonClickInteraction } from '../analytics/google';
+import { getMvtValue } from '../analytics/mvt-cookie';
+import { submitComponentEvent, submitViewEvent } from './acquisitions-ophan';
+import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
+import {
+    getVisitCount,
     setupOphanView,
     submitOphanInsert,
-    getVisitCount,
-} from 'common/modules/commercial/contributions-utilities';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import config from 'lib/config';
-import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import fetchJson from 'lib/fetch-json';
-import { mountDynamic } from "@guardian/automat-modules";
-import { getCookie } from 'lib/cookies';
-import { setupRemoteEpicInLiveblog } from 'common/modules/commercial/contributions-liveblog-utilities';
-
+} from './contributions-utilities';
 import {
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
-} from 'common/modules/commercial/user-features';
-import userPrefs from "common/modules/user-prefs";
-
-
-
+} from './user-features';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');

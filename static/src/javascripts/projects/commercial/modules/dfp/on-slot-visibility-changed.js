@@ -1,5 +1,5 @@
 import { storage } from '@guardian/libs';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
+import { getAdvertById } from './get-advert-by-id';
 
 export const onSlotVisibilityChanged = (
     event

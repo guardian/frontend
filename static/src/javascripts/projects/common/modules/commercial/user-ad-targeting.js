@@ -1,5 +1,5 @@
 import { storage } from '@guardian/libs';
-import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
+import { getUserFromCookie, getUserFromApi } from '../identity/api';
 
 const userSegmentsKey = 'gu.ads.userSegmentsData';
 

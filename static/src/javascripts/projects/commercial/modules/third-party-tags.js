@@ -1,22 +1,22 @@
 /* A regionalised container for all the commercial tags. */
 
-import fastdom from 'lib/fastdom-promise';
 import {
-    onConsentChange,
-    getConsentFor,
-} from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { imrWorldwide } from 'commercial/modules/third-party-tags/imr-worldwide';
-import { imrWorldwideLegacy } from 'commercial/modules/third-party-tags/imr-worldwide-legacy';
-import {
-    ias,
-    permutive,
-    twitter,
     fbPixel,
-    remarketing,
+    ias,
     inizio,
+    permutive,
+    remarketing,
+    twitter,
 } from '@guardian/commercial-core';
-import config from 'lib/config';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import config from '../../../lib/config';
+import fastdom from '../../../lib/fastdom-promise';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { imrWorldwide } from './third-party-tags/imr-worldwide';
+import { imrWorldwideLegacy } from './third-party-tags/imr-worldwide-legacy';
 
 const addScripts = tags => {
     const ref = document.scripts[0];

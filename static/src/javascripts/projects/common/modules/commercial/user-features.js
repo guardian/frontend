@@ -1,8 +1,8 @@
-import { getCookie, removeCookie, addCookie } from 'lib/cookies';
-import config from 'lib/config';
-import fetchJson from 'lib/fetch-json';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import { dateDiffDays } from 'lib/time-utils';
+import { getCookie, removeCookie, addCookie } from '../../../../lib/cookies';
+import config from '../../../../lib/config';
+import fetchJson from '../../../../lib/fetch-json';
+import { isUserLoggedIn } from '../identity/api';
+import { dateDiffDays } from '../../../../lib/time-utils';
 
 // Persistence keys
 const USER_FEATURES_EXPIRY_COOKIE = 'gu_user_features_expiry';

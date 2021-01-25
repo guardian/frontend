@@ -1,12 +1,12 @@
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import {
     isInUsOrCa as isInUsOrCa_,
     isInAuOrNz as isInAuOrNz_,
-} from 'common/modules/commercial/geo-utils';
+} from '../../../../common/modules/commercial/geo-utils';
 import { _, getAppNexusDirectBidParams } from './appnexus';
 import { getBreakpointKey as getBreakpointKey_ } from '../utils';
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
     buildAppNexusTargetingObject: () => ({
         url: 'gu.com',
@@ -24,16 +24,16 @@ jest.mock('../utils', () => {
     };
 });
 
-jest.mock('common/modules/commercial/geo-utils', () => ({
+jest.mock('../../../../common/modules/commercial/geo-utils', () => ({
     isInAuOrNz: jest.fn(),
     isInUsOrCa: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),

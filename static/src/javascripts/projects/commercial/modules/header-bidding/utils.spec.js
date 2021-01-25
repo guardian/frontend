@@ -1,25 +1,25 @@
-import { getSync as getSync_ } from 'lib/geolocation';
+import { _ } from 'common/modules/commercial/geo-utils';
+import config from '../../../../lib/config';
 import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
-} from 'lib/detect';
-import config from 'lib/config';
-import { _} from "common/modules/commercial/geo-utils";
+} from '../../../../lib/detect';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
 import {
-    getLargestSize,
     getBreakpointKey,
+    getLargestSize,
+    removeFalseyValues,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
+    shouldIncludeMobileSticky,
     shouldIncludeOpenx,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
+    stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-    stripDfpAdPrefixFrom,
-    removeFalseyValues,
-    shouldIncludeMobileSticky,
 } from './utils';
 
 const getSync = getSync_;
@@ -28,17 +28,17 @@ const isBreakpoint = isBreakpoint_;
 
 jest.mock('lodash/once', () => a => a);
 
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
     hasPushStateSupport: jest.fn(() => true),
     isBreakpoint: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab-tests');
+jest.mock('../../../common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {

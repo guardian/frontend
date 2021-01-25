@@ -1,6 +1,6 @@
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
-import { markTime } from 'lib/user-timing';
-import a9 from 'commercial/modules/header-bidding/a9/a9';
+import prebid from '../header-bidding/prebid/prebid';
+import { markTime } from '../../../../lib/user-timing';
+import a9 from '../header-bidding/a9/a9';
 
 const forcedSlotSize = (advert, hbSlot) => {
     // We only fiddle with top-above-nav hbSlot(s)

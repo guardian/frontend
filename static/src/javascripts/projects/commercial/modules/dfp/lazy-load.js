@@ -1,7 +1,7 @@
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { loadAdvert, refreshAdvert } from 'commercial/modules/dfp/load-advert';
-import { getAdvertById } from 'commercial/modules/dfp/get-advert-by-id';
 import once from 'lodash/once';
+import { dfpEnv } from './dfp-env';
+import { getAdvertById } from './get-advert-by-id';
+import { loadAdvert, refreshAdvert } from './load-advert';
 
 const displayAd = (advertId) => {
     const advert = getAdvertById(advertId);

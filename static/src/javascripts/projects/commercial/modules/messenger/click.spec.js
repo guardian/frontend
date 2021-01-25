@@ -1,4 +1,4 @@
-import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
+import { trackNativeAdLinkClick } from '../../../common/modules/analytics/google';
 import { _ } from './click';
 
 const { sendClick } = _;
@@ -8,7 +8,7 @@ const { sendClick } = _;
 // `expect(register.mock.calls[0][0]).toBe('click');` to pass linting
 const foolFlow = (mockFn) => ((mockFn));
 
-jest.mock('common/modules/analytics/google', () => ({
+jest.mock('../../../common/modules/analytics/google', () => ({
     trackNativeAdLinkClick: jest.fn(),
 }));
 

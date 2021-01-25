@@ -1,4 +1,4 @@
-import { waitForAdvert } from 'commercial/modules/dfp/wait-for-advert';
+import { waitForAdvert } from './wait-for-advert';
 
 export const trackAdRender = (id) =>
     waitForAdvert(id).then(_ => _.whenRendered);

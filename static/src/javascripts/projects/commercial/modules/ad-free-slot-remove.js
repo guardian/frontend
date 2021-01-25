@@ -1,8 +1,8 @@
-import qwery from 'qwery';
-import fastdom from 'lib/fastdom-promise';
 import once from 'lodash/once';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import qwery from 'qwery';
+import fastdom from '../../../lib/fastdom-promise';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { dfpEnv } from './dfp/dfp-env';
 
 const mpuCandidateClass = 'fc-slice__item--mpu-candidate';
 const mpuCandidateSelector = `.${mpuCandidateClass}`;

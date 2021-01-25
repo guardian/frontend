@@ -1,6 +1,6 @@
 import qwery from 'qwery';
 import fastdom from 'fastdom';
-import $ from 'lib/$';
+import $ from '../../../../lib/$';
 
 class HostedCarousel {
 

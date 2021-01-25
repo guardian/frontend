@@ -1,13 +1,13 @@
-import fastdom from 'lib/fastdom-promise';
+import fastdom from '../../../../lib/fastdom-promise';
 import {
     init,
     canAutoplay,
     triggerEndSlate,
     addCancelListener,
-} from 'commercial/modules/hosted/next-video-autoplay';
+} from './next-video-autoplay';
 
-jest.mock('common/modules/analytics/google', () => {});
-jest.mock('commercial/modules/hosted/next-video', () => ({
+jest.mock('../../../common/modules/analytics/google', () => {});
+jest.mock('./next-video', () => ({
     init: () => Promise.resolve(),
     load: () => Promise.resolve(),
 }));

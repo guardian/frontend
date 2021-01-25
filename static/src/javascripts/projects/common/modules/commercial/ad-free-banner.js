@@ -1,8 +1,8 @@
-import { Message, hasUserAcknowledgedBanner } from 'common/modules/ui/message';
-import checkIcon from 'svgs/icon/tick.svg';
 import bean from 'bean';
-import config from 'lib/config';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
+import checkIcon from 'svgs/icon/tick.svg';
+import config from '../../../../lib/config';
+import { hasUserAcknowledgedBanner, Message } from '../ui/message';
+import { isAdFreeUser } from './user-features';
 
 const messageCode = 'ad-free-banner';
 const image = config.get('images.acquisitions.ad-free', '');

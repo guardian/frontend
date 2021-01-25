@@ -1,33 +1,33 @@
-import config from 'lib/config';
-import { pbTestNameMap } from 'lib/url';
 import isEmpty from 'lodash/isEmpty';
+import config from '../../../../../lib/config';
+import { pbTestNameMap } from '../../../../../lib/url';
 import {
     buildAppNexusTargeting,
     buildAppNexusTargetingObject,
     getPageTargeting,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 import {
-    isInUk,
-    isInUsOrCa,
     isInAuOrNz,
     isInRow,
-} from 'common/modules/commercial/geo-utils';
+    isInUk,
+    isInUsOrCa,
+} from '../../../../common/modules/commercial/geo-utils';
 import {
     containsBillboard,
     containsDmpu,
     containsLeaderboard,
     containsLeaderboardOrBillboard,
+    containsMobileSticky,
     containsMpu,
     containsMpuOrDmpu,
-    containsMobileSticky,
     getBreakpointKey,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
     shouldIncludeOpenx,
     shouldIncludeSonobi,
-    shouldIncludeTrustX,
     shouldIncludeTripleLift,
+    shouldIncludeTrustX,
     shouldIncludeXaxis,
     shouldUseOzoneAdaptor,
     stripDfpAdPrefixFrom,

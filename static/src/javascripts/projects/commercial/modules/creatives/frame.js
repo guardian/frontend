@@ -1,13 +1,13 @@
-import fastdom from 'lib/fastdom-promise';
 import template from 'lodash/template';
-import { Toggles } from 'common/modules/ui/toggles';
-import { addClassesAndTitle } from 'common/views/svg';
-import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import frameStr from 'commercial/views/creatives/frame.html';
-import labelStr from 'commercial/views/creatives/gustyle-label.html';
-import externalLink from 'svgs/icon/external-link.svg';
 import arrow from 'svgs/icon/arrow.svg';
+import externalLink from 'svgs/icon/external-link.svg';
+import fastdom from '../../../../lib/fastdom-promise';
+import { Toggles } from '../../../common/modules/ui/toggles';
+import { addClassesAndTitle } from '../../../common/views/svg';
+import frameStr from '../../views/creatives/frame.html';
+import labelStr from '../../views/creatives/gustyle-label.html';
+import { addTrackingPixel } from './add-tracking-pixel';
+import { addViewabilityTracker } from './add-viewability-tracker';
 
 class Frame {
 
