@@ -527,7 +527,6 @@ private object NavLinks {
     insideTheGuardian,
     observer,
     weekly.copy(url = s"${weekly.url}?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_UK"),
-    NavLink("Professional networks", "/guardian-professional"),
     crosswords,
   )
   val auOtherLinks = List(
