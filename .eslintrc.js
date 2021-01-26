@@ -6,6 +6,11 @@ module.exports = {
         sourceType: 'module',
         ecmaVersion: 6,
     },
+    rules: {
+        // disallow naming variables 'guardian', because
+        // window.guardian is our global config/settings object
+        'id-denylist': ['error', 'guardian'],
+    },
     ignorePatterns: ['javascripts.flow.archive'],
     overrides: [
         {
