@@ -1,13 +1,13 @@
 package model.abtests
 
-import common.Logging
+import common.GuLogging
 import tools.CloudWatch
 import views.support.CamelCase
 
 import scala.collection.JavaConverters._
 import scala.concurrent.ExecutionContext
 
-object AbTestJob extends Logging {
+object AbTestJob extends GuLogging {
   def run()(implicit executionContext: ExecutionContext) {
 
     log.info("Downloading abtests info from CloudWatch")

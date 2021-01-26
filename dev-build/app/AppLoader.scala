@@ -24,7 +24,6 @@ import services.ophan.SurgingContentAgentLifecycle
 import play.api.ApplicationLoader.Context
 import play.api._
 import play.api.routing.Router
-import play.filters.csrf.{CSRFAddToken, CSRFCheck}
 import router.Routes
 import rugby.conf.RugbyLifecycle
 import rugby.controllers.RugbyControllers
@@ -32,6 +31,8 @@ import services._
 import _root_.commercial.targeting.TargetingLifecycle
 import akka.actor.ActorSystem
 import concurrent.BlockingOperations
+import services.newsletters.{EmailEmbedAgent, EmailEmbedLifecycle, NewsletterApi}
+import play.api.OptionalDevContext
 
 class AppLoader extends FrontendApplicationLoader {
   override def buildComponents(context: Context): FrontendComponents =
@@ -52,6 +53,9 @@ trait Controllers
     with FrontendComponents
     with CricketControllers {
   self: BuiltInComponents =>
+
+  def emailEmbedAgent: EmailEmbedAgent
+
   lazy val accessTokenGenerator = wire[AccessTokenGenerator]
   lazy val apiSandbox = wire[ApiSandbox]
   lazy val devAssetsController = wire[DevAssetsController]
@@ -76,9 +80,15 @@ trait AppComponents
   override lazy val capiHttpClient: HttpClient = wire[CapiHttpClient]
   override lazy val contentApiClient = wire[ContentApiClient]
   override lazy val blockingOperations = wire[BlockingOperations]
+  override lazy val newsletterApi = wire[NewsletterApi]
+  override lazy val emailEmbedAgent = wire[EmailEmbedAgent]
+
   lazy val logbackOperationsPool = wire[LogbackOperationsPool]
 
   lazy val remoteRender = wire[renderers.DotcomRenderingService]
+
+  override lazy val optionalDevContext = new OptionalDevContext(devContext)
+  override lazy val sourceMapper = devContext.map(_.sourceMapper)
 
   def actorSystem: ActorSystem
   override def router: Router = wire[Routes]
@@ -104,6 +114,7 @@ trait AppComponents
       wire[TargetingLifecycle],
       wire[DiscussionExternalAssetsLifecycle],
       wire[StocksDataLifecycle],
+      wire[EmailEmbedLifecycle],
     )
 
   override lazy val httpFilters = wire[DevFilters].filters

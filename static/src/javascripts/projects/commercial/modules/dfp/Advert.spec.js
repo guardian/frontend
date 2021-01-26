@@ -1,8 +1,8 @@
-import { _, Advert } from 'commercial/modules/dfp/Advert';
+import { _, Advert } from './Advert';
 
 const { filterClasses } = _;
 
-jest.mock('lib/raven');
+jest.mock('../../../../lib/raven');
 jest.mock('ophan/ng', () => null);
 
 describe('Filter classes', () => {

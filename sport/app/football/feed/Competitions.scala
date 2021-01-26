@@ -299,7 +299,7 @@ class CompetitionsService(val footballClient: FootballClient, competitionDefinit
     extends Competitions
     with LiveMatches
     with Lineups
-    with Logging
+    with GuLogging
     with implicits.Collections
     with implicits.Football {
 

@@ -1,12 +1,17 @@
-import fastdom from 'lib/fastdom-promise';
-import { isEnhanced, isAndroid, getUserAgent, getViewport } from 'lib/detect';
 import template from 'lodash/template';
-import mediator from 'lib/mediator';
-import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
-import fabricV1Html from 'raw-loader!commercial/views/creatives/fabric-v1.html';
-import iframeVideoStr from 'raw-loader!commercial/views/creatives/iframe-video.html';
-import scrollBgStr from 'raw-loader!commercial/views/creatives/scrollbg.html';
+import {
+    getUserAgent,
+    getViewport,
+    isAndroid,
+    isEnhanced,
+} from '../../../../lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
+import mediator from '../../../../lib/mediator';
+import fabricV1Html from '../../views/creatives/fabric-v1.html';
+import iframeVideoStr from '../../views/creatives/iframe-video.html';
+import scrollBgStr from '../../views/creatives/scrollbg.html';
+import { addTrackingPixel } from './add-tracking-pixel';
+import { addViewabilityTracker } from './add-viewability-tracker';
 
 const hasBackgroundFixedSupport = !isAndroid();
 const isIE10OrLess =
@@ -21,12 +26,7 @@ let scrollBgTpl;
 // This is a hasty clone of fluid250.js
 
 class FabricV1 {
-    adSlot;
-    params;
 
-    scrollingBg;
-    layer2;
-    scrollType;
 
     constructor(adSlot, params) {
         this.adSlot = adSlot;

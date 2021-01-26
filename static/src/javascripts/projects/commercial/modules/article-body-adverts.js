@@ -1,16 +1,15 @@
+import config from '../../../lib/config';
+import { isBreakpoint } from '../../../lib/detect';
+import fastdom from '../../../lib/fastdom-promise';
+import mediator from '../../../lib/mediator';
+import { spaceFiller } from '../../common/modules/article/space-filler';
+import { adSizes } from './ad-sizes';
+import { addSlot } from './dfp/add-slot';
+import { trackAdRender } from './dfp/track-ad-render';
+import { createSlots } from './dfp/create-slots';
 
-import config from 'lib/config';
-import { isBreakpoint } from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
-import mediator from 'lib/mediator';
-import { spaceFiller } from 'common/modules/article/space-filler';
-import { adSizes } from 'commercial/modules/ad-sizes';
-import { addSlot } from 'commercial/modules/dfp/add-slot';
-import { trackAdRender } from 'commercial/modules/dfp/track-ad-render';
-import { createSlots } from 'commercial/modules/dfp/create-slots';
-
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { initCarrot } from 'commercial/modules/carrot-traffic-driver';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
+import { initCarrot } from './carrot-traffic-driver';
 
 
 

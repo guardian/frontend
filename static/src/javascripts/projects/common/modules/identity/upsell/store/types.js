@@ -6,10 +6,7 @@ import {
 
 
 class ConsentWithState {
-    consent;
-    uniqueId;
-    hasConsented;
-    updateInApiFn;
+
 
     constructor(consent, hasConsented) {
         this.consent = consent;

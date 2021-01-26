@@ -3,7 +3,7 @@ package controllers.admin
 import model.Cached.RevalidatableResult
 import play.api.mvc._
 import football.services.PaFootballClient
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import java.net.URLDecoder
 
 import scala.language.postfixOps
@@ -15,7 +15,7 @@ class PaBrowserController(val wsClient: WSClient, val controllerComponents: Cont
 ) extends BaseController
     with ImplicitControllerExecutionContext
     with PaFootballClient
-    with Logging {
+    with GuLogging {
 
   def browserSubstitution(): Action[AnyContent] =
     Action { implicit request =>

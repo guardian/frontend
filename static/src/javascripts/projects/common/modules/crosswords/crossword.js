@@ -355,12 +355,7 @@ class Crossword extends Component {
         this.returnPosition = position;
     }
 
-    columns;
-    rows;
-    clueMap;
-    $gridWrapper;
-    gridHeightIsSet;
-    returnPosition;
+
 
     insertCharacter(character) {
         const characterUppercase = character.toUpperCase();

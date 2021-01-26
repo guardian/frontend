@@ -7,7 +7,7 @@ import com.amazonaws.services.cloudwatch.{
   AmazonCloudWatchAsyncClientBuilder,
 }
 import com.amazonaws.services.cloudwatch.model._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import conf.Configuration._
 import org.joda.time.DateTime
@@ -19,7 +19,7 @@ case class MaximumMetric(metric: GetMetricStatisticsResult) {
   lazy val max: Double = metric.getDatapoints.asScala.headOption.map(_.getMaximum.doubleValue()).getOrElse(0.0)
 }
 
-object CloudWatch extends Logging {
+object CloudWatch extends GuLogging {
   def shutdown(): Unit = {
     euWestClient.shutdown()
     defaultClient.shutdown()

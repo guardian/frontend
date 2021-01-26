@@ -1,10 +1,10 @@
 package services
 
-import common.{AkkaAsync, Logging}
+import common.{AkkaAsync, GuLogging}
 
 import scala.concurrent.ExecutionContext
 
-object R2PressedPageTakedownNotifier extends Logging {
+object R2PressedPageTakedownNotifier extends GuLogging {
 
   def enqueue(akkaAsync: AkkaAsync)(path: String)(implicit executionContext: ExecutionContext): String = {
     try {

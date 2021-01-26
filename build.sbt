@@ -10,7 +10,7 @@ val common = library("common")
     javaOptions in Test += "-Dconfig.file=common/conf/test.conf",
     libraryDependencies ++= Seq(
       guBox,
-      apacheCommonsMath3,
+      apacheCommonsLang,
       awsCore,
       awsCloudwatch,
       awsDynamodb,
@@ -42,7 +42,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback,
+      logback2,// logback2: to prevent "error: reference to logback is ambiguous;"
       kinesisLogbackAppender,
       targetingClient,
       scanamo,

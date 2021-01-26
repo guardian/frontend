@@ -1,5 +1,5 @@
-import { addCountryGroupToSupportLink } from 'common/modules/commercial/support-utilities';
-import { setGeolocation } from 'lib/geolocation';
+import { addCountryGroupToSupportLink } from './support-utilities';
+import { setGeolocation } from '../../../../lib/geolocation';
 
 describe('addCountryGroupToSupportLink', () => {
     test('adds country group to subscribe link', () => {

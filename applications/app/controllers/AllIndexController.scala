@@ -2,7 +2,7 @@ package controllers
 
 import com.gu.contentapi.client.model.ContentApiError
 import common.Edition.defaultEdition
-import common.{Edition, ImplicitControllerExecutionContext, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
 import contentapi.{ContentApiClient, SectionsLookUp}
 import implicits.{Dates, ItemResponses}
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
@@ -25,7 +25,7 @@ class AllIndexController(
     with ImplicitControllerExecutionContext
     with ItemResponses
     with Dates
-    with Logging {
+    with GuLogging {
 
   private val indexController = new IndexController(contentApiClient, sectionsLookUp, controllerComponents)
 

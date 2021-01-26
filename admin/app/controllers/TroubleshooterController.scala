@@ -2,7 +2,7 @@ package controllers.admin
 
 import contentapi.{CapiHttpClient, ContentApiClient, PreviewContentApi, PreviewSigner}
 import play.api.mvc.{Action, AnyContent, BaseController, ControllerComponents}
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import model.{ApplicationContext, NoCache}
 import play.api.libs.ws.WSClient
 import tools.LoadBalancer
@@ -29,7 +29,7 @@ object TestFailed {
 class TroubleshooterController(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     appContext: ApplicationContext,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   private val capiLiveHttpClient = new CapiHttpClient(wsClient)

@@ -11,7 +11,7 @@ class MostViewedVideoController(
     mostViewedVideoAgent: MostViewedVideoAgent,
     val controllerComponents: ControllerComponents,
 ) extends BaseController
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   // Move this out of here if the test is successful

@@ -1,33 +1,32 @@
-import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
-import { onConsentChange } from '@guardian/consent-management-platform'
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
-    setupOphanView,
-    emitBeginEvent,
-    setupClickHandling,
-    submitOphanInsert,
+    getEpicMeta,
+    getViewLog,
+    getWeeklyArticleHistory,
+} from '@guardian/automat-contributions';
+import { mountDynamic } from '@guardian/automat-modules';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import userPrefs from 'common/modules/user-prefs';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import fastdom from '../../../../lib/fastdom-promise';
+import fetchJson from '../../../../lib/fetch-json';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import reportError from '../../../../lib/report-error';
+import { trackNonClickInteraction } from '../analytics/google';
+import { getMvtValue } from '../analytics/mvt-cookie';
+import { submitComponentEvent, submitViewEvent } from './acquisitions-ophan';
+import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
+import {
     getVisitCount,
-} from 'common/modules/commercial/contributions-utilities';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import config from 'lib/config';
-import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import fetchJson from 'lib/fetch-json';
-import { mountDynamic } from "@guardian/automat-modules";
-import { getCookie } from 'lib/cookies';
-
+    setupOphanView,
+    submitOphanInsert,
+} from './contributions-utilities';
 import {
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
-} from 'common/modules/commercial/user-features';
-import userPrefs from "common/modules/user-prefs";
-
-
-
+} from './user-features';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -233,7 +232,7 @@ const getEpicUrl = (contentType) => {
         `https://contributions.guardianapis.com/${path}`
 };
 
-const renderEpic = async (module, meta) => {
+const renderLiveblogEpic = async (module, meta) => {
     const component = await window.guardianPolyfilledImport(module.url);
 
     const {
@@ -245,8 +244,33 @@ const renderEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
+    const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
+
+    if (element) {
+        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+        setupOphanView(
+            element,
+            abTestName,
+            abTestVariant,
+            campaignCode,
+            campaignId,
+            componentType,
+            products,
+        );
+    }
+};
+
+const renderEpic = async (module, meta) => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
 
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
@@ -260,8 +284,6 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
-        abTestVariant.showTicker,
-        abTestVariant.tickerSettings,
     );
 };
 
@@ -360,8 +382,7 @@ export const renderBanner = (response) => {
 export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    // Liveblog epics are still selected and rendered natively
-    if (page.contentType === 'Article') {
+    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
         try {
             const payload = await buildEpicPayload();
 
@@ -372,7 +393,12 @@ export const fetchAndRenderEpic = async () => {
 
             if (json && json.data) {
                 const {module, meta} = json.data;
-                await renderEpic(module, meta);
+
+                if (page.contentType === 'Article') {
+                    await renderEpic(module, meta);
+                } else if (page.contentType === 'LiveBlog') {
+                    await renderLiveblogEpic(module, meta);
+                }
             }
 
         } catch (error) {

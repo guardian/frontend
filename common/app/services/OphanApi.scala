@@ -5,7 +5,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 
-import common.{BadConfigurationException, Logging}
+import common.{BadConfigurationException, GuLogging}
 import conf.Configuration._
 import play.api.libs.json._
 import play.api.libs.ws.WSClient
@@ -24,7 +24,7 @@ object OphanDeeplyReadItem {
 }
 
 class OphanApi(wsClient: WSClient)(implicit executionContext: ExecutionContext)
-    extends Logging
+    extends GuLogging
     with implicits.WSRequests {
   private val mostViewedDateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
 

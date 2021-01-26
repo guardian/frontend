@@ -1,11 +1,11 @@
 package commercial
 
-import common.{JobScheduler, Logging}
+import common.{JobScheduler, GuLogging}
 import commercial.model.merchandise.jobs.Industries
 
 import scala.concurrent.ExecutionContext
 
-trait RefreshJob extends Logging {
+trait RefreshJob extends GuLogging {
 
   def name: String
   def jobs: JobScheduler

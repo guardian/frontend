@@ -1,5 +1,8 @@
-import a9, { _ } from 'commercial/modules/header-bidding/a9/a9';
-import { onConsentChange as onConsentChange_ , getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
+import {
+    getConsentFor as getConsentFor_,
+    onConsentChange as onConsentChange_,
+} from '@guardian/consent-management-platform';
+import a9, { _ } from './a9';
 
 const onConsentChange = onConsentChange_;
 
@@ -13,12 +16,12 @@ const CcpaWithConsentMock = (callback) =>
 
 const getConsentFor = getConsentFor_;
 
-jest.mock('lib/raven');
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('../../../../../lib/raven');
+jest.mock('../../dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/slot-config', () => ({
+jest.mock('../slot-config', () => ({
     slots: jest
         .fn()
         .mockImplementation(() => [

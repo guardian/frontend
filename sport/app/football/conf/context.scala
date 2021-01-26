@@ -80,7 +80,7 @@ class FootballLifecycle(
 class FootballClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
     extends PaClient
     with Http
-    with Logging {
+    with GuLogging {
 
   // Runs the API calls via a CDN
   override lazy val base: String = "https://football-api.guardianapis.com/v1.5"

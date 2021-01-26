@@ -2,7 +2,7 @@ package conf.cricketPa
 
 import akka.actor.ActorSystem
 import akka.stream.Materializer
-import common.Logging
+import common.GuLogging
 import cricket.feed.CricketThrottler
 import org.joda.time.{DateTime, LocalDate}
 import org.joda.time.format.{DateTimeFormat, DateTimeFormatter}
@@ -17,7 +17,7 @@ object PaFeed {
   val dateFormat: DateTimeFormatter = DateTimeFormat.forPattern("yyyy-MM-dd")
 }
 
-class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends Logging {
+class PaFeed(wsClient: WSClient, actorSystem: ActorSystem, materializer: Materializer) extends GuLogging {
 
   private val paEndpoint = "https://cricket.api.press.net/v1"
   private val credentials = conf.SportConfiguration.pa.cricketKey.map { ("Apikey", _) }

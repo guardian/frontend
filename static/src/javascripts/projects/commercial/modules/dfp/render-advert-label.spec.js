@@ -1,8 +1,8 @@
-import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
 import bonzo from 'bonzo';
+import { renderAdvertLabel } from './render-advert-label';
 
-jest.mock('lib/detect', () => {});
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../../../lib/detect', () => {});
+jest.mock('../../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {},
 }));
 

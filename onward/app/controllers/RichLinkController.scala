@@ -1,6 +1,6 @@
 package controllers
 
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
 import contentapi.ContentApiClient
 import implicits.Requests
 import model.{ApplicationContext, Cached, Content, ContentType}
@@ -15,7 +15,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
     context: ApplicationContext,
 ) extends OnwardContentCardController(contentApiClient, controllerComponents)
     with Paging
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext
     with Requests {
   def render(path: String): Action[AnyContent] =

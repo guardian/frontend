@@ -12,24 +12,7 @@ class ComponentError {
 }
 
 class Component {
-    useBem;
-    templateName;
-    componentClass;
-    endpoint;
-    classes;
-    elem;
-    template;
-    rendered;
-    destroyed;
-    elems;
-    options;
-    defaultOptions;
-    responseDataKey;
-    autoupdated;
-    updateEvery;
-    fetchData;
-    manipulationType;
-    t;
+
 
     constructor() {
         this.useBem = false;

@@ -1,6 +1,6 @@
 package controllers.admin
 
-import common.{ImplicitControllerExecutionContext, Logging}
+import common.{ImplicitControllerExecutionContext, GuLogging}
 import football.model.PA
 import football.services.PaFootballClient
 import model.Cached.RevalidatableResult
@@ -17,7 +17,7 @@ class TablesController(val wsClient: WSClient, val controllerComponents: Control
 ) extends BaseController
     with ImplicitControllerExecutionContext
     with PaFootballClient
-    with Logging {
+    with GuLogging {
 
   def tablesIndex: Action[AnyContent] =
     Action.async { implicit request =>

@@ -26,7 +26,7 @@ class ArticleController(
 )(implicit context: ApplicationContext)
     extends BaseController
     with RendersItemResponse
-    with Logging
+    with GuLogging
     with ImplicitControllerExecutionContext {
 
   val capiLookup: CAPILookup = new CAPILookup(contentApiClient)

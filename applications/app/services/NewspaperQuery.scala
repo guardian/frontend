@@ -19,7 +19,7 @@ case class ContentByPage(page: Int, content: ApiContent)
 case class TagWithContent(tag: Tag, content: ApiContent)
 case class BookSectionContentByPage(page: Int, booksectionContent: BookSectionContent)
 
-class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with Logging {
+class NewspaperQuery(contentApiClient: ContentApiClient) extends Dates with GuLogging {
 
   val dateForFrontPagePattern = DateTimeFormat.forPattern("EEEE d MMMM y")
   private val hrefFormat = DateTimeFormat.forPattern("yyyy/MMM/dd").withZone(DateTimeZone.UTC)

@@ -18,9 +18,7 @@ const btnTmpl = ({ text, dataLink }) => `
 `;
 
 export class ContainerToggle {
-    $container;
-    state;
-    $button;
+
     constructor(container) {
         this.$container = bonzo(container);
         this.$button = bonzo(

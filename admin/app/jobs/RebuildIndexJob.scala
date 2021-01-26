@@ -1,6 +1,6 @@
 package jobs
 
-import common.{Logging, StopWatch}
+import common.{GuLogging, StopWatch}
 import contentapi.ContentApiClient
 import indexes.{ContentApiTagsEnumerator, TagPages}
 import model.{TagIndexListings, TagIndex}
@@ -9,7 +9,8 @@ import services.TagIndexesS3
 
 import scala.concurrent.{ExecutionContext, Future, blocking}
 
-class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext) extends Logging {
+class RebuildIndexJob(contentApiClient: ContentApiClient)(implicit executionContext: ExecutionContext)
+    extends GuLogging {
 
   val contentApiTagsEnumerator = new ContentApiTagsEnumerator(contentApiClient)
   val tagPages = new TagPages

@@ -35,9 +35,7 @@ class ScoreBoard extends Component {
         }
     }
 
-    placeholder;
-    pageType;
-    parent;
+
 
     prerender() {
         const scoreLoadingPlaceholder = $(

@@ -34,10 +34,7 @@ import { noop } from 'lib/noop';
 */
 
 class FiniteStateMachine {
-    context;
-    states;
-    debug;
-    onChangeState;
+
 
     constructor(options) {
         this.context = options.context;

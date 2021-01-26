@@ -2,7 +2,7 @@ import config from 'lib/config';
 import mediator from 'lib/mediator';
 
 class FormstackIframe {
-    el;
+
 
     constructor(el) {
         this.el = el;

@@ -1,7 +1,7 @@
-import { breakpoints } from 'lib/detect';
-import { getCurrentTime } from 'lib/user-timing';
-import { defineSlot } from 'commercial/modules/dfp/define-slot';
-import { breakpointNameToAttribute } from 'commercial/modules/dfp/breakpoint-name-to-attribute';
+import { breakpoints } from '../../../../lib/detect';
+import { getCurrentTime } from '../../../../lib/user-timing';
+import { defineSlot } from './define-slot';
+import { breakpointNameToAttribute } from './breakpoint-name-to-attribute';
 
 
 /** A breakpoint can have various sizes assigned to it. You can assign either on
@@ -29,26 +29,7 @@ const getAdBreakpointSizes = (advertNode) =>
     }, {});
 
 class Advert {
-    id;
-    node;
-    sizes;
-    size;
-    slot;
-    isEmpty;
-    isLoading;
-    isRendering;
-    isLoaded;
-    isRendered;
-    shouldRefresh;
-    maxViewPercentage;
-    whenLoaded;
-    whenLoadedResolver;
-    whenRendered;
-    whenRenderedResolver;
-    whenSlotReady;
-    extraNodeClasses;
-    timings;
-    hasPrebidSize;
+
 
     constructor(adSlotNode) {
         const sizes = getAdBreakpointSizes(adSlotNode);

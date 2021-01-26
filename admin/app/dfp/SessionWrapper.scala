@@ -6,7 +6,7 @@ import com.google.api.ads.admanager.axis.utils.v202011.{ReportDownloader, Statem
 import com.google.api.ads.admanager.axis.v202011._
 import com.google.api.ads.admanager.lib.client.AdManagerSession
 import com.google.common.io.CharSource
-import common.Logging
+import common.GuLogging
 import conf.{AdminConfiguration, Configuration}
 import dfp.Reader.read
 import dfp.SessionLogger.{logAroundCreate, logAroundPerform, logAroundRead, logAroundReadSingle}
@@ -199,7 +199,7 @@ private[dfp] class SessionWrapper(dfpSession: AdManagerSession) {
   }
 }
 
-object SessionWrapper extends Logging {
+object SessionWrapper extends GuLogging {
 
   def apply(networkId: Option[String] = None): Option[SessionWrapper] = {
     val dfpSession =

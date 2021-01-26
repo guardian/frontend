@@ -1,6 +1,6 @@
 package business
 
-import common.Logging
+import common.GuLogging
 import play.api.libs.json.{Json, JsString, JsValue, Writes}
 
 import scala.util.Try
@@ -41,7 +41,7 @@ case class StockValue(
     closed: Boolean,
 )
 
-object Stocks extends Logging {
+object Stocks extends GuLogging {
   implicit val jsonWrites = Json.writes[Stocks]
 
   private val Commas = """,+""".r

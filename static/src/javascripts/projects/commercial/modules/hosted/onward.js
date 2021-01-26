@@ -1,6 +1,6 @@
-import config from 'lib/config';
-import fetchJson from 'lib/fetch-json';
-import fastdom from 'lib/fastdom-promise';
+import config from '../../../../lib/config';
+import fetchJson from '../../../../lib/fetch-json';
+import fastdom from '../../../../lib/fastdom-promise';
 import { initHostedCarousel } from './onward-journey-carousel';
 
 // there should only ever be one onward component on the page

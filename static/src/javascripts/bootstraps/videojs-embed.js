@@ -9,8 +9,8 @@ import template from 'lodash/template';
 import events from 'common/modules/video/events';
 import { fullscreener } from 'common/modules/media/videojs-plugins/fullscreener';
 import { inlineSvg } from 'common/views/svgs';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
-import titlebarTmpl from 'raw-loader!common/views/media/titlebar.html';
+import loadingTmpl from 'common/views/ui/loading.html';
+import titlebarTmpl from 'common/views/media/titlebar.html';
 import debounce from 'lodash/debounce';
 import videojsOptions from 'common/modules/video/videojs-options';
 

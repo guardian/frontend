@@ -2,11 +2,11 @@ package dfp
 
 import com.google.api.ads.admanager.axis.utils.v202011.StatementBuilder
 import com.google.api.ads.admanager.axis.v202011._
-import common.Logging
+import common.GuLogging
 
 import scala.util.control.NonFatal
 
-private[dfp] object SessionLogger extends Logging {
+private[dfp] object SessionLogger extends GuLogging {
 
   def logAroundRead[T](typesToRead: String, stmtBuilder: StatementBuilder)(read: => Seq[T]): Seq[T] = {
     logAroundSeq(typesToRead, opName = "reading", Some(stmtBuilder.toStatement))(read)

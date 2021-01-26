@@ -1,18 +1,21 @@
-import config from 'lib/config';
-import reportError from 'lib/report-error';
-import {onConsentChange} from '@guardian/consent-management-platform';
-import {mountDynamic} from "@guardian/automat-modules";
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { getUrlVars } from 'lib/url';
+import { mountDynamic } from '@guardian/automat-modules';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
-import {getUserFromApi} from 'common/modules/identity/api';
-import {shouldNotBeShownSupportMessaging} from "common/modules/commercial/user-features";
-import {measureTiming} from './measure-timing';
+import config from '../../../lib/config';
+import reportError from '../../../lib/report-error';
+import { getUrlVars } from '../../../lib/url';
 import {
+    submitComponentEvent,
+    submitViewEvent,
+} from '../../common/modules/commercial/acquisitions-ophan';
+import { getUserFromApi } from '../../common/modules/identity/api';
+import {
+    clearHasCurrentBrazeUser,
     hasCurrentBrazeUser,
     setHasCurrentBrazeUser,
-    clearHasCurrentBrazeUser,
-} from "./hasCurrentBrazeUser"
+} from './hasCurrentBrazeUser';
+import { measureTiming } from './measure-timing';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 

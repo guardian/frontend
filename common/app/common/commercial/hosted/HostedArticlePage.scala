@@ -1,7 +1,7 @@
 package common.commercial.hosted
 
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
-import common.Logging
+import common.GuLogging
 import common.commercial.hosted.ContentUtils.{findLargestMainImageAsset, imageForSocialShare, thumbnailUrl}
 import common.commercial.hosted.LoggingUtils.getAndLog
 import model.{Content, MetaData}
@@ -25,7 +25,7 @@ case class HostedArticlePage(
   override val mainImageUrl = mainPicture
 }
 
-object HostedArticlePage extends Logging {
+object HostedArticlePage extends GuLogging {
 
   def fromContent(content: ApiContent): Option[HostedArticlePage] = {
     log.info(s"Building hosted article ${content.id} ...")

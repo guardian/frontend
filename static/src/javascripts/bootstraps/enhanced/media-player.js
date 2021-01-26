@@ -15,7 +15,7 @@ import { isBreakpoint } from 'lib/detect';
 import mediator from 'lib/mediator';
 import events from 'common/modules/video/events';
 import videojsOptions from 'common/modules/video/videojs-options';
-import loadingTmpl from 'raw-loader!common/views/ui/loading.html';
+import loadingTmpl from 'common/views/ui/loading.html';
 import { isOn as accessibilityisOn } from 'common/modules/accessibility/main';
 import { Component } from 'common/modules/component';
 import { getVideoInfo, isGeoBlocked } from 'common/modules/video/metadata';

@@ -1,5 +1,5 @@
-import { getViewport } from 'lib/detect';
-import fastdom from 'lib/fastdom-promise';
+import { getViewport } from '../../../../lib/detect';
+import fastdom from '../../../../lib/fastdom-promise';
 
 let w = window;
 let iframes = {};

@@ -196,7 +196,7 @@ final case class MediaAsset(
 
 sealed trait MediaAssetPlatform extends EnumEntry
 
-object MediaAtom extends common.Logging {
+object MediaAtom extends common.GuLogging {
 
   def make(atom: AtomApiAtom): MediaAtom = {
     val id = atom.id
@@ -328,7 +328,7 @@ final case class QuizAtom(
     shareLinks: ShareLinkMeta,
 ) extends Atom
 
-object QuizAtom extends common.Logging {
+object QuizAtom extends common.GuLogging {
 
   implicit val assetFormat = Json.format[Asset]
   implicit val imageFormat = Json.format[Image]

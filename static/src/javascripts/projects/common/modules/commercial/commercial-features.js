@@ -1,27 +1,12 @@
-import defaultConfig from 'lib/config';
-import { getBreakpoint } from 'lib/detect';
-import { isAdFreeUser } from 'common/modules/commercial/user-features';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import userPrefs from 'common/modules/user-prefs';
+import defaultConfig from '../../../../lib/config';
+import { getBreakpoint } from '../../../../lib/detect';
+import { isAdFreeUser } from './user-features';
+import { isUserLoggedIn } from '../identity/api';
+import userPrefs from '../user-prefs';
 
 // Having a constructor means we can easily re-instantiate the object in a test
 class CommercialFeatures {
-    dfpAdvertising;
-    isSecureContact;
-    stickyTopBannerAd;
-    articleBodyAdverts;
-    articleAsideAdverts;
-    carrotTrafficDriver;
-    highMerch;
-    thirdPartyTags;
-    relatedWidgetEnabled;
-    commentAdverts;
-    liveblogAdverts;
-    paidforBand;
-    asynchronous;
-    adFree;
-    comscore;
-    launchpad;
+
 
     constructor(config = defaultConfig) {
         // this is used for SpeedCurve tests

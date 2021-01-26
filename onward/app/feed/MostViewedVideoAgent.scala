@@ -11,7 +11,7 @@ import services.OphanApi
 
 import scala.concurrent.{ExecutionContext, Future}
 
-class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends Logging {
+class MostViewedVideoAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) extends GuLogging {
 
   case class QueryResult(id: String, count: Double, paths: Seq[String])
 

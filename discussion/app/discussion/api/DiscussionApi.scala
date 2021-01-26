@@ -3,7 +3,7 @@ package discussion.api
 import java.net.URLEncoder
 
 import com.netaporter.uri.dsl._
-import common.Logging
+import common.GuLogging
 import conf.Configuration
 import discussion.model.{CommentCount, _}
 import discussion.model._
@@ -17,7 +17,7 @@ import conf.switches.Switches._
 
 import scala.concurrent.{ExecutionContext, Future}
 
-trait DiscussionApiLike extends Http with Logging {
+trait DiscussionApiLike extends Http with GuLogging {
 
   protected def GET(url: String, headers: (String, String)*)(implicit
       executionContext: ExecutionContext,

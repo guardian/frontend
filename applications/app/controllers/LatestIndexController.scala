@@ -15,7 +15,7 @@ class LatestIndexController(contentApiClient: ContentApiClient, val controllerCo
     extends BaseController
     with ImplicitControllerExecutionContext
     with implicits.ItemResponses
-    with Logging {
+    with GuLogging {
 
   def latest(path: String): Action[AnyContent] =
     Action.async { implicit request =>

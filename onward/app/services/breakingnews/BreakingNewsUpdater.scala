@@ -2,7 +2,7 @@ package services.breakingnews
 
 import akka.actor.Status.{Failure => ActorFailure}
 import akka.actor.{Actor, Props}
-import common.{Logging}
+import common.{GuLogging}
 import models.BreakingNewsFormats._
 import models.{BreakingNews, NewsAlertNotification}
 import play.api.libs.json.{JsValue, Json}
@@ -11,7 +11,7 @@ sealed trait BreakingNewsUpdaterMessage
 case class NewNotificationRequest(notification: NewsAlertNotification) extends BreakingNewsUpdaterMessage
 case object GetAlertsRequest extends BreakingNewsUpdaterMessage
 
-class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with Logging {
+class BreakingNewsUpdater(breakingNewsApi: BreakingNewsApi) extends Actor with GuLogging {
 
   def getAlerts(): Unit = {
     val origin = sender

@@ -1,7 +1,7 @@
 package controllers
 
 import com.gu.contentapi.client.model.v1.{Crossword, ItemResponse, Content => ApiContent, Section => ApiSection}
-import common.{Edition, ImplicitControllerExecutionContext, Logging}
+import common.{Edition, ImplicitControllerExecutionContext, GuLogging}
 import conf.Static
 import contentapi.ContentApiClient
 import pages.{CrosswordHtmlPage, IndexHtmlPage, PrintableCrosswordHtmlPage}
@@ -25,7 +25,7 @@ import html.HtmlPageHelpers.ContentCSSFile
 import scala.concurrent.Future
 import scala.concurrent.duration._
 
-trait CrosswordController extends BaseController with Logging with ImplicitControllerExecutionContext {
+trait CrosswordController extends BaseController with GuLogging with ImplicitControllerExecutionContext {
 
   def contentApiClient: ContentApiClient
 

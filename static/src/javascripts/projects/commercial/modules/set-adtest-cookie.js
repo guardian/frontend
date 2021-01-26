@@ -1,5 +1,5 @@
-import { getUrlVars } from 'lib/url';
-import { removeCookie, addCookie } from 'lib/cookies';
+import { getUrlVars } from '../../../lib/url';
+import { removeCookie, addCookie } from '../../../lib/cookies';
 
 const init = () => {
     const queryParams = getUrlVars();

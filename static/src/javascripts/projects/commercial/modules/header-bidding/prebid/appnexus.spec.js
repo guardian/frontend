@@ -1,16 +1,12 @@
-import config from 'lib/config';
-import { isInUsOrCa as isInUsOrCa_,
-    isInAuOrNz as isInAuOrNz_} from 'common/modules/commercial/geo-utils';
+import config from '../../../../../lib/config';
 import {
-    _,
-    getAppNexusDirectBidParams,
-    getAppNexusServerSideBidParams,
-} from './appnexus';
-import {
-    getBreakpointKey as getBreakpointKey_
-} from '../utils';
+    isInUsOrCa as isInUsOrCa_,
+    isInAuOrNz as isInAuOrNz_,
+} from '../../../../common/modules/commercial/geo-utils';
+import { _, getAppNexusDirectBidParams } from './appnexus';
+import { getBreakpointKey as getBreakpointKey_ } from '../utils';
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
     buildAppNexusTargetingObject: () => ({
         url: 'gu.com',
@@ -21,7 +17,6 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 }));
 
 jest.mock('../utils', () => {
-    
     const original = jest.requireActual('../utils');
     return {
         ...original,
@@ -29,16 +24,16 @@ jest.mock('../utils', () => {
     };
 });
 
-jest.mock('common/modules/commercial/geo-utils', () => ({
-        isInAuOrNz: jest.fn(),
-        isInUsOrCa: jest.fn(),
+jest.mock('../../../../common/modules/commercial/geo-utils', () => ({
+    isInAuOrNz: jest.fn(),
+    isInUsOrCa: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),
@@ -118,13 +113,11 @@ describe('getAppNexusInvCode', () => {
 describe('getAppNexusDirectPlacementId', () => {
     beforeEach(() => {
         resetConfig();
-        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
     });
 
     const prebidSizes = [
@@ -164,13 +157,11 @@ describe('getAppNexusPlacementId', () => {
         resetConfig();
         isInAuOrNz.mockReturnValue(false);
         isInUsOrCa.mockReturnValue(false);
-        window.OzoneLotameData = { some: 'lotamedata' };
     });
 
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
     });
 
     const generateTestIds = () => {
@@ -235,25 +226,6 @@ describe('getAppNexusServerSideBidParams', () => {
     afterEach(() => {
         jest.resetAllMocks();
         resetConfig();
-        window.OzoneLotameData = undefined;
-    });
-
-    test('should include OzoneLotameData if available', () => {
-        getBreakpointKey.mockReturnValue('M');
-        window.OzoneLotameData = { some: 'lotamedata' };
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
-            lotame: { some: 'lotamedata' },
-        });
-    });
-
-    test('should excude lotame if data is unavailable', () => {
-        getBreakpointKey.mockReturnValue('M');
-        expect(getAppNexusServerSideBidParams([[300, 250]])).toEqual({
-            keywords: { edition: 'UK', sens: 'f', url: 'gu.com' },
-            placementId: '13366904',
-        });
     });
 });
 

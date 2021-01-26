@@ -7,7 +7,7 @@ import com.amazonaws.DefaultRequest
 import com.amazonaws.auth.{AWS4Signer, AWSCredentials}
 import com.amazonaws.http.HttpMethodName
 import common.ContentApiMetrics.{ContentApi404Metric, ContentApiErrorMetric, ContentApiRequestsMetric}
-import common.{ContentApiMetrics, Logging}
+import common.{ContentApiMetrics, GuLogging}
 import conf.Configuration
 import conf.Configuration.contentApi.capiPreviewCredentials
 import play.api.libs.ws.WSClient
@@ -30,7 +30,9 @@ trait HttpClient {
   def GET(url: String, headers: Iterable[(String, String)]): Future[Response]
 }
 
-class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext) extends HttpClient with Logging {
+class CapiHttpClient(wsClient: WSClient)(implicit executionContext: ExecutionContext)
+    extends HttpClient
+    with GuLogging {
 
   import java.lang.System.currentTimeMillis
 

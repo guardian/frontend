@@ -3,10 +3,7 @@ import { getUserOrSignIn } from 'common/modules/identity/api';
 
 // TODO: Remove repitition with common/modules/identity/formstack-iframe-embed
 class Formstack {
-    el;
-    form;
-    formId;
-    config;
+
 
     constructor(el, formstackId) {
         this.el = el;

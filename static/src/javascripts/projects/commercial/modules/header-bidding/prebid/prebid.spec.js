@@ -1,25 +1,25 @@
-import config from 'lib/config';
-import prebid from 'commercial/modules/header-bidding/prebid/prebid';
 import 'prebid.js/build/dist/prebid';
-import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
+import config from '../../../../../lib/config';
+import { getAdvertById as getAdvertById_ } from '../../dfp/get-advert-by-id';
+import prebid from './prebid';
 
 const getAdvertById = getAdvertById_;
 
-jest.mock('lib/raven');
+jest.mock('../../../../../lib/raven');
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('../../dfp/Advert', () =>
     jest.fn().mockImplementation(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/header-bidding/prebid/bid-config', () => ({
+jest.mock('./bid-config', () => ({
     bids: jest.fn(),
 }));
 
-jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+jest.mock('../../dfp/get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(
         (testId, variantId) => variantId === 'variant'
     ),

@@ -1,14 +1,14 @@
 package commercial.model.capi
 
 import com.gu.Box
-import common.Logging
+import common.GuLogging
 import contentapi.ContentApiClient
 import model.ContentType
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
 
-class CapiAgent(contentApiClient: ContentApiClient) extends Logging {
+class CapiAgent(contentApiClient: ContentApiClient) extends GuLogging {
 
   private lazy val shortUrlAgent = Box[Map[String, Option[ContentType]]](Map.empty)
   private val lookup = new Lookup(contentApiClient)

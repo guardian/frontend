@@ -13,7 +13,7 @@ import scala.collection.JavaConverters._
 /*
  * Builds absolute links to the core site (www.theguardian.com)
  */
-trait LinkTo extends Logging {
+trait LinkTo extends GuLogging {
 
   lazy val host = Configuration.site.host
 

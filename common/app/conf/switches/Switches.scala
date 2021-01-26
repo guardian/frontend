@@ -44,7 +44,7 @@ object SwitchGroup {
   val TX = SwitchGroup("TX")
 }
 
-trait Initializable[T] extends Logging {
+trait Initializable[T] extends GuLogging {
 
   private val initialized = Promise[T]()
 

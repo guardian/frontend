@@ -1,16 +1,16 @@
-import { _ as testExports } from 'commercial/modules/messenger/viewport';
-import { getViewport as getViewport_ } from 'lib/detect';
+import { _ as testExports } from './viewport';
+import { getViewport as getViewport_ } from '../../../../lib/detect';
 
 const getViewport = getViewport_;
 
 const addResizeListener = testExports.addResizeListener;
 const reset = testExports.reset;
 
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getViewport: jest.fn(),
 }));
 
-jest.mock('commercial/modules/messenger', () => ({
+jest.mock('../messenger', () => ({
     register: jest.fn(),
 }));
 

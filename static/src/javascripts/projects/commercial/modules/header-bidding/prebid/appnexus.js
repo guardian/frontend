@@ -1,14 +1,13 @@
-
-
-import config from 'lib/config';
+import config from '../../../../../lib/config';
 import {
     getPageTargeting,
     buildAppNexusTargetingObject,
-} from 'common/modules/commercial/build-page-targeting';
+} from '../../../../common/modules/commercial/build-page-targeting';
 
 import {
     isInUsOrCa,
-    isInAuOrNz } from 'common/modules/commercial/geo-utils';
+    isInAuOrNz,
+} from '../../../../common/modules/commercial/geo-utils';
 
 import {
     getLargestSize,
@@ -16,11 +15,10 @@ import {
     containsLeaderboardOrBillboard,
     containsMpu,
     containsMpuOrDmpu,
-    getBreakpointKey
+    getBreakpointKey,
 } from '../utils';
 
-
-const getAppNexusInvCode = (sizes) => {
+const getAppNexusInvCode = sizes => {
     const device = getBreakpointKey() === 'M' ? 'M' : 'D';
     // section is optional and makes it through to the config object as an empty string... OTL
     const sectionName =
@@ -33,7 +31,7 @@ const getAppNexusInvCode = (sizes) => {
     }
 };
 
-export const getAppNexusPlacementId = (sizes) => {
+export const getAppNexusPlacementId = sizes => {
     const defaultPlacementId = '13915593';
     if (isInUsOrCa() || isInAuOrNz()) {
         return defaultPlacementId;
@@ -65,9 +63,7 @@ export const getAppNexusPlacementId = (sizes) => {
     }
 };
 
-export const getAppNexusDirectPlacementId = (
-    sizes
-) => {
+export const getAppNexusDirectPlacementId = sizes => {
     if (isInAuOrNz()) {
         return '11016434';
     }
@@ -100,9 +96,7 @@ export const getAppNexusDirectPlacementId = (
     }
 };
 
-export const getAppNexusDirectBidParams = (
-    sizes
-) => {
+export const getAppNexusDirectBidParams = sizes => {
     if (isInAuOrNz() && config.get('switches.prebidAppnexusInvcode')) {
         const invCode = getAppNexusInvCode(sizes);
         // flowlint sketchy-null-string:warn
@@ -124,16 +118,13 @@ export const getAppNexusDirectBidParams = (
 };
 
 // TODO are we using getAppNexusServerSideBidParams anywhere?
-export const getAppNexusServerSideBidParams = (
-    sizes
-) =>
+export const getAppNexusServerSideBidParams = sizes =>
     Object.assign(
         {},
         {
             placementId: getAppNexusPlacementId(sizes),
             keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        },
-        window.OzoneLotameData ? { lotame: window.OzoneLotameData } : {}
+        }
     );
 
 export const _ = {

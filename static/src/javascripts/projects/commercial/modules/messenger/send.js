@@ -1,4 +1,4 @@
-import { postMessage } from 'commercial/modules/messenger/post-message';
+import { postMessage } from './post-message';
 
 /* eslint no-bitwise: "off" */
 

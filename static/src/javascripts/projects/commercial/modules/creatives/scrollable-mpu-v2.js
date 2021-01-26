@@ -1,9 +1,9 @@
 import fastdom from 'fastdom';
-import $ from 'lib/$';
-import { isAndroid } from 'lib/detect';
-import mediator from 'lib/mediator';
-import { addTrackingPixel } from 'commercial/modules/creatives/add-tracking-pixel';
-import { addViewabilityTracker } from 'commercial/modules/creatives/add-viewability-tracker';
+import $ from '../../../../lib/$';
+import { isAndroid } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
+import { addTrackingPixel } from './add-tracking-pixel';
+import { addViewabilityTracker } from './add-viewability-tracker';
 
 /**
  * TODO: rather blunt instrument this, due to the fact *most* mobile devices don't have a fixed
@@ -31,10 +31,7 @@ const scrollableMpuTpl = (params) => `
 `;
 
 class ScrollableMpu {
-    adSlot;
-    params;
-    $scrollableImage;
-    $scrollableMpu;
+
 
     constructor(adSlot, params) {
         this.adSlot = adSlot;
