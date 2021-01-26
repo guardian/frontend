@@ -1,4 +1,4 @@
-/* eslint-disable import/no-extraneous-dependencies */
+
 
 const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');

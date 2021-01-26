@@ -1,6 +1,6 @@
 const execa = require('execa');
 const split = require('split');
-// eslint-disable-next-line import/no-unassigned-import
+
 require('any-observable/register/rxjs-all');
 const Observable = require('any-observable');
 const streamToObservable = require('stream-to-observable');
