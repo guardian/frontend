@@ -105,6 +105,10 @@ object ArticlePageChecks {
   // Custom Tag that can be added to articles + special reports tags while we don't support them
   private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
+  )
+  
+  // If an article has one of these series tags then it is a Special Report
+  private[this] val specialReportTags: Set[String] = Set(
     "business/series/undercover-in-the-chicken-industry",
     "business/series/britains-debt-timebomb",
     "world/series/this-is-europe",
@@ -122,6 +126,10 @@ object ArticlePageChecks {
 
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
     !page.item.tags.tags.exists(t => tagsBlockList(t.id))
+  }
+
+  def isNotSpecialReport(page: PageWithStoryPackage): Boolean = {
+    !page.item.tags.tags.exists(t => specialReportTags(t.id))
   }
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
@@ -162,6 +170,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
+      ("isNotSpecialReport", ArticlePageChecks.isNotSpecialReport(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }
@@ -179,6 +188,7 @@ object ArticlePicker {
         "isNotLiveBlog",
         "isNotAMP",
         "isNotInTagBlockList",
+        "isNotSpecialReport",
         "isNotPaidContent",
       ),
     )
