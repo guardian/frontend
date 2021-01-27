@@ -18,6 +18,21 @@ module.exports = {
 			extends: '@guardian/eslint-config-typescript',
 			rules: {
 				'import/no-unresolved': 0,
+				'no-restricted-imports': [
+					'error',
+					{
+						name: 'bonzo',
+						message: 'Use `lib/$$` instead.',
+					},
+					{
+						name: 'qwery',
+						message: 'Use `lib/$$` instead.',
+					},
+					{
+						name: 'bean',
+						message: 'Use `lib/$$` instead.',
+					},
+				],
 			},
 		},
 	],
