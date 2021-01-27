@@ -130,6 +130,8 @@ object ArticlePageChecks {
 
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
+  def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
+
   def isNotAMP(request: RequestHeader): Boolean = !request.isAmp
 
   def isNotOpinion(page: PageWithStoryPackage): Boolean = !page.item.tags.isComment
@@ -156,6 +158,7 @@ object ArticlePicker {
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
+      ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
@@ -173,6 +176,7 @@ object ArticlePicker {
       Set(
         "isSupportedType",
         "isNotAGallery",
+        "isNotLiveBlog",
         "isNotAMP",
         "isNotInTagBlockList",
         "isNotPaidContent",
