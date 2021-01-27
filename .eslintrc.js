@@ -1,18 +1,21 @@
 module.exports = {
-    extends: ['airbnb', 'prettier'],
+    extends: ['prettier'],
     plugins: ['guardian-frontend', 'prettier'],
-    rules: {
-        'import/no-extraneous-dependencies': 'off',
-
-        'no-extend-native': 'error',
-        'func-style': ['error', 'expression', { allowArrowFunctions: true }],
-
-        // our own rules for frontend
-        // live in tools/eslint-plugin-guardian-frontend
-        'guardian-frontend/exports-last': 'error',
-
-        'prefer-destructuring': 'off',
+    parser: 'babel-eslint',
+    parserOptions: {
+        sourceType: 'module',
+        ecmaVersion: 6,
     },
-    // don't look for eslintrcs above here
-    root: true,
+    rules: {
+        // disallow naming variables 'guardian', because
+        // window.guardian is our global config/settings object
+        'id-denylist': ['error', 'guardian'],
+    },
+    ignorePatterns: ['javascripts.flow.archive'],
+    overrides: [
+        {
+            files: ['*.ts', '*.tsx'],
+            extends: '@guardian/eslint-config-typescript',
+        },
+    ],
 };

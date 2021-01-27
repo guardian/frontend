@@ -1,19 +1,70 @@
 {
-  // Change this to match your project
-  "include": ["static/src/javascripts/**/*"],
   "compilerOptions": {
     "allowJs": true,
-    "noEmit": true,
-    "skipLibCheck": true,
-    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
     "baseUrl": "./static/src/javascripts/",
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react",
+    "lib": [
+      "esnext",
+      "es2015",
+      "dom"
+    ],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "noEmit": true,
+    "noUnusedLocals": true,
     "paths": {
-        "admin/*": ["./projects/admin/*"],
-        "common/*": ["./projects/common/*"],
-        "facia/*": ["./projects/facia/*"],
-        "membership/*": ["./projects/membership/*"],
-        "commercial/*": ["./projects/commercial/*"],
-        "journalism/*": ["./projects/journalism/*"],
+      "admin/*": [
+        "./projects/admin/*"
+      ],
+      "bootstraps/*": [
+        "./bootstraps/*"
+      ],
+      "commercial/*": [
+        "./projects/commercial/*"
+      ],
+      "common/*": [
+        "./projects/common/*"
+      ],
+      "facia/*": [
+        "./projects/facia/*"
+      ],
+      "journalism/*": [
+        "./projects/journalism/*"
+      ],
+      "lib/*": [
+        "./lib/*"
+      ],
+      "lodash/*": [
+        "node_modules/lodash-node/compat/*"
+      ],
+      "membership/*": [
+        "./projects/membership/*"
+      ],
+      "ophan/embed": [
+        "node_modules/ophan-tracker-js/build/ophan.embed"
+      ],
+      "ophan/ng": [
+        "node_modules/ophan-tracker-js"
+      ],
+      "raven": [
+        "node_modules/raven-js"
+      ],
+      "svgs/*": [
+        "./static/src/inline-svgs/*"
+      ],
+      "videojs": [
+        "node_modules/video.js"
+      ]
     },
-  }
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "target": "ESNEXT"
+  },
+  "include": [
+    "./static/src/javascripts"
+  ]
 }
