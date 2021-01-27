@@ -15,7 +15,6 @@ const error = ctx => {
     );
 };
 
-
 const dirs = p =>
     fs.readdirSync(p).filter(f => fs.statSync(`${p}/${f}`).isDirectory());
 
@@ -24,7 +23,7 @@ module.exports = {
     task: [
         {
             description: 'Static',
-            task: `eslint static/src/javascripts --ext=ts,tsx,js --no-error-on-unmatched-pattern ${config}`,
+            task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
             onError: error,
         },
         {
