@@ -23,6 +23,7 @@ import { init as hide } from '../messenger/hide';
 import { init as resize } from '../messenger/resize';
 import { init as scroll } from '../messenger/scroll';
 import { init as type } from '../messenger/type';
+import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
 import { init as viewport } from '../messenger/viewport';
 import { dfpEnv } from './dfp-env';
 import { fillAdvertSlots } from './fill-advert-slots';
@@ -37,6 +38,7 @@ initMessenger(
     getStyles,
     initGetPageTargeting,
     initGetPageUrl,
+    initMeasureAdLoad,
     resize,
     hide,
     scroll,
