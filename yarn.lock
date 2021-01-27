@@ -1788,6 +1788,11 @@
   resolved "https://registry.yarnpkg.com/@guardian/libs/-/libs-1.4.2.tgz#76f525cf37b37ad58d17288c85008e4ab176a929"
   integrity sha512-ZACBS1NmAjss8Q60c3SWHZ7alsS2tvjI5rQipEidW3fvWI8kdWWXck6FSM4F42vNzLdRFjAGmzEA36rG/NsZSg==
 
+"@guardian/prettier@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@guardian/prettier/-/prettier-0.4.2.tgz#2d08a8a50aad3911a88c9b53f92a37748694d551"
+  integrity sha512-f8MCY/s3rLNonqxITsqnqrPRt0r6hEyW6rGKqDexTt88fEQnA3BMtAlN2hqjuNfrOa9EQexEknZugRVdIpbijQ==
+
 "@guardian/shimport@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@guardian/shimport/-/shimport-1.0.2.tgz#96c71153553a90f5a7b2a45dfc78196eb14e76f1"
@@ -10186,9 +10191,10 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier@^1.16.4:
-  version "1.16.4"
-  resolved "https://registry.yarnpkg.com/prettier/-/prettier-1.16.4.tgz#73e37e73e018ad2db9c76742e2647e21790c9717"
+prettier@^2.2.1:
+  version "2.2.1"
+  resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
+  integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
 
 pretty-format@^24.0.0:
   version "24.0.0"

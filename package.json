@@ -5,7 +5,9 @@
   "engines": {
     "yarn": ">=1.13.0"
   },
-  "files": ["static/src/**/*"],
+  "files": [
+    "static/src/**/*"
+  ],
   "dependencies": {
     "@braze/web-sdk-core": "3.1.0",
     "@emotion/core": "^10.0.27",
@@ -66,6 +68,7 @@
     "@babel/register": "^7.11.5",
     "@babel/runtime": "^7.11.2",
     "@guardian/eslint-config-typescript": "^0.4.2",
+    "@guardian/prettier": "^0.4.2",
     "@types/jest": "^24.1.0",
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
@@ -123,7 +126,7 @@
     "postcss": "^6.0.10",
     "postcss-pxtorem": "^4.0.1",
     "preact-x": "npm:preact@10.3.1",
-    "prettier": "^1.16.4",
+    "prettier": "^2.2.1",
     "prettysize": "^0.1.0",
     "raw-loader": "^0.5.1",
     "request": "^2.81.0",
@@ -198,12 +201,5 @@
     "eslint-fix": "eslint --color --fix",
     "test": "jest"
   },
-  "prettier": {
-    "trailingComma": "es5",
-    "singleQuote": true,
-    "bracketSpacing": true,
-    "tabWidth": 4,
-    "jsxBracketSameLine": true,
-    "parser": "babel"
-  }
+  "prettier": "@guardian/prettier"
 }
