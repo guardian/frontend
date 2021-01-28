@@ -74,7 +74,7 @@
                 display: flex;
                 flex-direction: row;
 
-                margin-left:0;
+                margin-left: 0;
 
 
                 &::before {
@@ -99,7 +99,7 @@
 
                 .flagship-audio__description,
                 .flagship-audio__title {
-                    color:#ffffff;
+                    color: #ffffff;
                     max-width: 460px;
                 }
 
@@ -113,7 +113,7 @@
                 .flagship-audio__title {
                     @include fs-headline(8, true);
                     font-weight: 700;
-                    color:#ffffff;
+                    color: #ffffff;
                     margin-bottom: 0;
 
                     @include mq($from: mobile, $until: phablet) {
@@ -142,7 +142,7 @@
                     z-index: 8;
                 }
                 @include mq($from: leftCol) {
-                    right:18px;
+                    right: 18px;
                 }
                 @include mq($from: wide) {
                     right: 100px;
@@ -169,9 +169,9 @@
                             width: 100%;
                         }
                         path {
-                            fill:#ff00f0;
+                            fill: #ff00f0;
                             &:nth-child(2) {
-                                fill:#0a3168;
+                                fill: #0a3168;
                             }
                         }
                     }
@@ -204,13 +204,13 @@
         }
 
         .flagship-audio__link-wrapper {
-            display:flex;
-            flex-direction:row;
+            display: flex;
+            flex-direction: row;
         }
         .flagship-audio__subscribe-label {
             @include fs-textSans(1);
             margin-bottom: 6px;
-            color:#ffffff;
+            color: #ffffff;
             font-weight: 800;
             font-size: 17px;
             @include mq($from: phablet) {
@@ -225,8 +225,8 @@
         align-items: center;
         display: inline-flex;
         // background-color: $brightness-20;
-        border: 1px solid#ffffff;
-        color:#ffffff;
+        border: 1px solid #ffffff;
+        color: #ffffff;
         padding: 10px 12px;
         border-radius: 20px;
         font-weight: 600;
@@ -258,7 +258,7 @@
 
             ul.flagship-audio__content-buttons {
                 display: block;
-                background-color:#121212;
+                background-color: #121212;
                 margin: 0;
                 padding: $gs-gutter/4 $gs-gutter;
 
