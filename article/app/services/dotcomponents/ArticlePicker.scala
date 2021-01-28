@@ -27,6 +27,7 @@ import model.liveblog.{
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 import conf.Configuration
+import model.dotcomrendering.DotcomRenderingDataModelFunctions
 
 object ArticlePageChecks {
 
@@ -107,29 +108,8 @@ object ArticlePageChecks {
     "tracking/platformfunctional/dcrblacklist",
   )
 
-  // If an article has one of these series tags then it is a Special Report
-  private[this] val specialReportTags: Set[String] = Set(
-    "business/series/undercover-in-the-chicken-industry",
-    "business/series/britains-debt-timebomb",
-    "world/series/this-is-europe",
-    "environment/series/the-polluters",
-    "news/series/hsbc-files",
-    "news/series/panama-papers",
-    "us-news/homan-square",
-    "uk-news/series/the-new-world-of-work",
-    "world/series/the-new-arrivals",
-    "news/series/nauru-files",
-    "us-news/series/counted-us-police-killings",
-    "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs",
-  )
-
   def isNotInTagBlockList(page: PageWithStoryPackage): Boolean = {
     !page.item.tags.tags.exists(t => tagsBlockList(t.id))
-  }
-
-  def isNotSpecialReport(page: PageWithStoryPackage): Boolean = {
-    !page.item.tags.tags.exists(t => specialReportTags(t.id))
   }
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
@@ -170,7 +150,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
-      ("isNotSpecialReport", ArticlePageChecks.isNotSpecialReport(page)),
+      ("isNotSpecialReport", !DotcomRenderingDataModelFunctions.isSpecialReport(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }

@@ -61,6 +61,7 @@ case class DotcomRenderingDataModel(
     badge: Option[DCRBadge],
     // Match Data
     matchUrl: Option[String], // Optional url used for match data
+    isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
 
 object DotcomRenderingDataModel {
@@ -120,6 +121,7 @@ object DotcomRenderingDataModel {
         "contributionsServiceUrl" -> model.contributionsServiceUrl,
         "badge" -> model.badge,
         "matchUrl" -> model.matchUrl,
+        "isSpecialReport" -> model.isSpecialReport,
       )
   }
 
