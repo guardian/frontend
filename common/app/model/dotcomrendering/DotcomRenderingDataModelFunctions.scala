@@ -270,26 +270,6 @@ object DotcomRenderingDataModelFunctions {
     )
   }
 
-  val specialReportTags: Set[String] = Set(
-    "business/series/undercover-in-the-chicken-industry",
-    "business/series/britains-debt-timebomb",
-    "world/series/this-is-europe",
-    "environment/series/the-polluters",
-    "news/series/hsbc-files",
-    "news/series/panama-papers",
-    "us-news/homan-square",
-    "uk-news/series/the-new-world-of-work",
-    "world/series/the-new-arrivals",
-    "news/series/nauru-files",
-    "us-news/series/counted-us-police-killings",
-    "australia-news/series/healthcare-in-detention",
-    "society/series/this-is-the-nhs",
-  )
-
-  def isSpecialReport(page: PageWithStoryPackage): Boolean = {
-    page.item.tags.tags.exists(t => specialReportTags(t.id))
-  }
-
   // -----------------------------------------------------------------------
 
   def fromArticle(
@@ -586,7 +566,6 @@ object DotcomRenderingDataModelFunctions {
       badge = badge,
       // Match Data
       matchUrl = makeMatchUrl(page),
-      isSpecialReport = isSpecialReport(page),
     )
   }
 }
