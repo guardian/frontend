@@ -106,7 +106,7 @@ object ArticlePageChecks {
   private[this] val tagsBlockList: Set[String] = Set(
     "tracking/platformfunctional/dcrblacklist",
   )
-  
+
   // If an article has one of these series tags then it is a Special Report
   private[this] val specialReportTags: Set[String] = Set(
     "business/series/undercover-in-the-chicken-industry",
