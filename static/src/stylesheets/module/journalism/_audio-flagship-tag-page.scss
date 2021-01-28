@@ -21,13 +21,17 @@
     /* ---------------- HEADER ------------------- */
 
     section.flagship-audio {
-        background-color: #f0dbbc;
+        background: rgb(8, 43, 97);
+        background: linear-gradient(0deg, rgba(8, 43, 97, 1) 0%, rgba(36, 112, 163, 1) 100%);
         padding: 0;
 
         .flagship-audio__thrasher {
             width: 100%;
             margin: 0;
             padding: 0;
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: space-between;
             .flagship-audio__content {
                 padding-top: $gs-baseline/2;
             }
@@ -70,19 +74,21 @@
                 display: flex;
                 flex-direction: row;
 
+                margin-left:0;
+
 
                 &::before {
                     display: none;
-                    @include mq($from: leftCol) {
-                        display: block;
-                        content: '';
-                        position: relative;
-                        width: 1px;
-                        background-color: rgba(0, 0, 0, .1);
-                        top: 0;
-                        bottom: 0;
-                        left: -10px;
-                    }
+                    // @include mq($from: leftCol) {
+                    //     display: block;
+                    //     content: '';
+                    //     position: relative;
+                    //     width: 1px;
+                    //     background-color:white;
+                    //     top: 0;
+                    //     bottom: 0;
+                    //     left: -10px;
+                    // }
                 }
 
                 @include mq($until: desktop) {
@@ -93,6 +99,7 @@
 
                 .flagship-audio__description,
                 .flagship-audio__title {
+                    color:#fff;
                     max-width: 460px;
                 }
 
@@ -106,12 +113,8 @@
                 .flagship-audio__title {
                     @include fs-headline(8, true);
                     font-weight: 700;
-                    color: #000000;
+                    color: #fff;
                     margin-bottom: 0;
-
-                    .red-highlight {
-                        color: #ff6a56;
-                    }
 
                     @include mq($from: mobile, $until: phablet) {
                         @include fs-headline(6, true);
@@ -138,6 +141,12 @@
                     bottom: 0;
                     z-index: 8;
                 }
+                @include mq($from: leftCol) {
+                    right:18px;
+                }
+                @include mq($from: wide) {
+                    right: 100px;
+                }
                 .artwork-holder {
                     width: 100%;
                     top: 0;
@@ -158,6 +167,12 @@
                         overflow: visible;
                         @include mq($until: phablet) {
                             width: 100%;
+                        }
+                        path {
+                            fill:#ff00f0;
+                            &:nth-child(2) {
+                                fill:#0a3168;
+                            }
                         }
                     }
 
@@ -187,11 +202,21 @@
         @include mq($until: phablet) {
             display: none;
         }
+
+        .flagship-audio__link-wrapper {
+            display:flex;
+            flex-direction:row;
+        }
         .flagship-audio__subscribe-label {
+            @include fs-textSans(1);
             margin-bottom: 6px;
-            color: $brightness-20;
+            color: #fff;
             font-weight: 800;
             font-size: 17px;
+            @include mq($from: phablet) {
+                padding-top: 10px;
+                margin-right: 8px;
+            }
         }
     }
 
@@ -199,8 +224,9 @@
         @include fs-textSans(1);
         align-items: center;
         display: inline-flex;
-        background-color: $brightness-20;
-        color: $brightness-100;
+        // background-color: $brightness-20;
+        border: 1px solid #fff;
+        color: #fff;
         padding: 10px 12px;
         border-radius: 20px;
         font-weight: 600;
