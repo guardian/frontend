@@ -31,6 +31,8 @@ case class TimelineEvent(
     date: String,
     body: Option[String],
     toDate: Option[String],
+    unixDate: Long,
+    toUnixDate: Option[Long],
 )
 object TimelineEvent {
   implicit val TimelineEventWrites: Writes[TimelineEvent] = Json.writes[TimelineEvent]
@@ -1104,6 +1106,8 @@ object PageElement {
                     date = TimelineAtom.renderFormattedDate(event.date, event.dateFormat),
                     body = event.body,
                     toDate = event.toDate.map(date => TimelineAtom.renderFormattedDate(date, event.dateFormat)),
+                    unixDate = event.date,
+                    toUnixDate = event.toDate,
                   ),
                 ),
               ),
