@@ -199,7 +199,7 @@
     .flagship-audio__content-buttons {
         list-style: none;
         line-height: 1;
-        padding: 40px 0 0.3125rem;
+        padding: 40px 0 5px;
         background-color: transparent;
         color: $brightness-7;
         overflow: auto;
@@ -249,7 +249,7 @@
         text-decoration: none;
 
         .flagship-audio__button {
-            background-color: rgba(255, 255, 255, 0.15);
+            background-color: rgba(255, 255, 255, .15);
         }
     }
 
