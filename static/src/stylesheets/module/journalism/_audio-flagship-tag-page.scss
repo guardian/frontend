@@ -41,6 +41,7 @@
                 position: absolute;
                 top: $gs-baseline/2;
 
+
                 @include mq($until: mobileLandscape) {
                     right: 0;
                 }
@@ -58,6 +59,12 @@
                         transform-origin: top right;
                         transform: scale(.8);
                     }
+                }
+                @include mq($from: leftCol) {
+                    right: 20px;
+                }
+                @include mq($from: wide) {
+                    right: 100px;
                 }
             }
 
@@ -192,7 +199,7 @@
     .flagship-audio__content-buttons {
         list-style: none;
         line-height: 1;
-        padding: $gs-baseline*2 0 5px;
+        padding: 40px 0 0.3125rem;
         background-color: transparent;
         color: $brightness-7;
         overflow: auto;
@@ -224,7 +231,6 @@
         @include fs-textSans(1);
         align-items: center;
         display: inline-flex;
-        // background-color: $brightness-20;
         border: 1px solid #ffffff;
         color: #ffffff;
         padding: 10px 12px;
@@ -243,7 +249,7 @@
         text-decoration: none;
 
         .flagship-audio__button {
-            background-color: $brightness-7;
+            background-color: rgba(255, 255, 255, 0.15);
         }
     }
 
