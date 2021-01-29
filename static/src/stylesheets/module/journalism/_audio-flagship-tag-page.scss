@@ -65,7 +65,7 @@
                     width: 115px;
                 }
                 @include mq($from: wide) {
-                    right: 100px;
+                    right: 90px;
                 }
             }
 
@@ -156,8 +156,8 @@
                     bottom: 0;
                     z-index: 8;
                 }
-                @include mq($from: leftCol) {
-                    right: 18px;
+                @include mq($from: desktop) {
+                    right:20px;
                 }
                 @include mq($from: wide) {
                     right: 100px;
