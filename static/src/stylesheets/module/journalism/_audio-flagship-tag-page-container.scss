@@ -135,7 +135,8 @@
     }
 
     .flagship-audio__contributions-banner {
-        background-color: #f0dbbc;
+        background: rgb(8, 43, 97);
+        background: linear-gradient(0deg, rgba(8, 43, 97, 1) 0%, rgba(36, 112, 163, 1) 100%);
         padding-bottom: 0;
 
         .flagship-audio__contributions-banner-holder {
@@ -144,20 +145,28 @@
 
             h2 {
                 @include fs-headline(4, true);
-                color: #ff6a56;
+                color: #ffffff;
             }
             p {
                 @include fs-bodyCopy(2);
+                color: #ffffff;
             }
             a {
-                background-color: #121212;
                 max-width: 170px;
+                border: 1px solid #ffffff;
+                color: #ffffff;
             }
             .flagship-audio__contributions-banner-text {
                 display: flex;
                 flex-direction: column;
                 flex: 0 0 300px;
                 z-index: 10;
+                .contributions__contribute {
+                    background-color: transparent;
+                    &:hover {
+                        background-color: rgba(255, 255, 255, .15);
+                    }
+                }
             }
             .flagship-audio__contributions-banner-image {
                 flex: 1 1 auto;
@@ -173,6 +182,9 @@
                     @include mq($until: phablet) {
                         height: 60%;
                         width: 60%;
+                    }
+                    path {
+                        fill: #ff00f0;
                     }
                 }
             }
