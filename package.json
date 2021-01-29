@@ -158,6 +158,7 @@
     "fsevents": "^1.1.2"
   },
   "jest": {
+    "testSequencer": "./sequencer.js",
     "preset": "ts-jest/presets/js-with-babel",
     "globals": {
       "ts-jest": {
