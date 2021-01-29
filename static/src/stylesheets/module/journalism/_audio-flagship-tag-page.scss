@@ -157,7 +157,7 @@
                     z-index: 8;
                 }
                 @include mq($from: desktop) {
-                    right:20px;
+                    right: 20px;
                 }
                 @include mq($from: wide) {
                     right: 100px;
