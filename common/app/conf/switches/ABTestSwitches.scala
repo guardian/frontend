@@ -41,7 +41,7 @@ trait ABTestSwitches {
     "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
     owners = Seq(Owner.withGithub("nitro-marky")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 1, 29),
+    sellByDate = new LocalDate(2021, 2, 5),
     exposeClientSide = true,
   )
 }
