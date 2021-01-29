@@ -105,6 +105,8 @@ describe('Cross-frame messenger: scroll', () => {
         });
 
         it('should call respond1 but not respond2 at the top of the page', () => {
+            mockIframePosition(iframe1, 8);
+            mockIframePosition(iframe2, 6320);
             if (onIntersect) {
                 onIntersect([
                     { target: iframe1, intersectionRatio: 0.5 },
@@ -118,6 +120,8 @@ describe('Cross-frame messenger: scroll', () => {
         });
 
         it('should call respond2 but not respond1 at the bottom of the page', () => {
+            mockIframePosition(iframe1, -6304);
+            mockIframePosition(iframe2, 8);
             if (onIntersect) {
                 onIntersect([
                     { target: iframe1, intersectionRatio: 0 },
