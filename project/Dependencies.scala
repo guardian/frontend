@@ -5,7 +5,7 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.239"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.6"
+  val capiVersion = "17.8"
   val faciaVersion = "3.2.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
@@ -91,7 +91,7 @@ object Dependencies {
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
   val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
+  val jackson =  Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
