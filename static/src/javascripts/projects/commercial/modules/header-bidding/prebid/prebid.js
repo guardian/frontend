@@ -175,7 +175,7 @@ const requestBids = (
                                     adUnits[0].code,
                                 ]);
                                 // TODO: Replace with commercial core's API
-                                recordFirstPrebidStarted();
+                                recordFirstPrebidEnded();
                                 if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
                                     markTime(`Prebid Ended for Top Above Nav (${adUnitsCodes})`);
                                 }
