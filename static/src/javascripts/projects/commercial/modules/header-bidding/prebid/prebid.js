@@ -120,6 +120,15 @@ const initialise = (window) => {
     });
 };
 
+const recordFirstPrebidStarted = once(() => {
+    markTime('First Prebid Ad Request Started');
+});
+
+const recordFirstPrebidEnded = once(() => {
+    markTime('First Prebid Ad Request Ended');
+});
+
+
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
 const requestBids = (
@@ -150,11 +159,13 @@ const requestBids = (
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
+                        // TODO: Replace with commercial core's API
+                        recordFirstPrebidStarted();
                         const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
                         if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
                             markTime(`Prebid Started for Top Above Nav (${adUnitsCodes})`);
                         }
-                        // TODO: Replace markTime with commercial core's API
+
 
                         window.pbjs.requestBids({
                             adUnits,
@@ -162,7 +173,8 @@ const requestBids = (
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
-                                // TODO: Replace markTime with commercial core's API
+                                // TODO: Replace with commercial core's API
+                                recordFirstPrebidStarted();
                                 if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
                                     markTime(`Prebid Ended for Top Above Nav (${adUnitsCodes})`);
                                 }
