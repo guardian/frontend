@@ -4,6 +4,7 @@ import { bids } from './bid-config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
+import {markTime} from "../../../../../lib/user-timing";
 
 const bidderTimeout = 1500;
 
@@ -19,8 +20,6 @@ const consentManagement = {
 };
 
 class PrebidAdUnit {
-
-
     constructor(advert, slot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
@@ -150,12 +149,17 @@ const requestBids = (
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
+                        const adUnitsCodes = adUnits.map(adUnit => adUnit.code).join(", ");
+                        //TODO: Replace markTime with commercial core's API
+                        markTime(`Prebid Started for: ${adUnitsCodes}`);
                         window.pbjs.requestBids({
                             adUnits,
                             bidsBackHandler() {
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
+                                //TODO: Replace markTime with commercial core's API
+                                markTime(`Prebid Ended for: ${adUnitsCodes}`);
                                 resolve();
                             },
                         });
