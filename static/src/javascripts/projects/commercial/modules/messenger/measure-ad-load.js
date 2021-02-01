@@ -1,4 +1,5 @@
 import { markTime } from 'lib/user-timing';
+import once from 'lodash/once';
 
 // This message is intended to be used with a DFP creative wrapper.
 // For reference, the wrapper will post a message, like so:
@@ -20,8 +21,14 @@ top.window.postMessage(JSON.stringify(
 </script>
 * */
 
+const recordFirstAdLoaded = once(() => {
+    markTime('First Ad Loaded');
+});
+
 const init = (register) => {
     register('measure-ad-load', (specs) => {
+        // TODO: Replace recordFirstAdLoaded with commercial core's API
+        recordFirstAdLoaded();
         if (specs.slotId === 'top-above-nav') {
             // TODO: Replace markTime with commercial core's API
             markTime('topAboveNav Ad loaded')
