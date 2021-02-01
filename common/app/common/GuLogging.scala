@@ -31,15 +31,15 @@ trait GuLogging {
   // Transparent error logging on exceptions: log context and exception on error, and pass on the exception
   def errorLoggingF[A](context: String)(task: => Future[A])(implicit ec: ExecutionContext): Future[A] = {
     Try(task) match {
-      case Success(f) => f.failed.foreach(Logger.logger.error(context, _)); f
-      case Failure(e) => Logger.logger.error(context, e); throw e
+      case Success(f) => f.failed.foreach(log.error(context, _)); f
+      case Failure(e) => log.error(context, e); throw e
     }
   }
 
   def errorLogging[A](message: String)(block: => A): A = {
     Try(block) match {
       case Success(result) => result
-      case Failure(e)      => Logger.logger.error(message, e); throw e
+      case Failure(e)      => log.error(message, e); throw e
     }
   }
 }
