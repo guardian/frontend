@@ -6,6 +6,7 @@ import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { markTime } from '../../../../../lib/user-timing';
 import { stripDfpAdPrefixFrom } from '../utils';
+import once from 'lodash/once';
 
 const bidderTimeout = 1500;
 
