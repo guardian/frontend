@@ -23,6 +23,7 @@ top.window.postMessage(JSON.stringify(
 const init = (register) => {
     register('measure-ad-load', (specs) => {
         if (specs.slotId === 'top-above-nav') {
+            // TODO: Replace markTime with commercial core's API
             markTime('topAboveNav Ad loaded')
         }
     });
