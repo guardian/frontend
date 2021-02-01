@@ -10,6 +10,8 @@ import play.api.{Logger => PlayLogger}
 
 class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
 
+  lazy val log = PlayLogger(getClass)
+
   lazy val loggingContext = LoggerFactory.getILoggerFactory.asInstanceOf[LoggerContext]
 
   case class KinesisAppenderConfig(
@@ -76,12 +78,12 @@ class LogbackConfig(logbackOperationsPool: LogbackOperationsPool) {
           )
           lb.addAppender(appender)
           lb.info("Configured Logback")
-        } getOrElse PlayLogger.logger.info("not running using logback")
+        } getOrElse log.info("not running using logback")
       } catch {
-        case ex: Throwable => PlayLogger.logger.info(s"Error while adding Logback Kinesis appender: $ex")
+        case ex: Throwable => log.info(s"Error while adding Logback Kinesis appender: $ex")
       }
     } else {
-      PlayLogger.logger.info("Logging disabled")
+      log.info("Logging disabled")
     }
   }
 
