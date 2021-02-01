@@ -4,7 +4,8 @@ import { bids } from './bid-config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
-import {markTime} from "../../../../../lib/user-timing";
+import { markTime } from '../../../../../lib/user-timing';
+import { stripDfpAdPrefixFrom } from '../utils';
 
 const bidderTimeout = 1500;
 
@@ -149,8 +150,8 @@ const requestBids = (
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
-                        const adUnitsCodes = adUnits.map(adUnit => adUnit.code).join(", ");
-                        //TODO: Replace markTime with commercial core's API
+                        const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code)).join(", ");
+                        // TODO: Replace markTime with commercial core's API
                         markTime(`Prebid Started for: ${adUnitsCodes}`);
                         window.pbjs.requestBids({
                             adUnits,
@@ -158,7 +159,7 @@ const requestBids = (
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
-                                //TODO: Replace markTime with commercial core's API
+                                // TODO: Replace markTime with commercial core's API
                                 markTime(`Prebid Ended for: ${adUnitsCodes}`);
                                 resolve();
                             },
