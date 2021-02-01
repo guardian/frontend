@@ -150,9 +150,12 @@ const requestBids = (
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
-                        const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code)).join(", ");
+                        const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
+                        if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
+                            markTime(`Prebid Started for Top Above Nav (${adUnitsCodes})`);
+                        }
                         // TODO: Replace markTime with commercial core's API
-                        markTime(`Prebid Started for: ${adUnitsCodes}`);
+
                         window.pbjs.requestBids({
                             adUnits,
                             bidsBackHandler() {
@@ -160,7 +163,9 @@ const requestBids = (
                                     adUnits[0].code,
                                 ]);
                                 // TODO: Replace markTime with commercial core's API
-                                markTime(`Prebid Ended for: ${adUnitsCodes}`);
+                                if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
+                                    markTime(`Prebid Ended for Top Above Nav (${adUnitsCodes})`);
+                                }
                                 resolve();
                             },
                         });
