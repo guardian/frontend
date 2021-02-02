@@ -163,7 +163,7 @@ const requestBids = (
                     window.pbjs.que.push(() => {
                         // TODO: Replace with commercial core's API
                         // recordFirstPrebidStarted();
-                        EventTimer.trigger('prebidStart');
+                        // EventTimer.trigger('prebidStart');
                         const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
                         if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
                             markTime(`Prebid Started for Top Above Nav (${adUnitsCodes})`);
