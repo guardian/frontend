@@ -27,7 +27,7 @@ import model.liveblog.{
 import play.api.mvc.RequestHeader
 import views.support.Commercial
 import conf.Configuration
-import model.dotcomrendering.DotcomRenderingDataModelFunctions
+import model.dotcomrendering.DotcomRenderingUtils
 
 object ArticlePageChecks {
 
@@ -150,7 +150,7 @@ object ArticlePicker {
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
       ("isNotPaidContent", ArticlePageChecks.isNotPaidContent(page)),
       ("isNotInTagBlockList", ArticlePageChecks.isNotInTagBlockList(page)),
-      ("isNotSpecialReport", !DotcomRenderingDataModelFunctions.isSpecialReport(page)),
+      ("isNotSpecialReport", !DotcomRenderingUtils.isSpecialReport(page)),
       ("isNotNumberedList", ArticlePageChecks.isNotNumberedList(page)),
     )
   }

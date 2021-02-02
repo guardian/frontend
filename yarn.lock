@@ -1849,10 +1849,10 @@
     "@guardian/src-icons" "2.7.1"
     emotion-theming "^10.0.19"
 
-"@guardian/commercial-core@^0.9.0":
-  version "0.9.0"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.9.0.tgz#2c578b61a6af99436abd83760d3349ef99d53ab8"
-  integrity sha512-2o/au3c/SRUYrlPA1x6Rog6+UpXkSf6UrSX16lD19VaFyia60LaIXtBu9mkZNhSm0FWqfLSgync8RTCeCRG47w==
+"@guardian/commercial-core@^0.9.2":
+  version "0.9.2"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.9.2.tgz#627db6d1f78f1ef68bdeabcb9ae8e4dc798cbbb0"
+  integrity sha512-7Afm4WgnK5bnnCXwynJmpqCWPABjyIt8I4+TtGZlFkB0hNYkmxgXpnkfIhKupsG5iAc0d2Vqur5cl513SQcQZQ==
 
 "@guardian/consent-management-platform@6.9.1":
   version "6.9.1"
@@ -1948,6 +1948,11 @@
   version "0.16.1"
   resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-0.16.1.tgz#331d6bb30513c45b09e5b4807832eb4a146a27ea"
   integrity sha512-OudfWJaKpTTP0J1QckqX0NmfneXgQ5YieZ/4em2lNXGZFEfYyxHnIXrAQE5LjmIGR8eJQoIikkwWiAFt4ziHXQ==
+
+"@guardian/src-svgs@^2.8.2":
+  version "2.8.2"
+  resolved "https://registry.yarnpkg.com/@guardian/src-svgs/-/src-svgs-2.8.2.tgz#4e05c4f144c8507d39166aa6aa8c146c8a3612ae"
+  integrity sha512-PyZJ6jwUKUMsHdKywz/Pgk7oHjvSDdEqTZq6vkiOPJLTjEraEdyO6amu7L7ynVO58CmgzJ+6SwOOAtilHU/LRw==
 
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
