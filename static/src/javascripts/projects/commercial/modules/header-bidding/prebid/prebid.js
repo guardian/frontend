@@ -7,6 +7,7 @@ import { getAdvertById } from '../../dfp/get-advert-by-id';
 import { markTime } from '../../../../../lib/user-timing';
 import { stripDfpAdPrefixFrom } from '../utils';
 import once from 'lodash/once';
+import { EventTimer } from '@guardian/commercial-core';
 
 const bidderTimeout = 1500;
 
@@ -161,7 +162,8 @@ const requestBids = (
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
                         // TODO: Replace with commercial core's API
-                        recordFirstPrebidStarted();
+                        // recordFirstPrebidStarted();
+                        EventTimer.trigger('prebidStart');
                         const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
                         if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
                             markTime(`Prebid Started for Top Above Nav (${adUnitsCodes})`);
