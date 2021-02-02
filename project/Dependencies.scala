@@ -91,7 +91,7 @@ object Dependencies {
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
   val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
   val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
-  val jackson =  Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
+  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
 
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
