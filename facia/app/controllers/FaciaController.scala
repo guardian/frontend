@@ -412,13 +412,13 @@ trait FaciaController
   def ampRsaPublicKey: Action[AnyContent] = {
     Action {
       val rsakey: String = """-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArLbfdMxclHAJvmVW7IXf
-SYjWoLl6qtwRY7CzX3Y7xV2vUx0O0YIyvXhjRsqrIBdUatDyukAM+m/3pPlYLTV5
-LniZcSDq/vjjaueCoTWjfpnp/cgS2mvOmReaa9lTdvQhYvckJaLD5vrr37XRqq8r
-McdNaVF84z8zdZoEAXigQVgQ7uPlBGiBTDl+nrNyUpBC4nL/9yozTS8To7MkNT1w
-X4fw/fFcAzZ4mizXr/msHGHtXU9lc/TS2yKMWjunSwQOxDIKnxueU8LMkdduYrve
-/bSPgXHAMlJ/Oz8df4e/8hz1FISnD4Y4morh/oPg0yemFfMya7GplzqWd27moE/R
-aQIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApCXxbFZh32bQtP7XTcN8
+Qu7tUqOKgtdwrhH0d8Virw+Q5YuTxAEKaSL864TPPl02uWz3/zYUFmfEWj0iheVF
+anR7Ws8lUJa+VNFIfVk4ldVc0uatdmsd6F2BoSYKXQit7mpeljn9OQ9FZ2xJTd3M
+7stPudsYd0XTrKwJdqx4XX2yGb+Qig7bJvyzzXKQAyW7QLhqKdPMIKPFX8puNd2V
+3JLsabOONcRO8mXM21jX6s9P5nI4rw5szhe3F7zrdNuWK1hN9l76a6iygZZYOJ9Q
+WE6jcX2DPtRveAucdVs4hZgB3sxeSRTXm3juoQw2cjEqqJw8loXn54wNeU1JAj17
+OQIDAQAB
 -----END PUBLIC KEY-----"""
       Ok(rsakey).as("text/plain")
     }
