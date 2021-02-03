@@ -58,7 +58,7 @@ object ProjectSettings {
       "Guardian Editorial Tools Bintray" at "https://dl.bintray.com/guardian/editorial-tools",
       Resolver.bintrayRepo("guardian", "ophan"),
       "Spy" at "https://files.couchbase.com/maven2/",
-      "emueller-bintray" at "http://dl.bintray.com/emueller/maven",
+      "emueller-bintray" at "https://dl.bintray.com/emueller/maven",
     ),
     evictionWarningOptions in update := EvictionWarningOptions.default
       .withWarnTransitiveEvictions(false)
