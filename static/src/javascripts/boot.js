@@ -11,7 +11,6 @@ import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { getLocale } from '@guardian/libs';
 import { getCookie } from 'lib/cookies';
 import { trackPerformance } from 'common/modules/analytics/google';
-import { EventTimer } from '@guardian/commercial-core';
 
 // Let webpack know where to get files from
 // __webpack_public_path__ is a special webpack variable
@@ -31,9 +30,6 @@ const go = () => {
         // 1. boot standard, always
         markTime('standard boot');
         bootStandard();
-
-        // Init commercial timers
-        EventTimer.init();
 
         // Start CMP
         // CCPA and TCFv2
