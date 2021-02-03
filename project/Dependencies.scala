@@ -85,7 +85,7 @@ object Dependencies {
   // classpath in the executable shell file for the service. The classpath output is different to the
   // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
   // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
-  val jacksonVersion = "2.11.0"
+  val jacksonVersion = "2.12.1"
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
