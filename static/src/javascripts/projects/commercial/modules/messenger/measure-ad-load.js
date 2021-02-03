@@ -1,7 +1,6 @@
-import { markTime } from 'lib/user-timing';
-import once from 'lodash/once';
+import { EventTimer } from "@guardian/commercial-core";
 
-// This message is intended to be used with a DFP creative wrapper.
+// This message is intended to be used with a GAM creative wrapper.
 // For reference, the wrapper will post a message, like so:
 
 /*
@@ -21,17 +20,13 @@ top.window.postMessage(JSON.stringify(
 </script>
 * */
 
-const recordFirstAdLoaded = once(() => {
-    markTime('First Ad Loaded');
-});
+const eventTimer = EventTimer.get();
 
 const init = (register) => {
     register('measure-ad-load', (specs) => {
-        // TODO: Replace recordFirstAdLoaded with commercial core's API
-        recordFirstAdLoaded();
+        eventTimer.trigger('adOnPage');
         if (specs.slotId === 'top-above-nav') {
-            // TODO: Replace markTime with commercial core's API
-            markTime('topAboveNav Ad loaded')
+            eventTimer.trigger('adOnPage','top-above-nav');
         }
     });
 }

@@ -26,6 +26,7 @@ import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
+import { EventTimer } from '@guardian/commercial-core';
 
 const commercialModules = [
     ['cm-setAdTestCookie', setAdTestCookie],
@@ -119,6 +120,10 @@ const loadModules = () => {
 
 export const bootCommercial = () => {
     markTime('commercial start');
+
+    // Init Commercial event timers
+    EventTimer.init();
+
     catchErrorsWithContext(
         [
             [

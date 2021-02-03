@@ -4,9 +4,7 @@ import { bids } from './bid-config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
-import { markTime } from '../../../../../lib/user-timing';
 import { stripDfpAdPrefixFrom } from '../utils';
-import once from 'lodash/once';
 import { EventTimer } from '@guardian/commercial-core';
 
 const bidderTimeout = 1500;
@@ -122,15 +120,6 @@ const initialise = (window) => {
     });
 };
 
-const recordFirstPrebidStarted = once(() => {
-    markTime('First Prebid Ad Request Started');
-});
-
-const recordFirstPrebidEnded = once(() => {
-    markTime('First Prebid Ad Request Ended');
-});
-
-
 // slotFlatMap allows you to dynamically interfere with the PrebidSlot definition
 // for this given request for bids.
 const requestBids = (
@@ -156,17 +145,17 @@ const requestBids = (
         return requestQueue;
     }
 
+    const eventTimer = EventTimer.get();
+
     requestQueue = requestQueue
         .then(
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
-                        // TODO: Replace with commercial core's API
-                        // recordFirstPrebidStarted();
-                        // EventTimer.trigger('prebidStart');
+                        eventTimer.trigger('prebidStart');
                         const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
                         if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
-                            markTime(`Prebid Started for Top Above Nav (${adUnitsCodes})`);
+                            eventTimer.trigger('prebidStart', 'top-above-nav');
                         }
 
 
@@ -176,10 +165,9 @@ const requestBids = (
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
-                                // TODO: Replace with commercial core's API
-                                recordFirstPrebidEnded();
+                                eventTimer.trigger('prebidEnd');
                                 if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
-                                    markTime(`Prebid Ended for Top Above Nav (${adUnitsCodes})`);
+                                    eventTimer.trigger('prebidEnd', 'top-above-nav');
                                 }
                                 resolve();
                             },
