@@ -61,7 +61,7 @@ const showHiringMessage = (): void => {
                     '%cHello.\n' +
                     '\n' +
                     '%cWe are hiring – ever thought about joining us? \n' +
-                    '%chttps://workforus.theguardian.com/careers/digital-development%c \n' +
+                    '%chttps://workforus.theguardian.com/careers/product-engineering%c \n' +
                     '\n',
                 'font-family: Georgia, serif; font-size: 32px; color: #052962',
                 'font-family: Georgia, serif; font-size: 16px; color: #767676',
