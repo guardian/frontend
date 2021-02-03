@@ -25,7 +25,6 @@ install: check-node-env
 # Remove all 3rd party dependencies.
 uninstall: # PRIVATE
 	@rm -rf node_modules
-	@rm -rf tools/amp-validation/node_modules
 	@echo 'All 3rd party dependencies have been uninstalled.'
 
 # Reinstall all 3rd party dependencies from scratch.
@@ -115,10 +114,6 @@ fix: install
 # Fix committed JS linting errors.
 fix-commits: install
 	@./tools/task-runner/runner validate-head/javascript-fix
-
-
-validate-amp: install # PRIVATE
-	@cd tools/amp-validation && npm install && NODE_ENV=dev node index.js
 
 validate-a11y: install # PRIVATE
 	@./tools/task-runner/runner validate/a11y
