@@ -81,6 +81,18 @@ object Dependencies {
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
   val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
+  // sbt-native-packager does not seem respect the latestRevision conflict manager when building the
+  // classpath in the executable shell file for the service. The classpath output is different to the
+  // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
+  // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
+  val jacksonVersion = "2.12.1"
+  val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
+  val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
+  val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion
+  val jacksonDataTypeJdk8 = "com.fasterxml.jackson.datatype" % "jackson-datatype-jdk8" % jacksonVersion
+  val jacksonAnnotations = "com.fasterxml.jackson.core" % "jackson-annotations" % jacksonVersion
+  val jackson = Seq(jacksonDataFormat, jacksonCore, jacksonDataType, jacksonAnnotations)
+
   // Web jars
   val bootstrap = "org.webjars" % "bootstrap" % "3.3.7"
   val jquery = "org.webjars" % "jquery" % "3.2.1"
