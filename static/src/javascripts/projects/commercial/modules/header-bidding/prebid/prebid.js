@@ -152,12 +152,7 @@ const requestBids = (
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
-                        eventTimer.trigger('prebidStart');
-                        const adUnitsCodes = adUnits.map(adUnit => stripDfpAdPrefixFrom(adUnit.code));
-                        if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
-                            eventTimer.trigger('prebidStart', 'top-above-nav');
-                        }
-
+                        adUnits.map(adUnit => eventTimer.trigger('prebidStart', stripDfpAdPrefixFrom(adUnit.code)));
 
                         window.pbjs.requestBids({
                             adUnits,
@@ -165,10 +160,7 @@ const requestBids = (
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
-                                eventTimer.trigger('prebidEnd');
-                                if (adUnitsCodes.indexOf('top-above-nav') !== -1) {
-                                    eventTimer.trigger('prebidEnd', 'top-above-nav');
-                                }
+                                adUnits.map(adUnit => eventTimer.trigger('prebidEnd', stripDfpAdPrefixFrom(adUnit.code)));
                                 resolve();
                             },
                         });
