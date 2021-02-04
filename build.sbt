@@ -42,7 +42,7 @@ val common = library("common")
       jerseyClient,
       cssParser,
       w3cSac,
-      logback2, // logback2: to prevent "error: reference to logback is ambiguous;"
+      logback2,// logback2: to prevent "error: reference to logback is ambiguous;"
       kinesisLogbackAppender,
       targetingClient,
       scanamo,
@@ -52,12 +52,13 @@ val common = library("common")
       playJsonExtensions,
       playJsonJoda,
       jodaForms,
+      jacksonDataFormat,
       atomRenderer,
       identityModel,
       capiAws,
       okhttp,
       jsonSchema,
-    ),
+    ) ++ jackson,
   )
   .settings(
     mappings in TestAssets ~= filterAssets,
