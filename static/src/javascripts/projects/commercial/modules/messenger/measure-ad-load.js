@@ -24,10 +24,7 @@ const eventTimer = EventTimer.get();
 
 const init = (register) => {
     register('measure-ad-load', (specs) => {
-        eventTimer.trigger('adOnPage');
-        if (specs.slotId === 'top-above-nav') {
-            eventTimer.trigger('adOnPage','top-above-nav');
-        }
+        eventTimer.trigger('adOnPage',specs.slotId);
     });
 }
 
