@@ -4,6 +4,8 @@ import { bids } from './bid-config';
 import { getHeaderBiddingAdSlots } from '../slot-config';
 import { priceGranularity } from './price-config';
 import { getAdvertById } from '../../dfp/get-advert-by-id';
+import { stripDfpAdPrefixFrom } from '../utils';
+import { EventTimer } from '@guardian/commercial-core';
 
 const bidderTimeout = 1500;
 
@@ -19,8 +21,6 @@ const consentManagement = {
 };
 
 class PrebidAdUnit {
-
-
     constructor(advert, slot) {
         this.code = advert.id;
         this.bids = bids(advert.id, slot.sizes);
@@ -145,17 +145,22 @@ const requestBids = (
         return requestQueue;
     }
 
+    const eventTimer = EventTimer.get();
+
     requestQueue = requestQueue
         .then(
             () =>
                 new Promise(resolve => {
                     window.pbjs.que.push(() => {
+                        adUnits.map(adUnit => eventTimer.trigger('prebidStart', stripDfpAdPrefixFrom(adUnit.code)));
+
                         window.pbjs.requestBids({
                             adUnits,
                             bidsBackHandler() {
                                 window.pbjs.setTargetingForGPTAsync([
                                     adUnits[0].code,
                                 ]);
+                                adUnits.map(adUnit => eventTimer.trigger('prebidEnd', stripDfpAdPrefixFrom(adUnit.code)));
                                 resolve();
                             },
                         });
