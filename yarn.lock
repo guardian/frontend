@@ -1849,10 +1849,10 @@
     "@guardian/src-icons" "2.7.1"
     emotion-theming "^10.0.19"
 
-"@guardian/commercial-core@^0.11.1":
-  version "0.11.1"
-  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.11.1.tgz#bd61af5065ff834e35911a4cff3f9b85b2c7ea19"
-  integrity sha512-b+VbUNVzRJ/JFitZ7zYQtslChdpuwG/N3l6PgvJfT3lSv5PjKdFX3+9I636Ssxx6or3Dm7PInnCd9lnFTRyVww==
+"@guardian/commercial-core@^0.12.0":
+  version "0.12.0"
+  resolved "https://registry.yarnpkg.com/@guardian/commercial-core/-/commercial-core-0.12.0.tgz#45ec5f0958345cfbd7485842ffea5a1410758db1"
+  integrity sha512-/lJznHPqXXtib/d4N3s5sG2FFH5V8WXXN1IXEmrS10Oow7jclaE6gpIt2/+Tw9v7x52Det+jh8AlwQTj4otMiw==
 
 "@guardian/consent-management-platform@6.9.1":
   version "6.9.1"
