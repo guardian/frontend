@@ -93,6 +93,9 @@ const initialise = (window) => {
                     },
                 },
             ],
+            bidCpmAdjustment : (bidCpm) => {
+                return bidCpm * 0.5;
+            }
         };
     }
 
