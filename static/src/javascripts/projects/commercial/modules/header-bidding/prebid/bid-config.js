@@ -174,10 +174,31 @@ const getImproveSizeParam = slotId => {
 };
 
 const getXaxisPlacementId = sizes => {
-    if (containsDmpu(sizes)) return 13663297;
-    if (containsMpu(sizes)) return 13663304;
-    if (containsBillboard(sizes)) return 13663284;
-    return 13663304;
+    switch (getBreakpointKey()) {
+        case 'D':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943665;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943666;
+            }
+            return 20943668;
+        case 'M':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943669;
+            }
+            return 20943670;
+        case 'T':
+            if (containsMpuOrDmpu(sizes)) {
+                return 20943671;
+            }
+            if (containsLeaderboardOrBillboard(sizes)) {
+                return 20943672;
+            }
+            return 20943674;
+        default:
+            return -1;
+    }
 };
 
 const getTripleLiftInventoryCode = (slotId, sizes) => {
@@ -410,6 +431,7 @@ export const bids = (slotId, slotSizes) =>
 export const _ = {
     getIndexSiteId,
     getImprovePlacementId,
+    getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 };
