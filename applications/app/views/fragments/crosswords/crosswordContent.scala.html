@@ -4,11 +4,18 @@
 @import views.html.fragments.crosswords._
 @import conf.switches.Switches.CommercialSwitch
 @import views.support.Commercial.{shouldShowAds, isAdFree}
+@import conf.switches.Switches.{SurveySwitch}
+
+
 
 @defining(CommercialSwitch.isSwitchedOn && shouldShowAds(crosswordPage) && !isAdFree(request)) { adsEnabled =>
     <div class="l-side-margins">
         <article id="crossword" class="content content--article tonal tonal--tone-news" role="main">
             @crosswordMetaHeader(crosswordPage)
+
+            @if(SurveySwitch.isSwitchedOn) {
+                @fragments.commercial.survey()
+            }
 
             <div class="content__main tonal__main tonal__main--tone-news">
                 <div class="gs-container">
