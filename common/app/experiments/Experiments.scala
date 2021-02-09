@@ -9,7 +9,7 @@ import conf.switches.SwitchGroup.Commercial
 object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
-    ClickToView
+    ClickToView,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
