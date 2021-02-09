@@ -94,7 +94,7 @@ const initialise = (window) => {
                 },
             ],
             bidCpmAdjustment : (bidCpm) => {
-                return bidCpm * 0.5;
+                return bidCpm * 1.05;
             }
         };
     }
