@@ -23,6 +23,7 @@ import model.liveblog.{
   TweetBlockElement,
   UnknownBlockElement,
   VideoBlockElement,
+  WitnessBlockElement,
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
@@ -74,6 +75,7 @@ object ArticlePageChecks {
         case _: TweetBlockElement     => false
         case _: UnknownBlockElement   => false
         case _: VideoBlockElement     => false
+        case _: WitnessBlockElement   => false
         case ContentAtomBlockElement(_, atomtype) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
