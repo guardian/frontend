@@ -58,6 +58,7 @@ const getBidders = () =>
 const {
     getIndexSiteId,
     getImprovePlacementId,
+    getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 } = _;
@@ -522,5 +523,71 @@ describe('triplelift adapter', () => {
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
         });
+    });
+});
+
+describe('getXaxisPlacementId', () => {
+    beforeEach(() => {
+        resetConfig();
+        getBreakpointKey.mockReturnValue('D');
+
+        containsMpuOrDmpu.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    const generateTestIds = () => {
+        const prebidSizes = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+            [[1, 2]],
+        ];
+        return prebidSizes.map(getXaxisPlacementId);
+    };
+
+    test('should return -1 if no cases match', () => {
+        expect(getImprovePlacementId([[1, 2]])).toBe(-1);
+    });
+
+    test('should return the expected values for desktop device', () => {
+        getBreakpointKey.mockReturnValue('D');
+
+        expect(generateTestIds()).toEqual([
+            20943665,
+            20943665,
+            20943666,
+            20943666,
+            20943668,
+        ]);
+    });
+
+    test('should return the expected values for tablet device', () => {
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            20943671,
+            20943671,
+            20943672,
+            20943672,
+            20943674,
+        ]);
+    });
+
+    test('should return the expected values for mobile device', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([
+            20943669,
+            20943669,
+            20943670,
+            20943670,
+            20943670]);
     });
 });

@@ -44,4 +44,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 4, 1),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-updated-xaxis-prebid",
+    "Test the performance of updated xaxis adapter in prebid",
+    owners = Owner.group(Commercial),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 2, 24),
+    exposeClientSide = true,
+  )
 }
