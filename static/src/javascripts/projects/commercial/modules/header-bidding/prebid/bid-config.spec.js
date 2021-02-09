@@ -530,6 +530,13 @@ describe('getXaxisPlacementId', () => {
     beforeEach(() => {
         resetConfig();
         getBreakpointKey.mockReturnValue('D');
+
+        containsMpuOrDmpu.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -553,12 +560,7 @@ describe('getXaxisPlacementId', () => {
 
     test('should return the expected values for desktop device', () => {
         getBreakpointKey.mockReturnValue('D');
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValue(false);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValue(false);
+
         expect(generateTestIds()).toEqual([
             20943665,
             20943665,
@@ -570,12 +572,6 @@ describe('getXaxisPlacementId', () => {
 
     test('should return the expected values for tablet device', () => {
         getBreakpointKey.mockReturnValue('T');
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValue(false);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             20943671,
             20943671,
@@ -587,12 +583,6 @@ describe('getXaxisPlacementId', () => {
 
     test('should return the expected values for mobile device', () => {
         getBreakpointKey.mockReturnValue('M');
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValueOnce(true);
-        containsMpuOrDmpu.mockReturnValue(false);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValueOnce(true);
-        containsLeaderboardOrBillboard.mockReturnValue(false);
         expect(generateTestIds()).toEqual([
             20943669,
             20943669,

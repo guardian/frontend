@@ -49,7 +49,7 @@ trait ABTestSwitches {
     ABTests,
     "ab-updated-xaxis-prebid",
     "Test the performance of updated xaxis adapter in prebid",
-    owners = Seq(Owner.withGithub("ioanna0")),
+    owners = Owner.group(Commercial),
     safeState = Off,
     sellByDate = new LocalDate(2021, 2, 24),
     exposeClientSide = true,

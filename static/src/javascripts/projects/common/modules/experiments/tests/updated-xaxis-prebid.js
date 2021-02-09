@@ -1,10 +1,9 @@
-// @flow strict
 import { isInUk } from 'common/modules/commercial/geo-utils';
 
 export const xaxisPrebidTest = {
     id: 'UpdatedXaxisPrebid',
-    start: '2020-09-02',
-    expiry: '2020-24-02',
+    start: '2021-02-09',
+    expiry: '2021-02-24',
     author: 'Ioanna Kyprianou',
     description: 'Test the performance of updated xaxis adapter in prebid',
     audience: 0.01,
