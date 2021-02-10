@@ -81,9 +81,9 @@ object Dependencies {
   val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
   /*
-    Note: Although frontend compiles and passes all the current tests when jackson is removed, as it was attempted
-    here: https://github.com/guardian/frontend/pull/23527 , those dependencies should not be discarded as doing so
-    does, for instance, break the fronts diagnostics tools.
+    Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
+    may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
+    dependencies have been upgraded), then do remember to check for regressions.
    */
   val jacksonVersion = "2.12.1"
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
