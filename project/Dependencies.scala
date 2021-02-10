@@ -80,10 +80,11 @@ object Dependencies {
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
   val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
-  // sbt-native-packager does not seem respect the latestRevision conflict manager when building the
-  // classpath in the executable shell file for the service. The classpath output is different to the
-  // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
-  // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
+  /*
+    Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
+    may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
+    dependencies have been upgraded), then do remember to check for regressions.
+   */
   val jacksonVersion = "2.12.1"
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
