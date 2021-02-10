@@ -93,7 +93,6 @@ val sport = application("sport")
   .settings(
     libraryDependencies ++= Seq(
       paClient,
-      akkaContrib,
     ),
   )
 
