@@ -150,8 +150,8 @@ case class Nav(
     pillars: Seq[NavLink],
     otherLinks: Seq[NavLink],
     brandExtensions: Seq[NavLink],
-    currentNavLinkId: Option[String],
-    currentPillarId: Option[String],
+    currentNavLinkTitle: Option[String],
+    currentPillarTitle: Option[String],
     subNavSections: Option[Subnav],
     readerRevenueLinks: ReaderRevenueLinks,
     // TODO remove once migrated to Id versions (which serialise better).
