@@ -5,7 +5,7 @@ export const curatedContentCarouselTest = {
     author: 'buck06191',
     description:
         'Compare two carousel designs against existing fixed content for onwards journeys',
-    audience: 0.05,
+    audience: 0.0,
     audienceOffset: 0.95,
     successMeasure: 'The carousel drives increased engagement with onwards content as compared to control',
     audienceCriteria:
