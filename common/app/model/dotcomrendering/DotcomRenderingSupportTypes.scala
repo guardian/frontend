@@ -150,9 +150,9 @@ case class Nav(
     pillars: Seq[NavLink],
     otherLinks: Seq[NavLink],
     brandExtensions: Seq[NavLink],
-    currentNavLink: Option[NavLink],
-    currentParent: Option[NavLink],
-    currentPillar: Option[NavLink],
+    currentNavLink: Option[String],
+    currentParent: Option[String],
+    currentPillar: Option[String],
     subNavSections: Option[Subnav],
     readerRevenueLinks: ReaderRevenueLinks,
 )

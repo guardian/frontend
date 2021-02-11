@@ -20,6 +20,10 @@ case class NavLink(
     classList: Seq[String] = Nil,
 )
 
+object NavLink {
+  def id(link: NavLink): String = link.title
+}
+
 case class SimpleMenu(
     pillars: Seq[NavLink],
     otherLinks: Seq[NavLink],
