@@ -488,12 +488,10 @@ object DotcomRenderingUtils {
         otherLinks = navMenu.otherLinks,
         brandExtensions = navMenu.brandExtensions,
         currentNavLinkId = navMenu.currentNavLink.map(NavLink.id),
-        currentParentId = navMenu.currentParent.map(NavLink.id),
         currentPillarId = navMenu.currentPillar.map(NavLink.id),
         subNavSections = navMenu.subNavSections,
         readerRevenueLinks = readerRevenueLinks,
         currentNavLink = navMenu.currentNavLink,
-        currentParent = navMenu.currentParent,
         currentPillar = navMenu.currentPillar,
       )
     }

@@ -151,13 +151,11 @@ case class Nav(
     otherLinks: Seq[NavLink],
     brandExtensions: Seq[NavLink],
     currentNavLinkId: Option[String],
-    currentParentId: Option[String],
     currentPillarId: Option[String],
     subNavSections: Option[Subnav],
     readerRevenueLinks: ReaderRevenueLinks,
     // TODO remove once migrated to Id versions (which serialise better).
     currentNavLink: Option[NavLink],
-    currentParent: Option[NavLink],
     currentPillar: Option[NavLink],
 )
 
