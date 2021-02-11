@@ -13,9 +13,9 @@ case class ParentSubnav(parent: NavLink, links: Seq[NavLink]) extends Subnav
 case class NavLink(
     title: String,
     url: String,
-    longTitle: String = "",
+    longTitle: Option[String] = None,
     // TODO: Shouldn't need iconName. Remove, and just make the first NavLink on mobile
-    iconName: String = "",
+    iconName: Option[String] = None,
     children: Seq[NavLink] = Nil,
     classList: Seq[String] = Nil,
 )

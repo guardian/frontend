@@ -2,8 +2,8 @@ package model.dotcomrendering
 
 import common.commercial.{CommercialProperties, EditionCommercialProperties, PrebidIndexSite}
 import model.dotcomrendering.pageElements.PageElement
-import navigation.{FlatSubnav, NavLink, ParentSubnav, Subnav}
-import navigation.FooterLink
+import navigation._
+import play.api.libs.functional.syntax.toFunctionalBuilderOps
 import play.api.libs.json._
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
@@ -158,13 +158,35 @@ case class Nav(
 )
 
 object Nav {
-  implicit val navlinkWrites = Json.writes[NavLink]
   implicit val flatSubnavWrites = Json.writes[FlatSubnav]
   implicit val parentSubnavWrites = Json.writes[ParentSubnav]
   implicit val subnavWrites = Writes[Subnav] {
     case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
     case nav: ParentSubnav => parentSubnavWrites.writes(nav)
   }
+
+  def nullableSeq[A](path: JsPath, writer: => Writes[A]): OWrites[Seq[A]] =
+    OWrites[Seq[A]] { a =>
+      a match {
+        case nonEmpty if nonEmpty.nonEmpty =>
+          JsPath.createObj(path -> Json.toJson(nonEmpty)(Writes.seq(writer)))
+        case _ => JsObject.empty
+      }
+    }
+
+  // Custom writer so that we can drop sequences altogether. It is really important to minimise the data sent to DCR and
+  // this really helps.
+  implicit lazy val navLinkWrites: Writes[NavLink] = {
+    ((__ \ "title").write[String]
+      and (__ \ "url").write[String]
+      and (__ \ "longTitle").writeNullable[String]
+      and (__ \ "iconName").writeNullable[String]
+      and (nullableSeq[NavLink](__ \ "children", navLinkWrites))
+      and (nullableSeq[String](__ \ "classList", Writes.StringWrites)))(nl =>
+      (nl.title, nl.url, nl.longTitle, nl.iconName, nl.children, nl.classList),
+    )
+  }
+
   implicit val writes = Json.writes[Nav]
 }
 

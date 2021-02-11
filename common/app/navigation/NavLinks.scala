@@ -8,14 +8,14 @@ private object NavLinks {
   val politics = NavLink("UK politics", "/politics")
   val media = NavLink("Media", "/media")
   val globalDevelopment = NavLink("Global development", "/global-development")
-  val australiaNews = NavLink("Australia", "/australia-news", longTitle = "Australia news")
-  val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", longTitle = "Politics")
+  val australiaNews = NavLink("Australia", "/australia-news", longTitle = Some("Australia news"))
+  val auPolitics = NavLink("AU politics", "/australia-news/australian-politics", longTitle = Some("Politics"))
   val auImmigration = NavLink("Immigration", "/australia-news/australian-immigration-and-asylum")
   val indigenousAustralia = NavLink("Indigenous Australia", "/australia-news/indigenous-australians")
   val indigenousAustraliaOpinion = NavLink("Indigenous", "/commentisfree/series/indigenousx")
-  val usNews = NavLink("US", "/us-news", longTitle = "US news")
-  val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = "US politics")
-  val coronavirus = NavLink("Coronavirus", "/world/coronavirus-outbreak", longTitle = "Coronavirus")
+  val usNews = NavLink("US", "/us-news", longTitle = Some("US news"))
+  val usPolitics = NavLink("US Politics", "/us-news/us-politics", longTitle = Some("US politics"))
+  val coronavirus = NavLink("Coronavirus", "/world/coronavirus-outbreak", longTitle = Some("Coronavirus"))
 
   val education = {
     val teachers = NavLink("Teachers", "/teacher-network")
@@ -60,13 +60,13 @@ private object NavLinks {
   val ukNews = NavLink(
     "UK",
     "/uk-news",
-    longTitle = "UK news",
+    longTitle = Some("UK news"),
     children = List(politics, education, media, society, law, scotland, wales, northernIreland),
   )
   val world = NavLink(
     "World",
     "/world",
-    longTitle = "World news",
+    longTitle = Some("World news"),
     children = List(europe, usNews, americas, asia, australiaNews, middleEast, africa, inequality, globalDevelopment),
   )
   val ukEnvironment =
@@ -96,12 +96,12 @@ private object NavLinks {
     "Football",
     "/football",
     children = List(
-      NavLink("Live scores", "/football/live", "football/live"),
-      NavLink("Tables", "/football/tables", "football/tables"),
-      NavLink("Fixtures", "/football/fixtures", "football/fixtures"),
-      NavLink("Results", "/football/results", "football/results"),
-      NavLink("Competitions", "/football/competitions", "football/competitions"),
-      NavLink("Clubs", "/football/teams", "football/teams"),
+      NavLink("Live scores", "/football/live", Some("football/live")),
+      NavLink("Tables", "/football/tables", Some("football/tables")),
+      NavLink("Fixtures", "/football/fixtures", Some("football/fixtures")),
+      NavLink("Results", "/football/results", Some("football/results")),
+      NavLink("Competitions", "/football/competitions", Some("football/competitions")),
+      NavLink("Clubs", "/football/teams", Some("football/teams")),
     ),
   )
   val soccer = football.copy(title = "Soccer")
@@ -240,8 +240,8 @@ private object NavLinks {
   val ukNewsPillar = NavLink(
     "News",
     "/",
-    longTitle = "Headlines",
-    iconName = "home",
+    longTitle = Some("Headlines"),
+    iconName = Some("home"),
     List(
       ukNews,
       world,
@@ -306,8 +306,8 @@ private object NavLinks {
   val ukOpinionPillar = NavLink(
     "Opinion",
     "/commentisfree",
-    longTitle = "Opinion home",
-    iconName = "home",
+    longTitle = Some("Opinion home"),
+    iconName = Some("home"),
     List(
       theGuardianView,
       columnists,
@@ -348,8 +348,8 @@ private object NavLinks {
   val ukSportPillar = NavLink(
     "Sport",
     "/sport",
-    longTitle = "Sport home",
-    iconName = "home",
+    longTitle = Some("Sport home"),
+    iconName = Some("home"),
     List(
       football,
       cricket,
@@ -405,8 +405,8 @@ private object NavLinks {
   val ukCulturePillar = NavLink(
     "Culture",
     "/culture",
-    longTitle = "Culture home",
-    iconName = "home",
+    longTitle = Some("Culture home"),
+    iconName = Some("home"),
     List(
       film,
       music,
@@ -459,8 +459,8 @@ private object NavLinks {
   val ukLifestylePillar = NavLink(
     "Lifestyle",
     "/lifeandstyle",
-    longTitle = "Lifestyle home",
-    iconName = "home",
+    longTitle = Some("Lifestyle home"),
+    iconName = Some("home"),
     List(
       fashion,
       food,
