@@ -46,6 +46,10 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
         ).distinct.mkString(", "),
       ),
       LogFieldString(
+        "page.mainElements",
+        page.article.blocks.flatMap(_.main.map(_.getClass.getSimpleName)).getOrElse(""),
+      ),
+      LogFieldString(
         "page.tone",
         page.article.tags.tones.headOption.map(_.name).getOrElse(""),
       ),
