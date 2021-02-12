@@ -7,12 +7,12 @@ import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => Cli
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Edition
 import common.Maps.RichMap
-import common.commercial.{EditionCommercialProperties}
+import common.commercial.EditionCommercialProperties
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
 import model.content.Atom
-import model.dotcomrendering.pageElements.{TextCleaner, DisclaimerBlockElement, PageElement}
+import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.{
   Article,
   ArticleDateTimes,
@@ -24,10 +24,9 @@ import model.{
   PageWithStoryPackage,
   Pillar,
 }
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportSubscribe, SupportGifting}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe}
 import navigation.UrlHelpers._
-import navigation.NavMenu
-import navigation.FooterLinks
+import navigation.{FooterLinks, NavLink, NavMenu}
 import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import common.RichRequestHeader
@@ -488,11 +487,12 @@ object DotcomRenderingUtils {
         pillars = navMenu.pillars,
         otherLinks = navMenu.otherLinks,
         brandExtensions = navMenu.brandExtensions,
-        currentNavLink = navMenu.currentNavLink,
-        currentParent = navMenu.currentParent,
-        currentPillar = navMenu.currentPillar,
+        currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
+        currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
         subNavSections = navMenu.subNavSections,
         readerRevenueLinks = readerRevenueLinks,
+        currentNavLink = navMenu.currentNavLink,
+        currentPillar = navMenu.currentPillar,
       )
     }
 
