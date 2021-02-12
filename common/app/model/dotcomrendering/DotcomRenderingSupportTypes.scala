@@ -66,29 +66,6 @@ object Pagination {
   implicit val writes = Json.writes[Pagination]
 }
 
-case class ReaderRevenueLink(
-    contribute: String,
-    subscribe: String,
-    support: String,
-    gifting: String,
-)
-
-object ReaderRevenueLink {
-  implicit val writes = Json.writes[ReaderRevenueLink]
-}
-
-case class ReaderRevenueLinks(
-    header: ReaderRevenueLink,
-    footer: ReaderRevenueLink,
-    sideMenu: ReaderRevenueLink,
-    ampHeader: ReaderRevenueLink,
-    ampFooter: ReaderRevenueLink,
-)
-
-object ReaderRevenueLinks {
-  implicit val writes = Json.writes[ReaderRevenueLinks]
-}
-
 case class Commercial(
     editionCommercialProperties: Map[String, EditionCommercialProperties],
     prebidIndexSites: List[PrebidIndexSite],
@@ -143,50 +120,6 @@ case class DCRBadge(seriesTag: String, imageUrl: String)
 
 object DCRBadge {
   implicit val writes = Json.writes[DCRBadge]
-}
-
-case class Nav(
-    currentUrl: String,
-    pillars: Seq[NavLink],
-    otherLinks: Seq[NavLink],
-    brandExtensions: Seq[NavLink],
-    currentNavLinkTitle: Option[String],
-    currentPillarTitle: Option[String],
-    subNavSections: Option[Subnav],
-    readerRevenueLinks: ReaderRevenueLinks,
-)
-
-object Nav {
-  implicit val flatSubnavWrites = Json.writes[FlatSubnav]
-  implicit val parentSubnavWrites = Json.writes[ParentSubnav]
-  implicit val subnavWrites = Writes[Subnav] {
-    case nav: FlatSubnav   => flatSubnavWrites.writes(nav)
-    case nav: ParentSubnav => parentSubnavWrites.writes(nav)
-  }
-
-  def nullableSeq[A](path: JsPath, writer: => Writes[A]): OWrites[Seq[A]] =
-    OWrites[Seq[A]] { a =>
-      a match {
-        case nonEmpty if nonEmpty.nonEmpty =>
-          JsPath.createObj(path -> Json.toJson(nonEmpty)(Writes.seq(writer)))
-        case _ => JsObject.empty
-      }
-    }
-
-  // Custom writer so that we can drop sequences altogether. It is really important to minimise the data sent to DCR and
-  // this really helps.
-  implicit lazy val navLinkWrites: Writes[NavLink] = {
-    ((__ \ "title").write[String]
-      and (__ \ "url").write[String]
-      and (__ \ "longTitle").writeNullable[String]
-      and (__ \ "iconName").writeNullable[String]
-      and (nullableSeq[NavLink](__ \ "children", navLinkWrites))
-      and (nullableSeq[String](__ \ "classList", Writes.StringWrites)))(nl =>
-      (nl.title, nl.url, nl.longTitle, nl.iconName, nl.children, nl.classList),
-    )
-  }
-
-  implicit val writes = Json.writes[Nav]
 }
 
 case class PageFooter(

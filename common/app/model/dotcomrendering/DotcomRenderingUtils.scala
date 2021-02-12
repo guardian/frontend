@@ -5,17 +5,19 @@ import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
-import common.Edition
 import common.Maps.RichMap
+import common.{Edition, RichRequestHeader}
 import common.commercial.EditionCommercialProperties
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
+import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
 import model.{
   Article,
   ArticleDateTimes,
+  ArticlePage,
   Badges,
   CanonicalLiveBlog,
   DisplayedDateTimesDCR,
@@ -24,19 +26,13 @@ import model.{
   PageWithStoryPackage,
   Pillar,
 }
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe}
-import navigation.UrlHelpers._
-import navigation.{FooterLinks, NavLink, NavMenu}
-import play.api.libs.json._
-import play.api.mvc.RequestHeader
-import common.RichRequestHeader
-import views.html.fragments.affiliateLinksDisclaimer
-import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300}
-import model.ArticlePage
-import experiments.ActiveExperiments
+import navigation._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
-import views.support.JavaScriptPage
+import play.api.libs.json._
+import play.api.mvc.RequestHeader
+import views.html.fragments.affiliateLinksDisclaimer
+import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300, JavaScriptPage}
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,
@@ -437,49 +433,6 @@ object DotcomRenderingUtils {
       ),
     )
 
-    val headerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
-      getReaderRevenueUrl(SupportContribute, Header)(request),
-      getReaderRevenueUrl(SupportSubscribe, Header)(request),
-      getReaderRevenueUrl(Support, Header)(request),
-      getReaderRevenueUrl(SupportGifting, Header)(request),
-    )
-
-    val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
-      getReaderRevenueUrl(SupportContribute, Footer)(request),
-      getReaderRevenueUrl(SupportSubscribe, Footer)(request),
-      getReaderRevenueUrl(Support, Footer)(request),
-      getReaderRevenueUrl(SupportGifting, Footer)(request),
-    )
-
-    val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
-      getReaderRevenueUrl(SupportContribute, SideMenu)(request),
-      getReaderRevenueUrl(SupportSubscribe, SideMenu)(request),
-      getReaderRevenueUrl(Support, SideMenu)(request),
-      getReaderRevenueUrl(SupportGifting, SideMenu)(request),
-    )
-
-    val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
-      getReaderRevenueUrl(SupportContribute, AmpHeader)(request),
-      getReaderRevenueUrl(SupportSubscribe, AmpHeader)(request),
-      getReaderRevenueUrl(Support, AmpHeader)(request),
-      getReaderRevenueUrl(SupportGifting, AmpHeader)(request),
-    )
-
-    val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
-      getReaderRevenueUrl(SupportContribute, AmpFooter)(request),
-      getReaderRevenueUrl(SupportSubscribe, AmpFooter)(request),
-      getReaderRevenueUrl(Support, AmpFooter)(request),
-      getReaderRevenueUrl(SupportGifting, AmpFooter)(request),
-    )
-
-    val readerRevenueLinks = ReaderRevenueLinks(
-      headerReaderRevenueLink,
-      footerReaderRevenueLink,
-      sideMenuReaderRevenueLink,
-      ampHeaderReaderRevenueLink,
-      ampFooterReaderRevenueLink,
-    )
-
     val nav = {
       val navMenu = NavMenu(page, Edition(request))
       Nav(
@@ -490,7 +443,7 @@ object DotcomRenderingUtils {
         currentNavLinkTitle = navMenu.currentNavLink.map(NavLink.id),
         currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
         subNavSections = navMenu.subNavSections,
-        readerRevenueLinks = readerRevenueLinks,
+        readerRevenueLinks = ReaderRevenueLinks.all,
       )
     }
 
