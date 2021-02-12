@@ -491,8 +491,6 @@ object DotcomRenderingUtils {
         currentPillarTitle = navMenu.currentPillar.map(NavLink.id),
         subNavSections = navMenu.subNavSections,
         readerRevenueLinks = readerRevenueLinks,
-        currentNavLink = navMenu.currentNavLink,
-        currentPillar = navMenu.currentPillar,
       )
     }
 
