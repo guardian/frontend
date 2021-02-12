@@ -21,7 +21,7 @@ object Cors extends Results with implicits.Requests {
 
     request.headers
       .get("Origin")
-      .filter(isWhitelisted(_, ajax.corsOrigins, domainWhitelist))
+      //.filter(isWhitelisted(_, ajax.corsOrigins, domainWhitelist))
       .orElse(fallbackAllowOrigin) match {
 
       case Some(allowedOrigin) =>

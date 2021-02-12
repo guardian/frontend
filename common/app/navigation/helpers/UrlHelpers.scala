@@ -2,12 +2,11 @@ package navigation
 
 import com.netaporter.uri.config.UriConfig
 import com.netaporter.uri.encoding.PercentEncoder
+import navigation.ReaderRevenueSite._
 import play.api.libs.json.Json
 import play.api.mvc.RequestHeader
-import common.Edition
-import navigation.ReaderRevenueSite._
 
-import PartialFunction.condOpt
+import scala.PartialFunction.condOpt
 
 object UrlHelpers {
 
@@ -24,9 +23,7 @@ object UrlHelpers {
   case object ManageMyAccountUpsell extends Position
   case object ManageMyAccountCancel extends Position
 
-  def getComponentId(destination: ReaderRevenueSite, position: Position)(implicit
-      request: RequestHeader,
-  ): Option[String] = {
+  def getComponentId(destination: ReaderRevenueSite, position: Position): Option[String] = {
     condOpt((destination, position)) {
       case (Support, Header | SlimHeaderDropdown) => "header_support"
       case (Support, AmpHeader)                   => "amp_header_support"
@@ -70,9 +67,7 @@ object UrlHelpers {
     queryEncoder = PercentEncoder(PercentEncoder.QUERY_CHARS_TO_ENCODE + '"'),
   )
 
-  def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position)(implicit
-      request: RequestHeader,
-  ): String = {
+  def getReaderRevenueUrl(destination: ReaderRevenueSite, position: Position): String = {
     val componentId = getComponentId(destination, position)
     val componentType = getComponentType(position)
 
