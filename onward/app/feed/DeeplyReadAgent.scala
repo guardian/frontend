@@ -6,10 +6,11 @@ import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
 import models._
+import model.{Content => ArticleContent}
+import views.support.{ImgSrc, Item1200, SrcSet}
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -26,6 +27,7 @@ case class DeeplyReadItem(
     showByline: Boolean,
     byline: Option[String],
     image: Option[String],
+    trailImage: Option[SrcSet],
     ageWarning: Option[String],
     isLiveBlog: Boolean,
     pillar: String,
@@ -135,6 +137,13 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem, content: Content): Option[DeeplyReadItem] = {
     // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
     // Note that we could also do it during the DeeplyReadItem to OnwardItemNx2 transformation
+    val c = ArticleContent.make(content)
+    val trail = c.trail.trailPicture
+
+    val trailPic = for {
+      imageMedia <- trail
+    } yield ImgSrc.srcsetForProfile(Item1200, imageMedia, true)
+
     for {
       webPublicationDate <- content.webPublicationDate
       fields <- content.fields
@@ -150,6 +159,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       showByline = false,
       byline = fields.byline,
       image = fields.thumbnail,
+      trailImage = trailPic,
       ageWarning = None,
       isLiveBlog = fields.liveBloggingNow.getOrElse(false),
       pillar = correctPillar(pillar.toLowerCase),
