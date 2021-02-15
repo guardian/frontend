@@ -43,13 +43,13 @@ const findBreakpoint = () => {
     }
 };
 
-const inskinTargetting = () => {
+const skinsizeTargetting = () => {
     const vp = getViewport();
-    if (!vp || vp.width < 1560) {
-        return 'f';
-    }
+    return (vp && vp.width >= 1560) ? "l" : "s";
+};
 
-    // Don’t show inskin if we cannot tell if a privacy message will be shown
+const inskinTargetting = () => {
+// Don’t show inskin if we cannot tell if a privacy message will be shown
     if (!cmp.hasInitialised()) return 'f';
     return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
@@ -272,6 +272,7 @@ const rebuildPageTargeting = () => {
             // was DCR eligible and was actually rendered by DCR or
             // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
+            skinsize: skinsizeTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),

@@ -317,6 +317,7 @@ describe('Build Page Targeting', () => {
             bp: 'mobile',
             at: 'ng101',
             si: 't',
+            skinsize: 's',
             ab: ['MtMaster-variantName'],
             pv: '123456',
             fr: '0',
@@ -487,26 +488,28 @@ describe('Build Page Targeting', () => {
             getViewport.mockReturnValue({ width: 1920, height: 1080 });
             expect(getPageTargeting().inskin).toBe('f');
         });
+    });
 
-        
+
+    describe('skinsize targetting', () => {
         it.each([
-            ['f', 1280],
-            ['f', 1440],
-            ['f', 1559],
-            ['t', 1560],
-            ['t', 1561],
-            ['t', 1920],
-            ['t', 2560],
+            ['s', 1280],
+            ['s', 1440],
+            ['s', 1559],
+            ['l', 1560],
+            ['l', 1561],
+            ['l', 1920],
+            ['l', 2560],
         ])("should return '%s' if viewport width is %s", (expected, width) => {
             cmp.hasInitialised.mockReturnValue(true);
             cmp.willShowPrivacyMessageSync.mockReturnValue(false);
             getViewport.mockReturnValue({ width, height: 800 });
-            expect(getPageTargeting().inskin).toBe(expected);
+            expect(getPageTargeting().skinsize).toBe(expected);
         });
 
-        it("should return 'f' if vp does not have a width", () => {
+        it("should return 's' if vp does not have a width", () => {
             getViewport.mockReturnValue(undefined);
-            expect(getPageTargeting().inskin).toBe('f');
+            expect(getPageTargeting().skinsize).toBe('s');
         });
-    });
+    })
 });
