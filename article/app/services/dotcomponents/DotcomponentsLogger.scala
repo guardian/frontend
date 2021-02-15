@@ -34,26 +34,34 @@ case class DotcomponentsLogger(request: Option[RequestHeader]) extends GuLogging
   def fieldsFromResults(results: Map[String, String]): List[LogField] =
     results.map({ case (k, v) => LogFieldString(k, v) }).toList
 
-  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] =
+  def elementsLogFieldFromPage(page: PageWithStoryPackage): List[LogField] = {
+    val bodyBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      body <- blocks.body
+      element <- body.elements
+    } yield element.getClass.getSimpleName
+
+    val mainBlocks = for {
+      blocks <- page.article.blocks.toSeq
+      main <- blocks.main.toSeq
+      element <- main.elements
+    } yield element.getClass.getSimpleName
+
     List(
       LogFieldString(
         "page.elements",
-        (
-          page.article.blocks match {
-            case Some(blocks) => blocks.body.flatMap(bblock => bblock.elements) map (be => be.getClass.getSimpleName)
-            case None         => Seq()
-          }
-        ).distinct.mkString(", "),
+        bodyBlocks.distinct.mkString(", "),
       ),
       LogFieldString(
         "page.mainElements",
-        page.article.blocks.flatMap(_.main.map(_.getClass.getSimpleName)).getOrElse(""),
+        mainBlocks.distinct.mkString(", "),
       ),
       LogFieldString(
         "page.tone",
         page.article.tags.tones.headOption.map(_.name).getOrElse(""),
       ),
     )
+  }
 
   def withRequestHeaders(rh: RequestHeader): DotcomponentsLogger = {
     copy(Some(rh))
