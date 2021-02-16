@@ -17,7 +17,7 @@ case class OnwardItemNx2(
     showByline: Boolean,
     byline: Option[String],
     image: Option[String],
-    carouselImages: List[Option[String]],
+    carouselImages: Map[String, Option[String]],
     ageWarning: Option[String],
     isLiveBlog: Boolean,
     pillar: String,
@@ -57,13 +57,15 @@ object OnwardItemNx2 {
 
   }
 
-  def getImageSrcList(imageMedia: Option[ImageMedia]): List[Option[String]] = {
-    for {
+  def getImageSources(imageMedia: Option[ImageMedia]): Map[String, Option[String]] = {
+    var images = for {
       profile: ImageProfile <- List(Item300, Item460)
+      width: Int <- profile.width
       trailPicture: ImageMedia <- imageMedia
     } yield{
-      profile.bestSrcFor(trailPicture)
+      width.toString -> profile.bestSrcFor(trailPicture)
     }
+    images.toMap
   }
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
     for {
@@ -83,7 +85,7 @@ object OnwardItemNx2 {
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
       image = maybeContent.trail.thumbnailPath,
-      carouselImages = getImageSrcList(maybeContent.trail.trailPicture),
+      carouselImages = getImageSources(maybeContent.trail.trailPicture),
       ageWarning = None,
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
@@ -115,7 +117,7 @@ object OnwardItemNx2 {
       showByline = content.properties.showByline,
       byline = content.properties.byline,
       image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
-      carouselImages = getImageSrcList(content.trailPicture),
+      carouselImages = getImageSources(content.trailPicture),
       ageWarning = content.ageWarning,
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
