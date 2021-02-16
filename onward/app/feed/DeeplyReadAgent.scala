@@ -48,7 +48,7 @@ object DeeplyReadItem {
       showByline = item.showByline,
       byline = item.byline,
       image = item.image,
-      carouselImages = List(Some("deeply")),
+      carouselImages = Nil, // Not implemented for Deeply Read at the moment
       ageWarning = item.ageWarning,
       isLiveBlog = item.isLiveBlog,
       pillar = item.pillar,

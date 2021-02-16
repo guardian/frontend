@@ -2,14 +2,13 @@ package models
 
 import com.github.nscala_time.time.Imports.DateTimeZone
 import common.{Edition, LinkTo}
-import feed.DeeplyReadItem
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
 import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, ImageAsset, ImageMedia, InlineImage, MostPopular, Pillar}
+import model.{Article, ImageMedia, InlineImage, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
 case class OnwardItemNx2(
