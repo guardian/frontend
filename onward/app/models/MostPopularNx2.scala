@@ -57,6 +57,10 @@ object OnwardItemNx2 {
 
   }
 
+  // We ideally want this to be replaced by something else in the near future. Probably
+  // image-rendering or similar. But this will do for now.
+  // TODO: Replace this.
+  
   def getImageSources(imageMedia: Option[ImageMedia]): Map[String, Option[String]] = {
     var images = for {
       profile: ImageProfile <- List(Item300, Item460)
