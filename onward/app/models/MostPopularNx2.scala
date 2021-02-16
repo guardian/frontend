@@ -62,7 +62,7 @@ object OnwardItemNx2 {
   // TODO: Replace this.
 
   def getImageSources(imageMedia: Option[ImageMedia]): Map[String, Option[String]] = {
-    var images = for {
+    val images = for {
       profile: ImageProfile <- List(Item300, Item460)
       width: Int <- profile.width
       trailPicture: ImageMedia <- imageMedia
@@ -71,6 +71,7 @@ object OnwardItemNx2 {
     }
     images.toMap
   }
+
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
     for {
       properties <- contentCard.properties
