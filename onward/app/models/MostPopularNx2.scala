@@ -66,7 +66,7 @@ object OnwardItemNx2 {
       profile: ImageProfile <- List(Item300, Item460)
       width: Int <- profile.width
       trailPicture: ImageMedia <- imageMedia
-    } yield{
+    } yield {
       width.toString -> profile.bestSrcFor(trailPicture)
     }
     images.toMap
