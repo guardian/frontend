@@ -5,11 +5,11 @@ import common.{Edition, LinkTo}
 import feed.DeeplyReadItem
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
-import views.support.{ContentOldAgeDescriber, ImgSrc, RemoveOuterParaHtml}
+import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Item460, RemoveOuterParaHtml}
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, InlineImage, MostPopular, Pillar}
+import model.{Article, ImageAsset, ImageMedia, InlineImage, MostPopular, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
 case class OnwardItemNx2(
@@ -18,6 +18,7 @@ case class OnwardItemNx2(
     showByline: Boolean,
     byline: Option[String],
     image: Option[String],
+    carouselImages: List[Option[String]],
     ageWarning: Option[String],
     isLiveBlog: Boolean,
     pillar: String,
@@ -56,6 +57,15 @@ object OnwardItemNx2 {
     }
 
   }
+
+  def getImageSrcList(imageMedia: Option[ImageMedia]): List[Option[String]] = {
+    for {
+      profile: ImageProfile <- List(Item300, Item460)
+      trailPicture: ImageMedia <- imageMedia
+    } yield{
+      profile.bestSrcFor(trailPicture)
+    }
+  }
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
     for {
       properties <- contentCard.properties
@@ -74,6 +84,7 @@ object OnwardItemNx2 {
       showByline = showByline,
       byline = contentCard.byline.map(x => x.get),
       image = maybeContent.trail.thumbnailPath,
+      carouselImages = getImageSrcList(maybeContent.trail.trailPicture),
       ageWarning = None,
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
@@ -105,6 +116,7 @@ object OnwardItemNx2 {
       showByline = content.properties.showByline,
       byline = content.properties.byline,
       image = content.trailPicture.flatMap(ImgSrc.getFallbackUrl),
+      carouselImages = getImageSrcList(content.trailPicture),
       ageWarning = content.ageWarning,
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
