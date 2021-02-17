@@ -60,6 +60,10 @@ object ImageMedia {
     )
   implicit val imageMediaWrites: Writes[ImageMedia] = Json.writes[ImageMedia]
 }
+
+/**
+  * ImageMedia is a collection of ImageAssets with some helper methods.
+  */
 final case class ImageMedia(allImages: Seq[ImageAsset]) {
 
   lazy val imageCrops: Seq[ImageAsset] = allImages.filterNot(_.isMaster)
