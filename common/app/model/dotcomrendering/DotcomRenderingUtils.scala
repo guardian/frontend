@@ -529,6 +529,9 @@ object DotcomRenderingUtils {
     val isPaidContent = article.metadata.designType.contains(AdvertisementFeature)
     val edition = Edition(request)
 
+    val displayedDateTimes: DisplayedDateTimesDCR =
+      ArticleDateTimes.makeDisplayedDateTimesDCR(articleDateTimes, request)
+
     DotcomRenderingDataModel(
       version = 3,
       headline = article.trail.headline,
@@ -543,6 +546,7 @@ object DotcomRenderingUtils {
       webPublicationDate = article.trail.webPublicationDate.toString, // TODO check format
       webPublicationDateDisplay =
         GUDateTimeFormatNew.formatDateTimeForDisplay(article.trail.webPublicationDate, request),
+      webPublicationSecondaryDateDisplay = displayedDateTimes.secondaryDateLine,
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = edition.id,
       pageId = article.metadata.id,

@@ -21,6 +21,7 @@ case class DotcomRenderingDataModel(
     author: Author,
     webPublicationDate: String,
     webPublicationDateDisplay: String, // TODO remove
+    webPublicationSecondaryDateDisplay: String,
     editionLongForm: String,
     editionId: String,
     pageId: String,
@@ -83,6 +84,7 @@ object DotcomRenderingDataModel {
         "author" -> model.author,
         "webPublicationDate" -> model.webPublicationDate,
         "webPublicationDateDisplay" -> model.webPublicationDateDisplay,
+        "webPublicationSecondaryDateDisplay" -> model.webPublicationSecondaryDateDisplay,
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
