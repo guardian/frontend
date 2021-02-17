@@ -2,6 +2,7 @@ package model.dotcomrendering
 
 import common.commercial.EditionCommercialProperties
 import model.dotcomrendering.pageElements.PageElement
+import navigation.Nav
 import play.api.libs.json._
 
 // -----------------------------------------------------------------
