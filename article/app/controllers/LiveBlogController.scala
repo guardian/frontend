@@ -51,35 +51,35 @@ class LiveBlogController(
     }
   }
 
-  def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
-    Action.async { implicit request =>
-      def renderWithRange(range: BlockRange): Future[Result] = {
-        mapModel(path, range) { (page, blocks) =>
-          {
-            val isAmpSupported = page.article.content.shouldAmplify
-            val pageType: PageType = PageType(page, request, context)
-            (page, request.getRequestFormat) match {
-              case (minute: MinutePage, HtmlFormat) =>
-                Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
-              case (blog: LiveBlogPage, HtmlFormat) =>
-                Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
-                remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
-              case (blog: LiveBlogPage, AmpFormat) =>
-                Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
-              case _ => Future.successful(NotFound)
-            }
-          }
+  def renderWithRange(path: String, range: BlockRange)(implicit request: RequestHeader): Future[Result] = {
+    mapModel(path, range) { (page, blocks) =>
+      {
+        val isAmpSupported = page.article.content.shouldAmplify
+        val pageType: PageType = PageType(page, request, context)
+        (page, request.getRequestFormat) match {
+          case (minute: MinutePage, HtmlFormat) =>
+            Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
+          case (blog: LiveBlogPage, HtmlFormat) =>
+            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
+            remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
+          case (blog: LiveBlogPage, AmpFormat) =>
+            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case _ => Future.successful(NotFound)
         }
       }
+    }
+  }
 
+  def renderArticle(path: String, page: Option[String] = None, format: Option[String] = None): Action[AnyContent] = {
+    Action.async { implicit request =>
       page.map(ParseBlockId.fromPageParam) match {
-        case Some(ParsedBlockId(id)) => renderWithRange(PageWithBlock(id)) // we know the id of a block
+        case Some(ParsedBlockId(id)) => renderWithRange(path, PageWithBlock(id)) // we know the id of a block
         case Some(InvalidFormat) =>
           Future.successful(
             Cached(10)(WithoutRevalidationResult(NotFound)),
           ) // page param there but couldn't extract a block id
-        case None => renderWithRange(CanonicalLiveBlog) // no page param
+        case None => renderWithRange(path, CanonicalLiveBlog) // no page param
       }
     }
   }
