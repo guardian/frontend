@@ -1,11 +1,11 @@
 export const curatedContentCarouselTest = {
     id: 'CuratedContent3Carousel',
-    start: '2021-02-10',
-    expiry: '2021-02-26',
+    start: '2021-02-18',
+    expiry: '2021-03-08',
     author: 'buck06191',
     description:
         'Compare two carousel designs against existing fixed content for onwards journeys',
-    audience: 0.0,
+    audience: 0.05,
     audienceOffset: 0.95,
     successMeasure: 'The carousel drives increased engagement with onwards content as compared to control',
     audienceCriteria:

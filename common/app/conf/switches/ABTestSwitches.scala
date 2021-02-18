@@ -51,7 +51,7 @@ trait ABTestSwitches {
     "Test the impact of a Carousel for onwards journeys",
     owners = Seq(Owner.withGithub("buck06191")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 2, 26),
+    sellByDate = new LocalDate(2021, 3, 8),
     exposeClientSide = true,
   )
 }
