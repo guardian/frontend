@@ -40,13 +40,6 @@ object ArticlePageChecks {
     (!page.article.content.trail.isCommentable) && page.article.content.trail.isClosedForComments
   }
 
-  def hasBlocks(page: PageWithStoryPackage): Boolean = {
-    page.article.blocks match {
-      case Some(b) => b.body.nonEmpty
-      case None    => false
-    }
-  }
-
   def isSupportedType(page: PageWithStoryPackage): Boolean = {
     page match {
       case a: ArticlePage => true
@@ -143,7 +136,6 @@ object ArticlePicker {
   def primaryFeatures(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
-      ("hasBlocks", ArticlePageChecks.hasBlocks(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
       ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
