@@ -297,7 +297,7 @@ object InteractiveAtomBlockElement {
     Json.writes[InteractiveAtomBlockElement]
 }
 
-case class InteractiveBlockElement(url: Option[String], alt: Option[String], scriptUrl: Option[String], role: Option[String]) extends PageElement
+case class InteractiveBlockElement(url: Option[String], alt: Option[String], scriptUrl: Option[String], role: Option[String], isMandatory: Option[Boolean]) extends PageElement
 object InteractiveBlockElement {
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
 }
@@ -1228,7 +1228,7 @@ object PageElement {
           )
           .toList
       case Interactive =>
-        element.interactiveTypeData.map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role)).toList
+        element.interactiveTypeData.map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory)).toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
         (for {
