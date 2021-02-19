@@ -10,6 +10,7 @@ object ActiveExperiments extends ExperimentsDefinition {
   override val allExperiments: Set[Experiment] = Set(
     DotcomRendering,
     ClickToView,
+    LiveblogRendering,
   )
 
   implicit val canCheckExperiment = new CanCheckExperiment(this)
