@@ -4,6 +4,7 @@ import com.gu.contentapi.client.model.v1.{Blocks, ItemResponse, Content => ApiCo
 import common.`package`.{convertApiExceptions => _, renderFormat => _}
 import common.{JsonComponent, RichRequestHeader, _}
 import contentapi.ContentApiClient
+import experiments.{ActiveExperiments, LiveblogRendering}
 import model.Cached.WithoutRevalidationResult
 import model.LiveBlogHelpers._
 import model.ParseBlockId.{InvalidFormat, ParsedBlockId}
@@ -18,7 +19,6 @@ import model.dotcomrendering.{DotcomRenderingDataModel, DotcomRenderingUtils}
 import renderers.DotcomRenderingService
 
 import scala.concurrent.Future
-
 import model.dotcomrendering.PageType
 
 case class MinutePage(article: Article, related: RelatedContent) extends PageWithStoryPackage
@@ -59,8 +59,16 @@ class LiveBlogController(
         (page, request.getRequestFormat) match {
           case (minute: MinutePage, HtmlFormat) =>
             Future.successful(common.renderHtml(MinuteHtmlPage.html(minute), minute))
-          case (blog: LiveBlogPage, HtmlFormat) =>
-            Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+          case (blog: LiveBlogPage, HtmlFormat) => {
+            val remoteRendering = request.forceDCR && ActiveExperiments.isParticipating(LiveblogRendering)
+            remoteRendering match {
+              case false => Future.successful(common.renderHtml(LiveBlogHtmlPage.html(blog), blog))
+              case true => {
+                val pageType: PageType = PageType(blog, request, context)
+                remoteRenderer.getArticle(ws, path, blog, blocks, pageType)
+              }
+            }
+          }
           case (blog: LiveBlogPage, AmpFormat) if isAmpSupported =>
             remoteRenderer.getAMPArticle(ws, blog, blocks, pageType)
           case (blog: LiveBlogPage, AmpFormat) =>
@@ -90,10 +98,8 @@ class LiveBlogController(
       rendered: Option[Boolean],
       isLivePage: Option[Boolean],
   ): Action[AnyContent] = {
-
     Action.async { implicit request =>
       val range = getRange(lastUpdate, rendered)
-
       mapModel(path, range) {
         case (blog: LiveBlogPage, blocks) if rendered.contains(false) => getJsonForFronts(blog)
         case (blog: LiveBlogPage, blocks) if request.forceDCR         => Future.successful(renderGuuiJson(path, blog, blocks))
@@ -102,7 +108,6 @@ class LiveBlogController(
           Future.successful(common.renderJson(views.html.fragments.minuteBody(minute), minute))
         case _ => Future { Cached(600)(WithoutRevalidationResult(NotFound)) }
       }
-
     }
   }
 
