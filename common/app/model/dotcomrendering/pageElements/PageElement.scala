@@ -576,7 +576,9 @@ object VideoYoutubeBlockElement {
 }
 
 case class VineBlockElement(
-    html: Option[String],
+    url: String,
+    height: Int,
+    width: Int,
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
@@ -756,7 +758,7 @@ object PageElement {
       case _: VideoYoutubeBlockElement    => true
       case _: YoutubeBlockElement         => true
       case _: WitnessBlockElement         => true
-
+      case _: VineBlockElement            => true
       // TODO we should quick fail here for these rather than pointlessly go to DCR
       case table: TableBlockElement if table.isMandatory.exists(identity) => true
       case _: CodeBlockElement                                            => true // Currently will just fail over at DCR
@@ -1263,7 +1265,14 @@ object PageElement {
       case Vine =>
         element.vineTypeData
           .map(d =>
-            VineBlockElement(d.html, containsThirdPartyTracking(element.tracking), Some(d.source), d.sourceDomain),
+            VineBlockElement(
+              getIframeSrc(d.html.getOrElse("")).getOrElse(""),
+              getIframeHeight(d.html.getOrElse("")).getOrElse(0),
+              getIframeWidth(d.html.getOrElse("")).getOrElse(0),
+              containsThirdPartyTracking(element.tracking),
+              Some(d.source),
+              d.sourceDomain,
+            ),
           )
           .toList
       case Code =>
