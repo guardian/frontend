@@ -1263,18 +1263,19 @@ object PageElement {
           )
           .toList
       case Vine =>
-        element.vineTypeData
-          .map(d =>
-            VineBlockElement(
-              getIframeSrc(d.html.getOrElse("")).getOrElse(""),
-              getIframeHeight(d.html.getOrElse("")).getOrElse(0),
-              getIframeWidth(d.html.getOrElse("")).getOrElse(0),
-              containsThirdPartyTracking(element.tracking),
-              Some(d.source),
-              d.sourceDomain,
-            ),
+        (for {
+          fields <- element.vineTypeData
+          html <- fields.html
+        } yield {
+          VineBlockElement(
+            getIframeSrc(html).getOrElse(""),
+            getIframeHeight(html).getOrElse(0),
+            getIframeWidth(html).getOrElse(0),
+            containsThirdPartyTracking(element.tracking),
+            Some(fields.source),
+            fields.sourceDomain,
           )
-          .toList
+        }).toList
       case Code =>
         List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
       case Form                      => List(FormBlockElement(None))
