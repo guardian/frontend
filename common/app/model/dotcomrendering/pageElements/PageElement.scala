@@ -94,13 +94,7 @@ trait ThirdPartyEmbeddedContent {
   model.liveblog._ elements but replaced in full here
  */
 
-sealed trait PageElement {
-
-  // renderId: unique identifier used by DCR's rendering logic
-  // We are not using the existing `id` field that some page elements already have, because not all of them have one and
-  // they do not have the same purpose.
-  val renderId: String = ""
-}
+sealed trait PageElement
 
 case class AudioAtomBlockElement(
     id: String,

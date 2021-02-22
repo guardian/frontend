@@ -66,13 +66,68 @@ case class DotcomRenderingDataModel(
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
 
+object ElementsEnhancer {
+
+  /*
+    Originally the TextBlockElement, for instance, comes like this:
+
+    {
+        "_type": "model.dotcomrendering.pageElements.TextBlockElement",
+        "html": "<p>Something</p>"
+    }
+
+    But there is a request from DCR to add a `renderId` attribute, whose value is a random string to it, for instance
+
+    {
+        "renderId": "b11904da-4f57-4320-bdde-800e55825d1d",
+        "_type": "model.dotcomrendering.pageElements.TextBlockElement",
+        "html": "<p>Something</p>"
+    }
+
+    This request does not only apply to TextBlockElement, but to each variant of the PageElement trait.
+
+    There were two ways to implement this:
+
+    1. Update the type of each PageElement case class to have a new renderId field, and use a value when initializing the
+       case class.
+
+    2. What we are doing here: adding that field as a transformation applied to PageElements during the Json
+       serialisation.
+
+    We decided to go for solution 2, because `renderId` doesn't itself have real semantics for backend types. It' ok
+       for the backend to provide the field to DCR from the backend but doing it at json serialization seems the right
+       place to perform that operation.
+   */
+
+  def enhanceElement(element: JsValue): JsValue = {
+    element.as[JsObject] ++ Json.obj("renderId" -> java.util.UUID.randomUUID.toString)
+  }
+
+  def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
+    elements.as[JsArray].value.map(element => enhanceElement(element))
+  }
+
+  def enhanceBlock(block: JsValue): JsValue = {
+    val elements = block.as[JsObject].value("elements")
+    block.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  }
+
+  def enhanceBlocks(blocks: JsValue): IndexedSeq[JsValue] = {
+    blocks.as[JsArray].value.map(block => enhanceBlock(block))
+  }
+
+  def enhanceDcrObject(obj: JsObject): JsObject = {
+    obj ++ Json.obj("blocks" -> enhanceBlocks(obj.value("blocks")))
+  }
+}
+
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
-    def writes(model: DotcomRenderingDataModel) =
-      Json.obj(
+    def writes(model: DotcomRenderingDataModel) = {
+      val obj = Json.obj(
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -126,6 +181,13 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "isSpecialReport" -> model.isSpecialReport,
       )
+
+      // The following line essentially performs the "update" of the `elements` objects inside the `blocks` objects
+      // using functions of the ElementsEnhancer object.
+      // See comments in ElementsEnhancer for a full context of why this happens.
+      ElementsEnhancer.enhanceDcrObject(obj)
+
+    }
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
