@@ -1,19 +1,19 @@
 package controllers
 
 import java.net.URI
-
 import com.gu.contentapi.client.model.{ContentApiError, ItemQuery}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import common.{JsonComponent, _}
 import contentapi.ContentApiClient
 import implicits.Requests
-import layout.{FaciaContainer}
+import layout.FaciaContainer
 import model.Cached.{RevalidatableResult, WithoutRevalidationResult}
 import model._
 import play.api.libs.json.{JsArray, Json}
 import play.api.mvc._
 import views.support.FaciaToMicroFormat2Helpers._
 import models.{Series, SeriesHelper, SeriesStoriesDCR}
+import utils.ShortUrls
 
 import scala.concurrent.Future
 import scala.concurrent.duration._
@@ -69,7 +69,9 @@ class SeriesController(
     val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
 
     def isCurrentStory(content: ApiContent) =
-      content.fields.flatMap(_.shortUrl).exists(_.equals(currentShortUrl))
+      content.fields
+        .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
+        .exists(currentShortUrl.endsWith)
 
     val query = queryModifier {
       contentApiClient.item(seriesId, edition).showFields("all")

@@ -11,6 +11,7 @@ import model.pressed.CollectionConfig
 import play.api.mvc._
 import services.CollectionConfigWithId
 import layout.slices.{Fixed, FixedContainers}
+import utils.ShortUrls
 
 import scala.concurrent.Future
 
@@ -47,7 +48,9 @@ class MediaInSectionController(
     val tags = (s"type/$mediaType" +: excludeTags).mkString(",")
 
     def isCurrentStory(content: ApiContent) =
-      content.fields.flatMap(_.shortUrl).exists(!_.equals(currentShortUrl))
+      content.fields
+        .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
+        .exists(currentShortUrl.endsWith)
 
     val promiseOrResponse = contentApiClient
       .getResponse(
