@@ -71,7 +71,7 @@ class SeriesController(
     def isCurrentStory(content: ApiContent) =
       content.fields
         .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
-        .exists(url => currentShortUrl.exists(url.endsWith))
+        .exists(url => currentShortUrl.exists(_.endsWith(url)))
 
     val query = queryModifier {
       contentApiClient.item(seriesId, edition).showFields("all")
