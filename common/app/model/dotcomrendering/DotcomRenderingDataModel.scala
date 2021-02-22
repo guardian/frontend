@@ -100,6 +100,10 @@ object ElementsEnhancer {
    */
 
   def enhanceElement(element: JsValue): JsValue = {
+    // Note: the value of renderId is used to link serverside and client side elements together for portals and
+    // hydration which was previously done with the array index (brittle, particularly when now dealing with main
+    // media array too). The actual value is irrelevant and can vary from one call to another. Here we are using UUIDs
+
     element.as[JsObject] ++ Json.obj("renderId" -> java.util.UUID.randomUUID.toString)
   }
 
