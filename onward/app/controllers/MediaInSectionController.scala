@@ -41,7 +41,7 @@ class MediaInSectionController(
   private def lookup(edition: Edition, mediaType: String, sectionId: String, seriesId: Option[String])(implicit
       request: RequestHeader,
   ): Future[Option[Seq[RelatedContentItem]]] = {
-    val currentShortUrl = request.getQueryString("shortUrl").getOrElse("")
+    val currentShortUrl = request.getQueryString("shortUrl")
     log.info(s"Fetching $mediaType content in section: $sectionId")
 
     val excludeTags: Seq[String] = (request.queryString.getOrElse("exclude-tag", Nil) ++ seriesId).map(t => s"-$t")
@@ -50,7 +50,7 @@ class MediaInSectionController(
     def isCurrentStory(content: ApiContent) =
       content.fields
         .flatMap(fields => fields.shortUrl.map(ShortUrls.shortUrlToShortId))
-        .exists(currentShortUrl.endsWith)
+        .exists(url => currentShortUrl.exists(url.endsWith))
 
     val promiseOrResponse = contentApiClient
       .getResponse(
@@ -62,7 +62,7 @@ class MediaInSectionController(
           .showFields("all"),
       )
       .map { response =>
-        response.results.toList filter { content => isCurrentStory(content) } map { result =>
+        response.results.toList filterNot { isCurrentStory } map { result =>
           RelatedContentItem(result)
         } match {
           case Nil     => None
