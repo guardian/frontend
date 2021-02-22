@@ -1646,5 +1646,15 @@ object PageElement {
     }
   }
 
+  /*
+     Note: The JSON serialization of `PageElement`s shows a "_type" attribute (that is a crucial part of how DCR
+     recognise and parse `BlockElement`s). This attribute is added by Play Framework itself.
+     See: https://www.playframework.com/documentation/2.7.x/ScalaJsonAutomated#Requirements
+
+     TODO:
+       Because this attribute is a defacto a part of the frontend DCR datamodel contract, it would be nice to stop
+       relying on the framework to provide it (for safety)
+   */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+
 }
