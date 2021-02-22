@@ -23,6 +23,10 @@ import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
+// ------------------------------------------------------
+// PageElement Supporting Types and Traits
+// ------------------------------------------------------
+
 // TODO dates are being rendered as strings to avoid duplication of the
 // to-string logic, but ultimately we should pass unformatted date info to
 // DCR.
@@ -75,6 +79,12 @@ object NSImage1 {
   }
 }
 
+trait ThirdPartyEmbeddedContent {
+  def isThirdPartyTracking: Boolean
+  def source: Option[String]
+  def sourceDomain: Option[String]
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -84,12 +94,12 @@ object NSImage1 {
   model.liveblog._ elements but replaced in full here
  */
 
-sealed trait PageElement
+sealed trait PageElement {
 
-trait ThirdPartyEmbeddedContent {
-  def isThirdPartyTracking: Boolean
-  def source: Option[String]
-  def sourceDomain: Option[String]
+  // renderId: unique identifier used by DCR's rendering logic
+  // We are not using the existing `id` field that some page elements already have, because not all of them have one and
+  // they do not have the same purpose.
+  val renderId: String = ""
 }
 
 case class AudioAtomBlockElement(
