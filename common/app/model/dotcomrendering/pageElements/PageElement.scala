@@ -23,6 +23,10 @@ import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
+// ------------------------------------------------------
+// PageElement Supporting Types and Traits
+// ------------------------------------------------------
+
 // TODO dates are being rendered as strings to avoid duplication of the
 // to-string logic, but ultimately we should pass unformatted date info to
 // DCR.
@@ -75,6 +79,12 @@ object NSImage1 {
   }
 }
 
+trait ThirdPartyEmbeddedContent {
+  def isThirdPartyTracking: Boolean
+  def source: Option[String]
+  def sourceDomain: Option[String]
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -85,12 +95,6 @@ object NSImage1 {
  */
 
 sealed trait PageElement
-
-trait ThirdPartyEmbeddedContent {
-  def isThirdPartyTracking: Boolean
-  def source: Option[String]
-  def sourceDomain: Option[String]
-}
 
 case class AudioAtomBlockElement(
     id: String,
