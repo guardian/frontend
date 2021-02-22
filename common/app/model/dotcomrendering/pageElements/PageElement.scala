@@ -579,9 +579,12 @@ case class VineBlockElement(
     url: String,
     height: Int,
     width: Int,
+    originalUrl: String,
+    title: String,
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    role: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VineBlockElement {
@@ -1269,9 +1272,12 @@ object PageElement {
               getIframeSrc(d.html.getOrElse("")).getOrElse(""),
               getIframeHeight(d.html.getOrElse("")).getOrElse(0),
               getIframeWidth(d.html.getOrElse("")).getOrElse(0),
+              d.originalUrl,
+              d.title,
               containsThirdPartyTracking(element.tracking),
               Some(d.source),
               d.sourceDomain,
+              d.role,
             ),
           )
           .toList
