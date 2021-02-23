@@ -66,13 +66,41 @@ case class DotcomRenderingDataModel(
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
 
+object ElementsEnhancer {
+
+  // Note:
+  //     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+  //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
+
+  def enhanceElement(element: JsValue): JsValue = {
+    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
+  }
+
+  def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
+    elements.as[JsArray].value.map(element => enhanceElement(element))
+  }
+
+  def enhanceBlock(block: JsValue): JsValue = {
+    val elements = block.as[JsObject].value("elements")
+    block.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  }
+
+  def enhanceBlocks(blocks: JsValue): IndexedSeq[JsValue] = {
+    blocks.as[JsArray].value.map(block => enhanceBlock(block))
+  }
+
+  def enhanceDcrObject(obj: JsObject): JsObject = {
+    obj ++ Json.obj("blocks" -> enhanceBlocks(obj.value("blocks")))
+  }
+}
+
 object DotcomRenderingDataModel {
 
   implicit val pageElementWrites = PageElement.pageElementWrites
 
   implicit val writes = new Writes[DotcomRenderingDataModel] {
-    def writes(model: DotcomRenderingDataModel) =
-      Json.obj(
+    def writes(model: DotcomRenderingDataModel) = {
+      val obj = Json.obj(
         "version" -> model.version,
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
@@ -126,6 +154,13 @@ object DotcomRenderingDataModel {
         "matchUrl" -> model.matchUrl,
         "isSpecialReport" -> model.isSpecialReport,
       )
+
+      // The following line essentially performs the "update" of the `elements` objects inside the `blocks` objects
+      // using functions of the ElementsEnhancer object.
+      // See comments in ElementsEnhancer for a full context of why this happens.
+      ElementsEnhancer.enhanceDcrObject(obj)
+
+    }
   }
 
   def toJson(model: DotcomRenderingDataModel): String = {
