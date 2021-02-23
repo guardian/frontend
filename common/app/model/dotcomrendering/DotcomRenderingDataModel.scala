@@ -68,42 +68,11 @@ case class DotcomRenderingDataModel(
 
 object ElementsEnhancer {
 
-  /*
-    Originally the TextBlockElement, for instance, comes like this:
-
-    {
-        "_type": "model.dotcomrendering.pageElements.TextBlockElement",
-        "html": "<p>Something</p>"
-    }
-
-    But there is a request from DCR to add a `renderId` attribute, whose value is a random string to it, for instance
-
-    {
-        "renderId": "b11904da-4f57-4320-bdde-800e55825d1d",
-        "_type": "model.dotcomrendering.pageElements.TextBlockElement",
-        "html": "<p>Something</p>"
-    }
-
-    This request does not only apply to TextBlockElement, but to each variant of the PageElement trait.
-
-    There were two ways to implement this:
-
-    1. Update the type of each PageElement case class to have a new renderId field, and use a value when initializing the
-       case class.
-
-    2. What we are doing here: adding that field as a transformation applied to PageElements during the Json
-       serialisation.
-
-    We decided to go for solution 2, because `renderId` doesn't itself have real semantics for backend types. It' ok
-       for the backend to provide the field to DCR from the backend but doing it at json serialization seems the right
-       place to perform that operation.
-   */
+  // Note:
+  //     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+  //     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
 
   def enhanceElement(element: JsValue): JsValue = {
-    // Note: the value of renderId is used to link serverside and client side elements together for portals and
-    // hydration which was previously done with the array index (brittle, particularly when now dealing with main
-    // media array too). The actual value is irrelevant and can vary from one call to another. Here we are using UUIDs
-
     element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
   }
 

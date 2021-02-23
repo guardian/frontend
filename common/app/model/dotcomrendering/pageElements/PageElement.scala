@@ -96,6 +96,10 @@ trait ThirdPartyEmbeddedContent {
 
 sealed trait PageElement
 
+// Note:
+//     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+//     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
+
 case class AudioAtomBlockElement(
     id: String,
     kicker: String,
