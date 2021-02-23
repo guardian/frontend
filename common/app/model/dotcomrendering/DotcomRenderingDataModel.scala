@@ -104,7 +104,7 @@ object ElementsEnhancer {
     // hydration which was previously done with the array index (brittle, particularly when now dealing with main
     // media array too). The actual value is irrelevant and can vary from one call to another. Here we are using UUIDs
 
-    element.as[JsObject] ++ Json.obj("renderId" -> java.util.UUID.randomUUID.toString)
+    element.as[JsObject] ++ Json.obj("elementId" -> java.util.UUID.randomUUID.toString)
   }
 
   def enhanceElements(elements: JsValue): IndexedSeq[JsValue] = {
