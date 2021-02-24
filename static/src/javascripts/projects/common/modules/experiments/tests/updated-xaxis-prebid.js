@@ -3,7 +3,7 @@ import { isInUk } from 'common/modules/commercial/geo-utils';
 export const xaxisPrebidTest = {
     id: 'UpdatedXaxisPrebid',
     start: '2021-02-09',
-    expiry: '2021-02-24',
+    expiry: '2021-03-03',
     author: 'Ioanna Kyprianou',
     description: 'Test the performance of updated xaxis adapter in prebid',
     audience: 0.01,

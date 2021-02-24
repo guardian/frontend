@@ -1,6 +1,5 @@
 package conf.switches
 
-import common.editions._
 import conf.switches.SwitchGroup.{ABTests, Commercial}
 import org.joda.time.LocalDate
 
@@ -41,7 +40,7 @@ trait ABTestSwitches {
     "Test the performance of updated xaxis adapter in prebid",
     owners = Owner.group(Commercial),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 2, 24),
+    sellByDate = new LocalDate(2021, 3, 3),
     exposeClientSide = true,
   )
 
