@@ -109,8 +109,6 @@ object ArticlePageChecks {
 
   def isNotNumberedList(page: PageWithStoryPackage): Boolean = !page.item.isNumberedList
 
-  def isNotPhotoEssay(page: PageWithStoryPackage): Boolean = !page.item.isPhotoEssay
-
   def isNotAGallery(page: PageWithStoryPackage): Boolean = !page.item.tags.isGallery
 
   def isNotLiveBlog(page: PageWithStoryPackage): Boolean = !page.item.tags.isLiveBlog
@@ -138,7 +136,6 @@ object ArticlePicker {
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
       ("hasOnlySupportedMainElements", ArticlePageChecks.hasOnlySupportedMainElements(page)),
-      ("isNotPhotoEssay", ArticlePageChecks.isNotPhotoEssay(page)),
       ("isNotAGallery", ArticlePageChecks.isNotAGallery(page)),
       ("isNotLiveBlog", ArticlePageChecks.isNotLiveBlog(page)),
       ("isNotAMP", ArticlePageChecks.isNotAMP(request)),
