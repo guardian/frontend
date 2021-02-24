@@ -1,6 +1,6 @@
 package conf.switches
 
-import conf.switches.SwitchGroup.{ABTests, Commercial}
+import conf.switches.SwitchGroup.ABTests
 import org.joda.time.LocalDate
 
 trait ABTestSwitches {
@@ -31,16 +31,6 @@ trait ABTestSwitches {
     owners = Seq(Owner.withGithub("nitro-marky")),
     safeState = Off,
     sellByDate = new LocalDate(2021, 4, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
-    "ab-updated-xaxis-prebid",
-    "Test the performance of updated xaxis adapter in prebid",
-    owners = Owner.group(Commercial),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 3, 3),
     exposeClientSide = true,
   )
 
