@@ -80,23 +80,20 @@ object ElementsEnhancer {
     elements.as[JsArray].value.map(element => enhanceElement(element))
   }
 
-  def enhanceBlock(block: JsValue): JsValue = {
-    val elements = block.as[JsObject].value("elements")
-    block.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
+    val elements = obj.as[JsObject].value("elements")
+    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
   }
 
-  def enhanceBlocks(blocks: JsValue): IndexedSeq[JsValue] = {
-    blocks.as[JsArray].value.map(block => enhanceBlock(block))
-  }
-
-  def enhanceMainMediaElements(value: JsValue): IndexedSeq[JsValue] = {
-    value.as[JsArray].value.map(element => enhanceElement(element))
+  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
+    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
   }
 
   def enhanceDcrObject(obj: JsObject): JsObject = {
     obj ++
-      Json.obj("blocks" -> enhanceBlocks(obj.value("blocks"))) ++
-      Json.obj("mainMediaElements" -> enhanceMainMediaElements(obj.value("mainMediaElements")))
+      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++
+      Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
+      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
   }
 }
 
