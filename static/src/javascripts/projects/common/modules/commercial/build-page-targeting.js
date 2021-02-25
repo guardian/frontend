@@ -24,6 +24,7 @@ import { getUserSegments } from './user-ad-targeting';
 let myPageTargetting = {};
 let latestCmpHasInitalised;
 let latestCMPState;
+const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
 const findBreakpoint = () => {
     switch (getBreakpoint(true)) {
@@ -225,9 +226,16 @@ const getAdConsentFromState = (state) => {
     } else if (state.aus) {
         // AUS mode
         return state.aus.personalisedAdvertising;
-    } 
+    }
     // Unknown mode
     return false;
+}
+
+const createAdManagerGroup = () => {
+    // users are assigned to groups 1-12
+    const group = String(Math.floor(Math.random() * 12) + 1);
+    storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
+    return group;
 }
 
 const rebuildPageTargeting = () => {
@@ -277,6 +285,7 @@ const rebuildPageTargeting = () => {
             rdp: getRdpValue(ccpaState),
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),
             cmp_interaction: tcfv2EventStatus || 'na',
+            amtgrp: storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup(),
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -310,14 +319,14 @@ const getPageTargeting = () => {
         }
         return myPageTargetting;
     }
-    
+
     // First call binds to onConsentChange and returns {}
     onConsentChange((state)=>{
     // On every consent change we rebuildPageTageting
         latestCMPState = state;
         myPageTargetting = rebuildPageTargeting();
     });
-    return myPageTargetting; 
+    return myPageTargetting;
 };
 
 const resetPageTargeting = () => {

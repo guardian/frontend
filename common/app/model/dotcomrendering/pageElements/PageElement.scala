@@ -23,6 +23,10 @@ import views.support.{ImgSrc, SrcSet, Video700}
 
 import scala.collection.JavaConverters._
 
+// ------------------------------------------------------
+// PageElement Supporting Types and Traits
+// ------------------------------------------------------
+
 // TODO dates are being rendered as strings to avoid duplication of the
 // to-string logic, but ultimately we should pass unformatted date info to
 // DCR.
@@ -75,6 +79,12 @@ object NSImage1 {
   }
 }
 
+trait ThirdPartyEmbeddedContent {
+  def isThirdPartyTracking: Boolean
+  def source: Option[String]
+  def sourceDomain: Option[String]
+}
+
 // ------------------------------------------------------
 // PageElement
 // ------------------------------------------------------
@@ -86,11 +96,9 @@ object NSImage1 {
 
 sealed trait PageElement
 
-trait ThirdPartyEmbeddedContent {
-  def isThirdPartyTracking: Boolean
-  def source: Option[String]
-  def sourceDomain: Option[String]
-}
+// Note:
+//     In the file PageElement-Identifiers.md you will find a discussion of identifiers used by PageElements
+//     Also look for "03feb394-a17d-4430-8384-edd1891e0d01"
 
 case class AudioAtomBlockElement(
     id: String,
@@ -579,9 +587,12 @@ case class VineBlockElement(
     url: String,
     height: Int,
     width: Int,
+    originalUrl: String,
+    title: String,
     isThirdPartyTracking: Boolean,
     source: Option[String],
     sourceDomain: Option[String],
+    role: Option[String],
 ) extends PageElement
     with ThirdPartyEmbeddedContent
 object VineBlockElement {
@@ -1266,14 +1277,18 @@ object PageElement {
         (for {
           fields <- element.vineTypeData
           html <- fields.html
+          iframeSrc <- getIframeSrc(html)
         } yield {
           VineBlockElement(
-            getIframeSrc(html).getOrElse(""),
+            iframeSrc,
             getIframeHeight(html).getOrElse(0),
             getIframeWidth(html).getOrElse(0),
+            fields.originalUrl,
+            fields.title,
             containsThirdPartyTracking(element.tracking),
             Some(fields.source),
             fields.sourceDomain,
+            fields.role,
           )
         }).toList
       case Code =>
@@ -1652,5 +1667,15 @@ object PageElement {
     }
   }
 
+  /*
+     Note: The JSON serialization of `PageElement`s shows a "_type" attribute (that is a crucial part of how DCR
+     recognise and parse `BlockElement`s). This attribute is added by Play Framework itself.
+     See: https://www.playframework.com/documentation/2.7.x/ScalaJsonAutomated#Requirements
+
+     TODO:
+       Because this attribute is a defacto a part of the frontend DCR datamodel contract, it would be nice to stop
+       relying on the framework to provide it (for safety)
+   */
   val pageElementWrites: Writes[PageElement] = Json.writes[PageElement]
+
 }
