@@ -105,7 +105,7 @@ object DotcomRenderingDataModel {
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
-        "mainMediaElements" -> Json.toJson(model.mainMediaElements),
+        "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
