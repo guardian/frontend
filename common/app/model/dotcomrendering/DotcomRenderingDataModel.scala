@@ -89,8 +89,14 @@ object ElementsEnhancer {
     blocks.as[JsArray].value.map(block => enhanceBlock(block))
   }
 
+  def enhanceMainMediaElements(value: JsValue): IndexedSeq[JsValue] = {
+    value.as[JsArray].value.map(element => enhanceElement(element))
+  }
+
   def enhanceDcrObject(obj: JsObject): JsObject = {
-    obj ++ Json.obj("blocks" -> enhanceBlocks(obj.value("blocks")))
+    obj ++
+      Json.obj("blocks" -> enhanceBlocks(obj.value("blocks"))) ++
+      Json.obj("mainMediaElements" -> enhanceMainMediaElements(obj.value("mainMediaElements")))
   }
 }
 
@@ -105,7 +111,7 @@ object DotcomRenderingDataModel {
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
-        "mainMediaElements" -> Json.toJson(model.mainMediaElements),
+        "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
@@ -155,9 +161,11 @@ object DotcomRenderingDataModel {
         "isSpecialReport" -> model.isSpecialReport,
       )
 
-      // The following line essentially performs the "update" of the `elements` objects inside the `blocks` objects
-      // using functions of the ElementsEnhancer object.
-      // See comments in ElementsEnhancer for a full context of why this happens.
+      // The following line performs:
+      //     1. an update of the `elements` objects inside the `blocks` objects
+      //     2. an update of the `elements` objects inside mainMediaElements
+      // using functions of the ElementsEnhancer object. See comments in ElementsEnhancer for a full
+      // context of why this happens.
       ElementsEnhancer.enhanceDcrObject(obj)
 
     }
