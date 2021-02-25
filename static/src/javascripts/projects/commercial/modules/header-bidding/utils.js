@@ -8,11 +8,6 @@ import once from 'lodash/once';
 import config from '../../../../lib/config';
 import { getBreakpoint, isBreakpoint } from '../../../../lib/detect';
 import { pbTestNameMap } from '../../../../lib/url';
-import { isInVariantSynchronous } from 'common/modules/experiments/ab';
-import { xaxisPrebidTest } from 'common/modules/experiments/tests/updated-xaxis-prebid';
-
-const isInXaxisTestVariant = () =>
-    isInVariantSynchronous(xaxisPrebidTest, 'variant');
 
 const SUFFIX_REGEXPS = {};
 const stripSuffix = (s, suffix) => {
@@ -132,7 +127,7 @@ export const shouldIncludeAppNexus = () =>
         !!pbTestNameMap().and);
 
 export const shouldIncludeXaxis = () =>
-    isInUk() && isInXaxisTestVariant();
+    isInUk();
 
 export const shouldIncludeImproveDigital = () =>
     isInUk() || isInRow();

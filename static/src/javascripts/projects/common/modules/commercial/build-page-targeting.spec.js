@@ -162,10 +162,13 @@ describe('Build Page Targeting', () => {
         getSync.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
 
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+
         expect.hasAssertions();
     });
 
     afterEach(() => {
+        jest.spyOn(global.Math, 'random').mockRestore();
         jest.resetAllMocks();
     });
 
@@ -329,6 +332,7 @@ describe('Build Page Targeting', () => {
             rdp: 'na',
             consent_tcfv2: 'na',
             cmp_interaction: 'na',
+            amtgrp: '7',
         });
     });
 
@@ -490,7 +494,6 @@ describe('Build Page Targeting', () => {
         });
     });
 
-
     describe('skinsize targetting', () => {
         it.each([
             ['s', 1280],
@@ -511,5 +514,23 @@ describe('Build Page Targeting', () => {
             getViewport.mockReturnValue(undefined);
             expect(getPageTargeting().skinsize).toBe('s');
         });
-    })
+    });
+
+    describe('ad manager group value', () => {
+        const STORAGE_KEY = 'gu.adManagerGroup';
+        it('if present in localstorage, use value from storage', () => {
+            storage.local.setRaw(STORAGE_KEY, '10');
+            expect(getPageTargeting().amtgrp).toEqual('10');
+            storage.local.remove(STORAGE_KEY);
+        });
+        it('if not present in localstorage, generate a random group 1-12, store in localstorage', () => {
+            // restore Math.random for this test so we can assert the group value range is 1-12
+            jest.spyOn(global.Math, 'random').mockRestore();
+            const valueGenerated = getPageTargeting().amtgrp;
+            expect(Number(valueGenerated)).toBeGreaterThanOrEqual(1);
+            expect(Number(valueGenerated)).toBeLessThanOrEqual(12);
+            const valueFromStorage = storage.local.getRaw(STORAGE_KEY);
+            expect(valueFromStorage).toEqual(valueGenerated);
+        });
+    });
 });
