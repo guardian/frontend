@@ -80,13 +80,13 @@ object ElementsEnhancer {
     elements.as[JsArray].value.map(element => enhanceElement(element))
   }
 
-  def enhanceObjectWithElementsAtDepth1(block: JsValue): JsValue = {
-    val elements = block.as[JsObject].value("elements")
-    block.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
+    val elements = obj.as[JsObject].value("elements")
+    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
   }
 
-  def enhanceObjectsWithElementsAtDepth1(blocks: JsValue): IndexedSeq[JsValue] = {
-    blocks.as[JsArray].value.map(block => enhanceObjectWithElementsAtDepth1(block))
+  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
+    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
   }
 
   def enhanceDcrObject(obj: JsObject): JsObject = {
