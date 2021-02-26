@@ -4,7 +4,7 @@ import mediator from 'lib/mediator';
 
 const trackerName = config.get('googleAnalytics.trackers.editorial');
 
-const send = `${trackerName}.send`;
+const send = trackerName ? `${trackerName}.send` : 'send';
 
 const getTextContent = (el) =>
     (el.textContent || '').trim();
