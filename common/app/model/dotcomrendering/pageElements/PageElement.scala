@@ -297,7 +297,13 @@ object InteractiveAtomBlockElement {
     Json.writes[InteractiveAtomBlockElement]
 }
 
-case class InteractiveBlockElement(url: String) extends PageElement
+case class InteractiveBlockElement(
+    url: Option[String],
+    alt: Option[String],
+    scriptUrl: Option[String],
+    role: Option[String],
+    isMandatory: Option[Boolean],
+) extends PageElement
 object InteractiveBlockElement {
   implicit val InteractiveBlockElementWrites: Writes[InteractiveBlockElement] = Json.writes[InteractiveBlockElement]
 }
@@ -1228,7 +1234,9 @@ object PageElement {
           )
           .toList
       case Interactive =>
-        element.interactiveTypeData.flatMap(_.iframeUrl).map(url => InteractiveBlockElement(url)).toList
+        element.interactiveTypeData
+          .map(d => InteractiveBlockElement(d.iframeUrl, d.alt, d.scriptUrl, d.role, d.isMandatory))
+          .toList
       case Table => element.tableTypeData.map(d => TableBlockElement(d.html, Role(d.role), d.isMandatory)).toList
       case Witness => {
         (for {
@@ -1274,21 +1282,23 @@ object PageElement {
           )
           .toList
       case Vine =>
-        element.vineTypeData
-          .map(d =>
-            VineBlockElement(
-              getIframeSrc(d.html.getOrElse("")).getOrElse(""),
-              getIframeHeight(d.html.getOrElse("")).getOrElse(0),
-              getIframeWidth(d.html.getOrElse("")).getOrElse(0),
-              d.originalUrl,
-              d.title,
-              containsThirdPartyTracking(element.tracking),
-              Some(d.source),
-              d.sourceDomain,
-              d.role,
-            ),
+        (for {
+          fields <- element.vineTypeData
+          html <- fields.html
+          iframeSrc <- getIframeSrc(html)
+        } yield {
+          VineBlockElement(
+            iframeSrc,
+            getIframeHeight(html).getOrElse(0),
+            getIframeWidth(html).getOrElse(0),
+            fields.originalUrl,
+            fields.title,
+            containsThirdPartyTracking(element.tracking),
+            Some(fields.source),
+            fields.sourceDomain,
+            fields.role,
           )
-          .toList
+        }).toList
       case Code =>
         List(CodeBlockElement(None, true)) // Force isMandatory to avoid rendering any articles with Codeblocks in AMP
       case Form                      => List(FormBlockElement(None))

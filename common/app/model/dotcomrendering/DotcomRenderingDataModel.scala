@@ -82,17 +82,20 @@ object ElementsEnhancer {
     elements.as[JsArray].value.map(element => enhanceElement(element))
   }
 
-  def enhanceBlock(block: JsValue): JsValue = {
-    val elements = block.as[JsObject].value("elements")
-    block.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
+  def enhanceObjectWithElementsAtDepth1(obj: JsValue): JsValue = {
+    val elements = obj.as[JsObject].value("elements")
+    obj.as[JsObject] ++ Json.obj("elements" -> enhanceElements(elements))
   }
 
-  def enhanceBlocks(blocks: JsValue): IndexedSeq[JsValue] = {
-    blocks.as[JsArray].value.map(block => enhanceBlock(block))
+  def enhanceObjectsWithElementsAtDepth1(objs: JsValue): IndexedSeq[JsValue] = {
+    objs.as[JsArray].value.map(obj => enhanceObjectWithElementsAtDepth1(obj))
   }
 
   def enhanceDcrObject(obj: JsObject): JsObject = {
-    obj ++ Json.obj("blocks" -> enhanceBlocks(obj.value("blocks")))
+    obj ++
+      Json.obj("blocks" -> enhanceObjectsWithElementsAtDepth1(obj.value("blocks"))) ++
+      Json.obj("mainMediaElements" -> enhanceElements(obj.value("mainMediaElements"))) ++
+      Json.obj("keyEvents" -> enhanceObjectsWithElementsAtDepth1(obj.value("keyEvents")))
   }
 }
 
@@ -107,7 +110,7 @@ object DotcomRenderingDataModel {
         "headline" -> model.headline,
         "standfirst" -> model.standfirst,
         "webTitle" -> model.webTitle,
-        "mainMediaElements" -> Json.toJson(model.mainMediaElements),
+        "mainMediaElements" -> model.mainMediaElements,
         "main" -> model.main,
         "keyEvents" -> model.keyEvents,
         "blocks" -> model.blocks,
@@ -158,9 +161,11 @@ object DotcomRenderingDataModel {
         "isSpecialReport" -> model.isSpecialReport,
       )
 
-      // The following line essentially performs the "update" of the `elements` objects inside the `blocks` objects
-      // using functions of the ElementsEnhancer object.
-      // See comments in ElementsEnhancer for a full context of why this happens.
+      // The following line performs:
+      //     1. an update of the `elements` objects inside the `blocks` objects
+      //     2. an update of the `elements` objects inside mainMediaElements
+      // using functions of the ElementsEnhancer object. See comments in ElementsEnhancer for a full
+      // context of why this happens.
       ElementsEnhancer.enhanceDcrObject(obj)
 
     }

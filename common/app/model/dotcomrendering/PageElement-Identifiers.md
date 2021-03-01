@@ -54,3 +54,7 @@ to this:
 2. The initial implementation uses UUIDs, but the contract is that any reasonably unique string can do 
 
 3. The value of `elementId` for each element is, as per original implementation, randomly chosen at each generation. In any case, there is no 1-2-1 mapping between `PageElement`s / `BlockElement`s and those values. 
+
+### Main Media Elements renderId
+
+Main media elements also carry an `elementId`. It is added using the same method we use for `BlockElement`s.
