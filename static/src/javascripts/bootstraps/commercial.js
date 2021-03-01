@@ -119,8 +119,6 @@ const loadModules = () => {
 };
 
 export const bootCommercial = () => {
-    markTime('commercial start');
-
     // Init Commercial event timers
     EventTimer.init();
 
@@ -129,11 +127,7 @@ export const bootCommercial = () => {
             [
                 'ga-user-timing-commercial-start',
                 function runTrackPerformance() {
-                    trackPerformance(
-                        'Javascript Load',
-                        'commercialStart',
-                        'Commercial start parse time'
-                    );
+                    EventTimer.get().trigger('commercialStart');
                 },
             ],
         ],
@@ -156,11 +150,7 @@ export const bootCommercial = () => {
                     [
                         'ga-user-timing-commercial-end',
                         function runTrackPerformance() {
-                            trackPerformance(
-                                'Javascript Load',
-                                'commercialEnd',
-                                'Commercial end parse time'
-                            );
+                            EventTimer.get().trigger('commercialEnd');
                         },
                     ],
                 ],
