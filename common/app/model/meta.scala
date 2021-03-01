@@ -3,7 +3,8 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
+import com.gu.contentapi.client.utils.format._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RichContent, RenderingFormat}
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
@@ -134,6 +135,7 @@ object MetaData {
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
       designType: Option[DesignType] = None,
+      format: Option[ContentFormat] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
       description: Option[String] = None,
@@ -161,6 +163,7 @@ object MetaData {
       section = section,
       pillar = pillar,
       designType = designType,
+      format = format,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
@@ -185,6 +188,8 @@ object MetaData {
     val url = s"/$id"
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
+    val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+
     MetaData(
       id = id,
       url = url,
@@ -192,6 +197,7 @@ object MetaData {
       maybeSectionId,
       Pillar(apiContent),
       Some(apiContent.designType),
+      format = Some(contentFormat),
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
       adUnitSuffix = maybeSectionId.map(_.value).getOrElse(""),
@@ -211,6 +217,15 @@ object MetaData {
   }
 }
 
+final case class ContentFormat(
+    design: Design,
+    theme: Theme,
+    display: Display,
+) {
+  def mkMappedString: Map[String, String] =
+    Map("design" -> design.toString, "theme" -> theme.toString, "display" -> display.toString)
+}
+
 final case class MetaData(
     id: String,
     url: String,
@@ -218,6 +233,7 @@ final case class MetaData(
     section: Option[SectionId],
     pillar: Option[Pillar],
     designType: Option[DesignType],
+    format: Option[ContentFormat],
     webTitle: String,
     adUnitSuffix: String,
     iosType: Option[String] = Some("Article"),
