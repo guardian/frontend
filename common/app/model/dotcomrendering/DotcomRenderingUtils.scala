@@ -1,12 +1,13 @@
 package model.dotcomrendering
 
+import java.net.URLEncoder
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
 import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
-import common.commercial.EditionCommercialProperties
 import common.{Edition, RichRequestHeader}
+import common.commercial.EditionCommercialProperties
 import conf.Configuration.affiliateLinks
 import conf.switches.Switches
 import conf.{Configuration, Static}
@@ -19,8 +20,8 @@ import model.{
   ArticlePage,
   Badges,
   CanonicalLiveBlog,
-  DisplayedDateTimesDCR,
   Format,
+  DisplayedDateTimesDCR,
   GUDateTimeFormatNew,
   LiveBlogPage,
   PageWithStoryPackage,
@@ -33,8 +34,6 @@ import play.api.libs.json._
 import play.api.mvc.RequestHeader
 import views.html.fragments.affiliateLinksDisclaimer
 import views.support.{AffiliateLinksCleaner, CamelCase, ContentLayout, ImgSrc, Item300, JavaScriptPage}
-
-import java.net.URLEncoder
 
 // We have introduced our own set of objects for serializing data to the DotComponents API,
 // because we don't want people changing the core frontend models and as a side effect,

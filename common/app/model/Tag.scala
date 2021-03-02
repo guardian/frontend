@@ -5,9 +5,9 @@ import common.commercial.CommercialProperties
 import common.{Pagination, RelativePathEscaper}
 import conf.Configuration
 import contentapi.SectionTagLookUp
-import navigation.GuardianFoundationHelper
 import play.api.libs.json._
 import views.support.{Contributor, ImgSrc, Item140}
+import navigation.GuardianFoundationHelper
 
 object Tag {
 
