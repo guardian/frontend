@@ -10,7 +10,7 @@ import com.gu.contentapi.client.model.v1.ContentType.{
   Crossword => ApiCrossword,
   Audio => ApiAudio,
 }
-import play.api.libs.json._
+import play.api.libs.json.{Format => JsonFormat, _}
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import model.pressed.PressedStory
 
@@ -45,7 +45,7 @@ object DotcomContentType {
   object Signup extends DotcomContentType { override val name = "Signup" }
   object Identity extends DotcomContentType { override val name = "userid" }
 
-  implicit val format: Format[DotcomContentType] = new Format[DotcomContentType] {
+  implicit val format: JsonFormat[DotcomContentType] = new JsonFormat[DotcomContentType] {
     override def reads(json: JsValue): JsResult[DotcomContentType] =
       json match {
         case JsString(Article.name)      => JsSuccess(Article)
