@@ -1,7 +1,7 @@
 package model.dotcomrendering
 
 import common.commercial.EditionCommercialProperties
-import model.Format
+import model.ContentFormat
 import model.dotcomrendering.pageElements.PageElement
 import navigation.Nav
 import play.api.libs.json._
@@ -28,7 +28,7 @@ case class DotcomRenderingDataModel(
     editionId: String,
     pageId: String,
     // Format and previous flags
-    format: Format,
+    format: ContentFormat,
     designType: String,
     tags: List[Tag],
     pillar: String,

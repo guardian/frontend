@@ -135,7 +135,7 @@ object MetaData {
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
       designType: Option[DesignType] = None,
-      format: Option[Format] = None,
+      format: Option[ContentFormat] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
       description: Option[String] = None,
@@ -188,7 +188,7 @@ object MetaData {
     val url = s"/$id"
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
-    val contentFormat: Format = Format(apiContent.design, apiContent.theme, apiContent.display)
+    val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
 
     MetaData(
       id = id,
@@ -217,15 +217,15 @@ object MetaData {
   }
 }
 
-final case class Format(
+final case class ContentFormat(
     design: Design,
     theme: Theme,
     display: Display,
 )
 
-object Format {
-  implicit val writes = new Writes[Format] {
-    def writes(format: Format) =
+object ContentFormat {
+  implicit val writes = new Writes[ContentFormat] {
+    def writes(format: ContentFormat) =
       Json.obj(
         "design" -> format.design.toString,
         "theme" -> format.theme.toString,
@@ -240,7 +240,7 @@ final case class MetaData(
     webUrl: String,
     section: Option[SectionId],
     pillar: Option[Pillar],
-    format: Option[Format],
+    format: Option[ContentFormat],
     designType: Option[DesignType],
     webTitle: String,
     adUnitSuffix: String,
