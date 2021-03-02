@@ -144,7 +144,6 @@ export const bootCommercial = () => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            markTime('commercial end');
             catchErrorsWithContext(
                 [
                     [
