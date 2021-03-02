@@ -1,6 +1,7 @@
 package model.dotcomrendering
 
 import common.commercial.EditionCommercialProperties
+import model.ContentFormat
 import model.dotcomrendering.pageElements.PageElement
 import navigation.Nav
 import play.api.libs.json._
@@ -26,6 +27,9 @@ case class DotcomRenderingDataModel(
     editionLongForm: String,
     editionId: String,
     pageId: String,
+    // Format and previous flags
+    format: ContentFormat,
+    designType: String,
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
@@ -52,7 +56,6 @@ case class DotcomRenderingDataModel(
     starRating: Option[Int],
     trailText: String,
     nav: Nav,
-    designType: String,
     showBottomSocialButtons: Boolean,
     pageFooter: PageFooter,
     publication: String,
@@ -120,6 +123,8 @@ object DotcomRenderingDataModel {
         "editionLongForm" -> model.editionLongForm,
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
+        "format" -> model.format,
+        "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
         "isImmersive" -> model.isImmersive,
@@ -146,7 +151,6 @@ object DotcomRenderingDataModel {
         "starRating" -> model.starRating,
         "trailText" -> model.trailText,
         "nav" -> model.nav,
-        "designType" -> model.designType,
         "showBottomSocialButtons" -> model.showBottomSocialButtons,
         "pageFooter" -> model.pageFooter,
         "publication" -> model.publication,

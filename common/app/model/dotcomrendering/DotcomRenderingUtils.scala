@@ -1,9 +1,9 @@
 package model.dotcomrendering
 
 import java.net.URLEncoder
-
 import com.gu.contentapi.client.model.v1.ElementType.Text
 import com.gu.contentapi.client.model.v1.{Block => APIBlock, BlockElement => ClientBlockElement, Blocks => APIBlocks}
+import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
 import com.gu.contentapi.client.utils.{AdvertisementFeature, DesignType}
 import common.Maps.RichMap
 import common.{Edition, RichRequestHeader}
@@ -20,6 +20,7 @@ import model.{
   ArticlePage,
   Badges,
   CanonicalLiveBlog,
+  ContentFormat,
   DisplayedDateTimesDCR,
   GUDateTimeFormatNew,
   LiveBlogPage,
@@ -503,6 +504,8 @@ object DotcomRenderingUtils {
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = edition.id,
       pageId = article.metadata.id,
+      format = article.metadata.format.getOrElse(ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)),
+      designType = designTypeAsString(article.metadata.designType),
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),
       isImmersive = article.isImmersive,
@@ -530,7 +533,6 @@ object DotcomRenderingUtils {
       trailText = TextCleaner.sanitiseLinks(edition)(article.trail.fields.trailText.getOrElse("")),
       nav = nav,
       showBottomSocialButtons = ContentLayout.showBottomSocialButtons(article),
-      designType = designTypeAsString(article.metadata.designType),
       pageFooter = pageFooter,
       publication = article.content.publication,
       // See pageShouldHideReaderRevenue in contributions-utilities.js

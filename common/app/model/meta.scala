@@ -3,7 +3,8 @@ package model
 import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
-import com.gu.contentapi.client.utils.CapiModelEnrichment.RichContent
+import com.gu.contentapi.client.utils.format._
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RichContent, RenderingFormat}
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
@@ -134,6 +135,7 @@ object MetaData {
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
       designType: Option[DesignType] = None,
+      format: Option[ContentFormat] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
       description: Option[String] = None,
@@ -160,6 +162,7 @@ object MetaData {
       webTitle = webTitle,
       section = section,
       pillar = pillar,
+      format = format,
       designType = designType,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
@@ -185,12 +188,15 @@ object MetaData {
     val url = s"/$id"
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
+    val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+
     MetaData(
       id = id,
       url = url,
       webUrl = apiContent.webUrl,
       maybeSectionId,
       Pillar(apiContent),
+      format = Some(contentFormat),
       Some(apiContent.designType),
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
@@ -211,12 +217,30 @@ object MetaData {
   }
 }
 
+final case class ContentFormat(
+    design: Design,
+    theme: Theme,
+    display: Display,
+)
+
+object ContentFormat {
+  implicit val writes = new Writes[ContentFormat] {
+    def writes(format: ContentFormat) =
+      Json.obj(
+        "design" -> format.design.toString,
+        "theme" -> format.theme.toString,
+        "display" -> format.display.toString,
+      )
+  }
+}
+
 final case class MetaData(
     id: String,
     url: String,
     webUrl: String,
     section: Option[SectionId],
     pillar: Option[Pillar],
+    format: Option[ContentFormat],
     designType: Option[DesignType],
     webTitle: String,
     adUnitSuffix: String,
