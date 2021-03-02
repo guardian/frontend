@@ -135,7 +135,7 @@ object MetaData {
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
       designType: Option[DesignType] = None,
-      format: Option[ContentFormat] = None,
+      format: Option[Format] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
       description: Option[String] = None,
@@ -162,8 +162,8 @@ object MetaData {
       webTitle = webTitle,
       section = section,
       pillar = pillar,
-      designType = designType,
       format = format,
+      designType = designType,
       adUnitSuffix = adUnitSuffix getOrElse section.map(_.value).getOrElse(""),
       canonicalUrl = canonicalUrl,
       shouldGoogleIndex = shouldGoogleIndex,
@@ -188,7 +188,7 @@ object MetaData {
     val url = s"/$id"
     val maybeSectionId: Option[SectionId] = apiContent.section.map(SectionId.fromCapiSection)
 
-    val contentFormat: ContentFormat = ContentFormat(apiContent.design, apiContent.theme, apiContent.display)
+    val contentFormat: Format = Format(apiContent.design, apiContent.theme, apiContent.display)
 
     MetaData(
       id = id,
@@ -196,8 +196,8 @@ object MetaData {
       webUrl = apiContent.webUrl,
       maybeSectionId,
       Pillar(apiContent),
-      Some(apiContent.designType),
       format = Some(contentFormat),
+      Some(apiContent.designType),
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
       adUnitSuffix = maybeSectionId.map(_.value).getOrElse(""),
@@ -217,13 +217,21 @@ object MetaData {
   }
 }
 
-final case class ContentFormat(
+final case class Format(
     design: Design,
     theme: Theme,
     display: Display,
-) {
-  def mkMappedString: Map[String, String] =
-    Map("design" -> design.toString, "theme" -> theme.toString, "display" -> display.toString)
+)
+
+object Format {
+  implicit val writes = new Writes[Format] {
+    def writes(format: Format) =
+      Json.obj(
+        "design" -> format.design.toString,
+        "theme" -> format.theme.toString,
+        "display" -> format.display.toString,
+      )
+  }
 }
 
 final case class MetaData(
@@ -232,8 +240,8 @@ final case class MetaData(
     webUrl: String,
     section: Option[SectionId],
     pillar: Option[Pillar],
+    format: Option[Format],
     designType: Option[DesignType],
-    format: Option[ContentFormat],
     webTitle: String,
     adUnitSuffix: String,
     iosType: Option[String] = Some("Article"),

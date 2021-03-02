@@ -1,6 +1,7 @@
 package model.dotcomrendering
 
 import common.commercial.EditionCommercialProperties
+import model.Format
 import model.dotcomrendering.pageElements.PageElement
 import navigation.Nav
 import play.api.libs.json._
@@ -27,11 +28,11 @@ case class DotcomRenderingDataModel(
     editionId: String,
     pageId: String,
     // Format and previous flags
-    format: Map[String, String],
+    format: Format,
+    designType: String,
     tags: List[Tag],
     pillar: String,
     isImmersive: Boolean,
-    designType: String,
     sectionLabel: String,
     sectionUrl: String,
     sectionName: Option[String],
@@ -123,10 +124,10 @@ object DotcomRenderingDataModel {
         "editionId" -> model.editionId,
         "pageId" -> model.pageId,
         "format" -> model.format,
+        "designType" -> model.designType,
         "tags" -> model.tags,
         "pillar" -> model.pillar,
         "isImmersive" -> model.isImmersive,
-        "designType" -> model.designType,
         "sectionLabel" -> model.sectionLabel,
         "sectionUrl" -> model.sectionUrl,
         "sectionName" -> model.sectionName,

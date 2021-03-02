@@ -20,7 +20,7 @@ import model.{
   ArticlePage,
   Badges,
   CanonicalLiveBlog,
-  ContentFormat,
+  Format,
   DisplayedDateTimesDCR,
   GUDateTimeFormatNew,
   LiveBlogPage,
@@ -103,14 +103,6 @@ object DotcomRenderingUtils {
 
   private def designTypeAsString(designType: Option[DesignType]): String = {
     designType.map(_.toString).getOrElse("Article")
-  }
-
-  private def contentFormatAsMap(format: Option[ContentFormat]): Map[String, String] = {
-    format
-      .map(_.mkMappedString)
-      .getOrElse(
-        Map("design" -> ArticleDesign.toString, "theme" -> NewsPillar.toString, "display" -> StandardDisplay.toString),
-      )
   }
 
   private def buildFullCommercialUrl(bundlePath: String): String = {
@@ -512,11 +504,11 @@ object DotcomRenderingUtils {
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = edition.id,
       pageId = article.metadata.id,
-      format = contentFormatAsMap(article.metadata.format),
+      format = article.metadata.format.getOrElse(Format(ArticleDesign, NewsPillar, StandardDisplay)),
+      designType = designTypeAsString(article.metadata.designType),
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),
       isImmersive = article.isImmersive,
-      designType = designTypeAsString(article.metadata.designType),
       sectionLabel = article.content.sectionLabelName,
       sectionUrl = article.content.sectionLabelLink,
       sectionName = article.metadata.section.map(_.value),
