@@ -5,50 +5,50 @@ import common.Pagination
 import model.content._
 import model.facia.PressedCollection
 import model.pressed._
-import play.api.libs.json._
+import play.api.libs.json.{Format => JsonFormat, _}
 import play.api.libs.json.JodaReads._
 
-object GenericThriftAtomFormat extends Format[com.gu.contentatom.thrift.Atom] {
+object GenericThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.Atom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(atom: com.gu.contentatom.thrift.Atom): JsObject = JsObject(Seq.empty)
 }
 
-object RecipeThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
+object RecipeThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.recipe.RecipeAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(recipe: com.gu.contentatom.thrift.atom.recipe.RecipeAtom): JsObject = JsObject(Seq.empty)
 }
 
-object ReviewThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
+object ReviewThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.review.ReviewAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(review: com.gu.contentatom.thrift.atom.review.ReviewAtom): JsObject = JsObject(Seq.empty)
 }
 
-object ExplainerThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom] {
+object ExplainerThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.explainer.ExplainerAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(explainer: com.gu.contentatom.thrift.atom.explainer.ExplainerAtom): JsObject = JsObject(Seq.empty)
 }
 
-object QandasThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.qanda.QAndAAtom] {
+object QandasThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.qanda.QAndAAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(qanda: com.gu.contentatom.thrift.atom.qanda.QAndAAtom): JsObject = JsObject(Seq.empty)
 }
 
-object GuidesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.guide.GuideAtom] {
+object GuidesThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.guide.GuideAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(guide: com.gu.contentatom.thrift.atom.guide.GuideAtom): JsObject = JsObject(Seq.empty)
 }
 
-object ProfilesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.profile.ProfileAtom] {
+object ProfilesThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.profile.ProfileAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(profile: com.gu.contentatom.thrift.atom.profile.ProfileAtom): JsObject = JsObject(Seq.empty)
 }
 
-object TimelinesThriftAtomFormat extends Format[com.gu.contentatom.thrift.atom.timeline.TimelineAtom] {
+object TimelinesThriftAtomFormat extends JsonFormat[com.gu.contentatom.thrift.atom.timeline.TimelineAtom] {
   def reads(json: JsValue): JsError = JsError("Converting from Json is not supported by intent!")
   def writes(timeline: com.gu.contentatom.thrift.atom.timeline.TimelineAtom): JsObject = JsObject(Seq.empty)
 }
 
-object CardStyleFormat extends Format[CardStyle] {
+object CardStyleFormat extends JsonFormat[CardStyle] {
   def reads(json: JsValue): JsResult[CardStyle] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("SpecialReport"), _)    => JsSuccess(SpecialReport)
@@ -84,7 +84,7 @@ object CardStyleFormat extends Format[CardStyle] {
     }
 }
 
-object MediaTypeFormat extends Format[MediaType] {
+object MediaTypeFormat extends JsonFormat[MediaType] {
   def reads(json: JsValue): JsResult[MediaType] = {
     (json \ "type").transform[JsString](Reads.JsStringReads) match {
       case JsSuccess(JsString("Video"), _)   => JsSuccess(pressed.Video)
@@ -105,7 +105,7 @@ object MediaTypeFormat extends Format[MediaType] {
 object PressedContentFormat {
 
   // This format is implicit because CuratedContent is recursively defined, so it needs a format object in scope.
-  implicit object format extends Format[PressedContent] {
+  implicit object format extends JsonFormat[PressedContent] {
 
     def reads(json: JsValue): JsResult[PressedContent] =
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
@@ -155,7 +155,7 @@ object PressedContentFormat {
       }
   }
 
-  implicit val designTypeFormat: Format[DesignType] = new Format[DesignType] {
+  implicit val designTypeFormat: JsonFormat[DesignType] = new JsonFormat[DesignType] {
     override def reads(json: JsValue): JsResult[DesignType] =
       json match {
         case JsString("Article")              => JsSuccess(com.gu.contentapi.client.utils.Article)
@@ -246,7 +246,7 @@ object ItemKickerFormat {
   private val freeHtmlKickerFormat = Json.format[FreeHtmlKicker]
   private val freeHtmlKickerWithLinkFormat = Json.format[FreeHtmlKickerWithLink]
 
-  object format extends Format[ItemKicker] {
+  object format extends JsonFormat[ItemKicker] {
     def reads(json: JsValue): JsResult[ItemKicker] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("BreakingNewsKicker"), _) => JsSuccess(BreakingNewsKicker)
@@ -299,7 +299,7 @@ object FaciaImageFormat {
   implicit val replaceFormat = Json.format[Replace]
   implicit val slideshowFormat = Json.format[ImageSlideshow]
 
-  object format extends Format[Image] {
+  object format extends JsonFormat[Image] {
     def reads(json: JsValue): JsResult[Image] = {
       (json \ "type").transform[JsString](Reads.JsStringReads) match {
         case JsSuccess(JsString("Cutout"), _)         => (json \ "item").validate[Cutout](cutoutFormat)
