@@ -1,7 +1,7 @@
 package model.pressed
 
 import com.gu.contentapi.client.utils.DesignType
-import model.{DotcomContentType, Pillar, SectionId}
+import model.{ContentFormat, DotcomContentType, Pillar, SectionId}
 
 final case class PressedMetadata(
     id: String,
@@ -11,4 +11,5 @@ final case class PressedMetadata(
     pillar: Option[Pillar],
     sectionId: Option[SectionId],
     designType: DesignType,
+    format: Option[ContentFormat],
 )

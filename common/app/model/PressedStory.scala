@@ -42,6 +42,7 @@ object PressedStory {
         Pillar(apiContent),
         sectionId,
         apiContent.designType,
+        metadata.format,
       ),
       PressedFields(
         fields.main,

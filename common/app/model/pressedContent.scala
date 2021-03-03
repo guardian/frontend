@@ -13,6 +13,7 @@ import model.content.{Atoms, MediaAtom}
 import model.{
   CardStylePicker,
   Commercial,
+  ContentFormat,
   DotcomContentType,
   Elements,
   Fields,
@@ -55,6 +56,8 @@ sealed trait PressedContent {
       .map(ContentOldAgeDescriber.apply)
       .filterNot(_ == "")
   }
+
+  def format: Option[ContentFormat]
 }
 
 object PressedContent {
