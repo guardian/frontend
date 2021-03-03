@@ -2,6 +2,8 @@ package feed
 
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
+import com.gu.facia.api.models.ContentFormat
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
@@ -9,7 +11,6 @@ import models._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -53,6 +54,7 @@ object DeeplyReadItem {
       isLiveBlog = item.isLiveBlog,
       pillar = item.pillar,
       designType = item.designType,
+      format = None, // TODO: pass the right Option[ContentFormat] instead of this hardcoded one
       webPublicationDate = item.webPublicationDate,
       headline = item.headline,
       mediaType = item.mediaType,

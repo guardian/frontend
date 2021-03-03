@@ -1,6 +1,8 @@
 package services
 
 import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
+import com.gu.facia.api.models.ContentFormat
 import com.gu.facia.api.utils.{ContentProperties, ItemKicker, ResolvedMetaData}
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.client.models.TrailMetaData
@@ -20,6 +22,11 @@ object FaciaContentConvert {
       maybeFrontPublicationDate = None,
       supportingContent = Nil,
       cardStyle = cardStyle,
+      format = ContentFormat(
+        ArticleDesign,
+        NewsPillar,
+        StandardDisplay,
+      ), // TODO: pass the right ContentFormat instead of this hardcoded one
       headline = frontendContent.trail.headline,
       href = Option(content.id),
       trailText = frontendContent.fields.trailText,

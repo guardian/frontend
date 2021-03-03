@@ -57,7 +57,8 @@ sealed trait PressedContent {
       .filterNot(_ == "")
   }
 
-  def format: Option[ContentFormat]
+  // TODO: if we do not want this, then override it manually in the children classes
+  def format: Option[ContentFormat] = None
 }
 
 object PressedContent {

@@ -4,14 +4,13 @@ import com.gu.contentapi.client.model.v1.{Content => CapiContent}
 import com.gu.contentapi.client.model.{v1 => contentapi}
 import com.gu.contentapi.client.utils.DesignType
 import com.gu.contentapi.client.utils.format._
-import com.gu.contentapi.client.utils.CapiModelEnrichment.{RichContent, RenderingFormat}
+import com.gu.contentapi.client.utils.CapiModelEnrichment.{RenderingFormat, RichContent}
 import implicits.Dates.CapiRichDateTime
 import common.commercial.{AdUnitMaker, CommercialProperties}
 import common.dfp._
-import common.{Edition, LinkTo, Localisation, ManifestData, Pagination}
+import common.{Edition, ManifestData, Pagination}
 import conf.Configuration
 import conf.cricketPa.CricketTeams
-import model.content._
 import model.liveblog.Blocks
 import model.meta.{Guardian, LinkedData, PotentialAction, WebPage}
 import org.apache.commons.lang3.StringUtils
@@ -19,8 +18,8 @@ import org.joda.time.DateTime
 import com.github.nscala_time.time.Implicits._
 import play.api.libs.json._
 import play.api.libs.json.JodaWrites.JodaDateTimeWrites
+import play.api.libs.functional.syntax._
 import play.api.mvc.RequestHeader
-import play.twirl.api.Html
 import navigation.GuardianFoundationHelper
 
 import scala.util.matching.Regex
@@ -224,7 +223,7 @@ final case class ContentFormat(
 )
 
 object ContentFormat {
-  implicit val writes = new Writes[ContentFormat] {
+  implicit val contentFormatWrites = new Writes[ContentFormat] {
     def writes(format: ContentFormat) =
       Json.obj(
         "design" -> format.design.toString,
@@ -232,6 +231,35 @@ object ContentFormat {
         "display" -> format.display.toString,
       )
   }
+
+  /*
+    Date: 03 March 2021
+
+    The only reason `contentFormatBuilder` exists is to define `contentFormatReads`, and the only
+    reason `contentFormatReads` exists is to help define `contentFormatFormat` in `object PressedMetadata`
+    (see PressedMetadata.scala) to make compilation possible.
+
+    As such, the fact that contentFormatReads always return ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)
+    is perfectly fine, because it's not actually used anywhere.
+
+    If one day this changes, then it will be just enough to replace
+
+        v => ArticleDesign
+        v => NewsPillar
+        v => StandardDisplay
+
+      by the relevant functions:
+
+        String -> Design
+        String -> Pillar
+        String -> Display
+   */
+
+  val contentFormatBuilder = (JsPath \ "design").read[String].map(_ => ArticleDesign) and
+    (JsPath \ "theme").read[String].map(_ => NewsPillar) and
+    (JsPath \ "display").readNullable[String].map(_ => StandardDisplay)
+
+  implicit val contentFormatReads = contentFormatBuilder.apply(ContentFormat.apply _)
 }
 
 final case class MetaData(
