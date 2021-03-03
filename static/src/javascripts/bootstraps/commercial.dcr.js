@@ -1,7 +1,6 @@
 import 'lib/dotcom-rendering/public-path';
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
-import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
@@ -21,7 +20,6 @@ import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
@@ -121,20 +119,7 @@ const loadModules = () => {
 const bootCommercial = () => {
     // Init Commercial event timers
     EventTimer.init();
-
-    catchErrorsWithContext(
-        [
-            [
-                'ga-user-timing-commercial-start',
-                function runTrackPerformance() {
-                    EventTimer.get().trigger('commercialStart');
-                },
-            ],
-        ],
-        {
-            feature: 'commercial',
-        }
-    );
+    EventTimer.get().trigger('commercialStart');
 
     // Stub the command queue
     window.googletag = {
@@ -144,19 +129,7 @@ const bootCommercial = () => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            catchErrorsWithContext(
-                [
-                    [
-                        'ga-user-timing-commercial-end',
-                        function runTrackPerformance() {
-                            EventTimer.get().trigger('commercialEnd');
-                        },
-                    ],
-                ],
-                {
-                    feature: 'commercial',
-                }
-            );
+            EventTimer.get().trigger('commercialEnd');
         })
         .catch(err => {
             // report async errors in bootCommercial to Sentry with the commercial feature tag
