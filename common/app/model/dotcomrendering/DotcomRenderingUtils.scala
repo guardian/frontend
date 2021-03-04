@@ -20,7 +20,6 @@ import model.{
   ArticlePage,
   Badges,
   CanonicalLiveBlog,
-  ContentFormat,
   DisplayedDateTimesDCR,
   GUDateTimeFormatNew,
   LiveBlogPage,
@@ -504,7 +503,7 @@ object DotcomRenderingUtils {
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = edition.id,
       pageId = article.metadata.id,
-      format = article.metadata.format.getOrElse(ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)),
+      format = article.metadata.format,
       designType = designTypeAsString(article.metadata.designType),
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),

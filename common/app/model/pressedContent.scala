@@ -57,8 +57,6 @@ sealed trait PressedContent {
       .filterNot(_ == "")
   }
 
-  // TODO: if we do not want this, then override it manually in the children classes
-  def format: Option[ContentFormat] = None
 }
 
 object PressedContent {
@@ -78,6 +76,7 @@ final case class CuratedContent(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
+    format: ContentFormat,
     enriched: Option[
       EnrichedContent,
     ], // This is currently an option, as we introduce the new field. It can then become a value type.
@@ -96,6 +95,7 @@ object CuratedContent {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
+      format = content.format,
       supportingContent = content.supportingContent.map(PressedContent.make),
       cardStyle = CardStyle.make(content.cardStyle),
       enriched = Some(EnrichedContent.empty),
@@ -109,6 +109,7 @@ final case class SupportingCuratedContent(
     override val card: PressedCard,
     override val discussion: PressedDiscussionSettings,
     override val display: PressedDisplaySettings,
+    format: ContentFormat,
     cardStyle: CardStyle,
 ) extends PressedContent {
   override def withoutTrailText: PressedContent = copy(card = card.withoutTrailText)
@@ -122,6 +123,7 @@ object SupportingCuratedContent {
       card = PressedCard.make(content),
       discussion = PressedDiscussionSettings.make(content),
       display = PressedDisplaySettings.make(content),
+      format = content.format,
       cardStyle = CardStyle.make(content.cardStyle),
     )
   }

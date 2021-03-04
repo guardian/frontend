@@ -133,8 +133,8 @@ object MetaData {
       url: Option[String] = None,
       canonicalUrl: Option[String] = None,
       pillar: Option[Pillar] = None,
+      format: ContentFormat = ContentFormat.defaultContentFormat,
       designType: Option[DesignType] = None,
-      format: Option[ContentFormat] = None,
       shouldGoogleIndex: Boolean = true,
       pagination: Option[Pagination] = None,
       description: Option[String] = None,
@@ -195,7 +195,7 @@ object MetaData {
       webUrl = apiContent.webUrl,
       maybeSectionId,
       Pillar(apiContent),
-      format = Some(contentFormat),
+      contentFormat,
       Some(apiContent.designType),
       webTitle = apiContent.webTitle,
       membershipAccess = apiContent.fields.flatMap(_.membershipAccess.map(_.name)),
@@ -223,6 +223,10 @@ final case class ContentFormat(
 )
 
 object ContentFormat {
+  lazy val defaultContentFormat: ContentFormat = {
+    ContentFormat(ArticleDesign, NewsPillar, StandardDisplay)
+  }
+
   implicit val contentFormatWrites = new Writes[ContentFormat] {
     def writes(format: ContentFormat) =
       Json.obj(
@@ -268,7 +272,7 @@ final case class MetaData(
     webUrl: String,
     section: Option[SectionId],
     pillar: Option[Pillar],
-    format: Option[ContentFormat],
+    format: ContentFormat,
     designType: Option[DesignType],
     webTitle: String,
     adUnitSuffix: String,

@@ -22,7 +22,7 @@ case class OnwardItemNx2(
     isLiveBlog: Boolean,
     pillar: String,
     designType: String,
-    format: Option[ContentFormat],
+    format: ContentFormat,
     webPublicationDate: String,
     headline: String,
     mediaType: Option[String],
