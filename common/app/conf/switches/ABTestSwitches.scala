@@ -53,4 +53,14 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 3, 8),
     exposeClientSide = true,
   )
+
+  Switch(
+    ABTests,
+    "ab-sticky-nav-test",
+    "Tests sticky nav behaviour",
+    owners = Seq(Owner.withGithub("nicl")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 5, 3),
+    exposeClientSide = true,
+  )
 }
