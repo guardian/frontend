@@ -99,7 +99,6 @@ export const init = () => {
         window.googletag.cmd.push(
             setDfpListeners,
             setPageTargeting,
-            setPublisherProvidedId,
             refreshOnResize,
             () => {
                 fillAdvertSlots();
@@ -115,6 +114,11 @@ export const init = () => {
                         restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
+                if (!state.ccpa.doNotSell) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             } else {
                 let npaFlag;
                 if (state.tcfv2) {
@@ -127,6 +131,11 @@ export const init = () => {
                     // AUS mode
                     // canRun stays true, set NPA flag if consent is retracted
                     npaFlag = !getConsentFor('googletag', state);
+                    if (!npaFlag) {
+                        window.googletag.cmd.push(
+                            setPublisherProvidedId,
+                        );
+                    }
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
