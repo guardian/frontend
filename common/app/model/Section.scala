@@ -10,6 +10,7 @@ object Section {
   def make(section: ApiSection, pagination: Option[Pagination] = None): Section = {
     val id: String = section.id
     val webTitle: String = section.webTitle
+
     val adUnitSuffix = AdSuffixHandlingForFronts.extractAdUnitSuffixFrom(id, id)
 
     val keywordIds: Seq[String] = frontKeywordIds(id)

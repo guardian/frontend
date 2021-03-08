@@ -3,6 +3,7 @@ package common.facia
 import model.facia.PressedCollection
 import model.{FrontProperties, PressedPage, SeoData}
 import model.pressed._
+import model.ContentFormat
 
 object FixtureBuilder {
 
@@ -125,6 +126,7 @@ object FixtureBuilder {
       enriched = None,
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
+      format = Some(ContentFormat.defaultContentFormat)
     )
   }
 }

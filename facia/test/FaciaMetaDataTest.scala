@@ -69,10 +69,11 @@ import test._
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     println(topContainer)
-    topContainer.size should be(15)
+    // Note: the below "shouldBe" value is brittle and might need to be sense checked
+    topContainer.size should be(7)
 
     (topContainer(0) \ "url").as[JsString].value should be(
-      s"${Configuration.site.host}/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia",
+      s"${Configuration.site.host}/music/2021/mar/04/st-vincent-id-been-feral-for-so-long-i-was-sort-of-in-outer-space",
     )
 
   }
