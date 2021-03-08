@@ -44,13 +44,4 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
-  Switch(
-    ABTests,
-    "ab-curated-content-3-carousel",
-    "Test the impact of a Carousel for onwards journeys",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 3, 8),
-    exposeClientSide = true,
-  )
 }
