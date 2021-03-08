@@ -131,17 +131,17 @@ export const init = () => {
                     // AUS mode
                     // canRun stays true, set NPA flag if consent is retracted
                     npaFlag = !getConsentFor('googletag', state);
-                    if (!npaFlag) {
-                        window.googletag.cmd.push(
-                            setPublisherProvidedId,
-                        );
-                    }
                 }
                 window.googletag.cmd.push(() => {
                     window.googletag
                         .pubads()
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
+                if (!npaFlag) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             }
             // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
             // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
