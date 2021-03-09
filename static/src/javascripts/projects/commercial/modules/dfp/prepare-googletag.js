@@ -99,7 +99,6 @@ export const init = () => {
         window.googletag.cmd.push(
             setDfpListeners,
             setPageTargeting,
-            setPublisherProvidedId,
             refreshOnResize,
             () => {
                 fillAdvertSlots();
@@ -115,6 +114,11 @@ export const init = () => {
                         restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
+                if (!state.ccpa.doNotSell) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             } else {
                 let npaFlag;
                 if (state.tcfv2) {
@@ -133,6 +137,11 @@ export const init = () => {
                         .pubads()
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
+                if (!npaFlag) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             }
             // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
             // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.
