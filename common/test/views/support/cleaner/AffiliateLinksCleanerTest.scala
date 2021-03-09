@@ -10,7 +10,7 @@ class AffiliateLinksCleanerTest extends FlatSpec with Matchers {
     val link = "https://www.piratendating.nl/"
     val pageUrl = "/guardian-pirates/soulmates"
     linkToSkimLink(link, pageUrl, "123") should equal(
-      s"http://go.theguardian.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
+      s"https://go.skimresources.com/?id=123&url=https%3A%2F%2Fwww.piratendating.nl%2F&sref=${Configuration.site.host}/guardian-pirates/soulmates",
     )
   }
 
