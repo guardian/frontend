@@ -3,6 +3,7 @@ package test
 import akka.actor.ActorSystem
 import com.fasterxml.jackson.core.JsonParseException
 import com.gu.facia.client.models.{ConfigJson, FrontJson}
+import common.Edition
 import common.editions.{Uk, Us}
 import implicits.FakeRequests
 import concurrent.BlockingOperations
@@ -162,7 +163,7 @@ import scala.concurrent.Await
   }
 
   it should "render correct amount of fronts in mf2 format (no section or edition provided)" in {
-    val count = 3
+    val count = 2
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0)(request)
     status(result) should be(200)
@@ -171,7 +172,7 @@ import scala.concurrent.Await
 
   it should "render fronts in mf2 format (no edition provided)" in {
     val section = "music"
-    val count = 3
+    val count = 2
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/section/$section/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, section)(request)
     status(result) should be(200)
@@ -180,7 +181,7 @@ import scala.concurrent.Await
 
   it should "render fronts in mf2 format (no section provided)" in {
     val edition = "uk"
-    val count = 3
+    val count = 2
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/edition/$edition/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, edition = edition)(request)
     status(result) should be(200)
@@ -190,7 +191,7 @@ import scala.concurrent.Await
   it should "render fronts in mf2 format" in {
     val section = "media" // has to be an editionalised section
     val edition = "au"
-    val count = 3
+    val count = 2
     val request = FakeRequest("GET", s"/container/count/$count/offset/0/section/$section/edition/$edition/mf2.json")
     val result = faciaController.renderSomeFrontContainersMf2(count, 0, section, edition)(request)
     status(result) should be(200)

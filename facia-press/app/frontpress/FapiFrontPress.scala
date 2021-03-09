@@ -453,8 +453,11 @@ trait FapiFrontPress extends EmailFrontPress with GuLogging {
     for {
       itemResp <- getCapiItemResponseForPath(path)
     } yield {
+      log.info(s"CAPI response for $path: ${itemResp.toString}")
       val seoFromConfig = ConfigAgent.getSeoDataJsonFromConfig(path)
+      log.info(s"SEO from config for $path: ${seoFromConfig.toString}")
       val seoFromPath = SeoData.fromPath(path)
+      log.info(s"SEO from path for $path: ${seoFromPath.toString}")
 
       val navSection: String = seoFromConfig.navSection
         .orElse(itemResp.flatMap(getNavSectionFromItemResponse))

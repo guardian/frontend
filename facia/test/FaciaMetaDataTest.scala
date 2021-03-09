@@ -65,14 +65,14 @@ import test._
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(12)
+    containers.size should be(6)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     println(topContainer)
-    topContainer.size should be(15)
+    topContainer.size should be(7)
 
     (topContainer(0) \ "url").as[JsString].value should be(
-      s"${Configuration.site.host}/music/ng-interactive/2017/oct/30/how-the-north-stayed-underground-grime-makina-psychedelia",
+      s"${Configuration.site.host}/music/2021/mar/09/a-century-of-music-by-british-women-review-international-womens-day-concert",
     )
 
   }
