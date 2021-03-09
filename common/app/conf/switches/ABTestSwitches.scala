@@ -46,16 +46,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-curated-content-3-carousel",
-    "Test the impact of a Carousel for onwards journeys",
-    owners = Seq(Owner.withGithub("buck06191")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 3, 8),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-sticky-nav-test",
     "Tests sticky nav behaviour",
     owners = Seq(Owner.withGithub("nicl")),
@@ -63,4 +53,5 @@ trait ABTestSwitches {
     sellByDate = new LocalDate(2021, 5, 3),
     exposeClientSide = true,
   )
+
 }
