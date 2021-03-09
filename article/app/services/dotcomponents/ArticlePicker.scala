@@ -24,6 +24,7 @@ import model.liveblog.{
   UnknownBlockElement,
   VideoBlockElement,
   WitnessBlockElement,
+  InteractiveBlockElement,
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
@@ -75,6 +76,12 @@ object ArticlePageChecks {
           val supportedAtomTypes =
             List("audio", "chart", "explainer", "guide", "media", "profile", "qanda", "timeline")
           !supportedAtomTypes.contains(atomtype)
+        }
+        case InteractiveBlockElement(_, scriptUrl) => {
+          scriptUrl match {
+            case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
+            case _                                                                       => true
+          }
         }
         case _ => true
       }
