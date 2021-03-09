@@ -17,7 +17,7 @@ import scala.concurrent.Await
 import test._
 
 @DoNotDiscover class FaciaMetaDataTest
-    extends FlatSpec
+  extends FlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll
@@ -65,15 +65,14 @@ import test._
     val itemList: JsValue = Json.parse(script.first().html())
 
     val containers = (itemList \ "itemListElement").as[JsArray].value
-    containers.size should be(12)
+    containers.size should be(6)
 
     val topContainer = (containers(0) \ "item" \ "itemListElement").as[JsArray].value
     println(topContainer)
-    // Note: the below "shouldBe" value is brittle and might need to be sense checked
     topContainer.size should be(7)
 
     (topContainer(0) \ "url").as[JsString].value should be(
-      s"${Configuration.site.host}/music/2021/mar/04/st-vincent-id-been-feral-for-so-long-i-was-sort-of-in-outer-space",
+      s"${Configuration.site.host}/music/2021/mar/09/a-century-of-music-by-british-women-review-international-womens-day-concert",
     )
 
   }
