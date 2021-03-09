@@ -24,7 +24,7 @@ import model.liveblog.{
   UnknownBlockElement,
   VideoBlockElement,
   WitnessBlockElement,
-  InteractiveBlockElement
+  InteractiveBlockElement,
 }
 import play.api.mvc.RequestHeader
 import views.support.Commercial
@@ -80,7 +80,7 @@ object ArticlePageChecks {
         case InteractiveBlockElement(_, scriptUrl) => {
           scriptUrl match {
             case Some("https://interactive.guim.co.uk/embed/iframe-wrapper/0.1/boot.js") => false
-            case _ => true
+            case _                                                                       => true
           }
         }
         case _ => true
