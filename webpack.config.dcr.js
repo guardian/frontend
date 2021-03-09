@@ -1,7 +1,4 @@
-
 const path = require('path');
-const CircularDependencyPlugin = require('circular-dependency-plugin');
-const webpack = require('webpack');
 const webpackMerge = require('webpack-merge');
 const config = require('./webpack.config.js');
 

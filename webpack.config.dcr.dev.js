@@ -1,7 +1,4 @@
-
-
 const webpackMerge = require('webpack-merge');
-
 const config = require('./webpack.config.dcr.js');
 
 module.exports = webpackMerge.smart(config, {

@@ -1,4 +1,3 @@
-
 const path = require('path');
 const CircularDependencyPlugin = require('circular-dependency-plugin');
 const webpack = require('webpack');
@@ -70,6 +69,7 @@ module.exports = {
             svgs: path.join(__dirname, 'static', 'src', 'inline-svgs'),
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
+            lodash: 'lodash-es',
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
         symlinks: false, // Inserted to enable linking @guardian/consent-management-platform
