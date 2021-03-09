@@ -42,7 +42,6 @@ case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, 
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
 case class ContentAtomBlockElement(atomId: String, atomtype: String) extends BlockElement
-case class InteractiveBlockElement(html: Option[String]) extends BlockElement
 case class CommentBlockElement(html: Option[String]) extends BlockElement
 case class TableBlockElement(html: Option[String]) extends BlockElement
 case class WitnessBlockElement(html: Option[String]) extends BlockElement
@@ -51,6 +50,8 @@ case class InstagramBlockElement(html: Option[String]) extends BlockElement
 case class VineBlockElement(html: Option[String]) extends BlockElement
 case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
+
+case class InteractiveBlockElement(html: Option[String], scriptUrl: Option[String] = None) extends BlockElement
 
 case class MembershipBlockElement(
     originalUrl: Option[String],
@@ -157,7 +158,7 @@ object BlockElement {
       case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType))
 
       case Pullquote       => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
-      case Interactive     => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html))
+      case Interactive     => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, d.scriptUrl))
       case Comment         => element.commentTypeData.map(d => CommentBlockElement(d.html))
       case Table           => element.tableTypeData.map(d => TableBlockElement(d.html))
       case Witness         => element.witnessTypeData.map(d => WitnessBlockElement(d.html))
