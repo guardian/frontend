@@ -17,7 +17,7 @@ import scala.concurrent.Await
 import test._
 
 @DoNotDiscover class FaciaMetaDataTest
-  extends FlatSpec
+    extends FlatSpec
     with Matchers
     with ConfiguredTestSuite
     with BeforeAndAfterAll

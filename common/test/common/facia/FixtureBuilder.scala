@@ -126,7 +126,7 @@ object FixtureBuilder {
       enriched = None,
       supportingContent = Nil,
       cardStyle = DefaultCardstyle,
-      format = Some(ContentFormat.defaultContentFormat)
+      format = Some(ContentFormat.defaultContentFormat),
     )
   }
 }
