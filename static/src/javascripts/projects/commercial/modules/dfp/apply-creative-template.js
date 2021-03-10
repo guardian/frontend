@@ -1,12 +1,12 @@
 import fastdom from '../../../../lib/fastdom-promise';
 import reportError from '../../../../lib/report-error';
-
 import { Frame } from '../creatives/frame';
 import { FabricV1 } from '../creatives/fabric-v1';
 import { FabricExpandingV1 } from '../creatives/fabric-expanding-v1';
 import { FabricExpandableVideoV2 } from '../creatives/fabric-expandable-video-v2';
 import { FabricVideo } from '../creatives/fabric-video';
 import { ScrollableMpu } from '../creatives/scrollable-mpu-v2';
+import config from 'lib/config';
 
 const creativeLookup = {
     frame: Frame,
@@ -62,6 +62,16 @@ const renderCreativeTemplate = (
 
     const creativeConfig = fetchCreativeConfig();
 
+    if (config.get('switches.applyCreativeTemplate', false) && creativeConfig) {
+        reportError(
+            Error(`Apply Creative Templates is used: ${creativeConfig}`),
+            {
+                feature: 'commercial',
+            },
+            false
+        );
+    }
+
     if (creativeConfig) {
         return hideIframe()
             .then(() => JSON.parse(creativeConfig))
@@ -94,7 +104,7 @@ const getAdvertIframe = (adSlot) =>
         } else if (
             // According to Flow, readyState exists on the Document, not the HTMLIFrameElement
             // Is this different for old IE?
-            
+
             contentFrame.readyState &&
             contentFrame.readyState !== 'complete'
         ) {
@@ -102,7 +112,7 @@ const getAdvertIframe = (adSlot) =>
             const getIeIframe = e => {
                 const updatedIFrame = e.srcElement;
 
-                
+
                 if (updatedIFrame && updatedIFrame.readyState === 'complete') {
                     updatedIFrame.removeEventListener(
                         'readystatechange',
