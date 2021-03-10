@@ -3,7 +3,6 @@ package conf.switches
 import conf.switches.Expiry.never
 import conf.switches.Owner.group
 import conf.switches.SwitchGroup.{Commercial, CommercialPrebid, Membership}
-import org.joda.time.LocalDate
 
 trait CommercialSwitches {
 
@@ -478,6 +477,16 @@ trait PrebidSwitches {
     description = "Include Mobile Sticky leaderboard banner in Prebid",
     owners = group(Commercial),
     safeState = On,
+    sellByDate = never,
+    exposeClientSide = true,
+  )
+
+  val applyCreativeTemplate: Switch = Switch(
+    group = Commercial,
+    name = "apply-creative-template",
+    description = "Test what happens if we remove apply creative template code",
+    owners = group(Commercial),
+    safeState = Off,
     sellByDate = never,
     exposeClientSide = true,
   )
