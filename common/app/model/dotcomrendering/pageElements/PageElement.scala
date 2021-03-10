@@ -801,7 +801,6 @@ object PageElement {
       for {
         contentAtom <- element.contentAtomTypeData
         atom <- atoms.find(_.id == contentAtom.atomId)
-        atomRole <- contentAtom.role
       } yield atom
 
     element.`type` match {
@@ -1061,6 +1060,11 @@ object PageElement {
           }
 
           case Some(interactive: InteractiveAtom) => {
+            val maybeRole = for {
+            contentAtom <- element.contentAtomTypeData
+            role <- contentAtom.role
+            } yield role
+
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
@@ -1070,7 +1074,7 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
-                role = Some(interactive.role),
+                role = maybeRole,
               ),
             )
           }

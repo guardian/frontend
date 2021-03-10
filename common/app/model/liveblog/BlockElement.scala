@@ -156,7 +156,7 @@ object BlockElement {
 
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType, Some(d.role)))
+      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType, d.role))
 
       case Pullquote       => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
       case Interactive     => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, d.scriptUrl))
