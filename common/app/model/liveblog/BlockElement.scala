@@ -41,7 +41,8 @@ case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, 
     extends BlockElement
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
-case class ContentAtomBlockElement(atomId: String, atomtype: String) extends BlockElement
+case class ContentAtomBlockElement(atomId: String, atomtype: String, role: Option[String]) extends BlockElement
+case class InteractiveBlockElement(html: Option[String]) extends BlockElement
 case class CommentBlockElement(html: Option[String]) extends BlockElement
 case class TableBlockElement(html: Option[String]) extends BlockElement
 case class WitnessBlockElement(html: Option[String]) extends BlockElement
@@ -155,7 +156,7 @@ object BlockElement {
 
       case Embed => element.embedTypeData.map(d => EmbedBlockElement(d.html, d.safeEmbedCode, d.alt))
 
-      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType))
+      case Contentatom => element.contentAtomTypeData.map(d => ContentAtomBlockElement(d.atomId, d.atomType, Some(d.role)))
 
       case Pullquote       => element.pullquoteTypeData.map(d => PullquoteBlockElement(d.html))
       case Interactive     => element.interactiveTypeData.map(d => InteractiveBlockElement(d.html, d.scriptUrl))

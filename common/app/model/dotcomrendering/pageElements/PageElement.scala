@@ -291,6 +291,7 @@ case class InteractiveAtomBlockElement(
     css: Option[String],
     js: Option[String],
     placeholderUrl: Option[String],
+    role: Option[String]
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -800,6 +801,7 @@ object PageElement {
       for {
         contentAtom <- element.contentAtomTypeData
         atom <- atoms.find(_.id == contentAtom.atomId)
+        atomRole <- contentAtom.role
       } yield atom
 
     element.`type` match {
@@ -1068,6 +1070,7 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
+                role = Some(interactive.role),
               ),
             )
           }
