@@ -6,9 +6,8 @@ import mediator from 'lib/mediator';
 import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
-import fetch from 'lib/fetch-json';
+import fetchJson from 'lib/fetch-json';
 import qs from 'qs';
-import reqwest from 'reqwest';
 import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
 let userFromCookieCache = null;
@@ -66,7 +65,7 @@ export const getUserFromCookie = () => {
 };
 
 export const updateNewsletter = (newsletter) =>
-    reqwest({
+    fetch({
         url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
         method: 'PATCH',
         type: 'json',
@@ -243,7 +242,7 @@ export const updateUsername = (username) => {
 export const getAllConsents = () => {
     const endpoint = '/consents';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
         headers: { Accept: 'application/json' },
@@ -253,7 +252,7 @@ export const getAllConsents = () => {
 export const getAllNewsletters = () => {
     const endpoint = '/newsletters';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
         headers: { Accept: 'application/json' },
@@ -263,7 +262,7 @@ export const getAllNewsletters = () => {
 export const getSubscribedNewsletters = () => {
     const endpoint = '/users/me/newsletters';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
         headers: { Accept: 'application/json' },
@@ -280,7 +279,7 @@ export const getSubscribedNewsletters = () => {
 
 export const setConsent = (consents) =>
     new Promise((success, error) => {
-        reqwest({
+        fetch({
             url: `${idApiRoot || ''}/users/me/consents`,
             method: 'PATCH',
             type: 'json',
@@ -307,7 +306,7 @@ export const ajaxSignIn = (credentials) => {
         body.componentEventParams = createAuthenticationComponentEvent('guardian_smartlock', window.guardian.ophan.viewId);
     }
 
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -317,7 +316,7 @@ export const ajaxSignIn = (credentials) => {
 };
 
 export const getUserData = () =>
-    fetch(`${idApiRoot || ''}/user/me`, {
+    fetchJson(`${idApiRoot || ''}/user/me`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',

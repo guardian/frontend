@@ -1,4 +1,3 @@
-import reqwest from 'reqwest';
 import config from 'lib/config';
 import raven from 'lib/raven';
 // This should no longer be used.
@@ -13,7 +12,7 @@ const ajax = (params) => {
         options.crossOrigin = true;
     }
 
-    const r = reqwest(options);
+    const r = fetch(options);
 
     raven.wrap(
         {
