@@ -1,5 +1,4 @@
 import config from 'lib/config';
-import fetch from 'lib/fetch';
 
 const fire = (path) => {
     const img = new Image();

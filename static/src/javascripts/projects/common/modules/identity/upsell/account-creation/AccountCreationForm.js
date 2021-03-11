@@ -1,5 +1,4 @@
 import React, { Component } from 'preact/compat';
-import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
@@ -20,7 +19,7 @@ class AccountCreationForm extends Component {
             errors: [],
         });
 
-        reqwest({
+        fetch({
             url: '/password/guest',
             method: 'post',
             data: {

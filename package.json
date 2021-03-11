@@ -119,6 +119,7 @@
     "lodash.uniq": "^4.5.0",
     "megalog": "^0.1.0",
     "mkdirp": "0.5.1",
+    "node-fetch": "^2.6.1",
     "node-sass": "^4.5.3",
     "ora": "^1.3.0",
     "pa11y": "^4.13.1",
@@ -193,7 +194,8 @@
     },
     "testResultsProcessor": "jest-teamcity-reporter",
     "setupFilesAfterEnv": [
-      "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js"
+      "<rootDir>/dev/jest.setupTestFrameworkScriptFile.js",
+      "<rootDir>/dev/nodeFetch.js"
     ],
     "testEnvironment": "jest-environment-jsdom-global",
     "testURL": "http://testurl.theguardian.com",
