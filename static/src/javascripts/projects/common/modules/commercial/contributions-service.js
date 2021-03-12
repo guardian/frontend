@@ -27,6 +27,8 @@ import {
     isRecurringContributor,
     shouldHideSupportMessaging,
 } from './user-features';
+import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -225,6 +227,19 @@ const getStickyBottomBanner = (payload) => {
     });
 };
 
+const getPuzzlesBanner = () => {
+    const isProd = config.get('page.isProd');
+    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles';
+
+    const forcedVariant = getForcedVariant('puzzles');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${URL}${queryString}`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+    });
+}
+
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
@@ -288,7 +303,20 @@ const renderEpic = async (module, meta) => {
 };
 
 export const fetchBannerData = async () => {
+    const page = config.get('page');
     const payload = await buildBannerPayload();
+    const isInPuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+
+    if (isInPuzzlesBannerTest &&
+        !payload.targeting.shouldHideReaderRevenue &&
+        (page.section === 'crosswords' || page.series === 'Sudoku')) {
+        return getPuzzlesBanner().then(json => {
+            if (!json.data) {
+                return null;
+            }
+            return (json);
+        })
+    }
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
         return Promise.resolve(null);
@@ -319,7 +347,6 @@ export const renderBanner = (response) => {
         return Promise.resolve(false);
     }
 
-    
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];

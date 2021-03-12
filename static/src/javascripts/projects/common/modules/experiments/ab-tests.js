@@ -1,9 +1,11 @@
 import { signInGateMainVariant } from 'common/modules/experiments/tests/sign-in-gate-main-variant';
 import { signInGateMainControl } from 'common/modules/experiments/tests/sign-in-gate-main-control';
 import { signInGateCopyOpt } from 'common/modules/experiments/tests/sign-in-gate-copy-opt';
+import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
 
 export const concurrentTests = [
     signInGateMainVariant,
     signInGateMainControl,
-    signInGateCopyOpt
+    signInGateCopyOpt,
+    puzzlesBanner,
 ];
