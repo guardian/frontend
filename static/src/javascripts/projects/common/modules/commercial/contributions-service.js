@@ -3,7 +3,7 @@ import {
     getViewLog,
     getWeeklyArticleHistory,
 } from '@guardian/automat-contributions';
-import { mountDynamic } from '@guardian/automat-modules';
+import { mountDynamic } from '../../../common/modules/mount-dynamic';
 import { onConsentChange } from '@guardian/consent-management-platform';
 import userPrefs from 'common/modules/user-prefs';
 import config from '../../../../lib/config';
@@ -319,7 +319,7 @@ export const renderBanner = (response) => {
         return Promise.resolve(false);
     }
 
-    
+
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
