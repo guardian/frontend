@@ -1,4 +1,4 @@
-import React, { Component, findDOMNode } from 'preact-compat';
+import React, { Component, findDOMNode } from 'react';
 import bonzo from 'bonzo';
 import fastdom from 'fastdom';
 import { scrollTo } from 'lib/scroller';

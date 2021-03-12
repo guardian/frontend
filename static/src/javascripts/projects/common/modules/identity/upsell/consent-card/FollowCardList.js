@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import config from 'lib/config';
 import { FollowCard } from 'common/modules/identity/upsell/consent-card/FollowCard';
 import {

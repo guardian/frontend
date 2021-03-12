@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'react';
 
 const round = x => Math.round(x * 100) / 100;
 /**

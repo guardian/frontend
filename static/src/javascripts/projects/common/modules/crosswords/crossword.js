@@ -1,4 +1,4 @@
-import React, { Component, findDOMNode } from 'preact-compat';
+import React, { Component, findDOMNode } from 'react';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';

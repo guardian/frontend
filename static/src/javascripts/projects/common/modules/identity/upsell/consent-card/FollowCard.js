@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import { FollowButtonWrap } from 'common/modules/identity/upsell/button/FollowButtonWrap';
 
 

@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import circlesLeft from './circles-left.svg';
 import circlesRight from './circles-right.svg';
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'react';
 import { classNames } from 'common/modules/crosswords/classNames';
 
 const timeout = 2000;

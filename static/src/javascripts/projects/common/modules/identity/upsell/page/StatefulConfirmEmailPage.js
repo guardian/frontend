@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import { ConfirmEmailPage } from './ConfirmEmailPage';
 import { getUserData } from '../../api';
 

@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'react';
 
 
 // Checks a object in the form{",":[4,7]}

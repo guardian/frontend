@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'react';
 import { Checkbox } from 'common/modules/identity/upsell/checkbox/Checkbox';
 import { OptoutsExpanderButton } from 'common/modules/identity/upsell/button/OptoutsExpanderButton';
 import {

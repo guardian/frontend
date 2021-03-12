@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import plus from 'svgs/icon/plus.svg';
 import minus from 'svgs/icon/minus.svg';
 

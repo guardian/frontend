@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 
 import { NewsLetterSignUps } from './NewsLetterSignUps';
 import { OptOuts } from './OptOuts';

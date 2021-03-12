@@ -1,4 +1,4 @@
-import React, { Component, render } from 'preact-compat';
+import React, { Component, render } from 'react';
 
 import { saveState, isOn } from 'common/modules/accessibility/main';
 

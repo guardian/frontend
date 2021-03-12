@@ -1,4 +1,4 @@
-import React from 'preact-compat';
+import React from 'react';
 import { Block } from '../block/Block';
 import { FollowCardList } from '../consent-card/FollowCardList';
 
