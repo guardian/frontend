@@ -1,4 +1,3 @@
-import 'cross-fetch/polyfill';
 import config from 'lib/config';
 
 const json = (
