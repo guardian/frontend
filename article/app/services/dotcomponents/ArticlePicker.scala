@@ -70,7 +70,7 @@ object ArticlePageChecks {
         case _: UnknownBlockElement   => false
         case _: VideoBlockElement     => false
         case _: WitnessBlockElement   => false
-        case ContentAtomBlockElement(_, atomtype) => {
+        case ContentAtomBlockElement(_, atomtype, _) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
@@ -98,7 +98,7 @@ object ArticlePageChecks {
         case _: VideoBlockElement                => false
         case _: GuVideoBlockElement              => false
         case _: EmbedBlockElement                => false
-        case ContentAtomBlockElement(_, "media") => false
+        case ContentAtomBlockElement(_, "media", _) => false
         case _                                   => true
       }
 
