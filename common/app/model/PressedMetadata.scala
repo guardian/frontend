@@ -13,7 +13,7 @@ final case class PressedMetadata(
     pillar: Option[Pillar],
     sectionId: Option[SectionId],
     designType: DesignType,
-    format: ContentFormat,
+    format: Option[ContentFormat],
 )
 
 object PressedMetadata {

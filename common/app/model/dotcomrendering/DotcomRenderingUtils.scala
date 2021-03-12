@@ -14,18 +14,7 @@ import conf.{Configuration, Static}
 import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{
-  Article,
-  ArticleDateTimes,
-  ArticlePage,
-  Badges,
-  CanonicalLiveBlog,
-  DisplayedDateTimesDCR,
-  GUDateTimeFormatNew,
-  LiveBlogPage,
-  PageWithStoryPackage,
-  Pillar,
-}
+import model.{Article, ArticleDateTimes, ArticlePage, Badges, CanonicalLiveBlog, ContentFormat, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
 import navigation._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
@@ -503,7 +492,7 @@ object DotcomRenderingUtils {
       editionLongForm = Edition(request).displayName, // TODO check
       editionId = edition.id,
       pageId = article.metadata.id,
-      format = article.metadata.format,
+      format = article.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       designType = designTypeAsString(article.metadata.designType),
       tags = allTags,
       pillar = findPillar(article.metadata.pillar, article.metadata.designType),

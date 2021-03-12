@@ -96,7 +96,7 @@ object OnwardItemNx2 {
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
       designType = metadata.designType.toString,
-      format = metadata.format,
+      format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
       headline = headline,
       mediaType = contentCard.mediaType.map(x => x.toString),
