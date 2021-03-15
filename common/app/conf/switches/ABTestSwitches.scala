@@ -26,6 +26,16 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
+    "ab-sign-in-gate-mandatory",
+    "Compare mandatory signin gate",
+    owners = Seq(Owner.withGithub("quarpt")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 6, 4),
+    exposeClientSide = true,
+  )
+
+  Switch(
+    ABTests,
     "ab-deeply-read-test",
     "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
     owners = Seq(Owner.withGithub("nitro-marky")),
