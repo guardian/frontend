@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import { AccountCreationFeatures } from './AccountCreationFeatures';
 import { AccountCreationForm } from './AccountCreationForm';
 import { AccountBenefits } from './AccountBenefits';
