@@ -1,21 +1,21 @@
-import React, { Component } from 'preact-compat';
-
+import React, { Component } from 'react';
 
 class FeedbackFlashBox extends Component {
-    render() {
-        return (
-            <div
-                className={[
-                    'identity-ad-prefs-manager__flash',
-                    this.props.flashing
-                        ? 'identity-ad-prefs-manager__flash--flashing'
-                        : '',
-                ].join(' ')}
-                aria-hidden="true">
-                {this.props.children}
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div
+				className={[
+					'identity-ad-prefs-manager__flash',
+					this.props.flashing
+						? 'identity-ad-prefs-manager__flash--flashing'
+						: '',
+				].join(' ')}
+				aria-hidden="true"
+			>
+				{this.props.children}
+			</div>
+		);
+	}
 }
 
 export { FeedbackFlashBox };
