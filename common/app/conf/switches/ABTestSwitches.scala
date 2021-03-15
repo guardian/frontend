@@ -26,16 +26,6 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-copy-opt",
-    "Compare 6 different sign-in gate copy updates",
-    owners = Seq(Owner.withGithub("rebecca-thompson")),
-    safeState = Off,
-    sellByDate = new LocalDate(2021, 12, 1),
-    exposeClientSide = true,
-  )
-
-  Switch(
-    ABTests,
     "ab-deeply-read-test",
     "Tests an onward hypothesis by replacing the second tab in the Most Popular container with deeply read items.",
     owners = Seq(Owner.withGithub("nitro-marky")),
