@@ -291,7 +291,7 @@ case class InteractiveAtomBlockElement(
     css: Option[String],
     js: Option[String],
     placeholderUrl: Option[String],
-    role: Option[String]
+    role: Option[String],
 ) extends PageElement
 object InteractiveAtomBlockElement {
   implicit val InteractiveAtomBlockElementWrites: Writes[InteractiveAtomBlockElement] =
@@ -1061,8 +1061,8 @@ object PageElement {
 
           case Some(interactive: InteractiveAtom) => {
             val maybeRole = for {
-            contentAtom <- element.contentAtomTypeData
-            role <- contentAtom.role
+              contentAtom <- element.contentAtomTypeData
+              role <- contentAtom.role
             } yield role
 
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
