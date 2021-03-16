@@ -35,10 +35,6 @@ const getAdvertIframe = (adSlot) =>
         }
     });
 
-/**
- * Not all adverts render themselves - some just provide data for templates that we implement in commercial.js.
- * This looks for any such data and, if we find it, renders the appropriate component.
- */
 const getAdIframe = (adSlot) =>
     getAdvertIframe(adSlot).then(() =>
         Promise.resolve(true)
