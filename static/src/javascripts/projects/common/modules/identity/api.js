@@ -1,5 +1,4 @@
 /* global escape:true */
-import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
@@ -58,14 +57,15 @@ export const getUserFromCookie = () => {
 };
 
 export const updateNewsletter = (newsletter) =>
-    fetch({
+    fetchJson({
         url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
         method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(newsletter),
+        headers: new Headers({
+            'Content-Type': 'application/json'
+        }),
+        credentials: 'include',
+        mode: 'cors',
+        body: JSON.stringify(newsletter),
     });
 
 export const buildNewsletterUpdatePayload = (
@@ -90,24 +90,23 @@ export const buildNewsletterUpdatePayload = (
 
 export const isUserLoggedIn = () => getUserFromCookie() !== null;
 
-export const getUserFromApi = mergeCalls((mergingCallback) => {
-	const apiRoot = idApiRoot || '';
+export const getUserFromApi = mergeCalls(mergingCallback => {
+    const apiRoot = idApiRoot || '';
 
-	if (isUserLoggedIn()) {
-		ajax({
-			url: `${apiRoot}/user/me`,
-			type: 'jsonp',
-			crossOrigin: true,
-		}).then((response) => {
-			if (response.status === 'ok') {
-				mergingCallback(response.user);
-			} else {
-				mergingCallback(null);
-			}
-		});
-	} else {
-		mergingCallback(null);
-	}
+    if (isUserLoggedIn()) {
+        fetchJson({
+            url: `${apiRoot}/user/me`,
+            mode: 'cors',
+        }).then(response => {
+            if (response.status === 'ok') {
+                mergingCallback(response.user);
+            } else {
+                mergingCallback(null);
+            }
+        });
+    } else {
+        mergingCallback(null);
+    }
 });
 
 export const reset = () => {
@@ -120,16 +119,15 @@ export const getCookie = () => getCookieByName(cookieName);
 export const getUrl = () => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
-	const endpoint = '/user/me';
-	const request = ajax({
-		url: (idApiRoot || '') + endpoint,
-		type: 'jsonp',
-		data: {
-			refreshCookie: true,
-		},
-	});
+    const endpoint = '/user/me';
+    const request = fetchJson({
+        url: (idApiRoot || '') + endpoint,
+        body: JSON.stringify({
+            refreshCookie: true,
+        }),
+    });
 
-	return request;
+    return request;
 };
 
 export const redirectTo = (url) => {
@@ -176,14 +174,13 @@ export const shouldAutoSigninInUser = () => {
 export const getUserEmailSignUps = () => {
 	const user = getUserFromCookie();
 
-	if (user) {
-		const endpoint = `/useremails/${user.id}`;
-		const request = ajax({
-			url: (idApiRoot || '') + endpoint,
-			type: 'jsonp',
-			crossOrigin: true,
-			withCredentials: true,
-		});
+    if (user) {
+        const endpoint = `/useremails/${user.id}`;
+        const request = fetchJson({
+            url: (idApiRoot || '') + endpoint,
+            mode: 'cors',
+            credentials: 'include',
+        });
 
 		return request;
 	}
@@ -192,44 +189,44 @@ export const getUserEmailSignUps = () => {
 };
 
 export const sendValidationEmail = () => {
-	const defaultReturnEndpoint = '/email-prefs';
-	const endpoint = '/user/send-validation-email';
-	const returnUrl = getUrlVars().returnUrl
-		? decodeURIComponent(getUrlVars().returnUrl)
-		: (profileRoot || '') + defaultReturnEndpoint;
+    const defaultReturnEndpoint = '/email-prefs';
+    const endpoint = '/user/send-validation-email';
+    const returnUrl = getUrlVars().returnUrl
+        ? decodeURIComponent(getUrlVars().returnUrl)
+        : (profileRoot || '') + defaultReturnEndpoint;
 
-	const request = ajax({
-		url: (idApiRoot || '') + endpoint,
-		type: 'jsonp',
-		crossOrigin: true,
-		data: {
-			method: 'post',
-			returnUrl,
-		},
-	});
+    const request = fetchJson({
+        url: (idApiRoot || '') + endpoint,
+        mode: 'cors',
+        body: JSON.stringify({
+            method: 'post',
+            returnUrl,
+        }),
+    });
 
-	return request;
+    return request;
 };
 
 export const updateUsername = (username) => {
-	const endpoint = '/user/me';
-	const data = {
-		publicFields: {
-			username,
-			displayName: username,
-		},
-	};
-	const request = ajax({
-		url: (idApiRoot || '') + endpoint,
-		type: 'json',
-		crossOrigin: true,
-		method: 'POST',
-		contentType: 'application/json; charset=utf-8',
-		data: JSON.stringify(data),
-		withCredentials: true,
-	});
+    const endpoint = '/user/me';
+    const data = {
+        publicFields: {
+            username,
+            displayName: username,
+        },
+    };
+    const request = fetchJson({
+        url: (idApiRoot || '') + endpoint,
+        mode: 'cors',
+        method: 'POST',
+        headers: new Headers({
+            'Content-Type': 'application/json; charset=utf-8',
+        }),
+        body: JSON.stringify(data),
+        credentials: 'include',
+    });
 
-	return request;
+    return request;
 };
 
 export const getAllConsents = () => {
@@ -238,7 +235,7 @@ export const getAllConsents = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: new Headers({ 'Accept': 'application/json' }),
     });
 };
 
@@ -248,7 +245,7 @@ export const getAllNewsletters = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: new Headers({ 'Accept': 'application/json' }),
     });
 };
 
@@ -258,7 +255,7 @@ export const getSubscribedNewsletters = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: new Headers({ 'Accept': 'application/json' }),
         credentials: 'include',
     })
         .then(json => {
@@ -272,17 +269,17 @@ export const getSubscribedNewsletters = () => {
 
 export const setConsent = (consents) =>
     new Promise((success, error) => {
-        fetch({
+        fetchJson({
             url: `${idApiRoot || ''}/users/me/consents`,
             method: 'PATCH',
-            type: 'json',
-            contentType: 'application/json',
-            withCredentials: true,
-            crossOrigin: true,
-            data: JSON.stringify(consents),
-            error,
-            success,
-        });
+            headers: new Headers({ 'Content-Type': 'application/json'}),
+            credentials: 'include',
+            mode: 'cors',
+            body: JSON.stringify(consents),
+        })
+        .then(success)
+        .catch(error)
+        ;
     });
 export const ajaxSignIn = (credentials) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
