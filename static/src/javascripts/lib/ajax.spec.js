@@ -1,11 +1,10 @@
-import reqwest from 'reqwest';
 import { ajax } from 'lib/ajax';
 
 jest.mock('lib/raven');
-jest.mock('reqwest', () => jest.fn());
 jest.mock('lib/config');
 
-const reqwestSpy = (reqwest);
+global.fetch = jest.fn();
+const reqwestSpy = global.fetch;
 
 describe('ajax', () => {
     beforeEach(() => {

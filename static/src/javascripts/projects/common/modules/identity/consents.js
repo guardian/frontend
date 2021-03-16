@@ -58,11 +58,12 @@ const getInputFields = (labelEl) =>
 
 const unsubscribeFromAll = (buttonEl) => {
     buttonEl.classList.add(isLoadingClassName);
-    return fetch({
-        url: `${config.get('page.idApiUrl')}/remove/consent/all`,
-        method: 'POST',
-        withCredentials: true,
-        crossOrigin: true,
+    return fetch(
+        `${config.get('page.idApiUrl')}/remove/consent/all`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            mode: 'cors',
     });
 };
 

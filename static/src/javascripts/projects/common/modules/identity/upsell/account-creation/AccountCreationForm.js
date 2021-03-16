@@ -1,8 +1,8 @@
 import React, { Component } from 'preact/compat';
+import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
-
 
 class AccountCreationForm extends Component {
     constructor(props) {
@@ -19,7 +19,7 @@ class AccountCreationForm extends Component {
             errors: [],
         });
 
-        fetch({
+        reqwest({
             url: '/password/guest',
             method: 'post',
             data: {
@@ -75,7 +75,8 @@ class AccountCreationForm extends Component {
                         <li id="email_field" aria-hidden>
                             <label
                                 className="identity-forms-input-wrap"
-                                htmlFor="email">
+                                htmlFor="email"
+                            >
                                 <div className="identity-forms-label">
                                     Email
                                 </div>
@@ -98,7 +99,8 @@ class AccountCreationForm extends Component {
                     <li id="password_field">
                         <label
                             className="identity-forms-input-wrap"
-                            htmlFor="password">
+                            htmlFor="password"
+                        >
                             <div className="identity-forms-label">Password</div>
                             <input
                                 className="identity-forms-input"
@@ -120,13 +122,15 @@ class AccountCreationForm extends Component {
                         {isLoading ? (
                             <button
                                 disabled
-                                className="manage-account__button manage-account__button--light manage-account__button--center">
+                                className="manage-account__button manage-account__button--light manage-account__button--center"
+                            >
                                 Hang on...
                             </button>
                         ) : (
                             <button
                                 type="submit"
-                                className="manage-account__button manage-account__button--icon manage-account__button--main">
+                                className="manage-account__button manage-account__button--icon manage-account__button--main"
+                            >
                                 Create an account
                             </button>
                         )}
