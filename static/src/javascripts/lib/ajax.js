@@ -1,3 +1,4 @@
+import fetchJson from 'lib/fetch-json';
 import config from 'lib/config';
 import raven from 'lib/raven';
 // This should no longer be used.
@@ -12,17 +13,22 @@ const ajax = (params) => {
         options.crossOrigin = true;
     }
 
-    const r = fetch(options);
+    const isJsonFetch = ['json','jsonp'].includes(options.type);
+    const { url } = options;
+
+    const r = isJsonFetch ? fetchJson(options) : fetch(url, options);
 
     raven.wrap(
         {
             deep: true,
         },
-        r.then
+        r.then,
     );
     return r;
 };
 
-ajax.setHost = host => {
+ajax.setHost = (host) => {
     ajaxHost = host;
 };
+
+export { ajax };
