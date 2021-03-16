@@ -36,8 +36,8 @@ object ProjectSettings {
     initialize := {
       val _ = initialize.value
       assert(
-        sys.props("java.specification.version") == "1.8",
-        "Java 8 is required for this project.",
+        Set("1.8", "11").contains(sys.props("java.specification.version")),
+        "Java 8 or 11 is required for this project.",
       )
     },
     cleanAll := Def.taskDyn {
