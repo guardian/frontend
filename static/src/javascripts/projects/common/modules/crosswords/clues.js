@@ -1,4 +1,4 @@
-import React, { Component, findDOMNode } from 'preact-compat';
+import React, { Component, findDOMNode } from 'preact/compat';
 import bean from 'bean';
 import fastdom from 'fastdom';
 import { classNames } from 'common/modules/crosswords/classNames';
