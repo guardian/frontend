@@ -44,7 +44,7 @@ export const isInVariantSynchronous = (
     variantId
 ) =>
     getSynchronousTestsToRun().some(
-       t => t.id === test.id && t.variantToRun.id === variantId
+        t => t.id === test.id && t.variantToRun.id === variantId
     );
 
 // This excludes epic & banner tests
