@@ -56,7 +56,7 @@ If you just ship new facia without pressing things will break until the presser 
 #### Prepare the ground
 
 * Choose a quiet time of day, and this will take an hour
-* Can you `ssm` onto the facia-press instances for `CODE` and `PROD`? [No?](https://github.com/guardian/ssm-scala)
+* Can you `ssh` onto the facia-press instances for `CODE` and `PROD`? [No?](https://github.com/guardian/ssm-scala)
 * Turn off continuous integration for `CODE` and `PROD` (via riff-raff)
 * Block deploys: Add a restriction to [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions)
 * Let team know what you're doing
