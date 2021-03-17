@@ -25,6 +25,7 @@ const ajax = (params) => {
         mode: options.crossOrigin ? 'cors' : null,
         headers: headerSize > 0 ? headers : null,
         body: options.data ? JSON.stringify(options.data) : null,
+        credentials: options.withCredentials ? 'include' : null,
     }).filter( e => e[1] !== null )
 
     const init = initArray.length > 0 ? Object.fromEntries(initArray) : undefined;

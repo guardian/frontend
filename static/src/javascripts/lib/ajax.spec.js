@@ -40,6 +40,17 @@ describe('ajax', () => {
         });
     });
 
+    it('should handle withCredentials', () => {
+        ajax({ url: '/endpoint.json', withCredentials: true });
+
+        expect(fetchSpy).toHaveBeenCalledWith(
+            'http://api.nextgen.guardianapps.co.uk/endpoint.json',
+            {
+                mode: 'cors',
+                credentials: 'include',
+        });
+    });
+
     it('should not touch a url that is already absolute', () => {
         ajax({ url: 'http://apis.guardian.co.uk/endpoint.json' });
 
