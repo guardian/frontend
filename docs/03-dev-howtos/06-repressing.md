@@ -2,6 +2,7 @@
 
 The JSON output created by `Facia-press` that is ingested by `Facia` does not have the properties that `Facia` is expecting. You need to re-press the fronts to re-create the JSON. [Read the Fronts architecture here](https://github.com/guardian/frontend/blob/d4422b4537165424e70a898d150db4e806ba04d6/docs/02-architecture/02-fronts-architecture.md).
 
+
 ## Tests failing (PR Build & Locally)
 
 Tests are failing because of mis pressed data committed. In the Teamcity PR build, you can see things like:
@@ -41,6 +42,7 @@ curl -v -X POST http://localhost:9000/press/live/au/media
 
 * Stop facia press, switch to `facia` project and run `test`
 	* Re-running the tests will recreate the JSON in the `data/pressedPage` folder - you'll need to commit those files.
+	* _Note: The S3 buckets for pressed fronts and configs can be found in the CMS for Fronts account rather than the Frontend one on AWS. There is old data probably hanging around the Frontend account but you want to be looking at CMS if you're wondering why tests aren't working._
 
 
 ## Shipping
@@ -54,8 +56,8 @@ If you just ship new facia without pressing things will break until the presser 
 #### Prepare the ground
 
 * Choose a quiet time of day, and this will take an hour
-* Can you `ssh` onto the facia-press instances for `CODE` and `PROD`? [No?](https://github.com/guardian/platform/blob/master/doc/manual/chapters/1.04.ssh-keys.md)
-* Turn off continuous integration of `Preview` and `CODE facia` (via riff-raff)
+* Can you `ssm` onto the facia-press instances for `CODE` and `PROD`? [No?](https://github.com/guardian/ssm-scala)
+* Turn off continuous integration for `CODE` and `PROD` (via riff-raff)
 * Block deploys: Add a restriction to [Riff-Raff](https://riffraff.gutools.co.uk/deployment/restrictions)
 * Let team know what you're doing
 * Email core central prod to let them know preview fronts may error
