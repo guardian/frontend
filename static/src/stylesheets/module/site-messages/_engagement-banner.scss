@@ -10,3 +10,11 @@
     overflow-x: hidden;
 }
 
+.site-message--banner.remote-banner-puzzles {
+    width: 100% !important;
+    z-index: 1090 !important;
+    background: none !important;
+    top: auto !important;
+    position: fixed !important;
+    max-height: 80vh;
+}
