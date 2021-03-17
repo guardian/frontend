@@ -358,7 +358,6 @@ export const renderBanner = (response) => {
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
-            console.log('module name: ', module.name)
 
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
