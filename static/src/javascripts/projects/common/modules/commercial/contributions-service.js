@@ -302,14 +302,17 @@ const renderEpic = async (module, meta) => {
     );
 };
 
-export const fetchBannerData = async () => {
+export const fetchPuzzlesData = async () => {
     const page = config.get('page');
     const payload = await buildBannerPayload();
-    const isInPuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+    const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+    const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
-    if (isInPuzzlesBannerTest &&
-        !payload.targeting.shouldHideReaderRevenue &&
-        (page.section === 'crosswords' || page.series === 'Sudoku')) {
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return Promise.resolve(null);
+    }
+
+    if (forcePuzzlesBannerTest && isPuzzlesPage) {
         return getPuzzlesBanner().then(json => {
             if (!json.data) {
                 return null;
@@ -317,6 +320,11 @@ export const fetchBannerData = async () => {
             return (json);
         })
     }
+    return Promise.resolve(null);
+}
+
+export const fetchBannerData = async () => {
+    const payload = await buildBannerPayload();
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
         return Promise.resolve(null);
