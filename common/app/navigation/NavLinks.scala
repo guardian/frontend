@@ -191,7 +191,6 @@ private object NavLinks {
     "/crosswords",
     children = List(
       NavLink("Blog", "/crosswords/crossword-blog"),
-      NavLink("Editor", "/crosswords/series/crossword-editor-update"),
       NavLink("Quick", "/crosswords/series/quick"),
       NavLink("Cryptic", "/crosswords/series/cryptic"),
       NavLink("Prize", "/crosswords/series/prize"),

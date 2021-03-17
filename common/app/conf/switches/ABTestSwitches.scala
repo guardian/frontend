@@ -26,11 +26,11 @@ trait ABTestSwitches {
 
   Switch(
     ABTests,
-    "ab-sign-in-gate-copy-opt",
-    "Compare 6 different sign-in gate copy updates",
-    owners = Seq(Owner.withGithub("rebecca-thompson")),
+    "ab-sign-in-gate-mandatory",
+    "Compare mandatory signin gate",
+    owners = Seq(Owner.withGithub("quarpt")),
     safeState = Off,
-    sellByDate = new LocalDate(2021, 12, 1),
+    sellByDate = new LocalDate(2021, 6, 4),
     exposeClientSide = true,
   )
 

@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React from 'preact-compat';
+import React from 'preact/compat';
 import plus from 'svgs/icon/plus.svg';
 import minus from 'svgs/icon/minus.svg';
 

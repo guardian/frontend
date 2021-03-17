@@ -1,4 +1,4 @@
-import React, { render } from 'preact-compat';
+import React, { render } from 'preact/compat';
 import fastdom from 'lib/fastdom-promise';
 import { FollowButtonWrap } from './upsell/button/FollowButtonWrap';
 import loadEnhancers from './modules/loadEnhancers';
