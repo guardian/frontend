@@ -1,5 +1,4 @@
 import config from 'lib/config';
-// import type Fetch;
 
 const json = (
     input,
