@@ -18,47 +18,60 @@ describe('ajax', () => {
         reqwestSpy.mockReset();
     });
 
-    it('should proxy calls to reqwest', () => {
-        ajax({ url: '/endpoint.json', param: 'value' });
+    it('should proxy calls to fetch', () => {
+        ajax({ url: '/endpoint.json', data: 'value' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith({
-            url: 'http://api.nextgen.guardianapps.co.uk/endpoint.json',
-            crossOrigin: true,
-            param: 'value',
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            'http://api.nextgen.guardianapps.co.uk/endpoint.json',
+            {
+                mode: 'cors',
+                body: JSON.stringify('value'),
+        });
+    });
+
+    it('should handle contentType', () => {
+        ajax({ url: '/endpoint.json', contentType: 'application/json' });
+
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            'http://api.nextgen.guardianapps.co.uk/endpoint.json',
+            {
+                mode: 'cors',
+                headers: new Headers({'Content-Type': 'application/json'}),
         });
     });
 
     it('should not touch a url that is already absolute', () => {
         ajax({ url: 'http://apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith({
-            url: 'http://apis.guardian.co.uk/endpoint.json',
-        });
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            'http://apis.guardian.co.uk/endpoint.json'
+        );
     });
 
     it('should not touch a url that is already absolute (https)', () => {
         ajax({ url: 'https://apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith({
-            url: 'https://apis.guardian.co.uk/endpoint.json',
-        });
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            'https://apis.guardian.co.uk/endpoint.json'
+        );
     });
 
     it('should not touch a protocol-less url', () => {
         ajax({ url: '//apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith({
-            url: '//apis.guardian.co.uk/endpoint.json',
-        });
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            '//apis.guardian.co.uk/endpoint.json'
+        );
     });
 
     it('should be able to update host', () => {
         ajax.setHost('http://apis.guardian.co.uk');
         ajax({ url: '/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith({
-            url: 'http://apis.guardian.co.uk/endpoint.json',
-            crossOrigin: true,
+        expect(reqwestSpy).toHaveBeenCalledWith(
+            'http://apis.guardian.co.uk/endpoint.json',
+            {
+                mode: 'cors',
         });
     });
 });
