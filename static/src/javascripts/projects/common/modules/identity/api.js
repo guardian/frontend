@@ -275,19 +275,14 @@ export const getSubscribedNewsletters = () => {
 };
 
 export const setConsent = (consents) =>
-    new Promise((success, error) => {
-        fetchJson({
-            url: `${idApiRoot || ''}/users/me/consents`,
-            method: 'PATCH',
-            headers: new Headers({ 'Content-Type': 'application/json'}),
-            credentials: 'include',
-            mode: 'cors',
-            body: JSON.stringify(consents),
-        })
-        .then(success)
-        .catch(error)
-        ;
-    });
+    fetchJson({
+        url: `${idApiRoot || ''}/users/me/consents`,
+        method: 'PATCH',
+        headers: new Headers({ 'Content-Type': 'application/json'}),
+        credentials: 'include',
+        mode: 'cors',
+        body: JSON.stringify(consents),
+    })
 export const ajaxSignIn = (credentials) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
     const body = {
