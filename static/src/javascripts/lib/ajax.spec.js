@@ -4,24 +4,24 @@ jest.mock('lib/raven');
 jest.mock('lib/config');
 
 global.fetch = jest.fn();
-const reqwestSpy = global.fetch;
+const fetchSpy = global.fetch;
 
 describe('ajax', () => {
     beforeEach(() => {
         ajax.setHost('http://api.nextgen.guardianapps.co.uk');
-        reqwestSpy.mockImplementation(() => ({
+        fetchSpy.mockImplementation(() => ({
             then() {},
         }));
     });
 
     afterEach(() => {
-        reqwestSpy.mockReset();
+        fetchSpy.mockReset();
     });
 
     it('should proxy calls to fetch', () => {
         ajax({ url: '/endpoint.json', data: 'value' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             'http://api.nextgen.guardianapps.co.uk/endpoint.json',
             {
                 mode: 'cors',
@@ -32,7 +32,7 @@ describe('ajax', () => {
     it('should handle contentType', () => {
         ajax({ url: '/endpoint.json', contentType: 'application/json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             'http://api.nextgen.guardianapps.co.uk/endpoint.json',
             {
                 mode: 'cors',
@@ -43,7 +43,7 @@ describe('ajax', () => {
     it('should not touch a url that is already absolute', () => {
         ajax({ url: 'http://apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             'http://apis.guardian.co.uk/endpoint.json'
         );
     });
@@ -51,7 +51,7 @@ describe('ajax', () => {
     it('should not touch a url that is already absolute (https)', () => {
         ajax({ url: 'https://apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             'https://apis.guardian.co.uk/endpoint.json'
         );
     });
@@ -59,7 +59,7 @@ describe('ajax', () => {
     it('should not touch a protocol-less url', () => {
         ajax({ url: '//apis.guardian.co.uk/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             '//apis.guardian.co.uk/endpoint.json'
         );
     });
@@ -68,7 +68,7 @@ describe('ajax', () => {
         ajax.setHost('http://apis.guardian.co.uk');
         ajax({ url: '/endpoint.json' });
 
-        expect(reqwestSpy).toHaveBeenCalledWith(
+        expect(fetchSpy).toHaveBeenCalledWith(
             'http://apis.guardian.co.uk/endpoint.json',
             {
                 mode: 'cors',
