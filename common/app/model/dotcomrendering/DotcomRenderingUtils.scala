@@ -14,7 +14,19 @@ import conf.{Configuration, Static}
 import experiments.ActiveExperiments
 import model.content.Atom
 import model.dotcomrendering.pageElements.{DisclaimerBlockElement, PageElement, TextCleaner}
-import model.{Article, ArticleDateTimes, ArticlePage, Badges, CanonicalLiveBlog, ContentFormat, DisplayedDateTimesDCR, GUDateTimeFormatNew, LiveBlogPage, PageWithStoryPackage, Pillar}
+import model.{
+  Article,
+  ArticleDateTimes,
+  ArticlePage,
+  Badges,
+  CanonicalLiveBlog,
+  ContentFormat,
+  DisplayedDateTimesDCR,
+  GUDateTimeFormatNew,
+  LiveBlogPage,
+  PageWithStoryPackage,
+  Pillar,
+}
 import navigation._
 import org.joda.time.DateTime
 import org.joda.time.format.DateTimeFormat
