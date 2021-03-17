@@ -1,4 +1,9 @@
-import { mountDynamic } from '@guardian/automat-modules';
+import React from 'react';
+import { render } from 'react-dom';
+
+import { CacheProvider } from '@emotion/core';
+import createCache from '@emotion/cache';
+
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
@@ -242,23 +247,33 @@ const show = () => import(
             document.body.appendChild(container);
         }
 
-        mountDynamic(
-            container,
-            module.BrazeMessage,
-            {
-                componentName: messageConfig.extras.componentName,
-                logButtonClickWithBraze: (buttonId) => {
-                    if (appboy) {
-                        const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
-                        appboy.logInAppMessageButtonClick(
-                            thisButton, messageConfig
-                        );
-                    }
-                },
-                submitComponentEvent,
-                brazeMessageProps: messageConfig.extras,
-            },
-            true,
+        const Component = module.BrazeMessage
+        // const shadowRoot = container.attachShadow({ mode: 'open' });
+        const inner = container.appendChild(document.createElement('div'));
+
+        // const emotionCache = createCache({ container: inner });
+
+        const cached = (
+            // <CacheProvider value={emotionCache}>
+                <Component
+                    componentName={ messageConfig.extras.componentName}
+                    logButtonClickWithBraze={(buttonId) => {
+                        if (appboy) {
+                            const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
+                            appboy.logInAppMessageButtonClick(
+                                thisButton, messageConfig
+                            );
+                        }
+                    }}
+                    submitComponentEvent={submitComponentEvent}
+                    brazeMessageProps={messageConfig.extras}
+                />
+            // </CacheProvider>
+        );
+
+        render(
+            cached,
+            inner
         );
 
         if (appboy) {
