@@ -358,11 +358,12 @@ export const renderBanner = (response) => {
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
+            const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
-                module.name === 'PuzzlesBanner' ?
+                isPuzzlesBanner ?
                     container.classList.add('remote-banner-puzzles') :
                     container.classList.add('remote-banner');
 
@@ -370,20 +371,11 @@ export const renderBanner = (response) => {
                     document.body.insertAdjacentElement('beforeend', container);
                 }
 
-                if (module.name === 'PuzzlesBanner') {
-                    return mountDynamic(
-                        container,
-                        Banner,
-                        { submitComponentEvent, ...module.props},
-                        false
-                    );
-                }
-
                 return mountDynamic(
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    true
+                    isPuzzlesBanner ? false : true
                 );
             }).then(() => {
                 const {
