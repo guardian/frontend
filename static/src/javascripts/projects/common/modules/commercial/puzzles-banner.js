@@ -9,12 +9,6 @@ let data = null;
 const show = () => data ? renderBanner(data) : Promise.resolve(false);
 
 const canShow = () => {
-    const forceBanner = window.location.search.includes('force-remote-banner=true');
-    const enabled = config.get('switches.remoteBanner') || forceBanner;
-
-    if (!enabled) {
-        return Promise.resolve(false);
-    }
 
     return fetchPuzzlesData()
         .then((response)  => {

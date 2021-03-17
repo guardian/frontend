@@ -217,10 +217,7 @@ const getStickyBottomBanner = (payload) => {
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
-    const forcedVariant = getForcedVariant('banner');
-    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
-
-    return fetchJson(`${URL}${queryString}`, {
+    return fetchJson(URL, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: json,
@@ -229,9 +226,9 @@ const getStickyBottomBanner = (payload) => {
 
 const getPuzzlesBanner = () => {
     const isProd = config.get('page.isProd');
-    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles';
+    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles?';
 
-    const forcedVariant = getForcedVariant('puzzles');
+    const forcedVariant = getForcedVariant('banner');
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
 
     return fetchJson(`${URL}${queryString}`, {
