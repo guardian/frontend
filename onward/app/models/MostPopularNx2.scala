@@ -8,7 +8,7 @@ import views.support.{ContentOldAgeDescriber, ImageProfile, ImgSrc, Item300, Ite
 import play.api.libs.json._
 import implicits.FaciaContentFrontendHelpers._
 import layout.ContentCard
-import model.{Article, ImageMedia, InlineImage, Pillar}
+import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
 case class OnwardItemNx2(
@@ -22,6 +22,7 @@ case class OnwardItemNx2(
     isLiveBlog: Boolean,
     pillar: String,
     designType: String,
+    format: ContentFormat,
     webPublicationDate: String,
     headline: String,
     mediaType: Option[String],
@@ -95,6 +96,7 @@ object OnwardItemNx2 {
       isLiveBlog = isLiveBlog,
       pillar = correctPillar(pillar.toString.toLowerCase),
       designType = metadata.designType.toString,
+      format = metadata.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = webPublicationDate,
       headline = headline,
       mediaType = contentCard.mediaType.map(x => x.toString),
@@ -127,6 +129,7 @@ object OnwardItemNx2 {
       isLiveBlog = content.properties.isLiveBlog,
       pillar = content.maybePillar.map(pillarToString).getOrElse("news"),
       designType = content.properties.maybeContent.map(_.metadata.designType).getOrElse(Article).toString,
+      format = content.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = content.webPublicationDate.withZone(DateTimeZone.UTC).toString,
       headline = content.header.headline,
       mediaType = content.card.mediaType.map(_.toString()),
