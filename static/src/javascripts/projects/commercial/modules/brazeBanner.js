@@ -248,13 +248,16 @@ const show = () => import(
         }
 
         const Component = module.BrazeMessage
-        // const shadowRoot = container.attachShadow({ mode: 'open' });
-        const inner = container.appendChild(document.createElement('div'));
+        const shadowRoot = container.attachShadow({ mode: 'open' });
+        const inner = shadowRoot.appendChild(document.createElement('div'));
+        const renderContainer = inner.appendChild(
+            document.createElement('div'),
+        );
 
-        // const emotionCache = createCache({ container: inner });
+        const emotionCache = createCache({ key: 'site-message', container: inner });
 
         const cached = (
-            // <CacheProvider value={emotionCache}>
+            <CacheProvider value={emotionCache}>
                 <Component
                     componentName={ messageConfig.extras.componentName}
                     logButtonClickWithBraze={(buttonId) => {
@@ -268,12 +271,12 @@ const show = () => import(
                     submitComponentEvent={submitComponentEvent}
                     brazeMessageProps={messageConfig.extras}
                 />
-            // </CacheProvider>
+            </CacheProvider>
         );
 
         render(
             cached,
-            inner
+            renderContainer
         );
 
         if (appboy) {
