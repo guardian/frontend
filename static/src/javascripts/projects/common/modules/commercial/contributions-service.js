@@ -360,9 +360,7 @@ export const renderBanner = (response) => {
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
-                isPuzzlesBanner ?
-                    container.classList.add('remote-banner-puzzles') :
-                    container.classList.add('remote-banner');
+                container.classList.add('remote-banner', isPuzzlesBanner ? 'remote-banner--puzzles' : '');
 
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
@@ -372,7 +370,7 @@ export const renderBanner = (response) => {
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    isPuzzlesBanner ? false : true
+                    !isPuzzlesBanner // The puzzles banner has its own CacheProvider component, and needs this to be false
                 );
             }).then(() => {
                 const {
