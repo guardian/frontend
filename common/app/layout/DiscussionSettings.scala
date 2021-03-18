@@ -13,8 +13,6 @@ object DiscussionSettings {
     DiscussionSettings(
       faciaContent.discussion.isCommentable,
       faciaContent.discussion.isClosedForComments,
-      //TODO: this is a quick fix only - remove once we've released a fixed fapi client
       faciaContent.discussion.discussionId
-        .map(_.replaceFirst("^[a-zA-Z]+://www.theguardian.com", "")),
     )
 }

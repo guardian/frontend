@@ -16,7 +16,5 @@ object PressedDiscussionSettings {
       isClosedForComments = FaciaContentUtils.isClosedForComments(content),
       discussionId = FaciaContentUtils
         .discussionId(content)
-        //TODO: this is a quick fix only - remove once we've released a fixed fapi client
-        .map(_.replaceFirst("^[a-zA-Z]+://www.theguardian.com", "")),
     )
 }
