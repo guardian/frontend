@@ -1,5 +1,13 @@
 import config from 'lib/config';
 
+/**
+ * Fetches JSON
+ *
+ * @param {RequestInfo} input - The URL to point to
+ * @param {RequestInit} init - Object with options
+ *
+ */
+
 const json = (
     input,
     init = {}
