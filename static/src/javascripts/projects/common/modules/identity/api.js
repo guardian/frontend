@@ -64,8 +64,7 @@ export const getUserFromCookie = () => {
 };
 
 export const updateNewsletter = (newsletter) =>
-    fetchJson({
-        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
+    fetchJson(`${config.get('page.idApiUrl')}/users/me/newsletters`, {
         method: 'PATCH',
         headers: new Headers({
             'Content-Type': 'application/json'
@@ -101,8 +100,7 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
     const apiRoot = idApiRoot || '';
 
     if (isUserLoggedIn()) {
-        fetchJson({
-            url: `${apiRoot}/user/me`,
+        fetchJson(`${apiRoot}/user/me`, {
             mode: 'cors',
             credentials: 'include',
         }).then(response => {
@@ -128,8 +126,8 @@ export const getUrl = () => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
-    const request = fetchJson({
-        url: (idApiRoot || '') + endpoint,
+    const url = (idApiRoot || '') + endpoint
+    const request = fetchJson(url, {
         body: JSON.stringify({
             refreshCookie: true,
         }),
@@ -186,8 +184,8 @@ export const getUserEmailSignUps = () => {
 
     if (user) {
         const endpoint = `/useremails/${user.id}`;
-        const request = fetchJson({
-            url: (idApiRoot || '') + endpoint,
+        const url = (idApiRoot || '') + endpoint;
+        const request = fetchJson(url, {
             mode: 'cors',
             credentials: 'include',
         });
@@ -205,8 +203,8 @@ export const sendValidationEmail = () => {
         ? decodeURIComponent(getUrlVars().returnUrl)
         : (profileRoot || '') + defaultReturnEndpoint;
 
-    const request = fetchJson({
-        url: (idApiRoot || '') + endpoint,
+    const url = (idApiRoot || '') + endpoint;
+    const request = fetchJson(url, {
         mode: 'cors',
         body: JSON.stringify({
             method: 'post',
@@ -226,8 +224,8 @@ export const updateUsername = (username) => {
             displayName: username,
         },
     };
-    const request = fetchJson({
-        url: (idApiRoot || '') + endpoint,
+    const url = (idApiRoot || '') + endpoint;
+    const request = fetchJson(url, {
         mode: 'cors',
         method: 'POST',
         headers: new Headers({
