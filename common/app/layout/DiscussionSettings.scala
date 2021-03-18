@@ -13,6 +13,6 @@ object DiscussionSettings {
     DiscussionSettings(
       faciaContent.discussion.isCommentable,
       faciaContent.discussion.isClosedForComments,
-      faciaContent.discussion.discussionId
+      faciaContent.discussion.discussionId,
     )
 }

@@ -15,6 +15,6 @@ object PressedDiscussionSettings {
       isCommentable = FaciaContentUtils.isCommentable(content),
       isClosedForComments = FaciaContentUtils.isClosedForComments(content),
       discussionId = FaciaContentUtils
-        .discussionId(content)
+        .discussionId(content),
     )
 }
