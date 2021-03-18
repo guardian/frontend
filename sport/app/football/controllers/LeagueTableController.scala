@@ -34,7 +34,7 @@ class LeagueTableController(
     "Ligue 1",
     "Women's Super League",
     "Champions League",
-    "Euro 2020 qualifying",
+    "World Cup 2022 qualifying",
     "Europa League",
     "Carabao Cup",
     "International friendlies",
