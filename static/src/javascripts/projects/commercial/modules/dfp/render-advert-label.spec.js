@@ -30,6 +30,16 @@ describe('Rendering advert labels', () => {
         adverts.frame = bonzo(
             bonzo.create('<div class="js-ad-slot ad-slot--frame"></div>')
         );
+
+        adverts.topAboveNav = bonzo(
+            bonzo.create(`<div class="js-ad-slot" id="dfp-ad--top-above-nav"></div>`)
+        );
+    });
+
+    afterEach(() => {
+        if (document.body) {
+            document.body.innerHTML = '';
+        }
     });
 
     it(`Can add a label`, () =>
@@ -62,5 +72,32 @@ describe('Rendering advert labels', () => {
         renderAdvertLabel(adverts.frame[0]).then(() => {
             const label = adverts.frame[0].querySelector(labelSelector);
             expect(label).toBeNull();
+        }));
+
+    it('When the ad is top above nav and the label is toggleable make the label visible and set width to ad width', () => {
+        if (document.body) {
+            document.body.innerHTML = `
+                <div>
+                    <div class="ad-slot__label ad-slot__label--toggle hidden">Advertisement</div>
+                    <div class="js-ad-slot" id="dfp-ad--top-above-nav"></div>
+                </div>
+            `;
+        }
+        Object.defineProperty(window.HTMLElement.prototype, 'offsetWidth', {
+            get: function() {
+              return this.id === "dfp-ad--top-above-nav" ? 120 : 60;
+            }
+          });
+        return renderAdvertLabel(adverts.topAboveNav[0]).then(() => {
+            const label = document.querySelector(labelSelector);
+            expect(label.classList.contains("visible")).toBe(true);
+            expect(label.style.width).toEqual("120px");
+        });
+    });
+
+    it('When the ad is top above nav and the label is NOT toggleable render the label dynamically', () =>
+        renderAdvertLabel(adverts.topAboveNav[0]).then(() => {
+            const label = adverts.topAboveNav[0].querySelector(labelSelector);
+            expect(label.textContent).toEqual("Advertisement");
         }));
 });
