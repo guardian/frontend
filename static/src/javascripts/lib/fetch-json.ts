@@ -20,13 +20,19 @@ const fetchJson = async (
 		init.credentials = 'include';
 	}
 
-	return fetch(path, options).then((resp) => {
+	return fetch(path, init).then((resp: Response) => {
 		if (resp.ok) {
 			switch (resp.status) {
 				case 204:
-					return {};
+					return Promise.resolve({});
 				default:
-					return resp.json();
+					try {
+						return resp.json();
+					} catch (ex) {
+						throw new Error(
+							`Fetch error while requesting ${path}: Invalid JSON response`,
+						);
+					}
 			}
 		}
 		throw new Error(
