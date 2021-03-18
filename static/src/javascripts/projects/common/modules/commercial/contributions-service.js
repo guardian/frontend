@@ -306,7 +306,7 @@ export const fetchPuzzlesData = async () => {
     const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
-        return Promise.resolve(null);
+        return null;
     }
 
     if (forcePuzzlesBannerTest && isPuzzlesPage) {
@@ -317,7 +317,7 @@ export const fetchPuzzlesData = async () => {
             return (json);
         })
     }
-    return Promise.resolve(null);
+    return null;
 }
 
 export const fetchBannerData = async () => {
