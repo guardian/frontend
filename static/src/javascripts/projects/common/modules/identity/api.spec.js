@@ -80,6 +80,7 @@ describe('Identity API', () => {
             expect(fetchJson).toHaveBeenCalledWith({
                 url: 'https://idapi.theguardian.com/user/me',
                 mode: 'cors',
+                credentials: 'include',
             });
             done();
         };

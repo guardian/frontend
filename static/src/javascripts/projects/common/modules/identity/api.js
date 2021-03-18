@@ -104,6 +104,7 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
         fetchJson({
             url: `${apiRoot}/user/me`,
             mode: 'cors',
+            credentials: 'include',
         }).then(response => {
             if (response.status === 'ok') {
                 mergingCallback(response.user);
