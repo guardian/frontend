@@ -133,6 +133,8 @@ export const getUserFromApiWithRefreshedCookie = () => {
         body: JSON.stringify({
             refreshCookie: true,
         }),
+        mode: 'cors',
+        credentials: 'include',
     });
 
     return request;
@@ -210,6 +212,7 @@ export const sendValidationEmail = () => {
             method: 'post',
             returnUrl,
         }),
+        credentials: 'include',
     });
 
     return request;
@@ -244,6 +247,7 @@ export const getAllConsents = () => {
         mode: 'cors',
         method: 'GET',
         headers: new Headers({ 'Accept': 'application/json' }),
+        credentials: 'include',
     });
 };
 
@@ -254,6 +258,7 @@ export const getAllNewsletters = () => {
         mode: 'cors',
         method: 'GET',
         headers: new Headers({ 'Accept': 'application/json' }),
+        credentials: 'include',
     });
 };
 
@@ -280,8 +285,8 @@ export const setConsent = (consents) =>
         url: `${idApiRoot || ''}/users/me/consents`,
         method: 'PATCH',
         headers: new Headers({ 'Content-Type': 'application/json'}),
-        credentials: 'include',
         mode: 'cors',
+        credentials: 'include',
         body: JSON.stringify(consents),
     })
 export const ajaxSignIn = (credentials) => {
