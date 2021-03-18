@@ -77,8 +77,8 @@ describe('Identity API', () => {
         const expectedUser = {};
         const apiCallback = user => {
             expect(user).toBe(expectedUser);
-            expect(fetchJson).toHaveBeenCalledWith({
-                url: 'https://idapi.theguardian.com/user/me',
+            const url = 'https://idapi.theguardian.com/user/me';
+            expect(fetchJson).toHaveBeenCalledWith(url, {
                 mode: 'cors',
                 credentials: 'include',
             });
