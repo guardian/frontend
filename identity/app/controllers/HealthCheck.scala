@@ -9,5 +9,5 @@ import scala.concurrent.ExecutionContext
 class HealthCheck(wsClient: WSClient, val controllerComponents: ControllerComponents)(implicit
     executionContext: ExecutionContext,
 ) extends AllGoodCachedHealthCheck(
-      NeverExpiresSingleHealthCheck("/"),
+      NeverExpiresSingleHealthCheck("/form/complete"),
     )(wsClient, executionContext)
