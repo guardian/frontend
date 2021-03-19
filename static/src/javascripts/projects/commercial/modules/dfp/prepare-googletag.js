@@ -10,7 +10,7 @@ import raven from '../../../../lib/raven';
 import sha1 from '../../../../lib/sha1';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
-import { getUserFromCookie } from '../../../common/modules/identity/api';
+import { getUserFromApi, getUserFromCookie } from '../../../common/modules/identity/api';
 import { adFreeSlotRemove } from '../ad-free-slot-remove';
 import { init as initMessenger } from '../messenger';
 import { init as background } from '../messenger/background';
@@ -84,11 +84,14 @@ const removeAdSlots = () => {
 };
 
 const setPublisherProvidedId = () => {
-    const user = getUserFromCookie();
-    if (user) {
-        const hashedId = sha1.hash(user.id);
-        window.googletag.pubads().setPublisherProvidedId(hashedId);
-    }
+	// Also known as PPID
+	getUserFromApi((user) => {
+		if (user && user.privateFields && user.privateFields.googleTagId) {
+			window.googletag
+				.pubads()
+				.setPublisherProvidedId(user.privateFields.googleTagId);
+		}
+	});
 };
 
 export const init = () => {
