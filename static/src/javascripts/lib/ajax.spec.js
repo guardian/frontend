@@ -6,6 +6,13 @@ jest.mock('lib/config');
 global.fetch = jest.fn();
 const fetchSpy = global.fetch;
 
+const defaultInit = {
+    body: undefined,
+    credentials: undefined,
+    headers: undefined,
+    mode: undefined
+}
+
 describe('ajax', () => {
     beforeEach(() => {
         ajax.setHost('http://api.nextgen.guardianapps.co.uk');
@@ -24,6 +31,7 @@ describe('ajax', () => {
         expect(fetchSpy).toHaveBeenCalledWith(
             'http://api.nextgen.guardianapps.co.uk/endpoint.json',
             {
+                ...defaultInit,
                 mode: 'cors',
                 body: JSON.stringify('value'),
         });
@@ -35,6 +43,7 @@ describe('ajax', () => {
         expect(fetchSpy).toHaveBeenCalledWith(
             'http://api.nextgen.guardianapps.co.uk/endpoint.json',
             {
+                ...defaultInit,
                 mode: 'cors',
                 headers: new Headers({'Content-Type': 'application/json'}),
         });
@@ -46,6 +55,7 @@ describe('ajax', () => {
         expect(fetchSpy).toHaveBeenCalledWith(
             'http://api.nextgen.guardianapps.co.uk/endpoint.json',
             {
+                ...defaultInit,
                 mode: 'cors',
                 credentials: 'include',
         });
@@ -55,7 +65,8 @@ describe('ajax', () => {
         ajax({ url: 'http://apis.guardian.co.uk/endpoint.json' });
 
         expect(fetchSpy).toHaveBeenCalledWith(
-            'http://apis.guardian.co.uk/endpoint.json'
+            'http://apis.guardian.co.uk/endpoint.json',
+            defaultInit
         );
     });
 
@@ -63,7 +74,8 @@ describe('ajax', () => {
         ajax({ url: 'https://apis.guardian.co.uk/endpoint.json' });
 
         expect(fetchSpy).toHaveBeenCalledWith(
-            'https://apis.guardian.co.uk/endpoint.json'
+            'https://apis.guardian.co.uk/endpoint.json',
+            defaultInit
         );
     });
 
@@ -71,7 +83,8 @@ describe('ajax', () => {
         ajax({ url: '//apis.guardian.co.uk/endpoint.json' });
 
         expect(fetchSpy).toHaveBeenCalledWith(
-            '//apis.guardian.co.uk/endpoint.json'
+            '//apis.guardian.co.uk/endpoint.json',
+            defaultInit
         );
     });
 
@@ -82,6 +95,7 @@ describe('ajax', () => {
         expect(fetchSpy).toHaveBeenCalledWith(
             'http://apis.guardian.co.uk/endpoint.json',
             {
+                ...defaultInit,
                 mode: 'cors',
         });
     });

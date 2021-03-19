@@ -21,16 +21,14 @@ const ajax = (params) => {
     headers.forEach(() => { headerSize++ });
 
 
-    const initArray = Object.entries({
-        mode: options.crossOrigin ? 'cors' : null,
-        headers: headerSize > 0 ? headers : null,
-        body: options.data ? JSON.stringify(options.data) : null,
-        credentials: options.withCredentials ? 'include' : null,
-    }).filter( e => e[1] !== null )
+    const init = {
+        mode: options.crossOrigin ? 'cors' : undefined,
+        headers: headerSize > 0 ? headers : undefined,
+        body: options.data ? JSON.stringify(options.data) : undefined,
+        credentials: options.withCredentials ? 'include' : undefined,
+    }
 
-    const init = initArray.length > 0 ? Object.fromEntries(initArray) : undefined;
-
-    const r = init === undefined ? fetch(url) : fetch(url, init);
+    const r = fetch(url, init);
 
     raven.wrap(
         {
