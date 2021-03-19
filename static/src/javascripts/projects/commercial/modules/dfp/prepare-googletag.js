@@ -7,7 +7,6 @@ import qwery from 'qwery';
 import config from '../../../../lib/config';
 import fastdom from '../../../../lib/fastdom-promise';
 import raven from '../../../../lib/raven';
-import sha1 from '../../../../lib/sha1';
 import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
 import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 import { getUserFromApi, getUserFromCookie } from '../../../common/modules/identity/api';
