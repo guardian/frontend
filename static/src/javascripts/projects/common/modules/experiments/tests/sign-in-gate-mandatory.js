@@ -5,8 +5,8 @@ export const signInGateMandoryTest = {
 	author: 'Peter Colley',
 	description:
 		'Compare mandatory gate (an article sigin gate without the dismiss button) with the main signin gate',
-	audience: 0.20,
-	audienceOffset: 0.70,
+	audience: 0.30,
+	audienceOffset: 0.60,
 	successMeasure: 'Users sign in or create a Guardian account',
 	audienceCriteria:
 		'3rd article of the day, lower priority than consent banner, simple articles (not gallery, live etc.), not signed in, not shown after dismiss or reshown after 5 dismisses, not on help, info sections etc. exclude iOS 9 and guardian-live-australia, UK only, only users with specific CMP consents. Suppresses other banners, and appears over epics',
