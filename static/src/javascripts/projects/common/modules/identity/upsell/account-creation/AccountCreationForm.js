@@ -1,4 +1,5 @@
 import React, { Component } from 'preact/compat';
+import fetchJson from '../../../../../../lib/fetch-json';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
@@ -19,7 +20,7 @@ class AccountCreationForm extends Component {
             errors: [],
         });
 
-        fetch(
+        fetchJson(
             '/password/guest',
             {
                 method: 'POST',

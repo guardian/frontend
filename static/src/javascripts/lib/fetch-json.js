@@ -8,7 +8,7 @@ import config from 'lib/config';
  *
  */
 
-const json = (
+const fetchJson = (
     input,
     init = {}
 ) => {
@@ -50,4 +50,4 @@ const json = (
     });
 };
 
-export default json;
+export default fetchJson;
