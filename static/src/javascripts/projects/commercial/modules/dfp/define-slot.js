@@ -1,4 +1,3 @@
-import flatten from 'lodash/flatten';
 import once from 'lodash/once';
 import uniqBy from 'lodash/uniqBy';
 import config from '../../../../lib/config';
@@ -38,8 +37,10 @@ const buildSizeMapping = (sizes) => {
 const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
+
+    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((a, b) => [...a, ...b], [])
     const sizes = uniqBy(
-        flatten(sizeMapping.map(size => size[1])),
+        flattenSizeMappings,
         size => `${size[0]}-${size[1]}`
     );
 
