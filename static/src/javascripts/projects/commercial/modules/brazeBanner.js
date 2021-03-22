@@ -162,13 +162,25 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 };
 
 const maybeWipeUserData = async (apiKey, brazeUuid) => {
-    if (!brazeUuid && hasCurrentBrazeUser()) {
-        appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+    const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
+    const slotNames = ['Banner','EndOfArticle']
 
-        appboy.initialize(apiKey, SDK_OPTIONS);
-
+    if (userHasLoggedOut) {
         try {
-            appboy.wipeData();
+            if (apiKey){
+                appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+                appboy.initialize(apiKey, SDK_OPTIONS);
+                appboy.wipeData();
+            }
+
+            // DCR has an implementation of LocalMessageCache but Frontend does not
+            // We should still wipe the cache from Frontend if the user logs out
+            const localStorageKeyBase = 'gu.brazeMessageCache'
+            slotNames.forEach(slotName => {
+                const key = `${localStorageKeyBase}.${slotName}`
+                storage.local.remove(key);
+            })
+
             clearHasCurrentBrazeUser();
         } catch(error) {
             reportError(error, {}, false);
