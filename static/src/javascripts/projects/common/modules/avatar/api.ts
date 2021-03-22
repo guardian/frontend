@@ -1,42 +1,38 @@
-import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 
-const apiUrl = `${config.get('page.avatarApiUrl')}/v1`;
-const staticUrl = `${config.get('page.avatarImagesUrl')}/user`;
-
+const apiUrl = `${String(config.get('page.avatarApiUrl'))}/v1`;
+const staticUrl = `${String(config.get('page.avatarImagesUrl'))}/user`;
 
 const request = (
-    method,
-    path,
-    data
-) => {
-    const params = {
-        url: apiUrl + path,
-        type: 'json',
-        data,
-        processData: false,
-        method,
-        crossOrigin: true,
-        withCredentials: true,
-    };
-
-    return ajax(params);
+	method: string,
+	path: string,
+	data?: Record<string, unknown>,
+): Promise<Response> => {
+	const url = apiUrl + path;
+	return fetch(url, {
+		body: JSON.stringify(data),
+		method,
+		mode: 'cors',
+		credentials: 'include',
+	});
 };
 
 // A user's 'active' avatar is only available to signed-in users as it
 // includes avatars in a pre-mod state.
-const getActive = () => request('GET', '/avatars/user/me/active');
+const getActive = (): Promise<Response> =>
+	request('GET', '/avatars/user/me/active');
 
-const updateAvatar = (data) =>
-    request('POST', '/avatars', data);
+const updateAvatar = (data: Record<string, unknown>): Promise<Response> =>
+	request('POST', '/avatars', data);
 
 // The deterministic URL always returns an image. If the user has no avatar,
 // a default image is returned.
-const deterministicUrl = (userId) => `${staticUrl}/${userId}`;
+const deterministicUrl = (userId: number): string => `${staticUrl}/${userId}`;
 
+// eslint-disable-next-line import/no-default-export -- that’s how it was set up
 export default {
-    request,
-    getActive,
-    updateAvatar,
-    deterministicUrl,
+	request,
+	getActive,
+	updateAvatar,
+	deterministicUrl,
 };
