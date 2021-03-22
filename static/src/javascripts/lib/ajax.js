@@ -13,17 +13,15 @@ const ajax = (params) => {
     }
 
     const { url } = options;
-    const headers = new Headers();
+    const headers = { ...options.headers };
     if(options.headers !== undefined) headers.append( options.headers );
     if(options.contentType !== undefined)
-        headers.append('Content-Type', options.contentType );
-    let headerSize = 0;
-    headers.forEach(() => { headerSize++ });
+        headers['Content-Type'] = options.contentType;
 
 
     const init = {
         mode: options.crossOrigin ? 'cors' : undefined,
-        headers: headerSize > 0 ? headers : undefined,
+        headers: Object.keys(headers).length > 0 ? headers : undefined,
         body: options.data ? JSON.stringify(options.data) : undefined,
         credentials: options.withCredentials ? 'include' : undefined,
     }

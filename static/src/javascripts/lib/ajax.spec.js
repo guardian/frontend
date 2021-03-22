@@ -45,7 +45,7 @@ describe('ajax', () => {
             {
                 ...defaultInit,
                 mode: 'cors',
-                headers: new Headers({'Content-Type': 'application/json'}),
+                headers: {'Content-Type': 'application/json'},
         });
     });
 

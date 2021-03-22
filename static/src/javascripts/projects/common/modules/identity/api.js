@@ -66,9 +66,9 @@ export const getUserFromCookie = () => {
 export const updateNewsletter = (newsletter) =>
     fetchJson(`${config.get('page.idApiUrl')}/users/me/newsletters`, {
         method: 'PATCH',
-        headers: new Headers({
+        headers: {
             'Content-Type': 'application/json'
-        }),
+        },
         credentials: 'include',
         mode: 'cors',
         body: JSON.stringify(newsletter),
@@ -228,9 +228,9 @@ export const updateUsername = (username) => {
     const request = fetchJson(url, {
         mode: 'cors',
         method: 'POST',
-        headers: new Headers({
+        headers: {
             'Content-Type': 'application/json; charset=utf-8',
-        }),
+        },
         body: JSON.stringify(data),
         credentials: 'include',
     });
@@ -244,7 +244,7 @@ export const getAllConsents = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: new Headers({ 'Accept': 'application/json' }),
+        headers: { 'Accept': 'application/json' },
         credentials: 'include',
     });
 };
@@ -255,7 +255,7 @@ export const getAllNewsletters = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: new Headers({ 'Accept': 'application/json' }),
+        headers: { 'Accept': 'application/json' },
         credentials: 'include',
     });
 };
@@ -266,7 +266,7 @@ export const getSubscribedNewsletters = () => {
     return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: new Headers({ 'Accept': 'application/json' }),
+        headers: { 'Accept': 'application/json' },
         credentials: 'include',
     })
         .then(json => {
@@ -282,7 +282,7 @@ export const setConsent = (consents) =>
     fetchJson({
         url: `${idApiRoot || ''}/users/me/consents`,
         method: 'PATCH',
-        headers: new Headers({ 'Content-Type': 'application/json'}),
+        headers: { 'Content-Type': 'application/json'},
         mode: 'cors',
         credentials: 'include',
         body: JSON.stringify(consents),
