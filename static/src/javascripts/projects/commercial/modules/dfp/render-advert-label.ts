@@ -1,7 +1,12 @@
+/* eslint-disable @typescript-eslint/no-misused-promises
+-- Fastdom measure and mutate signatures are Promise<void>
+-- Nested fastdom measure-mutate promises throw the error:
+-- "Promise returned in function argument where a void return was expected"
+*/
 import crossIcon from 'svgs/icon/cross.svg';
 import fastdom from '../../../../lib/fastdom-promise';
 
-const shouldRenderLabel = (adSlotNode) =>
+const shouldRenderLabel = (adSlotNode: HTMLElement) =>
 	!(
 		adSlotNode.classList.contains('ad-slot--fluid') ||
 		adSlotNode.classList.contains('ad-slot--frame') ||
@@ -11,11 +16,11 @@ const shouldRenderLabel = (adSlotNode) =>
 	);
 
 const createAdCloseDiv = () => {
-	const closeDiv = document.createElement('button');
+	const closeDiv: HTMLElement = document.createElement('button');
 	closeDiv.className = 'ad-slot__close-button';
 	closeDiv.innerHTML = crossIcon.markup;
 	closeDiv.onclick = () => {
-		const container = closeDiv.closest(
+		const container: HTMLElement | null = closeDiv.closest(
 			'.mobilesticky-container',
 		);
 		if (container) container.remove();
@@ -44,12 +49,12 @@ const createAdLabel = () => {
  * @param {HTMLElement} adSlotNode
  */
 export const renderAdvertLabel = (
-	adSlotNode,
-) => {
+	adSlotNode: HTMLElement,
+): Promise<Promise<void>> => {
 	let renderDynamicLabel = true;
 	return fastdom.measure(() => {
 		if (adSlotNode.id === 'dfp-ad--top-above-nav') {
-			const labelToggle = document.querySelector(
+			const labelToggle = document.querySelector<HTMLElement>(
 				'.ad-slot__label.ad-slot__label--toggle',
 			);
 			if (labelToggle) {
@@ -77,9 +82,9 @@ export const renderAdvertLabel = (
 	});
 };
 
-export const renderStickyAdLabel = (adSlotNode) =>
+export const renderStickyAdLabel = (adSlotNode: HTMLElement): Promise<void> =>
 	fastdom.measure(() => {
-		const adSlotLabel = document.createElement('div');
+		const adSlotLabel: HTMLElement = document.createElement('div');
 		adSlotLabel.classList.add('ad-slot__label');
 		adSlotLabel.classList.add('sticky');
 		adSlotLabel.innerHTML = 'Advertisement';
@@ -87,8 +92,8 @@ export const renderStickyAdLabel = (adSlotNode) =>
 	});
 
 export const renderStickyScrollForMoreLabel = (
-	adSlotNode,
-) =>
+	adSlotNode: HTMLElement,
+): Promise<void> =>
 	fastdom.mutate(() => {
 		const scrollForMoreLabel = document.createElement('div');
 		scrollForMoreLabel.classList.add('ad-slot__scroll');
