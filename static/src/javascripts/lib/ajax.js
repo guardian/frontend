@@ -14,7 +14,6 @@ const ajax = (params) => {
 
     const { url } = options;
     const headers = { ...options.headers };
-    if(options.headers !== undefined) headers.append( options.headers );
     if(options.contentType !== undefined)
         headers['Content-Type'] = options.contentType;
 
