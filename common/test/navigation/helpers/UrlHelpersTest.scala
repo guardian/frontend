@@ -36,8 +36,8 @@ class UrlHelpersTest extends WordSpec with Matchers {
         UrlHelpers.getComponentId(SupportGifting, Footer) should be(Some("footer_support_gifting"))
       }
 
-      "return footer_supporter_cta when called with SupporerCTA, Footer" in {
-        UrlHelpers.getComponentId(SupporerCTA, Footer) should be(Some("footer_supporter_cta"))
+      "return footer_supporter_cta when called with SupporterCTA, Footer" in {
+        UrlHelpers.getComponentId(SupporterCTA, Footer) should be(Some("footer_supporter_cta"))
       }
 
       "return amp_footer_support_subscribe when called with SupportSubscribe, AmpFooter" in {
