@@ -8,7 +8,7 @@ import { init as initHighMerch } from 'commercial/modules/high-merch';
 import { init as initArticleAsideAdverts } from 'commercial/modules/article-aside-adverts';
 import { init as initArticleBodyAdverts } from 'commercial/modules/article-body-adverts';
 import { init as initMobileSticky } from 'commercial/modules/mobile-sticky';
-import { closeDisabledSlots } from 'commercial/modules/close-disabled-slots';
+import { removeDisabledSlots as closeDisabledSlots } from 'commercial/modules/remove-slots';
 import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
 import { init as prepareAdVerification } from 'commercial/modules/ad-verification/prepare-ad-verification';
 import { init as prepareGoogletag } from 'commercial/modules/dfp/prepare-googletag';
