@@ -1,33 +1,34 @@
-import { getEpicMeta, getViewLog, getWeeklyArticleHistory } from '@guardian/automat-contributions';
-import { onConsentChange } from '@guardian/consent-management-platform'
-import { getSync as geolocationGetSync } from 'lib/geolocation';
 import {
-    setupOphanView,
-    emitBeginEvent,
-    setupClickHandling,
-    submitOphanInsert,
+    getEpicMeta,
+    getViewLog,
+    getWeeklyArticleHistory,
+} from '@guardian/automat-contributions';
+import { mountDynamic } from '@guardian/automat-modules';
+import { onConsentChange } from '@guardian/consent-management-platform';
+import userPrefs from 'common/modules/user-prefs';
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import fastdom from '../../../../lib/fastdom-promise';
+import fetchJson from '../../../../lib/fetch-json';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import reportError from '../../../../lib/report-error';
+import { trackNonClickInteraction } from '../analytics/google';
+import { getMvtValue } from '../analytics/mvt-cookie';
+import { submitComponentEvent, submitViewEvent } from './acquisitions-ophan';
+import { setupRemoteEpicInLiveblog } from './contributions-liveblog-utilities';
+import {
     getVisitCount,
-} from 'common/modules/commercial/contributions-utilities';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import config from 'lib/config';
-import { getMvtValue } from 'common/modules/analytics/mvt-cookie';
-import {submitViewEvent, submitComponentEvent} from 'common/modules/commercial/acquisitions-ophan';
-import { trackNonClickInteraction } from 'common/modules/analytics/google';
-import fetchJson from 'lib/fetch-json';
-import { mountDynamic } from "@guardian/automat-modules";
-import { getCookie } from 'lib/cookies';
-
+    setupOphanView,
+    submitOphanInsert,
+} from './contributions-utilities';
 import {
+    ARTICLES_VIEWED_OPT_OUT_COOKIE,
     getLastOneOffContributionDate,
     isRecurringContributor,
     shouldHideSupportMessaging,
-    ARTICLES_VIEWED_OPT_OUT_COOKIE,
-} from 'common/modules/commercial/user-features';
-import userPrefs from "common/modules/user-prefs";
-
-
-
+} from './user-features';
+import { puzzlesBanner } from 'common/modules/experiments/tests/puzzles-banner';
+import { isInVariantSynchronous } from 'common/modules/experiments/ab';
 
 const buildKeywordTags = page => {
     const keywordIds = page.keywordIds.split(',');
@@ -216,21 +217,59 @@ const getStickyBottomBanner = (payload) => {
     const URL = isProd ? 'https://contributions.guardianapis.com/banner' : 'https://contributions.code.dev-guardianapis.com/banner';
     const json = JSON.stringify(payload);
 
-    const forcedVariant = getForcedVariant('banner');
-    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
-
-    return fetchJson(`${URL}${queryString}`, {
+    return fetchJson(URL, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
         body: json,
     });
 };
 
+const getPuzzlesBanner = () => {
+    const isProd = config.get('page.isProd');
+    const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles?';
+
+    const forcedVariant = getForcedVariant('banner');
+    const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
+
+    return fetchJson(`${URL}${queryString}`, {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+    });
+}
+
 const getEpicUrl = (contentType) => {
     const path = contentType === 'LiveBlog' ? 'liveblog-epic' : 'epic';
     return config.get('page.isDev') ?
         `https://contributions.code.dev-guardianapis.com/${path}` :
         `https://contributions.guardianapis.com/${path}`
+};
+
+const renderLiveblogEpic = async (module, meta) => {
+    const component = await window.guardianPolyfilledImport(module.url);
+
+    const {
+        abTestName,
+        abTestVariant,
+        componentType,
+        products = [],
+        campaignCode,
+        campaignId
+    } = meta;
+
+    const element = setupRemoteEpicInLiveblog(component.ContributionsLiveblogEpic, module.props);
+
+    if (element) {
+        submitOphanInsert(abTestName, abTestVariant, componentType, products, campaignCode);
+        setupOphanView(
+            element,
+            abTestName,
+            abTestVariant,
+            campaignCode,
+            campaignId,
+            componentType,
+            products,
+        );
+    }
 };
 
 const renderEpic = async (module, meta) => {
@@ -245,9 +284,6 @@ const renderEpic = async (module, meta) => {
         campaignId
     } = meta;
 
-    emitBeginEvent(campaignId);
-    setupClickHandling(abTestName, abTestVariant, componentType, campaignCode, products);
-
     const el = epicEl();
     mountDynamic(el, component.ContributionsEpic, module.props, true);
 
@@ -260,10 +296,29 @@ const renderEpic = async (module, meta) => {
         campaignId,
         componentType,
         products,
-        abTestVariant.showTicker,
-        abTestVariant.tickerSettings,
     );
 };
+
+export const fetchPuzzlesData = async () => {
+    const page = config.get('page');
+    const payload = await buildBannerPayload();
+    const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+    const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
+
+    if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
+        return null;
+    }
+
+    if (forcePuzzlesBannerTest && isPuzzlesPage) {
+        return getPuzzlesBanner().then(json => {
+            if (!json.data) {
+                return null;
+            }
+            return (json);
+        })
+    }
+    return null;
+}
 
 export const fetchBannerData = async () => {
     const payload = await buildBannerPayload();
@@ -297,15 +352,15 @@ export const renderBanner = (response) => {
         return Promise.resolve(false);
     }
 
-    
     return window.guardianPolyfilledImport(module.url)
         .then(bannerModule => {
             const Banner = bannerModule[module.name];
+            const isPuzzlesBanner = module.name === 'PuzzlesBanner';
 
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
-                container.classList.add('remote-banner');
+                container.classList.add('remote-banner', isPuzzlesBanner ? 'remote-banner--puzzles' : '');
 
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
@@ -315,7 +370,7 @@ export const renderBanner = (response) => {
                     container,
                     Banner,
                     { submitComponentEvent, ...module.props},
-                    true
+                    !isPuzzlesBanner // The puzzles banner has its own CacheProvider component, and needs this to be false
                 );
             }).then(() => {
                 const {
@@ -360,8 +415,7 @@ export const renderBanner = (response) => {
 export const fetchAndRenderEpic = async () => {
     const page = config.get('page');
 
-    // Liveblog epics are still selected and rendered natively
-    if (page.contentType === 'Article') {
+    if (page.contentType === 'Article' || page.contentType === 'LiveBlog') {
         try {
             const payload = await buildEpicPayload();
 
@@ -372,7 +426,12 @@ export const fetchAndRenderEpic = async () => {
 
             if (json && json.data) {
                 const {module, meta} = json.data;
-                await renderEpic(module, meta);
+
+                if (page.contentType === 'Article') {
+                    await renderEpic(module, meta);
+                } else if (page.contentType === 'LiveBlog') {
+                    await renderLiveblogEpic(module, meta);
+                }
             }
 
         } catch (error) {

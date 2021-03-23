@@ -21,9 +21,7 @@ const getPercentageInViewPort = (el) => {
 };
 
 class ScrollDepth {
-    opts;
-    data;
-    timeoutId;
+
 
     constructor(options) {
         this.opts = Object.assign(

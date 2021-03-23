@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 
 const round = x => Math.round(x * 100) / 100;
 /**
@@ -32,7 +32,6 @@ class Ring extends Component {
                             letter.entered ? 'entered' : ''
                         }`}
                         style={getPosition(angle, i)}
-                        // eslint-disable-next-line react/no-array-index-key
                         key={`${letter.value}-${i}`}>
                         {letter.value}
                     </div>

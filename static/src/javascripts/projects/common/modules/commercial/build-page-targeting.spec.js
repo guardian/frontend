@@ -1,26 +1,22 @@
-import { storage } from '@guardian/libs';
-
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import {
-    getPageTargeting,
-    _,
-} from 'common/modules/commercial/build-page-targeting';
-import config from 'lib/config';
-import { getCookie as getCookie_ } from 'lib/cookies';
-import {
-    getReferrer as getReferrer_,
-    getBreakpoint as getBreakpoint_,
-    getViewport as getViewport_,
-} from 'lib/detect';
-import { getSync as getSync_ } from 'lib/geolocation';
-import { getPrivacyFramework as getPrivacyFramework_ } from 'lib/getPrivacyFramework';
-import { isUserLoggedIn as isUserLoggedIn_ } from 'common/modules/identity/api';
-import { getUserSegments as getUserSegments_ } from 'common/modules/commercial/user-ad-targeting';
-import { getSynchronousParticipations as getSynchronousParticipations_ } from 'common/modules/experiments/ab';
 import {
     cmp as cmp_,
     onConsentChange,
 } from '@guardian/consent-management-platform';
+import { storage } from '@guardian/libs';
+import config from '../../../../lib/config';
+import { getCookie as getCookie_ } from '../../../../lib/cookies';
+import {
+    getBreakpoint as getBreakpoint_,
+    getReferrer as getReferrer_,
+    getViewport as getViewport_,
+} from '../../../../lib/detect';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
+import { getPrivacyFramework as getPrivacyFramework_ } from '../../../../lib/getPrivacyFramework';
+import { getSynchronousParticipations as getSynchronousParticipations_ } from '../experiments/ab';
+import { isUserLoggedIn as isUserLoggedIn_ } from '../identity/api';
+import { getPageTargeting, _ } from './build-page-targeting';
+import { commercialFeatures } from './commercial-features';
+import { getUserSegments as getUserSegments_ } from './user-ad-targeting';
 
 const getCookie = getCookie_;
 const getUserSegments = getUserSegments_;
@@ -33,33 +29,33 @@ const getSync = getSync_;
 const getPrivacyFramework = getPrivacyFramework_;
 const cmp = cmp_;
 
-jest.mock('lib/config');
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../lib/config');
+jest.mock('../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
-jest.mock('lib/detect', () => ({
+jest.mock('../../../../lib/detect', () => ({
     getViewport: jest.fn(),
     getBreakpoint: jest.fn(),
     getReferrer: jest.fn(),
     hasPushStateSupport: jest.fn(),
 }));
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(),
 }));
-jest.mock('lib/getPrivacyFramework', () => ({
+jest.mock('../../../../lib/getPrivacyFramework', () => ({
     getPrivacyFramework: jest.fn(),
 }));
-jest.mock('common/modules/identity/api', () => ({
+jest.mock('../identity/api', () => ({
     isUserLoggedIn: jest.fn(),
 }));
-jest.mock('common/modules/commercial/user-ad-targeting', () => ({
+jest.mock('./user-ad-targeting', () => ({
     getUserSegments: jest.fn(),
 }));
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../experiments/ab', () => ({
     getSynchronousParticipations: jest.fn(),
 }));
 jest.mock('lodash/once', () => fn => fn);
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('./commercial-features', () => ({
     commercialFeatures() {},
 }));
 jest.mock('@guardian/consent-management-platform', () => ({
@@ -166,10 +162,13 @@ describe('Build Page Targeting', () => {
         getSync.mockReturnValue('US');
         getPrivacyFramework.mockReturnValue({ ccpa: true });
 
+        jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
+
         expect.hasAssertions();
     });
 
     afterEach(() => {
+        jest.spyOn(global.Math, 'random').mockRestore();
         jest.resetAllMocks();
     });
 
@@ -321,6 +320,7 @@ describe('Build Page Targeting', () => {
             bp: 'mobile',
             at: 'ng101',
             si: 't',
+            skinsize: 's',
             ab: ['MtMaster-variantName'],
             pv: '123456',
             fr: '0',
@@ -332,6 +332,7 @@ describe('Build Page Targeting', () => {
             rdp: 'na',
             consent_tcfv2: 'na',
             cmp_interaction: 'na',
+            amtgrp: '7',
         });
     });
 
@@ -491,26 +492,45 @@ describe('Build Page Targeting', () => {
             getViewport.mockReturnValue({ width: 1920, height: 1080 });
             expect(getPageTargeting().inskin).toBe('f');
         });
+    });
 
-        
+    describe('skinsize targetting', () => {
         it.each([
-            ['f', 1280],
-            ['f', 1440],
-            ['f', 1559],
-            ['t', 1560],
-            ['t', 1561],
-            ['t', 1920],
-            ['t', 2560],
+            ['s', 1280],
+            ['s', 1440],
+            ['s', 1559],
+            ['l', 1560],
+            ['l', 1561],
+            ['l', 1920],
+            ['l', 2560],
         ])("should return '%s' if viewport width is %s", (expected, width) => {
             cmp.hasInitialised.mockReturnValue(true);
             cmp.willShowPrivacyMessageSync.mockReturnValue(false);
             getViewport.mockReturnValue({ width, height: 800 });
-            expect(getPageTargeting().inskin).toBe(expected);
+            expect(getPageTargeting().skinsize).toBe(expected);
         });
 
-        it("should return 'f' if vp does not have a width", () => {
+        it("should return 's' if vp does not have a width", () => {
             getViewport.mockReturnValue(undefined);
-            expect(getPageTargeting().inskin).toBe('f');
+            expect(getPageTargeting().skinsize).toBe('s');
+        });
+    });
+
+    describe('ad manager group value', () => {
+        const STORAGE_KEY = 'gu.adManagerGroup';
+        it('if present in localstorage, use value from storage', () => {
+            storage.local.setRaw(STORAGE_KEY, '10');
+            expect(getPageTargeting().amtgrp).toEqual('10');
+            storage.local.remove(STORAGE_KEY);
+        });
+        it('if not present in localstorage, generate a random group 1-12, store in localstorage', () => {
+            // restore Math.random for this test so we can assert the group value range is 1-12
+            jest.spyOn(global.Math, 'random').mockRestore();
+            const valueGenerated = getPageTargeting().amtgrp;
+            expect(Number(valueGenerated)).toBeGreaterThanOrEqual(1);
+            expect(Number(valueGenerated)).toBeLessThanOrEqual(12);
+            const valueFromStorage = storage.local.getRaw(STORAGE_KEY);
+            expect(valueFromStorage).toEqual(valueGenerated);
         });
     });
 });

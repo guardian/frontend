@@ -1,5 +1,5 @@
-import { getUrlVars } from 'lib/url';
-import config from 'lib/config';
+import { getUrlVars } from '../../../../lib/url';
+import config from '../../../../lib/config';
 
 
 export const dfpEnv = {

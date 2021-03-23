@@ -1,6 +1,9 @@
 import { loadScript } from '@guardian/libs';
-import { onConsentChange as onConsentChange_, getConsentFor as getConsentFor_ } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import {
+    onConsentChange as onConsentChange_,
+    getConsentFor as getConsentFor_,
+} from '@guardian/consent-management-platform';
+import { commercialFeatures } from '../../common/modules/commercial/commercial-features';
 import { init, _ } from './comscore';
 
 jest.mock('@guardian/consent-management-platform', () => ({
@@ -45,7 +48,7 @@ jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
 
-jest.mock('common/modules/commercial/commercial-features', () => ({
+jest.mock('../../common/modules/commercial/commercial-features', () => ({
     commercialFeatures: {
         comscore: true,
     },

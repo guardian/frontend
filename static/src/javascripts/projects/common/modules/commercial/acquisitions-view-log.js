@@ -20,19 +20,8 @@ const logView = (testId) => {
     storage.local.set(viewKey, viewLog.slice(-maxLogEntries));
 };
 
-const viewsInPreviousDays = (days, testId) => {
-    const ms = days * 1000 * 60 * 60 * 24;
-    const now = new Date().getTime();
-
-    return viewLog.filter(
-        view => (testId ? view.testId === testId : true) && view.date > now - ms
-    ).length;
-};
-
 const clearViewLog = () => {
     storage.local.remove(viewKey);
 };
 
-const overallNumberOfViews = () => viewLog.length;
-
-export { logView, viewsInPreviousDays, overallNumberOfViews, clearViewLog };
+export { logView, clearViewLog };

@@ -1,7 +1,7 @@
 import {
     countryCodeToSupportInternationalisationId,
     getFromStorage,
-} from 'lib/geolocation';
+} from '../../../../lib/geolocation';
 
 // Will not change the link if there's no country code in localStorage
 // (i.e. it bypasses the edition fallback of getSync from lib/geolocation)

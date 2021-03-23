@@ -16,24 +16,7 @@ import uniq from 'lodash/uniq';
  * @param {Object=} options
  */
 class Message {
-    id;
-    important;
-    permanent;
-    blocking;
-    trackDisplay;
-    type;
-    position;
-    siteMessageComponentName;
-    siteMessageLinkName;
-    siteMessageCloseBtn;
-    prefs;
-    widthBasedMessage;
-    cssModifierClass;
-    customJs;
-    customOpts;
-    $siteMessage;
-    $siteMessageContainer;
-    $siteMessageOverlay;
+
 
     constructor(id, options) {
         const opts = options || {};

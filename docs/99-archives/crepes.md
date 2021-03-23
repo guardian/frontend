@@ -5,11 +5,11 @@ Quantities are in metric system, because science.
 ## Ingredients
 
 - 250 g plain flour
-- a bit of buckwheat flour (aka farine de blé noir / sarazin in French stores)
+- a bit of buckwheat flour (aka _farine de blé noir_ or _sarrazin/sarrasin_ in French stores)
 - 100 g sugar
 - a pinch of salt
 - 3 eggs
-- 1/2 l of milk (a pint, for you bloody Brits)
+- ½ L of milk (a pint, for you bloody Brits)
 
 ## Steps
 
@@ -29,12 +29,15 @@ Then leave the bowl for 30 minutes minimum (ideally, up to 4 hours).
 
 ### The cooking
 
-You'll need a pan, or ideally a [crêpiere](http://www.amazon.co.uk/VonShef-Professional-Quality-Electric-Spreader/dp/B00AMJ2IJK/ref=sr_1_1?s=kitchen&ie=UTF8&qid=1409134365&sr=1-1&keywords=Krampouz)
+You’ll need a pan, or ideally a [crêpiere/_billig_][billig], from [Krampouz][].
+
+[billig]: https://en.wikipedia.org/wiki/Crepe_maker#Denomination
+[Krampouz]: https://en.wikipedia.org/wiki/Krampouz
 
 Spread batter on the crêpiere, wait a few seconds, flip, wait,
 flip back again, paint the crêpe with butter, fold.
 
-Don't eat the first crêpe (in Britanny we say: "the first one goes to the dog").
+Don't eat the first crêpe (in Britanny we say: “the first one goes to the dog”).
 
 Taste the second crêpe and decide to add sugar if it's not sweet enough,
 or milk if the crêpe seems too thick.

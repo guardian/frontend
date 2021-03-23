@@ -8,7 +8,6 @@ class MatchInfo {
         this.endpoint = `${base}/${slug}.json?page=${page}`;
     }
 
-    endpoint;
 
     fetch() {
         return fetchJSON(this.endpoint, {

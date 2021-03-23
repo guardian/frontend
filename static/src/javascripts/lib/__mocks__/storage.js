@@ -1,6 +1,5 @@
 class StorageMock {
-    storage;
-    available;
+
 
     constructor() {
         this.storage = {};

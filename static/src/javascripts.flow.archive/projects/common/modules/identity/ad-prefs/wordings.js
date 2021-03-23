@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React, { Node } from 'preact-compat';
+import React, { Node } from 'preact/compat';
 import type { AdConsent } from 'common/modules/commercial/ad-prefs.lib';
 import { thirdPartyTrackingAdConsent } from 'common/modules/commercial/ad-prefs.lib';
 

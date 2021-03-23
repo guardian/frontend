@@ -1,6 +1,5 @@
 import config from 'lib/config';
 import { catchErrorsWithContext } from 'lib/robust';
-import { markTime } from 'lib/user-timing';
 import reportError from 'lib/report-error';
 import { init as setAdTestCookie } from 'commercial/modules/set-adtest-cookie';
 import { init as initHighMerch } from 'commercial/modules/high-merch';
@@ -22,10 +21,10 @@ import { init as initPaidForBand } from 'commercial/modules/paidfor-band';
 import { init as initComscore } from 'commercial/modules/comscore';
 import { init as initIpsosMori } from 'commercial/modules/ipsos-mori';
 import { paidContainers } from 'commercial/modules/paid-containers';
-import { trackPerformance } from 'common/modules/analytics/google';
 import { commercialFeatures } from 'common/modules/commercial/commercial-features';
 import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { initAdblockAsk } from 'common/modules/commercial/adblock-ask';
+import { EventTimer } from '@guardian/commercial-core';
 
 const commercialModules = [
     ['cm-setAdTestCookie', setAdTestCookie],
@@ -118,17 +117,15 @@ const loadModules = () => {
 };
 
 export const bootCommercial = () => {
-    markTime('commercial start');
+    // Init Commercial event timers
+    EventTimer.init();
+
     catchErrorsWithContext(
         [
             [
                 'ga-user-timing-commercial-start',
                 function runTrackPerformance() {
-                    trackPerformance(
-                        'Javascript Load',
-                        'commercialStart',
-                        'Commercial start parse time'
-                    );
+                    EventTimer.get().trigger('commercialStart');
                 },
             ],
         ],
@@ -145,17 +142,12 @@ export const bootCommercial = () => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            markTime('commercial end');
             catchErrorsWithContext(
                 [
                     [
                         'ga-user-timing-commercial-end',
                         function runTrackPerformance() {
-                            trackPerformance(
-                                'Javascript Load',
-                                'commercialEnd',
-                                'Commercial end parse time'
-                            );
+                            EventTimer.get().trigger('commercialEnd');
                         },
                     ],
                 ],

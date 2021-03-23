@@ -1,5 +1,5 @@
-import reportError from 'lib/report-error';
-import { postMessage } from 'commercial/modules/messenger/post-message';
+import reportError from '../../../lib/report-error';
+import { postMessage } from './messenger/post-message';
 
 const LISTENERS = {};
 let REGISTERED_LISTENERS = 0;

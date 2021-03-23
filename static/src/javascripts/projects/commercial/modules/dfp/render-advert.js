@@ -1,12 +1,12 @@
 import qwery from 'qwery';
-import config from 'lib/config';
-import reportError from 'lib/report-error';
-import fastdom from 'lib/fastdom-promise';
-import { adSizes } from 'commercial/modules/ad-sizes';
-import { stickyMpu, stickyCommentsMpu } from 'commercial/modules/sticky-mpu';
-import { applyCreativeTemplate } from 'commercial/modules/dfp/apply-creative-template';
-import { renderAdvertLabel } from 'commercial/modules/dfp/render-advert-label';
-import { geoMostPopular } from 'common/modules/onward/geo-most-popular';
+import config from '../../../../lib/config';
+import reportError from '../../../../lib/report-error';
+import fastdom from '../../../../lib/fastdom-promise';
+import { adSizes } from '../ad-sizes';
+import { stickyMpu, stickyCommentsMpu } from '../sticky-mpu';
+import { getAdIframe } from './get-ad-iframe';
+import { renderAdvertLabel } from './render-advert-label';
+import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
 /**
  * ADVERT RENDERING
  * ----------------
@@ -207,7 +207,7 @@ export const renderAdvert = (
 ) => {
     addContentClass(advert.node);
 
-    return applyCreativeTemplate(advert.node)
+    return getAdIframe(advert.node)
         .then(isRendered => {
             const callSizeCallback = () => {
                 if (advert.size) {

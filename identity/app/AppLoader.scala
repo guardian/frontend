@@ -42,7 +42,6 @@ trait AppLifecycleComponents {
     wire[IdentityLifecycle],
     wire[CloudWatchMetricsLifecycle],
     wire[SwitchboardLifecycle],
-    wire[CachedHealthCheckLifeCycle],
     wire[EmailEmbedLifecycle],
   )
 

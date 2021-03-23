@@ -20,7 +20,7 @@ class AudienceItem extends Component {
         );
     }
 
-    config;
+
 
     prerender() {
         const testEl = this.getElem('test');

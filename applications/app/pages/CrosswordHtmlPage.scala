@@ -23,6 +23,7 @@ import views.html.fragments.page.head._
 import views.html.fragments.page.{devTakeShot, htmlTag}
 import html.HtmlPageHelpers.ContentCSSFile
 import views.html.stacked
+import views.html.fragments.commercial.survey
 
 object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
 
@@ -59,6 +60,7 @@ object CrosswordHtmlPage extends HtmlPage[CrosswordPage] {
       ),
       bodyTag(classes = defaultBodyClasses)(
         skipToMainContent(),
+        survey(),
         pageSkin() when page.metadata.hasPageSkin(request),
         guardianHeaderHtml(),
         mainContent(),

@@ -1,4 +1,4 @@
-import { init } from 'commercial/modules/hosted/about';
+import { init } from './about';
 
 describe('Hosted About Popup', () => {
     beforeEach(() => {

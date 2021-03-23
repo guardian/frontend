@@ -166,7 +166,13 @@ object CompetitionsProvider {
       "European",
       tableDividers = List(2, 6, 21),
     ),
-    Competition("751", "/football/euro-2020-qualifiers", "Euro 2020 qualifying", "Euro 2020 qual.", "Internationals"),
+    Competition(
+      "701",
+      "/football/world-cup-2022-qualifiers",
+      "World Cup 2022 qualifying",
+      "World Cup 2022 qual.",
+      "Internationals",
+    ),
     Competition(
       "510",
       "/football/uefa-europa-league",

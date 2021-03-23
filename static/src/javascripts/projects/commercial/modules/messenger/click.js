@@ -1,4 +1,4 @@
-import { trackNativeAdLinkClick } from 'common/modules/analytics/google';
+import { trackNativeAdLinkClick } from '../../../common/modules/analytics/google';
 
 const sendClick = (adSlot, linkName) => {
     trackNativeAdLinkClick(adSlot.id, linkName);

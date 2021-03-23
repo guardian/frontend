@@ -1,6 +1,6 @@
 ## We're hiring!
 Ever thought about joining us?
-https://workforus.theguardian.com/careers/digital-development/
+https://workforus.theguardian.com/careers/product-engineering/
 
 # Frontend
 The Guardian website frontend.

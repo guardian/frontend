@@ -1,25 +1,25 @@
-import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
-import { getAdvertById as getAdvertById_ } from 'commercial/modules/dfp/get-advert-by-id';
-import { loadAdvert } from 'commercial/modules/dfp/load-advert';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { enableLazyLoad } from './lazy-load';
+import { getAdvertById as getAdvertById_ } from './get-advert-by-id';
+import { loadAdvert } from './load-advert';
+import { dfpEnv } from './dfp-env';
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/config', () => ({
+jest.mock('../../../../lib/config', () => ({
     get: jest.fn(() => false),
 }));
 
-jest.mock('commercial/modules/dfp/Advert', () =>
+jest.mock('./Advert', () =>
     jest.fn(() => ({ advert: jest.fn() }))
 );
 
-jest.mock('commercial/modules/dfp/get-advert-by-id', () => ({
+jest.mock('./get-advert-by-id', () => ({
     getAdvertById: jest.fn(),
 }));
 
-jest.mock('commercial/modules/dfp/load-advert', () => ({
+jest.mock('./load-advert', () => ({
     refreshAdvert: jest.fn(),
     loadAdvert: jest.fn(),
 }));

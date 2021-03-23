@@ -1,9 +1,9 @@
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { Advert } from 'commercial/modules/dfp/Advert';
-import { queueAdvert } from 'commercial/modules/dfp/queue-advert';
+import { dfpEnv } from './dfp-env';
+import { Advert } from './Advert';
+import { queueAdvert } from './queue-advert';
 
-import { loadAdvert } from 'commercial/modules/dfp/load-advert';
-import { enableLazyLoad } from 'commercial/modules/dfp/lazy-load';
+import { loadAdvert } from './load-advert';
+import { enableLazyLoad } from './lazy-load';
 
 const displayAd = (adSlot, forceDisplay) => {
     const advert = new Advert(adSlot);

@@ -9,7 +9,7 @@ const onError = (e) => {
 };
 
 class SpaceFiller {
-    queue;
+
 
     constructor() {
         this.queue = Promise.resolve();

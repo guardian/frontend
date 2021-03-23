@@ -12,7 +12,7 @@ import flattenDeep from 'lodash/flattenDeep';
 import pickBy from 'lodash/pickBy';
 import { isWithinSeconds } from 'common/modules/ui/relativedates';
 import { inlineSvg } from 'common/views/svgs';
-import alertHtml from 'raw-loader!common/views/breaking-news.html';
+import alertHtml from 'common/views/breaking-news.html';
 
 let alertToShow;
 

@@ -1,44 +1,51 @@
-import { getSync as getSync_ } from 'lib/geolocation';
+import { _ } from 'common/modules/commercial/geo-utils';
+import config from '../../../../lib/config';
 import {
     getBreakpoint as getBreakpoint_,
     isBreakpoint as isBreakpoint_,
-} from 'lib/detect';
-import config from 'lib/config';
-import { _} from "common/modules/commercial/geo-utils";
+} from '../../../../lib/detect';
+import { getSync as getSync_ } from '../../../../lib/geolocation';
+
 import {
-    getLargestSize,
     getBreakpointKey,
+    getLargestSize,
+    removeFalseyValues,
     shouldIncludeAdYouLike,
     shouldIncludeAppNexus,
     shouldIncludeImproveDigital,
+    shouldIncludeMobileSticky,
     shouldIncludeOpenx,
     shouldIncludeSonobi,
     shouldIncludeTrustX,
     shouldIncludeXaxis,
+    stripDfpAdPrefixFrom,
     stripMobileSuffix,
     stripTrailingNumbersAbove1,
-    stripDfpAdPrefixFrom,
-    removeFalseyValues,
-    shouldIncludeMobileSticky,
 } from './utils';
+import {isInVariantSynchronous as isInVariantSynchronous_} from "common/modules/experiments/ab";
 
 const getSync = getSync_;
 const getBreakpoint = getBreakpoint_;
 const isBreakpoint = isBreakpoint_;
+const isInVariantSynchronous = isInVariantSynchronous_;
 
 jest.mock('lodash/once', () => a => a);
 
-jest.mock('lib/geolocation', () => ({
+jest.mock('../../../../lib/geolocation', () => ({
     getSync: jest.fn(() => 'GB'),
 }));
 
-jest.mock('lib/detect', () => ({
+jest.mock('common/modules/experiments/ab', () => ({
+    isInVariantSynchronous: jest.fn(),
+}));
+
+jest.mock('../../../../lib/detect', () => ({
     getBreakpoint: jest.fn(() => 'mobile'),
     hasPushStateSupport: jest.fn(() => true),
     isBreakpoint: jest.fn(),
 }));
 
-jest.mock('common/modules/experiments/ab-tests');
+jest.mock('../../../common/modules/experiments/ab-tests');
 
 /* eslint-disable guardian-frontend/no-direct-access-config */
 const resetConfig = () => {
@@ -100,7 +107,7 @@ describe('Utils', () => {
         expect(results).toEqual(['M', 'T', 'T', 'D', 'D']);
     });
 
-    
+
     test.each([
         ['AU','on', true],
         ['AU','off', true],
@@ -190,7 +197,10 @@ describe('Utils', () => {
         expect(shouldIncludeImproveDigital()).toBe(false);
     });
 
-    test('shouldIncludeXaxis should be true if geolocation is GB', () => {
+    test('shouldIncludeXaxis should be true if geolocation is GB and opted in AB test variant', () => {
+        isInVariantSynchronous.mockImplementationOnce(
+            (testId, variantId) => variantId === 'variant'
+        );
         config.set('page.isDev', true);
         getSync.mockReturnValue('GB');
         expect(shouldIncludeXaxis()).toBe(true);

@@ -9,7 +9,7 @@ import java.io.File
 import scala.util.{Failure, Success}
 import play.api.Logger
 
-import common.{GuLogging}
+import common.GuLogging
 import pa.{Http, PaClient, PaClientErrorsException, Response, Season, Team}
 import conf.AdminConfiguration
 import football.model.PA

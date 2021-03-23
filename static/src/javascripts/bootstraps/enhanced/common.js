@@ -21,7 +21,6 @@ import { init as initCookieRefresh } from 'common/modules/identity/cookierefresh
 import { initNavigation } from 'common/modules/navigation/navigation';
 import { Profile } from 'common/modules/navigation/profile';
 import { Search } from 'common/modules/navigation/search';
-import { emailSignInBanner } from 'common/modules/identity/email-sign-in-banner/index';
 import {
     initMembership,
     membershipBanner,
@@ -57,6 +56,7 @@ import {
 import { signInGate } from 'common/modules/identity/sign-in-gate';
 import { brazeBanner } from 'commercial/modules/brazeBanner';
 import { readerRevenueBanner } from 'common/modules/commercial/reader-revenue-banner';
+import { puzzlesBanner } from 'common/modules/commercial/puzzles-banner';
 import { getArticleCountConsent } from 'common/modules/commercial/contributions-service';
 import { init as initGoogleAnalytics } from 'common/modules/tracking/google-analytics';
 
@@ -296,10 +296,10 @@ const initialiseBanner = () => {
         breakingNews,
         signInGate,
         membershipBanner,
+        puzzlesBanner,
         readerRevenueBanner,
         smartAppBanner,
         adFreeBanner,
-        emailSignInBanner,
         brazeBanner,
     ];
 

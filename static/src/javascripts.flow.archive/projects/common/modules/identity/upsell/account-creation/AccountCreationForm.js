@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 import reqwest from 'reqwest';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';

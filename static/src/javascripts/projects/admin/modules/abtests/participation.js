@@ -20,7 +20,7 @@ class Participation extends Component {
         );
     }
 
-    config;
+
 
     prerender() {
         const test = this.config.test;

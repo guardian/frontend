@@ -15,7 +15,6 @@ import conf.Configuration
 import model.PressedPageType
 import org.joda.time.{DateTime, DateTimeZone}
 import play.api.libs.ws.{WSClient, WSRequest}
-import sun.misc.BASE64Encoder
 
 import scala.io.{Codec, Source}
 

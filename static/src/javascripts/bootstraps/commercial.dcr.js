@@ -27,6 +27,7 @@ import { initCommentAdverts } from 'commercial/modules/comment-adverts';
 import { init as prepareA9 } from 'commercial/modules/dfp/prepare-a9';
 import { init as initRedplanet } from 'commercial/modules/dfp/redplanet';
 import {refresh as refreshUserFeatures} from "common/modules/commercial/user-features";
+import { EventTimer } from "@guardian/commercial-core";
 
 const commercialModules = [
     ['cm-setAdTestCookie', setAdTestCookie],
@@ -118,17 +119,15 @@ const loadModules = () => {
 };
 
 const bootCommercial = () => {
-    markTime('commercial start');
+    // Init Commercial event timers
+    EventTimer.init();
+
     catchErrorsWithContext(
         [
             [
                 'ga-user-timing-commercial-start',
                 function runTrackPerformance() {
-                    trackPerformance(
-                        'Javascript Load',
-                        'commercialStart',
-                        'Commercial start parse time'
-                    );
+                    EventTimer.get().trigger('commercialStart');
                 },
             ],
         ],
@@ -145,17 +144,12 @@ const bootCommercial = () => {
     return loadHostedBundle()
         .then(loadModules)
         .then(() => {
-            markTime('commercial end');
             catchErrorsWithContext(
                 [
                     [
                         'ga-user-timing-commercial-end',
                         function runTrackPerformance() {
-                            trackPerformance(
-                                'Javascript Load',
-                                'commercialEnd',
-                                'Commercial end parse time'
-                            );
+                            EventTimer.get().trigger('commercialEnd');
                         },
                     ],
                 ],

@@ -22,7 +22,7 @@ class ParticipationItem extends Component {
         );
     }
 
-    config;
+
 
     prerender() {
         const origin = /gutools.co.uk$/.test(document.location.origin)

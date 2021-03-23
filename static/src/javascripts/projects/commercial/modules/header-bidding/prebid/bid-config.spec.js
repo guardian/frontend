@@ -1,13 +1,13 @@
 /* global jsdom */
 
-import config from 'lib/config';
-import { isInVariantSynchronous as isInVariantSynchronous_ } from 'common/modules/experiments/ab';
-import {isInUk as isInUk_,
-    isInUsOrCa as isInUsOrCa_,
+import {
     isInAuOrNz as isInAuOrNz_,
-    isInRow as isInRow_} from "common/modules/commercial/geo-utils";
-import { _, bids } from './bid-config';
-
+    isInRow as isInRow_,
+    isInUk as isInUk_,
+    isInUsOrCa as isInUsOrCa_,
+} from 'common/modules/commercial/geo-utils';
+import config from '../../../../../lib/config';
+import { isInVariantSynchronous as isInVariantSynchronous_ } from '../../../../common/modules/experiments/ab';
 import {
     containsBillboard as containsBillboard_,
     containsDmpu as containsDmpu_,
@@ -21,12 +21,13 @@ import {
     shouldIncludeAppNexus as shouldIncludeAppNexus_,
     shouldIncludeImproveDigital as shouldIncludeImproveDigital_,
     shouldIncludeOpenx as shouldIncludeOpenx_,
+    shouldIncludeSonobi as shouldIncludeSonobi_,
+    shouldIncludeTripleLift as shouldIncludeTripleLift_,
     shouldIncludeTrustX as shouldIncludeTrustX_,
     shouldIncludeXaxis as shouldIncludeXaxis_,
-    shouldIncludeSonobi as shouldIncludeSonobi_,
     stripMobileSuffix as stripMobileSuffix_,
-    shouldIncludeTripleLift as shouldIncludeTripleLift_,
 } from '../utils';
+import { bids, _ } from './bid-config';
 
 const containsBillboard = containsBillboard_;
 const containsDmpu = containsDmpu_;
@@ -57,11 +58,12 @@ const getBidders = () =>
 const {
     getIndexSiteId,
     getImprovePlacementId,
+    getXaxisPlacementId,
     getTrustXAdUnitId,
     indexExchangeBidders,
 } = _;
 
-jest.mock('common/modules/commercial/build-page-targeting', () => ({
+jest.mock('../../../../common/modules/commercial/build-page-targeting', () => ({
     buildAppNexusTargeting: () => 'someTestAppNexusTargeting',
     buildAppNexusTargetingObject: () => 'someAppNexusTargetingObject',
     getPageTargeting: () => 'bla',
@@ -69,13 +71,13 @@ jest.mock('common/modules/commercial/build-page-targeting', () => ({
 
 jest.mock('../utils');
 
-jest.mock('common/modules/commercial/geo-utils');
+jest.mock('../../../../common/modules/commercial/geo-utils');
 
-jest.mock('common/modules/experiments/ab', () => ({
+jest.mock('../../../../common/modules/experiments/ab', () => ({
     isInVariantSynchronous: jest.fn(),
 }));
 
-jest.mock('lib/cookies', () => ({
+jest.mock('../../../../../lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
 
@@ -222,67 +224,6 @@ describe('getImprovePlacementId', () => {
         expect(generateTestIds()).toEqual([-1, -1, -1, -1, -1]);
     });
 
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop MPU', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('D');
-        containsMpu.mockReturnValue(true);
-        expect(getImprovePlacementId([[300, 250]])).toEqual(1116407);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop DMPU', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('D');
-        containsDmpu.mockReturnValue(true);
-        expect(getImprovePlacementId([[300, 600]])).toEqual(1116408);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop billboard', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('D');
-        containsLeaderboardOrBillboard.mockReturnValue(true);
-        expect(getImprovePlacementId([[970, 250]])).toEqual(1116409);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in desktop leaderboard', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('D');
-        containsLeaderboardOrBillboard.mockReturnValue(true);
-        expect(getImprovePlacementId([[728, 90]])).toEqual(1116409);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet MPU', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('T');
-        containsMpu.mockReturnValue(true);
-        expect(getImprovePlacementId([[300, 250]])).toEqual(1116410);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in tablet leaderboard', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('T');
-        containsLeaderboard.mockReturnValue(true);
-        expect(getImprovePlacementId([[728, 90]])).toEqual(1116411);
-    });
-
-    test('should use test placement ID when participating in CommercialPrebidSafeframe test in mobile MPU', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('M');
-        expect(getImprovePlacementId([[300, 250]])).toEqual(1116412);
-    });
 });
 
 describe('getTrustXAdUnitId', () => {
@@ -386,30 +327,6 @@ describe('getIndexSiteId', () => {
             '345678',
             '123456',
         ]);
-    });
-
-    test('should use test site ID when participating in CommercialPrebidSafeframe test on desktop', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('D');
-        expect(getIndexSiteId()).toEqual('287246');
-    });
-
-    test('should use test site ID when participating in CommercialPrebidSafeframe test on tablet', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('T');
-        expect(getIndexSiteId()).toEqual('287247');
-    });
-
-    test('should use test site ID when participating in CommercialPrebidSafeframe test on mobile', () => {
-        isInVariantSynchronous.mockImplementationOnce(
-            (testId, variantId) => variantId === 'variant'
-        );
-        getBreakpointKey.mockReturnValue('M');
-        expect(getIndexSiteId()).toEqual('287248');
     });
 });
 
@@ -606,5 +523,71 @@ describe('triplelift adapter', () => {
         expect(tripleLiftBids).toEqual({
             inventoryCode: 'theguardian_320x50_HDX',
         });
+    });
+});
+
+describe('getXaxisPlacementId', () => {
+    beforeEach(() => {
+        resetConfig();
+        getBreakpointKey.mockReturnValue('D');
+
+        containsMpuOrDmpu.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+        containsLeaderboardOrBillboard.mockReturnValueOnce(true)
+            .mockReturnValueOnce(true)
+            .mockReturnValue(false);
+    });
+
+    afterEach(() => {
+        jest.resetAllMocks();
+    });
+
+    const generateTestIds = () => {
+        const prebidSizes = [
+            [[300, 250]],
+            [[300, 600]],
+            [[970, 250]],
+            [[728, 90]],
+            [[1, 2]],
+        ];
+        return prebidSizes.map(getXaxisPlacementId);
+    };
+
+    test('should return -1 if no cases match', () => {
+        expect(getImprovePlacementId([[1, 2]])).toBe(-1);
+    });
+
+    test('should return the expected values for desktop device', () => {
+        getBreakpointKey.mockReturnValue('D');
+
+        expect(generateTestIds()).toEqual([
+            20943665,
+            20943665,
+            20943666,
+            20943666,
+            20943668,
+        ]);
+    });
+
+    test('should return the expected values for tablet device', () => {
+        getBreakpointKey.mockReturnValue('T');
+        expect(generateTestIds()).toEqual([
+            20943671,
+            20943671,
+            20943672,
+            20943672,
+            20943674,
+        ]);
+    });
+
+    test('should return the expected values for mobile device', () => {
+        getBreakpointKey.mockReturnValue('M');
+        expect(generateTestIds()).toEqual([
+            20943669,
+            20943669,
+            20943670,
+            20943670,
+            20943670]);
     });
 });

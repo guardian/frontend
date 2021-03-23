@@ -53,7 +53,7 @@ class TonalComponent extends Component {
         return `/container/${endpoint}.json`;
     }
 
-    edition;
+
 
     isSupported() {
         return TonalComponent.getTone() in tones[this.edition];

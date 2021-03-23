@@ -11,7 +11,7 @@
  */
 
 // @flow
-import React from 'preact-compat';
+import React from 'preact/compat';
 import arrowDown from 'svgs/icon/arrow-down.svg';
 import arrowUp from 'svgs/icon/arrow-up.svg';
 

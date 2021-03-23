@@ -1,4 +1,4 @@
-import React, { Component, findDOMNode } from 'preact-compat';
+import React, { Component, findDOMNode } from 'preact/compat';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
 import mediator from 'lib/mediator';
@@ -355,12 +355,7 @@ class Crossword extends Component {
         this.returnPosition = position;
     }
 
-    columns;
-    rows;
-    clueMap;
-    $gridWrapper;
-    gridHeightIsSet;
-    returnPosition;
+
 
     insertCharacter(character) {
         const characterUppercase = character.toUpperCase();

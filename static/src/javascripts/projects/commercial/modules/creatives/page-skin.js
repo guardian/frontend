@@ -1,8 +1,8 @@
-import config from 'lib/config';
-import { isBreakpoint, hasCrossedBreakpoint } from 'lib/detect';
-import mediator from 'lib/mediator';
 import fastdom from 'fastdom';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
+import config from '../../../../lib/config';
+import { hasCrossedBreakpoint, isBreakpoint } from '../../../../lib/detect';
+import mediator from '../../../../lib/mediator';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
 
 const pageSkin = () => {
     const bodyEl = document.body;

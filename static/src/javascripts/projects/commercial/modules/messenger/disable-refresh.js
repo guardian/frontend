@@ -1,4 +1,4 @@
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from '../dfp/dfp-env';
 
 // This message is intended to be used with a DFP creative wrapper.
 // For reference, the wrapper will post a message, with an iFrameId, like so:

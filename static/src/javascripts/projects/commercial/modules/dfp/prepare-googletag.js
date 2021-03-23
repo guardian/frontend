@@ -1,42 +1,44 @@
-import qwery from 'qwery';
-import config from 'lib/config';
-import fastdom from 'lib/fastdom-promise';
-import { loadScript, storage } from '@guardian/libs';
-import raven from 'lib/raven';
-import sha1 from 'lib/sha1';
 import {
-    onConsentChange,
     getConsentFor,
+    onConsentChange,
 } from '@guardian/consent-management-platform';
-import { getPageTargeting } from 'common/modules/commercial/build-page-targeting';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { adFreeSlotRemove } from 'commercial/modules/ad-free-slot-remove';
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
-import { fillAdvertSlots } from 'commercial/modules/dfp/fill-advert-slots';
-import { getUserFromCookie } from 'common/modules/identity/api';
-import { onSlotLoad } from 'commercial/modules/dfp/on-slot-load';
-import { onSlotRender } from 'commercial/modules/dfp/on-slot-render';
-import { onSlotViewableFunction } from 'commercial/modules/dfp/on-slot-viewable';
-import { onSlotVisibilityChanged } from 'commercial/modules/dfp/on-slot-visibility-changed';
-import { refreshOnResize } from 'commercial/modules/dfp/refresh-on-resize';
-import { init as initMessenger } from 'commercial/modules/messenger';
-import { init as background } from 'commercial/modules/messenger/background';
-import { init as sendClick } from 'commercial/modules/messenger/click';
-import { init as disableRefresh } from 'commercial/modules/messenger/disable-refresh';
-import { init as initGetPageTargeting } from 'commercial/modules/messenger/get-page-targeting';
-import { init as initGetPageUrl } from 'commercial/modules/messenger/get-page-url';
-import { init as getStyles } from 'commercial/modules/messenger/get-stylesheet';
-import { init as hide } from 'commercial/modules/messenger/hide';
-import { init as resize } from 'commercial/modules/messenger/resize';
-import { init as scroll } from 'commercial/modules/messenger/scroll';
-import { init as type } from 'commercial/modules/messenger/type';
-import { init as viewport } from 'commercial/modules/messenger/viewport';
+import { loadScript, storage } from '@guardian/libs';
+import qwery from 'qwery';
+import config from '../../../../lib/config';
+import fastdom from '../../../../lib/fastdom-promise';
+import raven from '../../../../lib/raven';
+import sha1 from '../../../../lib/sha1';
+import { getPageTargeting } from '../../../common/modules/commercial/build-page-targeting';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { getUserFromCookie } from '../../../common/modules/identity/api';
+import { adFreeSlotRemove } from '../ad-free-slot-remove';
+import { init as initMessenger } from '../messenger';
+import { init as background } from '../messenger/background';
+import { init as sendClick } from '../messenger/click';
+import { init as disableRefresh } from '../messenger/disable-refresh';
+import { init as initGetPageTargeting } from '../messenger/get-page-targeting';
+import { init as initGetPageUrl } from '../messenger/get-page-url';
+import { init as getStyles } from '../messenger/get-stylesheet';
+import { init as hide } from '../messenger/hide';
+import { init as resize } from '../messenger/resize';
+import { init as scroll } from '../messenger/scroll';
+import { init as type } from '../messenger/type';
+import { init as initMeasureAdLoad } from 'commercial/modules/messenger/measure-ad-load';
+import { init as viewport } from '../messenger/viewport';
+import { dfpEnv } from './dfp-env';
+import { fillAdvertSlots } from './fill-advert-slots';
+import { onSlotLoad } from './on-slot-load';
+import { onSlotRender } from './on-slot-render';
+import { onSlotViewableFunction } from './on-slot-viewable';
+import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
+import { refreshOnResize } from './refresh-on-resize';
 
 initMessenger(
     type,
     getStyles,
     initGetPageTargeting,
     initGetPageUrl,
+    initMeasureAdLoad,
     resize,
     hide,
     scroll,
@@ -97,7 +99,6 @@ export const init = () => {
         window.googletag.cmd.push(
             setDfpListeners,
             setPageTargeting,
-            setPublisherProvidedId,
             refreshOnResize,
             () => {
                 fillAdvertSlots();
@@ -113,6 +114,11 @@ export const init = () => {
                         restrictDataProcessing: state.ccpa.doNotSell,
                     });
                 });
+                if (!state.ccpa.doNotSell) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             } else {
                 let npaFlag;
                 if (state.tcfv2) {
@@ -131,6 +137,11 @@ export const init = () => {
                         .pubads()
                         .setRequestNonPersonalizedAds(npaFlag ? 1 : 0);
                 });
+                if (!npaFlag) {
+                    window.googletag.cmd.push(
+                        setPublisherProvidedId,
+                    );
+                }
             }
             // Prebid will already be loaded, and window.googletag is stubbed in `commercial.js`.
             // Just load googletag. Prebid will already be loaded, and googletag is already added to the window by Prebid.

@@ -1,9 +1,9 @@
-import { getUrlVars } from 'lib/url';
-import config from 'lib/config';
-import { breakpoints } from 'lib/detect';
-import uniqBy from 'lodash/uniqBy';
 import flatten from 'lodash/flatten';
 import once from 'lodash/once';
+import uniqBy from 'lodash/uniqBy';
+import config from '../../../../lib/config';
+import { breakpoints } from '../../../../lib/detect';
+import { getUrlVars } from '../../../../lib/url';
 
 const adUnit = once(() => {
     const urlVars = getUrlVars();
@@ -107,11 +107,11 @@ const defineSlot = (adSlotNode, sizes) => {
         To see debugging output from IAS add the URL param `&iasdebug=true` to the page URL
      */
     if (config.get('switches.iasAdTargeting', false)) {
-        /* eslint-disable no-underscore-dangle */
+
         // this should all have been instantiated by commercial/modules/third-party-tags/ias.js
         window.__iasPET = window.__iasPET || {};
         const iasPET = window.__iasPET;
-        /* eslint-disable no-underscore-enable */
+
 
         iasPET.queue = iasPET.queue || [];
         iasPET.pubId = '10249';

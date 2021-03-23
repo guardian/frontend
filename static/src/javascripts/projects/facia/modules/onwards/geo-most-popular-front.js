@@ -26,10 +26,7 @@ export class GeoMostPopularFront extends Component {
         this.manipulationType = 'html';
     }
 
-    isNetworkFront;
-    isVideoFront;
-    isInternational;
-    parent;
+
 
     prerender() {
         this.elem = qwery('.headline-list', this.elem)[0];

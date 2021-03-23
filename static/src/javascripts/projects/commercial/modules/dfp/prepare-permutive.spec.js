@@ -1,6 +1,6 @@
 import { _ } from './prepare-permutive';
 
-jest.mock('lib/raven');
+jest.mock('../../../../lib/raven');
 
 describe('Generating Permutive payload utils', () => {
     describe('isEmpty', () => {

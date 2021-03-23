@@ -1,4 +1,4 @@
-import React, { Component } from 'preact-compat';
+import React, { Component } from 'preact/compat';
 
 
 export class Block extends Component {

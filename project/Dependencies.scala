@@ -5,15 +5,14 @@ import sbt._
 object Dependencies {
   val identityLibVersion = "3.239"
   val awsVersion = "1.11.240"
-  val capiVersion = "17.6"
-  val faciaVersion = "3.2.0"
+  val capiVersion = "17.10"
+  val faciaVersion = "3.3.0"
   val dispatchVersion = "0.13.1"
   val romeVersion = "1.0"
   val jerseyVersion = "1.19.4"
   val playJsonVersion = "2.6.3"
   val playJsonExtensionsVersion = "0.10.0"
   val guBox = "com.gu" %% "box" % "0.1.0"
-  val akkaContrib = "com.typesafe.akka" %% "akka-contrib" % "2.5.6"
   val apacheCommonsLang = "org.apache.commons" % "commons-lang3" % "3.11"
   val awsCore = "com.amazonaws" % "aws-java-sdk-core" % awsVersion
   val awsCloudwatch = "com.amazonaws" % "aws-java-sdk-cloudwatch" % awsVersion
@@ -33,7 +32,7 @@ object Dependencies {
   val cssParser = "net.sourceforge.cssparser" % "cssparser" % "0.9.23"
   val contentApiClient = "com.gu" %% "content-api-client" % capiVersion
   val dfpAxis = "com.google.api-ads" % "dfp-axis" % "4.12.0"
-  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play26" % faciaVersion
+  val faciaFapiScalaClient = "com.gu" %% "fapi-client-play27" % faciaVersion
   val identityCookie = "com.gu.identity" %% "identity-cookie" % identityLibVersion
   val identityModel = "com.gu.identity" %% "identity-model" % identityLibVersion
   val identityAuthPlay = "com.gu.identity" %% "identity-auth-play" % identityLibVersion
@@ -81,11 +80,12 @@ object Dependencies {
   val okhttp = "com.squareup.okhttp3" % "okhttp" % "3.10.0"
   val jsonSchema = "com.eclipsesource" %% "play-json-schema-validator" % "0.9.5-M4"
 
-  // sbt-native-packager does not seem respect the latestRevision conflict manager when building the
-  // classpath in the executable shell file for the service. The classpath output is different to the
-  // dependencies indicated by the dependency tree plugin. Specifying jackson versions manually seems
-  // to be the only way of making sbt-native-packager build a classpath with consistent jackson versions.
-  val jacksonVersion = "2.11.0"
+  /*
+    Note: Although frontend compiles and passes all the current tests when jackson is removed, be careful that this
+    may break the fronts diagnostics tools. If we try to remove jackson one day after (for instance after other
+    dependencies have been upgraded), then do remember to check for regressions.
+   */
+  val jacksonVersion = "2.12.1"
   val jacksonDataFormat = "com.fasterxml.jackson.dataformat" % "jackson-dataformat-cbor" % jacksonVersion
   val jacksonCore = "com.fasterxml.jackson.core" % "jackson-core" % jacksonVersion
   val jacksonDataType = "com.fasterxml.jackson.datatype" % "jackson-datatype-jsr310" % jacksonVersion

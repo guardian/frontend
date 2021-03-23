@@ -1,9 +1,10 @@
-
-
-import config from 'lib/config';
-import { onConsentChange, getConsentFor } from '@guardian/consent-management-platform';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { isInAuOrNz } from 'common/modules/commercial/geo-utils';
+import {
+    getConsentFor,
+    onConsentChange,
+} from '@guardian/consent-management-platform';
+import config from '../../../../lib/config';
+import { commercialFeatures } from '../../../common/modules/commercial/commercial-features';
+import { isInAuOrNz } from '../../../common/modules/commercial/geo-utils';
 
 let initialised = false;
 
@@ -41,7 +42,7 @@ const setupRedplanet = () => {
 
         if (!initialised && canRun) {
             initialised = true;
-            return import('lib/launchpad.js').then(() => {
+            return import('../../../../lib/launchpad.js').then(() => {
                 initialise();
                 return Promise.resolve();
             });

@@ -1,5 +1,5 @@
-import config, { } from 'lib/config';
-import reportError, { } from 'lib/report-error';
+import config from '../../../../lib/config';
+import reportError from '../../../../lib/report-error';
 
 
 

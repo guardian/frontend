@@ -2,14 +2,15 @@ package feed
 
 import contentapi.ContentApiClient
 import com.gu.contentapi.client.model.v1.Content
+import com.gu.contentapi.client.utils.CapiModelEnrichment.RenderingFormat
 import services.{OphanApi, OphanDeeplyReadItem}
 import play.api.libs.json._
 import common._
+import model.ContentFormat
 import models._
 
 import scala.concurrent.{ExecutionContext, Future}
 import scala.util.control.NonFatal
-
 import scala.concurrent.duration.Duration
 import scala.concurrent.{Await, Future}
 
@@ -30,6 +31,7 @@ case class DeeplyReadItem(
     isLiveBlog: Boolean,
     pillar: String,
     designType: String,
+    format: Option[ContentFormat],
     webPublicationDate: String,
     headline: String,
     mediaType: Option[String],
@@ -48,10 +50,12 @@ object DeeplyReadItem {
       showByline = item.showByline,
       byline = item.byline,
       image = item.image,
+      carouselImages = Map("N/A" -> None), // Not implemented for Deeply Read at the moment
       ageWarning = item.ageWarning,
       isLiveBlog = item.isLiveBlog,
       pillar = item.pillar,
       designType = item.designType,
+      format = item.format.getOrElse(ContentFormat.defaultContentFormat),
       webPublicationDate = item.webPublicationDate,
       headline = item.headline,
       mediaType = item.mediaType,
@@ -133,6 +137,9 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
   def correctPillar(pillar: String): String = if (pillar == "arts") "culture" else pillar
 
   def ophanItemToDeeplyReadItem(item: OphanDeeplyReadItem, content: Content): Option[DeeplyReadItem] = {
+
+    val contentFormat: ContentFormat = ContentFormat(content.design, content.theme, content.display)
+
     // We are doing the pillar correction during the OphanDeeplyReadItem to DeeplyReadItem transformation
     // Note that we could also do it during the DeeplyReadItem to OnwardItemNx2 transformation
     for {
@@ -154,6 +161,7 @@ class DeeplyReadAgent(contentApiClient: ContentApiClient, ophanApi: OphanApi) ex
       isLiveBlog = fields.liveBloggingNow.getOrElse(false),
       pillar = correctPillar(pillar.toLowerCase),
       designType = content.`type`.toString,
+      format = Some(contentFormat),
       webPublicationDate = webPublicationDate.toString(),
       headline = headline,
       mediaType = None,

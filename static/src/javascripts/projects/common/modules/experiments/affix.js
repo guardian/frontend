@@ -6,12 +6,7 @@ const getPixels = (top) =>
     top !== 'auto' ? parseInt(top, 10) : 0;
 
 class Affix {
-    affixed;
-    $markerTop;
-    $markerBottom;
-    $container;
-    $element;
-    $window;
+
 
     constructor(options) {
         window.addEventListener('click', () => {

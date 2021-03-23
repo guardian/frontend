@@ -1,4 +1,4 @@
-import { dfpEnv } from 'commercial/modules/dfp/dfp-env';
+import { dfpEnv } from './dfp-env';
 
 export const queueAdvert = (advert) => {
     dfpEnv.advertsToLoad.push(advert);

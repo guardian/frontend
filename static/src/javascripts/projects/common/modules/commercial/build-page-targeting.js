@@ -1,34 +1,30 @@
-
-import config from 'lib/config';
-import { getCookie } from 'lib/cookies';
-import {
-    getReferrer as detectGetReferrer,
-    getBreakpoint,
-    getViewport,
-} from 'lib/detect';
-import { getSync as geolocationGetSync } from 'lib/geolocation';
-import { storage } from '@guardian/libs';
-import { getUrlVars } from 'lib/url';
-import { getPrivacyFramework } from 'lib/getPrivacyFramework';
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
-import {
-    getPermutiveSegments,
-    clearPermutiveSegments,
-} from 'common/modules/commercial/permutive';
-import { isUserLoggedIn } from 'common/modules/identity/api';
-import { getUserSegments } from 'common/modules/commercial/user-ad-targeting';
-import { commercialFeatures } from 'common/modules/commercial/commercial-features';
-import { getSynchronousParticipations } from 'common/modules/experiments/ab';
-import { removeFalseyValues } from 'commercial/modules/header-bidding/utils';
+import { storage } from '@guardian/libs';
 import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
-
+import config from '../../../../lib/config';
+import { getCookie } from '../../../../lib/cookies';
+import {
+    getBreakpoint,
+    getReferrer as detectGetReferrer,
+    getViewport,
+} from '../../../../lib/detect';
+import { getSync as geolocationGetSync } from '../../../../lib/geolocation';
+import { getPrivacyFramework } from '../../../../lib/getPrivacyFramework';
+import { getUrlVars } from '../../../../lib/url';
+import { removeFalseyValues } from '../../../commercial/modules/header-bidding/utils';
+import { getSynchronousParticipations } from '../experiments/ab';
+import { isUserLoggedIn } from '../identity/api';
+import { commercialFeatures } from './commercial-features';
+import { clearPermutiveSegments, getPermutiveSegments } from './permutive';
+import { getUserSegments } from './user-ad-targeting';
 
 let myPageTargetting = {};
 let latestCmpHasInitalised;
 let latestCMPState;
+const AMTGRP_STORAGE_KEY = 'gu.adManagerGroup';
 
 const findBreakpoint = () => {
     switch (getBreakpoint(true)) {
@@ -48,13 +44,13 @@ const findBreakpoint = () => {
     }
 };
 
-const inskinTargetting = () => {
+const skinsizeTargetting = () => {
     const vp = getViewport();
-    if (!vp || vp.width < 1560) {
-        return 'f';
-    }
+    return (vp && vp.width >= 1560) ? "l" : "s";
+};
 
-    // Don’t show inskin if we cannot tell if a privacy message will be shown
+const inskinTargetting = () => {
+// Don’t show inskin if we cannot tell if a privacy message will be shown
     if (!cmp.hasInitialised()) return 'f';
     return cmp.willShowPrivacyMessageSync() ? 'f' : 't';
 };
@@ -230,9 +226,16 @@ const getAdConsentFromState = (state) => {
     } else if (state.aus) {
         // AUS mode
         return state.aus.personalisedAdvertising;
-    } 
+    }
     // Unknown mode
     return false;
+}
+
+const createAdManagerGroup = () => {
+    // users are assigned to groups 1-12
+    const group = String(Math.floor(Math.random() * 12) + 1);
+    storage.local.setRaw(AMTGRP_STORAGE_KEY, group);
+    return group;
 }
 
 const rebuildPageTargeting = () => {
@@ -277,10 +280,12 @@ const rebuildPageTargeting = () => {
             // was DCR eligible and was actually rendered by DCR or
             // was DCR eligible but rendered by frontend for a user not in the DotcomRendering experiment
             inskin: inskinTargetting(),
+            skinsize: skinsizeTargetting(),
             urlkw: getUrlKeywords(page.pageId),
             rdp: getRdpValue(ccpaState),
             consent_tcfv2: getTcfv2ConsentValue(adConsentState),
             cmp_interaction: tcfv2EventStatus || 'na',
+            amtgrp: storage.local.getRaw(AMTGRP_STORAGE_KEY) || createAdManagerGroup(),
         },
         page.sharedAdTargeting,
         paTargeting,
@@ -314,14 +319,14 @@ const getPageTargeting = () => {
         }
         return myPageTargetting;
     }
-    
+
     // First call binds to onConsentChange and returns {}
     onConsentChange((state)=>{
     // On every consent change we rebuildPageTageting
         latestCMPState = state;
         myPageTargetting = rebuildPageTargeting();
     });
-    return myPageTargetting; 
+    return myPageTargetting;
 };
 
 const resetPageTargeting = () => {

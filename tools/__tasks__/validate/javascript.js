@@ -15,22 +15,20 @@ const error = ctx => {
     );
 };
 
-
 const dirs = p =>
     fs.readdirSync(p).filter(f => fs.statSync(`${p}/${f}`).isDirectory());
 
 module.exports = {
     description: 'Lint JS',
     task: [
-        ...dirs('static/src/javascripts')
-            .map(dir => ({
-                description: `App ${chalk.dim(dir)}`,
-                task: `eslint static/src/javascripts/${dir} ${config}`,
-                onError: error,
-            })),
+        {
+            description: 'Static',
+            task: `eslint static/src/javascripts --ext=ts,tsx,js ${config}`,
+            onError: error,
+        },
         {
             description: 'Tools etc.',
-            task: `eslint --ignore-pattern /static/src --ignore-pattern . ${config}`,
+            task: `eslint tools ${config}`,
             onError: error,
         },
         {

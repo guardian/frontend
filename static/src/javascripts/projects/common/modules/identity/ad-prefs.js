@@ -1,4 +1,4 @@
-import React, { Component, render } from 'preact-compat';
+import React, { Component, render } from 'preact/compat';
 import { FeedbackFlashBox } from 'common/modules/identity/ad-prefs/FeedbackFlashBox';
 import { ConsentBox } from 'common/modules/identity/ad-prefs/ConsentBox';
 
@@ -55,8 +55,7 @@ class AdPrefsWrapper extends Component {
         });
     }
 
-    FeedbackFlashBoxRef;
-    SubmitButtonRef;
+
 
     render() {
         return (
