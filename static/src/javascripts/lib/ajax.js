@@ -12,7 +12,7 @@ const ajax = (params) => {
         options.crossOrigin = true;
     }
 
-    const { url } = options;
+    const { url, method } = options;
     const headers = { ...options.headers };
     if(options.contentType !== undefined)
         headers['Content-Type'] = options.contentType;
@@ -24,6 +24,8 @@ const ajax = (params) => {
         body: options.data ? JSON.stringify(options.data) : undefined,
         credentials: options.withCredentials ? 'include' : undefined,
     }
+
+    if (['GET', 'HEAD'].includes(`${method}`.toUpperCase())) delete init.body;
 
     const r = fetch(url, init);
 
