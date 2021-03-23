@@ -42,7 +42,6 @@ case class GuVideoBlockElement(assets: Seq[VideoAsset], imageMedia: ImageMedia, 
 case class VideoBlockElement(data: Map[String, String]) extends BlockElement
 case class EmbedBlockElement(html: Option[String], safe: Option[Boolean], alt: Option[String]) extends BlockElement
 case class ContentAtomBlockElement(atomId: String, atomtype: String, role: Option[String]) extends BlockElement
-case class InteractiveBlockElement(html: Option[String]) extends BlockElement
 case class CommentBlockElement(html: Option[String]) extends BlockElement
 case class TableBlockElement(html: Option[String]) extends BlockElement
 case class WitnessBlockElement(html: Option[String]) extends BlockElement
@@ -51,7 +50,6 @@ case class InstagramBlockElement(html: Option[String]) extends BlockElement
 case class VineBlockElement(html: Option[String]) extends BlockElement
 case class MapBlockElement(html: Option[String]) extends BlockElement
 case class UnknownBlockElement(html: Option[String]) extends BlockElement
-
 case class InteractiveBlockElement(html: Option[String], scriptUrl: Option[String] = None) extends BlockElement
 
 case class MembershipBlockElement(
