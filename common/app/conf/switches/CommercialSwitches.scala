@@ -480,14 +480,4 @@ trait PrebidSwitches {
     sellByDate = never,
     exposeClientSide = true,
   )
-
-  val applyCreativeTemplate: Switch = Switch(
-    group = Commercial,
-    name = "apply-creative-template",
-    description = "Test what happens if we remove apply creative template code",
-    owners = group(Commercial),
-    safeState = Off,
-    sellByDate = never,
-    exposeClientSide = true,
-  )
 }

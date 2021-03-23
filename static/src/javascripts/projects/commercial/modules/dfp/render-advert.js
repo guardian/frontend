@@ -4,7 +4,7 @@ import reportError from '../../../../lib/report-error';
 import fastdom from '../../../../lib/fastdom-promise';
 import { adSizes } from '../ad-sizes';
 import { stickyMpu, stickyCommentsMpu } from '../sticky-mpu';
-import { applyCreativeTemplate } from './apply-creative-template';
+import { getAdIframe } from './get-ad-iframe';
 import { renderAdvertLabel } from './render-advert-label';
 import { geoMostPopular } from '../../../common/modules/onward/geo-most-popular';
 /**
@@ -207,7 +207,7 @@ export const renderAdvert = (
 ) => {
     addContentClass(advert.node);
 
-    return applyCreativeTemplate(advert.node)
+    return getAdIframe(advert.node)
         .then(isRendered => {
             const callSizeCallback = () => {
                 if (advert.size) {

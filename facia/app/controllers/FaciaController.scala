@@ -194,9 +194,9 @@ trait FaciaController
             if (request.isRss) {
               val body = TrailsToRss.fromPressedPage(faciaPage)
               RevalidatableResult(Ok(body).as("text/xml; charset=utf-8"), body)
-            } else if (request.isJson)
+            } else if (request.isJson) {
               JsonFront(faciaPage)
-            else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
+            } else if (request.isEmail || ConfigAgent.isEmailFront(path)) {
               renderEmail(faciaPage)
             } else {
               RevalidatableResult.Ok(FrontHtmlPage.html(faciaPage))

@@ -54,4 +54,13 @@ trait ABTestSwitches {
     exposeClientSide = true,
   )
 
+  Switch(
+    ABTests,
+    "ab-puzzles-banner",
+    "0% A/B test for puzzles banner",
+    owners = Seq(Owner.withGithub("lucymonie")),
+    safeState = Off,
+    sellByDate = new LocalDate(2021, 4, 13),
+    exposeClientSide = true,
+  )
 }

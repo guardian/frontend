@@ -1,5 +1,5 @@
 import React, { Component } from 'preact/compat';
-import reqwest from 'reqwest';
+import fetchJson from '../../../../../../lib/fetch-json';
 import ophan from 'ophan/ng';
 import reportError from 'lib/report-error';
 import { ErrorBar, genericErrorStr } from '../error-bar/ErrorBar';
@@ -20,41 +20,43 @@ class AccountCreationForm extends Component {
             errors: [],
         });
 
-        reqwest({
-            url: '/password/guest',
-            method: 'post',
-            data: {
-                csrfToken: this.props.csrfToken,
-                token: this.props.accountToken,
-                password: this.state.password,
-            },
-            success: () => {
-                ophan.record({
-                    component: 'set-password',
-                    value: 'set-password',
+        fetchJson(
+            '/password/guest',
+            {
+                method: 'POST',
+                body: JSON.stringify({
+                    csrfToken: this.props.csrfToken,
+                    token: this.props.accountToken,
+                    password: this.state.password,
+                })
+            }
+        )
+        .then( () => {
+            ophan.record({
+                component: 'set-password',
+                value: 'set-password',
+            });
+            this.props.onAccountCreated();
+        })
+        .catch( (response) => {
+            reportError(
+                Error(response),
+                {
+                    feature: 'identity-create-account-upsell',
+                },
+                false
+            );
+            try {
+                const apiError = JSON.parse(response.responseText)[0];
+                this.setState({
+                    errors: [apiError.description],
                 });
-                this.props.onAccountCreated();
-            },
-            error: response => {
-                reportError(
-                    Error(response),
-                    {
-                        feature: 'identity-create-account-upsell',
-                    },
-                    false
-                );
-                try {
-                    const apiError = JSON.parse(response.responseText)[0];
-                    this.setState({
-                        errors: [apiError.description],
-                    });
-                } catch (exception) {
-                    this.setState({ errors: [genericErrorStr] });
-                }
-            },
-            complete: () => {
-                this.setState({ isLoading: false });
-            },
+            } catch (exception) {
+                this.setState({ errors: [genericErrorStr] });
+            }
+        })
+        .finally( () => {
+            this.setState({ isLoading: false });
         });
     };
 

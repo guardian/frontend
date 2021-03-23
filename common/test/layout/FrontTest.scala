@@ -3,6 +3,8 @@ package layout
 import java.time.ZoneOffset
 import com.gu.contentapi.client.model.v1.{Content => ApiContent}
 import com.gu.contentapi.client.utils.CapiModelEnrichment.RichOffsetDateTime
+import com.gu.contentapi.client.utils.format.{ArticleDesign, NewsPillar, StandardDisplay}
+import com.gu.facia.api.models.ContentFormat
 import com.gu.facia.api.{models => fapi}
 import com.gu.facia.api.utils._
 import contentapi.FixtureTemplates.emptyApiContent
@@ -42,6 +44,11 @@ class FrontTest extends FlatSpec with Matchers with GuiceOneAppPerSuite {
       id = theUrl,
       maybeFrontPublicationDate = None,
       cardStyle = DefaultCardstyle,
+      ContentFormat(
+        ArticleDesign,
+        NewsPillar,
+        StandardDisplay,
+      ),
       snapUri = None,
       snapCss = None,
       latestContent = Option(content),

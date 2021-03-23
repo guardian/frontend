@@ -1,4 +1,3 @@
-import reqwest from 'reqwest';
 import fastdom from 'lib/fastdom-promise';
 import config from 'lib/config';
 import loadEnhancers from './modules/loadEnhancers';
@@ -59,11 +58,12 @@ const getInputFields = (labelEl) =>
 
 const unsubscribeFromAll = (buttonEl) => {
     buttonEl.classList.add(isLoadingClassName);
-    return reqwest({
-        url: `${config.get('page.idApiUrl')}/remove/consent/all`,
-        method: 'POST',
-        withCredentials: true,
-        crossOrigin: true,
+    return fetch(
+        `${config.get('page.idApiUrl')}/remove/consent/all`,
+        {
+            method: 'POST',
+            credentials: 'include',
+            mode: 'cors',
     });
 };
 
