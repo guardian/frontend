@@ -25,6 +25,7 @@ const ajax = (params) => {
         credentials: options.withCredentials ? 'include' : undefined,
     }
 
+    // Ensure no “empty object” gets passed on GET or HEAD requests.
     if (['GET', 'HEAD'].includes(`${method}`.toUpperCase())) delete init.body;
 
     const r = fetch(url, init);
