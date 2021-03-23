@@ -12,8 +12,6 @@ case class ReaderRevenueLink(
     supporter: String,
 )
 
-// TODO: Remove Comment
-
 object ReaderRevenueLink {
   implicit val writes = Json.writes[ReaderRevenueLink]
 }
