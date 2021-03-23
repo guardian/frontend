@@ -1610,8 +1610,8 @@ object PageElement {
       url = data.url.getOrElse(originalUrl)
       thirdPartyTracking = containsThirdPartyTracking(element.tracking)
     } yield {
-      source match {
-        case "YouTube" =>
+      source.toLowerCase match {
+        case "youtube" =>
           VideoYoutubeBlockElement(
             caption,
             url,
@@ -1624,7 +1624,7 @@ object PageElement {
             data.source,
             data.sourceDomain,
           )
-        case "Vimeo" =>
+        case "vimeo" =>
           VideoVimeoBlockElement(
             caption,
             url,
@@ -1637,7 +1637,7 @@ object PageElement {
             data.source,
             data.sourceDomain,
           )
-        case "Facebook" =>
+        case "facebook" =>
           VideoFacebookBlockElement(
             caption,
             url,
