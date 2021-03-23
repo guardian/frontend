@@ -1,6 +1,6 @@
 package navigation
 
-import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe}
+import navigation.ReaderRevenueSite.{Support, SupportContribute, SupportGifting, SupportSubscribe, SupporterCTA}
 import navigation.UrlHelpers._
 import play.api.libs.json.{Json, Writes}
 
@@ -9,6 +9,7 @@ case class ReaderRevenueLink(
     subscribe: String,
     support: String,
     gifting: String,
+    supporter: String,
 )
 
 object ReaderRevenueLink {
@@ -31,6 +32,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportSubscribe, Header),
     getReaderRevenueUrl(Support, Header),
     getReaderRevenueUrl(SupportGifting, Header),
+    getReaderRevenueUrl(SupporterCTA, Header),
   )
 
   val footerReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
@@ -38,6 +40,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportSubscribe, Footer),
     getReaderRevenueUrl(Support, Footer),
     getReaderRevenueUrl(SupportGifting, Footer),
+    getReaderRevenueUrl(SupporterCTA, Footer)
   )
 
   val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
@@ -45,6 +48,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportSubscribe, SideMenu),
     getReaderRevenueUrl(Support, SideMenu),
     getReaderRevenueUrl(SupportGifting, SideMenu),
+    getReaderRevenueUrl(SupporterCTA, SideMenu),
   )
 
   val ampHeaderReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
@@ -52,6 +56,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportSubscribe, AmpHeader),
     getReaderRevenueUrl(Support, AmpHeader),
     getReaderRevenueUrl(SupportGifting, AmpHeader),
+    getReaderRevenueUrl(SupporterCTA, AmpHeader),
   )
 
   val ampFooterReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
@@ -59,6 +64,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportSubscribe, AmpFooter),
     getReaderRevenueUrl(Support, AmpFooter),
     getReaderRevenueUrl(SupportGifting, AmpFooter),
+    getReaderRevenueUrl(SupporterCTA, AmpFooter),
   )
 
   val all = ReaderRevenueLinks(
