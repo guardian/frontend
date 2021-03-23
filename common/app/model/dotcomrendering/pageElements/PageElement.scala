@@ -799,14 +799,14 @@ object PageElement {
   ): List[PageElement] = {
     def extractAtom: Option[Atom] =
       for {
-        contentAtom <- element.contentAtomTypeData
-        atom <- atoms.find(_.id == contentAtom.atomId)
+        d <- element.contentAtomTypeData
+        atom <- atoms.find(_.id == d.atomId)
       } yield atom
 
     def extractRole: Option[String] =
       for {
-        contentAtom <- element.contentAtomTypeData
-        role <- contentAtom.role
+        d <- element.contentAtomTypeData
+        role <- d.role
       } yield role
 
     element.`type` match {
