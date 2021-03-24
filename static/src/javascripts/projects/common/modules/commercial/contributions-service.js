@@ -305,7 +305,7 @@ export const fetchPuzzlesData = async () => {
     const page = config.get('page');
     const payload = await buildBannerPayload();
     const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
-    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner');
+    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
     const userShouldSeeBanner = forcePuzzlesBannerTest || isPuzzlesBannerSwitchOn;
     const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
