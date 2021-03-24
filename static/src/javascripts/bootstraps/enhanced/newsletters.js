@@ -1,6 +1,7 @@
 import bean from 'bean';
 import fastdom from 'fastdom';
 import $ from 'lib/$';
+import fetch from 'lib/fetch';
 import config from 'lib/config';
 import { getUserFromCookie, getUserFromApi } from 'common/modules/identity/api';
 
