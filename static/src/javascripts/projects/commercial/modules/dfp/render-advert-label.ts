@@ -51,7 +51,8 @@ const createAdLabel = () => {
 export const renderAdvertLabel = (
 	adSlotNode: HTMLElement,
 ): Promise<Promise<void>> => {
-	let renderDynamicLabel = true;
+	let renderDynamic = true;
+	const shouldRender = shouldRenderLabel(adSlotNode);
 	return fastdom.measure(() => {
 		if (adSlotNode.id === 'dfp-ad--top-above-nav') {
 			const labelToggle = document.querySelector<HTMLElement>(
@@ -59,24 +60,31 @@ export const renderAdvertLabel = (
 			);
 			if (labelToggle) {
 				// found a toggled label so don't render dynamically
-				renderDynamicLabel = false;
-				const adSlotWidth = adSlotNode.offsetWidth;
-				const labelToggleWidth = labelToggle.offsetWidth;
-				if (labelToggleWidth !== adSlotWidth) {
+				renderDynamic = false;
+				if (shouldRender) {
+					const adSlotWidth = adSlotNode.offsetWidth;
+					const labelToggleWidth = labelToggle.offsetWidth;
+					if (labelToggleWidth !== adSlotWidth) {
+						return fastdom.mutate(() => {
+							labelToggle.style.width = `${adSlotWidth}px`;
+							labelToggle.classList.remove('hidden');
+							labelToggle.classList.add('visible');
+						});
+					}
+				} else {
+					// some ads should not have a label
+					// for example fabric ads can have an embedded label
+					// so don't display and remove from layout
 					return fastdom.mutate(() => {
-						labelToggle.style.width = `${adSlotWidth}px`;
-						labelToggle.classList.remove('hidden');
-						labelToggle.classList.add('visible');
+						labelToggle.style.display = 'none';
 					});
 				}
 			}
 		}
-		if (renderDynamicLabel) {
-			if (shouldRenderLabel(adSlotNode)) {
-				return fastdom.mutate(() => {
-					adSlotNode.prepend(createAdLabel());
-				});
-			}
+		if (renderDynamic && shouldRender) {
+			return fastdom.mutate(() => {
+				adSlotNode.prepend(createAdLabel());
+			});
 		}
 		return Promise.resolve();
 	});
