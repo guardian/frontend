@@ -306,6 +306,8 @@ export class AudioPlayer extends Component {
             hovering: false,
             grabbing: false,
         };
+
+        this.waveRef = React.createRef();
     }
 
     componentDidMount() {
@@ -323,6 +325,8 @@ export class AudioPlayer extends Component {
         } else {
             this.ready();
         }
+
+        this.setGeometry(this.waveRef.current)
     }
 
     onTimeUpdate = () => {
@@ -512,7 +516,7 @@ export class AudioPlayer extends Component {
                     <Time t={this.state.duration} />
                 </TimeContainer>
                 <WaveAndTrack>
-                    <FakeWave ref={this.setGeometry} onClick={this.seek}>
+                    <FakeWave ref={this.waveRef} onClick={this.seek}>
                         <div
                             className="wave-holder"
                             dangerouslySetInnerHTML={{ __html: waveW.markup }}
