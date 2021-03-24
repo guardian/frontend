@@ -797,17 +797,19 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
   ): List[PageElement] = {
-    def extractAtom: Option[Atom] =
+
+    def extractAtomWithRole(element: ApiBlockElement): Option[(Atom, Option[String])] = {
+      val role: Option[String] =
+        for {
+          d <- element.contentAtomTypeData
+          role <- d.role
+        } yield role
+
       for {
         d <- element.contentAtomTypeData
         atom <- atoms.find(_.id == d.atomId)
-      } yield atom
-
-    def extractRole: Option[String] =
-      for {
-        d <- element.contentAtomTypeData
-        role <- d.role
-      } yield role
+      } yield (atom, role)
+    }
 
     element.`type` match {
 
@@ -1013,9 +1015,9 @@ object PageElement {
       // 3. CalloutBlockElement
 
       case Contentatom =>
-        (extractAtom match {
+        (extractAtomWithRole(element) match {
 
-          case Some(audio: AudioAtom) => {
+          case Some((audio: AudioAtom, _: Option[String])) => {
             Some(
               AudioAtomBlockElement(
                 id = audio.id,
@@ -1029,7 +1031,7 @@ object PageElement {
             )
           }
 
-          case Some(chart: ChartAtom) => {
+          case Some((chart: ChartAtom, _: Option[String])) => {
             val encodedId = URLEncoder.encode(chart.id, "UTF-8")
             // chart.id is a uuid, so there is no real need to url-encode it but just to be safe
             Some(
@@ -1043,11 +1045,11 @@ object PageElement {
             )
           }
 
-          case Some(explainer: ExplainerAtom) => {
+          case Some((explainer: ExplainerAtom, _: Option[String])) => {
             Some(ExplainerAtomBlockElement(explainer.id, explainer.title, explainer.body))
           }
 
-          case Some(guide: GuideAtom) => {
+          case Some((guide: GuideAtom, _: Option[String])) => {
             val html = guide.data.items
               .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
               .mkString("")
@@ -1065,7 +1067,7 @@ object PageElement {
             )
           }
 
-          case Some(interactive: InteractiveAtom) => {
+          case Some((interactive: InteractiveAtom, role: Option[String])) => {
             val encodedId = URLEncoder.encode(interactive.id, "UTF-8")
             Some(
               InteractiveAtomBlockElement(
@@ -1075,12 +1077,12 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
-                role = extractRole,
+                role = role,
               ),
             )
           }
 
-          case Some(mediaAtom: MediaAtom) => {
+          case Some((mediaAtom: MediaAtom, _: Option[String])) => {
             val imageOverride = overrideImage.map(_.images).flatMap(Video700.bestSrcFor)
             val altText = overrideImage.flatMap(_.images.allImages.headOption.flatMap(_.altText))
             mediaAtom match {
@@ -1116,7 +1118,7 @@ object PageElement {
             }
           }
 
-          case Some(profile: ProfileAtom) => {
+          case Some((profile: ProfileAtom, _: Option[String])) => {
             val html = profile.data.items
               .map(item => s"${item.title.map(t => s"<p><strong>${t}</strong></p>").getOrElse("")}${item.body}")
               .mkString("")
@@ -1134,7 +1136,7 @@ object PageElement {
             )
           }
 
-          case Some(qa: QandaAtom) => {
+          case Some((qa: QandaAtom, _: Option[String])) => {
             Some(
               QABlockElement(
                 id = qa.id,
@@ -1146,7 +1148,7 @@ object PageElement {
             )
           }
 
-          case Some(timeline: TimelineAtom) => {
+          case Some((timeline: TimelineAtom, _: Option[String])) => {
             Some(
               TimelineBlockElement(
                 id = timeline.id,
@@ -1165,7 +1167,7 @@ object PageElement {
               ),
             )
           }
-          case Some(quizAtom: QuizAtom) => {
+          case Some((quizAtom: QuizAtom, _: Option[String])) => {
             val questions = quizAtom.content.questions.map { q =>
               QuizAtomQuestion(
                 id = q.id,
@@ -1198,7 +1200,7 @@ object PageElement {
 
           // Here we capture all the atom types which are not yet supported.
           // ContentAtomBlockElement is mapped to null in the DCR source code.
-          case Some(atom) => Some(ContentAtomBlockElement(atom.id))
+          case Some((atom, _: Option[String])) => Some(ContentAtomBlockElement(atom.id))
 
           case _ => None
         }).toList
