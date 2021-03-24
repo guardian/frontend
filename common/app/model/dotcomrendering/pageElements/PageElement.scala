@@ -797,13 +797,14 @@ object PageElement {
       overrideImage: Option[ImageElement],
       edition: Edition,
   ): List[PageElement] = {
+
     def extractAtom: Option[Atom] =
       for {
         d <- element.contentAtomTypeData
         atom <- atoms.find(_.id == d.atomId)
       } yield atom
 
-    def extractRole: Option[String] =
+    val elementRole: Option[String] =
       for {
         d <- element.contentAtomTypeData
         role <- d.role
@@ -1075,7 +1076,7 @@ object PageElement {
                 css = Some(interactive.css),
                 js = interactive.mainJS,
                 placeholderUrl = interactive.placeholderUrl,
-                role = extractRole,
+                role = elementRole,
               ),
             )
           }
