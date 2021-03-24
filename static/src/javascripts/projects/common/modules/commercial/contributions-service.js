@@ -360,7 +360,10 @@ export const renderBanner = (response) => {
             return fastdom.mutate(() => {
                 const container = document.createElement('div');
                 container.classList.add('site-message--banner');
-                container.classList.add('remote-banner', isPuzzlesBanner ? 'remote-banner--puzzles' : '');
+                container.classList.add('remote-banner');
+                if (isPuzzlesBanner) {
+                    container.classList.add('remote-banner--puzzles');
+                }
 
                 if (document.body) {
                     document.body.insertAdjacentElement('beforeend', container);
