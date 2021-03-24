@@ -1,14 +1,12 @@
 /* global escape:true */
-import { ajax } from 'lib/ajax';
 import config from 'lib/config';
 import { getCookie as getCookieByName } from 'lib/cookies';
 import mediator from 'lib/mediator';
 import { storage } from '@guardian/libs';
 import { mergeCalls } from 'common/modules/async-call-merger';
 import { getUrlVars } from 'lib/url';
-import fetch from 'lib/fetch-json';
+import fetchJson from 'lib/fetch-json';
 import qs from 'qs';
-import reqwest from 'reqwest';
 import { createAuthenticationComponentEvent, createAuthenticationComponentEventParams } from "common/modules/identity/auth-component-event-params";
 
 let userFromCookieCache = null;
@@ -66,14 +64,14 @@ export const getUserFromCookie = () => {
 };
 
 export const updateNewsletter = (newsletter) =>
-    reqwest({
-        url: `${config.get('page.idApiUrl')}/users/me/newsletters`,
+    fetchJson(`${config.get('page.idApiUrl')}/users/me/newsletters`, {
         method: 'PATCH',
-        type: 'json',
-        contentType: 'application/json',
-        withCredentials: true,
-        crossOrigin: true,
-        data: JSON.stringify(newsletter),
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        credentials: 'include',
+        mode: 'cors',
+        body: JSON.stringify(newsletter),
     });
 
 export const buildNewsletterUpdatePayload = (
@@ -102,10 +100,9 @@ export const getUserFromApi = mergeCalls(mergingCallback => {
     const apiRoot = idApiRoot || '';
 
     if (isUserLoggedIn()) {
-        ajax({
-            url: `${apiRoot}/user/me`,
-            type: 'jsonp',
-            crossOrigin: true,
+        fetchJson(`${apiRoot}/user/me`, {
+            mode: 'cors',
+            credentials: 'include',
         }).then(response => {
             if (response.status === 'ok') {
                 mergingCallback(response.user);
@@ -129,12 +126,13 @@ export const getUrl = () => config.get('page.idUrl');
 
 export const getUserFromApiWithRefreshedCookie = () => {
     const endpoint = '/user/me';
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'jsonp',
-        data: {
+    const url = (idApiRoot || '') + endpoint
+    const request = fetchJson(url, {
+        body: JSON.stringify({
             refreshCookie: true,
-        },
+        }),
+        mode: 'cors',
+        credentials: 'include',
     });
 
     return request;
@@ -186,11 +184,10 @@ export const getUserEmailSignUps = () => {
 
     if (user) {
         const endpoint = `/useremails/${user.id}`;
-        const request = ajax({
-            url: (idApiRoot || '') + endpoint,
-            type: 'jsonp',
-            crossOrigin: true,
-            withCredentials: true,
+        const url = (idApiRoot || '') + endpoint;
+        const request = fetchJson(url, {
+            mode: 'cors',
+            credentials: 'include',
         });
 
         return request;
@@ -206,14 +203,14 @@ export const sendValidationEmail = () => {
         ? decodeURIComponent(getUrlVars().returnUrl)
         : (profileRoot || '') + defaultReturnEndpoint;
 
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'jsonp',
-        crossOrigin: true,
-        data: {
+    const url = (idApiRoot || '') + endpoint;
+    const request = fetchJson(url, {
+        mode: 'cors',
+        body: JSON.stringify({
             method: 'post',
             returnUrl,
-        },
+        }),
+        credentials: 'include',
     });
 
     return request;
@@ -227,14 +224,15 @@ export const updateUsername = (username) => {
             displayName: username,
         },
     };
-    const request = ajax({
-        url: (idApiRoot || '') + endpoint,
-        type: 'json',
-        crossOrigin: true,
+    const url = (idApiRoot || '') + endpoint;
+    const request = fetchJson(url, {
+        mode: 'cors',
         method: 'POST',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(data),
-        withCredentials: true,
+        headers: {
+            'Content-Type': 'application/json; charset=utf-8',
+        },
+        body: JSON.stringify(data),
+        credentials: 'include',
     });
 
     return request;
@@ -243,30 +241,32 @@ export const updateUsername = (username) => {
 export const getAllConsents = () => {
     const endpoint = '/consents';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: { 'Accept': 'application/json' },
+        credentials: 'include',
     });
 };
 
 export const getAllNewsletters = () => {
     const endpoint = '/newsletters';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: { 'Accept': 'application/json' },
+        credentials: 'include',
     });
 };
 
 export const getSubscribedNewsletters = () => {
     const endpoint = '/users/me/newsletters';
     const url = (idApiRoot || '') + endpoint;
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'GET',
-        headers: { Accept: 'application/json' },
+        headers: { 'Accept': 'application/json' },
         credentials: 'include',
     })
         .then(json => {
@@ -279,19 +279,14 @@ export const getSubscribedNewsletters = () => {
 };
 
 export const setConsent = (consents) =>
-    new Promise((success, error) => {
-        reqwest({
-            url: `${idApiRoot || ''}/users/me/consents`,
-            method: 'PATCH',
-            type: 'json',
-            contentType: 'application/json',
-            withCredentials: true,
-            crossOrigin: true,
-            data: JSON.stringify(consents),
-            error,
-            success,
-        });
-    });
+    fetchJson({
+        url: `${idApiRoot || ''}/users/me/consents`,
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json'},
+        mode: 'cors',
+        credentials: 'include',
+        body: JSON.stringify(consents),
+    })
 export const ajaxSignIn = (credentials) => {
     const url = `${profileRoot || ''}/actions/auth/ajax`;
     const body = {
@@ -307,7 +302,7 @@ export const ajaxSignIn = (credentials) => {
         body.componentEventParams = createAuthenticationComponentEvent('guardian_smartlock', window.guardian.ophan.viewId);
     }
 
-    return fetch(url, {
+    return fetchJson(url, {
         mode: 'cors',
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -317,7 +312,7 @@ export const ajaxSignIn = (credentials) => {
 };
 
 export const getUserData = () =>
-    fetch(`${idApiRoot || ''}/user/me`, {
+    fetchJson(`${idApiRoot || ''}/user/me`, {
         method: 'GET',
         mode: 'cors',
         credentials: 'include',
