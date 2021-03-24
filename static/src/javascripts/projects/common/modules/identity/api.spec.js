@@ -11,11 +11,13 @@ import {
 } from 'common/modules/identity/api.js';
 import config from 'lib/config';
 import { getCookie as getCookie_ } from 'lib/cookies';
-import fetchJson_ from 'lib/fetch-json';
+import { ajax as ajax_ } from 'lib/ajax';
 import { storage } from '@guardian/libs';
 
 jest.mock('lib/config');
-jest.mock('lib/fetch-json', () => jest.fn());
+jest.mock('lib/ajax', () => ({
+    ajax: jest.fn(),
+}));
 jest.mock('lib/cookies', () => ({
     getCookie: jest.fn(),
 }));
@@ -28,7 +30,7 @@ jest.mock('common/modules/async-call-merger', () => ({
 }));
 
 const getCookieStub = getCookie_;
-const fetchJson = fetchJson_;
+const ajax = ajax_;
 
 const originalAssign = window.location.assign;
 
@@ -77,15 +79,15 @@ describe('Identity API', () => {
         const expectedUser = {};
         const apiCallback = user => {
             expect(user).toBe(expectedUser);
-            const url = 'https://idapi.theguardian.com/user/me';
-            expect(fetchJson).toHaveBeenCalledWith(url, {
-                mode: 'cors',
-                credentials: 'include',
+            expect(ajax).toHaveBeenCalledWith({
+                url: 'https://idapi.theguardian.com/user/me',
+                type: 'jsonp',
+                crossOrigin: true,
             });
             done();
         };
 
-        fetchJson.mockImplementationOnce(() =>
+        ajax.mockImplementationOnce(() =>
             Promise.resolve({
                 status: 'ok',
                 user: expectedUser,
@@ -101,7 +103,7 @@ describe('Identity API', () => {
 
         const apiCallback = user => {
             expect(user).toBe(null);
-            expect(fetchJson).not.toHaveBeenCalled();
+            expect(ajax).not.toHaveBeenCalled();
             done();
         };
 

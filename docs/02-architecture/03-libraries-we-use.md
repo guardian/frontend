@@ -10,6 +10,9 @@ https://github.com/ded/bonzo
 Bean - an events library for components
 https://github.com/fat/bean
 
+Reqwest - an Ajax library
+https://github.com/ded/reqwest
+
 ## back end
 Play - the application server
 https://playframework.com/

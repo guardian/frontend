@@ -1,3 +1,4 @@
+import reqwest from 'reqwest';
 import config from 'lib/config';
 import raven from 'lib/raven';
 // This should no longer be used.
@@ -12,23 +13,7 @@ const ajax = (params) => {
         options.crossOrigin = true;
     }
 
-    const { url, method } = options;
-    const headers = { ...options.headers };
-    if(options.contentType !== undefined)
-        headers['Content-Type'] = options.contentType;
-
-
-    const init = {
-        mode: options.crossOrigin ? 'cors' : undefined,
-        headers: Object.keys(headers).length > 0 ? headers : undefined,
-        body: options.data ? JSON.stringify(options.data) : undefined,
-        credentials: options.withCredentials ? 'include' : undefined,
-    }
-
-    // Ensure no “empty object” gets passed on GET or HEAD requests.
-    if (['GET', 'HEAD'].includes(`${method}`.toUpperCase())) delete init.body;
-
-    const r = fetch(url, init);
+    const r = reqwest(options);
 
     raven.wrap(
         {

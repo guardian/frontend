@@ -1,4 +1,5 @@
 import fastdom from 'lib/fastdom-promise';
+import fetch from 'lib/fetch';
 import config from 'lib/config';
 
 const targetUrl = config.get('page.calloutsUrl');
