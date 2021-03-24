@@ -443,4 +443,14 @@ trait FeatureSwitches {
     sellByDate = new LocalDate(2021, 8, 3),
     exposeClientSide = true,
   )
+
+  val puzzlesBanner = Switch(
+    SwitchGroup.Feature,
+    "puzzles-banner",
+    "Enables the puzzles banner on puzzles pages",
+    owners = Seq(Owner.withGithub("i-hardy")),
+    safeState = Off,
+    sellByDate = new LocalDate(2022, 3, 31),
+    exposeClientSide = true,
+  )
 }
