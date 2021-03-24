@@ -70,7 +70,7 @@ object ArticlePageChecks {
         case _: UnknownBlockElement   => false
         case _: VideoBlockElement     => false
         case _: WitnessBlockElement   => false
-        case ContentAtomBlockElement(_, atomtype) => {
+        case ContentAtomBlockElement(_, atomtype, _) => {
           // ContentAtomBlockElement was expanded to include atomtype.
           // To support an atom type, just add it to supportedAtomTypes
           val supportedAtomTypes =
@@ -93,13 +93,13 @@ object ArticlePageChecks {
     // See: https://github.com/guardian/dotcom-rendering/blob/master/packages/frontend/web/components/lib/ArticleRenderer.tsx
     def unsupportedElement(blockElement: BlockElement) =
       blockElement match {
-        case _: TextBlockElement                 => false
-        case _: ImageBlockElement                => false
-        case _: VideoBlockElement                => false
-        case _: GuVideoBlockElement              => false
-        case _: EmbedBlockElement                => false
-        case ContentAtomBlockElement(_, "media") => false
-        case _                                   => true
+        case _: TextBlockElement                    => false
+        case _: ImageBlockElement                   => false
+        case _: VideoBlockElement                   => false
+        case _: GuVideoBlockElement                 => false
+        case _: EmbedBlockElement                   => false
+        case ContentAtomBlockElement(_, "media", _) => false
+        case _                                      => true
       }
 
     !page.article.blocks.exists(_.main.exists(_.elements.exists(unsupportedElement)))
