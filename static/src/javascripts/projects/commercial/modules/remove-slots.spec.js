@@ -21,12 +21,12 @@ describe('Remove ad slots and labels', () => {
                 </div>
             `;
         }
-        expect(Array.from(document.querySelectorAll(adSlotSelector)).length).toEqual(2);
-        expect(Array.from(document.querySelectorAll(toggledAdLabelSelector)).length).toEqual(2);
+        expect(document.querySelectorAll(adSlotSelector).length).toEqual(2);
+        expect(document.querySelectorAll(toggledAdLabelSelector).length).toEqual(2);
         return removeSlots().then(() => {
-            expect(Array.from(document.querySelectorAll(adSlotSelector)).length).toEqual(0);
-            expect(Array.from(document.querySelectorAll(toggledAdLabelSelector)).length).toEqual(0);
-            expect(Array.from(document.querySelectorAll('.ad-slot__label')).length).toEqual(1);
+            expect(document.querySelectorAll(adSlotSelector).length).toEqual(0);
+            expect(document.querySelectorAll(toggledAdLabelSelector).length).toEqual(0);
+            expect(document.querySelectorAll('.ad-slot__label').length).toEqual(1);
         });
     });
 
@@ -42,12 +42,12 @@ describe('Remove ad slots and labels', () => {
                 </div>
             `;
         }
-        expect(Array.from(document.querySelectorAll(adSlotSelector)).length).toEqual(2);
-        expect(Array.from(document.querySelectorAll(toggledAdLabelSelector)).length).toEqual(2);
+        expect(document.querySelectorAll(adSlotSelector).length).toEqual(2);
+        expect(document.querySelectorAll(toggledAdLabelSelector).length).toEqual(2);
         return removeDisabledSlots().then(() => {
-            expect(Array.from(document.querySelectorAll(adSlotSelector)).length).toEqual(1);
-            expect(Array.from(document.querySelectorAll(toggledAdLabelSelector)).length).toEqual(1);
-            expect(Array.from(document.querySelectorAll('.ad-slot__label')).length).toEqual(2);
+            expect(document.querySelectorAll(adSlotSelector).length).toEqual(1);
+            expect(document.querySelectorAll(toggledAdLabelSelector).length).toEqual(1);
+            expect(document.querySelectorAll('.ad-slot__label').length).toEqual(2);
         });
     });
 });
