@@ -4,8 +4,8 @@ import fetchJson from './fetch-json';
 
 const chance = new Chance();
 
-global.fetch = jest.fn();
-const fetchSpy = global.fetch;
+jest.mock('lib/fetch', () => jest.fn());
+const fetchSpy = require('lib/fetch');
 
 describe('Fetch JSON util', () => {
     beforeAll(() => {

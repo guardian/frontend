@@ -224,9 +224,10 @@ const getStickyBottomBanner = (payload) => {
     });
 };
 
-const getPuzzlesBanner = () => {
+const getPuzzlesBanner = (payload) => {
     const isProd = config.get('page.isProd');
     const URL = isProd ? 'https://contributions.guardianapis.com/puzzles' : 'https://contributions.code.dev-guardianapis.com/puzzles?';
+    const json = JSON.stringify(payload);
 
     const forcedVariant = getForcedVariant('banner');
     const queryString = forcedVariant ? `?force=${forcedVariant}` : '';
@@ -234,6 +235,7 @@ const getPuzzlesBanner = () => {
     return fetchJson(`${URL}${queryString}`, {
         method: 'post',
         headers: { 'Content-Type': 'application/json' },
+        body: json,
     });
 }
 
@@ -303,14 +305,16 @@ export const fetchPuzzlesData = async () => {
     const page = config.get('page');
     const payload = await buildBannerPayload();
     const forcePuzzlesBannerTest = isInVariantSynchronous(puzzlesBanner, 'variant');
+    const isPuzzlesBannerSwitchOn = config.get('switches.puzzlesBanner', false);
+    const userShouldSeeBanner = forcePuzzlesBannerTest || isPuzzlesBannerSwitchOn;
     const isPuzzlesPage = page.section === 'crosswords' || page.series === 'Sudoku';
 
     if (payload.targeting.shouldHideReaderRevenue || payload.targeting.isPaidContent) {
         return null;
     }
 
-    if (forcePuzzlesBannerTest && isPuzzlesPage) {
-        return getPuzzlesBanner().then(json => {
+    if (userShouldSeeBanner && isPuzzlesPage) {
+        return getPuzzlesBanner(payload).then(json => {
             if (!json.data) {
                 return null;
             }

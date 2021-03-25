@@ -944,7 +944,7 @@ object AffiliateLinksCleaner {
 
   def linkToSkimLink(link: String, pageUrl: String, skimlinksId: String): String = {
     val urlEncodedLink = URLEncode(link)
-    s"http://go.theguardian.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
+    s"https://go.skimresources.com/?id=$skimlinksId&url=$urlEncodedLink&sref=$host$pageUrl"
   }
 
   def contentHasAlwaysOffTag(tagPaths: List[String], alwaysOffTags: Set[String]): Boolean = {
