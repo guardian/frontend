@@ -168,11 +168,9 @@ const maybeWipeUserData = async (apiKey, brazeUuid) => {
 
     if (userHasLoggedOut) {
         try {
-            if (apiKey){
-                appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
-                appboy.initialize(apiKey, SDK_OPTIONS);
-                appboy.wipeData();
-            }
+            appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+            appboy.initialize(apiKey, SDK_OPTIONS);
+            appboy.wipeData();
 
             // DCR has an implementation of LocalMessageCache but Frontend does not
             // We should still wipe the cache from Frontend if the user logs out
