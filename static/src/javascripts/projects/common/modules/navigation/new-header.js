@@ -7,7 +7,7 @@ import { storage } from '@guardian/libs';
 import { scrollToElement } from 'lib/scroller';
 import { addEventListener } from 'lib/events';
 import { showMyAccountIfNecessary } from './user-account';
-import { showGiftingCTA } from './gifting';
+import { showSupporterCTA } from './supporter-cta';
 
 
 const enhanced = {};
@@ -564,7 +564,7 @@ export const newHeaderInit = () => {
     showMoreButton();
     addEventHandler();
     showMyAccountIfNecessary();
-    showGiftingCTA();
+    showSupporterCTA();
     closeAllMenuSections();
     trackRecentSearch();
 };
