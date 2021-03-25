@@ -1,9 +1,9 @@
 package controllers
 
-import common.{Edition, ImplicitControllerExecutionContext, JsonComponent, GuLogging}
+import common.{Edition, GuLogging, ImplicitControllerExecutionContext, JsonComponent}
 import contentapi.ContentApiClient
 import implicits.Requests
-import model.{ApplicationContext, Cached, Content, ContentType}
+import model.{ApplicationContext, Cached, Content, ContentFormat, ContentType}
 import models.dotcomponents.{OnwardsUtils, RichLink, RichLinkTag}
 import play.api.mvc.{Action, AnyContent, ControllerComponents, RequestHeader}
 import play.twirl.api.Html
@@ -35,6 +35,7 @@ class RichLinkController(contentApiClient: ContentApiClient, controllerComponent
               .flatMap(_.properties.contributorLargeImagePath.map(ImgSrc(_, RichLinkContributor))),
             url = content.metadata.url,
             pillar = OnwardsUtils.determinePillar(content.metadata.pillar),
+            format = content.metadata.format.getOrElse(ContentFormat.defaultContentFormat),
           )
           Cached(900)(JsonComponent(richLink)(request, RichLink.writes))
         case Some(content) => renderContent(richLinkHtml(content), richLinkBodyHtml(content))
