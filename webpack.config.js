@@ -70,6 +70,9 @@ module.exports = {
             'ophan/ng': 'ophan-tracker-js',
             'ophan/embed': 'ophan-tracker-js/build/ophan.embed',
             lodash: 'lodash-es',
+            "react": "preact/compat",
+            "react-dom/test-utils": "preact/test-utils",
+            "react-dom": "preact/compat",
         },
         extensions: ['.js', '.ts', '.tsx', '.jsx'],
         symlinks: false, // Inserted to enable linking @guardian/consent-management-platform

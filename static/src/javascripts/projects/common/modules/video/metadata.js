@@ -1,4 +1,5 @@
 import config from 'lib/config';
+import fetch from 'lib/fetch';
 import fetchJSON from 'lib/fetch-json';
 
 

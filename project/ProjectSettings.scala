@@ -32,7 +32,7 @@ object ProjectSettings {
     publishArtifact in (Compile, packageDoc) := false,
     sources in (Compile, doc) := Seq.empty,
     doc in Compile := target.map(_ / "none").value,
-    scalaVersion := "2.12.12",
+    scalaVersion := "2.12.13",
     initialize := {
       val _ = initialize.value
       assert(
