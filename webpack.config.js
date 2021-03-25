@@ -129,16 +129,6 @@ module.exports = {
                 exclude: /(node_modules)/,
                 loader: 'raw-loader',
             },
-            // {
-            //     test: /node_modules\/@guardian\/braze-components/,
-            //     // include: path.resolve(__dirname, 'node_modules/@guardian/braze-components'),
-            //     resolve: {
-            //         alias: {
-            //             react: 'preact/compat',
-            //             'react-dom': 'preact/compat',
-            //         },
-            //     },
-            // },
             // Atoms rely on locally defined variables (see atoms/vars.scss)
             // to exhibit the same styles of the underlying platform. This
             // module below exposes a loader that catches requests for
