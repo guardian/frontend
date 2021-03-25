@@ -1,5 +1,6 @@
 import { mountDynamic } from '@guardian/automat-modules';
 import { onConsentChange } from '@guardian/consent-management-platform';
+import { storage } from '@guardian/libs';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
 import config from '../../../lib/config';
