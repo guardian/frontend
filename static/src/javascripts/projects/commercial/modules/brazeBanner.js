@@ -247,16 +247,10 @@ const show = () => Promise.all([
         }
 
         const Component = brazeModule.BrazeMessage
-        const shadowRoot = container.attachShadow({ mode: 'open' });
-        const inner = shadowRoot.appendChild(document.createElement('div'));
-        const renderContainer = inner.appendChild(
-            document.createElement('div'),
-        );
 
-        const emotionCache = createCacheModule.default({ key: 'site-message', container: inner });
-
-        const cached = (
-            <CacheProvider value={emotionCache}>
+        // IE does not support shadow DOM, so instead we just render
+        if (!container.attachShadow) {
+            render(
                 <Component
                     componentName={ messageConfig.extras.componentName}
                     logButtonClickWithBraze={(buttonId) => {
@@ -270,13 +264,39 @@ const show = () => Promise.all([
                     submitComponentEvent={submitComponentEvent}
                     brazeMessageProps={messageConfig.extras}
                 />
-            </CacheProvider>
-        );
+            , container);
+        } else {
+            const shadowRoot = container.attachShadow({ mode: 'open' });
+            const inner = shadowRoot.appendChild(document.createElement('div'));
+            const renderContainer = inner.appendChild(
+                document.createElement('div'),
+            );
 
-        render(
-            cached,
-            renderContainer
-        );
+            const emotionCache = createCacheModule.default({ key: 'site-message', container: inner });
+
+            const cached = (
+                <CacheProvider value={emotionCache}>
+                    <Component
+                        componentName={ messageConfig.extras.componentName}
+                        logButtonClickWithBraze={(buttonId) => {
+                            if (appboy) {
+                                const thisButton = new appboy.InAppMessageButton(`Button ${buttonId}`,null,null,null,null,null,buttonId)
+                                appboy.logInAppMessageButtonClick(
+                                    thisButton, messageConfig
+                                );
+                            }
+                        }}
+                        submitComponentEvent={submitComponentEvent}
+                        brazeMessageProps={messageConfig.extras}
+                    />
+                </CacheProvider>
+            );
+
+            render(
+                cached,
+                renderContainer
+            );
+        }
 
         if (appboy) {
             // Log the impression with Braze
