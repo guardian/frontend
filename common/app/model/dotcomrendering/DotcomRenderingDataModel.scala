@@ -60,11 +60,9 @@ case class DotcomRenderingDataModel(
     pageFooter: PageFooter,
     publication: String,
     shouldHideReaderRevenue: Boolean,
-    // slot machine (temporary for contributions development)
-    slotMachineFlags: String,
+    slotMachineFlags: String, // slot machine (temporary for contributions development)
     contributionsServiceUrl: String,
     badge: Option[DCRBadge],
-    // Match Data
     matchUrl: Option[String], // Optional url used for match data
     isSpecialReport: Boolean, // Indicates whether the page is a special report.
 )
@@ -162,13 +160,7 @@ object DotcomRenderingDataModel {
         "isSpecialReport" -> model.isSpecialReport,
       )
 
-      // The following line performs:
-      //     1. an update of the `elements` objects inside the `blocks` objects
-      //     2. an update of the `elements` objects inside mainMediaElements
-      // using functions of the ElementsEnhancer object. See comments in ElementsEnhancer for a full
-      // context of why this happens.
       ElementsEnhancer.enhanceDcrObject(obj)
-
     }
   }
 
