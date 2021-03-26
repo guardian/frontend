@@ -23,13 +23,10 @@ const filterDisabledNodes = (nodes: Element[]) => nodes.filter(isDisabled);
 const removeNodes = (nodes: Element[]): Promise<void> =>
 	fastdom.mutate(() => nodes.forEach((node) => node.remove()));
 
-const removeAdSlots = () => removeNodes(selectNodes());
+const removeSlots = (): Promise<void> => removeNodes(selectNodes());
 
-const removeDisabledAdSlots = (): Promise<void> =>
-	removeNodes(filterDisabledNodes(selectNodes()));
-
-const removeSlots = (): Promise<void> => removeAdSlots();
-
-const removeDisabledSlots = once(() => removeDisabledAdSlots());
+const removeDisabledSlots = once(() =>
+	removeNodes(filterDisabledNodes(selectNodes())),
+);
 
 export { removeSlots, removeDisabledSlots };
