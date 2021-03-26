@@ -1,8 +1,4 @@
 import React from 'react';
-import { render } from 'react-dom';
-
-import { CacheProvider } from '@emotion/core';
-import createCache from '@emotion/cache';
 
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
@@ -235,11 +231,14 @@ const canShow = async () => {
     }
 };
 
-const show = () => import(
-    /* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components'
-    )
-    .then((module) => {
-        const container = document.createElement('div');
+const show = () => Promise.all([
+    import('react-dom'),
+    import('@emotion/core'),
+    import('@emotion/cache'),
+    import(/* webpackChunkName: "guardian-braze-components" */ '@guardian/braze-components')
+]).then((props) => {
+    const [{ render }, { CacheProvider }, createCacheModule, brazeModule] = props
+    const container = document.createElement('div');
         container.classList.add('site-message--banner');
 
         // The condition here is to keep flow happy
@@ -247,14 +246,14 @@ const show = () => import(
             document.body.appendChild(container);
         }
 
-        const Component = module.BrazeMessage
+        const Component = brazeModule.BrazeMessage
         const shadowRoot = container.attachShadow({ mode: 'open' });
         const inner = shadowRoot.appendChild(document.createElement('div'));
         const renderContainer = inner.appendChild(
             document.createElement('div'),
         );
 
-        const emotionCache = createCache({ key: 'site-message', container: inner });
+        const emotionCache = createCacheModule.default({ key: 'site-message', container: inner });
 
         const cached = (
             <CacheProvider value={emotionCache}>
