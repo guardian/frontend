@@ -1,14 +1,7 @@
 import config from 'lib/config';
+import fetch from 'lib/fetch';
 
-/**
- * Fetches JSON
- *
- * @param {RequestInfo} input - The URL to point to
- * @param {RequestInit} init - Object with options
- *
- */
-
-const fetchJson = (
+const json = (
     input,
     init = {}
 ) => {
@@ -50,4 +43,4 @@ const fetchJson = (
     });
 };
 
-export default fetchJson;
+export default json;

@@ -17,6 +17,7 @@ import endslateTpl from 'common/views/content/endslate.html';
 import loaderTpl from 'common/views/content/loader.html';
 import shareButtonTpl from 'common/views/content/share-button.html';
 import { loadCssPromise } from 'lib/load-css-promise';
+import fetch from 'lib/fetch';
 
 
 

@@ -37,7 +37,7 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, Footer),
     getReaderRevenueUrl(SupportSubscribe, Footer),
     getReaderRevenueUrl(Support, Footer),
-    getReaderRevenueUrl(SupporterCTA, Footer)
+    getReaderRevenueUrl(SupporterCTA, Footer),
   )
 
   val sideMenuReaderRevenueLink: ReaderRevenueLink = ReaderRevenueLink(
