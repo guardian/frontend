@@ -17,10 +17,14 @@ export const send = (
 ): Promise<Response> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
+
+		const body = ['GET', 'HEAD'].includes(method.toUpperCase())
+			? undefined
+			: JSON.stringify(data);
 		return fetch(url, {
 			method,
 			mode: 'cors',
-			body: JSON.stringify(data),
+			body,
 			headers: {
 				'D2-X-UID': String(config.get('page.discussionD2Uid')),
 				'GU-Client': String(
