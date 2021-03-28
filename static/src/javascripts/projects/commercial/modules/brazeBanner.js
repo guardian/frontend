@@ -18,6 +18,7 @@ import {
     setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
 import { measureTiming } from './measure-timing';
+import { BrazeMessages, InMemoryCache, LocalMessageCache } from '@guardian/braze-components/logic'
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
 
@@ -52,8 +53,7 @@ const canShowPreChecks = ({
     pageConfig,
 }) => Boolean(userIsGuSupporter && !pageConfig.isPaidContent);
 
-let messageConfig;
-let appboy;
+let message;
 
 const FORCE_BRAZE_ALLOWLIST = [
     'preview.gutools.co.uk',
@@ -112,7 +112,7 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     const sdkLoadTiming = measureTiming('braze-sdk-load');
     sdkLoadTiming.start();
 
-    appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+    const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
 
     const sdkLoadTimeTaken = sdkLoadTiming.end();
     ophan.record({
@@ -125,35 +125,16 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
 
     appboy.initialize(apiKey, SDK_OPTIONS);
 
-    const canShowPromise = new Promise(resolve => {
-        // Needed to keep Flow happy
-        if (!appboy) {
-            resolve(false);
-            return;
-        }
+    const errorHandler = (error) => { reportError(error, {}, false) };
+    const brazeMessages = new BrazeMessages(appboy, InMemoryCache, errorHandler);
 
-        let subscriptionId;
+    setHasCurrentBrazeUser();
+    appboy.changeUser(brazeUuid);
+    appboy.openSession();
 
-        const callback = (message) => {
-            if (message.extras) {
-                messageConfig = message;
-                resolve(true);
-            } else {
-                resolve(false);
-            }
-
-            if (appboy && subscriptionId) {
-                appboy.removeSubscription(subscriptionId);
-            }
-        };
-
-        // Keep hold of the subscription ID so that we can unsubscribe in the
-        // callback, ensuring that the callback is only invoked once per page
-        subscriptionId = appboy.subscribeToInAppMessage(callback);
-
-        setHasCurrentBrazeUser();
-        appboy.changeUser(brazeUuid);
-        appboy.openSession();
+    const canShowPromise = brazeMessages.getMessageForBanner().then((m) => {
+        message = m;
+        return true;
     });
 
     canShowPromise.then(() => {
@@ -190,6 +171,7 @@ const maybeWipeUserData = async (apiKey, brazeUuid) => {
             })
 
             clearHasCurrentBrazeUser();
+            LocalMessageCache.clear();
         } catch(error) {
             reportError(error, {}, false);
         }
@@ -202,7 +184,7 @@ const canShow = async () => {
 
     const forcedBrazeMessage = getMessageFromUrlFragment();
     if (forcedBrazeMessage) {
-        messageConfig = forcedBrazeMessage;
+        message = forcedBrazeMessage;
         return true;
     }
 
@@ -317,16 +299,14 @@ const show = () => Promise.all([
             );
         }
 
-        if (appboy) {
-            // Log the impression with Braze
-            appboy.logInAppMessageImpression(messageConfig);
-        }
+        // Log the impression with Braze
+        message.logImpression();
 
         // Log the impression with Ophan
         submitViewEvent({
             component: {
                 componentType: 'RETENTION_ENGAGEMENT_BANNER',
-                id: messageConfig.extras.componentName,
+                id: message.extras.componentName,
             },
         });
 
