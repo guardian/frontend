@@ -154,10 +154,18 @@ const getMessageFromBraze = async (apiKey, brazeUuid) => {
     return canShowPromise
 };
 
+<<<<<<< HEAD
 const maybeWipeUserData = async (apiKey, brazeUuid, consent) => {
     const userHasLoggedOut = !brazeUuid && hasCurrentBrazeUser();
     const userHasRemovedConsent = !consent && hasCurrentBrazeUser();
     const slotNames = ['Banner','EndOfArticle'];
+=======
+const maybeWipeUserData = async (apiKey, brazeUuid) => {
+    if (!brazeUuid && hasCurrentBrazeUser()) {
+        const appboy = await import(/* webpackChunkName: "braze-web-sdk-core" */ '@braze/web-sdk-core');
+
+        appboy.initialize(apiKey, SDK_OPTIONS);
+>>>>>>> b2727c2dd8... Use BrazeMessages.getMessageForBanner() from @guardian/braze-components
 
     if (userHasLoggedOut || userHasRemovedConsent) {
         try {
