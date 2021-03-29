@@ -158,9 +158,18 @@ const getUrlKeywords = (pageId) => {
     return [];
 };
 
-const flattenDeep = (arr) => Array.isArray(arr)
-    ? arr.reduce( (a, b) => a.concat(flattenDeep(b)) , [])
-    : [arr]
+const flattenDeep = arr => {
+    let flattened = [];
+    for (const a of arr) {
+        if (Array.isArray(a)) {
+            flattened = [...flattened, ...a];
+            flattened = [...flattenDeep(flattened)]
+        } else {
+            flattened.push(a);
+        }
+    }
+    return flattened;
+}
 
 const formatAppNexusTargeting = (obj) =>
     flattenDeep(
