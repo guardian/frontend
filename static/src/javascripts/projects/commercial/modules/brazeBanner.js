@@ -197,7 +197,7 @@ const canShow = async () => {
 
     const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
 
-    await maybeWipeUserData(apiKey, brazeUuid);
+    await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
 
     if (!(brazeUuid && hasGivenConsent)) {
         return false;
