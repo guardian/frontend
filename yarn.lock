@@ -1838,16 +1838,15 @@
     react "^16.13.1"
     react-dom "^16.13.1"
 
-"@guardian/braze-components@0.0.19":
-  version "0.0.19"
-  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.19.tgz#edca8e113c09e556c492c425a12b04724e13912b"
-  integrity sha512-fDWFc7YSeS2CEcH7ZiZO6RKwclFvB5uy+aAvKER4rFGqRwaK2eBcF8i7SMHDbWNjfafpdrTu9Rdug7nxnj1kbg==
+"@guardian/braze-components@0.0.20":
+  version "0.0.20"
+  resolved "https://registry.yarnpkg.com/@guardian/braze-components/-/braze-components-0.0.20.tgz#6e63a93a598eefa1ebd80c643be0a3087b3fa839"
+  integrity sha512-3KWR9Td2KxvEZ3NDa56aPeyNJ2hFYD5K50IepSB1BxVpICxX1UAYF1CvP8yPashDon4rI/T8VcPiaSw16reyJA==
   dependencies:
     "@guardian/src-button" "2.7.1"
     "@guardian/src-foundations" "2.7.1"
     "@guardian/src-grid" "2.7.1"
     "@guardian/src-icons" "2.7.1"
-    emotion-theming "^10.0.19"
 
 "@guardian/commercial-core@^0.16.3":
   version "0.16.3"
@@ -5476,7 +5475,7 @@ emotion-server@^10.0.5:
   dependencies:
     create-emotion-server "10.0.27"
 
-emotion-theming@^10.0.19, emotion-theming@^10.0.27:
+emotion-theming@^10.0.27:
   version "10.0.27"
   resolved "https://registry.yarnpkg.com/emotion-theming/-/emotion-theming-10.0.27.tgz#1887baaec15199862c89b1b984b79806f2b9ab10"
   integrity sha512-MlF1yu/gYh8u+sLUqA0YuA9JX0P4Hb69WlKc/9OLo+WCXuX6sy/KoIa+qJimgmr2dWqnypYKYPX37esjDBbhdw==
