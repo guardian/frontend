@@ -21,6 +21,7 @@ export const send = (
 		const body = ['GET', 'HEAD'].includes(method.toUpperCase())
 			? undefined
 			: JSON.stringify(data);
+
 		return fetch(url, {
 			method,
 			mode: 'cors',
