@@ -97,7 +97,7 @@ describe('comscore init', () => {
         it('CCPA without consent: runs', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
             init();
-            expect(loadScript).toBeCalled();
+            expect(loadScript).not.toBeCalled();
         });
     });
 });
@@ -117,7 +117,7 @@ describe('comscore initOnConsent', () => {
         _.initOnConsent(true);
         _.initOnConsent(true);
 
-        
+
         expect(loadScript).toBeCalledTimes(1);
     });
 });
