@@ -9,8 +9,13 @@ const request = (
 	data?: Record<string, unknown>,
 ): Promise<Response> => {
 	const url = apiUrl + path;
+
+	const body = ['GET', 'HEAD'].includes(method.toUpperCase())
+		? undefined
+		: JSON.stringify(data);
+
 	return fetch(url, {
-		body: JSON.stringify(data),
+		body,
 		method,
 		mode: 'cors',
 		credentials: 'include',
