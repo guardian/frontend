@@ -28,7 +28,6 @@ jest.mock('common/modules/identity/api', () => ({
 }));
 jest.mock('common/modules/discussion/api', () => ({
     postComment: jest.fn(),
-    getUser: jest.fn(),
 }));
 
 const getUserFromApiWithRefreshedCookie = (getUserFromApiWithRefreshedCookie_);
