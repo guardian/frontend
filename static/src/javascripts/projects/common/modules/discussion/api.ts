@@ -40,7 +40,7 @@ export const send = (
 };
 
 export const postComment = (
-	discussionId: number | string,
+	discussionId: Id,
 	comment: Comment,
 ): Promise<Response> => {
 	const endpoint = `/discussion/${discussionId}/comment${
