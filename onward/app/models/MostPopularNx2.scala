@@ -1,7 +1,7 @@
 package models
 
 import com.github.nscala_time.time.Imports.DateTimeZone
-import com.gu.commercial.branding.Branding
+import com.gu.commercial.branding.{Branding, BrandingType, Sponsored, Logo, Dimensions}
 import common.{Edition, LinkTo}
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
@@ -36,7 +36,21 @@ case class OnwardItemNx2(
 
 object OnwardItemNx2 {
 
-  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
+  implicit val brandingTypeWrites = new Writes[BrandingType] {
+    def writes(bt: BrandingType) = {
+      Json.obj(
+        "name" -> bt.name,
+      )
+    }
+  }
+
+  implicit val dimentionsWrites = Json.writes[Dimensions]
+
+  implicit val logoWrites = Json.writes[Logo]
+
+  implicit val brandingWrites = Json.writes[Branding]
+
+  implicit val onwardItemNx2Writes = Json.writes[OnwardItemNx2]
 
   private def contentCardToAvatarUrl(contentCard: ContentCard): Option[String] = {
 

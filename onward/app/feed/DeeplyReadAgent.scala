@@ -63,6 +63,7 @@ object DeeplyReadItem {
       kickerText = item.kickerText,
       starRating = item.starRating,
       avatarUrl = None,
+      branding = None,
     )
   }
 }
