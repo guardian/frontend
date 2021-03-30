@@ -38,18 +38,17 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
       handler: WSResponse => Result,
   )(implicit request: RequestHeader): Future[Result] = {
 
-    def getRecover(): Future[Result] = {
+    def doGet() = {
       ws.url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
         .post(payload)
-        .map(handler)
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
-      circuitBreaker.withCircuitBreaker(getRecover())
+      circuitBreaker.withCircuitBreaker(doGet()).map(handler)
     } else {
-      getRecover()
+      doGet().map(handler)
     }
   }
 
