@@ -1,8 +1,9 @@
 import {
     brazeVendorId,
     canShowPreChecks,
-    hasRequiredConsents,
 } from './brazeBanner';
+
+import { hasRequiredConsents } from './hasRequiredConsents.js'
 
 jest.mock('../../../lib/raven');
 jest.mock('ophan/ng', () => null);

@@ -1,52 +1,25 @@
 import React from 'react';
-
 import { onConsentChange } from '@guardian/consent-management-platform';
 import { storage } from '@guardian/libs';
 import { shouldNotBeShownSupportMessaging } from 'common/modules/commercial/user-features';
 import ophan from 'ophan/ng';
-import config from '../../../lib/config';
 import reportError from '../../../lib/report-error';
 import { getUrlVars } from '../../../lib/url';
 import {
     submitComponentEvent,
     submitViewEvent,
 } from '../../common/modules/commercial/acquisitions-ophan';
-import { getUserFromApi } from '../../common/modules/identity/api';
 import {
     clearHasCurrentBrazeUser,
     hasCurrentBrazeUser,
     setHasCurrentBrazeUser,
 } from './hasCurrentBrazeUser';
 import { measureTiming } from './measure-timing';
+import { checkBrazeDependencies } from './checkBrazeDependencies.js'
 import { BrazeMessages, InMemoryCache, LocalMessageCache } from '@guardian/braze-components/logic'
+import fastdom from 'lib/__mocks__/fastdom';
 
 const brazeVendorId = '5ed8c49c4b8ce4571c7ad801';
-
-const getBrazeUuid = () =>
-    new Promise((resolve) => {
-        getUserFromApi(user => {
-            if (user && user.privateFields && user.privateFields.brazeUuid) {
-                resolve(user.privateFields.brazeUuid);
-            } else {
-                resolve();
-            }
-        })
-    });
-
-const hasRequiredConsents = () =>
-    new Promise((resolve) => {
-        onConsentChange(({ tcfv2, ccpa, aus }) => {
-            if (tcfv2) {
-                resolve(tcfv2.vendorConsents[brazeVendorId]);
-            } else if (ccpa) {
-                resolve(!ccpa.doNotSell);
-            } else if (aus) {
-                resolve(aus.personalisedAdvertising);
-            } else {
-                resolve(false);
-            }
-        })
-    });
 
 const canShowPreChecks = ({
     userIsGuSupporter,
@@ -191,34 +164,25 @@ const canShow = async () => {
         return true;
     }
 
-    const brazeSwitch = config.get('switches.brazeSwitch');
-    const apiKey = config.get('page.brazeApiKey');
-    const isBrazeConfigured = brazeSwitch && apiKey;
-    if (!isBrazeConfigured) {
+    const dependenciesResult = await checkBrazeDependencies();
+
+    if (!dependenciesResult.isSuccessful) {
+        const { failure, data } = dependenciesResult;
+
+        await maybeWipeUserData(data.apiKey, data.brazeUuid, data.hasGivenConsent);
+
+        if (SDK_OPTIONS.enableLogging) {
+			console.log(
+				`Not attempting to show Braze messages. Dependency ${failure.field} failed with ${failure.data}.`,
+			);
+		}
+
         return false;
     }
 
-    const [brazeUuid, hasGivenConsent] = await Promise.all([getBrazeUuid(), hasRequiredConsents()]);
-
-    await maybeWipeUserData(apiKey, brazeUuid, hasGivenConsent);
-
-    if (!(brazeUuid && hasGivenConsent)) {
-        return false;
-    }
-
-    if (!canShowPreChecks({
-        userIsGuSupporter: shouldNotBeShownSupportMessaging(),
-        pageConfig: config.get('page'),
-    })) {
-        // Currently all active web canvases in Braze target existing supporters,
-        // subscribers or otherwise those with a Guardian product. We can use the
-        // value of `shouldNotBeShownSupportMessaging` to identify these users,
-        // limiting the number of requests we need to initialise Braze on the page:
-        return false;
-    }
 
     try {
-        const result = await getMessageFromBraze(apiKey, brazeUuid)
+        const result = await getMessageFromBraze(dependenciesResult.data.apiKey, dependenciesResult.data.brazeUuid)
         const timeTaken = bannerTiming.end();
 
         if (timeTaken) {
@@ -321,6 +285,5 @@ const brazeBanner = {
 export {
     brazeBanner,
     brazeVendorId,
-    hasRequiredConsents,
     canShowPreChecks,
 }
