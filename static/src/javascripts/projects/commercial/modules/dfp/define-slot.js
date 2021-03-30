@@ -38,7 +38,13 @@ const getSizeOpts = (sizesByBreakpoint) => {
     const sizeMapping = buildSizeMapping(sizesByBreakpoint);
     // as we're using sizeMapping, pull out all the ad sizes, as an array of arrays
 
-    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((a, b) => [...a, ...b], [])
+    const flattenSizeMappings = sizeMapping.map(size => size[1]).reduce((a, b) => {
+        if (!b.length) {
+            return [...a, b];
+        }
+        return [...a, ...b]
+    }, []);
+
     const sizes = uniqBy(
         flattenSizeMappings,
         size => `${size[0]}-${size[1]}`
