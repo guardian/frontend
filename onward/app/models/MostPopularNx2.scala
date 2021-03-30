@@ -153,7 +153,7 @@ object OnwardItemNx2 {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
-      branding = content.branding(Edition.defaultEdition),
+      branding = content.branding(Edition(request)),
     )
   }
 }
