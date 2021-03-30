@@ -44,7 +44,7 @@ object OnwardItemNx2 {
     }
   }
 
-  implicit val dimentionsWrites = Json.writes[Dimensions]
+  implicit val dimensionsWrites = Json.writes[Dimensions]
 
   implicit val logoWrites = Json.writes[Logo]
 
