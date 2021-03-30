@@ -1,6 +1,7 @@
 package models
 
 import com.github.nscala_time.time.Imports.DateTimeZone
+import com.gu.commercial.branding.Branding
 import common.{Edition, LinkTo}
 import model.pressed.PressedContent
 import play.api.mvc.RequestHeader
@@ -30,6 +31,7 @@ case class OnwardItemNx2(
     kickerText: Option[String],
     starRating: Option[Int],
     avatarUrl: Option[String],
+    branding: Option[Branding],
 )
 
 object OnwardItemNx2 {
@@ -74,6 +76,7 @@ object OnwardItemNx2 {
   }
 
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
+    print(ContentCard);
     for {
       properties <- contentCard.properties
       maybeContent <- properties.maybeContent
@@ -104,6 +107,7 @@ object OnwardItemNx2 {
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
       avatarUrl = contentCardToAvatarUrl(contentCard),
+      branding = contentCard.branding,
     )
   }
 
@@ -117,7 +121,6 @@ object OnwardItemNx2 {
         case other  => other
       }
     }
-
     OnwardItemNx2(
       url = LinkTo(content.header.url),
       linkText = RemoveOuterParaHtml(content.properties.linkText.getOrElse(content.header.headline)).body,
@@ -137,6 +140,7 @@ object OnwardItemNx2 {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
+      branding = content.branding(Edition.defaultEdition),
     )
   }
 }
