@@ -90,7 +90,6 @@ object OnwardItemNx2 {
   }
 
   def contentCardToOnwardItemNx2(contentCard: ContentCard): Option[OnwardItemNx2] = {
-    print(ContentCard);
     for {
       properties <- contentCard.properties
       maybeContent <- properties.maybeContent
