@@ -108,7 +108,7 @@ describe('comscore init', () => {
             expect(loadScript).toBeCalled();
         });
 
-        it('CCPA without consent: runs', () => {
+        it('CCPA without consent: does not run', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
             init();
             expect(loadScript).not.toBeCalled();
