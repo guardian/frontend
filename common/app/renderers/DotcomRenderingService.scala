@@ -2,7 +2,7 @@ package renderers
 
 import akka.actor.ActorSystem
 import com.gu.contentapi.client.model.v1.Blocks
-import common.{LinkTo, GuLogging}
+import common.{GuLogging, LinkTo}
 import concurrent.CircuitBreakerRegistry
 import conf.Configuration
 import conf.switches.Switches.CircuitBreakerSwitch
@@ -17,9 +17,10 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.concurrent.duration._
 import model.dotcomrendering.PageType
-
 import http.ResultWithPreconnectPreload
 import http.HttpPreconnections
+
+import java.net.ConnectException
 
 class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload {
 
@@ -39,10 +40,25 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
   )(implicit request: RequestHeader): Future[Result] = {
 
     def doGet() = {
-      ws.url(endpoint)
+      val resp = ws
+        .url(endpoint)
         .withRequestTimeout(Configuration.rendering.timeout)
         .addHttpHeaders("Content-Type" -> "application/json")
         .post(payload)
+
+      resp.recoverWith({
+        case ConnectException if Configuration.environment.stage == "DEV" =>
+          val msg = s"""Connection refused to ${endpoint}.
+              |
+              |You are trying to access a DCR page via Frontend. Most of the time you are better off developing directly
+              |on DCR. See https://github.com/guardian/dotcom-rendering for how to get started with this.
+              |
+              |If you do need to access DCR via Frontend, then make sure to:
+              |
+              | * run DCR locally
+              | * override the 'rendering.endpoint' config property if DCR is running on a non-standard domain or port""".stripMargin
+          Future.failed(new ConnectException(msg))
+      })
     }
 
     if (CircuitBreakerSwitch.isSwitchedOn) {
