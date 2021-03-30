@@ -12,6 +12,17 @@ import layout.ContentCard
 import model.{Article, ContentFormat, ImageMedia, InlineImage, Pillar}
 import models.dotcomponents.OnwardsUtils.{correctPillar, determinePillar}
 
+case class BrandingNx2(
+    brandingType: String,
+    sponsorName: String,
+    aboutThisLink: String,
+    hostedCampaignColour: Option[String],
+)
+
+object BrandingNx2 {
+  implicit val brandingNx2Writes = Json.writes[BrandingNx2]
+}
+
 case class OnwardItemNx2(
     url: String,
     linkText: String,
@@ -31,7 +42,7 @@ case class OnwardItemNx2(
     kickerText: Option[String],
     starRating: Option[Int],
     avatarUrl: Option[String],
-    branding: Option[Branding],
+    branding: Option[BrandingNx2],
 )
 
 object OnwardItemNx2 {
@@ -107,7 +118,9 @@ object OnwardItemNx2 {
       kickerText = contentCard.header.kicker.flatMap(_.properties.kickerText),
       starRating = contentCard.starRating,
       avatarUrl = contentCardToAvatarUrl(contentCard),
-      branding = contentCard.branding,
+      branding = contentCard.branding.map(b =>
+        BrandingNx2(b.brandingType.name, b.sponsorName, b.aboutThisLink, b.hostedCampaignColour),
+      ),
     )
   }
 
@@ -140,7 +153,9 @@ object OnwardItemNx2 {
       kickerText = content.header.kicker.flatMap(_.properties.kickerText),
       starRating = content.card.starRating,
       avatarUrl = None,
-      branding = content.branding(Edition.defaultEdition),
+      branding = content
+        .branding(Edition.defaultEdition)
+        .map(b => BrandingNx2(b.brandingType.name, b.sponsorName, b.aboutThisLink, b.hostedCampaignColour)),
     )
   }
 }
