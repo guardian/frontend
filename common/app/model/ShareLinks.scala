@@ -98,12 +98,12 @@ object ShareLinks {
     lazy val twitterText = title.replace("Leave.EU", "Leave. EU").encodeURIComponent
 
     val fullLink = platform match {
-      case WhatsApp => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
-      case Email         => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
-      case LinkedIn      => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
-      case Facebook      => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
-      case Twitter       => s"https://twitter.com/intent/tweet?text=$twitterText&url=$encodedHref"
-      case Messenger     => s"fb-messenger://share?link=$encodedHref&app_id=180444840287"
+      case WhatsApp  => s"""whatsapp://send?text=${("\"" + title + "\" " + href).encodeURIComponent}"""
+      case Email     => s"mailto:?subject=${title.encodeURIComponent}&body=$encodedHref"
+      case LinkedIn  => s"http://www.linkedin.com/shareArticle?mini=true&title=${title.urlEncoded}&url=$encodedHref"
+      case Facebook  => s"https://www.facebook.com/dialog/share".appendQueryParams(facebookParams)
+      case Twitter   => s"https://twitter.com/intent/tweet?text=$twitterText&url=$encodedHref"
+      case Messenger => s"fb-messenger://share?link=$encodedHref&app_id=180444840287"
     }
 
     ShareLink(platform, fullLink)
@@ -147,7 +147,6 @@ final case class ShareLinks(
 ) {
 
   private val elementShareOrder: List[SharePlatform] = List(Facebook, Twitter)
-
 
   private def campaignParams(platform: SharePlatform): Map[String, String] = {
     platform.campaign
