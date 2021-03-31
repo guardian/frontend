@@ -14,7 +14,7 @@ export const send = (
 	endpoint: string,
 	method: string,
 	data = {},
-): Promise<Response> => {
+): Promise<unknown> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
 
@@ -33,7 +33,7 @@ export const send = (
 				),
 			},
 			credentials: 'include',
-		});
+		}).then((r) => r.json());
 	}
 
 	throw new Error('Discussion features have been disabled');
@@ -42,7 +42,7 @@ export const send = (
 export const postComment = (
 	discussionId: Id,
 	comment: Comment,
-): Promise<Response> => {
+): Promise<unknown> => {
 	const endpoint = `/discussion/${discussionId}/comment${
 		comment.replyTo ? `/${comment.replyTo.commentId}/reply` : ''
 	}`;
@@ -50,22 +50,22 @@ export const postComment = (
 	return send(endpoint, 'POST', comment);
 };
 
-export const previewComment = (comment: Comment): Promise<Response> =>
+export const previewComment = (comment: Comment): Promise<unknown> =>
 	send('/comment/preview', 'POST', comment);
 
-export const recommendComment = (id: Id): Promise<Response> =>
+export const recommendComment = (id: Id): Promise<unknown> =>
 	send(`/comment/${id}/recommend`, 'POST');
 
-export const pickComment = (id: Id): Promise<Response> =>
+export const pickComment = (id: Id): Promise<unknown> =>
 	send(`/comment/${id}/highlight`, 'POST');
 
-export const unPickComment = (id: Id): Promise<Response> =>
+export const unPickComment = (id: Id): Promise<unknown> =>
 	send(`/comment/${id}/unhighlight`, 'POST');
 
 export const reportComment = (
 	id: Id,
 	report: Record<string, unknown>,
-): Promise<Response> => send(`/comment/${id}/reportAbuse`, 'POST', report);
+): Promise<unknown> => send(`/comment/${id}/reportAbuse`, 'POST', report);
 
-export const getUser = (id: Id = 'me'): Promise<Response> =>
+export const getUser = (id: Id = 'me'): Promise<unknown> =>
 	send(`/profile/${id}`, 'GET');
