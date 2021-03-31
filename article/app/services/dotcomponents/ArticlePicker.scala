@@ -135,8 +135,9 @@ object ArticlePicker {
     val primaryChecksPass = primaryChecks.values.forall(identity)
 
     val tier =
-      if (request.forceDCR || primaryChecksPass) RemoteRender
-      else LocalRenderArticle // only for unsupported types
+      if (request.forceDCROff) LocalRenderArticle
+      else if (request.forceDCR || primaryChecksPass) RemoteRender
+      else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
     val isAddFree = ArticlePageChecks.isAdFree(page, request);
