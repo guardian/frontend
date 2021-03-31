@@ -90,8 +90,27 @@ export const unPickComment = (id: Id): Promise<CommentResponse> =>
 
 export const reportComment = (
 	id: Id,
-	report: Record<string, unknown>,
-): Promise<unknown> => send(`/comment/${id}/reportAbuse`, 'POST', report);
+	report: AbuseReport,
+): Promise<CommentResponse> => {
+	const data = new URLSearchParams();
+	data.append('categoryId', report.categoryId.toString());
+	report.email && data.append('email', report.email.toString());
+	report.reason && data.append('reason', report.reason);
+
+	const url =
+		String(config.get('page.discussionApiUrl')) +
+		`/comment/${id}/reportAbuse`;
+
+	return fetch(url, {
+		...defaultInitParams,
+		method: 'POST',
+		body: data.toString(),
+		headers: {
+			...defaultInitParams.headers,
+			'Content-Type': 'application/x-www-form-urlencoded',
+		},
+	}).then((resp) => resp.json());
+};
 
 export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
 	send(`/profile/${id}`, 'GET');
