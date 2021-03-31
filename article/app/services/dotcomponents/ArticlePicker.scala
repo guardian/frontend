@@ -99,7 +99,7 @@ object ArticlePicker {
     logger.withRequestHeaders(request).results(msg, results, page)
   }
 
-  def primaryFeatures(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
+  def dcrChecks(page: PageWithStoryPackage, request: RequestHeader): Map[String, Boolean] = {
     Map(
       ("isSupportedType", ArticlePageChecks.isSupportedType(page)),
       ("hasOnlySupportedElements", ArticlePageChecks.hasOnlySupportedElements(page)),
@@ -115,7 +115,7 @@ object ArticlePicker {
   }
 
   private[this] def dcrArticle100PercentPage(page: PageWithStoryPackage, request: RequestHeader): Boolean = {
-    val allowListFeatures = primaryFeatures(page, request)
+    val allowListFeatures = dcrChecks(page, request)
     val article100PercentPageFeatures = allowListFeatures.filterKeys(
       Set(
         "isSupportedType",
@@ -127,16 +127,17 @@ object ArticlePicker {
         "isNotPaidContent",
       ),
     )
+
     article100PercentPageFeatures.forall({ case (_, isMet) => isMet })
   }
 
   def getTier(page: PageWithStoryPackage)(implicit request: RequestHeader): RenderType = {
-    val primaryChecks = primaryFeatures(page, request)
-    val primaryChecksPass = primaryChecks.values.forall(identity)
+    val checks = dcrChecks(page, request)
+    val dcrCanRender = checks.values.forall(identity)
 
     val tier =
       if (request.forceDCROff) LocalRenderArticle
-      else if (request.forceDCR || primaryChecksPass) RemoteRender
+      else if (request.forceDCR || dcrCanRender) RemoteRender
       else LocalRenderArticle
 
     val isArticle100PercentPage = dcrArticle100PercentPage(page, request);
@@ -144,10 +145,10 @@ object ArticlePicker {
     val pageTones = page.article.tags.tones.map(_.id).mkString(", ")
 
     // include features that we wish to log but not allow-list against
-    val features = primaryChecks.mapValues(_.toString) +
+    val features = checks.mapValues(_.toString) +
       ("isAdFree" -> isAddFree.toString) +
       ("isArticle100PercentPage" -> isArticle100PercentPage.toString) +
-      ("dcrCouldRender" -> primaryChecksPass.toString) +
+      ("dcrCouldRender" -> dcrCanRender.toString) +
       ("pageTones" -> pageTones)
 
     if (tier == RemoteRender) {
