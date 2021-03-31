@@ -13,7 +13,7 @@ type Comment = {
 export const send = (
 	endpoint: string,
 	method: string,
-	data = {},
+	data: Comment | unknown = {},
 ): Promise<unknown> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
