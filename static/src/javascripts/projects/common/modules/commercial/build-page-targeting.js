@@ -1,6 +1,5 @@
 import { cmp, onConsentChange } from '@guardian/consent-management-platform';
 import { storage } from '@guardian/libs';
-import flattenDeep from 'lodash/flattenDeep';
 import once from 'lodash/once';
 import pick from 'lodash/pick';
 import pickBy from 'lodash/pickBy';
@@ -159,17 +158,18 @@ const getUrlKeywords = (pageId) => {
     return [];
 };
 
-const formatAppNexusTargeting = (obj) =>
-    flattenDeep(
-        Object.keys(obj)
-            .filter((key) => obj[key] !== '' && obj[key] !== null)
-            .map((key) => {
-                const value = obj[key];
-                return Array.isArray(value)
-                    ? value.map(nestedValue => `${key}=${nestedValue}`)
-                    : `${key}=${value}`;
-            })
-    ).join(',');
+const formatAppNexusTargeting = (obj) => {
+    const asKeyValues = Object.keys(obj)
+        .map((key) => {
+            const value = obj[key];
+            return Array.isArray(value)
+                ? value.map(nestedValue => `${key}=${nestedValue}`)
+                : `${key}=${value}`;
+        });
+
+    const flattenDeep = Array.prototype.concat.apply([], asKeyValues);
+    return flattenDeep.join(',');
+}
 
 const buildAppNexusTargetingObject = once(
     (pageTargeting) =>
