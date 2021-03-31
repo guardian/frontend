@@ -25,10 +25,6 @@
     @include social-icon($social-linkedin);
 }
 
-.social-icon--pinterest {
-    @include social-icon($social-pinterest);
-}
-
 .social-icon--email {
     @include social-icon($brightness-46);
 }
