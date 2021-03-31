@@ -10,30 +10,56 @@ type Comment = {
 	};
 };
 
+type CommentResponse = {
+	status: 'ok' | 'error';
+	statusCode: number;
+	message: string;
+	errorCode?: string;
+};
+
+type AbuseReport = {
+	categoryId: number;
+	reason?: string;
+	email?: string;
+};
+
+const defaultInitParams: RequestInit = {
+	mode: 'cors',
+	credentials: 'include',
+	headers: {
+		'D2-X-UID': String(config.get('page.discussionD2Uid')),
+		'GU-Client': String(config.get('page.discussionApiClientHeader')),
+	},
+};
+
 export const send = (
 	endpoint: string,
 	method: string,
-	data: Comment | unknown = {},
-): Promise<unknown> => {
+	data: string = '',
+): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
 
-		const body = ['GET', 'HEAD'].includes(method.toUpperCase())
-			? undefined
-			: JSON.stringify(data);
+		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
+		if (method === 'POST') {
+			const body = new URLSearchParams();
+			body.append('body', data);
+
+			return fetch(url, {
+				...defaultInitParams,
+				method,
+				body: body.toString(),
+				headers: {
+					...defaultInitParams.headers,
+					'Content-Type': 'application/x-www-form-urlencoded',
+				},
+			}).then((resp) => resp.json());
+		}
 
 		return fetch(url, {
+			...defaultInitParams,
 			method,
-			mode: 'cors',
-			body,
-			headers: {
-				'D2-X-UID': String(config.get('page.discussionD2Uid')),
-				'GU-Client': String(
-					config.get('page.discussionApiClientHeader'),
-				),
-			},
-			credentials: 'include',
-		}).then((r) => r.json());
+		}).then((resp) => resp.json());
 	}
 
 	throw new Error('Discussion features have been disabled');
@@ -42,24 +68,24 @@ export const send = (
 export const postComment = (
 	discussionId: Id,
 	comment: Comment,
-): Promise<unknown> => {
+): Promise<CommentResponse> => {
 	const endpoint = `/discussion/${discussionId}/comment${
 		comment.replyTo ? `/${comment.replyTo.commentId}/reply` : ''
 	}`;
 
-	return send(endpoint, 'POST', comment);
+	return send(endpoint, 'POST', comment.body);
 };
 
-export const previewComment = (comment: Comment): Promise<unknown> =>
-	send('/comment/preview', 'POST', comment);
+export const previewComment = (comment: Comment): Promise<CommentResponse> =>
+	send('/comment/preview', 'POST', comment.body);
 
-export const recommendComment = (id: Id): Promise<unknown> =>
+export const recommendComment = (id: Id): Promise<CommentResponse> =>
 	send(`/comment/${id}/recommend`, 'POST');
 
-export const pickComment = (id: Id): Promise<unknown> =>
+export const pickComment = (id: Id): Promise<CommentResponse> =>
 	send(`/comment/${id}/highlight`, 'POST');
 
-export const unPickComment = (id: Id): Promise<unknown> =>
+export const unPickComment = (id: Id): Promise<CommentResponse> =>
 	send(`/comment/${id}/unhighlight`, 'POST');
 
 export const reportComment = (
@@ -67,5 +93,5 @@ export const reportComment = (
 	report: Record<string, unknown>,
 ): Promise<unknown> => send(`/comment/${id}/reportAbuse`, 'POST', report);
 
-export const getUser = (id: Id = 'me'): Promise<unknown> =>
+export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
 	send(`/profile/${id}`, 'GET');
