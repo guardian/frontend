@@ -1,5 +1,10 @@
 import config from 'lib/config';
 
+/**
+ * This information is partly inspired by the API in discussion-rendering
+ * https://github.com/guardian/discussion-rendering/tree/main/src/lib/api.tsx
+ */
+
 type Id = number | string;
 
 type Comment = {
