@@ -160,7 +160,6 @@ const getUrlKeywords = (pageId) => {
 
 const formatAppNexusTargeting = (obj) => {
     const asKeyValues = Object.keys(obj)
-        .filter((key) => obj[key] !== '' && obj[key] !== null)
         .map((key) => {
             const value = obj[key];
             return Array.isArray(value)
