@@ -158,30 +158,19 @@ const getUrlKeywords = (pageId) => {
     return [];
 };
 
-const flattenDeep = arr => {
-    let flattened = [];
-    for (const a of arr) {
-        if (Array.isArray(a)) {
-            flattened = [...flattened, ...a];
-            flattened = [...flattenDeep(flattened)]
-        } else {
-            flattened.push(a);
-        }
-    }
-    return flattened;
-}
+const formatAppNexusTargeting = (obj) => {
+    const asKeyValues = Object.keys(obj)
+        .filter((key) => obj[key] !== '' && obj[key] !== null)
+        .map((key) => {
+            const value = obj[key];
+            return Array.isArray(value)
+                ? value.map(nestedValue => `${key}=${nestedValue}`)
+                : `${key}=${value}`;
+        });
 
-const formatAppNexusTargeting = (obj) =>
-    flattenDeep(
-        Object.keys(obj)
-            .filter((key) => obj[key] !== '' && obj[key] !== null)
-            .map((key) => {
-                const value = obj[key];
-                return Array.isArray(value)
-                    ? value.map(nestedValue => `${key}=${nestedValue}`)
-                    : `${key}=${value}`;
-            })
-    ).join(',');
+    const flattenDeep = Array.prototype.concat.apply([], asKeyValues);
+    return flattenDeep.join(',');
+}
 
 const buildAppNexusTargetingObject = once(
     (pageTargeting) =>
