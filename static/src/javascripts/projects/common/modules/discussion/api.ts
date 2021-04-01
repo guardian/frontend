@@ -40,7 +40,7 @@ const defaultInitParams: RequestInit = {
 export const send = (
 	endpoint: string,
 	method: string,
-	data = '',
+	data?: Comment | AbuseReport,
 ): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
@@ -48,7 +48,17 @@ export const send = (
 		// https://github.com/guardian/discussion-rendering/blob/1e8a7c7fa0b6a4273497111f0dab30f479a107bf/src/lib/api.tsx#L140
 		if (method === 'POST') {
 			const body = new URLSearchParams();
-			body.append('body', data);
+
+			if (data) {
+				if ('body' in data) {
+					body.append('body', data.body);
+				}
+				if ('categoryId' in data) {
+					body.append('categoryId', data.categoryId.toString());
+					data.email && body.append('email', data.email.toString());
+					data.reason && body.append('reason', data.reason);
+				}
+			}
 
 			return fetch(url, {
 				...defaultInitParams,
@@ -78,11 +88,11 @@ export const postComment = (
 		comment.replyTo ? `/${comment.replyTo.commentId}/reply` : ''
 	}`;
 
-	return send(endpoint, 'POST', comment.body);
+	return send(endpoint, 'POST', comment);
 };
 
 export const previewComment = (comment: Comment): Promise<CommentResponse> =>
-	send('/comment/preview', 'POST', comment.body);
+	send('/comment/preview', 'POST', comment);
 
 export const recommendComment = (id: Id): Promise<CommentResponse> =>
 	send(`/comment/${id}/recommend`, 'POST');
@@ -96,26 +106,8 @@ export const unPickComment = (id: Id): Promise<CommentResponse> =>
 export const reportComment = (
 	id: Id,
 	report: AbuseReport,
-): Promise<CommentResponse> => {
-	const data = new URLSearchParams();
-	data.append('categoryId', report.categoryId.toString());
-	report.email && data.append('email', report.email.toString());
-	report.reason && data.append('reason', report.reason);
-
-	const url =
-		String(config.get('page.discussionApiUrl')) +
-		`/comment/${id}/reportAbuse`;
-
-	return fetch(url, {
-		...defaultInitParams,
-		method: 'POST',
-		body: data.toString(),
-		headers: {
-			...defaultInitParams.headers,
-			'Content-Type': 'application/x-www-form-urlencoded',
-		},
-	}).then((resp) => resp.json() as Promise<CommentResponse>);
-};
+): Promise<CommentResponse> =>
+	send(`/comment/${id}/reportAbuse`, 'POST', report);
 
 export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
 	send(`/profile/${id}`, 'GET');
