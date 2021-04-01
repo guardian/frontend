@@ -47,7 +47,7 @@ class DotcomRenderingService extends GuLogging with ResultWithPreconnectPreload 
         .post(payload)
 
       resp.recoverWith({
-        case ConnectException if Configuration.environment.stage == "DEV" =>
+        case _: ConnectException if Configuration.environment.stage == "DEV" =>
           val msg = s"""Connection refused to ${endpoint}.
               |
               |You are trying to access a DCR page via Frontend. Most of the time you are better off developing directly
