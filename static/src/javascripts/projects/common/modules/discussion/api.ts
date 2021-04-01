@@ -40,7 +40,7 @@ const defaultInitParams: RequestInit = {
 export const send = (
 	endpoint: string,
 	method: string,
-	data: string = '',
+	data = '',
 ): Promise<CommentResponse> => {
 	if (config.get('switches.enableDiscussionSwitch')) {
 		const url = String(config.get('page.discussionApiUrl')) + endpoint;
@@ -58,13 +58,13 @@ export const send = (
 					...defaultInitParams.headers,
 					'Content-Type': 'application/x-www-form-urlencoded',
 				},
-			}).then((resp) => resp.json());
+			}).then((resp) => resp.json() as Promise<CommentResponse>);
 		}
 
 		return fetch(url, {
 			...defaultInitParams,
 			method,
-		}).then((resp) => resp.json());
+		}).then((resp) => resp.json() as Promise<CommentResponse>);
 	}
 
 	throw new Error('Discussion features have been disabled');
@@ -114,7 +114,7 @@ export const reportComment = (
 			...defaultInitParams.headers,
 			'Content-Type': 'application/x-www-form-urlencoded',
 		},
-	}).then((resp) => resp.json());
+	}).then((resp) => resp.json() as Promise<CommentResponse>);
 };
 
 export const getUser = (id: Id = 'me'): Promise<CommentResponse> =>
