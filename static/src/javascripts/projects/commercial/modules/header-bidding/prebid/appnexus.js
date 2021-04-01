@@ -117,16 +117,6 @@ export const getAppNexusDirectBidParams = sizes => {
     };
 };
 
-// TODO are we using getAppNexusServerSideBidParams anywhere?
-export const getAppNexusServerSideBidParams = sizes =>
-    Object.assign(
-        {},
-        {
-            placementId: getAppNexusPlacementId(sizes),
-            keywords: buildAppNexusTargetingObject(getPageTargeting()), // Ok to duplicate call. Lodash 'once' is used.
-        }
-    );
-
 export const _ = {
     getAppNexusPlacementId,
     getAppNexusInvCode,
