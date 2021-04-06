@@ -1,49 +1,38 @@
-import config from 'lib/config';
+import config_ from 'lib/config';
 import fetch from 'lib/fetch';
 
-const json = (
-    input,
-    init = {}
-) => {
-    // #? we should use Object.assign for this assignment, but this currently breaks
-    // Karma tests that depend on fetch-json.js and have not been stubbed
-    const options = init;
-    let path = typeof input === 'string' ? input : input.url;
-
-    if(init)
-
-    if (!path.match('^(https?:)?//')) {
-        path = config.get('page.ajaxUrl', '') + path;
-        options.mode = 'cors';
-        options.credentials = 'include';
-    }
-
-    return fetch(path, options).then(resp => {
-        if (resp.ok) {
-            switch (resp.status) {
-                case 204:
-                    return {};
-                default:
-                    return resp.json();
-            }
-        }
-        if (!resp.status) {
-            // IE9 uses XDomainRequest which doesn't set the response status thus failing
-            // even when the response was actually valid
-            return resp.text().then(responseText => {
-                try {
-                    return JSON.parse(responseText);
-                } catch (ex) {
-                    throw new Error(
-                        `Fetch error while requesting ${path}: Invalid JSON response`
-                    );
-                }
-            });
-        }
-        throw new Error(
-            `Fetch error while requesting ${path}: ${resp.statusText}`
-        );
-    });
+// This is really a hacky workaround ⚠️
+const config = config_ as {
+	get: (s: string, d?: string) => string;
 };
 
-export default json;
+const fetchJson = async (
+	resource: string,
+	init: RequestInit = {},
+): Promise<unknown> => {
+	if (typeof resource !== 'string')
+		throw new Error('First argument should be of type `string`');
+
+	let path = '';
+	if (!RegExp('^(https?:)?//').exec(resource)) {
+		path = config.get('page.ajaxUrl', '') + resource;
+		init.mode = 'cors';
+		init.credentials = 'include';
+	}
+
+	return fetch(path, options).then((resp) => {
+		if (resp.ok) {
+			switch (resp.status) {
+				case 204:
+					return {};
+				default:
+					return resp.json();
+			}
+		}
+		throw new Error(
+			`Fetch error while requesting ${path}: ${resp.statusText}`,
+		);
+	});
+};
+
+export { fetchJson };
