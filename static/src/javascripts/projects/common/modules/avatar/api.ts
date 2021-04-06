@@ -33,6 +33,7 @@ const request = (
 const getActive = (): Promise<Response> =>
 	request('GET', '/avatars/user/me/active');
 
+// 2021-04-06: updating avatar should only be done from manage.theguardian.com – this can likely be removed.
 const updateAvatar = (data: FormData): Promise<Response> =>
 	request('POST', '/avatars', data);
 
