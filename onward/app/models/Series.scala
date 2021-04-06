@@ -26,7 +26,6 @@ case class SeriesStoriesDCR(
 )
 
 object SeriesStoriesDCR {
-  implicit val onwardItemWrites = Json.writes[OnwardItemNx2]
   implicit val seriesStoriesDCRWrites = Json.writes[SeriesStoriesDCR]
   def fromSeries(series: Series)(implicit request: RequestHeader): SeriesStoriesDCR = {
     SeriesStoriesDCR(

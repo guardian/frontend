@@ -218,17 +218,6 @@ describe('getAppNexusPlacementId', () => {
     });
 });
 
-describe('getAppNexusServerSideBidParams', () => {
-    beforeEach(() => {
-        resetConfig();
-    });
-
-    afterEach(() => {
-        jest.resetAllMocks();
-        resetConfig();
-    });
-});
-
 describe('getAppNexusDirectBidParams', () => {
     beforeEach(() => {
         resetConfig();
