@@ -1888,17 +1888,17 @@
   resolved "https://registry.yarnpkg.com/@guardian/consent-management-platform/-/consent-management-platform-6.11.2.tgz#668d0f911aff5c3bc42cb54c606b07640d18f0b8"
   integrity sha512-tX+lZZFgn9PP8RUj14MnsYa7ikBAyTWfQJPNls4o2Q5c+o0uRVYHnlgifvspj0k1m05rFEmYjnmj7rxwpnH2Xw==
 
-"@guardian/eslint-config-typescript@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/eslint-config-typescript/-/eslint-config-typescript-0.4.2.tgz#085ff16e4b340386f9b28107ef83f2b03561c7f5"
-  integrity sha512-PrM0fhsz1RbV+iQHnJyShzzX7eenjD6ylSCD7xSqVL1Mwfl8UoNDoxlpcK2N4p7zupP5EfzzZZSvrqmD9Hxt1A==
+"@guardian/eslint-config-typescript@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/eslint-config-typescript/-/eslint-config-typescript-0.5.0.tgz#362b79da6440fc77d9c25b77ef9cfae18988ac5b"
+  integrity sha512-bCLWYgjNUNzppF+kD2IWmWnvvPSZRMHnNU1Yku9nHqlDOgE8HdEkdfrMc6fWuD/I/HyWW9p5UJweeGfgRSypVw==
   dependencies:
-    "@guardian/eslint-config" "^0.4.2"
+    "@guardian/eslint-config" "^0.5.0"
 
-"@guardian/eslint-config@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.4.2.tgz#0f07c3b951e0b5730ad3a3423d8cc508ff2c431e"
-  integrity sha512-zDXdnGhY+5IomMc0zVLOquaxylWEFjWJz4Beg2UP+U2qPjr4yVVe2ekEjZM+hayADHIs9bH7OlQ8s2EHSgfK2g==
+"@guardian/eslint-config@^0.5.0":
+  version "0.5.0"
+  resolved "https://registry.yarnpkg.com/@guardian/eslint-config/-/eslint-config-0.5.0.tgz#ece14ec90b372932c7bf01992fc6d8ce58f7f26e"
+  integrity sha512-THJn0wg7i9YjSVM9ofobsJgS+WH9ybrZH1+0CXLAebp0T53RGtgZUkek82mDg1h3DidsM+f7HSZqoQyrCbPzPw==
 
 "@guardian/libs@^1.6.3":
   version "1.6.3"
