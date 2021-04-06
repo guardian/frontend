@@ -10,7 +10,7 @@ import play.api.libs.json._
 // because we don't want people changing the core frontend models and as a side effect,
 // making them incompatible with Dotcomponents. By having our own set of models, there's
 // only one reason for change.
-// exceptions: we do resuse the existing Nav & BlockElement classes right now
+// Exceptions: we do reuse the existing Nav & BlockElement classes right now
 
 // -----------------------------------------------------------------
 // Supporting Types
