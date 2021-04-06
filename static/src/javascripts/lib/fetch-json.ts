@@ -10,9 +10,12 @@ const json = (
     const options = init;
     let path = typeof input === 'string' ? input : input.url;
 
+    if(init)
+
     if (!path.match('^(https?:)?//')) {
         path = config.get('page.ajaxUrl', '') + path;
         options.mode = 'cors';
+        options.credentials = 'include';
     }
 
     return fetch(path, options).then(resp => {
