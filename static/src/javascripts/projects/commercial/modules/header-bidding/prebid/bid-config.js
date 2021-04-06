@@ -1,4 +1,3 @@
-import isEmpty from 'lodash/isEmpty';
 import config from '../../../../../lib/config';
 import { pbTestNameMap } from '../../../../../lib/url';
 import {
@@ -224,7 +223,7 @@ const getOzoneTargeting = () => {
 };
 
 // Is pbtest being used?
-const isPbTestOn = () => !isEmpty(pbTestNameMap());
+const isPbTestOn = () => Object.keys(pbTestNameMap()).length > 0;
 // Helper for conditions
 const inPbTestOr = liveClause => isPbTestOn() || liveClause;
 

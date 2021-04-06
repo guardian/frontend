@@ -31,6 +31,7 @@ import { onSlotRender } from './on-slot-render';
 import { onSlotViewableFunction } from './on-slot-viewable';
 import { onSlotVisibilityChanged } from './on-slot-visibility-changed';
 import { refreshOnResize } from './refresh-on-resize';
+import { removeSlots } from '../../../commercial/modules/remove-slots';
 
 initMessenger(
     type,
@@ -68,18 +69,6 @@ const setPageTargeting = () => {
     Object.keys(targeting).forEach(key => {
         pubads.setTargeting(key, targeting[key]);
     });
-};
-
-// This is specifically a separate function to close-disabled-slots. One is for
-// closing hidden/disabled slots, the other is for graceful recovery when prepare-googletag
-// encounters an error. Here, slots are closed unconditionally.
-const removeAdSlots = () => {
-    // Get all ad slots
-    const adSlots = qwery(dfpEnv.adSlotSelector);
-
-    return fastdom.mutate(() =>
-        adSlots.forEach((adSlot) => adSlot.remove())
-    );
 };
 
 const setPublisherProvidedId = () => {
@@ -166,10 +155,10 @@ export const init = () => {
         // Abandon the init sequence.
         setupAdvertising()
             .then(adFreeSlotRemove)
-            .catch(removeAdSlots);
+            .catch(removeSlots);
 
         return Promise.resolve();
     }
 
-    return removeAdSlots();
+    return removeSlots();
 };

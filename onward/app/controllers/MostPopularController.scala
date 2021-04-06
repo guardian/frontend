@@ -7,7 +7,7 @@ import java.time.temporal.ChronoUnit
 import common._
 import conf.switches.Switches
 import contentapi.ContentApiClient
-import feed.{DayMostPopularAgent, DeeplyReadAgent, DeeplyReadItem, GeoMostPopularAgent, MostPopularAgent}
+import feed.{DayMostPopularAgent, GeoMostPopularAgent, MostPopularAgent}
 import layout.ContentCard
 import model.Cached.RevalidatableResult
 import model._
@@ -32,7 +32,6 @@ class MostPopularController(
     geoMostPopularAgent: GeoMostPopularAgent,
     dayMostPopularAgent: DayMostPopularAgent,
     mostPopularAgent: MostPopularAgent,
-    deeplyReadAgent: DeeplyReadAgent,
     val controllerComponents: ControllerComponents,
 )(implicit context: ApplicationContext)
     extends BaseController
@@ -93,63 +92,6 @@ class MostPopularController(
             }
         }
       }
-    }
-
-  def runDeeplyReadRefreshCycle(): Action[AnyContent] =
-    Action.async { implicit request =>
-      deeplyReadAgent.refresh().map { unit =>
-        Ok("done")
-      }
-    }
-
-  def renderDeeplyRead(): Action[AnyContent] =
-    Action.async { implicit request =>
-      Future.successful(Ok(Json.toJson(deeplyReadAgent.getReport())))
-    }
-
-  // Experimental (December 2020)
-  def renderWithDeeplyRead(): Action[AnyContent] =
-    Action.async { implicit request =>
-      val edition = Edition(request)
-
-      // Synchronous global popular, from the mostPopularAgent (stateful)
-      val globalPopular: Option[MostPopularNx2] = {
-        val globalPopularContent = mostPopularAgent.mostPopular(edition)
-        if (globalPopularContent.nonEmpty) {
-          Some(
-            MostPopularNx2(
-              "Most popular",
-              "",
-              globalPopularContent
-                .map(_.faciaContent)
-                .map(OnwardItemNx2.pressedContentToOnwardItemNx2),
-            ),
-          )
-        } else
-          None
-      }
-
-      val deeplyReadItems = deeplyReadAgent.getReport().map(DeeplyReadItem.deeplyReadItemToOnwardItemNx2)
-
-      // Async section specific most Popular.
-      val deeplyRead: Option[MostPopularNx2] = {
-        if (deeplyReadItems.isEmpty) None
-        else
-          Some(
-            MostPopularNx2(
-              "Deeply read",
-              "",
-              deeplyReadItems,
-            ),
-          )
-      }
-
-      val response =
-        if (globalPopular.isDefined && deeplyRead.isDefined)
-          jsonResponseNx2(globalPopular.toSeq ++ deeplyRead.toSeq, mostCards())
-        else NotFound
-
-      Future(response)
     }
 
   private val countryNames = Map(

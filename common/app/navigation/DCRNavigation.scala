@@ -8,7 +8,6 @@ case class ReaderRevenueLink(
     contribute: String,
     subscribe: String,
     support: String,
-    gifting: String,
     supporter: String,
 )
 
@@ -31,7 +30,6 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, Header),
     getReaderRevenueUrl(SupportSubscribe, Header),
     getReaderRevenueUrl(Support, Header),
-    getReaderRevenueUrl(SupportGifting, Header),
     getReaderRevenueUrl(SupporterCTA, Header),
   )
 
@@ -39,7 +37,6 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, Footer),
     getReaderRevenueUrl(SupportSubscribe, Footer),
     getReaderRevenueUrl(Support, Footer),
-    getReaderRevenueUrl(SupportGifting, Footer),
     getReaderRevenueUrl(SupporterCTA, Footer),
   )
 
@@ -47,7 +44,6 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, SideMenu),
     getReaderRevenueUrl(SupportSubscribe, SideMenu),
     getReaderRevenueUrl(Support, SideMenu),
-    getReaderRevenueUrl(SupportGifting, SideMenu),
     getReaderRevenueUrl(SupporterCTA, SideMenu),
   )
 
@@ -55,7 +51,6 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, AmpHeader),
     getReaderRevenueUrl(SupportSubscribe, AmpHeader),
     getReaderRevenueUrl(Support, AmpHeader),
-    getReaderRevenueUrl(SupportGifting, AmpHeader),
     getReaderRevenueUrl(SupporterCTA, AmpHeader),
   )
 
@@ -63,7 +58,6 @@ object ReaderRevenueLinks {
     getReaderRevenueUrl(SupportContribute, AmpFooter),
     getReaderRevenueUrl(SupportSubscribe, AmpFooter),
     getReaderRevenueUrl(Support, AmpFooter),
-    getReaderRevenueUrl(SupportGifting, AmpFooter),
     getReaderRevenueUrl(SupporterCTA, AmpFooter),
   )
 
