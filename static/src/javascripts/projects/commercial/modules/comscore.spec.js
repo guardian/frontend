@@ -44,6 +44,20 @@ const ccpaWithoutConsentMock = (callback) =>
         },
     });
 
+const AusWithoutConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: true,
+        },
+    });
+
+const AusWithConsentMock = (callback) =>
+    callback({
+        aus: {
+            doNotSell: false,
+        },
+    });
+
 jest.mock('@guardian/libs', () => ({
     loadScript: jest.fn(() => Promise.resolve()),
 }));
@@ -94,8 +108,20 @@ describe('comscore init', () => {
             expect(loadScript).toBeCalled();
         });
 
-        it('CCPA without consent: runs', () => {
+        it('CCPA without consent: does not run', () => {
             onConsentChange.mockImplementation(ccpaWithoutConsentMock);
+            init();
+            expect(loadScript).not.toBeCalled();
+        });
+
+        it('Aus without consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithoutConsentMock);
+            init();
+            expect(loadScript).toBeCalled();
+        });
+
+        it('Aus with consent: runs', () => {
+            onConsentChange.mockImplementation(AusWithConsentMock);
             init();
             expect(loadScript).toBeCalled();
         });
@@ -117,7 +143,7 @@ describe('comscore initOnConsent', () => {
         _.initOnConsent(true);
         _.initOnConsent(true);
 
-        
+
         expect(loadScript).toBeCalledTimes(1);
     });
 });
